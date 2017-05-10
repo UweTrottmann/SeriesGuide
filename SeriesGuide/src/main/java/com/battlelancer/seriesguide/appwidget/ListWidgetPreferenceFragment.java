@@ -19,6 +19,7 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
 
     @SuppressWarnings("FieldCanBeLocal") private SharedPreferences.OnSharedPreferenceChangeListener
             preferenceChangeListener;
+    private ListPreference typePref;
 
     public static ListWidgetPreferenceFragment newInstance(int appWidgetId) {
         ListWidgetPreferenceFragment f = new ListWidgetPreferenceFragment();
@@ -45,7 +46,7 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         int appWidgetId = getArguments().getInt("appWidgetId");
 
         // widget type setting
-        final ListPreference typePref = new ListPreference(getActivity());
+        typePref = new ListPreference(getActivity());
         typePref.setKey(WidgetSettings.KEY_PREFIX_WIDGET_LISTTYPE + appWidgetId);
         typePref.setTitle(R.string.pref_widget_type);
         typePref.setEntries(R.array.widgetType);
@@ -153,10 +154,17 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
                 }
             }
         };
+
+        getPreferenceManager().getSharedPreferences()
+                .registerOnSharedPreferenceChangeListener(preferenceChangeListener);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         // trigger the listener to handle the current state
         preferenceChangeListener.onSharedPreferenceChanged(
                 getPreferenceManager().getSharedPreferences(), typePref.getKey());
-        getPreferenceManager().getSharedPreferences()
-                .registerOnSharedPreferenceChangeListener(preferenceChangeListener);
     }
 }
