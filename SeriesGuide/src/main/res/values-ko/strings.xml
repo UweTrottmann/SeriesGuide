@@ -156,7 +156,9 @@
   <string name="recent">최근방영됨</string>
   <string name="noupcoming">방영예정인 에피소드가 없습니다.</string>
   <string name="norecent">최근 방영된 에피소드가 없습니다.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">즐겨찾기한 쇼만 보이기</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">영구적인 달력</string>
   <!-- Updating -->
   <string name="update_scheduled">업데이트 중&#8230;</string>

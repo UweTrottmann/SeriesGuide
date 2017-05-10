@@ -161,7 +161,9 @@
   <string name="recent">مؤخراً</string>
   <string name="noupcoming">.لا توجد حلقات قادمة</string>
   <string name="norecent">.لا توجد حلقات حالية</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">فقط المسلسلات المفضلة</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">رزنامة النهائية</string>
   <!-- Updating -->
   <string name="update_scheduled">جاري التحديث</string>

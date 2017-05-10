@@ -156,7 +156,9 @@
   <string name="recent">Baru-baru ini</string>
   <string name="noupcoming">Tidak ada episode mendatang.</string>
   <string name="norecent">Tak ada video terkini.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Hanya acara favorit</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Kalender tidak terbatas</string>
   <!-- Updating -->
   <string name="update_scheduled">Memperbarui&#8230;</string>

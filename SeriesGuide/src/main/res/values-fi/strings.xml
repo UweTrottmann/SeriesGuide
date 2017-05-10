@@ -157,7 +157,9 @@
   <string name="recent">Viimeisimmät</string>
   <string name="noupcoming">Ei tulevia jaksoja.</string>
   <string name="norecent">Ei viimeaikaisia jaksoja.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Vain suosikkiohjelmat</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Päättymätön kalenteri</string>
   <!-- Updating -->
   <string name="update_scheduled">Päivitetään&#8230;</string>

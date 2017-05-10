@@ -156,7 +156,9 @@
   <string name="recent">最近</string>
   <string name="noupcoming">今後のエピソードはありません。</string>
   <string name="norecent">最近のエピソードはありません。</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">お気に入りの番組だけ</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">無限のカレンダー</string>
   <!-- Updating -->
   <string name="update_scheduled">更新中&#8230;</string>

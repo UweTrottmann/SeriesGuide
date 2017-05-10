@@ -157,7 +157,9 @@
   <string name="recent">Πρόσφατο</string>
   <string name="noupcoming">Δεν υπάρχουν επερχόμενα επεισόδια.</string>
   <string name="norecent">Δεν υπάρχουν πρόσφατα επεισόδια.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Μόνο αγαπημένες σειρές</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Απεριόριστο ημερολόγιο</string>
   <!-- Updating -->
   <string name="update_scheduled">Ενημέρωση&#8230;</string>

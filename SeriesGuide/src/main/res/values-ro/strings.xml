@@ -158,7 +158,9 @@
   <string name="recent">Recente</string>
   <string name="noupcoming">Nu sunt episoade care urmează.</string>
   <string name="norecent">Nu sunt episoade recente.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Doar emisiunile preferate</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Calendar infinit</string>
   <!-- Updating -->
   <string name="update_scheduled">Actualizare&#8230;</string>

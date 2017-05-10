@@ -156,7 +156,9 @@
   <string name="recent">已播剧集</string>
   <string name="noupcoming">没有即将播出的剧集</string>
   <string name="norecent">没有近期已播出的剧集</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">仅显示喜爱节目</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">无限的日历</string>
   <!-- Updating -->
   <string name="update_scheduled">正在更新&#8230;</string>

@@ -157,7 +157,9 @@
   <string name="recent">En Son</string>
   <string name="noupcoming">Yaklaşan bölüm yok.</string>
   <string name="norecent">Yeni tarihli bölüm yok.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Sadece favori diziler</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Sonsuz takvim</string>
   <!-- Updating -->
   <string name="update_scheduled">Güncelleniyor&#8230;</string>

@@ -157,7 +157,9 @@
   <string name="recent">Seneste</string>
   <string name="noupcoming">Ingen kommende episoder.</string>
   <string name="norecent">Ingen nylige episoder.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Kun foretrukne serier</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Uendelig kalender</string>
   <!-- Updating -->
   <string name="update_scheduled">Opdaterer&#8230;</string>

@@ -158,7 +158,9 @@
   <string name="recent">Nedavno</string>
   <string name="noupcoming">Nema nadolazećih epizoda.</string>
   <string name="norecent">Nema nedavnih epizoda.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Samo favoriti</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Infinite calendar</string>
   <!-- Updating -->
   <string name="update_scheduled">Ažuriranje&#8230;</string>

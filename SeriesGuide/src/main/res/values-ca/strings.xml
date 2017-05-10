@@ -157,7 +157,9 @@
   <string name="recent">Recent</string>
   <string name="noupcoming">No hi ha capítols pròximament.</string>
   <string name="norecent">No hi ha capítols recents.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Només sèries preferides</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Calendari infinit</string>
   <!-- Updating -->
   <string name="update_scheduled">S\'està actualitzant&#8230;</string>

@@ -157,7 +157,9 @@
   <string name="recent">Recenti</string>
   <string name="noupcoming">Non c\'è nessun episodio in programma.</string>
   <string name="norecent">Non ci sono episodi recenti.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Solo le serie preferite</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Calendario perpetuo</string>
   <!-- Updating -->
   <string name="update_scheduled">Aggiornamento&#8230;</string>

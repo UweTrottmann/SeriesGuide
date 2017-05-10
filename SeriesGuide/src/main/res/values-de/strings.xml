@@ -157,7 +157,9 @@
   <string name="recent">Vor kurzem</string>
   <string name="noupcoming">Keine kommenden Folgen.</string>
   <string name="norecent">Keine bereits gesendeten Folgen.</string>
+  <string name="calendar_settings">Kalendereinstellungen</string>
   <string name="only_favorites">Nur Serien-Favoriten</string>
+  <string name="calendar_only_collected">Nur gesammelte Folgen</string>
   <string name="pref_infinite_scrolling">Endloser Kalender</string>
   <!-- Updating -->
   <string name="update_scheduled">Aktualisiert&#8230;</string>

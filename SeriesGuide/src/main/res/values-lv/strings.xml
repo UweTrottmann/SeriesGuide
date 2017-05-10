@@ -158,7 +158,9 @@
   <string name="recent">Nesen</string>
   <string name="noupcoming">Nav gaidāmu epizožu.</string>
   <string name="norecent">Nav nesenu epizožu.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Tikai izlases seriāli</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Infinite calendar</string>
   <!-- Updating -->
   <string name="update_scheduled">Notiek atjaunināšana&#8230;</string>

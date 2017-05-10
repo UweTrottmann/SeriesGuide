@@ -156,7 +156,9 @@
   <string name="recent">ล่าสุด</string>
   <string name="noupcoming">ไม่มีตอนที่กำลังจะมาเร็วๆ นี้</string>
   <string name="norecent">ไม่มีตอนล่าสุด</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">เฉพาะซีรีส์ที่ชื่นชอบ</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">ปฏิทินไม่สิ้นสุด</string>
   <!-- Updating -->
   <string name="update_scheduled">กำลังอัปเดต&#8230;</string>

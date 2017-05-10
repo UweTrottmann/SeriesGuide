@@ -157,7 +157,9 @@
   <string name="recent">Recente</string>
   <string name="noupcoming">Er zijn geen toekomstige afleveringen.</string>
   <string name="norecent">Er zijn geen recente afleveringen.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Alleen favoriete series</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Oneindige kalender</string>
   <!-- Updating -->
   <string name="update_scheduled">Bijwerken&#8230;</string>

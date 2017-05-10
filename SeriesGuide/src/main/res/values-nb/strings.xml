@@ -157,7 +157,9 @@
   <string name="recent">Siste</string>
   <string name="noupcoming">Det er ingen kommende episoder.</string>
   <string name="norecent">Det er ingen nylige episoder.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Bare favoritter</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Uendelig kalender</string>
   <!-- Updating -->
   <string name="update_scheduled">Oppdaterer&#8230;</string>

@@ -157,7 +157,9 @@
   <string name="recent">اخیر</string>
   <string name="noupcoming">هیچ قسمت آینده ای وجود ندارد.</string>
   <string name="norecent">هیچ قسمت اخیری وجود ندارد.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">تنها نمایش های مورد علاقه</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">تقویم بی‌پایان</string>
   <!-- Updating -->
   <string name="update_scheduled">به‌روز رسانی&#8230;</string>

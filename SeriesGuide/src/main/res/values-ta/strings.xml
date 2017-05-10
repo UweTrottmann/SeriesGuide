@@ -157,7 +157,9 @@
   <string name="recent">சமீபத்திய</string>
   <string name="noupcoming">எந்த வரவிருக்கும் episodes உள்ளன.</string>
   <string name="norecent">எந்த சமீபத்திய episodes உள்ளன.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">பிடித்த காட்சிகள்</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">முடிவிலா காலண்டர்</string>
   <!-- Updating -->
   <string name="update_scheduled">புதுப்பித்தல்&#8230;</string>

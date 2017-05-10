@@ -159,7 +159,9 @@
   <string name="recent">אחרונים</string>
   <string name="noupcoming">אין פרקים שישודרו בקרוב</string>
   <string name="norecent">אין פרקים חדשים</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">סדרות מעודפות בלבד</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">לוח שנה אינסופית</string>
   <!-- Updating -->
   <string name="update_scheduled">מעדכן&#8230;</string>

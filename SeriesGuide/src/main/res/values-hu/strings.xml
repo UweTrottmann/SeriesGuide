@@ -157,7 +157,9 @@
   <string name="recent">Legutóbbi</string>
   <string name="noupcoming">Nincsenek következő epizódok.</string>
   <string name="norecent">Nincsenek mostanában vetített epizódok.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Csak kedvenc sorozatok</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Végtelen naptár</string>
   <!-- Updating -->
   <string name="update_scheduled">Frissítés&#8230;</string>

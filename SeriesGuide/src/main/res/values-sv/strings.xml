@@ -158,7 +158,9 @@
   <string name="recent">Senaste</string>
   <string name="noupcoming">Det finns inga kommande avsnitt.</string>
   <string name="norecent">Det finns inga aktuella avsnitt.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Endast favoritserier</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Oändlig kalender</string>
   <!-- Updating -->
   <string name="update_scheduled">Uppdaterar&#8230;</string>
