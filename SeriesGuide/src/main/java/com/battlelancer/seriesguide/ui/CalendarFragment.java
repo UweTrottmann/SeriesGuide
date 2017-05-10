@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -37,6 +38,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
@@ -179,6 +181,10 @@ public class CalendarFragment extends Fragment implements
         }
 
         inflater.inflate(R.menu.calendar_menu, menu);
+
+        VectorDrawableCompat visibilitySettingsIcon = ViewTools.createVectorIconWhite(
+                getActivity(), getActivity().getTheme(), R.drawable.ic_visibility_black_24dp);
+        menu.findItem(R.id.menu_action_calendar_visibility).setIcon(visibilitySettingsIcon);
 
         // set menu items to current values
         menu.findItem(R.id.menu_onlyfavorites)
