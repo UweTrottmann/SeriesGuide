@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -183,35 +184,42 @@ public class CalendarFragment extends Fragment
 
         VectorDrawableCompat visibilitySettingsIcon = ViewTools.createVectorIconWhite(
                 getActivity(), getActivity().getTheme(), R.drawable.ic_visibility_black_24dp);
-        menu.findItem(R.id.menu_action_calendar_visibility).setIcon(visibilitySettingsIcon);
+        menu.findItem(R.id.menu_calendar_visibility).setIcon(visibilitySettingsIcon);
 
         // set menu items to current values
-        menu.findItem(R.id.menu_onlyfavorites)
-                .setChecked(CalendarSettings.isOnlyFavorites(getActivity()));
-        menu.findItem(R.id.menu_nospecials)
-                .setChecked(DisplaySettings.isHidingSpecials(getActivity()));
-        menu.findItem(R.id.menu_nowatched)
-                .setChecked(DisplaySettings.isNoWatchedEpisodes(getActivity()));
-        menu.findItem(R.id.menu_infinite_scrolling)
-                .setChecked(CalendarSettings.isInfiniteScrolling(getActivity()));
+        Context context = getContext();
+        menu.findItem(R.id.menu_action_calendar_onlyfavorites)
+                .setChecked(CalendarSettings.isOnlyFavorites(context));
+        menu.findItem(R.id.menu_action_calendar_onlycollected)
+                .setChecked(CalendarSettings.isOnlyCollected(context));
+        menu.findItem(R.id.menu_action_calendar_nospecials)
+                .setChecked(DisplaySettings.isHidingSpecials(context));
+        menu.findItem(R.id.menu_action_calendar_nowatched)
+                .setChecked(DisplaySettings.isNoWatchedEpisodes(context));
+        menu.findItem(R.id.menu_action_calendar_infinite)
+                .setChecked(CalendarSettings.isInfiniteScrolling(context));
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_onlyfavorites) {
+        if (itemId == R.id.menu_action_calendar_onlyfavorites) {
             toggleFilterSetting(item, CalendarSettings.KEY_ONLY_FAVORITE_SHOWS);
             Utils.trackAction(getActivity(), TAG, "Only favorite shows Toggle");
             return true;
-        } else if (itemId == R.id.menu_nospecials) {
+        } else if (itemId == R.id.menu_action_calendar_onlycollected) {
+            toggleFilterSetting(item, CalendarSettings.KEY_ONLY_COLLECTED);
+            Utils.trackAction(getActivity(), TAG, "Only calendar shows Toggle");
+            return true;
+        } else if (itemId == R.id.menu_action_calendar_nospecials) {
             toggleFilterSetting(item, DisplaySettings.KEY_HIDE_SPECIALS);
             Utils.trackAction(getActivity(), TAG, "Hide specials Toggle");
             return true;
-        } else if (itemId == R.id.menu_nowatched) {
+        } else if (itemId == R.id.menu_action_calendar_nowatched) {
             toggleFilterSetting(item, DisplaySettings.KEY_NO_WATCHED_EPISODES);
             Utils.trackAction(getActivity(), TAG, "Hide watched Toggle");
             return true;
-        } else if (itemId == R.id.menu_infinite_scrolling) {
+        } else if (itemId == R.id.menu_action_calendar_infinite) {
             toggleFilterSetting(item, CalendarSettings.KEY_INFINITE_SCROLLING);
             Utils.trackAction(getActivity(), TAG, "Infinite Scrolling Toggle");
             return true;
@@ -353,6 +361,7 @@ public class CalendarFragment extends Fragment
             gridView.setFastScrollEnabled(infiniteScrolling);
         }
         if (CalendarSettings.KEY_ONLY_FAVORITE_SHOWS.equals(key)
+                || CalendarSettings.KEY_ONLY_COLLECTED.equals(key)
                 || DisplaySettings.KEY_HIDE_SPECIALS.equals(key)
                 || DisplaySettings.KEY_NO_WATCHED_EPISODES.equals(key)
                 || CalendarSettings.KEY_INFINITE_SCROLLING.equals(key)) {

@@ -5,26 +5,30 @@
 
     <!-- Icon is set in code. -->
     <item
-        android:id="@+id/menu_action_calendar_visibility"
+        android:id="@+id/menu_calendar_visibility"
         android:orderInCategory="0"
         android:title="@string/calendar_settings"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction">
         <menu>
             <item
-                android:id="@+id/menu_onlyfavorites"
+                android:id="@+id/menu_action_calendar_onlyfavorites"
                 android:checkable="true"
                 android:title="@string/only_favorites" />
             <item
-                android:id="@+id/menu_nowatched"
+                android:id="@+id/menu_action_calendar_onlycollected"
+                android:checkable="true"
+                android:title="@string/calendar_only_collected" />
+            <item
+                android:id="@+id/menu_action_calendar_nowatched"
                 android:checkable="true"
                 android:title="@string/hide_watched" />
             <item
-                android:id="@+id/menu_nospecials"
+                android:id="@+id/menu_action_calendar_nospecials"
                 android:checkable="true"
                 android:title="@string/pref_onlyseasoneps" />
             <item
-                android:id="@+id/menu_infinite_scrolling"
+                android:id="@+id/menu_action_calendar_infinite"
                 android:checkable="true"
                 android:title="@string/pref_infinite_scrolling" />
         </menu>
