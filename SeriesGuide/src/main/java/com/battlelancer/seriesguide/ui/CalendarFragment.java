@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -48,9 +47,9 @@ import org.greenrobot.eventbus.ThreadMode;
 /**
  * Displays upcoming or recent episodes in a scrollable grid, by default grouped by day.
  */
-public class CalendarFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener,
-        OnSharedPreferenceChangeListener, AdapterView.OnItemLongClickListener {
+public class CalendarFragment extends Fragment
+        implements OnItemClickListener, OnSharedPreferenceChangeListener,
+        AdapterView.OnItemLongClickListener {
 
     private static final String TAG = "Calendar";
     private static final int CONTEXT_FLAG_WATCHED_ID = 0;
@@ -142,9 +141,9 @@ public class CalendarFragment extends Fragment implements
           https://github.com/UweTrottmann/SeriesGuide/issues/257.
          */
         boolean isLoaderExists = getLoaderManager().getLoader(getLoaderId()) != null;
-        getLoaderManager().initLoader(getLoaderId(), null, this);
+        getLoaderManager().initLoader(getLoaderId(), null, calendarLoaderCallbacks);
         if (isLoaderExists) {
-            onRequery();
+            requery();
         }
     }
 
@@ -221,24 +220,16 @@ public class CalendarFragment extends Fragment implements
         }
     }
 
-    public void checkInEpisode(int episodeTvdbId) {
-        CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(), episodeTvdbId);
-        if (f != null && isResumed()) {
-            f.show(getFragmentManager(), "checkin-dialog");
-        }
+    private void toggleFilterSetting(MenuItem item, String key) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        prefs.edit().putBoolean(key, !item.isChecked()).apply();
+
+        // refresh filter icon state
+        getActivity().supportInvalidateOptionsMenu();
     }
 
-    private void updateEpisodeCollectionState(int showTvdbId, int episodeTvdbId, int seasonNumber,
-            int episodeNumber, boolean addToCollection) {
-        EpisodeTools.episodeCollected(SgApp.from(getActivity()), showTvdbId, episodeTvdbId,
-                seasonNumber, episodeNumber, addToCollection);
-    }
-
-    private void updateEpisodeWatchedState(int showTvdbId, int episodeTvdbId, int seasonNumber,
-            int episodeNumber, boolean isWatched) {
-        EpisodeTools.episodeWatched(SgApp.from(getActivity()), showTvdbId, episodeTvdbId,
-                seasonNumber, episodeNumber,
-                isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
+    private int getLoaderId() {
+        return getArguments().getInt("loaderid");
     }
 
     @Override
@@ -324,12 +315,24 @@ public class CalendarFragment extends Fragment implements
         return true;
     }
 
-    public void onRequery() {
-        getLoaderManager().restartLoader(getLoaderId(), null, this);
+    private void checkInEpisode(int episodeTvdbId) {
+        CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(), episodeTvdbId);
+        if (f != null && isResumed()) {
+            f.show(getFragmentManager(), "checkin-dialog");
+        }
     }
 
-    private int getLoaderId() {
-        return getArguments().getInt("loaderid");
+    private void updateEpisodeCollectionState(int showTvdbId, int episodeTvdbId, int seasonNumber,
+            int episodeNumber, boolean addToCollection) {
+        EpisodeTools.episodeCollected(SgApp.from(getActivity()), showTvdbId, episodeTvdbId,
+                seasonNumber, episodeNumber, addToCollection);
+    }
+
+    private void updateEpisodeWatchedState(int showTvdbId, int episodeTvdbId, int seasonNumber,
+            int episodeNumber, boolean isWatched) {
+        EpisodeTools.episodeWatched(SgApp.from(getActivity()), showTvdbId, episodeTvdbId,
+                seasonNumber, episodeNumber,
+                isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -342,47 +345,6 @@ public class CalendarFragment extends Fragment implements
         }
     }
 
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        boolean isInfiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
-
-        // infinite or 30 days activity stream
-        String[][] queryArgs = DBUtils.buildActivityQuery(getActivity(), type,
-                isInfiniteScrolling ? -1 : 30);
-
-        // prevent upcoming/recent episodes from becoming stale
-        schedulePeriodicDataRefresh(true);
-
-        return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
-                CalendarAdapter.Query.PROJECTION, queryArgs[0][0], queryArgs[1], queryArgs[2][0]);
-    }
-
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        adapter.swapCursor(data);
-    }
-
-    public void onLoaderReset(Loader<Cursor> loader) {
-        adapter.swapCursor(null);
-    }
-
-    private void schedulePeriodicDataRefresh(boolean enableRefresh) {
-        if (handler == null) {
-            handler = new Handler();
-        }
-        handler.removeCallbacks(mDataRefreshRunnable);
-        if (enableRefresh) {
-            handler.postDelayed(mDataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
-        }
-    }
-
-    private Runnable mDataRefreshRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if (isAdded()) {
-                getLoaderManager().restartLoader(getLoaderId(), null, CalendarFragment.this);
-            }
-        }
-    };
-
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (CalendarSettings.KEY_INFINITE_SCROLLING.equals(key)) {
@@ -394,18 +356,58 @@ public class CalendarFragment extends Fragment implements
                 || DisplaySettings.KEY_HIDE_SPECIALS.equals(key)
                 || DisplaySettings.KEY_NO_WATCHED_EPISODES.equals(key)
                 || CalendarSettings.KEY_INFINITE_SCROLLING.equals(key)) {
-            onRequery();
+            requery();
         }
     }
 
-    @SuppressLint("CommitPrefEdits")
-    private void toggleFilterSetting(MenuItem item, String key) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        prefs.edit().putBoolean(key, !item.isChecked()).apply();
-
-        // refresh filter icon state
-        getActivity().supportInvalidateOptionsMenu();
+    private void requery() {
+        getLoaderManager().restartLoader(getLoaderId(), null, calendarLoaderCallbacks);
     }
+
+    private void schedulePeriodicDataRefresh(boolean enableRefresh) {
+        if (handler == null) {
+            handler = new Handler();
+        }
+        handler.removeCallbacks(dataRefreshRunnable);
+        if (enableRefresh) {
+            handler.postDelayed(dataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
+        }
+    }
+
+    private Runnable dataRefreshRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (isAdded()) {
+                getLoaderManager().restartLoader(getLoaderId(), null, calendarLoaderCallbacks);
+            }
+        }
+    };
+
+    private LoaderManager.LoaderCallbacks<Cursor> calendarLoaderCallbacks
+            = new LoaderManager.LoaderCallbacks<Cursor>() {
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            boolean isInfiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
+
+            // infinite or 30 days activity stream
+            String[][] queryArgs = DBUtils.buildActivityQuery(getActivity(), type,
+                    isInfiniteScrolling ? -1 : 30);
+
+            // prevent upcoming/recent episodes from becoming stale
+            schedulePeriodicDataRefresh(true);
+
+            return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
+                    CalendarAdapter.Query.PROJECTION, queryArgs[0][0], queryArgs[1],
+                    queryArgs[2][0]);
+        }
+
+        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            adapter.swapCursor(data);
+        }
+
+        public void onLoaderReset(Loader<Cursor> loader) {
+            adapter.swapCursor(null);
+        }
+    };
 
     private CalendarAdapter.ItemClickListener itemClickListener
             = new CalendarAdapter.ItemClickListener() {
