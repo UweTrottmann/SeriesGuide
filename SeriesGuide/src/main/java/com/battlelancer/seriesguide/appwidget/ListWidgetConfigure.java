@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.RemoteViews;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
@@ -63,22 +61,7 @@ public class ListWidgetConfigure extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.widget_config_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_save) {
-            updateWidget();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void updateWidget() {
+    protected void updateWidget() {
         final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         RemoteViews views = ListWidgetProvider
                 .buildRemoteViews(this, appWidgetManager, mAppWidgetId);
