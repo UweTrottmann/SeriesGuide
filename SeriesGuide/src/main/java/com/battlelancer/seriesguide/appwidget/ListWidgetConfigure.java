@@ -33,9 +33,6 @@ public class ListWidgetConfigure extends AppCompatActivity {
         setContentView(R.layout.activity_singlepane);
         setupActionBar();
 
-        // if the user backs out, no widget gets added
-        setResult(RESULT_CANCELED);
-
         // get given app widget id
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -49,6 +46,9 @@ public class ListWidgetConfigure extends AppCompatActivity {
             finish();
             return;
         }
+
+        // if the user backs out, no widget gets added
+        setWidgetResult(RESULT_CANCELED);
 
         if (savedInstanceState == null) {
             ListWidgetPreferenceFragment f = ListWidgetPreferenceFragment.newInstance(mAppWidgetId);
@@ -72,13 +72,13 @@ public class ListWidgetConfigure extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_save) {
-            onUpdateWidget();
+            updateWidget();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void onUpdateWidget() {
+    private void updateWidget() {
         final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         RemoteViews views = ListWidgetProvider
                 .buildRemoteViews(this, appWidgetManager, mAppWidgetId);
@@ -93,9 +93,13 @@ public class ListWidgetConfigure extends AppCompatActivity {
         };
         new Handler().postDelayed(runnable, 300);
 
+        setWidgetResult(RESULT_OK);
+        finish();
+    }
+
+    private void setWidgetResult(int resultCode) {
         Intent resultValue = new Intent();
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-        setResult(RESULT_OK, resultValue);
-        finish();
+        setResult(resultCode, resultValue);
     }
 }
