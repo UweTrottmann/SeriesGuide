@@ -73,6 +73,13 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         onlyFavoritesPref.setDefaultValue(false);
         preferenceScreen.addPreference(onlyFavoritesPref);
 
+        // only collected episodes setting
+        final CheckBoxPreference onlyCollectedPref = new CheckBoxPreference(getActivity());
+        onlyCollectedPref.setKey(WidgetSettings.KEY_PREFIX_WIDGET_ONLY_COLLECTED + appWidgetId);
+        onlyCollectedPref.setTitle(R.string.calendar_only_collected);
+        onlyCollectedPref.setDefaultValue(false);
+        preferenceScreen.addPreference(onlyCollectedPref);
+
         // hide watched setting
         final CheckBoxPreference hideWatchedPreference = new CheckBoxPreference(getActivity());
         hideWatchedPreference.setKey(WidgetSettings.KEY_PREFIX_WIDGET_HIDE_WATCHED + appWidgetId);
@@ -141,6 +148,7 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
                     boolean displayingShows = getString(R.string.widget_type_shows)
                             .equals(newTypeValue);
                     sortPref.setEnabled(displayingShows);
+                    onlyCollectedPref.setEnabled(!displayingShows);
                     hideWatchedPreference.setEnabled(!displayingShows);
                 }
             }

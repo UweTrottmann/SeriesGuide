@@ -1,12 +1,14 @@
 
 package com.battlelancer.seriesguide.dashclock;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.CalendarAdapter;
+import com.battlelancer.seriesguide.settings.CalendarSettings;
 import com.battlelancer.seriesguide.settings.DashClockSettings;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -26,10 +28,13 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
 
     @Override
     protected void onUpdateData(int arg0) {
-        final Cursor upcomingEpisodes = DBUtils.getUpcomingEpisodes(getApplicationContext(), false,
-                true);
-        final long customCurrentTime = TimeTools.getCurrentTime(getApplicationContext());
-        int hourThreshold = DashClockSettings.getUpcomingTreshold(getApplicationContext());
+        Context context = getApplicationContext();
+        // as details for only 1 episode can be shown, always exclude watched episodes
+        final Cursor upcomingEpisodes = DBUtils.getUpcomingEpisodes(context,
+                CalendarSettings.isOnlyCollected(context),
+                CalendarSettings.isOnlyFavorites(context), true);
+        final long customCurrentTime = TimeTools.getCurrentTime(context);
+        int hourThreshold = DashClockSettings.getUpcomingTreshold(context);
         long latestTimeToInclude = customCurrentTime + hourThreshold * DateUtils.HOUR_IN_MILLIS;
 
         // Ensure there are episodes to show
@@ -43,8 +48,7 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
                     // build our DashClock panel
 
                     // title and episode of first show, like 'Title 1x01'
-                    String expandedTitle = TextTools.getShowWithEpisodeNumber(
-                            getApplicationContext(),
+                    String expandedTitle = TextTools.getShowWithEpisodeNumber(context,
                             upcomingEpisodes.getString(CalendarAdapter.Query.SHOW_TITLE),
                             upcomingEpisodes.getInt(CalendarAdapter.Query.SEASON),
                             upcomingEpisodes.getInt(CalendarAdapter.Query.NUMBER)
@@ -87,8 +91,7 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
                             .expandedTitle(expandedTitle)
                             .expandedBody(expandedBody.toString())
                             .clickIntent(
-                                    new Intent(getApplicationContext(),
-                                            ShowsActivity.class)
+                                    new Intent(context, ShowsActivity.class)
                                             .putExtra(
                                                     ShowsActivity.InitBundle.SELECTED_TAB,
                                                     ShowsActivity.InitBundle.INDEX_TAB_UPCOMING)));

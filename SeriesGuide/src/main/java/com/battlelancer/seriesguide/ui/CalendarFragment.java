@@ -195,7 +195,7 @@ public class CalendarFragment extends Fragment
         menu.findItem(R.id.menu_action_calendar_nospecials)
                 .setChecked(DisplaySettings.isHidingSpecials(context));
         menu.findItem(R.id.menu_action_calendar_nowatched)
-                .setChecked(DisplaySettings.isNoWatchedEpisodes(context));
+                .setChecked(CalendarSettings.isHidingWatchedEpisodes(context));
         menu.findItem(R.id.menu_action_calendar_infinite)
                 .setChecked(CalendarSettings.isInfiniteScrolling(context));
     }
@@ -216,7 +216,7 @@ public class CalendarFragment extends Fragment
             Utils.trackAction(getActivity(), TAG, "Hide specials Toggle");
             return true;
         } else if (itemId == R.id.menu_action_calendar_nowatched) {
-            toggleFilterSetting(item, DisplaySettings.KEY_NO_WATCHED_EPISODES);
+            toggleFilterSetting(item, CalendarSettings.KEY_HIDE_WATCHED_EPISODES);
             Utils.trackAction(getActivity(), TAG, "Hide watched Toggle");
             return true;
         } else if (itemId == R.id.menu_action_calendar_infinite) {
@@ -363,7 +363,7 @@ public class CalendarFragment extends Fragment
         if (CalendarSettings.KEY_ONLY_FAVORITE_SHOWS.equals(key)
                 || CalendarSettings.KEY_ONLY_COLLECTED.equals(key)
                 || DisplaySettings.KEY_HIDE_SPECIALS.equals(key)
-                || DisplaySettings.KEY_NO_WATCHED_EPISODES.equals(key)
+                || CalendarSettings.KEY_HIDE_WATCHED_EPISODES.equals(key)
                 || CalendarSettings.KEY_INFINITE_SCROLLING.equals(key)) {
             requery();
         }

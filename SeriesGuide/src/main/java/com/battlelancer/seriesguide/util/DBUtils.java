@@ -250,10 +250,10 @@ public class DBUtils {
      *
      * @return Cursor using the projection of {@link CalendarAdapter.Query}.
      */
-    public static Cursor getUpcomingEpisodes(Context context, boolean isOnlyFavorites,
-            boolean isOnlyUnwatched) {
-        String[][] args = buildActivityQuery(context, CalendarType.UPCOMING, false, isOnlyFavorites,
-                isOnlyUnwatched, -1);
+    public static Cursor getUpcomingEpisodes(Context context, boolean isOnlyCollected,
+            boolean isOnlyFavorites, boolean isOnlyUnwatched) {
+        String[][] args = buildActivityQuery(context, CalendarType.UPCOMING, isOnlyCollected,
+                isOnlyFavorites, isOnlyUnwatched, -1);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 CalendarAdapter.Query.PROJECTION, args[0][0], args[1], args[2][0]);
@@ -266,10 +266,10 @@ public class DBUtils {
      *
      * @return Cursor using the projection of {@link CalendarAdapter.Query}.
      */
-    public static Cursor getRecentEpisodes(Context context, boolean isOnlyFavorites,
-            boolean isOnlyUnwatched) {
-        String[][] args = buildActivityQuery(context, CalendarType.RECENT, false, isOnlyFavorites,
-                isOnlyUnwatched, -1);
+    public static Cursor getRecentEpisodes(Context context, boolean isOnlyCollected,
+            boolean isOnlyFavorites, boolean isOnlyUnwatched) {
+        String[][] args = buildActivityQuery(context, CalendarType.RECENT, isOnlyCollected,
+                isOnlyFavorites, isOnlyUnwatched, -1);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 CalendarAdapter.Query.PROJECTION, args[0][0], args[1], args[2][0]);
@@ -287,9 +287,9 @@ public class DBUtils {
             int numberOfDaysToInclude) {
         boolean isOnlyCollected = CalendarSettings.isOnlyCollected(context);
         boolean isOnlyFavorites = CalendarSettings.isOnlyFavorites(context);
-        boolean isNoWatched = DisplaySettings.isNoWatchedEpisodes(context);
+        boolean isOnlyUnwatched = CalendarSettings.isHidingWatchedEpisodes(context);
 
-        return buildActivityQuery(context, type, isOnlyCollected, isOnlyFavorites, isNoWatched,
+        return buildActivityQuery(context, type, isOnlyCollected, isOnlyFavorites, isOnlyUnwatched,
                 numberOfDaysToInclude);
     }
 

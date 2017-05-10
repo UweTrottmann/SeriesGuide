@@ -9,6 +9,9 @@ import android.preference.PreferenceManager;
  */
 public class CalendarSettings {
 
+    public static final String KEY_HIDE_WATCHED_EPISODES
+            = "com.battlelancer.seriesguide.activity.nowatched";
+
     public static final String KEY_INFINITE_SCROLLING
             = "com.battlelancer.seriesguide.activity.infinite";
 
@@ -17,6 +20,14 @@ public class CalendarSettings {
 
     public static final String KEY_ONLY_FAVORITE_SHOWS
             = "com.battlelancer.seriesguide.onlyfavorites";
+
+    /**
+     * Whether the calendar should not include watched episodes.
+     */
+    public static boolean isHidingWatchedEpisodes(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_HIDE_WATCHED_EPISODES, false);
+    }
 
     /**
      * Whether the calendar should be infinite or limited to a number of days.
