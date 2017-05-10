@@ -77,10 +77,10 @@ public class NotificationSettings {
 
         int value;
         int stringRes;
-        if (minutes % (24 * 60) == 0) {
+        if (minutes != 0 && minutes % (24 * 60) == 0) {
             value = minutes / (24 * 60);
             stringRes = R.plurals.days_before_plural;
-        } else if (minutes % 60 == 0) {
+        } else if (minutes != 0 && minutes % 60 == 0) {
             value = minutes / 60;
             stringRes = R.plurals.hours_before_plural;
         } else {

@@ -82,10 +82,10 @@ public class NotificationThresholdDialogFragment extends AppCompatDialogFragment
         int minutes = NotificationSettings.getLatestToIncludeTreshold(getContext());
 
         int value;
-        if (minutes % (24 * 60) == 0) {
+        if (minutes != 0 && minutes % (24 * 60) == 0) {
             value = minutes / (24 * 60);
             radioGroup.check(R.id.radioButtonThresholdDays);
-        } else if (minutes % 60 == 0) {
+        } else if (minutes != 0 && minutes % 60 == 0) {
             value = minutes / 60;
             radioGroup.check(R.id.radioButtonThresholdHours);
         } else {
