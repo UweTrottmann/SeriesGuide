@@ -13,9 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.model.HeaderData;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
@@ -39,20 +37,20 @@ import java.util.List;
  */
 public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersBaseAdapter {
 
-    private final SgApp app;
-    private LayoutInflater mLayoutInflater;
+    public interface ItemClickListener {
+        void onWatchedBoxClick(View view, int position, int episodeTvdbId);
+    }
 
-    private List<HeaderData> mHeaders;
-    private boolean mIsShowingHeaders;
+    private final ItemClickListener itemClickListener;
+    private final Calendar calendar;
 
-    private Calendar mCalendar;
+    private List<HeaderData> headers;
+    private boolean isShowingHeaders;
 
-    public CalendarAdapter(Activity activity) {
+    public CalendarAdapter(Activity activity, ItemClickListener itemClickListener) {
         super(activity, null, 0);
-        app = SgApp.from(activity);
-        mLayoutInflater = (LayoutInflater) activity
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mCalendar = Calendar.getInstance();
+        this.itemClickListener = itemClickListener;
+        this.calendar = Calendar.getInstance();
     }
 
     /**
@@ -60,7 +58,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
      * calculating them is expensive. Make sure to reload the data afterwards.
      */
     public void setIsShowingHeaders(boolean isShowingHeaders) {
-        mIsShowingHeaders = isShowingHeaders;
+        this.isShowingHeaders = isShowingHeaders;
     }
 
     /**
@@ -77,29 +75,15 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
     }
 
     @Override
-    public void bindView(View view, final Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, final Cursor cursor) {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
+        viewHolder.episodeTvdbId = cursor.getInt(Query._ID);
+        viewHolder.position = cursor.getPosition();
+
         // watched box
-        // save rowid to hand over to OnClick event listener
-        final int showTvdbId = cursor.getInt(Query.SHOW_ID);
-        final int season = cursor.getInt(Query.SEASON);
-        final int episodeTvdbId = cursor.getInt(Query._ID);
-        final int episode = cursor.getInt(Query.NUMBER);
-        viewHolder.watchedBox.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                WatchedBox box = (WatchedBox) v;
-                // disable button, will be re-enabled on data reload once action completes
-                box.setEnabled(false);
-                EpisodeTools.episodeWatched(app, showTvdbId, episodeTvdbId, season, episode,
-                        EpisodeTools.isWatched(box.getEpisodeFlag()) ? EpisodeFlags.UNWATCHED
-                                : EpisodeFlags.WATCHED
-                );
-            }
-        });
         int episodeFlag = cursor.getInt(Query.WATCHED);
         viewHolder.watchedBox.setEpisodeFlag(episodeFlag);
-        viewHolder.watchedBox.setEnabled(true);
         boolean watched = EpisodeTools.isWatched(episodeFlag);
         viewHolder.watchedBox.setContentDescription(
                 context.getString(watched ? R.string.action_unwatched : R.string.action_watched));
@@ -111,6 +95,8 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         viewHolder.show.setText(cursor.getString(Query.SHOW_TITLE));
 
         // episode number and title
+        final int season = cursor.getInt(Query.SEASON);
+        final int episode = cursor.getInt(Query.NUMBER);
         if (EpisodeTools.isUnwatched(episodeFlag) && DisplaySettings.preventSpoilers(context)) {
             // just show the number
             viewHolder.episode.setText(TextTools.getEpisodeNumber(context, season, episode));
@@ -154,9 +140,10 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View v = mLayoutInflater.inflate(R.layout.item_calendar, parent, false);
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_calendar, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v, itemClickListener);
         v.setTag(viewHolder);
 
         return v;
@@ -178,29 +165,29 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         long releaseTime = item.getLong(Query.RELEASE_TIME_MS);
         Date actualRelease = TimeTools.applyUserOffset(mContext, releaseTime);
 
-        mCalendar.setTime(actualRelease);
+        calendar.setTime(actualRelease);
         // not midnight because upcoming->recent is delayed 1 hour
         // so header would display wrong relative time close to midnight
-        mCalendar.set(Calendar.HOUR_OF_DAY, 1);
-        mCalendar.set(Calendar.MINUTE, 0);
-        mCalendar.set(Calendar.SECOND, 0);
-        mCalendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 1);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
 
-        return mCalendar.getTimeInMillis();
+        return calendar.getTimeInMillis();
     }
 
     @Override
     public int getCountForHeader(int position) {
-        if (mHeaders != null) {
-            return mHeaders.get(position).getCount();
+        if (headers != null) {
+            return headers.get(position).getCount();
         }
         return 0;
     }
 
     @Override
     public int getNumHeaders() {
-        if (mHeaders != null) {
-            return mHeaders.size();
+        if (headers != null) {
+            return headers.size();
         }
         return 0;
     }
@@ -208,7 +195,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
     @Override
     public View getHeaderView(int position, View convertView, ViewGroup parent) {
         // get header position for item position
-        position = mHeaders.get(position).getRefPosition();
+        position = headers.get(position).getRefPosition();
 
         Cursor item = getItem(position);
         if (item == null) {
@@ -217,7 +204,8 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
 
         HeaderViewHolder holder;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.item_grid_header, parent, false);
+            convertView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_grid_header, parent, false);
 
             holder = new HeaderViewHolder();
             holder.day = (TextView) convertView.findViewById(R.id.textViewGridHeader);
@@ -238,20 +226,20 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
     @Override
     public void notifyDataSetChanged() {
         // re-create headers before letting notifyDataSetChanged reach the AdapterView
-        mHeaders = generateHeaderList();
+        headers = generateHeaderList();
         super.notifyDataSetChanged();
     }
 
     @Override
     public void notifyDataSetInvalidated() {
         // remove headers before letting notifyDataSetChanged reach the AdapterView
-        mHeaders = null;
+        headers = null;
         super.notifyDataSetInvalidated();
     }
 
     protected List<HeaderData> generateHeaderList() {
         int count = getCount();
-        if (count == 0 || !mIsShowingHeaders) {
+        if (count == 0 || !isShowingHeaders) {
             return null;
         }
 
@@ -328,8 +316,10 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         public TextView info;
         public TextView timestamp;
         public ImageView poster;
+        public int position;
+        public int episodeTvdbId;
 
-        public ViewHolder(View v) {
+        public ViewHolder(View v, final ItemClickListener itemClickListener) {
             show = (TextView) v.findViewById(R.id.textViewActivityShow);
             episode = (TextView) v.findViewById(R.id.textViewActivityEpisode);
             collected = v.findViewById(R.id.imageViewActivityCollected);
@@ -337,6 +327,14 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
             info = (TextView) v.findViewById(R.id.textViewActivityInfo);
             timestamp = (TextView) v.findViewById(R.id.textViewActivityTimestamp);
             poster = (ImageView) v.findViewById(R.id.imageViewActivityPoster);
+
+            watchedBox.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if (itemClickListener != null) {
+                        itemClickListener.onWatchedBoxClick(v, position, episodeTvdbId);
+                    }
+                }
+            });
         }
     }
 

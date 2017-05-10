@@ -108,7 +108,7 @@ public class CalendarFragment extends Fragment implements
         super.onActivityCreated(savedInstanceState);
 
         // setup adapter
-        adapter = new CalendarAdapter(getActivity());
+        adapter = new CalendarAdapter(getActivity(), itemClickListener);
         boolean infiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
         adapter.setIsShowingHeaders(!infiniteScrolling);
 
@@ -406,4 +406,12 @@ public class CalendarFragment extends Fragment implements
         // refresh filter icon state
         getActivity().supportInvalidateOptionsMenu();
     }
+
+    private CalendarAdapter.ItemClickListener itemClickListener
+            = new CalendarAdapter.ItemClickListener() {
+        @Override
+        public void onWatchedBoxClick(View view, int position, int episodeTvdbId) {
+            onItemLongClick(gridView, view, position, episodeTvdbId);
+        }
+    };
 }
