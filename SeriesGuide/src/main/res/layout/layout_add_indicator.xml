@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/imageViewAddIndicator"
@@ -9,7 +10,8 @@
         android:contentDescription="@string/action_shows_add"
         android:focusable="false"
         android:scaleType="centerInside"
-        android:src="?attr/drawableAddIcon" />
+        android:tint="?attr/sgColorIcon"
+        app:srcCompat="@drawable/ic_add_white_24dp" />
 
     <!-- Content description is set in code. -->
     <ImageView

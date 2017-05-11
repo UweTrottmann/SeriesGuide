@@ -25,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.PopupMenu;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
@@ -83,7 +84,10 @@ public class ShowsFragment extends Fragment implements
         View v = inflater.inflate(R.layout.fragment_shows, container, false);
 
         gridView = ButterKnife.findById(v, android.R.id.list);
-        v.findViewById(R.id.emptyViewShows).setOnClickListener(new OnClickListener() {
+        Button emptyView = ButterKnife.findById(v, R.id.emptyViewShows);
+        ViewTools.setVectorDrawableTop(getActivity().getTheme(), emptyView,
+                R.drawable.ic_add_white_24dp);
+        emptyView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityAddShows();
@@ -432,7 +436,7 @@ public class ShowsFragment extends Fragment implements
                 break;
             }
             case FirstRunView.ButtonType.SIGN_IN: {
-                ((BaseNavDrawerActivity)getActivity()).openNavDrawer();
+                ((BaseNavDrawerActivity) getActivity()).openNavDrawer();
                 Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Sign in");
                 break;
             }

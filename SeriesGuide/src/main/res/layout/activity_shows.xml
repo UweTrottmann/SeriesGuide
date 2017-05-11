@@ -42,7 +42,7 @@
             android:layout_marginRight="@dimen/fab_margin"
             android:layout_marginTop="0dp"
             android:contentDescription="@string/action_shows_add"
-            android:src="@drawable/ic_action_add" />
+            app:srcCompat="@drawable/ic_add_white_24dp" />
 
     </android.support.design.widget.CoordinatorLayout>
 

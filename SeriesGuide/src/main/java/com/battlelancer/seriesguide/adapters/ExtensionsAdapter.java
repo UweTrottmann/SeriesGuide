@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.battlelancer.seriesguide.api.SeriesGuideExtension;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.extensions.ExtensionsConfigurationFragment;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -63,8 +65,9 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
         return 2;
     }
 
+    @NonNull
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
         if (getItemViewType(position) == VIEW_TYPE_ADD) {
             if (convertView == null) {
                 convertView = mLayoutInflater.inflate(LAYOUT_ADD, parent, false);
@@ -73,8 +76,11 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
             boolean isAtLimit =
                     getCount() - 1 == ExtensionsConfigurationFragment.EXTENSION_LIMIT_FREE
                             && !Utils.hasAccessToX(getContext());
-            convertView.findViewById(R.id.textViewItemExtensionAddLabel)
-                    .setVisibility(isAtLimit ? View.GONE : View.VISIBLE);
+            TextView textViewAdd = ButterKnife.findById(convertView,
+                    R.id.textViewItemExtensionAddLabel);
+            ViewTools.setVectorDrawableLeft(getContext().getTheme(), textViewAdd,
+                    R.drawable.ic_add_white_24dp);
+            textViewAdd.setVisibility(isAtLimit ? View.GONE : View.VISIBLE);
             convertView.findViewById(R.id.textViewItemExtensionAddLimit)
                     .setVisibility(isAtLimit ? View.VISIBLE : View.GONE);
             return convertView;

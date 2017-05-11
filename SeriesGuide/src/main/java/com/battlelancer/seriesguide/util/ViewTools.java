@@ -14,8 +14,7 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 
@@ -29,36 +28,36 @@ public class ViewTools {
      * text.  Use 0 if you do not want a Drawable there. The Drawables' bounds will be set to their
      * intrinsic bounds.
      */
-    public static void setCompoundDrawablesRelativeWithIntrinsicBounds(Button button,
+    public static void setCompoundDrawablesRelativeWithIntrinsicBounds(TextView textView,
             @DrawableRes int left, @DrawableRes int top, @DrawableRes int right,
             @DrawableRes int bottom) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            button.setCompoundDrawablesRelativeWithIntrinsicBounds(left, top, right, bottom);
+            textView.setCompoundDrawablesRelativeWithIntrinsicBounds(left, top, right, bottom);
             return;
         }
 
-        Context context = button.getContext();
+        Context context = textView.getContext();
         setCompoundDrawablesRelativeWithIntrinsicBounds(
-                button,
+                textView,
                 left != 0 ? ContextCompat.getDrawable(context, left) : null,
                 top != 0 ? ContextCompat.getDrawable(context, top) : null,
                 right != 0 ? ContextCompat.getDrawable(context, right) : null,
                 bottom != 0 ? ContextCompat.getDrawable(context, bottom) : null);
     }
 
-    public static void setVectorDrawableLeft(Resources.Theme theme, Button button,
+    public static void setVectorDrawableLeft(Resources.Theme theme, TextView textView,
             @DrawableRes int vectorRes) {
-        VectorDrawableCompat drawable = createVectorIcon(button.getContext(), theme, vectorRes);
-        setCompoundDrawablesRelativeWithIntrinsicBounds(button, drawable, null, null, null);
+        VectorDrawableCompat drawable = createVectorIcon(textView.getContext(), theme, vectorRes);
+        setCompoundDrawablesRelativeWithIntrinsicBounds(textView, drawable, null, null, null);
     }
 
-    public static void setVectorDrawableTop(Resources.Theme theme, Button button,
+    public static void setVectorDrawableTop(Resources.Theme theme, TextView textView,
             @DrawableRes int vectorRes) {
-        VectorDrawableCompat drawable = createVectorIcon(button.getContext(), theme, vectorRes);
-        setCompoundDrawablesRelativeWithIntrinsicBounds(button, null, drawable, null, null);
+        VectorDrawableCompat drawable = createVectorIcon(textView.getContext(), theme, vectorRes);
+        setCompoundDrawablesRelativeWithIntrinsicBounds(textView, null, drawable, null, null);
     }
 
-    public static void setVectorDrawable(Resources.Theme theme, ImageButton button,
+    public static void setVectorDrawable(Resources.Theme theme, ImageView button,
             @DrawableRes int vectorRes) {
         VectorDrawableCompat drawable = createVectorIcon(button.getContext(), theme, vectorRes);
         button.setImageDrawable(drawable);
@@ -88,10 +87,10 @@ public class ViewTools {
 
     /**
      * Sets the Drawables (if any) to appear to the start of, above, to the end of, and below the
-     * text.  Use null if you do not want a Drawable there. The Drawables' bounds will be set to
+     * text. Use null if you do not want a Drawable there. The Drawables' bounds will be set to
      * their intrinsic bounds.
      */
-    public static void setCompoundDrawablesRelativeWithIntrinsicBounds(Button button,
+    public static void setCompoundDrawablesRelativeWithIntrinsicBounds(TextView textView,
             Drawable left, Drawable top, Drawable right, Drawable bottom) {
         if (left != null) {
             left.setBounds(0, 0, left.getIntrinsicWidth(), left.getIntrinsicHeight());
@@ -105,7 +104,7 @@ public class ViewTools {
         if (bottom != null) {
             bottom.setBounds(0, 0, bottom.getIntrinsicWidth(), bottom.getIntrinsicHeight());
         }
-        button.setCompoundDrawables(left, top, right, bottom);
+        textView.setCompoundDrawables(left, top, right, bottom);
     }
 
     public static void setValueOrPlaceholder(View view, final String value) {
