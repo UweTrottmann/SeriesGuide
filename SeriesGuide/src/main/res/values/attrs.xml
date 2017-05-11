@@ -35,7 +35,6 @@
     <attr name="drawableDropdown" format="reference" />
     <attr name="drawableExtension" format="reference" />
     <attr name="drawableFilter" format="reference" />
-    <attr name="drawableLink" format="reference" />
     <attr name="drawableList" format="reference" />
     <attr name="drawableSkip" format="reference" />
     <attr name="drawableStar" format="reference" />

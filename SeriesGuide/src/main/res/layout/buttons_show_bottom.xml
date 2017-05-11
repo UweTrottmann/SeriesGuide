@@ -8,24 +8,27 @@
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:drawableLeft="?attr/drawableLink"
-        android:text="@string/imdb" />
+        android:text="@string/imdb"
+        tools:drawableLeft="@drawable/ic_link_black_24dp"
+        tools:drawableTint="?attr/sgColorIcon" />
 
     <Button
         android:id="@+id/buttonShowTvdb"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:drawableLeft="?attr/drawableLink"
-        android:text="@string/tvdb" />
+        android:text="@string/tvdb"
+        tools:drawableLeft="@drawable/ic_link_black_24dp"
+        tools:drawableTint="?attr/sgColorIcon" />
 
     <Button
         android:id="@+id/buttonShowTrakt"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:drawableLeft="?attr/drawableLink"
-        android:text="@string/trakt" />
+        android:text="@string/trakt"
+        tools:drawableLeft="@drawable/ic_link_black_24dp"
+        tools:drawableTint="?attr/sgColorIcon" />
 
     <Button
         android:id="@+id/buttonShowWebSearch"
@@ -42,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/share_show"
-        tools:drawableLeft="@drawable/ic_search_white_24dp"
+        tools:drawableLeft="@drawable/ic_share_white_24dp"
         tools:drawableTint="?attr/sgColorIcon" />
 
     <Button
@@ -50,8 +53,9 @@
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:drawableLeft="?attr/drawableLink"
-        android:text="@string/add_to_homescreen" />
+        android:text="@string/add_to_homescreen"
+        tools:drawableLeft="@drawable/ic_link_black_24dp"
+        tools:drawableTint="?attr/sgColorIcon" />
 
     <Button
         android:id="@+id/buttonShowComments"

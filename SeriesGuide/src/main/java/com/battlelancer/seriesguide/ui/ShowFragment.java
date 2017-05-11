@@ -107,9 +107,9 @@ public class ShowFragment extends Fragment {
     @BindView(R.id.buttonShowShortcut) Button buttonShortcut;
     @BindView(R.id.buttonShowLanguage) Button buttonLanguage;
     @BindView(R.id.containerRatings) View mButtonRate;
-    @BindView(R.id.buttonShowImdb) View mButtonImdb;
-    @BindView(R.id.buttonShowTvdb) View mButtonTvdb;
-    @BindView(R.id.buttonShowTrakt) View mButtonTrakt;
+    @BindView(R.id.buttonShowImdb) Button mButtonImdb;
+    @BindView(R.id.buttonShowTvdb) Button mButtonTvdb;
+    @BindView(R.id.buttonShowTrakt) Button mButtonTrakt;
     @BindView(R.id.buttonShowWebSearch) Button mButtonWebSearch;
     @BindView(R.id.buttonShowComments) Button mButtonComments;
     @BindView(R.id.buttonShowShare) Button buttonShare;
@@ -157,7 +157,10 @@ public class ShowFragment extends Fragment {
         });
         CheatSheet.setup(mButtonRate, R.string.action_rate);
 
-        // search and comments button
+        // link, search and comments button
+        ViewTools.setVectorDrawableLeft(theme, mButtonImdb, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorDrawableLeft(theme, mButtonTvdb, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorDrawableLeft(theme, mButtonTrakt, R.drawable.ic_link_black_24dp);
         ViewTools.setVectorDrawableLeft(theme, mButtonWebSearch, R.drawable.ic_search_white_24dp);
         ViewTools.setVectorDrawableLeft(theme, mButtonComments, R.drawable.ic_forum_black_24dp);
 
@@ -171,6 +174,7 @@ public class ShowFragment extends Fragment {
         });
 
         // shortcut button
+        ViewTools.setVectorDrawableLeft(theme, buttonShortcut, R.drawable.ic_link_black_24dp);
         buttonShortcut.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

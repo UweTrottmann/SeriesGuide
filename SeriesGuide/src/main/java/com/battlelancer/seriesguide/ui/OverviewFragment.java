@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -119,9 +120,9 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.textViewRatingsVotes) TextView textRatingVotes;
     @BindView(R.id.textViewRatingsUser) TextView textUserRating;
 
-    @BindView(R.id.buttonEpisodeImdb) View buttonImdb;
-    @BindView(R.id.buttonEpisodeTvdb) View buttonTvdb;
-    @BindView(R.id.buttonEpisodeTrakt) View buttonTrakt;
+    @BindView(R.id.buttonEpisodeImdb) Button buttonImdb;
+    @BindView(R.id.buttonEpisodeTvdb) Button buttonTvdb;
+    @BindView(R.id.buttonEpisodeTrakt) Button buttonTrakt;
     @BindView(R.id.buttonEpisodeComments) Button buttonComments;
 
     private Handler handler = new Handler();
@@ -212,9 +213,14 @@ public class OverviewFragment extends Fragment implements
         CheatSheet.setup(containerRatings, R.string.action_rate);
 
         // comments button
-        ViewTools.setVectorDrawableLeft(getActivity().getTheme(), buttonComments,
-                R.drawable.ic_forum_black_24dp);
+        Resources.Theme theme = getActivity().getTheme();
+        ViewTools.setVectorDrawableLeft(theme, buttonComments, R.drawable.ic_forum_black_24dp);
         buttonComments.setOnClickListener(commentsClickListener);
+
+        // other bottom buttons
+        ViewTools.setVectorDrawableLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorDrawableLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorDrawableLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp);
 
         return v;
     }

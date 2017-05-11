@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -123,10 +124,10 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     @BindView(R.id.buttonEpisodeCollected) Button buttonCollect;
     @BindView(R.id.buttonEpisodeSkip) Button buttonSkip;
 
-    @BindView(R.id.buttonEpisodeImdb) View mImdbButton;
-    @BindView(R.id.buttonEpisodeTvdb) View mTvdbButton;
-    @BindView(R.id.buttonEpisodeTrakt) View mTraktButton;
-    @BindView(R.id.buttonEpisodeComments) Button mCommentsButton;
+    @BindView(R.id.buttonEpisodeImdb) Button imdbButton;
+    @BindView(R.id.buttonEpisodeTvdb) Button tvdbButton;
+    @BindView(R.id.buttonEpisodeTrakt) Button traktButton;
+    @BindView(R.id.buttonEpisodeComments) Button commentsButton;
 
     private Unbinder unbinder;
 
@@ -167,8 +168,13 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         mEpisodeContainer.setVisibility(View.GONE);
 
         // comments button
-        ViewTools.setVectorDrawableLeft(getActivity().getTheme(), mCommentsButton,
-                R.drawable.ic_forum_black_24dp);
+        Resources.Theme theme = getActivity().getTheme();
+        ViewTools.setVectorDrawableLeft(theme, commentsButton, R.drawable.ic_forum_black_24dp);
+
+        // other bottom buttons
+        ViewTools.setVectorDrawableLeft(theme, imdbButton, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorDrawableLeft(theme, tvdbButton, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorDrawableLeft(theme, traktButton, R.drawable.ic_link_black_24dp);
 
         return v;
     }
@@ -558,20 +564,20 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         }
 
         // service buttons
-        ServiceUtils.setUpTraktEpisodeButton(mTraktButton, getEpisodeTvdbId(), TAG);
+        ServiceUtils.setUpTraktEpisodeButton(traktButton, getEpisodeTvdbId(), TAG);
         // IMDb
         String imdbId = cursor.getString(DetailsQuery.IMDBID);
         if (TextUtils.isEmpty(imdbId)) {
             // fall back to show IMDb id
             imdbId = cursor.getString(DetailsQuery.SHOW_IMDBID);
         }
-        ServiceUtils.setUpImdbButton(imdbId, mImdbButton, TAG);
+        ServiceUtils.setUpImdbButton(imdbId, imdbButton, TAG);
         // TVDb
         final int seasonTvdbId = cursor.getInt(DetailsQuery.SEASON_ID);
-        ServiceUtils.setUpTvdbButton(mShowTvdbId, seasonTvdbId, getEpisodeTvdbId(), mTvdbButton,
+        ServiceUtils.setUpTvdbButton(mShowTvdbId, seasonTvdbId, getEpisodeTvdbId(), tvdbButton,
                 TAG);
         // trakt comments
-        mCommentsButton.setOnClickListener(new OnClickListener() {
+        commentsButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), TraktCommentsActivity.class);
