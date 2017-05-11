@@ -80,7 +80,6 @@
         <item name="drawableCollect">@drawable/ic_action_collect</item>
         <item name="drawableCollectAll">@drawable/ic_action_collect_all</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
-        <item name="drawableExtension">@drawable/ic_extension_white_24dp</item>
         <item name="drawableFilter">@drawable/ic_action_filter</item>
         <item name="drawableList">@drawable/ic_action_list</item>
         <item name="drawableSkip">@drawable/ic_action_skip</item>
@@ -163,7 +162,6 @@
         <item name="drawableCollect">@drawable/ic_action_collect</item>
         <item name="drawableCollectAll">@drawable/ic_action_collect_all</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
-        <item name="drawableExtension">@drawable/ic_extension_white_24dp</item>
         <item name="drawableFilter">@drawable/ic_action_filter</item>
         <item name="drawableList">@drawable/ic_action_list</item>
         <item name="drawableSkip">@drawable/ic_action_skip</item>
@@ -257,7 +255,6 @@
         <item name="drawableCollect">@drawable/ic_action_collect_inverse</item>
         <item name="drawableCollectAll">@drawable/ic_action_collect_all_inverse</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu_light</item>
-        <item name="drawableExtension">@drawable/ic_extension_black_24dp</item>
         <item name="drawableFilter">@drawable/ic_action_filter_inverse</item>
         <item name="drawableList">@drawable/ic_action_list_inverse</item>
         <item name="drawableSkip">@drawable/ic_action_skip_inverse</item>

@@ -64,7 +64,7 @@ public class ViewTools {
         button.setImageDrawable(drawable);
     }
 
-    private static VectorDrawableCompat createVectorIcon(Context context,
+    public static VectorDrawableCompat createVectorIcon(Context context,
             Resources.Theme theme, @DrawableRes int vectorRes) {
         return createTintedVectorDrawable(context, theme, vectorRes,
                 Utils.resolveAttributeToResourceId(theme, R.attr.sgColorIcon));
