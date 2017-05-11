@@ -39,7 +39,6 @@
 
     <item
         android:id="@+id/menu_action_shows_add"
-        android:icon="@drawable/ic_action_new_show"
         android:orderInCategory="2"
         android:title="@string/action_shows_add"
         app:showAsAction="never" />

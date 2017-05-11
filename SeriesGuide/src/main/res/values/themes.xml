@@ -72,7 +72,6 @@
 
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
-        <item name="drawableAddShow">@drawable/ic_action_new_show</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
         <item name="drawableArrowRight">@drawable/ic_arrow_forward_white_24dp</item>
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
@@ -158,7 +157,6 @@
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
 
-        <item name="drawableAddShow">@drawable/ic_action_new_show</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
         <item name="drawableArrowRight">@drawable/ic_arrow_forward_white_24dp</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
@@ -253,7 +251,6 @@
 
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add_inverse</item>
-        <item name="drawableAddShow">@drawable/ic_action_new_show_inverse</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top_inverse</item>
         <item name="drawableArrowRight">@drawable/ic_arrow_forward_grey600_24dp</item>
         <item name="drawableBackgroundGradient">@drawable/background_gradient_light</item>
