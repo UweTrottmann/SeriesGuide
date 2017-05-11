@@ -71,7 +71,6 @@
         <item name="colorsProgressBar">@array/progressBarColors</item>
 
         <!-- Drawables -->
-        <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
         <item name="drawableArrowRight">@drawable/ic_arrow_forward_white_24dp</item>
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
@@ -153,7 +152,6 @@
         <!-- Drawables -->
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
 
-        <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
         <item name="drawableArrowRight">@drawable/ic_arrow_forward_white_24dp</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
         <item name="drawableCheckin">@drawable/ic_action_checkin</item>
@@ -244,7 +242,6 @@
         <item name="colorsProgressBar">@array/progressBarColors</item>
 
         <!-- Drawables -->
-        <item name="drawableArrowUp">@drawable/ic_action_arrow_top_inverse</item>
         <item name="drawableArrowRight">@drawable/ic_arrow_forward_grey600_24dp</item>
         <item name="drawableBackgroundGradient">@drawable/background_gradient_light</item>
         <item name="drawableCancel">@drawable/ic_action_cancel_inverse</item>

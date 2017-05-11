@@ -24,7 +24,6 @@
     <attr name="colorsProgressBar" format="reference" />
 
     <!-- Drawables -->
-    <attr name="drawableArrowUp" format="reference" />
     <attr name="drawableArrowRight" format="reference" />
     <attr name="drawableBackgroundGradient" format="reference" />
     <attr name="drawableCancel" format="reference" />
