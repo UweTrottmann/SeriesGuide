@@ -441,7 +441,7 @@
   <string name="upcoming_episodes">Neue Folgen laufen in Kürze</string>
   <string name="upcoming_episodes_number">%s neue Folgen</string>
   <string name="upcoming_show_detailed">%1$s auf %2$s</string>
-  <string name="more">%s weitere</string>
+  <string name="more">%d mehr</string>
   <string name="upcoming_display">Auswählen um kommende Serien anzuzeigen</string>
   <string name="pref_notifications">Benachrichtigungen</string>
   <string name="pref_notificationssummary">Benachrichtigung bei neuen Folgen</string>

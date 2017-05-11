@@ -429,7 +429,7 @@
   <string name="upcoming_episodes">新しいエピソードが始まります</string>
   <string name="upcoming_episodes_number">%s 新しいエピソード</string>
   <string name="upcoming_show_detailed">%1$s、 %2$s</string>
-  <string name="more">%s さらに</string>
+  <string name="more">%d さらに</string>
   <string name="upcoming_display">表示する今後の番組を選択</string>
   <string name="pref_notifications">通知</string>
   <string name="pref_notificationssummary">新しいエピソードについて通知します</string>

@@ -453,7 +453,7 @@
   <string name="upcoming_episodes">Виходять нові серії</string>
   <string name="upcoming_episodes_number">%s нових серій</string>
   <string name="upcoming_show_detailed">%1$s на %2$s</string>
-  <string name="more">%s більше</string>
+  <string name="more">%d більше</string>
   <string name="upcoming_display">Виберіть для відображення найближчих серіалів</string>
   <string name="pref_notifications">Сповіщення</string>
   <string name="pref_notificationssummary">Повідомляти про нові серії</string>

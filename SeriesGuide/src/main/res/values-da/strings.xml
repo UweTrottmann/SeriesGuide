@@ -441,7 +441,7 @@
   <string name="upcoming_episodes">Nye episoder kommer snart</string>
   <string name="upcoming_episodes_number">%s nye episoder</string>
   <string name="upcoming_show_detailed">%1$s på %2$s</string>
-  <string name="more">%s mere</string>
+  <string name="more">%d mere</string>
   <string name="upcoming_display">Vælg for at vise kommende serier</string>
   <string name="pref_notifications">Meddelelser</string>
   <string name="pref_notificationssummary">Notificér om nye episoder</string>

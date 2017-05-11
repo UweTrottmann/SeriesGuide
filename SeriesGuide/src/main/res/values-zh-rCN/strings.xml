@@ -429,7 +429,7 @@
   <string name="upcoming_episodes">即将播出新的剧集</string>
   <string name="upcoming_episodes_number">%s 个剧集即将播出</string>
   <string name="upcoming_show_detailed">%1$s 在 %2$s</string>
-  <string name="more">还有 %s 个项目</string>
+  <string name="more">还有 %d 个项目</string>
   <string name="upcoming_display">选中来显示即将播出的节目</string>
   <string name="pref_notifications">通知</string>
   <string name="pref_notificationssummary">新剧集开始播出时显示通知</string>

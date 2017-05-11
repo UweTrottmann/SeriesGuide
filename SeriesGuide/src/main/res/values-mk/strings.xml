@@ -441,7 +441,7 @@
   <string name="upcoming_episodes">Нови епизоди доаѓаат наскоро</string>
   <string name="upcoming_episodes_number">%s нови епизоди</string>
   <string name="upcoming_show_detailed">%1$s на %2$s</string>
-  <string name="more">%s повеќе</string>
+  <string name="more">%d повеќе</string>
   <string name="upcoming_display">Селектирај за да се прикажат сериите што следат</string>
   <string name="pref_notifications">Нотификација</string>
   <string name="pref_notificationssummary">Покажи нотификација за нови епизоди</string>

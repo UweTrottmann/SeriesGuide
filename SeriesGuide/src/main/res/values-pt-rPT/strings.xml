@@ -441,7 +441,7 @@
   <string name="upcoming_episodes">Novos episódios brevemente</string>
   <string name="upcoming_episodes_number">%s novos episódios</string>
   <string name="upcoming_show_detailed">%1$s em %2$s</string>
-  <string name="more">%s mais</string>
+  <string name="more">%d mais</string>
   <string name="upcoming_display">Seleciona para exibir as próximas séries</string>
   <string name="pref_notifications">Notificações</string>
   <string name="pref_notificationssummary">Notificar sobre novos episódios</string>

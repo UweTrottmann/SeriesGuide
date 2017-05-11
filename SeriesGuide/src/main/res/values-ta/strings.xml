@@ -441,7 +441,7 @@
   <string name="upcoming_episodes">புதிய episodes உள்ளன வருவன</string>
   <string name="upcoming_episodes_number">%s புதிய episodes</string>
   <string name="upcoming_show_detailed">%2$s %1$s</string>
-  <string name="more">%s மேலும்</string>
+  <string name="more">%d மேலும்</string>
   <string name="upcoming_display">வரவிருக்கும் காட்சிகள் காண்பிக்க தேர்ந்தெடு</string>
   <string name="pref_notifications">அறிவிப்புகள்</string>
   <string name="pref_notificationssummary">புதிய episodes பற்றி</string>

@@ -465,7 +465,7 @@
   <string name="upcoming_episodes">Nove epizode prihajajo na spored</string>
   <string name="upcoming_episodes_number">%s novih epizod</string>
   <string name="upcoming_show_detailed">%1$s na %2$s</string>
-  <string name="more">%s več</string>
+  <string name="more">%d več</string>
   <string name="upcoming_display">Izberi za prikaz prihajajočih oddaj</string>
   <string name="pref_notifications">Obvestila</string>
   <string name="pref_notificationssummary">Obvesti me o novih epizodah</string>

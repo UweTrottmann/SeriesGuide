@@ -429,7 +429,7 @@
   <string name="upcoming_episodes">ตอนใหม่กำลังมา</string>
   <string name="upcoming_episodes_number">%s ตอนใหม่</string>
   <string name="upcoming_show_detailed">%1$s บน %2$s</string>
-  <string name="more">อื่นๆ อีก %s</string>
+  <string name="more">อื่นๆ อีก %d</string>
   <string name="upcoming_display">เลือกเพื่อแสดงซีรีส์ที่กำลังมา</string>
   <string name="pref_notifications">การแจ้งเตือน</string>
   <string name="pref_notificationssummary">แจ้งเตือนเกี่ยวกับตอนใหม่</string>

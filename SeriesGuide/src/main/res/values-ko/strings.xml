@@ -429,7 +429,7 @@
   <string name="upcoming_episodes">새 에피소드 방영예정</string>
   <string name="upcoming_episodes_number">%s 개의 새로운 에피소드</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>
-  <string name="more">%s개의 에피소드 정보 더 있음</string>
+  <string name="more">%d개의 에피소드 정보 더 있음</string>
   <string name="upcoming_display">방영예정인 쇼를 표시하려면 선택</string>
   <string name="pref_notifications">알림</string>
   <string name="pref_notificationssummary">새로운 에피소드를 알려줍니다.</string>

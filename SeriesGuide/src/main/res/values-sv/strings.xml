@@ -442,7 +442,7 @@
   <string name="upcoming_episodes">Nya avsnitt är på väg</string>
   <string name="upcoming_episodes_number">%s nya avsnitt</string>
   <string name="upcoming_show_detailed">%1$s på %2$s</string>
-  <string name="more">%s fler</string>
+  <string name="more">%d fler</string>
   <string name="upcoming_display">Välj för att visa kommande serier</string>
   <string name="pref_notifications">Aviseringar</string>
   <string name="pref_notificationssummary">Meddela om nya avsnitt</string>

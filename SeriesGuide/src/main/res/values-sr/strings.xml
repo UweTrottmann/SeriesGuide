@@ -453,7 +453,7 @@
   <string name="upcoming_episodes">Нове епизоде долазе ускоро</string>
   <string name="upcoming_episodes_number">%s нових епизода</string>
   <string name="upcoming_show_detailed">%1$s на %2$s</string>
-  <string name="more">%s више</string>
+  <string name="more">%d више</string>
   <string name="upcoming_display">Одабери долазеће серије за приказивање</string>
   <string name="pref_notifications">Обавештења</string>
   <string name="pref_notificationssummary">Обавести ме само о новим епизодама</string>

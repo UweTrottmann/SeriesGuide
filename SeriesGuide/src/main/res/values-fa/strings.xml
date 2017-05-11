@@ -441,7 +441,7 @@
   <string name="upcoming_episodes">قسمت‌های جدید پیش رو هستند</string>
   <string name="upcoming_episodes_number">‫%s قسمت جدید</string>
   <string name="upcoming_show_detailed">‫%1$s در %2$s</string>
-  <string name="more">%s بیشتر</string>
+  <string name="more">%d بیشتر</string>
   <string name="upcoming_display">گزینش برای نشان دادن نمایش‌های پیش رو</string>
   <string name="pref_notifications">آگاهی‌ها</string>
   <string name="pref_notificationssummary">آگاهی دربارهٔ قسمت‌های جدید</string>

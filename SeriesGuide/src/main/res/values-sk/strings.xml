@@ -453,7 +453,7 @@
   <string name="upcoming_episodes">Práve vychádzajú nové epizódy</string>
   <string name="upcoming_episodes_number">%s nových epizód</string>
   <string name="upcoming_show_detailed">%1$s na %2$s</string>
-  <string name="more">%s ďalších</string>
+  <string name="more">%d ďalších</string>
   <string name="upcoming_display">Vyberte pre zobrazenie nadchádzajúcich seriálov</string>
   <string name="pref_notifications">Upozornenia</string>
   <string name="pref_notificationssummary">Upozorňovať na nové epizódy</string>

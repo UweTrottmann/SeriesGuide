@@ -441,7 +441,7 @@
   <string name="upcoming_episodes">Νέα επεισόδια έρχονται</string>
   <string name="upcoming_episodes_number">%s νέα επεισόδια</string>
   <string name="upcoming_show_detailed">%1$s προς %2$s</string>
-  <string name="more">%s περισσότερο</string>
+  <string name="more">%d περισσότερο</string>
   <string name="upcoming_display">Επιλέξτε, για να εμφανίσετε τις επερχόμενες σειρές</string>
   <string name="pref_notifications">Ειδοποιήσεις</string>
   <string name="pref_notificationssummary">Ειδοποίηση για νέα επεισόδια</string>

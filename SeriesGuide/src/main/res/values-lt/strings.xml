@@ -453,7 +453,7 @@
   <string name="upcoming_episodes">New episodes are coming up</string>
   <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s %2$s</string>
-  <string name="more">%s daugiau</string>
+  <string name="more">%d daugiau</string>
   <string name="upcoming_display">Select to display upcoming shows</string>
   <string name="pref_notifications">Pranešimai</string>
   <string name="pref_notificationssummary">Pranešti apie naujas serijas</string>

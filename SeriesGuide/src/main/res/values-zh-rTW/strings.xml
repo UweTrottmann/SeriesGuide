@@ -429,7 +429,7 @@
   <string name="upcoming_episodes">新的集數來了</string>
   <string name="upcoming_episodes_number">%s新集數</string>
   <string name="upcoming_show_detailed">%2$s 於 %1$s</string>
-  <string name="more">%s 更多</string>
+  <string name="more">%d 更多</string>
   <string name="upcoming_display">選擇以顯示即將撥出的節目</string>
   <string name="pref_notifications">提示信息</string>
   <string name="pref_notificationssummary">當有新的集數時進行通知</string>

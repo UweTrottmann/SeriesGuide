@@ -453,7 +453,7 @@
   <string name="upcoming_episodes">Urmează episoade noi</string>
   <string name="upcoming_episodes_number">%s episoade noi</string>
   <string name="upcoming_show_detailed">%1$s pe %2$s</string>
-  <string name="more">%s mai mult</string>
+  <string name="more">%d mai mult</string>
   <string name="upcoming_display">Selectați să se afișeze serialele următoare</string>
   <string name="pref_notifications">Notificări</string>
   <string name="pref_notificationssummary">Anunță-mă despre episoadele noi</string>

@@ -453,7 +453,7 @@
   <string name="upcoming_episodes">Jaunas epizodes tuvojas</string>
   <string name="upcoming_episodes_number">%s jaunas epizodes</string>
   <string name="upcoming_show_detailed">%1$s uz %2$s</string>
-  <string name="more">%s vairāk</string>
+  <string name="more">%d vairāk</string>
   <string name="upcoming_display">Izvēlies lai tiktu uzrādītu turpmākos šovus</string>
   <string name="pref_notifications">Paziņojumi</string>
   <string name="pref_notificationssummary">Paziņot par jaunām epizodēm</string>
