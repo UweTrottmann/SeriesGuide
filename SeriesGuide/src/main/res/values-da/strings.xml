@@ -119,8 +119,8 @@
   <string name="context_unfavorite">Fjern fra Foretrukne</string>
   <string name="favorited">Føjet til Foretrukne</string>
   <string name="unfavorited">Fjernet fra Foretrukne</string>
-  <string name="action_episode_notifications_on">Turn on episode notifications</string>
-  <string name="action_episode_notifications_off">Turn off episode notifications</string>
+  <string name="action_episode_notifications_on">Slå episodemeddelelser til</string>
+  <string name="action_episode_notifications_off">Slå episodemeddelelser fra</string>
   <string name="context_hide">Skjul</string>
   <string name="context_unhide">Skjul ikke</string>
   <string name="hidden">Flyttet til skjulte</string>
@@ -129,7 +129,7 @@
   <string name="action_shows_filter">Filtrér serier</string>
   <string name="empty_filter">Fjern alle filtre</string>
   <string name="action_shows_filter_favorites">Foretrukne</string>
-  <string name="action_shows_filter_unwatched">Ikke sete</string>
+  <string name="action_shows_filter_unwatched">Ikke set</string>
   <string name="action_shows_filter_upcoming">Kommende</string>
   <string name="action_shows_filter_hidden">Skjult</string>
   <string name="action_shows_sort">Sortér serier</string>
@@ -157,9 +157,9 @@
   <string name="recent">Seneste</string>
   <string name="noupcoming">Ingen kommende episoder.</string>
   <string name="norecent">Ingen nylige episoder.</string>
-  <string name="calendar_settings">Calendar settings</string>
+  <string name="calendar_settings">Kalenderindstillinger</string>
   <string name="only_favorites">Kun foretrukne serier</string>
-  <string name="calendar_only_collected">Only collected episodes</string>
+  <string name="calendar_only_collected">Kun episoder i samling</string>
   <string name="pref_infinite_scrolling">Uendelig kalender</string>
   <!-- Updating -->
   <string name="update_scheduled">Opdaterer&#8230;</string>
@@ -168,20 +168,20 @@
   <!-- Seasons -->
   <string name="season_allwatched">Alle episoder set</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="one">%d ikke sete episoder</item>
+    <item quantity="other">%d ikke sete episoder</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d andre episoder</item>
+    <item quantity="other">%d andre episoder</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">%d afventer udgivelse</item>
+    <item quantity="other">%d afventer udgivelse</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">%d tilbageværende</item>
+    <item quantity="other">%d tilbageværende</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Angiv et serienavn</string>
@@ -196,7 +196,7 @@
   <string name="add_error">Kunne ikke tilføje %s.</string>
   <string name="add_already_exists">%s er allerede på din serieliste.</string>
   <string name="recommended">Anbefalet</string>
-  <string name="watched_shows">Sete</string>
+  <string name="watched_shows">Set</string>
   <string name="shows_collection">Samling</string>
   <string name="watchlist">Overvågningsliste</string>
   <!-- Lists -->
@@ -239,7 +239,7 @@
   <string name="statistics_movies">film</string>
   <string name="shows_with_next">%s med kommende episoder</string>
   <string name="shows_continuing">%s fortsætter</string>
-  <string name="episodes_watched">%s sete</string>
+  <string name="episodes_watched">%s set</string>
   <string name="runtime_all_episodes">varighed af alle sete episoder</string>
   <string name="movies_on_watchlist">%s på overvågningsliste</string>
   <string name="runtime_movies_watchlist">varighed af film på overvågningsliste</string>
@@ -348,16 +348,16 @@
   <string name="pref_updatewifionly">Download kun billeder via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Download ikke billeder via mobil- eller forbrugsgebyrbelagte netværk for at reducere gebyrer</string>
   <plurals name="days_before_plural">
-    <item quantity="one">%d day before</item>
-    <item quantity="other">%d days before</item>
+    <item quantity="one">%d dage før</item>
+    <item quantity="other">%d dage før</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="one">%d hour before</item>
-    <item quantity="other">%d hours before</item>
+    <item quantity="one">%d timer før</item>
+    <item quantity="other">%d timer før</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="one">%d minute before</item>
-    <item quantity="other">%d minutes before</item>
+    <item quantity="one">%d minutter før</item>
+    <item quantity="other">%d minutter før</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Denne app benytter data og billeder fra TheTVDB licenseret under CC BY-NC 4.0.</string>
@@ -449,8 +449,8 @@
   <string name="pref_vibrate">Vibrér</string>
   <string name="pref_vibratesummary">Vibrér også ved visning af meddelelse</string>
   <string name="pref_notifications_treshold">Meddelelsesfrekvens</string>
-  <string name="pref_notifications_select_shows">Select shows</string>
-  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notifications_select_shows">Vælg serier</string>
+  <string name="pref_notifications_select_shows_summary">Serier med episodemeddelelser slået til (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (lille)</string>
   <!-- List Widget -->
