@@ -49,7 +49,7 @@
         android:maxLines="1"
         android:paddingBottom="@dimen/default_padding"
         android:textAppearance="@style/TextAppearance.Caption.Dim"
-        tools:text="Nov 13, 2013+++" />
+        tools:text="13.11.2013" />
 
     <ImageView
         android:id="@+id/imageViewMovieItemContextMenu"
@@ -62,7 +62,8 @@
         android:paddingLeft="28dp"
         android:paddingTop="@dimen/larger_padding"
         android:scaleType="centerInside"
-        android:src="?attr/drawableDropdown"
+        android:tint="?attr/sgColorIcon"
+        app:srcCompat="@drawable/ic_more_vert_white_20dp"
         tools:ignore="RtlSymmetry" />
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -67,7 +68,8 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/description_menu_overflow"
             android:scaleType="centerInside"
-            android:src="?attr/drawableDropdown" />
+            android:tint="?attr/sgColorIcon"
+            app:srcCompat="@drawable/ic_more_vert_white_20dp" />
 
         <com.battlelancer.seriesguide.widgets.AddIndicator
             android:id="@+id/addIndicatorAddShow"

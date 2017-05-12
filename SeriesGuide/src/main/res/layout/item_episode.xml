@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -87,10 +88,11 @@
             android:layout_alignParentRight="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/description_menu_overflow"
-            android:paddingBottom="13dp"
-            android:paddingRight="@dimen/default_padding"
-            android:scaleType="fitXY"
-            android:src="?attr/drawableDropdown" />
+            android:paddingLeft="@dimen/default_padding"
+            android:scaleType="centerInside"
+            android:tint="?attr/sgColorIcon"
+            app:srcCompat="@drawable/ic_more_vert_white_20dp"
+            tools:ignore="RtlSymmetry" />
     </RelativeLayout>
 
 </FrameLayout>
