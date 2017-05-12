@@ -9,8 +9,20 @@ Version 37
 ----------
 *(in development)*
 
+#### 37-beta7
+*(2017-05-12)*
+
+* 🔧 Add "Only collected episodes" option to calendar and list widget settings.
+* 🔧 Move calendar settings to own button.
+* 🔧 Display popup menu with multiple options when pressing tick icon in calendar.
+* 🔨 List widget settings are saved even if not tapping "Save selection".
+* 🔨 Old content in Now tabs stuck when switching away and back while refresh indicator is visible.
+* 🔨 If the notification threshold is 0, display '0 minutes' instead of '0 days'.
+* 🔧 Use vector icons in more places: crisp on very high resolution screens, reduced app size. 
+* 📝 Latest translations from crowdin.
+
 #### 37-beta6
-*(2017-05-05)*
+*(2017-05-06)*
 
 * 🔨 Crash: Correctly parse episode DVD numbers when adding or updating a show.
 * 🔨 Some action bar icons are wrongly colored.
