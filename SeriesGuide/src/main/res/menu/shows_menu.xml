@@ -7,7 +7,7 @@
 
     <item
         android:id="@+id/menu_action_shows_filter"
-        android:icon="@drawable/ic_action_filter"
+        android:icon="@drawable/ic_filter_white_24dp"
         android:orderInCategory="0"
         android:title="@string/action_shows_filter"
         app:showAsAction="always">

@@ -72,6 +72,9 @@ public class ShowsFragment extends Fragment implements
 
     private ShowsAdapter adapter;
     private HeaderGridView gridView;
+    private Button emptyView;
+    private Button emptyViewFilter;
+
     private Handler handler;
 
     public static ShowsFragment newInstance() {
@@ -84,7 +87,7 @@ public class ShowsFragment extends Fragment implements
         View v = inflater.inflate(R.layout.fragment_shows, container, false);
 
         gridView = ButterKnife.findById(v, android.R.id.list);
-        Button emptyView = ButterKnife.findById(v, R.id.emptyViewShows);
+        emptyView = ButterKnife.findById(v, R.id.emptyViewShows);
         ViewTools.setVectorDrawableTop(getActivity().getTheme(), emptyView,
                 R.drawable.ic_add_white_24dp);
         emptyView.setOnClickListener(new OnClickListener() {
@@ -93,7 +96,10 @@ public class ShowsFragment extends Fragment implements
                 startActivityAddShows();
             }
         });
-        v.findViewById(R.id.emptyViewShowsFilter).setOnClickListener(new OnClickListener() {
+        emptyViewFilter = ButterKnife.findById(v, R.id.emptyViewShowsFilter);
+        ViewTools.setVectorDrawableTop(getActivity().getTheme(), emptyViewFilter,
+                R.drawable.ic_filter_white_24dp);
+        emptyViewFilter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 isFilterFavorites = isFilterUnwatched = isFilterUpcoming = isFilterHidden
@@ -172,9 +178,9 @@ public class ShowsFragment extends Fragment implements
 
         View emptyView;
         if (isFilterFavorites || isFilterUnwatched || isFilterUpcoming || isFilterHidden) {
-            emptyView = getView().findViewById(R.id.emptyViewShowsFilter);
+            emptyView = emptyViewFilter;
         } else {
-            emptyView = getView().findViewById(R.id.emptyViewShows);
+            emptyView = this.emptyView;
         }
 
         if (oldEmptyView != null) {
@@ -240,7 +246,7 @@ public class ShowsFragment extends Fragment implements
         menu.findItem(R.id.menu_action_shows_filter)
                 .setIcon(isFilterFavorites || isFilterUnwatched || isFilterUpcoming
                         || isFilterHidden ?
-                        R.drawable.ic_action_filter_selected_24dp : R.drawable.ic_action_filter);
+                        R.drawable.ic_filter_selected_white_24dp : R.drawable.ic_filter_white_24dp);
 
         // set filter check box states
         menu.findItem(R.id.menu_action_shows_filter_favorites)
