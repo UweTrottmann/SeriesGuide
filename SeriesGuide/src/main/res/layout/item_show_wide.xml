@@ -31,7 +31,8 @@
             android:paddingBottom="8dp"
             android:paddingLeft="8dp"
             android:scaleType="centerInside"
-            android:src="?attr/drawableStar"
+            tools:src="@drawable/ic_star_black_24dp"
+            tools:tint="?attr/sgColorIcon"
             tools:ignore="ContentDescription,RtlSymmetry" />
 
         <ImageView

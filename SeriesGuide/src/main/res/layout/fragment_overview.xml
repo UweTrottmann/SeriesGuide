@@ -76,7 +76,8 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@null"
-                    android:src="?attr/drawableStar0" />
+                    tools:src="@drawable/ic_star_black_24dp"
+                    tools:tint="?attr/sgColorIcon" />
 
             </LinearLayout>
 

@@ -2,7 +2,9 @@ package com.battlelancer.seriesguide.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,7 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import java.util.Date;
 
 /**
@@ -27,18 +29,19 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
 
     protected final SgApp app;
     private OnContextMenuClickListener onContextMenuClickListener;
-    private final int resIdStar;
-    private final int resIdStarZero;
+    private final VectorDrawableCompat drawableStar;
+    private final VectorDrawableCompat drawableStarZero;
 
     BaseShowsAdapter(Activity activity, OnContextMenuClickListener listener) {
         super(activity, null, 0);
         this.app = SgApp.from(activity);
         this.onContextMenuClickListener = listener;
 
-        resIdStar = Utils.resolveAttributeToResourceId(activity.getTheme(),
-                R.attr.drawableStar);
-        resIdStarZero = Utils.resolveAttributeToResourceId(activity.getTheme(),
-                R.attr.drawableStar0);
+        Resources.Theme theme = activity.getTheme();
+        drawableStar = ViewTools.createVectorIcon(activity, theme,
+                R.drawable.ic_star_black_24dp);
+        drawableStarZero = ViewTools.createVectorIcon(activity, theme,
+                R.drawable.ic_star_border_black_24dp);
     }
 
     @Override
@@ -52,7 +55,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
     }
 
     void setFavoriteState(ImageView view, boolean isFavorite) {
-        view.setImageResource(isFavorite ? resIdStar : resIdStarZero);
+        view.setImageDrawable(isFavorite ? drawableStar : drawableStarZero);
         view.setContentDescription(view.getContext()
                 .getString(isFavorite ? R.string.context_unfavorite : R.string.context_favorite));
     }
