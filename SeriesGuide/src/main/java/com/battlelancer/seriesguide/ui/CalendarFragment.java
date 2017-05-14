@@ -29,10 +29,12 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.CalendarAdapter;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.settings.CalendarSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -269,16 +271,20 @@ public class CalendarFragment extends Fragment
         }
 
         // only display the action appropriate for the items current state
-        menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
         if (EpisodeTools.isWatched(episode.getInt(CalendarAdapter.Query.WATCHED))) {
-            menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 1, R.string.action_unwatched);
+            menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 0, R.string.action_unwatched);
         } else {
-            menu.add(0, CONTEXT_FLAG_WATCHED_ID, 1, R.string.action_watched);
+            menu.add(0, CONTEXT_FLAG_WATCHED_ID, 0, R.string.action_watched);
         }
         if (EpisodeTools.isCollected(episode.getInt(CalendarAdapter.Query.COLLECTED))) {
-            menu.add(0, CONTEXT_COLLECTION_REMOVE_ID, 2, R.string.action_collection_remove);
+            menu.add(0, CONTEXT_COLLECTION_REMOVE_ID, 1, R.string.action_collection_remove);
         } else {
-            menu.add(0, CONTEXT_COLLECTION_ADD_ID, 2, R.string.action_collection_add);
+            menu.add(0, CONTEXT_COLLECTION_ADD_ID, 1, R.string.action_collection_add);
+        }
+        // display check-in if only trakt is connected
+        if (TraktCredentials.get(view.getContext()).hasCredentials()
+                && !HexagonSettings.isEnabled(view.getContext())) {
+            menu.add(0, CONTEXT_CHECKIN_ID, 2, R.string.checkin);
         }
 
         final int showTvdbId = episode.getInt(CalendarAdapter.Query.SHOW_ID);
