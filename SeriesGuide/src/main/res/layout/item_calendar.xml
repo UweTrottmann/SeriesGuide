@@ -26,6 +26,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="26dp"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/description_menu_overflow"
             android:scaleType="centerInside" />
 
         <ImageView
@@ -83,8 +84,8 @@
             android:layout_below="@+id/textViewActivityInfo"
             android:layout_toLeftOf="@+id/watchedBoxActivity"
             android:layout_toRightOf="@+id/imageViewActivityPoster"
-            android:paddingBottom="@dimen/default_padding"
             android:ellipsize="end"
+            android:paddingBottom="@dimen/default_padding"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Caption.Dim"
             tools:text="in 7 hours" />

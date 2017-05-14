@@ -84,12 +84,6 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         // watched box
         int episodeFlag = cursor.getInt(Query.WATCHED);
         viewHolder.watchedBox.setEpisodeFlag(episodeFlag);
-        boolean watched = EpisodeTools.isWatched(episodeFlag);
-        viewHolder.watchedBox.setContentDescription(
-                context.getString(watched ? R.string.action_unwatched : R.string.action_watched));
-        CheatSheet.setup(viewHolder.watchedBox,
-                watched ? R.string.action_unwatched : R.string.action_watched
-        );
 
         // show title
         viewHolder.show.setText(cursor.getString(Query.SHOW_TITLE));
@@ -335,6 +329,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
                     }
                 }
             });
+            CheatSheet.setup(watchedBox);
         }
     }
 
