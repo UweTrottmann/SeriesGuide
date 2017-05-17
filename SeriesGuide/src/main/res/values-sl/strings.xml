@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Prikaži</string>
   <string name="episode">Epizoda</string>
-  <string name="episode_number">Epizoda %s</string>
+  <string name="episode_number">Epizoda %d</string>
   <string name="episodes">Epizode</string>
   <string name="season">Sezona</string>
-  <string name="season_number">Sezona %s</string>
+  <string name="season_number">Sezona %d</string>
   <string name="seasons">Sezone</string>
   <string name="specialseason">Posebne epizode</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">Deli oddajo</string>
   <string name="share_episode">Deli epizodo</string>
   <string name="share_movie">Deli film</string>
-  <string name="share_checkout">Oglejte si %s</string>
   <string name="addtocalendar">Dodaj v koledar</string>
   <string name="addtocalendar_failed">Dogodka v koledarju ni bilo mogoče ustvariti.</string>
   <string name="links">Povezave</string>
@@ -122,6 +121,8 @@
   <string name="context_unfavorite">Odstrani iz priljubljenih</string>
   <string name="favorited">Dodano med priljubljene</string>
   <string name="unfavorited">Odstrani iz priljubljenih</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Skrij</string>
   <string name="context_unhide">Prikaži</string>
   <string name="hidden">Skrita oddaja</string>
@@ -158,7 +159,9 @@
   <string name="recent">Nedavno</string>
   <string name="noupcoming">Ni prihajajočih epizod.</string>
   <string name="norecent">Ni nedavnih epizod.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Samo priljubljene oddaje</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Infinite calendar</string>
   <!-- Updating -->
   <string name="update_scheduled">Posodabljanje&#8230;</string>
@@ -362,6 +365,24 @@
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Slike samo preko Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="two">%d days before</item>
+    <item quantity="few">%d days before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="two">%d hours before</item>
+    <item quantity="few">%d hours before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="two">%d minutes before</item>
+    <item quantity="few">%d minutes before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
@@ -403,7 +424,7 @@
   <string name="backup_summary">Naredite varnostno kopijo ali obnovite vaše oddaje</string>
   <string name="pref_number">Oblika števil</string>
   <string name="pref_offset">Ročna nastavitev časovnega zamika</string>
-  <string name="pref_offsetsummary">Zamakni čas predvajanja za %s ur</string>
+  <string name="pref_offsetsummary">Zamakni čas predvajanja za %d ur</string>
   <string name="clear_cache">Izbriši predp. slik</string>
   <string name="clear_cache_summary">Odstrani vse predpomnjene slike iz naprave</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
@@ -444,21 +465,16 @@
   <string name="upcoming_episodes">Nove epizode prihajajo na spored</string>
   <string name="upcoming_episodes_number">%s novih epizod</string>
   <string name="upcoming_show_detailed">%1$s na %2$s</string>
-  <string name="more">%s več</string>
+  <string name="more">%d več</string>
   <string name="upcoming_display">Izberi za prikaz prihajajočih oddaj</string>
   <string name="pref_notifications">Obvestila</string>
   <string name="pref_notificationssummary">Obvesti me o novih epizodah</string>
-  <string name="pref_notifyfavonly">Samo priljubljene</string>
-  <string name="pref_notifyfavonlysummary">Prejemaj obvestila samo za priljubljene oddaje</string>
   <string name="pref_ringtone">Zvonenje</string>
   <string name="pref_vibrate">Vibriranje</string>
   <string name="pref_vibratesummary">Vibriranje tudi ob prikazu obvestila</string>
   <string name="pref_notifications_treshold">Čas obveščanja</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">se predvaja</string>
-  <string name="notification_release_earlier_five">5 min prej</string>
-  <string name="notification_release_earlier_ten">10 min prej</string>
-  <string name="notification_release_earlier_hour">eno uro prej</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (majhen)</string>
   <!-- List Widget -->

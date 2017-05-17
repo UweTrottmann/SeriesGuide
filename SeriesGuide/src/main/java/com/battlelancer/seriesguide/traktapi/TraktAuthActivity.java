@@ -16,9 +16,6 @@ import dagger.Lazy;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import javax.inject.Inject;
-import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
-import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
-import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
@@ -31,6 +28,11 @@ public class TraktAuthActivity extends BaseOAuthActivity {
 
     private static final String KEY_STATE = "state";
     private static final String TRAKT_CONNECT_TASK_TAG = "trakt-connect-task";
+    private static final String CATEGORY_OAUTH_ERROR = "OAuth Error";
+    private static final String ACTION_FETCHING_TOKENS = "fetching tokens";
+    private static final String ERROR_DESCRIPTION_STATE_MISMATCH
+            = "invalid_state, State is null or does not match.";
+
     private String state;
     private ConnectTraktTaskFragment taskFragment;
     @Inject Lazy<TraktV2> trakt;
@@ -62,16 +64,7 @@ public class TraktAuthActivity extends BaseOAuthActivity {
     @Nullable
     protected String getAuthorizationUrl() {
         state = new BigInteger(130, new SecureRandom()).toString(32);
-        try {
-            OAuthClientRequest request = trakt.get().buildAuthorizationRequest(state);
-            return request.getLocationUri();
-        } catch (OAuthSystemException e) {
-            Timber.e(e, "Building auth request failed.");
-            activateFallbackButtons();
-            setMessage(getAuthErrorMessage() + "\n\n(" + e.getMessage() + ")");
-        }
-
-        return null;
+        return trakt.get().buildAuthorizationUrl(state);
     }
 
     @Override
@@ -99,8 +92,12 @@ public class TraktAuthActivity extends BaseOAuthActivity {
 
         // if state does not match what we sent, drop the auth code
         if (this.state == null || !this.state.equals(state)) {
-            Timber.e(OAuthProblemException.error("invalid_state",
-                    "State is null or does not match."), "fetchTokensAndFinish: failed.");
+            // log trakt OAuth failures
+            Utils.trackCustomEvent(this, CATEGORY_OAUTH_ERROR, ACTION_FETCHING_TOKENS,
+                    ERROR_DESCRIPTION_STATE_MISMATCH);
+            Timber.tag(CATEGORY_OAUTH_ERROR);
+            Timber.e("%s: %s", ACTION_FETCHING_TOKENS, ERROR_DESCRIPTION_STATE_MISMATCH);
+
             setMessage(getAuthErrorMessage() + (this.state == null ?
                     "\n\n(State is null.)" :
                     "\n\n(State does not match. Cross-site request forgery detected.)"));

@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Série</string>
   <string name="episode">Episódio</string>
-  <string name="episode_number">Episódio %s</string>
+  <string name="episode_number">Episódio %d</string>
   <string name="episodes">Episódios</string>
   <string name="season">Temporada</string>
-  <string name="season_number">Temporada %s</string>
+  <string name="season_number">Temporada %d</string>
   <string name="seasons">Temporadas</string>
   <string name="specialseason">Episódios Especiais</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">Partilhar série</string>
   <string name="share_episode">Partilhar episódio</string>
   <string name="share_movie">Partilhar filme</string>
-  <string name="share_checkout">Tens de ver %s</string>
   <string name="addtocalendar">Adicionar ao calendário</string>
   <string name="addtocalendar_failed">Não é possível criar um evento de calendário.</string>
   <string name="links">Endereços</string>
@@ -72,7 +71,7 @@
     <item quantity="other">%d respostas</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">TOTALIDADE</string>
+  <string name="episode_number_absolute">ABSOLUTO</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Data de estreia</string>
   <string name="episode_firstaired_unknown">Data de estreia desconhecida</string>
@@ -80,11 +79,11 @@
   <string name="original_release">Exibição original</string>
   <string name="show_on_network">em %s</string>
   <string name="show_genres">Géneros</string>
-  <string name="show_contentrating">Avaliação de conteúdo</string>
+  <string name="show_contentrating">Classificação Etária</string>
   <string name="show_release_times">Horários de exibição</string>
-  <string name="episode_directors">Realizadores</string>
+  <string name="episode_directors">Realizador(es)</string>
   <string name="episode_gueststars">Participações especiais</string>
-  <string name="episode_writers">Argumentistas</string>
+  <string name="episode_writers">Argumentista(s)</string>
   <string name="show_isalive">Em exibição</string>
   <string name="show_isnotalive">Terminou</string>
   <string name="lastEdit">Última Edição // TheTVDB</string>
@@ -120,6 +119,8 @@
   <string name="context_unfavorite">Remover dos Favoritos</string>
   <string name="favorited">Adicionado aos favoritos</string>
   <string name="unfavorited">Removido dos favoritos</string>
+  <string name="action_episode_notifications_on">Ativar notificações do episódio</string>
+  <string name="action_episode_notifications_off">Desativar notificações do episódio</string>
   <string name="context_hide">Ocultar</string>
   <string name="context_unhide">Mostrar</string>
   <string name="hidden">Série ocultada</string>
@@ -156,7 +157,9 @@
   <string name="recent">Recentes</string>
   <string name="noupcoming">Não existem próximos episódios.</string>
   <string name="norecent">Não existem episódios recentes.</string>
+  <string name="calendar_settings">Configurações do calendário</string>
   <string name="only_favorites">Apenas séries favoritas</string>
+  <string name="calendar_only_collected">Apenas episódios que possuo</string>
   <string name="pref_infinite_scrolling">Calendário infinito</string>
   <!-- Updating -->
   <string name="update_scheduled">A Atualizar&#8230;</string>
@@ -225,7 +228,7 @@
   <string name="movies_watchlist_empty">Não adicionaste filmes à lista dos que desejas ver.</string>
   <string name="trailer">Trailer</string>
   <string name="movie_cast">Elenco</string>
-  <string name="movie_crew">Equipa</string>
+  <string name="movie_crew">Equipa Técnica</string>
   <string name="action_movies_sort">Ordenar filmes</string>
   <string name="action_movies_sort_title">Título</string>
   <string name="action_movies_sort_release">Data de estreia</string>
@@ -301,8 +304,8 @@
   <string name="show_library">Mostrar a tua biblioteca</string>
   <string name="about_trakt">O trakt ajuda-te a manter a par da lista de séries e filmes que tu assistes. <a href="http://trakt.tv">Experimenta!</a></string>
   <!-- trakt ratings -->
-  <string name="action_rate">Avaliar</string>
-  <string name="your_rating">A minha avaliação</string>
+  <string name="action_rate">Classificar</string>
+  <string name="your_rating">A minha classificação</string>
   <string name="love">Fora de série!</string>
   <string name="hate">Mas que porcaria :(</string>
   <string name="rating2">Horrível</string>
@@ -344,6 +347,18 @@
   <string name="pref_language">Idioma preferido para o conteúdo</string>
   <string name="pref_updatewifionly">Atualizar imagens apenas por Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Não utilizar dados móveis ou quaisquer serviços de tráfego limitado, de forma a reduzir qualquer custo com as operadoras</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d dia antes</item>
+    <item quantity="other">%d dias antes</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hora antes</item>
+    <item quantity="other">%d horas antes</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minuto antes</item>
+    <item quantity="other">%d minutos antes</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Esta aplicação faz uso de informação e imagens do TheTVDB licenciado sob a CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Este produto utiliza a API TMDb mas não foi aprovado ou certificado pelo TMDb.</string>
@@ -385,12 +400,12 @@
   <string name="backup_summary">Fazer uma cópia de segurança ou restaurar as tuas séries</string>
   <string name="pref_number">Formato numérico</string>
   <string name="pref_offset">Acerto manual do fuso horário</string>
-  <string name="pref_offsetsummary">Acertar o fuso horário da exibição por %s horas</string>
+  <string name="pref_offsetsummary">Acertar o fuso horário da exibição por %d horas</string>
   <string name="clear_cache">Apagar imagens da Cache</string>
   <string name="clear_cache_summary">Remove todas as imagens em cache do teu dispositivo</string>
   <string name="pref_ganalyticssummary">Enviar estatísticas de uso anónimas para um serviço da Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Inclui todos os meta-dados como descrições, atores e avaliações.</string>
+  <string name="backup_full_dump">Inclui todos os meta-dados como descrições, atores e classificações.</string>
   <string name="backup_path">Pasta para as cópias de segurança</string>
   <string name="backup_version">Versão da Base de Dados</string>
   <string name="backup_failed_file_access">Cópia de segurança interrompida. Uma cópia de segurança não pôde ser encontrada ou acedida.</string>
@@ -426,21 +441,16 @@
   <string name="upcoming_episodes">Novos episódios brevemente</string>
   <string name="upcoming_episodes_number">%s novos episódios</string>
   <string name="upcoming_show_detailed">%1$s em %2$s</string>
-  <string name="more">%s mais</string>
+  <string name="more">%d mais</string>
   <string name="upcoming_display">Seleciona para exibir as próximas séries</string>
   <string name="pref_notifications">Notificações</string>
   <string name="pref_notificationssummary">Notificar sobre novos episódios</string>
-  <string name="pref_notifyfavonly">Apenas favoritos</string>
-  <string name="pref_notifyfavonlysummary">Receber apenas notificações para séries favoritas</string>
   <string name="pref_ringtone">Toque de Notificação</string>
   <string name="pref_vibrate">Vibrar</string>
   <string name="pref_vibratesummary">Também vibrará quando surgir uma notificação</string>
   <string name="pref_notifications_treshold">Quando notificar</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">A transmitir</string>
-  <string name="notification_release_earlier_five">5 min. antes</string>
-  <string name="notification_release_earlier_ten">10 min. antes</string>
-  <string name="notification_release_earlier_hour">1 hora antes</string>
+  <string name="pref_notifications_select_shows">Selecionar séries</string>
+  <string name="pref_notifications_select_shows_summary">Séries que possuem notificações ativadas (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (pequeno)</string>
   <!-- List Widget -->
@@ -494,8 +504,8 @@
   <string name="feedback_question_enjoy">Estás a gostar do SeriesGuide?</string>
   <string name="feedback_action_yes">Sim!</string>
   <string name="feedback_action_notreally">Nem por isso</string>
-  <string name="feedback_question_rate_google">Avaliá-lo na Google Play?</string>
-  <string name="feedback_question_rate_amazon">Avaliá-lo na Amazon?</string>
+  <string name="feedback_question_rate_google">Classificá-lo na Google Play?</string>
+  <string name="feedback_question_rate_amazon">Classificá-lo na Amazon?</string>
   <string name="feedback_question_feedback">Diz-me o que devo melhorar?</string>
   <string name="feedback_action_ok">Está bem, com certeza</string>
   <string name="feedback_action_nothanks">Não, obrigado</string>

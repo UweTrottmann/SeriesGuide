@@ -29,7 +29,7 @@
                     android:gravity="center"
                     android:padding="@dimen/large_padding"
                     android:text="@string/no_shouts"
-                    android:textAppearance="@style/TextAppearance.Body.Dim" />
+                    android:textAppearance="@style/TextAppearance.Body.Secondary" />
 
             </ScrollView>
 

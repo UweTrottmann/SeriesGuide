@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">ТВ предаване</string>
   <string name="episode">Епизод</string>
-  <string name="episode_number">Епизод %s</string>
+  <string name="episode_number">Епизод %d</string>
   <string name="episodes">Епизоди</string>
   <string name="season">Сезон</string>
-  <string name="season_number">Сезон %s</string>
+  <string name="season_number">Сезон %d</string>
   <string name="seasons">Сезони</string>
   <string name="specialseason">Специални епизоди</string>
   <!-- Descriptions -->
@@ -33,9 +33,9 @@
   <string name="web_search">Търсене в мрежата</string>
   <string name="add_to_homescreen">Пряк път</string>
   <string name="action_open">Отвори</string>
-  <string name="sync_manually">Sync manually</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
-  <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="sync_manually">Само ръчна синхронизация</string>
+  <string name="sync_and_update">Синхронизиране &amp; актуализация</string>
+  <string name="sync_and_download_all">Синхронизиране &amp; Изтегли всички</string>
   <!-- Search -->
   <string name="clear_search_history">Изчисти историята на търсене</string>
   <string name="search_hint">Търсене на епизоди</string>
@@ -48,14 +48,13 @@
   <string name="app_not_available">Няма налично подходящо приложение.</string>
   <string name="people_empty">Няма никой тук?! Натисни, за да опиташ отново.</string>
   <string name="database_error">Не може да промени данните.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="reinstall_info">Опитайте се да архивирате от настройките, преинсталирайте и възстановете.</string>
+  <string name="api_error_generic">Няма връзка с %s. trakt. Опитайте отново по-късно.</string>
   <!-- Sharing -->
   <string name="share">Сподели</string>
   <string name="share_show">Сподели ТВ предаване</string>
   <string name="share_episode">Сподели епизод</string>
   <string name="share_movie">Сподели филм</string>
-  <string name="share_checkout">Виж %s</string>
   <string name="addtocalendar">Добавяне в календара</string>
   <string name="addtocalendar_failed">Не може да създаде календарно събитие.</string>
   <string name="links">Интернет връзки</string>
@@ -90,7 +89,7 @@
   <string name="lastEdit">Последна промяна // TVDb</string>
   <string name="no_translation">Няма описание преведено на %1$s възможно на %2$s.</string>
   <string name="no_translation_title">Не е преведено</string>
-  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="no_spoilers">Някои детайли са скрити, за да се избегнат спойлерите. За да изключите това отидете в настройки.</string>
   <!-- Date and Time -->
   <string name="today">днес</string>
   <string name="now">сега</string>
@@ -120,6 +119,8 @@
   <string name="context_unfavorite">Премахни от Любими</string>
   <string name="favorited">Добавено в Любими</string>
   <string name="unfavorited">Премахнато от Любими</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Скрий</string>
   <string name="context_unhide">Показване</string>
   <string name="hidden">Скрито ТВ предаване</string>
@@ -133,10 +134,10 @@
   <string name="action_shows_filter_hidden">Скрити</string>
   <string name="action_shows_sort">Сортирай сериалите</string>
   <string name="action_shows_sort_title">Заглавие</string>
-  <string name="action_shows_sort_latest_episode">Latest episode</string>
-  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
-  <string name="action_shows_sort_last_watched">Last watched</string>
-  <string name="action_shows_sort_remaining">Remaining episodes</string>
+  <string name="action_shows_sort_latest_episode">Последен епизод</string>
+  <string name="action_shows_sort_oldest_episode">Най-старият епизод</string>
+  <string name="action_shows_sort_last_watched">Последно гледани</string>
+  <string name="action_shows_sort_remaining">Оставащи епизоди</string>
   <string name="action_shows_sort_favorites">Първо Любими</string>
   <string name="context_updateshow">Актуализирай</string>
   <string name="context_marknext">Гледан следващ епизод</string>
@@ -156,7 +157,9 @@
   <string name="recent">Скорошни</string>
   <string name="noupcoming">Няма предстоящи епизоди.</string>
   <string name="norecent">Няма скорошни епизоди.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Само Любими сериали</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Безкраен календар</string>
   <!-- Updating -->
   <string name="update_scheduled">Обновяване&#8230;</string>
@@ -165,20 +168,20 @@
   <!-- Seasons -->
   <string name="season_allwatched">Всички епизоди са гледани</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="one">%d негледани епизоди</item>
+    <item quantity="other">%d негледани епизоди</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d други епизоди</item>
+    <item quantity="other">%d други епизоди</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">%d предстоящи</item>
+    <item quantity="other">%d предстоящи</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">%d оставащи</item>
+    <item quantity="other">%d оставащи</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Въведете име на сериала</string>
@@ -186,7 +189,7 @@
   <string name="no_results">Няма резултати, опитайте търсене с цели думи.</string>
   <string name="action_try_any_language">Опитай всеки език</string>
   <string name="action_try_again">Опитай отново</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="tvdb_error_does_not_exist">Шоуто не съществува (все още) на TheTVDB. Опитайте отново по-късно.</string>
   <string name="add_all">Добави всички</string>
   <string name="add_multiple">Всички сериали ще се появят в списъка ви скоро.</string>
   <string name="add_started">Всеки момент %s ще се появи в списъка със сериали.</string>
@@ -209,11 +212,11 @@
   <string name="action_lists_reorder">Пренареждане на списъците</string>
   <string name="error_name_already_exists">Списък с това име вече съществува</string>
   <!-- Movies -->
-  <string name="title_discover">Discover</string>
-  <string name="title_popular">Popular</string>
-  <string name="title_digital_releases">Digital releases</string>
-  <string name="title_disc_releases">Disc releases</string>
-  <string name="movies_in_theatres">In theaters</string>
+  <string name="title_discover">Открийте</string>
+  <string name="title_popular">Популярни</string>
+  <string name="title_digital_releases">Дихитални издания</string>
+  <string name="title_disc_releases">Излезли на диск</string>
+  <string name="movies_in_theatres">В кината</string>
   <string name="movies_collection">Колекция</string>
   <string name="movies_watchlist">Списък за гледане</string>
   <string name="watchlist_add">Добави към списъка за гледане</string>
@@ -267,7 +270,7 @@
   <string name="hexagon_remove_account_failure">Не може да се премахне акаунта.</string>
   <string name="hexagon_remove_account_confirmation">С премахването на акаунта ви ще се изтрият всички предавания и филми от SeriesGuide облака. Не забраявайте да го премахнете и на други свързани устройства.</string>
   <string name="hexagon_api_queued">Изпращане към SeriesGuide облака.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Излизане от облака SeriesGuide.</string>
   <string name="hexagon_google_play_missing">Необходимо е да използвате SeriesGuide Cloud, Google Play Services.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Подаване към trakt.</string>
@@ -283,7 +286,7 @@
   <string name="trakt_success">Изпратено към trakt.</string>
   <string name="trakt_error_credentials">Нещо се обърка. Проверете идентификационните си данни и опитайте отново.</string>
   <string name="trakt_error_not_exists">Няма (все още) в trakt. Опитайте отново по-късно.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_notice_not_exists">Не може (все още) да се проследи от trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt профил</string>
   <string name="trakt_connect_instructions">На следващия екран влезте в trakt или си създайте профил. След това разрешете на SeriesGuide достъп до профила ви в trakt.</string>
@@ -322,7 +325,7 @@
   <string name="checkin_hint">Напиши съобщение (по избор)</string>
   <string name="paste_title">Поставете заглавие</string>
   <string name="pref_quick_checkin">Бързо отбелязване</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin_summary">Не питай за проверка в съобщенията</string>
   <!-- Help -->
   <string name="feedback">Обратна връзка</string>
   <string name="action_open_in_browser">Отвори в браузър</string>
@@ -337,13 +340,25 @@
   <string name="pref_onlyseasonepssummary">Специалните епизоди изчезват отвсякъде без списъка на сезоните</string>
   <string name="pref_exactdates">Показване на точните дати</string>
   <string name="pref_exactdates_summary">\"31 октомври\" вместо \"след 3 дни\"</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
-  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
+  <string name="pref_nospoilers">Предотвратяване на спойлери</string>
+  <string name="pref_nospoilers_summary">Скрий детайлите, докато е епизода бъде гледан</string>
   <string name="pref_seasonsorting">Сортирай сезоните по&#8230;</string>
   <string name="pref_episodesorting">Сортирай епизодите по&#8230;</string>
   <string name="pref_language">Предпочитан език на съдържанието</string>
   <string name="pref_updatewifionly">Изображения само при Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <string name="pref_updatewifionlysummary">За да намалите таксуването за пренос на данни, не теглете през мобилната мрежа</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Това приложение ползва данни и изображения от TheTVDB лицензиран под  CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Този продукт използва TMDb API, но не е сертифицирано от TMDb.</string>
@@ -378,27 +393,27 @@
   <string name="pref_theme">Тема</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Други</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">Автоматично синхронизиране и актуализиране данните на SeriesGuide</string>
   <string name="pref_autobackup">Автоматично създаване на резервно копие</string>
-  <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
+  <string name="pref_autobackupsummary">Седмичен архив на вашите предавания, списъци и филми</string>
   <string name="backup">Архивиране/Възстановяване</string>
   <string name="backup_summary">Архивиране или възстановяване на вашите сериали</string>
   <string name="pref_number">Формат на числата</string>
   <string name="pref_offset">Ръчна смяна време</string>
-  <string name="pref_offsetsummary">Преместване на часовете за излъчване с %s часа</string>
+  <string name="pref_offsetsummary">Преместване на часовете за излъчване с %d часа</string>
   <string name="clear_cache">Изчисти кеша на изображенията</string>
   <string name="clear_cache_summary">Премахнете всички кеширани снимки от вашето устройство</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Изпрати анонимни данни за потреблението на Google услугите</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Включете всички мета-данни като описания, актьори и рейтинги.</string>
   <string name="backup_path">Папка за архивиране</string>
   <string name="backup_version">Версията на базата данни</string>
-  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+  <string name="backup_failed_file_access">Не може да се архивира. Архивения файл не може да бъде намерен или е не достъпен.</string>
   <string name="backup_inprogress">Архивиране на базата данни&#8230;</string>
   <string name="backup_success">Архивирането приключи успешно.</string>
   <string name="backup_failed">Архивирането не беше успешно.</string>
   <string name="import_inprogress">Възстановяване на базата от данни&#8230;</string>
-  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
+  <string name="import_failed_nosd">Не може да се възстанови архив. Папката за архивиране не е налична.</string>
   <string name="import_failed_nofile">Няма архивен файл.</string>
   <string name="import_failed_noread">Архивният файл не се чете.</string>
   <string name="dbupgradefailed">Вашият архив може би е твърде стар или празен. Забележка: Първо, внесете архиви с версия по-малка от 2.0 във 1.9.х версия.</string>
@@ -408,15 +423,15 @@
   <string name="import_button">Възстанови архив</string>
   <string name="backup_question">Това ще замени текущия архивен файл в папката за архивиране!</string>
   <string name="import_question">Текущият списък със сериали ще бъде загубен! Уверете се, че архивния файл е в папката за архиви.</string>
-  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+  <string name="import_warning">Разбирам моите текущи предавания, списъци и филми ще бъдат заменени!</string>
   <string name="last_auto_backup">Последно автоматично архивиране: %s</string>
   <string name="restore_auto_backup">Възстанови автоматично архивиране</string>
-  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
-  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
+  <string name="dataliberation_permission_missing">За да архивирате или възстановите, позволете достъп до вашите файлове.</string>
+  <string name="autobackup_permission_missing">За да използвате автоматичното архивиране, позволете достъп до вашите файлове.</string>
+  <string name="autobackup_files_missing">За да използвате автоматично архивиране, изберете валиден архивн файл.</string>
   <string name="no_file_selected">Няма избран файл</string>
   <string name="action_select_file">Избор на файл</string>
-  <string name="backup_use_default_files">Use default backup files</string>
+  <string name="backup_use_default_files">Използвайте файловете подразбиране за архивиране</string>
   <!-- Welcome dialog -->
   <string name="get_started">Начало</string>
   <string name="welcome_setuplanguage">Избор на език</string>
@@ -426,21 +441,16 @@
   <string name="upcoming_episodes">Предстоят нови епизоди</string>
   <string name="upcoming_episodes_number">%s нови епизоди</string>
   <string name="upcoming_show_detailed">%1$s по %2$s</string>
-  <string name="more">%s още</string>
+  <string name="more">%d още</string>
   <string name="upcoming_display">Изберете да се показват предстоящи сериали</string>
   <string name="pref_notifications">Известия</string>
   <string name="pref_notificationssummary">Известяване за нови епизоди</string>
-  <string name="pref_notifyfavonly">Само любими</string>
-  <string name="pref_notifyfavonlysummary">Получавай известия само за любими сериали</string>
   <string name="pref_ringtone">Мелодия</string>
   <string name="pref_vibrate">Вибрация</string>
   <string name="pref_vibratesummary">Също вибриране за показване на известие</string>
   <string name="pref_notifications_treshold">Кога да извести</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">в момента</string>
-  <string name="notification_release_earlier_five">5 минути по-рано</string>
-  <string name="notification_release_earlier_ten">10 минути по-рано</string>
-  <string name="notification_release_earlier_hour">един час по-рано</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (малка)</string>
   <!-- List Widget -->

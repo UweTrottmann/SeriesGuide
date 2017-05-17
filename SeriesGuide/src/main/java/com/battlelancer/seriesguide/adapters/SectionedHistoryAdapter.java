@@ -156,7 +156,7 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
      * device time zone.
      */
     private long getHeaderTime(HistoryEntry item) {
-        mCalendar.setTimeInMillis(item.watched_at.getMillis());
+        mCalendar.setTimeInMillis(item.watched_at.toInstant().toEpochMilli());
         //
         mCalendar.set(Calendar.HOUR_OF_DAY, 0);
         mCalendar.set(Calendar.MINUTE, 0);

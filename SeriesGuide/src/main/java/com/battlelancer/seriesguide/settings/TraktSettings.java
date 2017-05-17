@@ -3,7 +3,8 @@ package com.battlelancer.seriesguide.settings;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
-import org.joda.time.DateTime;
+import com.battlelancer.seriesguide.util.TimeTools;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * Settings related to trakt.tv integration.
@@ -129,22 +130,25 @@ public class TraktSettings {
     /**
      * If either collection or watchlist have changes newer than last stored.
      */
-    public static boolean isMovieListsChanged(Context context, DateTime collectedAt,
-            DateTime watchlistedAt) {
-        return collectedAt.isAfter(TraktSettings.getLastMoviesCollectedAt(context))
-                || watchlistedAt.isAfter(TraktSettings.getLastMoviesWatchlistedAt(context));
+    public static boolean isMovieListsChanged(Context context, OffsetDateTime collectedAt,
+            OffsetDateTime watchlistedAt) {
+        return TimeTools.isAfterMillis(collectedAt, TraktSettings.getLastMoviesCollectedAt(context))
+                || TimeTools.isAfterMillis(watchlistedAt,
+                TraktSettings.getLastMoviesWatchlistedAt(context));
     }
 
     /**
      * Store last collected and watchlisted timestamps.
      */
-    public static void storeLastMoviesChangedAt(Context context, DateTime collectedAt,
-            DateTime watchlistedAt) {
+    public static void storeLastMoviesChangedAt(Context context, OffsetDateTime collectedAt,
+            OffsetDateTime watchlistedAt) {
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
-                .putLong(TraktSettings.KEY_LAST_MOVIES_COLLECTED_AT, collectedAt.getMillis())
-                .putLong(TraktSettings.KEY_LAST_MOVIES_WATCHLISTED_AT, watchlistedAt.getMillis())
-                .commit();
+                .putLong(TraktSettings.KEY_LAST_MOVIES_COLLECTED_AT,
+                        collectedAt.toInstant().toEpochMilli())
+                .putLong(TraktSettings.KEY_LAST_MOVIES_WATCHLISTED_AT,
+                        watchlistedAt.toInstant().toEpochMilli())
+                .apply();
     }
 
     /**

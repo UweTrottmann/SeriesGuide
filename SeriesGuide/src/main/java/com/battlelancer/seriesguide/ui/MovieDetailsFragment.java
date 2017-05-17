@@ -63,6 +63,7 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TmdbTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -138,7 +139,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     private int tmdbId;
     private MovieDetails movieDetails = new MovieDetails();
     private Videos.Video trailer;
-    private int currentLanguageIndex;
+    @Nullable private String languageCode;
     private Handler handler = new Handler();
     private AsyncTask<Bitmap, Void, Palette> paletteAsyncTask;
 
@@ -157,26 +158,20 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         // language button
         buttonMovieLanguage.setVisibility(View.GONE);
-        Utils.setVectorCompoundDrawable(getActivity().getTheme(), buttonMovieLanguage,
-                R.attr.drawableLanguage);
+        ViewTools.setVectorDrawableLeft(getActivity().getTheme(), buttonMovieLanguage,
+                R.drawable.ic_language_white_24dp);
         CheatSheet.setup(buttonMovieLanguage, R.string.pref_language);
         buttonMovieLanguage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // guard against onClick called after fragment is up navigated (multi-touch)
-                // onSaveInstanceState might already be called
-                if (isResumed()) {
-                    DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
-                            currentLanguageIndex);
-                    dialog.show(getFragmentManager(), "dialog-language");
-                }
+                displayLanguageSettings();
             }
         });
 
         // comments button
         buttonMovieComments.setVisibility(View.GONE);
-        Utils.setVectorCompoundDrawable(getActivity().getTheme(), buttonMovieComments,
-                R.attr.drawableComments);
+        ViewTools.setVectorDrawableLeft(getActivity().getTheme(), buttonMovieComments,
+                R.drawable.ic_forum_black_24dp);
 
         // cast and crew
         setCastVisibility(false);
@@ -395,11 +390,12 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                     isWatched ? R.string.action_unwatched : R.string.action_watched);
             CheatSheet.setup(buttonMovieWatched,
                     isWatched ? R.string.action_unwatched : R.string.action_watched);
-            Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatched, 0, isWatched
-                    ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                    R.attr.drawableWatched)
-                    : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                            R.attr.drawableWatch), 0, 0);
+            ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatched, 0,
+                    isWatched
+                            ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                            R.attr.drawableWatched)
+                            : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                                    R.attr.drawableWatch), 0, 0);
             buttonMovieWatched.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -418,7 +414,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
 
         // collected button
-        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieCollected, 0,
+        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieCollected, 0,
                 inCollection
                         ? R.drawable.ic_collected
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
@@ -441,7 +437,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         });
 
         // watchlist button
-        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatchlisted, 0,
+        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatchlisted, 0,
                 inWatchlist
                         ? R.drawable.ic_listed
                         : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
@@ -469,7 +465,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         // language button
         LanguageTools.LanguageData languageData = LanguageTools.getMovieLanguageData(getContext());
         if (languageData != null) {
-            currentLanguageIndex = languageData.languageIndex;
+            languageCode = languageData.languageCode;
             buttonMovieLanguage.setText(languageData.languageString);
         } else {
             buttonMovieLanguage.setText(null);
@@ -510,7 +506,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         // genres
         textViewMovieGenresLabel.setVisibility(View.VISIBLE);
-        Utils.setValueOrPlaceholder(textViewMovieGenres,
+        ViewTools.setValueOrPlaceholder(textViewMovieGenres,
                 TmdbTools.buildGenresString(tmdbMovie.genres));
 
         // trakt comments link
@@ -625,6 +621,16 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         buttonMovieWatchlisted.setEnabled(enabled);
     }
 
+    private void displayLanguageSettings() {
+        // guard against onClick called after fragment is up navigated (multi-touch)
+        // onSaveInstanceState might already be called
+        if (isResumed()) {
+            DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
+                    R.array.languageCodesMovies, languageCode);
+            dialog.show(getFragmentManager(), "dialog-language");
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleLanguageEvent(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
         if (!AndroidUtils.isNetworkConnected(getContext())) {
@@ -632,10 +638,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             return;
         }
 
-        String languageCode = getResources().getStringArray(
-                R.array.languageCodesMovies)[event.selectedLanguageIndex];
         PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
-                .putString(DisplaySettings.KEY_MOVIES_LANGUAGE, languageCode)
+                .putString(DisplaySettings.KEY_MOVIES_LANGUAGE, event.selectedLanguageCode)
                 .apply();
 
         progressBar.setVisibility(View.VISIBLE);

@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">ซีรีส์</string>
   <string name="episode">ตอน</string>
-  <string name="episode_number">ตอน %s</string>
+  <string name="episode_number">ตอน %d</string>
   <string name="episodes">ตอน</string>
   <string name="season">ซีซั่น</string>
-  <string name="season_number">ซีซั่น %s</string>
+  <string name="season_number">ซีซั่น %d</string>
   <string name="seasons">ซีซั่น</string>
   <string name="specialseason">ตอนพิเศษ</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">แบ่งปันซีรีส์</string>
   <string name="share_episode">แบ่งปันตอน</string>
   <string name="share_movie">แบ่งปันภาพยนตร์</string>
-  <string name="share_checkout">ลองดู %s</string>
   <string name="addtocalendar">เพิ่มในปฏิทิน</string>
   <string name="addtocalendar_failed">ไม่สามารถสร้างกิจกรรมบนปฏิทิน</string>
   <string name="links">ลิงก์</string>
@@ -119,6 +118,8 @@
   <string name="context_unfavorite">ลบออกจากรายการโปรด</string>
   <string name="favorited">เพิ่มในรายการโปรดแล้ว</string>
   <string name="unfavorited">ลบออกจากรายการโปรดแล้ว</string>
+  <string name="action_episode_notifications_on">เปิดการแจ้งเตือนตอนใหม่</string>
+  <string name="action_episode_notifications_off">ปิดการแจ้งเตือนตอนใหม่</string>
   <string name="context_hide">ซ่อน</string>
   <string name="context_unhide">ไม่ต้องซ่อน</string>
   <string name="hidden">ย้ายไปซ่อนแล้ว</string>
@@ -155,7 +156,9 @@
   <string name="recent">ล่าสุด</string>
   <string name="noupcoming">ไม่มีตอนที่กำลังจะมาเร็วๆ นี้</string>
   <string name="norecent">ไม่มีตอนล่าสุด</string>
+  <string name="calendar_settings">การตั้งค่าปฏิทิน</string>
   <string name="only_favorites">เฉพาะซีรีส์ที่ชื่นชอบ</string>
+  <string name="calendar_only_collected">เฉพาะตอนที่เก็บไว้</string>
   <string name="pref_infinite_scrolling">ปฏิทินไม่สิ้นสุด</string>
   <!-- Updating -->
   <string name="update_scheduled">กำลังอัปเดต&#8230;</string>
@@ -164,16 +167,16 @@
   <!-- Seasons -->
   <string name="season_allwatched">ดูครบทุกตอนแล้ว</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="other">%d ตอนยังไม่ได้ดู</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="other">%d other episodes</item>
+    <item quantity="other">%d ตอนเพิ่มเติม</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="other">%d to be released</item>
+    <item quantity="other">%d ตอนยังไม่ออก</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="other">%d remaining</item>
+    <item quantity="other">เหลืออีก %d</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">พิมพ์ชื่อซีรีส์</string>
@@ -335,6 +338,15 @@
   <string name="pref_language">ภาษาของเนื้อหาที่ต้องการ</string>
   <string name="pref_updatewifionly">รูปภาพผ่านไวไฟเท่านั้น</string>
   <string name="pref_updatewifionlysummary">เพื่อใช้ข้อมูลน้อยลง ไม่ต้องดาวน์โหลดผ่านเครือข่ายมือถือ</string>
+  <plurals name="days_before_plural">
+    <item quantity="other">%d วันก่อนหน้า</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="other">%d ชั่วโมงก่อนหน้า</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="other">%d นาทีก่อนหน้า</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">แอปนี้ใช้ข้อมูลและรูปภาพจาก TheTVDB สงวนสิทธิ์ภายใต้ CC BY-NC 4.0</string>
   <string name="licence_themoviedb">ผลิตภัณฑ์นี้ใช้ API ของ TMDb แต่ไม่ได้รับการรับรองโดย TMDb</string>
@@ -376,7 +388,7 @@
   <string name="backup_summary">สำรองหรือกู้คืนซีรีส์ของคุณ</string>
   <string name="pref_number">รูปแบบตัวเลข</string>
   <string name="pref_offset">ชดเชยเวลาด้วยตนเอง</string>
-  <string name="pref_offsetsummary">ชดเชยเวลาออกอากาศ %s ชั่วโมง</string>
+  <string name="pref_offsetsummary">ชดเชยเวลาออกอากาศ %d ชั่วโมง</string>
   <string name="clear_cache">ลบแคชรูปภาพ</string>
   <string name="clear_cache_summary">ลบแคชรูปภาพทั้งหมดออกจากอุปกรณ์ของคุณ</string>
   <string name="pref_ganalyticssummary">ส่งสถิติการใช้งานแบบไม่ระบุชื่อกับบริการของ Google</string>
@@ -417,21 +429,16 @@
   <string name="upcoming_episodes">ตอนใหม่กำลังมา</string>
   <string name="upcoming_episodes_number">%s ตอนใหม่</string>
   <string name="upcoming_show_detailed">%1$s บน %2$s</string>
-  <string name="more">อื่นๆ อีก %s</string>
+  <string name="more">อื่นๆ อีก %d</string>
   <string name="upcoming_display">เลือกเพื่อแสดงซีรีส์ที่กำลังมา</string>
   <string name="pref_notifications">การแจ้งเตือน</string>
   <string name="pref_notificationssummary">แจ้งเตือนเกี่ยวกับตอนใหม่</string>
-  <string name="pref_notifyfavonly">เฉพาะรายการโปรด</string>
-  <string name="pref_notifyfavonlysummary">รับการแจ้งเตือนเฉพาะซีรีส์เรื่องโปรด</string>
   <string name="pref_ringtone">เสียง</string>
   <string name="pref_vibrate">สั่น</string>
   <string name="pref_vibratesummary">สั่นเมื่อแสดงการแจ้งเตือนด้วย</string>
   <string name="pref_notifications_treshold">แจ้งเตือนตอนไหนดี</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">เวลาออกอากาศ</string>
-  <string name="notification_release_earlier_five">ล่วงหน้า 5 นาที</string>
-  <string name="notification_release_earlier_ten">ล่วงหน้า 10 นาที</string>
-  <string name="notification_release_earlier_hour">ล่วงหน้า 1 ชั่วโมง</string>
+  <string name="pref_notifications_select_shows">เลือกรายการ</string>
+  <string name="pref_notifications_select_shows_summary">รายการที่เปิดใช้การแจ้งเตือน (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (เล็ก)</string>
   <!-- List Widget -->

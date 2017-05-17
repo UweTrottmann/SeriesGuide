@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Seriál</string>
   <string name="episode">Epizoda</string>
-  <string name="episode_number">Epizoda %s</string>
+  <string name="episode_number">Epizoda %d</string>
   <string name="episodes">Epizody</string>
   <string name="season">Série</string>
-  <string name="season_number">Série %s</string>
+  <string name="season_number">Série %d</string>
   <string name="seasons">Série</string>
   <string name="specialseason">Bonusové Epizody</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">Sdílet seriál</string>
   <string name="share_episode">Sdílet epizodu</string>
   <string name="share_movie">Sdílet film</string>
-  <string name="share_checkout">Čekuj %s</string>
   <string name="addtocalendar">Přidat do kalendáře</string>
   <string name="addtocalendar_failed">V kalendáři nelze založit událost.</string>
   <string name="links">Odkazy</string>
@@ -121,6 +120,8 @@
   <string name="context_unfavorite">Znelíbit</string>
   <string name="favorited">Přidáno k oblíbeným</string>
   <string name="unfavorited">Odebráno z oblíbených</string>
+  <string name="action_episode_notifications_on">Zapnout oznámení epizody</string>
+  <string name="action_episode_notifications_off">Vypnout oznámení epizody</string>
   <string name="context_hide">Skrýt</string>
   <string name="context_unhide">Obnovit</string>
   <string name="hidden">Skrytý seriál</string>
@@ -157,7 +158,9 @@
   <string name="recent">Nedávné</string>
   <string name="noupcoming">Žádné nadcházející epizody.</string>
   <string name="norecent">Žádné nedávné epizody.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Pouze oblíbené seriály</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Nekonečný kalendář</string>
   <!-- Updating -->
   <string name="update_scheduled">Probíhá aktualizace&#8230;</string>
@@ -166,24 +169,24 @@
   <!-- Seasons -->
   <string name="season_allwatched">Všechny epizody zhlédnuty</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
+    <item quantity="one">%d epizoda ke shlédnutí</item>
     <item quantity="few">%d episodes not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="other">%d epizod ke shlédnutí</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
+    <item quantity="one">%d další epizoda</item>
     <item quantity="few">%d other episodes</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="other">%d další epizody</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
+    <item quantity="one">%d neodvysílaná</item>
     <item quantity="few">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="other">%d neodvysílaná</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
+    <item quantity="one">%d zbývá</item>
     <item quantity="few">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="other">%d zbývá</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Napište název seriálu</string>
@@ -275,7 +278,7 @@
   <string name="hexagon_remove_account_failure">Nelze odebrat účet.</string>
   <string name="hexagon_remove_account_confirmation">Odebráním účtu smažete veškeré seriály a filmy ze SeriesGuide cloudu. Ujistěte se, že jste ho odebrali i na ostatních připojených zařízeních.</string>
   <string name="hexagon_api_queued">Odesílání do SeriesGuide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Odhlášeno z SeriesGuide Cloudu.</string>
   <string name="hexagon_google_play_missing">Pro použití SeriesGuide Cloudu jsou vyžadovány Služby Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Odesíláno na trakt.</string>
@@ -353,6 +356,21 @@
   <string name="pref_language">Preferovaný jazyk obsahu</string>
   <string name="pref_updatewifionly">Obrázky pouze přes Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Omezí přenos dat, nebude se stahovat před mobilní data nebo omezená připojení</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d den předem</item>
+    <item quantity="few">%d days before</item>
+    <item quantity="other">%d dní předem</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hodina předem</item>
+    <item quantity="few">%d hours before</item>
+    <item quantity="other">%d hodin předem</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minuta předem</item>
+    <item quantity="few">%d minutes before</item>
+    <item quantity="other">%d minut předem</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Tato aplikace využívá údaje a obrázky z TheTVDB podle licence CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Tento produkt používá TMDb API ale není schválen nebo certifikován TMDb.</string>
@@ -394,7 +412,7 @@
   <string name="backup_summary">Zálohování a obnovení Vašich pořadů</string>
   <string name="pref_number">Formát číslování</string>
   <string name="pref_offset">Ruční časový posun</string>
-  <string name="pref_offsetsummary">Posunout vysílací čas o %s hodin</string>
+  <string name="pref_offsetsummary">Posunout vysílací čas o %d hodin</string>
   <string name="clear_cache">Vymazat paměť pro obrázky</string>
   <string name="clear_cache_summary">Odstranit všechny stažené obrázky ze zařízení</string>
   <string name="pref_ganalyticssummary">Odeslat anonymní statistiky službě Google</string>
@@ -435,21 +453,16 @@
   <string name="upcoming_episodes">Vycházející epizody</string>
   <string name="upcoming_episodes_number">%s nových epizod</string>
   <string name="upcoming_show_detailed">%1$s na %2$s</string>
-  <string name="more">%s další</string>
+  <string name="more">%d další</string>
   <string name="upcoming_display">Vyberte pro zobrazení nadcházejících seriálů</string>
   <string name="pref_notifications">Upozornění</string>
   <string name="pref_notificationssummary">Upozorňovat na nové epizody</string>
-  <string name="pref_notifyfavonly">Pouze oblíbené</string>
-  <string name="pref_notifyfavonlysummary">Upozorňovat pouze na oblíbené seriály</string>
   <string name="pref_ringtone">Vyzváněcí tón</string>
   <string name="pref_vibrate">Vibrovat</string>
   <string name="pref_vibratesummary">Při upozornění také vibrovat</string>
   <string name="pref_notifications_treshold">Čas upozornění</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">vysílá se</string>
-  <string name="notification_release_earlier_five">5 minut předem</string>
-  <string name="notification_release_earlier_ten">10 minut předem</string>
-  <string name="notification_release_earlier_hour">hodinu předem</string>
+  <string name="pref_notifications_select_shows">Vybrat pořad</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (malý)</string>
   <!-- List Widget -->
@@ -470,7 +483,7 @@
   <string name="onlyx">Pouze pro dárce</string>
   <string name="action_upgrade">Odemknout všechny funkce</string>
   <string name="billing_action_subscribe">Odebírat</string>
-  <string name="billing_action_pass">Získejte Rozšířenou verzi</string>
+  <string name="billing_action_pass">Získejte X Pass</string>
   <string name="billing_price_subscribe">%s/rok, vyzkoušejte zdarma</string>
   <string name="billing_price_pass">jednorázový nákup</string>
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>

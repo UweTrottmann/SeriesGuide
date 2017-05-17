@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Serie</string>
   <string name="episode">Aflevering</string>
-  <string name="episode_number">Aflevering %s</string>
+  <string name="episode_number">Aflevering %d</string>
   <string name="episodes">Afleveringen</string>
   <string name="season">Seizoen</string>
-  <string name="season_number">Seizoen %s</string>
+  <string name="season_number">Seizoen %d</string>
   <string name="seasons">Seizoenen</string>
   <string name="specialseason">Speciale afleveringen</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">Serie delen</string>
   <string name="share_episode">Aflevering delen</string>
   <string name="share_movie">Film delen</string>
-  <string name="share_checkout">Uitchecken %s</string>
   <string name="addtocalendar">Aan agenda toevoegen</string>
   <string name="addtocalendar_failed">Kan geen agendagebeurtenis aanmaken.</string>
   <string name="links">Links</string>
@@ -120,6 +119,8 @@
   <string name="context_unfavorite">Geen favoriet</string>
   <string name="favorited">Toegevoegd aan favorieten</string>
   <string name="unfavorited">Verwijderd uit favorieten</string>
+  <string name="action_episode_notifications_on">Zet afleveringsmeldingen aan</string>
+  <string name="action_episode_notifications_off">Zet afleveringsmeldingen uit</string>
   <string name="context_hide">Verbergen</string>
   <string name="context_unhide">Niet verbergen</string>
   <string name="hidden">Verborgen serie</string>
@@ -156,7 +157,9 @@
   <string name="recent">Recente</string>
   <string name="noupcoming">Er zijn geen toekomstige afleveringen.</string>
   <string name="norecent">Er zijn geen recente afleveringen.</string>
+  <string name="calendar_settings">Kalenderinstellingen</string>
   <string name="only_favorites">Alleen favoriete series</string>
+  <string name="calendar_only_collected">Enkel verzamelde afleveringen</string>
   <string name="pref_infinite_scrolling">Oneindige kalender</string>
   <!-- Updating -->
   <string name="update_scheduled">Bijwerken&#8230;</string>
@@ -165,20 +168,20 @@
   <!-- Seasons -->
   <string name="season_allwatched">Alle afleveringen bekeken</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="one">%d aflevering niet bekeken</item>
+    <item quantity="other">%d afleveringen niet bekeken</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d andere aflevering</item>
+    <item quantity="other">%d andere afleveringen</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">%d nog vrij te geven</item>
+    <item quantity="other">%d nog vrij te geven</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">%d resterend</item>
+    <item quantity="other">%d resterend</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Voer de naam van een serie in</string>
@@ -344,6 +347,18 @@
   <string name="pref_language">Content taal voorkeur</string>
   <string name="pref_updatewifionly">Afbeeldingen alleen via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Om dataverbruik te reduceren, niet downloaden over een mobiele verbinding of andere betaald netwerken</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d dag voordien</item>
+    <item quantity="other">%d dagen voordien</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d uur voordien</item>
+    <item quantity="other">%d uren voordien</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minuut voordien</item>
+    <item quantity="other">%d minuten voordien</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Deze app gebruikt data en afbeeldingen van TheTVDB, gelicenseerd onder CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Dit product gebruikt de TMDb API maar is niet goedgekeurd of gecertificeerd door TMDb.</string>
@@ -385,7 +400,7 @@
   <string name="backup_summary">Back-up van series maken/herstellen</string>
   <string name="pref_number">Nummer opmaak</string>
   <string name="pref_offset">Handmatige aanpassing tijdzone</string>
-  <string name="pref_offsetsummary">Pas uitzendtijd aan met %s uren</string>
+  <string name="pref_offsetsummary">Pas uitzendtijd aan met %d uren</string>
   <string name="clear_cache">Afbeeldingenbuffer wissen</string>
   <string name="clear_cache_summary">Alle gebufferde afbeeldingen van het apparaat verwijderen</string>
   <string name="pref_ganalyticssummary">Anonieme gebruiksstatistieken verzenden naar een Google-dienst</string>
@@ -426,21 +441,16 @@
   <string name="upcoming_episodes">Nieuwe afleveringen verschijnen binnenkort</string>
   <string name="upcoming_episodes_number">%s nieuwe afleveringen</string>
   <string name="upcoming_show_detailed">%1$s op %2$s</string>
-  <string name="more">%s meer</string>
+  <string name="more">%d meer</string>
   <string name="upcoming_display">Selecteer om toekomstige series weer te geven</string>
   <string name="pref_notifications">Meldingen</string>
   <string name="pref_notificationssummary">Verwittigen bij nieuwe afleveringen</string>
-  <string name="pref_notifyfavonly">Alleen favorieten</string>
-  <string name="pref_notifyfavonlysummary">Ontvang alleen berichten over favoriete series</string>
   <string name="pref_ringtone">Beltoon</string>
   <string name="pref_vibrate">Trillen</string>
   <string name="pref_vibratesummary">Ook trillen als melding wordt weergegeven</string>
   <string name="pref_notifications_treshold">Wanneer te waarschuwen</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">uitzending</string>
-  <string name="notification_release_earlier_five">5 min van tevoren</string>
-  <string name="notification_release_earlier_ten">10 min van tevoren</string>
-  <string name="notification_release_earlier_hour">één uur van tevoren</string>
+  <string name="pref_notifications_select_shows">Kies series</string>
+  <string name="pref_notifications_select_shows_summary">Series waarvoor de meldingen aanstaan (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (klein)</string>
   <!-- List Widget -->

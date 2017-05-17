@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!--suppress AndroidDomInspection -->
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
@@ -8,49 +6,78 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar" />
+        <include
+            android:id="@+id/sgToolbar"
+            layout="@layout/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.percent.PercentRelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineOverviewVertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.4" />
 
-            <FrameLayout
-                android:id="@+id/fragment_show"
-                app:layout_heightPercent="50%"
-                app:layout_widthPercent="40%" />
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineOverviewHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
 
-            <View
-                android:id="@+id/viewOverviewShadowBottom"
-                android:layout_height="4dp"
-                android:layout_alignBottom="@id/fragment_show"
-                app:layout_widthPercent="40%" />
+        <FrameLayout
+            android:id="@+id/fragment_show"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineOverviewHorizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/guidelineOverviewVertical"
+            app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />
 
-            <FrameLayout
-                android:id="@+id/fragment_seasons"
-                android:layout_below="@id/fragment_show"
-                app:layout_heightPercent="50%"
-                app:layout_widthPercent="40%" />
+        <View
+            android:id="@+id/viewOverviewShadowBottom"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineOverviewHorizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@+id/fragment_show" />
 
-            <FrameLayout
-                android:id="@+id/fragment_overview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@id/fragment_show" />
+        <FrameLayout
+            android:id="@+id/fragment_seasons"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/guidelineOverviewVertical"
+            app:layout_constraintTop_toBottomOf="@+id/guidelineOverviewHorizontal" />
 
-            <View
-                android:id="@+id/viewOverviewShadowStart"
-                android:layout_width="4dp"
-                android:layout_height="match_parent"
-                android:layout_alignLeft="@id/fragment_overview" />
+        <FrameLayout
+            android:id="@+id/fragment_overview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_toRightOf="@id/fragment_show"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/guidelineOverviewVertical"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />
 
-        </android.support.percent.PercentRelativeLayout>
+        <View
+            android:id="@+id/viewOverviewShadowStart"
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/guidelineOverviewVertical"
+            app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
     <include layout="@layout/drawer_left" />
 

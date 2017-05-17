@@ -1,25 +1,32 @@
 package com.battlelancer.seriesguide.appwidget;
 
-import android.annotation.TargetApi;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
-import com.battlelancer.seriesguide.ui.BaseSettingsFragment;
 import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Shows settings fragment for a specific app widget, hosted inside a {@link ListWidgetConfigure}
  * activity.
  */
-public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
+public class ListWidgetPreferenceFragment extends PreferenceFragment {
 
-    @SuppressWarnings("FieldCanBeLocal") private SharedPreferences.OnSharedPreferenceChangeListener
-            preferenceChangeListener;
+    private ListPreference typePref;
+    private ListPreference sortPref;
+    private CheckBoxPreference onlyFavoritesPref;
+    private CheckBoxPreference onlyCollectedPref;
+    private CheckBoxPreference hideWatchedPreference;
+    private ListPreference themePref;
+    private ListPreference backgroundPref;
 
     public static ListWidgetPreferenceFragment newInstance(int appWidgetId) {
         ListWidgetPreferenceFragment f = new ListWidgetPreferenceFragment();
@@ -34,19 +41,12 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // use the settings file specific to widgets
-        getPreferenceManager().setSharedPreferencesName(WidgetSettings.SETTINGS_FILE);
-        getPreferenceManager().setSharedPreferencesMode(0);
-
-        // create a widget specific settings screen
-        PreferenceScreen preferenceScreen = getPreferenceManager().createPreferenceScreen(
-                getActivity());
+        setHasOptionsMenu(true);
 
         int appWidgetId = getArguments().getInt("appWidgetId");
 
         // widget type setting
-        final ListPreference typePref = new ListPreference(getActivity());
+        typePref = new ListPreference(getActivity());
         typePref.setKey(WidgetSettings.KEY_PREFIX_WIDGET_LISTTYPE + appWidgetId);
         typePref.setTitle(R.string.pref_widget_type);
         typePref.setEntries(R.array.widgetType);
@@ -54,10 +54,9 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         typePref.setDefaultValue(getString(R.string.widget_default_type));
         typePref.setPositiveButtonText(null);
         typePref.setNegativeButtonText(null);
-        preferenceScreen.addPreference(typePref);
 
         // widget show type sort order setting
-        final ListPreference sortPref = new ListPreference(getActivity());
+        sortPref = new ListPreference(getActivity());
         sortPref.setKey(WidgetSettings.KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER + appWidgetId);
         sortPref.setTitle(R.string.action_shows_sort);
         sortPref.setEntries(R.array.widgetShowSortOrder);
@@ -65,24 +64,27 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         sortPref.setDefaultValue(getString(R.string.widget_default_show_sort_order));
         sortPref.setPositiveButtonText(null);
         sortPref.setNegativeButtonText(null);
-        preferenceScreen.addPreference(sortPref);
 
         // only favorite shows setting
-        final CheckBoxPreference onlyFavoritesPref = new CheckBoxPreference(getActivity());
+        onlyFavoritesPref = new CheckBoxPreference(getActivity());
         onlyFavoritesPref.setKey(WidgetSettings.KEY_PREFIX_WIDGET_ONLY_FAVORITES + appWidgetId);
         onlyFavoritesPref.setTitle(R.string.only_favorites);
         onlyFavoritesPref.setDefaultValue(false);
-        preferenceScreen.addPreference(onlyFavoritesPref);
+
+        // only collected episodes setting
+        onlyCollectedPref = new CheckBoxPreference(getActivity());
+        onlyCollectedPref.setKey(WidgetSettings.KEY_PREFIX_WIDGET_ONLY_COLLECTED + appWidgetId);
+        onlyCollectedPref.setTitle(R.string.calendar_only_collected);
+        onlyCollectedPref.setDefaultValue(false);
 
         // hide watched setting
-        final CheckBoxPreference hideWatchedPreference = new CheckBoxPreference(getActivity());
+        hideWatchedPreference = new CheckBoxPreference(getActivity());
         hideWatchedPreference.setKey(WidgetSettings.KEY_PREFIX_WIDGET_HIDE_WATCHED + appWidgetId);
         hideWatchedPreference.setTitle(R.string.hide_watched);
         hideWatchedPreference.setDefaultValue(true);
-        preferenceScreen.addPreference(hideWatchedPreference);
 
         // widget theme setting
-        ListPreference themePref = new ListPreference(getActivity());
+        themePref = new ListPreference(getActivity());
         themePref.setKey(WidgetSettings.KEY_PREFIX_WIDGET_THEME + appWidgetId);
         themePref.setTitle(R.string.pref_theme);
         themePref.setEntries(R.array.widgetTheme);
@@ -90,10 +92,9 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         themePref.setDefaultValue("0");
         themePref.setPositiveButtonText(null);
         themePref.setNegativeButtonText(null);
-        preferenceScreen.addPreference(themePref);
 
         // background setting
-        ListPreference backgroundPref = new ListPreference(getActivity());
+        backgroundPref = new ListPreference(getActivity());
         backgroundPref.setKey(
                 WidgetSettings.KEY_PREFIX_WIDGET_BACKGROUND_OPACITY + appWidgetId);
         backgroundPref.setTitle(R.string.pref_widget_opacity);
@@ -102,46 +103,138 @@ public class ListWidgetPreferenceFragment extends BaseSettingsFragment {
         backgroundPref.setDefaultValue(WidgetSettings.DEFAULT_WIDGET_BACKGROUND_OPACITY);
         backgroundPref.setPositiveButtonText(null);
         backgroundPref.setNegativeButtonText(null);
-        preferenceScreen.addPreference(backgroundPref);
 
+        // use the settings file specific to widgets
+        getPreferenceManager().setSharedPreferencesName(WidgetSettings.SETTINGS_FILE);
+        getPreferenceManager().setSharedPreferencesMode(0);
+        // create a widget specific settings screen
+        PreferenceScreen preferenceScreen = getPreferenceManager().createPreferenceScreen(
+                getActivity());
+
+        // add preferences to screen
+        preferenceScreen.addPreference(typePref);
+        preferenceScreen.addPreference(sortPref);
+        preferenceScreen.addPreference(onlyFavoritesPref);
+        preferenceScreen.addPreference(onlyCollectedPref);
+        preferenceScreen.addPreference(hideWatchedPreference);
+        preferenceScreen.addPreference(themePref);
+        preferenceScreen.addPreference(backgroundPref);
         setPreferenceScreen(preferenceScreen);
 
-        bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), typePref);
-        bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), sortPref);
-        bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), backgroundPref);
-        bindPreferenceSummaryToValue(getPreferenceManager().getSharedPreferences(), themePref);
+        // after restoring any values prevent persisting changes (only save on user command)
+        typePref.setPersistent(false);
+        sortPref.setPersistent(false);
+        onlyFavoritesPref.setPersistent(false);
+        onlyCollectedPref.setPersistent(false);
+        hideWatchedPreference.setPersistent(false);
+        themePref.setPersistent(false);
+        backgroundPref.setPersistent(false);
 
-        // disable type and background pref for non-supporters
+        bindPreferenceSummaryToValue(typePref);
+        bindPreferenceSummaryToValue(sortPref);
+        bindPreferenceSummaryToValue(backgroundPref);
+        bindPreferenceSummaryToValue(themePref);
+
         if (!Utils.hasAccessToX(getActivity())) {
-            typePref.setEnabled(false);
+            // disable saving prefs not available for non-supporters
+            Preference.OnPreferenceChangeListener onDisablePreferenceChangeListener
+                    = new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    Utils.advertiseSubscription(getActivity());
+                    return false;
+                }
+            };
+            typePref.setOnPreferenceChangeListener(onDisablePreferenceChangeListener);
             typePref.setSummary(R.string.onlyx);
-            themePref.setEnabled(false);
+            themePref.setOnPreferenceChangeListener(onDisablePreferenceChangeListener);
             themePref.setSummary(R.string.onlyx);
-            backgroundPref.setEnabled(false);
+            backgroundPref.setOnPreferenceChangeListener(onDisablePreferenceChangeListener);
             backgroundPref.setSummary(R.string.onlyx);
         }
-
-        // disable episode related setting if selecting show widget type
-        preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-                    String key) {
-                if (!isAdded()) {
-                    return; // no longer attached to activity
-                }
-                if (typePref.getKey().equals(key)) {
-                    String newTypeValue = typePref.getValue();
-                    boolean displayingShows = getString(R.string.widget_type_shows)
-                            .equals(newTypeValue);
-                    sortPref.setEnabled(displayingShows);
-                    hideWatchedPreference.setEnabled(!displayingShows);
-                }
-            }
-        };
-        // trigger the listener to handle the current state
-        preferenceChangeListener.onSharedPreferenceChanged(
-                getPreferenceManager().getSharedPreferences(), typePref.getKey());
-        getPreferenceManager().getSharedPreferences()
-                .registerOnSharedPreferenceChangeListener(preferenceChangeListener);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // trigger the listener to handle the current state
+        preferenceChangeListener.onPreferenceChange(typePref, typePref.getValue());
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.widget_config_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_save) {
+            save(); // disabled persistence, so save ourselves
+            ((ListWidgetConfigure) getActivity()).updateWidget();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void save() {
+        SharedPreferences.Editor editor = getPreferenceManager().getSharedPreferences().edit();
+        editor.putString(typePref.getKey(), typePref.getValue());
+        editor.putString(sortPref.getKey(), sortPref.getValue());
+        editor.putBoolean(onlyFavoritesPref.getKey(), onlyFavoritesPref.isChecked());
+        editor.putBoolean(onlyCollectedPref.getKey(), onlyCollectedPref.isChecked());
+        editor.putBoolean(hideWatchedPreference.getKey(), hideWatchedPreference.isChecked());
+        editor.putString(themePref.getKey(), themePref.getValue());
+        editor.putString(backgroundPref.getKey(), backgroundPref.getValue());
+        editor.apply();
+    }
+
+    /**
+     * Binds a preference's summary to its value. More specifically, when the
+     * preference's value is changed, its summary (line of text below the
+     * preference title) is updated to reflect the value. The summary is also
+     * immediately updated upon calling this method. The exact display format is
+     * dependent on the type of preference.
+     */
+    public void bindPreferenceSummaryToValue(ListPreference preference) {
+        // Set the listener to watch for value changes.
+        preference.setOnPreferenceChangeListener(preferenceChangeListener);
+
+        // Trigger the listener immediately with the preference's current value.
+        preferenceChangeListener.onPreferenceChange(preference, preference.getValue());
+    }
+
+    private Preference.OnPreferenceChangeListener preferenceChangeListener =
+            new Preference.OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            // disable episode related setting if selecting show widget type
+            if (typePref.getKey().equals(preference.getKey())) {
+                String newTypeValue = (String) newValue;
+                boolean displayingShows = getString(R.string.widget_type_shows)
+                        .equals(newTypeValue);
+                sortPref.setEnabled(displayingShows);
+                onlyCollectedPref.setEnabled(!displayingShows);
+                hideWatchedPreference.setEnabled(!displayingShows);
+            }
+
+            if (preference instanceof ListPreference) {
+                // For list preferences, look up the correct display value in
+                // the preference's 'entries' list.
+                ListPreference listPreference = (ListPreference) preference;
+                String stringValue = newValue.toString();
+                int index = listPreference.findIndexOfValue(stringValue);
+
+                // Set the summary to reflect the new value. Escape '%'.
+                preference.setSummary(
+                        index >= 0
+                                ? (listPreference.getEntries()[index])
+                                .toString().replaceAll("%", "%%")
+                                : null
+                );
+            }
+
+            return true;
+        }
+    };
 }

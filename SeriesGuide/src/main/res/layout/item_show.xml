@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -31,7 +32,8 @@
             android:paddingLeft="22dp"
             android:paddingRight="6dp"
             android:paddingTop="6dp"
-            android:src="?attr/drawableStar"
+            tools:src="@drawable/ic_star_black_24dp"
+            tools:tint="?attr/sgColorIcon"
             tools:ignore="ContentDescription" />
 
         <ImageView
@@ -46,7 +48,8 @@
             android:paddingLeft="24dp"
             android:paddingTop="20dp"
             android:scaleType="centerInside"
-            android:src="?attr/drawableDropdown"
+            android:tint="?attr/sgColorIcon"
+            app:srcCompat="@drawable/ic_more_vert_white_20dp"
             tools:ignore="ContentDescription" />
 
         <TextView
@@ -71,7 +74,7 @@
             android:paddingRight="@dimen/inline_padding"
             android:paddingTop="@dimen/inline_padding"
             android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Body.Dim"
+            android:textAppearance="@style/TextAppearance.Body.Secondary"
             tools:text="10x456 Some Very Cool Episode Title Therefore" />
 
         <TextView

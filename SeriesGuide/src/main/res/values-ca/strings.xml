@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Sèrie</string>
   <string name="episode">Episodi</string>
-  <string name="episode_number">Episodi %s</string>
+  <string name="episode_number">Episodi %d</string>
   <string name="episodes">Episodis</string>
   <string name="season">Temporada</string>
-  <string name="season_number">Temporada %s</string>
+  <string name="season_number">Temporada %d</string>
   <string name="seasons">Temporades</string>
   <string name="specialseason">Episodis especials</string>
   <!-- Descriptions -->
@@ -34,8 +34,8 @@
   <string name="add_to_homescreen">Drecera</string>
   <string name="action_open">Obre</string>
   <string name="sync_manually">Sincronitza manualment</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
-  <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="sync_and_update">Sincronització i actualització</string>
+  <string name="sync_and_download_all">Sincronitza i descarrega tot</string>
   <!-- Search -->
   <string name="clear_search_history">Esborra l\'historial</string>
   <string name="search_hint">Cerca episodis</string>
@@ -48,28 +48,27 @@
   <string name="app_not_available">No hi ha cap aplicació per gestionar-ho.</string>
   <string name="people_empty">No hi ha ningú? Toqueu per intentar-ho novament.</string>
   <string name="database_error">No s\'han pogut modificar les dades.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="reinstall_info">Intenta fer un backup en el panell de Configuraciò, torneu a instal·lar i restaurar.</string>
+  <string name="api_error_generic">No es possible contactar amb %s. Proveu-ho més tard.</string>
   <!-- Sharing -->
   <string name="share">Comparteix</string>
   <string name="share_show">Comparteix la serie</string>
   <string name="share_episode">Comparteix l\'episodi</string>
   <string name="share_movie">Comparteix la pel·lícula</string>
-  <string name="share_checkout">Dóna un cop d\'ull a %s</string>
   <string name="addtocalendar">Afegeix al calendari</string>
   <string name="addtocalendar_failed">No es pot crear l\'esdeveniment.</string>
-  <string name="links">Links</string>
+  <string name="links">Enllaços</string>
   <!-- Comments -->
   <string name="comments">Comentaris</string>
   <string name="shout_hint">Escriu un comentari (anglès, 5+ paraules)</string>
   <string name="shout_invalid">El teu comentari no compleix les normes!</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Publica</string>
   <string name="isspoiler">Revela parts de la trama!</string>
   <string name="no_shouts">Sigueu el primer a escriure!</string>
   <string name="refresh">Refresca</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d reply</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d resposta</item>
+    <item quantity="other">%d respostes</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_absolute">ABSOLUT</string>
@@ -88,9 +87,9 @@
   <string name="show_isalive">No ha finalitzat</string>
   <string name="show_isnotalive">Finalitzat</string>
   <string name="lastEdit">Darrera edició // TVDb</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
-  <string name="no_translation_title">Not translated</string>
-  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="no_translation">No hi ha cap descripció traduïda al %1$s disponible a %2$s.</string>
+  <string name="no_translation_title">No traduït</string>
+  <string name="no_spoilers">Alguns detalls estan amagats per evitar spoilers. Per desactivar aquesta opció aneu a a Configuració.</string>
   <!-- Date and Time -->
   <string name="today">avui</string>
   <string name="now">ara</string>
@@ -120,6 +119,8 @@
   <string name="context_unfavorite">No preferit</string>
   <string name="favorited">S\'ha afegit a preferits</string>
   <string name="unfavorited">S\'ha esborrat de preferits</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Oculta</string>
   <string name="context_unhide">Mostra</string>
   <string name="hidden">Sèrie oculta</string>
@@ -133,10 +134,10 @@
   <string name="action_shows_filter_hidden">Ocults</string>
   <string name="action_shows_sort">Ordena sèries</string>
   <string name="action_shows_sort_title">Títol</string>
-  <string name="action_shows_sort_latest_episode">Latest episode</string>
-  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
-  <string name="action_shows_sort_last_watched">Last watched</string>
-  <string name="action_shows_sort_remaining">Remaining episodes</string>
+  <string name="action_shows_sort_latest_episode">Últim episodi</string>
+  <string name="action_shows_sort_oldest_episode">Episodi més antic</string>
+  <string name="action_shows_sort_last_watched">Últim vist</string>
+  <string name="action_shows_sort_remaining">Episodis restants</string>
   <string name="action_shows_sort_favorites">Preferits primer</string>
   <string name="context_updateshow">Actualitza</string>
   <string name="context_marknext">Següent episodi vist</string>
@@ -145,8 +146,8 @@
   <string name="recently_watched">Vist Recentment</string>
   <string name="released_today">Publicat avui</string>
   <string name="friends_recently">Els teus amics de Trakt</string>
-  <string name="now_empty">Nothing going on. Watch some shows!</string>
-  <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
+  <string name="now_empty">Res a veure. Mira alguna sèrie!</string>
+  <string name="now_movies_empty">Res a veure. Mira alguna pel·lícula!</string>
   <!-- History -->
   <string name="user_stream">historic</string>
   <string name="user_stream_empty">No hi ha activitat recent al trakt. Seguiu alguna sèrie!</string>
@@ -156,7 +157,9 @@
   <string name="recent">Recent</string>
   <string name="noupcoming">No hi ha capítols pròximament.</string>
   <string name="norecent">No hi ha capítols recents.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Només sèries preferides</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Calendari infinit</string>
   <!-- Updating -->
   <string name="update_scheduled">S\'està actualitzant&#8230;</string>
@@ -165,35 +168,35 @@
   <!-- Seasons -->
   <string name="season_allwatched">Tots els episodis vistos</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="one">%d episodi no vist</item>
+    <item quantity="other">%d episodis per veure</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d episodi restant</item>
+    <item quantity="other">%d episodis restants</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">%d pendent d\'emissió</item>
+    <item quantity="other">%d pendent d\'emissió</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">%d restant</item>
+    <item quantity="other">%d restants</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Escriviu el nom d\'una sèrie</string>
   <string name="add_empty">Aquí no hi ha series.</string>
   <string name="no_results">Cap resultat, proveu paraules completes.</string>
-  <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="action_try_any_language">Prova qualsevol idioma</string>
+  <string name="action_try_again">Torneu-ho a intentar</string>
+  <string name="tvdb_error_does_not_exist">La sèrie no existeix (encara) a TheTVDB. Torna-ho a intentar més tard.</string>
   <string name="add_all">Afegeix-ho tot</string>
   <string name="add_multiple">Totes les sèries apareixeran de seguida a la vostra llista de sèries.</string>
   <string name="add_started">De seguida apareixerà %s a la vostra llista de sèries.</string>
   <string name="add_error">No es pot afegir %s.</string>
   <string name="add_already_exists">%s ja és a la vostra llista de sèries.</string>
   <string name="recommended">Recomanat</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Vist</string>
   <string name="shows_collection">Coŀlecció</string>
   <string name="watchlist">Llista de seguiment</string>
   <!-- Lists -->
@@ -207,13 +210,13 @@
   <string name="list_empty">Podeu afegir sèries, temporades o episodis a aquesta llista.</string>
   <string name="action_lists_sort">Ordena les llistes</string>
   <string name="action_lists_reorder">Reordenar les llistes</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">Ja existeix una llista amb aquest nom</string>
   <!-- Movies -->
-  <string name="title_discover">Discover</string>
+  <string name="title_discover">Descobrir</string>
   <string name="title_popular">Popular</string>
-  <string name="title_digital_releases">Digital releases</string>
-  <string name="title_disc_releases">Disc releases</string>
-  <string name="movies_in_theatres">In theaters</string>
+  <string name="title_digital_releases">Publicació digital</string>
+  <string name="title_disc_releases">Publicació en disc</string>
+  <string name="movies_in_theatres">En els teatres</string>
   <string name="movies_collection">Coŀlecció</string>
   <string name="movies_watchlist">Llista de seguiment</string>
   <string name="watchlist_add">Afegeix a la llista de seguiment</string>
@@ -230,7 +233,7 @@
   <string name="action_movies_sort_title">Títol</string>
   <string name="action_movies_sort_release">Data de llançament</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">No s\'han pogut calcular les estadístiques.</string>
   <string name="statistics_shows">Sèries</string>
   <string name="statistics_episodes">Episodis</string>
   <string name="statistics_movies">Peŀlícules</string>
@@ -241,16 +244,16 @@
   <string name="movies_on_watchlist">%s a la llista de seguiment</string>
   <string name="runtime_movies_watchlist">Durada de la llista de peŀlícules</string>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">%d dia</item>
+    <item quantity="other">%d dies</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">%d hour</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="one">%d hora</item>
+    <item quantity="other">%d hores</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="one">%d minute</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="one">%d minut</item>
+    <item quantity="other">%d minuts</item>
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental</string>
@@ -344,6 +347,18 @@
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Imatges només via xarxa sense fils</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
@@ -385,7 +400,7 @@
   <string name="backup_summary">Creeu una còpia de seguretat de les vostres sèries o restaureu-ne alguna d\'existent</string>
   <string name="pref_number">Format de número</string>
   <string name="pref_offset">Compensació horària manual</string>
-  <string name="pref_offsetsummary">Les hores d\'estrena tenen un desfasament de %s hores</string>
+  <string name="pref_offsetsummary">Les hores d\'estrena tenen un desfasament de %d hores</string>
   <string name="clear_cache">Buida la memòria cau d\'imatges</string>
   <string name="clear_cache_summary">Elimina totes les imatges que SeriesGuide hagi baixat i encara siguin al dispositiu</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
@@ -426,21 +441,16 @@
   <string name="upcoming_episodes">Nous episodis són a punt de sortir</string>
   <string name="upcoming_episodes_number">%s episodis nous</string>
   <string name="upcoming_show_detailed">%1$s a %2$s</string>
-  <string name="more">%s més</string>
+  <string name="more">%d més</string>
   <string name="upcoming_display">Seleccioneu-ho per veure les sèries que han de sortir</string>
   <string name="pref_notifications">Notificacions</string>
   <string name="pref_notificationssummary">Notifica\'m de tots els episodis nous</string>
-  <string name="pref_notifyfavonly">Només preferits</string>
-  <string name="pref_notifyfavonlysummary">Només mostra notificacions per a les sèries preferides</string>
   <string name="pref_ringtone">To de notificació</string>
   <string name="pref_vibrate">Vibració</string>
   <string name="pref_vibratesummary">Vibra quan mostris una notificació</string>
   <string name="pref_notifications_treshold">Moment per notificar</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">emetent-se</string>
-  <string name="notification_release_earlier_five">5 min d\'antelació</string>
-  <string name="notification_release_earlier_ten">10 min d\'antelació</string>
-  <string name="notification_release_earlier_hour">1 hora d\'antelació</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (petit)</string>
   <!-- List Widget -->

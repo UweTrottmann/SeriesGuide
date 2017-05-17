@@ -3,10 +3,13 @@ package com.battlelancer.seriesguide.ui.dialogs;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.ArrayRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import com.battlelancer.seriesguide.R;
+import java.util.Locale;
 import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
 
@@ -17,77 +20,82 @@ import timber.log.Timber;
 public class LanguageChoiceDialogFragment extends AppCompatDialogFragment {
 
     public static class LanguageChangedEvent {
-        public final int showTvdbId;
-        public final int selectedLanguageIndex;
+        @NonNull public final String selectedLanguageCode;
 
-        public LanguageChangedEvent(int showTvdbId, int selectedLanguageIndex) {
-            this.showTvdbId = showTvdbId;
-            this.selectedLanguageIndex = selectedLanguageIndex;
+        public LanguageChangedEvent(@NonNull String selectedLanguageCode) {
+            this.selectedLanguageCode = selectedLanguageCode;
         }
     }
 
-    public static final String ARG_SELECTED_LANGUAGE_POSITION = "selectedPosition";
-    private static final String ARG_SHOW_TVDBID = "showTvdbId";
+    private static final String ARG_ARRAY_LANGUAGE_CODES = "languageCodes";
+    private static final String ARG_SELECTED_LANGUAGE_CODE = "selectedLanguageCode";
 
-    /**
-     * Creates a language choice dialog for a specific show.
-     */
-    public static LanguageChoiceDialogFragment newInstance(int showTvdbId,
-            int selectedLanguageIndex) {
+    public static LanguageChoiceDialogFragment newInstance(@ArrayRes int languageCodes,
+            @Nullable String selectedLanguageCode) {
         LanguageChoiceDialogFragment f = new LanguageChoiceDialogFragment();
 
         Bundle args = new Bundle();
-        args.putInt(ARG_SHOW_TVDBID, showTvdbId);
-        args.putInt(ARG_SELECTED_LANGUAGE_POSITION, selectedLanguageIndex);
+        args.putInt(ARG_ARRAY_LANGUAGE_CODES, languageCodes);
+        args.putString(ARG_SELECTED_LANGUAGE_CODE, selectedLanguageCode);
         f.setArguments(args);
 
         return f;
     }
 
-    /**
-     * Creates a language choice dialog for movie languages.
-     */
-    public static LanguageChoiceDialogFragment newInstance(int selectedLanguageIndex) {
-        LanguageChoiceDialogFragment f = new LanguageChoiceDialogFragment();
-
-        Bundle args = new Bundle();
-        args.putInt(ARG_SELECTED_LANGUAGE_POSITION, selectedLanguageIndex);
-        f.setArguments(args);
-
-        return f;
-    }
+    private String[] languageCodes;
+    private int currentLanguagePosition;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final int showTvdbId = getArguments().getInt(ARG_SHOW_TVDBID);
-        final CharSequence[] items;
-        if (showTvdbId != 0) {
-            // show languages
-            items = getResources().getStringArray(R.array.languagesShows);
-        } else {
-            // movie languages
-            items = getResources().getStringArray(R.array.languagesMovies);
+        final int languageCodesArrayRes = getArguments().getInt(ARG_ARRAY_LANGUAGE_CODES);
+        languageCodes = getResources().getStringArray(languageCodesArrayRes);
+
+        String languageCodeAny = getString(R.string.language_code_any);
+        final String[] languages = new String[languageCodes.length];
+        for (int i = 0; i < languageCodes.length; i++) {
+            // example: "en" for shows or "en-US" for movies
+            String languageCode = languageCodes[i];
+            if (languageCodeAny.equals(languageCode)) {
+                languages[i] = getString(R.string.any_language);
+            } else {
+                languages[i] = new Locale(languageCode.substring(0, 2), "").getDisplayName();
+            }
         }
-        final int currentLanguagePosition = getArguments().getInt(ARG_SELECTED_LANGUAGE_POSITION);
+
+        final String currentLanguageCode = getArguments().getString(ARG_SELECTED_LANGUAGE_CODE);
+
+        currentLanguagePosition = 0;
+        if (currentLanguageCode != null) {
+            for (int i = 0; i < languageCodes.length; i++) {
+                if (languageCodes[i].equals(currentLanguageCode)) {
+                    currentLanguagePosition = i;
+                    break;
+                }
+            }
+        }
 
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.pref_language)
                 .setSingleChoiceItems(
-                        items,
+                        languages,
                         currentLanguagePosition,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int item) {
-                                if (item == currentLanguagePosition) {
-                                    Timber.d("Language is unchanged, do nothing.");
-                                    dismiss();
-                                    return;
-                                }
-
-                                EventBus.getDefault()
-                                        .post(new LanguageChangedEvent(showTvdbId, item));
-                                dismiss();
+                                postLanguageChangedEvent(item);
                             }
                         }).create();
+    }
+
+    private void postLanguageChangedEvent(int selectedLanguagePosition) {
+        if (selectedLanguagePosition == currentLanguagePosition) {
+            Timber.d("Language is unchanged, do nothing.");
+            dismiss();
+            return;
+        }
+
+        EventBus.getDefault()
+                .post(new LanguageChangedEvent(languageCodes[selectedLanguagePosition]));
+        dismiss();
     }
 }

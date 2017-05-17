@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Serial</string>
   <string name="episode">Odcinek</string>
-  <string name="episode_number">Odcinek %s</string>
+  <string name="episode_number">Odcinek %d</string>
   <string name="episodes">Odcinki</string>
   <string name="season">Sezon</string>
-  <string name="season_number">Sezon %s</string>
+  <string name="season_number">Sezon %d</string>
   <string name="seasons">Sezony</string>
   <string name="specialseason">Odcinki specjalne</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">Współdziel serial</string>
   <string name="share_episode">Udostępnij</string>
   <string name="share_movie">Udostępnij film</string>
-  <string name="share_checkout">Nie oglądam %s</string>
   <string name="addtocalendar">Dodaj do kalendarza</string>
   <string name="addtocalendar_failed">Nie można utworzyć zdarzenia kalendarza.</string>
   <string name="links">Odnośniki</string>
@@ -121,6 +120,8 @@
   <string name="context_unfavorite">Nieulubione</string>
   <string name="favorited">Dodano do ulubionych</string>
   <string name="unfavorited">Usunięto z ulubionych</string>
+  <string name="action_episode_notifications_on">Włącz powiadomienia o odcinkach</string>
+  <string name="action_episode_notifications_off">Wyłącz powiadomienia o odcinkach</string>
   <string name="context_hide">Ukryj</string>
   <string name="context_unhide">Odkryj</string>
   <string name="hidden">Serial został ukryty</string>
@@ -157,7 +158,9 @@
   <string name="recent">Ostatnie</string>
   <string name="noupcoming">Brak nadchodzących odcinków.</string>
   <string name="norecent">Brak ostatnio emitowanych odcinków.</string>
+  <string name="calendar_settings">Ustawienia kalendarza</string>
   <string name="only_favorites">Tylko ulubione seriale</string>
+  <string name="calendar_only_collected">Tylko odcinki w kolekcji</string>
   <string name="pref_infinite_scrolling">Przewijaj kalendarz</string>
   <!-- Updating -->
   <string name="update_scheduled">Aktualizowanie&#8230;</string>
@@ -166,24 +169,24 @@
   <!-- Seasons -->
   <string name="season_allwatched">Wszystkie odcinki obejrzane</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="few">%d episodes not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="one">%d odcinek nieobejrzany</item>
+    <item quantity="few">%d odcinki nieobejrzane</item>
+    <item quantity="other">%d odcinków nieobejrzanych</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="few">%d other episodes</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d inny odcinek</item>
+    <item quantity="few">%d inne odcinki</item>
+    <item quantity="other">%d innych odcinków</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="few">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">%d niewyemitowany</item>
+    <item quantity="few">%d niewyemitowane</item>
+    <item quantity="other">%d niewyemitowanych</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="few">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">%d pozostały</item>
+    <item quantity="few">%d pozostałe</item>
+    <item quantity="other">%d pozostałych</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Wpisz nazwę serialu</string>
@@ -353,6 +356,21 @@
   <string name="pref_language">Preferowany język zawartości</string>
   <string name="pref_updatewifionly">Obrazy tylko przez Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Aby zmniejszyć opłaty za transfer danych, nie pobieraj przy użyciu sieci komórkowej</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d dzień przed</item>
+    <item quantity="few">%d dni przed</item>
+    <item quantity="other">%d dni przed</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d godzinę przed</item>
+    <item quantity="few">%d godziny przed</item>
+    <item quantity="other">%d godzin przed</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minutę przed</item>
+    <item quantity="few">%d minuty przed</item>
+    <item quantity="other">%d minut przed</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Ta aplikacja korzysta z danych i zdjęć z serwisu TheTVDB na licencji CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Ten produkt używa interfejsu API TMDb, ale nie jest zatwierdzony lub poświadczony przez TMDb.</string>
@@ -394,7 +412,7 @@
   <string name="backup_summary">Utwórz/Przywróć kopię bazy seriali</string>
   <string name="pref_number">Format numeracji</string>
   <string name="pref_offset">Ręczne przesunięcie czasu</string>
-  <string name="pref_offsetsummary">Przesuń czas emisji o %s godzin</string>
+  <string name="pref_offsetsummary">Przesuń czas emisji o %d godzin</string>
   <string name="clear_cache">Usuń bufor obrazów</string>
   <string name="clear_cache_summary">Usuwa wszystkie buforowane obrazy z urządzenia</string>
   <string name="pref_ganalyticssummary">Wysyła anonimowe statystyki użytkowania do usług Google</string>
@@ -435,21 +453,16 @@
   <string name="upcoming_episodes">Nadchodzą nowe odcinki</string>
   <string name="upcoming_episodes_number">%s nowych odcinków</string>
   <string name="upcoming_show_detailed">%1$s na %2$s</string>
-  <string name="more">%s więcej</string>
+  <string name="more">%d więcej</string>
   <string name="upcoming_display">Wyświetl informacje o nadchodzących odcinkach</string>
   <string name="pref_notifications">Powiadomienia</string>
   <string name="pref_notificationssummary">Informuj o nowych odcinkach</string>
-  <string name="pref_notifyfavonly">Tylko ulubione</string>
-  <string name="pref_notifyfavonlysummary">Pokazuj powiadomienia tylko dla ulubionych seriali</string>
   <string name="pref_ringtone">Dzwonek</string>
   <string name="pref_vibrate">Wibracja</string>
   <string name="pref_vibratesummary">Wibruj również przy wyświetlaniu powiadomienia</string>
   <string name="pref_notifications_treshold">Powiadamiaj</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">na antenie</string>
-  <string name="notification_release_earlier_five">5 min wcześniej</string>
-  <string name="notification_release_earlier_ten">10 min wcześniej</string>
-  <string name="notification_release_earlier_hour">godzinę wcześniej</string>
+  <string name="pref_notifications_select_shows">Wybierz seriale</string>
+  <string name="pref_notifications_select_shows_summary">Seriale z aktywnymi powiadomieniami (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (mały)</string>
   <!-- List Widget -->

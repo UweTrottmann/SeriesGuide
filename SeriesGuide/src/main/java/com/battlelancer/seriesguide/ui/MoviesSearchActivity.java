@@ -24,7 +24,7 @@ import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
 import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.ui.dialogs.MovieLocalizationDialogFragment;
 import com.battlelancer.seriesguide.util.SearchHistory;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -62,7 +62,7 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
 
         if (savedInstanceState == null) {
             if (showSearchView) {
-                Utils.showSoftKeyboardOnSearchView(this, searchView);
+                ViewTools.showSoftKeyboardOnSearchView(this, searchView);
             }
 
             getSupportFragmentManager().beginTransaction()
@@ -160,7 +160,7 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
         }
         if (itemId == R.id.menu_action_movies_search_display_search) {
             setSearchViewVisible(true);
-            Utils.showSoftKeyboardOnSearchView(this, searchView);
+            ViewTools.showSoftKeyboardOnSearchView(this, searchView);
             showSearchView = true;
             supportInvalidateOptionsMenu();
             return true;

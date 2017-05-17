@@ -33,7 +33,7 @@ import dagger.Lazy;
 import java.io.IOException;
 import javax.inject.Inject;
 import org.greenrobot.eventbus.EventBus;
-import org.joda.time.DateTime;
+import org.threeten.bp.OffsetDateTime;
 
 public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
 
@@ -290,9 +290,10 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                 // check if the user wants to check-in, but there is already a check-in in progress
                 CheckinError checkinError = trakt.get().checkForCheckinError(response);
                 if (checkinError != null) {
-                    DateTime expiresAt = checkinError.expires_at;
+                    OffsetDateTime expiresAt = checkinError.expires_at;
                     int waitTimeMin = expiresAt == null ? -1
-                            : (int) ((expiresAt.getMillis() - System.currentTimeMillis()) / 1000);
+                            : (int) ((expiresAt.toInstant().toEpochMilli()
+                                    - System.currentTimeMillis()) / 1000);
                     return new CheckinBlockedResponse(waitTimeMin);
                 }
                 // check if item does not exist on trakt (yet)

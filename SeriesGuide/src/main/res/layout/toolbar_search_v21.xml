@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Some CoordinatorLayouts have scrollable children which do not support app bar scrolling
+    pre-L, so only add scroll flags on L+. -->
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sgToolbar"
+    style="@style/Widget.SeriesGuide.ActionBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary"
+    android:minHeight="?attr/actionBarSize"
+    android:theme="?attr/actionBarTheme"
+    app:layout_scrollFlags="scroll|enterAlways|snap"
+    app:popupTheme="?attr/actionBarPopupTheme">
+
+    <RelativeLayout
+        android:id="@+id/containerSearchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <AutoCompleteTextView
+            android:id="@+id/editTextSearchBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/search"
+            android:minWidth="250dp"
+            android:paddingRight="44dp"
+            tools:ignore="RtlSymmetry" />
+
+        <ImageButton
+            android:id="@+id/imageButtonSearchClear"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_alignRight="@+id/editTextSearchBar"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/clear"
+            android:src="@drawable/ic_action_cancel" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.Toolbar>

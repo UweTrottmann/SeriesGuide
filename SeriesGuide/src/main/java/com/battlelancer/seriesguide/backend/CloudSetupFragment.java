@@ -179,15 +179,21 @@ public class CloudSetupFragment extends Fragment {
     /**
      * On sign-in success, saves the signed in Google account and auto-starts setup if Cloud is not
      * enabled, yet. On sign-in failure disables Cloud.
+     *
+     * @param result May be null (here if coming from onActivityResult).
      */
-    private void handleSignInResult(GoogleSignInResult result) {
-        boolean signedIn = result.isSuccess();
+    private void handleSignInResult(@Nullable GoogleSignInResult result) {
+        boolean signedIn = result != null && result.isSuccess();
         if (signedIn) {
             Timber.i("Signed in with Google.");
             signInAccount = result.getSignInAccount();
         } else {
             // not or no longer signed in
-            hexagonTools.trackSignInFailure(ACTION_SIGN_IN, result.getStatus());
+            if (result != null) {
+                hexagonTools.trackSignInFailure(ACTION_SIGN_IN, result.getStatus());
+            } else {
+                hexagonTools.trackSignInFailure(ACTION_SIGN_IN, "result is null");
+            }
             signInAccount = null;
             hexagonTools.setDisabled();
         }

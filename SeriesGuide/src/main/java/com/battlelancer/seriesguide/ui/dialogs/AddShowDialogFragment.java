@@ -39,7 +39,7 @@ import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.Date;
 import java.util.List;
@@ -296,7 +296,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
                 statusText.setSpan(new TextAppearanceSpan(getActivity(),
                                 encodedStatus == ShowTools.Status.CONTINUING
                                         ? R.style.TextAppearance_Body_Green
-                                        : R.style.TextAppearance_Body_Dim),
+                                        : R.style.TextAppearance_Body_Secondary),
                         currentTextLength, statusText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
@@ -330,7 +330,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         rating.setText(TraktTools.buildRatingString(show.rating));
 
         // genres
-        Utils.setValueOrPlaceholder(genres, TextTools.splitAndKitTVDBStrings(show.genres));
+        ViewTools.setValueOrPlaceholder(genres, TextTools.splitAndKitTVDBStrings(show.genres));
 
         // poster
         TvdbImageTools.loadShowPosterFitCrop(getActivity(), poster, show.poster);

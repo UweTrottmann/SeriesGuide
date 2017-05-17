@@ -4,10 +4,9 @@ package com.battlelancer.seriesguide.settings;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.annotation.ArrayRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 
 /**
  * Access settings related to the notification service.
@@ -19,6 +18,10 @@ public class NotificationSettings {
 
     public static final String KEY_THRESHOLD
             = "com.battlelancer.seriesguide.notifications.threshold";
+
+    /** Just a link to a screen to select shows to notify about. */
+    public static final String KEY_SELECTION
+            = "com.battlelancer.seriesguide.notifications.shows";
 
     public static final String KEY_LAST_CLEARED
             = "com.battlelancer.seriesguide.notifications.latestcleared";
@@ -33,13 +36,18 @@ public class NotificationSettings {
 
     public static final String KEY_VIBRATE = "com.battlelancer.seriesguide.notifications.vibrate";
 
-    private static final String THRESHOLD_DEFAULT_MIN = "60";
+    private static final int THRESHOLD_DEFAULT_MIN = 10;
 
     public static boolean isNotificationsEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_ENABLED, true);
     }
 
+    /**
+     * @deprecated Notifications are enabled on a per-show basis since {@link
+     * SeriesGuideDatabase#DBVER_40_NOTIFY_PER_SHOW}.
+     */
+    @Deprecated
     public static boolean isNotifyAboutFavoritesOnly(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_FAVONLY, false);
@@ -49,11 +57,11 @@ public class NotificationSettings {
      * How far into the future to include upcoming episodes in minutes.
      */
     public static int getLatestToIncludeTreshold(Context context) {
-        int threshold = 60;
+        int threshold = THRESHOLD_DEFAULT_MIN;
 
         try {
             threshold = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context)
-                    .getString(KEY_THRESHOLD, THRESHOLD_DEFAULT_MIN));
+                    .getString(KEY_THRESHOLD, String.valueOf(THRESHOLD_DEFAULT_MIN)));
         } catch (NumberFormatException ignored) {
         }
 
@@ -61,39 +69,26 @@ public class NotificationSettings {
     }
 
     /**
-     * How far into the future to include upcoming episodes in minutes as text value.
+     * Text value when notifications for new episodes are shown, such as '10 minutes before'.
      */
-    @Nullable
+    @NonNull
     public static CharSequence getLatestToIncludeTresholdValue(Context context) {
-        String value = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_THRESHOLD, THRESHOLD_DEFAULT_MIN);
-        return getEntryForValue(context, R.array.notificationThresholdData,
-                R.array.notificationThreshold, value);
-    }
+        int minutes = getLatestToIncludeTreshold(context);
 
-    @Nullable
-    private static CharSequence getEntryForValue(@NonNull Context context,
-            @ArrayRes int entryValuesResId, @ArrayRes int entriesResId, @Nullable String value) {
-        if (value == null) {
-            return null;
+        int value;
+        int stringRes;
+        if (minutes != 0 && minutes % (24 * 60) == 0) {
+            value = minutes / (24 * 60);
+            stringRes = R.plurals.days_before_plural;
+        } else if (minutes != 0 && minutes % 60 == 0) {
+            value = minutes / 60;
+            stringRes = R.plurals.hours_before_plural;
+        } else {
+            value = minutes;
+            stringRes = R.plurals.minutes_before_plural;
         }
-        CharSequence[] entryValues = context.getResources().getTextArray(entryValuesResId);
-        if (entryValues == null) {
-            return null;
-        }
-        int index = findIndexOfValue(value, entryValues);
-        CharSequence[] entries = context.getResources().getTextArray(entriesResId);
-        return index >= 0 && entries != null ? entries[index] : null;
-    }
 
-    private static int findIndexOfValue(@NonNull String value,
-            @NonNull CharSequence[] entryValues) {
-        for (int i = entryValues.length - 1; i >= 0; i--) {
-            if (entryValues[i].equals(value)) {
-                return i;
-            }
-        }
-        return -1;
+        return context.getResources().getQuantityString(stringRes, value, value);
     }
 
     /**
@@ -105,8 +100,7 @@ public class NotificationSettings {
     }
 
     /**
-     * Get the air time of the episode the user cleared last (or for below HC the last episode we
-     * notified about).
+     * Get the air time of the episode the user cleared last.
      */
     public static long getLastCleared(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
@@ -116,7 +110,7 @@ public class NotificationSettings {
     /**
      * Get the air time of the episode we last notified about.
      */
-    public static long getLastNotified(Context context) {
+    public static long getLastNotifiedAbout(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getLong(KEY_LAST_NOTIFIED, 0);
     }

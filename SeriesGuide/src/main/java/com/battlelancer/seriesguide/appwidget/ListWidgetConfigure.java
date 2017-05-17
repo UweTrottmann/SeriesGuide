@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.RemoteViews;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
@@ -33,9 +31,6 @@ public class ListWidgetConfigure extends AppCompatActivity {
         setContentView(R.layout.activity_singlepane);
         setupActionBar();
 
-        // if the user backs out, no widget gets added
-        setResult(RESULT_CANCELED);
-
         // get given app widget id
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -50,6 +45,9 @@ public class ListWidgetConfigure extends AppCompatActivity {
             return;
         }
 
+        // if the user backs out, no widget gets added
+        setWidgetResult(RESULT_CANCELED);
+
         if (savedInstanceState == null) {
             ListWidgetPreferenceFragment f = ListWidgetPreferenceFragment.newInstance(mAppWidgetId);
             FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -63,22 +61,7 @@ public class ListWidgetConfigure extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.widget_config_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_save) {
-            onUpdateWidget();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void onUpdateWidget() {
+    protected void updateWidget() {
         final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         RemoteViews views = ListWidgetProvider
                 .buildRemoteViews(this, appWidgetManager, mAppWidgetId);
@@ -93,9 +76,13 @@ public class ListWidgetConfigure extends AppCompatActivity {
         };
         new Handler().postDelayed(runnable, 300);
 
+        setWidgetResult(RESULT_OK);
+        finish();
+    }
+
+    private void setWidgetResult(int resultCode) {
         Intent resultValue = new Intent();
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-        setResult(RESULT_OK, resultValue);
-        finish();
+        setResult(resultCode, resultValue);
     }
 }

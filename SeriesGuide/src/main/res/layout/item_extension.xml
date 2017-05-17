@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent">
@@ -32,7 +33,9 @@
             android:paddingBottom="12dp"
             android:paddingLeft="@dimen/large_padding"
             android:paddingTop="12dp"
-            android:src="?attr/drawableDropdown" />
+            android:tint="?attr/sgColorIcon"
+            app:srcCompat="@drawable/ic_more_vert_white_20dp"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
             android:id="@+id/textViewItemExtensionTitle"
@@ -56,7 +59,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:paddingBottom="20dp"
-            android:textAppearance="@style/TextAppearance.Body.Dim"
+            android:textAppearance="@style/TextAppearance.Body.Secondary"
             tools:text="Displays some important information about episodes" />
 
     </RelativeLayout>
@@ -70,6 +73,7 @@
         android:paddingBottom="@dimen/default_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingTop="@dimen/default_padding"
-        android:src="?attr/sgColorDivider" />
+        android:src="?attr/sgColorDivider"
+        tools:ignore="RtlSymmetry" />
 
 </FrameLayout>

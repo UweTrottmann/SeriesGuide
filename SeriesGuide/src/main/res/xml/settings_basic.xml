@@ -16,6 +16,10 @@
             android:key="language"
             android:title="@string/pref_language" />
 
+        <Preference
+            android:key="com.battlelancer.seriesguide.timeoffset"
+            android:title="@string/pref_offset" />
+
         <CheckBoxPreference
             android:defaultValue="False"
             android:key="onlyFutureEpisodes"
@@ -39,13 +43,6 @@
             android:key="com.battlelancer.seriesguide.PREVENT_SPOILERS"
             android:summary="@string/pref_nospoilers_summary"
             android:title="@string/pref_nospoilers" />
-
-        <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/offsets"
-            android:entryValues="@array/offsetData"
-            android:key="com.battlelancer.seriesguide.timeoffset"
-            android:title="@string/pref_offset" />
 
     </PreferenceCategory>
 

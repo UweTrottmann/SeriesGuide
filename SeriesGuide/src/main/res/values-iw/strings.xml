@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">סדרה</string>
   <string name="episode">פרק</string>
-  <string name="episode_number">פרק %s</string>
+  <string name="episode_number">פרק %d</string>
   <string name="episodes">פרקים</string>
   <string name="season">עונה</string>
-  <string name="season_number">עונה %s</string>
+  <string name="season_number">עונה %d</string>
   <string name="seasons">עונות</string>
   <string name="specialseason">פרקים מיוחדים</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">שתף סדרה</string>
   <string name="share_episode">שתף פרק</string>
   <string name="share_movie">שתף סרט</string>
-  <string name="share_checkout">בדוק את %s</string>
   <string name="addtocalendar">הוסף ללוח השנה</string>
   <string name="addtocalendar_failed">אין אפשרות ליצור אירוע בלוח השנה.</string>
   <string name="links">קישורים</string>
@@ -68,9 +67,9 @@
   <string name="no_shouts">תהיה הראשון להמליץ!</string>
   <string name="refresh">רענון</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d תגובה</item>
+    <item quantity="one">תגובה אחת</item>
     <item quantity="two">%d תגובות</item>
-    <item quantity="many">%d replies</item>
+    <item quantity="many">%d תגובות</item>
     <item quantity="other">%d תגובות</item>
   </plurals>
   <!-- Metadata -->
@@ -122,6 +121,8 @@
   <string name="context_unfavorite">הסר מהמועדפים</string>
   <string name="favorited">הוסף למעודפים</string>
   <string name="unfavorited">הוסר מהמעודפים</string>
+  <string name="action_episode_notifications_on">הפעל התראות עבור פרקים</string>
+  <string name="action_episode_notifications_off">כבה התראות עבור פרקים</string>
   <string name="context_hide">הסתר</string>
   <string name="context_unhide">בטל הסתרה</string>
   <string name="hidden">סדרה מוסתרת</string>
@@ -158,7 +159,9 @@
   <string name="recent">אחרונים</string>
   <string name="noupcoming">אין פרקים שישודרו בקרוב</string>
   <string name="norecent">אין פרקים חדשים</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">סדרות מעודפות בלבד</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">לוח שנה אינסופית</string>
   <!-- Updating -->
   <string name="update_scheduled">מעדכן&#8230;</string>
@@ -167,28 +170,28 @@
   <!-- Seasons -->
   <string name="season_allwatched">כל הפרקים נצפו</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="two">%d episodes not watched</item>
-    <item quantity="many">%d episodes not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="one">פרק אחד לא נצפה</item>
+    <item quantity="two">שני פרקים לא נצפו</item>
+    <item quantity="many">%d פרקים לא נצפו</item>
+    <item quantity="other">%d פרקים לא נצפו</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="two">%d other episodes</item>
-    <item quantity="many">%d other episodes</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">עוד פרק אחד</item>
+    <item quantity="two">עוד שני פרקים</item>
+    <item quantity="many">עוד %d פרקים</item>
+    <item quantity="other">עוד %d פרקים</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="two">%d to be released</item>
-    <item quantity="many">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">פרק אחד צפוי להשתחרר</item>
+    <item quantity="two">שני פרקים צפויים להשתחרר</item>
+    <item quantity="many">%d פרקים צפויים להשתחרר</item>
+    <item quantity="other">%d פרקים צפויים להשתחרר</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="two">%d remaining</item>
-    <item quantity="many">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">אחד נותר</item>
+    <item quantity="two">שניים נותרו</item>
+    <item quantity="many">%d נותרו</item>
+    <item quantity="other">%d נותרו</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">הקלד שם סדרה</string>
@@ -264,9 +267,9 @@
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d דקה</item>
-    <item quantity="two">%d minutes</item>
-    <item quantity="many">%d minutes</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="two">%d דקות</item>
+    <item quantity="many">%d דקות</item>
+    <item quantity="other">%d דקות</item>
   </plurals>
   <!-- Hexagon -->
   <string name="hexagon_warning">ניסיוני!</string>
@@ -283,7 +286,7 @@
   <string name="hexagon_remove_account_failure">לא ניתן להסיר את החשבון.</string>
   <string name="hexagon_remove_account_confirmation">הסרת החשבון שלך תמחק את כל התוכניות והסרטים מ-SeriesGuide Cloud. הקפד למחוק אותם גם בהתקנים מחוברים אחרים.</string>
   <string name="hexagon_api_queued">שולח ל-SeriesGuide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">אינך מחובר לענן SeriesGuide.</string>
   <string name="hexagon_google_play_missing">כדי להשתמש ב-SeriesGuide בענן, נדרש שירותי Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">שלח ל-Trakt.</string>
@@ -330,10 +333,10 @@
   <string name="rating8">טוב מאוד</string>
   <string name="rating9">מצוין</string>
   <plurals name="votes">
-    <item quantity="one">%d הצבעה</item>
-    <item quantity="two">%d votes</item>
-    <item quantity="many">%d votes</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="one">הצבעה אחת</item>
+    <item quantity="two">%d הצבעות</item>
+    <item quantity="many">%d הצבעות</item>
+    <item quantity="other">%d הצבעות</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">צ\'ק-אין</string>
@@ -362,6 +365,24 @@
   <string name="pref_language">שפת תוכן מועדפת</string>
   <string name="pref_updatewifionly">תמונות באמצעות Wi-Fi בלבד</string>
   <string name="pref_updatewifionlysummary">כדי לצמצם את חיובי הנתונים, לא להוריד ברשת סלולרי או רשת מבוקרת</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">יום לפני</item>
+    <item quantity="two">יומיים לפני</item>
+    <item quantity="many">%d ימים לפני</item>
+    <item quantity="other">%d ימים לפני</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">שעה לפני</item>
+    <item quantity="two">שעתיים לפני</item>
+    <item quantity="many">%d שעות לפני</item>
+    <item quantity="other">%d שעות לפני</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">דקה לפני</item>
+    <item quantity="two">%d דקות לפני</item>
+    <item quantity="many">%d דקות לפני</item>
+    <item quantity="other">%d דקות לפני</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">יישום זה משתמש בנתונים ותמונות על ידי TheTVDB תחת רישיון CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">מוצר זה עושה שימוש ב-API TMDb אך אינו נתמך או מאושר על ידי TMDb.</string>
@@ -403,7 +424,7 @@
   <string name="backup_summary">גבה או שחזר את סדרותיך</string>
   <string name="pref_number">תבנית מספרים</string>
   <string name="pref_offset">סטיית שעה ידנית</string>
-  <string name="pref_offsetsummary">הסט זמני שידור ב- %s שעות</string>
+  <string name="pref_offsetsummary">הסט זמני שידור ב- %d שעות</string>
   <string name="clear_cache">נקה מטמוני תמונות</string>
   <string name="clear_cache_summary">הסר את כל מטמוני התמונות ממכשירך</string>
   <string name="pref_ganalyticssummary">שלח סטטיסטיקת שימוש אנונימית לשירות גוגל</string>
@@ -444,21 +465,16 @@
   <string name="upcoming_episodes">פרקים חדשים מתקרבים</string>
   <string name="upcoming_episodes_number">פרקים חדשים %s</string>
   <string name="upcoming_show_detailed">%1$s ב-%2$s</string>
-  <string name="more">עוד %s</string>
+  <string name="more">עוד %d</string>
   <string name="upcoming_display">בחר כדי להציג סדרות שמתקרבות</string>
   <string name="pref_notifications">התראות</string>
   <string name="pref_notificationssummary">עדכן אותי על פרקים חדשים</string>
-  <string name="pref_notifyfavonly">מועדפים בלבד</string>
-  <string name="pref_notifyfavonlysummary">קבל התראות לגבי סדרות מעודפות בלבד</string>
   <string name="pref_ringtone">רינגטון</string>
   <string name="pref_vibrate">רטט</string>
   <string name="pref_vibratesummary">רטוט גם בזמן הצגת התראות</string>
   <string name="pref_notifications_treshold">מתי להתריע</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">משודר</string>
-  <string name="notification_release_earlier_five">5 דקות מראש</string>
-  <string name="notification_release_earlier_ten">10 דקות מראש</string>
-  <string name="notification_release_earlier_hour">שעה מראש</string>
+  <string name="pref_notifications_select_shows">בחר סדרות</string>
+  <string name="pref_notifications_select_shows_summary">סדרות עבורן מופעלות (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (קטן)</string>
   <!-- List Widget -->

@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.service;
 
-import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
@@ -41,6 +40,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.threeten.bp.Instant;
 import timber.log.Timber;
 
 public class NotificationService extends IntentService {
@@ -59,7 +59,7 @@ public class NotificationService extends IntentService {
     private static final int REQUEST_CODE_ACTION_CHECKIN = 4;
     private static final int REQUEST_CODE_ACTION_SET_WATCHED = 4;
 
-    private static final long[] VIBRATION_PATTERN = new long[] {
+    public static final long[] VIBRATION_PATTERN = new long[] {
             0, 100, 200, 100, 100, 100
     };
 
@@ -74,9 +74,10 @@ public class NotificationService extends IntentService {
             + Shows.SORT_TITLE + ","
             + Episodes.NUMBER + " ASC";
 
-    // only within time frame, unwatched episodes
-    private static final String SELECTION = Episodes.FIRSTAIREDMS + ">=? AND "
-            + Episodes.SELECTION_UNWATCHED;
+    // only if notifications are on: unwatched episodes released on or after arg
+    private static final String SELECTION = Shows.SELECTION_NOTIFY + " AND "
+            + Episodes.SELECTION_UNWATCHED + " AND "
+            + Episodes.FIRSTAIREDMS + ">=?";
 
     interface NotificationQuery {
 
@@ -104,63 +105,29 @@ public class NotificationService extends IntentService {
         setIntentRedelivery(true);
     }
 
-    @SuppressLint("CommitPrefEdits")
     @Override
     protected void onHandleIntent(Intent intent) {
         Timber.d("Waking up...");
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        /*
-         * Handle a possible delete intent.
-         */
         if (handleDeleteIntent(this, intent)) {
             return;
         }
-
-        /*
-         * Unschedule notification service wake-ups for disabled notifications
-         * and non-supporters.
-         */
+        // remove notification service wake-up alarm if notifications are disabled or not unlocked
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (!NotificationSettings.isNotificationsEnabled(this) || !Utils.hasAccessToX(this)) {
-            Timber.d("Notification service disabled, removing wakup-up alarm");
-            // cancel any pending alarm
+            Timber.d("Notifications disabled, removing wake-up alarm");
             AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent i = new Intent(this, OnAlarmReceiver.class);
             PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
             am.cancel(pi);
 
             resetLastEpisodeAirtime(prefs);
-
             return;
         }
 
-        long wakeUpTime = 0;
-
-        /*
-         * Get pool of episodes which air from 12 hours ago until eternity which
-         * match the users settings.
-         */
-        StringBuilder selection = new StringBuilder(SELECTION);
-        boolean isFavsOnly = NotificationSettings.isNotifyAboutFavoritesOnly(this);
-        if (isFavsOnly) {
-            selection.append(" AND ").append(Shows.SELECTION_FAVORITES);
-        }
-        boolean isNoSpecials = DisplaySettings.isHidingSpecials(this);
-        if (isNoSpecials) {
-            selection.append(" AND ").append(Episodes.SELECTION_NO_SPECIALS);
-        }
-        Timber.d("Settings: favorites-only: %s, specials: %s",
-                isFavsOnly ? "YES" : "NO", isNoSpecials ? "YES" : "NO");
-        // always exclude hidden shows
-        selection.append(" AND ").append(Shows.SELECTION_NO_HIDDEN);
+        long nextWakeUpTime = 0;
 
         final long customCurrentTime = TimeTools.getCurrentTime(this);
-        final Cursor upcomingEpisodes = getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                PROJECTION, selection.toString(), new String[] {
-                        String.valueOf(customCurrentTime - 12 * DateUtils.HOUR_IN_MILLIS)
-                }, SORTING
-        );
-
+        final Cursor upcomingEpisodes = queryUpcomingEpisodes(customCurrentTime);
         if (upcomingEpisodes != null) {
             int notificationThreshold = NotificationSettings.getLatestToIncludeTreshold(this);
             if (DEBUG) {
@@ -178,30 +145,25 @@ public class NotificationService extends IntentService {
                     TimeTools.applyUserOffset(this, nextEpisodeReleaseTime).getTime()
                             - DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
 
-            /*
-             * Set to -1 as on first run nextTimePlanned will be 0. This assures
-             * we still see notifications of upcoming episodes then.
-             */
-            int newEpisodesAvailable = -1;
+            // note: on first run plannedWakeUpTime will be <= 0
+            boolean checkForNewEpisodes = true;
 
-            // Check if we did wake up earlier than planned
             if (System.currentTimeMillis() < plannedWakeUpTime) {
                 Timber.d("Woke up earlier than planned, checking for new episodes");
-                newEpisodesAvailable = 0;
-                long latestTimeNotified = NotificationSettings.getLastNotified(this);
+                checkForNewEpisodes = false;
+                long releaseTimeLastNotified = NotificationSettings.getLastNotifiedAbout(this);
 
-                // Check if there are any earlier episodes to notify about
                 while (upcomingEpisodes.moveToNext()) {
                     final long releaseTime = upcomingEpisodes.getLong(
                             NotificationQuery.EPISODE_FIRST_RELEASE_MS);
+                    // any episodes added that release before the next one planned to notify about?
                     if (releaseTime < nextEpisodeReleaseTime) {
-                        if (releaseTime > latestTimeNotified) {
-                            /**
-                             * This will not get new episodes which would have
-                             * aired the same time as the last one we notified
-                             * about. Sad, but the best we can do right now.
-                             */
-                            newEpisodesAvailable = 1;
+                        // limit to those released after the episode we last notified about to avoid
+                        // notifying about an episode we already notified about
+                        // limitation: so if added episodes release at or before that last episode
+                        // they will not be notified about
+                        if (releaseTime > releaseTimeLastNotified) {
+                            checkForNewEpisodes = true;
                             break;
                         }
                     } else {
@@ -210,106 +172,57 @@ public class NotificationService extends IntentService {
                 }
             }
 
-            if (newEpisodesAvailable == 0) {
-                // Go to sleep, wake up as planned
-                Timber.d("No new episodes");
-                wakeUpTime = plannedWakeUpTime;
-            } else {
-                // Get episodes which are within the notification threshold
-                // (user set) and not yet cleared
-                final List<Integer> notifyPositions = new ArrayList<>();
-                final long latestTimeCleared = NotificationSettings.getLastCleared(this);
+            if (checkForNewEpisodes) {
                 final long latestTimeToInclude = customCurrentTime
                         + DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
 
-                int position = -1;
-                upcomingEpisodes.moveToPosition(position);
-                while (upcomingEpisodes.moveToNext()) {
-                    position++;
+                maybeNotify(prefs, upcomingEpisodes, latestTimeToInclude);
 
-                    final long releaseTime = upcomingEpisodes.getLong(
-                            NotificationQuery.EPISODE_FIRST_RELEASE_MS);
-                    if (releaseTime <= latestTimeToInclude) {
-                        /*
-                         * Only add those after the last one the user cleared.
-                         * At most those of the last 24 hours (see query above).
-                         */
-                        if (releaseTime > latestTimeCleared) {
-                            notifyPositions.add(position);
-                        }
-                    } else {
-                        // Too far into the future, stop!
-                        break;
-                    }
-                }
-
-                // Notify if we found any episodes
-                if (notifyPositions.size() > 0) {
-                    // store latest air time of all episodes we notified about
-                    upcomingEpisodes
-                            .moveToPosition(notifyPositions.get(notifyPositions.size() - 1));
-                    long latestAirtime = upcomingEpisodes.getLong(
-                            NotificationQuery.EPISODE_FIRST_RELEASE_MS);
-                    if (!AndroidUtils.isHoneycombOrHigher()) {
-                        /*
-                         * Everything below HC does not have delete intents, so
-                         * we just never notify about the same episode twice.
-                         */
-                        Timber.d("Delete intent NOT supported, setting last cleared to: %d",
-                                latestAirtime);
-                        prefs.edit().putLong(NotificationSettings.KEY_LAST_CLEARED,
-                                latestAirtime).commit();
-                    }
-                    Timber.d("Found %d new episodes, setting last notified to: %d",
-                            notifyPositions.size(), latestAirtime);
-                    prefs.edit().putLong(NotificationSettings.KEY_LAST_NOTIFIED, latestAirtime)
-                            .commit();
-
-                    onNotify(upcomingEpisodes, notifyPositions, latestAirtime);
-                }
-
-                /*
-                 * Plan next episode to notify about, calc wake-up alarm as
-                 * early as user wants.
-                 */
+                // plan next episode to notify about
                 upcomingEpisodes.moveToPosition(-1);
                 while (upcomingEpisodes.moveToNext()) {
                     final long releaseTime = upcomingEpisodes.getLong(
                             NotificationQuery.EPISODE_FIRST_RELEASE_MS);
                     if (releaseTime > latestTimeToInclude) {
-                        // store next episode we plan to notify about
-                        Timber.d("Storing next episode time to notify about: %d", releaseTime);
-                        prefs.edit().putLong(NotificationSettings.KEY_NEXT_TO_NOTIFY, releaseTime)
-                                .commit();
+                        prefs.edit()
+                                .putLong(NotificationSettings.KEY_NEXT_TO_NOTIFY, releaseTime)
+                                .apply();
+                        Timber.d("Next notification planned for episode released at: %s",
+                                Instant.ofEpochMilli(releaseTime));
 
-                        // calc actual wake up time
-                        wakeUpTime = TimeTools.applyUserOffset(this, releaseTime).getTime()
+                        // calc wake up time to notify about this episode
+                        // taking into account time offset and notification threshold
+                        nextWakeUpTime = TimeTools.applyUserOffset(this, releaseTime).getTime()
                                 - DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
-
                         break;
                     }
                 }
+            } else {
+                // Go to sleep, wake up as planned
+                Timber.d("No new episodes");
+                nextWakeUpTime = plannedWakeUpTime;
             }
 
             upcomingEpisodes.close();
         }
 
         // Set a default wake-up time if there are no future episodes for now
-        if (wakeUpTime <= 0) {
-            wakeUpTime = System.currentTimeMillis() + 6 * DateUtils.HOUR_IN_MILLIS;
+        if (nextWakeUpTime <= 0) {
+            nextWakeUpTime = System.currentTimeMillis() + 6 * DateUtils.HOUR_IN_MILLIS;
             Timber.d("No future episodes found, wake up in 6 hours");
         }
 
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(this, NotificationService.class);
         PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
-        Timber.d("Going to sleep, setting wake-up alarm to: %d", wakeUpTime);
+        Timber.d("Going to sleep, setting wake-up alarm to: %s",
+                Instant.ofEpochMilli(nextWakeUpTime));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, wakeUpTime, pi);
+            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            am.setExact(AlarmManager.RTC_WAKEUP, wakeUpTime, pi);
+            am.setExact(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
         } else {
-            am.set(AlarmManager.RTC_WAKEUP, wakeUpTime, pi);
+            am.set(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
         }
     }
 
@@ -328,7 +241,7 @@ public class NotificationService extends IntentService {
             PreferenceManager.getDefaultSharedPreferences(context)
                     .edit()
                     .putLong(NotificationSettings.KEY_LAST_CLEARED, clearedTime)
-                    .commit();
+                    .apply();
             return true;
         }
         return false;
@@ -338,16 +251,75 @@ public class NotificationService extends IntentService {
      * Resets the air time of the last notified about episode. Afterwards notifications for episodes
      * may appear, which were already notified about.
      */
-    @SuppressLint("CommitPrefEdits")
     public static void resetLastEpisodeAirtime(final SharedPreferences prefs) {
         Timber.d("Resetting last cleared and last notified");
         prefs.edit()
                 .putLong(NotificationSettings.KEY_LAST_CLEARED, 0)
                 .putLong(NotificationSettings.KEY_LAST_NOTIFIED, 0)
-                .commit();
+                .apply();
     }
 
-    private void onNotify(final Cursor upcomingEpisodes, List<Integer> notifyPositions,
+    /**
+     * Get episodes which air from 12 hours ago until eternity, excludes some episodes based on user
+     * settings.
+     */
+    private Cursor queryUpcomingEpisodes(long customCurrentTime) {
+        StringBuilder selection = new StringBuilder(SELECTION);
+
+        boolean isNoSpecials = DisplaySettings.isHidingSpecials(this);
+        Timber.d("Settings: specials: %s", isNoSpecials ? "YES" : "NO");
+        if (isNoSpecials) {
+            selection.append(" AND ").append(Episodes.SELECTION_NO_SPECIALS);
+        }
+        // always exclude hidden shows
+        selection.append(" AND ").append(Shows.SELECTION_NO_HIDDEN);
+
+        return getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
+                PROJECTION, selection.toString(), new String[] {
+                        String.valueOf(customCurrentTime - 12 * DateUtils.HOUR_IN_MILLIS)
+                }, SORTING
+        );
+    }
+
+    private void maybeNotify(SharedPreferences prefs, Cursor upcomingEpisodes,
+            long latestTimeToInclude) {
+        final List<Integer> notifyPositions = new ArrayList<>();
+        final long latestTimeCleared = NotificationSettings.getLastCleared(this);
+
+        int position = -1;
+        upcomingEpisodes.moveToPosition(position);
+        while (upcomingEpisodes.moveToNext()) {
+            position++;
+            // get episodes which are within the notification threshold (user set)...
+            final long releaseTime = upcomingEpisodes.getLong(
+                    NotificationQuery.EPISODE_FIRST_RELEASE_MS);
+            if (releaseTime <= latestTimeToInclude) {
+                // ...and released after the last one the user cleared.
+                // Note: should be at most those of the last few hours (see cursor query).
+                if (releaseTime > latestTimeCleared) {
+                    notifyPositions.add(position);
+                }
+            } else {
+                // Too far into the future, stop!
+                break;
+            }
+        }
+
+        // Notify if we found any episodes, store latest release time we notify about
+        if (notifyPositions.size() > 0) {
+            upcomingEpisodes.moveToPosition(notifyPositions.get(notifyPositions.size() - 1));
+            long latestAirtime = upcomingEpisodes.getLong(
+                    NotificationQuery.EPISODE_FIRST_RELEASE_MS);
+            prefs.edit().putLong(NotificationSettings.KEY_LAST_NOTIFIED, latestAirtime).apply();
+
+            Timber.d("Notify about %d episodes, latest released at: %s",
+                    notifyPositions.size(), Instant.ofEpochMilli(latestAirtime));
+
+            notifyAbout(upcomingEpisodes, notifyPositions, latestAirtime);
+        }
+    }
+
+    private void notifyAbout(final Cursor upcomingEpisodes, List<Integer> notifyPositions,
             long latestAirtime) {
         final Context context = getApplicationContext();
 
@@ -415,16 +387,18 @@ public class NotificationService extends IntentService {
                 maybeSetPoster(nb, upcomingEpisodes.getString(NotificationQuery.POSTER));
 
                 if (!DisplaySettings.preventSpoilers(context)) {
-                    final String episodeTitle = upcomingEpisodes
-                            .getString(NotificationQuery.TITLE);
+                    final String episodeTitle = TextTools.getEpisodeTitle(context,
+                            upcomingEpisodes.getString(NotificationQuery.TITLE),
+                            upcomingEpisodes.getInt(NotificationQuery.NUMBER));
                     final String episodeSummary = upcomingEpisodes
                             .getString(NotificationQuery.OVERVIEW);
 
                     final SpannableStringBuilder bigText = new SpannableStringBuilder();
-                    bigText.append(TextUtils.isEmpty(episodeTitle) ? "" : episodeTitle);
+                    bigText.append(episodeTitle);
                     bigText.setSpan(new StyleSpan(Typeface.BOLD), 0, bigText.length(), 0);
-                    bigText.append("\n");
-                    bigText.append(TextUtils.isEmpty(episodeSummary) ? "" : episodeSummary);
+                    if (!TextUtils.isEmpty(episodeSummary)) {
+                        bigText.append("\n").append(episodeSummary);
+                    }
 
                     nb.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText)
                             .setSummaryText(contentText));
@@ -547,12 +521,12 @@ public class NotificationService extends IntentService {
         NotificationManagerCompat nm = NotificationManagerCompat.from(getApplicationContext());
         nm.notify(SgApp.NOTIFICATION_EPISODE_ID, notification);
 
-        Timber.d("Notification: count=%d, rich(JB+)=%s, sound=%s, vibrate=%s, delete=%d",
+        Timber.d("Notification: count=%d, rich(JB+)=%s, sound=%s, vibrate=%s, delete=%s",
                 count,
                 richNotification ? "YES" : "NO",
                 hasSound ? "YES" : "NO",
                 vibrates ? "YES" : "NO",
-                latestAirtime);
+                Instant.ofEpochMilli(latestAirtime));
     }
 
     private void maybeSetPoster(NotificationCompat.Builder nb, String posterPath) {

@@ -14,6 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
+import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.text.DateFormat;
@@ -40,7 +41,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public MoviesAdapter(Context context, ItemClickListener itemClickListener) {
         this.context = context;
         this.itemClickListener = itemClickListener;
-        this.dateFormatMovieReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        this.dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat();
         this.movies = new ArrayList<>();
         this.posterBaseUrl = TmdbSettings.getPosterBaseUrl(context);
     }

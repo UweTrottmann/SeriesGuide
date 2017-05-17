@@ -19,7 +19,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:padding="10dp"
-        android:textAppearance="@style/TextAppearance.Body.Dim"
+        android:textAppearance="@style/TextAppearance.Body.Secondary"
         android:visibility="gone"
         tools:text="@string/noupcoming" />
 

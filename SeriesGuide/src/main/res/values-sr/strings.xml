@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Серија</string>
   <string name="episode">Епизода</string>
-  <string name="episode_number">Епизода %s</string>
+  <string name="episode_number">Епизода %d</string>
   <string name="episodes">Епизоде</string>
   <string name="season">Сезона</string>
-  <string name="season_number">Сезона %s</string>
+  <string name="season_number">Сезона %d</string>
   <string name="seasons">Сезоне</string>
   <string name="specialseason">Специјалне епизоде</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">Подели серију</string>
   <string name="share_episode">Подели епизоду</string>
   <string name="share_movie">Подели филм</string>
-  <string name="share_checkout">Погледај %s</string>
   <string name="addtocalendar">Додај у календар</string>
   <string name="addtocalendar_failed">Креирање овог догађаја у календару није успело.</string>
   <string name="links">Линкови</string>
@@ -121,6 +120,8 @@
   <string name="context_unfavorite">Уклони из омиљених</string>
   <string name="favorited">Додато у омиљене</string>
   <string name="unfavorited">Уклоњено из омиљених</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Сакриј</string>
   <string name="context_unhide">Прикажи</string>
   <string name="hidden">Сакривена серија</string>
@@ -157,7 +158,9 @@
   <string name="recent">Скорашње</string>
   <string name="noupcoming">Нема предстојећих епизода.</string>
   <string name="norecent">Нема скорашњих епизода.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Само омиљене серије</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Календар</string>
   <!-- Updating -->
   <string name="update_scheduled">Ажурирање&#8230;</string>
@@ -353,6 +356,21 @@
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Слике само кроз бежичну мрежу</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="few">%d days before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="few">%d hours before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="few">%d minutes before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
@@ -394,7 +412,7 @@
   <string name="backup_summary">Архивирај или врати архивиране серије</string>
   <string name="pref_number">Облик нумерисања</string>
   <string name="pref_offset">Ручно подеси временску разлику</string>
-  <string name="pref_offsetsummary">Разлика у емитовању је %s сати</string>
+  <string name="pref_offsetsummary">Разлика у емитовању је %d сати</string>
   <string name="clear_cache">Обриши слике из кеш меморије</string>
   <string name="clear_cache_summary">Уклони све слике у кеш меморији вашег уређаја</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
@@ -435,21 +453,16 @@
   <string name="upcoming_episodes">Нове епизоде долазе ускоро</string>
   <string name="upcoming_episodes_number">%s нових епизода</string>
   <string name="upcoming_show_detailed">%1$s на %2$s</string>
-  <string name="more">%s више</string>
+  <string name="more">%d више</string>
   <string name="upcoming_display">Одабери долазеће серије за приказивање</string>
   <string name="pref_notifications">Обавештења</string>
   <string name="pref_notificationssummary">Обавести ме само о новим епизодама</string>
-  <string name="pref_notifyfavonly">Само омиљене</string>
-  <string name="pref_notifyfavonlysummary">Прими обавештења само за омиљене серије</string>
   <string name="pref_ringtone">Звоно</string>
   <string name="pref_vibrate">Вибрирање</string>
   <string name="pref_vibratesummary">Такође вибрирај при обавештењима</string>
   <string name="pref_notifications_treshold">Кад да обавештава</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">емитује се</string>
-  <string name="notification_release_earlier_five">5 мин унапред</string>
-  <string name="notification_release_earlier_ten">10 мин унапред</string>
-  <string name="notification_release_earlier_hour">1 сат унапред</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (мали)</string>
   <!-- List Widget -->

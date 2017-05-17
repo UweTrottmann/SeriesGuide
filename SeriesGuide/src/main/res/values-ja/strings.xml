@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">表示</string>
   <string name="episode">エピソード</string>
-  <string name="episode_number">エピソード %s</string>
+  <string name="episode_number">エピソード %d</string>
   <string name="episodes">エピソード</string>
   <string name="season">シーズン</string>
-  <string name="season_number">シーズン %s</string>
+  <string name="season_number">シーズン %d</string>
   <string name="seasons">シーズン</string>
   <string name="specialseason">特別編</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">番組を共有</string>
   <string name="share_episode">エピソードを共有</string>
   <string name="share_movie">映画を共有</string>
-  <string name="share_checkout">%s をチェックしてください</string>
   <string name="addtocalendar">カレンダーに追加</string>
   <string name="addtocalendar_failed">カレンダー イベントを作成できません。</string>
   <string name="links">リンク</string>
@@ -119,6 +118,8 @@
   <string name="context_unfavorite">お気に入りから削除</string>
   <string name="favorited">お気に入りに追加しました</string>
   <string name="unfavorited">お気に入りから削除しました</string>
+  <string name="action_episode_notifications_on">エピソード通知をオンにする</string>
+  <string name="action_episode_notifications_off">エピソード通知をオフにする</string>
   <string name="context_hide">非表示</string>
   <string name="context_unhide">非表示にしない</string>
   <string name="hidden">非表示に移動しました</string>
@@ -155,7 +156,9 @@
   <string name="recent">最近</string>
   <string name="noupcoming">今後のエピソードはありません。</string>
   <string name="norecent">最近のエピソードはありません。</string>
+  <string name="calendar_settings">カレンダー設定</string>
   <string name="only_favorites">お気に入りの番組だけ</string>
+  <string name="calendar_only_collected">コレクション済のエピソードのみ</string>
   <string name="pref_infinite_scrolling">無限のカレンダー</string>
   <!-- Updating -->
   <string name="update_scheduled">更新中&#8230;</string>
@@ -335,6 +338,15 @@
   <string name="pref_language">ご希望のコンテンツ言語</string>
   <string name="pref_updatewifionly">画像は Wi-Fi 経由のみ</string>
   <string name="pref_updatewifionlysummary">データ通信料金を減らすため、モバイルまたは従量課金ネットワーク経由でダウンロードしません</string>
+  <plurals name="days_before_plural">
+    <item quantity="other">%d 日前</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="other">%d 時間前</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="other">%d 分前</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">このアプリは、TheTVDB により CC BY-NC 4.0 の下でライセンスされるデータと画像を使用します。</string>
   <string name="licence_themoviedb">この製品は TMDb API を使用していますが、TMDb による承認または認定はされていません。</string>
@@ -376,7 +388,7 @@
   <string name="backup_summary">番組をバックアップまたは復元します</string>
   <string name="pref_number">表示形式</string>
   <string name="pref_offset">手動の時間オフセット</string>
-  <string name="pref_offsetsummary">放映時間を %s 時間オフセットします</string>
+  <string name="pref_offsetsummary">放映時間を %d 時間オフセットします</string>
   <string name="clear_cache">画像キャッシュをクリア</string>
   <string name="clear_cache_summary">お使いのデバイスからキャッシュされた画像をすべて削除します</string>
   <string name="pref_ganalyticssummary">匿名の使用状況に関する統計情報をGoogle サービスに送信します</string>
@@ -417,21 +429,16 @@
   <string name="upcoming_episodes">新しいエピソードが始まります</string>
   <string name="upcoming_episodes_number">%s 新しいエピソード</string>
   <string name="upcoming_show_detailed">%1$s、 %2$s</string>
-  <string name="more">%s さらに</string>
+  <string name="more">%d さらに</string>
   <string name="upcoming_display">表示する今後の番組を選択</string>
   <string name="pref_notifications">通知</string>
   <string name="pref_notificationssummary">新しいエピソードについて通知します</string>
-  <string name="pref_notifyfavonly">お気に入りのみ</string>
-  <string name="pref_notifyfavonlysummary">お気に入りの番組のみ通知します</string>
   <string name="pref_ringtone">サウンド</string>
   <string name="pref_vibrate">バイブレート</string>
   <string name="pref_vibratesummary">通知を表示する時にバイブレーションする</string>
   <string name="pref_notifications_treshold">通知のタイミング</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">放映時</string>
-  <string name="notification_release_earlier_five">5 分前</string>
-  <string name="notification_release_earlier_ten">10 分前</string>
-  <string name="notification_release_earlier_hour">1 時間前</string>
+  <string name="pref_notifications_select_shows">番組を選択</string>
+  <string name="pref_notifications_select_shows_summary">通知を有効にした番組 (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (小)</string>
   <!-- List Widget -->

@@ -7,18 +7,14 @@
         android:summary="@string/pref_notificationssummary"
         android:title="@string/pref_notifications" />
 
-    <ListPreference
-        android:defaultValue="60"
-        android:entries="@array/notificationThreshold"
-        android:entryValues="@array/notificationThresholdData"
+    <Preference
         android:key="com.battlelancer.seriesguide.notifications.threshold"
         android:title="@string/pref_notifications_treshold" />
 
-    <CheckBoxPreference
-        android:defaultValue="False"
-        android:key="com.battlelancer.seriesguide.notifications.favonly"
-        android:summary="@string/pref_notifyfavonlysummary"
-        android:title="@string/pref_notifyfavonly" />
+    <Preference
+        android:key="com.battlelancer.seriesguide.notifications.shows"
+        android:title="@string/pref_notifications_select_shows" />
+
     <CheckBoxPreference
         android:defaultValue="False"
         android:key="com.battlelancer.seriesguide.notifications.vibrate"

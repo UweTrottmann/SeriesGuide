@@ -33,10 +33,9 @@ public class DisplaySettings {
 
     public static final String NUMBERFORMAT_ENGLISHLOWER = "englishlower";
 
-    public static final String KEY_NO_RELEASED_EPISODES = "onlyFutureEpisodes";
+    public static final String KEY_SHOWS_TIME_OFFSET = "com.battlelancer.seriesguide.timeoffset";
 
-    public static final String KEY_NO_WATCHED_EPISODES
-            = "com.battlelancer.seriesguide.activity.nowatched";
+    public static final String KEY_NO_RELEASED_EPISODES = "onlyFutureEpisodes";
 
     public static final String KEY_SEASON_SORT_ORDER = "seasonSorting";
 
@@ -138,6 +137,19 @@ public class DisplaySettings {
                 .getString(KEY_NUMBERFORMAT, NUMBERFORMAT_DEFAULT);
     }
 
+    /**
+     * @return A positive or negative number of hours to offset show release times by. Defaults to
+     * 0.
+     */
+    public static int getShowsTimeOffset(Context context) {
+        try {
+            return Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(context)
+                    .getString(KEY_SHOWS_TIME_OFFSET, "0"));
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
     public static Constants.EpisodeSorting getEpisodeSortOrder(Context context) {
         String orderId = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(KEY_EPISODE_SORT_ORDER, Constants.EpisodeSorting.OLDEST_FIRST.value());
@@ -153,11 +165,6 @@ public class DisplaySettings {
     public static boolean isNoReleasedEpisodes(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_NO_RELEASED_EPISODES, false);
-    }
-
-    public static boolean isNoWatchedEpisodes(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_NO_WATCHED_EPISODES, false);
     }
 
     /**

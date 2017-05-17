@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">節目</string>
   <string name="episode">集數</string>
-  <string name="episode_number">第 %s 集</string>
+  <string name="episode_number">第 %d 集</string>
   <string name="episodes">集數</string>
   <string name="season">季</string>
-  <string name="season_number">第 %s 季</string>
+  <string name="season_number">第 %d 季</string>
   <string name="seasons">季數</string>
   <string name="specialseason">特集</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">分享節目</string>
   <string name="share_episode">分享此集</string>
   <string name="share_movie">分享電影</string>
-  <string name="share_checkout">查看%s</string>
   <string name="addtocalendar">新增至行事曆</string>
   <string name="addtocalendar_failed">無法建立行事曆事件。</string>
   <string name="links">連結</string>
@@ -119,6 +118,8 @@
   <string name="context_unfavorite">自最愛移除</string>
   <string name="favorited">新增至我的最愛</string>
   <string name="unfavorited">從我的最愛中刪除</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">隱藏</string>
   <string name="context_unhide">取消隱藏</string>
   <string name="hidden">隱藏影集</string>
@@ -155,7 +156,9 @@
   <string name="recent">最近</string>
   <string name="noupcoming">沒有即將播出的集數。</string>
   <string name="norecent">沒有最近的影集。</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">僅顯示喜愛影集</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">萬年曆</string>
   <!-- Updating -->
   <string name="update_scheduled">更新中......</string>
@@ -335,6 +338,15 @@
   <string name="pref_language">偏好的語言</string>
   <string name="pref_updatewifionly">只有在使用Wi-Fi時載入圖片</string>
   <string name="pref_updatewifionlysummary">為了減少資料量，不要透過移動或計量網路下載</string>
+  <plurals name="days_before_plural">
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">此應用程式使用的資料及圖片為按照CC BY-NC 4.0的TVDB所授權。</string>
   <string name="licence_themoviedb">此產品使用TMDb的API但並非尤其支持。</string>
@@ -376,7 +388,7 @@
   <string name="backup_summary">備份或還原你的影集</string>
   <string name="pref_number">數字格式</string>
   <string name="pref_offset">手動時間換算</string>
-  <string name="pref_offsetsummary">%s 小時的時差</string>
+  <string name="pref_offsetsummary">%d 小時的時差</string>
   <string name="clear_cache">清除圖片暫存檔</string>
   <string name="clear_cache_summary">從您的設備中刪除所有暫存的圖片</string>
   <string name="pref_ganalyticssummary">向Google服務寄送匿名的使用資料統計</string>
@@ -417,21 +429,16 @@
   <string name="upcoming_episodes">新的集數來了</string>
   <string name="upcoming_episodes_number">%s新集數</string>
   <string name="upcoming_show_detailed">%2$s 於 %1$s</string>
-  <string name="more">%s 更多</string>
+  <string name="more">%d 更多</string>
   <string name="upcoming_display">選擇以顯示即將撥出的節目</string>
   <string name="pref_notifications">提示信息</string>
   <string name="pref_notificationssummary">當有新的集數時進行通知</string>
-  <string name="pref_notifyfavonly">僅最愛的</string>
-  <string name="pref_notifyfavonlysummary">只接收最愛節目的通知</string>
   <string name="pref_ringtone">提示音</string>
   <string name="pref_vibrate">震動</string>
   <string name="pref_vibratesummary">顯示通知的同時震動</string>
   <string name="pref_notifications_treshold">何時通知</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">撥出時</string>
-  <string name="notification_release_earlier_five">提前 5 分鐘</string>
-  <string name="notification_release_earlier_ten">提前 10 分鐘</string>
-  <string name="notification_release_earlier_hour">提前 1 個小時</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (小)</string>
   <!-- List Widget -->

@@ -42,7 +42,6 @@ import com.uwetrottmann.trakt5.entities.SearchResult;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
-import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.IdType;
 import com.uwetrottmann.trakt5.enums.Type;
 import com.uwetrottmann.trakt5.services.Movies;
@@ -50,6 +49,7 @@ import com.uwetrottmann.trakt5.services.Search;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -99,6 +99,14 @@ public class MovieTools {
     public MovieTools(SgApp app) {
         context = app.getApplicationContext();
         app.getServicesComponent().inject(this);
+    }
+
+    /**
+     * Date format using only numbers.
+     */
+    public static DateFormat getMovieShortDateFormat() {
+        // use SHORT as in some languages (Portuguese) the MEDIUM string is longer than expected
+        return DateFormat.getDateInstance(DateFormat.SHORT);
     }
 
     /**
@@ -607,7 +615,7 @@ public class MovieTools {
         Set<Integer> collection;
         try {
             Response<List<BaseMovie>> response = traktSync.get()
-                    .collectionMovies(Extended.DEFAULT_MIN)
+                    .collectionMovies(null)
                     .execute();
             if (response.isSuccessful()) {
                 collection = buildTmdbIdSet(response.body());
@@ -630,7 +638,7 @@ public class MovieTools {
         Set<Integer> watchlist;
         try {
             Response<List<BaseMovie>> response = traktSync.get()
-                    .watchlistMovies(Extended.DEFAULT_MIN)
+                    .watchlistMovies(null)
                     .execute();
             if (response.isSuccessful()) {
                 watchlist = buildTmdbIdSet(response.body());

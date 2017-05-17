@@ -26,6 +26,8 @@ public class WidgetSettings {
 
     public static final String KEY_PREFIX_WIDGET_HIDE_WATCHED = "unwatched_";
 
+    public static final String KEY_PREFIX_WIDGET_ONLY_COLLECTED = "only_collected_";
+
     public static final String KEY_PREFIX_WIDGET_ONLY_FAVORITES = "only_favorites_";
 
     public static final String KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER = "shows_order_";
@@ -84,6 +86,14 @@ public class WidgetSettings {
     public static boolean isHidingWatchedEpisodes(Context context, int appWidgetId) {
         SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
         return prefs.getBoolean(KEY_PREFIX_WIDGET_HIDE_WATCHED + appWidgetId, false);
+    }
+
+    /**
+     * Returns if this widget should only show collected episodes.
+     */
+    public static boolean isOnlyCollectedEpisodes(Context context, int appWidgetId) {
+        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
+        return prefs.getBoolean(KEY_PREFIX_WIDGET_ONLY_COLLECTED + appWidgetId, false);
     }
 
     /**

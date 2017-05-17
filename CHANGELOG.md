@@ -5,6 +5,94 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 37
+----------
+*(2017-05-17)*
+
+* Turn on and off notifications for each show.
+* Within limits, select any number of minutes, hours or days to notify before episodes are released.
+* Use TheTVDB API v2 to fetch episode data: no longer falls back to English if not translated.
+* Add "Only collected episodes" option to calendar and list widget.
+* Offset show release times between +/-24 hours in Settings > Basics > Manual time offset.
+* Dim titles of episodes that are not released.
+
+#### 37
+*(2017-05-17)*
+
+* 🔧 Revert to set watched/not watched when pressing the tick icon in calendar.
+* 📝 Latest translations from crowdin.
+
+#### 37-beta7
+*(2017-05-12)*
+
+* 🔧 Add "Only collected episodes" option to calendar and list widget settings.
+* 🔧 Move calendar settings to own button.
+* 🔧 Display popup menu with multiple options when pressing tick icon in calendar.
+* 🔨 List widget settings are saved even if not tapping "Save selection".
+* 🔨 Old content in Now tabs stuck when switching away and back while refresh indicator is visible.
+* 🔨 If the notification threshold is 0, display '0 minutes' instead of '0 days'.
+* 🔧 Use vector icons in more places: crisp on very high resolution screens, reduced app size. 
+* 📝 Latest translations from crowdin.
+
+#### 37-beta6
+*(2017-05-06)*
+
+* 🔨 Crash: Correctly parse episode DVD numbers when adding or updating a show.
+* 🔨 Some action bar icons are wrongly colored.
+* 📝 Latest translations from crowdin.
+
+#### 37-beta5
+*(2017-05-05)*
+
+* 🔧 Use TheTVDB API v2 to fetch episode information: if no translation for title or description
+  exists, will no longer fall back to English. Image, directors, writers and guest stars are only
+  fetched when viewing an episode.
+* 🔧 Display generic episode title, such as 'Episode 2', if actual title is not available.
+* 🔧 If available, show internal details why backing up or restoring failed.
+* 🔨 Do not remove release time when updating a show and talking to trakt fails.
+* 📝 Latest translations from crowdin.
+
+#### 37-beta4
+*(2017-04-28)*
+
+* 🌟 Turn on and off notifications for each show individually.
+* 🔨 Exclude Amazon shows from hour-past midnight correction.
+* 🔧 Replace show tab share and shortcut button with notifications and hide button.
+* 🔧 Add show share and shortcut buttons to bottom buttons.
+* 🔨 Do not auto-select text in time offset dialog. Gboard does not play nice if it is.
+* 🔧 Display numbers-only date on movie cards as in some languages the date text was too long.
+* 📝 Latest translations from crowdin.
+
+#### 37-beta3
+*(2017-04-12)*
+
+* 🔧 Show release times can now be moved between -/+24 hours with Settings > Basics > Manual time
+     offset. It also displays an example.
+* 🔨 Search history entries contain strange characters. Use Clear search history action to delete them. 
+* 🔨 Crash due to episode time parsing failing due to invalid date.
+* 🔨 Crash due to missing character encoding class on Android 4.x.
+* 📝 Latest translations from crowdin.
+
+#### 37-beta2
+*(2017-04-07)*
+
+* 🌟 Within limits, select any number of minutes, hours or days to notify before episodes are released.
+* 🔨 Time stamps in trakt history are wrong.
+* 🔨 Show add dialog displays "unknown" language.
+* 🔧 Let non-supporters see available list widget options.
+* 📝 Latest translations from crowdin.
+
+#### 37-beta1
+*(2017-03-31)*
+
+* 🔨 Crash when signing in with Cloud on some devices.
+* 🔧 Move show search language selector to toolbar.
+* 🔧 Display language in native language for shows and movies. Like "German" instead of "Deutsch".
+* 🔧 Dim titles of episodes that are not released.
+* 🔧 Recognize the URL created when sharing a show, when sharing it back to SeriesGuide: offer to add the show.
+* 🔧 Drop the stupid "Check out" from share messages, you are intelligent enough to write your own message.
+* 🔧 Layout improvements in backup tools.
+
 Version 36
 ----------
 *(2017-03-30)*

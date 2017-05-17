@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Serie</string>
   <string name="episode">Folge</string>
-  <string name="episode_number">Folge %s</string>
+  <string name="episode_number">Folge %d</string>
   <string name="episodes">Folgen</string>
   <string name="season">Staffel</string>
-  <string name="season_number">Staffel %s</string>
+  <string name="season_number">Staffel %d</string>
   <string name="seasons">Staffeln</string>
   <string name="specialseason">Specials</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">Serie teilen</string>
   <string name="share_episode">Folge empfehlen</string>
   <string name="share_movie">Film teilen</string>
-  <string name="share_checkout">Empfehle %s</string>
   <string name="addtocalendar">Zum Kalender hinzufügen</string>
   <string name="addtocalendar_failed">Kann kein Kalenderereignis erstellen.</string>
   <string name="links">Links</string>
@@ -120,6 +119,8 @@
   <string name="context_unfavorite">Von Favoriten entfernen</string>
   <string name="favorited">Zu Favoriten hinzugefügt</string>
   <string name="unfavorited">Von Favoriten entfernt</string>
+  <string name="action_episode_notifications_on">Benachrichtigungen zu Folgen anschalten</string>
+  <string name="action_episode_notifications_off">Benachrichtigungen zu Folgen ausschalten</string>
   <string name="context_hide">Ausblenden</string>
   <string name="context_unhide">Einblenden</string>
   <string name="hidden">Serie ausgeblendet</string>
@@ -156,7 +157,9 @@
   <string name="recent">Vor kurzem</string>
   <string name="noupcoming">Keine kommenden Folgen.</string>
   <string name="norecent">Keine bereits gesendeten Folgen.</string>
+  <string name="calendar_settings">Kalendereinstellungen</string>
   <string name="only_favorites">Nur Serien-Favoriten</string>
+  <string name="calendar_only_collected">Nur gesammelte Folgen</string>
   <string name="pref_infinite_scrolling">Endloser Kalender</string>
   <!-- Updating -->
   <string name="update_scheduled">Aktualisiert&#8230;</string>
@@ -344,6 +347,18 @@
   <string name="pref_language">Bevorzugte Sprache der Inhalte</string>
   <string name="pref_updatewifionly">Bilder nur über WLAN</string>
   <string name="pref_updatewifionlysummary">Um Gebühren zu vermeiden, nicht über mobile oder kostenpflichtige Funknetze herunterladen</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d Tag zuvor</item>
+    <item quantity="other">%d Tage zuvor</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d Stunde zuvor</item>
+    <item quantity="other">%d Stunden zuvor</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d Minute zuvor</item>
+    <item quantity="other">%d Minuten zuvor</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Diese App verwendet Daten und Bilder von TheTVDB lizenziert unter CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Dieses Produkt verwendet die TMDb API ist aber von TMDb nicht unterstützt oder zertifiziert.</string>
@@ -385,7 +400,7 @@
   <string name="backup_summary">Sicherung aller Serien erstellen oder Sicherung wiederherstellen</string>
   <string name="pref_number">Zahlenformat</string>
   <string name="pref_offset">Manuelle Zeit-Verschiebung</string>
-  <string name="pref_offsetsummary">Ausstrahlungszeit um %s Stunden verschieben</string>
+  <string name="pref_offsetsummary">Sendezeit um %d Stunden verschieben</string>
   <string name="clear_cache">Bilder-Zwischenspeicher leeren</string>
   <string name="clear_cache_summary">Alle zwischengespeicherten Bilder von Ihrem Gerät entfernen</string>
   <string name="pref_ganalyticssummary">Anonyme Nutzungs-Statistiken an einen Google-Dienst senden</string>
@@ -426,21 +441,16 @@
   <string name="upcoming_episodes">Neue Folgen laufen in Kürze</string>
   <string name="upcoming_episodes_number">%s neue Folgen</string>
   <string name="upcoming_show_detailed">%1$s auf %2$s</string>
-  <string name="more">%s weitere</string>
+  <string name="more">%d mehr</string>
   <string name="upcoming_display">Auswählen um kommende Serien anzuzeigen</string>
   <string name="pref_notifications">Benachrichtigungen</string>
   <string name="pref_notificationssummary">Benachrichtigung bei neuen Folgen</string>
-  <string name="pref_notifyfavonly">Nur Favoriten</string>
-  <string name="pref_notifyfavonlysummary">Nur Benachrichtigungen für Favoriten anzeigen</string>
   <string name="pref_ringtone">Ton</string>
   <string name="pref_vibrate">Vibrieren</string>
   <string name="pref_vibratesummary">Bei Anzeige einer Benachrichtigung vibrieren</string>
   <string name="pref_notifications_treshold">Wann benachrichtigt wird</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">auf Sendung</string>
-  <string name="notification_release_earlier_five">5 min zuvor</string>
-  <string name="notification_release_earlier_ten">10 min zuvor</string>
-  <string name="notification_release_earlier_hour">1 Stunde zuvor</string>
+  <string name="pref_notifications_select_shows">Serien auswählen</string>
+  <string name="pref_notifications_select_shows_summary">Serien für die Benachrichtigungen angezeigt werden (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (klein)</string>
   <!-- List Widget -->

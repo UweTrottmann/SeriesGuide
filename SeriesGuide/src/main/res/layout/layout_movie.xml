@@ -6,20 +6,24 @@
     android:layout_height="wrap_content"
     tools:showIn="@layout/item_movie">
 
-    <android.support.percent.PercentFrameLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/containerMoviePoster"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!--suppress AndroidDomInspection -->
         <ImageView
             android:id="@+id/imageViewMoviePoster"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:contentDescription="@null"
-            app:layout_aspectRatio="66%"
-            app:layout_widthPercent="100%"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="w,66:100"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:src="#F50057" />
 
-    </android.support.percent.PercentFrameLayout>
+    </android.support.constraint.ConstraintLayout>
 
     <!-- Force constant item height (set exact lines here) to avoid grid items overlapping. -->
     <TextView
@@ -45,7 +49,7 @@
         android:maxLines="1"
         android:paddingBottom="@dimen/default_padding"
         android:textAppearance="@style/TextAppearance.Caption.Dim"
-        tools:text="Nov 13, 2013+++" />
+        tools:text="13.11.2013" />
 
     <ImageView
         android:id="@+id/imageViewMovieItemContextMenu"
@@ -58,7 +62,8 @@
         android:paddingLeft="28dp"
         android:paddingTop="@dimen/larger_padding"
         android:scaleType="centerInside"
-        android:src="?attr/drawableDropdown"
+        android:tint="?attr/sgColorIcon"
+        app:srcCompat="@drawable/ic_more_vert_white_20dp"
         tools:ignore="RtlSymmetry" />
 
 </RelativeLayout>

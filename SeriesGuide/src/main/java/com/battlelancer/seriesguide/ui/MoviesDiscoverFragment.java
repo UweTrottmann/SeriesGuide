@@ -27,6 +27,7 @@ import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
 import com.battlelancer.seriesguide.ui.dialogs.MovieLocalizationDialogFragment;
 import com.battlelancer.seriesguide.util.AutoGridLayoutManager;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -57,7 +58,7 @@ public class MoviesDiscoverFragment extends Fragment {
 
         swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
         swipeRefreshLayout.setRefreshing(false);
-        Utils.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
+        ViewTools.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
 
         adapter = new MoviesDiscoverAdapter(getContext(),
                 new MovieItemClickListener(getActivity()));
@@ -109,6 +110,15 @@ public class MoviesDiscoverFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        // when switching tabs while still showing refresh animation, old content remains stuck
+        // so force clear the drawing cache and animation: http://stackoverflow.com/a/27073879
+        if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+            swipeRefreshLayout.destroyDrawingCache();
+            swipeRefreshLayout.clearAnimation();
+        }
+
         unbinder.unbind();
     }
 

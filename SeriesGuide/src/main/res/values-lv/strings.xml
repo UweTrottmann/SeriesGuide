@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Seriāls</string>
   <string name="episode">Epizode</string>
-  <string name="episode_number">%s epizode</string>
+  <string name="episode_number">Epizode %d</string>
   <string name="episodes">Epizodes</string>
   <string name="season">Sezona</string>
-  <string name="season_number">%s sezona</string>
+  <string name="season_number">Sezona %d</string>
   <string name="seasons">Sezonas</string>
   <string name="specialseason">Speciālas epizodes</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">Kopīgot seriālu</string>
   <string name="share_episode">Kopīgot epizodi</string>
   <string name="share_movie">Dalīties ar filmu</string>
-  <string name="share_checkout">Iečeko %s</string>
   <string name="addtocalendar">Pievienot kalendāram</string>
   <string name="addtocalendar_failed">Nevar radīt kalendāru pasākumu.</string>
   <string name="links">Links</string>
@@ -121,6 +120,8 @@
   <string name="context_unfavorite">Noņemt no favorītiem</string>
   <string name="favorited">Pievienota(-s) pie favorītiem</string>
   <string name="unfavorited">Noņemta(-s) no favorītiem</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Slēpt</string>
   <string name="context_unhide">Atslēpt</string>
   <string name="hidden">Noslēpts šovs</string>
@@ -157,7 +158,9 @@
   <string name="recent">Nesen</string>
   <string name="noupcoming">Nav gaidāmu epizožu.</string>
   <string name="norecent">Nav nesenu epizožu.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Tikai izlases seriāli</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Infinite calendar</string>
   <!-- Updating -->
   <string name="update_scheduled">Notiek atjaunināšana&#8230;</string>
@@ -353,6 +356,21 @@
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Bildes tikai caur WiFi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <plurals name="days_before_plural">
+    <item quantity="zero">%d days before</item>
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="zero">%d hours before</item>
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="zero">%d minutes before</item>
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
@@ -394,7 +412,7 @@
   <string name="backup_summary">Dublēt vai atjaunot jūsu seriālus</string>
   <string name="pref_number">Epizožu formāts</string>
   <string name="pref_offset">Manuāla laika nobīde</string>
-  <string name="pref_offsetsummary">Nobīdīt raidlaikus %s stundas</string>
+  <string name="pref_offsetsummary">Nobīdīt raidlaikus %d stundas</string>
   <string name="clear_cache">Iztukšot attēlu kešatmiņu</string>
   <string name="clear_cache_summary">Noņemt visus kešatmiņā ievietotos attēlus no ierīces</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
@@ -435,21 +453,16 @@
   <string name="upcoming_episodes">Jaunas epizodes tuvojas</string>
   <string name="upcoming_episodes_number">%s jaunas epizodes</string>
   <string name="upcoming_show_detailed">%1$s uz %2$s</string>
-  <string name="more">%s vairāk</string>
+  <string name="more">%d vairāk</string>
   <string name="upcoming_display">Izvēlies lai tiktu uzrādītu turpmākos šovus</string>
   <string name="pref_notifications">Paziņojumi</string>
   <string name="pref_notificationssummary">Paziņot par jaunām epizodēm</string>
-  <string name="pref_notifyfavonly">Tikai favorīti</string>
-  <string name="pref_notifyfavonlysummary">Saņemt paziņojumus tikai par mīļākajiem šoviem</string>
   <string name="pref_ringtone">Melodija</string>
   <string name="pref_vibrate">Vibrēt</string>
   <string name="pref_vibratesummary">Vibrēt arī paziņojuma uzrādīšanas laikā</string>
   <string name="pref_notifications_treshold">Kad paziņot</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">ekranizācijas laikā</string>
-  <string name="notification_release_earlier_five">5 minūtes pirms</string>
-  <string name="notification_release_earlier_ten">10 minūtes pirms</string>
-  <string name="notification_release_earlier_hour">1 stundu pirms</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (neliels)</string>
   <!-- List Widget -->

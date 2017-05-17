@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport;
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
@@ -16,7 +15,6 @@ import com.battlelancer.seriesguide.dataliberation.model.Movie;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.interfaces.OnTaskFinishedListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
@@ -37,6 +35,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
@@ -55,31 +54,17 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
     private Context context;
     private String[] languageCodes;
-    private OnTaskFinishedListener finishedListener;
     private boolean isImportingAutoBackup;
     private boolean isUseDefaultFolders;
     private boolean isImportShows;
     private boolean isImportLists;
     private boolean isImportMovies;
+    @Nullable private String errorCause;
 
-    public JsonImportTask(Context context, OnTaskFinishedListener listener) {
-        this(context);
-        finishedListener = listener;
-        isImportingAutoBackup = true;
-        isImportShows = true;
-        isImportLists = true;
-        isImportMovies = true;
-        // use Storage Access Framework on KitKat and up to select custom backup files,
-        // on older versions use default folders
-        // also auto backup by default uses default folders
-        isUseDefaultFolders = !AndroidUtils.isKitKatOrHigher()
-                || BackupSettings.isUseAutoBackupDefaultFiles(context);
-    }
-
-    public JsonImportTask(Context context, OnTaskFinishedListener listener,
-            boolean importShows, boolean importLists, boolean importMovies) {
-        this(context);
-        finishedListener = listener;
+    public JsonImportTask(Context context, boolean importShows, boolean importLists,
+            boolean importMovies) {
+        this.context = context.getApplicationContext();
+        languageCodes = this.context.getResources().getStringArray(R.array.languageCodesShows);
         isImportingAutoBackup = false;
         isImportShows = importShows;
         isImportLists = importLists;
@@ -90,9 +75,14 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         isUseDefaultFolders = !AndroidUtils.isKitKatOrHigher();
     }
 
-    private JsonImportTask(Context context) {
-        this.context = context.getApplicationContext();
-        languageCodes = this.context.getResources().getStringArray(R.array.languageCodesShows);
+    public JsonImportTask(Context context) {
+        this(context, true, true, true);
+        isImportingAutoBackup = true;
+        // use Storage Access Framework on KitKat and up to select custom backup files,
+        // on older versions use default folders
+        // also auto backup by default uses default folders
+        isUseDefaultFolders = !AndroidUtils.isKitKatOrHigher()
+                || BackupSettings.isUseAutoBackupDefaultFiles(context);
     }
 
     @Override
@@ -157,28 +147,32 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     @Override
     protected void onPostExecute(Integer result) {
         int messageId;
+        boolean showIndefinite;
         switch (result) {
             case SUCCESS:
                 messageId = R.string.import_success;
+                showIndefinite = false;
                 break;
             case ERROR_STORAGE_ACCESS:
                 messageId = R.string.import_failed_nosd;
+                showIndefinite = true;
                 break;
             case ERROR_FILE_ACCESS:
                 messageId = R.string.import_failed_nofile;
+                showIndefinite = true;
                 break;
             case ERROR_LARGE_DB_OP:
                 messageId = R.string.update_inprogress;
+                showIndefinite = false;
                 break;
             default:
                 messageId = R.string.import_failed;
+                showIndefinite = true;
                 break;
         }
-        Toast.makeText(context, messageId, Toast.LENGTH_LONG).show();
-
-        if (finishedListener != null) {
-            finishedListener.onTaskFinished();
-        }
+        EventBus.getDefault()
+                .post(new DataLiberationFragment.LiberationResultEvent(
+                        context.getString(messageId), errorCause, showIndefinite));
     }
 
     private int importData(File importPath, @JsonExportTask.BackupType int type) {
@@ -197,6 +191,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                 pfd = context.getContentResolver().openFileDescriptor(backupFileUri, "r");
             } catch (FileNotFoundException | SecurityException e) {
                 Timber.e(e, "Backup file not found.");
+                errorCause = e.getMessage();
                 return ERROR_FILE_ACCESS;
             }
             if (pfd == null) {
@@ -216,6 +211,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             } catch (JsonParseException | IOException | IllegalStateException e) {
                 // the given Json might not be valid or unreadable
                 Timber.e(e, "JSON import failed");
+                errorCause = e.getMessage();
                 return ERROR;
             }
         } else {
@@ -241,6 +237,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                 in = new FileInputStream(backupFile);
             } catch (FileNotFoundException e) {
                 Timber.e(e, "Backup file not found.");
+                errorCause = e.getMessage();
                 return ERROR_FILE_ACCESS;
             }
 
@@ -252,6 +249,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             } catch (JsonParseException | IOException | IllegalStateException e) {
                 // the given Json might not be valid or unreadable
                 Timber.e(e, "JSON show import failed");
+                errorCause = e.getMessage();
                 return ERROR;
             }
         }
@@ -334,6 +332,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         showValues.put(Shows.TITLE, show.title == null ? "" : show.title);
         showValues.put(Shows.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(show.title));
         showValues.put(Shows.FAVORITE, show.favorite);
+        showValues.put(Shows.NOTIFY, show.notify == null ? true : show.notify);
         showValues.put(Shows.HIDDEN, show.hidden);
         // only add the language, if we support it
         for (int i = 0, size = languageCodes.length; i < size; i++) {

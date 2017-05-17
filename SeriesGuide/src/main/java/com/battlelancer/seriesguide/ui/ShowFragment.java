@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -47,6 +49,7 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.tmdb2.entities.Credits;
 import java.util.Date;
@@ -98,16 +101,18 @@ public class ShowFragment extends Fragment {
     @BindView(R.id.textViewRatingsUser) TextView mTextViewRatingUser;
     @BindView(R.id.textViewShowLastEdit) TextView mTextViewLastEdit;
 
-    @BindView(R.id.buttonShowFavorite) Button mButtonFavorite;
-    @BindView(R.id.buttonShowShare) Button mButtonShare;
-    @BindView(R.id.buttonShowShortcut) Button mButtonShortcut;
+    @BindView(R.id.buttonShowFavorite) Button buttonFavorite;
+    @BindView(R.id.buttonShowNotify) Button buttonNotify;
+    @BindView(R.id.buttonShowHidden) Button buttonHidden;
+    @BindView(R.id.buttonShowShortcut) Button buttonShortcut;
     @BindView(R.id.buttonShowLanguage) Button buttonLanguage;
     @BindView(R.id.containerRatings) View mButtonRate;
-    @BindView(R.id.buttonShowInfoIMDB) View mButtonImdb;
-    @BindView(R.id.buttonTVDB) View mButtonTvdb;
-    @BindView(R.id.buttonTrakt) View mButtonTrakt;
-    @BindView(R.id.buttonWebSearch) Button mButtonWebSearch;
-    @BindView(R.id.buttonShouts) Button mButtonComments;
+    @BindView(R.id.buttonShowImdb) Button mButtonImdb;
+    @BindView(R.id.buttonShowTvdb) Button mButtonTvdb;
+    @BindView(R.id.buttonShowTrakt) Button mButtonTrakt;
+    @BindView(R.id.buttonShowWebSearch) Button mButtonWebSearch;
+    @BindView(R.id.buttonShowComments) Button mButtonComments;
+    @BindView(R.id.buttonShowShare) Button buttonShare;
 
     @BindView(R.id.labelCast) TextView castLabel;
     @BindView(R.id.containerCast) LinearLayout castContainer;
@@ -119,7 +124,7 @@ public class ShowFragment extends Fragment {
     private TraktRatingsTask traktTask;
     private String showTitle;
     private String posterPath;
-    private int selectedLanguageIndex;
+    @Nullable private String languageCode;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -127,27 +132,14 @@ public class ShowFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_show, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-        // share button
-        mButtonShare.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareShow();
-            }
-        });
-        CheatSheet.setup(mButtonShare);
-
-        // shortcut button
-        mButtonShortcut.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createShortcut();
-            }
-        });
-        CheatSheet.setup(mButtonShortcut);
+        // favorite + notifications + visibility button
+        CheatSheet.setup(buttonFavorite);
+        CheatSheet.setup(buttonNotify);
+        CheatSheet.setup(buttonHidden);
 
         // language button
         Resources.Theme theme = getActivity().getTheme();
-        Utils.setVectorCompoundDrawable(theme, buttonLanguage, R.attr.drawableLanguage);
+        ViewTools.setVectorDrawableLeft(theme, buttonLanguage, R.drawable.ic_language_white_24dp);
         buttonLanguage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,9 +157,30 @@ public class ShowFragment extends Fragment {
         });
         CheatSheet.setup(mButtonRate, R.string.action_rate);
 
-        // search and comments button
-        Utils.setVectorCompoundDrawable(theme, mButtonWebSearch, R.attr.drawableSearch);
-        Utils.setVectorCompoundDrawable(theme, mButtonComments, R.attr.drawableComments);
+        // link, search and comments button
+        ViewTools.setVectorDrawableLeft(theme, mButtonImdb, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorDrawableLeft(theme, mButtonTvdb, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorDrawableLeft(theme, mButtonTrakt, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorDrawableLeft(theme, mButtonWebSearch, R.drawable.ic_search_white_24dp);
+        ViewTools.setVectorDrawableLeft(theme, mButtonComments, R.drawable.ic_forum_black_24dp);
+
+        // share button
+        ViewTools.setVectorDrawableLeft(theme, buttonShare, R.drawable.ic_share_white_24dp);
+        buttonShare.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareShow();
+            }
+        });
+
+        // shortcut button
+        ViewTools.setVectorDrawableLeft(theme, buttonShortcut, R.drawable.ic_link_black_24dp);
+        buttonShortcut.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createShortcut();
+            }
+        });
 
         setCastVisibility(false);
         setCrewVisibility(false);
@@ -247,7 +260,9 @@ public class ShowFragment extends Fragment {
                 Shows.RATING_VOTES,
                 Shows.RATING_USER,
                 Shows.LASTEDIT,
-                Shows.LANGUAGE
+                Shows.LANGUAGE,
+                Shows.NOTIFY,
+                Shows.HIDDEN
         };
 
         int TITLE = 1;
@@ -270,6 +285,8 @@ public class ShowFragment extends Fragment {
         int RATING_USER = 18;
         int LAST_EDIT_MS = 19;
         int LANGUAGE = 20;
+        int NOTIFY = 21;
+        int HIDDEN = 22;
     }
 
     private LoaderCallbacks<Cursor> mShowLoaderCallbacks = new LoaderCallbacks<Cursor>() {
@@ -335,16 +352,15 @@ public class ShowFragment extends Fragment {
 
         // favorite button
         final boolean isFavorite = showCursor.getInt(ShowQuery.IS_FAVORITE) == 1;
-        mButtonFavorite.setEnabled(true);
-        Utils.setCompoundDrawablesRelativeWithIntrinsicBounds(mButtonFavorite, 0,
-                Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        isFavorite ? R.attr.drawableStar : R.attr.drawableStar0),
-                0, 0);
-        mButtonFavorite.setText(
+        ViewTools.setVectorDrawableTop(getActivity().getTheme(), buttonFavorite, isFavorite
+                ? R.drawable.ic_star_black_24dp
+                : R.drawable.ic_star_border_black_24dp);
+        String labelFavorite = getString(
                 isFavorite ? R.string.context_unfavorite : R.string.context_favorite);
-        CheatSheet.setup(mButtonFavorite,
-                isFavorite ? R.string.context_unfavorite : R.string.context_favorite);
-        mButtonFavorite.setOnClickListener(new OnClickListener() {
+        buttonFavorite.setText(labelFavorite);
+        buttonFavorite.setContentDescription(labelFavorite);
+        buttonFavorite.setEnabled(true);
+        buttonFavorite.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // disable until action is complete
@@ -352,6 +368,49 @@ public class ShowFragment extends Fragment {
                 SgApp.from(getActivity())
                         .getShowTools()
                         .storeIsFavorite(getShowTvdbId(), !isFavorite);
+            }
+        });
+
+        // notifications button
+        final boolean notify = showCursor.getInt(ShowQuery.NOTIFY) == 1;
+        buttonNotify.setContentDescription(getString(notify
+                ? R.string.action_episode_notifications_off
+                : R.string.action_episode_notifications_on));
+        ViewTools.setVectorDrawableTop(getActivity().getTheme(), buttonNotify, notify
+                ? R.drawable.ic_notifications_active_black_24dp
+                : R.drawable.ic_notifications_off_black_24dp);
+        buttonNotify.setEnabled(true);
+        buttonNotify.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!Utils.hasAccessToX(getActivity())) {
+                    Utils.advertiseSubscription(getActivity());
+                    return;
+                }
+                // disable until action is complete
+                v.setEnabled(false);
+                SgApp.from(getActivity())
+                        .getShowTools()
+                        .storeNotify(getShowTvdbId(), !notify);
+            }
+        });
+
+        // hidden button
+        final boolean isHidden = showCursor.getInt(ShowQuery.HIDDEN) == 1;
+        String label = getString(isHidden ? R.string.context_unhide : R.string.context_hide);
+        buttonHidden.setContentDescription(label);
+        buttonHidden.setText(label);
+        ViewTools.setVectorDrawableTop(getActivity().getTheme(), buttonHidden,
+                isHidden
+                        ? R.drawable.ic_visibility_off_black_24dp
+                        : R.drawable.ic_visibility_black_24dp);
+        buttonHidden.setEnabled(true);
+        buttonHidden.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // disable until action is complete
+                v.setEnabled(false);
+                SgApp.from(getActivity()).getShowTools().storeIsHidden(getShowTvdbId(), !isHidden);
             }
         });
 
@@ -371,7 +430,7 @@ public class ShowFragment extends Fragment {
         LanguageTools.LanguageData languageData = LanguageTools.getShowLanguageDataFor(
                 getContext(), showCursor.getString(ShowQuery.LANGUAGE));
         if (languageData != null) {
-            selectedLanguageIndex = languageData.languageIndex;
+            languageCode = languageData.languageCode;
             buttonLanguage.setText(languageData.languageString);
         }
 
@@ -381,14 +440,14 @@ public class ShowFragment extends Fragment {
 
         // original release
         String firstRelease = showCursor.getString(ShowQuery.FIRST_RELEASE);
-        Utils.setValueOrPlaceholder(mTextViewFirstRelease,
+        ViewTools.setValueOrPlaceholder(mTextViewFirstRelease,
                 TimeTools.getShowReleaseYear(firstRelease));
 
         // content rating
-        Utils.setValueOrPlaceholder(mTextViewContentRating,
+        ViewTools.setValueOrPlaceholder(mTextViewContentRating,
                 showCursor.getString(ShowQuery.CONTENT_RATING));
         // genres
-        Utils.setValueOrPlaceholder(mTextViewGenres,
+        ViewTools.setValueOrPlaceholder(mTextViewGenres,
                 TextTools.splitAndKitTVDBStrings(showCursor.getString(ShowQuery.GENRES)));
 
         // trakt rating
@@ -535,15 +594,17 @@ public class ShowFragment extends Fragment {
     }
 
     private void displayLanguageSettings() {
-        DialogFragment dialog
-                = LanguageChoiceDialogFragment.newInstance(getShowTvdbId(), selectedLanguageIndex);
-        dialog.show(getFragmentManager(), "dialog-language");
+        // guard against onClick called after fragment is up navigated (multi-touch)
+        // onSaveInstanceState might already be called
+        if (isResumed()) {
+            DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
+                    R.array.languageCodesShows, languageCode);
+            dialog.show(getFragmentManager(), "dialog-language");
+        }
     }
 
-    private void changeShowLanguage(int languageCodeIndex) {
-        selectedLanguageIndex = languageCodeIndex;
-        String languageCode = getResources().getStringArray(
-                R.array.languageCodesShows)[languageCodeIndex];
+    private void changeShowLanguage(@NonNull String languageCode) {
+        this.languageCode = languageCode;
 
         Timber.d("Changing show language to %s", languageCode);
         SgApp.from(getActivity()).getShowTools().storeLanguage(getShowTvdbId(), languageCode);
@@ -551,10 +612,7 @@ public class ShowFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
-        if (event.showTvdbId != getShowTvdbId()) {
-            return;
-        }
-        changeShowLanguage(event.selectedLanguageIndex);
+        changeShowLanguage(event.selectedLanguageCode);
     }
 
     private void createShortcut() {

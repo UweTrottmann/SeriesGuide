@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">نمایش</string>
   <string name="episode">قسمت</string>
-  <string name="episode_number">قسمت %s</string>
+  <string name="episode_number">قسمت %d</string>
   <string name="episodes">قسمت‌ها</string>
   <string name="season">فصل</string>
-  <string name="season_number">فصل %s</string>
+  <string name="season_number">فصل %d</string>
   <string name="seasons">فصل‌ها</string>
   <string name="specialseason">قسمت‌های ویژه</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">هم‌رسانی نمایش</string>
   <string name="share_episode">هم‌رسانی قسمت</string>
   <string name="share_movie">هم‌رسانی فیلم</string>
-  <string name="share_checkout">بررسی %s</string>
   <string name="addtocalendar">افزودن به تقویم</string>
   <string name="addtocalendar_failed">ناتوانی در ایجاد یک رویداد تقویم.</string>
   <string name="links">پیوندها</string>
@@ -98,11 +97,11 @@
   <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s دقیقه</string>
   <!-- Flagging -->
-  <string name="mark_all">تماشا کردن همه</string>
-  <string name="unmark_all">هیچکدام تماشا نشده</string>
+  <string name="mark_all">همه تماشا شدن</string>
+  <string name="unmark_all">هیچکدام تماشا نشدن</string>
   <string name="mark_untilhere">تنظیم تمام قدیمی‌ترها به‌عنوان تماشا شده</string>
-  <string name="collect_all">همه جمع آوری شده</string>
-  <string name="uncollect_all">هیچ کدام جمع آوری نشده</string>
+  <string name="collect_all">همه به کلکسیون افزوده شده</string>
+  <string name="uncollect_all">هیچ کدام به کلکسیون افزوده نشده</string>
   <string name="action_skip">رد کردن</string>
   <string name="action_dont_skip">رد نشو</string>
   <string name="action_collection_add">افزودن به مجموعه</string>
@@ -112,30 +111,32 @@
   <string name="action_watched">تنظیم به تماشا شده</string>
   <string name="action_unwatched">تنظیم به تماشا نشده</string>
   <!-- Shows -->
-  <string name="confirm_delete">واقعاً می‌خواهید %s را بردارید؟</string>
-  <string name="delete_error">نمی‌تواند نمایش را برداشت. بعداً دوباره تلاش کنید.</string>
-  <string name="delete_show">برداشتن</string>
+  <string name="confirm_delete">واقعاً می‌خواهید %s را حذف کنید؟</string>
+  <string name="delete_error">اثر نمایشی حذف نشد. بعداً دوباره سعی کنید.</string>
+  <string name="delete_show">حذف</string>
   <string name="no_nextepisode">قسمت بعدی پیدا نشد</string>
   <string name="context_favorite">افزودن به برگزیده‌ها</string>
-  <string name="context_unfavorite">برداشتن از برگزیده‌ها</string>
+  <string name="context_unfavorite">حذف از برگزیده‌ها</string>
   <string name="favorited">به برگزیده‌ها افزوده شد</string>
-  <string name="unfavorited">از برگزیده‌ها برداشته شد</string>
-  <string name="context_hide">نهفتن</string>
+  <string name="unfavorited">از برگزیده‌ها حذف شد</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
+  <string name="context_hide">پنهان کردن</string>
   <string name="context_unhide">پنهان نکردن</string>
-  <string name="hidden">به نهفته جابه‌جا شد</string>
-  <string name="unhidden">نمایش دوباره آشکار است</string>
-  <string name="action_shows_add">افزودن نمایش</string>
-  <string name="action_shows_filter">پالودن نمایش‌ها</string>
-  <string name="empty_filter">برداشتن تمام پالایه‌ها</string>
+  <string name="hidden">به پنهان منتقل شد</string>
+  <string name="unhidden">اثر نمایشی دوباره قابل مشاهده است</string>
+  <string name="action_shows_add">افزودن اثر نمایشی</string>
+  <string name="action_shows_filter">آثار نمایشی برحسب فیلتر</string>
+  <string name="empty_filter">حذف همه فیلترها</string>
   <string name="action_shows_filter_favorites">برگزیده‌ها</string>
   <string name="action_shows_filter_unwatched">تماشا نشده</string>
-  <string name="action_shows_filter_upcoming">پیش رو</string>
-  <string name="action_shows_filter_hidden">نهفته</string>
-  <string name="action_shows_sort">چینش نمایش‌ها</string>
+  <string name="action_shows_filter_upcoming">بزودی</string>
+  <string name="action_shows_filter_hidden">پنهان شده</string>
+  <string name="action_shows_sort">چینش آثار نمایشی</string>
   <string name="action_shows_sort_title">عنوان</string>
   <string name="action_shows_sort_latest_episode">آخرین قسمت</string>
   <string name="action_shows_sort_oldest_episode">قدیمی‌ترین قسمت</string>
-  <string name="action_shows_sort_last_watched">آخرین تماشا</string>
+  <string name="action_shows_sort_last_watched">آخرین تماشا شده</string>
   <string name="action_shows_sort_remaining">قسمت‌های باقی مانده</string>
   <string name="action_shows_sort_favorites">نخست برگزیده‌ها</string>
   <string name="context_updateshow">به‌روز رسانی</string>
@@ -144,19 +145,21 @@
   <string name="now_tab">اکنون</string>
   <string name="recently_watched">به‌تازگی تماشا شده</string>
   <string name="released_today">امروز منتشر شد</string>
-  <string name="friends_recently">دوستان ترکتتان</string>
-  <string name="now_empty">هیچ خبری نیست. چند نمایش تماشا کنید!</string>
+  <string name="friends_recently">دوستان شما در trakt</string>
+  <string name="now_empty">هیچ خبری نیست. چند اثر نمایشی تماشا کنید!</string>
   <string name="now_movies_empty">هیچ خبری نیست. چند فیلم تماشا کنید!</string>
   <!-- History -->
   <string name="user_stream">تاریخچه</string>
-  <string name="user_stream_empty">هیچ سابقه ای در trakt نیست. تعدادی نمایش مشاهده و سپس علامت بزنید!</string>
+  <string name="user_stream_empty">هیچ تاریخچه ای در trakt یافت نشد. چند اثری نمایشی را مشاهده کنید و سپس علامت بزنید!</string>
   <string name="user_movie_stream_empty">هیچ فعالیت اخیری در trakt  نیست. تعدادی فیلم را علامت بزنید!</string>
   <!-- Calendar -->
-  <string name="upcoming">پیش رو</string>
+  <string name="upcoming">بزودی</string>
   <string name="recent">اخیر</string>
-  <string name="noupcoming">هیچ قسمت آینده وجود ندارد.</string>
+  <string name="noupcoming">هیچ قسمت آینده ای وجود ندارد.</string>
   <string name="norecent">هیچ قسمت اخیری وجود ندارد.</string>
-  <string name="only_favorites">تنها نمایش‌های برگزیده</string>
+  <string name="calendar_settings">Calendar settings</string>
+  <string name="only_favorites">تنها نمایش های مورد علاقه</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">تقویم بی‌پایان</string>
   <!-- Updating -->
   <string name="update_scheduled">به‌روز رسانی&#8230;</string>
@@ -165,28 +168,28 @@
   <!-- Seasons -->
   <string name="season_allwatched">تمامی قسمت‌ها تماشا شده‌اند</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="one">قسمت %d تماشا نشده است</item>
+    <item quantity="other">%d قسمت تماشا نشده است</item>
   </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d قسمت دیگر</item>
+    <item quantity="other">%d قسمت های دیگر</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">%d منتشر خواهد شد</item>
+    <item quantity="other">%d منتشر خواهند شد</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">%d باقی مانده</item>
+    <item quantity="other">%d باقی مانده</item>
   </plurals>
   <!-- Add show -->
-  <string name="checkin_searchhint">نام نمایشی را بنویسید</string>
+  <string name="checkin_searchhint">نام یک اثر نمایشی را بنویسید</string>
   <string name="add_empty">این‌جا هیچ سریالی نیست.</string>
   <string name="no_results">هیچ نتیجه ای پیدا نشد، کلمات را بصورت کامل امتحان کنید.</string>
   <string name="action_try_any_language">هر زبانی را امتحان کنید</string>
-  <string name="action_try_again">تلاش دوباره</string>
-  <string name="tvdb_error_does_not_exist">نمایش (هنوز) در TheTVDB وجود ندارد. بعدا دوباره تلاش کنید.</string>
+  <string name="action_try_again">دوباره امتحان کنید</string>
+  <string name="tvdb_error_does_not_exist">اثر نمایشی (هنوز) در TheTVDB وجود ندارد. بعداً دوباره سعی کنید.</string>
   <string name="add_all">افزودن همه</string>
   <string name="add_multiple">تمام نمایش‌ها به زودی در فهرست نمایشتان ظاهر خواهند شد.</string>
   <string name="add_started">%s به زودی در فهرست تماشایتان ظاهر خواهد شد.</string>
@@ -211,8 +214,8 @@
   <!-- Movies -->
   <string name="title_discover">کشف</string>
   <string name="title_popular">محبوب</string>
-  <string name="title_digital_releases">ارائهٔ دیجیتال</string>
-  <string name="title_disc_releases">ارائه روی دیسک</string>
+  <string name="title_digital_releases">نسخه های دیجیتال</string>
+  <string name="title_disc_releases">منتشر شده روی دیسک</string>
   <string name="movies_in_theatres">در سینماها</string>
   <string name="movies_collection">مجموعه</string>
   <string name="movies_watchlist">فهرست تماشا</string>
@@ -225,7 +228,7 @@
   <string name="movies_watchlist_empty">فیلم‌ها را به فهرست تماشای خود نیفزوده‌اید.</string>
   <string name="trailer">تریلر</string>
   <string name="movie_cast">بازیگران</string>
-  <string name="movie_crew">کادر</string>
+  <string name="movie_crew">عوامل پشت صحنه</string>
   <string name="action_movies_sort">چینش فیلم‌ها</string>
   <string name="action_movies_sort_title">عنوان</string>
   <string name="action_movies_sort_release">تاریخ انتشار</string>
@@ -241,55 +244,55 @@
   <string name="movies_on_watchlist">%s در فهرست تماشا</string>
   <string name="runtime_movies_watchlist">زمان اجرای فیلم‌های فهرست تماشا</string>
   <plurals name="days_plural">
-    <item quantity="one">‫%Id روز</item>
-    <item quantity="other">‫%Id روز</item>
+    <item quantity="one">%d روز</item>
+    <item quantity="other">%d روز</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">‫%Id ساعت</item>
-    <item quantity="other">‫%Id ساعت</item>
+    <item quantity="one">%d ساعت</item>
+    <item quantity="other">%d ساعت</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="one">‫%Id دقیقه</item>
-    <item quantity="other">‫%Id دقیقه</item>
+    <item quantity="one">%d دقیقه</item>
+    <item quantity="other">%d دقیقه</item>
   </plurals>
   <!-- Hexagon -->
-  <string name="hexagon_warning">تجربی!</string>
+  <string name="hexagon_warning">آزمایشی</string>
   <string name="hexagon_description">وصل شدن به ابرواره برای پشتیبان گیری و هم‌گام سازی نمایش‌ها و فیلم‌هایتان.</string>
   <string name="hexagon_warning_lists">فهرست‌ها گنجانده نشده‌اند.</string>
-  <string name="hexagon_warning_trakt">مادامی که ابروارهٔ سریزگاید وصل است، هم‌گام سازی ترکت غیرفعّال می‌شود.</string>
-  <string name="hexagon_signin">ورود به برنامه</string>
+  <string name="hexagon_warning_trakt">هنگامی که فضای ابری SeriesGuide متصل شود، هم‌گام سازی trakt غیرفعال خواد شد.</string>
+  <string name="hexagon_signin">ورود</string>
   <string name="hexagon_signed_in">به ابروارهٔ سریزگاید وصل هستید.</string>
   <string name="hexagon_signout">خروج از سیستم</string>
-  <string name="hexagon_setup_incomplete">راه اندازی ابروارهٔ سریزگاید کامل نشد.</string>
+  <string name="hexagon_setup_incomplete">راه اندازی فضای ابری SeriesGuide کامل نشد.</string>
   <string name="hexagon_setup_fail_auth">مشکل دردسترسی به حساب گوگل.</string>
-  <string name="hexagon_remove_account">برداشتن حساب</string>
+  <string name="hexagon_remove_account">حذف حساب</string>
   <string name="hexagon_remove_account_success">حساب حذف شد.</string>
-  <string name="hexagon_remove_account_failure">نمی‌توان حساب را برداشت.</string>
-  <string name="hexagon_remove_account_confirmation">برداشتن حسابتان تمام نمایش‌ها و فیلم‌ها را از ابروارهٔ سریزگاید حذف می‌کند. مطمئن شوید که آن را از دیگر افزاره‌های وصل شده نیز برمی‌دارید.</string>
-  <string name="hexagon_api_queued">در حال ارسال به ابروارهٔ سریزگاید.</string>
-  <string name="hexagon_signed_out">از SeriesGuide Cloud خارج شدید.</string>
-  <string name="hexagon_google_play_missing">برای استفاده از ابروارهٔ سریزگاید، نیاز به خدمات گوگل پلی است.</string>
+  <string name="hexagon_remove_account_failure">قادر به حذف حساب نیست.</string>
+  <string name="hexagon_remove_account_confirmation">حذف حسابتان تمام نمایش‌ها و فیلم‌ها را از فضای ابری SeriesGuide پاک می‌کند. مطمئن شوید که آن را از دیگر افزاره‌های وصل شده نیز حذف میکنید.</string>
+  <string name="hexagon_api_queued">در حال ارسال به فضای ابری SeriesGuide.</string>
+  <string name="hexagon_signed_out">از فضای ابری SeriesGuide خارج شدید.</string>
+  <string name="hexagon_google_play_missing">برای استفاده از فضای ابری SeriesGuide، نیاز به خدمات گوگل پلی است.</string>
   <!-- trakt -->
-  <string name="trakt_submitqueued">در حال فرستادن به ترکت.</string>
+  <string name="trakt_submitqueued">ارسال به trakt.</string>
   <string name="trakt_seen">‫%s دیده شده.</string>
   <string name="trakt_notseen">‫%s دیده نشده.</string>
-  <string name="trakt_collected">‫%s جمع‌آوری شده.</string>
-  <string name="trakt_notcollected">‫%s جمع‌آوری نشده.</string>
-  <string name="checkin_success_trakt">روی ترکت %s ثبت شد.</string>
-  <string name="checkin_canceled_success_trakt">ثبت روی ترکت لغو شد.</string>
-  <string name="traktcheckin_cancel">پایمال کردن</string>
-  <string name="traktcheckin_inprogress">شما به تازگی قسمت یا فیلمی دیگر را ثبت کرده‌اید. ثبت پیشین را پایمال کنید یا %s منتظر شده و دوباره تلاش کنید.</string>
-  <string name="traktcheckin_wait">منتظر شدن</string>
-  <string name="trakt_success">به ترکت فرستاده شد.</string>
-  <string name="trakt_error_credentials">چیزی اشتباه شد. اعتبارنامهٔ ترکت را بررسی کرده و دوباره تلاش کنید.</string>
-  <string name="trakt_error_not_exists">(هنوز) روی ترکت موجود نیست. بعداً دوباره تلاش کنید.</string>
-  <string name="trakt_notice_not_exists">(هنوز) نمی‌توان با ترکت ردیابی کرد.</string>
+  <string name="trakt_collected">‫%s به کلکسیون افزوده شده.</string>
+  <string name="trakt_notcollected">‫%s به کلکسیون افزوده نشده.</string>
+  <string name="checkin_success_trakt">%s روی trakt ثبت شد.</string>
+  <string name="checkin_canceled_success_trakt">ثبت روی trakt لغو شد.</string>
+  <string name="traktcheckin_cancel">باطل کردن</string>
+  <string name="traktcheckin_inprogress">شما به تازگی قسمت یا فیلمی دیگر را ثبت کرده‌اید. ثبت پیشین را باطل کنید یا %s منتظر شده و دوباره تلاش کنید.</string>
+  <string name="traktcheckin_wait">منتظر میمانم</string>
+  <string name="trakt_success">به trakt ارسال شد.</string>
+  <string name="trakt_error_credentials">اشتباهی رخ داد. اطلاعات کاربری trakt خود را بررسی کنید و دوباره امتحان کنید.</string>
+  <string name="trakt_error_not_exists">(هنوز) روی trakt موجود نیست. بعداً دوباره تلاش کنید.</string>
+  <string name="trakt_notice_not_exists">(هنوز) نمی‌توان با trakt ردیابی کرد.</string>
   <!-- Connect trakt -->
-  <string name="trakt_account">حساب ترکت</string>
-  <string name="trakt_connect_instructions">در صفحهٔ بعدی به ترکت وارد شده با حسابی جدید بسازید. سپس به سریزگاید اجازهٔ دسترسی به حساب ترکت را بدهید.</string>
-  <string name="connect_trakt">وصل شدن به ترکت</string>
-  <string name="trakt_reconnect">وصل کردن سریزگاید به ترکت</string>
-  <string name="trakt_reconnect_details">اعتبارنامهٔ ترکت را بررسی کنید</string>
+  <string name="trakt_account">حساب trakt</string>
+  <string name="trakt_connect_instructions">در صفحهٔ بعدی به trakt وارد شده یا حساب کاربری جدید بسازید. سپس به SeriesGuide اجازهٔ دسترسی به حساب trakt را بدهید.</string>
+  <string name="connect_trakt">اتصال به ترکت</string>
+  <string name="trakt_reconnect">اتصال SeriesGuide به trakt</string>
+  <string name="trakt_reconnect_details">اعتبارنامهٔ trakt را بررسی کنید</string>
   <string name="username">نام کاربری</string>
   <string name="waitplease">یک لحظه، لطفا&#8230;</string>
   <string name="connect">وصل کردن</string>
@@ -330,7 +333,7 @@
   <string name="prefs_category_basic">پایه‌ها</string>
   <string name="prefs_category_sharing">خدمات</string>
   <string name="prefs_category_advanced">پیش‌رفته</string>
-  <string name="prefs_category_about">درباره</string>
+  <string name="prefs_category_about">درباره ما</string>
   <string name="pref_onlyfuture">نادیده گرفتن قسمت‌های پخش شده</string>
   <string name="pref_onlyfuturesummary">هرگز قسمت‌های قبلاً پخش شده را نشان نده</string>
   <string name="pref_onlyseasoneps">نهفتن قسمت‌های ویژه</string>
@@ -344,12 +347,24 @@
   <string name="pref_language">زبان محتوای ترجیحی</string>
   <string name="pref_updatewifionly">تصویرها فقط با وای‌فای</string>
   <string name="pref_updatewifionlysummary">به منظور کاهش هزینه‌های داده، از طریق شبکه‌های همراه یا حجمی بارگیری نکنید</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d روز قبل</item>
+    <item quantity="other">%d روز قبل</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d ساعت قبل</item>
+    <item quantity="other">%d ساعت قبل</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d دقیقه قبل</item>
+    <item quantity="other">%d دقیقه قبل</item>
+  </plurals>
   <!-- About screen -->
-  <string name="licence_tvdb">این کاره از داده‌ها و تصویرهای TheTVDB با پروانهٔ CC BY-NC 4.0 استفاده می‌کند.</string>
-  <string name="licence_themoviedb">این محصول از رابط برنامه‌نویسی TMDb استفاده می‌کند، ولی توسّط TMDb توصیه یا تصدیق نشده است.</string>
-  <string name="licence_trakt">این کاره از داده‌ها و تصویرهای ترکت استفاده می‌کند.</string>
-  <string name="about_open_source">سریزگاید با استفاده از نرم‌افزارهای آزاد ساخته شده است.</string>
-  <string name="licences_and_credits">پروانه‌ها و اعتبارها</string>
+  <string name="licence_tvdb">‫این برنامه از داده‌ها و تصویرهای TheTVDB با مجوز CC BY-NC 4.0 استفاده می‌کند.</string>
+  <string name="licence_themoviedb">‫این محصول از رابط برنامه‌نویسی TMDb استفاده می‌کند ولی توسّط TMDb تصدیق نشده است.</string>
+  <string name="licence_trakt">‫این برنامه از داده‌ها و تصویرهای trakt استفاده می‌کند.</string>
+  <string name="about_open_source">SeriesGuide با استفاده از نرم‌افزارهای متن باز ساخته شده است.</string>
+  <string name="licences_and_credits">مجوزها و اعتبارات</string>
   <!-- Sort -->
   <string name="sort">مرتب کردن بر اساس</string>
   <string name="action_sort_ignore_articles">چشم پوشی از مقالات</string>
@@ -359,20 +374,20 @@
   <string name="sort_order_unwatched_first">نخست تماشا نشده‌ها</string>
   <string name="sort_order_alphabetical">الفبایی</string>
   <string name="sort_order_top_rated_first">بالاترین رتبه</string>
-  <string name="sort_order_latest_first_dvd">نخست جدیدترین (دی‌وی‌دی)</string>
-  <string name="sort_order_oldest_first_dvd">نخست قدیمی‌ترین (دی‌وی‌دی)</string>
+  <string name="sort_order_latest_first_dvd">نخست جدیدترین (DVD)</string>
+  <string name="sort_order_oldest_first_dvd">نخست قدیمی‌ترین (DVD)</string>
   <!-- Upcoming thresholds -->
-  <string name="pref_upcominglimit">بازهٔ پیش رو</string>
+  <string name="pref_upcominglimit">بازهٔ نمایش های آینده</string>
   <string name="upcoming_upto_now">اکنون</string>
-  <string name="upcoming_upto_one_day">1 روز</string>
-  <string name="upcoming_upto_three_days">3 روز</string>
-  <string name="upcoming_upto_one_week">1 هفته</string>
-  <string name="upcoming_upto_two_weeks">2 هفته</string>
-  <string name="upcoming_upto_one_month">1 ماه</string>
+  <string name="upcoming_upto_one_day">۱ روز</string>
+  <string name="upcoming_upto_three_days">۳ روز</string>
+  <string name="upcoming_upto_one_week">۱ هفته</string>
+  <string name="upcoming_upto_two_weeks">۲ هفته</string>
+  <string name="upcoming_upto_one_month">۱ ماه</string>
   <!-- Additional DashClock extension upcoming thresholds -->
-  <string name="upcoming_upto_one_hour">1 ساعت</string>
-  <string name="upcoming_upto_six_hours">6 ساعت</string>
-  <string name="upcoming_upto_half_day">12 ساعت</string>
+  <string name="upcoming_upto_one_hour">۱ ساعت</string>
+  <string name="upcoming_upto_six_hours">۶ ساعت</string>
+  <string name="upcoming_upto_half_day">۱۲ ساعت</string>
   <!-- Appearance settings -->
   <string name="pref_appearance">ظاهر</string>
   <string name="pref_theme">زمینه</string>
@@ -385,14 +400,14 @@
   <string name="backup_summary">پشتیبان گیری یا بازگردانی نمایش‌هایتان</string>
   <string name="pref_number">قالب شماره</string>
   <string name="pref_offset">جابه‌جایی زمان دستی</string>
-  <string name="pref_offsetsummary">جابه‌جا کردن زمان پخش به اندازهٔ %s ساعت</string>
-  <string name="clear_cache">پاک سازی انباره‌های تصویر</string>
-  <string name="clear_cache_summary">برداشتن تمام تصویرهای انبار شده از افزاره‌تان</string>
+  <string name="pref_offsetsummary">جابه‌جا کردن زمان پخش به اندازهٔ %d ساعت</string>
+  <string name="clear_cache">پاک سازی تصاویر ذخیره شده از حافظه دستگاه</string>
+  <string name="clear_cache_summary">حذف همه تصاویر ذخیره شده از حافظه دستگاه شما</string>
   <string name="pref_ganalyticssummary">ارسال آمار استفاده به سرویس گوگل بصورت ناشناس</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">گنجاندن تمامی فراداده‌ها چون توضیحات، بازیگران و نمره‌ها.</string>
   <string name="backup_path">پوشهٔ پشتیبان‌گیری</string>
-  <string name="backup_version">نگارش پایگاه داده</string>
+  <string name="backup_version">نسخه پایگاه داده</string>
   <string name="backup_failed_file_access">نمی‌توان پشتیبان گرفت. پروندهٔ پشتیبانی نمی‌تواند پیدا یا دیده شود.</string>
   <string name="backup_inprogress">در حال پشتیان گرفتن از پایگاه داده&#8230;</string>
   <string name="backup_success">پشتیبان گیری انجام شد.</string>
@@ -426,21 +441,16 @@
   <string name="upcoming_episodes">قسمت‌های جدید پیش رو هستند</string>
   <string name="upcoming_episodes_number">‫%s قسمت جدید</string>
   <string name="upcoming_show_detailed">‫%1$s در %2$s</string>
-  <string name="more">%s بیشتر</string>
+  <string name="more">%d بیشتر</string>
   <string name="upcoming_display">گزینش برای نشان دادن نمایش‌های پیش رو</string>
   <string name="pref_notifications">آگاهی‌ها</string>
   <string name="pref_notificationssummary">آگاهی دربارهٔ قسمت‌های جدید</string>
-  <string name="pref_notifyfavonly">فقط برگزیده‌ها</string>
-  <string name="pref_notifyfavonlysummary">دریافت آگاهی، فقط برای نمایش‌های برگزیده</string>
   <string name="pref_ringtone">صدا</string>
   <string name="pref_vibrate">لرزش</string>
   <string name="pref_vibratesummary">ارزش هنگام نمایش آگهی</string>
   <string name="pref_notifications_treshold">زمان آگاهی</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">شروع پخش</string>
-  <string name="notification_release_earlier_five">۵ دقیقه زودتر</string>
-  <string name="notification_release_earlier_ten">۱۰ دقیقه زودتر</string>
-  <string name="notification_release_earlier_hour">۱ ساعت قبل</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">سریزگاید (کوچک)</string>
   <!-- List Widget -->

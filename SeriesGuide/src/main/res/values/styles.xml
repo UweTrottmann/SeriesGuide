@@ -37,34 +37,28 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="TextAppearance.Title.Dim">
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
+    </style>
+
     <style name="TextAppearance.Subhead">
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="TextAppearance.Body">
-        <item name="android:textSize">@dimen/text_size_default_sg</item>
-    </style>
-
-    <style name="TextAppearance.Caption">
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
-        <item name="android:textSize">@dimen/text_size_caption_sg</item>
-    </style>
-
-    <style name="TextAppearance.Menu">
-        <item name="android:textSize">@dimen/text_size_menu_sg</item>
-    </style>
-
-    <style name="TextAppearance.Button">
-        <item name="android:textSize">@dimen/text_size_default_sg</item>
-        <item name="android:textAllCaps">true</item>
-    </style>
-
     <style name="TextAppearance.Subhead.Dim">
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
 
     <style name="TextAppearance.Subhead.Narrow">
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
+    </style>
+
+    <style name="TextAppearance.Subhead.Secondary">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="TextAppearance.Body">
+        <item name="android:textSize">@dimen/text_size_default_sg</item>
     </style>
 
     <style name="TextAppearance.Body.Bold">
@@ -76,6 +70,10 @@
     </style>
 
     <style name="TextAppearance.Body.Dim">
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
+    </style>
+
+    <style name="TextAppearance.Body.Secondary">
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
@@ -95,6 +93,11 @@
         <item name="android:textColor">@color/text_red</item>
     </style>
 
+    <style name="TextAppearance.Caption">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textSize">@dimen/text_size_caption_sg</item>
+    </style>
+
     <style name="TextAppearance.Caption.Dim">
         <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
@@ -109,6 +112,15 @@
 
     <style name="TextAppearance.Caption.Red">
         <item name="android:textColor">@color/text_red</item>
+    </style>
+
+    <style name="TextAppearance.Menu">
+        <item name="android:textSize">@dimen/text_size_menu_sg</item>
+    </style>
+
+    <style name="TextAppearance.Button">
+        <item name="android:textSize">@dimen/text_size_default_sg</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <!-- Widget styles -->

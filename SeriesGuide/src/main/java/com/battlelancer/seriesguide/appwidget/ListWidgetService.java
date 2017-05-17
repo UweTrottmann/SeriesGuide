@@ -59,6 +59,7 @@ public class ListWidgetService extends RemoteViewsService {
         }
 
         private void onQueryForData() {
+            boolean isOnlyCollected = WidgetSettings.isOnlyCollectedEpisodes(context, appWidgetId);
             boolean isOnlyFavorites = WidgetSettings.isOnlyFavoriteShows(context, appWidgetId);
             boolean isHideWatched = WidgetSettings.isHidingWatchedEpisodes(context, appWidgetId);
             int widgetType = WidgetSettings.getWidgetListType(context, appWidgetId);
@@ -67,7 +68,8 @@ public class ListWidgetService extends RemoteViewsService {
             switch (widgetType) {
                 case WidgetSettings.Type.RECENT:
                     // Recent episodes
-                    newCursor = DBUtils.getRecentEpisodes(context, isOnlyFavorites, isHideWatched);
+                    newCursor = DBUtils.getRecentEpisodes(context, isOnlyCollected, isOnlyFavorites,
+                            isHideWatched);
                     break;
                 case WidgetSettings.Type.SHOWS:
                     // Shows
@@ -105,8 +107,8 @@ public class ListWidgetService extends RemoteViewsService {
                     break;
                 default:
                     // Upcoming episodes
-                    newCursor = DBUtils.getUpcomingEpisodes(context, isOnlyFavorites,
-                            isHideWatched);
+                    newCursor = DBUtils.getUpcomingEpisodes(context, isOnlyCollected,
+                            isOnlyFavorites, isHideWatched);
                     break;
             }
 

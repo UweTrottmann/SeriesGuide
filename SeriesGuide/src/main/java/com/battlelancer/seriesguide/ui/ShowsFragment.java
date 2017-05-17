@@ -25,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.PopupMenu;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
@@ -43,6 +44,7 @@ import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.FirstRunView;
 import com.battlelancer.seriesguide.widgets.HeaderGridView;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -70,6 +72,9 @@ public class ShowsFragment extends Fragment implements
 
     private ShowsAdapter adapter;
     private HeaderGridView gridView;
+    private Button emptyView;
+    private Button emptyViewFilter;
+
     private Handler handler;
 
     public static ShowsFragment newInstance() {
@@ -82,13 +87,19 @@ public class ShowsFragment extends Fragment implements
         View v = inflater.inflate(R.layout.fragment_shows, container, false);
 
         gridView = ButterKnife.findById(v, android.R.id.list);
-        v.findViewById(R.id.emptyViewShows).setOnClickListener(new OnClickListener() {
+        emptyView = ButterKnife.findById(v, R.id.emptyViewShows);
+        ViewTools.setVectorDrawableTop(getActivity().getTheme(), emptyView,
+                R.drawable.ic_add_white_24dp);
+        emptyView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityAddShows();
             }
         });
-        v.findViewById(R.id.emptyViewShowsFilter).setOnClickListener(new OnClickListener() {
+        emptyViewFilter = ButterKnife.findById(v, R.id.emptyViewShowsFilter);
+        ViewTools.setVectorDrawableTop(getActivity().getTheme(), emptyViewFilter,
+                R.drawable.ic_filter_white_24dp);
+        emptyViewFilter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 isFilterFavorites = isFilterUnwatched = isFilterUpcoming = isFilterHidden
@@ -167,9 +178,9 @@ public class ShowsFragment extends Fragment implements
 
         View emptyView;
         if (isFilterFavorites || isFilterUnwatched || isFilterUpcoming || isFilterHidden) {
-            emptyView = getView().findViewById(R.id.emptyViewShowsFilter);
+            emptyView = emptyViewFilter;
         } else {
-            emptyView = getView().findViewById(R.id.emptyViewShows);
+            emptyView = this.emptyView;
         }
 
         if (oldEmptyView != null) {
@@ -235,7 +246,7 @@ public class ShowsFragment extends Fragment implements
         menu.findItem(R.id.menu_action_shows_filter)
                 .setIcon(isFilterFavorites || isFilterUnwatched || isFilterUpcoming
                         || isFilterHidden ?
-                        R.drawable.ic_action_filter_selected_24dp : R.drawable.ic_action_filter);
+                        R.drawable.ic_filter_selected_white_24dp : R.drawable.ic_filter_white_24dp);
 
         // set filter check box states
         menu.findItem(R.id.menu_action_shows_filter_favorites)
@@ -259,15 +270,15 @@ public class ShowsFragment extends Fragment implements
         MenuItem remainingItem = menu.findItem(R.id.menu_action_shows_sort_remaining);
         remainingItem.setTitle(R.string.action_shows_sort_remaining);
         if (sortOrderId == ShowsSortOrder.TITLE_ID) {
-            Utils.setMenuItemActiveString(sortTitleItem);
+            ViewTools.setMenuItemActiveString(sortTitleItem);
         } else if (sortOrderId == ShowsSortOrder.LATEST_EPISODE_ID) {
-            Utils.setMenuItemActiveString(sortLatestItem);
+            ViewTools.setMenuItemActiveString(sortLatestItem);
         } else if (sortOrderId == ShowsSortOrder.OLDEST_EPISODE_ID) {
-            Utils.setMenuItemActiveString(sortOldestItem);
+            ViewTools.setMenuItemActiveString(sortOldestItem);
         } else if (sortOrderId == ShowsSortOrder.LAST_WATCHED_ID) {
-            Utils.setMenuItemActiveString(lastWatchedItem);
+            ViewTools.setMenuItemActiveString(lastWatchedItem);
         } else if (sortOrderId == ShowsSortOrder.LEAST_REMAINING_EPISODES_ID) {
-            Utils.setMenuItemActiveString(remainingItem);
+            ViewTools.setMenuItemActiveString(remainingItem);
         }
         menu.findItem(R.id.menu_action_shows_sort_favorites)
                 .setChecked(isSortFavoritesFirst);
@@ -431,7 +442,7 @@ public class ShowsFragment extends Fragment implements
                 break;
             }
             case FirstRunView.ButtonType.SIGN_IN: {
-                ((BaseNavDrawerActivity)getActivity()).openNavDrawer();
+                ((BaseNavDrawerActivity) getActivity()).openNavDrawer();
                 Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Sign in");
                 break;
             }

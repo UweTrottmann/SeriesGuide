@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.AutoGridLayoutManager;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 
@@ -95,7 +96,7 @@ public class MoviesSearchFragment extends Fragment {
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewMoviesSearch,
                 R.id.recyclerViewMoviesSearch);
         swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
-        Utils.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
+        ViewTools.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
 
         // setup grid view
         AutoGridLayoutManager layoutManager = new AutoGridLayoutManager(getContext(),

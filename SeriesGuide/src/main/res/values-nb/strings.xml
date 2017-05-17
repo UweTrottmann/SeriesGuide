@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Serie</string>
   <string name="episode">Episode</string>
-  <string name="episode_number">Episode %s</string>
+  <string name="episode_number">Episode %d</string>
   <string name="episodes">Episoder</string>
   <string name="season">Sesong</string>
-  <string name="season_number">Sesong %s</string>
+  <string name="season_number">Sesong %d</string>
   <string name="seasons">Sesonger</string>
   <string name="specialseason">Spesialepisoder</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">Del serie</string>
   <string name="share_episode">Del episode</string>
   <string name="share_movie">Del film</string>
-  <string name="share_checkout">Sjekk ut %s</string>
   <string name="addtocalendar">Legg til i kalender</string>
   <string name="addtocalendar_failed">Kan ikke opprette en kalenderhendelse.</string>
   <string name="links">Linker</string>
@@ -120,6 +119,8 @@
   <string name="context_unfavorite">Fjern favorittmarkering</string>
   <string name="favorited">Favorittmarkert</string>
   <string name="unfavorited">Fjernet favorittmarkeringen</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Skjul</string>
   <string name="context_unhide">Vis</string>
   <string name="hidden">Skjuler serie</string>
@@ -156,7 +157,9 @@
   <string name="recent">Siste</string>
   <string name="noupcoming">Det er ingen kommende episoder.</string>
   <string name="norecent">Det er ingen nylige episoder.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Bare favoritter</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Uendelig kalender</string>
   <!-- Updating -->
   <string name="update_scheduled">Oppdaterer&#8230;</string>
@@ -344,6 +347,18 @@
   <string name="pref_language">Foretrukket språk</string>
   <string name="pref_updatewifionly">Bilder kun via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">For å redusere datakostnadene, ikke last ned over mobil eller målte nettverk</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Denne appen bruker data og bilder av TheTVDB lisensiert under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Dette produktet bruker API\'en til TMDb men er ikke godkjent eller sertifisert av TMDb.</string>
@@ -385,7 +400,7 @@
   <string name="backup_summary">Sikkerhetskopier eller gjenopprett dine serier</string>
   <string name="pref_number">Nummerering</string>
   <string name="pref_offset">Manuell tidsforskyvning</string>
-  <string name="pref_offsetsummary">Tidsforskjell på %s timer</string>
+  <string name="pref_offsetsummary">Tidsforskjell på %d timer</string>
   <string name="clear_cache">Tøm hurtiglageret</string>
   <string name="clear_cache_summary">Fjern alle hurtiglagrede bilder fra enheten</string>
   <string name="pref_ganalyticssummary">Sende anonym brukerstatistikk til en Google-tjeneste</string>
@@ -426,21 +441,16 @@
   <string name="upcoming_episodes">Nye episoder er på vei</string>
   <string name="upcoming_episodes_number">%s nye episoder</string>
   <string name="upcoming_show_detailed">%1$s på %2$s</string>
-  <string name="more">%s gjenstår</string>
+  <string name="more">%d gjenstår</string>
   <string name="upcoming_display">Velg for å vise kommende serier</string>
   <string name="pref_notifications">Varsler</string>
   <string name="pref_notificationssummary">Varsle om nye episoder</string>
-  <string name="pref_notifyfavonly">Bare favoritter</string>
-  <string name="pref_notifyfavonlysummary">Bare motta varsler for favorittserier</string>
   <string name="pref_ringtone">Ringetone</string>
   <string name="pref_vibrate">Vibrer</string>
   <string name="pref_vibratesummary">Vibrer også ved visning av varsel</string>
   <string name="pref_notifications_treshold">Tidspunkt for varsling</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">På lufta</string>
-  <string name="notification_release_earlier_five">5 min på forhånd</string>
-  <string name="notification_release_earlier_ten">10 min på forhånd</string>
-  <string name="notification_release_earlier_hour">1 time på forhånd</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (liten)</string>
   <!-- List Widget -->

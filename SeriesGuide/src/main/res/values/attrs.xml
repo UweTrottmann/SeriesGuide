@@ -12,6 +12,7 @@
     <!-- Other colors -->
     <attr name="sgColorBackgroundCard" format="reference|color" />
     <attr name="sgColorBackgroundDim" format="reference|color" />
+    <attr name="sgColorIcon" format="reference|color" />
     <attr name="sgColorSeparator" format="reference|color" />
     <attr name="sgColorDivider" format="reference|color" />
     <attr name="sgColorBackgroundDrawer" format="reference|color" />
@@ -23,27 +24,13 @@
     <attr name="colorsProgressBar" format="reference" />
 
     <!-- Drawables -->
-    <attr name="drawableAddIcon" format="reference" />
-    <attr name="drawableAddShow" format="reference" />
-    <attr name="drawableArrowUp" format="reference" />
-    <attr name="drawableArrowRight" format="reference" />
     <attr name="drawableBackgroundGradient" format="reference" />
     <attr name="drawableCancel" format="reference" />
     <attr name="drawableCheckin" format="reference" />
     <attr name="drawableCollect" format="reference" />
     <attr name="drawableCollectAll" format="reference" />
-    <attr name="drawableComments" format="reference" />
-    <attr name="drawableDropdown" format="reference" />
-    <attr name="drawableExtension" format="reference" />
-    <attr name="drawableFilter" format="reference" />
-    <attr name="drawableLanguage" format="reference" />
-    <attr name="drawableLink" format="reference" />
     <attr name="drawableList" format="reference" />
-    <attr name="drawableSearch" format="reference" />
-    <attr name="drawableShare" format="reference" />
     <attr name="drawableSkip" format="reference" />
-    <attr name="drawableStar" format="reference" />
-    <attr name="drawableStar0" format="reference" />
     <attr name="drawableTraktHeart" format="reference" />
     <attr name="drawableWatch" format="reference" />
     <attr name="drawableWatchAll" format="reference" />

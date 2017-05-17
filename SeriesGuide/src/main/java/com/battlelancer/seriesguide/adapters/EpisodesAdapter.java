@@ -4,6 +4,7 @@ package com.battlelancer.seriesguide.adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
+import android.support.v4.widget.TextViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -87,7 +88,9 @@ public class EpisodesAdapter extends CursorAdapter {
             viewHolder.episodeTitle.setText(
                     TextTools.getEpisodeNumber(mContext, season, episodeNumber));
         } else {
-            viewHolder.episodeTitle.setText(mCursor.getString(EpisodesQuery.TITLE));
+            viewHolder.episodeTitle.setText(
+                    TextTools.getEpisodeTitle(mContext, mCursor.getString(EpisodesQuery.TITLE),
+                            episodeNumber));
         }
 
         // number
@@ -135,9 +138,11 @@ public class EpisodesAdapter extends CursorAdapter {
         viewHolder.episodeAlternativeNumbers.setText(altNumbers);
 
         // release time
+        boolean isReleased;
         final long releaseTime = mCursor.getLong(EpisodesQuery.FIRSTAIREDMS);
         if (releaseTime != -1) {
             Date actualRelease = TimeTools.applyUserOffset(mContext, releaseTime);
+            isReleased = TimeTools.isReleased(actualRelease);
             // "in 15 mins" or "Oct 31, 2010"
             boolean displayExactDate = DisplaySettings.isDisplayExactDate(mContext);
             viewHolder.episodeAirdate.setText(displayExactDate ?
@@ -146,7 +151,14 @@ public class EpisodesAdapter extends CursorAdapter {
         } else {
             viewHolder.episodeAirdate.setText(mContext
                     .getString(R.string.episode_firstaired_unknown));
+            isReleased = false;
         }
+
+        // dim text color if not released
+        TextViewCompat.setTextAppearance(viewHolder.episodeTitle, isReleased
+                ? R.style.TextAppearance_Subhead : R.style.TextAppearance_Subhead_Dim);
+        TextViewCompat.setTextAppearance(viewHolder.episodeAirdate, isReleased
+                ? R.style.TextAppearance_Body_Secondary : R.style.TextAppearance_Body_Dim);
 
         // context menu
         viewHolder.contextMenu.setOnClickListener(new OnClickListener() {

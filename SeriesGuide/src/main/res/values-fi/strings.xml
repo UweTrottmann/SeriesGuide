@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Ohjelma</string>
   <string name="episode">Jakso</string>
-  <string name="episode_number">Jakso %s</string>
+  <string name="episode_number">Jakso %d</string>
   <string name="episodes">Jaksot</string>
   <string name="season">Kausi</string>
-  <string name="season_number">Kausi %s</string>
+  <string name="season_number">Kausi %d</string>
   <string name="seasons">Kaudet</string>
   <string name="specialseason">Erikoisjaksot</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">Jaa ohjelma</string>
   <string name="share_episode">Jaa jakso</string>
   <string name="share_movie">Jaa elokuva</string>
-  <string name="share_checkout">Tsekkaa %s</string>
   <string name="addtocalendar">Lisää kalenteriin</string>
   <string name="addtocalendar_failed">Ei voitu luoda kalenteritapahtumaa.</string>
   <string name="links">Linkit</string>
@@ -120,6 +119,8 @@
   <string name="context_unfavorite">Ei suosikki</string>
   <string name="favorited">Lisätty suosikkeihin</string>
   <string name="unfavorited">Poistettu suosikeista</string>
+  <string name="action_episode_notifications_on">Ota jaksoilmoitukset käyttöön</string>
+  <string name="action_episode_notifications_off">Poista jaksoilmoitukset käytöstä</string>
   <string name="context_hide">Piilota</string>
   <string name="context_unhide">Paljasta</string>
   <string name="hidden">Piilotettu ohjelma</string>
@@ -156,7 +157,9 @@
   <string name="recent">Viimeisimmät</string>
   <string name="noupcoming">Ei tulevia jaksoja.</string>
   <string name="norecent">Ei viimeaikaisia jaksoja.</string>
+  <string name="calendar_settings">Kalenteriasetukset</string>
   <string name="only_favorites">Vain suosikkiohjelmat</string>
+  <string name="calendar_only_collected">Vain kerätyt jaksot</string>
   <string name="pref_infinite_scrolling">Päättymätön kalenteri</string>
   <!-- Updating -->
   <string name="update_scheduled">Päivitetään&#8230;</string>
@@ -344,6 +347,18 @@
   <string name="pref_language">Ensisijainen sisällön kieli</string>
   <string name="pref_updatewifionly">Kuvat vain Wi-Fin kautta</string>
   <string name="pref_updatewifionlysummary">Pienentääksesi datamaksuja, älä lataa mobiiliverkon tai käytön mukaan laskutettavan yhteyden kautta</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d päivää ennen</item>
+    <item quantity="other">%d päivää ennen</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d tuntia ennen</item>
+    <item quantity="other">%d tuntia ennen</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minuuttia ennen</item>
+    <item quantity="other">%d minuuttia ennen</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Tämä sovellus käyttää TheTVDB:n tietoja ja kuvia, lisensoitu CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Tämä tuote käyttää TMDb:n API-rajapintaa, mutta se ei ole TMDb:n hyväksymä tai sertifioima.</string>
@@ -385,7 +400,7 @@
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
   <string name="pref_number">Lukumuoto</string>
   <string name="pref_offset">Manuaalinen ajansiirto</string>
-  <string name="pref_offsetsummary">Siirrä lähetysaikoja %s tunnilla</string>
+  <string name="pref_offsetsummary">Siirrä lähetysaikoja %d tunnilla</string>
   <string name="clear_cache">Tyhjennä kuvavälimuisti</string>
   <string name="clear_cache_summary">Poistaa kaikki välimuistiin tallennetut kuvat</string>
   <string name="pref_ganalyticssummary">Lähetä anonyymia käyttötilastoja Googlen palveluun</string>
@@ -426,21 +441,16 @@
   <string name="upcoming_episodes">Uusia jaksoja tulossa</string>
   <string name="upcoming_episodes_number">%s uutta jaksoa</string>
   <string name="upcoming_show_detailed">%1$s kanavalla %2$s</string>
-  <string name="more">%s lisää</string>
+  <string name="more">%d lisää</string>
   <string name="upcoming_display">Valitse näyttääksesi tulevat ohjelmat</string>
   <string name="pref_notifications">Ilmoitukset</string>
   <string name="pref_notificationssummary">Ilmoita uusista jaksoista</string>
-  <string name="pref_notifyfavonly">Vain suosikit</string>
-  <string name="pref_notifyfavonlysummary">Vastaanota ainoastaan ilmoituksia suosikkiohjelmistasi</string>
   <string name="pref_ringtone">Soittoääni</string>
   <string name="pref_vibrate">Värinä</string>
   <string name="pref_vibratesummary">Värinä, kun näytetään ilmoitus</string>
   <string name="pref_notifications_treshold">Milloin ilmoittaa</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">esitettäessä</string>
-  <string name="notification_release_earlier_five">5 min etukäteen</string>
-  <string name="notification_release_earlier_ten">10 min etukäteen</string>
-  <string name="notification_release_earlier_hour">1 tunti etukäteen</string>
+  <string name="pref_notifications_select_shows">Valitse ohjelmat</string>
+  <string name="pref_notifications_select_shows_summary">Ohjelmat, joissa ilmoitukset ovat käytössä (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (pieni)</string>
   <!-- List Widget -->

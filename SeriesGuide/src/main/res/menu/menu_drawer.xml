@@ -36,7 +36,7 @@
             android:title="@string/help_and_feedback" />
         <item
             android:id="@+id/navigation_sub_item_unlock"
-            android:icon="@drawable/ic_action_star"
+            android:icon="@drawable/ic_star_black_24dp"
             android:title="@string/action_upgrade" />
     </group>
 

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/large_padding">
+    android:paddingLeft="@dimen/large_padding"
+    tools:ignore="RtlSymmetry">
 
     <TextView
         android:id="@+id/textViewSeasonTitle"
@@ -26,7 +28,8 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/description_menu_overflow"
         android:scaleType="centerInside"
-        android:src="?attr/drawableDropdown" />
+        android:tint="?attr/sgColorIcon"
+        app:srcCompat="@drawable/ic_more_vert_white_20dp" />
 
     <TextView
         android:id="@+id/textViewSeasonProgress"
@@ -36,7 +39,7 @@
         android:layout_toLeftOf="@id/imageViewContextMenu"
         android:paddingTop="@dimen/large_padding"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.Subhead.Dim"
+        android:textAppearance="@style/TextAppearance.Subhead.Secondary"
         tools:text="3/24" />
 
     <ProgressBar

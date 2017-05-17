@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">العرض</string>
   <string name="episode">الحلقة</string>
-  <string name="episode_number">الحلقة %s</string>
+  <string name="episode_number">الحلقة %d</string>
   <string name="episodes">الحلقات</string>
   <string name="season">الموسم</string>
-  <string name="season_number">الموسم %s</string>
+  <string name="season_number">الموسم %d</string>
   <string name="seasons">المواسم</string>
   <string name="specialseason">حلقات خاصة</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">مشاركة المسلسل</string>
   <string name="share_episode">مشاركة الحلقة</string>
   <string name="share_movie">مشاركة فيلم</string>
-  <string name="share_checkout">تتحق من %s</string>
   <string name="addtocalendar">إضافة إلى التقويم</string>
   <string name="addtocalendar_failed">.لا يمكن إنشاء حدث تقويم</string>
   <string name="links">الروابط</string>
@@ -124,6 +123,8 @@
   <string name="context_unfavorite">إزالة من المفضلة</string>
   <string name="favorited">إضافة إلى المفضلة</string>
   <string name="unfavorited">إزالة من المفضلة</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">إخفاء</string>
   <string name="context_unhide">إظهار</string>
   <string name="hidden">تم إخفاء المسلسل</string>
@@ -160,7 +161,9 @@
   <string name="recent">مؤخراً</string>
   <string name="noupcoming">.لا توجد حلقات قادمة</string>
   <string name="norecent">.لا توجد حلقات حالية</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">فقط المسلسلات المفضلة</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">رزنامة النهائية</string>
   <!-- Updating -->
   <string name="update_scheduled">جاري التحديث</string>
@@ -169,36 +172,36 @@
   <!-- Seasons -->
   <string name="season_allwatched">تم مشاهدة جميع الحلقات</string>
   <plurals name="not_watched_episodes_plural">
-    <item quantity="zero">%d حلقة واحدة غير مشاهدة</item>
-    <item quantity="one">%d حلقتين غير مشاهدة</item>
-    <item quantity="two">%d حلقات غير مشاهدة</item>
-    <item quantity="few">%d episodes not watched</item>
-    <item quantity="many">%d episodes not watched</item>
-    <item quantity="other">%d episodes not watched</item>
+    <item quantity="zero">الحلقات %d لم يشاهد</item>
+    <item quantity="one">الحلقات %d لم يشاهد</item>
+    <item quantity="two">الحلقات %d لم يشاهد</item>
+    <item quantity="few">الحلقات %d لم يشاهد</item>
+    <item quantity="many">الحلقات %d لم يشاهد</item>
+    <item quantity="other">الحلقات %d لم يشاهد</item>
   </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="zero">%d الحلقات الأخرى</item>
-    <item quantity="one">%d other episode</item>
-    <item quantity="two">%d other episodes</item>
-    <item quantity="few">%d other episodes</item>
-    <item quantity="many">%d other episodes</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d الحلقات الأخرى</item>
+    <item quantity="two">%d الحلقات الأخرى</item>
+    <item quantity="few">%d الحلقات الأخرى</item>
+    <item quantity="many">%d الحلقات الأخرى</item>
+    <item quantity="other">%d الحلقات الأخرى</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="zero">%d to be released</item>
-    <item quantity="one">%d to be released</item>
-    <item quantity="two">%d to be released</item>
-    <item quantity="few">%d to be released</item>
-    <item quantity="many">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="zero">%d يمكن اطلاقها</item>
+    <item quantity="one">%d يمكن اطلاقها</item>
+    <item quantity="two">%d يمكن اطلاقها</item>
+    <item quantity="few">%d يمكن اطلاقها</item>
+    <item quantity="many">%d يمكن اطلاقها</item>
+    <item quantity="other">%d يمكن اطلاقها</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="zero">%d remaining</item>
-    <item quantity="one">%d remaining</item>
-    <item quantity="two">%d remaining</item>
-    <item quantity="few">%d remaining</item>
-    <item quantity="many">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="zero">%d المتبقية</item>
+    <item quantity="one">%d المتبقية</item>
+    <item quantity="two">%d المتبقية</item>
+    <item quantity="few">%d المتبقية</item>
+    <item quantity="many">%d المتبقية</item>
+    <item quantity="other">%d المتبقية</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">إبحث عن إسم المسلسل</string>
@@ -380,6 +383,30 @@
   <string name="pref_language">اللغة المفضلة</string>
   <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>
   <string name="pref_updatewifionlysummary">لتخفيض الكلفة، لا تحمّل عبر شبكات الجوال أو الشبكات الغير مجانية</string>
+  <plurals name="days_before_plural">
+    <item quantity="zero">قبل يوم من %d</item>
+    <item quantity="one">قبل يوم من %d</item>
+    <item quantity="two">قبل يوم من %d</item>
+    <item quantity="few">قبل يوم من %d</item>
+    <item quantity="many">قبل يوم من %d</item>
+    <item quantity="other">قبل يوم من %d</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="zero">قبل يوم من %d</item>
+    <item quantity="one">قبل يوم من %d</item>
+    <item quantity="two">قبل يوم من %d</item>
+    <item quantity="few">قبل يوم من %d</item>
+    <item quantity="many">قبل يوم من %d</item>
+    <item quantity="other">قبل يوم من %d</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="zero">قبل دقائق من %d</item>
+    <item quantity="one">قبل دقائق من %d</item>
+    <item quantity="two">قبل دقائق من %d</item>
+    <item quantity="few">قبل دقائق من %d</item>
+    <item quantity="many">قبل دقائق من %d</item>
+    <item quantity="other">قبل دقائق من %d</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">هذا البرنامج يستخدم صور و بيانات من TheTVDB مرخصة من قبل CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">هذا البرنامج يستخدم وصلة TMDb ولكنه غير مدعوم ولامعتمد من TMDb.</string>
@@ -421,7 +448,7 @@
   <string name="backup_summary">لعمل نسخ إحتياطي للمسلسلات أو إستعادتها</string>
   <string name="pref_number">تنسيق الأرقام</string>
   <string name="pref_offset">تغيير وقت العرض بشكل يدوي</string>
-  <string name="pref_offsetsummary">بدء وقت العرض قبل %s ساعات</string>
+  <string name="pref_offsetsummary">بدء وقت العرض قبل %d ساعات</string>
   <string name="clear_cache">تنظيف ذاكرة التخزين المؤقتة للصور</string>
   <string name="clear_cache_summary">إزالة جميع الصور المخزنة مؤقتاً من الجهاز</string>
   <string name="pref_ganalyticssummary">سيتم إرسال إحصاءات مجهولة الهوية لخدمة جوجل</string>
@@ -462,21 +489,16 @@
   <string name="upcoming_episodes">الحلقات الجديدة القادمة</string>
   <string name="upcoming_episodes_number">%s حلقات جديدة</string>
   <string name="upcoming_show_detailed">%1$s على %2$s</string>
-  <string name="more">%s أكثر</string>
+  <string name="more">%d أكثر</string>
   <string name="upcoming_display">حدد هذا الخيار لعرض المسلسلات القادمة</string>
   <string name="pref_notifications">التنبيهات</string>
   <string name="pref_notificationssummary">التنبيه عن الحلقات الجديدة</string>
-  <string name="pref_notifyfavonly">العروض المفضلة فقط</string>
-  <string name="pref_notifyfavonlysummary">التنبيه عن المسلسلات المفضلة فقط</string>
   <string name="pref_ringtone">نغمة التنبيه</string>
   <string name="pref_vibrate">إهتزاز</string>
   <string name="pref_vibratesummary">إهتزاز عند عرض التنبيه</string>
   <string name="pref_notifications_treshold">موعد التنبيه</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">مباشر</string>
-  <string name="notification_release_earlier_five">قبل 5 دقائق</string>
-  <string name="notification_release_earlier_ten">قبل 10 دقائق</string>
-  <string name="notification_release_earlier_hour">قبل ساعة</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">دليل المسلسلات (صغير)</string>
   <!-- List Widget -->

@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">காண்பி</string>
   <string name="episode">அத்தியாயத்தில்</string>
-  <string name="episode_number">அத்தியாயத்தில் %s</string>
+  <string name="episode_number">அத்தியாயத்தில் %d</string>
   <string name="episodes">அத்தியாயங்களில்</string>
   <string name="season">பருவம்</string>
-  <string name="season_number">பருவம் %s</string>
+  <string name="season_number">பருவம் %d</string>
   <string name="seasons">பருவங்கள்</string>
   <string name="specialseason">சிறப்பு Episodes</string>
   <!-- Descriptions -->
@@ -33,7 +33,7 @@
   <string name="web_search">வலை தேடல்</string>
   <string name="add_to_homescreen">எளியவழி</string>
   <string name="action_open">திற</string>
-  <string name="sync_manually">Sync manually</string>
+  <string name="sync_manually">கைமுறையாக ஒத்திசை</string>
   <string name="sync_and_update">Sync &amp; Update</string>
   <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
@@ -55,7 +55,6 @@
   <string name="share_show">பங்கு காண்பி</string>
   <string name="share_episode">பங்குச் சந்தை சம்பவம்</string>
   <string name="share_movie">பங்கு திரைப்படம்</string>
-  <string name="share_checkout">%s வெளியெடு</string>
   <string name="addtocalendar">நாட்காட்டியில் சேர்</string>
   <string name="addtocalendar_failed">ஒரு காலண்டர் நிகழ்வு உருவாக்க முடியும்.</string>
   <string name="links">இணைப்புகள்</string>
@@ -120,6 +119,8 @@
   <string name="context_unfavorite">பிடித்தவையில் இருந்து அகற்று</string>
   <string name="favorited">விருப்பங்களின் சேர்க்க</string>
   <string name="unfavorited">பிடித்தவையில் இருந்து நீக்கப்பட்டது</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">மறை</string>
   <string name="context_unhide">மறைக்க வேண்டாம்</string>
   <string name="hidden">நகர்த்த மறைந்த</string>
@@ -156,7 +157,9 @@
   <string name="recent">சமீபத்திய</string>
   <string name="noupcoming">எந்த வரவிருக்கும் episodes உள்ளன.</string>
   <string name="norecent">எந்த சமீபத்திய episodes உள்ளன.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">பிடித்த காட்சிகள்</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">முடிவிலா காலண்டர்</string>
   <!-- Updating -->
   <string name="update_scheduled">புதுப்பித்தல்&#8230;</string>
@@ -210,7 +213,7 @@
   <string name="error_name_already_exists">இந்த பட்டியலை ஏற்கனவே உள்ளது</string>
   <!-- Movies -->
   <string name="title_discover">Discover</string>
-  <string name="title_popular">Popular</string>
+  <string name="title_popular">பிரபலமானவை</string>
   <string name="title_digital_releases">Digital releases</string>
   <string name="title_disc_releases">Disc releases</string>
   <string name="movies_in_theatres">In theaters</string>
@@ -344,6 +347,18 @@
   <string name="pref_language">விருப்ப உள்ளடக்க மொழி</string>
   <string name="pref_updatewifionly">படிமங்கள் வழியாக Wi-Fi மட்டும்</string>
   <string name="pref_updatewifionlysummary">தரவு கட்டணங்களை குறைக்க, தகவலிறக்க வேண்டாம் மேல் மொபைல் அல்லது metered பிணையங்கள்</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">இந்த பயன்பாட்டு பயன்படுத்தும் தரவு மற்றும் படிமங்கள் மூலம் TheTVDB உரிமம் கீழ் நகல் மூலம்-NC 4.0.</string>
   <string name="licence_themoviedb">இந்த தயாரிப்பு TMDb API பயன்படுத்தும் ஆனால் இல்லை endorsed அல்லது TMDb மூலம் சான்றிதழ்.</string>
@@ -385,7 +400,7 @@
   <string name="backup_summary">மறுபிரதி எடு அல்லது மீட்டெடு உங்கள் காட்சிகள்</string>
   <string name="pref_number">எண் வடிவமைப்பு</string>
   <string name="pref_offset">கைமுறை நேரம் ஆப்செட்</string>
-  <string name="pref_offsetsummary">%s மணிநேரத்தில் ஏர் முறை சரியீடு</string>
+  <string name="pref_offsetsummary">%d மணிநேரத்தில் ஏர் முறை சரியீடு</string>
   <string name="clear_cache">தெளிவான உருவம் இடைமாற்றுகள்</string>
   <string name="clear_cache_summary">உங்கள் சாதனத்தில் இருந்து அனைத்து தேக்கக படிமங்களை அகற்று</string>
   <string name="pref_ganalyticssummary">Google சேவைக்கு பெயரிலா பயன்பாட்டு புள்ளிவிவரம் அனுப்பு</string>
@@ -426,21 +441,16 @@
   <string name="upcoming_episodes">புதிய episodes உள்ளன வருவன</string>
   <string name="upcoming_episodes_number">%s புதிய episodes</string>
   <string name="upcoming_show_detailed">%2$s %1$s</string>
-  <string name="more">%s மேலும்</string>
+  <string name="more">%d மேலும்</string>
   <string name="upcoming_display">வரவிருக்கும் காட்சிகள் காண்பிக்க தேர்ந்தெடு</string>
   <string name="pref_notifications">அறிவிப்புகள்</string>
   <string name="pref_notificationssummary">புதிய episodes பற்றி</string>
-  <string name="pref_notifyfavonly">பிடித்தவை மட்டும்</string>
-  <string name="pref_notifyfavonlysummary">Favorited காட்சிகள் அறிவிப்புகள் மட்டுமே பெற</string>
   <string name="pref_ringtone">ஒலி</string>
   <string name="pref_vibrate">அதிர்வு</string>
   <string name="pref_vibratesummary">மேலும் vibrate அறிவிக்கை காண்பிப்பதில் உள்ள</string>
   <string name="pref_notifications_treshold">எப்போது அறிவிக்க</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">காற்று உள்ள</string>
-  <string name="notification_release_earlier_five">5 நிமிடம் உள்நாட்டு</string>
-  <string name="notification_release_earlier_ten">10 நிமிடம் உள்நாட்டு</string>
-  <string name="notification_release_earlier_hour">1 மணி நேரம் உள்நாட்டு</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (சிறிய)</string>
   <!-- List Widget -->

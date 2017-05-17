@@ -5,7 +5,6 @@
 
     <item
         android:id="@+id/menu_action_stream_refresh"
-        android:icon="@drawable/ic_action_reload"
         android:orderInCategory="2"
         android:title="@string/refresh"
         app:showAsAction="never" />

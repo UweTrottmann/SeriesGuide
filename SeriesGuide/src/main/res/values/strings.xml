@@ -15,10 +15,10 @@
     <!-- Media items -->
     <string name="show">Show</string>
     <string name="episode">Episode</string>
-    <string name="episode_number">Episode %s</string>
+    <string name="episode_number">Episode %d</string>
     <string name="episodes">Episodes</string>
     <string name="season">Season</string>
-    <string name="season_number">Season %s</string>
+    <string name="season_number">Season %d</string>
     <string name="seasons">Seasons</string>
     <string name="specialseason">Special Episodes</string>
 
@@ -61,7 +61,6 @@
     <string name="share_show">Share show</string>
     <string name="share_episode">Share episode</string>
     <string name="share_movie">Share movie</string>
-    <string name="share_checkout">Check out %s</string>
     <string name="addtocalendar">Add to calendar</string>
     <string name="addtocalendar_failed">Can not create a calendar event.</string>
     <string name="links">Links</string>
@@ -135,6 +134,8 @@
     <string name="context_unfavorite">Remove from favorites</string>
     <string name="favorited">Added to favorites</string>
     <string name="unfavorited">Removed from favorites</string>
+    <string name="action_episode_notifications_on">Turn on episode notifications</string>
+    <string name="action_episode_notifications_off">Turn off episode notifications</string>
     <string name="context_hide">Hide</string>
     <string name="context_unhide">Do not hide</string>
     <string name="hidden">Moved to hidden</string>
@@ -174,7 +175,9 @@
     <string name="recent">Recent</string>
     <string name="noupcoming">There are no upcoming episodes.</string>
     <string name="norecent">There are no recent episodes.</string>
+    <string name="calendar_settings">Calendar settings</string>
     <string name="only_favorites">Only favorite shows</string>
+    <string name="calendar_only_collected">Only collected episodes</string>
     <string name="pref_infinite_scrolling">Infinite calendar</string>
 
     <!-- Updating -->
@@ -393,6 +396,19 @@
     <string name="pref_updatewifionly">Images via Wi-Fi only</string>
     <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
 
+    <plurals name="days_before_plural">
+        <item quantity="one">%d day before</item>
+        <item quantity="other">%d days before</item>
+    </plurals>
+    <plurals name="hours_before_plural">
+        <item quantity="one">%d hour before</item>
+        <item quantity="other">%d hours before</item>
+    </plurals>
+    <plurals name="minutes_before_plural">
+        <item quantity="one">%d minute before</item>
+        <item quantity="other">%d minutes before</item>
+    </plurals>
+
     <!-- About screen -->
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
     <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
@@ -440,7 +456,7 @@
     <string name="backup_summary">Backup or restore your shows</string>
     <string name="pref_number">Number format</string>
     <string name="pref_offset">Manual time offset</string>
-    <string name="pref_offsetsummary">Offset air times by %s hours</string>
+    <string name="pref_offsetsummary">Offset air times by %d hours</string>
     <string name="clear_cache">Clear image caches</string>
     <string name="clear_cache_summary">Remove all cached images from your device</string>
     <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
@@ -484,22 +500,16 @@
     <string name="upcoming_episodes">New episodes are coming up</string>
     <string name="upcoming_episodes_number">%s new episodes</string>
     <string name="upcoming_show_detailed">%1$s on %2$s</string>
-    <string name="more">%s more</string>
+    <string name="more">%d more</string>
     <string name="upcoming_display">Select to display upcoming shows</string>
     <string name="pref_notifications">Notifications</string>
     <string name="pref_notificationssummary">Notify about new episodes</string>
-    <string name="pref_notifyfavonly">Favorites only</string>
-    <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
     <string name="pref_ringtone">Sound</string>
     <string name="pref_vibrate">Vibrate</string>
     <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
     <string name="pref_notifications_treshold">When to notify</string>
-
-    <!-- Notification thresholds -->
-    <string name="notification_release_exact">on air</string>
-    <string name="notification_release_earlier_five">5 min in advance</string>
-    <string name="notification_release_earlier_ten">10 min in advance</string>
-    <string name="notification_release_earlier_hour">1 hour in advance</string>
+    <string name="pref_notifications_select_shows">Select shows</string>
+    <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
 
     <!-- Legacy Widgets -->
     <string name="smallwidget">SeriesGuide (small)</string>

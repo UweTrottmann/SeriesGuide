@@ -10,14 +10,14 @@
   <string name="preferences">设置</string>
   <string name="help">帮助</string>
   <string name="help_and_feedback">帮助 &amp; 反馈</string>
-  <string name="drawer_open">显示导航栏</string>
+  <string name="drawer_open">打开导航栏</string>
   <!-- Media items -->
   <string name="show">节目</string>
   <string name="episode">剧集</string>
-  <string name="episode_number">第 %s 集</string>
+  <string name="episode_number">第 %d 集</string>
   <string name="episodes">剧集</string>
   <string name="season">季</string>
-  <string name="season_number">第 %s 季</string>
+  <string name="season_number">第 %d 季</string>
   <string name="seasons">季</string>
   <string name="specialseason">特别篇</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">分享此节目</string>
   <string name="share_episode">分享剧集</string>
   <string name="share_movie">分享电影</string>
-  <string name="share_checkout">快来看看 %s</string>
   <string name="addtocalendar">添加到日历</string>
   <string name="addtocalendar_failed">创建日历事件失败</string>
   <string name="links">链接</string>
@@ -119,6 +118,8 @@
   <string name="context_unfavorite">不喜欢</string>
   <string name="favorited">已标记为喜爱的节目。</string>
   <string name="unfavorited">已移除节目的喜爱标记。</string>
+  <string name="action_episode_notifications_on">开启剧集通知</string>
+  <string name="action_episode_notifications_off">关闭剧集通知</string>
   <string name="context_hide">隐藏</string>
   <string name="context_unhide">取消隐藏</string>
   <string name="hidden">已隐藏选中的节目</string>
@@ -155,7 +156,9 @@
   <string name="recent">已播剧集</string>
   <string name="noupcoming">没有即将播出的剧集</string>
   <string name="norecent">没有近期已播出的剧集</string>
+  <string name="calendar_settings">日历设置</string>
   <string name="only_favorites">仅显示喜爱节目</string>
+  <string name="calendar_only_collected">仅已收藏剧集</string>
   <string name="pref_infinite_scrolling">无限的日历</string>
   <!-- Updating -->
   <string name="update_scheduled">正在更新&#8230;</string>
@@ -176,7 +179,7 @@
     <item quantity="other">剩余 %d 集</item>
   </plurals>
   <!-- Add show -->
-  <string name="checkin_searchhint">输入电视节目名称</string>
+  <string name="checkin_searchhint">输入节目名称</string>
   <string name="add_empty">尚未添加任何节目</string>
   <string name="no_results">请键入完整的原始剧目名称\n暂时不提供译名或内容摘要搜索</string>
   <string name="action_try_any_language">尝试使用其它语言搜索</string>
@@ -226,7 +229,7 @@
   <string name="action_movies_sort_release">首播日期</string>
   <!-- Statistics -->
   <string name="statistics_failed">数据无法计算。</string>
-  <string name="statistics_shows">电视节目总数</string>
+  <string name="statistics_shows">节目总数</string>
   <string name="statistics_episodes">剧集总数</string>
   <string name="statistics_movies">电影总数</string>
   <string name="shows_with_next">%s 部节目仍有未观看剧集</string>
@@ -335,10 +338,19 @@
   <string name="pref_language">内容首选的语言</string>
   <string name="pref_updatewifionly">仅通过 Wi-Fi 下载图片</string>
   <string name="pref_updatewifionlysummary">为了减少蜂窝数据流量使用，在移动网络下禁止下载</string>
+  <plurals name="days_before_plural">
+    <item quantity="other">%d 天前</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="other">%d 小时前</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="other">%d 分钟前</item>
+  </plurals>
   <!-- About screen -->
-  <string name="licence_tvdb">此应用程序使用 TheTVDb 在线数据库获取其它用户和剧集的信息，这些数据的使用和传播遵守《创用 CC 4.0：姓名标示、非商业性》授权条款。</string>
-  <string name="licence_themoviedb">此应用程序使用了 TMDb 应用程序接口但没有被 TMDb 官方认证。</string>
-  <string name="licence_trakt">此应用程序还使用了来自 trakt 的用户数据和剧集图片。</string>
+  <string name="licence_tvdb">此应用程序使用 TheTVDB 在线数据库获取其它用户和剧集的信息，这些数据的使用和传播遵守 CC BY-NC 4.0。</string>
+  <string name="licence_themoviedb">此应用程序使用了 TMDb 应用程序接口，但与 TMDb 并无关联，且没有获得 TMDb 认证。</string>
+  <string name="licence_trakt">此应用程序使用了来自 trakt 的数据和图片。</string>
   <string name="about_open_source">SeriesGuide 是采用开放源码软件编写的。</string>
   <string name="licences_and_credits">许可证与信用</string>
   <!-- Sort -->
@@ -376,7 +388,7 @@
   <string name="backup_summary">备份或还原节目单</string>
   <string name="pref_number">序号格式</string>
   <string name="pref_offset">手动偏移播出时间</string>
-  <string name="pref_offsetsummary">显示时间与原播出时间相差 %s 小时</string>
+  <string name="pref_offsetsummary">显示时间与原播出时间相差 %d 小时</string>
   <string name="clear_cache">清理图片缓存</string>
   <string name="clear_cache_summary">删除缓存图片</string>
   <string name="pref_ganalyticssummary">向Google服务发送匿名使用情况统计信息</string>
@@ -417,21 +429,16 @@
   <string name="upcoming_episodes">即将播出新的剧集</string>
   <string name="upcoming_episodes_number">%s 个剧集即将播出</string>
   <string name="upcoming_show_detailed">%1$s 在 %2$s</string>
-  <string name="more">还有 %s 个项目</string>
+  <string name="more">还有 %d 个项目</string>
   <string name="upcoming_display">选中来显示即将播出的节目</string>
   <string name="pref_notifications">通知</string>
   <string name="pref_notificationssummary">新剧集开始播出时显示通知</string>
-  <string name="pref_notifyfavonly">忽略非喜爱节目</string>
-  <string name="pref_notifyfavonlysummary">仅为标记为喜爱的节目显示通知</string>
   <string name="pref_ringtone">铃声</string>
   <string name="pref_vibrate">振动</string>
   <string name="pref_vibratesummary">显示通知时振动</string>
   <string name="pref_notifications_treshold">通知显示时刻</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">播出时</string>
-  <string name="notification_release_earlier_five">提前 5 分钟</string>
-  <string name="notification_release_earlier_ten">提前 10 分钟</string>
-  <string name="notification_release_earlier_hour">提前 1 小时</string>
+  <string name="pref_notifications_select_shows">选择节目</string>
+  <string name="pref_notifications_select_shows_summary">已启用通知的节目（%d）</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide 最小尺寸</string>
   <!-- List Widget -->

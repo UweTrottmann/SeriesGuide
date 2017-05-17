@@ -9,6 +9,7 @@ public class TvdbException extends Exception {
 
     public enum Service {
         TVDB,
+        TRAKT,
         HEXAGON,
         DATA
     }

@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsReorderDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -118,15 +119,15 @@ public class ListsActivity extends BaseTopActivity {
         MenuItem remainingItem = menu.findItem(R.id.menu_action_lists_sort_remaining);
         remainingItem.setTitle(R.string.action_shows_sort_remaining);
         if (sortOrderId == ListsSortOrder.TITLE_ALPHABETICAL_ID) {
-            Utils.setMenuItemActiveString(sortTitleItem);
+            ViewTools.setMenuItemActiveString(sortTitleItem);
         } else if (sortOrderId == ListsSortOrder.LATEST_EPISODE_ID) {
-            Utils.setMenuItemActiveString(sortLatestItem);
+            ViewTools.setMenuItemActiveString(sortLatestItem);
         } else if (sortOrderId == ListsSortOrder.OLDEST_EPISODE_ID) {
-            Utils.setMenuItemActiveString(sortOldestItem);
+            ViewTools.setMenuItemActiveString(sortOldestItem);
         } else if (sortOrderId == ListsSortOrder.LAST_WATCHED_ID) {
-            Utils.setMenuItemActiveString(lastWatchedItem);
+            ViewTools.setMenuItemActiveString(lastWatchedItem);
         } else if (sortOrderId == ListsSortOrder.LEAST_REMAINING_EPISODES_ID) {
-            Utils.setMenuItemActiveString(remainingItem);
+            ViewTools.setMenuItemActiveString(remainingItem);
         }
 
         menu.findItem(R.id.menu_action_lists_sort_ignore_articles)

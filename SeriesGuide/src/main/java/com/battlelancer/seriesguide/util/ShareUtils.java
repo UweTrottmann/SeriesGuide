@@ -24,22 +24,18 @@ public class ShareUtils {
 
     public static void shareEpisode(Activity activity, int episodeTvdbId, int seasonNumber,
             int episodeNumber, String showTitle, String episodeTitle) {
-        String message = activity.getString(R.string.share_checkout,
-                showTitle + " " + TextTools.getNextEpisodeString(activity, seasonNumber, episodeNumber,
-                        episodeTitle))
-                + " " + TraktTools.buildEpisodeUrl(episodeTvdbId);
+        String message = showTitle + " - " + TextTools.getNextEpisodeString(activity, seasonNumber,
+                episodeNumber, episodeTitle) + " " + TraktTools.buildEpisodeUrl(episodeTvdbId);
         startShareIntentChooser(activity, message, R.string.share_episode);
     }
 
     public static void shareShow(Activity activity, int showTvdbId, String showTitle) {
-        String message = activity.getString(R.string.share_checkout, showTitle) + " "
-                + TraktTools.buildShowUrl(showTvdbId);
+        String message = showTitle + " " + TraktTools.buildShowUrl(showTvdbId);
         startShareIntentChooser(activity, message, R.string.share_show);
     }
 
     public static void shareMovie(Activity activity, int movieTmdbId, String movieTitle) {
-        String message = activity.getString(R.string.share_checkout, movieTitle) + " "
-                + TraktTools.buildMovieUrl(movieTmdbId);
+        String message = movieTitle + " " + TraktTools.buildMovieUrl(movieTmdbId);
         startShareIntentChooser(activity, message, R.string.share_movie);
     }
 

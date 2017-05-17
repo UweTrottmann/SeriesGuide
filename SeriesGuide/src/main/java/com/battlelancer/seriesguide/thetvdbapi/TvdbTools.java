@@ -15,7 +15,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Xml;
-import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -32,11 +31,12 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
-import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.thetvdb.entities.Episode;
+import com.uwetrottmann.thetvdb.entities.EpisodesResponse;
 import com.uwetrottmann.thetvdb.entities.Series;
 import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResult;
 import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResultResponse;
@@ -64,8 +64,8 @@ import javax.inject.Inject;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.joda.time.DateTimeZone;
-import org.joda.time.LocalTime;
+import org.threeten.bp.LocalTime;
+import org.threeten.bp.ZoneId;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import timber.log.Timber;
@@ -77,16 +77,8 @@ import timber.log.Timber;
 public class TvdbTools {
 
     private static final String TVDB_API_URL = "http://thetvdb.com/api/";
-
     private static final String TVDB_API_GETSERIES = TVDB_API_URL + "GetSeries.php?seriesname=";
-
-    private static final String TVDB_API_SERIES = TVDB_API_URL + BuildConfig.TVDB_API_KEY
-            + "/series/";
-
-    private static final String TVDB_PATH_ALL = "all/";
     private static final String TVDB_PARAM_LANGUAGE = "&language=";
-    private static final String TVDB_EXTENSION_COMPRESSED = ".zip";
-    private static final String TVDB_FILE_DEFAULT = "en" + TVDB_EXTENSION_COMPRESSED;
     private static final String[] LANGUAGE_QUERY_PROJECTION = new String[] { Shows.LANGUAGE };
 
     private static TvdbTools tvdbTools;
@@ -215,7 +207,7 @@ public class TvdbTools {
         getEpisodesAndUpdateDatabase(batch, show, show.language);
     }
 
-    private static String getShowLanguage(Context context, int showTvdbId) {
+    public static String getShowLanguage(Context context, int showTvdbId) {
         Cursor languageQuery = context.getContentResolver()
                 .query(Shows.buildShowUri(showTvdbId), LANGUAGE_QUERY_PROJECTION, null, null, null);
         if (languageQuery == null) {
@@ -442,6 +434,9 @@ public class TvdbTools {
             if (hexagonShow.getIsFavorite() != null) {
                 show.favorite = hexagonShow.getIsFavorite();
             }
+            if (hexagonShow.getNotify() != null) {
+                show.notify = hexagonShow.getNotify();
+            }
             if (hexagonShow.getIsHidden() != null) {
                 show.hidden = hexagonShow.getIsHidden();
             }
@@ -457,26 +452,26 @@ public class TvdbTools {
      * @param language A TVDb language code (ISO 639-1 two-letter format, see <a
      * href="http://www.thetvdb.com/wiki/index.php/API:languages.xml">TVDb wiki</a>). If not
      * supplied, TVDb falls back to English.
+     * @throws TvdbException If a request fails or a response appears to be corrupted.
      */
     @NonNull
     public Show getShowDetails(int showTvdbId, @NonNull String language) throws TvdbException {
-        // try to get some details from trakt
-        com.uwetrottmann.trakt5.entities.Show traktShow = null;
-        // always look up the trakt id based on the TVDb id
-        // e.g. a TVDb id might be linked against the wrong trakt entry, then get fixed
+        // always look up the trakt id
+        // a TVDb id might be linked against the wrong trakt entry, then get fixed
         Integer showTraktId = lookupShowTraktId(showTvdbId);
+
+        // get show from TVDb
+        final Show show = downloadAndParseShow(showTvdbId, language);
+
         if (showTraktId != null) {
-            traktShow = SgTrakt.executeCall(app,
+            // get some more details from trakt
+            com.uwetrottmann.trakt5.entities.Show traktShow = SgTrakt.executeCall(app,
                     traktShows.get().summary(String.valueOf(showTraktId), Extended.FULL),
                     "get show summary"
             );
-        }
-
-        // get full show details from TVDb
-        final Show show = downloadAndParseShow(showTvdbId, language);
-
-        // fill in data from trakt
-        if (traktShow != null) {
+            if (traktShow == null) {
+                throw new TvdbTraktException("getShowDetails: failed to get trakt show details.");
+            }
             if (traktShow.ids != null && traktShow.ids.trakt != null) {
                 show.trakt_id = traktShow.ids.trakt;
             }
@@ -489,10 +484,9 @@ public class TvdbTools {
             show.first_aired = TimeTools.parseShowFirstRelease(traktShow.first_aired);
             show.rating = traktShow.rating == null ? 0.0 : traktShow.rating;
         } else {
-            // keep any pre-existing trakt id (e.g. trakt call above might have failed temporarily)
-            Timber.w("getShowDetails: failed to get trakt show details.");
-            show.trakt_id = ShowTools.getShowTraktId(app, showTvdbId);
-            // set default values
+            // no trakt id (show not on trakt): set default values
+            Timber.w("getShowDetails: no trakt id found, using default values.");
+            show.trakt_id = null;
             show.release_time = -1;
             show.release_weekday = -1;
             show.first_aired = "";
@@ -504,9 +498,11 @@ public class TvdbTools {
 
     /**
      * Look up a show's trakt id, may return {@code null} if not found.
+     *
+     * @throws TvdbException If the request failed or the response appears to be corrupted.
      */
     @Nullable
-    private Integer lookupShowTraktId(int showTvdbId) {
+    private Integer lookupShowTraktId(int showTvdbId) throws TvdbException {
         List<com.uwetrottmann.trakt5.entities.SearchResult> searchResults = SgTrakt.executeCall(
                 app,
                 traktSearch.get().idLookup(IdType.TVDB, String.valueOf(showTvdbId), Type.SHOW,
@@ -514,15 +510,19 @@ public class TvdbTools {
                 "show trakt id lookup"
         );
 
-        if (searchResults == null || searchResults.size() != 1) {
-            return null;
+        if (searchResults == null) {
+            throw new TvdbTraktException("lookupShowTraktId: failed.");
+        }
+
+        if (searchResults.size() != 1) {
+            return null; // no results
         }
 
         com.uwetrottmann.trakt5.entities.SearchResult result = searchResults.get(0);
         if (result.show != null && result.show.ids != null) {
             return result.show.ids.trakt;
         } else {
-            return null;
+            throw new TvdbTraktException("lookupShowTraktId: response corrupted.");
         }
     }
 
@@ -640,54 +640,45 @@ public class TvdbTools {
         return posters.get(highestRatedIndex).fileName;
     }
 
-    private ArrayList<ContentValues> fetchEpisodes(ArrayList<ContentProviderOperation> batch,
-            Show show, String language) throws TvdbException {
-        String url = TVDB_API_SERIES + show.tvdb_id + "/" + TVDB_PATH_ALL
-                + (language != null ? language + TVDB_EXTENSION_COMPRESSED : TVDB_FILE_DEFAULT);
-
-        return parseEpisodes(batch, show, url);
-    }
-
     /**
-     * Loads the given zipped XML and parses containing episodes to create an array of {@link
+     * Loads and parses episodes for the given show and language to create an array of {@link
      * ContentValues} for new episodes.<br> Adds update ops for updated episodes and delete ops for
      * local orphaned episodes to the given {@link ContentProviderOperation} batch.
      */
-    private ArrayList<ContentValues> parseEpisodes(final ArrayList<ContentProviderOperation> batch,
-            final Show show, String url) throws TvdbException {
+    private ArrayList<ContentValues> fetchEpisodes(ArrayList<ContentProviderOperation> batch,
+            Show show, @NonNull String language) throws TvdbException {
+        final int showTvdbId = show.tvdb_id;
+        final ArrayList<ContentValues> newEpisodesValues = new ArrayList<>();
+        final HashMap<Integer, Long> localEpisodeIds = DBUtils.getEpisodeMapForShow(app,
+                showTvdbId);
+        @SuppressLint("UseSparseArrays") final HashMap<Integer, Long> removableEpisodeIds =
+                new HashMap<>(localEpisodeIds); // just copy episodes list, then remove valid ones
+        final HashSet<Integer> localSeasonIds = DBUtils.getSeasonIdsOfShow(app, showTvdbId);
+        // store updated seasons to avoid duplicate ops
+        final HashSet<Integer> seasonIdsToUpdate = new HashSet<>();
+
         final long dateLastMonthEpoch = (System.currentTimeMillis()
                 - (DateUtils.DAY_IN_MILLIS * 30)) / 1000;
-        final DateTimeZone showTimeZone = TimeTools.getDateTimeZone(show.release_timezone);
+        final ZoneId showTimeZone = TimeTools.getDateTimeZone(show.release_timezone);
         final LocalTime showReleaseTime = TimeTools.getShowReleaseTime(show.release_time);
         final String deviceTimeZone = TimeZone.getDefault().getID();
 
-        RootElement root = new RootElement("Data");
-        Element episode = root.getChild("Episode");
+        Integer page = 0;
+        while (page != null) {
+            EpisodesResponse response = getEpisodes(showTvdbId, page, language);
+            page = response.links.next;
 
-        final ArrayList<ContentValues> newEpisodesValues = new ArrayList<>();
-
-        final HashMap<Integer, Long> localEpisodeIds = DBUtils.getEpisodeMapForShow(app,
-                show.tvdb_id);
-        @SuppressLint("UseSparseArrays") final HashMap<Integer, Long> removableEpisodeIds =
-                new HashMap<>(localEpisodeIds); // just copy episodes list, then remove valid ones
-        final HashSet<Integer> localSeasonIds = DBUtils.getSeasonIdsOfShow(app, show.tvdb_id);
-        // store updated seasons to avoid duplicate ops
-        final HashSet<Integer> seasonIdsToUpdate = new HashSet<>();
-        final ContentValues values = new ContentValues();
-
-        // set handlers for elements we want to react to
-        episode.setEndElementListener(new EndElementListener() {
-            public void end() {
-                Integer episodeId = values.getAsInteger(Episodes._ID);
+            final ContentValues values = new ContentValues();
+            for (Episode episode : response.data) {
+                Integer episodeId = episode.id;
                 if (episodeId == null || episodeId <= 0) {
-                    // invalid id, skip
-                    return;
+                    continue; // invalid id, skip
                 }
 
                 // don't clean up this episode
                 removableEpisodeIds.remove(episodeId);
 
-                // decide whether to insert or update
+                boolean insert = true;
                 if (localEpisodeIds.containsKey(episodeId)) {
                     /*
                      * Update uses provider ops which take a long time. Only
@@ -695,119 +686,53 @@ public class TvdbTools {
                      * a month (ensures show air time changes get stored).
                      */
                     Long lastEditEpoch = localEpisodeIds.get(episodeId);
-                    Long lastEditEpochNew = values.getAsLong(Episodes.LAST_EDITED);
+                    Long lastEditEpochNew = episode.lastUpdated;
                     if (lastEditEpoch != null && lastEditEpochNew != null
                             && (lastEditEpoch < lastEditEpochNew
                             || dateLastMonthEpoch < lastEditEpoch)) {
-                        // complete update op for episode
-                        batch.add(DBUtils.buildEpisodeUpdateOp(values));
+                        // update episode
+                        insert = false;
+                    } else {
+                        continue; // too old to update, skip
                     }
-                } else {
-                    // episode does not exist, yet
-                    newEpisodesValues.add(new ContentValues(values));
                 }
 
-                Integer seasonId = values.getAsInteger(Seasons.REF_SEASON_ID);
+                // extract values
+                values.put(Episodes._ID, episode.id);
+                Integer seasonId = episode.airedSeasonID;
+                values.put(Seasons.REF_SEASON_ID, seasonId);
+                values.put(Shows.REF_SHOW_ID, showTvdbId);
+
+                values.put(Episodes.NUMBER, episode.airedEpisodeNumber);
+                values.put(Episodes.ABSOLUTE_NUMBER, episode.absoluteNumber);
+                values.put(Episodes.SEASON, episode.airedSeason);
+                values.put(Episodes.DVDNUMBER, episode.dvdEpisodeNumber);
+
+                long releaseDateTime = TimeTools.parseEpisodeReleaseDate(app, showTimeZone,
+                        episode.firstAired, showReleaseTime, show.country, show.network,
+                        deviceTimeZone);
+                values.put(Episodes.FIRSTAIREDMS, releaseDateTime);
+                values.put(Episodes.TITLE, episode.episodeName == null ? "" : episode.episodeName);
+                values.put(Episodes.OVERVIEW, episode.overview);
+                values.put(Episodes.LAST_EDITED, episode.lastUpdated);
+
+                if (insert) {
+                    // episode does not exist, yet: insert
+                    newEpisodesValues.add(new ContentValues(values));
+                } else {
+                    // episode exists: update
+                    batch.add(DBUtils.buildEpisodeUpdateOp(values));
+                }
+
                 if (seasonId != null && !seasonIdsToUpdate.contains(seasonId)) {
                     // add insert/update op for season
                     batch.add(DBUtils.buildSeasonOp(values, !localSeasonIds.contains(seasonId)));
-                    seasonIdsToUpdate.add(values.getAsInteger(Seasons.REF_SEASON_ID));
+                    seasonIdsToUpdate.add(seasonId);
                 }
 
                 values.clear();
             }
-        });
-        episode.getChild("id").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                values.put(Episodes._ID, body.trim());
-            }
-        });
-        episode.getChild("EpisodeNumber").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                values.put(Episodes.NUMBER, body.trim());
-            }
-        });
-        episode.getChild("absolute_number").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                values.put(Episodes.ABSOLUTE_NUMBER, body.trim());
-            }
-        });
-        episode.getChild("SeasonNumber").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                values.put(Episodes.SEASON, body.trim());
-            }
-        });
-        episode.getChild("DVD_episodenumber").setEndTextElementListener(
-                new EndTextElementListener() {
-                    public void end(String body) {
-                        values.put(Episodes.DVDNUMBER, body.trim());
-                    }
-                }
-        );
-        episode.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String releaseDate) {
-                long releaseDateTime = TimeTools.parseEpisodeReleaseDate(app, showTimeZone,
-                        releaseDate, showReleaseTime, show.country, show.network, deviceTimeZone);
-                values.put(Episodes.FIRSTAIREDMS, releaseDateTime);
-            }
-        });
-        episode.getChild("EpisodeName").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                values.put(Episodes.TITLE, body.trim());
-            }
-        });
-        episode.getChild("Overview").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                values.put(Episodes.OVERVIEW, body.trim());
-            }
-        });
-        episode.getChild("seasonid").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                values.put(Seasons.REF_SEASON_ID, body.trim());
-            }
-        });
-        episode.getChild("seriesid").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                values.put(Shows.REF_SHOW_ID, body.trim());
-            }
-        });
-        episode.getChild("Director").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                values.put(Episodes.DIRECTORS, body.trim());
-            }
-        });
-        episode.getChild("GuestStars").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                values.put(Episodes.GUESTSTARS, body.trim());
-            }
-        });
-        episode.getChild("Writer").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                values.put(Episodes.WRITERS, body.trim());
-            }
-        });
-        episode.getChild("filename").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                values.put(Episodes.IMAGE, body.trim());
-            }
-        });
-        episode.getChild("IMDB_ID").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                values.put(Episodes.IMDBID, body.trim());
-            }
-        });
-        episode.getChild("lastupdated").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                // system populated field, trimming not necessary
-                try {
-                    values.put(Episodes.LAST_EDITED, Long.valueOf(body));
-                } catch (NumberFormatException e) {
-                    values.put(Episodes.LAST_EDITED, 0);
-                }
-            }
-        });
-
-        downloadAndParse(root.getContentHandler(), url, true, "parseEpisodes: ");
+        }
 
         // add delete ops for leftover episodeIds in our db
         for (Integer episodeId : removableEpisodeIds.keySet()) {
@@ -816,6 +741,21 @@ public class TvdbTools {
         }
 
         return newEpisodesValues;
+    }
+
+    @NonNull
+    private EpisodesResponse getEpisodes(int showTvdbId, int page, @Nullable String language)
+            throws TvdbException {
+        retrofit2.Response<EpisodesResponse> response;
+        try {
+            response = tvdbSeries.get().episodes(showTvdbId, page, language).execute();
+        } catch (IOException e) {
+            throw new TvdbException("getEpisodes: " + e.getMessage(), e);
+        }
+
+        ensureSuccessfulResponse(response.raw(), "getEpisodes: ");
+
+        return response.body();
     }
 
     /**

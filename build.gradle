@@ -8,7 +8,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.0' // libraries, SeriesGuide
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.0-beta3' // SeriesGuide
-        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3' // api
+        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.7.0' // api
         classpath 'io.fabric.tools:gradle:1.22.1' // SeriesGuide
     }
 }
@@ -30,11 +30,11 @@ task clean(type: Delete) {
 
 ext {
     androidCompileSdkVersion = 25
-    androidBuildToolsVersion = '25.0.1'
+    androidBuildToolsVersion = '25.0.2'
 
     // API level 15+ -> version 15xxx
-    androidVersionCode = 15245
-    androidVersionName = '36'
+    androidVersionCode = 15257
+    androidVersionName = '37'
 
-    supportVersion = '25.3.0'
+    supportVersion = '25.3.1'
 }

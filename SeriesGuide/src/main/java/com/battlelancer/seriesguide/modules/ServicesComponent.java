@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.loaders.TraktRecentEpisodeHistoryLoader;
 import com.battlelancer.seriesguide.loaders.TvdbAddLoader;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdbInterceptor;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeDetailsTask;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.traktapi.SgTraktInterceptor;
 import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
@@ -69,5 +70,6 @@ public interface ServicesComponent {
     void inject(TraktTask traktTask);
     void inject(TraktTools traktTools);
     void inject(TvdbAddLoader tvdbAddLoader);
+    void inject(TvdbEpisodeDetailsTask tvdbEpisodeDetailsTask);
     void inject(TvdbTools tvdbTools);
 }

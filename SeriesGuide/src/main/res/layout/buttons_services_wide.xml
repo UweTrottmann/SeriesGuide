@@ -13,7 +13,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <include layout="@layout/buttons_more" />
+        <include layout="@layout/buttons_episode_more" />
     </LinearLayout>
 
     <LinearLayout

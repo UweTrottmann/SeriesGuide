@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Emisiune</string>
   <string name="episode">Episod</string>
-  <string name="episode_number">Episod %s</string>
+  <string name="episode_number">Episod %d</string>
   <string name="episodes">Episoade</string>
   <string name="season">Sezon</string>
-  <string name="season_number">Sezonul %s</string>
+  <string name="season_number">Sezonul %d</string>
   <string name="seasons">Sezoane</string>
   <string name="specialseason">Episoade speciale</string>
   <!-- Descriptions -->
@@ -55,7 +55,6 @@
   <string name="share_show">Distribuie emisiunea</string>
   <string name="share_episode">Distribuie episod</string>
   <string name="share_movie">Distribuie film</string>
-  <string name="share_checkout">Verifica %s</string>
   <string name="addtocalendar">Adăugați la calendar</string>
   <string name="addtocalendar_failed">Nu puteţi crea evenimentul în calendar.</string>
   <string name="links">Links</string>
@@ -121,6 +120,8 @@
   <string name="context_unfavorite">Ștergeți din favorite</string>
   <string name="favorited">Adăugat la favorite</string>
   <string name="unfavorited">Șters din favorite</string>
+  <string name="action_episode_notifications_on">Turn on episode notifications</string>
+  <string name="action_episode_notifications_off">Turn off episode notifications</string>
   <string name="context_hide">Ascunde</string>
   <string name="context_unhide">Arată</string>
   <string name="hidden">Emisiune ascunsă</string>
@@ -157,7 +158,9 @@
   <string name="recent">Recente</string>
   <string name="noupcoming">Nu sunt episoade care urmează.</string>
   <string name="norecent">Nu sunt episoade recente.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Doar emisiunile preferate</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Calendar infinit</string>
   <!-- Updating -->
   <string name="update_scheduled">Actualizare&#8230;</string>
@@ -353,6 +356,21 @@
   <string name="pref_language">Limba preferată</string>
   <string name="pref_updatewifionly">Imaginile se vor încarca doar prin intermediul Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="few">%d days before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="few">%d hours before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="few">%d minutes before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Această aplicație folosește date și imagini ale TVDB sub licența CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Acest produs utilizează API-ul TMDb, dar nu este aprobat sau certificată de TMDb.</string>
@@ -394,7 +412,7 @@
   <string name="backup_summary">Arhivează sau restaurează emisiunile</string>
   <string name="pref_number">Format număr</string>
   <string name="pref_offset">Compensare manuală a timpului</string>
-  <string name="pref_offsetsummary">Compensare timp de difuzare cu %s ore</string>
+  <string name="pref_offsetsummary">Compensare timp de difuzare cu %d ore</string>
   <string name="clear_cache">Șterge imaginile din cache</string>
   <string name="clear_cache_summary">Șterge toate imaginile din cache de pe acest dispozitiv</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
@@ -435,21 +453,16 @@
   <string name="upcoming_episodes">Urmează episoade noi</string>
   <string name="upcoming_episodes_number">%s episoade noi</string>
   <string name="upcoming_show_detailed">%1$s pe %2$s</string>
-  <string name="more">%s mai mult</string>
+  <string name="more">%d mai mult</string>
   <string name="upcoming_display">Selectați să se afișeze serialele următoare</string>
   <string name="pref_notifications">Notificări</string>
   <string name="pref_notificationssummary">Anunță-mă despre episoadele noi</string>
-  <string name="pref_notifyfavonly">Doar Favorite</string>
-  <string name="pref_notifyfavonlysummary">Primiți notificări doar pentru emisiunile favorite</string>
   <string name="pref_ringtone">Sunet</string>
   <string name="pref_vibrate">Vibrează</string>
   <string name="pref_vibratesummary">Vibrează și la afişarea unei notificări</string>
   <string name="pref_notifications_treshold">Când să fiți notificat</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">Difuzate</string>
-  <string name="notification_release_earlier_five">5 min în avans</string>
-  <string name="notification_release_earlier_ten">10 min în avans</string>
-  <string name="notification_release_earlier_hour">o oră în avans</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (mic)</string>
   <!-- List Widget -->

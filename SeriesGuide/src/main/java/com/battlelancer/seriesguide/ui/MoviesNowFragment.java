@@ -29,6 +29,7 @@ import com.battlelancer.seriesguide.loaders.TraktRecentMovieHistoryLoader;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.GridInsetDecoration;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
@@ -114,7 +115,7 @@ public class MoviesNowFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Utils.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
+        ViewTools.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
 
         // define dataset
         adapter = new MoviesNowAdapter(getContext(), itemClickListener);
@@ -167,6 +168,14 @@ public class MoviesNowFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        // when switching tabs while still showing refresh animation, old content remains stuck
+        // so force clear the drawing cache and animation: http://stackoverflow.com/a/27073879
+        if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+            swipeRefreshLayout.destroyDrawingCache();
+            swipeRefreshLayout.clearAnimation();
+        }
 
         unbinder.unbind();
     }

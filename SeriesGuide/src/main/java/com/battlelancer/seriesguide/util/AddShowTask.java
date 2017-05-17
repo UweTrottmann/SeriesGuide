@@ -16,7 +16,6 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.entities.BaseShow;
-import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
 import java.io.IOException;
@@ -86,11 +85,12 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     private static final int PROGRESS_ERROR = 2;
     private static final int PROGRESS_ERROR_TVDB = 3;
     private static final int PROGRESS_ERROR_TVDB_NOT_EXISTS = 4;
-    private static final int PROGRESS_ERROR_HEXAGON = 5;
-    private static final int PROGRESS_ERROR_DATA = 6;
-    private static final int RESULT_OFFLINE = 7;
-    private static final int RESULT_TRAKT_API_ERROR = 8;
-    private static final int RESULT_TRAKT_AUTH_ERROR = 9;
+    private static final int PROGRESS_ERROR_TRAKT = 5;
+    private static final int PROGRESS_ERROR_HEXAGON = 6;
+    private static final int PROGRESS_ERROR_DATA = 7;
+    private static final int RESULT_OFFLINE = 8;
+    private static final int RESULT_TRAKT_API_ERROR = 9;
+    private static final int RESULT_TRAKT_AUTH_ERROR = 10;
 
     private final SgApp app;
     private final LinkedList<SearchResult> addQueue = new LinkedList<>();
@@ -216,6 +216,8 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                     } else {
                         result = PROGRESS_ERROR_TVDB;
                     }
+                } else if (e.service() == TvdbException.Service.TRAKT) {
+                    result = PROGRESS_ERROR_TRAKT;
                 } else if (e.service() == TvdbException.Service.HEXAGON) {
                     result = PROGRESS_ERROR_HEXAGON;
                 } else if (e.service() == TvdbException.Service.DATA) {
@@ -281,6 +283,10 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 event = OnShowAddedEvent.failedDetails(app, currentShowTvdbId, currentShowName,
                         app.getString(R.string.tvdb_error_does_not_exist));
                 break;
+            case PROGRESS_ERROR_TRAKT:
+                event = OnShowAddedEvent.failedDetails(app, currentShowTvdbId, currentShowName,
+                        app.getString(R.string.api_error_generic, app.getString(R.string.trakt)));
+                break;
             case PROGRESS_ERROR_HEXAGON:
                 event = OnShowAddedEvent.failedDetails(app, currentShowTvdbId, currentShowName,
                         app.getString(R.string.api_error_generic, app.getString(R.string.hexagon)));
@@ -312,9 +318,9 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         try {
             Response<List<BaseShow>> response;
             if (isCollectionNotWatched) {
-                response = traktSync.get().collectionShows(Extended.DEFAULT_MIN).execute();
+                response = traktSync.get().collectionShows(null).execute();
             } else {
-                response = traktSync.get().watchedShows(Extended.DEFAULT_MIN).execute();
+                response = traktSync.get().watchedShows(null).execute();
             }
             if (response.isSuccessful()) {
                 return TraktTools.buildTraktShowsMap(response.body());

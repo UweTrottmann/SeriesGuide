@@ -38,7 +38,7 @@ import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.GridInsetDecoration;
 import com.battlelancer.seriesguide.util.TabClickEvent;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import java.util.List;
@@ -125,7 +125,7 @@ public class ShowsNowFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Utils.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
+        ViewTools.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
 
         // define dataset
         adapter = new NowAdapter(getActivity(), itemClickListener);
@@ -167,10 +167,10 @@ public class ShowsNowFragment extends Fragment {
 
         EventBus.getDefault().register(this);
 
-        /**
-         * Init recently watched and released today loaders here the earliest.
-         * So we can restart them if they already exist to ensure up to date data (the loaders do
-         * not react to database changes themselves) and avoid loading data twice in a row.
+        /*
+          Init recently watched and released today loaders here the earliest.
+          So we can restart them if they already exist to ensure up to date data (the loaders do
+          not react to database changes themselves) and avoid loading data twice in a row.
          */
         if (NowSettings.isDisplayingReleasedToday(getActivity())) {
             isLoadingReleasedToday = true;
@@ -205,6 +205,14 @@ public class ShowsNowFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        // when switching tabs while still showing refresh animation, old content remains stuck
+        // so force clear the drawing cache and animation: http://stackoverflow.com/a/27073879
+        if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+            swipeRefreshLayout.destroyDrawingCache();
+            swipeRefreshLayout.clearAnimation();
+        }
 
         unbinder.unbind();
     }

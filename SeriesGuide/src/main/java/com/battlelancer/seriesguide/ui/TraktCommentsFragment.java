@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.loaders.TraktCommentsLoader;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktLink;
@@ -81,7 +82,7 @@ public class TraktCommentsFragment extends Fragment {
                         R.dimen.swipe_refresh_progress_bar_start_margin),
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_end_margin));
-        Utils.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
+        ViewTools.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
 
         list.setOnItemClickListener(mOnClickListener);
         list.setEmptyView(emptyView);

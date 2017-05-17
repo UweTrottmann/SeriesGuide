@@ -14,10 +14,10 @@
   <!-- Media items -->
   <string name="show">Serialas</string>
   <string name="episode">Serija</string>
-  <string name="episode_number">Serija %s</string>
+  <string name="episode_number">Serija %d</string>
   <string name="episodes">Serijos</string>
   <string name="season">Sezonas</string>
-  <string name="season_number">Sezonas %s</string>
+  <string name="season_number">Sezonas %d</string>
   <string name="seasons">Sezonai</string>
   <string name="specialseason">Ypatingos serijos</string>
   <!-- Descriptions -->
@@ -33,7 +33,7 @@
   <string name="web_search">Paieška žiniatinklyje</string>
   <string name="add_to_homescreen">Nuoroda</string>
   <string name="action_open">Atidaryti</string>
-  <string name="sync_manually">Sync manually</string>
+  <string name="sync_manually">Sinchronizuoti rankiniu būdu</string>
   <string name="sync_and_update">Sync &amp; Update</string>
   <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
@@ -48,14 +48,13 @@
   <string name="app_not_available">Nėra tinkamų programėlių.</string>
   <string name="people_empty">Nieko nėra?! Bandykite dar kartą.</string>
   <string name="database_error">Nepavyko modifikuoti duomenų.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="reinstall_info">Pabandykite sukurti atsarginę kopiją parametrų, iš naujo įdiegti ir atkurti.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <!-- Sharing -->
   <string name="share">Dalintis</string>
   <string name="share_show">Dalintis serialu</string>
   <string name="share_episode">Dalintis serija</string>
   <string name="share_movie">Dalintis filmu</string>
-  <string name="share_checkout">Peržiūrėti %s</string>
   <string name="addtocalendar">Pridėti į kalendorių</string>
   <string name="addtocalendar_failed">Negalima sukurti kalendoriaus įvykio.</string>
   <string name="links">Links</string>
@@ -121,6 +120,8 @@
   <string name="context_unfavorite">Šalinti iš mėgstamų</string>
   <string name="favorited">Pridėta prie mėgstamiausių</string>
   <string name="unfavorited">Pašalinta iš mėgstamiausių</string>
+  <string name="action_episode_notifications_on">Įjungti epizodų pranešimus</string>
+  <string name="action_episode_notifications_off">Išjungti epizodų pranešimus</string>
   <string name="context_hide">Slėpti</string>
   <string name="context_unhide">Nebeslėpti</string>
   <string name="hidden">Perkeltas į paslėptus</string>
@@ -134,10 +135,10 @@
   <string name="action_shows_filter_hidden">Paslėpti</string>
   <string name="action_shows_sort">Rūšiuoti serialus</string>
   <string name="action_shows_sort_title">Pavadinimas</string>
-  <string name="action_shows_sort_latest_episode">Latest episode</string>
-  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
-  <string name="action_shows_sort_last_watched">Last watched</string>
-  <string name="action_shows_sort_remaining">Remaining episodes</string>
+  <string name="action_shows_sort_latest_episode">Vėliausias epizodas</string>
+  <string name="action_shows_sort_oldest_episode">Seniausias epizodas</string>
+  <string name="action_shows_sort_last_watched">Paskutinis žiūrėtas</string>
+  <string name="action_shows_sort_remaining">Likę epizodai</string>
   <string name="action_shows_sort_favorites">Mėgstamų sąrašas</string>
   <string name="context_updateshow">Atnaujinti</string>
   <string name="context_marknext">Pažiūrėta kita serija</string>
@@ -157,7 +158,9 @@
   <string name="recent">Paskutinės</string>
   <string name="noupcoming">Artėjančių serijų nėra.</string>
   <string name="norecent">Paskutinių serijų nėra.</string>
+  <string name="calendar_settings">Calendar settings</string>
   <string name="only_favorites">Tik mėgstamiausi serialai</string>
+  <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">Visas kalendorius</string>
   <!-- Updating -->
   <string name="update_scheduled">Atnaujinimas&#8230;</string>
@@ -353,6 +356,21 @@
   <string name="pref_language">Preferred content language</string>
   <string name="pref_updatewifionly">Images via Wi-Fi only</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <plurals name="days_before_plural">
+    <item quantity="one">%d day before</item>
+    <item quantity="few">%d days before</item>
+    <item quantity="other">%d days before</item>
+  </plurals>
+  <plurals name="hours_before_plural">
+    <item quantity="one">%d hour before</item>
+    <item quantity="few">%d hours before</item>
+    <item quantity="other">%d hours before</item>
+  </plurals>
+  <plurals name="minutes_before_plural">
+    <item quantity="one">%d minute before</item>
+    <item quantity="few">%d minutes before</item>
+    <item quantity="other">%d minutes before</item>
+  </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
@@ -394,7 +412,7 @@
   <string name="backup_summary">Padaryti atsarginę kopiją arba atkurti serialus</string>
   <string name="pref_number">Skaičių formatas</string>
   <string name="pref_offset">Rankinis laiko postūmis</string>
-  <string name="pref_offsetsummary">Rodymo laikas pastumtas %s val</string>
+  <string name="pref_offsetsummary">Rodymo laikas pastumtas %d val</string>
   <string name="clear_cache">Pašalinti išsaugotus paveikslus</string>
   <string name="clear_cache_summary">Pašalina visus išsaugotus paveikslus iš jūsų įrenginio</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
@@ -435,21 +453,16 @@
   <string name="upcoming_episodes">New episodes are coming up</string>
   <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s %2$s</string>
-  <string name="more">%s daugiau</string>
+  <string name="more">%d daugiau</string>
   <string name="upcoming_display">Select to display upcoming shows</string>
   <string name="pref_notifications">Pranešimai</string>
   <string name="pref_notificationssummary">Pranešti apie naujas serijas</string>
-  <string name="pref_notifyfavonly">Favorites only</string>
-  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
   <string name="pref_ringtone">Melodija</string>
   <string name="pref_vibrate">Vibravimas</string>
   <string name="pref_vibratesummary">Vibruoti, kai rodomas pranešimas</string>
   <string name="pref_notifications_treshold">Kada išsiųsti notifikaciją</string>
-  <!-- Notification thresholds -->
-  <string name="notification_release_exact">rodo</string>
-  <string name="notification_release_earlier_five">5 min in advance</string>
-  <string name="notification_release_earlier_ten">10 min in advance</string>
-  <string name="notification_release_earlier_hour">1 hour in advance</string>
+  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (small)</string>
   <!-- List Widget -->

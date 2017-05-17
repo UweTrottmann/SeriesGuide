@@ -24,10 +24,10 @@ import com.battlelancer.seriesguide.util.TraktTools;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.jakewharton.picasso.OkHttp3Downloader;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.squareup.picasso.Picasso;
 import io.fabric.sdk.android.Fabric;
 import io.palaima.debugdrawer.timber.data.LumberYard;
-import net.danlew.android.joda.JodaTimeAndroid;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.EventBusException;
 import timber.log.Timber;
@@ -90,7 +90,7 @@ public class SgApp extends Application {
         // set up logging first so crashes during initialization are caught
         initializeLogging();
 
-        JodaTimeAndroid.init(this);
+        AndroidThreeTen.init(this);
         initializeEventBus();
         initializePicasso();
 

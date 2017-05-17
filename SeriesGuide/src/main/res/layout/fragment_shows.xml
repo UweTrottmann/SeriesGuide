@@ -11,12 +11,13 @@
         android:layout_width="@dimen/empty_view_width"
         android:layout_height="200dp"
         android:layout_gravity="center"
-        android:drawableTop="?attr/drawableAddIcon"
         android:gravity="center"
         android:paddingBottom="70dp"
         android:paddingTop="70dp"
         android:text="@string/action_shows_add"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:drawableTint="?attr/sgColorIcon"
+        tools:drawableTop="@drawable/ic_add_white_24dp" />
 
     <Button
         android:id="@+id/emptyViewShowsFilter"
@@ -24,12 +25,13 @@
         android:layout_width="@dimen/empty_view_width"
         android:layout_height="200dp"
         android:layout_gravity="center"
-        android:drawableTop="?attr/drawableFilter"
         android:gravity="center"
         android:paddingBottom="70dp"
         android:paddingTop="70dp"
         android:text="@string/empty_filter"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:drawableTint="?attr/sgColorIcon"
+        tools:drawableTop="@drawable/ic_filter_white_24dp" />
 
     <!-- Add large bottom padding to make room for FAB if scrolled to bottom. -->
     <com.battlelancer.seriesguide.widgets.HeaderGridView

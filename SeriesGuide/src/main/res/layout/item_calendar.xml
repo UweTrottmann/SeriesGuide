@@ -47,7 +47,7 @@
             android:ellipsize="end"
             android:paddingTop="@dimen/default_padding"
             android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Body.Dim"
+            android:textAppearance="@style/TextAppearance.Body.Secondary"
             tools:text="Defiance" />
 
         <TextView
@@ -83,8 +83,8 @@
             android:layout_below="@+id/textViewActivityInfo"
             android:layout_toLeftOf="@+id/watchedBoxActivity"
             android:layout_toRightOf="@+id/imageViewActivityPoster"
-            android:paddingBottom="@dimen/default_padding"
             android:ellipsize="end"
+            android:paddingBottom="@dimen/default_padding"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Caption.Dim"
             tools:text="in 7 hours" />

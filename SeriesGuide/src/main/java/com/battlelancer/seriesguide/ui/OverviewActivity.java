@@ -189,8 +189,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
                 public NdefMessage createNdefMessage(NfcEvent event) {
                     // send show TVDB id
                     return new NdefMessage(new NdefRecord[] {
-                            createMimeRecord(
-                                    String.valueOf(showTvdbId).getBytes())
+                            createMimeRecord(String.valueOf(showTvdbId).getBytes())
                     });
                 }
 

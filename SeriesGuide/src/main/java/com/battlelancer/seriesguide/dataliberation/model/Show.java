@@ -38,6 +38,7 @@ public class Show {
 
     /** SeriesGuide specific values */
     public boolean favorite;
+    public Boolean notify;
     public boolean hidden;
 
     public long last_updated;

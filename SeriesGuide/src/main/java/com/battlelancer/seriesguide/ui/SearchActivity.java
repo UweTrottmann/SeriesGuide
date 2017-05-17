@@ -40,6 +40,7 @@ import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.google.android.gms.actions.SearchIntents;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -118,6 +119,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
         setupViews(savedInstanceState == null);
 
+        handleBeamIntent(getIntent());
         handleSearchIntent(getIntent());
     }
 
@@ -240,11 +242,11 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             }
             if (mayShowKeyboard &&
                     (defaultTab == TAB_POSITION_SHOWS || defaultTab == TAB_POSITION_EPISODES)) {
-                Utils.showSoftKeyboardOnSearchView(this, searchView);
+                ViewTools.showSoftKeyboardOnSearchView(this, searchView);
             }
         } else if (mayShowKeyboard) {
             // also show keyboard when showing first tab (added tab)
-            Utils.showSoftKeyboardOnSearchView(this, searchView);
+            ViewTools.showSoftKeyboardOnSearchView(this, searchView);
         }
     }
 
@@ -285,10 +287,43 @@ public class SearchActivity extends BaseNavDrawerActivity implements
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+        handleBeamIntent(intent);
         handleSearchIntent(intent);
     }
 
-    private void handleSearchIntent(Intent intent) {
+    /**
+     * Handles Android Beam intents, extracts the beamed show from the NDEF Message and displays an
+     * add dialog for the show.
+     */
+    private void handleBeamIntent(@Nullable Intent intent) {
+        if (intent == null || !NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
+            return;
+        }
+
+        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+        if (rawMsgs == null || rawMsgs.length == 0) {
+            Utils.trackCustomEvent(this, "Beam", "Failed", "Data null or zero length");
+            return; // corrupted or invalid data
+        }
+
+        // only one message sent during the beam
+        NdefMessage msg = (NdefMessage) rawMsgs[0];
+
+        int showTvdbId;
+        try {
+            showTvdbId = Integer.valueOf(new String(msg.getRecords()[0].getPayload()));
+        } catch (NumberFormatException e) {
+            Utils.trackCustomEvent(this, "Beam", "Failed",
+                    "NumberFormatException: " + e.getMessage());
+            return;
+        }
+
+        // display add dialog
+        AddShowDialogFragment.showAddDialog(showTvdbId, getSupportFragmentManager());
+        Utils.trackCustomEvent(this, "Beam", "Success", null);
+    }
+
+    private void handleSearchIntent(@Nullable Intent intent) {
         if (intent == null) {
             return;
         }
@@ -334,12 +369,18 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
         // try to match TVDB URLs
         // match season and episode pages first
-        Pattern tvdbSeriesIdPattern = Pattern.compile(".*?thetvdb\\.com.*?seriesid=([0-9]*)");
+        Pattern tvdbSeriesIdPattern = Pattern.compile("thetvdb\\.com.*?seriesid=([0-9]*)");
         int showTvdbId = matchShowTvdbId(tvdbSeriesIdPattern, sharedText);
         if (showTvdbId <= 0) {
             // match show pages
-            Pattern tvdbIdPattern = Pattern.compile(".*?thetvdb\\.com.*?id=([0-9]*)");
+            Pattern tvdbIdPattern = Pattern.compile("thetvdb\\.com.*?id=([0-9]*)");
             showTvdbId = matchShowTvdbId(tvdbIdPattern, sharedText);
+        }
+        if (showTvdbId <= 0) {
+            // try to match trakt search URLs (the ones shared by this app)
+            Pattern traktShowIdPattern =
+                    Pattern.compile("trakt\\.tv\\/search\\/tvdb\\/([0-9]*)\\?id_type=show");
+            showTvdbId = matchShowTvdbId(traktShowIdPattern, sharedText);
         }
 
         if (showTvdbId > 0) {
@@ -422,17 +463,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        // If the activity was started due to an Android Beam, handle the incoming beam
-        if (getIntent() != null && NfcAdapter.ACTION_NDEF_DISCOVERED.equals(
-                getIntent().getAction())) {
-            handleBeamIntent(getIntent());
-        }
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
 
@@ -505,30 +535,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             progressDialog.dismiss();
         }
         progressDialog = null;
-    }
-
-    /**
-     * Extracts the beamed show from the NDEF Message and displays an add dialog for the show.
-     */
-    private void handleBeamIntent(Intent intent) {
-        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-        if (rawMsgs == null || rawMsgs.length == 0) {
-            // corrupted or invalid data
-            return;
-        }
-
-        // only one message sent during the beam
-        NdefMessage msg = (NdefMessage) rawMsgs[0];
-
-        int showTvdbId;
-        try {
-            showTvdbId = Integer.valueOf(new String(msg.getRecords()[0].getPayload()));
-        } catch (NumberFormatException e) {
-            return;
-        }
-
-        // display add dialog
-        AddShowDialogFragment.showAddDialog(showTvdbId, getSupportFragmentManager());
     }
 
     @Override

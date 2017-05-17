@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -19,6 +20,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="10dp" />
 
+        <!-- Text appearance set in code. -->
         <TextView
             android:id="@+id/textViewEpisodeTitle"
             android:layout_width="match_parent"
@@ -39,9 +41,10 @@
             android:layout_marginLeft="@dimen/default_padding"
             android:paddingRight="@dimen/large_padding"
             android:paddingTop="16dp"
-            android:textAppearance="@style/TextAppearance.Subhead.Dim"
+            android:textAppearance="@style/TextAppearance.Subhead.Secondary"
             tools:text="23" />
 
+        <!-- Text appearance set in code. -->
         <TextView
             android:id="@+id/textViewEpisodeAirdate"
             android:layout_width="wrap_content"
@@ -51,7 +54,7 @@
             android:ellipsize="end"
             android:paddingTop="@dimen/inline_padding"
             android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Body.Dim"
+            android:textAppearance="@style/TextAppearance.Body.Secondary"
             tools:text="in 2 days" />
 
         <TextView
@@ -85,10 +88,11 @@
             android:layout_alignParentRight="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/description_menu_overflow"
-            android:paddingBottom="13dp"
-            android:paddingRight="@dimen/default_padding"
-            android:scaleType="fitXY"
-            android:src="?attr/drawableDropdown" />
+            android:paddingLeft="@dimen/default_padding"
+            android:scaleType="centerInside"
+            android:tint="?attr/sgColorIcon"
+            app:srcCompat="@drawable/ic_more_vert_white_20dp"
+            tools:ignore="RtlSymmetry" />
     </RelativeLayout>
 
 </FrameLayout>

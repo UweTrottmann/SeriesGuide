@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Some CoordinatorLayouts have scrollable children which do not support app bar scrolling
+    pre-L, so only add scroll flags on L+. -->
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sgToolbar"
+    style="@style/Widget.SeriesGuide.ActionBar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    android:theme="?attr/actionBarTheme"
+    app:layout_scrollFlags="scroll|enterAlways|snap"
+    app:popupTheme="?attr/actionBarPopupTheme" />
