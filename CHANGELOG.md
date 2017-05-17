@@ -9,6 +9,12 @@ Version 37
 ----------
 *(in development)*
 
+#### 37
+*(2017-05-17)*
+
+* 🔧 Revert to set watched/not watched when pressing the tick icon in calendar.
+* 📝 Latest translations from crowdin.
+
 #### 37-beta7
 *(2017-05-12)*
 
