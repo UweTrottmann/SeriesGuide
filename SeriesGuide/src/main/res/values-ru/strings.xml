@@ -158,9 +158,9 @@
   <string name="recent">Недавние</string>
   <string name="noupcoming">Предстоящих эпизодов нет.</string>
   <string name="norecent">Недавних эпизодов нет.</string>
-  <string name="calendar_settings">Calendar settings</string>
+  <string name="calendar_settings">Настройки календаря</string>
   <string name="only_favorites">Только избранные сериалы</string>
-  <string name="calendar_only_collected">Only collected episodes</string>
+  <string name="calendar_only_collected">Только собранные эпизоды</string>
   <string name="pref_infinite_scrolling">Бесконечный календарь</string>
   <!-- Updating -->
   <string name="update_scheduled">Обновление&#8230;</string>

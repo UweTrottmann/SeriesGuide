@@ -118,8 +118,8 @@
   <string name="context_unfavorite">ลบออกจากรายการโปรด</string>
   <string name="favorited">เพิ่มในรายการโปรดแล้ว</string>
   <string name="unfavorited">ลบออกจากรายการโปรดแล้ว</string>
-  <string name="action_episode_notifications_on">Turn on episode notifications</string>
-  <string name="action_episode_notifications_off">Turn off episode notifications</string>
+  <string name="action_episode_notifications_on">เปิดการแจ้งเตือนตอนใหม่</string>
+  <string name="action_episode_notifications_off">ปิดการแจ้งเตือนตอนใหม่</string>
   <string name="context_hide">ซ่อน</string>
   <string name="context_unhide">ไม่ต้องซ่อน</string>
   <string name="hidden">ย้ายไปซ่อนแล้ว</string>
@@ -156,9 +156,9 @@
   <string name="recent">ล่าสุด</string>
   <string name="noupcoming">ไม่มีตอนที่กำลังจะมาเร็วๆ นี้</string>
   <string name="norecent">ไม่มีตอนล่าสุด</string>
-  <string name="calendar_settings">Calendar settings</string>
+  <string name="calendar_settings">การตั้งค่าปฏิทิน</string>
   <string name="only_favorites">เฉพาะซีรีส์ที่ชื่นชอบ</string>
-  <string name="calendar_only_collected">Only collected episodes</string>
+  <string name="calendar_only_collected">เฉพาะตอนที่เก็บไว้</string>
   <string name="pref_infinite_scrolling">ปฏิทินไม่สิ้นสุด</string>
   <!-- Updating -->
   <string name="update_scheduled">กำลังอัปเดต&#8230;</string>
@@ -437,8 +437,8 @@
   <string name="pref_vibrate">สั่น</string>
   <string name="pref_vibratesummary">สั่นเมื่อแสดงการแจ้งเตือนด้วย</string>
   <string name="pref_notifications_treshold">แจ้งเตือนตอนไหนดี</string>
-  <string name="pref_notifications_select_shows">Select shows</string>
-  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notifications_select_shows">เลือกรายการ</string>
+  <string name="pref_notifications_select_shows_summary">รายการที่เปิดใช้การแจ้งเตือน (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (เล็ก)</string>
   <!-- List Widget -->

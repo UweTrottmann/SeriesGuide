@@ -158,9 +158,9 @@
   <string name="recent">Nedávne</string>
   <string name="noupcoming">Žiadne nadchádzajúce epizódy.</string>
   <string name="norecent">Žiadne nedávne epizódy.</string>
-  <string name="calendar_settings">Calendar settings</string>
+  <string name="calendar_settings">Nastavenia kalendára</string>
   <string name="only_favorites">Iba obľúbené seriály</string>
-  <string name="calendar_only_collected">Only collected episodes</string>
+  <string name="calendar_only_collected">Iba epizódy v zbierke</string>
   <string name="pref_infinite_scrolling">Nekonečný kalendár</string>
   <!-- Updating -->
   <string name="update_scheduled">Aktualizuje sa&#8230;</string>
