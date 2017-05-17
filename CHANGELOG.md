@@ -7,7 +7,20 @@ All dates are in the European Central timezone.
 
 Version 37
 ----------
-*(in development)*
+*(2017-05-17)*
+
+* Turn on and off notifications for each show.
+* Within limits, select any number of minutes, hours or days to notify before episodes are released.
+* Use TheTVDB API v2 to fetch episode data: no longer falls back to English if not translated.
+* Add "Only collected episodes" option to calendar and list widget.
+* Offset show release times between +/-24 hours in Settings > Basics > Manual time offset.
+* Dim titles of episodes that are not released.
+
+#### 37
+*(2017-05-17)*
+
+* 🔧 Revert to set watched/not watched when pressing the tick icon in calendar.
+* 📝 Latest translations from crowdin.
 
 #### 37-beta7
 *(2017-05-12)*
