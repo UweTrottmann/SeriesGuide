@@ -281,6 +281,14 @@ public class OverviewFragment extends Fragment implements
         if (handler != null) {
             handler.removeCallbacks(episodeActionsRunnable);
         }
+        if (detailsTask != null) {
+            detailsTask.cancel(true);
+            detailsTask = null;
+        }
+        if (ratingsTask != null) {
+            ratingsTask.cancel(true);
+            ratingsTask = null;
+        }
     }
 
     @Override

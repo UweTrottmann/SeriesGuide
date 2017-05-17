@@ -8,6 +8,7 @@ import android.support.v4.os.AsyncTaskCompat;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.util.TextTools;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.thetvdb.entities.Episode;
 import com.uwetrottmann.thetvdb.entities.EpisodeResponse;
 import com.uwetrottmann.thetvdb.services.TheTvdbEpisodes;
@@ -24,7 +25,8 @@ public class TvdbEpisodeDetailsTask extends AsyncTask<Void, Void, Void> {
     @Nullable
     public static TvdbEpisodeDetailsTask runIfOutdated(SgApp app, int showTvdbId, int episodeTvdbId,
             long lastEdited, long lastUpdated) {
-        if (lastUpdated == 0 || lastEdited > lastUpdated) {
+        if ((lastUpdated == 0 || lastEdited > lastUpdated)
+                && Utils.isAllowedLargeDataConnection(app)) {
             TvdbEpisodeDetailsTask detailsTask = new TvdbEpisodeDetailsTask(app, showTvdbId,
                     episodeTvdbId, lastEdited);
             AsyncTaskCompat.executeParallel(detailsTask);
@@ -50,9 +52,17 @@ public class TvdbEpisodeDetailsTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
+        if (isCancelled()) {
+            return null;
+        }
+
         String language = TvdbTools.getShowLanguage(app, showTvdbId);
         if (language == null) {
             return null; // failed to get language
+        }
+
+        if (isCancelled()) {
+            return null;
         }
 
         Episode.FullEpisode episode = getEpisode(language);

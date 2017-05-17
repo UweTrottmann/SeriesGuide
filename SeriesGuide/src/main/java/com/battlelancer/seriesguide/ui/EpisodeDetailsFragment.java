@@ -224,6 +224,19 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (detailsTask != null) {
+            detailsTask.cancel(true);
+            detailsTask = null;
+        }
+        if (ratingsTask != null) {
+            ratingsTask.cancel(true);
+            ratingsTask = null;
+        }
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
