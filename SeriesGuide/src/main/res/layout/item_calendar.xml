@@ -26,7 +26,6 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="26dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/description_menu_overflow"
             android:scaleType="centerInside" />
 
         <ImageView

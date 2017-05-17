@@ -427,8 +427,19 @@ public class CalendarFragment extends Fragment
     private CalendarAdapter.ItemClickListener itemClickListener
             = new CalendarAdapter.ItemClickListener() {
         @Override
-        public void onWatchedBoxClick(View view, int position, int episodeTvdbId) {
-            onItemLongClick(gridView, view, position, episodeTvdbId);
+        public void onWatchedBoxClick(int episodePosition, boolean isWatched) {
+            Cursor episode = adapter.getItem(episodePosition);
+            if (episode == null) {
+                return;
+            }
+
+            int showTvdbId = episode.getInt(CalendarAdapter.Query.SHOW_ID);
+            int episodeTvdbId = episode.getInt(CalendarAdapter.Query._ID);
+            int seasonNumber = episode.getInt(CalendarAdapter.Query.SEASON);
+            int episodeNumber = episode.getInt(CalendarAdapter.Query.NUMBER);
+
+            updateEpisodeWatchedState(showTvdbId, episodeTvdbId, seasonNumber, episodeNumber,
+                    !isWatched);
         }
     };
 }

@@ -38,7 +38,7 @@ import java.util.List;
 public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersBaseAdapter {
 
     public interface ItemClickListener {
-        void onWatchedBoxClick(View view, int position, int episodeTvdbId);
+        void onWatchedBoxClick(int episodePosition, boolean isWatched);
     }
 
     private final ItemClickListener itemClickListener;
@@ -78,12 +78,14 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
     public void bindView(View view, final Context context, final Cursor cursor) {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
-        viewHolder.episodeTvdbId = cursor.getInt(Query._ID);
         viewHolder.position = cursor.getPosition();
 
         // watched box
         int episodeFlag = cursor.getInt(Query.WATCHED);
         viewHolder.watchedBox.setEpisodeFlag(episodeFlag);
+        boolean watched = EpisodeTools.isWatched(episodeFlag);
+        viewHolder.watchedBox.setContentDescription(
+                context.getString(watched ? R.string.action_unwatched : R.string.action_watched));
 
         // show title
         viewHolder.show.setText(cursor.getString(Query.SHOW_TITLE));
@@ -311,7 +313,6 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         public TextView timestamp;
         public ImageView poster;
         public int position;
-        public int episodeTvdbId;
 
         public ViewHolder(View v, final ItemClickListener itemClickListener) {
             show = (TextView) v.findViewById(R.id.textViewActivityShow);
@@ -325,7 +326,8 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
             watchedBox.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if (itemClickListener != null) {
-                        itemClickListener.onWatchedBoxClick(v, position, episodeTvdbId);
+                        itemClickListener.onWatchedBoxClick(position,
+                                EpisodeTools.isWatched(watchedBox.getEpisodeFlag()));
                     }
                 }
             });
