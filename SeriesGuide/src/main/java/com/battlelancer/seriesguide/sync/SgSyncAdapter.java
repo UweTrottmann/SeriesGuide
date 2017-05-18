@@ -242,7 +242,11 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     @Inject Lazy<ConfigurationService> tmdbConfigService;
 
     public SgSyncAdapter(SgApp app, boolean autoInitialize) {
-        super(app, autoInitialize);
+        this(app, autoInitialize, false);
+    }
+
+    public SgSyncAdapter(SgApp app, boolean autoInitialize, boolean allowParallelSyncs) {
+        super(app, autoInitialize, allowParallelSyncs);
         this.app = app;
         app.getServicesComponent().inject(this);
         Timber.d("Creating sync adapter");
