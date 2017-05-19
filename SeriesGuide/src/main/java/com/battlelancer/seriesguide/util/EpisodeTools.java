@@ -122,10 +122,10 @@ public class EpisodeTools {
      * release date).
      */
     public static void episodeWatchedPrevious(SgApp app, int showTvdbId,
-            long episodeFirstAired) {
+            int episodeAbsoluteNumber) {
         execute(app,
                 new EpisodeTaskTypes.EpisodeWatchedPreviousType(app, showTvdbId,
-                        episodeFirstAired)
+                        episodeAbsoluteNumber)
         );
     }
 

@@ -31,7 +31,7 @@ public class EpisodesAdapter extends CursorAdapter {
 
     public interface PopupMenuClickListener {
         void onPopupMenuClick(View v, int episodeTvdbId, int episodeNumber,
-                long releaseTimeMs, int watchedFlag, boolean isCollected);
+                int absoluteNumber, int watchedFlag, boolean isCollected);
     }
 
     private PopupMenuClickListener popupMenuClickListener;
@@ -122,7 +122,7 @@ public class EpisodesAdapter extends CursorAdapter {
 
         // alternative numbers
         StringBuilder altNumbers = new StringBuilder();
-        int absoluteNumber = mCursor.getInt(EpisodesQuery.ABSOLUTE_NUMBER);
+        final int absoluteNumber = mCursor.getInt(EpisodesQuery.ABSOLUTE_NUMBER);
         if (absoluteNumber > 0) {
             altNumbers.append(mContext.getString(R.string.episode_number_absolute)).append(" ")
                     .append(absoluteNumber);
@@ -166,7 +166,7 @@ public class EpisodesAdapter extends CursorAdapter {
             public void onClick(View v) {
                 if (popupMenuClickListener != null) {
                     popupMenuClickListener.onPopupMenuClick(v, episodeId, episodeNumber,
-                            releaseTime, watchedFlag, isCollected);
+                            absoluteNumber, watchedFlag, isCollected);
                 }
             }
         });
