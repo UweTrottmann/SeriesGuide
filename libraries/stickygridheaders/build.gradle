@@ -4,12 +4,10 @@ android {
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.buildTools
 
-    sourceSets {
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
-            res.srcDirs = ['res']
-        }
-
+    defaultConfig {
+        minSdkVersion versions.minSdk
+        targetSdkVersion 17
+        versionCode 1
+        versionName "1.0"
     }
 }
