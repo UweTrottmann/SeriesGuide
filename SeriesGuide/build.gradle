@@ -148,7 +148,7 @@ dependencies {
     // https://github.com/google/gson/blob/master/CHANGELOG.md
     compile 'com.google.code.gson:gson:2.8.0'
     // https://github.com/google/dagger/releases
-    def daggerVersion = "2.9"
+    def daggerVersion = "2.10"
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     compile "com.google.dagger:dagger:$daggerVersion"
     // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
