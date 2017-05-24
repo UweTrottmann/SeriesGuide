@@ -1,21 +1,16 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.annotation.TargetApi;
 import android.os.Build;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 
 /**
  * A utility class that helps with showing and hiding system UI such as the
- * status bar and navigation/system bar. This class uses backward-compatibility
- * techniques described in <a href=
- * "http://developer.android.com/training/backward-compatible-ui/index.html">
- * Creating Backward-Compatible UIs</a> to ensure that devices running any
- * version of ndroid OS are supported. More specifically, there are separate
- * implementations of this abstract class: for newer devices,
- * {@link #getInstance} will return a {@link SystemUiHiderHoneycomb} instance,
- * while on older devices {@link #getInstance} will return a
- * {@link SystemUiHiderBase} instance.
+ * status bar and navigation/system bar on API 11+ devices.
  * <p>
  * For more on system bars, see <a href=
  * "http://developer.android.com/design/get-started/ui-overview.html#system-bars"
@@ -24,20 +19,7 @@ import android.view.View;
  * @see android.view.View#setSystemUiVisibility(int)
  * @see android.view.WindowManager.LayoutParams#FLAG_FULLSCREEN
  */
-public abstract class SystemUiHider {
-    /**
-     * When this flag is set, the
-     * {@link android.view.WindowManager.LayoutParams#FLAG_LAYOUT_IN_SCREEN}
-     * flag will be set on older devices, making the status bar "float" on top
-     * of the activity layout. This is most useful when there are no controls at
-     * the top of the activity layout.
-     * <p>
-     * This flag isn't used on newer devices because the <a
-     * href="http://developer.android.com/design/patterns/actionbar.html">action
-     * bar</a>, the most important structural element of an Android app, should
-     * be visible and not obscured by the system UI.
-     */
-    public static final int FLAG_LAYOUT_IN_SCREEN_OLDER_DEVICES = 0x1;
+public class SystemUiHider {
 
     /**
      * When this flag is set, {@link #show()} and {@link #hide()} will toggle
@@ -69,9 +51,33 @@ public abstract class SystemUiHider {
      *
      * @see #FLAG_FULLSCREEN
      * @see #FLAG_HIDE_NAVIGATION
-     * @see #FLAG_LAYOUT_IN_SCREEN_OLDER_DEVICES
      */
     protected int mFlags;
+
+    /**
+     * Flags for {@link View#setSystemUiVisibility(int)} to use when showing the
+     * system UI.
+     */
+    private int mShowFlags;
+
+    /**
+     * Flags for {@link View#setSystemUiVisibility(int)} to use when hiding the
+     * system UI.
+     */
+    private int mHideFlags;
+
+    /**
+     * Flags to test against the first parameter in
+     * {@link android.view.View.OnSystemUiVisibilityChangeListener#onSystemUiVisibilityChange(int)}
+     * to determine the system UI visibility state.
+     */
+    private int mTestFlags;
+
+    /**
+     * Whether or not the system UI is currently visible. This is cached from
+     * {@link android.view.View.OnSystemUiVisibilityChangeListener}.
+     */
+    private boolean mVisible = true;
 
     /**
      * The current visibility callback.
@@ -79,53 +85,77 @@ public abstract class SystemUiHider {
     protected OnVisibilityChangeListener mOnVisibilityChangeListener = sDummyListener;
 
     /**
-     * Creates and returns an instance of {@link SystemUiHider} that is
-     * appropriate for this device. The object will be either a
-     * {@link SystemUiHiderBase} or {@link SystemUiHiderHoneycomb} depending on
-     * the device.
+     * Creates and returns an instance of {@link SystemUiHider}.
      *
-     * @param activity The activity whose window's system UI should be
-     *            controlled by this class.
-     * @param anchorView The view on which
-     *            {@link View#setSystemUiVisibility(int)} will be called.
-     * @param flags Either 0 or any combination of {@link #FLAG_FULLSCREEN},
-     *            {@link #FLAG_HIDE_NAVIGATION}, and
-     *            {@link #FLAG_LAYOUT_IN_SCREEN_OLDER_DEVICES}.
+     * @param activity The activity whose window's system UI should be controlled by this class.
+     * @param anchorView The view on which {@link View#setSystemUiVisibility(int)} will be called.
+     * @param flags Either 0 or any combination of {@link #FLAG_FULLSCREEN} and {@link
+     * #FLAG_HIDE_NAVIGATION}.
      */
     public static SystemUiHider getInstance(AppCompatActivity activity, View anchorView,
             int flags) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            return new SystemUiHiderHoneycomb(activity, anchorView, flags);
-        } else {
-            return new SystemUiHiderBase(activity, anchorView, flags);
-        }
+        return new SystemUiHider(activity, anchorView, flags);
     }
 
-    protected SystemUiHider(AppCompatActivity activity, View anchorView, int flags) {
+    /**
+     * Constructor not intended to be called by clients. Use
+     * {@link SystemUiHider#getInstance} to obtain an instance.
+     */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private SystemUiHider(AppCompatActivity activity, View anchorView, int flags) {
         mActivity = activity;
         mAnchorView = anchorView;
         mFlags = flags;
+
+        mShowFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        mHideFlags = View.SYSTEM_UI_FLAG_LOW_PROFILE | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        mTestFlags = View.SYSTEM_UI_FLAG_LOW_PROFILE;
+
+        if ((mFlags & FLAG_FULLSCREEN) == FLAG_FULLSCREEN) {
+            // If the client requested fullscreen, add flags relevant to hiding
+            // the status bar. Note that some of these constants are new as of
+            // API 16 (Jelly Bean). It is safe to use them, as they are inlined
+            // at compile-time and do nothing on pre-Jelly Bean devices.
+            mShowFlags |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+            mHideFlags |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        }
+
+        if ((mFlags & FLAG_HIDE_NAVIGATION) == FLAG_HIDE_NAVIGATION) {
+            // If the client requested hiding navigation, add relevant flags.
+            mShowFlags |= View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+            mHideFlags |= View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+            mTestFlags |= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        }
     }
 
     /**
      * Sets up the system UI hider. Should be called from {@link AppCompatActivity#onCreate}.
      */
-    public abstract void setup();
+    public void setup() {
+        mAnchorView.setOnSystemUiVisibilityChangeListener(mSystemUiVisibilityChangeListener);
+    }
 
     /**
      * Returns whether or not the system UI is visible.
      */
-    public abstract boolean isVisible();
+    public boolean isVisible() {
+        return mVisible;
+    }
 
     /**
      * Hide the system UI.
      */
-    public abstract void hide();
+    public void hide() {
+        mAnchorView.setSystemUiVisibility(mHideFlags);
+    }
 
     /**
      * Show the system UI.
      */
-    public abstract void show();
+    public void show() {
+        mAnchorView.setSystemUiVisibility(mShowFlags);
+    }
 
     /**
      * Toggle the visibility of the system UI.
@@ -170,4 +200,46 @@ public abstract class SystemUiHider {
          */
         void onVisibilityChange(boolean visible);
     }
+
+    private View.OnSystemUiVisibilityChangeListener mSystemUiVisibilityChangeListener
+            = new View.OnSystemUiVisibilityChangeListener() {
+        @Override
+        public void onSystemUiVisibilityChange(int vis) {
+            // Test against mTestFlags to see if the system UI is visible.
+            ActionBar supportActionBar = mActivity.getSupportActionBar();
+            if ((vis & mTestFlags) != 0) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    // Pre-Jelly Bean, we must use the old window flags API.
+                    mActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                }
+
+                // As we use the appcompat toolbar as an action bar, we must manually hide it
+                if (supportActionBar != null) {
+                    supportActionBar.hide();
+                }
+
+                // Trigger the registered listener and cache the visibility
+                // state.
+                mOnVisibilityChangeListener.onVisibilityChange(false);
+                mVisible = false;
+            } else {
+                mAnchorView.setSystemUiVisibility(mShowFlags);
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    // Pre-Jelly Bean, we must use the old window flags API.
+                    mActivity.getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                }
+
+                // As we use the appcompat toolbar as an action bar, we must manually show it
+                if (supportActionBar != null) {
+                    supportActionBar.show();
+                }
+
+                // Trigger the registered listener and cache the visibility
+                // state.
+                mOnVisibilityChangeListener.onVisibilityChange(true);
+                mVisible = true;
+            }
+        }
+    };
 }
