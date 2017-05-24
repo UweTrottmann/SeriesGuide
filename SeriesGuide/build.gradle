@@ -152,7 +152,7 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     compile "com.google.dagger:dagger:$daggerVersion"
     // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
-    def butterKnifeVersion = "8.5.1"
+    def butterKnifeVersion = "8.6.0"
     compile "com.jakewharton:butterknife:$butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
     // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
