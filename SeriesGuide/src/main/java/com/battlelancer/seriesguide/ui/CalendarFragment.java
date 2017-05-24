@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
@@ -111,14 +113,14 @@ public class CalendarFragment extends Fragment
 
         // setup adapter
         adapter = new CalendarAdapter(getActivity(), itemClickListener);
+
         boolean infiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
-        adapter.setIsShowingHeaders(!infiniteScrolling);
+        configureCalendar(gridView, adapter, infiniteScrolling);
 
         // setup grid view
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(this);
         gridView.setOnItemLongClickListener(this);
-        gridView.setFastScrollEnabled(infiniteScrolling);
 
         PreferenceManager.getDefaultSharedPreferences(getActivity())
                 .registerOnSharedPreferenceChangeListener(this);
@@ -363,8 +365,11 @@ public class CalendarFragment extends Fragment
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (CalendarSettings.KEY_INFINITE_SCROLLING.equals(key)) {
             boolean infiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
-            adapter.setIsShowingHeaders(!infiniteScrolling);
-            gridView.setFastScrollEnabled(infiniteScrolling);
+            configureCalendar(gridView, adapter, infiniteScrolling);
+            // re-set the adapter to properly force a re-layout
+            // FIXME: this should not be required, works on emulator, but not device
+            // (likely race condition with requestLayout(), though that makes no sense...)
+            gridView.setAdapter(adapter);
         }
         if (CalendarSettings.KEY_ONLY_FAVORITE_SHOWS.equals(key)
                 || CalendarSettings.KEY_ONLY_COLLECTED.equals(key)
@@ -373,6 +378,20 @@ public class CalendarFragment extends Fragment
                 || CalendarSettings.KEY_INFINITE_SCROLLING.equals(key)) {
             requery();
         }
+    }
+
+    private void configureCalendar(GridView gridView, CalendarAdapter adapter,
+            boolean infiniteScrolling) {
+        adapter.setIsShowingHeaders(!infiniteScrolling);
+        gridView.setFastScrollEnabled(infiniteScrolling);
+        gridView.setFastScrollAlwaysVisible(infiniteScrolling);
+        Resources res = getResources();
+        int paddingLeft = res.getDimensionPixelSize(R.dimen.grid_leftright_padding);
+        int paddingRight = infiniteScrolling
+                ? res.getDimensionPixelSize(R.dimen.grid_fast_scroll_padding)
+                : paddingLeft;
+        int paddingTopBottom = res.getDimensionPixelSize(R.dimen.grid_topbottom_padding);
+        gridView.setPadding(paddingLeft, paddingTopBottom, paddingRight, paddingTopBottom);
     }
 
     private void requery() {

@@ -19,7 +19,6 @@
     <dimen name="text_size_caption_sg">12sp</dimen>
 
     <!-- Legacy widget -->
-
     <dimen name="widget_margin">5dp</dimen>
     <dimen name="widget_paddingRight">3dp</dimen>
     <dimen name="widget_paddingLeft">8dp</dimen>
@@ -43,6 +42,9 @@
     <!-- Workaround margins due to grid inset breaking percent layouts. -->
     <dimen name="grid_item_margin_vertical">1dp</dimen>
     <dimen name="grid_item_margin_horizontal">2dp</dimen>
+
+    <!-- Fast scroll width, tested on Android 4.4 and 5.0. -->
+    <dimen name="grid_fast_scroll_padding">28dp</dimen>
 
     <!-- Show posters, 2:3 aspect ratio -->
     <dimen name="show_poster_width_default">69dp</dimen>
