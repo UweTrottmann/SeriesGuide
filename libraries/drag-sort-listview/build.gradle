@@ -1,34 +1,16 @@
 apply plugin: 'com.android.library'
 
-dependencies {
-    compile "com.android.support:support-v4:$supportVersion"
-    compile "com.android.support:support-annotations:$supportVersion"
-}
-
 android {
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.buildTools
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion versions.minSdk
         versionCode 4
         versionName "0.6.1"
     }
+}
 
-    sourceSets {
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
-            res.srcDirs = ['res']
-        }
-
-        // Move the build types to build-types/<type>
-        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
-        // This moves them out of them default location under src/<type>/... which would
-        // conflict with src/ being used by the main source set.
-        // Adding new build types or product flavors should be accompanied
-        // by a similar customization.
-        debug.setRoot('build-types/debug')
-        release.setRoot('build-types/release')
-    }
+dependencies {
+    compile "com.android.support:support-annotations:$supportVersion"
 }
