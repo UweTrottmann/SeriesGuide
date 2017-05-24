@@ -9,7 +9,6 @@ import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.GenericCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.TraktTask;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -28,11 +27,7 @@ public class QuickCheckInActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle arg0) {
         // make the activity show the wallpaper, nothing else
-        if (AndroidUtils.isHoneycombOrHigher()) {
-            setTheme(android.R.style.Theme_Holo_Wallpaper_NoTitleBar);
-        } else {
-            setTheme(android.R.style.Theme_Translucent_NoTitleBar);
-        }
+        setTheme(android.R.style.Theme_Holo_Wallpaper_NoTitleBar);
         super.onCreate(arg0);
 
         int episodeTvdbId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);

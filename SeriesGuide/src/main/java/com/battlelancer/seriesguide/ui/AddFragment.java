@@ -123,13 +123,7 @@ public abstract class AddFragment extends Fragment {
     public void setSearchResults(List<SearchResult> searchResults) {
         this.searchResults = searchResults;
         adapter.clear();
-        if (AndroidUtils.isHoneycombOrHigher()) {
-            adapter.addAll(searchResults);
-        } else {
-            for (SearchResult searchResult : searchResults) {
-                adapter.add(searchResult);
-            }
-        }
+        adapter.addAll(searchResults);
         resultsGridView.setAdapter(adapter);
     }
 
