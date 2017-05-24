@@ -8,7 +8,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2' // libraries, SeriesGuide
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.0' // SeriesGuide
-        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.7.0' // api
+        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.8.0' // api
         classpath 'io.fabric.tools:gradle:1.22.1' // SeriesGuide
     }
 }
