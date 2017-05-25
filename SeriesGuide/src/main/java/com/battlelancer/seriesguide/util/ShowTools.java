@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.util;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
@@ -39,6 +40,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import javax.inject.Inject;
 import timber.log.Timber;
 
 /**
@@ -63,9 +65,10 @@ public class ShowTools {
         int UNKNOWN = -1;
     }
 
-    private final SgApp app;
+    private final Application app;
 
-    public ShowTools(SgApp app) {
+    @Inject
+    public ShowTools(Application app) {
         this.app = app;
     }
 
@@ -318,23 +321,24 @@ public class ShowTools {
         );
     }
 
-    private static class ShowsUploadTask extends AsyncTask<Void, Void, Void> {
+    public static class ShowsUploadTask extends AsyncTask<Void, Void, Void> {
 
-        private final SgApp app;
+        private final Context app;
+        private final Show show;
+        @Inject HexagonTools hexagonTools;
 
-        private final Show mShow;
-
-        public ShowsUploadTask(SgApp app, Show show) {
-            this.app = app;
-            mShow = show;
+        public ShowsUploadTask(Application app, Show show) {
+            this.app = app.getApplicationContext();
+            this.show = show;
+            SgApp.getServicesComponent(app).inject(this);
         }
 
         @Override
         protected Void doInBackground(Void... params) {
             List<Show> shows = new LinkedList<>();
-            shows.add(mShow);
+            shows.add(show);
 
-            Upload.toHexagon(app, shows);
+            Upload.toHexagon(app, hexagonTools, shows);
 
             return null;
         }
@@ -345,9 +349,9 @@ public class ShowTools {
         /**
          * Uploads all local shows to Hexagon.
          */
-        public static boolean toHexagon(SgApp app) {
+        public static boolean toHexagon(Context context, HexagonTools hexagonTools) {
             Timber.d("toHexagon: uploading all shows");
-            List<Show> shows = buildShowList(app);
+            List<Show> shows = buildShowList(context);
             if (shows == null) {
                 Timber.e("toHexagon: show query was null");
                 return false;
@@ -357,7 +361,7 @@ public class ShowTools {
                 // nothing to upload
                 return true;
             }
-            return toHexagon(app, shows);
+            return toHexagon(context, hexagonTools, shows);
         }
 
         /**
@@ -365,20 +369,21 @@ public class ShowTools {
          *
          * @return One of {@link com.battlelancer.seriesguide.enums.Result}.
          */
-        public static boolean toHexagon(SgApp app, List<Show> shows) {
+        public static boolean toHexagon(Context context, HexagonTools hexagonTools,
+                List<Show> shows) {
             // wrap into helper object
             ShowList showList = new ShowList();
             showList.setShows(shows);
 
             // upload shows
             try {
-                Shows showsService = app.getHexagonTools().getShowsService();
+                Shows showsService = hexagonTools.getShowsService();
                 if (showsService == null) {
                     return false;
                 }
                 showsService.save(showList).execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(app, "save shows", e);
+                HexagonTools.trackFailedRequest(context, "save shows", e);
                 return false;
             }
 
@@ -424,13 +429,14 @@ public class ShowTools {
          * to the given map.
          */
         @SuppressLint("ApplySharedPref")
-        public static boolean fromHexagon(SgApp app, HashSet<Integer> existingShows,
-                HashMap<Integer, SearchResult> newShows, boolean hasMergedShows) {
+        public static boolean fromHexagon(Context context, HexagonTools hexagonTools,
+                HashSet<Integer> existingShows, HashMap<Integer, SearchResult> newShows,
+                boolean hasMergedShows) {
             List<Show> shows;
             boolean hasMoreShows = true;
             String cursor = null;
             long currentTime = System.currentTimeMillis();
-            DateTime lastSyncTime = new DateTime(HexagonSettings.getLastShowsSyncTime(app));
+            DateTime lastSyncTime = new DateTime(HexagonSettings.getLastShowsSyncTime(context));
 
             if (hasMergedShows) {
                 Timber.d("fromHexagon: downloading changed shows since %s", lastSyncTime);
@@ -440,13 +446,13 @@ public class ShowTools {
 
             while (hasMoreShows) {
                 // abort if connection is lost
-                if (!AndroidUtils.isNetworkConnected(app)) {
+                if (!AndroidUtils.isNetworkConnected(context)) {
                     Timber.e("fromHexagon: no network connection");
                     return false;
                 }
 
                 try {
-                    Shows showsService = app.getHexagonTools().getShowsService();
+                    Shows showsService = hexagonTools.getShowsService();
                     if (showsService == null) {
                         return false;
                     }
@@ -476,7 +482,7 @@ public class ShowTools {
                         hasMoreShows = false;
                     }
                 } catch (IOException e) {
-                    HexagonTools.trackFailedRequest(app, "get shows", e);
+                    HexagonTools.trackFailedRequest(context, "get shows", e);
                     return false;
                 }
 
@@ -490,7 +496,7 @@ public class ShowTools {
                         newShows, !hasMergedShows);
 
                 try {
-                    DBUtils.applyInSmallBatches(app, batch);
+                    DBUtils.applyInSmallBatches(context, batch);
                 } catch (OperationApplicationException e) {
                     Timber.e(e, "fromHexagon: applying show updates failed");
                     return false;
@@ -499,7 +505,7 @@ public class ShowTools {
 
             if (hasMergedShows) {
                 // set new last sync time
-                PreferenceManager.getDefaultSharedPreferences(app)
+                PreferenceManager.getDefaultSharedPreferences(context)
                         .edit()
                         .putLong(HexagonSettings.KEY_LAST_SYNC_SHOWS, currentTime)
                         .commit();

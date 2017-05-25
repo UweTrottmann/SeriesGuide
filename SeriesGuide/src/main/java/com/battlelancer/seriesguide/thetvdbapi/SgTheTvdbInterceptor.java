@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.thetvdbapi;
 
+import android.app.Application;
 import com.battlelancer.seriesguide.SgApp;
 import com.uwetrottmann.thetvdb.TheTvdb;
 import com.uwetrottmann.thetvdb.TheTvdbInterceptor;
@@ -17,8 +18,8 @@ public class SgTheTvdbInterceptor implements Interceptor {
 
     @Inject Lazy<TheTvdb> theTvdb;
 
-    public SgTheTvdbInterceptor(SgApp app) {
-        app.getServicesComponent().inject(this);
+    public SgTheTvdbInterceptor(Application application) {
+        SgApp.getServicesComponent(application).inject(this);
     }
 
     @Override

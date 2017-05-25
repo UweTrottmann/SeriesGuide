@@ -20,7 +20,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.ThemeUtils;
-import com.battlelancer.seriesguide.util.TraktTools;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.jakewharton.picasso.OkHttp3Downloader;
@@ -73,11 +72,10 @@ public class SgApp extends Application {
      */
     public static final String CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider";
 
-    private ServicesComponent servicesComponent;
+    private static ServicesComponent servicesComponent;
     private HexagonTools hexagonTools;
     private MovieTools movieTools;
     private ShowTools showTools;
-    private TraktTools traktTools;
 
     @Override
     public void onCreate() {
@@ -96,15 +94,6 @@ public class SgApp extends Application {
 
         // Load the current theme into a global variable
         ThemeUtils.updateTheme(DisplaySettings.getThemeIndex(this));
-
-        // dagger
-        servicesComponent = DaggerServicesComponent.builder()
-                .appModule(new AppModule(this))
-                .httpClientModule(new HttpClientModule())
-                .tmdbModule(new TmdbModule())
-                .traktModule(new TraktModule())
-                .tvdbModule(new TvdbModule())
-                .build();
     }
 
     private void initializeLogging() {
@@ -155,7 +144,21 @@ public class SgApp extends Application {
         return (SgApp) activity.getApplication();
     }
 
+    @Deprecated
     public ServicesComponent getServicesComponent() {
+        return getServicesComponent(this);
+    }
+
+    public static synchronized ServicesComponent getServicesComponent(Application app) {
+        if (servicesComponent == null) {
+            servicesComponent = DaggerServicesComponent.builder()
+                    .appModule(new AppModule(app))
+                    .httpClientModule(new HttpClientModule())
+                    .tmdbModule(new TmdbModule())
+                    .traktModule(new TraktModule())
+                    .tvdbModule(new TvdbModule())
+                    .build();
+        }
         return servicesComponent;
     }
 
@@ -178,13 +181,6 @@ public class SgApp extends Application {
             showTools = new ShowTools(this);
         }
         return showTools;
-    }
-
-    public synchronized TraktTools getTraktTools() {
-        if (traktTools == null) {
-            traktTools = new TraktTools(this);
-        }
-        return traktTools;
     }
 
     /**

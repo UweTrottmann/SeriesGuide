@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.util;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
@@ -64,9 +65,10 @@ public class TraktTools {
     private final Context context;
     @Inject Lazy<Sync> traktSync;
 
-    public TraktTools(SgApp app) {
+    @Inject
+    public TraktTools(Application app) {
         context = app.getApplicationContext();
-        app.getServicesComponent().inject(this);
+        SgApp.getServicesComponent(app).inject(this);
     }
 
     public enum Flag {

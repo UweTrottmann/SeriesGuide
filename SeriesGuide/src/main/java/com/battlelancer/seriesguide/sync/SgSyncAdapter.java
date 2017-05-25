@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.sync;
 
 import android.accounts.Account;
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
@@ -238,18 +239,22 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         return isSyncActive;
     }
 
-    private final SgApp app;
+    private final Application app;
+    @Inject TvdbTools tvdbTools;
+    @Inject Lazy<HexagonTools> hexagonTools;
+    @Inject Lazy<TraktTools> traktTools;
+    @Inject Lazy<MovieTools> movieTools;
     @Inject Lazy<ConfigurationService> tmdbConfigService;
 
-    public SgSyncAdapter(SgApp app, boolean autoInitialize) {
+    public SgSyncAdapter(Application app, boolean autoInitialize) {
         this(app, autoInitialize, false);
     }
 
-    public SgSyncAdapter(SgApp app, boolean autoInitialize, boolean allowParallelSyncs) {
+    public SgSyncAdapter(Application app, boolean autoInitialize, boolean allowParallelSyncs) {
         super(app, autoInitialize, allowParallelSyncs);
-        this.app = app;
-        app.getServicesComponent().inject(this);
         Timber.d("Creating sync adapter");
+        this.app = app;
+        SgApp.getServicesComponent(app).inject(this);
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -307,7 +312,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             try {
-                TvdbTools.getInstance(app).updateShow(id);
+                tvdbTools.updateShow(id);
 
                 // make sure other loaders (activity, overview, details) are notified
                 resolver.notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);
@@ -339,7 +344,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 if (HexagonSettings.isEnabled(getContext())) {
                     // sync with hexagon...
                     Timber.d("Syncing...Hexagon");
-                    boolean success = HexagonTools.syncWithHexagon(app, showsExisting, showsNew);
+                    boolean success = hexagonTools.get().syncWithHexagon(showsExisting, showsNew);
                     // don't overwrite failure
                     if (resultCode == UpdateResult.SUCCESS) {
                         resultCode = success ? UpdateResult.SUCCESS : UpdateResult.INCOMPLETE;
@@ -475,8 +480,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             return UpdateResult.INCOMPLETE;
         }
 
+        TraktTools traktTools = this.traktTools.get();
+
         // get last activity timestamps
-        TraktTools traktTools = app.getTraktTools();
         LastActivities lastActivity = traktTools.getLastActivity();
         if (lastActivity == null) {
             // trakt is likely offline or busy, try later
@@ -523,7 +529,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // sync watchlist and collection with trakt
-        if (app.getMovieTools().syncMovieListsWithTrakt(lastActivity.movies)
+        if (movieTools.get().syncMovieListsWithTrakt(lastActivity.movies)
                 != UpdateResult.SUCCESS) {
             return UpdateResult.INCOMPLETE;
         }
@@ -563,8 +569,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         // download watched and collected flags
         // if initial sync, upload any flags missing on trakt
         // otherwise clear all local flags not on trakt
-        int resultCode = app.getTraktTools().syncEpisodeFlags(localShows, lastActivity,
-                isInitialSync);
+        int resultCode = traktTools.get().syncEpisodeFlags(localShows, lastActivity, isInitialSync);
 
         if (resultCode < 0) {
             return UpdateResult.INCOMPLETE;

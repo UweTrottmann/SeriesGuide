@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.util;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
@@ -96,9 +97,10 @@ public class MovieTools {
     @Inject Lazy<Search> traktSearch;
     @Inject Lazy<Sync> traktSync;
 
-    public MovieTools(SgApp app) {
+    @Inject
+    public MovieTools(Application app) {
         context = app.getApplicationContext();
-        app.getServicesComponent().inject(this);
+        SgApp.getServicesComponent(app).inject(this);
     }
 
     /**
@@ -456,15 +458,15 @@ public class MovieTools {
          * <p> Adds movie tmdb ids to the respective collection or watchlist set.
          */
         @SuppressLint("ApplySharedPref")
-        public static boolean fromHexagon(SgApp app,
+        public static boolean fromHexagon(Context context, HexagonTools hexagonTools,
                 @NonNull Set<Integer> newCollectionMovies, @NonNull Set<Integer> newWatchlistMovies,
                 boolean hasMergedMovies) {
             List<com.uwetrottmann.seriesguide.backend.movies.model.Movie> movies;
             boolean hasMoreMovies = true;
             String cursor = null;
             long currentTime = System.currentTimeMillis();
-            DateTime lastSyncTime = new DateTime(HexagonSettings.getLastMoviesSyncTime(app));
-            HashSet<Integer> localMovies = getMovieTmdbIdsAsSet(app);
+            DateTime lastSyncTime = new DateTime(HexagonSettings.getLastMoviesSyncTime(context));
+            HashSet<Integer> localMovies = getMovieTmdbIdsAsSet(context);
             if (localMovies == null) {
                 Timber.e("fromHexagon: querying for local movies failed.");
                 return false;
@@ -478,14 +480,14 @@ public class MovieTools {
 
             while (hasMoreMovies) {
                 // abort if connection is lost
-                if (!AndroidUtils.isNetworkConnected(app)) {
+                if (!AndroidUtils.isNetworkConnected(context)) {
                     Timber.e("fromHexagon: no network connection");
                     return false;
                 }
 
                 try {
                     com.uwetrottmann.seriesguide.backend.movies.Movies moviesService
-                            = app.getHexagonTools().getMoviesService();
+                            = hexagonTools.getMoviesService();
                     if (moviesService == null) {
                         return false;
                     }
@@ -514,7 +516,7 @@ public class MovieTools {
                         hasMoreMovies = false;
                     }
                 } catch (IOException e) {
-                    HexagonTools.trackFailedRequest(app, "get movies", e);
+                    HexagonTools.trackFailedRequest(context, "get movies", e);
                     return false;
                 }
 
@@ -560,7 +562,7 @@ public class MovieTools {
                 }
 
                 try {
-                    DBUtils.applyInSmallBatches(app, batch);
+                    DBUtils.applyInSmallBatches(context, batch);
                 } catch (OperationApplicationException e) {
                     Timber.e(e, "fromHexagon: applying movie updates failed");
                     return false;
@@ -569,7 +571,7 @@ public class MovieTools {
 
             // set new last sync time
             if (hasMergedMovies) {
-                PreferenceManager.getDefaultSharedPreferences(app)
+                PreferenceManager.getDefaultSharedPreferences(context)
                         .edit()
                         .putLong(HexagonSettings.KEY_LAST_SYNC_MOVIES, currentTime)
                         .commit();
@@ -913,11 +915,11 @@ public class MovieTools {
         /**
          * Uploads all local movies to Hexagon.
          */
-        public static boolean toHexagon(SgApp app) {
+        public static boolean toHexagon(Context context, HexagonTools hexagonTools) {
             Timber.d("toHexagon: uploading all movies");
 
             List<com.uwetrottmann.seriesguide.backend.movies.model.Movie> movies = buildMovieList(
-                    app);
+                    context);
             if (movies == null) {
                 Timber.e("toHexagon: movie query was null");
                 return false;
@@ -933,13 +935,13 @@ public class MovieTools {
 
             try {
                 com.uwetrottmann.seriesguide.backend.movies.Movies moviesService
-                        = app.getHexagonTools().getMoviesService();
+                        = hexagonTools.getMoviesService();
                 if (moviesService == null) {
                     return false;
                 }
                 moviesService.save(movieList).execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(app, "save movies", e);
+                HexagonTools.trackFailedRequest(context, "save movies", e);
                 return false;
             }
 

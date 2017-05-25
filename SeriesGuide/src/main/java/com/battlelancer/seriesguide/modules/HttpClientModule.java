@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.modules;
 import android.app.Application;
 import android.os.Build;
 import android.os.StatFs;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdbInterceptor;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdbInterceptor;
 import com.battlelancer.seriesguide.traktapi.SgTraktInterceptor;
@@ -32,14 +31,14 @@ public class HttpClientModule {
      */
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(SgApp app, Cache cache) {
+    OkHttpClient provideOkHttpClient(Application application, Cache cache) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
         builder.readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
         builder.addInterceptor(new SgTmdbInterceptor());
-        builder.addNetworkInterceptor(new SgTheTvdbInterceptor(app));
-        builder.addNetworkInterceptor(new SgTraktInterceptor(app));
-        builder.authenticator(new AllApisAuthenticator(app));
+        builder.addNetworkInterceptor(new SgTheTvdbInterceptor(application));
+        builder.addNetworkInterceptor(new SgTraktInterceptor(application));
+        builder.authenticator(new AllApisAuthenticator(application));
         builder.cache(cache);
         return builder.build();
     }

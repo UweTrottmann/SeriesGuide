@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.traktapi;
 
+import android.app.Application;
 import com.battlelancer.seriesguide.SgApp;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.TraktV2Interceptor;
@@ -17,8 +18,8 @@ public class SgTraktInterceptor implements Interceptor {
 
     @Inject Lazy<TraktV2> trakt;
 
-    public SgTraktInterceptor(SgApp app) {
-        app.getServicesComponent().inject(this);
+    public SgTraktInterceptor(Application application) {
+        SgApp.getServicesComponent(application).inject(this);
     }
 
     @Override

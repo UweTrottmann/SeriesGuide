@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.loaders;
 
+import android.app.Application;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -15,18 +16,18 @@ import retrofit2.Response;
 public class MovieCreditsLoader extends GenericSimpleLoader<Credits> {
 
     @Inject MoviesService moviesService;
-    private final int mTmdbId;
+    private final int tmdbId;
 
-    public MovieCreditsLoader(SgApp app, int tmdbId) {
+    public MovieCreditsLoader(Application app, int tmdbId) {
         super(app);
-        app.getServicesComponent().inject(this);
-        mTmdbId = tmdbId;
+        SgApp.getServicesComponent(app).inject(this);
+        this.tmdbId = tmdbId;
     }
 
     @Override
     public Credits loadInBackground() {
         try {
-            Response<Credits> response = moviesService.credits(mTmdbId).execute();
+            Response<Credits> response = moviesService.credits(tmdbId).execute();
             if (response.isSuccessful()) {
                 return response.body();
             } else {

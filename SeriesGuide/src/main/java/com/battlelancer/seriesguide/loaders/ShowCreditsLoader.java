@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.loaders;
 
+import android.app.Application;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -33,9 +34,9 @@ public class ShowCreditsLoader extends GenericSimpleLoader<Credits> {
      * @param findTmdbId If true, the loader assumes the passed id is from TVDb id and will try to
      * look up the associated TMDb id.
      */
-    public ShowCreditsLoader(SgApp app, int id, boolean findTmdbId) {
+    public ShowCreditsLoader(Application app, int id, boolean findTmdbId) {
         super(app);
-        app.getServicesComponent().inject(this);
+        SgApp.getServicesComponent(app).inject(this);
         showId = id;
         this.findTmdbId = findTmdbId;
     }

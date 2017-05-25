@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.backend;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -42,12 +43,14 @@ import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
+import dagger.Lazy;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import javax.inject.Inject;
 import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
 
@@ -65,7 +68,8 @@ public class HexagonTools {
 
     private static GoogleSignInOptions googleSignInOptions;
 
-    private final SgApp app;
+    private final Application app;
+    @Inject Lazy<MovieTools> movieTools;
     private GoogleApiClient googleApiClient;
     private GoogleAccountCredential credential;
     private long lastSignInCheck;
@@ -74,8 +78,10 @@ public class HexagonTools {
     private Movies moviesService;
     private Lists listsService;
 
-    public HexagonTools(SgApp app) {
+    @Inject
+    public HexagonTools(Application app) {
         this.app = app;
+        SgApp.getServicesComponent(app).inject(this);
     }
 
     /**
@@ -337,25 +343,25 @@ public class HexagonTools {
      * <p> Merges shows, episodes and movies after a sign-in. Consecutive syncs will only download
      * changes to shows, episodes and movies.
      */
-    public static boolean syncWithHexagon(SgApp app, HashSet<Integer> existingShows,
+    public boolean syncWithHexagon(HashSet<Integer> existingShows,
             HashMap<Integer, SearchResult> newShows) {
         Timber.d("syncWithHexagon: syncing...");
 
         //// EPISODES
-        boolean syncEpisodesSuccessful = syncEpisodes(app);
+        boolean syncEpisodesSuccessful = syncEpisodes();
         Timber.d("syncWithHexagon: episode sync %s",
                 syncEpisodesSuccessful ? "SUCCESSFUL" : "FAILED");
 
         //// SHOWS
-        boolean syncShowsSuccessful = syncShows(app, existingShows, newShows);
+        boolean syncShowsSuccessful = syncShows(existingShows, newShows);
         Timber.d("syncWithHexagon: show sync %s", syncShowsSuccessful ? "SUCCESSFUL" : "FAILED");
 
         //// MOVIES
-        boolean syncMoviesSuccessful = syncMovies(app);
+        boolean syncMoviesSuccessful = syncMovies();
         Timber.d("syncWithHexagon: movie sync %s", syncMoviesSuccessful ? "SUCCESSFUL" : "FAILED");
 
         //// LISTS
-        boolean syncListsSuccessful = syncLists(app);
+        boolean syncListsSuccessful = syncLists();
         Timber.d("syncWithHexagon: lists sync %s", syncListsSuccessful ? "SUCCESSFUL" : "FAILED");
 
         Timber.d("syncWithHexagon: syncing...DONE");
@@ -365,7 +371,7 @@ public class HexagonTools {
                 && syncListsSuccessful;
     }
 
-    private static boolean syncEpisodes(SgApp app) {
+    private boolean syncEpisodes() {
         // get shows that need episode merging
         Cursor query = app.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
                 new String[] { SeriesGuideContract.Shows._ID },
@@ -385,14 +391,14 @@ public class HexagonTools {
 
             int showTvdbId = query.getInt(0);
 
-            boolean success = EpisodeTools.Download.flagsFromHexagon(app, showTvdbId);
+            boolean success = EpisodeTools.Download.flagsFromHexagon(app, this, showTvdbId);
             if (!success) {
                 // try again next time
                 mergeSuccessful = false;
                 continue;
             }
 
-            success = EpisodeTools.Upload.flagsToHexagon(app, showTvdbId);
+            success = EpisodeTools.Upload.flagsToHexagon(app, this, showTvdbId);
             if (success) {
                 // set merge as completed
                 ContentValues values = new ContentValues();
@@ -407,17 +413,17 @@ public class HexagonTools {
         query.close();
 
         // download changed episodes and update properties on existing episodes
-        boolean changedDownloadSuccessful = EpisodeTools.Download.flagsFromHexagon(app);
+        boolean changedDownloadSuccessful = EpisodeTools.Download.flagsFromHexagon(app, this);
 
         return mergeSuccessful && changedDownloadSuccessful;
     }
 
-    private static boolean syncShows(SgApp app, HashSet<Integer> existingShows,
+    private boolean syncShows(HashSet<Integer> existingShows,
             HashMap<Integer, SearchResult> newShows) {
         boolean hasMergedShows = HexagonSettings.hasMergedShows(app);
 
         // download shows and apply property changes (if merging only overwrite some properties)
-        boolean downloadSuccessful = ShowTools.Download.fromHexagon(app, existingShows,
+        boolean downloadSuccessful = ShowTools.Download.fromHexagon(app, this, existingShows,
                 newShows, hasMergedShows);
         if (!downloadSuccessful) {
             return false;
@@ -425,7 +431,7 @@ public class HexagonTools {
 
         // if merge required, upload all shows to Hexagon
         if (!hasMergedShows) {
-            boolean uploadSuccessful = ShowTools.Upload.toHexagon(app);
+            boolean uploadSuccessful = ShowTools.Upload.toHexagon(app, this);
             if (!uploadSuccessful) {
                 return false;
             }
@@ -444,27 +450,27 @@ public class HexagonTools {
     }
 
     @SuppressLint("ApplySharedPref")
-    private static boolean syncMovies(SgApp app) {
+    private boolean syncMovies() {
         boolean hasMergedMovies = HexagonSettings.hasMergedMovies(app);
 
         // download movies and apply property changes, build list of new movies
         Set<Integer> newCollectionMovies = new HashSet<>();
         Set<Integer> newWatchlistMovies = new HashSet<>();
-        boolean downloadSuccessful = MovieTools.Download.fromHexagon(app, newCollectionMovies,
-                newWatchlistMovies, hasMergedMovies);
+        boolean downloadSuccessful = MovieTools.Download.fromHexagon(app, this,
+                newCollectionMovies, newWatchlistMovies, hasMergedMovies);
         if (!downloadSuccessful) {
             return false;
         }
 
         if (!hasMergedMovies) {
-            boolean uploadSuccessful = MovieTools.Upload.toHexagon(app);
+            boolean uploadSuccessful = MovieTools.Upload.toHexagon(app, this);
             if (!uploadSuccessful) {
                 return false;
             }
         }
 
         // add new movies with the just downloaded properties
-        SgSyncAdapter.UpdateResult result = app.getMovieTools()
+        SgSyncAdapter.UpdateResult result = movieTools.get()
                 .addMovies(newCollectionMovies, newWatchlistMovies);
         boolean addingSuccessful = result == SgSyncAdapter.UpdateResult.SUCCESS;
         if (!hasMergedMovies) {
@@ -483,21 +489,21 @@ public class HexagonTools {
     }
 
     @SuppressLint("ApplySharedPref")
-    private static boolean syncLists(SgApp app) {
+    private boolean syncLists() {
         boolean hasMergedLists = HexagonSettings.hasMergedLists(app);
 
-        if (!ListsTools.downloadFromHexagon(app, hasMergedLists)) {
+        if (!ListsTools.downloadFromHexagon(app, this, hasMergedLists)) {
             return false;
         }
 
         if (hasMergedLists) {
             // on regular syncs, remove lists gone from hexagon
-            if (!ListsTools.removeListsRemovedOnHexagon(app)) {
+            if (!ListsTools.removeListsRemovedOnHexagon(app, this)) {
                 return false;
             }
         } else {
             // upload all lists on initial data merge
-            if (!ListsTools.uploadAllToHexagon(app)) {
+            if (!ListsTools.uploadAllToHexagon(app, this)) {
                 return false;
             }
         }

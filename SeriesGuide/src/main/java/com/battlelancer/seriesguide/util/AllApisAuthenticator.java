@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.util;
 
+import android.app.Application;
 import android.content.Context;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -25,9 +26,9 @@ public class AllApisAuthenticator implements Authenticator {
     @Inject Lazy<TheTvdb> theTvdb;
     @Inject Lazy<TraktV2> trakt;
 
-    public AllApisAuthenticator(SgApp app) {
-        this.context = app.getApplicationContext();
-        app.getServicesComponent().inject(this);
+    public AllApisAuthenticator(Application application) {
+        this.context = application.getApplicationContext();
+        SgApp.getServicesComponent(application).inject(this);
     }
 
     @Override

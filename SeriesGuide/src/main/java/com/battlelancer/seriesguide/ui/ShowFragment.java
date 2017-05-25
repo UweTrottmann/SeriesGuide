@@ -525,8 +525,7 @@ public class ShowFragment extends Fragment {
     private LoaderCallbacks<Credits> mCreditsLoaderCallbacks = new LoaderCallbacks<Credits>() {
         @Override
         public Loader<Credits> onCreateLoader(int id, Bundle args) {
-            return new ShowCreditsLoader((SgApp) getActivity().getApplication(), getShowTvdbId(),
-                    true);
+            return new ShowCreditsLoader(getActivity().getApplication(), getShowTvdbId(), true);
         }
 
         @Override
