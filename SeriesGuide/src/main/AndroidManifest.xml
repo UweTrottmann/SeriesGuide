@@ -346,6 +346,15 @@
             </intent-filter>
         </service>
         <service
+            android:name="com.battlelancer.seriesguide.extensions.VodsterExtension"
+            android:description="@string/extension_vodster_description"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/extension_vodster">
+            <intent-filter>
+                <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
+            </intent-filter>
+        </service>
+        <service
             android:name="com.battlelancer.seriesguide.extensions.WebSearchExtension"
             android:description="@string/description_extension_web_search"
             android:icon="@drawable/ic_launcher"
