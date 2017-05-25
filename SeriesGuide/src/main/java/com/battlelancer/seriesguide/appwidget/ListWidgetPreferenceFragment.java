@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.StringRes;
@@ -103,21 +105,24 @@ public class ListWidgetPreferenceFragment extends PreferenceFragment {
 
         // create a widget specific settings screen
         preferenceScreen = getPreferenceManager().createPreferenceScreen(getActivity());
+
         preferenceScreen.addPreference(typePref);
         preferenceScreen.addPreference(showsSortPref);
         preferenceScreen.addPreference(onlyFavoritesPref);
         preferenceScreen.addPreference(onlyCollectedPref);
         preferenceScreen.addPreference(hideWatchedPreference);
         preferenceScreen.addPreference(isInfinitePref);
-        preferenceScreen.addPreference(themePref);
-        preferenceScreen.addPreference(backgroundPref);
+
+        PreferenceCategory appearanceCategory = new PreferenceCategory(getActivity());
+        appearanceCategory.setTitle(R.string.pref_appearance);
+        preferenceScreen.addPreference(appearanceCategory);
+        appearanceCategory.addPreference(themePref);
+        appearanceCategory.addPreference(backgroundPref);
+
         setPreferenceScreen(preferenceScreen);
 
         // after restoring any values prevent persisting changes (only save on user command)
-        int preferenceCount = preferenceScreen.getPreferenceCount();
-        for (int i = 0; i < preferenceCount; i++) {
-            preferenceScreen.getPreference(i).setPersistent(false);
-        }
+        disablePersistence(preferenceScreen);
 
         bindPreferenceSummaryToValue(typePref);
         bindPreferenceSummaryToValue(showsSortPref);
@@ -188,21 +193,37 @@ public class ListWidgetPreferenceFragment extends PreferenceFragment {
         return listPreference;
     }
 
+    private void disablePersistence(PreferenceGroup group) {
+        int count = group.getPreferenceCount();
+        for (int i = 0; i < count; i++) {
+            Preference pref = group.getPreference(i);
+            if (pref instanceof PreferenceGroup) {
+                disablePersistence((PreferenceGroup) pref);
+            } else {
+                pref.setPersistent(false);
+            }
+        }
+    }
+
     private void save() {
         SharedPreferences.Editor editor = getPreferenceManager().getSharedPreferences().edit();
+        savePreferences(preferenceScreen, editor);
+        editor.apply();
+    }
 
-        int count = preferenceScreen.getPreferenceCount();
+    private void savePreferences(PreferenceGroup group, SharedPreferences.Editor editor) {
+        int count = group.getPreferenceCount();
         for (int i = 0; i < count; i++) {
-            Preference pref = preferenceScreen.getPreference(i);
+            Preference pref = group.getPreference(i);
             String key = pref.getKey();
-            if (pref instanceof CheckBoxPreference) {
+            if (pref instanceof PreferenceGroup) {
+                savePreferences((PreferenceGroup) pref, editor);
+            } else if (pref instanceof CheckBoxPreference) {
                 editor.putBoolean(key, ((CheckBoxPreference) pref).isChecked());
             } else if (pref instanceof ListPreference) {
                 editor.putString(key, ((ListPreference) pref).getValue());
             }
         }
-
-        editor.apply();
     }
 
     /**
