@@ -9,6 +9,7 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.api.Action;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -152,9 +154,29 @@ public class ExtensionManager {
      */
     public void setDefaultEnabledExtensions() {
         List<ComponentName> defaultExtensions = new ArrayList<>();
+        if (hasGermanLocale()) {
+            // vodster.de is in German
+            defaultExtensions.add(new ComponentName(context, VodsterExtension.class));
+        }
         defaultExtensions.add(new ComponentName(context, WebSearchExtension.class));
         defaultExtensions.add(new ComponentName(context, YouTubeExtension.class));
         setEnabledExtensions(defaultExtensions);
+    }
+
+    private boolean hasGermanLocale() {
+        String german = Locale.GERMAN.getLanguage();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            LocaleList locales = context.getResources().getConfiguration().getLocales();
+            for (int i = 0; i < locales.size(); i++) {
+                if (german.equals(locales.get(i).getLanguage())) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            //noinspection deprecation
+            return german.equals(context.getResources().getConfiguration().locale.getLanguage());
+        }
     }
 
     /**
