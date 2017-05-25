@@ -420,11 +420,14 @@ public class CalendarFragment extends Fragment
     private LoaderManager.LoaderCallbacks<Cursor> calendarLoaderCallbacks
             = new LoaderManager.LoaderCallbacks<Cursor>() {
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            boolean isOnlyCollected = CalendarSettings.isOnlyCollected(getActivity());
+            boolean isOnlyFavorites = CalendarSettings.isOnlyFavorites(getActivity());
+            boolean isOnlyUnwatched = CalendarSettings.isHidingWatchedEpisodes(getActivity());
             boolean isInfiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
 
             // infinite or 30 days activity stream
-            String[][] queryArgs = DBUtils.buildActivityQuery(getActivity(), type,
-                    isInfiniteScrolling ? -1 : 30);
+            String[][] queryArgs = DBUtils.buildActivityQuery(getActivity(), type, isOnlyCollected,
+                    isOnlyFavorites, isOnlyUnwatched, isInfiniteScrolling);
 
             // prevent upcoming/recent episodes from becoming stale
             schedulePeriodicDataRefresh(true);

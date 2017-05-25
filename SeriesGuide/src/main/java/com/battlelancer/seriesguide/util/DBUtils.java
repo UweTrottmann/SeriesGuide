@@ -57,6 +57,7 @@ public class DBUtils {
     public static final int UNKNOWN_UNWATCHED_COUNT = -1;
     public static final int UNKNOWN_COLLECTED_COUNT = -1;
 
+    private static final int ACTIVITY_DAY_LIMIT = 30;
     private static final int SMALL_BATCH_SIZE = 50;
 
     private static final String[] PROJECTION_COUNT = new String[] {
@@ -244,33 +245,30 @@ public class DBUtils {
     }
 
     /**
-     * Returns all episodes that air today or later. Excludes shows that are hidden.
+     * Returns episodes that air today or within the next {@link #ACTIVITY_DAY_LIMIT} days. Excludes
+     * shows that are hidden.
      *
-     * <p> Filters by watched episodes or favorite shows if enabled.
+     * <p>Filters by watched episodes or favorite shows if enabled.
      *
      * @return Cursor using the projection of {@link CalendarAdapter.Query}.
      */
-    public static Cursor getUpcomingEpisodes(Context context, boolean isOnlyCollected,
-            boolean isOnlyFavorites, boolean isOnlyUnwatched) {
-        String[][] args = buildActivityQuery(context, CalendarType.UPCOMING, isOnlyCollected,
-                isOnlyFavorites, isOnlyUnwatched, -1);
-
-        return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                CalendarAdapter.Query.PROJECTION, args[0][0], args[1], args[2][0]);
+    @Nullable
+    public static Cursor upcomingEpisodesQuery(Context context, boolean isOnlyUnwatched) {
+        boolean isOnlyCollected = CalendarSettings.isOnlyCollected(context);
+        boolean isOnlyFavorites = CalendarSettings.isOnlyFavorites(context);
+        return activityQuery(context, CalendarType.UPCOMING, isOnlyCollected, isOnlyFavorites,
+                isOnlyUnwatched, false);
     }
 
     /**
-     * Return all episodes that aired the day before and earlier. Excludes shows that are hidden.
-     *
-     * <p> Filters by watched episodes or favorite shows if enabled.
-     *
-     * @return Cursor using the projection of {@link CalendarAdapter.Query}.
+     * @return Cursor with projection {@link CalendarAdapter.Query}.
+     * @see #buildActivityQuery(Context, String, boolean, boolean, boolean, boolean)
      */
-    public static Cursor getRecentEpisodes(Context context, boolean isOnlyCollected,
-            boolean isOnlyFavorites, boolean isOnlyUnwatched) {
-        String[][] args = buildActivityQuery(context, CalendarType.RECENT, isOnlyCollected,
-                isOnlyFavorites, isOnlyUnwatched, -1);
-
+    @Nullable
+    public static Cursor activityQuery(Context context, String type, boolean isOnlyCollected,
+            boolean isOnlyFavorites, boolean isOnlyUnwatched, boolean isInfinite) {
+        String[][] args = buildActivityQuery(context, type, isOnlyCollected, isOnlyFavorites,
+                isOnlyUnwatched, isInfinite);
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 CalendarAdapter.Query.PROJECTION, args[0][0], args[1], args[2][0]);
     }
@@ -280,22 +278,12 @@ public class DBUtils {
      * args in {@code [1]} and the sort order in {@code [2][0]}.
      *
      * @param type A {@link CalendarType}, defaults to UPCOMING.
-     * @param numberOfDaysToInclude Limits the time range of returned episodes to a number of days
-     * from today. If lower then 1 defaults to infinity.
+     * @param isInfinite If false, limits the release time range of returned episodes to {@link
+     * #ACTIVITY_DAY_LIMIT} days from today.
      */
     public static String[][] buildActivityQuery(Context context, String type,
-            int numberOfDaysToInclude) {
-        boolean isOnlyCollected = CalendarSettings.isOnlyCollected(context);
-        boolean isOnlyFavorites = CalendarSettings.isOnlyFavorites(context);
-        boolean isOnlyUnwatched = CalendarSettings.isHidingWatchedEpisodes(context);
-
-        return buildActivityQuery(context, type, isOnlyCollected, isOnlyFavorites, isOnlyUnwatched,
-                numberOfDaysToInclude);
-    }
-
-    private static String[][] buildActivityQuery(Context context, String type,
             boolean isOnlyCollected, boolean isOnlyFavorites, boolean isOnlyUnwatched,
-            int numberOfDaysToInclude) {
+            boolean isInfinite) {
         // go an hour back in time, so episodes move to recent one hour late
         long recentThreshold = TimeTools.getCurrentTime(context) - DateUtils.HOUR_IN_MILLIS;
 
@@ -307,23 +295,24 @@ public class DBUtils {
         if (CalendarType.RECENT.equals(type)) {
             query = new StringBuilder(CalendarAdapter.Query.QUERY_RECENT);
             sortOrder = CalendarAdapter.Query.SORTING_RECENT;
-            if (numberOfDaysToInclude < 1) {
+            if (isInfinite) {
                 // to the past!
                 timeThreshold = Long.MIN_VALUE;
             } else {
                 // last x days
                 timeThreshold = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS
-                        * numberOfDaysToInclude;
+                        * ACTIVITY_DAY_LIMIT;
             }
         } else {
             query = new StringBuilder(CalendarAdapter.Query.QUERY_UPCOMING);
             sortOrder = CalendarAdapter.Query.SORTING_UPCOMING;
-            if (numberOfDaysToInclude < 1) {
+            if (isInfinite) {
                 // to the future!
                 timeThreshold = Long.MAX_VALUE;
             } else {
+                // coming x days
                 timeThreshold = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS
-                        * numberOfDaysToInclude;
+                        * ACTIVITY_DAY_LIMIT;
             }
         }
 

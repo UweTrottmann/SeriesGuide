@@ -89,9 +89,7 @@ public class AppWidget extends AppWidgetProvider {
             views.removeAllViews(R.id.LinearLayoutWidget);
 
             // get upcoming shows (name and next episode text)
-            final Cursor upcomingEpisodes = DBUtils.getUpcomingEpisodes(context,
-                    CalendarSettings.isOnlyCollected(context),
-                    CalendarSettings.isOnlyFavorites(context),
+            final Cursor upcomingEpisodes = DBUtils.upcomingEpisodesQuery(context,
                     CalendarSettings.isHidingWatchedEpisodes(context));
 
             if (upcomingEpisodes == null || upcomingEpisodes.getCount() == 0) {
