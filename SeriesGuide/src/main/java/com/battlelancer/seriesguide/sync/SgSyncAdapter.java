@@ -237,7 +237,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         return isSyncActive;
     }
 
-    @Inject TvdbTools tvdbTools;
+    @Inject Lazy<TvdbTools> tvdbTools;
     @Inject Lazy<HexagonTools> hexagonTools;
     @Inject Lazy<TraktTools> traktTools;
     @Inject Lazy<MovieTools> movieTools;
@@ -307,7 +307,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             try {
-                tvdbTools.updateShow(id);
+                tvdbTools.get().updateShow(id);
 
                 // make sure other loaders (activity, overview, details) are notified
                 resolver.notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);
