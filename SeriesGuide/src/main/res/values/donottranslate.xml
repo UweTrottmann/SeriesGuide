@@ -53,7 +53,7 @@
 
     <!-- German only extension -->
     <string name="extension_vodster">vodster.de Suche</string>
-    <string name="extension_vodster_description">Video-on-Demand und Streaming Suche für Deutschland</string>
+    <string name="extension_vodster_description">Deutsche Video-on-Demand und Streaming Suche</string>
 
     <!-- Internal -->
     <string name="menu_action_extensions_enable_debug">[Debug] Enable extensions</string>
