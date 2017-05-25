@@ -109,7 +109,7 @@ public class ExtensionsConfigurationFragment extends Fragment
 
         EventBus.getDefault().unregister(this);
         if (enabledExtensions != null) { // might not have finished loading, yet
-            ExtensionManager.getInstance(getActivity())
+            ExtensionManager.get()
                     .setEnabledExtensions(getContext(), enabledExtensions);
         }
     }
@@ -127,20 +127,20 @@ public class ExtensionsConfigurationFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_extensions_enable) {
-            List<ExtensionManager.Extension> extensions = ExtensionManager.getInstance(getContext())
+            List<ExtensionManager.Extension> extensions = ExtensionManager.get()
                     .queryAllAvailableExtensions(getContext());
             List<ComponentName> enabledExtensions = new ArrayList<>();
             for (ExtensionManager.Extension extension : extensions) {
                 enabledExtensions.add(extension.componentName);
             }
-            ExtensionManager.getInstance(getContext())
+            ExtensionManager.get()
                     .setEnabledExtensions(getContext(), enabledExtensions);
             Toast.makeText(getActivity(), "Enabled all available extensions", Toast.LENGTH_LONG)
                     .show();
             return true;
         }
         if (itemId == R.id.menu_action_extensions_disable) {
-            ExtensionManager.getInstance(getActivity())
+            ExtensionManager.get()
                     .setEnabledExtensions(getContext(), new ArrayList<ComponentName>());
             Toast.makeText(getActivity(), "Disabled all available extensions", Toast.LENGTH_LONG)
                     .show();
@@ -175,8 +175,7 @@ public class ExtensionsConfigurationFragment extends Fragment
             }
 
             if (enabledExtensions == null) {
-                enabledExtensions = ExtensionManager.getInstance(getActivity())
-                        .getEnabledExtensions();
+                enabledExtensions = ExtensionManager.get().getEnabledExtensions(getContext());
             }
             Set<ComponentName> enabledExtensions = new HashSet<>(
                     ExtensionsConfigurationFragment.this.enabledExtensions);

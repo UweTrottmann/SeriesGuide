@@ -32,8 +32,8 @@ public class ExtensionPackageChangeReceiver extends WakefulBroadcastReceiver {
         }
 
         String changedPackage = intent.getData().getSchemeSpecificPart();
-        ExtensionManager extensionManager = ExtensionManager.getInstance(context);
-        List<ComponentName> enabledExtensions = extensionManager.getEnabledExtensions();
+        ExtensionManager extensionManager = ExtensionManager.get();
+        List<ComponentName> enabledExtensions = extensionManager.getEnabledExtensions(context);
         int affectedExtensionIndex = -1;
         for (int i = 0; i < enabledExtensions.size(); i++) {
             ComponentName componentName = enabledExtensions.get(i);

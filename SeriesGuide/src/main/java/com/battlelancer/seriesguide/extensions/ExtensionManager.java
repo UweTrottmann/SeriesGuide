@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.LocaleList;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.api.Episode;
@@ -48,15 +49,6 @@ public class ExtensionManager {
     private final static android.support.v4.util.LruCache<Integer, Map<ComponentName, Action>>
             sMovieActionsCache = new android.support.v4.util.LruCache<>(HARD_CACHE_CAPACITY);
 
-    private static ExtensionManager _instance;
-
-    public static synchronized ExtensionManager getInstance(Context context) {
-        if (_instance == null) {
-            _instance = new ExtensionManager(context.getApplicationContext());
-        }
-        return _instance;
-    }
-
     /**
      * {@link com.battlelancer.seriesguide.extensions.ExtensionManager} has received new {@link
      * com.battlelancer.seriesguide.api.Action} objects from enabled extensions. Receivers might
@@ -83,15 +75,24 @@ public class ExtensionManager {
         }
     }
 
-    private ComponentName subscriberComponentName;
-    private Map<ComponentName, String> subscriptions; // extension + token = sub
-    private Map<String, ComponentName> tokens; // mirrored map for faster token searching
-    private List<ComponentName> enabledExtensions; // order-preserving list of enabled extensions
+    @Nullable private Map<ComponentName, String> subscriptions; // extension + token = sub
+    @Nullable private Map<String, ComponentName> tokens; // mirrored map for faster token searching
+    @Nullable private List<ComponentName> enabledExtensions;
+            // order-preserving list of enabled extensions
 
-    private ExtensionManager(Context context) {
-        Timber.d("Initializing extension manager");
-        subscriberComponentName = new ComponentName(context, ExtensionSubscriberService.class);
-        loadSubscriptions(context);
+    private static ExtensionManager _instance;
+
+    /**
+     * Ensure that {@link #loadSubscriptions(Context)} was called to set up the manager.
+     */
+    public static synchronized ExtensionManager get() {
+        if (_instance == null) {
+            _instance = new ExtensionManager();
+        }
+        return _instance;
+    }
+
+    private ExtensionManager() {
     }
 
     /**
@@ -182,7 +183,7 @@ public class ExtensionManager {
         boolean isChanged = false;
 
         // disable removed extensions
-        for (ComponentName extension : enabledExtensions) {
+        for (ComponentName extension : enabledExtensions(context)) {
             if (!extensionsToEnable.contains(extension)) {
                 // disable extension
                 disableExtension(context, extension);
@@ -213,8 +214,8 @@ public class ExtensionManager {
      * Returns a copy of the list of currently enabled extensions in the order the user previously
      * determined.
      */
-    public synchronized List<ComponentName> getEnabledExtensions() {
-        return new ArrayList<>(enabledExtensions);
+    public synchronized List<ComponentName> getEnabledExtensions(Context context) {
+        return new ArrayList<>(enabledExtensions(context));
     }
 
     private void enableExtension(Context context, ComponentName extension) {
@@ -222,6 +223,7 @@ public class ExtensionManager {
             Timber.e("enableExtension: empty extension");
         }
 
+        Map<ComponentName, String> subscriptions = subscriptions(context);
         if (subscriptions.containsKey(extension)) {
             // already subscribed
             Timber.d("enableExtension: already subscribed to %s", extension);
@@ -230,6 +232,7 @@ public class ExtensionManager {
 
         // subscribe
         String token = UUID.randomUUID().toString();
+        Map<String, ComponentName> tokens = tokens(context);
         while (tokens.containsKey(token)) {
             // create another UUID on collision
             /*
@@ -244,7 +247,7 @@ public class ExtensionManager {
         context.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
                 .setComponent(extension)
                 .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
-                        subscriberComponentName)
+                        subscriberComponentName(context))
                 .putExtra(IncomingConstants.EXTRA_TOKEN, token));
     }
 
@@ -253,6 +256,7 @@ public class ExtensionManager {
             Timber.e("disableExtension: extension empty");
         }
 
+        Map<ComponentName, String> subscriptions = subscriptions(context);
         if (!subscriptions.containsKey(extension)) {
             Timber.d("disableExtension: extension not enabled %s", extension);
             return;
@@ -263,35 +267,35 @@ public class ExtensionManager {
         context.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
                 .setComponent(extension)
                 .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
-                        subscriberComponentName)
+                        subscriberComponentName(context))
                 .putExtra(IncomingConstants.EXTRA_TOKEN, (String) null));
-        tokens.remove(subscriptions.remove(extension));
+        tokens(context).remove(subscriptions.remove(extension));
     }
 
     /**
      * Returns the currently available {@link com.battlelancer.seriesguide.api.Action} list for the
      * given episode, identified through its TVDb id. Sorted in the order determined by the user.
      */
-    public synchronized List<Action> getLatestEpisodeActions(int episodeTvdbId) {
+    public synchronized List<Action> getLatestEpisodeActions(Context context, int episodeTvdbId) {
         Map<ComponentName, Action> actionMap = sEpisodeActionsCache.get(episodeTvdbId);
-        return actionListFrom(actionMap);
+        return actionListFrom(context, actionMap);
     }
 
     /**
      * Returns the currently available {@link com.battlelancer.seriesguide.api.Action} list for the
      * given movie, identified through its TMDB id. Sorted in the order determined by the user.
      */
-    public synchronized List<Action> getLatestMovieActions(int movieTmdbId) {
+    public synchronized List<Action> getLatestMovieActions(Context context, int movieTmdbId) {
         Map<ComponentName, Action> actionMap = sMovieActionsCache.get(movieTmdbId);
-        return actionListFrom(actionMap);
+        return actionListFrom(context, actionMap);
     }
 
-    private List<Action> actionListFrom(Map<ComponentName, Action> actionMap) {
+    private List<Action> actionListFrom(Context context, Map<ComponentName, Action> actionMap) {
         if (actionMap == null) {
             return null;
         }
         List<Action> sortedActions = new ArrayList<>();
-        for (ComponentName extension : enabledExtensions) {
+        for (ComponentName extension : enabledExtensions(context)) {
             Action action = actionMap.get(extension);
             if (action != null) {
                 sortedActions.add(action);
@@ -304,7 +308,7 @@ public class ExtensionManager {
      * Asks all enabled extensions to publish an action for the given episode.
      */
     public synchronized void requestEpisodeActions(Context context, Episode episode) {
-        for (ComponentName extension : subscriptions.keySet()) {
+        for (ComponentName extension : subscriptions(context).keySet()) {
             requestEpisodeAction(context, extension, episode);
         }
     }
@@ -330,7 +334,7 @@ public class ExtensionManager {
      * Asks all enabled extensions to publish an action for the given movie.
      */
     public synchronized void requestMovieActions(Context context, Movie movie) {
-        for (ComponentName extension : subscriptions.keySet()) {
+        for (ComponentName extension : subscriptions(context).keySet()) {
             requestMovieAction(context, extension, movie);
         }
     }
@@ -352,7 +356,7 @@ public class ExtensionManager {
                 .putExtra(IncomingConstants.EXTRA_MOVIE, movie.toBundle()));
     }
 
-    public void handlePublishedAction(String token, Action action, int type) {
+    public void handlePublishedAction(Context context, String token, Action action, int type) {
         if (TextUtils.isEmpty(token) || action == null) {
             // whoops, no token or action received
             Timber.d("handlePublishedAction: token or action empty");
@@ -364,6 +368,7 @@ public class ExtensionManager {
         }
 
         synchronized (this) {
+            Map<String, ComponentName> tokens = tokens(context);
             if (!tokens.containsKey(token)) {
                 // we are not subscribed, ignore
                 Timber.d("handlePublishedAction: token invalid, ignoring incoming action");
@@ -401,12 +406,15 @@ public class ExtensionManager {
     }
 
     private synchronized void loadSubscriptions(Context context) {
+        if (enabledExtensions != null && subscriptions != null && tokens != null) {
+            return; // already loaded subscriptions
+        }
+        Timber.i("Loading extension subscriptions");
         enabledExtensions = new ArrayList<>();
         subscriptions = new HashMap<>();
         tokens = new HashMap<>();
 
-        String serializedSubscriptions = getPreferences(context).getString(PREF_SUBSCRIPTIONS,
-                null);
+        String serializedSubscriptions = preferences(context).getString(PREF_SUBSCRIPTIONS, null);
         if (serializedSubscriptions == null) {
             setDefaultEnabledExtensions(context);
             return;
@@ -435,15 +443,40 @@ public class ExtensionManager {
         }
     }
 
-    private synchronized void saveSubscriptions(Context context) {
+    private void saveSubscriptions(Context context) {
         List<String> serializedSubscriptions = new ArrayList<>();
-        for (ComponentName extension : enabledExtensions) {
+        Map<ComponentName, String> subscriptions = subscriptions(context);
+        for (ComponentName extension : enabledExtensions(context)) {
             serializedSubscriptions.add(extension.flattenToShortString() + "|"
                     + subscriptions.get(extension));
         }
         Timber.d("Saving %s subscriptions", serializedSubscriptions.size());
         JSONArray json = new JSONArray(serializedSubscriptions);
-        getPreferences(context).edit().putString(PREF_SUBSCRIPTIONS, json.toString()).apply();
+        preferences(context).edit().putString(PREF_SUBSCRIPTIONS, json.toString()).apply();
+    }
+
+    private Map<ComponentName, String> subscriptions(Context context) {
+        loadSubscriptions(context);
+        return subscriptions;
+    }
+
+    private Map<String, ComponentName> tokens(Context context) {
+        loadSubscriptions(context);
+        return tokens;
+    }
+
+    private List<ComponentName> enabledExtensions(Context context) {
+        loadSubscriptions(context);
+        return enabledExtensions;
+    }
+
+    private SharedPreferences preferences(Context context) {
+        return context.getSharedPreferences(PREF_FILE_SUBSCRIPTIONS, 0);
+    }
+
+    @NonNull
+    private ComponentName subscriberComponentName(Context context) {
+        return new ComponentName(context, ExtensionSubscriberService.class);
     }
 
     /**
@@ -454,10 +487,6 @@ public class ExtensionManager {
     public synchronized void clearActionsCache() {
         sEpisodeActionsCache.evictAll();
         sMovieActionsCache.evictAll();
-    }
-
-    private SharedPreferences getPreferences(Context context) {
-        return context.getSharedPreferences(PREF_FILE_SUBSCRIPTIONS, 0);
     }
 
     public class Extension {
