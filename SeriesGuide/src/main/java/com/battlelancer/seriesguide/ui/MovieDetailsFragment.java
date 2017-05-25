@@ -669,7 +669,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                         .title(movieDetails.tmdbMovie().title)
                         .releaseDate(movieDetails.tmdbMovie().release_date)
                         .build();
-                ExtensionManager.getInstance(getContext()).requestMovieActions(movie);
+                ExtensionManager.getInstance(getContext()).requestMovieActions(getContext(), movie);
             }
         }
 

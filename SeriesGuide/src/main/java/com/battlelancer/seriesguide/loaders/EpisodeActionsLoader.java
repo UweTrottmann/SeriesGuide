@@ -65,7 +65,8 @@ public class EpisodeActionsLoader extends GenericSimpleLoader<List<Action>> {
             query = null;
 
             if (episode != null) {
-                ExtensionManager.getInstance(getContext()).requestEpisodeActions(episode);
+                ExtensionManager.getInstance(getContext())
+                        .requestEpisodeActions(getContext(), episode);
             }
         }
 

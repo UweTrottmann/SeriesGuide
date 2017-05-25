@@ -48,7 +48,7 @@ public class ExtensionPackageChangeReceiver extends WakefulBroadcastReceiver {
 
         // temporarily unsubscribe from extension
         ComponentName changedExtension = enabledExtensions.remove(affectedExtensionIndex);
-        extensionManager.setEnabledExtensions(enabledExtensions);
+        extensionManager.setEnabledExtensions(context, enabledExtensions);
 
         try {
             context.getPackageManager().getServiceInfo(changedExtension, 0);
@@ -60,6 +60,6 @@ public class ExtensionPackageChangeReceiver extends WakefulBroadcastReceiver {
         // changed or updated
         Timber.i("Extension package changed or replaced: re-subscribing");
         enabledExtensions.add(affectedExtensionIndex, changedExtension);
-        extensionManager.setEnabledExtensions(enabledExtensions);
+        extensionManager.setEnabledExtensions(context, enabledExtensions);
     }
 }
