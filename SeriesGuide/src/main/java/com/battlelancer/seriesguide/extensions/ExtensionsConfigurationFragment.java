@@ -47,7 +47,7 @@ import timber.log.Timber;
 public class ExtensionsConfigurationFragment extends Fragment
         implements AdapterView.OnItemClickListener {
 
-    public static final int EXTENSION_LIMIT_FREE = 2;
+    public static final int EXTENSION_LIMIT_FREE = 10;
 
     private static final String TAG = "Extension Configuration";
 
