@@ -12,7 +12,6 @@ import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -58,7 +57,7 @@ public class ListsActivity extends BaseTopActivity {
     private void setupViews(Bundle savedInstanceState) {
         ButterKnife.bind(this);
 
-        listsAdapter = new ListsPagerAdapter(SgApp.from(this), getSupportFragmentManager());
+        listsAdapter = new ListsPagerAdapter(this, getSupportFragmentManager());
 
         viewPager.setAdapter(listsAdapter);
 

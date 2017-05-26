@@ -13,16 +13,14 @@ import retrofit2.Call;
 
 public class AddMovieToWatchlistTask extends BaseMovieActionTask {
 
-    private final SgApp app;
-
-    public AddMovieToWatchlistTask(SgApp app, int movieTmdbId) {
-        super(app, movieTmdbId);
-        this.app = app;
+    public AddMovieToWatchlistTask(Context context, int movieTmdbId) {
+        super(context, movieTmdbId);
     }
 
     @Override
     protected boolean doDatabaseUpdate(Context context, int movieTmdbId) {
-        return app.getMovieTools().addToList(movieTmdbId, MovieTools.Lists.WATCHLIST);
+        MovieTools movieTools = SgApp.getServicesComponent(context).movieTools();
+        return movieTools.addToList(movieTmdbId, MovieTools.Lists.WATCHLIST);
     }
 
     @Override

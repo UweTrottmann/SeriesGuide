@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.os.AsyncTaskCompat;
 import android.text.TextUtils;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -62,33 +61,33 @@ public class ListsTools {
     private ListsTools() {
     }
 
-    public static void addList(@NonNull SgApp app, @NonNull String listName) {
-        AsyncTaskCompat.executeParallel(new AddListTask(app, listName));
+    public static void addList(@NonNull Context context, @NonNull String listName) {
+        AsyncTaskCompat.executeParallel(new AddListTask(context, listName));
     }
 
-    public static void renameList(@NonNull SgApp app, @NonNull String listId,
+    public static void renameList(@NonNull Context context, @NonNull String listId,
             @NonNull String listName) {
-        AsyncTaskCompat.executeParallel(new RenameListTask(app, listId, listName));
+        AsyncTaskCompat.executeParallel(new RenameListTask(context, listId, listName));
     }
 
-    public static void removeList(@NonNull SgApp app, @NonNull String listId) {
-        AsyncTaskCompat.executeParallel(new RemoveListTask(app, listId));
+    public static void removeList(@NonNull Context context, @NonNull String listId) {
+        AsyncTaskCompat.executeParallel(new RemoveListTask(context, listId));
     }
 
-    public static void reorderLists(@NonNull SgApp app,
+    public static void reorderLists(@NonNull Context context,
             @NonNull List<String> listIdsInOrder) {
-        AsyncTaskCompat.executeParallel(new ReorderListsTask(app, listIdsInOrder));
+        AsyncTaskCompat.executeParallel(new ReorderListsTask(context, listIdsInOrder));
     }
 
-    public static void changeListsOfItem(@NonNull SgApp app, int itemTvdbId, int itemType,
+    public static void changeListsOfItem(@NonNull Context context, int itemTvdbId, int itemType,
             @NonNull List<String> addToTheseLists, @NonNull List<String> removeFromTheseLists) {
         AsyncTaskCompat.executeParallel(
-                new ChangeListItemListsTask(app, itemTvdbId, itemType, addToTheseLists,
+                new ChangeListItemListsTask(context, itemTvdbId, itemType, addToTheseLists,
                         removeFromTheseLists));
     }
 
-    public static void removeListItem(@NonNull SgApp app, @NonNull String listItemId) {
-        AsyncTaskCompat.executeParallel(new RemoveListItemTask(app, listItemId));
+    public static void removeListItem(@NonNull Context context, @NonNull String listItemId) {
+        AsyncTaskCompat.executeParallel(new RemoveListItemTask(context, listItemId));
     }
 
     public static boolean removeListsRemovedOnHexagon(Context context, HexagonTools hexagonTools) {

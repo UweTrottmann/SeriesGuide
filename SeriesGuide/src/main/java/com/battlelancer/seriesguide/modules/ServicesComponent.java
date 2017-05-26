@@ -27,8 +27,6 @@ import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTools;
-import com.battlelancer.seriesguide.util.tasks.BaseRateItemTask;
-import com.battlelancer.seriesguide.util.tasks.BaseShowActionTask;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Component;
 import javax.inject.Singleton;
@@ -44,11 +42,10 @@ import javax.inject.Singleton;
 public interface ServicesComponent {
 
     HexagonTools hexagonTools();
+    MovieTools movieTools();
     Sync traktSync();
 
     void inject(AddShowTask addShowTask);
-    void inject(BaseRateItemTask baseRateItemTask);
-    void inject(BaseShowActionTask baseShowActionTask);
     void inject(CloudSetupFragment cloudSetupFragment);
     void inject(ConnectTraktTask connectTraktTask);
     void inject(EpisodeTools.EpisodeFlagTask episodeFlagTask);

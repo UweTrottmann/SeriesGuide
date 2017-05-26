@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
@@ -113,18 +114,18 @@ public class TraktAddFragment extends AddFragment {
             }
 
             popupMenu.setOnMenuItemClickListener(
-                    new AddItemMenuItemClickListener(SgApp.from(getActivity()), showTvdbId));
+                    new AddItemMenuItemClickListener(getContext(), showTvdbId));
             popupMenu.show();
         }
     };
 
     public static class AddItemMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
 
-        private final SgApp app;
+        private final Context context;
         private final int showTvdbId;
 
-        public AddItemMenuItemClickListener(SgApp app, int showTvdbId) {
-            this.app = app;
+        public AddItemMenuItemClickListener(Context context, int showTvdbId) {
+            this.context = context;
             this.showTvdbId = showTvdbId;
         }
 
@@ -132,11 +133,11 @@ public class TraktAddFragment extends AddFragment {
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.menu_action_show_watchlist_add) {
-                ShowTools.addToWatchlist(app, showTvdbId);
+                ShowTools.addToWatchlist(context, showTvdbId);
                 return true;
             }
             if (itemId == R.id.menu_action_show_watchlist_remove) {
-                ShowTools.removeFromWatchlist(app, showTvdbId);
+                ShowTools.removeFromWatchlist(context, showTvdbId);
                 return true;
             }
             return false;

@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -191,15 +192,15 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
 
     private static class PopupMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
 
-        private final SgApp app;
+        private final Context context;
         private final FragmentManager fragmentManager;
         private final String itemId;
         private final int itemTvdbId;
         private final int itemType;
 
-        public PopupMenuItemClickListener(SgApp app, FragmentManager fm, String itemId,
+        public PopupMenuItemClickListener(Context context, FragmentManager fm, String itemId,
                 int itemTvdbId, int itemType) {
-            this.app = app;
+            this.context = context;
             this.fragmentManager = fm;
             this.itemId = itemId;
             this.itemTvdbId = itemTvdbId;
@@ -212,12 +213,12 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
                 case R.id.menu_action_lists_manage: {
                     ManageListsDialogFragment.showListsDialog(itemTvdbId, itemType,
                             fragmentManager);
-                    Utils.trackContextMenu(app, TAG, "Manage lists");
+                    Utils.trackContextMenu(context, TAG, "Manage lists");
                     return true;
                 }
                 case R.id.menu_action_lists_remove: {
-                    ListsTools.removeListItem(app, itemId);
-                    Utils.trackContextMenu(app, TAG, "Remove from list");
+                    ListsTools.removeListItem(context, itemId);
+                    Utils.trackContextMenu(context, TAG, "Remove from list");
                     return true;
                 }
             }

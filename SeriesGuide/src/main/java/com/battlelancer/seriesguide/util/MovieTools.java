@@ -133,12 +133,12 @@ public class MovieTools {
         Timber.d("deleteUnusedMovies: removed %s movies", rowsDeleted);
     }
 
-    public static void addToCollection(SgApp app, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new AddMovieToCollectionTask(app, movieTmdbId));
+    public static void addToCollection(Context context, int movieTmdbId) {
+        AsyncTaskCompat.executeParallel(new AddMovieToCollectionTask(context, movieTmdbId));
     }
 
-    public static void addToWatchlist(SgApp app, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new AddMovieToWatchlistTask(app, movieTmdbId));
+    public static void addToWatchlist(Context context, int movieTmdbId) {
+        AsyncTaskCompat.executeParallel(new AddMovieToWatchlistTask(context, movieTmdbId));
     }
 
     /**
@@ -160,12 +160,12 @@ public class MovieTools {
         }
     }
 
-    public static void removeFromCollection(SgApp app, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new RemoveMovieFromCollectionTask(app, movieTmdbId));
+    public static void removeFromCollection(Context context, int movieTmdbId) {
+        AsyncTaskCompat.executeParallel(new RemoveMovieFromCollectionTask(context, movieTmdbId));
     }
 
-    public static void removeFromWatchlist(SgApp app, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new RemoveMovieFromWatchlistTask(app, movieTmdbId));
+    public static void removeFromWatchlist(Context context, int movieTmdbId) {
+        AsyncTaskCompat.executeParallel(new RemoveMovieFromWatchlistTask(context, movieTmdbId));
     }
 
     /**
@@ -195,12 +195,12 @@ public class MovieTools {
         }
     }
 
-    public static void watchedMovie(SgApp app, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new SetMovieWatchedTask(app, movieTmdbId));
+    public static void watchedMovie(Context context, int movieTmdbId) {
+        AsyncTaskCompat.executeParallel(new SetMovieWatchedTask(context, movieTmdbId));
     }
 
-    public static void unwatchedMovie(SgApp app, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new SetMovieUnwatchedTask(app, movieTmdbId));
+    public static void unwatchedMovie(Context context, int movieTmdbId) {
+        AsyncTaskCompat.executeParallel(new SetMovieUnwatchedTask(context, movieTmdbId));
     }
 
     /**

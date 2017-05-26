@@ -29,8 +29,8 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
 
     private final int movieTmdbId;
 
-    public BaseMovieActionTask(SgApp app, int movieTmdbId) {
-        super(app);
+    public BaseMovieActionTask(Context context, int movieTmdbId) {
+        super(context);
         this.movieTmdbId = movieTmdbId;
     }
 

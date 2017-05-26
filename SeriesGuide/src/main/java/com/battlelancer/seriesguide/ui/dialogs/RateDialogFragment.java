@@ -16,7 +16,6 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.tasks.BaseRateItemTask;
@@ -192,19 +191,18 @@ public class RateDialogFragment extends AppCompatDialogFragment {
             return;
         }
         int itemId = args.getInt(InitBundle.ITEM_ID);
-        SgApp app = SgApp.from(getActivity());
         BaseRateItemTask task = null;
         switch (itemType) {
             case ITEM_MOVIE: {
-                task = new RateMovieTask(app, rating, itemId);
+                task = new RateMovieTask(getContext(), rating, itemId);
                 break;
             }
             case ITEM_SHOW: {
-                task = new RateShowTask(app, rating, itemId);
+                task = new RateShowTask(getContext(), rating, itemId);
                 break;
             }
             case ITEM_EPISODE: {
-                task = new RateEpisodeTask(app, rating, itemId);
+                task = new RateEpisodeTask(getContext(), rating, itemId);
                 break;
             }
         }

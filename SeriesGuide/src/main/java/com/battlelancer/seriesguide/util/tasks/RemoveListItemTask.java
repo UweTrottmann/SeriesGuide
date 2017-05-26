@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.util.tasks;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -19,8 +20,8 @@ public class RemoveListItemTask extends BaseActionTask {
 
     private final String listItemId;
 
-    public RemoveListItemTask(@NonNull SgApp app, @NonNull String listItemId) {
-        super(app);
+    public RemoveListItemTask(@NonNull Context context, @NonNull String listItemId) {
+        super(context);
         this.listItemId = listItemId;
     }
 

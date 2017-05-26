@@ -400,10 +400,10 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 @Override
                 public void onClick(View v) {
                     if (isWatched) {
-                        MovieTools.unwatchedMovie(SgApp.from(getActivity()), tmdbId);
+                        MovieTools.unwatchedMovie(getContext(), tmdbId);
                         Utils.trackAction(getActivity(), TAG, "Unwatched movie");
                     } else {
-                        MovieTools.watchedMovie(SgApp.from(getActivity()), tmdbId);
+                        MovieTools.watchedMovie(getContext(), tmdbId);
                         Utils.trackAction(getActivity(), TAG, "Watched movie");
                     }
                 }
@@ -427,10 +427,10 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             @Override
             public void onClick(View v) {
                 if (inCollection) {
-                    MovieTools.removeFromCollection(SgApp.from(getActivity()), tmdbId);
+                    MovieTools.removeFromCollection(getContext(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Uncollected movie");
                 } else {
-                    MovieTools.addToCollection(SgApp.from(getActivity()), tmdbId);
+                    MovieTools.addToCollection(getContext(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Collected movie");
                 }
             }
@@ -450,10 +450,10 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             @Override
             public void onClick(View v) {
                 if (inWatchlist) {
-                    MovieTools.removeFromWatchlist(SgApp.from(getActivity()), tmdbId);
+                    MovieTools.removeFromWatchlist(getContext(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Unwatchlist movie");
                 } else {
-                    MovieTools.addToWatchlist(SgApp.from(getActivity()), tmdbId);
+                    MovieTools.addToWatchlist(getContext(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Watchlist movie");
                 }
             }
