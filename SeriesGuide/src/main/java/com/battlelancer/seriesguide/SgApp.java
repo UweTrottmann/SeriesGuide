@@ -30,9 +30,7 @@ import org.greenrobot.eventbus.EventBusException;
 import timber.log.Timber;
 
 /**
- * Initializes settings and services and on pre-ICS implements actions for low memory state.
- *
- * @author Uwe Trottmann
+ * Initializes logging and services.
  */
 public class SgApp extends Application {
 
