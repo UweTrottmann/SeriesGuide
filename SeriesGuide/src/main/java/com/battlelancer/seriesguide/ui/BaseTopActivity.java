@@ -12,6 +12,8 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
@@ -135,6 +137,9 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     }
 
     private void setUpAutoBackupSnackbar(Snackbar snackbar) {
+        TextView textView = ButterKnife.findById(snackbar.getView(),
+                android.support.design.R.id.snackbar_text);
+        textView.setMaxLines(5);
         snackbar.addCallback(new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
