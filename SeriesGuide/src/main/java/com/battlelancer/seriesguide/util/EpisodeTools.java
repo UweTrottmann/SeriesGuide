@@ -106,10 +106,10 @@ public class EpisodeTools {
         );
     }
 
-    public static void episodeCollected(SgApp app, int showTvdbId, int episodeTvdbId,
+    public static void episodeCollected(Context context, int showTvdbId, int episodeTvdbId,
             int season, int episode, boolean isFlag) {
-        execute(app,
-                new EpisodeTaskTypes.EpisodeCollectedType(app, showTvdbId, episodeTvdbId,
+        execute(context,
+                new EpisodeTaskTypes.EpisodeCollectedType(context, showTvdbId, episodeTvdbId,
                         season, episode,
                         isFlag ? 1 : 0)
         );
@@ -119,40 +119,40 @@ public class EpisodeTools {
      * Flags all episodes released previous to this one as watched (excluding episodes with no
      * release date).
      */
-    public static void episodeWatchedPrevious(SgApp app, int showTvdbId,
+    public static void episodeWatchedPrevious(Context context, int showTvdbId,
             long episodeFirstAired) {
-        execute(app,
-                new EpisodeTaskTypes.EpisodeWatchedPreviousType(app, showTvdbId,
+        execute(context,
+                new EpisodeTaskTypes.EpisodeWatchedPreviousType(context, showTvdbId,
                         episodeFirstAired)
         );
     }
 
-    public static void seasonWatched(SgApp app, int showTvdbId, int seasonTvdbId, int season,
+    public static void seasonWatched(Context context, int showTvdbId, int seasonTvdbId, int season,
             int episodeFlags) {
         validateFlags(episodeFlags);
-        execute(app,
-                new EpisodeTaskTypes.SeasonWatchedType(app, showTvdbId, seasonTvdbId, season,
+        execute(context,
+                new EpisodeTaskTypes.SeasonWatchedType(context, showTvdbId, seasonTvdbId, season,
                         episodeFlags)
         );
     }
 
-    public static void seasonCollected(SgApp app, int showTvdbId, int seasonTvdbId,
+    public static void seasonCollected(Context context, int showTvdbId, int seasonTvdbId,
             int season, boolean isFlag) {
-        execute(app,
-                new EpisodeTaskTypes.SeasonCollectedType(app, showTvdbId, seasonTvdbId, season,
+        execute(context,
+                new EpisodeTaskTypes.SeasonCollectedType(context, showTvdbId, seasonTvdbId, season,
                         isFlag ? 1 : 0)
         );
     }
 
-    public static void showWatched(SgApp app, int showTvdbId, boolean isFlag) {
-        execute(app,
-                new EpisodeTaskTypes.ShowWatchedType(app, showTvdbId, isFlag ? 1 : 0)
+    public static void showWatched(Context context, int showTvdbId, boolean isFlag) {
+        execute(context,
+                new EpisodeTaskTypes.ShowWatchedType(context, showTvdbId, isFlag ? 1 : 0)
         );
     }
 
-    public static void showCollected(SgApp app, int showTvdbId, boolean isFlag) {
-        execute(app,
-                new EpisodeTaskTypes.ShowCollectedType(app, showTvdbId, isFlag ? 1 : 0)
+    public static void showCollected(Context context, int showTvdbId, boolean isFlag) {
+        execute(context,
+                new EpisodeTaskTypes.ShowCollectedType(context, showTvdbId, isFlag ? 1 : 0)
         );
     }
 
@@ -193,7 +193,7 @@ public class EpisodeTools {
         private boolean canSendToTrakt;
 
         public EpisodeFlagTask(Context context, EpisodeTaskTypes.FlagType type) {
-            this.context = context;
+            this.context = context.getApplicationContext();
             flagType = type;
         }
 

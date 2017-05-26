@@ -358,7 +358,7 @@ public class OverviewFragment extends Fragment implements
         final int season = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
         final int episode = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
         final boolean isCollected = currentEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1;
-        EpisodeTools.episodeCollected(SgApp.from(getActivity()), showTvdbId,
+        EpisodeTools.episodeCollected(getContext(), showTvdbId,
                 currentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, !isCollected);
 
         Utils.trackAction(getActivity(), TAG, "Toggle Collected");
@@ -376,7 +376,7 @@ public class OverviewFragment extends Fragment implements
         }
         final int season = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
         final int episode = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-        EpisodeTools.episodeWatched(SgApp.from(getActivity()), showTvdbId,
+        EpisodeTools.episodeWatched(getContext(), showTvdbId,
                 currentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, episodeFlag);
     }
 

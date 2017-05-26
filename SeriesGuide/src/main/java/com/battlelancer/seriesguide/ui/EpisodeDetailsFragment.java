@@ -290,13 +290,13 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
     private void changeEpisodeFlag(int episodeFlag) {
         mEpisodeFlag = episodeFlag;
-        EpisodeTools.episodeWatched(SgApp.from(getActivity()), mShowTvdbId, getEpisodeTvdbId(),
+        EpisodeTools.episodeWatched(getContext(), mShowTvdbId, getEpisodeTvdbId(),
                 mSeasonNumber, mEpisodeNumber, episodeFlag);
     }
 
     private void onToggleCollected() {
         mCollected = !mCollected;
-        EpisodeTools.episodeCollected(SgApp.from(getActivity()), mShowTvdbId, getEpisodeTvdbId(),
+        EpisodeTools.episodeCollected(getContext(), mShowTvdbId, getEpisodeTvdbId(),
                 mSeasonNumber, mEpisodeNumber, mCollected);
     }
 
