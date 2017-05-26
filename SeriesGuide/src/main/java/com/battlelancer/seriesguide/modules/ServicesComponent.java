@@ -14,14 +14,11 @@ import com.battlelancer.seriesguide.loaders.TraktFriendsMovieHistoryLoader;
 import com.battlelancer.seriesguide.loaders.TraktRecentEpisodeHistoryLoader;
 import com.battlelancer.seriesguide.loaders.TvdbAddLoader;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdbInterceptor;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeDetailsTask;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
-import com.battlelancer.seriesguide.traktapi.SgTraktInterceptor;
 import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
 import com.battlelancer.seriesguide.util.AddShowTask;
-import com.battlelancer.seriesguide.util.AllApisAuthenticator;
 import com.battlelancer.seriesguide.util.ConnectTraktTask;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.MovieTools;
@@ -45,7 +42,6 @@ import javax.inject.Singleton;
 })
 public interface ServicesComponent {
     void inject(AddShowTask addShowTask);
-    void inject(AllApisAuthenticator allApisAuthenticator);
     void inject(BaseMovieActionTask baseMovieActionTask);
     void inject(BaseRateItemTask baseRateItemTask);
     void inject(BaseShowActionTask baseShowActionTask);
@@ -57,8 +53,6 @@ public interface ServicesComponent {
     void inject(MovieTools movieTools);
     void inject(PersonLoader personLoader);
     void inject(SgSyncAdapter sgSyncAdapter);
-    void inject(SgTheTvdbInterceptor sgTheTvdbInterceptor);
-    void inject(SgTraktInterceptor sgTraktInterceptor);
     void inject(ShowCreditsLoader showCreditsLoader);
     void inject(ShowTools.ShowsUploadTask showsUploadTask);
     void inject(TmdbMoviesLoader tmdbMoviesLoader);

@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.util;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
@@ -18,6 +17,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.MovieDetails;
+import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -98,9 +98,9 @@ public class MovieTools {
     @Inject Lazy<Sync> traktSync;
 
     @Inject
-    public MovieTools(Application app) {
-        context = app.getApplicationContext();
-        SgApp.getServicesComponent(app).inject(this);
+    public MovieTools(@ApplicationContext Context context) {
+        this.context = context;
+        SgApp.getServicesComponent(context).inject(this);
     }
 
     /**

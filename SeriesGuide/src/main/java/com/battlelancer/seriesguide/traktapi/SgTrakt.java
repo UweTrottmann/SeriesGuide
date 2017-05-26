@@ -26,7 +26,7 @@ public class SgTrakt extends TraktV2 {
     public SgTrakt(Context context, OkHttpClient okHttpClient) {
         super(BuildConfig.TRAKT_CLIENT_ID, BuildConfig.TRAKT_CLIENT_SECRET,
                 BaseOAuthActivity.OAUTH_CALLBACK_URL_CUSTOM);
-        this.context = context.getApplicationContext();
+        this.context = context;
         this.okHttpClient = okHttpClient;
     }
 

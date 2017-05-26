@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.util;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
@@ -25,6 +24,7 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
@@ -65,11 +65,11 @@ public class ShowTools {
         int UNKNOWN = -1;
     }
 
-    private final Application app;
+    private final Context context;
 
     @Inject
-    public ShowTools(Application app) {
-        this.app = app;
+    public ShowTools(@ApplicationContext Context context) {
+        this.context = context;
     }
 
     /**
@@ -79,8 +79,8 @@ public class ShowTools {
      * @return One of {@link com.battlelancer.seriesguide.enums.NetworkResult}.
      */
     public int removeShow(int showTvdbId) {
-        if (HexagonSettings.isEnabled(app)) {
-            if (!AndroidUtils.isNetworkConnected(app)) {
+        if (HexagonSettings.isEnabled(context)) {
+            if (!AndroidUtils.isNetworkConnected(context)) {
                 return NetworkResult.OFFLINE;
             }
             // send to cloud
@@ -91,7 +91,7 @@ public class ShowTools {
         // also saves memory by applying batches early
 
         // SEARCH DATABASE ENTRIES
-        final Cursor episodes = app.getContentResolver().query(
+        final Cursor episodes = context.getContentResolver().query(
                 SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId), new String[] {
                         SeriesGuideContract.Episodes._ID
                 }, null, null, null
@@ -113,7 +113,7 @@ public class ShowTools {
                     SeriesGuideContract.EpisodeSearch.buildDocIdUri(episodeTvdbId)).build());
         }
         try {
-            DBUtils.applyInSmallBatches(app, batch);
+            DBUtils.applyInSmallBatches(context, batch);
         } catch (OperationApplicationException e) {
             Timber.e(e, "Removing episode search entries failed");
             return Result.ERROR;
@@ -129,16 +129,16 @@ public class ShowTools {
         batch.add(ContentProviderOperation.newDelete(
                 SeriesGuideContract.Shows.buildShowUri(showTvdbId)).build());
         try {
-            DBUtils.applyInSmallBatches(app, batch);
+            DBUtils.applyInSmallBatches(context, batch);
         } catch (OperationApplicationException e) {
             Timber.e(e, "Removing episodes, seasons and show failed");
             return Result.ERROR;
         }
 
         // make sure other loaders (activity, overview, details, search) are notified
-        app.getContentResolver().notifyChange(
+        context.getContentResolver().notifyChange(
                 SeriesGuideContract.Episodes.CONTENT_URI_WITHSHOW, null);
-        app.getContentResolver().notifyChange(
+        context.getContentResolver().notifyChange(
                 SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
 
         return Result.SUCCESS;
@@ -171,8 +171,8 @@ public class ShowTools {
      * Saves new favorite flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeIsFavorite(int showTvdbId, boolean isFavorite) {
-        if (HexagonSettings.isEnabled(app)) {
-            if (Utils.isNotConnected(app, true)) {
+        if (HexagonSettings.isEnabled(context)) {
+            if (Utils.isNotConnected(context, true)) {
                 return;
             }
             // send to cloud
@@ -185,19 +185,19 @@ public class ShowTools {
         // save to local database
         ContentValues values = new ContentValues();
         values.put(SeriesGuideContract.Shows.FAVORITE, isFavorite);
-        app.getContentResolver().update(
+        context.getContentResolver().update(
                 SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
 
         // also notify URIs used by search and lists
-        app.getContentResolver()
+        context.getContentResolver()
                 .notifyChange(SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
-        app.getContentResolver()
+        context.getContentResolver()
                 .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
 
         // favorite status may determine eligibility for notifications
-        Utils.runNotificationService(app);
+        Utils.runNotificationService(context);
 
-        Toast.makeText(app, app.getString(isFavorite ?
+        Toast.makeText(context, context.getString(isFavorite ?
                 R.string.favorited : R.string.unfavorited), Toast.LENGTH_SHORT).show();
     }
 
@@ -205,8 +205,8 @@ public class ShowTools {
      * Saves new hidden flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeIsHidden(int showTvdbId, boolean isHidden) {
-        if (HexagonSettings.isEnabled(app)) {
-            if (Utils.isNotConnected(app, true)) {
+        if (HexagonSettings.isEnabled(context)) {
+            if (Utils.isNotConnected(context, true)) {
                 return;
             }
             // send to cloud
@@ -219,20 +219,20 @@ public class ShowTools {
         // save to local database
         ContentValues values = new ContentValues();
         values.put(SeriesGuideContract.Shows.HIDDEN, isHidden);
-        app.getContentResolver().update(
+        context.getContentResolver().update(
                 SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
 
         // also notify filter URI used by search
-        app.getContentResolver()
+        context.getContentResolver()
                 .notifyChange(SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
 
-        Toast.makeText(app, app.getString(isHidden ?
+        Toast.makeText(context, context.getString(isHidden ?
                 R.string.hidden : R.string.unhidden), Toast.LENGTH_SHORT).show();
     }
 
     public void storeLanguage(final int showTvdbId, final String languageCode) {
-        if (HexagonSettings.isEnabled(app)) {
-            if (Utils.isNotConnected(app, true)) {
+        if (HexagonSettings.isEnabled(context)) {
+            if (Utils.isNotConnected(context, true)) {
                 return;
             }
             // send to cloud
@@ -250,29 +250,29 @@ public class ShowTools {
                 // change language
                 ContentValues values = new ContentValues();
                 values.put(SeriesGuideContract.Shows.LANGUAGE, languageCode);
-                app.getContentResolver()
+                context.getContentResolver()
                         .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null,
                                 null);
                 // reset episode last edit time so all get updated
                 values = new ContentValues();
                 values.put(SeriesGuideContract.Episodes.LAST_EDITED, 0);
-                app.getContentResolver()
+                context.getContentResolver()
                         .update(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
                                 values, null, null);
                 // trigger update
-                SgSyncAdapter.requestSyncImmediate(app, SgSyncAdapter.SyncType.SINGLE,
+                SgSyncAdapter.requestSyncImmediate(context, SgSyncAdapter.SyncType.SINGLE,
                         showTvdbId, false);
             }
         };
         AsyncTask.THREAD_POOL_EXECUTOR.execute(runnable);
 
         // show immediate feedback, also if offline and sync won't go through
-        if (AndroidUtils.isNetworkConnected(app)) {
+        if (AndroidUtils.isNetworkConnected(context)) {
             // notify about upcoming sync
-            Toast.makeText(app, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
         } else {
             // offline
-            Toast.makeText(app, R.string.update_no_connection, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.update_no_connection, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -280,8 +280,8 @@ public class ShowTools {
      * Saves new notify flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeNotify(int showTvdbId, boolean notify) {
-        if (HexagonSettings.isEnabled(app)) {
-            if (Utils.isNotConnected(app, true)) {
+        if (HexagonSettings.isEnabled(context)) {
+            if (Utils.isNotConnected(context, true)) {
                 return;
             }
             // send to cloud
@@ -294,11 +294,11 @@ public class ShowTools {
         // save to local database
         ContentValues values = new ContentValues();
         values.put(SeriesGuideContract.Shows.NOTIFY, notify);
-        app.getContentResolver().update(
+        context.getContentResolver().update(
                 SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
 
         // new notify setting may determine eligibility for notifications
-        Utils.runNotificationService(app);
+        Utils.runNotificationService(context);
     }
 
     /**
@@ -317,20 +317,20 @@ public class ShowTools {
 
     private void uploadShowAsync(Show show) {
         AsyncTaskCompat.executeParallel(
-                new ShowsUploadTask(app, show)
+                new ShowsUploadTask(context, show)
         );
     }
 
     public static class ShowsUploadTask extends AsyncTask<Void, Void, Void> {
 
-        private final Context app;
+        private final Context context;
         private final Show show;
         @Inject HexagonTools hexagonTools;
 
-        public ShowsUploadTask(Application app, Show show) {
-            this.app = app.getApplicationContext();
+        public ShowsUploadTask(Context context, Show show) {
+            this.context = context.getApplicationContext();
             this.show = show;
-            SgApp.getServicesComponent(app).inject(this);
+            SgApp.getServicesComponent(context).inject(this);
         }
 
         @Override
@@ -338,7 +338,7 @@ public class ShowTools {
             List<Show> shows = new LinkedList<>();
             shows.add(show);
 
-            Upload.toHexagon(app, hexagonTools, shows);
+            Upload.toHexagon(context, hexagonTools, shows);
 
             return null;
         }

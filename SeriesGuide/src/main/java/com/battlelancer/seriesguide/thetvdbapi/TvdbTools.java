@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.thetvdbapi;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
@@ -23,6 +22,7 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -94,17 +94,17 @@ public class TvdbTools {
     @Inject Lazy<com.uwetrottmann.trakt5.services.Shows> traktShows;
     @Inject Lazy<OkHttpClient> okHttpClient;
 
-    public static synchronized TvdbTools getInstance(Application app) {
+    public static synchronized TvdbTools getInstance(Context context) {
         if (tvdbTools == null) {
-            tvdbTools = new TvdbTools(app);
+            tvdbTools = new TvdbTools(context);
         }
         return tvdbTools;
     }
 
     @Inject
-    public TvdbTools(Application app) {
-        this.context = app.getApplicationContext();
-        SgApp.getServicesComponent(app).inject(this);
+    public TvdbTools(@ApplicationContext Context context) {
+        this.context = context;
+        SgApp.getServicesComponent(context).inject(this);
     }
 
     /**

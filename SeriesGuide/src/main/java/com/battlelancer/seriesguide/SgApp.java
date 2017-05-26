@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide;
 import android.app.Activity;
 import android.app.Application;
 import android.content.ContentProvider;
+import android.content.Context;
 import android.os.Build;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
@@ -149,10 +150,10 @@ public class SgApp extends Application {
         return getServicesComponent(this);
     }
 
-    public static synchronized ServicesComponent getServicesComponent(Application app) {
+    public static synchronized ServicesComponent getServicesComponent(Context context) {
         if (servicesComponent == null) {
             servicesComponent = DaggerServicesComponent.builder()
-                    .appModule(new AppModule(app))
+                    .appModule(new AppModule(context))
                     .httpClientModule(new HttpClientModule())
                     .tmdbModule(new TmdbModule())
                     .traktModule(new TraktModule())

@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.util;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -104,10 +103,10 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     private String currentShowName;
     private int currentShowTvdbId;
 
-    public AddShowTask(Application app, List<SearchResult> shows, boolean isSilentMode,
+    public AddShowTask(Context context, List<SearchResult> shows, boolean isSilentMode,
             boolean isMergingShows) {
-        this.context = app.getApplicationContext();
-        SgApp.getServicesComponent(app).inject(this);
+        this.context = context.getApplicationContext();
+        SgApp.getServicesComponent(context).inject(this);
         addQueue.addAll(shows);
         this.isSilentMode = isSilentMode;
         this.isMergingShows = isMergingShows;

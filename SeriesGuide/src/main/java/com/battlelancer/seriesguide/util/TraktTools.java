@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.util;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
@@ -15,6 +14,7 @@ import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
@@ -66,9 +66,9 @@ public class TraktTools {
     @Inject Lazy<Sync> traktSync;
 
     @Inject
-    public TraktTools(Application app) {
-        context = app.getApplicationContext();
-        SgApp.getServicesComponent(app).inject(this);
+    public TraktTools(@ApplicationContext Context context) {
+        this.context = context;
+        SgApp.getServicesComponent(context).inject(this);
     }
 
     public enum Flag {

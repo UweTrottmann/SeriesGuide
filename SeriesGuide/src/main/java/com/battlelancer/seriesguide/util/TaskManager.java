@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.util;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -58,7 +57,7 @@ public class TaskManager {
      * @param isSilentMode   Whether to display status toasts if a show could not be added.
      * @param isMergingShows Whether to set the Hexagon show merged flag to true if all shows were
      */
-    public synchronized void performAddTask(final Application app, final List<SearchResult> shows,
+    public synchronized void performAddTask(final Context context, final List<SearchResult> shows,
             final boolean isSilentMode, final boolean isMergingShows) {
         if (!isSilentMode) {
             // notify user here already
@@ -84,7 +83,7 @@ public class TaskManager {
                 @Override
                 public void run() {
                     mAddTask = (AddShowTask) Utils.executeInOrder(
-                            new AddShowTask(app, shows, isSilentMode, isMergingShows));
+                            new AddShowTask(context, shows, isSilentMode, isMergingShows));
                 }
             });
         }
