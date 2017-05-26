@@ -25,7 +25,6 @@ import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.TraktTools;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Component;
 import javax.inject.Singleton;
@@ -65,7 +64,6 @@ public interface ServicesComponent {
     void inject(TraktRatingsTask traktRatingsTask);
     void inject(TraktRecentEpisodeHistoryLoader traktRecentEpisodeHistoryLoader);
     void inject(TraktTask traktTask);
-    void inject(TraktTools traktTools);
     void inject(TvdbAddLoader tvdbAddLoader);
     void inject(TvdbEpisodeDetailsTask tvdbEpisodeDetailsTask);
     void inject(TvdbShowLoader tvdbShowLoader);

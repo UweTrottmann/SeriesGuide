@@ -12,7 +12,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -63,12 +62,12 @@ public class TraktTools {
     public static final int FAILED_CREDENTIALS = -3;
 
     private final Context context;
-    @Inject Lazy<Sync> traktSync;
+    private final Lazy<Sync> traktSync;
 
     @Inject
-    public TraktTools(@ApplicationContext Context context) {
+    public TraktTools(@ApplicationContext Context context, Lazy<Sync> traktSync) {
         this.context = context;
-        SgApp.getServicesComponent(context).inject(this);
+        this.traktSync = traktSync;
     }
 
     public enum Flag {
