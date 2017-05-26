@@ -11,11 +11,8 @@ import com.battlelancer.seriesguide.enums.TraktResult;
 import com.battlelancer.seriesguide.ui.BaseOAuthActivity;
 import com.battlelancer.seriesguide.util.ConnectTraktTask;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.trakt5.TraktV2;
-import dagger.Lazy;
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import javax.inject.Inject;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
@@ -35,11 +32,9 @@ public class TraktAuthActivity extends BaseOAuthActivity {
 
     private String state;
     private ConnectTraktTaskFragment taskFragment;
-    @Inject Lazy<TraktV2> trakt;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        SgApp.from(this).getServicesComponent().inject(this);
         super.onCreate(savedInstanceState);
 
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(TRAKT_CONNECT_TASK_TAG);
@@ -64,7 +59,7 @@ public class TraktAuthActivity extends BaseOAuthActivity {
     @Nullable
     protected String getAuthorizationUrl() {
         state = new BigInteger(130, new SecureRandom()).toString(32);
-        return trakt.get().buildAuthorizationUrl(state);
+        return SgApp.getServicesComponent(this).trakt().buildAuthorizationUrl(state);
     }
 
     @Override
