@@ -16,7 +16,6 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Xml;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
@@ -83,28 +82,37 @@ public class TvdbTools {
     private static final String TVDB_PARAM_LANGUAGE = "&language=";
     private static final String[] LANGUAGE_QUERY_PROJECTION = new String[] { Shows.LANGUAGE };
 
-    private static TvdbTools tvdbTools;
     private final Context context;
-    @Inject Lazy<HexagonTools> hexagonTools;
-    @Inject Lazy<ShowTools> showTools;
-    @Inject Lazy<TraktTools> traktTools;
-    @Inject Lazy<TheTvdbSearch> tvdbSearch;
-    @Inject Lazy<TheTvdbSeries> tvdbSeries;
-    @Inject Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch;
-    @Inject Lazy<com.uwetrottmann.trakt5.services.Shows> traktShows;
-    @Inject Lazy<OkHttpClient> okHttpClient;
-
-    public static synchronized TvdbTools getInstance(Context context) {
-        if (tvdbTools == null) {
-            tvdbTools = new TvdbTools(context);
-        }
-        return tvdbTools;
-    }
+    Lazy<HexagonTools> hexagonTools;
+    Lazy<ShowTools> showTools;
+    Lazy<TraktTools> traktTools;
+    Lazy<TheTvdbSearch> tvdbSearch;
+    Lazy<TheTvdbSeries> tvdbSeries;
+    Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch;
+    Lazy<com.uwetrottmann.trakt5.services.Shows> traktShows;
+    Lazy<OkHttpClient> okHttpClient;
 
     @Inject
-    public TvdbTools(@ApplicationContext Context context) {
+    public TvdbTools(
+            @ApplicationContext Context context,
+            Lazy<HexagonTools> hexagonTools,
+            Lazy<ShowTools> showTools,
+            Lazy<TraktTools> traktTools,
+            Lazy<TheTvdbSearch> tvdbSearch,
+            Lazy<TheTvdbSeries> tvdbSeries,
+            Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch,
+            Lazy<com.uwetrottmann.trakt5.services.Shows> traktShows,
+            Lazy<OkHttpClient> okHttpClient
+    ) {
         this.context = context;
-        SgApp.getServicesComponent(context).inject(this);
+        this.hexagonTools = hexagonTools;
+        this.showTools = showTools;
+        this.traktTools = traktTools;
+        this.tvdbSearch = tvdbSearch;
+        this.tvdbSeries = tvdbSeries;
+        this.traktSearch = traktSearch;
+        this.traktShows = traktShows;
+        this.okHttpClient = okHttpClient;
     }
 
     /**
@@ -783,6 +791,7 @@ public class TvdbTools {
         ensureSuccessfulResponse(response, logTag);
 
         try {
+            //noinspection ConstantConditions
             final InputStream input = response.body().byteStream();
             if (isZipFile) {
                 // We downloaded the compressed file from TheTVDB

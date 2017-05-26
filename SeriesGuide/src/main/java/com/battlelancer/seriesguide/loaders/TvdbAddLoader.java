@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.loaders;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -42,9 +43,10 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
         }
     }
 
-    private final SgApp app;
+    private final Context context;
     private final String query;
     private final String language;
+    @Inject Lazy<TvdbTools> tvdbTools;
     @Inject Lazy<Shows> traktShows;
     @Inject Lazy<Search> traktSearch;
 
@@ -54,12 +56,12 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
      *
      * @param language If not provided, will search for results in all languages.
      */
-    public TvdbAddLoader(SgApp app, @Nullable String query, @Nullable String language) {
-        super(app);
-        this.app = app;
-        app.getServicesComponent().inject(this);
+    public TvdbAddLoader(Context context, @Nullable String query, @Nullable String language) {
+        super(context);
+        this.context = context;
         this.query = query;
         this.language = language;
+        SgApp.getServicesComponent(context).inject(this);
     }
 
     @Override
@@ -68,7 +70,7 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
 
         if (TextUtils.isEmpty(query)) {
             // no query? load a list of trending shows from trakt
-            List<TrendingShow> trendingShows = SgTrakt.executeCall(app,
+            List<TrendingShow> trendingShows = SgTrakt.executeCall(context,
                     traktShows.get().trending(1, 35, Extended.FULL),
                     "get trending shows"
             );
@@ -94,7 +96,7 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
             // use TheTVDB search for all other (or any) languages
             if (DisplaySettings.LANGUAGE_EN.equals(language)) {
                 List<com.uwetrottmann.trakt5.entities.SearchResult> searchResults
-                        = SgTrakt.executeCall(app,
+                        = SgTrakt.executeCall(context,
                         traktSearch.get().textQueryShow(query,
                                 null, null, null, null, null, null, null, null, null,
                                 Extended.FULL, 1, 30),
@@ -122,9 +124,9 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
                 try {
                     if (TextUtils.isEmpty(language)) {
                         // use the v1 API to do an any language search not supported by v2
-                        results = TvdbTools.getInstance(app).searchShow(query, null);
+                        results = tvdbTools.get().searchShow(query, null);
                     } else {
-                        results = TvdbTools.getInstance(app).searchSeries(query, language);
+                        results = tvdbTools.get().searchSeries(query, language);
                     }
                     markLocalShows(results);
                     return buildResultSuccess(results, R.string.no_results);

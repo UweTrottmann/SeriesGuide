@@ -237,7 +237,7 @@ public class TvdbAddFragment extends AddFragment {
                     language = null;
                 }
             }
-            return new TvdbAddLoader((SgApp) getActivity().getApplication(), query, language);
+            return new TvdbAddLoader(getContext(), query, language);
         }
 
         @Override
