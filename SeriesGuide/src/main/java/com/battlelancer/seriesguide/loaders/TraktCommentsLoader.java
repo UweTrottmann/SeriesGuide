@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.loaders;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
@@ -41,17 +42,16 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
 
     private static final int PAGE_SIZE = 25;
 
-    private final SgApp app;
     private Bundle args;
+    @Inject MovieTools movieTools;
     @Inject Lazy<Episodes> traktEpisodes;
     @Inject Lazy<Movies> traktMovies;
     @Inject Lazy<Shows> traktShows;
 
-    public TraktCommentsLoader(SgApp app, Bundle args) {
-        super(app);
-        this.app = app;
-        app.getServicesComponent().inject(this);
+    public TraktCommentsLoader(Context context, Bundle args) {
+        super(context);
         this.args = args;
+        SgApp.getServicesComponent(context).inject(this);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
         // movie comments?
         int movieTmdbId = args.getInt(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID);
         if (movieTmdbId != 0) {
-            Integer movieTraktId = app.getMovieTools().lookupTraktId(movieTmdbId);
+            Integer movieTraktId = movieTools.lookupTraktId(movieTmdbId);
             if (movieTraktId != null) {
                 if (movieTraktId == -1) {
                     return buildResultFailure(R.string.trakt_error_not_exists);

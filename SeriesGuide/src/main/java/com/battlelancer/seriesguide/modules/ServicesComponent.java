@@ -51,7 +51,6 @@ public interface ServicesComponent {
     void inject(EpisodeTools.EpisodeFlagTask episodeFlagTask);
     void inject(MovieCreditsLoader movieCreditsLoader);
     void inject(MovieTrailersLoader movieTrailersLoader);
-    void inject(MovieTools movieTools);
     void inject(PersonLoader personLoader);
     void inject(SgSyncAdapter sgSyncAdapter);
     void inject(ShowCreditsLoader showCreditsLoader);

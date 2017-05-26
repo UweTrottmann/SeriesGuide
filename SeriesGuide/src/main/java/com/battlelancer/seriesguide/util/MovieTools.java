@@ -13,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.os.AsyncTaskCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.MovieDetails;
@@ -92,15 +91,24 @@ public class MovieTools {
     };
 
     private final Context context;
-    @Inject Lazy<MoviesService> tmdbMovies;
-    @Inject Lazy<Movies> traktMovies;
-    @Inject Lazy<Search> traktSearch;
-    @Inject Lazy<Sync> traktSync;
+    private final Lazy<MoviesService> tmdbMovies;
+    private final Lazy<Movies> traktMovies;
+    private final Lazy<Search> traktSearch;
+    private final Lazy<Sync> traktSync;
 
     @Inject
-    public MovieTools(@ApplicationContext Context context) {
+    public MovieTools(
+            @ApplicationContext Context context,
+            Lazy<MoviesService> tmdbMovies,
+            Lazy<Movies> traktMovies,
+            Lazy<Search> traktSearch,
+            Lazy<Sync> traktSync
+    ) {
         this.context = context;
-        SgApp.getServicesComponent(context).inject(this);
+        this.tmdbMovies = tmdbMovies;
+        this.traktMovies = traktMovies;
+        this.traktSearch = traktSearch;
+        this.traktSync = traktSync;
     }
 
     /**
