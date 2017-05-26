@@ -786,8 +786,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             = new LoaderManager.LoaderCallbacks<Credits>() {
         @Override
         public Loader<Credits> onCreateLoader(int loaderId, Bundle args) {
-            return new MovieCreditsLoader(getActivity().getApplication(),
-                    args.getInt(InitBundle.TMDB_ID));
+            return new MovieCreditsLoader(getContext(), args.getInt(InitBundle.TMDB_ID));
         }
 
         @Override

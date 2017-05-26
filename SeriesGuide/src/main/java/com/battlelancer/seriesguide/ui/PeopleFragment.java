@@ -215,9 +215,9 @@ public class PeopleFragment extends Fragment {
             setProgressVisibility(true);
 
             if (mMediaType == PeopleActivity.MediaType.MOVIE) {
-                return new MovieCreditsLoader(getActivity().getApplication(), mTmdbId);
+                return new MovieCreditsLoader(getContext(), mTmdbId);
             } else {
-                return new ShowCreditsLoader(getActivity().getApplication(), mTmdbId, false);
+                return new ShowCreditsLoader(getContext(), mTmdbId, false);
             }
         }
 
