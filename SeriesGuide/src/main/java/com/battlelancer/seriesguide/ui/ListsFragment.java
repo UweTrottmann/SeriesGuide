@@ -19,7 +19,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.ListItemsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -184,7 +183,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
             PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
             popupMenu.inflate(R.menu.lists_popup_menu);
             popupMenu.setOnMenuItemClickListener(
-                    new PopupMenuItemClickListener(SgApp.from(getActivity()), getFragmentManager(),
+                    new PopupMenuItemClickListener(getContext(), getFragmentManager(),
                             viewHolder.itemId, viewHolder.itemTvdbId, viewHolder.itemType));
             popupMenu.show();
         }

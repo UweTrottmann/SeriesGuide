@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.ContentProvider;
 import android.content.Context;
@@ -131,15 +130,6 @@ public class SgApp extends Application {
         } catch (IllegalStateException ignored) {
             // instance was already set
         }
-    }
-
-    public static SgApp from(Activity activity) {
-        return (SgApp) activity.getApplication();
-    }
-
-    @Deprecated
-    public ServicesComponent getServicesComponent() {
-        return getServicesComponent(this);
     }
 
     public static synchronized ServicesComponent getServicesComponent(Context context) {

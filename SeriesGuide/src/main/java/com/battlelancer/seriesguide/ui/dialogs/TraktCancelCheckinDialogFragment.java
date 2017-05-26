@@ -55,7 +55,6 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
                 mWait < 0 ? context.getString(R.string.not_available)
                         : DateUtils.formatElapsedTime(mWait)));
 
-        final SgApp app = SgApp.from(getActivity());
         builder.setPositiveButton(R.string.traktcheckin_cancel, new OnClickListener() {
 
             @Override
@@ -100,7 +99,7 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
 
                             // relaunch the trakt task which called us to
                             // try the check in again
-                            AsyncTaskCompat.executeParallel(new TraktTask(app, args));
+                            AsyncTaskCompat.executeParallel(new TraktTask(context, args));
                         } else {
                             // well, something went wrong
                             Toast.makeText(context, message, Toast.LENGTH_LONG).show();

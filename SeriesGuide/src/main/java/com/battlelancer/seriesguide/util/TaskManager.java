@@ -7,7 +7,6 @@ import android.os.Looper;
 import android.support.v4.os.AsyncTaskCompat;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.items.SearchResult;
 import java.util.ArrayList;
@@ -45,10 +44,10 @@ public class TaskManager {
         return _instance;
     }
 
-    public synchronized void performAddTask(SgApp app, SearchResult show) {
+    public synchronized void performAddTask(Context context, SearchResult show) {
         List<SearchResult> wrapper = new ArrayList<>();
         wrapper.add(show);
-        performAddTask(app, wrapper, false, false);
+        performAddTask(context, wrapper, false, false);
     }
 
     /**

@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.streams.UserEpisodeStreamFragment;
@@ -79,6 +78,6 @@ public class HistoryActivity extends BaseActivity implements
      */
     @Override
     public void onAddShow(SearchResult show) {
-        TaskManager.getInstance(this).performAddTask(SgApp.from(this), show);
+        TaskManager.getInstance(this).performAddTask(this, show);
     }
 }

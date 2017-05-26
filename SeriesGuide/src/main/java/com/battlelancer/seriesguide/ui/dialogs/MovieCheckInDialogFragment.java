@@ -27,7 +27,7 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
      */
     protected void checkInTrakt(String message) {
         AsyncTaskCompat.executeParallel(
-                new TraktTask(getActivity()).checkInMovie(
+                new TraktTask(getContext()).checkInMovie(
                         getArguments().getInt(InitBundle.MOVIE_TMDB_ID),
                         getArguments().getString(InitBundle.ITEM_TITLE),
                         message));

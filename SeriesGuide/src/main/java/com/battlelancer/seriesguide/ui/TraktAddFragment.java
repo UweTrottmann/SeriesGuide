@@ -16,7 +16,6 @@ import android.widget.PopupMenu;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TraktAddLoader;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -97,7 +96,7 @@ public class TraktAddFragment extends AddFragment {
         @Override
         public void onAddClick(SearchResult item) {
             EventBus.getDefault().post(new OnAddingShowEvent(item.tvdbid));
-            TaskManager.getInstance(getContext()).performAddTask(SgApp.from(getActivity()), item);
+            TaskManager.getInstance(getContext()).performAddTask(getContext(), item);
         }
 
         @Override
@@ -165,7 +164,7 @@ public class TraktAddFragment extends AddFragment {
                 }
                 EventBus.getDefault().post(new OnAddingShowEvent());
                 TaskManager.getInstance(getActivity())
-                        .performAddTask(SgApp.from(getActivity()), showsToAdd, false, false);
+                        .performAddTask(getContext(), showsToAdd, false, false);
             }
             // disable the item so the user has to come back
             item.setEnabled(false);

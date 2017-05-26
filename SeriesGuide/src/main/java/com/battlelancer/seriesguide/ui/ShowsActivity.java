@@ -385,7 +385,7 @@ public class ShowsActivity extends BaseTopActivity implements
      */
     @Override
     public void onAddShow(SearchResult show) {
-        TaskManager.getInstance(this).performAddTask(SgApp.from(this), show);
+        TaskManager.getInstance(this).performAddTask(this, show);
     }
 
     /**

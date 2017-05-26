@@ -591,7 +591,7 @@ public class ShowFragment extends Fragment {
 
     private void loadTraktRatings() {
         if (traktTask == null || traktTask.getStatus() == AsyncTask.Status.FINISHED) {
-            traktTask = new TraktRatingsTask(SgApp.from(getActivity()), getShowTvdbId());
+            traktTask = new TraktRatingsTask(getContext(), getShowTvdbId());
             AsyncTaskCompat.executeParallel(traktTask);
         }
     }

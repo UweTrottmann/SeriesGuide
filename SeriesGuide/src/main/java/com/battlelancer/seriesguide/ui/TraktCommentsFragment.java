@@ -134,7 +134,7 @@ public class TraktCommentsFragment extends Fragment {
         int episodeTvdbId = args.getInt(InitBundle.EPISODE_TVDB_ID);
         if (episodeTvdbId != 0) {
             AsyncTaskCompat.executeParallel(
-                    new TraktTask(getActivity()).commentEpisode(episodeTvdbId, comment, isSpoiler)
+                    new TraktTask(getContext()).commentEpisode(episodeTvdbId, comment, isSpoiler)
             );
             return;
         }
@@ -143,7 +143,7 @@ public class TraktCommentsFragment extends Fragment {
         int movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID);
         if (movieTmdbId != 0) {
             AsyncTaskCompat.executeParallel(
-                    new TraktTask(getActivity()).commentMovie(movieTmdbId, comment, isSpoiler)
+                    new TraktTask(getContext()).commentMovie(movieTmdbId, comment, isSpoiler)
             );
             return;
         }
@@ -152,7 +152,7 @@ public class TraktCommentsFragment extends Fragment {
         int showTvdbId = args.getInt(InitBundle.SHOW_TVDB_ID);
         if (showTvdbId != 0) {
             AsyncTaskCompat.executeParallel(
-                    new TraktTask(getActivity()).commentShow(showTvdbId, comment, isSpoiler)
+                    new TraktTask(getContext()).commentShow(showTvdbId, comment, isSpoiler)
             );
         }
 

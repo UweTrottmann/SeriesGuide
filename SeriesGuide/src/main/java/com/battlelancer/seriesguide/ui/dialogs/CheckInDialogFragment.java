@@ -66,7 +66,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     @Override
     protected void checkInTrakt(String message) {
         AsyncTaskCompat.executeParallel(
-                new TraktTask(getActivity()).checkInEpisode(
+                new TraktTask(getContext()).checkInEpisode(
                         getArguments().getInt(InitBundle.EPISODE_TVDB_ID),
                         getArguments().getString(InitBundle.ITEM_TITLE),
                         message)

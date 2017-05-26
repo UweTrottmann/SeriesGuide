@@ -829,7 +829,7 @@ public class OverviewFragment extends Fragment implements
         if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {
             int seasonNumber = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
             int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-            ratingsTask = new TraktRatingsTask(SgApp.from(getActivity()), showTvdbId,
+            ratingsTask = new TraktRatingsTask(getContext(), showTvdbId,
                     currentEpisodeTvdbId, seasonNumber, episodeNumber);
             AsyncTaskCompat.executeParallel(ratingsTask);
         }

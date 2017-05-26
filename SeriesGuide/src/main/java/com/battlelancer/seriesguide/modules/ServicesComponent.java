@@ -13,12 +13,12 @@ import com.battlelancer.seriesguide.util.ConnectTraktTask;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
-import com.battlelancer.seriesguide.util.TraktTask;
 import com.uwetrottmann.thetvdb.services.TheTvdbEpisodes;
 import com.uwetrottmann.tmdb2.services.MoviesService;
 import com.uwetrottmann.tmdb2.services.PeopleService;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.services.Checkin;
+import com.uwetrottmann.trakt5.services.Comments;
 import com.uwetrottmann.trakt5.services.Sync;
 import com.uwetrottmann.trakt5.services.Users;
 import dagger.Component;
@@ -41,11 +41,12 @@ public interface ServicesComponent {
     ShowTools showTools();
     TraktV2 trakt();
     Checkin traktCheckin();
+    Comments traktComments();
     Sync traktSync();
     Users traktUsers();
     TheTvdbEpisodes tvdbEpisodes();
-    TvdbTools tvdbTools();
 
+    TvdbTools tvdbTools();
     void inject(AddShowTask addShowTask);
     void inject(ConnectTraktTask connectTraktTask);
     void inject(SgSyncAdapter sgSyncAdapter);
@@ -55,6 +56,5 @@ public interface ServicesComponent {
     void inject(TraktAddLoader traktAddLoader);
     void inject(TraktCommentsLoader traktCommentsLoader);
     void inject(TraktRatingsTask traktRatingsTask);
-    void inject(TraktTask traktTask);
     void inject(TvdbAddLoader tvdbAddLoader);
 }

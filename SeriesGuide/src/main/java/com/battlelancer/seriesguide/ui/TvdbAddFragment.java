@@ -17,7 +17,6 @@ import android.widget.PopupMenu;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TvdbAddLoader;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -96,7 +95,7 @@ public class TvdbAddFragment extends AddFragment {
         @Override
         public void onAddClick(SearchResult item) {
             EventBus.getDefault().post(new OnAddingShowEvent(item.tvdbid));
-            TaskManager.getInstance(getContext()).performAddTask(SgApp.from(getActivity()), item);
+            TaskManager.getInstance(getContext()).performAddTask(getContext(), item);
         }
 
         @Override

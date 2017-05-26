@@ -20,7 +20,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.MoviesDiscoverAdapter;
 import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
@@ -170,7 +169,7 @@ public class MoviesDiscoverFragment extends Fragment {
             = new LoaderManager.LoaderCallbacks<TmdbMoviesLoader.Result>() {
         @Override
         public Loader<TmdbMoviesLoader.Result> onCreateLoader(int id, Bundle args) {
-            return new TmdbMoviesLoader(SgApp.from(getActivity()),
+            return new TmdbMoviesLoader(getContext(),
                     MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT, null);
         }
 

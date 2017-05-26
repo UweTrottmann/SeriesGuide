@@ -618,7 +618,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // update trakt ratings
         if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {
-            ratingsTask = new TraktRatingsTask(SgApp.from(getActivity()), mShowTvdbId,
+            ratingsTask = new TraktRatingsTask(getContext(), mShowTvdbId,
                     getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber);
             AsyncTaskCompat.executeParallel(ratingsTask);
         }

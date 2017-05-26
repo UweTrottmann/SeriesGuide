@@ -161,7 +161,7 @@ public class MoviesSearchFragment extends Fragment {
                 link = MoviesDiscoverLink.fromId(args.getInt(ARG_ID_LINK));
                 query = args.getString(ARG_SEARCH_QUERY);
             }
-            return new TmdbMoviesLoader(SgApp.from(getActivity()), link, query);
+            return new TmdbMoviesLoader(getContext(), link, query);
         }
 
         @Override
