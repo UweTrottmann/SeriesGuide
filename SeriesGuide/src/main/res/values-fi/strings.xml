@@ -87,7 +87,7 @@
   <string name="show_isalive">Jatkuu</string>
   <string name="show_isnotalive">Päättynyt</string>
   <string name="lastEdit">Viimeisin muokkaus // TVDb</string>
-  <string name="no_translation">Kuvausta ei ole saatavilla %1$s palvelussa %2$s.</string>
+  <string name="no_translation">Kuvausta ei ole saatavilla kielellä %1$s palvelussa %2$s.</string>
   <string name="no_translation_title">Ei käännetty</string>
   <string name="no_spoilers">Osa tiedoista on piilotettu juonipaljastuksien varalta. Voit poistaa tämän käytöstä asetuksista.</string>
   <!-- Date and Time -->
