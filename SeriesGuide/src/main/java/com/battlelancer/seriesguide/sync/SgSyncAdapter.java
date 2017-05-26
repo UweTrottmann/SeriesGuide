@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.sync;
 
 import android.accounts.Account;
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
@@ -243,14 +242,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     @Inject Lazy<MovieTools> movieTools;
     @Inject Lazy<ConfigurationService> tmdbConfigService;
 
-    public SgSyncAdapter(Application app, boolean autoInitialize) {
-        this(app, autoInitialize, false);
-    }
-
-    public SgSyncAdapter(Application app, boolean autoInitialize, boolean allowParallelSyncs) {
-        super(app, autoInitialize, allowParallelSyncs);
+    public SgSyncAdapter(Context context) {
+        super(context, true, false);
         Timber.d("Creating sync adapter");
-        SgApp.getServicesComponent(app).inject(this);
+        SgApp.getServicesComponent(context).inject(this);
     }
 
     @Override

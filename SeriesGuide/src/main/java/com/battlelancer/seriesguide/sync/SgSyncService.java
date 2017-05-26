@@ -20,7 +20,7 @@ public class SgSyncService extends Service {
         Timber.d("Creating sync service");
         synchronized (syncAdapterLock) {
             if (syncAdapter == null) {
-                syncAdapter = new SgSyncAdapter(getApplication(), true);
+                syncAdapter = new SgSyncAdapter(getApplicationContext());
             }
         }
     }
