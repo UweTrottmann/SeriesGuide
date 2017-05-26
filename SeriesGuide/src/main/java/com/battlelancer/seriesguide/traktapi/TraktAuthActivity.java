@@ -107,7 +107,7 @@ public class TraktAuthActivity extends BaseOAuthActivity {
 
         // fetch access token with given OAuth auth code
         setMessage(getString(R.string.waitplease), true);
-        ConnectTraktTask task = new ConnectTraktTask(SgApp.from(this));
+        ConnectTraktTask task = new ConnectTraktTask(this);
         Utils.executeInOrder(task, authCode);
         taskFragment.setTask(task);
     }

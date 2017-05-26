@@ -822,8 +822,8 @@ public class OverviewFragment extends Fragment implements
         if (detailsTask == null || detailsTask.getStatus() == AsyncTask.Status.FINISHED) {
             long lastEdited = currentEpisodeCursor.getLong(EpisodeQuery.LAST_EDITED);
             long lastUpdated = currentEpisodeCursor.getLong(EpisodeQuery.LAST_UPDATED);
-            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(SgApp.from(getActivity()),
-                    showTvdbId, currentEpisodeTvdbId, lastEdited, lastUpdated);
+            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(getContext(), showTvdbId,
+                    currentEpisodeTvdbId, lastEdited, lastUpdated);
         }
 
         if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {

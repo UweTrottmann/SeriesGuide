@@ -10,7 +10,6 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import javax.inject.Inject;
 import timber.log.Timber;
 
 /**
@@ -26,13 +25,11 @@ public class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
 
     private final int showTvdbId;
     private String language;
-    @Inject TvdbTools tvdbTools;
 
     public TvdbShowLoader(Context context, int showTvdbId, @Nullable String language) {
         super(context);
         this.showTvdbId = showTvdbId;
         this.language = language;
-        SgApp.getServicesComponent(context).inject(this);
     }
 
     @Override
@@ -45,6 +42,7 @@ public class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
                 // fall back to user preferred language
                 language = DisplaySettings.getContentLanguage(getContext());
             }
+            TvdbTools tvdbTools = SgApp.getServicesComponent(getContext()).tvdbTools();
             result.show = tvdbTools.getShowDetails(showTvdbId, language);
         } catch (TvdbException e) {
             Timber.e(e, "Downloading TVDb show failed");

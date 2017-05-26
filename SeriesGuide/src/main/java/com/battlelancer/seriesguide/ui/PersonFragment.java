@@ -22,7 +22,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.loaders.PersonLoader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TmdbTools;
@@ -160,7 +159,7 @@ public class PersonFragment extends Fragment {
             setProgressVisibility(true);
 
             int tmdbId = getArguments().getInt(InitBundle.PERSON_TMDB_ID);
-            return new PersonLoader((SgApp) getActivity().getApplication(), tmdbId);
+            return new PersonLoader(getContext(), tmdbId);
         }
 
         @Override

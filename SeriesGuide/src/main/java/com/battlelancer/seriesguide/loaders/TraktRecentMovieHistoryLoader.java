@@ -1,8 +1,10 @@
 package com.battlelancer.seriesguide.loaders;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
@@ -62,10 +64,11 @@ public class TraktRecentMovieHistoryLoader extends TraktRecentEpisodeHistoryLoad
 
     @Override
     protected Call<List<HistoryEntry>> buildCall() {
-        return buildUserMovieHistoryCall(traktUsers.get());
+        return buildUserMovieHistoryCall(getContext());
     }
 
-    public static Call<List<HistoryEntry>> buildUserMovieHistoryCall(Users traktUsers) {
+    public static Call<List<HistoryEntry>> buildUserMovieHistoryCall(Context context) {
+        Users traktUsers = SgApp.getServicesComponent(context).traktUsers();
         return traktUsers
                 .history(UserSlug.ME, HistoryType.MOVIES, 1, MAX_HISTORY_SIZE, null,
                         null, null);

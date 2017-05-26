@@ -612,8 +612,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         if (detailsTask == null || detailsTask.getStatus() == AsyncTask.Status.FINISHED) {
             long lastEdited = cursor.getLong(DetailsQuery.LAST_EDITED);
             long lastUpdated = cursor.getLong(DetailsQuery.LAST_UPDATED);
-            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(SgApp.from(getActivity()),
-                    mShowTvdbId, getEpisodeTvdbId(), lastEdited, lastUpdated);
+            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(getContext(), mShowTvdbId,
+                    getEpisodeTvdbId(), lastEdited, lastUpdated);
         }
 
         // update trakt ratings

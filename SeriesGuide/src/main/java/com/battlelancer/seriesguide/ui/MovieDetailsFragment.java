@@ -38,7 +38,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.extensions.ActionsHelper;
@@ -761,8 +760,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             = new LoaderManager.LoaderCallbacks<Videos.Video>() {
         @Override
         public Loader<Videos.Video> onCreateLoader(int loaderId, Bundle args) {
-            return new MovieTrailersLoader(SgApp.from(getActivity()),
-                    args.getInt(InitBundle.TMDB_ID));
+            return new MovieTrailersLoader(getContext(), args.getInt(InitBundle.TMDB_ID));
         }
 
         @Override

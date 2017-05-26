@@ -223,7 +223,7 @@ public class TraktAddFragment extends AddFragment {
             = new LoaderManager.LoaderCallbacks<TraktAddLoader.Result>() {
         @Override
         public Loader<TraktAddLoader.Result> onCreateLoader(int id, Bundle args) {
-            return new TraktAddLoader(SgApp.from(getActivity()), listType);
+            return new TraktAddLoader(getContext(), listType);
         }
 
         @Override
