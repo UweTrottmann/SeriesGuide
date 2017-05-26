@@ -31,7 +31,7 @@ import timber.log.Timber;
  * Adds shows to the local database, tries to get watched and collected episodes if a trakt account
  * is connected.
  */
-public class AddShowTask extends AsyncTask<Void, Integer, Void> {
+public class AddShowTask extends AsyncTask<Void, String, Void> {
 
     public static class OnShowAddedEvent {
 
@@ -100,8 +100,6 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     private boolean isFinishedAddingShows = false;
     private boolean isSilentMode;
     private boolean isMergingShows;
-    private String currentShowName;
-    private int currentShowTvdbId;
 
     public AddShowTask(Context context, List<SearchResult> shows, boolean isSilentMode,
             boolean isMergingShows) {
@@ -140,14 +138,10 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             return null;
         }
 
-        // set values required for progress update
-        SearchResult nextShow = addQueue.peek();
-        currentShowName = nextShow.title;
-        currentShowTvdbId = nextShow.tvdbid;
-
         if (!AndroidUtils.isNetworkConnected(context)) {
             Timber.d("Finished. No internet connection.");
-            publishProgress(RESULT_OFFLINE);
+            SearchResult nextShow = addQueue.peek();
+            publishProgress(RESULT_OFFLINE, nextShow.tvdbid, nextShow.title);
             return null;
         }
 
@@ -187,14 +181,14 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 return null;
             }
 
-            nextShow = addQueue.removeFirst();
+            SearchResult nextShow = addQueue.removeFirst();
             // set values required for progress update
-            currentShowName = nextShow.title;
-            currentShowTvdbId = nextShow.tvdbid;
+            String currentShowName = nextShow.title;
+            int currentShowTvdbId = nextShow.tvdbid;
 
             if (!AndroidUtils.isNetworkConnected(context)) {
                 Timber.d("Finished. No connection.");
-                publishProgress(RESULT_OFFLINE);
+                publishProgress(RESULT_OFFLINE, currentShowTvdbId, currentShowName);
                 failedMergingShows = true;
                 break;
             }
@@ -229,7 +223,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 Timber.e(e, "Adding show failed");
             }
 
-            publishProgress(result);
+            publishProgress(result, currentShowTvdbId, currentShowName);
             Timber.d("Finished adding show. (Result code: %s)", result);
         }
 
@@ -257,14 +251,21 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     }
 
     @Override
-    protected void onProgressUpdate(Integer... values) {
+    protected void onProgressUpdate(String... values) {
         if (isSilentMode) {
             Timber.d("SILENT MODE: do not show progress toast");
             return;
         }
 
+        // passing tvdb id and show name through values as fields may already have been
+        // overwritten on processing thread
+
         OnShowAddedEvent event = null;
-        switch (values[0]) {
+        // not catching format/null exceptions, if they happen we made a mistake passing values
+        int result = Integer.parseInt(values[0]);
+        int currentShowTvdbId = Integer.parseInt(values[1]);
+        String currentShowName = values[2];
+        switch (result) {
             case PROGRESS_SUCCESS:
                 // do nothing, user will see show added to show list
                 event = OnShowAddedEvent.successful(currentShowTvdbId);
@@ -316,6 +317,14 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         TaskManager.getInstance().releaseAddTaskRef();
+    }
+
+    private void publishProgress(int result) {
+        publishProgress(String.valueOf(result), "0", "");
+    }
+
+    private void publishProgress(int result, int showTvdbId, String showTitle) {
+        publishProgress(String.valueOf(result), String.valueOf(showTvdbId), showTitle);
     }
 
     @Nullable
