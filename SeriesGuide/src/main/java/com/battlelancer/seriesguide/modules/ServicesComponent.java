@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.modules;
 
+import com.battlelancer.seriesguide.backend.CloudSetupFragment;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
@@ -26,9 +27,9 @@ import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTools;
-import com.battlelancer.seriesguide.util.tasks.BaseMovieActionTask;
 import com.battlelancer.seriesguide.util.tasks.BaseRateItemTask;
 import com.battlelancer.seriesguide.util.tasks.BaseShowActionTask;
+import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Component;
 import javax.inject.Singleton;
 
@@ -41,13 +42,16 @@ import javax.inject.Singleton;
         TvdbModule.class
 })
 public interface ServicesComponent {
+
+    HexagonTools hexagonTools();
+    Sync traktSync();
+
     void inject(AddShowTask addShowTask);
-    void inject(BaseMovieActionTask baseMovieActionTask);
     void inject(BaseRateItemTask baseRateItemTask);
     void inject(BaseShowActionTask baseShowActionTask);
+    void inject(CloudSetupFragment cloudSetupFragment);
     void inject(ConnectTraktTask connectTraktTask);
     void inject(EpisodeTools.EpisodeFlagTask episodeFlagTask);
-    void inject(HexagonTools hexagonTools);
     void inject(MovieCreditsLoader movieCreditsLoader);
     void inject(MovieTrailersLoader movieTrailersLoader);
     void inject(MovieTools movieTools);

@@ -32,7 +32,8 @@ public class RemoveListItemTask extends BaseActionTask {
     @Override
     protected Integer doBackgroundAction(Void... params) {
         if (isSendingToHexagon()) {
-            Lists listsService = getContext().getHexagonTools().getListsService();
+            HexagonTools hexagonTools = SgApp.getServicesComponent(getContext()).hexagonTools();
+            Lists listsService = hexagonTools.getListsService();
             if (listsService == null) {
                 return ERROR_HEXAGON_API; // no longer signed in
             }

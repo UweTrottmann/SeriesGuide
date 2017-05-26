@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
@@ -177,7 +178,9 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
             public void onDismissed(Snackbar snackbar, int event) {
                 if (event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
                     // user has dismissed warning, so disable Cloud
-                    SgApp.from(BaseTopActivity.this).getHexagonTools().setDisabled();
+                    HexagonTools hexagonTools = SgApp.getServicesComponent(BaseTopActivity.this)
+                            .hexagonTools();
+                    hexagonTools.setDisabled();
                 }
             }
         }).setAction(R.string.hexagon_signin, new View.OnClickListener() {

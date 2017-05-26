@@ -9,7 +9,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
@@ -51,12 +50,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
 
 /**
  * Handles credentials and services for interacting with Hexagon.
  */
+@Singleton // needs global state for lastSignInCheck + to avoid rebuilding services
 public class HexagonTools {
 
     private static final String HEXAGON_ERROR_CATEGORY = "Hexagon Error";
@@ -69,7 +70,7 @@ public class HexagonTools {
     private static GoogleSignInOptions googleSignInOptions;
 
     private final Context context;
-    @Inject Lazy<MovieTools> movieTools;
+    private final Lazy<MovieTools> movieTools;
     private GoogleApiClient googleApiClient;
     private GoogleAccountCredential credential;
     private long lastSignInCheck;
@@ -79,9 +80,9 @@ public class HexagonTools {
     private Lists listsService;
 
     @Inject
-    public HexagonTools(@ApplicationContext Context context) {
+    public HexagonTools(@ApplicationContext Context context, Lazy<MovieTools> movieTools) {
         this.context = context;
-        SgApp.getServicesComponent(context).inject(this);
+        this.movieTools = movieTools;
     }
 
     /**
