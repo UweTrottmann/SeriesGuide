@@ -312,7 +312,7 @@ public class ShowsActivity extends BaseTopActivity implements
         }
 
         // update next episodes
-        TaskManager.getInstance(this).tryNextEpisodeUpdateTask();
+        TaskManager.getInstance().tryNextEpisodeUpdateTask(this);
     }
 
     @Override
@@ -385,7 +385,7 @@ public class ShowsActivity extends BaseTopActivity implements
      */
     @Override
     public void onAddShow(SearchResult show) {
-        TaskManager.getInstance(this).performAddTask(this, show);
+        TaskManager.getInstance().performAddTask(this, show);
     }
 
     /**

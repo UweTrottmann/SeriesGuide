@@ -360,7 +360,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             // update next episodes for all shows
-            TaskManager.getInstance(getContext()).tryNextEpisodeUpdateTask();
+            TaskManager.getInstance().tryNextEpisodeUpdateTask(getContext());
 
             // store time of update, set retry counter on failure
             if (resultCode == UpdateResult.SUCCESS) {

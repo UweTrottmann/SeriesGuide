@@ -441,7 +441,7 @@ public class HexagonTools {
         // add new shows
         if (newShows.size() > 0) {
             List<SearchResult> newShowsList = new LinkedList<>(newShows.values());
-            TaskManager.getInstance(context).performAddTask(context, newShowsList, true, !hasMergedShows);
+            TaskManager.getInstance().performAddTask(context, newShowsList, true, !hasMergedShows);
         } else if (!hasMergedShows) {
             // set shows as merged
             HexagonSettings.setHasMergedShows(context, true);

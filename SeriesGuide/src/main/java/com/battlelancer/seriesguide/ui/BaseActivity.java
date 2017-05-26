@@ -169,7 +169,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 return false;
             }
 
-            TaskManager.getInstance(this).tryBackupTask();
+            TaskManager.getInstance().tryBackupTask(this);
             return true;
         } else {
             return false;

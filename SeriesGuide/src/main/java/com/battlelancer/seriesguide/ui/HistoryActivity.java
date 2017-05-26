@@ -78,6 +78,6 @@ public class HistoryActivity extends BaseActivity implements
      */
     @Override
     public void onAddShow(SearchResult show) {
-        TaskManager.getInstance(this).performAddTask(this, show);
+        TaskManager.getInstance().performAddTask(this, show);
     }
 }

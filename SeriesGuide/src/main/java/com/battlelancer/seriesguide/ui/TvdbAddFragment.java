@@ -95,7 +95,7 @@ public class TvdbAddFragment extends AddFragment {
         @Override
         public void onAddClick(SearchResult item) {
             EventBus.getDefault().post(new OnAddingShowEvent(item.tvdbid));
-            TaskManager.getInstance(getContext()).performAddTask(getContext(), item);
+            TaskManager.getInstance().performAddTask(getContext(), item);
         }
 
         @Override

@@ -40,4 +40,9 @@ public class LatestEpisodeUpdateTask extends AsyncTask<Integer, Void, Void> {
 
         return null;
     }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        TaskManager.getInstance().releaseNextEpisodeUpdateTaskRef();
+    }
 }

@@ -96,7 +96,7 @@ public class TraktAddFragment extends AddFragment {
         @Override
         public void onAddClick(SearchResult item) {
             EventBus.getDefault().post(new OnAddingShowEvent(item.tvdbid));
-            TaskManager.getInstance(getContext()).performAddTask(getContext(), item);
+            TaskManager.getInstance().performAddTask(getContext(), item);
         }
 
         @Override
@@ -163,8 +163,7 @@ public class TraktAddFragment extends AddFragment {
                     }
                 }
                 EventBus.getDefault().post(new OnAddingShowEvent());
-                TaskManager.getInstance(getActivity())
-                        .performAddTask(getContext(), showsToAdd, false, false);
+                TaskManager.getInstance().performAddTask(getContext(), showsToAdd, false, false);
             }
             // disable the item so the user has to come back
             item.setEnabled(false);

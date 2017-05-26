@@ -313,6 +313,11 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         }
     }
 
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        TaskManager.getInstance().releaseAddTaskRef();
+    }
+
     @Nullable
     private HashMap<Integer, BaseShow> getTraktShows(String action,
             boolean isCollectionNotWatched) {
