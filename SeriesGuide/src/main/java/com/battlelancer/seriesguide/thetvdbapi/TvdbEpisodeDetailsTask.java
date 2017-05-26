@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.thetvdbapi;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v4.os.AsyncTaskCompat;
@@ -13,7 +14,6 @@ import com.uwetrottmann.thetvdb.entities.Episode;
 import com.uwetrottmann.thetvdb.entities.EpisodeResponse;
 import com.uwetrottmann.thetvdb.services.TheTvdbEpisodes;
 import java.io.IOException;
-import javax.inject.Inject;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -23,11 +23,12 @@ import timber.log.Timber;
 public class TvdbEpisodeDetailsTask extends AsyncTask<Void, Void, Void> {
 
     @Nullable
-    public static TvdbEpisodeDetailsTask runIfOutdated(SgApp app, int showTvdbId, int episodeTvdbId,
+    public static TvdbEpisodeDetailsTask runIfOutdated(Context context, int showTvdbId,
+            int episodeTvdbId,
             long lastEdited, long lastUpdated) {
         if ((lastUpdated == 0 || lastEdited > lastUpdated)
-                && Utils.isAllowedLargeDataConnection(app)) {
-            TvdbEpisodeDetailsTask detailsTask = new TvdbEpisodeDetailsTask(app, showTvdbId,
+                && Utils.isAllowedLargeDataConnection(context)) {
+            TvdbEpisodeDetailsTask detailsTask = new TvdbEpisodeDetailsTask(context, showTvdbId,
                     episodeTvdbId, lastEdited);
             AsyncTaskCompat.executeParallel(detailsTask);
             return detailsTask;
@@ -36,18 +37,17 @@ public class TvdbEpisodeDetailsTask extends AsyncTask<Void, Void, Void> {
         }
     }
 
-    private final SgApp app;
+    private final Context context;
     private final int showTvdbId;
     private final int episodeTvdbId;
     private final long lastEdited;
-    @Inject TheTvdbEpisodes tvdbEpisodes;
 
-    public TvdbEpisodeDetailsTask(SgApp app, int showTvdbId, int episodeTvdbId, long lastEdited) {
-        this.app = app;
+    public TvdbEpisodeDetailsTask(Context context, int showTvdbId, int episodeTvdbId,
+            long lastEdited) {
+        this.context = context.getApplicationContext();
         this.showTvdbId = showTvdbId;
         this.episodeTvdbId = episodeTvdbId;
         this.lastEdited = lastEdited;
-        app.getServicesComponent().inject(this);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class TvdbEpisodeDetailsTask extends AsyncTask<Void, Void, Void> {
             return null;
         }
 
-        String language = TvdbTools.getShowLanguage(app, showTvdbId);
+        String language = TvdbTools.getShowLanguage(context, showTvdbId);
         if (language == null) {
             return null; // failed to get language
         }
@@ -80,7 +80,7 @@ public class TvdbEpisodeDetailsTask extends AsyncTask<Void, Void, Void> {
         // do not use current last updated value as this task does not update all episode properties
         values.put(Episodes.LAST_UPDATED, lastEdited);
 
-        ContentResolver resolver = app.getContentResolver();
+        ContentResolver resolver = context.getContentResolver();
         resolver.update(Episodes.buildEpisodeUri(episodeTvdbId), values, null, null);
 
         // make sure other loaders (activity, overview, details) are notified
@@ -91,6 +91,7 @@ public class TvdbEpisodeDetailsTask extends AsyncTask<Void, Void, Void> {
 
     @Nullable
     private Episode.FullEpisode getEpisode(String language) {
+        TheTvdbEpisodes tvdbEpisodes = SgApp.getServicesComponent(context).tvdbEpisodes();
         try {
             Response<EpisodeResponse> response = tvdbEpisodes.get(episodeTvdbId, language)
                     .execute();

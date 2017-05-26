@@ -29,6 +29,6 @@ public class TraktMovieHistoryLoader extends TraktEpisodeHistoryLoader {
 
     @Override
     protected Call<List<HistoryEntry>> buildCall() {
-        return TraktRecentMovieHistoryLoader.buildUserMovieHistoryCall(traktUsers.get());
+        return TraktRecentMovieHistoryLoader.buildUserMovieHistoryCall(getContext());
     }
 }

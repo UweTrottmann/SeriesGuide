@@ -16,12 +16,12 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Xml;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
+import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
@@ -81,25 +82,37 @@ public class TvdbTools {
     private static final String TVDB_PARAM_LANGUAGE = "&language=";
     private static final String[] LANGUAGE_QUERY_PROJECTION = new String[] { Shows.LANGUAGE };
 
-    private static TvdbTools tvdbTools;
-    private final SgApp app;
-    @Inject Lazy<TheTvdbSearch> tvdbSearch;
-    @Inject Lazy<TheTvdbSeries> tvdbSeries;
-    @Inject Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch;
-    @Inject Lazy<com.uwetrottmann.trakt5.services.Shows> traktShows;
-    @Inject Lazy<OkHttpClient> okHttpClient;
-
-    public static synchronized TvdbTools getInstance(SgApp app) {
-        if (tvdbTools == null) {
-            tvdbTools = new TvdbTools(app);
-        }
-        return tvdbTools;
-    }
+    private final Context context;
+    Lazy<HexagonTools> hexagonTools;
+    Lazy<ShowTools> showTools;
+    Lazy<TraktTools> traktTools;
+    Lazy<TheTvdbSearch> tvdbSearch;
+    Lazy<TheTvdbSeries> tvdbSeries;
+    Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch;
+    Lazy<com.uwetrottmann.trakt5.services.Shows> traktShows;
+    Lazy<OkHttpClient> okHttpClient;
 
     @Inject
-    public TvdbTools(SgApp app) {
-        this.app = app;
-        app.getServicesComponent().inject(this);
+    public TvdbTools(
+            @ApplicationContext Context context,
+            Lazy<HexagonTools> hexagonTools,
+            Lazy<ShowTools> showTools,
+            Lazy<TraktTools> traktTools,
+            Lazy<TheTvdbSearch> tvdbSearch,
+            Lazy<TheTvdbSeries> tvdbSeries,
+            Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch,
+            Lazy<com.uwetrottmann.trakt5.services.Shows> traktShows,
+            Lazy<OkHttpClient> okHttpClient
+    ) {
+        this.context = context;
+        this.hexagonTools = hexagonTools;
+        this.showTools = showTools;
+        this.traktTools = traktTools;
+        this.tvdbSearch = tvdbSearch;
+        this.tvdbSeries = tvdbSeries;
+        this.traktSearch = traktSearch;
+        this.traktShows = traktShows;
+        this.okHttpClient = okHttpClient;
     }
 
     /**
@@ -138,39 +151,40 @@ public class TvdbTools {
             @Nullable HashMap<Integer, BaseShow> traktCollection,
             @Nullable HashMap<Integer, BaseShow> traktWatched)
             throws TvdbException {
-        boolean isShowExists = DBUtils.isShowExists(app, showTvdbId);
+        boolean isShowExists = DBUtils.isShowExists(context, showTvdbId);
         if (isShowExists) {
             return false;
         }
 
         // get show and determine the language to use
-        boolean hexagonEnabled = HexagonSettings.isEnabled(app);
+        boolean hexagonEnabled = HexagonSettings.isEnabled(context);
         Show show = getShowDetailsWithHexagon(showTvdbId, language, hexagonEnabled);
         language = show.language;
 
         // get episodes and store everything to the database
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        batch.add(DBUtils.buildShowOp(app, show, true));
+        batch.add(DBUtils.buildShowOp(context, show, true));
         getEpisodesAndUpdateDatabase(batch, show, language);
 
         // restore episode flags...
         if (hexagonEnabled) {
             // ...from Hexagon
-            boolean success = EpisodeTools.Download.flagsFromHexagon(app, showTvdbId);
+            boolean success = EpisodeTools.Download.flagsFromHexagon(context, hexagonTools.get(),
+                    showTvdbId);
             if (!success) {
                 // failed to download episode flags
                 // flag show as needing an episode merge
                 ContentValues values = new ContentValues();
                 values.put(Shows.HEXAGON_MERGE_COMPLETE, false);
-                app.getContentResolver()
+                context.getContentResolver()
                         .update(Shows.buildShowUri(showTvdbId), values, null, null);
             }
 
             // flag show to be auto-added (again), send (new) language to Hexagon
-            app.getShowTools().sendIsAdded(showTvdbId, language);
+            showTools.get().sendIsAdded(showTvdbId, language);
         } else {
             // ...from trakt
-            TraktTools traktTools = app.getTraktTools();
+            TraktTools traktTools = this.traktTools.get();
             if (!traktTools.storeEpisodeFlags(traktWatched, showTvdbId,
                     TraktTools.Flag.WATCHED)) {
                 throw new TvdbDataException("addShow: storing trakt watched episodes failed.");
@@ -182,7 +196,7 @@ public class TvdbTools {
         }
 
         // calculate next episode
-        DBUtils.updateLatestEpisode(app, showTvdbId);
+        DBUtils.updateLatestEpisode(context, showTvdbId);
 
         return true;
     }
@@ -192,7 +206,7 @@ public class TvdbTools {
      */
     public void updateShow(int showTvdbId) throws TvdbException {
         // determine which translation to get
-        String language = getShowLanguage(app, showTvdbId);
+        String language = getShowLanguage(context, showTvdbId);
         if (language == null) {
             return;
         }
@@ -200,7 +214,7 @@ public class TvdbTools {
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
         Show show = getShowDetails(showTvdbId, language);
-        batch.add(DBUtils.buildShowOp(app, show, false));
+        batch.add(DBUtils.buildShowOp(context, show, false));
 
         // get episodes in the language as returned in the TVDB show entry
         // the show might not be available in the desired language
@@ -385,13 +399,13 @@ public class TvdbTools {
         newEpisodesValues = importShowEpisodes.toArray(newEpisodesValues);
 
         try {
-            DBUtils.applyInSmallBatches(app, batch);
+            DBUtils.applyInSmallBatches(context, batch);
         } catch (OperationApplicationException e) {
             throw new TvdbDataException("getEpisodesAndUpdateDatabase: " + e.getMessage(), e);
         }
 
         // insert all new episodes in bulk
-        app.getContentResolver().bulkInsert(Episodes.CONTENT_URI, newEpisodesValues);
+        context.getContentResolver().bulkInsert(Episodes.CONTENT_URI, newEpisodesValues);
     }
 
     /**
@@ -407,12 +421,12 @@ public class TvdbTools {
         if (hexagonEnabled) {
             try {
                 com.uwetrottmann.seriesguide.backend.shows.Shows showsService =
-                        app.getHexagonTools().getShowsService();
+                        hexagonTools.get().getShowsService();
                 if (showsService != null) {
                     hexagonShow = showsService.getShow().setShowTvdbId(showTvdbId).execute();
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(app, "get show details", e);
+                HexagonTools.trackFailedRequest(context, "get show details", e);
                 throw new TvdbCloudException("getShowDetailsWithHexagon: " + e.getMessage(), e);
             }
         }
@@ -423,7 +437,7 @@ public class TvdbTools {
         }
         // if we still have no language, use the users default language
         if (TextUtils.isEmpty(language)) {
-            language = DisplaySettings.getContentLanguage(app);
+            language = DisplaySettings.getContentLanguage(context);
         }
 
         // get show info from TVDb and trakt
@@ -465,7 +479,7 @@ public class TvdbTools {
 
         if (showTraktId != null) {
             // get some more details from trakt
-            com.uwetrottmann.trakt5.entities.Show traktShow = SgTrakt.executeCall(app,
+            com.uwetrottmann.trakt5.entities.Show traktShow = SgTrakt.executeCall(context,
                     traktShows.get().summary(String.valueOf(showTraktId), Extended.FULL),
                     "get show summary"
             );
@@ -504,7 +518,7 @@ public class TvdbTools {
     @Nullable
     private Integer lookupShowTraktId(int showTvdbId) throws TvdbException {
         List<com.uwetrottmann.trakt5.entities.SearchResult> searchResults = SgTrakt.executeCall(
-                app,
+                context,
                 traktSearch.get().idLookup(IdType.TVDB, String.valueOf(showTvdbId), Type.SHOW,
                         null, 1, 1),
                 "show trakt id lookup"
@@ -556,9 +570,9 @@ public class TvdbTools {
         if (noTranslation || TextUtils.isEmpty(series.overview)) {
             // add note about non-translated or non-existing overview
             String untranslatedOverview = series.overview;
-            result.overview = app.getString(R.string.no_translation,
-                    LanguageTools.getShowLanguageStringFor(app, desiredLanguage),
-                    app.getString(R.string.tvdb));
+            result.overview = context.getString(R.string.no_translation,
+                    LanguageTools.getShowLanguageStringFor(context, desiredLanguage),
+                    context.getString(R.string.tvdb));
             if (!TextUtils.isEmpty(untranslatedOverview)) {
                 result.overview += "\n\n" + untranslatedOverview;
             }
@@ -649,11 +663,11 @@ public class TvdbTools {
             Show show, @NonNull String language) throws TvdbException {
         final int showTvdbId = show.tvdb_id;
         final ArrayList<ContentValues> newEpisodesValues = new ArrayList<>();
-        final HashMap<Integer, Long> localEpisodeIds = DBUtils.getEpisodeMapForShow(app,
+        final HashMap<Integer, Long> localEpisodeIds = DBUtils.getEpisodeMapForShow(context,
                 showTvdbId);
         @SuppressLint("UseSparseArrays") final HashMap<Integer, Long> removableEpisodeIds =
                 new HashMap<>(localEpisodeIds); // just copy episodes list, then remove valid ones
-        final HashSet<Integer> localSeasonIds = DBUtils.getSeasonIdsOfShow(app, showTvdbId);
+        final HashSet<Integer> localSeasonIds = DBUtils.getSeasonIdsOfShow(context, showTvdbId);
         // store updated seasons to avoid duplicate ops
         final HashSet<Integer> seasonIdsToUpdate = new HashSet<>();
 
@@ -708,7 +722,7 @@ public class TvdbTools {
                 values.put(Episodes.SEASON, episode.airedSeason);
                 values.put(Episodes.DVDNUMBER, episode.dvdEpisodeNumber);
 
-                long releaseDateTime = TimeTools.parseEpisodeReleaseDate(app, showTimeZone,
+                long releaseDateTime = TimeTools.parseEpisodeReleaseDate(context, showTimeZone,
                         episode.firstAired, showReleaseTime, show.country, show.network,
                         deviceTimeZone);
                 values.put(Episodes.FIRSTAIREDMS, releaseDateTime);
@@ -777,6 +791,7 @@ public class TvdbTools {
         ensureSuccessfulResponse(response, logTag);
 
         try {
+            //noinspection ConstantConditions
             final InputStream input = response.body().byteStream();
             if (isZipFile) {
                 // We downloaded the compressed file from TheTVDB

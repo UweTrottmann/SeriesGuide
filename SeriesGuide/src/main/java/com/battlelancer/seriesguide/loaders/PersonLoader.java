@@ -1,12 +1,12 @@
 package com.battlelancer.seriesguide.loaders;
 
+import android.content.Context;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.entities.Person;
 import com.uwetrottmann.tmdb2.services.PeopleService;
 import java.io.IOException;
-import javax.inject.Inject;
 import retrofit2.Response;
 
 /**
@@ -14,17 +14,16 @@ import retrofit2.Response;
  */
 public class PersonLoader extends GenericSimpleLoader<Person> {
 
-    @Inject PeopleService peopleService;
     private final int mTmdbId;
 
-    public PersonLoader(SgApp app, int tmdbId) {
-        super(app);
-        app.getServicesComponent().inject(this);
+    public PersonLoader(Context context, int tmdbId) {
+        super(context);
         mTmdbId = tmdbId;
     }
 
     @Override
     public Person loadInBackground() {
+        PeopleService peopleService = SgApp.getServicesComponent(getContext()).peopleService();
         Response<Person> response;
         try {
             response = peopleService.summary(mTmdbId).execute();

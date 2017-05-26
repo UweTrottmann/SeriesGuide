@@ -32,7 +32,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.SeasonsAdapter;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
@@ -207,7 +206,7 @@ public class SeasonsFragment extends ListFragment {
     }
 
     private void onFlagSeasonSkipped(long seasonId, int seasonNumber) {
-        EpisodeTools.seasonWatched(SgApp.from(getActivity()), getShowId(), (int) seasonId,
+        EpisodeTools.seasonWatched(getContext(), getShowId(), (int) seasonId,
                 seasonNumber, EpisodeFlags.SKIPPED);
     }
 
@@ -215,7 +214,7 @@ public class SeasonsFragment extends ListFragment {
      * Changes the seasons episodes watched flags, updates the status label of the season.
      */
     private void onFlagSeasonWatched(long seasonId, int seasonNumber, boolean isWatched) {
-        EpisodeTools.seasonWatched(SgApp.from(getActivity()), getShowId(), (int) seasonId,
+        EpisodeTools.seasonWatched(getContext(), getShowId(), (int) seasonId,
                 seasonNumber, isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
     }
 
@@ -223,7 +222,7 @@ public class SeasonsFragment extends ListFragment {
      * Changes the seasons episodes collected flags.
      */
     private void onFlagSeasonCollected(long seasonId, int seasonNumber, boolean isCollected) {
-        EpisodeTools.seasonCollected(SgApp.from(getActivity()), getShowId(), (int) seasonId,
+        EpisodeTools.seasonCollected(getContext(), getShowId(), (int) seasonId,
                 seasonNumber, isCollected);
     }
 
@@ -232,7 +231,7 @@ public class SeasonsFragment extends ListFragment {
      * seasons.
      */
     private void onFlagShowWatched(boolean isWatched) {
-        EpisodeTools.showWatched(SgApp.from(getActivity()), getShowId(), isWatched);
+        EpisodeTools.showWatched(getContext(), getShowId(), isWatched);
     }
 
     /**
@@ -240,7 +239,7 @@ public class SeasonsFragment extends ListFragment {
      * all seasons.
      */
     private void onFlagShowCollected(boolean isCollected) {
-        EpisodeTools.showCollected(SgApp.from(getActivity()), getShowId(), isCollected);
+        EpisodeTools.showCollected(getContext(), getShowId(), isCollected);
     }
 
     /**

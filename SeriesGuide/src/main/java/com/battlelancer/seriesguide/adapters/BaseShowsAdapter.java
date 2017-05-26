@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.ViewTools;
 import java.util.Date;
@@ -23,19 +22,18 @@ import java.util.Date;
  */
 public abstract class BaseShowsAdapter extends CursorAdapter {
 
-    public interface OnContextMenuClickListener {
+    public interface OnItemClickListener {
         void onClick(View view, ShowViewHolder viewHolder);
+        void onFavoriteClick(int showTvdbId, boolean isFavorite);
     }
 
-    protected final SgApp app;
-    private OnContextMenuClickListener onContextMenuClickListener;
+    private OnItemClickListener onItemClickListener;
     private final VectorDrawableCompat drawableStar;
     private final VectorDrawableCompat drawableStarZero;
 
-    BaseShowsAdapter(Activity activity, OnContextMenuClickListener listener) {
+    BaseShowsAdapter(Activity activity, OnItemClickListener listener) {
         super(activity, null, 0);
-        this.app = SgApp.from(activity);
-        this.onContextMenuClickListener = listener;
+        this.onItemClickListener = listener;
 
         Resources.Theme theme = activity.getTheme();
         drawableStar = ViewTools.createVectorIcon(activity, theme,
@@ -48,7 +46,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         View v = LayoutInflater.from(context).inflate(R.layout.item_show, parent, false);
 
-        ShowViewHolder viewHolder = new ShowViewHolder(v, app, onContextMenuClickListener);
+        ShowViewHolder viewHolder = new ShowViewHolder(v, onItemClickListener);
         v.setTag(viewHolder);
 
         return v;
@@ -109,7 +107,9 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         public boolean isFavorited;
         public boolean isHidden;
 
-        public ShowViewHolder(View v, final SgApp app, final OnContextMenuClickListener listener) {
+        private OnItemClickListener clickListener;
+
+        public ShowViewHolder(View v, OnItemClickListener onItemClickListener) {
             name = (TextView) v.findViewById(R.id.seriesname);
             timeAndNetwork = (TextView) v.findViewById(R.id.textViewShowsTimeAndNetwork);
             episode = (TextView) v.findViewById(R.id.TextViewShowListNextEpisode);
@@ -118,20 +118,23 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
             poster = (ImageView) v.findViewById(R.id.showposter);
             favorited = (ImageView) v.findViewById(R.id.favoritedLabel);
             contextMenu = (ImageView) v.findViewById(R.id.imageViewShowsContextMenu);
+            clickListener = onItemClickListener;
 
             // favorite star
             favorited.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    app.getShowTools().storeIsFavorite(showTvdbId, !isFavorited);
+                    if (clickListener != null) {
+                        clickListener.onFavoriteClick(showTvdbId, !isFavorited);
+                    }
                 }
             });
             // context menu
             contextMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null) {
-                        listener.onClick(v, ShowViewHolder.this);
+                    if (clickListener != null) {
+                        clickListener.onClick(v, ShowViewHolder.this);
                     }
                 }
             });

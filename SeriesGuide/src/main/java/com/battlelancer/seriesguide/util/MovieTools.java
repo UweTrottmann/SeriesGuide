@@ -13,10 +13,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.os.AsyncTaskCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.MovieDetails;
+import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -91,14 +91,24 @@ public class MovieTools {
     };
 
     private final Context context;
-    @Inject Lazy<MoviesService> tmdbMovies;
-    @Inject Lazy<Movies> traktMovies;
-    @Inject Lazy<Search> traktSearch;
-    @Inject Lazy<Sync> traktSync;
+    private final Lazy<MoviesService> tmdbMovies;
+    private final Lazy<Movies> traktMovies;
+    private final Lazy<Search> traktSearch;
+    private final Lazy<Sync> traktSync;
 
-    public MovieTools(SgApp app) {
-        context = app.getApplicationContext();
-        app.getServicesComponent().inject(this);
+    @Inject
+    public MovieTools(
+            @ApplicationContext Context context,
+            Lazy<MoviesService> tmdbMovies,
+            Lazy<Movies> traktMovies,
+            Lazy<Search> traktSearch,
+            Lazy<Sync> traktSync
+    ) {
+        this.context = context;
+        this.tmdbMovies = tmdbMovies;
+        this.traktMovies = traktMovies;
+        this.traktSearch = traktSearch;
+        this.traktSync = traktSync;
     }
 
     /**
@@ -131,12 +141,12 @@ public class MovieTools {
         Timber.d("deleteUnusedMovies: removed %s movies", rowsDeleted);
     }
 
-    public static void addToCollection(SgApp app, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new AddMovieToCollectionTask(app, movieTmdbId));
+    public static void addToCollection(Context context, int movieTmdbId) {
+        AsyncTaskCompat.executeParallel(new AddMovieToCollectionTask(context, movieTmdbId));
     }
 
-    public static void addToWatchlist(SgApp app, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new AddMovieToWatchlistTask(app, movieTmdbId));
+    public static void addToWatchlist(Context context, int movieTmdbId) {
+        AsyncTaskCompat.executeParallel(new AddMovieToWatchlistTask(context, movieTmdbId));
     }
 
     /**
@@ -158,12 +168,12 @@ public class MovieTools {
         }
     }
 
-    public static void removeFromCollection(SgApp app, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new RemoveMovieFromCollectionTask(app, movieTmdbId));
+    public static void removeFromCollection(Context context, int movieTmdbId) {
+        AsyncTaskCompat.executeParallel(new RemoveMovieFromCollectionTask(context, movieTmdbId));
     }
 
-    public static void removeFromWatchlist(SgApp app, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new RemoveMovieFromWatchlistTask(app, movieTmdbId));
+    public static void removeFromWatchlist(Context context, int movieTmdbId) {
+        AsyncTaskCompat.executeParallel(new RemoveMovieFromWatchlistTask(context, movieTmdbId));
     }
 
     /**
@@ -193,12 +203,12 @@ public class MovieTools {
         }
     }
 
-    public static void watchedMovie(SgApp app, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new SetMovieWatchedTask(app, movieTmdbId));
+    public static void watchedMovie(Context context, int movieTmdbId) {
+        AsyncTaskCompat.executeParallel(new SetMovieWatchedTask(context, movieTmdbId));
     }
 
-    public static void unwatchedMovie(SgApp app, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new SetMovieUnwatchedTask(app, movieTmdbId));
+    public static void unwatchedMovie(Context context, int movieTmdbId) {
+        AsyncTaskCompat.executeParallel(new SetMovieUnwatchedTask(context, movieTmdbId));
     }
 
     /**
@@ -456,15 +466,15 @@ public class MovieTools {
          * <p> Adds movie tmdb ids to the respective collection or watchlist set.
          */
         @SuppressLint("ApplySharedPref")
-        public static boolean fromHexagon(SgApp app,
+        public static boolean fromHexagon(Context context, HexagonTools hexagonTools,
                 @NonNull Set<Integer> newCollectionMovies, @NonNull Set<Integer> newWatchlistMovies,
                 boolean hasMergedMovies) {
             List<com.uwetrottmann.seriesguide.backend.movies.model.Movie> movies;
             boolean hasMoreMovies = true;
             String cursor = null;
             long currentTime = System.currentTimeMillis();
-            DateTime lastSyncTime = new DateTime(HexagonSettings.getLastMoviesSyncTime(app));
-            HashSet<Integer> localMovies = getMovieTmdbIdsAsSet(app);
+            DateTime lastSyncTime = new DateTime(HexagonSettings.getLastMoviesSyncTime(context));
+            HashSet<Integer> localMovies = getMovieTmdbIdsAsSet(context);
             if (localMovies == null) {
                 Timber.e("fromHexagon: querying for local movies failed.");
                 return false;
@@ -478,14 +488,14 @@ public class MovieTools {
 
             while (hasMoreMovies) {
                 // abort if connection is lost
-                if (!AndroidUtils.isNetworkConnected(app)) {
+                if (!AndroidUtils.isNetworkConnected(context)) {
                     Timber.e("fromHexagon: no network connection");
                     return false;
                 }
 
                 try {
                     com.uwetrottmann.seriesguide.backend.movies.Movies moviesService
-                            = app.getHexagonTools().getMoviesService();
+                            = hexagonTools.getMoviesService();
                     if (moviesService == null) {
                         return false;
                     }
@@ -514,7 +524,7 @@ public class MovieTools {
                         hasMoreMovies = false;
                     }
                 } catch (IOException e) {
-                    HexagonTools.trackFailedRequest(app, "get movies", e);
+                    HexagonTools.trackFailedRequest(context, "get movies", e);
                     return false;
                 }
 
@@ -560,7 +570,7 @@ public class MovieTools {
                 }
 
                 try {
-                    DBUtils.applyInSmallBatches(app, batch);
+                    DBUtils.applyInSmallBatches(context, batch);
                 } catch (OperationApplicationException e) {
                     Timber.e(e, "fromHexagon: applying movie updates failed");
                     return false;
@@ -569,7 +579,7 @@ public class MovieTools {
 
             // set new last sync time
             if (hasMergedMovies) {
-                PreferenceManager.getDefaultSharedPreferences(app)
+                PreferenceManager.getDefaultSharedPreferences(context)
                         .edit()
                         .putLong(HexagonSettings.KEY_LAST_SYNC_MOVIES, currentTime)
                         .commit();
@@ -913,11 +923,11 @@ public class MovieTools {
         /**
          * Uploads all local movies to Hexagon.
          */
-        public static boolean toHexagon(SgApp app) {
+        public static boolean toHexagon(Context context, HexagonTools hexagonTools) {
             Timber.d("toHexagon: uploading all movies");
 
             List<com.uwetrottmann.seriesguide.backend.movies.model.Movie> movies = buildMovieList(
-                    app);
+                    context);
             if (movies == null) {
                 Timber.e("toHexagon: movie query was null");
                 return false;
@@ -933,13 +943,13 @@ public class MovieTools {
 
             try {
                 com.uwetrottmann.seriesguide.backend.movies.Movies moviesService
-                        = app.getHexagonTools().getMoviesService();
+                        = hexagonTools.getMoviesService();
                 if (moviesService == null) {
                     return false;
                 }
                 moviesService.save(movieList).execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(app, "save movies", e);
+                HexagonTools.trackFailedRequest(context, "save movies", e);
                 return false;
             }
 

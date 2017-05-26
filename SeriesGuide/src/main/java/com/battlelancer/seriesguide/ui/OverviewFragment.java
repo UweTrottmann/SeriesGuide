@@ -322,7 +322,8 @@ public class OverviewFragment extends Fragment implements
 
         // store new value
         boolean isFavorite = (Boolean) view.getTag();
-        SgApp.from(getActivity()).getShowTools().storeIsFavorite(showTvdbId, !isFavorite);
+        SgApp.getServicesComponent(getContext()).showTools()
+                .storeIsFavorite(showTvdbId, !isFavorite);
         Utils.trackAction(getActivity(), TAG, "Toggle favorited");
     }
 
@@ -357,7 +358,7 @@ public class OverviewFragment extends Fragment implements
         final int season = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
         final int episode = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
         final boolean isCollected = currentEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1;
-        EpisodeTools.episodeCollected(SgApp.from(getActivity()), showTvdbId,
+        EpisodeTools.episodeCollected(getContext(), showTvdbId,
                 currentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, !isCollected);
 
         Utils.trackAction(getActivity(), TAG, "Toggle Collected");
@@ -375,7 +376,7 @@ public class OverviewFragment extends Fragment implements
         }
         final int season = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
         final int episode = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-        EpisodeTools.episodeWatched(SgApp.from(getActivity()), showTvdbId,
+        EpisodeTools.episodeWatched(getContext(), showTvdbId,
                 currentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, episodeFlag);
     }
 
@@ -821,8 +822,8 @@ public class OverviewFragment extends Fragment implements
         if (detailsTask == null || detailsTask.getStatus() == AsyncTask.Status.FINISHED) {
             long lastEdited = currentEpisodeCursor.getLong(EpisodeQuery.LAST_EDITED);
             long lastUpdated = currentEpisodeCursor.getLong(EpisodeQuery.LAST_UPDATED);
-            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(SgApp.from(getActivity()),
-                    showTvdbId, currentEpisodeTvdbId, lastEdited, lastUpdated);
+            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(getContext(), showTvdbId,
+                    currentEpisodeTvdbId, lastEdited, lastUpdated);
         }
 
         if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {

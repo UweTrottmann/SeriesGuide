@@ -92,9 +92,10 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     private static final int RESULT_TRAKT_API_ERROR = 9;
     private static final int RESULT_TRAKT_AUTH_ERROR = 10;
 
-    private final SgApp app;
+    private final Context context;
     private final LinkedList<SearchResult> addQueue = new LinkedList<>();
 
+    @Inject TvdbTools tvdbTools;
     @Inject Lazy<Sync> traktSync;
     private boolean isFinishedAddingShows = false;
     private boolean isSilentMode;
@@ -102,10 +103,10 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     private String currentShowName;
     private int currentShowTvdbId;
 
-    public AddShowTask(SgApp app, List<SearchResult> shows, boolean isSilentMode,
+    public AddShowTask(Context context, List<SearchResult> shows, boolean isSilentMode,
             boolean isMergingShows) {
-        this.app = app;
-        app.getServicesComponent().inject(this);
+        this.context = context.getApplicationContext();
+        SgApp.getServicesComponent(context).inject(this);
         addQueue.addAll(shows);
         this.isSilentMode = isSilentMode;
         this.isMergingShows = isMergingShows;
@@ -144,7 +145,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         currentShowName = nextShow.title;
         currentShowTvdbId = nextShow.tvdbid;
 
-        if (!AndroidUtils.isNetworkConnected(app)) {
+        if (!AndroidUtils.isNetworkConnected(context)) {
             Timber.d("Finished. No internet connection.");
             publishProgress(RESULT_OFFLINE);
             return null;
@@ -158,7 +159,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         // if not connected to Hexagon, get episodes from trakt
         HashMap<Integer, BaseShow> traktCollection = null;
         HashMap<Integer, BaseShow> traktWatched = null;
-        if (!HexagonSettings.isEnabled(app) && TraktCredentials.get(app).hasCredentials()) {
+        if (!HexagonSettings.isEnabled(context) && TraktCredentials.get(context).hasCredentials()) {
             Timber.d("Getting watched and collected episodes from trakt.");
             // get collection
             HashMap<Integer, BaseShow> traktShows = getTraktShows("get collection", true);
@@ -191,7 +192,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             currentShowName = nextShow.title;
             currentShowTvdbId = nextShow.tvdbid;
 
-            if (!AndroidUtils.isNetworkConnected(app)) {
+            if (!AndroidUtils.isNetworkConnected(context)) {
                 Timber.d("Finished. No connection.");
                 publishProgress(RESULT_OFFLINE);
                 failedMergingShows = true;
@@ -199,7 +200,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             }
 
             try {
-                boolean addedShow = TvdbTools.getInstance(app)
+                boolean addedShow = tvdbTools
                         .addShow(nextShow.tvdbid, nextShow.language, traktCollection, traktWatched);
                 result = addedShow ? PROGRESS_SUCCESS : PROGRESS_EXISTS;
                 addedAtLeastOneShow = addedShow
@@ -236,19 +237,19 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
         // when merging shows down from Hexagon, set success flag
         if (isMergingShows && !failedMergingShows) {
-            HexagonSettings.setHasMergedShows(app, true);
+            HexagonSettings.setHasMergedShows(context, true);
         }
 
         if (addedAtLeastOneShow) {
             // make sure the next sync will download all ratings
-            PreferenceManager.getDefaultSharedPreferences(app).edit()
+            PreferenceManager.getDefaultSharedPreferences(context).edit()
                     .putLong(TraktSettings.KEY_LAST_SHOWS_RATED_AT, 0)
                     .putLong(TraktSettings.KEY_LAST_EPISODES_RATED_AT, 0)
                     .apply();
 
             // renew FTS3 table
             Timber.d("Renewing search table.");
-            DBUtils.rebuildFtsTable(app);
+            DBUtils.rebuildFtsTable(context);
         }
 
         Timber.d("Finished adding shows.");
@@ -269,41 +270,41 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 event = OnShowAddedEvent.successful(currentShowTvdbId);
                 break;
             case PROGRESS_EXISTS:
-                event = OnShowAddedEvent.exists(app, currentShowTvdbId, currentShowName);
+                event = OnShowAddedEvent.exists(context, currentShowTvdbId, currentShowName);
                 break;
             case PROGRESS_ERROR:
-                event = OnShowAddedEvent.failed(app, currentShowTvdbId,
-                        app.getString(R.string.add_error, currentShowName));
+                event = OnShowAddedEvent.failed(context, currentShowTvdbId,
+                        context.getString(R.string.add_error, currentShowName));
                 break;
             case PROGRESS_ERROR_TVDB:
-                event = OnShowAddedEvent.failedDetails(app, currentShowTvdbId, currentShowName,
-                        app.getString(R.string.api_error_generic, app.getString(R.string.tvdb)));
+                event = OnShowAddedEvent.failedDetails(context, currentShowTvdbId, currentShowName,
+                        context.getString(R.string.api_error_generic, context.getString(R.string.tvdb)));
                 break;
             case PROGRESS_ERROR_TVDB_NOT_EXISTS:
-                event = OnShowAddedEvent.failedDetails(app, currentShowTvdbId, currentShowName,
-                        app.getString(R.string.tvdb_error_does_not_exist));
+                event = OnShowAddedEvent.failedDetails(context, currentShowTvdbId, currentShowName,
+                        context.getString(R.string.tvdb_error_does_not_exist));
                 break;
             case PROGRESS_ERROR_TRAKT:
-                event = OnShowAddedEvent.failedDetails(app, currentShowTvdbId, currentShowName,
-                        app.getString(R.string.api_error_generic, app.getString(R.string.trakt)));
+                event = OnShowAddedEvent.failedDetails(context, currentShowTvdbId, currentShowName,
+                        context.getString(R.string.api_error_generic, context.getString(R.string.trakt)));
                 break;
             case PROGRESS_ERROR_HEXAGON:
-                event = OnShowAddedEvent.failedDetails(app, currentShowTvdbId, currentShowName,
-                        app.getString(R.string.api_error_generic, app.getString(R.string.hexagon)));
+                event = OnShowAddedEvent.failedDetails(context, currentShowTvdbId, currentShowName,
+                        context.getString(R.string.api_error_generic, context.getString(R.string.hexagon)));
                 break;
             case PROGRESS_ERROR_DATA:
-                event = OnShowAddedEvent.failedDetails(app, currentShowTvdbId, currentShowName,
-                        app.getString(R.string.database_error));
+                event = OnShowAddedEvent.failedDetails(context, currentShowTvdbId, currentShowName,
+                        context.getString(R.string.database_error));
                 break;
             case RESULT_OFFLINE:
-                event = OnShowAddedEvent.aborted(app.getString(R.string.offline));
+                event = OnShowAddedEvent.aborted(context.getString(R.string.offline));
                 break;
             case RESULT_TRAKT_API_ERROR:
-                event = OnShowAddedEvent.aborted(app.getString(R.string.api_error_generic,
-                        app.getString(R.string.trakt)));
+                event = OnShowAddedEvent.aborted(context.getString(R.string.api_error_generic,
+                        context.getString(R.string.trakt)));
                 break;
             case RESULT_TRAKT_AUTH_ERROR:
-                event = OnShowAddedEvent.aborted(app.getString(R.string.trakt_error_credentials));
+                event = OnShowAddedEvent.aborted(context.getString(R.string.trakt_error_credentials));
                 break;
         }
 
@@ -325,14 +326,14 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             if (response.isSuccessful()) {
                 return TraktTools.buildTraktShowsMap(response.body());
             } else {
-                if (SgTrakt.isUnauthorized(app, response)) {
+                if (SgTrakt.isUnauthorized(context, response)) {
                     publishProgress(RESULT_TRAKT_AUTH_ERROR);
                     return null;
                 }
-                SgTrakt.trackFailedRequest(app, action, response);
+                SgTrakt.trackFailedRequest(context, action, response);
             }
         } catch (IOException e) {
-            SgTrakt.trackFailedRequest(app, action, e);
+            SgTrakt.trackFailedRequest(context, action, e);
         }
         publishProgress(RESULT_TRAKT_API_ERROR);
         return null;

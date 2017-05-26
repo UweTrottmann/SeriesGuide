@@ -1,10 +1,10 @@
 package com.battlelancer.seriesguide.util.tasks;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
@@ -20,8 +20,8 @@ public class RateEpisodeTask extends BaseRateItemTask {
     /**
      * Stores the rating for the given episode in the database and sends it to trakt.
      */
-    public RateEpisodeTask(SgApp app, Rating rating, int episodeTvdbId) {
-        super(app, rating);
+    public RateEpisodeTask(Context context, Rating rating, int episodeTvdbId) {
+        super(context, rating);
         this.episodeTvdbId = episodeTvdbId;
     }
 

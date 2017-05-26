@@ -24,7 +24,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import butterknife.ButterKnife;
@@ -57,7 +56,7 @@ import org.greenrobot.eventbus.ThreadMode;
  * main view of the app.
  */
 public class ShowsFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, OnClickListener {
+        LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener, OnClickListener {
 
     private static final String TAG = "Shows";
     private static final String TAG_FIRST_RUN = "First Run";
@@ -604,8 +603,8 @@ public class ShowsFragment extends Fragment implements
                 SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
     }
 
-    private BaseShowsAdapter.OnContextMenuClickListener onShowMenuClickListener
-            = new BaseShowsAdapter.OnContextMenuClickListener() {
+    private BaseShowsAdapter.OnItemClickListener onShowMenuClickListener
+            = new BaseShowsAdapter.OnItemClickListener() {
         @Override
         public void onClick(View view, BaseShowsAdapter.ShowViewHolder viewHolder) {
             PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
@@ -621,9 +620,15 @@ public class ShowsFragment extends Fragment implements
             menu.findItem(R.id.menu_action_shows_unhide).setVisible(viewHolder.isHidden);
 
             popupMenu.setOnMenuItemClickListener(
-                    new ShowMenuItemClickListener(SgApp.from(getActivity()), getFragmentManager(),
+                    new ShowMenuItemClickListener(getContext(), getFragmentManager(),
                             viewHolder.showTvdbId, viewHolder.episodeTvdbId, TAG));
             popupMenu.show();
+        }
+
+        @Override
+        public void onFavoriteClick(int showTvdbId, boolean isFavorite) {
+            SgApp.getServicesComponent(getContext()).showTools()
+                    .storeIsFavorite(showTvdbId, isFavorite);
         }
     };
 

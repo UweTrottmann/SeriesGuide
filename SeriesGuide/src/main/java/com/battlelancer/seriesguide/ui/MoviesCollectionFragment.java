@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
 import com.battlelancer.seriesguide.settings.MoviesDistillationSettings;
 import com.battlelancer.seriesguide.util.MovieTools;
@@ -44,7 +43,7 @@ public class MoviesCollectionFragment extends MoviesBaseFragment {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case CONTEXT_COLLECTION_REMOVE_ID: {
-                        MovieTools.removeFromCollection(SgApp.from(getActivity()), movieTmdbId);
+                        MovieTools.removeFromCollection(getContext(), movieTmdbId);
                         return true;
                     }
                 }

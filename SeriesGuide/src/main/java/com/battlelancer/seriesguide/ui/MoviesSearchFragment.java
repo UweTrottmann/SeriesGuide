@@ -246,19 +246,19 @@ public class MoviesSearchFragment extends Fragment {
                 public boolean onMenuItemClick(MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.menu_action_movies_watchlist_add: {
-                            MovieTools.addToWatchlist(SgApp.from(getActivity()), movieTmdbId);
+                            MovieTools.addToWatchlist(getActivity(), movieTmdbId);
                             return true;
                         }
                         case R.id.menu_action_movies_watchlist_remove: {
-                            MovieTools.removeFromWatchlist(SgApp.from(getActivity()), movieTmdbId);
+                            MovieTools.removeFromWatchlist(getActivity(), movieTmdbId);
                             return true;
                         }
                         case R.id.menu_action_movies_collection_add: {
-                            MovieTools.addToCollection(SgApp.from(getActivity()), movieTmdbId);
+                            MovieTools.addToCollection(getActivity(), movieTmdbId);
                             return true;
                         }
                         case R.id.menu_action_movies_collection_remove: {
-                            MovieTools.removeFromCollection(SgApp.from(getActivity()), movieTmdbId);
+                            MovieTools.removeFromCollection(getActivity(), movieTmdbId);
                             return true;
                         }
                     }

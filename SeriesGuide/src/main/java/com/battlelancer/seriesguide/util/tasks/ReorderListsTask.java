@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.util.tasks;
 
 import android.content.ContentProviderOperation;
+import android.content.Context;
 import android.content.OperationApplicationException;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
@@ -27,8 +28,8 @@ public class ReorderListsTask extends BaseActionTask {
     /**
      * The given lists order number will be changed to their position in the given list.
      */
-    public ReorderListsTask(@NonNull SgApp app, @NonNull List<String> listIdsInOrder) {
-        super(app);
+    public ReorderListsTask(@NonNull Context context, @NonNull List<String> listIdsInOrder) {
+        super(context);
         this.listIdsInOrder = listIdsInOrder;
     }
 
@@ -40,7 +41,8 @@ public class ReorderListsTask extends BaseActionTask {
     @Override
     protected Integer doBackgroundAction(Void... params) {
         if (isSendingToHexagon()) {
-            Lists listsService = getContext().getHexagonTools().getListsService();
+            HexagonTools hexagonTools = SgApp.getServicesComponent(getContext()).hexagonTools();
+            Lists listsService = hexagonTools.getListsService();
             if (listsService == null) {
                 return ERROR_HEXAGON_API; // no longer signed in
             }

@@ -1,7 +1,8 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
-import com.battlelancer.seriesguide.SgApp;
+import android.support.annotation.NonNull;
+import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.uwetrottmann.thetvdb.TheTvdb;
 import com.uwetrottmann.thetvdb.TheTvdbAuthenticator;
@@ -21,17 +22,21 @@ import timber.log.Timber;
  */
 public class AllApisAuthenticator implements Authenticator {
 
-    private Context context;
-    @Inject Lazy<TheTvdb> theTvdb;
-    @Inject Lazy<TraktV2> trakt;
+    private final Context context;
+    private final Lazy<TheTvdb> theTvdb;
+    private final Lazy<TraktV2> trakt;
 
-    public AllApisAuthenticator(SgApp app) {
-        this.context = app.getApplicationContext();
-        app.getServicesComponent().inject(this);
+    @Inject
+    public AllApisAuthenticator(@ApplicationContext Context context, Lazy<TheTvdb> theTvdb,
+            Lazy<TraktV2> trakt) {
+        this.context = context;
+        this.theTvdb = theTvdb;
+        this.trakt = trakt;
     }
 
     @Override
-    public Request authenticate(Route route, Response response) throws IOException {
+    public Request authenticate(@NonNull Route route, @NonNull Response response)
+            throws IOException {
         String host = response.request().url().host();
         if (TheTvdb.API_HOST.equals(host)) {
             Timber.d("TheTVDB requires auth.");

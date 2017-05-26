@@ -26,7 +26,6 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -208,7 +207,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         public Loader<TvdbShowLoader.Result> onCreateLoader(int id, Bundle args) {
             int showTvdbId = args.getInt(KEY_SHOW_TVDBID);
             String language = args.getString(KEY_SHOW_LANGUAGE);
-            return new TvdbShowLoader(SgApp.from(getActivity()), showTvdbId, language);
+            return new TvdbShowLoader(getContext(), showTvdbId, language);
         }
 
         @Override

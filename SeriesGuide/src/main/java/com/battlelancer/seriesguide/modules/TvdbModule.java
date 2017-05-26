@@ -1,6 +1,6 @@
 package com.battlelancer.seriesguide.modules;
 
-import android.app.Application;
+import android.content.Context;
 import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdb;
 import com.uwetrottmann.thetvdb.TheTvdb;
 import com.uwetrottmann.thetvdb.services.TheTvdbEpisodes;
@@ -34,7 +34,7 @@ public class TvdbModule {
 
     @Singleton
     @Provides
-    TheTvdb provideTheTvdb(Application application, OkHttpClient okHttpClient) {
-        return new SgTheTvdb(application, okHttpClient);
+    TheTvdb provideTheTvdb(@ApplicationContext Context context, OkHttpClient okHttpClient) {
+        return new SgTheTvdb(context, okHttpClient);
     }
 }

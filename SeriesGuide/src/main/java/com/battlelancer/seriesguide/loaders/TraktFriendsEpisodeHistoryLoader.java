@@ -19,11 +19,9 @@ import com.uwetrottmann.trakt5.entities.UserSlug;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.services.Users;
-import dagger.Lazy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.inject.Inject;
 
 /**
  * Loads trakt friends, then returns the most recently watched episode for each friend.
@@ -31,11 +29,8 @@ import javax.inject.Inject;
 public class TraktFriendsEpisodeHistoryLoader
         extends GenericSimpleLoader<List<NowAdapter.NowItem>> {
 
-    @Inject Lazy<Users> traktUsers;
-
     public TraktFriendsEpisodeHistoryLoader(Activity activity) {
         super(activity);
-        SgApp.from(activity).getServicesComponent().inject(this);
     }
 
     @Override
@@ -45,8 +40,9 @@ public class TraktFriendsEpisodeHistoryLoader
         }
 
         // get all trakt friends
+        Users traktUsers = SgApp.getServicesComponent(getContext()).traktUsers();
         List<Friend> friends = SgTrakt.executeAuthenticatedCall(getContext(),
-                traktUsers.get().friends(UserSlug.ME, Extended.FULL), "get friends");
+                traktUsers.friends(UserSlug.ME, Extended.FULL), "get friends");
         if (friends == null) {
             return null;
         }
@@ -80,7 +76,7 @@ public class TraktFriendsEpisodeHistoryLoader
 
             // get last watched episode
             List<HistoryEntry> history = SgTrakt.executeCall(getContext(),
-                    traktUsers.get().history(new UserSlug(userSlug), HistoryType.EPISODES, 1, 1,
+                    traktUsers.history(new UserSlug(userSlug), HistoryType.EPISODES, 1, 1,
                             null, null, null), "get friend episode history");
             if (history == null || history.size() == 0) {
                 continue; // no history

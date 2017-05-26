@@ -4,7 +4,6 @@ package com.battlelancer.seriesguide.sync;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import com.battlelancer.seriesguide.SgApp;
 import timber.log.Timber;
 
 /**
@@ -21,7 +20,7 @@ public class SgSyncService extends Service {
         Timber.d("Creating sync service");
         synchronized (syncAdapterLock) {
             if (syncAdapter == null) {
-                syncAdapter = new SgSyncAdapter((SgApp) getApplication(), true);
+                syncAdapter = new SgSyncAdapter(getApplicationContext());
             }
         }
     }

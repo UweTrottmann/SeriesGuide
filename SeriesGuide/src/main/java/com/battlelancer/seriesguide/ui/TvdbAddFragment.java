@@ -110,8 +110,7 @@ public class TvdbAddFragment extends AddFragment {
                     .setVisible(false);
 
             popupMenu.setOnMenuItemClickListener(
-                    new TraktAddFragment.AddItemMenuItemClickListener(SgApp.from(getActivity()),
-                            showTvdbId));
+                    new TraktAddFragment.AddItemMenuItemClickListener(getContext(), showTvdbId));
             popupMenu.show();
         }
     };
@@ -237,7 +236,7 @@ public class TvdbAddFragment extends AddFragment {
                     language = null;
                 }
             }
-            return new TvdbAddLoader((SgApp) getActivity().getApplication(), query, language);
+            return new TvdbAddLoader(getContext(), query, language);
         }
 
         @Override

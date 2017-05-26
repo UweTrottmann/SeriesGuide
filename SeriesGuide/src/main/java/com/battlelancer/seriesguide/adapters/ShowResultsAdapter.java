@@ -13,7 +13,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
  */
 public class ShowResultsAdapter extends BaseShowsAdapter {
 
-    public ShowResultsAdapter(Activity activity, OnContextMenuClickListener listener) {
+    public ShowResultsAdapter(Activity activity, OnItemClickListener listener) {
         super(activity, listener);
     }
 

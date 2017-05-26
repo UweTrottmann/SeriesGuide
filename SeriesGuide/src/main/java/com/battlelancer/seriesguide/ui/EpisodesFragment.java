@@ -22,7 +22,6 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.EpisodesAdapter;
 import com.battlelancer.seriesguide.adapters.EpisodesAdapter.OnFlagEpisodeListener;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -259,24 +258,24 @@ public class EpisodesFragment extends ListFragment
 
     @Override
     public void onFlagEpisodeWatched(int episodeTvdbId, int episode, boolean isWatched) {
-        EpisodeTools.episodeWatched(SgApp.from(getActivity()), getShowId(), episodeTvdbId,
+        EpisodeTools.episodeWatched(getContext(), getShowId(), episodeTvdbId,
                 getSeasonNumber(), episode,
                 isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
     }
 
     public void onFlagEpisodeSkipped(int episodeTvdbId, int episode, boolean isSkipped) {
-        EpisodeTools.episodeWatched(SgApp.from(getActivity()), getShowId(), episodeTvdbId,
+        EpisodeTools.episodeWatched(getContext(), getShowId(), episodeTvdbId,
                 getSeasonNumber(), episode,
                 isSkipped ? EpisodeFlags.SKIPPED : EpisodeFlags.UNWATCHED);
     }
 
     public void onFlagEpisodeCollected(int episodeTvdbId, int episode, boolean isCollected) {
-        EpisodeTools.episodeCollected(SgApp.from(getActivity()), getShowId(), episodeTvdbId,
+        EpisodeTools.episodeCollected(getContext(), getShowId(), episodeTvdbId,
                 getSeasonNumber(), episode, isCollected);
     }
 
     private void onMarkUntilHere(long episodeFirstReleaseMs) {
-        EpisodeTools.episodeWatchedPrevious(SgApp.from(getActivity()), getShowId(),
+        EpisodeTools.episodeWatchedPrevious(getContext(), getShowId(),
                 episodeFirstReleaseMs);
     }
 

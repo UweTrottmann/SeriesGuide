@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.loaders;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -10,7 +11,6 @@ import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.entities.Videos;
 import com.uwetrottmann.tmdb2.services.MoviesService;
 import java.io.IOException;
-import javax.inject.Inject;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -20,12 +20,10 @@ import timber.log.Timber;
  */
 public class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
 
-    @Inject MoviesService moviesService;
     private int mTmdbId;
 
-    public MovieTrailersLoader(SgApp app, int tmdbId) {
-        super(app);
-        app.getServicesComponent().inject(this);
+    public MovieTrailersLoader(Context context, int tmdbId) {
+        super(context);
         mTmdbId = tmdbId;
     }
 
@@ -45,6 +43,7 @@ public class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
 
     @Nullable
     private Videos.Video getTrailer(@Nullable String language, @NonNull String action) {
+        MoviesService moviesService = SgApp.getServicesComponent(getContext()).moviesService();
         try {
             Response<Videos> response = moviesService.videos(mTmdbId, language).execute();
             if (response.isSuccessful()) {

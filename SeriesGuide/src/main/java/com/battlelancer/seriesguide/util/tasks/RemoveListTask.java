@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.util.tasks;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -16,8 +17,8 @@ public class RemoveListTask extends BaseActionTask {
 
     @NonNull protected final String listId;
 
-    public RemoveListTask(@NonNull SgApp app, @NonNull String listId) {
-        super(app);
+    public RemoveListTask(@NonNull Context context, @NonNull String listId) {
+        super(context);
         this.listId = listId;
     }
 
@@ -29,7 +30,8 @@ public class RemoveListTask extends BaseActionTask {
     @Override
     protected Integer doBackgroundAction(Void... params) {
         if (isSendingToHexagon()) {
-            Lists listsService = getContext().getHexagonTools().getListsService();
+            HexagonTools hexagonTools = SgApp.getServicesComponent(getContext()).hexagonTools();
+            Lists listsService = hexagonTools.getListsService();
             if (listsService == null) {
                 return ERROR_HEXAGON_API; // no longer signed in
             }
