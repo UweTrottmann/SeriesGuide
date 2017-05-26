@@ -106,7 +106,7 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
             = new SelectionAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(int showTvdbId, boolean notify) {
-            SgApp.from(getActivity()).getShowTools().storeNotify(showTvdbId, notify);
+            SgApp.getServicesComponent(getContext()).showTools().storeNotify(showTvdbId, notify);
         }
     };
 

@@ -48,7 +48,7 @@ public class ShowSearchFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        adapter = new ShowResultsAdapter(getActivity(), onContextMenuClickListener);
+        adapter = new ShowResultsAdapter(getActivity(), onItemClickListener);
         setListAdapter(adapter);
 
         // initially display shows with recently released episodes
@@ -133,8 +133,8 @@ public class ShowSearchFragment extends ListFragment {
         }
     };
 
-    private ShowResultsAdapter.OnContextMenuClickListener onContextMenuClickListener
-            = new ShowResultsAdapter.OnContextMenuClickListener() {
+    private BaseShowsAdapter.OnItemClickListener onItemClickListener
+            = new BaseShowsAdapter.OnItemClickListener() {
         @Override
         public void onClick(View view, BaseShowsAdapter.ShowViewHolder viewHolder) {
             PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
@@ -153,10 +153,16 @@ public class ShowSearchFragment extends ListFragment {
             menu.findItem(R.id.menu_action_shows_watched_next).setVisible(false);
 
             popupMenu.setOnMenuItemClickListener(
-                    new ShowMenuItemClickListener(SgApp.from(getActivity()),
+                    new ShowMenuItemClickListener(getContext(),
                             getFragmentManager(), viewHolder.showTvdbId, viewHolder.episodeTvdbId,
                             ListsActivity.TAG));
             popupMenu.show();
+        }
+
+        @Override
+        public void onFavoriteClick(int showTvdbId, boolean isFavorite) {
+            SgApp.getServicesComponent(getContext()).showTools()
+                    .storeIsFavorite(showTvdbId, isFavorite);
         }
     };
 }

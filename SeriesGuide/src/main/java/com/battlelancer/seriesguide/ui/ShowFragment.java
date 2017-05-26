@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -121,10 +122,17 @@ public class ShowFragment extends Fragment {
 
     private Unbinder unbinder;
     private Cursor showCursor;
+    private ShowTools showTools;
     private TraktRatingsTask traktTask;
     private String showTitle;
     private String posterPath;
     @Nullable private String languageCode;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        showTools = SgApp.getServicesComponent(getContext()).showTools();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -365,9 +373,7 @@ public class ShowFragment extends Fragment {
             public void onClick(View v) {
                 // disable until action is complete
                 v.setEnabled(false);
-                SgApp.from(getActivity())
-                        .getShowTools()
-                        .storeIsFavorite(getShowTvdbId(), !isFavorite);
+                showTools.storeIsFavorite(getShowTvdbId(), !isFavorite);
             }
         });
 
@@ -389,9 +395,7 @@ public class ShowFragment extends Fragment {
                 }
                 // disable until action is complete
                 v.setEnabled(false);
-                SgApp.from(getActivity())
-                        .getShowTools()
-                        .storeNotify(getShowTvdbId(), !notify);
+                showTools.storeNotify(getShowTvdbId(), !notify);
             }
         });
 
@@ -410,7 +414,7 @@ public class ShowFragment extends Fragment {
             public void onClick(View v) {
                 // disable until action is complete
                 v.setEnabled(false);
-                SgApp.from(getActivity()).getShowTools().storeIsHidden(getShowTvdbId(), !isHidden);
+                showTools.storeIsHidden(getShowTvdbId(), !isHidden);
             }
         });
 
@@ -606,7 +610,7 @@ public class ShowFragment extends Fragment {
         this.languageCode = languageCode;
 
         Timber.d("Changing show language to %s", languageCode);
-        SgApp.from(getActivity()).getShowTools().storeLanguage(getShowTvdbId(), languageCode);
+        showTools.storeLanguage(getShowTvdbId(), languageCode);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

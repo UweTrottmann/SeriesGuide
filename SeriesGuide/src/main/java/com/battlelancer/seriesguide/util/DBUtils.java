@@ -357,16 +357,16 @@ public class DBUtils {
      * Marks the next episode (if there is one) of the given show as watched. Submits it to trakt if
      * possible.
      */
-    public static void markNextEpisode(SgApp app, int showId, int episodeId) {
+    public static void markNextEpisode(Context context, int showId, int episodeId) {
         if (episodeId > 0) {
-            Cursor episode = app.getContentResolver().query(
+            Cursor episode = context.getContentResolver().query(
                     Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[] {
                             Episodes.SEASON, Episodes.NUMBER
                     }, null, null, null
             );
             if (episode != null) {
                 if (episode.moveToFirst()) {
-                    EpisodeTools.episodeWatched(app, showId, episodeId, episode.getInt(0),
+                    EpisodeTools.episodeWatched(context, showId, episodeId, episode.getInt(0),
                             episode.getInt(1), EpisodeFlags.WATCHED);
                 }
                 episode.close();

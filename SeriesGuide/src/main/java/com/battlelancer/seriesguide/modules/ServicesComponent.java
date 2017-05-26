@@ -21,7 +21,6 @@ import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
 import com.battlelancer.seriesguide.util.AddShowTask;
 import com.battlelancer.seriesguide.util.ConnectTraktTask;
-import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TraktRatingsTask;
@@ -43,12 +42,12 @@ public interface ServicesComponent {
 
     HexagonTools hexagonTools();
     MovieTools movieTools();
+    ShowTools showTools();
     Sync traktSync();
 
     void inject(AddShowTask addShowTask);
     void inject(CloudSetupFragment cloudSetupFragment);
     void inject(ConnectTraktTask connectTraktTask);
-    void inject(EpisodeTools.EpisodeFlagTask episodeFlagTask);
     void inject(MovieCreditsLoader movieCreditsLoader);
     void inject(MovieTrailersLoader movieTrailersLoader);
     void inject(PersonLoader personLoader);

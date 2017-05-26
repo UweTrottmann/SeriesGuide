@@ -322,7 +322,8 @@ public class OverviewFragment extends Fragment implements
 
         // store new value
         boolean isFavorite = (Boolean) view.getTag();
-        SgApp.from(getActivity()).getShowTools().storeIsFavorite(showTvdbId, !isFavorite);
+        SgApp.getServicesComponent(getContext()).showTools()
+                .storeIsFavorite(showTvdbId, !isFavorite);
         Utils.trackAction(getActivity(), TAG, "Toggle favorited");
     }
 
