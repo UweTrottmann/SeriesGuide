@@ -5,20 +5,6 @@ Release notes
 
 All dates are in the European Central timezone.
 
-Version 38
-----------
-*(in development)*
-
-#### 38-beta1
-*(2017-05-26)*
-
-* 🔧 Add "Infinite calendar" setting to widget. Disable it for existing widgets.
-* 🌟 Add extension for German video-on-demand and streaming search engine vodster.de.
-* 🔧 Increase enabled extension limit to 10.
-* 🔨 Potential fix for sync adapter crashes.
-* 🔨 If adding multiple shows, the first one might never display as added.
-* 📝 Latest translations from crowdin.
-
 Version 37
 ----------
 *(2017-05-17)*
@@ -29,6 +15,17 @@ Version 37
 * Add "Only collected episodes" option to calendar and list widget.
 * Offset show release times between +/-24 hours in Settings > Basics > Manual time offset.
 * Dim titles of episodes that are not released.
+
+#### 37.1
+*(2017-06-01)*
+
+* 🔧 Add "Infinite calendar" setting to widget. Disable it for existing widgets.
+* 🌟 Add extension for German video-on-demand and streaming search engine vodster.de.
+* 🔧 Increase enabled extension limit to 10.
+* 🔨 Potential fix for sync adapter crashes.
+* 🔨 If adding multiple shows, the first one might never display as added.
+* 🔨 Could tap add button for already added show.
+* 📝 Latest translations from crowdin.
 
 #### 37
 *(2017-05-17)*
