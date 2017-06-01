@@ -36,22 +36,22 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
      * Loads the latest ratings for the given show from trakt and saves them to the database. If
      * ratings were loaded recently, might do nothing.
      */
-    public TraktRatingsTask(SgApp app, int showTvdbId) {
-        this(app, showTvdbId, 0, 0, 0);
+    public TraktRatingsTask(Context context, int showTvdbId) {
+        this(context, showTvdbId, 0, 0, 0);
     }
 
     /**
      * Loads the latest ratings for the given episode from trakt and saves them to the database. If
      * ratings were loaded recently, might do nothing.
      */
-    public TraktRatingsTask(SgApp app, int showTvdbId, int episodeTvdbId, int season,
+    public TraktRatingsTask(Context context, int showTvdbId, int episodeTvdbId, int season,
             int episode) {
-        this.context = app;
-        app.getServicesComponent().inject(this);
+        this.context = context;
         this.showTvdbId = showTvdbId;
         this.episodeTvdbId = episodeTvdbId;
         this.season = season;
         this.episode = episode;
+        SgApp.getServicesComponent(context).inject(this);
     }
 
     @Override

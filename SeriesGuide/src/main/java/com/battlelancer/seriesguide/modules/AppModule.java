@@ -1,27 +1,21 @@
 package com.battlelancer.seriesguide.modules;
 
-import android.app.Application;
-import com.battlelancer.seriesguide.SgApp;
+import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
-import javax.inject.Singleton;
 
 @Module
 public class AppModule {
 
-    private final SgApp application;
+    private final Context context;
 
-    public AppModule(SgApp application) {
-        this.application = application;
+    public AppModule(Context context) {
+        this.context = context.getApplicationContext();
     }
 
     @Provides
-    SgApp providesSgApp() {
-        return application;
-    }
-
-    @Provides
-    Application providesApplication() {
-        return application;
+    @ApplicationContext
+    Context provideApplicationContext() {
+        return context;
     }
 }

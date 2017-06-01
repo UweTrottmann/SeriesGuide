@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.util;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -19,10 +18,9 @@ import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.AccessToken;
 import com.uwetrottmann.trakt5.entities.Settings;
 import com.uwetrottmann.trakt5.services.Users;
-import dagger.Lazy;
-import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import javax.inject.Inject;
+import org.greenrobot.eventbus.EventBus;
 import retrofit2.Response;
 
 /**
@@ -44,14 +42,13 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
     private final Context context;
     @Inject TraktV2 trakt;
-    @Inject Lazy<Users> traktUsers;
+    @Inject Users traktUsers;
 
-    public ConnectTraktTask(SgApp app) {
-        context = app;
-        app.getServicesComponent().inject(this);
+    public ConnectTraktTask(Context context) {
+        this.context = context;
+        SgApp.getServicesComponent(context).inject(this);
     }
 
-    @SuppressLint("CommitPrefEdits")
     @Override
     protected Integer doInBackground(String... params) {
         // check for connectivity
@@ -102,7 +99,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         String username = null;
         String displayname = null;
         try {
-            Response<Settings> response = traktUsers.get().settings().execute();
+            Response<Settings> response = traktUsers.settings().execute();
             if (response.isSuccessful()) {
                 if (response.body().user != null) {
                     username = response.body().user.username;
@@ -146,7 +143,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         editor.putLong(TraktSettings.KEY_LAST_EPISODES_RATED_AT, 0);
         editor.putLong(TraktSettings.KEY_LAST_MOVIES_RATED_AT, 0);
 
-        editor.commit();
+        editor.apply();
 
         return Result.SUCCESS;
     }

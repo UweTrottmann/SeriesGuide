@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.util.ShowTools;
  */
 public class ShowsAdapter extends BaseShowsAdapter {
 
-    public ShowsAdapter(Activity activity, OnContextMenuClickListener listener) {
+    public ShowsAdapter(Activity activity, OnItemClickListener listener) {
         super(activity, listener);
     }
 

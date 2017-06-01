@@ -48,7 +48,8 @@ public class ExtensionSubscriberService extends IntentService {
                 type = intent.getIntExtra(EXTRA_ACTION_TYPE, ACTION_TYPE_EPISODE);
             }
 
-            ExtensionManager.getInstance(this).handlePublishedAction(token, action, type);
+            ExtensionManager.get()
+                    .handlePublishedAction(getApplicationContext(), token, action, type);
         }
     }
 }

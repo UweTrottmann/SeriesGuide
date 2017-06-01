@@ -47,7 +47,7 @@ import timber.log.Timber;
 public class ExtensionsConfigurationFragment extends Fragment
         implements AdapterView.OnItemClickListener {
 
-    public static final int EXTENSION_LIMIT_FREE = 2;
+    public static final int EXTENSION_LIMIT_FREE = 10;
 
     private static final String TAG = "Extension Configuration";
 
@@ -109,7 +109,8 @@ public class ExtensionsConfigurationFragment extends Fragment
 
         EventBus.getDefault().unregister(this);
         if (enabledExtensions != null) { // might not have finished loading, yet
-            ExtensionManager.getInstance(getActivity()).setEnabledExtensions(enabledExtensions);
+            ExtensionManager.get()
+                    .setEnabledExtensions(getContext(), enabledExtensions);
         }
     }
 
@@ -126,20 +127,21 @@ public class ExtensionsConfigurationFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_extensions_enable) {
-            List<ExtensionManager.Extension> extensions = ExtensionManager.getInstance(
-                    getActivity()).queryAllAvailableExtensions();
+            List<ExtensionManager.Extension> extensions = ExtensionManager.get()
+                    .queryAllAvailableExtensions(getContext());
             List<ComponentName> enabledExtensions = new ArrayList<>();
             for (ExtensionManager.Extension extension : extensions) {
                 enabledExtensions.add(extension.componentName);
             }
-            ExtensionManager.getInstance(getActivity()).setEnabledExtensions(enabledExtensions);
+            ExtensionManager.get()
+                    .setEnabledExtensions(getContext(), enabledExtensions);
             Toast.makeText(getActivity(), "Enabled all available extensions", Toast.LENGTH_LONG)
                     .show();
             return true;
         }
         if (itemId == R.id.menu_action_extensions_disable) {
-            ExtensionManager.getInstance(getActivity())
-                    .setEnabledExtensions(new ArrayList<ComponentName>());
+            ExtensionManager.get()
+                    .setEnabledExtensions(getContext(), new ArrayList<ComponentName>());
             Toast.makeText(getActivity(), "Disabled all available extensions", Toast.LENGTH_LONG)
                     .show();
             return true;
@@ -173,8 +175,7 @@ public class ExtensionsConfigurationFragment extends Fragment
             }
 
             if (enabledExtensions == null) {
-                enabledExtensions = ExtensionManager.getInstance(getActivity())
-                        .getEnabledExtensions();
+                enabledExtensions = ExtensionManager.get().getEnabledExtensions(getContext());
             }
             Set<ComponentName> enabledExtensions = new HashSet<>(
                     ExtensionsConfigurationFragment.this.enabledExtensions);

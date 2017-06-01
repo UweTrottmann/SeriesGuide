@@ -123,13 +123,7 @@ public abstract class AddFragment extends Fragment {
     public void setSearchResults(List<SearchResult> searchResults) {
         this.searchResults = searchResults;
         adapter.clear();
-        if (AndroidUtils.isHoneycombOrHigher()) {
-            adapter.addAll(searchResults);
-        } else {
-            for (SearchResult searchResult : searchResults) {
-                adapter.add(searchResult);
-            }
-        }
+        adapter.addAll(searchResults);
         resultsGridView.setAdapter(adapter);
     }
 
@@ -331,7 +325,7 @@ public abstract class AddFragment extends Fragment {
             public ViewHolder(View view,
                     final OnItemClickListener onItemClickListener) {
                 ButterKnife.bind(this, view);
-                addIndicator.setOnClickListener(new OnClickListener() {
+                addIndicator.setOnAddClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (onItemClickListener != null) {

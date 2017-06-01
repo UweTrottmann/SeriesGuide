@@ -8,7 +8,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.os.AsyncTaskCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
@@ -22,9 +21,7 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
 import com.uwetrottmann.trakt5.services.Checkin;
-import dagger.Lazy;
 import java.io.IOException;
-import javax.inject.Inject;
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -33,7 +30,6 @@ import org.greenrobot.eventbus.EventBus;
  */
 public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
 
-    @Inject Lazy<Checkin> traktCheckin;
     private int mWait;
 
     /**
@@ -45,13 +41,6 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
         f.setArguments(traktTaskData);
         f.mWait = waitInMinutes;
         return f;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        SgApp.from(getActivity()).getServicesComponent().inject(this);
     }
 
     @NonNull
@@ -66,7 +55,6 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
                 mWait < 0 ? context.getString(R.string.not_available)
                         : DateUtils.formatElapsedTime(mWait)));
 
-        final SgApp app = SgApp.from(getActivity());
         builder.setPositiveButton(R.string.traktcheckin_cancel, new OnClickListener() {
 
             @Override
@@ -82,9 +70,9 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
                             return context.getString(R.string.trakt_error_credentials);
                         }
 
+                        Checkin checkin = SgApp.getServicesComponent(getContext()).traktCheckin();
                         try {
-                            retrofit2.Response<Void> response = traktCheckin.get()
-                                    .deleteActiveCheckin()
+                            retrofit2.Response<Void> response = checkin.deleteActiveCheckin()
                                     .execute();
                             if (response.isSuccessful()) {
                                 return null;
@@ -111,7 +99,7 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
 
                             // relaunch the trakt task which called us to
                             // try the check in again
-                            AsyncTaskCompat.executeParallel(new TraktTask(app, args));
+                            AsyncTaskCompat.executeParallel(new TraktTask(context, args));
                         } else {
                             // well, something went wrong
                             Toast.makeText(context, message, Toast.LENGTH_LONG).show();

@@ -16,15 +16,10 @@
 
 package com.tonicartos.widget.stickygridheaders;
 
-import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapterWrapper.HeaderFillerView;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -44,6 +39,9 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.GridView;
 import android.widget.ListAdapter;
+import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapterWrapper.HeaderFillerView;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * GridView that displays items in sections with headers that stick to the top
@@ -188,7 +186,7 @@ public class StickyGridHeadersGridView extends GridView implements OnScrollListe
 
         try {
             return (View)getChildAt(position).getTag();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return null;
     }
@@ -255,9 +253,7 @@ public class StickyGridHeadersGridView extends GridView implements OnScrollListe
             mScrollListener.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
-            scrollChanged(firstVisibleItem);
-        }
+        scrollChanged(firstVisibleItem);
     }
 
     @Override
@@ -584,7 +580,7 @@ public class StickyGridHeadersGridView extends GridView implements OnScrollListe
                     - getPaddingRight(), MeasureSpec.EXACTLY);
         }
 
-        int heightMeasureSpec = 0;
+        int heightMeasureSpec;
 
         ViewGroup.LayoutParams params = mStickiedHeader.getLayoutParams();
         if (params != null && params.height > 0) {
@@ -726,10 +722,6 @@ public class StickyGridHeadersGridView extends GridView implements OnScrollListe
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
-            scrollChanged(getFirstVisiblePosition());
-        }
-
         boolean drawStickiedHeader = mStickiedHeader != null && mAreHeadersSticky
                 && mStickiedHeader.getVisibility() == View.VISIBLE;
         int headerHeight = getHeaderHeight();

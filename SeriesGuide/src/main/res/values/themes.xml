@@ -60,6 +60,7 @@
         <item name="sgColorBackgroundCard">@color/background_card_dark</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
         <item name="sgColorIcon">@color/white</item>
+        <item name="sgColorIconInactive">@color/white_50</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
@@ -134,6 +135,7 @@
         <item name="sgColorBackgroundCard">@color/background_card_dark</item>
         <item name="sgColorBackgroundDim">@color/background_dim</item>
         <item name="sgColorIcon">@color/white</item>
+        <item name="sgColorIconInactive">@color/white_50</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
@@ -221,6 +223,7 @@
         <item name="sgColorBackgroundCard">@color/background_card_light</item>
         <item name="sgColorBackgroundDim">@color/background_dim_inverse</item>
         <item name="sgColorIcon">@color/black_54</item>
+        <item name="sgColorIconInactive">@color/black_38</item>
         <item name="sgColorSeparator">@color/separator_inverse</item>
         <item name="sgColorDivider">@color/divider_inverse</item>
         <item name="sgColorBackgroundDrawer">@color/background_navbar_inverse</item>

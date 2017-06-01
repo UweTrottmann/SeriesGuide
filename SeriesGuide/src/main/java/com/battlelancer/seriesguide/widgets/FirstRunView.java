@@ -83,7 +83,7 @@ public class FirstRunView extends CardView {
                         .putBoolean(DisplaySettings.KEY_PREVENT_SPOILERS, noSpoilers)
                         .apply();
                 // update next episode strings right away
-                TaskManager.getInstance(v.getContext()).tryNextEpisodeUpdateTask();
+                TaskManager.getInstance().tryNextEpisodeUpdateTask(v.getContext());
                 // show
                 noSpoilerCheckBox.setChecked(noSpoilers);
             }

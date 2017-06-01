@@ -1,13 +1,12 @@
 package com.battlelancer.seriesguide;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.ContentProvider;
+import android.content.Context;
 import android.os.Build;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;
-import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.modules.AppModule;
 import com.battlelancer.seriesguide.modules.DaggerServicesComponent;
 import com.battlelancer.seriesguide.modules.HttpClientModule;
@@ -17,10 +16,7 @@ import com.battlelancer.seriesguide.modules.TraktModule;
 import com.battlelancer.seriesguide.modules.TvdbModule;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.util.MovieTools;
-import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.ThemeUtils;
-import com.battlelancer.seriesguide.util.TraktTools;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.jakewharton.picasso.OkHttp3Downloader;
@@ -33,9 +29,7 @@ import org.greenrobot.eventbus.EventBusException;
 import timber.log.Timber;
 
 /**
- * Initializes settings and services and on pre-ICS implements actions for low memory state.
- *
- * @author Uwe Trottmann
+ * Initializes logging and services.
  */
 public class SgApp extends Application {
 
@@ -73,11 +67,7 @@ public class SgApp extends Application {
      */
     public static final String CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider";
 
-    private ServicesComponent servicesComponent;
-    private HexagonTools hexagonTools;
-    private MovieTools movieTools;
-    private ShowTools showTools;
-    private TraktTools traktTools;
+    private static ServicesComponent servicesComponent;
 
     @Override
     public void onCreate() {
@@ -96,15 +86,6 @@ public class SgApp extends Application {
 
         // Load the current theme into a global variable
         ThemeUtils.updateTheme(DisplaySettings.getThemeIndex(this));
-
-        // dagger
-        servicesComponent = DaggerServicesComponent.builder()
-                .appModule(new AppModule(this))
-                .httpClientModule(new HttpClientModule())
-                .tmdbModule(new TmdbModule())
-                .traktModule(new TraktModule())
-                .tvdbModule(new TvdbModule())
-                .build();
     }
 
     private void initializeLogging() {
@@ -151,40 +132,17 @@ public class SgApp extends Application {
         }
     }
 
-    public static SgApp from(Activity activity) {
-        return (SgApp) activity.getApplication();
-    }
-
-    public ServicesComponent getServicesComponent() {
+    public static synchronized ServicesComponent getServicesComponent(Context context) {
+        if (servicesComponent == null) {
+            servicesComponent = DaggerServicesComponent.builder()
+                    .appModule(new AppModule(context))
+                    .httpClientModule(new HttpClientModule())
+                    .tmdbModule(new TmdbModule())
+                    .traktModule(new TraktModule())
+                    .tvdbModule(new TvdbModule())
+                    .build();
+        }
         return servicesComponent;
-    }
-
-    public synchronized HexagonTools getHexagonTools() {
-        if (hexagonTools == null) {
-            hexagonTools = new HexagonTools(this);
-        }
-        return hexagonTools;
-    }
-
-    public synchronized MovieTools getMovieTools() {
-        if (movieTools == null) {
-            movieTools = new MovieTools(this);
-        }
-        return movieTools;
-    }
-
-    public synchronized ShowTools getShowTools() {
-        if (showTools == null) {
-            showTools = new ShowTools(this);
-        }
-        return showTools;
-    }
-
-    public synchronized TraktTools getTraktTools() {
-        if (traktTools == null) {
-            traktTools = new TraktTools(this);
-        }
-        return traktTools;
     }
 
     /**

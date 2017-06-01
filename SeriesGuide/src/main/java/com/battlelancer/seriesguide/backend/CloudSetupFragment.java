@@ -99,7 +99,7 @@ public class CloudSetupFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        hexagonTools = SgApp.from(getActivity()).getHexagonTools();
+        hexagonTools = SgApp.getServicesComponent(getContext()).hexagonTools();
         googleApiClient = new GoogleApiClient.Builder(getContext())
                 .enableAutoManage(getActivity(), onGoogleConnectionFailedListener)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, HexagonTools.getGoogleSignInOptions())

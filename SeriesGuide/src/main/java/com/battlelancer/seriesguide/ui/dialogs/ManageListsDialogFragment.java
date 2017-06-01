@@ -27,7 +27,6 @@ import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
@@ -116,7 +115,7 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
 
                 int itemTvdbId = getArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
                 int itemType = getArguments().getInt(InitBundle.INT_ITEM_TYPE);
-                ListsTools.changeListsOfItem(SgApp.from(getActivity()), itemTvdbId, itemType,
+                ListsTools.changeListsOfItem(getContext(), itemTvdbId, itemType,
                         addToTheseLists, removeFromTheseLists);
 
                 dismiss();

@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.util.tasks;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
@@ -11,19 +12,15 @@ import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.services.Sync;
-import dagger.Lazy;
 import java.io.IOException;
-import javax.inject.Inject;
 import retrofit2.Response;
 
 public abstract class BaseRateItemTask extends BaseActionTask {
 
-    @Inject Lazy<Sync> traktSync;
     private final Rating rating;
 
-    public BaseRateItemTask(SgApp app, Rating rating) {
-        super(app);
-        app.getServicesComponent().inject(this);
+    public BaseRateItemTask(Context context, Rating rating) {
+        super(context);
         this.rating = rating;
     }
 
@@ -40,7 +37,8 @@ public abstract class BaseRateItemTask extends BaseActionTask {
             }
             SyncErrors notFound;
             try {
-                Response<SyncResponse> response = traktSync.get()
+                Sync traktSync = SgApp.getServicesComponent(getContext()).traktSync();
+                Response<SyncResponse> response = traktSync
                         .addRatings(ratedItems)
                         .execute();
                 if (response.isSuccessful()) {

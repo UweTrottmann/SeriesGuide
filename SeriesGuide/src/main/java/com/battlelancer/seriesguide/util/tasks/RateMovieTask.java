@@ -1,9 +1,9 @@
 package com.battlelancer.seriesguide.util.tasks;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.uwetrottmann.trakt5.entities.MovieIds;
@@ -20,8 +20,8 @@ public class RateMovieTask extends BaseRateItemTask {
      * Stores the rating for the given movie in the database (if it is in the database) and sends it
      * to trakt.
      */
-    public RateMovieTask(SgApp app, Rating rating, int movieTmdbId) {
-        super(app, rating);
+    public RateMovieTask(Context context, Rating rating, int movieTmdbId) {
+        super(context, rating);
         this.movieTmdbId = movieTmdbId;
     }
 

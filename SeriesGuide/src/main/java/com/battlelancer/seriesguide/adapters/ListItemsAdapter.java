@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
@@ -121,7 +120,7 @@ public class ListItemsAdapter extends BaseShowsAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         View v = LayoutInflater.from(context).inflate(R.layout.item_show, parent, false);
 
-        ListItemViewHolder viewHolder = new ListItemViewHolder(v, app, onContextMenuClickListener);
+        ListItemViewHolder viewHolder = new ListItemViewHolder(v, onContextMenuClickListener);
         v.setTag(viewHolder);
 
         return v;
@@ -132,15 +131,17 @@ public class ListItemsAdapter extends BaseShowsAdapter {
         public String itemId;
         public int itemTvdbId;
         public int itemType;
+        private final OnContextMenuClickListener clickListener;
 
-        public ListItemViewHolder(View v, SgApp app, final OnContextMenuClickListener listener) {
-            super(v, app, null);
+        public ListItemViewHolder(View v, final OnContextMenuClickListener menuClickListener) {
+            super(v, null);
+            clickListener = menuClickListener;
 
             contextMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null) {
-                        listener.onClick(v, ListItemViewHolder.this);
+                    if (clickListener != null) {
+                        clickListener.onClick(v, ListItemViewHolder.this);
                     }
                 }
             });

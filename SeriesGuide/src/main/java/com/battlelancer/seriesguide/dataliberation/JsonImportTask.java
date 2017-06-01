@@ -88,7 +88,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     @Override
     protected Integer doInBackground(Void... params) {
         // Ensure no large database ops are running
-        TaskManager tm = TaskManager.getInstance(context);
+        TaskManager tm = TaskManager.getInstance();
         if (SgSyncAdapter.isSyncActive(context, false) || tm.isAddTaskRunning()) {
             return ERROR_LARGE_DB_OP;
         }

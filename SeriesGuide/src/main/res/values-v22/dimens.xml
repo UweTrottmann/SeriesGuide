@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <!-- The fast scroller width has increased on Android 5.1. -->
+    <dimen name="grid_fast_scroll_padding">48dp</dimen>
+
+</resources>

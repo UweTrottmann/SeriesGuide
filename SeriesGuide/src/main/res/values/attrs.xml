@@ -13,6 +13,7 @@
     <attr name="sgColorBackgroundCard" format="reference|color" />
     <attr name="sgColorBackgroundDim" format="reference|color" />
     <attr name="sgColorIcon" format="reference|color" />
+    <attr name="sgColorIconInactive" format="reference|color" />
     <attr name="sgColorSeparator" format="reference|color" />
     <attr name="sgColorDivider" format="reference|color" />
     <attr name="sgColorBackgroundDrawer" format="reference|color" />

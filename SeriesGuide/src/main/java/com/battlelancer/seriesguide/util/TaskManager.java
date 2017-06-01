@@ -2,53 +2,42 @@ package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
+import android.support.annotation.MainThread;
+import android.support.annotation.Nullable;
 import android.support.v4.os.AsyncTaskCompat;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.items.SearchResult;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Inspired by florianmski's traktoid TraktManager. This class is used to hold running tasks, so it
- * can execute independently from a running activity (so the application can still be used while
- * the
- * update continues). A plain AsyncTask could do this, too, but here we can also restrict it to one
- * task running at a time.
+ * Hold some {@link AsyncTask} instances while running to ensure only one is executing at a time.
  */
 public class TaskManager {
 
     private static TaskManager _instance;
 
-    private Handler mHandler = new Handler(Looper.getMainLooper());
+    @Nullable private AddShowTask addShowTask;
+    @Nullable private JsonExportTask backupTask;
+    @Nullable private LatestEpisodeUpdateTask nextEpisodeUpdateTask;
 
-    private AddShowTask mAddTask;
-
-    private JsonExportTask mBackupTask;
-
-    private LatestEpisodeUpdateTask mNextEpisodeUpdateTask;
-
-    private Context mContext;
-
-    private TaskManager(Context context) {
-        mContext = context.getApplicationContext();
+    private TaskManager() {
     }
 
-    public static synchronized TaskManager getInstance(Context context) {
+    public static synchronized TaskManager getInstance() {
         if (_instance == null) {
-            _instance = new TaskManager(context);
+            _instance = new TaskManager();
         }
         return _instance;
     }
 
-    public synchronized void performAddTask(SgApp app, SearchResult show) {
+    @MainThread
+    public synchronized void performAddTask(Context context, SearchResult show) {
         List<SearchResult> wrapper = new ArrayList<>();
         wrapper.add(show);
-        performAddTask(app, wrapper, false, false);
+        performAddTask(context, wrapper, false, false);
     }
 
     /**
@@ -57,40 +46,36 @@ public class TaskManager {
      * @param isSilentMode   Whether to display status toasts if a show could not be added.
      * @param isMergingShows Whether to set the Hexagon show merged flag to true if all shows were
      */
-    public synchronized void performAddTask(final SgApp app, final List<SearchResult> shows,
+    @MainThread
+    public synchronized void performAddTask(final Context context, final List<SearchResult> shows,
             final boolean isSilentMode, final boolean isMergingShows) {
         if (!isSilentMode) {
             // notify user here already
             if (shows.size() == 1) {
                 // say title of show
                 SearchResult show = shows.get(0);
-                Toast.makeText(mContext,
-                        mContext.getString(R.string.add_started, show.title),
+                Toast.makeText(context, context.getString(R.string.add_started, show.title),
                         Toast.LENGTH_SHORT).show();
             } else {
                 // generic adding multiple message
-                Toast.makeText(
-                        mContext,
-                        R.string.add_multiple,
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.add_multiple, Toast.LENGTH_SHORT).show();
             }
         }
 
         // add the show(s) to a running add task or create a new one
-        if (!isAddTaskRunning() || !mAddTask.addShows(shows, isSilentMode, isMergingShows)) {
-            // ensure this is called on our main thread (AsyncTask needs access to it)
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    mAddTask = (AddShowTask) Utils.executeInOrder(
-                            new AddShowTask(app, shows, isSilentMode, isMergingShows));
-                }
-            });
+        //noinspection ConstantConditions: null check in isAddTaskRunning
+        if (!isAddTaskRunning() || !addShowTask.addShows(shows, isSilentMode, isMergingShows)) {
+            addShowTask = new AddShowTask(context, shows, isSilentMode, isMergingShows);
+            AsyncTaskCompat.executeParallel(addShowTask);
         }
     }
 
+    public synchronized void releaseAddTaskRef() {
+        addShowTask = null; // clear reference to avoid holding on to task context
+    }
+
     public boolean isAddTaskRunning() {
-        return !(mAddTask == null || mAddTask.getStatus() == AsyncTask.Status.FINISHED);
+        return !(addShowTask == null || addShowTask.getStatus() == AsyncTask.Status.FINISHED);
     }
 
     /**
@@ -98,23 +83,33 @@ public class TaskManager {
      * com.battlelancer.seriesguide.util.TaskManager} is running a
      * {@link JsonExportTask} is scheduled in silent mode.
      */
-    public synchronized void tryBackupTask() {
+    @MainThread
+    public synchronized void tryBackupTask(Context context) {
         if (!isAddTaskRunning()
-                && (mBackupTask == null || mBackupTask.getStatus() == AsyncTask.Status.FINISHED)) {
-            mBackupTask = new JsonExportTask(mContext, null, false, true);
-            AsyncTaskCompat.executeParallel(mBackupTask);
+                && (backupTask == null || backupTask.getStatus() == AsyncTask.Status.FINISHED)) {
+            backupTask = new JsonExportTask(context, null, false, true);
+            AsyncTaskCompat.executeParallel(backupTask);
         }
+    }
+
+    public synchronized void releaseBackupTaskRef() {
+        backupTask = null; // clear reference to avoid holding on to task context
     }
 
     /**
      * Schedules a {@link com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask} for all shows
      * if no other one of this type is currently running.
      */
-    public synchronized void tryNextEpisodeUpdateTask() {
-        if (mNextEpisodeUpdateTask == null
-                || mNextEpisodeUpdateTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mNextEpisodeUpdateTask = new LatestEpisodeUpdateTask(mContext);
-            AsyncTaskCompat.executeParallel(mNextEpisodeUpdateTask);
+    @MainThread
+    public synchronized void tryNextEpisodeUpdateTask(Context context) {
+        if (nextEpisodeUpdateTask == null
+                || nextEpisodeUpdateTask.getStatus() == AsyncTask.Status.FINISHED) {
+            nextEpisodeUpdateTask = new LatestEpisodeUpdateTask(context);
+            AsyncTaskCompat.executeParallel(nextEpisodeUpdateTask);
         }
+    }
+
+    public synchronized void releaseNextEpisodeUpdateTaskRef() {
+        nextEpisodeUpdateTask = null; // clear reference to avoid holding on to task context
     }
 }

@@ -20,6 +20,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
+import com.battlelancer.seriesguide.ui.CalendarFragment;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -59,20 +60,15 @@ public class ListWidgetService extends RemoteViewsService {
         }
 
         private void onQueryForData() {
+            int widgetType = WidgetSettings.getWidgetListType(context, appWidgetId);
             boolean isOnlyCollected = WidgetSettings.isOnlyCollectedEpisodes(context, appWidgetId);
             boolean isOnlyFavorites = WidgetSettings.isOnlyFavoriteShows(context, appWidgetId);
-            boolean isHideWatched = WidgetSettings.isHidingWatchedEpisodes(context, appWidgetId);
-            int widgetType = WidgetSettings.getWidgetListType(context, appWidgetId);
+            boolean isOnlyUnwatched = WidgetSettings.isHidingWatchedEpisodes(context, appWidgetId);
+            boolean isInfinite = WidgetSettings.isInfinite(context, appWidgetId);
 
             Cursor newCursor;
             switch (widgetType) {
-                case WidgetSettings.Type.RECENT:
-                    // Recent episodes
-                    newCursor = DBUtils.getRecentEpisodes(context, isOnlyCollected, isOnlyFavorites,
-                            isHideWatched);
-                    break;
                 case WidgetSettings.Type.SHOWS:
-                    // Shows
                     // not hidden
                     StringBuilder selection = new StringBuilder(Shows.SELECTION_NO_HIDDEN);
 
@@ -105,10 +101,15 @@ public class ListWidgetService extends RemoteViewsService {
                                     false, DisplaySettings.isSortOrderIgnoringArticles(context))
                     );
                     break;
+                case WidgetSettings.Type.RECENT:
+                    newCursor = DBUtils.activityQuery(context, CalendarFragment.CalendarType.RECENT,
+                            isOnlyCollected, isOnlyFavorites, isOnlyUnwatched, isInfinite);
+                    break;
+                case WidgetSettings.Type.UPCOMING:
                 default:
-                    // Upcoming episodes
-                    newCursor = DBUtils.getUpcomingEpisodes(context, isOnlyCollected,
-                            isOnlyFavorites, isHideWatched);
+                    newCursor = DBUtils.activityQuery(context,
+                            CalendarFragment.CalendarType.UPCOMING,
+                            isOnlyCollected, isOnlyFavorites, isOnlyUnwatched, isInfinite);
                     break;
             }
 

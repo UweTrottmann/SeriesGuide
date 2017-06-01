@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.loaders;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -21,11 +22,9 @@ import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.UserSlug;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.services.Users;
-import dagger.Lazy;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -51,11 +50,8 @@ public class TraktRecentEpisodeHistoryLoader
         }
     }
 
-    @Inject Lazy<Users> traktUsers;
-
     public TraktRecentEpisodeHistoryLoader(Activity activity) {
         super(activity);
-        SgApp.from(activity).getServicesComponent().inject(this);
     }
 
     @Override
@@ -152,10 +148,11 @@ public class TraktRecentEpisodeHistoryLoader
     }
 
     protected Call<List<HistoryEntry>> buildCall() {
-        return buildUserEpisodeHistoryCall(traktUsers.get());
+        return buildUserEpisodeHistoryCall(getContext());
     }
 
-    public static Call<List<HistoryEntry>> buildUserEpisodeHistoryCall(Users traktUsers) {
+    public static Call<List<HistoryEntry>> buildUserEpisodeHistoryCall(Context context) {
+        Users traktUsers = SgApp.getServicesComponent(context).traktUsers();
         return traktUsers.history(UserSlug.ME, HistoryType.EPISODES, 1, MAX_HISTORY_SIZE,
                 null, null, null);
     }

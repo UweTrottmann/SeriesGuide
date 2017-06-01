@@ -1,6 +1,6 @@
 package com.battlelancer.seriesguide.modules;
 
-import android.app.Application;
+import android.content.Context;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.services.Checkin;
@@ -76,7 +76,7 @@ public class TraktModule {
 
     @Singleton
     @Provides
-    TraktV2 provideTrakt(Application application, OkHttpClient okHttpClient) {
-        return new SgTrakt(application, okHttpClient);
+    TraktV2 provideTrakt(@ApplicationContext Context context, OkHttpClient okHttpClient) {
+        return new SgTrakt(context, okHttpClient);
     }
 }

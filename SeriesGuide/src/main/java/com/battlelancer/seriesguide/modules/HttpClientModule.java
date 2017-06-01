@@ -1,9 +1,8 @@
 package com.battlelancer.seriesguide.modules;
 
-import android.app.Application;
+import android.content.Context;
 import android.os.Build;
 import android.os.StatFs;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdbInterceptor;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdbInterceptor;
 import com.battlelancer.seriesguide.traktapi.SgTraktInterceptor;
@@ -32,27 +31,28 @@ public class HttpClientModule {
      */
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(SgApp app, Cache cache) {
+    OkHttpClient provideOkHttpClient(Cache cache, SgTheTvdbInterceptor tvdbInterceptor,
+            SgTraktInterceptor traktInterceptor, AllApisAuthenticator authenticator) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
         builder.readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
         builder.addInterceptor(new SgTmdbInterceptor());
-        builder.addNetworkInterceptor(new SgTheTvdbInterceptor(app));
-        builder.addNetworkInterceptor(new SgTraktInterceptor(app));
-        builder.authenticator(new AllApisAuthenticator(app));
+        builder.addNetworkInterceptor(tvdbInterceptor);
+        builder.addNetworkInterceptor(traktInterceptor);
+        builder.authenticator(authenticator);
         builder.cache(cache);
         return builder.build();
     }
 
     @Provides
     @Singleton
-    Cache provideOkHttpCache(Application application) {
-        File cacheDir = createApiCacheDir(application, API_CACHE);
+    Cache provideOkHttpCache(@ApplicationContext Context context) {
+        File cacheDir = createApiCacheDir(context, API_CACHE);
         return new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir));
     }
 
-    private static File createApiCacheDir(Application application, String directoryName) {
-        File cache = new File(application.getCacheDir(), directoryName);
+    private static File createApiCacheDir(Context context, String directoryName) {
+        File cache = new File(context.getCacheDir(), directoryName);
         if (!cache.exists()) {
             cache.mkdirs();
         }

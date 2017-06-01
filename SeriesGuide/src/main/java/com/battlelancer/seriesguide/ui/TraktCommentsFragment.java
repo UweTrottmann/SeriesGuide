@@ -28,7 +28,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.TraktCommentsAdapter;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.loaders.TraktCommentsLoader;
@@ -135,7 +134,7 @@ public class TraktCommentsFragment extends Fragment {
         int episodeTvdbId = args.getInt(InitBundle.EPISODE_TVDB_ID);
         if (episodeTvdbId != 0) {
             AsyncTaskCompat.executeParallel(
-                    new TraktTask(getActivity()).commentEpisode(episodeTvdbId, comment, isSpoiler)
+                    new TraktTask(getContext()).commentEpisode(episodeTvdbId, comment, isSpoiler)
             );
             return;
         }
@@ -144,7 +143,7 @@ public class TraktCommentsFragment extends Fragment {
         int movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID);
         if (movieTmdbId != 0) {
             AsyncTaskCompat.executeParallel(
-                    new TraktTask(getActivity()).commentMovie(movieTmdbId, comment, isSpoiler)
+                    new TraktTask(getContext()).commentMovie(movieTmdbId, comment, isSpoiler)
             );
             return;
         }
@@ -153,7 +152,7 @@ public class TraktCommentsFragment extends Fragment {
         int showTvdbId = args.getInt(InitBundle.SHOW_TVDB_ID);
         if (showTvdbId != 0) {
             AsyncTaskCompat.executeParallel(
-                    new TraktTask(getActivity()).commentShow(showTvdbId, comment, isSpoiler)
+                    new TraktTask(getContext()).commentShow(showTvdbId, comment, isSpoiler)
             );
         }
 
@@ -247,7 +246,7 @@ public class TraktCommentsFragment extends Fragment {
         @Override
         public Loader<TraktCommentsLoader.Result> onCreateLoader(int id, Bundle args) {
             showProgressBar(true);
-            return new TraktCommentsLoader(SgApp.from(getActivity()), args);
+            return new TraktCommentsLoader(getContext(), args);
         }
 
         @Override

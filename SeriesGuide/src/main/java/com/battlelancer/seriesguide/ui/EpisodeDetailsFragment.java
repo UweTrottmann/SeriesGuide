@@ -290,13 +290,13 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
     private void changeEpisodeFlag(int episodeFlag) {
         mEpisodeFlag = episodeFlag;
-        EpisodeTools.episodeWatched(SgApp.from(getActivity()), mShowTvdbId, getEpisodeTvdbId(),
+        EpisodeTools.episodeWatched(getContext(), mShowTvdbId, getEpisodeTvdbId(),
                 mSeasonNumber, mEpisodeNumber, episodeFlag);
     }
 
     private void onToggleCollected() {
         mCollected = !mCollected;
-        EpisodeTools.episodeCollected(SgApp.from(getActivity()), mShowTvdbId, getEpisodeTvdbId(),
+        EpisodeTools.episodeCollected(getContext(), mShowTvdbId, getEpisodeTvdbId(),
                 mSeasonNumber, mEpisodeNumber, mCollected);
     }
 
@@ -612,13 +612,13 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         if (detailsTask == null || detailsTask.getStatus() == AsyncTask.Status.FINISHED) {
             long lastEdited = cursor.getLong(DetailsQuery.LAST_EDITED);
             long lastUpdated = cursor.getLong(DetailsQuery.LAST_UPDATED);
-            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(SgApp.from(getActivity()),
-                    mShowTvdbId, getEpisodeTvdbId(), lastEdited, lastUpdated);
+            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(getContext(), mShowTvdbId,
+                    getEpisodeTvdbId(), lastEdited, lastUpdated);
         }
 
         // update trakt ratings
         if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {
-            ratingsTask = new TraktRatingsTask(SgApp.from(getActivity()), mShowTvdbId,
+            ratingsTask = new TraktRatingsTask(getContext(), mShowTvdbId,
                     getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber);
             AsyncTaskCompat.executeParallel(ratingsTask);
         }

@@ -13,16 +13,14 @@ import retrofit2.Call;
 
 public class AddMovieToCollectionTask extends BaseMovieActionTask {
 
-    private final SgApp app;
-
-    public AddMovieToCollectionTask(SgApp app, int movieTmdbId) {
-        super(app, movieTmdbId);
-        this.app = app;
+    public AddMovieToCollectionTask(Context context, int movieTmdbId) {
+        super(context, movieTmdbId);
     }
 
     @Override
     protected boolean doDatabaseUpdate(Context context, int movieTmdbId) {
-        return app.getMovieTools().addToList(movieTmdbId, MovieTools.Lists.COLLECTION);
+        MovieTools movieTools = SgApp.getServicesComponent(context).movieTools();
+        return movieTools.addToList(movieTmdbId, MovieTools.Lists.COLLECTION);
     }
 
     @Override

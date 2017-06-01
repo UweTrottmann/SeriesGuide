@@ -45,8 +45,6 @@ import dagger.Lazy;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.inject.Inject;
 import retrofit2.Response;
@@ -238,17 +236,18 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         return isSyncActive;
     }
 
-    private final SgApp app;
+    @Inject Lazy<TvdbTools> tvdbTools;
+    @Inject Lazy<HexagonTools> hexagonTools;
+    @Inject Lazy<TraktTools> traktTools;
+    @Inject Lazy<MovieTools> movieTools;
     @Inject Lazy<ConfigurationService> tmdbConfigService;
 
-    public SgSyncAdapter(SgApp app, boolean autoInitialize) {
-        super(app, autoInitialize);
-        this.app = app;
-        app.getServicesComponent().inject(this);
+    public SgSyncAdapter(Context context) {
+        super(context, true, false);
         Timber.d("Creating sync adapter");
+        SgApp.getServicesComponent(context).inject(this);
     }
 
-    @SuppressLint("CommitPrefEdits")
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority,
             ContentProviderClient provider, SyncResult syncResult) {
@@ -303,7 +302,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             try {
-                TvdbTools.getInstance(app).updateShow(id);
+                tvdbTools.get().updateShow(id);
 
                 // make sure other loaders (activity, overview, details) are notified
                 resolver.notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);
@@ -326,16 +325,17 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             getTmdbConfiguration(prefs);
 
             // sync with Hexagon or trakt
-            final HashSet<Integer> showsExisting = ShowTools.getShowTvdbIdsAsSet(getContext());
             @SuppressLint("UseSparseArrays")
             final HashMap<Integer, SearchResult> showsNew = new HashMap<>();
+            final HashSet<Integer> showsExisting = ShowTools.getShowTvdbIdsAsSet(getContext());
+
             if (showsExisting == null) {
                 resultCode = UpdateResult.INCOMPLETE;
             } else {
                 if (HexagonSettings.isEnabled(getContext())) {
                     // sync with hexagon...
                     Timber.d("Syncing...Hexagon");
-                    boolean success = HexagonTools.syncWithHexagon(app, showsExisting, showsNew);
+                    boolean success = hexagonTools.get().syncWithHexagon(showsExisting, showsNew);
                     // don't overwrite failure
                     if (resultCode == UpdateResult.SUCCESS) {
                         resultCode = success ? UpdateResult.SUCCESS : UpdateResult.INCOMPLETE;
@@ -347,13 +347,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     // don't overwrite failure
                     if (resultCode == UpdateResult.SUCCESS) {
                         resultCode = resultTrakt;
-                    }
-
-                    // add shows newly discovered on trakt
-                    if (showsNew.size() > 0) {
-                        List<SearchResult> showsNewList = new LinkedList<>(showsNew.values());
-                        TaskManager.getInstance(getContext())
-                                .performAddTask(app, showsNewList, true, false);
                     }
                 }
 
@@ -367,13 +360,15 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             // update next episodes for all shows
-            TaskManager.getInstance(getContext()).tryNextEpisodeUpdateTask();
+            TaskManager.getInstance().tryNextEpisodeUpdateTask(getContext());
 
             // store time of update, set retry counter on failure
             if (resultCode == UpdateResult.SUCCESS) {
                 // we were successful, reset failed counter
-                prefs.edit().putLong(UpdateSettings.KEY_LASTUPDATE, currentTime)
-                        .putInt(UpdateSettings.KEY_FAILED_COUNTER, 0).commit();
+                prefs.edit()
+                        .putLong(UpdateSettings.KEY_LASTUPDATE, currentTime)
+                        .putInt(UpdateSettings.KEY_FAILED_COUNTER, 0)
+                        .apply();
             } else {
                 int failed = UpdateSettings.getFailedNumberOfUpdates(getContext());
 
@@ -395,7 +390,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 failed += 1;
                 prefs.edit()
                         .putLong(UpdateSettings.KEY_LASTUPDATE, fakeLastUpdateTime)
-                        .putInt(UpdateSettings.KEY_FAILED_COUNTER, failed).commit();
+                        .putInt(UpdateSettings.KEY_FAILED_COUNTER, failed)
+                        .apply();
             }
         }
 
@@ -471,8 +467,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             return UpdateResult.INCOMPLETE;
         }
 
+        TraktTools traktTools = this.traktTools.get();
+
         // get last activity timestamps
-        TraktTools traktTools = app.getTraktTools();
         LastActivities lastActivity = traktTools.getLastActivity();
         if (lastActivity == null) {
             // trakt is likely offline or busy, try later
@@ -519,7 +516,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // sync watchlist and collection with trakt
-        if (app.getMovieTools().syncMovieListsWithTrakt(lastActivity.movies)
+        if (movieTools.get().syncMovieListsWithTrakt(lastActivity.movies)
                 != UpdateResult.SUCCESS) {
             return UpdateResult.INCOMPLETE;
         }
@@ -550,7 +547,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      *
      * <p> Do <b>NOT</b> call if there are no local shows to avoid unnecessary work.
      */
-    @SuppressLint("CommitPrefEdits")
     private UpdateResult performTraktEpisodeSync(@NonNull HashSet<Integer> localShows,
             @NonNull LastActivityMore lastActivity, long currentTime) {
         // do we need to merge data instead of overwriting with data from trakt?
@@ -559,8 +555,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         // download watched and collected flags
         // if initial sync, upload any flags missing on trakt
         // otherwise clear all local flags not on trakt
-        int resultCode = app.getTraktTools().syncEpisodeFlags(localShows, lastActivity,
-                isInitialSync);
+        int resultCode = traktTools.get().syncEpisodeFlags(localShows, lastActivity, isInitialSync);
 
         if (resultCode < 0) {
             return UpdateResult.INCOMPLETE;
@@ -575,7 +570,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // success, set last sync time to now
         editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, currentTime);
-        editor.commit();
+        editor.apply();
 
         return UpdateResult.SUCCESS;
     }

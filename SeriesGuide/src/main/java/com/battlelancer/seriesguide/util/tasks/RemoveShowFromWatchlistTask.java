@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.util.tasks;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -10,7 +11,7 @@ import retrofit2.Call;
 
 public class RemoveShowFromWatchlistTask extends BaseShowActionTask {
 
-    public RemoveShowFromWatchlistTask(SgApp app, int showTvdbId) {
+    public RemoveShowFromWatchlistTask(Context app, int showTvdbId) {
         super(app, showTvdbId);
     }
 

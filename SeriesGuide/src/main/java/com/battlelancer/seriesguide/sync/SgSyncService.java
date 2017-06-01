@@ -4,12 +4,11 @@ package com.battlelancer.seriesguide.sync;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import com.battlelancer.seriesguide.SgApp;
 import timber.log.Timber;
 
 /**
- * {@link Service} which executes a {@link SgSyncAdapter} to sync the show
- * database.
+ * A {@link Service} that returns an IBinder {@link SgSyncAdapter}, allowing the sync adapter
+ * framework to call onPerformSync().
  */
 public class SgSyncService extends Service {
 
@@ -21,7 +20,7 @@ public class SgSyncService extends Service {
         Timber.d("Creating sync service");
         synchronized (syncAdapterLock) {
             if (syncAdapter == null) {
-                syncAdapter = new SgSyncAdapter((SgApp) getApplication(), true);
+                syncAdapter = new SgSyncAdapter(getApplicationContext());
             }
         }
     }
@@ -31,5 +30,4 @@ public class SgSyncService extends Service {
         Timber.d("Binding sync adapter");
         return syncAdapter.getSyncAdapterBinder();
     }
-
 }

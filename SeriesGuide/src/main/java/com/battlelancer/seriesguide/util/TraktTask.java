@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,9 +28,7 @@ import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
 import com.uwetrottmann.trakt5.services.Checkin;
 import com.uwetrottmann.trakt5.services.Comments;
-import dagger.Lazy;
 import java.io.IOException;
-import javax.inject.Inject;
 import org.greenrobot.eventbus.EventBus;
 import org.threeten.bp.OffsetDateTime;
 
@@ -140,9 +137,6 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     private final Context mContext;
     private Bundle mArgs;
     private TraktAction mAction;
-    @Inject Lazy<TraktV2> trakt;
-    @Inject Lazy<Checkin> traktCheckin;
-    @Inject Lazy<Comments> traktComments;
 
     /**
      * Initial constructor. Call <b>one</b> of the setup-methods like {@link #commentEpisode(int,
@@ -150,8 +144,8 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
      * with {@link com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()} and then
      * possibly launch {@link ConnectTraktActivity}) or execution will fail.
      */
-    public TraktTask(Activity activity) {
-        this(SgApp.from(activity), new Bundle());
+    public TraktTask(Context context) {
+        this(context, new Bundle());
     }
 
     /**
@@ -160,10 +154,9 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
      * com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()} and then possibly
      * launch {@link ConnectTraktActivity}) or execution will fail.
      */
-    public TraktTask(SgApp app, Bundle args) {
-        mContext = app;
+    public TraktTask(Context context, Bundle args) {
+        mContext = context.getApplicationContext();
         mArgs = args;
-        app.getServicesComponent().inject(this);
     }
 
     /**
@@ -255,6 +248,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     }
 
     private TraktResponse doCheckInAction() {
+        Checkin traktCheckin = SgApp.getServicesComponent(mContext).traktCheckin();
         try {
             retrofit2.Response response;
             String message = mArgs.getString(InitBundle.MESSAGE);
@@ -266,7 +260,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                             .message(message)
                             .build();
 
-                    response = traktCheckin.get().checkin(checkin).execute();
+                    response = traktCheckin.checkin(checkin).execute();
                     break;
                 }
                 case CHECKIN_MOVIE: {
@@ -276,7 +270,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                             .message(message)
                             .build();
 
-                    response = traktCheckin.get().checkin(checkin).execute();
+                    response = traktCheckin.checkin(checkin).execute();
                     break;
                 }
                 default:
@@ -288,7 +282,8 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                         mArgs.getString(InitBundle.TITLE)));
             } else {
                 // check if the user wants to check-in, but there is already a check-in in progress
-                CheckinError checkinError = trakt.get().checkForCheckinError(response);
+                TraktV2 trakt = SgApp.getServicesComponent(mContext).trakt();
+                CheckinError checkinError = trakt.checkForCheckinError(response);
                 if (checkinError != null) {
                     OffsetDateTime expiresAt = checkinError.expires_at;
                     int waitTimeMin = expiresAt == null ? -1
@@ -316,10 +311,10 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     }
 
     private TraktResponse doCommentAction() {
+        Comments traktComments = SgApp.getServicesComponent(mContext).traktComments();
         try {
             // post comment
-            retrofit2.Response<Comment> response = traktComments.get()
-                    .post(buildComment())
+            retrofit2.Response<Comment> response = traktComments.post(buildComment())
                     .execute();
             if (response.isSuccessful()) {
                 Comment postedComment = response.body();

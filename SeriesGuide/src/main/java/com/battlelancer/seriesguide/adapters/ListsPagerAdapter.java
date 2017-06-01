@@ -1,13 +1,13 @@
 
 package com.battlelancer.seriesguide.adapters;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.ui.ListsFragment;
 import com.battlelancer.seriesguide.util.ListsTools;
@@ -18,29 +18,29 @@ import com.battlelancer.seriesguide.util.ListsTools;
  */
 public class ListsPagerAdapter extends MultiPagerAdapter {
 
-    private final SgApp app;
+    private final Context context;
     private final ListsDataSetObserver dataSetObserver;
     @Nullable private Cursor cursorLists;
     private boolean dataValid;
 
-    public ListsPagerAdapter(SgApp app, FragmentManager fm) {
+    public ListsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
-        this.app = app;
+        this.context = context;
         this.dataSetObserver = new ListsDataSetObserver();
 
         cursorLists = queryLists();
 
         // precreate first list
         if (cursorLists != null && cursorLists.getCount() == 0) {
-            String listName = this.app.getString(R.string.first_list);
-            ListsTools.addList(this.app, listName);
+            String listName = this.context.getString(R.string.first_list);
+            ListsTools.addList(this.context, listName);
         }
     }
 
     @Nullable
     private Cursor queryLists() {
         // load lists, order by order number, then name
-        Cursor cursorNew = app.getContentResolver()
+        Cursor cursorNew = context.getContentResolver()
                 .query(Lists.CONTENT_URI, ListsQuery.PROJECTION, null, null,
                         Lists.SORT_ORDER_THEN_NAME);
         boolean cursorPresent = cursorNew != null;

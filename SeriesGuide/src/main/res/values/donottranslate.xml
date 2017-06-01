@@ -51,6 +51,10 @@
     <string name="url_extensions_search">https://play.google.com/store/search?q=SeriesGuide%20Extension&amp;c=apps</string>
     <string name="url_movies_search">https://play.google.com/store/search?q=%s&amp;c=movies</string>
 
+    <!-- German only extension -->
+    <string name="extension_vodster">vodster.de Suche</string>
+    <string name="extension_vodster_description">Deutsche Video-on-Demand und Streaming Suche</string>
+
     <!-- Internal -->
     <string name="menu_action_extensions_enable_debug">[Debug] Enable extensions</string>
     <string name="menu_action_extensions_disable_debug">[Debug] Disable extensions</string>

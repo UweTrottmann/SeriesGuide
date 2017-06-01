@@ -33,6 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -165,57 +166,19 @@ public class OverviewFragment extends Fragment implements
         View v = inflater.inflate(R.layout.fragment_overview, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-        buttonFavorite.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleShowFavorited(v);
-                Utils.trackAction(getActivity(), TAG, "Toggle favorited");
-            }
-        });
         containerEpisode.setVisibility(View.GONE);
 
         // episode buttons
-        buttonCheckin.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkIn();
-            }
-        });
         CheatSheet.setup(buttonCheckin);
-        buttonWatch.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setEpisodeWatched();
-            }
-        });
         CheatSheet.setup(buttonWatch);
-        buttonCollect.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleEpisodeCollected();
-            }
-        });
-        buttonSkip.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setEpisodeSkipped();
-            }
-        });
         CheatSheet.setup(buttonSkip);
 
         // ratings
-        containerRatings.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rateEpisode();
-            }
-        });
         CheatSheet.setup(containerRatings, R.string.action_rate);
 
         // comments button
         Resources.Theme theme = getActivity().getTheme();
         ViewTools.setVectorDrawableLeft(theme, buttonComments, R.drawable.ic_forum_black_24dp);
-        buttonComments.setOnClickListener(commentsClickListener);
 
         // other bottom buttons
         ViewTools.setVectorDrawableLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp);
@@ -351,7 +314,21 @@ public class OverviewFragment extends Fragment implements
         Utils.trackAction(getActivity(), TAG, "Add to calendar");
     }
 
-    private void checkIn() {
+    @OnClick(R.id.imageButtonFavorite)
+    void onButtonFavoriteClick(View view) {
+        if (view.getTag() == null) {
+            return;
+        }
+
+        // store new value
+        boolean isFavorite = (Boolean) view.getTag();
+        SgApp.getServicesComponent(getContext()).showTools()
+                .storeIsFavorite(showTvdbId, !isFavorite);
+        Utils.trackAction(getActivity(), TAG, "Toggle favorited");
+    }
+
+    @OnClick(R.id.buttonEpisodeCheckin)
+    void onButtonCheckInClick() {
         if (!isEpisodeDataAvailable) {
             return;
         }
@@ -366,15 +343,31 @@ public class OverviewFragment extends Fragment implements
         }
     }
 
-    private void setEpisodeSkipped() {
-        changeEpisodeFlag(EpisodeFlags.SKIPPED);
-        Utils.trackAction(getActivity(), TAG, "Flag Skipped");
-    }
-
-    private void setEpisodeWatched() {
+    @OnClick(R.id.buttonEpisodeWatched)
+    void onButtonWatchedClick() {
         hasSetEpisodeWatched = true;
         changeEpisodeFlag(EpisodeFlags.WATCHED);
         Utils.trackAction(getActivity(), TAG, "Flag Watched");
+    }
+
+    @OnClick(R.id.buttonEpisodeCollected)
+    void onButtonCollectedClick() {
+        if (!isEpisodeDataAvailable) {
+            return;
+        }
+        final int season = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
+        final int episode = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+        final boolean isCollected = currentEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1;
+        EpisodeTools.episodeCollected(getContext(), showTvdbId,
+                currentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, !isCollected);
+
+        Utils.trackAction(getActivity(), TAG, "Toggle Collected");
+    }
+
+    @OnClick(R.id.buttonEpisodeSkip)
+    void onButtonSkipClicked() {
+        changeEpisodeFlag(EpisodeFlags.SKIPPED);
+        Utils.trackAction(getActivity(), TAG, "Flag Skipped");
     }
 
     private void changeEpisodeFlag(int episodeFlag) {
@@ -383,11 +376,12 @@ public class OverviewFragment extends Fragment implements
         }
         final int season = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
         final int episode = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-        EpisodeTools.episodeWatched(SgApp.from(getActivity()), showTvdbId,
+        EpisodeTools.episodeWatched(getContext(), showTvdbId,
                 currentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, episodeFlag);
     }
 
-    private void rateEpisode() {
+    @OnClick(R.id.containerRatings)
+    void onButtonRateClick() {
         if (currentEpisodeTvdbId == 0) {
             return;
         }
@@ -396,6 +390,19 @@ public class OverviewFragment extends Fragment implements
                 currentEpisodeTvdbId);
 
         Utils.trackAction(getActivity(), TAG, "Rate (trakt)");
+    }
+
+    @OnClick(R.id.buttonEpisodeComments)
+    void onButtonCommentsClick(View v) {
+        if (isEpisodeDataAvailable) {
+            Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
+            i.putExtras(TraktCommentsActivity.createInitBundleEpisode(
+                    currentEpisodeCursor.getString(EpisodeQuery.TITLE),
+                    currentEpisodeTvdbId
+            ));
+            Utils.startActivityWithAnimation(getActivity(), i, v);
+            Utils.trackAction(v.getContext(), TAG, "Comments");
+        }
     }
 
     private void shareEpisode() {
@@ -410,29 +417,6 @@ public class OverviewFragment extends Fragment implements
                 showTitle, episodeTitle);
 
         Utils.trackAction(getActivity(), TAG, "Share");
-    }
-
-    private void toggleEpisodeCollected() {
-        if (!isEpisodeDataAvailable) {
-            return;
-        }
-        final int season = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
-        final int episode = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-        final boolean isCollected = currentEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1;
-        EpisodeTools.episodeCollected(SgApp.from(getActivity()), showTvdbId,
-                currentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, !isCollected);
-
-        Utils.trackAction(getActivity(), TAG, "Toggle Collected");
-    }
-
-    private void toggleShowFavorited(View v) {
-        if (v.getTag() == null) {
-            return;
-        }
-
-        // store new value
-        boolean isFavorite = (Boolean) v.getTag();
-        SgApp.from(getActivity()).getShowTools().storeIsFavorite(showTvdbId, !isFavorite);
     }
 
     public static class EpisodeLoader extends CursorLoader {
@@ -838,14 +822,14 @@ public class OverviewFragment extends Fragment implements
         if (detailsTask == null || detailsTask.getStatus() == AsyncTask.Status.FINISHED) {
             long lastEdited = currentEpisodeCursor.getLong(EpisodeQuery.LAST_EDITED);
             long lastUpdated = currentEpisodeCursor.getLong(EpisodeQuery.LAST_UPDATED);
-            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(SgApp.from(getActivity()),
-                    showTvdbId, currentEpisodeTvdbId, lastEdited, lastUpdated);
+            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(getContext(), showTvdbId,
+                    currentEpisodeTvdbId, lastEdited, lastUpdated);
         }
 
         if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {
             int seasonNumber = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
             int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-            ratingsTask = new TraktRatingsTask(SgApp.from(getActivity()), showTvdbId,
+            ratingsTask = new TraktRatingsTask(getContext(), showTvdbId,
                     currentEpisodeTvdbId, seasonNumber, episodeNumber);
             AsyncTaskCompat.executeParallel(ratingsTask);
         }
@@ -990,21 +974,6 @@ public class OverviewFragment extends Fragment implements
                 intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                         currentEpisodeTvdbId);
                 Utils.startActivityWithAnimation(getActivity(), intent, view);
-            }
-        }
-    };
-
-    private OnClickListener commentsClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (isEpisodeDataAvailable) {
-                Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
-                i.putExtras(TraktCommentsActivity.createInitBundleEpisode(
-                        currentEpisodeCursor.getString(EpisodeQuery.TITLE),
-                        currentEpisodeTvdbId
-                ));
-                Utils.startActivityWithAnimation(getActivity(), i, v);
-                Utils.trackAction(v.getContext(), TAG, "Comments");
             }
         }
     };

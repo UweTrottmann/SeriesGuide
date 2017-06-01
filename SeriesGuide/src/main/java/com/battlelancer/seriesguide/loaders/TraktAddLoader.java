@@ -51,10 +51,10 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
     @Inject Lazy<Sync> traktSync;
     private final int type;
 
-    public TraktAddLoader(SgApp app, int type) {
-        super(app);
-        app.getServicesComponent().inject(this);
+    public TraktAddLoader(Context context, int type) {
+        super(context);
         this.type = type;
+        SgApp.getServicesComponent(context).inject(this);
     }
 
     @Override

@@ -15,11 +15,9 @@ import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.services.Sync;
-import dagger.Lazy;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
 import org.greenrobot.eventbus.EventBus;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -29,12 +27,10 @@ import retrofit2.Response;
  */
 public abstract class BaseMovieActionTask extends BaseActionTask {
 
-    @Inject Lazy<Sync> traktSync;
     private final int movieTmdbId;
 
-    public BaseMovieActionTask(SgApp app, int movieTmdbId) {
-        super(app);
-        app.getServicesComponent().inject(this);
+    public BaseMovieActionTask(Context context, int movieTmdbId) {
+        super(context);
         this.movieTmdbId = movieTmdbId;
     }
 
@@ -54,7 +50,8 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
             movieList.setMovies(movies);
 
             try {
-                Movies moviesService = getContext().getHexagonTools().getMoviesService();
+                HexagonTools hexagonTools = SgApp.getServicesComponent(getContext()).hexagonTools();
+                Movies moviesService = hexagonTools.getMoviesService();
                 if (moviesService == null) {
                     return ERROR_HEXAGON_API;
                 }
@@ -75,7 +72,8 @@ public abstract class BaseMovieActionTask extends BaseActionTask {
                     new SyncMovie().id(MovieIds.tmdb(movieTmdbId)));
 
             try {
-                Response<SyncResponse> response = doTraktAction(traktSync.get(), items).execute();
+                Sync traktSync = SgApp.getServicesComponent(getContext()).traktSync();
+                Response<SyncResponse> response = doTraktAction(traktSync, items).execute();
                 if (response.isSuccessful()) {
                     if (isMovieNotFound(response.body())) {
                         return ERROR_TRAKT_API_NOT_FOUND;

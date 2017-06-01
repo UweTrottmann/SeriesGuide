@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.CalendarAdapter;
-import com.battlelancer.seriesguide.settings.CalendarSettings;
 import com.battlelancer.seriesguide.settings.DashClockSettings;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -30,9 +29,7 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
     protected void onUpdateData(int arg0) {
         Context context = getApplicationContext();
         // as details for only 1 episode can be shown, always exclude watched episodes
-        final Cursor upcomingEpisodes = DBUtils.getUpcomingEpisodes(context,
-                CalendarSettings.isOnlyCollected(context),
-                CalendarSettings.isOnlyFavorites(context), true);
+        final Cursor upcomingEpisodes = DBUtils.upcomingEpisodesQuery(context, true);
         final long customCurrentTime = TimeTools.getCurrentTime(context);
         int hourThreshold = DashClockSettings.getUpcomingTreshold(context);
         long latestTimeToInclude = customCurrentTime + hourThreshold * DateUtils.HOUR_IN_MILLIS;

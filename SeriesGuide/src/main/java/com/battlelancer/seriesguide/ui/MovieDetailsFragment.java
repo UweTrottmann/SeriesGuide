@@ -38,7 +38,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.extensions.ActionsHelper;
@@ -400,10 +399,10 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 @Override
                 public void onClick(View v) {
                     if (isWatched) {
-                        MovieTools.unwatchedMovie(SgApp.from(getActivity()), tmdbId);
+                        MovieTools.unwatchedMovie(getContext(), tmdbId);
                         Utils.trackAction(getActivity(), TAG, "Unwatched movie");
                     } else {
-                        MovieTools.watchedMovie(SgApp.from(getActivity()), tmdbId);
+                        MovieTools.watchedMovie(getContext(), tmdbId);
                         Utils.trackAction(getActivity(), TAG, "Watched movie");
                     }
                 }
@@ -427,10 +426,10 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             @Override
             public void onClick(View v) {
                 if (inCollection) {
-                    MovieTools.removeFromCollection(SgApp.from(getActivity()), tmdbId);
+                    MovieTools.removeFromCollection(getContext(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Uncollected movie");
                 } else {
-                    MovieTools.addToCollection(SgApp.from(getActivity()), tmdbId);
+                    MovieTools.addToCollection(getContext(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Collected movie");
                 }
             }
@@ -450,10 +449,10 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             @Override
             public void onClick(View v) {
                 if (inWatchlist) {
-                    MovieTools.removeFromWatchlist(SgApp.from(getActivity()), tmdbId);
+                    MovieTools.removeFromWatchlist(getContext(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Unwatchlist movie");
                 } else {
-                    MovieTools.addToWatchlist(SgApp.from(getActivity()), tmdbId);
+                    MovieTools.addToWatchlist(getContext(), tmdbId);
                     Utils.trackAction(getActivity(), TAG, "Watchlist movie");
                 }
             }
@@ -654,8 +653,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
     @Override
     public void loadMovieActions() {
-        List<Action> actions = ExtensionManager.getInstance(getContext())
-                .getLatestMovieActions(tmdbId);
+        List<Action> actions = ExtensionManager.get()
+                .getLatestMovieActions(getContext(), tmdbId);
 
         // no actions available yet, request extensions to publish them
         if (actions == null || actions.size() == 0) {
@@ -669,7 +668,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                         .title(movieDetails.tmdbMovie().title)
                         .releaseDate(movieDetails.tmdbMovie().release_date)
                         .build();
-                ExtensionManager.getInstance(getContext()).requestMovieActions(movie);
+                ExtensionManager.get().requestMovieActions(getContext(), movie);
             }
         }
 
@@ -723,7 +722,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             = new LoaderManager.LoaderCallbacks<MovieDetails>() {
         @Override
         public Loader<MovieDetails> onCreateLoader(int loaderId, Bundle args) {
-            return new MovieLoader(SgApp.from(getActivity()), args.getInt(InitBundle.TMDB_ID));
+            return new MovieLoader(getContext(), args.getInt(InitBundle.TMDB_ID));
         }
 
         @Override
@@ -761,8 +760,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             = new LoaderManager.LoaderCallbacks<Videos.Video>() {
         @Override
         public Loader<Videos.Video> onCreateLoader(int loaderId, Bundle args) {
-            return new MovieTrailersLoader(SgApp.from(getActivity()),
-                    args.getInt(InitBundle.TMDB_ID));
+            return new MovieTrailersLoader(getContext(), args.getInt(InitBundle.TMDB_ID));
         }
 
         @Override
@@ -786,8 +784,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             = new LoaderManager.LoaderCallbacks<Credits>() {
         @Override
         public Loader<Credits> onCreateLoader(int loaderId, Bundle args) {
-            return new MovieCreditsLoader(SgApp.from(getActivity()),
-                    args.getInt(InitBundle.TMDB_ID));
+            return new MovieCreditsLoader(getContext(), args.getInt(InitBundle.TMDB_ID));
         }
 
         @Override

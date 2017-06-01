@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
@@ -15,7 +16,6 @@ import android.widget.PopupMenu;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.loaders.TraktAddLoader;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -96,7 +96,7 @@ public class TraktAddFragment extends AddFragment {
         @Override
         public void onAddClick(SearchResult item) {
             EventBus.getDefault().post(new OnAddingShowEvent(item.tvdbid));
-            TaskManager.getInstance(getContext()).performAddTask(SgApp.from(getActivity()), item);
+            TaskManager.getInstance().performAddTask(getContext(), item);
         }
 
         @Override
@@ -113,18 +113,18 @@ public class TraktAddFragment extends AddFragment {
             }
 
             popupMenu.setOnMenuItemClickListener(
-                    new AddItemMenuItemClickListener(SgApp.from(getActivity()), showTvdbId));
+                    new AddItemMenuItemClickListener(getContext(), showTvdbId));
             popupMenu.show();
         }
     };
 
     public static class AddItemMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
 
-        private final SgApp app;
+        private final Context context;
         private final int showTvdbId;
 
-        public AddItemMenuItemClickListener(SgApp app, int showTvdbId) {
-            this.app = app;
+        public AddItemMenuItemClickListener(Context context, int showTvdbId) {
+            this.context = context;
             this.showTvdbId = showTvdbId;
         }
 
@@ -132,11 +132,11 @@ public class TraktAddFragment extends AddFragment {
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.menu_action_show_watchlist_add) {
-                ShowTools.addToWatchlist(app, showTvdbId);
+                ShowTools.addToWatchlist(context, showTvdbId);
                 return true;
             }
             if (itemId == R.id.menu_action_show_watchlist_remove) {
-                ShowTools.removeFromWatchlist(app, showTvdbId);
+                ShowTools.removeFromWatchlist(context, showTvdbId);
                 return true;
             }
             return false;
@@ -163,8 +163,7 @@ public class TraktAddFragment extends AddFragment {
                     }
                 }
                 EventBus.getDefault().post(new OnAddingShowEvent());
-                TaskManager.getInstance(getActivity())
-                        .performAddTask(SgApp.from(getActivity()), showsToAdd, false, false);
+                TaskManager.getInstance().performAddTask(getContext(), showsToAdd, false, false);
             }
             // disable the item so the user has to come back
             item.setEnabled(false);
@@ -222,7 +221,7 @@ public class TraktAddFragment extends AddFragment {
             = new LoaderManager.LoaderCallbacks<TraktAddLoader.Result>() {
         @Override
         public Loader<TraktAddLoader.Result> onCreateLoader(int id, Bundle args) {
-            return new TraktAddLoader(SgApp.from(getActivity()), listType);
+            return new TraktAddLoader(getContext(), listType);
         }
 
         @Override

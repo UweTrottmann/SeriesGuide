@@ -35,8 +35,7 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Utils.executeInOrder(
-                                new RemoveHexagonAccountTask(SgApp.from(getActivity())));
+                        Utils.executeInOrder(new RemoveHexagonAccountTask(getContext()));
                     }
                 }
         );
@@ -62,16 +61,17 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
 
     public static class RemoveHexagonAccountTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final SgApp app;
+        private final Context context;
+        private final HexagonTools hexagonTools;
 
-        public RemoveHexagonAccountTask(SgApp app) {
-            this.app = app;
+        public RemoveHexagonAccountTask(Context context) {
+            this.context = context;
+            this.hexagonTools = SgApp.getServicesComponent(context).hexagonTools();
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // remove account from hexagon
-            HexagonTools hexagonTools = app.getHexagonTools();
             try {
                 Account accountService = hexagonTools.buildAccountService();
                 if (accountService == null) {
@@ -79,12 +79,12 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
                 }
                 accountService.deleteData().execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(app, "remove account", e);
+                HexagonTools.trackFailedRequest(context, "remove account", e);
                 return false;
             }
 
             // de-authorize app so other clients are signed out as well
-            GoogleApiClient googleApiClient = new GoogleApiClient.Builder(app)
+            GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context)
                     .addApi(Auth.GOOGLE_SIGN_IN_API, HexagonTools.getGoogleSignInOptions())
                     .build();
             ConnectionResult connectionResult = googleApiClient.blockingConnect();

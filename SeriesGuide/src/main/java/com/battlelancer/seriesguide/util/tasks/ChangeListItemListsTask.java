@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.util.tasks;
 
 import android.content.ContentProviderOperation;
+import android.content.Context;
 import android.content.OperationApplicationException;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
@@ -26,9 +27,9 @@ public class ChangeListItemListsTask extends BaseActionTask {
     private final List<String> addToTheseLists;
     private final List<String> removeFromTheseLists;
 
-    public ChangeListItemListsTask(@NonNull SgApp app, int itemTvdbId, int itemType,
+    public ChangeListItemListsTask(@NonNull Context context, int itemTvdbId, int itemType,
             @NonNull List<String> addToTheseLists, @NonNull List<String> removeFromTheseLists) {
-        super(app);
+        super(context);
         this.itemTvdbId = itemTvdbId;
         this.itemType = itemType;
         this.addToTheseLists = addToTheseLists;
@@ -43,7 +44,8 @@ public class ChangeListItemListsTask extends BaseActionTask {
     @Override
     protected Integer doBackgroundAction(Void... params) {
         if (isSendingToHexagon()) {
-            Lists listsService = getContext().getHexagonTools().getListsService();
+            HexagonTools hexagonTools = SgApp.getServicesComponent(getContext()).hexagonTools();
+            Lists listsService = hexagonTools.getListsService();
             if (listsService == null) {
                 return ERROR_HEXAGON_API;
             }

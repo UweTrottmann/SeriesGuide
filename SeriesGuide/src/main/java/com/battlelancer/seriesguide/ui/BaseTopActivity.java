@@ -12,9 +12,12 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
@@ -134,6 +137,9 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     }
 
     private void setUpAutoBackupSnackbar(Snackbar snackbar) {
+        TextView textView = ButterKnife.findById(snackbar.getView(),
+                android.support.design.R.id.snackbar_text);
+        textView.setMaxLines(5);
         snackbar.addCallback(new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
@@ -177,7 +183,9 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
             public void onDismissed(Snackbar snackbar, int event) {
                 if (event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
                     // user has dismissed warning, so disable Cloud
-                    SgApp.from(BaseTopActivity.this).getHexagonTools().setDisabled();
+                    HexagonTools hexagonTools = SgApp.getServicesComponent(BaseTopActivity.this)
+                            .hexagonTools();
+                    hexagonTools.setDisabled();
                 }
             }
         }).setAction(R.string.hexagon_signin, new View.OnClickListener() {

@@ -27,11 +27,6 @@ public class NotificationActionReceiver extends BroadcastReceiver {
         if (episodeTvdbvId <= 0) {
             return;
         }
-        Context appContext = context.getApplicationContext();
-        if (!(appContext instanceof SgApp)) {
-            return;
-        }
-        SgApp app = (SgApp) appContext;
 
         // query for episode details
         Cursor query = context.getContentResolver()
@@ -48,7 +43,7 @@ public class NotificationActionReceiver extends BroadcastReceiver {
             int season = query.getInt(1);
             int episode = query.getInt(2);
             // mark episode watched
-            EpisodeTools.episodeWatched(app, showTvdbId, episodeTvdbvId, season, episode,
+            EpisodeTools.episodeWatched(context, showTvdbId, episodeTvdbvId, season, episode,
                     EpisodeFlags.WATCHED);
         }
         query.close();

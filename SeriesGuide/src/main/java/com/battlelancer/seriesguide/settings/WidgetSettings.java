@@ -30,6 +30,8 @@ public class WidgetSettings {
 
     public static final String KEY_PREFIX_WIDGET_ONLY_FAVORITES = "only_favorites_";
 
+    public static final String KEY_PREFIX_WIDGET_IS_INFINITE = "is_infinite_";
+
     public static final String KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER = "shows_order_";
 
     public static final String DEFAULT_WIDGET_BACKGROUND_OPACITY = "100";
@@ -102,6 +104,14 @@ public class WidgetSettings {
     public static boolean isOnlyFavoriteShows(Context context, int appWidgetId) {
         SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
         return prefs.getBoolean(KEY_PREFIX_WIDGET_ONLY_FAVORITES + appWidgetId, false);
+    }
+
+    /**
+     * Returns if this widget should display an infinite number of days.
+     */
+    public static boolean isInfinite(Context context, int appWidgetId) {
+        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
+        return prefs.getBoolean(KEY_PREFIX_WIDGET_IS_INFINITE + appWidgetId, false);
     }
 
     /**

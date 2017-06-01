@@ -127,7 +127,7 @@ public class BackupDeleteActivity extends BaseActivity {
         // automatically done on worker thread (separate from UI thread)
         @Override
         protected String doInBackground(final Void... args) {
-            TaskManager tm = TaskManager.getInstance(BackupDeleteActivity.this);
+            TaskManager tm = TaskManager.getInstance();
             if (SgSyncAdapter.isSyncActive(BackupDeleteActivity.this, false)
                     || tm.isAddTaskRunning()) {
                 return getString(R.string.update_inprogress);
@@ -184,7 +184,7 @@ public class BackupDeleteActivity extends BaseActivity {
         // but not being re-used
         @Override
         protected String doInBackground(final Void... args) {
-            TaskManager tm = TaskManager.getInstance(BackupDeleteActivity.this);
+            TaskManager tm = TaskManager.getInstance();
             if (SgSyncAdapter.isSyncActive(BackupDeleteActivity.this, false)
                     || tm.isAddTaskRunning()) {
                 return getString(R.string.update_inprogress);
@@ -210,7 +210,7 @@ public class BackupDeleteActivity extends BaseActivity {
                 AndroidUtils.copyFile(dbBackupFile, dbFile);
 
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
-                        .putBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, true).commit();
+                        .putBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, true).apply();
                 getContentResolver().notifyChange(Shows.CONTENT_URI, null);
 
                 // wait a little for the new db to settle in
