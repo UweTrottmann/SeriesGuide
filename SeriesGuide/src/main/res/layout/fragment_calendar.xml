@@ -10,7 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:columnWidth="@dimen/showgrid_columnWidth"
-        android:numColumns="auto_fit" />
+        android:numColumns="auto_fit"
+        tools:fastScrollAlwaysVisible="true"
+        tools:listitem="@layout/item_calendar"
+        tools:paddingRight="@dimen/grid_fast_scroll_padding" />
 
     <TextView
         android:id="@+id/emptyViewCalendar"
@@ -22,5 +25,16 @@
         android:textAppearance="@style/TextAppearance.Body.Secondary"
         android:visibility="gone"
         tools:text="@string/noupcoming" />
+
+    <ImageView
+        android:id="@+id/imageViewCalendarTapIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="@dimen/large_padding"
+        android:layout_marginTop="-24dp"
+        android:contentDescription="@null"
+        tools:src="@drawable/ic_touch_black_24dp"
+        tools:tint="?attr/sgColorIconInactive" />
 
 </FrameLayout>

@@ -69,6 +69,12 @@ public class ViewTools {
                 Utils.resolveAttributeToResourceId(theme, R.attr.sgColorIcon));
     }
 
+    public static VectorDrawableCompat createVectorIconInactive(Context context,
+            Resources.Theme theme, @DrawableRes int vectorRes) {
+        return createTintedVectorDrawable(context, theme, vectorRes,
+                Utils.resolveAttributeToResourceId(theme, R.attr.sgColorIconInactive));
+    }
+
     public static VectorDrawableCompat createVectorIconWhite(Context context,
             Resources.Theme theme, @DrawableRes int vectorRes) {
         return createTintedVectorDrawable(context, theme, vectorRes, R.color.white);

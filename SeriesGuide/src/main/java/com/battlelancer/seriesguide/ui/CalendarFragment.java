@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -26,8 +27,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
@@ -64,6 +67,7 @@ public class CalendarFragment extends Fragment
 
     private StickyGridHeadersGridView gridView;
     private CalendarAdapter adapter;
+    private ImageView imageViewTapIndicator;
     private Handler handler;
     private String type;
 
@@ -102,6 +106,12 @@ public class CalendarFragment extends Fragment
         ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
         gridView.setEmptyView(emptyView);
         gridView.setAreHeadersSticky(false);
+
+        VectorDrawableCompat drawableTouch = ViewTools.createVectorIconInactive(getContext(),
+                getActivity().getTheme(),
+                R.drawable.ic_touch_black_24dp);
+        imageViewTapIndicator = ButterKnife.findById(v, R.id.imageViewCalendarTapIndicator);
+        imageViewTapIndicator.setImageDrawable(drawableTouch);
 
         return v;
     }
@@ -382,6 +392,7 @@ public class CalendarFragment extends Fragment
     private void configureCalendar(GridView gridView, CalendarAdapter adapter,
             boolean infiniteScrolling) {
         adapter.setIsShowingHeaders(!infiniteScrolling);
+
         gridView.setFastScrollEnabled(infiniteScrolling);
         gridView.setFastScrollAlwaysVisible(infiniteScrolling);
         Resources res = getResources();
@@ -391,6 +402,22 @@ public class CalendarFragment extends Fragment
                 : paddingLeft;
         int paddingTopBottom = res.getDimensionPixelSize(R.dimen.grid_topbottom_padding);
         gridView.setPadding(paddingLeft, paddingTopBottom, paddingRight, paddingTopBottom);
+
+        updateTapIndicatorVisibility();
+    }
+
+    private void updateTapIndicatorVisibility() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+            // on L and below indicator is centered in touchable space, so do not show hint icon
+            imageViewTapIndicator.setVisibility(View.GONE);
+        } else {
+            // show hint icon in touchable fast scroll indicator space
+            boolean hasData = adapter.getCount() != 0;
+            boolean infiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
+            imageViewTapIndicator.setVisibility(infiniteScrolling && hasData
+                    ? View.VISIBLE
+                    : View.GONE);
+        }
     }
 
     private void requery() {
@@ -438,6 +465,7 @@ public class CalendarFragment extends Fragment
 
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
             adapter.swapCursor(data);
+            updateTapIndicatorVisibility();
         }
 
         public void onLoaderReset(Loader<Cursor> loader) {
