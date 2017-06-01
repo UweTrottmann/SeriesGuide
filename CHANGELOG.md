@@ -5,6 +5,20 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 38
+----------
+*(in development)*
+
+#### 38-beta1
+*(2017-05-26)*
+
+* 🔧 Add "Infinite calendar" setting to widget. Disable it for existing widgets.
+* 🌟 Add extension for German video-on-demand and streaming search engine vodster.de.
+* 🔧 Increase enabled extension limit to 10.
+* 🔨 Potential fix for sync adapter crashes.
+* 🔨 If adding multiple shows, the first one might never display as added.
+* 📝 Latest translations from crowdin.
+
 Version 37
 ----------
 *(2017-05-17)*
