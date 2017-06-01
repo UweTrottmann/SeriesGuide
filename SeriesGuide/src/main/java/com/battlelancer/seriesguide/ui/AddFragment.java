@@ -325,7 +325,7 @@ public abstract class AddFragment extends Fragment {
             public ViewHolder(View view,
                     final OnItemClickListener onItemClickListener) {
                 ButterKnife.bind(this, view);
-                addIndicator.setOnClickListener(new OnClickListener() {
+                addIndicator.setOnAddClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (onItemClickListener != null) {
