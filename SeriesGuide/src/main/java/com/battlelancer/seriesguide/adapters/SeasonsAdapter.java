@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeasonsFragment.SeasonsQuery;
 import com.battlelancer.seriesguide.util.SeasonTools;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 public class SeasonsAdapter extends CursorAdapter {
 
@@ -26,11 +27,13 @@ public class SeasonsAdapter extends CursorAdapter {
         void onPopupMenuClick(View v, int seasonTvdbId, int seasonNumber);
     }
 
-    private PopupMenuClickListener popupMenuClickListener;
+    private final PopupMenuClickListener popupMenuClickListener;
+    private final boolean isRtlLayout;
 
     public SeasonsAdapter(Context context, PopupMenuClickListener listener) {
         super(context, null, 0);
         popupMenuClickListener = listener;
+        isRtlLayout = AndroidUtils.isRtlLayout();
     }
 
     @Override
@@ -65,7 +68,14 @@ public class SeasonsAdapter extends CursorAdapter {
         } else {
             viewHolder.seasonProgressBar.setProgress(progress);
         }
-        viewHolder.seasonProgress.setText(progress + "/" + max);
+        Resources res = mContext.getResources();
+        String textProgress;
+        if (isRtlLayout) {
+            textProgress = res.getString(R.string.format_progress_and_total, max, progress);
+        } else {
+            textProgress = res.getString(R.string.format_progress_and_total, progress, max);
+        }
+        viewHolder.seasonProgress.setText(textProgress);
 
         // skipped label
         viewHolder.seasonSkipped
@@ -74,7 +84,6 @@ public class SeasonsAdapter extends CursorAdapter {
 
         // season episodes text
         StringBuilder countText = new StringBuilder();
-        Resources res = mContext.getResources();
         if (watchable > 0) {
             // some released episodes left to watch
             TextViewCompat.setTextAppearance(viewHolder.seasonWatchCount,
