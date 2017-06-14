@@ -89,16 +89,20 @@ public class SeasonsAdapter extends CursorAdapter {
                 countText.append(res.getQuantityString(R.plurals.other_episodes_plural,
                         noReleaseDate, noReleaseDate));
             } else {
-                // all watched
-                countText.append(mContext.getString(R.string.season_allwatched));
+                // ensure at least 1 watched episode by comparing amount of unwatched to total
+                if (notReleased + noReleaseDate != max) {
+                    // all watched
+                    countText.append(mContext.getString(R.string.season_allwatched));
+                }
             }
         }
         if (notReleased > 0) {
             // there are not yet released episodes
-            countText.append(" (+");
+            if (countText.length() > 0) {
+                countText.append(" - ");
+            }
             countText.append(res.getQuantityString(R.plurals.not_released_episodes_plural,
                     notReleased, notReleased));
-            countText.append(")");
         }
         viewHolder.seasonWatchCount.setText(countText);
 
