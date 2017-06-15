@@ -187,10 +187,6 @@
 
     <!-- Seasons -->
     <string name="season_allwatched">All episodes watched</string>
-    <plurals name="not_watched_episodes_plural">
-        <item quantity="one">%d episode not watched</item>
-        <item quantity="other">%d episodes not watched</item>
-    </plurals>
     <plurals name="other_episodes_plural">
         <item quantity="one">%d other episode</item>
         <item quantity="other">%d other episodes</item>

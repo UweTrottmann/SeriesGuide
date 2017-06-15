@@ -21,6 +21,7 @@
     <string name="format_version">v%1$s (Database v%2$d)</string>
     <string name="format_version_debug">v%1$s (Database v%2$d, build %3$d)</string>
     <string name="format_time_offset_range">%1$+d…%2$d</string>
+    <string name="format_progress_and_total">%1$d/%2$d</string>
 
     <!-- References -->
     <string name="pref_autoupdate">@string/sync_and_update</string>
