@@ -289,11 +289,16 @@
         <item quantity="other">%d minutes</item>
     </plurals>
 
+    <!-- Features -->
+    <string name="feature_supported">Supported</string>
+    <string name="feature_not_supported">Not supported</string>
+    <string name="feature_history">Personal and friend history</string>
+    <string name="feature_sync">Sync</string>
+
     <!-- Hexagon -->
     <string name="hexagon_warning">Experimental</string>
     <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
-    <string name="hexagon_warning_lists">Lists are not included.</string>
-    <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
     <string name="hexagon_signin">Sign In</string>
     <string name="hexagon_signed_in">You are connected to SeriesGuide Cloud.</string>
     <string name="hexagon_signout">Sign Out</string>
@@ -325,11 +330,9 @@
 
     <!-- Connect trakt -->
     <string name="trakt_account">trakt account</string>
-    <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
     <string name="connect_trakt">Connect trakt</string>
     <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
     <string name="trakt_reconnect_details">Check your trakt credentials</string>
-    <string name="username">Username</string>
     <string name="waitplease">A moment, please…</string>
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
