@@ -16,7 +16,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
@@ -45,12 +47,14 @@ public class CloudSetupFragment extends Fragment {
     private static final int REQUEST_SIGN_IN = 1;
     private static final String ACTION_SIGN_IN = "sign-in";
 
-    private Button buttonAction;
-    private TextView textViewDescription;
-    private TextView textViewUsername;
-    private ProgressBar progressBar;
-    private Button buttonRemoveAccount;
-    private TextView textViewWarning;
+    @BindView(R.id.buttonCloudAction) Button buttonAction;
+    @BindView(R.id.textViewCloudDescription) TextView textViewDescription;
+    @BindView(R.id.textViewCloudUser) TextView textViewUsername;
+    @BindView(R.id.progressBarCloud) ProgressBar progressBar;
+    @BindView(R.id.buttonCloudRemoveAccount) Button buttonRemoveAccount;
+    @BindView(R.id.textViewCloudWarnings) TextView textViewWarning;
+    private Unbinder unbinder;
+
     private Snackbar snackbar;
 
     private GoogleApiClient googleApiClient;
@@ -73,13 +77,8 @@ public class CloudSetupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_cloud_setup, container, false);
+        unbinder = ButterKnife.bind(this, v);
 
-        textViewDescription = (TextView) v.findViewById(R.id.textViewCloudDescription);
-        textViewUsername = ButterKnife.findById(v, R.id.textViewCloudUsername);
-        textViewWarning = ButterKnife.findById(v, R.id.textViewCloudWarnings);
-        progressBar = (ProgressBar) v.findViewById(R.id.progressBarCloud);
-        buttonAction = (Button) v.findViewById(R.id.buttonCloudAction);
-        buttonRemoveAccount = ButterKnife.findById(v, R.id.buttonCloudRemoveAccount);
         buttonRemoveAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,6 +152,12 @@ public class CloudSetupFragment extends Fragment {
     public void onPause() {
         super.onPause();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override
@@ -243,8 +248,7 @@ public class CloudSetupFragment extends Fragment {
         if (HexagonSettings.isEnabled(getContext())
                 && !HexagonSettings.shouldValidateAccount(getContext())) {
             textViewUsername.setText(HexagonSettings.getAccountName(getActivity()));
-            textViewUsername.setVisibility(View.VISIBLE);
-            textViewDescription.setText(R.string.hexagon_signed_in);
+            textViewDescription.setText(R.string.hexagon_description);
 
             // enable sign-out
             buttonAction.setText(R.string.hexagon_signout);
@@ -264,7 +268,7 @@ public class CloudSetupFragment extends Fragment {
             } else {
                 textViewDescription.setText(R.string.hexagon_description);
             }
-            textViewUsername.setVisibility(View.GONE);
+            textViewUsername.setText(null);
 
             // enable sign-in
             buttonAction.setText(R.string.hexagon_signin);

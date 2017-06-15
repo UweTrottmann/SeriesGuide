@@ -297,10 +297,9 @@
 
     <!-- Hexagon -->
     <string name="hexagon_warning">Experimental</string>
-    <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
+    <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
     <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
     <string name="hexagon_signin">Sign In</string>
-    <string name="hexagon_signed_in">You are connected to SeriesGuide Cloud.</string>
     <string name="hexagon_signout">Sign Out</string>
     <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed.</string>
     <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
