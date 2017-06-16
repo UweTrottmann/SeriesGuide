@@ -57,161 +57,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         SUCCESS, INCOMPLETE
     }
 
-    /**
-     * Calls {@link #requestSyncIfConnected} if there is no pending sync.
-     */
-    public static void requestSyncIfTime(Context context) {
-        // guard against scheduling too many sync requests
-        Account account = AccountUtils.getAccount(context);
-        if (account == null ||
-                ContentResolver.isSyncPending(account, SgApp.CONTENT_AUTHORITY)) {
-            return;
-        }
-
-        if (!isTimeForSync(context, System.currentTimeMillis())) {
-            return;
-        }
-
-        requestSyncIfConnected(context, TvdbSync.SyncType.DELTA, 0);
-    }
-
-    private static boolean isTimeForSync(Context context, long currentTime) {
-        long previousUpdateTime = UpdateSettings.getLastAutoUpdateTime(context);
-        return (currentTime - previousUpdateTime) >
-                SYNC_INTERVAL_MINIMUM_MINUTES * DateUtils.MINUTE_IN_MILLIS;
-    }
-
-    /**
-     * Schedules a sync for a single show if {@link TvdbTools#isUpdateShow(android.content.Context,
-     * int)} returns true.
-     *
-     * <p> <em>Note: Runs a content provider op, so you should do this on a background thread.</em>
-     */
-    public static void requestSyncIfTime(Context context, int showTvdbId) {
-        if (TvdbTools.isUpdateShow(context, showTvdbId)) {
-            requestSyncIfConnected(context, TvdbSync.SyncType.SINGLE, showTvdbId);
-        }
-    }
-
-    /**
-     * Schedules a sync. Will only queue a sync request if there is a network connection and
-     * auto-sync is enabled.
-     *
-     * @param showTvdbId If using {@link TvdbSync.SyncType#SINGLE}, the TVDb id of a show.
-     */
-    private static void requestSyncIfConnected(Context context, TvdbSync.SyncType syncType,
-            int showTvdbId) {
-        if (!AndroidUtils.isNetworkConnected(context) || !isSyncAutomatically(context)) {
-            // offline or auto-sync disabled: abort
-            return;
-        }
-
-        Bundle args = new Bundle();
-        args.putInt(SyncInitBundle.SYNC_TYPE, syncType.id);
-        args.putInt(SyncInitBundle.SYNC_SHOW_TVDB_ID, showTvdbId);
-
-        requestSync(context, args);
-    }
-
-    /**
-     * Schedules an immediate sync even if auto-sync is disabled, it runs as soon as there is a
-     * connection.
-     *
-     * @param showStatusToast If set, shows a status toast and aborts if offline.
-     */
-    public static void requestSyncDeltaImmediate(Context context, boolean showStatusToast) {
-        requestSyncImmediate(context, TvdbSync.SyncType.DELTA, 0, showStatusToast);
-    }
-
-    /**
-     * @see #requestSyncDeltaImmediate(Context, boolean)
-     */
-    public static void requestSyncSingleImmediate(Context context, boolean showStatusToast,
-            int showTvdbId) {
-        requestSyncImmediate(context, TvdbSync.SyncType.SINGLE, showTvdbId, showStatusToast);
-    }
-
-    /**
-     * @see #requestSyncDeltaImmediate(Context, boolean)
-     */
-    public static void requestSyncFullImmediate(Context context, boolean showStatusToast) {
-        requestSyncImmediate(context, TvdbSync.SyncType.FULL, 0, showStatusToast);
-    }
-
-    private static void requestSyncImmediate(Context context, TvdbSync.SyncType syncType,
-            int showTvdbId, boolean showStatusToast) {
-        if (showStatusToast) {
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                // offline: notify and abort
-                Toast.makeText(context, R.string.update_no_connection, Toast.LENGTH_LONG).show();
-                return;
-            }
-            // notify about upcoming sync
-            Toast.makeText(context, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
-        }
-
-        Bundle args = new Bundle();
-        args.putBoolean(SyncInitBundle.SYNC_IMMEDIATE, true);
-        args.putInt(SyncInitBundle.SYNC_TYPE, syncType.id);
-        args.putInt(SyncInitBundle.SYNC_SHOW_TVDB_ID, showTvdbId);
-
-        // ignore sync settings and backoff
-        args.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
-        // push to front of sync queue
-        args.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
-
-        requestSync(context, args);
-    }
-
-    /**
-     * Schedules a sync with the given arguments.
-     */
-    private static void requestSync(Context context, Bundle args) {
-        Account account = AccountUtils.getAccount(context);
-        if (account == null) {
-            return;
-        }
-        ContentResolver.requestSync(account, SgApp.CONTENT_AUTHORITY, args);
-    }
-
-    /**
-     * Set whether or not the provider is synced when it receives a network tickle.
-     */
-    public static void setSyncAutomatically(Context context, boolean sync) {
-        Account account = AccountUtils.getAccount(context);
-        if (account == null) {
-            return;
-        }
-        ContentResolver.setSyncAutomatically(account, SgApp.CONTENT_AUTHORITY,
-                sync);
-    }
-
-    /**
-     * Check if the provider should be synced when a network tickle is received.
-     */
-    public static boolean isSyncAutomatically(Context context) {
-        Account account = AccountUtils.getAccount(context);
-        return account != null && ContentResolver.getSyncAutomatically(account,
-                SgApp.CONTENT_AUTHORITY);
-    }
-
-    /**
-     * Returns true if there is currently a sync operation for the given account or authority in the
-     * pending list, or actively being processed.
-     */
-    public static boolean isSyncActive(Context context, boolean isDisplayWarning) {
-        Account account = AccountUtils.getAccount(context);
-        if (account == null) {
-            return false;
-        }
-        boolean isSyncActive = ContentResolver.isSyncActive(account,
-                SgApp.CONTENT_AUTHORITY);
-        if (isSyncActive && isDisplayWarning) {
-            Toast.makeText(context, R.string.update_inprogress, Toast.LENGTH_LONG).show();
-        }
-        return isSyncActive;
-    }
-
     @Inject Lazy<TvdbTools> tvdbTools;
     @Inject Lazy<HexagonTools> hexagonTools;
     @Inject Lazy<TraktTools> traktTools;
@@ -222,6 +67,12 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         super(context, true, false);
         Timber.d("Creating sync adapter");
         SgApp.getServicesComponent(context).inject(this);
+    }
+
+    private static boolean isTimeForSync(Context context, long currentTime) {
+        long previousUpdateTime = UpdateSettings.getLastAutoUpdateTime(context);
+        return (currentTime - previousUpdateTime) >
+                SYNC_INTERVAL_MINIMUM_MINUTES * DateUtils.MINUTE_IN_MILLIS;
     }
 
     @Override
@@ -474,6 +325,155 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         editor.apply();
 
         return UpdateResult.SUCCESS;
+    }
+
+    /**
+     * Calls {@link #requestSyncIfConnected} if there is no pending sync.
+     */
+    public static void requestSyncIfTime(Context context) {
+        // guard against scheduling too many sync requests
+        Account account = AccountUtils.getAccount(context);
+        if (account == null ||
+                ContentResolver.isSyncPending(account, SgApp.CONTENT_AUTHORITY)) {
+            return;
+        }
+
+        if (!isTimeForSync(context, System.currentTimeMillis())) {
+            return;
+        }
+
+        requestSyncIfConnected(context, TvdbSync.SyncType.DELTA, 0);
+    }
+
+    /**
+     * Schedules a sync for a single show if {@link TvdbTools#isUpdateShow(android.content.Context,
+     * int)} returns true.
+     *
+     * <p> <em>Note: Runs a content provider op, so you should do this on a background thread.</em>
+     */
+    public static void requestSyncIfTime(Context context, int showTvdbId) {
+        if (TvdbTools.isUpdateShow(context, showTvdbId)) {
+            requestSyncIfConnected(context, TvdbSync.SyncType.SINGLE, showTvdbId);
+        }
+    }
+
+    /**
+     * Schedules a sync. Will only queue a sync request if there is a network connection and
+     * auto-sync is enabled.
+     *
+     * @param showTvdbId If using {@link TvdbSync.SyncType#SINGLE}, the TVDb id of a show.
+     */
+    private static void requestSyncIfConnected(Context context, TvdbSync.SyncType syncType,
+            int showTvdbId) {
+        if (!AndroidUtils.isNetworkConnected(context) || !isSyncAutomatically(context)) {
+            // offline or auto-sync disabled: abort
+            return;
+        }
+
+        Bundle args = new Bundle();
+        args.putInt(SyncInitBundle.SYNC_TYPE, syncType.id);
+        args.putInt(SyncInitBundle.SYNC_SHOW_TVDB_ID, showTvdbId);
+
+        requestSync(context, args);
+    }
+
+    /**
+     * Schedules an immediate sync even if auto-sync is disabled, it runs as soon as there is a
+     * connection.
+     *
+     * @param showStatusToast If set, shows a status toast and aborts if offline.
+     */
+    public static void requestSyncDeltaImmediate(Context context, boolean showStatusToast) {
+        requestSyncImmediate(context, TvdbSync.SyncType.DELTA, 0, showStatusToast);
+    }
+
+    /**
+     * @see #requestSyncDeltaImmediate(Context, boolean)
+     */
+    public static void requestSyncSingleImmediate(Context context, boolean showStatusToast,
+            int showTvdbId) {
+        requestSyncImmediate(context, TvdbSync.SyncType.SINGLE, showTvdbId, showStatusToast);
+    }
+
+    /**
+     * @see #requestSyncDeltaImmediate(Context, boolean)
+     */
+    public static void requestSyncFullImmediate(Context context, boolean showStatusToast) {
+        requestSyncImmediate(context, TvdbSync.SyncType.FULL, 0, showStatusToast);
+    }
+
+    private static void requestSyncImmediate(Context context, TvdbSync.SyncType syncType,
+            int showTvdbId, boolean showStatusToast) {
+        if (showStatusToast) {
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                // offline: notify and abort
+                Toast.makeText(context, R.string.update_no_connection, Toast.LENGTH_LONG).show();
+                return;
+            }
+            // notify about upcoming sync
+            Toast.makeText(context, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
+        }
+
+        Bundle args = new Bundle();
+        args.putBoolean(SyncInitBundle.SYNC_IMMEDIATE, true);
+        args.putInt(SyncInitBundle.SYNC_TYPE, syncType.id);
+        args.putInt(SyncInitBundle.SYNC_SHOW_TVDB_ID, showTvdbId);
+
+        // ignore sync settings and backoff
+        args.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
+        // push to front of sync queue
+        args.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+
+        requestSync(context, args);
+    }
+
+    /**
+     * Schedules a sync with the given arguments.
+     */
+    private static void requestSync(Context context, Bundle args) {
+        Account account = AccountUtils.getAccount(context);
+        if (account == null) {
+            return;
+        }
+        ContentResolver.requestSync(account, SgApp.CONTENT_AUTHORITY, args);
+    }
+
+    /**
+     * Returns true if there is currently a sync operation for the given account or authority in the
+     * pending list, or actively being processed.
+     */
+    public static boolean isSyncActive(Context context, boolean isDisplayWarning) {
+        Account account = AccountUtils.getAccount(context);
+        if (account == null) {
+            return false;
+        }
+        boolean isSyncActive = ContentResolver.isSyncActive(account,
+                SgApp.CONTENT_AUTHORITY);
+        if (isSyncActive && isDisplayWarning) {
+            Toast.makeText(context, R.string.update_inprogress, Toast.LENGTH_LONG).show();
+        }
+        return isSyncActive;
+    }
+
+    /**
+     * Check if the provider should be synced when a network tickle is received.
+     */
+    public static boolean isSyncAutomatically(Context context) {
+        Account account = AccountUtils.getAccount(context);
+        return account != null && ContentResolver.getSyncAutomatically(account,
+                SgApp.CONTENT_AUTHORITY);
+    }
+
+    /**
+     * Set whether or not the provider is synced when it receives a network tickle.
+     */
+    public static void setSyncAutomatically(Context context, boolean sync) {
+        Account account = AccountUtils.getAccount(context);
+        if (account == null) {
+            return;
+        }
+        ContentResolver.setSyncAutomatically(account, SgApp.CONTENT_AUTHORITY,
+                sync);
     }
 
     public interface SyncInitBundle {
