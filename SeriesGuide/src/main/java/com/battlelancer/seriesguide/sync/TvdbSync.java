@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import dagger.Lazy;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 import timber.log.Timber;
@@ -53,6 +54,7 @@ public class TvdbSync {
 
         // loop through shows and download latest data from TVDb
         final ContentResolver resolver = context.getContentResolver();
+        int consecutiveTimeouts = 0;
         for (int i = 0; i < showsToUpdate.length; i++) {
             int showTvdbId = showsToUpdate[i];
 
@@ -64,6 +66,7 @@ public class TvdbSync {
 
             try {
                 tvdbTools.get().updateShow(showTvdbId);
+                hasUpdatedShows = true;
 
                 // make sure other loaders (activity, overview, details) are notified
                 resolver.notifyChange(SeriesGuideContract.Episodes.CONTENT_URI_WITHSHOW, null);
@@ -71,9 +74,18 @@ public class TvdbSync {
                 // failed, continue with other shows
                 resultCode = SgSyncAdapter.UpdateResult.INCOMPLETE;
                 Timber.e(e, "Updating show failed");
+                Throwable cause = e.getCause();
+                if (cause != null && cause instanceof SocketTimeoutException) {
+                    consecutiveTimeouts++;
+                } else if (consecutiveTimeouts > 0) {
+                    consecutiveTimeouts--;
+                }
+                // skip after multiple consecutive timeouts (around 3 * 15/20 seconds)
+                if (consecutiveTimeouts == 3) {
+                    Timber.e("Connection unstable, give up.");
+                    return resultCode;
+                }
             }
-
-            hasUpdatedShows = true;
         }
 
         return resultCode;
