@@ -148,7 +148,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 } else {
                     // ...OR sync with trakt
                     Timber.d("Syncing...trakt");
-                    UpdateResult resultTrakt = performTraktSync(showsExisting, currentTime);
+                    UpdateResult resultTrakt = performTraktSync(progress, showsExisting,
+                            currentTime);
                     // don't overwrite failure
                     if (resultCode == UpdateResult.SUCCESS) {
                         resultCode = resultTrakt;
@@ -231,7 +232,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
     }
 
-    private UpdateResult performTraktSync(HashSet<Integer> localShows, long currentTime) {
+    private UpdateResult performTraktSync(SyncProgress progress, HashSet<Integer> localShows,
+            long currentTime) {
         if (!TraktCredentials.get(getContext()).hasCredentials()) {
             Timber.d("performTraktSync: no auth, skip");
             return UpdateResult.SUCCESS;
@@ -259,6 +261,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             Timber.d("performTraktSync: no local shows, skip shows");
         } else {
             // download and upload episode watched and collected flags
+            progress.publish(SyncProgress.Step.TRAKT_EPISODES);
             if (performTraktEpisodeSync(localShows, lastActivity.episodes, currentTime)
                     != UpdateResult.SUCCESS) {
                 return UpdateResult.INCOMPLETE;
@@ -269,6 +272,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             // download show ratings
+            progress.publish(SyncProgress.Step.TRAKT_RATINGS);
             if (traktTools.downloadShowRatings(lastActivity.shows.rated_at)
                     != UpdateResult.SUCCESS) {
                 return UpdateResult.INCOMPLETE;
@@ -290,6 +294,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // sync watchlist and collection with trakt
+        progress.publish(SyncProgress.Step.TRAKT_MOVIES);
         if (movieTools.get().syncMovieListsWithTrakt(lastActivity.movies)
                 != UpdateResult.SUCCESS) {
             return UpdateResult.INCOMPLETE;
@@ -313,6 +318,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // download movie ratings
+        progress.publish(SyncProgress.Step.TRAKT_RATINGS);
         return traktTools.downloadMovieRatings(lastActivity.movies.rated_at);
     }
 
