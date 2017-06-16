@@ -163,6 +163,8 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:text="@string/hexagon_warning_trakt"
             android:textAppearance="@style/TextAppearance.Body.Highlight.Red"
             app:layout_constraintLeft_toLeftOf="parent"

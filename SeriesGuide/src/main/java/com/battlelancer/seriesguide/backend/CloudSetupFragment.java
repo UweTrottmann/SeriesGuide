@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.sync.SyncProgress;
+import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.dialogs.RemoveCloudAccountDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SyncStatusView;
@@ -81,6 +82,14 @@ public class CloudSetupFragment extends Fragment {
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_cloud_setup, container, false);
         unbinder = ButterKnife.bind(this, v);
+
+        textViewWarning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // link to trakt account activity which has details about disabled features
+                startActivity(new Intent(getContext(), ConnectTraktActivity.class));
+            }
+        });
 
         buttonRemoveAccount.setOnClickListener(new View.OnClickListener() {
             @Override
