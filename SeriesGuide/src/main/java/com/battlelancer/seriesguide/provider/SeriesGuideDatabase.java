@@ -295,8 +295,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.OVERVIEW + " TEXT DEFAULT '',"
 
-            + ShowsColumns.ACTORS + " TEXT DEFAULT '',"
-
             + ShowsColumns.RELEASE_TIME + " INTEGER,"
 
             + ShowsColumns.RELEASE_WEEKDAY + " INTEGER,"
