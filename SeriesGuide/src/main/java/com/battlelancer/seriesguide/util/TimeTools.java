@@ -61,11 +61,14 @@ public class TimeTools {
     }
 
     /**
-     * Returns whether the given date is within the next 48 hours.
+     * Returns whether the given {@link Date} is before now.
+     *
+     * Note: this may seem harsh, but is equal to how to be released are calculated for seasons.
+     *
+     * @see DBUtils#updateUnwatchedCount
      */
     public static boolean isReleased(Date actualRelease) {
-        return actualRelease.before(new Date(System.currentTimeMillis()
-                + 2 * DateUtils.DAY_IN_MILLIS));
+        return actualRelease.before(new Date(System.currentTimeMillis()));
     }
 
     /**
