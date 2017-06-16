@@ -65,7 +65,8 @@ public class SeasonsLoader extends GenericSimpleLoader<SeasonsLoader.Result> {
         List<Season> seasons = new ArrayList<>();
         Cursor seasonsQuery = getContext().getContentResolver()
                 .query(SeriesGuideContract.Seasons.buildSeasonsOfShowUri(showTvdbId),
-                        SeasonsQuery.PROJECTION, null, null,
+                        SeasonsQuery.PROJECTION,
+                        SeriesGuideContract.Seasons.SELECTION_WITH_EPISODES, null,
                         DisplaySettings.getSeasonSortOrder(getContext()).query());
         int seasonIndex = 0;
         int seasonIndexOfEpisode = 0;

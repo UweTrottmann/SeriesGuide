@@ -798,6 +798,8 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.season";
 
+        public static final String SELECTION_WITH_EPISODES = Seasons.TOTALCOUNT + ">0";
+
         public static Uri buildSeasonUri(String seasonTvdbId) {
             return CONTENT_URI.buildUpon().appendPath(seasonTvdbId).build();
         }

@@ -423,8 +423,6 @@ public class SeasonsFragment extends ListFragment {
                 Seasons.TAGS
         };
 
-        String SELECTION = Seasons.TOTALCOUNT + ">0";
-
         int _ID = 0;
         int COMBINED = 1;
         int WATCHCOUNT = 2;
@@ -441,7 +439,7 @@ public class SeasonsFragment extends ListFragment {
             Constants.SeasonSorting sortOrder = DisplaySettings.getSeasonSortOrder(getActivity());
             return new CursorLoader(getActivity(),
                     Seasons.buildSeasonsOfShowUri(String.valueOf(getShowId())),
-                    SeasonsQuery.PROJECTION, SeasonsQuery.SELECTION, null, sortOrder
+                    SeasonsQuery.PROJECTION, Seasons.SELECTION_WITH_EPISODES, null, sortOrder
                     .query()
             );
         }
