@@ -2,9 +2,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -31,10 +29,8 @@ import org.greenrobot.eventbus.ThreadMode;
  */
 public class ConnectTraktCredentialsFragment extends Fragment {
 
-    private static final String STATE_IS_CONNECTING = "is_connecting";
-
     @BindView(R.id.textViewTraktAbout) TextView textViewAbout;
-    @BindView(R.id.buttonTraktConnect) Button buttonConnect;
+    @BindView(R.id.buttonTraktConnect) Button buttonAccount;
     @BindView(R.id.textViewTraktUser) TextView textViewUsername;
     @BindView(R.id.syncStatusTrakt) SyncStatusView syncStatusView;
     @BindView(R.id.featureStatusTraktCheckIn) FeatureStatusView featureStatusCheckIn;
@@ -42,17 +38,8 @@ public class ConnectTraktCredentialsFragment extends Fragment {
     @BindView(R.id.featureStatusTraktSyncShows) FeatureStatusView featureStatusSyncShows;
     @BindView(R.id.featureStatusTraktSyncMovies) FeatureStatusView featureStatusSyncMovies;
     @BindView(R.id.textViewConnectTraktHexagonWarning) TextView textViewHexagonWarning;
+    @BindView(R.id.buttonTraktLibrary) Button buttonLibrary;
     private Unbinder unbinder;
-
-    private boolean isConnecting;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            isConnecting = savedInstanceState.getBoolean(STATE_IS_CONNECTING, false);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,6 +56,16 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         featureStatusSyncShows.setFeatureEnabled(!hexagonEnabled);
         featureStatusSyncMovies.setFeatureEnabled(!hexagonEnabled);
         textViewHexagonWarning.setVisibility(hexagonEnabled ? View.VISIBLE : View.GONE);
+
+        // library button
+        buttonLibrary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // open WATCHED tab
+                startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
+                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_WATCHED));
+            }
+        });
 
         syncStatusView.setVisibility(View.GONE);
 
@@ -94,12 +91,6 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean(STATE_IS_CONNECTING, isConnecting);
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onEvent(SyncProgress.SyncEvent event) {
         syncStatusView.setProgress(event);
@@ -109,32 +100,23 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         TraktCredentials traktCredentials = TraktCredentials.get(getActivity());
         boolean hasCredentials = traktCredentials.hasCredentials();
         if (hasCredentials) {
-            if (isConnecting) {
-                // show further options after successful connection
-                ConnectTraktFinishedFragment f = new ConnectTraktFinishedFragment();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.content_frame, f);
-                ft.commitAllowingStateLoss();
-            } else {
-                String username = traktCredentials.getUsername();
-                String displayName = traktCredentials.getDisplayName();
-                if (!TextUtils.isEmpty(displayName)) {
-                    username += " (" + displayName + ")";
-                }
-                textViewUsername.setText(username);
-                setConnectButtonState(false);
-                setIsConnecting(false);
+            String username = traktCredentials.getUsername();
+            String displayName = traktCredentials.getDisplayName();
+            if (!TextUtils.isEmpty(displayName)) {
+                username += " (" + displayName + ")";
             }
+            textViewUsername.setText(username);
+            setAccountButtonState(false);
+            buttonLibrary.setVisibility(View.VISIBLE);
         } else {
-            isConnecting = false;
             textViewUsername.setText(null);
-            setConnectButtonState(true);
-            setIsConnecting(false);
+            setAccountButtonState(true);
+            buttonLibrary.setVisibility(View.GONE);
         }
     }
 
     private void connect() {
-        setIsConnecting(true);
+        buttonAccount.setEnabled(false);
         startActivity(new Intent(getActivity(), TraktAuthActivity.class));
     }
 
@@ -143,27 +125,23 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         updateViews();
     }
 
-    private void setConnectButtonState(boolean connectEnabled) {
-        buttonConnect.setText(connectEnabled ? R.string.connect : R.string.disconnect);
+    private void setAccountButtonState(boolean connectEnabled) {
+        buttonAccount.setEnabled(true);
+        buttonAccount.setText(connectEnabled ? R.string.connect : R.string.disconnect);
         if (connectEnabled) {
-            buttonConnect.setOnClickListener(new View.OnClickListener() {
+            buttonAccount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     connect();
                 }
             });
         } else {
-            buttonConnect.setOnClickListener(new View.OnClickListener() {
+            buttonAccount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     disconnect();
                 }
             });
         }
-    }
-
-    private void setIsConnecting(boolean isConnecting) {
-        this.isConnecting = isConnecting;
-        buttonConnect.setEnabled(!isConnecting);
     }
 }
