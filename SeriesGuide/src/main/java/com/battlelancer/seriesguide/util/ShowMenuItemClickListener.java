@@ -8,7 +8,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.sync.TvdbSync;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RemoveShowDialogFragment;
 
@@ -70,8 +69,7 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
                 return true;
             }
             case R.id.menu_action_shows_update: {
-                SgSyncAdapter.requestSyncImmediate(context,
-                        TvdbSync.SyncType.SINGLE, showTvdbId, true);
+                SgSyncAdapter.requestSyncSingleImmediate(context, true, showTvdbId);
                 Utils.trackContextMenu(context, logTag, "Update show");
                 return true;
             }

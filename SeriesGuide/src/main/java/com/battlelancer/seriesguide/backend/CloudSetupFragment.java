@@ -24,7 +24,6 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.sync.TvdbSync;
 import com.battlelancer.seriesguide.ui.dialogs.RemoveCloudAccountDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.auth.api.Auth;
@@ -387,8 +386,7 @@ public class CloudSetupFragment extends Fragment {
                 case HexagonSetupTask.SUCCESS_SYNC_REQUIRED: {
                     // schedule full sync
                     Timber.d("Setting up Hexagon...SUCCESS_SYNC_REQUIRED");
-                    SgSyncAdapter.requestSyncImmediate(getActivity(), TvdbSync.SyncType.FULL,
-                            0, false);
+                    SgSyncAdapter.requestSyncFullImmediate(getActivity(), false);
                     HexagonSettings.setSetupCompleted(getActivity());
                     break;
                 }

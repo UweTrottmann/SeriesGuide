@@ -12,7 +12,6 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.sync.TvdbSync;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktV2;
@@ -153,7 +152,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
     protected void onPostExecute(Integer resultCode) {
         if (resultCode == Result.SUCCESS) {
             // trigger a sync, notifies user via toast
-            SgSyncAdapter.requestSyncImmediate(context, TvdbSync.SyncType.DELTA, 0, true);
+            SgSyncAdapter.requestSyncDeltaImmediate(context, true);
         }
 
         EventBus.getDefault().post(new FinishedEvent(resultCode));

@@ -52,13 +52,13 @@ import timber.log.Timber;
 public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private static final int SYNC_INTERVAL_MINIMUM_MINUTES = 5;
+
     public enum UpdateResult {
         SUCCESS, INCOMPLETE
     }
 
     /**
-     * Calls {@link ContentResolver} {@code .requestSyncIfConnected()} if there is no pending sync
-     * already.
+     * Calls {@link #requestSyncIfConnected} if there is no pending sync.
      */
     public static void requestSyncIfTime(Context context) {
         // guard against scheduling too many sync requests
@@ -72,7 +72,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             return;
         }
 
-        SgSyncAdapter.requestSyncIfConnected(context, TvdbSync.SyncType.DELTA, 0);
+        requestSyncIfConnected(context, TvdbSync.SyncType.DELTA, 0);
     }
 
     private static boolean isTimeForSync(Context context, long currentTime) {
@@ -89,7 +89,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     public static void requestSyncIfTime(Context context, int showTvdbId) {
         if (TvdbTools.isUpdateShow(context, showTvdbId)) {
-            SgSyncAdapter.requestSyncIfConnected(context, TvdbSync.SyncType.SINGLE, showTvdbId);
+            requestSyncIfConnected(context, TvdbSync.SyncType.SINGLE, showTvdbId);
         }
     }
 
@@ -97,10 +97,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Schedules a sync. Will only queue a sync request if there is a network connection and
      * auto-sync is enabled.
      *
-     * @param syncType Any of {@link TvdbSync.SyncType}.
      * @param showTvdbId If using {@link TvdbSync.SyncType#SINGLE}, the TVDb id of a show.
      */
-    public static void requestSyncIfConnected(Context context, TvdbSync.SyncType syncType,
+    private static void requestSyncIfConnected(Context context, TvdbSync.SyncType syncType,
             int showTvdbId) {
         if (!AndroidUtils.isNetworkConnected(context) || !isSyncAutomatically(context)) {
             // offline or auto-sync disabled: abort
@@ -118,13 +117,29 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Schedules an immediate sync even if auto-sync is disabled, it runs as soon as there is a
      * connection.
      *
-     * @param syncType Any of {@link TvdbSync.SyncType}.
-     * @param showTvdbId If using {@link TvdbSync.SyncType#SINGLE}, the TVDb id of a show.
      * @param showStatusToast If set, shows a status toast and aborts if offline.
      */
-    public static void requestSyncImmediate(Context context, TvdbSync.SyncType syncType,
-            int showTvdbId,
-            boolean showStatusToast) {
+    public static void requestSyncDeltaImmediate(Context context, boolean showStatusToast) {
+        requestSyncImmediate(context, TvdbSync.SyncType.DELTA, 0, showStatusToast);
+    }
+
+    /**
+     * @see #requestSyncDeltaImmediate(Context, boolean)
+     */
+    public static void requestSyncSingleImmediate(Context context, boolean showStatusToast,
+            int showTvdbId) {
+        requestSyncImmediate(context, TvdbSync.SyncType.SINGLE, showTvdbId, showStatusToast);
+    }
+
+    /**
+     * @see #requestSyncDeltaImmediate(Context, boolean)
+     */
+    public static void requestSyncFullImmediate(Context context, boolean showStatusToast) {
+        requestSyncImmediate(context, TvdbSync.SyncType.FULL, 0, showStatusToast);
+    }
+
+    private static void requestSyncImmediate(Context context, TvdbSync.SyncType syncType,
+            int showTvdbId, boolean showStatusToast) {
         if (showStatusToast) {
             if (!AndroidUtils.isNetworkConnected(context)) {
                 // offline: notify and abort
@@ -156,8 +171,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         if (account == null) {
             return;
         }
-        ContentResolver.requestSync(account,
-                SgApp.CONTENT_AUTHORITY, args);
+        ContentResolver.requestSync(account, SgApp.CONTENT_AUTHORITY, args);
     }
 
     /**
