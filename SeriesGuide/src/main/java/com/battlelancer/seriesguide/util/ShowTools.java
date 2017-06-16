@@ -27,6 +27,7 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.sync.TvdbSync;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
 import com.google.api.client.util.DateTime;
@@ -260,7 +261,7 @@ public class ShowTools {
                         .update(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
                                 values, null, null);
                 // trigger update
-                SgSyncAdapter.requestSyncImmediate(context, SgSyncAdapter.SyncType.SINGLE,
+                SgSyncAdapter.requestSyncImmediate(context, TvdbSync.SyncType.SINGLE,
                         showTvdbId, false);
             }
         };

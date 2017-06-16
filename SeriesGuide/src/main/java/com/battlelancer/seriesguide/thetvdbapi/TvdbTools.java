@@ -25,7 +25,6 @@ import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -35,7 +34,6 @@ import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.thetvdb.entities.Episode;
 import com.uwetrottmann.thetvdb.entities.EpisodesResponse;
 import com.uwetrottmann.thetvdb.entities.Series;
@@ -340,51 +338,6 @@ public class TvdbTools {
         downloadAndParse(root.getContentHandler(), url, false, "searchShow: ");
 
         return series;
-    }
-
-    // Values based on the assumption that sync runs about every 24 hours
-    private static final long UPDATE_THRESHOLD_WEEKLYS_MS = 6 * DateUtils.DAY_IN_MILLIS +
-            12 * DateUtils.HOUR_IN_MILLIS;
-    private static final long UPDATE_THRESHOLD_DAILYS_MS = DateUtils.DAY_IN_MILLIS
-            + 12 * DateUtils.HOUR_IN_MILLIS;
-
-    /**
-     * Return list of show TVDb ids hitting a x-day limit.
-     */
-    public static int[] deltaUpdateShows(long currentTime, Context context) {
-        final List<Integer> updatableShowIds = new ArrayList<>();
-
-        // get existing show ids
-        final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
-                Shows._ID, Shows.LASTUPDATED, Shows.RELEASE_WEEKDAY
-        }, null, null, null);
-
-        if (shows != null) {
-            while (shows.moveToNext()) {
-                boolean isDailyShow = shows.getInt(2) == TimeTools.RELEASE_WEEKDAY_DAILY;
-                long lastUpdatedTime = shows.getLong(1);
-                // update daily shows more frequently than weekly shows
-                if (currentTime - lastUpdatedTime >
-                        (isDailyShow ? UPDATE_THRESHOLD_DAILYS_MS : UPDATE_THRESHOLD_WEEKLYS_MS)) {
-                    // add shows that are due for updating
-                    updatableShowIds.add(shows.getInt(0));
-                }
-            }
-
-            int showCount = shows.getCount();
-            if (showCount > 0 && AppSettings.shouldReportStats(context)) {
-                Utils.trackCustomEvent(context, "Statistics", "Shows", String.valueOf(showCount));
-            }
-
-            shows.close();
-        }
-
-        // copy to int array
-        int[] showTvdbIds = new int[updatableShowIds.size()];
-        for (int i = 0; i < updatableShowIds.size(); i++) {
-            showTvdbIds[i] = updatableShowIds.get(i);
-        }
-        return showTvdbIds;
     }
 
     /**

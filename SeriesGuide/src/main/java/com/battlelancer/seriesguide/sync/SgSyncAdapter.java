@@ -8,11 +8,9 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SyncResult;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.widget.Toast;
@@ -22,12 +20,10 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -45,7 +41,6 @@ import dagger.Lazy;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.concurrent.atomic.AtomicInteger;
 import javax.inject.Inject;
 import retrofit2.Response;
 import timber.log.Timber;
@@ -57,43 +52,8 @@ import timber.log.Timber;
 public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private static final int SYNC_INTERVAL_MINIMUM_MINUTES = 5;
-
-    public enum SyncType {
-        DELTA(0),
-        SINGLE(1),
-        FULL(2);
-
-        public int id;
-
-        SyncType(int id) {
-            this.id = id;
-        }
-
-        public static SyncType from(int id) {
-            return values()[id];
-        }
-    }
-
     public enum UpdateResult {
         SUCCESS, INCOMPLETE
-    }
-
-    public interface SyncInitBundle {
-
-        /**
-         * One of {@link com.battlelancer.seriesguide.sync.SgSyncAdapter.SyncType}.
-         */
-        String SYNC_TYPE = "com.battlelancer.seriesguide.sync_type";
-
-        /**
-         * If {@link #SYNC_TYPE} is {@link SyncType#SINGLE}, the TVDb id of the show to sync.
-         */
-        String SYNC_SHOW_TVDB_ID = "com.battlelancer.seriesguide.sync_show";
-
-        /**
-         * Whether the sync should occur despite time or backoff limits.
-         */
-        String SYNC_IMMEDIATE = "com.battlelancer.seriesguide.sync_immediate";
     }
 
     /**
@@ -112,7 +72,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             return;
         }
 
-        SgSyncAdapter.requestSyncIfConnected(context, SyncType.DELTA, 0);
+        SgSyncAdapter.requestSyncIfConnected(context, TvdbSync.SyncType.DELTA, 0);
     }
 
     private static boolean isTimeForSync(Context context, long currentTime) {
@@ -129,7 +89,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     public static void requestSyncIfTime(Context context, int showTvdbId) {
         if (TvdbTools.isUpdateShow(context, showTvdbId)) {
-            SgSyncAdapter.requestSyncIfConnected(context, SyncType.SINGLE, showTvdbId);
+            SgSyncAdapter.requestSyncIfConnected(context, TvdbSync.SyncType.SINGLE, showTvdbId);
         }
     }
 
@@ -137,10 +97,11 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Schedules a sync. Will only queue a sync request if there is a network connection and
      * auto-sync is enabled.
      *
-     * @param syncType Any of {@link SyncType}.
-     * @param showTvdbId If using {@link SyncType#SINGLE}, the TVDb id of a show.
+     * @param syncType Any of {@link TvdbSync.SyncType}.
+     * @param showTvdbId If using {@link TvdbSync.SyncType#SINGLE}, the TVDb id of a show.
      */
-    public static void requestSyncIfConnected(Context context, SyncType syncType, int showTvdbId) {
+    public static void requestSyncIfConnected(Context context, TvdbSync.SyncType syncType,
+            int showTvdbId) {
         if (!AndroidUtils.isNetworkConnected(context) || !isSyncAutomatically(context)) {
             // offline or auto-sync disabled: abort
             return;
@@ -157,11 +118,12 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Schedules an immediate sync even if auto-sync is disabled, it runs as soon as there is a
      * connection.
      *
-     * @param syncType Any of {@link SyncType}.
-     * @param showTvdbId If using {@link SyncType#SINGLE}, the TVDb id of a show.
+     * @param syncType Any of {@link TvdbSync.SyncType}.
+     * @param showTvdbId If using {@link TvdbSync.SyncType#SINGLE}, the TVDb id of a show.
      * @param showStatusToast If set, shows a status toast and aborts if offline.
      */
-    public static void requestSyncImmediate(Context context, SyncType syncType, int showTvdbId,
+    public static void requestSyncImmediate(Context context, TvdbSync.SyncType syncType,
+            int showTvdbId,
             boolean showStatusToast) {
         if (showStatusToast) {
             if (!AndroidUtils.isNetworkConnected(context)) {
@@ -252,71 +214,29 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle extras, String authority,
             ContentProviderClient provider, SyncResult syncResult) {
         // determine type of sync
+        TvdbSync tvdbSync = new TvdbSync(extras);
         final boolean syncImmediately = extras.getBoolean(SyncInitBundle.SYNC_IMMEDIATE, false);
-        final SyncType syncType = SyncType.from(
-                extras.getInt(SyncInitBundle.SYNC_TYPE, SyncType.DELTA.id));
-        Timber.i("Syncing...%s%s", syncType, (syncImmediately ? "_IMMEDIATE" : "_REGULAR"));
+        Timber.i("Syncing...%s%s", tvdbSync.syncType(), syncImmediately
+                ? "_IMMEDIATE" : "_REGULAR");
 
         // should we sync?
         final long currentTime = System.currentTimeMillis();
-        if (!syncImmediately && syncType != SyncType.SINGLE) {
+        if (!syncImmediately && tvdbSync.isSyncMultiple()) {
             if (!isTimeForSync(getContext(), currentTime)) {
                 Timber.d("Syncing...ABORT_DID_JUST_SYNC");
                 return;
             }
         }
 
-        // build a list of shows to update
-        int[] showsToUpdate;
-        if (syncType == SyncType.SINGLE) {
-            int showTvdbId = extras.getInt(SyncInitBundle.SYNC_SHOW_TVDB_ID, 0);
-            if (showTvdbId == 0) {
-                Timber.e("Syncing...ABORT_INVALID_SHOW_TVDB_ID");
-                return;
-            }
-            showsToUpdate = new int[] {
-                    showTvdbId
-            };
-        } else {
-            showsToUpdate = getShowsToUpdate(syncType, currentTime);
-            if (showsToUpdate == null) {
-                Timber.e("Syncing...ABORT_SHOW_QUERY_FAILED");
-                return;
-            }
-        }
-
         // from here on we need more sophisticated abort handling, so keep track of errors
-        UpdateResult resultCode = UpdateResult.SUCCESS;
-
-        // loop through shows and download latest data from TVDb
         Timber.d("Syncing...TVDb");
-        final AtomicInteger updateCount = new AtomicInteger();
-        final ContentResolver resolver = getContext().getContentResolver();
-        for (int i = updateCount.get(); i < showsToUpdate.length; i++) {
-            int id = showsToUpdate[i];
-
-            // stop sync if connectivity is lost
-            if (!AndroidUtils.isNetworkConnected(getContext())) {
-                resultCode = UpdateResult.INCOMPLETE;
-                break;
-            }
-
-            try {
-                tvdbTools.get().updateShow(id);
-
-                // make sure other loaders (activity, overview, details) are notified
-                resolver.notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);
-            } catch (TvdbException e) {
-                // failed, continue with other shows
-                resultCode = UpdateResult.INCOMPLETE;
-                Timber.e(e, "Updating show failed");
-            }
-
-            updateCount.incrementAndGet();
+        UpdateResult resultCode = tvdbSync.sync(getContext(), tvdbTools, currentTime);
+        if (resultCode == null) {
+            return; // invalid show(s), abort
         }
 
         // do some more things if this is not a quick update
-        if (syncType != SyncType.SINGLE) {
+        if (tvdbSync.isSyncMultiple()) {
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getContext());
 
@@ -351,11 +271,11 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 }
 
                 // make sure other loaders (activity, overview, details) are notified of changes
-                resolver.notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);
+                getContext().getContentResolver().notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);
             }
 
             // renew search table if shows were updated and it will not be renewed by add task
-            if (updateCount.get() > 0 && showsToUpdate.length > 0 && showsNew.size() == 0) {
+            if (tvdbSync.hasUpdatedShows() && showsNew.size() == 0) {
                 DBUtils.rebuildFtsTable(getContext());
             }
 
@@ -399,39 +319,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         Utils.runNotificationService(getContext());
 
         Timber.i("Syncing...%s", resultCode.toString());
-    }
-
-    /**
-     * Returns an array of show ids to update.
-     */
-    @Nullable
-    private int[] getShowsToUpdate(SyncType syncType, long currentTime) {
-        switch (syncType) {
-            case FULL: {
-                // get all show IDs for a full update
-                final Cursor showsQuery = getContext().getContentResolver().query(Shows.CONTENT_URI,
-                        new String[] {
-                                Shows._ID
-                        }, null, null, null
-                );
-                if (showsQuery == null) {
-                    return null;
-                }
-
-                int[] showIds = new int[showsQuery.getCount()];
-                int i = 0;
-                while (showsQuery.moveToNext()) {
-                    showIds[i] = showsQuery.getInt(0);
-                    i++;
-                }
-                showsQuery.close();
-                return showIds;
-            }
-            case DELTA:
-            default:
-                // Get shows which have not been updated for a certain time.
-                return TvdbTools.deltaUpdateShows(currentTime, getContext());
-        }
     }
 
     /**
@@ -573,5 +460,24 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         editor.apply();
 
         return UpdateResult.SUCCESS;
+    }
+
+    public interface SyncInitBundle {
+
+        /**
+         * One of {@link TvdbSync.SyncType}.
+         */
+        String SYNC_TYPE = "com.battlelancer.seriesguide.sync_type";
+
+        /**
+         * If {@link #SYNC_TYPE} is {@link TvdbSync.SyncType#SINGLE}, the TVDb id of the show to
+         * sync.
+         */
+        String SYNC_SHOW_TVDB_ID = "com.battlelancer.seriesguide.sync_show";
+
+        /**
+         * Whether the sync should occur despite time or backoff limits.
+         */
+        String SYNC_IMMEDIATE = "com.battlelancer.seriesguide.sync_immediate";
     }
 }
