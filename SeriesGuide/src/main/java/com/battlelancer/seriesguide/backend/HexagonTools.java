@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.sync.SyncProgress;
 import com.battlelancer.seriesguide.ui.ListsActivity;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ListsTools;
@@ -345,23 +346,27 @@ public class HexagonTools {
      * changes to shows, episodes and movies.
      */
     public boolean syncWithHexagon(HashSet<Integer> existingShows,
-            HashMap<Integer, SearchResult> newShows) {
+            HashMap<Integer, SearchResult> newShows, SyncProgress progress) {
         Timber.d("syncWithHexagon: syncing...");
 
         //// EPISODES
+        progress.publish(SyncProgress.Step.HEXAGON_EPISODES);
         boolean syncEpisodesSuccessful = syncEpisodes();
         Timber.d("syncWithHexagon: episode sync %s",
                 syncEpisodesSuccessful ? "SUCCESSFUL" : "FAILED");
 
         //// SHOWS
+        progress.publish(SyncProgress.Step.HEXAGON_SHOWS);
         boolean syncShowsSuccessful = syncShows(existingShows, newShows);
         Timber.d("syncWithHexagon: show sync %s", syncShowsSuccessful ? "SUCCESSFUL" : "FAILED");
 
         //// MOVIES
+        progress.publish(SyncProgress.Step.HEXAGON_MOVIES);
         boolean syncMoviesSuccessful = syncMovies();
         Timber.d("syncWithHexagon: movie sync %s", syncMoviesSuccessful ? "SUCCESSFUL" : "FAILED");
 
         //// LISTS
+        progress.publish(SyncProgress.Step.HEXAGON_LISTS);
         boolean syncListsSuccessful = syncLists();
         Timber.d("syncWithHexagon: lists sync %s", syncListsSuccessful ? "SUCCESSFUL" : "FAILED");
 

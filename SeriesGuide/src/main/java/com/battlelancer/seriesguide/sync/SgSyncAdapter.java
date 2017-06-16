@@ -110,8 +110,11 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // from here on we need more sophisticated abort handling, so keep track of errors
         Timber.d("Syncing...TVDb");
+        SyncProgress progress = new SyncProgress();
+        progress.publish(SyncProgress.Step.TVDB);
         UpdateResult resultCode = tvdbSync.sync(getContext(), tvdbTools, currentTime);
         if (resultCode == null) {
+            progress.publish(SyncProgress.Result.FAILURE);
             return; // invalid show(s), abort
         }
 
@@ -122,6 +125,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
             // get latest TMDb configuration
             Timber.d("Syncing...TMDb config");
+            progress.publish(SyncProgress.Step.TMDB);
             getTmdbConfiguration(prefs);
 
             // sync with Hexagon or trakt
@@ -135,7 +139,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 if (HexagonSettings.isEnabled(getContext())) {
                     // sync with hexagon...
                     Timber.d("Syncing...Hexagon");
-                    boolean success = hexagonTools.get().syncWithHexagon(showsExisting, showsNew);
+                    boolean success = hexagonTools.get()
+                            .syncWithHexagon(showsExisting, showsNew, progress);
                     // don't overwrite failure
                     if (resultCode == UpdateResult.SUCCESS) {
                         resultCode = success ? UpdateResult.SUCCESS : UpdateResult.INCOMPLETE;
@@ -199,6 +204,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         Utils.runNotificationService(getContext());
 
         Timber.i("Syncing...%s", resultCode.toString());
+        progress.publish(resultCode == UpdateResult.SUCCESS
+                ? SyncProgress.Result.SUCCESS : SyncProgress.Result.FAILURE);
     }
 
     /**
