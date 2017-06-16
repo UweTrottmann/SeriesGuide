@@ -18,8 +18,13 @@ import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.sync.SyncProgress;
 import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
 import com.battlelancer.seriesguide.widgets.FeatureStatusView;
+import com.battlelancer.seriesguide.widgets.SyncStatusView;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Interface to show trakt account features and connect or disconnect trakt.
@@ -31,6 +36,7 @@ public class ConnectTraktCredentialsFragment extends Fragment {
     @BindView(R.id.textViewTraktAbout) TextView textViewAbout;
     @BindView(R.id.buttonTraktConnect) Button buttonConnect;
     @BindView(R.id.textViewTraktUser) TextView textViewUsername;
+    @BindView(R.id.syncStatusTrakt) SyncStatusView syncStatusView;
     @BindView(R.id.featureStatusTraktCheckIn) FeatureStatusView featureStatusCheckIn;
     @BindView(R.id.featureStatusTraktSync) FeatureStatusView featureStatusSync;
     @BindView(R.id.featureStatusTraktSyncShows) FeatureStatusView featureStatusSyncShows;
@@ -64,20 +70,27 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         featureStatusSyncMovies.setFeatureEnabled(!hexagonEnabled);
         textViewHexagonWarning.setVisibility(hexagonEnabled ? View.VISIBLE : View.GONE);
 
+        syncStatusView.setVisibility(View.GONE);
+
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
         updateViews();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
         unbinder.unbind();
     }
 
@@ -85,6 +98,11 @@ public class ConnectTraktCredentialsFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(STATE_IS_CONNECTING, isConnecting);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onEvent(SyncProgress.SyncEvent event) {
+        syncStatusView.setProgress(event);
     }
 
     private void updateViews() {
