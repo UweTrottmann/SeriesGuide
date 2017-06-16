@@ -52,16 +52,8 @@ public class TimeTools {
     private static final String NETWORK_HULU = "Hulu";
     private static final String NETWORK_NETFLIX = "Netflix";
 
-    public static boolean isBeforeMillis(Date date, long millis) {
-        return date.before(new Date(millis));
-    }
-
     public static boolean isBeforeMillis(OffsetDateTime dateTime, long millis) {
         return dateTime.toInstant().isBefore(Instant.ofEpochMilli(millis));
-    }
-
-    public static boolean isAfterMillis(Date date, long millis) {
-        return date.after(new Date(millis));
     }
 
     public static boolean isAfterMillis(OffsetDateTime dateTime, long millis) {
