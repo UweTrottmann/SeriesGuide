@@ -24,8 +24,10 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.sync.SyncProgress;
 import com.battlelancer.seriesguide.ui.dialogs.RemoveCloudAccountDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.SyncStatusView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -50,7 +52,8 @@ public class CloudSetupFragment extends Fragment {
     @BindView(R.id.buttonCloudAction) Button buttonAction;
     @BindView(R.id.textViewCloudDescription) TextView textViewDescription;
     @BindView(R.id.textViewCloudUser) TextView textViewUsername;
-    @BindView(R.id.progressBarCloud) ProgressBar progressBar;
+    @BindView(R.id.progressBarCloudAccount) ProgressBar progressBarAccount;
+    @BindView(R.id.syncStatusCloud) SyncStatusView syncStatusView;
     @BindView(R.id.buttonCloudRemoveAccount) Button buttonRemoveAccount;
     @BindView(R.id.textViewCloudWarnings) TextView textViewWarning;
     private Unbinder unbinder;
@@ -90,6 +93,7 @@ public class CloudSetupFragment extends Fragment {
 
         updateViews();
         setProgressVisible(true);
+        syncStatusView.setVisibility(View.GONE);
 
         return v;
     }
@@ -179,6 +183,11 @@ public class CloudSetupFragment extends Fragment {
         event.handle(getActivity());
         setProgressVisible(false);
         updateViews();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onEvent(SyncProgress.SyncEvent event) {
+        syncStatusView.setProgress(event);
     }
 
     /**
@@ -292,7 +301,7 @@ public class CloudSetupFragment extends Fragment {
      * Disables buttons and shows a progress bar.
      */
     private void setProgressVisible(boolean isVisible) {
-        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        progressBarAccount.setVisibility(isVisible ? View.VISIBLE : View.GONE);
 
         buttonAction.setEnabled(!isVisible);
         buttonRemoveAccount.setEnabled(!isVisible);
