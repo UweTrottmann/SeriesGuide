@@ -393,7 +393,7 @@ public class SeriesGuideContract {
 
         /**
          * Last time episode was edited on theTVDb.com (lastupdated field) in Unix time (seconds).
-         * Added in {@link SeriesGuideDatabase#DBVER_IMDBIDSLASTEDIT}.
+         * Added in {@link SeriesGuideDatabase#DBVER_27_IMDBIDSLASTEDIT}.
          *
          * <pre>
          * Range:   long (unix time)

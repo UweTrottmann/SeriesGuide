@@ -39,38 +39,22 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "seriesdatabase";
 
-    public static final int DBVER_FAVORITES = 17;
-
-    public static final int DBVER_NEXTAIRDATETEXT = 18;
-
-    public static final int DBVER_SETOTALCOUNT = 19;
-
-    public static final int DBVER_SYNC = 20;
-
-    public static final int DBVER_AIRTIMECOLUMN = 21;
-
-    public static final int DBVER_PERSHOWUPDATEDATE = 22;
-
-    public static final int DBVER_HIDDENSHOWS = 23;
-
-    public static final int DBVER_AIRTIMEREFORM = 24;
-
-    public static final int DBVER_NEXTAIRDATEMS = 25;
-
-    public static final int DBVER_COLLECTED = 26;
-
-    public static final int DBVER_IMDBIDSLASTEDIT = 27;
-
-    public static final int DBVER_LISTS = 28;
-
-    public static final int DBVER_GETGLUE_CHECKIN_FIX = 29;
-
-    public static final int DBVER_ABSOLUTE_NUMBERS = 30;
-
+    public static final int DBVER_17_FAVORITES = 17;
+    public static final int DBVER_18_NEXTAIRDATETEXT = 18;
+    public static final int DBVER_19_SETOTALCOUNT = 19;
+    public static final int DBVER_20_SYNC = 20;
+    public static final int DBVER_21_AIRTIMECOLUMN = 21;
+    public static final int DBVER_22_PERSHOWUPDATEDATE = 22;
+    public static final int DBVER_23_HIDDENSHOWS = 23;
+    public static final int DBVER_24_AIRTIMEREFORM = 24;
+    public static final int DBVER_25_NEXTAIRDATEMS = 25;
+    public static final int DBVER_26_COLLECTED = 26;
+    public static final int DBVER_27_IMDBIDSLASTEDIT = 27;
+    public static final int DBVER_28_LISTS = 28;
+    public static final int DBVER_29_GETGLUE_CHECKIN_FIX = 29;
+    public static final int DBVER_30_ABSOLUTE_NUMBERS = 30;
     public static final int DBVER_31_LAST_WATCHED_ID = 31;
-
     public static final int DBVER_32_MOVIES = 32;
-
     public static final int DBVER_33_IGNORE_ARTICLE_SORT = 33;
 
     /**
@@ -605,33 +589,33 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         switch (version) {
             case 16:
                 upgradeToSeventeen(db);
-            case 17:
+            case DBVER_17_FAVORITES:
                 upgradeToEighteen(db);
-            case 18:
+            case DBVER_18_NEXTAIRDATETEXT:
                 upgradeToNineteen(db);
-            case 19:
+            case DBVER_19_SETOTALCOUNT:
                 upgradeToTwenty(db);
-            case 20:
+            case DBVER_20_SYNC:
                 upgradeToTwentyOne(db);
-            case 21:
+            case DBVER_21_AIRTIMECOLUMN:
                 upgradeToTwentyTwo(db);
-            case 22:
+            case DBVER_22_PERSHOWUPDATEDATE:
                 upgradeToTwentyThree(db);
-            case 23:
+            case DBVER_23_HIDDENSHOWS:
                 upgradeToTwentyFour(db);
-            case 24:
+            case DBVER_24_AIRTIMEREFORM:
                 upgradeToTwentyFive(db);
-            case 25:
+            case DBVER_25_NEXTAIRDATEMS:
                 upgradeToTwentySix(db);
-            case 26:
+            case DBVER_26_COLLECTED:
                 upgradeToTwentySeven(db);
-            case 27:
+            case DBVER_27_IMDBIDSLASTEDIT:
                 upgradeToTwentyEight(db);
-            case 28:
+            case DBVER_28_LISTS:
                 // GetGlue column not required any longer
-            case 29:
+            case DBVER_29_GETGLUE_CHECKIN_FIX:
                 upgradeToThirty(db);
-            case 30:
+            case DBVER_30_ABSOLUTE_NUMBERS:
                 upgradeToThirtyOne(db);
             case DBVER_31_LAST_WATCHED_ID:
                 upgradeToThirtyTwo(db);
