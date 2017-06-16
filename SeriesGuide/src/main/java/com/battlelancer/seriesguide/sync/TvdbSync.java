@@ -31,9 +31,8 @@ public class TvdbSync {
     private boolean hasUpdatedShows;
 
     public TvdbSync(Bundle extras) {
-        syncType = SyncType.from(extras.getInt(SgSyncAdapter.SyncInitBundle.SYNC_TYPE,
-                SyncType.DELTA.id));
-        singleShowTvdbId = extras.getInt(SgSyncAdapter.SyncInitBundle.SYNC_SHOW_TVDB_ID, 0);
+        syncType = SyncType.from(extras.getInt(SgSyncAdapter.EXTRA_SYNC_TYPE, SyncType.DELTA.id));
+        singleShowTvdbId = extras.getInt(SgSyncAdapter.EXTRA_SYNC_SHOW_TVDB_ID, 0);
     }
 
     /**

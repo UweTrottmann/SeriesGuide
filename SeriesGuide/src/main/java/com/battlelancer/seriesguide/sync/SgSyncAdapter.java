@@ -57,6 +57,21 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         SUCCESS, INCOMPLETE
     }
 
+    /**
+     * One of {@link TvdbSync.SyncType}.
+     */
+    static final String EXTRA_SYNC_TYPE = "com.battlelancer.seriesguide.sync_type";
+    /**
+     * If {@link #EXTRA_SYNC_TYPE} is {@link TvdbSync.SyncType#SINGLE}, the TVDb id of the show to
+     * sync.
+     */
+    static final String EXTRA_SYNC_SHOW_TVDB_ID = "com.battlelancer.seriesguide.sync_show";
+    /**
+     * Whether the sync should occur despite time or backoff limits.
+     */
+    private static final String EXTRA_SYNC_IMMEDIATE
+            = "com.battlelancer.seriesguide.sync_immediate";
+
     @Inject Lazy<TvdbTools> tvdbTools;
     @Inject Lazy<HexagonTools> hexagonTools;
     @Inject Lazy<TraktTools> traktTools;
@@ -80,7 +95,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             ContentProviderClient provider, SyncResult syncResult) {
         // determine type of sync
         TvdbSync tvdbSync = new TvdbSync(extras);
-        final boolean syncImmediately = extras.getBoolean(SyncInitBundle.SYNC_IMMEDIATE, false);
+        final boolean syncImmediately = extras.getBoolean(EXTRA_SYNC_IMMEDIATE, false);
         Timber.i("Syncing...%s%s", tvdbSync.syncType(), syncImmediately
                 ? "_IMMEDIATE" : "_REGULAR");
 
@@ -371,8 +386,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         Bundle args = new Bundle();
-        args.putInt(SyncInitBundle.SYNC_TYPE, syncType.id);
-        args.putInt(SyncInitBundle.SYNC_SHOW_TVDB_ID, showTvdbId);
+        args.putInt(EXTRA_SYNC_TYPE, syncType.id);
+        args.putInt(EXTRA_SYNC_SHOW_TVDB_ID, showTvdbId);
 
         requestSync(context, args);
     }
@@ -415,9 +430,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         Bundle args = new Bundle();
-        args.putBoolean(SyncInitBundle.SYNC_IMMEDIATE, true);
-        args.putInt(SyncInitBundle.SYNC_TYPE, syncType.id);
-        args.putInt(SyncInitBundle.SYNC_SHOW_TVDB_ID, showTvdbId);
+        args.putBoolean(EXTRA_SYNC_IMMEDIATE, true);
+        args.putInt(EXTRA_SYNC_TYPE, syncType.id);
+        args.putInt(EXTRA_SYNC_SHOW_TVDB_ID, showTvdbId);
 
         // ignore sync settings and backoff
         args.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
@@ -472,26 +487,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         if (account == null) {
             return;
         }
-        ContentResolver.setSyncAutomatically(account, SgApp.CONTENT_AUTHORITY,
-                sync);
-    }
-
-    public interface SyncInitBundle {
-
-        /**
-         * One of {@link TvdbSync.SyncType}.
-         */
-        String SYNC_TYPE = "com.battlelancer.seriesguide.sync_type";
-
-        /**
-         * If {@link #SYNC_TYPE} is {@link TvdbSync.SyncType#SINGLE}, the TVDb id of the show to
-         * sync.
-         */
-        String SYNC_SHOW_TVDB_ID = "com.battlelancer.seriesguide.sync_show";
-
-        /**
-         * Whether the sync should occur despite time or backoff limits.
-         */
-        String SYNC_IMMEDIATE = "com.battlelancer.seriesguide.sync_immediate";
+        ContentResolver.setSyncAutomatically(account, SgApp.CONTENT_AUTHORITY, sync);
     }
 }
