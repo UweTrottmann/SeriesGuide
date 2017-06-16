@@ -21,9 +21,11 @@ import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.widgets.WatchedBox;
 import com.uwetrottmann.androidutils.CheatSheet;
+import java.text.NumberFormat;
 import java.util.Date;
 
 public class EpisodesAdapter extends CursorAdapter {
+
 
     public interface OnFlagEpisodeListener {
         void onFlagEpisodeWatched(int episodeId, int episodeNumber, boolean isWatched);
@@ -36,12 +38,14 @@ public class EpisodesAdapter extends CursorAdapter {
 
     private PopupMenuClickListener popupMenuClickListener;
     private OnFlagEpisodeListener onFlagListener;
+    private NumberFormat integerFormat;
 
     public EpisodesAdapter(Context context, PopupMenuClickListener listener,
             OnFlagEpisodeListener flagListener) {
         super(context, null, 0);
         popupMenuClickListener = listener;
         onFlagListener = flagListener;
+        integerFormat = NumberFormat.getIntegerInstance();
     }
 
     /**
@@ -94,7 +98,7 @@ public class EpisodesAdapter extends CursorAdapter {
         }
 
         // number
-        viewHolder.episodeNumber.setText(String.valueOf(episodeNumber));
+        viewHolder.episodeNumber.setText(integerFormat.format(episodeNumber));
 
         // watched box
         viewHolder.watchedBox.setEpisodeFlag(watchedFlag);
