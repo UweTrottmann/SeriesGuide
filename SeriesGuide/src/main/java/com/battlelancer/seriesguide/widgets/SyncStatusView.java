@@ -58,13 +58,6 @@ public class SyncStatusView extends LinearLayout {
                 return; // no need to update status text
             }
         }
-
-        StringBuilder statusText = new StringBuilder(
-                getContext().getString(R.string.sync_and_update));
-        if (event.step != null) {
-            statusText.append(" - ");
-            statusText.append(event.step.description);
-        }
-        textView.setText(statusText);
+        textView.setText(event.getDescription(getContext()));
     }
 }
