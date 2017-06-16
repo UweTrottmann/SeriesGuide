@@ -157,7 +157,7 @@
         <!-- trakt -->
         <activity
             android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity"
-            android:label="@string/connect_trakt" />
+            android:label="@string/trakt" />
         <activity
             android:name="com.battlelancer.seriesguide.traktapi.TraktAuthActivity"
             android:label="@string/connect_trakt"

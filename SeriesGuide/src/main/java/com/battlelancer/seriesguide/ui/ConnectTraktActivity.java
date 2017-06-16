@@ -6,15 +6,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
 
 /**
- * Shows a {@link ConnectTraktFragment} or if already connected to trakt a
- * {@link ConnectTraktCredentialsFragment}.
+ * Shows a {@link ConnectTraktCredentialsFragment}.
  */
 public class ConnectTraktActivity extends BaseActivity {
-
-    static final int OAUTH_CODE_REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,19 +19,10 @@ public class ConnectTraktActivity extends BaseActivity {
         setupActionBar();
 
         if (savedInstanceState == null) {
-            if (TraktCredentials.get(this).hasCredentials()) {
-                // immediately show credentials to allow disconnecting
-                ConnectTraktCredentialsFragment f = ConnectTraktCredentialsFragment.newInstance();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.content_frame, f);
-                ft.commit();
-            } else {
-                // display trakt introduction
-                ConnectTraktFragment f = new ConnectTraktFragment();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.content_frame, f);
-                ft.commit();
-            }
+            ConnectTraktCredentialsFragment f = new ConnectTraktCredentialsFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(R.id.content_frame, f);
+            ft.commit();
         }
     }
 

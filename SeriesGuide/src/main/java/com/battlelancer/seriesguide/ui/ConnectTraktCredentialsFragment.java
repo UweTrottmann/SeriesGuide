@@ -3,8 +3,8 @@ package com.battlelancer.seriesguide.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,27 +16,30 @@ import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.sync.SyncProgress;
 import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
+import com.battlelancer.seriesguide.widgets.FeatureStatusView;
+import com.battlelancer.seriesguide.widgets.SyncStatusView;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
- * Provides a user interface to connect or create a trakt account.
+ * Interface to show trakt account features and connect or disconnect trakt.
  */
 public class ConnectTraktCredentialsFragment extends Fragment {
 
-    private boolean isConnecting;
-
-    private Unbinder unbinder;
-    @BindView(R.id.buttonPositive) Button buttonConnect;
-    @BindView(R.id.buttonNegative) Button buttonDisconnect;
-    @BindView(R.id.textViewConnectTraktUsernameLabel) View textViewUsernameLabel;
-    @BindView(R.id.textViewConnectTraktUsername) TextView textViewUsername;
+    @BindView(R.id.textViewTraktAbout) TextView textViewAbout;
+    @BindView(R.id.buttonTraktConnect) Button buttonAccount;
+    @BindView(R.id.textViewTraktUser) TextView textViewUsername;
+    @BindView(R.id.syncStatusTrakt) SyncStatusView syncStatusView;
+    @BindView(R.id.featureStatusTraktCheckIn) FeatureStatusView featureStatusCheckIn;
+    @BindView(R.id.featureStatusTraktSync) FeatureStatusView featureStatusSync;
+    @BindView(R.id.featureStatusTraktSyncShows) FeatureStatusView featureStatusSyncShows;
+    @BindView(R.id.featureStatusTraktSyncMovies) FeatureStatusView featureStatusSyncMovies;
     @BindView(R.id.textViewConnectTraktHexagonWarning) TextView textViewHexagonWarning;
-    @BindView(R.id.progressBarConnectTrakt) View progressBar;
-    @BindView(R.id.textViewConnectTraktStatus) TextView textViewStatus;
-
-    public static ConnectTraktCredentialsFragment newInstance() {
-        return new ConnectTraktCredentialsFragment();
-    }
+    @BindView(R.id.buttonTraktLibrary) Button buttonLibrary;
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,23 +47,27 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_connect_trakt_credentials, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        // connect button
-        buttonConnect.setText(R.string.connect);
-        buttonConnect.setOnClickListener(new View.OnClickListener() {
+        // make learn more link clickable
+        textViewAbout.setMovementMethod(LinkMovementMethod.getInstance());
+
+        boolean hexagonEnabled = HexagonSettings.isEnabled(getContext());
+        featureStatusCheckIn.setFeatureEnabled(!hexagonEnabled);
+        featureStatusSync.setFeatureEnabled(!hexagonEnabled);
+        featureStatusSyncShows.setFeatureEnabled(!hexagonEnabled);
+        featureStatusSyncMovies.setFeatureEnabled(!hexagonEnabled);
+        textViewHexagonWarning.setVisibility(hexagonEnabled ? View.VISIBLE : View.GONE);
+
+        // library button
+        buttonLibrary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                connect();
+                // open WATCHED tab
+                startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
+                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_WATCHED));
             }
         });
 
-        // disconnect button
-        buttonDisconnect.setText(R.string.disconnect);
-        buttonDisconnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                disconnect();
-            }
-        });
+        syncStatusView.setVisibility(View.GONE);
 
         return view;
     }
@@ -68,52 +75,48 @@ public class ConnectTraktCredentialsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
         updateViews();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onEvent(SyncProgress.SyncEvent event) {
+        syncStatusView.setProgress(event);
     }
 
     private void updateViews() {
         TraktCredentials traktCredentials = TraktCredentials.get(getActivity());
         boolean hasCredentials = traktCredentials.hasCredentials();
         if (hasCredentials) {
-            if (isConnecting) {
-                // show further options after successful connection
-                ConnectTraktFinishedFragment f = new ConnectTraktFinishedFragment();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.content_frame, f);
-                ft.commitAllowingStateLoss();
-            } else {
-                String username = traktCredentials.getUsername();
-                String displayName = traktCredentials.getDisplayName();
-                if (!TextUtils.isEmpty(displayName)) {
-                    username += " (" + displayName + ")";
-                }
-                textViewUsername.setText(username);
-                setButtonStates(false, true);
-                setUsernameViewsStates(true);
-                setStatus(false, -1);
+            String username = traktCredentials.getUsername();
+            String displayName = traktCredentials.getDisplayName();
+            if (!TextUtils.isEmpty(displayName)) {
+                username += " (" + displayName + ")";
             }
+            textViewUsername.setText(username);
+            setAccountButtonState(false);
+            buttonLibrary.setVisibility(View.VISIBLE);
         } else {
-            isConnecting = false;
-            setButtonStates(true, false);
-            setUsernameViewsStates(false);
-            setStatus(false, R.string.trakt_connect_instructions);
+            textViewUsername.setText(null);
+            setAccountButtonState(true);
+            buttonLibrary.setVisibility(View.GONE);
         }
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        unbinder.unbind();
-    }
-
     private void connect() {
-        // disable buttons, show status message
-        setButtonStates(false, false);
-        setStatus(true, R.string.waitplease);
-
-        // launch activity to authorize with trakt
+        buttonAccount.setEnabled(false);
         startActivity(new Intent(getActivity(), TraktAuthActivity.class));
     }
 
@@ -122,31 +125,23 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         updateViews();
     }
 
-    private void setButtonStates(boolean connectEnabled, boolean disconnectEnabled) {
-        buttonConnect.setEnabled(connectEnabled);
-        buttonDisconnect.setEnabled(disconnectEnabled);
-    }
-
-    /**
-     * @param progressVisible If {@code true}, will show progress bar.
-     * @param statusTextResourceId If {@code -1} will hide the status display, otherwise show the
-     * given text ressource.
-     */
-    private void setStatus(boolean progressVisible, int statusTextResourceId) {
-        isConnecting = progressVisible;
-        progressBar.setVisibility(progressVisible ? View.VISIBLE : View.INVISIBLE);
-        if (statusTextResourceId == -1) {
-            textViewStatus.setVisibility(View.INVISIBLE);
+    private void setAccountButtonState(boolean connectEnabled) {
+        buttonAccount.setEnabled(true);
+        buttonAccount.setText(connectEnabled ? R.string.connect : R.string.disconnect);
+        if (connectEnabled) {
+            buttonAccount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    connect();
+                }
+            });
         } else {
-            textViewStatus.setText(statusTextResourceId);
-            textViewStatus.setVisibility(View.VISIBLE);
+            buttonAccount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    disconnect();
+                }
+            });
         }
-    }
-
-    private void setUsernameViewsStates(boolean visible) {
-        textViewUsername.setVisibility(visible ? View.VISIBLE : View.GONE);
-        textViewUsernameLabel.setVisibility(visible ? View.VISIBLE : View.GONE);
-        textViewHexagonWarning.setVisibility(
-                visible && HexagonSettings.isEnabled(getContext()) ? View.VISIBLE : View.GONE);
     }
 }

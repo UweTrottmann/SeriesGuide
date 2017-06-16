@@ -69,8 +69,7 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
                 return true;
             }
             case R.id.menu_action_shows_update: {
-                SgSyncAdapter.requestSyncImmediate(context,
-                        SgSyncAdapter.SyncType.SINGLE, showTvdbId, true);
+                SgSyncAdapter.requestSyncSingleImmediate(context, true, showTvdbId);
                 Utils.trackContextMenu(context, logTag, "Update show");
                 return true;
             }

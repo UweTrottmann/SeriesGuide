@@ -21,6 +21,7 @@
     <string name="season_number">Season %d</string>
     <string name="seasons">Seasons</string>
     <string name="specialseason">Special Episodes</string>
+    <string name="ratings">Ratings</string>
 
     <!-- Descriptions -->
     <string name="description_overview">Overview</string>
@@ -289,13 +290,17 @@
         <item quantity="other">%d minutes</item>
     </plurals>
 
+    <!-- Features -->
+    <string name="feature_supported">Supported</string>
+    <string name="feature_not_supported">Not supported</string>
+    <string name="feature_history">Personal and friend history</string>
+    <string name="feature_sync">Sync</string>
+
     <!-- Hexagon -->
     <string name="hexagon_warning">Experimental</string>
-    <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
-    <string name="hexagon_warning_lists">Lists are not included.</string>
-    <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
+    <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
     <string name="hexagon_signin">Sign In</string>
-    <string name="hexagon_signed_in">You are connected to SeriesGuide Cloud.</string>
     <string name="hexagon_signout">Sign Out</string>
     <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed.</string>
     <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
@@ -325,18 +330,13 @@
 
     <!-- Connect trakt -->
     <string name="trakt_account">trakt account</string>
-    <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
     <string name="connect_trakt">Connect trakt</string>
     <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
     <string name="trakt_reconnect_details">Check your trakt credentials</string>
-    <string name="username">Username</string>
     <string name="waitplease">A moment, please…</string>
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
     <string name="use_integrated_browser">Use integrated browser</string>
-    <string name="connect_trakt_done">Connected to trakt!</string>
-    <string name="connect_trakt_done_explanation">SeriesGuide will now sync the shows and movies on this device with trakt. This may take some time.</string>
-    <string name="add_trakt_shows">Add more shows from your trakt library:</string>
     <string name="show_library">Show your trakt library</string>
     <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
 

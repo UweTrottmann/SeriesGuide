@@ -260,8 +260,7 @@ public class ShowTools {
                         .update(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
                                 values, null, null);
                 // trigger update
-                SgSyncAdapter.requestSyncImmediate(context, SgSyncAdapter.SyncType.SINGLE,
-                        showTvdbId, false);
+                SgSyncAdapter.requestSyncSingleImmediate(context, false, showTvdbId);
             }
         };
         AsyncTask.THREAD_POOL_EXECUTOR.execute(runnable);

@@ -39,10 +39,15 @@
     <attr name="drawableWatchedAll" format="reference" />
     <attr name="drawableWatchSkipped" format="reference" />
 
-    <!-- Empty view attributes -->
+    <!-- Custom view attributes -->
     <declare-styleable name="EmptyView">
         <attr name="emptyViewMessage" format="string" />
         <attr name="emptyViewButtonText" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="FeatureStatusView">
+        <attr name="featureSupported" format="boolean" />
+        <attr name="featureDescription" format="string" />
     </declare-styleable>
 
 </resources>

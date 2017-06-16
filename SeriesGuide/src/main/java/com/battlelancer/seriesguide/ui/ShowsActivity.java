@@ -360,12 +360,12 @@ public class ShowsActivity extends BaseTopActivity implements
             startActivity(new Intent(this, SearchActivity.class));
             return true;
         } else if (itemId == R.id.menu_update) {
-            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.DELTA, 0, true);
+            SgSyncAdapter.requestSyncDeltaImmediate(this, true);
             Utils.trackAction(this, TAG, "Update (outdated)");
 
             return true;
         } else if (itemId == R.id.menu_fullupdate) {
-            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, true);
+            SgSyncAdapter.requestSyncFullImmediate(this, true);
             Utils.trackAction(this, TAG, "Update (all)");
 
             return true;
@@ -454,7 +454,7 @@ public class ShowsActivity extends BaseTopActivity implements
                 // flag all shows outdated so delta sync will pick up, if full sync gets aborted
                 scheduleAllShowsUpdate();
                 // force a sync
-                SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, true);
+                SgSyncAdapter.requestSyncFullImmediate(this, true);
             }
             if (lastVersion < SgApp.RELEASE_VERSION_34_BETA4) {
                 ActivityTools.populateShowsLastWatchedTime(this);

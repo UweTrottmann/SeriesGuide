@@ -16,14 +16,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.sync.SyncProgress;
+import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.dialogs.RemoveCloudAccountDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.widgets.SyncStatusView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -45,12 +50,15 @@ public class CloudSetupFragment extends Fragment {
     private static final int REQUEST_SIGN_IN = 1;
     private static final String ACTION_SIGN_IN = "sign-in";
 
-    private Button buttonAction;
-    private TextView textViewDescription;
-    private TextView textViewUsername;
-    private ProgressBar progressBar;
-    private Button buttonRemoveAccount;
-    private TextView textViewWarning;
+    @BindView(R.id.buttonCloudAction) Button buttonAction;
+    @BindView(R.id.textViewCloudDescription) TextView textViewDescription;
+    @BindView(R.id.textViewCloudUser) TextView textViewUsername;
+    @BindView(R.id.progressBarCloudAccount) ProgressBar progressBarAccount;
+    @BindView(R.id.syncStatusCloud) SyncStatusView syncStatusView;
+    @BindView(R.id.buttonCloudRemoveAccount) Button buttonRemoveAccount;
+    @BindView(R.id.textViewCloudWarnings) TextView textViewWarning;
+    private Unbinder unbinder;
+
     private Snackbar snackbar;
 
     private GoogleApiClient googleApiClient;
@@ -73,13 +81,16 @@ public class CloudSetupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_cloud_setup, container, false);
+        unbinder = ButterKnife.bind(this, v);
 
-        textViewDescription = (TextView) v.findViewById(R.id.textViewCloudDescription);
-        textViewUsername = ButterKnife.findById(v, R.id.textViewCloudUsername);
-        textViewWarning = ButterKnife.findById(v, R.id.textViewCloudWarnings);
-        progressBar = (ProgressBar) v.findViewById(R.id.progressBarCloud);
-        buttonAction = (Button) v.findViewById(R.id.buttonCloudAction);
-        buttonRemoveAccount = ButterKnife.findById(v, R.id.buttonCloudRemoveAccount);
+        textViewWarning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // link to trakt account activity which has details about disabled features
+                startActivity(new Intent(getContext(), ConnectTraktActivity.class));
+            }
+        });
+
         buttonRemoveAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +102,7 @@ public class CloudSetupFragment extends Fragment {
 
         updateViews();
         setProgressVisible(true);
+        syncStatusView.setVisibility(View.GONE);
 
         return v;
     }
@@ -156,6 +168,12 @@ public class CloudSetupFragment extends Fragment {
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if (isHexagonSetupRunning()) {
@@ -174,6 +192,11 @@ public class CloudSetupFragment extends Fragment {
         event.handle(getActivity());
         setProgressVisible(false);
         updateViews();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onEvent(SyncProgress.SyncEvent event) {
+        syncStatusView.setProgress(event);
     }
 
     /**
@@ -243,8 +266,7 @@ public class CloudSetupFragment extends Fragment {
         if (HexagonSettings.isEnabled(getContext())
                 && !HexagonSettings.shouldValidateAccount(getContext())) {
             textViewUsername.setText(HexagonSettings.getAccountName(getActivity()));
-            textViewUsername.setVisibility(View.VISIBLE);
-            textViewDescription.setText(R.string.hexagon_signed_in);
+            textViewDescription.setText(R.string.hexagon_description);
 
             // enable sign-out
             buttonAction.setText(R.string.hexagon_signout);
@@ -264,7 +286,7 @@ public class CloudSetupFragment extends Fragment {
             } else {
                 textViewDescription.setText(R.string.hexagon_description);
             }
-            textViewUsername.setVisibility(View.GONE);
+            textViewUsername.setText(null);
 
             // enable sign-in
             buttonAction.setText(R.string.hexagon_signin);
@@ -288,7 +310,7 @@ public class CloudSetupFragment extends Fragment {
      * Disables buttons and shows a progress bar.
      */
     private void setProgressVisible(boolean isVisible) {
-        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        progressBarAccount.setVisibility(isVisible ? View.VISIBLE : View.GONE);
 
         buttonAction.setEnabled(!isVisible);
         buttonRemoveAccount.setEnabled(!isVisible);
@@ -382,8 +404,7 @@ public class CloudSetupFragment extends Fragment {
                 case HexagonSetupTask.SUCCESS_SYNC_REQUIRED: {
                     // schedule full sync
                     Timber.d("Setting up Hexagon...SUCCESS_SYNC_REQUIRED");
-                    SgSyncAdapter.requestSyncImmediate(getActivity(), SgSyncAdapter.SyncType.FULL,
-                            0, false);
+                    SgSyncAdapter.requestSyncFullImmediate(getActivity(), false);
                     HexagonSettings.setSetupCompleted(getActivity());
                     break;
                 }
