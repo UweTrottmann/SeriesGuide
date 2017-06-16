@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.util;
 
-import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
@@ -37,6 +36,7 @@ import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.services.Sync;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
 import retrofit2.Call;
@@ -443,16 +443,19 @@ public class EpisodeTools {
          * Downloads all episodes changed since the last time this was called and applies changes to
          * the database.
          */
-        @SuppressLint("ApplySharedPref")
         public static boolean flagsFromHexagon(Context context, HexagonTools hexagonTools) {
-            List<Episode> episodes;
-            boolean hasMoreEpisodes = true;
-            String cursor = null;
+            HashSet<Integer> showTvdbIds = ShowTools.getShowTvdbIdsAsSet(context);
+            if (showTvdbIds == null) {
+                return false;
+            }
+
             long currentTime = System.currentTimeMillis();
             DateTime lastSyncTime = new DateTime(HexagonSettings.getLastEpisodesSyncTime(context));
-
             Timber.d("flagsFromHexagon: downloading changed episode flags since %s", lastSyncTime);
 
+            List<Episode> episodes;
+            String cursor = null;
+            boolean hasMoreEpisodes = true;
             SparseArrayCompat<Long> showsLastWatchedMs = new SparseArrayCompat<>();
             while (hasMoreEpisodes) {
                 try {
@@ -495,8 +498,12 @@ public class EpisodeTools {
                 // build batch of episode flag updates
                 ArrayList<ContentProviderOperation> batch = new ArrayList<>();
                 for (Episode episode : episodes) {
-                    ContentValues values = new ContentValues();
                     Integer showTvdbId = episode.getShowTvdbId();
+                    if (!showTvdbIds.contains(showTvdbId)) {
+                        continue; // ignore, show not added on this device
+                    }
+
+                    ContentValues values = new ContentValues();
                     Integer watchedFlag = episode.getWatchedFlag();
                     if (watchedFlag != null) {
                         values.put(SeriesGuideContract.Episodes.WATCHED, watchedFlag);
@@ -545,7 +552,7 @@ public class EpisodeTools {
             // store new last sync time
             PreferenceManager.getDefaultSharedPreferences(context).edit()
                     .putLong(HexagonSettings.KEY_LAST_SYNC_EPISODES, currentTime)
-                    .commit();
+                    .apply();
 
             return true;
         }
