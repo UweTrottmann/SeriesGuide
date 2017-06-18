@@ -1,7 +1,6 @@
-package com.battlelancer.seriesguide.test;
+package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.util.EpisodeTools;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

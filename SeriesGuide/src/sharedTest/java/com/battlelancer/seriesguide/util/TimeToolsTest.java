@@ -1,6 +1,5 @@
-package com.battlelancer.seriesguide.test;
+package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.util.TimeTools;
 import java.util.Date;
 import org.junit.Test;
 import org.threeten.bp.Clock;

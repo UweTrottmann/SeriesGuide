@@ -1,6 +1,5 @@
-package com.battlelancer.seriesguide.test;
+package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.util.TraktTools;
 import java.util.Locale;
 import org.junit.Test;
 
