@@ -24,6 +24,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
 
     public interface OnItemClickListener {
         void onClick(View view, ShowViewHolder viewHolder);
+
         void onFavoriteClick(int showTvdbId, boolean isFavorite);
     }
 
@@ -72,15 +73,28 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
      */
     static String buildNetworkAndTimeString(Context context, int time, int weekday,
             String timeZone, String country, String network) {
+        Date release;
+        if (time != -1) {
+            release = TimeTools.getShowReleaseDateTime(context,
+                    TimeTools.getShowReleaseTime(time), weekday, timeZone, country, network);
+        } else {
+            release = null;
+        }
+        return buildNetworkAndTimeString(context, release, weekday, network);
+    }
+
+    /**
+     * Builds a network + release time string for a show formatted like "Network / Tue 08:00 PM".
+     */
+    static String buildNetworkAndTimeString(Context context, Date release, int weekDay,
+            String network) {
         // network
         StringBuilder networkAndTime = new StringBuilder();
         networkAndTime.append(network);
 
         // time
-        if (time != -1) {
-            Date release = TimeTools.getShowReleaseDateTime(context,
-                    TimeTools.getShowReleaseTime(time), weekday, timeZone, country, network);
-            String dayString = TimeTools.formatToLocalDayOrDaily(context, release, weekday);
+        if (release != null) {
+            String dayString = TimeTools.formatToLocalDayOrDaily(context, release, weekDay);
             String timeString = TimeTools.formatToLocalTime(context, release);
             if (networkAndTime.length() > 0) {
                 networkAndTime.append(" / ");

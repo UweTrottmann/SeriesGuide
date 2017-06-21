@@ -6,10 +6,14 @@ import android.database.Cursor;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
 import android.view.View;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.TimeTools;
+import java.util.Date;
 
 /**
  * Adapter for show items.
@@ -33,6 +37,20 @@ public class ShowsAdapter extends BaseShowsAdapter {
         // favorite label
         setFavoriteState(viewHolder.favorited, viewHolder.isFavorited);
 
+        int weekDay = cursor.getInt(Query.RELEASE_WEEKDAY);
+        int time = cursor.getInt(Query.RELEASE_TIME);
+        String timeZone = cursor.getString(Query.RELEASE_TIMEZONE);
+        String country = cursor.getString(Query.RELEASE_COUNTRY);
+        String network = cursor.getString(Query.NETWORK);
+        // FIXME get ZonedDateTime to avoid conversion for isSameWeekDay
+        Date releaseTimeShow;
+        if (time != -1) {
+            releaseTimeShow = TimeTools.getShowReleaseDateTime(context,
+                    TimeTools.getShowReleaseTime(time), weekDay, timeZone, country, network);
+        } else {
+            releaseTimeShow = null;
+        }
+
         // next episode info
         String fieldValue = cursor.getString(Query.NEXTTEXT);
         if (TextUtils.isEmpty(fieldValue)) {
@@ -42,22 +60,36 @@ public class ShowsAdapter extends BaseShowsAdapter {
             viewHolder.episode.setText("");
         } else {
             viewHolder.episode.setText(fieldValue);
-            fieldValue = cursor.getString(Query.NEXTAIRDATETEXT);
-            viewHolder.episodeTime.setText(fieldValue);
+
+            long releaseTimeNext = cursor.getLong(Query.NEXTAIRDATEMS);
+            // FIXME get ZonedDateTime to avoid conversion for isSameWeekDay
+            Date releaseTimeEpisode = TimeTools.applyUserOffset(context, releaseTimeNext);
+            // FIXME: test getting display exact date value in constructor (test changing in settings)
+            boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
+            String dateTime = displayExactDate ?
+                    TimeTools.formatToLocalDateShort(context, releaseTimeEpisode)
+                    : TimeTools.formatToLocalRelativeTime(context, releaseTimeEpisode);
+            String episodeTimeText;
+            if (TimeTools.isSameWeekDay(releaseTimeEpisode, releaseTimeShow, weekDay)) {
+                // just display date
+                episodeTimeText = dateTime;
+            } else {
+                // display date and explicitly day
+                episodeTimeText = context.getString(R.string.release_date_and_day,
+                        dateTime, TimeTools.formatToLocalDay(releaseTimeEpisode));
+            }
+            viewHolder.episodeTime.setText(episodeTimeText);
         }
 
         setRemainingCount(viewHolder.remainingCount, cursor.getInt(Query.UNWATCHED_COUNT));
 
         // network, day and time
-        viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
-                cursor.getInt(Query.RELEASE_TIME),
-                cursor.getInt(Query.RELEASE_WEEKDAY),
-                cursor.getString(Query.RELEASE_TIMEZONE),
-                cursor.getString(Query.RELEASE_COUNTRY),
-                cursor.getString(Query.NETWORK)));
+        viewHolder.timeAndNetwork.setText(
+                buildNetworkAndTimeString(context, releaseTimeShow, weekDay, network));
 
         // set poster
-        TvdbImageTools.loadShowPosterResizeCrop(context, viewHolder.poster, cursor.getString(Query.POSTER));
+        TvdbImageTools.loadShowPosterResizeCrop(context, viewHolder.poster,
+                cursor.getString(Query.POSTER));
 
         // context menu
         viewHolder.isHidden = DBUtils.restoreBooleanFromInt(cursor.getInt(Query.HIDDEN));
@@ -81,7 +113,8 @@ public class ShowsAdapter extends BaseShowsAdapter {
                 SeriesGuideContract.Shows.NEXTAIRDATETEXT,
                 SeriesGuideContract.Shows.FAVORITE,
                 SeriesGuideContract.Shows.HIDDEN,
-                SeriesGuideContract.Shows.UNWATCHED_COUNT // 14
+                SeriesGuideContract.Shows.UNWATCHED_COUNT,
+                SeriesGuideContract.Shows.NEXTAIRDATEMS // 15
         };
 
         int _ID = 0;
@@ -99,5 +132,6 @@ public class ShowsAdapter extends BaseShowsAdapter {
         int FAVORITE = 12;
         int HIDDEN = 13;
         int UNWATCHED_COUNT = 14;
+        int NEXTAIRDATEMS = 15;
     }
 }

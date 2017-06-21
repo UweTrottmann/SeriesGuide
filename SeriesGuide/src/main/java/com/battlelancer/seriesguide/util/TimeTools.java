@@ -36,6 +36,7 @@ import timber.log.Timber;
  */
 public class TimeTools {
 
+    public static final int RELEASE_WEEKDAY_UNKNOWN = -1;
     public static final int RELEASE_WEEKDAY_DAILY = 0;
 
     private static final String TIMEZONE_ID_PREFIX_AMERICA = "America/";
@@ -109,7 +110,8 @@ public class TimeTools {
     /**
      * Converts US week day string to {@link DayOfWeek#getValue()} day.
      *
-     * <p> Returns -1 if no conversion is possible and 0 if it is "Daily".
+     * <p> Returns {@link #RELEASE_WEEKDAY_UNKNOWN} if no conversion is possible or {@link
+     * #RELEASE_WEEKDAY_DAILY} if it is "Daily".
      */
     public static int parseShowReleaseWeekDay(String day) {
         if (day == null || day.length() == 0) {
@@ -133,11 +135,29 @@ public class TimeTools {
             case "Sunday":
                 return DayOfWeek.SUNDAY.getValue();
             case "Daily":
-                return 0;
+                return RELEASE_WEEKDAY_DAILY;
         }
 
         // no match
-        return -1;
+        return RELEASE_WEEKDAY_UNKNOWN;
+    }
+
+    public static boolean isSameWeekDay(Date episodeDateTime, Date showDateTime, int weekDay) {
+        if (weekDay == RELEASE_WEEKDAY_DAILY) {
+            return true;
+        }
+        if (weekDay == RELEASE_WEEKDAY_UNKNOWN) {
+            return false;
+        }
+
+        Instant showInstant = Instant.ofEpochMilli(showDateTime.getTime());
+        DayOfWeek showDayOfWeek = LocalDateTime.ofInstant(showInstant, ZoneId.systemDefault())
+                .getDayOfWeek();
+
+        Instant episodeInstant = Instant.ofEpochMilli(episodeDateTime.getTime());
+        DayOfWeek episodeDayOfWeek = LocalDateTime.ofInstant(episodeInstant, ZoneId.systemDefault())
+                .getDayOfWeek();
+        return episodeDayOfWeek == showDayOfWeek;
     }
 
     /**
