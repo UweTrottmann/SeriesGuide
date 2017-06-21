@@ -43,16 +43,20 @@ public class SyncStatusView extends LinearLayout {
      * View#GONE}.
      */
     public void setProgress(SyncProgress.SyncEvent event) {
-        if (event.result == null) {
+        if (event.step != null) {
+            // syncing
             progressBar.setVisibility(View.VISIBLE);
             imageView.setVisibility(GONE);
             setVisibility(VISIBLE);
         } else {
+            // finished
             progressBar.setVisibility(View.GONE);
-            if (event.result == SyncProgress.Result.FAILURE) {
+            if (event.stepsWithError.size() > 0) {
+                // has errors
                 imageView.setVisibility(VISIBLE);
                 setVisibility(VISIBLE);
             } else {
+                // successful
                 imageView.setVisibility(GONE);
                 setVisibility(GONE);
                 return; // no need to update status text

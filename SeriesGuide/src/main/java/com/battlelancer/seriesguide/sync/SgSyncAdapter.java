@@ -96,25 +96,28 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         // determine type of sync
         TvdbSync tvdbSync = new TvdbSync(extras);
         final boolean syncImmediately = extras.getBoolean(EXTRA_SYNC_IMMEDIATE, false);
-        Timber.i("Syncing...%s%s", tvdbSync.syncType(), syncImmediately
+        Timber.i("Syncing: %s%s", tvdbSync.syncType(), syncImmediately
                 ? "_IMMEDIATE" : "_REGULAR");
 
         // should we sync?
         final long currentTime = System.currentTimeMillis();
         if (!syncImmediately && tvdbSync.isSyncMultiple()) {
             if (!isTimeForSync(getContext(), currentTime)) {
-                Timber.d("Syncing...ABORT_DID_JUST_SYNC");
+                Timber.d("Syncing: ABORT_DID_JUST_SYNC");
                 return;
             }
         }
 
         // from here on we need more sophisticated abort handling, so keep track of errors
-        Timber.d("Syncing...TVDb");
         SyncProgress progress = new SyncProgress();
         progress.publish(SyncProgress.Step.TVDB);
         UpdateResult resultCode = tvdbSync.sync(getContext(), tvdbTools, currentTime);
+        if (resultCode == null || resultCode == UpdateResult.INCOMPLETE) {
+            progress.recordError();
+        }
+        Timber.d("Syncing: TVDB...DONE");
         if (resultCode == null) {
-            progress.publish(SyncProgress.Result.FAILURE);
+            progress.publishFinished();
             return; // invalid show(s), abort
         }
 
@@ -124,9 +127,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     .getDefaultSharedPreferences(getContext());
 
             // get latest TMDb configuration
-            Timber.d("Syncing...TMDb config");
             progress.publish(SyncProgress.Step.TMDB);
-            getTmdbConfiguration(prefs);
+            getTmdbConfiguration(prefs, progress);
+            Timber.d("Syncing: TMDB...DONE");
 
             // sync with Hexagon or trakt
             @SuppressLint("UseSparseArrays")
@@ -138,22 +141,22 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             } else {
                 if (HexagonSettings.isEnabled(getContext())) {
                     // sync with hexagon...
-                    Timber.d("Syncing...Hexagon");
                     boolean success = hexagonTools.get()
                             .syncWithHexagon(showsExisting, showsNew, progress);
                     // don't overwrite failure
                     if (resultCode == UpdateResult.SUCCESS) {
                         resultCode = success ? UpdateResult.SUCCESS : UpdateResult.INCOMPLETE;
                     }
+                    Timber.d("Syncing: Hexagon...DONE");
                 } else {
                     // ...OR sync with trakt
-                    Timber.d("Syncing...trakt");
                     UpdateResult resultTrakt = performTraktSync(progress, showsExisting,
                             currentTime);
                     // don't overwrite failure
                     if (resultCode == UpdateResult.SUCCESS) {
                         resultCode = resultTrakt;
                     }
+                    Timber.d("Syncing: trakt...DONE");
                 }
 
                 // make sure other loaders (activity, overview, details) are notified of changes
@@ -204,15 +207,14 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         // There could have been new episodes added after an update
         Utils.runNotificationService(getContext());
 
-        Timber.i("Syncing...%s", resultCode.toString());
-        progress.publish(resultCode == UpdateResult.SUCCESS
-                ? SyncProgress.Result.SUCCESS : SyncProgress.Result.FAILURE);
+        Timber.i("Syncing: %s", resultCode.toString());
+        progress.publishFinished();
     }
 
     /**
      * Downloads and stores the latest image url configuration from themoviedb.org.
      */
-    private void getTmdbConfiguration(SharedPreferences prefs) {
+    private void getTmdbConfiguration(SharedPreferences prefs, SyncProgress progress) {
         try {
             Response<Configuration> response = tmdbConfigService.get().configuration().execute();
             if (response.isSuccessful()) {
@@ -225,9 +227,11 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                             .apply();
                 }
             } else {
+                progress.recordError();
                 SgTmdb.trackFailedRequest(getContext(), "get config", response);
             }
         } catch (IOException e) {
+            progress.recordError();
             SgTmdb.trackFailedRequest(getContext(), "get config", e);
         }
     }
@@ -264,6 +268,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             progress.publish(SyncProgress.Step.TRAKT_EPISODES);
             if (performTraktEpisodeSync(localShows, lastActivity.episodes, currentTime)
                     != UpdateResult.SUCCESS) {
+                progress.recordError();
                 return UpdateResult.INCOMPLETE;
             }
 
@@ -275,6 +280,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             progress.publish(SyncProgress.Step.TRAKT_RATINGS);
             if (traktTools.downloadShowRatings(lastActivity.shows.rated_at)
                     != UpdateResult.SUCCESS) {
+                progress.recordError();
                 return UpdateResult.INCOMPLETE;
             }
 
@@ -285,6 +291,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             // download episode ratings
             if (traktTools.downloadEpisodeRatings(lastActivity.episodes.rated_at)
                     != UpdateResult.SUCCESS) {
+                progress.recordError();
                 return UpdateResult.INCOMPLETE;
             }
 
@@ -297,6 +304,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         progress.publish(SyncProgress.Step.TRAKT_MOVIES);
         if (movieTools.get().syncMovieListsWithTrakt(lastActivity.movies)
                 != UpdateResult.SUCCESS) {
+            progress.recordError();
             return UpdateResult.INCOMPLETE;
         }
 
@@ -307,6 +315,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         // download watched movies
         if (traktTools.downloadWatchedMovies(lastActivity.movies.watched_at)
                 != UpdateResult.SUCCESS) {
+            progress.recordError();
             return UpdateResult.INCOMPLETE;
         }
 
@@ -319,7 +328,13 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // download movie ratings
         progress.publish(SyncProgress.Step.TRAKT_RATINGS);
-        return traktTools.downloadMovieRatings(lastActivity.movies.rated_at);
+        if (traktTools.downloadMovieRatings(lastActivity.movies.rated_at)
+                != UpdateResult.SUCCESS) {
+            progress.recordError();
+            return UpdateResult.INCOMPLETE;
+        }
+
+        return UpdateResult.SUCCESS;
     }
 
     /**

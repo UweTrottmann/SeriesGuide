@@ -347,30 +347,34 @@ public class HexagonTools {
      */
     public boolean syncWithHexagon(HashSet<Integer> existingShows,
             HashMap<Integer, SearchResult> newShows, SyncProgress progress) {
-        Timber.d("syncWithHexagon: syncing...");
-
         //// EPISODES
         progress.publish(SyncProgress.Step.HEXAGON_EPISODES);
         boolean syncEpisodesSuccessful = syncEpisodes();
-        Timber.d("syncWithHexagon: episode sync %s",
-                syncEpisodesSuccessful ? "SUCCESSFUL" : "FAILED");
+        if (!syncEpisodesSuccessful) {
+            progress.recordError();
+        }
 
         //// SHOWS
         progress.publish(SyncProgress.Step.HEXAGON_SHOWS);
         boolean syncShowsSuccessful = syncShows(existingShows, newShows);
-        Timber.d("syncWithHexagon: show sync %s", syncShowsSuccessful ? "SUCCESSFUL" : "FAILED");
+        if (!syncShowsSuccessful) {
+            progress.recordError();
+        }
 
         //// MOVIES
         progress.publish(SyncProgress.Step.HEXAGON_MOVIES);
         boolean syncMoviesSuccessful = syncMovies();
-        Timber.d("syncWithHexagon: movie sync %s", syncMoviesSuccessful ? "SUCCESSFUL" : "FAILED");
+        if (!syncMoviesSuccessful) {
+            progress.recordError();
+        }
 
         //// LISTS
         progress.publish(SyncProgress.Step.HEXAGON_LISTS);
         boolean syncListsSuccessful = syncLists();
-        Timber.d("syncWithHexagon: lists sync %s", syncListsSuccessful ? "SUCCESSFUL" : "FAILED");
+        if (!syncListsSuccessful) {
+            progress.recordError();
+        }
 
-        Timber.d("syncWithHexagon: syncing...DONE");
         return syncEpisodesSuccessful
                 && syncShowsSuccessful
                 && syncMoviesSuccessful

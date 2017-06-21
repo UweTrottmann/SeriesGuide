@@ -1,9 +1,13 @@
 package com.battlelancer.seriesguide.sync;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
+import java.util.LinkedList;
+import java.util.List;
 import org.greenrobot.eventbus.EventBus;
+import timber.log.Timber;
 
 public class SyncProgress {
 
@@ -27,44 +31,67 @@ public class SyncProgress {
         }
     }
 
-    public enum Result {SUCCESS, FAILURE}
-
     public static class SyncEvent {
+        /** If {@code null} syncing has finished. */
         @Nullable public final Step step;
-        @Nullable public final Result result;
+        /** Contains any steps that had an error. */
+        @NonNull public final List<Step> stepsWithError;
 
-        public SyncEvent(@Nullable Step step, @Nullable Result result) {
+        public SyncEvent(@Nullable Step step, @NonNull List<Step> stepsWithError) {
             this.step = step;
-            this.result = result;
+            this.stepsWithError = stepsWithError;
         }
 
         public String getDescription(Context context) {
             StringBuilder statusText = new StringBuilder(
                     context.getString(R.string.sync_and_update));
-            if (step != null) {
+
+            Step stepToDisplay = getStepToDisplay();
+            if (stepToDisplay != null) {
                 statusText.append(" - ");
-                statusText.append(context.getString(step.serviceRes));
-                if (step.typeRes != 0) {
+                statusText.append(context.getString(stepToDisplay.serviceRes));
+                if (stepToDisplay.typeRes != 0) {
                     statusText.append(" - ");
-                    statusText.append(context.getString(step.typeRes));
+                    statusText.append(context.getString(stepToDisplay.typeRes));
                 }
             }
+
             return statusText.toString();
         }
+
+        @Nullable
+        private Step getStepToDisplay() {
+            if (step != null) {
+                return step;
+            } else if (stepsWithError.size() > 0) {
+                // display first step that had error
+                return stepsWithError.get(0);
+            } else {
+                return null;
+            }
+        }
     }
+
+    @NonNull private final List<Step> stepsWithError = new LinkedList<>();
+    @Nullable private Step currentStep;
 
     public void publish(Step step) {
-        EventBus.getDefault().postSticky(new SyncEvent(step, null));
+        currentStep = step;
+        EventBus.getDefault().postSticky(new SyncEvent(step, stepsWithError));
+        Timber.d("Syncing: %s...", step.name());
     }
 
-    public void publish(Result result) {
-        SyncEvent lastSyncEvent = EventBus.getDefault().getStickyEvent(SyncEvent.class);
-        SyncEvent syncEvent;
-        if (lastSyncEvent != null) {
-            syncEvent = new SyncEvent(lastSyncEvent.step, result);
-        } else {
-            syncEvent = new SyncEvent(null, result);
+    /**
+     * Record an error for the last published step.
+     */
+    public void recordError() {
+        if (currentStep != null) {
+            stepsWithError.add(currentStep);
+            Timber.d("Syncing: %s...FAILED", currentStep.name());
         }
-        EventBus.getDefault().postSticky(syncEvent);
+    }
+
+    public void publishFinished() {
+        EventBus.getDefault().postSticky(new SyncEvent(null, stepsWithError));
     }
 }
