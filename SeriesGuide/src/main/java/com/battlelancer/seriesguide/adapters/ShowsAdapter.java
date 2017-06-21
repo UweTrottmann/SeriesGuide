@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import java.util.Date;
 
@@ -85,7 +86,7 @@ public class ShowsAdapter extends BaseShowsAdapter {
 
         // network, day and time
         viewHolder.timeAndNetwork.setText(
-                buildNetworkAndTimeString(context, releaseTimeShow, weekDay, network));
+                TextTools.networkAndTime(context, releaseTimeShow, weekDay, network));
 
         // set poster
         TvdbImageTools.loadShowPosterResizeCrop(context, viewHolder.poster,

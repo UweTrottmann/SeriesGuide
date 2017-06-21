@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.ViewTools;
 import java.util.Date;
@@ -68,41 +69,15 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         }
     }
 
-    /**
-     * Builds a network + release time string for a show formatted like "Network / Tue 08:00 PM".
-     */
     static String buildNetworkAndTimeString(Context context, int time, int weekday,
             String timeZone, String country, String network) {
-        Date release;
         if (time != -1) {
-            release = TimeTools.getShowReleaseDateTime(context,
+            Date release = TimeTools.getShowReleaseDateTime(context,
                     TimeTools.getShowReleaseTime(time), weekday, timeZone, country, network);
+            return TextTools.networkAndTime(context, release, weekday, network);
         } else {
-            release = null;
+            return TextTools.networkAndTime(context, null, weekday, network);
         }
-        return buildNetworkAndTimeString(context, release, weekday, network);
-    }
-
-    /**
-     * Builds a network + release time string for a show formatted like "Network / Tue 08:00 PM".
-     */
-    static String buildNetworkAndTimeString(Context context, Date release, int weekDay,
-            String network) {
-        // network
-        StringBuilder networkAndTime = new StringBuilder();
-        networkAndTime.append(network);
-
-        // time
-        if (release != null) {
-            String dayString = TimeTools.formatToLocalDayOrDaily(context, release, weekDay);
-            String timeString = TimeTools.formatToLocalTime(context, release);
-            if (networkAndTime.length() > 0) {
-                networkAndTime.append(" / ");
-            }
-            networkAndTime.append(dayString).append(" ").append(timeString);
-        }
-
-        return networkAndTime.toString();
     }
 
     public static class ShowViewHolder {
