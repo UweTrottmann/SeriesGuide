@@ -886,7 +886,7 @@ public class OverviewFragment extends Fragment implements
             time = dayString + " " + timeString;
         }
         TextView textViewNetworkAndTime = ButterKnife.findById(getView(), R.id.showmeta);
-        textViewNetworkAndTime.setText(TextTools.networkAndTime(network, time));
+        textViewNetworkAndTime.setText(TextTools.dotSeparate(network, time));
 
         // episode description might need show language, so update it here as well
         populateEpisodeDescription();

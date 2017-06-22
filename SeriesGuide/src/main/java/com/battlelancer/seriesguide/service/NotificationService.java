@@ -351,7 +351,7 @@ public class NotificationService extends IntentService {
             final String time = TimeTools.formatToLocalTime(this, TimeTools.applyUserOffset(this,
                             upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
             final String network = upcomingEpisodes.getString(NotificationQuery.NETWORK);
-            contentText = TextTools.networkAndTime(time, network); // switch on purpose
+            contentText = TextTools.dotSeparate(time, network); // switch on purpose
 
             Intent episodeDetailsIntent = new Intent(context, EpisodesActivity.class);
             episodeDetailsIntent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
@@ -460,7 +460,7 @@ public class NotificationService extends IntentService {
                                     .getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
                     String network = upcomingEpisodes
                             .getString(NotificationQuery.NETWORK);
-                    lineText.append(TextTools.networkAndTime(time, network)); // switch on purpose
+                    lineText.append(TextTools.dotSeparate(time, network)); // switch on purpose
 
                     inboxStyle.addLine(lineText);
                 }

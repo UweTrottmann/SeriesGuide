@@ -125,30 +125,32 @@ public class TextTools {
     }
 
     /**
-     * Builds a network + release time string for a show formatted like "Network · Tue 08:00 PM".
+     * Dot separates the two given strings. If one is empty, just returns the other string (no dot).
      */
     @NonNull
-    public static String networkAndTime(@Nullable String network, @Nullable String time) {
-        StringBuilder networkAndTime = new StringBuilder();
-        networkAndTime.append(network);
-        if (!TextUtils.isEmpty(time)) {
-            if (networkAndTime.length() > 0) {
-                networkAndTime.append(" · ");
+    public static String dotSeparate(@Nullable String left, @Nullable String right) {
+        StringBuilder dotString = new StringBuilder(left == null ? "" : left);
+        if (!TextUtils.isEmpty(right)) {
+            if (dotString.length() > 0) {
+                dotString.append(" · ");
             }
-            networkAndTime.append(time);
+            dotString.append(right);
         }
-        return networkAndTime.toString();
+        return dotString.toString();
     }
 
+    /**
+     * Builds a network + release time string for a show formatted like "Network · Tue 08:00 PM".
+     */
     @NonNull
     public static String networkAndTime(Context context, Date release, int weekDay,
             @Nullable String network) {
         if (release != null) {
             String dayString = TimeTools.formatToLocalDayOrDaily(context, release, weekDay);
             String timeString = TimeTools.formatToLocalTime(context, release);
-            return TextTools.networkAndTime(network, dayString + " " + timeString);
+            return TextTools.dotSeparate(network, dayString + " " + timeString);
         } else {
-            return TextTools.networkAndTime(network, null);
+            return TextTools.dotSeparate(network, null);
         }
     }
 }

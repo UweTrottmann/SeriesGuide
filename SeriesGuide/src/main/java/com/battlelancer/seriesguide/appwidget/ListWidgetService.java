@@ -210,7 +210,7 @@ public class ListWidgetService extends RemoteViewsService {
             String absoluteTime = TimeTools.formatToLocalTime(context, actualRelease);
             String network = dataCursor.getString(isShowQuery ?
                     ShowsQuery.SHOW_NETWORK : CalendarAdapter.Query.SHOW_NETWORK);
-            rv.setTextViewText(R.id.widgetNetwork, TextTools.networkAndTime(network, absoluteTime));
+            rv.setTextViewText(R.id.widgetNetwork, TextTools.dotSeparate(network, absoluteTime));
 
             // show name
             rv.setTextViewText(R.id.textViewWidgetShow, dataCursor.getString(isShowQuery ?
