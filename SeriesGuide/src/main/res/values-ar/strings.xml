@@ -98,7 +98,7 @@
   <string name="today">اليوم</string>
   <string name="now">الآن</string>
   <string name="daily">يومي</string>
-  <string name="release_date_and_day">(%1$s (%2$s</string>
+  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s دقيقة</string>
   <!-- Flagging -->
   <string name="mark_all">مشاهدة الكل</string>
