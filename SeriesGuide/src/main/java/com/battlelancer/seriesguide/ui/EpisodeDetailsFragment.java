@@ -411,7 +411,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 dateTime = TimeTools.formatToLocalRelativeTime(getContext(), actualRelease);
             }
             // append day: "in 15 mins (Fri)"
-            timeAndNumbersText.append(getString(R.string.release_date_and_day, dateTime,
+            timeAndNumbersText.append(getString(R.string.format_date_and_day, dateTime,
                     TimeTools.formatToLocalDay(actualRelease)).toUpperCase(Locale.getDefault()));
         } else {
             mReleaseDate.setText(R.string.unknown);

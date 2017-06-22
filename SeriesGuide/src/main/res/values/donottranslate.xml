@@ -17,6 +17,7 @@
     <string name="rating_number_text_format">%1$d - %2$s</string>
     <string name="backup_legacy_warning">This is the legacy backup system. It will get removed with a future update. If you want to restore an old backup, now would be the time. You can then export again using the new export tool.</string>
     <string name="not_available">n/a</string>
+    <string name="format_date_and_day">%1$s (%2$s)</string>
     <string name="format_progress_and_total">%1$d/%2$d</string>
     <string name="format_rating_range">/%d</string>
     <string name="format_time_offset_range">%1$+d…%2$d</string>

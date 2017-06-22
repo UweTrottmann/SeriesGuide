@@ -98,7 +98,7 @@ public class ListItemsAdapter extends BaseShowsAdapter {
                     // "in 15 mins (Fri)"
                     Date actualRelease = TimeTools.applyUserOffset(context, releaseTime);
                     viewHolder.episodeTime.setText(context.getString(
-                            R.string.release_date_and_day,
+                            R.string.format_date_and_day,
                             TimeTools.formatToLocalRelativeTime(context, actualRelease),
                             TimeTools.formatToLocalDay(actualRelease)));
                 }

@@ -76,7 +76,7 @@ public class ShowsAdapter extends BaseShowsAdapter {
                 episodeTimeText = dateTime;
             } else {
                 // display date and explicitly day
-                episodeTimeText = context.getString(R.string.release_date_and_day,
+                episodeTimeText = context.getString(R.string.format_date_and_day,
                         dateTime, TimeTools.formatToLocalDay(releaseTimeEpisode));
             }
             viewHolder.episodeTime.setText(episodeTimeText);

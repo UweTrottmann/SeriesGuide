@@ -532,7 +532,7 @@ public class TimeTools {
             day = formatToLocalDay(dateTime);
         }
 
-        return context.getString(R.string.release_date_and_day, date.toString(), day);
+        return context.getString(R.string.format_date_and_day, date.toString(), day);
     }
 
     /**

@@ -683,7 +683,7 @@ public class OverviewFragment extends Fragment implements
             } else {
                 dateTime = TimeTools.formatToLocalRelativeTime(getContext(), actualRelease);
             }
-            textEpisodeTime.setText(getString(R.string.release_date_and_day, dateTime,
+            textEpisodeTime.setText(getString(R.string.format_date_and_day, dateTime,
                     TimeTools.formatToLocalDay(actualRelease)));
         } else {
             textEpisodeTime.setText(null);
