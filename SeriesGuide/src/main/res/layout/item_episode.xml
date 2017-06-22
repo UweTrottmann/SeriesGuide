@@ -42,7 +42,8 @@
             android:paddingRight="@dimen/large_padding"
             android:paddingTop="16dp"
             android:textAppearance="@style/TextAppearance.Subhead.Secondary"
-            tools:text="23" />
+            tools:text="23"
+            tools:ignore="RtlSymmetry" />
 
         <!-- Text appearance set in code. -->
         <TextView
@@ -69,7 +70,7 @@
             android:paddingTop="@dimen/inline_padding"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Caption.Dim"
-            tools:text="ABSOLUTE 42" />
+            tools:text="42 · DVD 2.0" />
 
         <ImageView
             android:id="@+id/imageViewCollected"

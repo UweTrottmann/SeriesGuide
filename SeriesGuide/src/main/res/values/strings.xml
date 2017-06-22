@@ -84,7 +84,6 @@
     </plurals>
 
     <!-- Metadata -->
-    <string name="episode_number_absolute">ABSOLUTE</string>
     <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">Release date</string>
     <string name="episode_firstaired_unknown">Release date unknown</string>
