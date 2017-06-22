@@ -84,13 +84,11 @@
     </plurals>
 
     <!-- Metadata -->
-    <string name="episode_number_absolute">ABSOLUTE</string>
     <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">Release date</string>
     <string name="episode_firstaired_unknown">Release date unknown</string>
     <string name="episode_dvdnumber">DVD Episode</string>
     <string name="original_release">Original release</string>
-    <string name="show_on_network">on %s</string>
     <string name="show_genres">Genres</string>
     <string name="show_contentrating">Content Rating</string>
     <string name="show_release_times">Release times</string>
@@ -108,7 +106,6 @@
     <string name="today">today</string>
     <string name="now">now</string>
     <string name="daily">Daily</string>
-    <string name="release_date_and_day">%1$s (%2$s)</string>
     <string name="runtime_minutes">%s min</string>
 
     <!-- Flagging -->
@@ -495,7 +492,6 @@
     <string name="upcoming_show">%s is coming up</string>
     <string name="upcoming_episodes">New episodes are coming up</string>
     <string name="upcoming_episodes_number">%s new episodes</string>
-    <string name="upcoming_show_detailed">%1$s on %2$s</string>
     <string name="more">%d more</string>
     <string name="upcoming_display">Select to display upcoming shows</string>
     <string name="pref_notifications">Notifications</string>

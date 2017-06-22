@@ -342,7 +342,7 @@ public class ShowFragment extends Fragment {
         if (releaseTime != -1) {
             int weekDay = showCursor.getInt(ShowQuery.RELEASE_WEEKDAY);
             Date release = TimeTools.getShowReleaseDateTime(getActivity(),
-                    TimeTools.getShowReleaseTime(releaseTime),
+                    releaseTime,
                     weekDay,
                     showCursor.getString(ShowQuery.RELEASE_TIMEZONE),
                     releaseCountry, network);

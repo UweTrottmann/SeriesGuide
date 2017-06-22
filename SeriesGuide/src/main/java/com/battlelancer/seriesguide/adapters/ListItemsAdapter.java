@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -52,14 +53,23 @@ public class ListItemsAdapter extends BaseShowsAdapter {
             default:
             case 1:
                 // shows
+                int time = cursor.getInt(Query.SHOW_OR_EPISODE_RELEASE_TIME);
+                int weekDay = cursor.getInt(Query.SHOW_RELEASE_WEEKDAY);
+                String timeZone = cursor.getString(Query.SHOW_RELEASE_TIMEZONE);
+                String country = cursor.getString(Query.SHOW_RELEASE_COUNTRY);
+                String network = cursor.getString(Query.SHOW_NETWORK);
 
-                // network, day and time
-                viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
-                        cursor.getInt(Query.SHOW_OR_EPISODE_RELEASE_TIME),
-                        cursor.getInt(Query.SHOW_RELEASE_WEEKDAY),
-                        cursor.getString(Query.SHOW_RELEASE_TIMEZONE),
-                        cursor.getString(Query.SHOW_RELEASE_COUNTRY),
-                        cursor.getString(Query.SHOW_NETWORK)));
+                Date releaseTimeShow;
+                if (time != -1) {
+                    releaseTimeShow = TimeTools.getShowReleaseDateTime(context, time, weekDay,
+                            timeZone, country, network);
+                } else {
+                    releaseTimeShow = null;
+                }
+
+                // network, regular day and time
+                viewHolder.timeAndNetwork.setText(
+                        TextTools.networkAndTime(context, releaseTimeShow, weekDay, network));
 
                 // next episode info
                 String fieldValue = cursor.getString(Query.SHOW_NEXTTEXT);
@@ -70,8 +80,22 @@ public class ListItemsAdapter extends BaseShowsAdapter {
                     viewHolder.episode.setText(null);
                 } else {
                     viewHolder.episode.setText(fieldValue);
-                    fieldValue = cursor.getString(Query.SHOW_NEXTAIRDATETEXT);
-                    viewHolder.episodeTime.setText(fieldValue);
+
+                    Date releaseTimeEpisode = TimeTools.applyUserOffset(context,
+                            cursor.getLong(Query.SHOW_NEXT_DATE_MS));
+                    boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
+                    String dateTime = displayExactDate ?
+                            TimeTools.formatToLocalDateShort(context, releaseTimeEpisode)
+                            : TimeTools.formatToLocalRelativeTime(context, releaseTimeEpisode);
+                    if (TimeTools.isSameWeekDay(releaseTimeEpisode, releaseTimeShow, weekDay)) {
+                        // just display date
+                        viewHolder.episodeTime.setText(dateTime);
+                    } else {
+                        // display date and explicitly day
+                        viewHolder.episodeTime.setText(
+                                context.getString(R.string.format_date_and_day, dateTime,
+                                        TimeTools.formatToLocalDay(releaseTimeEpisode)));
+                    }
                 }
 
                 // remaining count
@@ -91,14 +115,14 @@ public class ListItemsAdapter extends BaseShowsAdapter {
                 viewHolder.timeAndNetwork.setText(R.string.episode);
                 viewHolder.episode.setText(TextTools.getNextEpisodeString(context,
                         cursor.getInt(Query.SHOW_NEXTTEXT),
-                        cursor.getInt(Query.SHOW_NEXTAIRDATETEXT),
+                        cursor.getInt(Query.SHOW_NEXT_DATE_OR_EPISODE_NUMBER),
                         cursor.getString(Query.ITEM_TITLE)));
                 long releaseTime = cursor.getLong(Query.SHOW_OR_EPISODE_RELEASE_TIME);
                 if (releaseTime != -1) {
                     // "in 15 mins (Fri)"
                     Date actualRelease = TimeTools.applyUserOffset(context, releaseTime);
                     viewHolder.episodeTime.setText(context.getString(
-                            R.string.release_date_and_day,
+                            R.string.format_date_and_day,
                             TimeTools.formatToLocalRelativeTime(context, actualRelease),
                             TimeTools.formatToLocalDay(actualRelease)));
                 }
@@ -167,8 +191,9 @@ public class ListItemsAdapter extends BaseShowsAdapter {
                 Shows.STATUS,
                 Shows.NEXTTEXT,
                 Shows.NEXTAIRDATETEXT, // 15
+                Shows.NEXTAIRDATEMS,
                 Shows.FAVORITE,
-                Shows.UNWATCHED_COUNT // 17
+                Shows.UNWATCHED_COUNT // 18
         };
 
         int LIST_ITEM_ID = 1;
@@ -185,8 +210,9 @@ public class ListItemsAdapter extends BaseShowsAdapter {
         int SHOW_RELEASE_COUNTRY = 12;
         int SHOW_STATUS = 13;
         int SHOW_NEXTTEXT = 14;
-        int SHOW_NEXTAIRDATETEXT = 15;
-        int SHOW_FAVORITE = 16;
-        int SHOW_UNWATCHED_COUNT = 17;
+        int SHOW_NEXT_DATE_OR_EPISODE_NUMBER = 15;
+        int SHOW_NEXT_DATE_MS = 16;
+        int SHOW_FAVORITE = 17;
+        int SHOW_UNWATCHED_COUNT = 18;
     }
 }

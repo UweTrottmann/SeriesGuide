@@ -26,7 +26,6 @@ import java.util.Date;
 
 public class EpisodesAdapter extends CursorAdapter {
 
-
     public interface OnFlagEpisodeListener {
         void onFlagEpisodeWatched(int episodeId, int episodeNumber, boolean isWatched);
     }
@@ -125,21 +124,18 @@ public class EpisodesAdapter extends CursorAdapter {
         viewHolder.collected.setVisibility(isCollected ? View.VISIBLE : View.INVISIBLE);
 
         // alternative numbers
-        StringBuilder altNumbers = new StringBuilder();
         int absoluteNumber = mCursor.getInt(EpisodesQuery.ABSOLUTE_NUMBER);
+        String absoluteNumberText = null;
         if (absoluteNumber > 0) {
-            altNumbers.append(mContext.getString(R.string.episode_number_absolute)).append(" ")
-                    .append(absoluteNumber);
+            absoluteNumberText = NumberFormat.getIntegerInstance().format(absoluteNumber);
         }
         double dvdNumber = mCursor.getDouble(EpisodesQuery.DVDNUMBER);
+        String dvdNumberText = null;
         if (dvdNumber > 0) {
-            if (altNumbers.length() != 0) {
-                altNumbers.append(" | ");
-            }
-            altNumbers.append(mContext.getString(R.string.episode_number_disk)).append(" ")
-                    .append(dvdNumber);
+            dvdNumberText = mContext.getString(R.string.episode_number_disk) + " " + dvdNumber;
         }
-        viewHolder.episodeAlternativeNumbers.setText(altNumbers);
+        viewHolder.episodeAlternativeNumbers.setText(
+                TextTools.dotSeparate(absoluteNumberText, dvdNumberText));
 
         // release time
         boolean isReleased;

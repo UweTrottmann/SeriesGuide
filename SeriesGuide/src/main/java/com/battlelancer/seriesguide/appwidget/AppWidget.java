@@ -136,7 +136,7 @@ public class AppWidget extends AppWidgetProvider {
                             TimeTools.formatToLocalDateShort(context, actualRelease)
                             : TimeTools.formatToLocalRelativeTime(context, actualRelease);
                     item.setTextViewText(R.id.widgetAirtime,
-                            getString(R.string.release_date_and_day,
+                            getString(R.string.format_date_and_day,
                                     dateTime,
                                     TimeTools.formatToLocalDay(actualRelease))
                     );

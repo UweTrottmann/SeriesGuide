@@ -730,7 +730,7 @@ public class DBUtils {
                         TimeTools.formatToLocalDateShort(context, actualRelease)
                         : TimeTools.formatToLocalRelativeTime(context, actualRelease);
                 final String nextReleaseDateString = context.getString(
-                        R.string.release_date_and_day,
+                        R.string.format_date_and_day,
                         dateTime,
                         TimeTools.formatToLocalDay(actualRelease));
 
