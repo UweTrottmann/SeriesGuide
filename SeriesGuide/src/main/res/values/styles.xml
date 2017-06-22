@@ -49,10 +49,6 @@
         <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
 
-    <style name="TextAppearance.Subhead.Narrow">
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
-    </style>
-
     <style name="TextAppearance.Subhead.Secondary">
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
@@ -75,6 +71,10 @@
 
     <style name="TextAppearance.Body.Secondary">
         <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="TextAppearance.Body.Secondary.Narrow">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
     </style>
 
     <style name="TextAppearance.Body.Green">
