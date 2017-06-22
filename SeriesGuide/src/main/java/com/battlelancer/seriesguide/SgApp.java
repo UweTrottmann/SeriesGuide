@@ -115,7 +115,10 @@ public class SgApp extends Application {
 
     private void initializeEventBus() {
         try {
-            EventBus.builder().addIndex(new SgEventBusIndex()).installDefaultEventBus();
+            EventBus.builder()
+                    .logNoSubscriberMessages(BuildConfig.DEBUG)
+                    .addIndex(new SgEventBusIndex())
+                    .installDefaultEventBus();
         } catch (EventBusException ignored) {
             // instance was already set
         }
