@@ -118,6 +118,7 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.labelGuestStars) View labelGuestStars;
     @BindView(R.id.TextViewEpisodeGuestStars) TextView textGuestStars;
     @BindView(R.id.textViewRatingsValue) TextView textRating;
+    @BindView(R.id.textViewRatingsRange) TextView textRatingRange;
     @BindView(R.id.textViewRatingsVotes) TextView textRatingVotes;
     @BindView(R.id.textViewRatingsUser) TextView textUserRating;
 
@@ -175,6 +176,7 @@ public class OverviewFragment extends Fragment implements
 
         // ratings
         CheatSheet.setup(containerRatings, R.string.action_rate);
+        textRatingRange.setText(getString(R.string.format_rating_range, 10));
 
         // comments button
         Resources.Theme theme = getActivity().getTheme();

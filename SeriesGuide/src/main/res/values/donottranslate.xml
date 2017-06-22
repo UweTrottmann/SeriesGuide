@@ -13,15 +13,15 @@
     <string name="powered_by_thetvdb">powered by TheTVDB + trakt</string>
     <string name="powered_by_trakt">powered by trakt</string>
     <string name="powered_by_tmdb">powered by TMDb</string>
-    <string name="tvdb_range">/10</string>
     <string name="placeholder_rating">--</string>
     <string name="rating_number_text_format">%1$d - %2$s</string>
     <string name="backup_legacy_warning">This is the legacy backup system. It will get removed with a future update. If you want to restore an old backup, now would be the time. You can then export again using the new export tool.</string>
     <string name="not_available">n/a</string>
+    <string name="format_progress_and_total">%1$d/%2$d</string>
+    <string name="format_rating_range">/%d</string>
+    <string name="format_time_offset_range">%1$+d…%2$d</string>
     <string name="format_version">v%1$s (Database v%2$d)</string>
     <string name="format_version_debug">v%1$s (Database v%2$d, build %3$d)</string>
-    <string name="format_time_offset_range">%1$+d…%2$d</string>
-    <string name="format_progress_and_total">%1$d/%2$d</string>
 
     <!-- References -->
     <string name="pref_autoupdate">@string/sync_and_update</string>

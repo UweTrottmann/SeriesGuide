@@ -134,7 +134,7 @@
                 android:layout_alignBaseline="@+id/textViewAddRatingValue"
                 android:layout_marginRight="@dimen/default_padding"
                 android:layout_toRightOf="@+id/textViewAddRatingValue"
-                android:text="@string/tvdb_range"
+                android:text="@string/format_rating_range"
                 android:textAppearance="@style/TextAppearance.Caption" />
 
             <TextView

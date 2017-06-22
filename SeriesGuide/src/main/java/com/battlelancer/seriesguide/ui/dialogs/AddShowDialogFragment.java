@@ -107,6 +107,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
     @BindView(R.id.textViewAddShowMeta) TextView showmeta;
     @BindView(R.id.textViewAddDescription) TextView overview;
     @BindView(R.id.textViewAddRatingValue) TextView rating;
+    @BindView(R.id.textViewAddRatingRange) TextView ratingRange;
     @BindView(R.id.textViewAddGenres) TextView genres;
     @BindView(R.id.textViewAddReleased) TextView releasedTextView;
     @BindView(R.id.imageViewAddPoster) ImageView poster;
@@ -164,6 +165,8 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
             Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.dialog_addshow, container, false);
         unbinder = ButterKnife.bind(this, v);
+
+        ratingRange.setText(getString(R.string.format_rating_range, 10));
 
         // buttons
         buttonNegative.setText(R.string.dismiss);

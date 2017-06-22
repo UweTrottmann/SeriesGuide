@@ -32,7 +32,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -115,6 +114,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     @BindView(R.id.labelEpisodeDvd) View mLabelDvd;
     @BindView(R.id.textViewEpisodeDvd) TextView mDvd;
     @BindView(R.id.textViewRatingsValue) TextView mTextRating;
+    @BindView(R.id.textViewRatingsRange) TextView mTextRatingRange;
     @BindView(R.id.textViewRatingsVotes) TextView mTextRatingVotes;
     @BindView(R.id.textViewRatingsUser) TextView mTextUserRating;
 
@@ -166,6 +166,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         unbinder = ButterKnife.bind(this, v);
 
         mEpisodeContainer.setVisibility(View.GONE);
+
+        mTextRatingRange.setText(getString(R.string.format_rating_range, 10));
 
         // comments button
         Resources.Theme theme = getActivity().getTheme();

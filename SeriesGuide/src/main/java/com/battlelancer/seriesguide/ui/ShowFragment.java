@@ -98,6 +98,7 @@ public class ShowFragment extends Fragment {
     @BindView(R.id.textViewShowContentRating) TextView mTextViewContentRating;
     @BindView(R.id.textViewShowGenres) TextView mTextViewGenres;
     @BindView(R.id.textViewRatingsValue) TextView mTextViewRatingGlobal;
+    @BindView(R.id.textViewRatingsRange) TextView mTextViewRatingRange;
     @BindView(R.id.textViewRatingsVotes) TextView mTextViewRatingVotes;
     @BindView(R.id.textViewRatingsUser) TextView mTextViewRatingUser;
     @BindView(R.id.textViewShowLastEdit) TextView mTextViewLastEdit;
@@ -164,6 +165,7 @@ public class ShowFragment extends Fragment {
             }
         });
         CheatSheet.setup(mButtonRate, R.string.action_rate);
+        mTextViewRatingRange.setText(getString(R.string.format_rating_range, 10));
 
         // link, search and comments button
         ViewTools.setVectorDrawableLeft(theme, mButtonImdb, R.drawable.ic_link_black_24dp);
