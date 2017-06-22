@@ -23,15 +23,8 @@ import java.util.Date;
  */
 public class ListItemsAdapter extends BaseShowsAdapter {
 
-    public interface OnContextMenuClickListener {
-        void onClick(View view, ListItemViewHolder viewHolder);
-    }
-
-    public OnContextMenuClickListener onContextMenuClickListener;
-
-    public ListItemsAdapter(Activity activity, OnContextMenuClickListener listener) {
-        super(activity, null);
-        this.onContextMenuClickListener = listener;
+    public ListItemsAdapter(Activity activity, OnItemClickListener listener) {
+        super(activity, listener);
     }
 
     @Override
@@ -144,7 +137,7 @@ public class ListItemsAdapter extends BaseShowsAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         View v = LayoutInflater.from(context).inflate(R.layout.item_show, parent, false);
 
-        ListItemViewHolder viewHolder = new ListItemViewHolder(v, onContextMenuClickListener);
+        ListItemViewHolder viewHolder = new ListItemViewHolder(v, onItemClickListener);
         v.setTag(viewHolder);
 
         return v;
@@ -155,20 +148,9 @@ public class ListItemsAdapter extends BaseShowsAdapter {
         public String itemId;
         public int itemTvdbId;
         public int itemType;
-        private final OnContextMenuClickListener clickListener;
 
-        public ListItemViewHolder(View v, final OnContextMenuClickListener menuClickListener) {
-            super(v, null);
-            clickListener = menuClickListener;
-
-            contextMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (clickListener != null) {
-                        clickListener.onClick(v, ListItemViewHolder.this);
-                    }
-                }
-            });
+        public ListItemViewHolder(View v, OnItemClickListener onItemClickListener) {
+            super(v, onItemClickListener);
         }
     }
 

@@ -26,7 +26,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         void onFavoriteClick(int showTvdbId, boolean isFavorite);
     }
 
-    private OnItemClickListener onItemClickListener;
+    protected OnItemClickListener onItemClickListener;
     private final VectorDrawableCompat drawableStar;
     private final VectorDrawableCompat drawableStarZero;
 

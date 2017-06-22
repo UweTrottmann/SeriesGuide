@@ -19,6 +19,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
 import com.battlelancer.seriesguide.adapters.ListItemsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -68,7 +70,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new ListItemsAdapter(getActivity(), onContextMenuClickListener);
+        mAdapter = new ListItemsAdapter(getActivity(), onItemClickListener);
 
         if (getView() == null) {
             return;
@@ -176,16 +178,27 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
         }
     };
 
-    private ListItemsAdapter.OnContextMenuClickListener onContextMenuClickListener
-            = new ListItemsAdapter.OnContextMenuClickListener() {
+    private ListItemsAdapter.OnItemClickListener onItemClickListener
+            = new ListItemsAdapter.OnItemClickListener() {
         @Override
-        public void onClick(View view, ListItemsAdapter.ListItemViewHolder viewHolder) {
-            PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
-            popupMenu.inflate(R.menu.lists_popup_menu);
-            popupMenu.setOnMenuItemClickListener(
-                    new PopupMenuItemClickListener(getContext(), getFragmentManager(),
-                            viewHolder.itemId, viewHolder.itemTvdbId, viewHolder.itemType));
-            popupMenu.show();
+        public void onClick(View view, BaseShowsAdapter.ShowViewHolder viewHolder) {
+            if (viewHolder instanceof ListItemsAdapter.ListItemViewHolder) {
+                ListItemsAdapter.ListItemViewHolder viewHolderActual
+                        = (ListItemsAdapter.ListItemViewHolder) viewHolder;
+                PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+                popupMenu.inflate(R.menu.lists_popup_menu);
+                popupMenu.setOnMenuItemClickListener(
+                        new PopupMenuItemClickListener(getContext(), getFragmentManager(),
+                                viewHolderActual.itemId, viewHolderActual.itemTvdbId,
+                                viewHolderActual.itemType));
+                popupMenu.show();
+            }
+        }
+
+        @Override
+        public void onFavoriteClick(int showTvdbId, boolean isFavorite) {
+            SgApp.getServicesComponent(getContext()).showTools()
+                    .storeIsFavorite(showTvdbId, isFavorite);
         }
     };
 
