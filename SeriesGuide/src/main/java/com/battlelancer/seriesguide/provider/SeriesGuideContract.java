@@ -1003,6 +1003,11 @@ public class SeriesGuideContract {
         public static final String SELECTION_IN_LIST =
                 SeriesGuideContract.Movies.SELECTION_COLLECTION + " OR "
                         + SeriesGuideContract.Movies.SELECTION_WATCHLIST;
+        public static final String[] PROJECTION_IN_LIST = {
+                TMDB_ID, // 0
+                IN_COLLECTION, // 1
+                IN_WATCHLIST // 2
+        };
 
         public static final String SELECTION_UNWATCHED = Movies.WATCHED + "=0";
 

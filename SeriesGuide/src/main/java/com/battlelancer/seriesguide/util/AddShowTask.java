@@ -7,10 +7,12 @@ import android.support.annotation.Nullable;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
@@ -95,6 +97,7 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
     private final Context context;
     private final LinkedList<SearchResult> addQueue = new LinkedList<>();
 
+    @Inject HexagonTools hexagonTools;
     @Inject TvdbTools tvdbTools;
     @Inject Lazy<Sync> traktSync;
     private boolean isFinishedAddingShows = false;
@@ -169,6 +172,8 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
             traktWatched = traktShows;
         }
 
+        HexagonEpisodeSync hexagonEpisodeSync = new HexagonEpisodeSync(context, hexagonTools);
+
         int result;
         boolean addedAtLeastOneShow = false;
         boolean failedMergingShows = false;
@@ -195,7 +200,8 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
 
             try {
                 boolean addedShow = tvdbTools
-                        .addShow(nextShow.tvdbid, nextShow.language, traktCollection, traktWatched);
+                        .addShow(nextShow.tvdbid, nextShow.language, traktCollection, traktWatched,
+                                hexagonEpisodeSync);
                 result = addedShow ? PROGRESS_SUCCESS : PROGRESS_EXISTS;
                 addedAtLeastOneShow = addedShow
                         || addedAtLeastOneShow; // do not overwrite previous success

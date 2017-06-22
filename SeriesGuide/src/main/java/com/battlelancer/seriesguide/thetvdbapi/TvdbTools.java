@@ -26,9 +26,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -147,7 +147,8 @@ public class TvdbTools {
      */
     public boolean addShow(int showTvdbId, @Nullable String language,
             @Nullable HashMap<Integer, BaseShow> traktCollection,
-            @Nullable HashMap<Integer, BaseShow> traktWatched)
+            @Nullable HashMap<Integer, BaseShow> traktWatched,
+            HexagonEpisodeSync hexagonEpisodeSync)
             throws TvdbException {
         boolean isShowExists = DBUtils.isShowExists(context, showTvdbId);
         if (isShowExists) {
@@ -167,8 +168,7 @@ public class TvdbTools {
         // restore episode flags...
         if (hexagonEnabled) {
             // ...from Hexagon
-            boolean success = EpisodeTools.Download.flagsFromHexagon(context, hexagonTools.get(),
-                    showTvdbId);
+            boolean success = hexagonEpisodeSync.downloadFlags(showTvdbId);
             if (!success) {
                 // failed to download episode flags
                 // flag show as needing an episode merge

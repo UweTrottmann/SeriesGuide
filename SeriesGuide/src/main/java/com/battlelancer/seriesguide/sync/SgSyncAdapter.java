@@ -133,30 +133,26 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
             // sync with Hexagon or trakt
             @SuppressLint("UseSparseArrays")
-            final HashMap<Integer, SearchResult> showsNew = new HashMap<>();
-            final HashSet<Integer> showsExisting = ShowTools.getShowTvdbIdsAsSet(getContext());
+            final HashMap<Integer, SearchResult> newShows = new HashMap<>();
+            final HashSet<Integer> existingShows = ShowTools.getShowTvdbIdsAsSet(getContext());
 
-            if (showsExisting == null) {
+            if (existingShows == null) {
                 resultCode = UpdateResult.INCOMPLETE;
             } else {
+                UpdateResult resultSync;
                 if (HexagonSettings.isEnabled(getContext())) {
                     // sync with hexagon...
-                    boolean success = hexagonTools.get()
-                            .syncWithHexagon(showsExisting, showsNew, progress);
-                    // don't overwrite failure
-                    if (resultCode == UpdateResult.SUCCESS) {
-                        resultCode = success ? UpdateResult.SUCCESS : UpdateResult.INCOMPLETE;
-                    }
+                    resultSync = new HexagonSync(getContext(), hexagonTools.get(), movieTools.get(),
+                            progress).sync(existingShows, newShows);
                     Timber.d("Syncing: Hexagon...DONE");
                 } else {
                     // ...OR sync with trakt
-                    UpdateResult resultTrakt = performTraktSync(progress, showsExisting,
-                            currentTime);
-                    // don't overwrite failure
-                    if (resultCode == UpdateResult.SUCCESS) {
-                        resultCode = resultTrakt;
-                    }
+                    resultSync = performTraktSync(progress, existingShows, currentTime);
                     Timber.d("Syncing: trakt...DONE");
+                }
+                // don't overwrite failure
+                if (resultSync == UpdateResult.SUCCESS) {
+                    resultCode = resultSync;
                 }
 
                 // make sure other loaders (activity, overview, details) are notified of changes
@@ -164,7 +160,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             // renew search table if shows were updated and it will not be renewed by add task
-            if (tvdbSync.hasUpdatedShows() && showsNew.size() == 0) {
+            if (tvdbSync.hasUpdatedShows() && newShows.size() == 0) {
                 DBUtils.rebuildFtsTable(getContext());
             }
 
