@@ -49,7 +49,7 @@
             android:shadowColor="@color/protection_dark"
             android:shadowDx="0"
             android:shadowDy="0"
-            android:shadowRadius="2"
+            android:shadowRadius="4"
             android:textAppearance="@style/TextAppearance.Display1.White"
             app:layout_constraintBottom_toBottomOf="@+id/imageViewPersonHeadshot"
             app:layout_constraintLeft_toLeftOf="parent"
