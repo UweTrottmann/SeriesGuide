@@ -14,18 +14,16 @@ public class TmdbSync {
 
     Context context;
     ConfigurationService configurationService;
-    SyncProgress progress;
 
-    TmdbSync(Context context, ConfigurationService configurationService, SyncProgress progress) {
+    TmdbSync(Context context, ConfigurationService configurationService) {
         this.context = context;
         this.configurationService = configurationService;
-        this.progress = progress;
     }
 
     /**
      * Downloads and stores the latest image url configuration from themoviedb.org.
      */
-    public void updateConfiguration(SharedPreferences prefs) {
+    public boolean updateConfiguration(SharedPreferences prefs) {
         try {
             Response<Configuration> response = configurationService.configuration().execute();
             if (response.isSuccessful()) {
@@ -36,14 +34,14 @@ public class TmdbSync {
                             .putString(TmdbSettings.KEY_TMDB_BASE_URL,
                                     config.images.secure_base_url)
                             .apply();
+                    return true;
                 }
             } else {
-                progress.recordError();
                 SgTmdb.trackFailedRequest(context, "get config", response);
             }
         } catch (IOException e) {
-            progress.recordError();
             SgTmdb.trackFailedRequest(context, "get config", e);
         }
+        return false;
     }
 }

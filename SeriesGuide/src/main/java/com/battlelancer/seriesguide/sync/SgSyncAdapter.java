@@ -118,8 +118,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
             // get latest TMDb configuration
             progress.publish(SyncProgress.Step.TMDB);
-            new TmdbSync(getContext(), tmdbConfigService.get(), progress)
-                    .updateConfiguration(prefs);
+            if (!new TmdbSync(getContext(), tmdbConfigService.get()).updateConfiguration(prefs)) {
+                progress.recordError();
+            }
             Timber.d("Syncing: TMDB...DONE");
 
             // sync with Hexagon or trakt
