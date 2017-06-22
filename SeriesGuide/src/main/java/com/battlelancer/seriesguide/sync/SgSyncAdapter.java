@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.content.SyncResult;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
@@ -19,25 +18,20 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.tmdb2.entities.Configuration;
 import com.uwetrottmann.tmdb2.services.ConfigurationService;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import javax.inject.Inject;
-import retrofit2.Response;
 import timber.log.Timber;
 
 /**
@@ -123,7 +117,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
             // get latest TMDb configuration
             progress.publish(SyncProgress.Step.TMDB);
-            getTmdbConfiguration(prefs, progress);
+            new TmdbSync(getContext(), tmdbConfigService.get(), progress)
+                    .updateConfiguration(prefs);
             Timber.d("Syncing: TMDB...DONE");
 
             // sync with Hexagon or trakt
@@ -201,31 +196,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         Timber.i("Syncing: %s", resultCode.toString());
         progress.publishFinished();
-    }
-
-    /**
-     * Downloads and stores the latest image url configuration from themoviedb.org.
-     */
-    private void getTmdbConfiguration(SharedPreferences prefs, SyncProgress progress) {
-        try {
-            Response<Configuration> response = tmdbConfigService.get().configuration().execute();
-            if (response.isSuccessful()) {
-                Configuration config = response.body();
-                if (config != null && config.images != null
-                        && !TextUtils.isEmpty(config.images.secure_base_url)) {
-                    prefs.edit()
-                            .putString(TmdbSettings.KEY_TMDB_BASE_URL,
-                                    config.images.secure_base_url)
-                            .apply();
-                }
-            } else {
-                progress.recordError();
-                SgTmdb.trackFailedRequest(getContext(), "get config", response);
-            }
-        } catch (IOException e) {
-            progress.recordError();
-            SgTmdb.trackFailedRequest(getContext(), "get config", e);
-        }
     }
 
     /**
