@@ -27,13 +27,13 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
+import com.battlelancer.seriesguide.sync.TraktEpisodeSync;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.TraktTools;
 import com.uwetrottmann.thetvdb.entities.Episode;
 import com.uwetrottmann.thetvdb.entities.EpisodesResponse;
 import com.uwetrottmann.thetvdb.entities.Series;
@@ -83,7 +83,6 @@ public class TvdbTools {
     private final Context context;
     Lazy<HexagonTools> hexagonTools;
     Lazy<ShowTools> showTools;
-    Lazy<TraktTools> traktTools;
     Lazy<TheTvdbSearch> tvdbSearch;
     Lazy<TheTvdbSeries> tvdbSeries;
     Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch;
@@ -95,7 +94,6 @@ public class TvdbTools {
             @ApplicationContext Context context,
             Lazy<HexagonTools> hexagonTools,
             Lazy<ShowTools> showTools,
-            Lazy<TraktTools> traktTools,
             Lazy<TheTvdbSearch> tvdbSearch,
             Lazy<TheTvdbSeries> tvdbSeries,
             Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch,
@@ -105,7 +103,6 @@ public class TvdbTools {
         this.context = context;
         this.hexagonTools = hexagonTools;
         this.showTools = showTools;
-        this.traktTools = traktTools;
         this.tvdbSearch = tvdbSearch;
         this.tvdbSeries = tvdbSeries;
         this.traktSearch = traktSearch;
@@ -182,13 +179,13 @@ public class TvdbTools {
             showTools.get().sendIsAdded(showTvdbId, language);
         } else {
             // ...from trakt
-            TraktTools traktTools = this.traktTools.get();
-            if (!traktTools.storeEpisodeFlags(traktWatched, showTvdbId,
-                    TraktTools.Flag.WATCHED)) {
+            TraktEpisodeSync traktEpisodeSync = new TraktEpisodeSync(context, null);
+            if (!traktEpisodeSync.storeEpisodeFlags(traktWatched, showTvdbId,
+                    TraktEpisodeSync.Flag.WATCHED)) {
                 throw new TvdbDataException("addShow: storing trakt watched episodes failed.");
             }
-            if (!traktTools.storeEpisodeFlags(traktCollection, showTvdbId,
-                    TraktTools.Flag.COLLECTED)) {
+            if (!traktEpisodeSync.storeEpisodeFlags(traktCollection, showTvdbId,
+                    TraktEpisodeSync.Flag.COLLECTED)) {
                 throw new TvdbDataException("addShow: storing trakt collected episodes failed.");
             }
         }

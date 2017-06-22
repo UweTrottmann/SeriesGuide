@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.content.SyncResult;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.widget.Toast;
@@ -21,8 +20,6 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
@@ -30,13 +27,11 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.entities.Configuration;
 import com.uwetrottmann.tmdb2.services.ConfigurationService;
-import com.uwetrottmann.trakt5.entities.LastActivities;
-import com.uwetrottmann.trakt5.entities.LastActivityMore;
+import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
 import java.io.IOException;
 import java.util.HashMap;
@@ -74,7 +69,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
     @Inject Lazy<TvdbTools> tvdbTools;
     @Inject Lazy<HexagonTools> hexagonTools;
-    @Inject Lazy<TraktTools> traktTools;
+    @Inject Lazy<Sync> traktSync;
     @Inject Lazy<MovieTools> movieTools;
     @Inject Lazy<ConfigurationService> tmdbConfigService;
 
@@ -147,7 +142,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     Timber.d("Syncing: Hexagon...DONE");
                 } else {
                     // ...OR sync with trakt
-                    resultSync = performTraktSync(progress, existingShows, currentTime);
+                    resultSync = new TraktSync(getContext(), movieTools.get(),
+                            traktSync.get(), progress).sync(existingShows, currentTime);
                     Timber.d("Syncing: trakt...DONE");
                 }
                 // don't overwrite failure
@@ -230,140 +226,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             progress.recordError();
             SgTmdb.trackFailedRequest(getContext(), "get config", e);
         }
-    }
-
-    private UpdateResult performTraktSync(SyncProgress progress, HashSet<Integer> localShows,
-            long currentTime) {
-        if (!TraktCredentials.get(getContext()).hasCredentials()) {
-            Timber.d("performTraktSync: no auth, skip");
-            return UpdateResult.SUCCESS;
-        }
-
-        if (!AndroidUtils.isNetworkConnected(getContext())) {
-            return UpdateResult.INCOMPLETE;
-        }
-
-        TraktTools traktTools = this.traktTools.get();
-
-        // get last activity timestamps
-        LastActivities lastActivity = traktTools.getLastActivity();
-        if (lastActivity == null) {
-            // trakt is likely offline or busy, try later
-            Timber.e("performTraktSync: last activity download failed");
-            return UpdateResult.INCOMPLETE;
-        }
-
-        if (!AndroidUtils.isNetworkConnected(getContext())) {
-            return UpdateResult.INCOMPLETE;
-        }
-
-        if (localShows.size() == 0) {
-            Timber.d("performTraktSync: no local shows, skip shows");
-        } else {
-            // download and upload episode watched and collected flags
-            progress.publish(SyncProgress.Step.TRAKT_EPISODES);
-            if (performTraktEpisodeSync(localShows, lastActivity.episodes, currentTime)
-                    != UpdateResult.SUCCESS) {
-                progress.recordError();
-                return UpdateResult.INCOMPLETE;
-            }
-
-            if (!AndroidUtils.isNetworkConnected(getContext())) {
-                return UpdateResult.INCOMPLETE;
-            }
-
-            // download show ratings
-            progress.publish(SyncProgress.Step.TRAKT_RATINGS);
-            if (traktTools.downloadShowRatings(lastActivity.shows.rated_at)
-                    != UpdateResult.SUCCESS) {
-                progress.recordError();
-                return UpdateResult.INCOMPLETE;
-            }
-
-            if (!AndroidUtils.isNetworkConnected(getContext())) {
-                return UpdateResult.INCOMPLETE;
-            }
-
-            // download episode ratings
-            if (traktTools.downloadEpisodeRatings(lastActivity.episodes.rated_at)
-                    != UpdateResult.SUCCESS) {
-                progress.recordError();
-                return UpdateResult.INCOMPLETE;
-            }
-
-            if (!AndroidUtils.isNetworkConnected(getContext())) {
-                return UpdateResult.INCOMPLETE;
-            }
-        }
-
-        // sync watchlist and collection with trakt
-        progress.publish(SyncProgress.Step.TRAKT_MOVIES);
-        if (movieTools.get().syncMovieListsWithTrakt(lastActivity.movies)
-                != UpdateResult.SUCCESS) {
-            progress.recordError();
-            return UpdateResult.INCOMPLETE;
-        }
-
-        if (!AndroidUtils.isNetworkConnected(getContext())) {
-            return UpdateResult.INCOMPLETE;
-        }
-
-        // download watched movies
-        if (traktTools.downloadWatchedMovies(lastActivity.movies.watched_at)
-                != UpdateResult.SUCCESS) {
-            progress.recordError();
-            return UpdateResult.INCOMPLETE;
-        }
-
-        // clean up any useless movies (not watched or not in any list)
-        MovieTools.deleteUnusedMovies(getContext());
-
-        if (!AndroidUtils.isNetworkConnected(getContext())) {
-            return UpdateResult.INCOMPLETE;
-        }
-
-        // download movie ratings
-        progress.publish(SyncProgress.Step.TRAKT_RATINGS);
-        if (traktTools.downloadMovieRatings(lastActivity.movies.rated_at)
-                != UpdateResult.SUCCESS) {
-            progress.recordError();
-            return UpdateResult.INCOMPLETE;
-        }
-
-        return UpdateResult.SUCCESS;
-    }
-
-    /**
-     * Downloads and uploads episode watched and collected flags.
-     *
-     * <p> Do <b>NOT</b> call if there are no local shows to avoid unnecessary work.
-     */
-    private UpdateResult performTraktEpisodeSync(@NonNull HashSet<Integer> localShows,
-            @NonNull LastActivityMore lastActivity, long currentTime) {
-        // do we need to merge data instead of overwriting with data from trakt?
-        boolean isInitialSync = !TraktSettings.hasMergedEpisodes(getContext());
-
-        // download watched and collected flags
-        // if initial sync, upload any flags missing on trakt
-        // otherwise clear all local flags not on trakt
-        int resultCode = traktTools.get().syncEpisodeFlags(localShows, lastActivity, isInitialSync);
-
-        if (resultCode < 0) {
-            return UpdateResult.INCOMPLETE;
-        }
-
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
-                getContext()).edit();
-        if (isInitialSync) {
-            // success, set initial sync as complete
-            editor.putBoolean(TraktSettings.KEY_HAS_MERGED_EPISODES, true);
-        }
-
-        // success, set last sync time to now
-        editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, currentTime);
-        editor.apply();
-
-        return UpdateResult.SUCCESS;
     }
 
     /**

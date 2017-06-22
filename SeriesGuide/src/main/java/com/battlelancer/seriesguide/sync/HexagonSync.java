@@ -178,9 +178,7 @@ public class HexagonSync {
         }
 
         // add new movies with the just downloaded properties
-        SgSyncAdapter.UpdateResult result = movieTools
-                .addMovies(newCollectionMovies, newWatchlistMovies);
-        boolean addingSuccessful = result == SgSyncAdapter.UpdateResult.SUCCESS;
+        boolean addingSuccessful = movieTools.addMovies(newCollectionMovies, newWatchlistMovies);
         if (!hasMergedMovies) {
             // ensure all missing movies from Hexagon are added before merge is complete
             if (!addingSuccessful) {
