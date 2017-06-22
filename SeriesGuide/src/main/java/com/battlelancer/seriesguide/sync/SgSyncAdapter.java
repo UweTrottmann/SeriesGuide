@@ -40,6 +40,7 @@ import timber.log.Timber;
  */
 public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
+    /** Should never be outside 4-32 so back-off works as expected. */
     private static final int SYNC_INTERVAL_MINIMUM_MINUTES = 5;
 
     public enum UpdateResult {
@@ -158,37 +159,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             // update next episodes for all shows
             TaskManager.getInstance().tryNextEpisodeUpdateTask(getContext());
 
-            // store time of update, set retry counter on failure
-            if (resultCode == UpdateResult.SUCCESS) {
-                // we were successful, reset failed counter
-                prefs.edit()
-                        .putLong(UpdateSettings.KEY_LASTUPDATE, currentTime)
-                        .putInt(UpdateSettings.KEY_FAILED_COUNTER, 0)
-                        .apply();
-            } else {
-                int failed = UpdateSettings.getFailedNumberOfUpdates(getContext());
-
-                /*
-                 * Back off by 2**(failure + 2) * minutes. Purposely set a fake
-                 * last update time, because the next update will be triggered
-                 * UPDATE_INTERVAL minutes after the last update time. This way
-                 * we can trigger it earlier (4min up to 32min).
-                 */
-                long fakeLastUpdateTime;
-                if (failed < 4) {
-                    fakeLastUpdateTime = currentTime
-                            - ((SYNC_INTERVAL_MINIMUM_MINUTES - (int) Math.pow(2, failed + 2))
-                            * DateUtils.MINUTE_IN_MILLIS);
-                } else {
-                    fakeLastUpdateTime = currentTime;
-                }
-
-                failed += 1;
-                prefs.edit()
-                        .putLong(UpdateSettings.KEY_LASTUPDATE, fakeLastUpdateTime)
-                        .putInt(UpdateSettings.KEY_FAILED_COUNTER, failed)
-                        .apply();
-            }
+            updateTimeAndFailedCounter(prefs, currentTime, resultCode);
         }
 
         // There could have been new episodes added after an update
@@ -196,6 +167,43 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         Timber.i("Syncing: %s", resultCode.toString());
         progress.publishFinished();
+    }
+
+    private void updateTimeAndFailedCounter(SharedPreferences prefs, long currentTime,
+            UpdateResult resultCode) {
+        // store time of update, set retry counter on failure
+        if (resultCode == UpdateResult.SUCCESS) {
+            // we were successful, reset failed counter
+            prefs.edit()
+                    .putLong(UpdateSettings.KEY_LASTUPDATE, currentTime)
+                    .putInt(UpdateSettings.KEY_FAILED_COUNTER, 0)
+                    .apply();
+        } else {
+            int failed = UpdateSettings.getFailedNumberOfUpdates(getContext());
+
+            /*
+             * Back off by 2**(failure + 2) * minutes. Purposely set a fake
+             * last update time, because the next update will be triggered
+             * SYNC_INTERVAL_MINIMUM_MINUTES minutes after the last update time.
+             * This will trigger sync earlier/later than the default (5min) interval
+              * (4min, 8min, 16min and 32min).
+             */
+            long fakeLastUpdateTime;
+            if (failed < 4) {
+                // 1, -3, -9, -27
+                int posOrNegInterval = SYNC_INTERVAL_MINIMUM_MINUTES
+                        - (int) Math.pow(2, failed + 2);
+                fakeLastUpdateTime = currentTime - (posOrNegInterval * DateUtils.MINUTE_IN_MILLIS);
+            } else {
+                fakeLastUpdateTime = currentTime;
+            }
+
+            failed += 1;
+            prefs.edit()
+                    .putLong(UpdateSettings.KEY_LASTUPDATE, fakeLastUpdateTime)
+                    .putInt(UpdateSettings.KEY_FAILED_COUNTER, failed)
+                    .apply();
+        }
     }
 
     /**
