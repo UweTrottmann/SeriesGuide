@@ -13,10 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.TextTools;
-import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.ViewTools;
-import java.util.Date;
 
 /**
  * Base adapter for the show item layout.
@@ -66,17 +63,6 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
                     .getQuantityString(R.plurals.remaining_episodes_plural, unwatched, unwatched));
         } else {
             textView.setText(null);
-        }
-    }
-
-    static String buildNetworkAndTimeString(Context context, int time, int weekday,
-            String timeZone, String country, String network) {
-        if (time != -1) {
-            Date release = TimeTools.getShowReleaseDateTime(context,
-                    TimeTools.getShowReleaseTime(time), weekday, timeZone, country, network);
-            return TextTools.networkAndTime(context, release, weekday, network);
-        } else {
-            return TextTools.networkAndTime(context, null, weekday, network);
         }
     }
 

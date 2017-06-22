@@ -142,11 +142,12 @@ public class TimeTools {
         return RELEASE_WEEKDAY_UNKNOWN;
     }
 
-    public static boolean isSameWeekDay(Date episodeDateTime, Date showDateTime, int weekDay) {
+    public static boolean isSameWeekDay(Date episodeDateTime, @Nullable Date showDateTime,
+            int weekDay) {
         if (weekDay == RELEASE_WEEKDAY_DAILY) {
             return true;
         }
-        if (weekDay == RELEASE_WEEKDAY_UNKNOWN) {
+        if (showDateTime == null || weekDay == RELEASE_WEEKDAY_UNKNOWN) {
             return false;
         }
 
@@ -239,15 +240,16 @@ public class TimeTools {
      * delays between time zones (e.g. in the United States) and DST. Adjusts for user-defined
      * offset.
      *
-     * @param time See {@link #getShowReleaseTime(int)}.
+     * @param releaseTime The {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows#RELEASE_TIME}.
      * @return The date is today or on the next day matching the given week day.
      */
-    public static Date getShowReleaseDateTime(@NonNull Context context, @NonNull LocalTime time,
+    public static Date getShowReleaseDateTime(@NonNull Context context, int releaseTime,
             int weekDay, @Nullable String timeZone, @Nullable String country,
             @Nullable String network) {
         // determine show time zone (falls back to America/New_York)
         ZoneId showTimeZone = getDateTimeZone(timeZone);
 
+        LocalTime time = TimeTools.getShowReleaseTime(releaseTime);
         ZonedDateTime dateTime = getShowReleaseDateTime(time, weekDay,
                 showTimeZone, country, network, Clock.system(showTimeZone));
 

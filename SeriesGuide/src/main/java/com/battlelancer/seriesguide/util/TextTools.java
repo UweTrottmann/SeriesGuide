@@ -143,7 +143,7 @@ public class TextTools {
      * Builds a network + release time string for a show formatted like "Network · Tue 08:00 PM".
      */
     @NonNull
-    public static String networkAndTime(Context context, Date release, int weekDay,
+    public static String networkAndTime(Context context, @Nullable Date release, int weekDay,
             @Nullable String network) {
         if (release != null) {
             String dayString = TimeTools.formatToLocalDayOrDaily(context, release, weekDay);

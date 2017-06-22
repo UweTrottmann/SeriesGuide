@@ -43,11 +43,10 @@ public class ShowsAdapter extends BaseShowsAdapter {
         String timeZone = cursor.getString(Query.RELEASE_TIMEZONE);
         String country = cursor.getString(Query.RELEASE_COUNTRY);
         String network = cursor.getString(Query.NETWORK);
-        // FIXME get ZonedDateTime to avoid conversion for isSameWeekDay
         Date releaseTimeShow;
         if (time != -1) {
-            releaseTimeShow = TimeTools.getShowReleaseDateTime(context,
-                    TimeTools.getShowReleaseTime(time), weekDay, timeZone, country, network);
+            releaseTimeShow = TimeTools.getShowReleaseDateTime(context, time, weekDay, timeZone,
+                    country, network);
         } else {
             releaseTimeShow = null;
         }
@@ -62,24 +61,20 @@ public class ShowsAdapter extends BaseShowsAdapter {
         } else {
             viewHolder.episode.setText(fieldValue);
 
-            long releaseTimeNext = cursor.getLong(Query.NEXTAIRDATEMS);
-            // FIXME get ZonedDateTime to avoid conversion for isSameWeekDay
-            Date releaseTimeEpisode = TimeTools.applyUserOffset(context, releaseTimeNext);
-            // FIXME: test getting display exact date value in constructor (test changing in settings)
+            Date releaseTimeEpisode = TimeTools.applyUserOffset(context,
+                    cursor.getLong(Query.NEXTAIRDATEMS));
             boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
             String dateTime = displayExactDate ?
                     TimeTools.formatToLocalDateShort(context, releaseTimeEpisode)
                     : TimeTools.formatToLocalRelativeTime(context, releaseTimeEpisode);
-            String episodeTimeText;
             if (TimeTools.isSameWeekDay(releaseTimeEpisode, releaseTimeShow, weekDay)) {
                 // just display date
-                episodeTimeText = dateTime;
+                viewHolder.episodeTime.setText(dateTime);
             } else {
                 // display date and explicitly day
-                episodeTimeText = context.getString(R.string.format_date_and_day,
-                        dateTime, TimeTools.formatToLocalDay(releaseTimeEpisode));
+                viewHolder.episodeTime.setText(context.getString(R.string.format_date_and_day,
+                        dateTime, TimeTools.formatToLocalDay(releaseTimeEpisode)));
             }
-            viewHolder.episodeTime.setText(episodeTimeText);
         }
 
         setRemainingCount(viewHolder.remainingCount, cursor.getInt(Query.UNWATCHED_COUNT));
@@ -111,11 +106,10 @@ public class ShowsAdapter extends BaseShowsAdapter {
                 SeriesGuideContract.Shows.STATUS,
                 SeriesGuideContract.Shows.NEXTEPISODE,
                 SeriesGuideContract.Shows.NEXTTEXT, // 10
-                SeriesGuideContract.Shows.NEXTAIRDATETEXT,
+                SeriesGuideContract.Shows.NEXTAIRDATEMS,
                 SeriesGuideContract.Shows.FAVORITE,
                 SeriesGuideContract.Shows.HIDDEN,
-                SeriesGuideContract.Shows.UNWATCHED_COUNT,
-                SeriesGuideContract.Shows.NEXTAIRDATEMS // 15
+                SeriesGuideContract.Shows.UNWATCHED_COUNT // 14
         };
 
         int _ID = 0;
@@ -129,10 +123,9 @@ public class ShowsAdapter extends BaseShowsAdapter {
         int STATUS = 8;
         int NEXTEPISODE = 9;
         int NEXTTEXT = 10;
-        int NEXTAIRDATETEXT = 11;
+        int NEXTAIRDATEMS = 11;
         int FAVORITE = 12;
         int HIDDEN = 13;
         int UNWATCHED_COUNT = 14;
-        int NEXTAIRDATEMS = 15;
     }
 }

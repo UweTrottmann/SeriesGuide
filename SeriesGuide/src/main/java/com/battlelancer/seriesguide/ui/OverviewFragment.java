@@ -875,7 +875,7 @@ public class OverviewFragment extends Fragment implements
         if (releaseTime != -1) {
             int weekDay = show.getInt(ShowQuery.SHOW_RELEASE_WEEKDAY);
             Date release = TimeTools.getShowReleaseDateTime(getActivity(),
-                    TimeTools.getShowReleaseTime(releaseTime),
+                    releaseTime,
                     weekDay,
                     show.getString(ShowQuery.SHOW_RELEASE_TIMEZONE),
                     show.getString(ShowQuery.SHOW_RELEASE_COUNTRY),

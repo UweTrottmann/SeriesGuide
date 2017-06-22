@@ -308,7 +308,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         SpannableStringBuilder timeAndNetworkText = new SpannableStringBuilder();
         if (show.release_time != -1) {
             Date release = TimeTools.getShowReleaseDateTime(getActivity(),
-                    TimeTools.getShowReleaseTime(show.release_time),
+                    show.release_time,
                     show.release_weekday,
                     show.release_timezone,
                     show.country,
