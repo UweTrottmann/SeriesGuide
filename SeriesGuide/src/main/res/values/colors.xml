@@ -50,14 +50,4 @@
     <color name="protection_dark">#66000000</color>
     <color name="protection_light">#12000000</color>
 
-    <integer-array name="progressBarColors">
-        <item>@color/accent_primary</item>
-        <item>@color/white</item>
-    </integer-array>
-
-    <integer-array name="progressBarColorsAndroidDark">
-        <item>@color/background</item>
-        <item>@color/white</item>
-    </integer-array>
-
 </resources>

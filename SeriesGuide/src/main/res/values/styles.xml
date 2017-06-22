@@ -181,19 +181,6 @@
         <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
     </style>
 
-    <!-- Smooth Progress Bar -->
-    <style name="Widget.SeriesGuide.SmoothProgressBar" parent="SmoothProgressBar">
-        <item name="android:indeterminate">true</item>
-        <item name="spb_sections_count">4</item>
-        <item name="spb_speed">1.0</item>
-        <item name="spb_colors">?attr/colorsProgressBar</item>
-        <item name="spb_stroke_width">4dp</item>
-        <item name="spb_stroke_separator_length">0dp</item>
-        <item name="spb_reversed">false</item>
-        <item name="spb_mirror_mode">false</item>
-        <item name="spb_interpolator">spb_interpolator_linear</item>
-    </style>
-
     <!-- TextView -->
     <style name="Widget.SeriesGuide.TextView" />
 

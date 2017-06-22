@@ -21,9 +21,6 @@
     <attr name="sgColorNavDrawerText" format="reference" />
     <attr name="sgColorShadow" format="reference|color" />
 
-    <!-- Color Arrays -->
-    <attr name="colorsProgressBar" format="reference" />
-
     <!-- Drawables -->
     <attr name="drawableBackgroundGradient" format="reference" />
     <attr name="drawableCancel" format="reference" />

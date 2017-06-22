@@ -159,7 +159,6 @@ dependencies {
     compile("com.crashlytics.sdk.android:crashlytics:${versions.crashlytics}@aar") {
         transitive = true
     }
-    compile 'com.github.castorflex.smoothprogressbar:library:1.1.0'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     compile "com.google.code.gson:gson:${versions.gson}"
     compile "com.jakewharton.threetenabp:threetenabp:${versions.threetenABP}"
