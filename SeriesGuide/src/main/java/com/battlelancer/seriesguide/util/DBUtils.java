@@ -658,7 +658,7 @@ public class DBUtils {
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         final String currentTime = String.valueOf(TimeTools.getCurrentTime(context));
         final boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
-        DisplaySettings.preventSpoilers(context);
+        boolean preventSpoilers = DisplaySettings.preventSpoilers(context);
         for (String[] show : showsLastEpisodes) {
             // STEP 1: get last watched episode details
             final String showTvdbId = show[0];
@@ -710,7 +710,7 @@ public class DBUtils {
                 final String nextEpisodeString;
                 int seasonNumber = next.getInt(NextEpisodesQuery.SEASON);
                 int episodeNumber = next.getInt(NextEpisodesQuery.NUMBER);
-                if (DisplaySettings.preventSpoilers(context)) {
+                if (preventSpoilers) {
                     // just the number, like '0x12'
                     nextEpisodeString = TextTools.getEpisodeNumber(context,
                             seasonNumber,
