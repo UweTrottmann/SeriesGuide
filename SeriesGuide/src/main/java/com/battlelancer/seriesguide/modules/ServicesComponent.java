@@ -45,8 +45,8 @@ public interface ServicesComponent {
     Sync traktSync();
     Users traktUsers();
     TheTvdbEpisodes tvdbEpisodes();
-
     TvdbTools tvdbTools();
+
     void inject(AddShowTask addShowTask);
     void inject(ConnectTraktTask connectTraktTask);
     void inject(SgSyncAdapter sgSyncAdapter);
