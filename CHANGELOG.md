@@ -9,6 +9,21 @@ Version 38
 ----------
 *(in development)*
 
+#### 38-beta2
+*(2017-06-23)*
+
+* 🔧 SeriesGuide Cloud and trakt account screens display available features and sync status.
+* 🔧 Simplified season info text, does not say all watched if none watched.
+* 🔧 Enable favorite (star) button of list items.
+* 🔧 In show list, do not display day of episode if it is the same as the regular release day.
+* 🔧 Skip TheTVDB sync after 3 consecutive timeouts.
+* 🔧 Dim episodes until actual release, matching season info text.
+* 🔨 Drop-down to change seasons contains empty or duplicate seasons.
+* 🔨 Last watched times not updated correctly when syncing with Cloud and show is not on device.
+* 🔨 Do not move Hulu shows released at midnight by one day.
+* 🔨 Wrong format of release date and time in Arabic.
+* 📝 Latest translations from crowdin.
+
 #### 38-beta1
 *(2017-05-26)*
 
