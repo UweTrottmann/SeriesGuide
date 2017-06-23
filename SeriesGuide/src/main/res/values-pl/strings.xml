@@ -161,7 +161,7 @@
   <string name="calendar_settings">Ustawienia kalendarza</string>
   <string name="only_favorites">Tylko ulubione seriale</string>
   <string name="calendar_only_collected">Tylko odcinki w kolekcji</string>
-  <string name="pref_infinite_scrolling">Przewijaj kalendarz</string>
+  <string name="pref_infinite_scrolling">Cały kalendarz</string>
   <!-- Updating -->
   <string name="update_scheduled">Aktualizowanie&#8230;</string>
   <string name="update_no_connection">Do aktualizacji należy połączyć się z Internetem.</string>

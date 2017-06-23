@@ -159,7 +159,7 @@
   <string name="norecent">Nincsenek mostanában vetített epizódok.</string>
   <string name="calendar_settings">Naptár beállításai</string>
   <string name="only_favorites">Csak kedvenc sorozatok</string>
-  <string name="calendar_only_collected">Only collected episodes</string>
+  <string name="calendar_only_collected">Csak begyűjtött epizódok</string>
   <string name="pref_infinite_scrolling">Végtelen naptár</string>
   <!-- Updating -->
   <string name="update_scheduled">Frissítés&#8230;</string>
@@ -286,7 +286,7 @@
   <string name="trakt_success">Továbbítva a trakt felé.</string>
   <string name="trakt_error_credentials">Hiba történt. Ellenőrizd a megadott adatokat és próbáld újra.</string>
   <string name="trakt_error_not_exists">(Még) nem található a trakton. Próbálkozz később.</string>
-  <string name="trakt_notice_not_exists">(Még) nem követhető nyomon a traktal.</string>
+  <string name="trakt_notice_not_exists">(Még) nem követhető nyomon a trakttal.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt fiók</string>
   <string name="trakt_connect_instructions">A következő képernyőn lépj be a traktba, vagy hozz létre egy új fiókot. Majd engedélyezd a SeriesGuide-nak a trakt fiókodhoz való hozzáférését.</string>
