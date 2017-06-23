@@ -108,7 +108,7 @@ public class ListItemsAdapter extends BaseShowsAdapter {
                 viewHolder.timeAndNetwork.setText(R.string.episode);
                 viewHolder.episode.setText(TextTools.getNextEpisodeString(context,
                         cursor.getInt(Query.SHOW_NEXTTEXT),
-                        cursor.getInt(Query.SHOW_NEXT_DATE_OR_EPISODE_NUMBER),
+                        cursor.getInt(Query.SHOW_NEXTEPISODE_OR_EPISODE_NUMBER),
                         cursor.getString(Query.ITEM_TITLE)));
                 long releaseTime = cursor.getLong(Query.SHOW_OR_EPISODE_RELEASE_TIME);
                 if (releaseTime != -1) {
@@ -172,7 +172,7 @@ public class ListItemsAdapter extends BaseShowsAdapter {
                 Shows.RELEASE_COUNTRY,
                 Shows.STATUS,
                 Shows.NEXTTEXT,
-                Shows.NEXTAIRDATETEXT, // 15
+                Shows.NEXTEPISODE, // 15
                 Shows.NEXTAIRDATEMS,
                 Shows.FAVORITE,
                 Shows.UNWATCHED_COUNT // 18
@@ -192,7 +192,7 @@ public class ListItemsAdapter extends BaseShowsAdapter {
         int SHOW_RELEASE_COUNTRY = 12;
         int SHOW_STATUS = 13;
         int SHOW_NEXTTEXT = 14;
-        int SHOW_NEXT_DATE_OR_EPISODE_NUMBER = 15;
+        int SHOW_NEXTEPISODE_OR_EPISODE_NUMBER = 15;
         int SHOW_NEXT_DATE_MS = 16;
         int SHOW_FAVORITE = 17;
         int SHOW_UNWATCHED_COUNT = 18;

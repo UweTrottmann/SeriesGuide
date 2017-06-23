@@ -224,6 +224,8 @@ public class SeriesGuideContract {
          * Example: "Apr 2 (Mon)"
          * Default: ""
          * </pre>
+         *
+         * @deprecated Use {@link #NEXTAIRDATEMS} and format.
          */
         String NEXTAIRDATETEXT = "series_nextairdatetext";
 

@@ -255,7 +255,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + Shows.OVERVIEW + ","
                 + Shows.RELEASE_TIME + ","
                 + Shows.NEXTTEXT + ","
-                + Shows.NEXTAIRDATETEXT + ","
+                + Shows.NEXTEPISODE + ","
                 + Shows.NEXTAIRDATEMS;
 
         String SEASONS_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + ","
@@ -263,7 +263,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + Seasons.COMBINED + " as " + Shows.OVERVIEW + ","
                 + Shows.RELEASE_TIME + ","
                 + Shows.NEXTTEXT + ","
-                + Shows.NEXTAIRDATETEXT + ","
+                + Shows.NEXTEPISODE + ","
                 + Shows.NEXTAIRDATEMS;
 
         String EPISODES_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + ","
@@ -271,7 +271,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + Episodes.TITLE + " as " + Shows.OVERVIEW + ","
                 + Episodes.FIRSTAIREDMS + " as " + Shows.RELEASE_TIME + ","
                 + Episodes.SEASON + " as " + Shows.NEXTTEXT + ","
-                + Episodes.NUMBER + " as " + Shows.NEXTAIRDATETEXT + ","
+                + Episodes.NUMBER + " as " + Shows.NEXTEPISODE + ","
                 + Episodes.FIRSTAIREDMS + " as " + Shows.NEXTAIRDATEMS;
     }
 

@@ -32,7 +32,6 @@ import com.battlelancer.seriesguide.settings.CalendarSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.CalendarFragment.CalendarType;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -470,7 +469,6 @@ public class DBUtils {
             values.put(Shows.NEXTEPISODE, "");
             values.put(Shows.NEXTTEXT, "");
             values.put(Shows.NEXTAIRDATEMS, UNKNOWN_NEXT_RELEASE_DATE);
-            values.put(Shows.NEXTAIRDATETEXT, "");
             values.put(Shows.LASTWATCHEDID, 0);
             return ContentProviderOperation.newInsert(Shows.CONTENT_URI).withValues(values).build();
         } else {
@@ -657,7 +655,6 @@ public class DBUtils {
         final ContentValues newShowValues = new ContentValues();
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         final String currentTime = String.valueOf(TimeTools.getCurrentTime(context));
-        final boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
         boolean preventSpoilers = DisplaySettings.preventSpoilers(context);
         for (String[] show : showsLastEpisodes) {
             // STEP 1: get last watched episode details
@@ -725,27 +722,17 @@ public class DBUtils {
 
                 // next release date text, e.g. "in 15 mins (Fri)"
                 long releaseTimeNext = next.getLong(NextEpisodesQuery.FIRST_RELEASE_MS);
-                Date actualRelease = TimeTools.applyUserOffset(context, releaseTimeNext);
-                String dateTime = displayExactDate ?
-                        TimeTools.formatToLocalDateShort(context, actualRelease)
-                        : TimeTools.formatToLocalRelativeTime(context, actualRelease);
-                final String nextReleaseDateString = context.getString(
-                        R.string.format_date_and_day,
-                        dateTime,
-                        TimeTools.formatToLocalDay(actualRelease));
 
                 nextEpisodeTvdbId = next.getInt(NextEpisodesQuery.ID);
                 newShowValues.put(Shows.NEXTEPISODE, nextEpisodeTvdbId);
                 newShowValues.put(Shows.NEXTAIRDATEMS, releaseTimeNext);
                 newShowValues.put(Shows.NEXTTEXT, nextEpisodeString);
-                newShowValues.put(Shows.NEXTAIRDATETEXT, nextReleaseDateString);
             } else {
                 // no next episode, set empty values
                 nextEpisodeTvdbId = 0;
                 newShowValues.put(Shows.NEXTEPISODE, "");
                 newShowValues.put(Shows.NEXTAIRDATEMS, UNKNOWN_NEXT_RELEASE_DATE);
                 newShowValues.put(Shows.NEXTTEXT, "");
-                newShowValues.put(Shows.NEXTAIRDATETEXT, "");
             }
             next.close();
 
