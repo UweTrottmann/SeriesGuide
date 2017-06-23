@@ -20,6 +20,7 @@
   <string name="season_number">Sezonul %d</string>
   <string name="seasons">Sezoane</string>
   <string name="specialseason">Episoade speciale</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">Prezentare generală</string>
   <string name="description_poster">Posterul emisiunii</string>
@@ -72,13 +73,11 @@
     <item quantity="other">%d replies</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">Absolut</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Data de lansare</string>
   <string name="episode_firstaired_unknown">Data de lansare necunoscută</string>
   <string name="episode_dvdnumber">Episod DVD</string>
   <string name="original_release">Release original</string>
-  <string name="show_on_network">pe %s</string>
   <string name="show_genres">Genuri</string>
   <string name="show_contentrating">Punctajul conţinutului</string>
   <string name="show_release_times">Ora de lansare</string>
@@ -95,7 +94,6 @@
   <string name="today">astăzi</string>
   <string name="now">acum</string>
   <string name="daily">Zilnic</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
   <!-- Flagging -->
   <string name="mark_all">Toate au fost vizionate</string>
@@ -168,11 +166,6 @@
   <string name="update_inprogress">O actualizare este în progres, încercaţi din nou mai târziu.</string>
   <!-- Seasons -->
   <string name="season_allwatched">Toate episoadele au fost vizionate</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="few">%d episodes not watched</item>
-    <item quantity="other">%d episodes not watched</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d other episode</item>
     <item quantity="few">%d other episodes</item>
@@ -263,13 +256,16 @@
     <item quantity="few">%d minutes</item>
     <item quantity="other">%d minutes</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental</string>
-  <string name="hexagon_description">Conectează-te la Cloud pentru a arhiva sau a sincroniza emisiunile și filmele.</string>
-  <string name="hexagon_warning_lists">Listele nu sunt incluse.</string>
-  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">Conectare</string>
-  <string name="hexagon_signed_in">Sunteți conectați pe SeriesGuide cloud.</string>
   <string name="hexagon_signout">Deconectare</string>
   <string name="hexagon_setup_incomplete">Setarea Series Guide cloud nu a putut fi finalizată.</string>
   <string name="hexagon_setup_fail_auth">Contul dumneavoastră de Google nu poate fi verificat.</string>
@@ -297,18 +293,13 @@
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">Cont trakt</string>
-  <string name="trakt_connect_instructions">Conectează-te sau crează un cont trakt pe următorul ecran. Apoi permite SeriesGuide să acceseze contul trakt.</string>
   <string name="connect_trakt">Conectaţi trakt</string>
   <string name="trakt_reconnect">Conectează SeriesGuide cu trakt</string>
   <string name="trakt_reconnect_details">Verifică certificările trakt</string>
-  <string name="username">Nume de utilizator</string>
   <string name="waitplease">Un moment, vă rugăm&#8230;</string>
   <string name="connect">Conectează-te</string>
   <string name="disconnect">Deconectează-te</string>
   <string name="use_integrated_browser">Use integrated browser</string>
-  <string name="connect_trakt_done">Conectat la trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide va sincroniza emisiunile și filmele de pe dispozitivul acesta cu trakt. Acest lucru poate dura ceva timp.</string>
-  <string name="add_trakt_shows">Adaugă emisiuni din biblioteca trakt:</string>
   <string name="show_library">Arată biblioteca dvs. trakt</string>
   <string name="about_trakt">trakt ajută la păstrarea unei evidenţe a emisiunilor TV şi a filmelor la care te uiţi. <a href="https://trakt.tv">Află mai multe</a></string>
   <!-- trakt ratings -->
@@ -452,7 +443,6 @@
   <string name="upcoming_show">%s urmează</string>
   <string name="upcoming_episodes">Urmează episoade noi</string>
   <string name="upcoming_episodes_number">%s episoade noi</string>
-  <string name="upcoming_show_detailed">%1$s pe %2$s</string>
   <string name="more">%d mai mult</string>
   <string name="upcoming_display">Selectați să se afișeze serialele următoare</string>
   <string name="pref_notifications">Notificări</string>

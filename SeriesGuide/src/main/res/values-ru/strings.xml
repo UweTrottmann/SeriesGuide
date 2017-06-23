@@ -20,6 +20,7 @@
   <string name="season_number">Сезон %d</string>
   <string name="seasons">Сезоны</string>
   <string name="specialseason">Особые выпуски</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">Обзор</string>
   <string name="description_poster">Показать постер</string>
@@ -72,13 +73,11 @@
     <item quantity="other">%d ответа(ов)</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">НОМЕР</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Дата выхода</string>
   <string name="episode_firstaired_unknown">Дата выхода неизвестна</string>
   <string name="episode_dvdnumber">DVD эпизод</string>
   <string name="original_release">Оригинальное издание</string>
-  <string name="show_on_network">на %s</string>
   <string name="show_genres">Жанры</string>
   <string name="show_contentrating">Возрастные ограничения</string>
   <string name="show_release_times">Время выпуска</string>
@@ -95,7 +94,6 @@
   <string name="today">сегодня</string>
   <string name="now">сейчас</string>
   <string name="daily">Ежедневно</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s минут</string>
   <!-- Flagging -->
   <string name="mark_all">Просмотрено всё</string>
@@ -168,11 +166,6 @@
   <string name="update_inprogress">Выполняется обновление, попробуйте еще раз позже.</string>
   <!-- Seasons -->
   <string name="season_allwatched">Все эпизоды просмотрены</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d эпизод не просмотрен</item>
-    <item quantity="few">%d эпизодов не просмотрено</item>
-    <item quantity="other">%d эпизодов не просмотрено</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d other episode</item>
     <item quantity="few">%d other episodes</item>
@@ -263,13 +256,16 @@
     <item quantity="few">%d минуты</item>
     <item quantity="other">%d минут</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Экспериментальный!</string>
-  <string name="hexagon_description">Подключитесь к облаку для резервного копирования и синхронизации ваших сериалов и фильмов.</string>
-  <string name="hexagon_warning_lists">Списки не включены.</string>
-  <string name="hexagon_warning_trakt">Пока подключен SeriesGuide Cloud, синхронизация с trakt будет отключена.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">Войти</string>
-  <string name="hexagon_signed_in">Вы подключены к SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Выйти</string>
   <string name="hexagon_setup_incomplete">Настройка SeriesGuide Cloud не была завершена.</string>
   <string name="hexagon_setup_fail_auth">Ваш Google аккаунт не проверен.</string>
@@ -297,18 +293,13 @@
   <string name="trakt_notice_not_exists">На данный не может быть отслежен с помощью trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">Аккаунт trakt</string>
-  <string name="trakt_connect_instructions">На следующей странице войдите в свой аккаунт на trakt или создайте новый. После этого, предоставьте SeriesGuide доступ к вашему аккаунту на trakt.</string>
   <string name="connect_trakt">Подключение trakt</string>
   <string name="trakt_reconnect">Подключите SeriesGuide к trakt</string>
   <string name="trakt_reconnect_details">Проверте учетные данные в trakt</string>
-  <string name="username">Имя пользователя</string>
   <string name="waitplease">Пожалуйста, подождите&#8230;</string>
   <string name="connect">Подключиться</string>
   <string name="disconnect">Отключиться</string>
   <string name="use_integrated_browser">Использовать встроенный браузер</string>
-  <string name="connect_trakt_done">Подключено к trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide теперь будет синхронизировать сериалы и фильмы на этом устройстве с trakt. Это может занимать некоторое время.</string>
-  <string name="add_trakt_shows">Добавьте сериалы из вашей библиотеки на trakt:</string>
   <string name="show_library">Показать вашу библиотеку на trakt.tv</string>
   <string name="about_trakt">Trakt помогает вести учет, какие сериалы и фильмы Вы смотрите. <a href="http://trakt.tv">Узнать больше</a></string>
   <!-- trakt ratings -->
@@ -452,7 +443,6 @@
   <string name="upcoming_show">%s выпущено</string>
   <string name="upcoming_episodes">Выходят новые эпизоды</string>
   <string name="upcoming_episodes_number">%s новый(х) эпизод(ов)</string>
-  <string name="upcoming_show_detailed">%1$s на %2$s</string>
   <string name="more">%d больше</string>
   <string name="upcoming_display">Выберите, чтобы показать предстоящие передачи</string>
   <string name="pref_notifications">Уведомления</string>

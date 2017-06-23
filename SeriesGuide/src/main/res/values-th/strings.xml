@@ -20,6 +20,7 @@
   <string name="season_number">ซีซั่น %d</string>
   <string name="seasons">ซีซั่น</string>
   <string name="specialseason">ตอนพิเศษ</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">ภาพรวม</string>
   <string name="description_poster">ใบปิดซีรีส์</string>
@@ -70,13 +71,11 @@
     <item quantity="other">%d ตอบกลับ</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">ตอนที่</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">วันที่ออกฉาย</string>
   <string name="episode_firstaired_unknown">ไม่ทราบวันที่ออกฉาย</string>
   <string name="episode_dvdnumber">ตอนใน DVD</string>
   <string name="original_release">วันที่ออกดั้งเดิม</string>
-  <string name="show_on_network">บน %s</string>
   <string name="show_genres">ประเภท</string>
   <string name="show_contentrating">การจัดอันดับเนื้อหา</string>
   <string name="show_release_times">เวลาออกฉาย</string>
@@ -93,7 +92,6 @@
   <string name="today">วันนี้</string>
   <string name="now">ขณะนี้</string>
   <string name="daily">ทุกวัน</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s นาที</string>
   <!-- Flagging -->
   <string name="mark_all">ดูทั้งหมดแล้ว</string>
@@ -166,9 +164,6 @@
   <string name="update_inprogress">การอัปเดตอยู่ระหว่างดำเนินการ ลองอีกครั้งภายหลัง</string>
   <!-- Seasons -->
   <string name="season_allwatched">ดูครบทุกตอนแล้ว</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="other">%d ตอนยังไม่ได้ดู</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="other">%d ตอนเพิ่มเติม</item>
   </plurals>
@@ -247,13 +242,16 @@
   <plurals name="minutes_plural">
     <item quantity="other">%d นาที</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">การทดลอง!</string>
-  <string name="hexagon_description">เชื่อมต่อคลาวด์เพื่อสำรองและซิงค์ซีรีส์และภาพยนตร์ของคุณ</string>
-  <string name="hexagon_warning_lists">ไม่รวมรายการ</string>
-  <string name="hexagon_warning_trakt">ขณะที่เชื่อมต่อ SeriesGuide Cloud อยู่, การซิงค์กับ trakt จะถูกปิดใช้งาน</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">เข้าสู่ระบบ</string>
-  <string name="hexagon_signed_in">คุณเชื่อมต่อกับ SeriesGuide Cloud แล้ว</string>
   <string name="hexagon_signout">ออกจากระบบ</string>
   <string name="hexagon_setup_incomplete">การตั้งค่า SeriesGuide Cloud ไม่เสร็จสมบูรณ์</string>
   <string name="hexagon_setup_fail_auth">ยังไม่ได้ตรวจสอบบัญชี Google ของคุณ</string>
@@ -281,18 +279,13 @@
   <string name="trakt_notice_not_exists">(ยัง)ไม่สามารถติดตามด้วย trakt</string>
   <!-- Connect trakt -->
   <string name="trakt_account">บัญชี trakt</string>
-  <string name="trakt_connect_instructions">บนหน้าจอถัดไป เข้าสู่ระบบ trakt หรือสร้างบัญชีใหม่ จากนั้นอนุญาตให้ SeriesGuide เข้าถึงบัญชี trakt ของคุณ</string>
   <string name="connect_trakt">เชื่อมต่อ trakt</string>
   <string name="trakt_reconnect">เชื่อมต่อ SeriesGuide กับ trakt</string>
   <string name="trakt_reconnect_details">ตรวจสอบข้อมูล trakt ของคุณ</string>
-  <string name="username">ชื่อผู้ใช้</string>
   <string name="waitplease">ขอเวลาอีกไม่นาน&#8230;</string>
   <string name="connect">เชื่อมต่อ</string>
   <string name="disconnect">เลิกเชื่อมต่อ</string>
   <string name="use_integrated_browser">ใช้เบราว์เซอร์ภายใน</string>
-  <string name="connect_trakt_done">เชื่อมต่อกับ trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide จะซิงค์ซีรีส์และภาพยนตร์บนอุปกรณ์นี้กับ trakt นี่อาจใช้เวลาสักครู่</string>
-  <string name="add_trakt_shows">เพิ่มซีรีส์เพิ่มเติมจากห้องสมุด trakt ของคุณ:</string>
   <string name="show_library">แสดงห้องสมุด trakt ของคุณ</string>
   <string name="about_trakt">trakt ช่วยเก็บบันทึกรายการทีวีและภาพยนตร์ที่คุณกำลังดูอยู่ <a href="https://trakt.tv">เรียนรู้เพิ่มเติม</a></string>
   <!-- trakt ratings -->
@@ -428,7 +421,6 @@
   <string name="upcoming_show">%s กำลังมา</string>
   <string name="upcoming_episodes">ตอนใหม่กำลังมา</string>
   <string name="upcoming_episodes_number">%s ตอนใหม่</string>
-  <string name="upcoming_show_detailed">%1$s บน %2$s</string>
   <string name="more">อื่นๆ อีก %d</string>
   <string name="upcoming_display">เลือกเพื่อแสดงซีรีส์ที่กำลังมา</string>
   <string name="pref_notifications">การแจ้งเตือน</string>

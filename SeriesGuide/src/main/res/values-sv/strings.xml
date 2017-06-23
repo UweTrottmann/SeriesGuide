@@ -21,6 +21,7 @@
   <string name="season_number">Säsong %d</string>
   <string name="seasons">Säsonger</string>
   <string name="specialseason">Specialavsnitt</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">Översikt</string>
   <string name="description_poster">Visa affisch</string>
@@ -72,13 +73,11 @@
     <item quantity="other">%d svar</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">Fullständig</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Utgivningsdatum</string>
   <string name="episode_firstaired_unknown">Utgivningsdatum okänt</string>
   <string name="episode_dvdnumber">DVD-avsnitt</string>
   <string name="original_release">Första utgivning</string>
-  <string name="show_on_network">på %s</string>
   <string name="show_genres">Genrer</string>
   <string name="show_contentrating">Åldersgräns</string>
   <string name="show_release_times">Visa utgivningstider</string>
@@ -95,7 +94,6 @@
   <string name="today">idag</string>
   <string name="now">nu</string>
   <string name="daily">Dagligen</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
   <!-- Flagging -->
   <string name="mark_all">Sett alla</string>
@@ -168,10 +166,6 @@
   <string name="update_inprogress">En uppdatering pågår, försök igen senare.</string>
   <!-- Seasons -->
   <string name="season_allwatched">Alla avsnitt sedda</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d ej sett avsnitt</item>
-    <item quantity="other">%d ej sedda avsnitt</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d annat avsnitt</item>
     <item quantity="other">%d andra avsnitt</item>
@@ -256,13 +250,16 @@
     <item quantity="one">%d minut</item>
     <item quantity="other">%d minuter</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimentelt</string>
-  <string name="hexagon_description">Anslut till molnet för att säkerhetskopiera och synkronisera dina serier och filmer.</string>
-  <string name="hexagon_warning_lists">Listor ingår inte.</string>
-  <string name="hexagon_warning_trakt">Medan SeriesGuide Cloud är ansluten, kommer trakt sync att inaktiveras.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">Logga in</string>
-  <string name="hexagon_signed_in">Du är ansluten till SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Logga ut</string>
   <string name="hexagon_setup_incomplete">Inställning av SeriesGuide Cloud slutfördes inte.</string>
   <string name="hexagon_setup_fail_auth">Ditt Google-konto stämmer inte.</string>
@@ -290,18 +287,13 @@
   <string name="trakt_notice_not_exists">Kan inte (ännu) följas med trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt-konto</string>
-  <string name="trakt_connect_instructions">På nästa skärm loggar du in på trakt eller skapar ett nytt konto. Ge sedan SeriesGuide åtkomst till ditt trakt-konto.</string>
   <string name="connect_trakt">Anslut till trakt</string>
   <string name="trakt_reconnect">Anslut SeriesGuide till trakt</string>
   <string name="trakt_reconnect_details">Kontrollera dina inloggningsuppgifter för trakt</string>
-  <string name="username">Användarnamn</string>
   <string name="waitplease">Ett ögonblick&#8230;</string>
   <string name="connect">Anslut</string>
   <string name="disconnect">Koppla ner</string>
   <string name="use_integrated_browser">Använd inbyggd webbläsare</string>
-  <string name="connect_trakt_done">Ansluten till trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide synkroniserar nu serier och filmer på den här enheten med trakt. Detta kan ta lite tid.</string>
-  <string name="add_trakt_shows">Lägg till serier från ditt trakt-bibliotek:</string>
   <string name="show_library">Visa ditt bibliotek</string>
   <string name="about_trakt">trakt hjälper till att hålla ett register över vilka TV-serier och filmer du ser på. <a href="http://trakt.tv">Lär dig mer</a></string>
   <!-- trakt ratings -->
@@ -441,7 +433,6 @@
   <string name="upcoming_show">%s kommande</string>
   <string name="upcoming_episodes">Nya avsnitt är på väg</string>
   <string name="upcoming_episodes_number">%s nya avsnitt</string>
-  <string name="upcoming_show_detailed">%1$s på %2$s</string>
   <string name="more">%d fler</string>
   <string name="upcoming_display">Välj för att visa kommande serier</string>
   <string name="pref_notifications">Aviseringar</string>

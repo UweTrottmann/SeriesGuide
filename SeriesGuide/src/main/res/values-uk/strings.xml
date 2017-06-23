@@ -20,6 +20,7 @@
   <string name="season_number">Сезон %d</string>
   <string name="seasons">Сезони</string>
   <string name="specialseason">Спец. епізоди</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">Огляд</string>
   <string name="description_poster">Показати постер</string>
@@ -72,13 +73,11 @@
     <item quantity="other">%d відповідей</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">Загалом</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Дата виходу</string>
   <string name="episode_firstaired_unknown">Дата виходу невідома</string>
   <string name="episode_dvdnumber">Серія на DVD</string>
   <string name="original_release">Оригінальне видання</string>
-  <string name="show_on_network">на %s</string>
   <string name="show_genres">Жанри</string>
   <string name="show_contentrating">Рейтинг</string>
   <string name="show_release_times">Дата релізу</string>
@@ -95,7 +94,6 @@
   <string name="today">сьогодні</string>
   <string name="now">Сьогодні</string>
   <string name="daily">Щодня</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s хвилин</string>
   <!-- Flagging -->
   <string name="mark_all">Всі переглянуті</string>
@@ -168,11 +166,6 @@
   <string name="update_inprogress">Оновлення в процесі, спробуйте ще раз пізніше.</string>
   <!-- Seasons -->
   <string name="season_allwatched">Усі серії переглянуті</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="few">%d episodes not watched</item>
-    <item quantity="other">%d episodes not watched</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d other episode</item>
     <item quantity="few">%d other episodes</item>
@@ -263,13 +256,16 @@
     <item quantity="few">%d minutes</item>
     <item quantity="other">%d minutes</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Експериментальна!</string>
-  <string name="hexagon_description">Підключіться до хмари для резервного копіювання і синхронізації серіалів та фільмів.</string>
-  <string name="hexagon_warning_lists">Списки не включено.</string>
-  <string name="hexagon_warning_trakt">При підключенні SeriesGuide Хмари, Тrakt синхронізацію буде вимкнено.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">Увійти</string>
-  <string name="hexagon_signed_in">Ви під\'єднані до хмари SeriesGuide.</string>
   <string name="hexagon_signout">Вийти</string>
   <string name="hexagon_setup_incomplete">Налаштування хмари SeriesGuide не було завершено.</string>
   <string name="hexagon_setup_fail_auth">Твій обліковий запис Google не пройшов перевірку.</string>
@@ -297,18 +293,13 @@
   <string name="trakt_notice_not_exists">Не можна (поки що) відслідкувати на trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt аккаунт</string>
-  <string name="trakt_connect_instructions">У наступному вікні увійдіть у свій trakt аккаунт або створіть новий. Потім дозвольте SeriesGuide доступ до вашого аккаунту на trakt.</string>
   <string name="connect_trakt">Підключитись до trakt</string>
   <string name="trakt_reconnect">Підключити SeriesGuide до trakt</string>
   <string name="trakt_reconnect_details">Перевірте свої облікові дані на trakt</string>
-  <string name="username">Ім\'я користувача</string>
   <string name="waitplease">Зачекайте хвилинку&#8230;</string>
   <string name="connect">Підключитись</string>
   <string name="disconnect">Від\'єднатись</string>
   <string name="use_integrated_browser">Використовувати вбудований браузер</string>
-  <string name="connect_trakt_done">Підключено до trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide зараз синхронізує серіали та фільми на цьому пристрої з trakt.  Це може зайняти деякий час.</string>
-  <string name="add_trakt_shows">Додати ще серіали з бібліотеки trakt:</string>
   <string name="show_library">Показати вашу бібліотеку з trakt</string>
   <string name="about_trakt">trakt допомагає зберігати запис про те які телесеріали та фільми ви дивитеся. <a href="http://trakt.tv">Дізнатись більше</a></string>
   <!-- trakt ratings -->
@@ -452,7 +443,6 @@
   <string name="upcoming_show">%s наближається</string>
   <string name="upcoming_episodes">Виходять нові серії</string>
   <string name="upcoming_episodes_number">%s нових серій</string>
-  <string name="upcoming_show_detailed">%1$s на %2$s</string>
   <string name="more">%d більше</string>
   <string name="upcoming_display">Виберіть для відображення найближчих серіалів</string>
   <string name="pref_notifications">Сповіщення</string>

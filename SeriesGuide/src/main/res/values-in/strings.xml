@@ -20,6 +20,7 @@
   <string name="season_number">Musim %d</string>
   <string name="seasons">Musim</string>
   <string name="specialseason">Episode Khusus</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">Tinjauan</string>
   <string name="description_poster">Poster acara</string>
@@ -70,13 +71,11 @@
     <item quantity="other">%d balasan</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">SEBETULNYA</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Tanggal rilis</string>
   <string name="episode_firstaired_unknown">Tanggal rilis tidak diketahui</string>
   <string name="episode_dvdnumber">Episode DVD</string>
   <string name="original_release">Rilisan asli</string>
-  <string name="show_on_network">di %s</string>
   <string name="show_genres">Genre</string>
   <string name="show_contentrating">Nilai konten</string>
   <string name="show_release_times">Waktu rilis</string>
@@ -93,7 +92,6 @@
   <string name="today">hari ini</string>
   <string name="now">sekarang</string>
   <string name="daily">Harian</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s menit</string>
   <!-- Flagging -->
   <string name="mark_all">Ditonton semua</string>
@@ -166,9 +164,6 @@
   <string name="update_inprogress">Sebuah perbaruan sedang berlangsung, coba lagi nanti.</string>
   <!-- Seasons -->
   <string name="season_allwatched">Semua episode ditonton</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="other">%d episode belum di tonton</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="other">%d episode lainnya</item>
   </plurals>
@@ -247,13 +242,16 @@
   <plurals name="minutes_plural">
     <item quantity="other">%d menit</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimentasi</string>
-  <string name="hexagon_description">Hubungkan ke cadangan awan dan sinkronisasi acara dan filmmu.</string>
-  <string name="hexagon_warning_lists">Daftar tidak termasuk.</string>
-  <string name="hexagon_warning_trakt">Saat SeriesGuide Cloud terkoneksi, trakt sycn akan di nonaktifkan.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">Masuk</string>
-  <string name="hexagon_signed_in">Kau tidak terhubung ke SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Keluar</string>
   <string name="hexagon_setup_incomplete">Pengaturan SeriesGuide Cloud Tidak selesai.</string>
   <string name="hexagon_setup_fail_auth">Akun Google anda tidak melapor.</string>
@@ -281,18 +279,13 @@
   <string name="trakt_notice_not_exists">Tidak bisa (Belum) dilacak dengan trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">akun trakt</string>
-  <string name="trakt_connect_instructions">Pada layar berikutnya masuk ke trakt atau buat akun baru. Kemudian izinkan SeriesGuide mengakses akun trakt anda.</string>
   <string name="connect_trakt">Sambungkan trakt</string>
   <string name="trakt_reconnect">Sambungkan SeriesGuide ke trakt</string>
   <string name="trakt_reconnect_details">Periksa kredensial trakt Anda</string>
-  <string name="username">Nama pengguna</string>
   <string name="waitplease">Tunggu sebentar&#8230;</string>
   <string name="connect">Sambungkan</string>
   <string name="disconnect">Putuskan</string>
   <string name="use_integrated_browser">Gunakan browser bawaan</string>
-  <string name="connect_trakt_done">Terhubung ke trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide sekarang akan mensinkronkan acara dan film pada perangkat ini dengan trakt. Ini mungkin akan memakan waktu.</string>
-  <string name="add_trakt_shows">Tambahkan lebih banyak acara dari perpustakaan trakt Anda:</string>
   <string name="show_library">Tampilkan Perpustakaan trakt Anda</string>
   <string name="about_trakt">trakt membantu menyimpan catatan acara TV dan film apa yang anda tonton. <a href="https://trakt.tv"> selengkapnya</a></string>
   <!-- trakt ratings -->
@@ -428,7 +421,6 @@
   <string name="upcoming_show">%s akan datang</string>
   <string name="upcoming_episodes">Episode baru akan datang</string>
   <string name="upcoming_episodes_number">%s episode baru</string>
-  <string name="upcoming_show_detailed">%1$s di %2$s</string>
   <string name="more">%d lagi</string>
   <string name="upcoming_display">Pilih untuk menampilkan acara yang akan datang</string>
   <string name="pref_notifications">Notifikasi</string>

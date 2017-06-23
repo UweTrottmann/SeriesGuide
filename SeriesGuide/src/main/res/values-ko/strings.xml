@@ -20,6 +20,7 @@
   <string name="season_number">시즌 %d</string>
   <string name="seasons">시즌</string>
   <string name="specialseason">스페셜 에피소드</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">개요</string>
   <string name="description_poster">포스터 보이기</string>
@@ -70,13 +71,11 @@
     <item quantity="other">%d개 리플</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">절대값</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">첫 방영 날짜</string>
   <string name="episode_firstaired_unknown">첫 방영 날짜 알 수 없음</string>
   <string name="episode_dvdnumber">DVD 에피소드</string>
   <string name="original_release">오리지널 릴리즈</string>
-  <string name="show_on_network">방송국 %s</string>
   <string name="show_genres">장르</string>
   <string name="show_contentrating">콘텐츠 등급</string>
   <string name="show_release_times">출시일</string>
@@ -93,7 +92,6 @@
   <string name="today">오늘</string>
   <string name="now">지금</string>
   <string name="daily">매일</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s 분</string>
   <!-- Flagging -->
   <string name="mark_all">모두 시청 완료</string>
@@ -166,9 +164,6 @@
   <string name="update_inprogress">업데이트가 진행 중 입니다. 잠시 후 다시 시도해주세요.</string>
   <!-- Seasons -->
   <string name="season_allwatched">모든 에피소드 시청완료</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="other">%d episodes not watched</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="other">%d other episodes</item>
   </plurals>
@@ -247,13 +242,16 @@
   <plurals name="minutes_plural">
     <item quantity="other">%d분</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">실험적인 기능</string>
-  <string name="hexagon_description">쇼와 영화를 백업/동기화하기 위해 클라우드에 접속</string>
-  <string name="hexagon_warning_lists">리스트는 포함되지 않습니다.</string>
-  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">로그인</string>
-  <string name="hexagon_signed_in">시리즈가이드 클라우드에 접속하였습니다.</string>
   <string name="hexagon_signout">로그아웃</string>
   <string name="hexagon_setup_incomplete">시리즈가이드 클라우드 설정이 완료 되지 않았습니다.</string>
   <string name="hexagon_setup_fail_auth">당신의 구글 계정이 확인되지 않습니다.</string>
@@ -281,18 +279,13 @@
   <string name="trakt_notice_not_exists">아직 trakt에서 추적할 수 없습니다.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt 계정</string>
-  <string name="trakt_connect_instructions">다음 화면에서 trakt에 로그인하거나 새계정을 만들 수 있습니다. 그렇게 하면 SeriesGuide 가 trakt 에 접근할 수 있습니다.</string>
   <string name="connect_trakt">trakt에 연결하기</string>
   <string name="trakt_reconnect">SeriesGuide를 trakt에 연결</string>
   <string name="trakt_reconnect_details">trakt 아이디/비밀번호를 확인하세요</string>
-  <string name="username">아이디</string>
   <string name="waitplease">잠시만 기다려주십시오</string>
   <string name="connect">연결</string>
   <string name="disconnect">연결끊기</string>
   <string name="use_integrated_browser">내부 웹브라우저 사용</string>
-  <string name="connect_trakt_done">trakt에 연결되었습니다!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide는 당신의 쇼와 영화들을 trakt에 지금 동기화합니다. 때로는 시간이 걸릴 수도 있습니다.</string>
-  <string name="add_trakt_shows">라이브러리에 있는 쇼 추가:</string>
   <string name="show_library">라이브러리 표시</string>
   <string name="about_trakt">trakt는 여러분이 보고 있는 TV 쇼와 영화 정보를 기록하고 유지하는데 도움이 됩니다. <a href="http://trakt.tv">더 보기</a></string>
   <!-- trakt ratings -->
@@ -428,7 +421,6 @@
   <string name="upcoming_show">%s가 방영 예정입니다</string>
   <string name="upcoming_episodes">새 에피소드 방영예정</string>
   <string name="upcoming_episodes_number">%s 개의 새로운 에피소드</string>
-  <string name="upcoming_show_detailed">%1$s on %2$s</string>
   <string name="more">%d개의 에피소드 정보 더 있음</string>
   <string name="upcoming_display">방영예정인 쇼를 표시하려면 선택</string>
   <string name="pref_notifications">알림</string>

@@ -20,6 +20,7 @@
   <string name="season_number">Séria %d</string>
   <string name="seasons">Série</string>
   <string name="specialseason">Bonusové epizódy</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">Prehľad</string>
   <string name="description_poster">Zobraziť plagát</string>
@@ -72,13 +73,11 @@
     <item quantity="other">%d odpovedí</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">CELKOVO</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Premiéra</string>
   <string name="episode_firstaired_unknown">Neznámy dátum premiéry</string>
   <string name="episode_dvdnumber">DVD epizóda</string>
   <string name="original_release">Prvé odvysielanie</string>
-  <string name="show_on_network">na %s</string>
   <string name="show_genres">Žánre</string>
   <string name="show_contentrating">Hodnotenie obsahu</string>
   <string name="show_release_times">Vysielané v</string>
@@ -95,7 +94,6 @@
   <string name="today">dnes</string>
   <string name="now">teraz</string>
   <string name="daily">Denne</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
   <!-- Flagging -->
   <string name="mark_all">Videné všetky</string>
@@ -168,11 +166,6 @@
   <string name="update_inprogress">Prebieha aktualizácia, skúste to neskôr.</string>
   <!-- Seasons -->
   <string name="season_allwatched">Všetky epizódy videné</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d nevidená epizóda</item>
-    <item quantity="few">%d nevidené epizódy</item>
-    <item quantity="other">%d nevidených epizód</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d ďalšia epizóda</item>
     <item quantity="few">%d ďalšie epizódy</item>
@@ -263,13 +256,16 @@
     <item quantity="few">%d minúty</item>
     <item quantity="other">%d minút</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimentálne</string>
-  <string name="hexagon_description">Pripojte sa ku cloudu pre zálohovanie a synchronizovanie seriálov a filmov.</string>
-  <string name="hexagon_warning_lists">Zoznamy nie sú zahrnuté.</string>
-  <string name="hexagon_warning_trakt">Pokiaľ je SeriesGuide Cloud pripojený, synchronizácia s trakt bude zakázaná.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">Prihlásiť sa</string>
-  <string name="hexagon_signed_in">Ste pripojený k SeriesGuide Cloudu.</string>
   <string name="hexagon_signout">Odhlásiť sa</string>
   <string name="hexagon_setup_incomplete">Nastavenie SeriesGuide Cloud nebolo dokončené.</string>
   <string name="hexagon_setup_fail_auth">Váš účet Google nebol odhlásený.</string>
@@ -297,18 +293,13 @@
   <string name="trakt_notice_not_exists">Nie je (zatiaľ) možné sledovať na trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt účet</string>
-  <string name="trakt_connect_instructions">Na nasledujúcej obrazovke sa prihláste alebo zaregistrujte na trakt. Potom povoľte prístup k účtu pre SeriesGuide.</string>
   <string name="connect_trakt">Pripojiť na trakt</string>
   <string name="trakt_reconnect">Pripojiť SeriesGuide k trakt</string>
   <string name="trakt_reconnect_details">Skontrolujte užívateľské meno/heslo trakt</string>
-  <string name="username">Užívateľské meno</string>
   <string name="waitplease">Prosím, chvíľku počkajte&#8230;</string>
   <string name="connect">Pripojiť</string>
   <string name="disconnect">Odpojiť</string>
   <string name="use_integrated_browser">Použiť vstavaný prehliadač</string>
-  <string name="connect_trakt_done">Pripojený do trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide teraz zosynchronizuje seriály a filmy na tomto zariadení s trakt. Môže to chvíľu trvať.</string>
-  <string name="add_trakt_shows">Pridať seriály z knižnice:</string>
   <string name="show_library">Zobraziť trakt knižnicu</string>
   <string name="about_trakt">V trakt zaznamenávate, ktoré seriály a filmy sledujete. <a href="https://trakt.tv">Zistite viac</a></string>
   <!-- trakt ratings -->
@@ -452,7 +443,6 @@
   <string name="upcoming_show">%s práve vychádzajú</string>
   <string name="upcoming_episodes">Práve vychádzajú nové epizódy</string>
   <string name="upcoming_episodes_number">%s nových epizód</string>
-  <string name="upcoming_show_detailed">%1$s na %2$s</string>
   <string name="more">%d ďalších</string>
   <string name="upcoming_display">Vyberte pre zobrazenie nadchádzajúcich seriálov</string>
   <string name="pref_notifications">Upozornenia</string>

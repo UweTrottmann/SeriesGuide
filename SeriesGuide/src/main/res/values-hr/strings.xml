@@ -20,6 +20,7 @@
   <string name="season_number">Sezona %d</string>
   <string name="seasons">Sezone</string>
   <string name="specialseason">Posebne epizode</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">Pregled</string>
   <string name="description_poster">Pokaži poster</string>
@@ -72,13 +73,11 @@
     <item quantity="other">%d replies</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">APSOLUTNO</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Datum emitiranja</string>
   <string name="episode_firstaired_unknown">Datum emitiranja nepoznat</string>
   <string name="episode_dvdnumber">DVD epizoda</string>
   <string name="original_release">Original release</string>
-  <string name="show_on_network">na %s</string>
   <string name="show_genres">Žanrovi</string>
   <string name="show_contentrating">Ocjena sadržaja</string>
   <string name="show_release_times">Vrijeme emitiranja</string>
@@ -95,7 +94,6 @@
   <string name="today">danas</string>
   <string name="now">sada</string>
   <string name="daily">Dnevno</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
   <!-- Flagging -->
   <string name="mark_all">Sve pogledano</string>
@@ -168,11 +166,6 @@
   <string name="update_inprogress">Ažuriranje u tijeku, pokušajte kasnije.</string>
   <!-- Seasons -->
   <string name="season_allwatched">Sve epizode pogledane</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="few">%d episodes not watched</item>
-    <item quantity="other">%d episodes not watched</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d other episode</item>
     <item quantity="few">%d other episodes</item>
@@ -263,13 +256,16 @@
     <item quantity="few">%d minutes</item>
     <item quantity="other">%d minutes</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental</string>
-  <string name="hexagon_description">Connect to the cloud to backup and sync your shows and movies.</string>
-  <string name="hexagon_warning_lists">Lists are not included.</string>
-  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">Prijava</string>
-  <string name="hexagon_signed_in">Povezani ste sa SeriesGuide-oblakom.</string>
   <string name="hexagon_signout">Odjava</string>
   <string name="hexagon_setup_incomplete">Postavljanje SeriesGuide oblaka nije dovršena.</string>
   <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
@@ -297,18 +293,13 @@
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt account</string>
-  <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
   <string name="connect_trakt">Poveži trakt</string>
   <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
   <string name="trakt_reconnect_details">Check your trakt credentials</string>
-  <string name="username">Korisničko ime</string>
   <string name="waitplease">Trenutak, molim&#8230;</string>
   <string name="connect">Povežite</string>
   <string name="disconnect">Isključi</string>
   <string name="use_integrated_browser">Use integrated browser</string>
-  <string name="connect_trakt_done">Povezano na trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide će sada sinkronizirati emisije i filmove na ovom uređaju s traktom. To može potrajati neko vrijeme.</string>
-  <string name="add_trakt_shows">Dodaj serije iz svoje zbirke:</string>
   <string name="show_library">Prikaži svoju zbirku</string>
   <string name="about_trakt">trakt pomaže pratiti koje serije i filmove gledaš. <a href="http://trakt.tv">Saznaj više</a></string>
   <!-- trakt ratings -->
@@ -452,7 +443,6 @@
   <string name="upcoming_show">%s će se emitirati</string>
   <string name="upcoming_episodes">Nove epizode će biti prikazane</string>
   <string name="upcoming_episodes_number">%s novih epizoda</string>
-  <string name="upcoming_show_detailed">%1$s na %2$s</string>
   <string name="more">%d više</string>
   <string name="upcoming_display">Odaberite za prikaz nadolazećih emisija</string>
   <string name="pref_notifications">Obavijesti</string>

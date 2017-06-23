@@ -20,6 +20,7 @@
   <string name="season_number">Sezon %d</string>
   <string name="seasons">Sezony</string>
   <string name="specialseason">Odcinki specjalne</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">Opis</string>
   <string name="description_poster">Pokaż plakat</string>
@@ -72,13 +73,11 @@
     <item quantity="other">%d odpowiedzi</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">Nr w całym serialu</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Data premiery</string>
   <string name="episode_firstaired_unknown">Data premiery nieznana</string>
   <string name="episode_dvdnumber">Odcinek na DVD</string>
   <string name="original_release">Oryginalna data emisji</string>
-  <string name="show_on_network">na %s</string>
   <string name="show_genres">Gatunki</string>
   <string name="show_contentrating">Ocena zawartości</string>
   <string name="show_release_times">Czasy emisji</string>
@@ -95,7 +94,6 @@
   <string name="today">dziś</string>
   <string name="now">teraz</string>
   <string name="daily">codziennie</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s minut</string>
   <!-- Flagging -->
   <string name="mark_all">Oznacz jako obejrzane</string>
@@ -168,11 +166,6 @@
   <string name="update_inprogress">Aktualizacja w toku, spróbuj ponownie później.</string>
   <!-- Seasons -->
   <string name="season_allwatched">Wszystkie odcinki obejrzane</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d odcinek nieobejrzany</item>
-    <item quantity="few">%d odcinki nieobejrzane</item>
-    <item quantity="other">%d odcinków nieobejrzanych</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d inny odcinek</item>
     <item quantity="few">%d inne odcinki</item>
@@ -263,13 +256,16 @@
     <item quantity="few">%d minuty</item>
     <item quantity="other">%d minut</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Eksperymentalne</string>
-  <string name="hexagon_description">Połącz się z chmurą w celu przechowywania kopii zapasowej oraz synchronizacji seriali i filmów.</string>
-  <string name="hexagon_warning_lists">Listy nie są uwzględniane.</string>
-  <string name="hexagon_warning_trakt">Po podłączeniu do chmury SeriesGuide, synchronizacja trakt jest wyłączona.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">Zaloguj się</string>
-  <string name="hexagon_signed_in">Podłączono SeriesGuide z chmurą.</string>
   <string name="hexagon_signout">Wyloguj</string>
   <string name="hexagon_setup_incomplete">Konfiguracja chmury SeriesGuide nie została zakończona.</string>
   <string name="hexagon_setup_fail_auth">Nie można potwierdzić Twojego konta Google.</string>
@@ -297,18 +293,13 @@
   <string name="trakt_notice_not_exists">Nie może być jeszcze śledzone na trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">Konto trakt</string>
-  <string name="trakt_connect_instructions">Na następnym ekranie zaloguj się do trakt lub utwórz nowe konto. Następnie włącz dostęp SeriesGuide do konta trakt.</string>
   <string name="connect_trakt">Połącz z trakt</string>
   <string name="trakt_reconnect">Połącz SeriesGuide z trakt</string>
   <string name="trakt_reconnect_details">Sprawdź swoje poświadczenia trakt</string>
-  <string name="username">Nazwa użytkownika</string>
   <string name="waitplease">Proszę czekać&#8230;</string>
   <string name="connect">Połącz</string>
   <string name="disconnect">Rozłącz</string>
   <string name="use_integrated_browser">Użyj zintegrowanej przeglądarki</string>
-  <string name="connect_trakt_done">Podłączono do trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide zsynchronizuje teraz seriale i filmy na tym urządzeniu z trakt. Może to zająć trochę czasu.</string>
-  <string name="add_trakt_shows">Dodaj seriale z biblioteki:</string>
   <string name="show_library">Pokaż bibliotekę</string>
   <string name="about_trakt">trakt.tv pomaga zarządzać jakie seriale i filmy oglądasz. <a href="http://trakt.tv">Dowiedz się więcej</a></string>
   <!-- trakt ratings -->
@@ -452,7 +443,6 @@
   <string name="upcoming_show">Nadchodzi odcinek %s</string>
   <string name="upcoming_episodes">Nadchodzą nowe odcinki</string>
   <string name="upcoming_episodes_number">%s nowych odcinków</string>
-  <string name="upcoming_show_detailed">%1$s na %2$s</string>
   <string name="more">%d więcej</string>
   <string name="upcoming_display">Wyświetl informacje o nadchodzących odcinkach</string>
   <string name="pref_notifications">Powiadomienia</string>

@@ -20,6 +20,7 @@
   <string name="season_number">Temporada %d</string>
   <string name="seasons">Temporades</string>
   <string name="specialseason">Episodis especials</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">Visió general</string>
   <string name="description_poster">Mostra el cartell</string>
@@ -71,13 +72,11 @@
     <item quantity="other">%d respostes</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">ABSOLUT</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Data de llançament</string>
   <string name="episode_firstaired_unknown">Data de llançament desconeguda</string>
   <string name="episode_dvdnumber">Episodi de DVD</string>
   <string name="original_release">Versió original</string>
-  <string name="show_on_network">a %s</string>
   <string name="show_genres">Gèneres</string>
   <string name="show_contentrating">Contingut</string>
   <string name="show_release_times">Data d\'estrena</string>
@@ -94,7 +93,6 @@
   <string name="today">avui</string>
   <string name="now">ara</string>
   <string name="daily">Diàriament</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
   <!-- Flagging -->
   <string name="mark_all">Tots vists</string>
@@ -167,10 +165,6 @@
   <string name="update_inprogress">Ja s\'està actualitzant quelcom, intenteu-ho més tard. </string>
   <!-- Seasons -->
   <string name="season_allwatched">Tots els episodis vistos</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episodi no vist</item>
-    <item quantity="other">%d episodis per veure</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d episodi restant</item>
     <item quantity="other">%d episodis restants</item>
@@ -255,13 +249,16 @@
     <item quantity="one">%d minut</item>
     <item quantity="other">%d minuts</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental</string>
-  <string name="hexagon_description">Connecteu-vos al nostre Cloud per disposar de còpies de seguretat i poder sincronitzar les vostres sèries i peŀlícules.</string>
-  <string name="hexagon_warning_lists">Les llistes no hi són incloses.</string>
-  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">Inicia la sessió</string>
-  <string name="hexagon_signed_in">Esteu connectat al Cloud de SeriesGuide.</string>
   <string name="hexagon_signout">Tanca la sessió</string>
   <string name="hexagon_setup_incomplete">No s\'ha pogut configurar el Cloud de SeriesGuide.</string>
   <string name="hexagon_setup_fail_auth">El vostre compte de Google no sembla correcte.</string>
@@ -289,18 +286,13 @@
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">Compte de trakt</string>
-  <string name="trakt_connect_instructions">En la següent pantalla accedeix a trakt o crea un compte nou. Llavors permet a SeriesGuide que hi accedeixi.</string>
   <string name="connect_trakt">Connecta\'t al trakt</string>
   <string name="trakt_reconnect">Connecta SeriesGuide a trakt</string>
   <string name="trakt_reconnect_details">Check your trakt credentials</string>
-  <string name="username">Nom d\'usuari</string>
   <string name="waitplease">Un moment, si us plau&#8230;</string>
   <string name="connect">Connecta</string>
   <string name="disconnect">Desconnecta</string>
   <string name="use_integrated_browser">Use integrated browser</string>
-  <string name="connect_trakt_done">S\'ha connectat a trakt!</string>
-  <string name="connect_trakt_done_explanation">Tot seguit, SeriesGuide sincronitzarà les sèries i peŀlícules en aquest dispositiu del trakt. Això pot trigar una estona.</string>
-  <string name="add_trakt_shows">Afegiu més sèries de la vostra biblioteca del trakt:</string>
   <string name="show_library">Mostra\'m la biblioteca del trakt</string>
   <string name="about_trakt">La plataforma trakt us ajuda a controlar les sèries i peŀlícules que esteu veient. <a href="https://trakt.tv">Més informació</a></string>
   <!-- trakt ratings -->
@@ -440,7 +432,6 @@
   <string name="upcoming_show">%s és a punt de sortir</string>
   <string name="upcoming_episodes">Nous episodis són a punt de sortir</string>
   <string name="upcoming_episodes_number">%s episodis nous</string>
-  <string name="upcoming_show_detailed">%1$s a %2$s</string>
   <string name="more">%d més</string>
   <string name="upcoming_display">Seleccioneu-ho per veure les sèries que han de sortir</string>
   <string name="pref_notifications">Notificacions</string>

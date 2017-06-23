@@ -20,6 +20,7 @@
   <string name="season_number">Κύκλος %d</string>
   <string name="seasons">Σεζόν</string>
   <string name="specialseason">Ειδικά Επεισόδια</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">Επισκόπηση</string>
   <string name="description_poster">Εμφάνιση αφίσας</string>
@@ -71,13 +72,11 @@
     <item quantity="other">%d απαντήσεις</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">ΑΠΟΛΥΤΗ</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Ημερομηνία προβολής</string>
   <string name="episode_firstaired_unknown">Άγνωστη ημερομηνία προβολής</string>
   <string name="episode_dvdnumber">Επεισόδιο DVD</string>
   <string name="original_release">Αρχική κυκλοφορία</string>
-  <string name="show_on_network">στο %s</string>
   <string name="show_genres">Είδη</string>
   <string name="show_contentrating">Αξιολόγηση περιεχομένου</string>
   <string name="show_release_times">Ώρες που παίζονται</string>
@@ -94,7 +93,6 @@
   <string name="today">Σήμερα</string>
   <string name="now">τώρα</string>
   <string name="daily">Καθημερινή</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s λεπτά</string>
   <!-- Flagging -->
   <string name="mark_all">Έχουν παρακολουθηθεί όλα</string>
@@ -167,10 +165,6 @@
   <string name="update_inprogress">Μια ενημέρωση βρίσκεται σε εξέλιξη, δοκιμάστε ξανά αργότερα.</string>
   <!-- Seasons -->
   <string name="season_allwatched">Όλα τα επεισόδια έχουν παρακολουθηθεί</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d επεισόδιο που δεν έχετε παρακολουθήσει</item>
-    <item quantity="other">%d επεισόδια που δεν έχετε παρακολουθήσει</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d επιπλέον επεισόδιο</item>
     <item quantity="other">%d επιπλέον επεισόδια</item>
@@ -255,13 +249,16 @@
     <item quantity="one">%d λεπτό</item>
     <item quantity="other">%d λεπτά</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Πειραματική έκδοση!</string>
-  <string name="hexagon_description">Συνδεθείτε με το  cloud για να κάνετε αντίγραφα ασφαλείας και να συγχρονίσετε τις σειρές και τις ταινίες σας.</string>
-  <string name="hexagon_warning_lists">Δεν συμπεριλαμβάνονται λίστες.</string>
-  <string name="hexagon_warning_trakt">Όσο το SeriesGuide Cloud είναι συνδεδεμένο, ο συγχρονισμός trakt θα είναι απενεργοποιημένος.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">Σύνδεση</string>
-  <string name="hexagon_signed_in">Είστε συνδεδεμένος στο σύννεφο του SeriesGuide.</string>
   <string name="hexagon_signout">Αποσύνδεση</string>
   <string name="hexagon_setup_incomplete">Η ρύθμιση του SeriesGuide cloud δεν ολοκληρώθηκε.</string>
   <string name="hexagon_setup_fail_auth">Ο λογαριασμός σας Google δεν επαληθεύτηκε.</string>
@@ -289,18 +286,13 @@
   <string name="trakt_notice_not_exists">Δεν είναι δυνατή (ακόμα) η παρακολούθηση με το trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">λογαριασμός trakt</string>
-  <string name="trakt_connect_instructions">Στην επόμενη οθόνη συνδεθείτε στο Trakt ή δημιουργήστε καινούργιο λογαριασμό. Μετά δώστε πρόσβαση στο SeriesGuide στον λογαριασμό Trakt.</string>
   <string name="connect_trakt">Σύνδεση trakt</string>
   <string name="trakt_reconnect">Σύνδεση του SeriesGuide με το trakt</string>
   <string name="trakt_reconnect_details">Έλεγχος διαπιστευτηρίων trakt</string>
-  <string name="username">Όνομα χρήστη</string>
   <string name="waitplease">Μια στιγμή, παρακαλώ&#8230;</string>
   <string name="connect">Σύνδεση</string>
   <string name="disconnect">Αποσύνδεση</string>
   <string name="use_integrated_browser">Χρησιμοποιήστε ενσωματωμένο πρόγραμμα περιήγησης</string>
-  <string name="connect_trakt_done">Συνδεδεμένο με το trakt!</string>
-  <string name="connect_trakt_done_explanation">Το SeriesGuide θα συγχρονίσει τώρα τις σειρές και τις ταινίες σε αυτή την συσκευή μέσω του trackt. Αυτό μπορεί να διαρκέσει λίγο χρόνο.</string>
-  <string name="add_trakt_shows">Προσθέστε σειρές από τη βιβλιοθήκη σας:</string>
   <string name="show_library">Εμφάνιση της  βιβλιοθήκη σας</string>
   <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε. <a href="http://trakt.tv"> Μάθετε περισσότερα</a></string>
   <!-- trakt ratings -->
@@ -440,7 +432,6 @@
   <string name="upcoming_show">%s επερχόμενα</string>
   <string name="upcoming_episodes">Νέα επεισόδια έρχονται</string>
   <string name="upcoming_episodes_number">%s νέα επεισόδια</string>
-  <string name="upcoming_show_detailed">%1$s προς %2$s</string>
   <string name="more">%d περισσότερο</string>
   <string name="upcoming_display">Επιλέξτε, για να εμφανίσετε τις επερχόμενες σειρές</string>
   <string name="pref_notifications">Ειδοποιήσεις</string>

@@ -20,6 +20,7 @@
   <string name="season_number">Kausi %d</string>
   <string name="seasons">Kaudet</string>
   <string name="specialseason">Erikoisjaksot</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">Yleiskatsaus</string>
   <string name="description_poster">Näytä juliste</string>
@@ -71,13 +72,11 @@
     <item quantity="other">%d vastausta</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">TODELLINEN</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Julkaisupäivä</string>
   <string name="episode_firstaired_unknown">Tuntematon julkaisupäivä</string>
   <string name="episode_dvdnumber">DVD-jakso</string>
   <string name="original_release">Alkuperäinen julkaisu</string>
-  <string name="show_on_network">kanavalla %s</string>
   <string name="show_genres">Genret</string>
   <string name="show_contentrating">Sisällön luokitus</string>
   <string name="show_release_times">Julkaisuajat</string>
@@ -94,7 +93,6 @@
   <string name="today">tänään</string>
   <string name="now">nyt</string>
   <string name="daily">Päivittäinen</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
   <!-- Flagging -->
   <string name="mark_all">Kaikki katsottu</string>
@@ -167,10 +165,6 @@
   <string name="update_inprogress">Päivitys on käynnissä, yritä myöhemmin uudelleen.</string>
   <!-- Seasons -->
   <string name="season_allwatched">Kaikki jaksot katsottu</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d jakso katsottavana</item>
-    <item quantity="other">%d jaksoa katsottavana</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d muu jakso</item>
     <item quantity="other">%d muuta jaksoa</item>
@@ -255,13 +249,16 @@
     <item quantity="one">%d minuutti</item>
     <item quantity="other">%d minuuttia</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Kokeellista ja helposti syttyvää!</string>
-  <string name="hexagon_description">Voit varmuuskopioida sekä synkronoida ohjelmasi ja elokuvasi yhdistämällä pilvipalveluun.</string>
-  <string name="hexagon_warning_lists">Listoja ei sisällytetä.</string>
-  <string name="hexagon_warning_trakt">Trakt-synkronointi poistetaan käytöstä, kun SeriesGuide Cloud on yhdistetty.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">Kirjaudu sisään</string>
-  <string name="hexagon_signed_in">Olet yhteydessä SeriesGuide Cloud -palveluun.</string>
   <string name="hexagon_signout">Kirjaudu ulos</string>
   <string name="hexagon_setup_incomplete">SeriesGuide Cloudin määrittäminen epäonnistui.</string>
   <string name="hexagon_setup_fail_auth">Google-tiliäsi ei ole tarkistettu.</string>
@@ -289,18 +286,13 @@
   <string name="trakt_notice_not_exists">Ei voida (vielä) kuitata traktissa.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt-tili</string>
-  <string name="trakt_connect_instructions">Seuraavalla ruudulla voit kirjautua traktiin tai luoda uuden tilin. Sitten salli SeriesGuidelle pääsy trakt-tiliisi.</string>
   <string name="connect_trakt">Yhdistä traktiin</string>
   <string name="trakt_reconnect">Yhdistä SeriesGuide traktiin</string>
   <string name="trakt_reconnect_details">Tarkista trakt-käyttäjätietosi</string>
-  <string name="username">Käyttäjänimi</string>
   <string name="waitplease">Odota hetki pieni&#8230;</string>
   <string name="connect">Yhdistä</string>
   <string name="disconnect">Katkaise yhteys</string>
   <string name="use_integrated_browser">Käytä integroitua selainta</string>
-  <string name="connect_trakt_done">Yhdistetty traktiin!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide synkronoi nyt tämän laitteen ohjelmat ja elokuvat traktin kanssa. Tämä voi kestää hetken.</string>
-  <string name="add_trakt_shows">Lisää ohjelmat kokoelmastasi:</string>
   <string name="show_library">Näytä kokoelmasi</string>
   <string name="about_trakt">trakt auttaa sinua pysymään kärryillä katsomistasi TV-ohjelmista ja elokuvista. <a href="http://trakt.tv">Lisätietoa</a></string>
   <!-- trakt ratings -->
@@ -440,7 +432,6 @@
   <string name="upcoming_show">%s on tulossa</string>
   <string name="upcoming_episodes">Uusia jaksoja tulossa</string>
   <string name="upcoming_episodes_number">%s uutta jaksoa</string>
-  <string name="upcoming_show_detailed">%1$s kanavalla %2$s</string>
   <string name="more">%d lisää</string>
   <string name="upcoming_display">Valitse näyttääksesi tulevat ohjelmat</string>
   <string name="pref_notifications">Ilmoitukset</string>
