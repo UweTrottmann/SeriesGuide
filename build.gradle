@@ -12,7 +12,7 @@ buildscript {
             'butterknife': '8.6.0', // github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
             'crashlytics': '2.6.8', // docs.fabric.io/android/changelog.html
             'dagger': '2.10', // github.com/google/dagger/releases
-            'gson': '2.8.0', // github.com/google/gson/blob/master/CHANGELOG.md
+            'gson': '2.8.1', // github.com/google/gson/blob/master/CHANGELOG.md
             'okhttp': '3.8.1', // github.com/square/okhttp/blob/master/CHANGELOG.md
             'timber': '4.5.1', // github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 
