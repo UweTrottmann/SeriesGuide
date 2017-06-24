@@ -9,6 +9,12 @@ Version 38
 ----------
 *(in development)*
 
+#### 38-beta3
+*(2017-06-24)*
+
+* 🔨 Crash when viewing details of episode that is not part of any season.
+* 🔧 When updating shows, remove seasons without episodes.
+
 #### 38-beta2
 *(2017-06-23)*
 
