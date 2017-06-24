@@ -20,7 +20,7 @@
   <string name="season_number">Séria %d</string>
   <string name="seasons">Série</string>
   <string name="specialseason">Bonusové epizódy</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">Hodnotenia</string>
   <!-- Descriptions -->
   <string name="description_overview">Prehľad</string>
   <string name="description_poster">Zobraziť plagát</string>
@@ -257,14 +257,14 @@
     <item quantity="other">%d minút</item>
   </plurals>
   <!-- Features -->
-  <string name="feature_supported">Supported</string>
-  <string name="feature_not_supported">Not supported</string>
-  <string name="feature_history">Personal and friend history</string>
-  <string name="feature_sync">Sync</string>
+  <string name="feature_supported">Podporované</string>
+  <string name="feature_not_supported">Nepodporované</string>
+  <string name="feature_history">Osobná história a história vašich priateľov</string>
+  <string name="feature_sync">Synchronizácia</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimentálne</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud pomáha zálohovať a synchronizovať vaše seriály, zoznamy a filmy.</string>
+  <string name="hexagon_warning_trakt">Keď ste prihlásený na SeriesGuide Cloud niektoré trakt funkcie nie sú dostupné.</string>
   <string name="hexagon_signin">Prihlásiť sa</string>
   <string name="hexagon_signout">Odhlásiť sa</string>
   <string name="hexagon_setup_incomplete">Nastavenie SeriesGuide Cloud nebolo dokončené.</string>

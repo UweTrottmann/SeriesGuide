@@ -20,7 +20,7 @@
   <string name="season_number">Musim %d</string>
   <string name="seasons">Musim</string>
   <string name="specialseason">Episode Khusus</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">Peringkat</string>
   <!-- Descriptions -->
   <string name="description_overview">Tinjauan</string>
   <string name="description_poster">Poster acara</string>
@@ -243,14 +243,14 @@
     <item quantity="other">%d menit</item>
   </plurals>
   <!-- Features -->
-  <string name="feature_supported">Supported</string>
-  <string name="feature_not_supported">Not supported</string>
-  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_supported">Didukung</string>
+  <string name="feature_not_supported">Tidak Didukung</string>
+  <string name="feature_history">Riwayat pribadi dan teman</string>
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimentasi</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud membantumu untuk mencadangkan dan menyelaraskan acara, daftar, dan film anda.</string>
+  <string name="hexagon_warning_trakt">Selama masuk menggunakan SeriesGuide Cloud beberapa fitur trakt tidak tersedia.</string>
   <string name="hexagon_signin">Masuk</string>
   <string name="hexagon_signout">Keluar</string>
   <string name="hexagon_setup_incomplete">Pengaturan SeriesGuide Cloud Tidak selesai.</string>

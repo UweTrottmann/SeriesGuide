@@ -20,7 +20,7 @@
   <string name="season_number">第 %d 季</string>
   <string name="seasons">季</string>
   <string name="specialseason">特别篇</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">评分</string>
   <!-- Descriptions -->
   <string name="description_overview">预览</string>
   <string name="description_poster">节目海报</string>
@@ -243,25 +243,25 @@
     <item quantity="other">%d 分钟</item>
   </plurals>
   <!-- Features -->
-  <string name="feature_supported">Supported</string>
-  <string name="feature_not_supported">Not supported</string>
-  <string name="feature_history">Personal and friend history</string>
-  <string name="feature_sync">Sync</string>
+  <string name="feature_supported">支持</string>
+  <string name="feature_not_supported">不支持</string>
+  <string name="feature_history">个人及朋友的历史记录</string>
+  <string name="feature_sync">同步</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">这是一个实验性功能！</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud 帮助您备份并同步您的节目、列表及电影。</string>
+  <string name="hexagon_warning_trakt">当您登陆到 SeriesGuide Cloud 时，trakt 的某些特性将不可用。</string>
   <string name="hexagon_signin">登录</string>
   <string name="hexagon_signout">注销</string>
-  <string name="hexagon_setup_incomplete">无法设置 SeriesGuide 云同步服务</string>
+  <string name="hexagon_setup_incomplete">设置 SeriesGuide Cloud 未完成。</string>
   <string name="hexagon_setup_fail_auth">处理 Google 帐户关联时出现问题！</string>
   <string name="hexagon_remove_account">删除帐户</string>
   <string name="hexagon_remove_account_success">用户数据已删除。</string>
   <string name="hexagon_remove_account_failure">无法删除帐户。</string>
-  <string name="hexagon_remove_account_confirmation">删除帐户会同时删除您储存的所有数据，包括在线备份的节目和电影。一旦您在此设备上完成删除，请记得从其它已同步设备上删除相同的 SeriesGuide 云服务帐户。</string>
+  <string name="hexagon_remove_account_confirmation">删除帐户会同时删除您储存的所有数据，包括在线备份的节目和电影。一旦您在此设备上完成删除，请记得从其它已同步设备上删除相同的 SeriesGuide Cloud 帐户。</string>
   <string name="hexagon_api_queued">正在同步 SeriesGuide Cloud…</string>
   <string name="hexagon_signed_out">已登出 SeriesGuide Cloud</string>
-  <string name="hexagon_google_play_missing">若要使用 SeriesGuide 云，需要谷歌Play服务。</string>
+  <string name="hexagon_google_play_missing">若要使用 SeriesGuide Cloud，需要 Google Play 服务。</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">正在与 trakt 同步…</string>
   <string name="trakt_seen">%s 已观看。</string>
@@ -384,7 +384,7 @@
   <string name="pref_offsetsummary">显示时间与原播出时间相差 %d 小时</string>
   <string name="clear_cache">清理图片缓存</string>
   <string name="clear_cache_summary">删除缓存图片</string>
-  <string name="pref_ganalyticssummary">向Google服务发送匿名使用情况统计信息</string>
+  <string name="pref_ganalyticssummary">向 Google 服务发送匿名使用情况统计信息</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">备份时包含所有「元数据」，例如节目简介、演员和评分。</string>
   <string name="backup_path">备份/还原数据库的路径</string>
