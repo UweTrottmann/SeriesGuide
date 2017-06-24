@@ -536,19 +536,19 @@ public class DBUtils {
      * Creates a {@link ContentProviderOperation} for insert if isNew, or update instead for with
      * the given season values.
      */
-    public static ContentProviderOperation buildSeasonOp(ContentValues values, boolean isNew) {
+    public static ContentProviderOperation buildSeasonOp(int showTvdbId, int seasonTvdbId,
+            int seasonNumber, boolean isNew) {
         ContentProviderOperation op;
-        final String seasonId = values.getAsString(Seasons.REF_SEASON_ID);
         final ContentValues seasonValues = new ContentValues();
-        seasonValues.put(Seasons.COMBINED, values.getAsString(Episodes.SEASON));
+        seasonValues.put(Seasons.COMBINED, seasonNumber);
 
         if (isNew) {
-            seasonValues.put(Seasons._ID, seasonId);
-            seasonValues.put(Shows.REF_SHOW_ID, values.getAsString(Shows.REF_SHOW_ID));
+            seasonValues.put(Seasons._ID, seasonTvdbId);
+            seasonValues.put(Shows.REF_SHOW_ID, showTvdbId);
             op = ContentProviderOperation.newInsert(Seasons.CONTENT_URI).withValues(seasonValues)
                     .build();
         } else {
-            op = ContentProviderOperation.newUpdate(Seasons.buildSeasonUri(seasonId))
+            op = ContentProviderOperation.newUpdate(Seasons.buildSeasonUri(seasonTvdbId))
                     .withValues(seasonValues).build();
         }
         return op;

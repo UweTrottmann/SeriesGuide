@@ -635,8 +635,12 @@ public class TvdbTools {
             final ContentValues values = new ContentValues();
             for (Episode episode : response.data) {
                 Integer episodeId = episode.id;
-                if (episodeId == null || episodeId <= 0) {
-                    continue; // invalid id, skip
+                Integer seasonNumber = episode.airedSeason;
+                Integer seasonId = episode.airedSeasonID;
+                if (episodeId == null || episodeId <= 0
+                        || seasonNumber == null || seasonNumber < 0 // season 0 allowed (specials)
+                        || seasonId == null || seasonId <= 0) {
+                    continue; // invalid ids, skip
                 }
 
                 // don't clean up this episode
@@ -662,14 +666,13 @@ public class TvdbTools {
                 }
 
                 // extract values
-                values.put(Episodes._ID, episode.id);
-                Integer seasonId = episode.airedSeasonID;
+                values.put(Episodes._ID, episodeId);
                 values.put(Seasons.REF_SEASON_ID, seasonId);
                 values.put(Shows.REF_SHOW_ID, showTvdbId);
 
                 values.put(Episodes.NUMBER, episode.airedEpisodeNumber);
                 values.put(Episodes.ABSOLUTE_NUMBER, episode.absoluteNumber);
-                values.put(Episodes.SEASON, episode.airedSeason);
+                values.put(Episodes.SEASON, seasonNumber);
                 values.put(Episodes.DVDNUMBER, episode.dvdEpisodeNumber);
 
                 long releaseDateTime = TimeTools.parseEpisodeReleaseDate(context, showTimeZone,
@@ -688,9 +691,10 @@ public class TvdbTools {
                     batch.add(DBUtils.buildEpisodeUpdateOp(values));
                 }
 
-                if (seasonId != null && !seasonIdsToUpdate.contains(seasonId)) {
+                if (!seasonIdsToUpdate.contains(seasonId)) {
                     // add insert/update op for season
-                    batch.add(DBUtils.buildSeasonOp(values, !localSeasonIds.contains(seasonId)));
+                    batch.add(DBUtils.buildSeasonOp(showTvdbId, seasonId, seasonNumber,
+                            !localSeasonIds.contains(seasonId)));
                     seasonIdsToUpdate.add(seasonId);
                 }
 
