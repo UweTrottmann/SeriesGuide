@@ -202,7 +202,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     };
 
     private void populateBasicInfo(@Nullable SeasonsLoader.Result basicInfo) {
-        if (basicInfo == null) {
+        if (basicInfo == null || basicInfo.seasonsOfShow.isEmpty()) {
             // do not have minimal data, give up.
             finish();
             return;

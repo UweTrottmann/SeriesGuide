@@ -68,25 +68,25 @@ public class SeasonsLoader extends GenericSimpleLoader<SeasonsLoader.Result> {
                         SeasonsQuery.PROJECTION,
                         SeriesGuideContract.Seasons.SELECTION_WITH_EPISODES, null,
                         DisplaySettings.getSeasonSortOrder(getContext()).query());
+        if (seasonsQuery == null) {
+            return null;
+        }
         int seasonIndex = 0;
         int seasonIndexOfEpisode = 0;
-        if (seasonsQuery != null) {
-            while (seasonsQuery.moveToNext()) {
-                Season season = new Season();
-                season.tvdbId = seasonsQuery.getInt(SeasonsQuery.ID);
-                season.season = seasonsQuery.getInt(SeasonsQuery.NUMBER);
-                seasons.add(season);
+        while (seasonsQuery.moveToNext()) {
+            Season season = new Season();
+            season.tvdbId = seasonsQuery.getInt(SeasonsQuery.ID);
+            season.season = seasonsQuery.getInt(SeasonsQuery.NUMBER);
+            seasons.add(season);
 
-                if (season.tvdbId == seasonTvdbId) {
-                    seasonIndexOfEpisode = seasonIndex;
-                }
-                seasonIndex++;
+            if (season.tvdbId == seasonTvdbId) {
+                seasonIndexOfEpisode = seasonIndex;
             }
-            seasonsQuery.close();
+            seasonIndex++;
         }
+        seasonsQuery.close();
 
-        return new Result(showTvdbId, showTitle, showPoster, seasonIndexOfEpisode,
-                seasons);
+        return new Result(showTvdbId, showTitle, showPoster, seasonIndexOfEpisode, seasons);
     }
 
     interface EpisodeQuery {
