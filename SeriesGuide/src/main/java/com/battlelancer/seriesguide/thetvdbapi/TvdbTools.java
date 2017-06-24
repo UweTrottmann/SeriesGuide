@@ -609,17 +609,20 @@ public class TvdbTools {
      * ContentValues} for new episodes.<br> Adds update ops for updated episodes and delete ops for
      * local orphaned episodes to the given {@link ContentProviderOperation} batch.
      */
+    @SuppressLint("UseSparseArrays")
     private ArrayList<ContentValues> fetchEpisodes(ArrayList<ContentProviderOperation> batch,
             Show show, @NonNull String language) throws TvdbException {
         final int showTvdbId = show.tvdb_id;
         final ArrayList<ContentValues> newEpisodesValues = new ArrayList<>();
+
         final HashMap<Integer, Long> localEpisodeIds = DBUtils.getEpisodeMapForShow(context,
                 showTvdbId);
-        @SuppressLint("UseSparseArrays") final HashMap<Integer, Long> removableEpisodeIds =
-                new HashMap<>(localEpisodeIds); // just copy episodes list, then remove valid ones
+        // just copy episodes list, then remove valid ones
+         final HashMap<Integer, Long> removableEpisodeIds = new HashMap<>(localEpisodeIds);
+
         final HashSet<Integer> localSeasonIds = DBUtils.getSeasonIdsOfShow(context, showTvdbId);
         // store updated seasons to avoid duplicate ops
-        final HashSet<Integer> seasonIdsToUpdate = new HashSet<>();
+        final HashSet<Integer> seasonsToAddOrUpdate = new HashSet<>();
 
         final long dateLastMonthEpoch = (System.currentTimeMillis()
                 - (DateUtils.DAY_IN_MILLIS * 30)) / 1000;
@@ -641,6 +644,13 @@ public class TvdbTools {
                         || seasonNumber == null || seasonNumber < 0 // season 0 allowed (specials)
                         || seasonId == null || seasonId <= 0) {
                     continue; // invalid ids, skip
+                }
+
+                // add insert/update op for season, prevents it from getting cleaned
+                if (!seasonsToAddOrUpdate.contains(seasonId)) {
+                    batch.add(DBUtils.buildSeasonOp(showTvdbId, seasonId, seasonNumber,
+                            !localSeasonIds.contains(seasonId)));
+                    seasonsToAddOrUpdate.add(seasonId);
                 }
 
                 // don't clean up this episode
@@ -691,13 +701,6 @@ public class TvdbTools {
                     batch.add(DBUtils.buildEpisodeUpdateOp(values));
                 }
 
-                if (!seasonIdsToUpdate.contains(seasonId)) {
-                    // add insert/update op for season
-                    batch.add(DBUtils.buildSeasonOp(showTvdbId, seasonId, seasonNumber,
-                            !localSeasonIds.contains(seasonId)));
-                    seasonIdsToUpdate.add(seasonId);
-                }
-
                 values.clear();
             }
         }
@@ -706,6 +709,14 @@ public class TvdbTools {
         for (Integer episodeId : removableEpisodeIds.keySet()) {
             batch.add(ContentProviderOperation.newDelete(Episodes.buildEpisodeUri(episodeId))
                     .build());
+        }
+
+        // add delete ops for leftover seasonIds in our db
+        for (Integer seasonId : localSeasonIds) {
+            if (!seasonsToAddOrUpdate.contains(seasonId)) {
+                batch.add(ContentProviderOperation.newDelete(Seasons.buildSeasonUri(seasonId))
+                        .build());
+            }
         }
 
         return newEpisodesValues;
