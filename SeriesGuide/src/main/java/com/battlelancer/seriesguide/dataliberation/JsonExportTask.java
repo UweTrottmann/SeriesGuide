@@ -419,7 +419,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 new String[] {
                         Seasons._ID,
                         Seasons.COMBINED
-                }, Seasons.SELECTION_WITH_EPISODES, null, null
+                }, null, null, null
         );
 
         if (seasonsCursor == null) {

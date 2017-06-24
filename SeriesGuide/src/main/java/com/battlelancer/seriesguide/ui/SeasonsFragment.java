@@ -437,6 +437,7 @@ public class SeasonsFragment extends ListFragment {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
             Constants.SeasonSorting sortOrder = DisplaySettings.getSeasonSortOrder(getActivity());
+            // can use SELECTION_WITH_EPISODES as count is updated when this fragment runs
             return new CursorLoader(getActivity(),
                     Seasons.buildSeasonsOfShowUri(String.valueOf(getShowId())),
                     SeasonsQuery.PROJECTION, Seasons.SELECTION_WITH_EPISODES, null, sortOrder
