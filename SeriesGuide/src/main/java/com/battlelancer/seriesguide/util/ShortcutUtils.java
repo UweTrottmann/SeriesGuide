@@ -87,7 +87,7 @@ public final class ShortcutUtils {
                 if (posterBitmap == null) {
                     // Fall back to the app icon
                     intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                            ShortcutIconResource.fromContext(context, R.drawable.ic_launcher));
+                            ShortcutIconResource.fromContext(context, R.mipmap.ic_app));
                 } else {
                     intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, posterBitmap);
                 }

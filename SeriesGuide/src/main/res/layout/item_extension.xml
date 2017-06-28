@@ -20,7 +20,7 @@
             android:layout_marginRight="@dimen/default_padding"
             android:layout_marginTop="@dimen/default_padding"
             android:contentDescription="@null"
-            tools:src="@drawable/ic_launcher" />
+            tools:src="@mipmap/ic_app" />
 
         <ImageView
             android:id="@+id/imageViewItemExtensionSettings"
