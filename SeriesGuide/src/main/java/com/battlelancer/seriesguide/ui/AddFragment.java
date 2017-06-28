@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -304,10 +303,9 @@ public abstract class AddFragment extends Fragment {
 
             // only local shows will have a poster path set
             // try to fall back to the first uploaded TVDB poster for all others
-            if (TextUtils.isEmpty(item.posterPath)) {
-                item.posterPath = TvdbImageTools.firstPosterPath(item.tvdbid);
-            }
-            TvdbImageTools.loadShowPosterResizeCrop(getContext(), holder.poster, item.posterPath);
+            String posterUrl = TvdbImageTools.smallSizeOrResolveUrl(item.posterPath, item.tvdbid,
+                    item.language);
+            TvdbImageTools.loadUrlResizeCrop(getContext(), holder.poster, posterUrl);
 
             return convertView;
         }

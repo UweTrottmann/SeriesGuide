@@ -77,7 +77,7 @@ public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
                 ? null : item.show.ids.tvdb;
         if (localShowPosters != null && showTvdbId != null) {
             // prefer poster of already added show, fall back to first uploaded poster
-            posterUrl = TvdbImageTools.smallSizeOrFirstUrl(localShowPosters.get(showTvdbId),
+            posterUrl = TvdbImageTools.smallSizeOrResolveUrl(localShowPosters.get(showTvdbId),
                     showTvdbId);
         } else {
             posterUrl = null;

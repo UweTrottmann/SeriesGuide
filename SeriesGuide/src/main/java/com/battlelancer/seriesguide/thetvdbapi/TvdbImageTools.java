@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.SgPicassoRequestHandler;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import javax.crypto.Mac;
@@ -55,25 +56,33 @@ public class TvdbImageTools {
     }
 
     /**
-     * Builds a full url for a TVDb show poster using the given image path.
-     *
-     * @param imagePath If empty, will return the URL of the first uploaded poster.
+     * @see #smallSizeOrResolveUrl(String, int, String)
      */
     @Nullable
-    public static String smallSizeOrFirstUrl(@Nullable String imagePath, int showTvdbId) {
+    public static String smallSizeOrResolveUrl(@Nullable String imagePath, int showTvdbId) {
         if (TextUtils.isEmpty(imagePath)) {
-            imagePath = firstPosterPath(showTvdbId);
+            return SgPicassoRequestHandler.SCHEME_SHOW_TVDB + "://" + showTvdbId;
         }
         return smallSizeUrl(imagePath);
     }
 
     /**
-     * Builds a fall-back path for a TVDb show poster using the TVDB id, equals the first image
-     * uploaded.
+     * Builds a full url for a TVDb show poster using the given image path.
+     *
+     * @param imagePath If empty, will return an URL that will be resolved to the highest rated
+     * poster using additional network requests.
      */
-    @NonNull
-    public static String firstPosterPath(int showTvdbId) {
-        return "posters/" + showTvdbId + "-1.jpg";
+    @Nullable
+    public static String smallSizeOrResolveUrl(@Nullable String imagePath, int showTvdbId,
+            @Nullable String language) {
+        if (TextUtils.isEmpty(imagePath)) {
+            String url = "showtvdb://" + showTvdbId;
+            if (!TextUtils.isEmpty(language)) {
+                url += "?language=" + language;
+            }
+            return url;
+        }
+        return smallSizeUrl(imagePath);
     }
 
     /**
@@ -113,6 +122,14 @@ public class TvdbImageTools {
     public static void loadShowPosterResizeCrop(Context context, ImageView imageView,
             String posterPath) {
         ServiceUtils.loadWithPicasso(context, smallSizeUrl(posterPath))
+                .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
+                .centerCrop()
+                .error(R.drawable.ic_image_missing)
+                .into(imageView);
+    }
+
+    public static void loadUrlResizeCrop(Context context, ImageView imageView, String url) {
+        ServiceUtils.loadWithPicasso(context, url)
                 .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                 .centerCrop()
                 .error(R.drawable.ic_image_missing)
