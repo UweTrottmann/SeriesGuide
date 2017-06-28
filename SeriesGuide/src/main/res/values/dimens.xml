@@ -54,6 +54,10 @@
     <dimen name="show_poster_width_small">59dp</dimen>
     <dimen name="show_poster_height_small">88dp</dimen>
 
+    <!-- Most launchers display 72dp icons, scale from recommended 128x176dp product icon size. -->
+    <dimen name="show_poster_width_shortcut">52dp</dimen>
+    <dimen name="show_poster_height_shortcut">72dp</dimen>
+
     <dimen name="show_poster_width">@dimen/show_poster_width_default</dimen>
     <dimen name="show_poster_height">@dimen/show_poster_height_default</dimen>
 
