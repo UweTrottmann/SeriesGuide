@@ -328,7 +328,7 @@
         <service
             android:name="com.battlelancer.seriesguide.extensions.AmazonExtension"
             android:description="@string/description_extension_amazon"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@mipmap/ic_app"
             android:label="@string/extension_amazon">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
@@ -340,7 +340,7 @@
         <service
             android:name="com.battlelancer.seriesguide.extensions.YouTubeExtension"
             android:description="@string/description_extension_youtube"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@mipmap/ic_app"
             android:label="@string/extension_youtube">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
@@ -349,7 +349,7 @@
         <service
             android:name="com.battlelancer.seriesguide.extensions.VodsterExtension"
             android:description="@string/extension_vodster_description"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@mipmap/ic_app"
             android:label="@string/extension_vodster">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
@@ -358,7 +358,7 @@
         <service
             android:name="com.battlelancer.seriesguide.extensions.WebSearchExtension"
             android:description="@string/description_extension_web_search"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@mipmap/ic_app"
             android:label="@string/web_search">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
