@@ -61,8 +61,10 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         if (unwatched > 0) {
             textView.setText(textView.getResources()
                     .getQuantityString(R.plurals.remaining_episodes_plural, unwatched, unwatched));
+            textView.setVisibility(View.VISIBLE);
         } else {
             textView.setText(null);
+            textView.setVisibility(View.GONE);
         }
     }
 

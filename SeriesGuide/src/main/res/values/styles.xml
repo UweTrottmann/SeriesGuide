@@ -241,7 +241,17 @@
         <item name="android:paddingRight">@dimen/grid_leftright_padding</item>
         <item name="android:scrollbarStyle">outsideOverlay</item>
         <item name="android:horizontalSpacing">@dimen/grid_horizontal_spacing</item>
-        <item name="android:verticalSpacing">@dimen/grid_vertical_spacing</item>
+        <item name="android:verticalSpacing">0dp</item>
+    </style>
+
+    <!-- TODO ut: check if top/bottom padding can be unified to 8dp? -->
+    <style name="Widget.SeriesGuide.CardGrid.Declutter">
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:horizontalSpacing">0dp</item>
+        <item name="android:verticalSpacing">0dp</item>
     </style>
 
     <!-- Easy layouting -->
