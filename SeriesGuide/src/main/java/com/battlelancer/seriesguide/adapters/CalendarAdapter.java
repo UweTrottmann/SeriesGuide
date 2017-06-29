@@ -208,8 +208,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
 
         long headerTime = getHeaderTime(item);
         // display headers like "Mon in 3 days", also "today" when applicable
-        holder.day.setText(
-                TimeTools.formatToLocalDayAndRelativeTime(mContext, new Date(headerTime)));
+        holder.day.setText(TimeTools.formatToLocalDayAndRelativeWeek(new Date(headerTime)));
 
         return convertView;
     }
