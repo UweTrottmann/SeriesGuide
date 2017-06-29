@@ -14,6 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.EpisodeSearchQuery;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -62,14 +63,19 @@ public class EpisodeResultsAdapter extends CursorAdapter {
         String title = mCursor.getString(EpisodeSearchQuery.TITLE);
         viewHolder.episodeTitle
                 .setText(TextTools.getNextEpisodeString(mContext, season, number, title));
+
+        // poster
+        TvdbImageTools.loadShowPosterResizeSmallCrop(context, viewHolder.poster,
+                TvdbImageTools.smallSizeUrl(cursor.getString(EpisodeSearchQuery.SHOW_POSTER)));
     }
 
     static class ViewHolder {
 
-        @BindView(R.id.textViewShowTitle) TextView showTitle;
-        @BindView(R.id.textViewEpisodeTitle) TextView episodeTitle;
+        @BindView(R.id.textViewSearchShow) TextView showTitle;
+        @BindView(R.id.textViewSearchEpisode) TextView episodeTitle;
         @BindView(R.id.textViewSearchSnippet) TextView searchSnippet;
-        @BindView(R.id.imageViewWatchedStatus) ImageView watchedStatus;
+        @BindView(R.id.imageViewSearchWatched) ImageView watchedStatus;
+        @BindView(R.id.imageViewSearchPoster) ImageView poster;
 
         public ViewHolder(View itemView) {
             ButterKnife.bind(this, itemView);
