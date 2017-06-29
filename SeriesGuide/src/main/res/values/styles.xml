@@ -45,6 +45,10 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="TextAppearance.Subhead.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="TextAppearance.Subhead.Dim">
         <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
@@ -241,7 +245,7 @@
         <item name="android:paddingRight">@dimen/grid_leftright_padding</item>
         <item name="android:scrollbarStyle">outsideOverlay</item>
         <item name="android:horizontalSpacing">@dimen/grid_horizontal_spacing</item>
-        <item name="android:verticalSpacing">0dp</item>
+        <item name="android:verticalSpacing">@dimen/grid_vertical_spacing</item>
     </style>
 
     <!-- TODO ut: check if top/bottom padding can be unified to 8dp? -->
