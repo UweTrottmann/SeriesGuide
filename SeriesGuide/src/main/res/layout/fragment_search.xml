@@ -5,25 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Enable nested scrolling for Lollipop and up to scroll app bar. -->
-    <ListView
-        android:id="@id/android:list"
-        style="@style/DefaultPadding.List"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:dividerHeight="@dimen/grid_vertical_spacing"
-        android:drawSelectorOnTop="true"
-        android:fastScrollEnabled="true"
-        android:nestedScrollingEnabled="true"
-        android:paddingBottom="@dimen/grid_topbottom_padding"
-        android:paddingLeft="@dimen/keyline"
-        android:paddingRight="@dimen/search_padding_right"
-        android:paddingTop="@dimen/grid_topbottom_padding"
-        android:scrollbarStyle="outsideOverlay"
-        tools:ignore="UnusedAttribute" />
-
     <TextView
-        android:id="@id/android:empty"
+        android:id="@+id/textViewSearchEmpty"
         android:layout_width="@dimen/empty_view_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -31,5 +14,15 @@
         android:padding="@dimen/default_padding"
         android:text="@string/no_results"
         android:textAppearance="@style/TextAppearance.Body.Secondary" />
+
+    <GridView
+        android:id="@+id/gridViewSearch"
+        style="@style/Widget.SeriesGuide.CardGrid.Declutter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="@dimen/showgrid_columnWidth"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        tools:listitem="@layout/item_show" />
 
 </FrameLayout>
