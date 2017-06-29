@@ -9,10 +9,10 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.AdapterView;
-import com.battlelancer.seriesguide.adapters.SearchResultsAdapter;
+import com.battlelancer.seriesguide.adapters.EpisodeResultsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.Utils;
 import org.greenrobot.eventbus.Subscribe;
@@ -23,7 +23,7 @@ import org.greenrobot.eventbus.ThreadMode;
  */
 public class EpisodeSearchFragment extends BaseSearchFragment {
 
-    private SearchResultsAdapter adapter;
+    private EpisodeResultsAdapter adapter;
 
     interface InitBundle {
         /** Set to pre-filter search results by show title. */
@@ -34,7 +34,7 @@ public class EpisodeSearchFragment extends BaseSearchFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        adapter = new SearchResultsAdapter(getActivity());
+        adapter = new EpisodeResultsAdapter(getActivity());
         gridView.setAdapter(adapter);
     }
 
@@ -85,7 +85,8 @@ public class EpisodeSearchFragment extends BaseSearchFragment {
             }
 
             return new CursorLoader(getActivity(), EpisodeSearch.CONTENT_URI_SEARCH,
-                    SearchQuery.PROJECTION, selection, selectionArgs, null);
+                    SeriesGuideDatabase.EpisodeSearchQuery.PROJECTION, selection, selectionArgs,
+                    null);
         }
 
         @Override
@@ -98,25 +99,4 @@ public class EpisodeSearchFragment extends BaseSearchFragment {
             adapter.swapCursor(null);
         }
     };
-
-    public interface SearchQuery {
-        String[] PROJECTION = new String[] {
-                Episodes._ID, Episodes.TITLE, Episodes.OVERVIEW, Episodes.NUMBER, Episodes.SEASON,
-                Episodes.WATCHED, Shows.TITLE
-        };
-
-        int _ID = 0;
-
-        int TITLE = 1;
-
-        int OVERVIEW = 2;
-
-        int NUMBER = 3;
-
-        int SEASON = 4;
-
-        int WATCHED = 5;
-
-        int SHOW_TITLE = 6;
-    }
 }

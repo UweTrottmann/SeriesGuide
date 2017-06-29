@@ -13,7 +13,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ui.EpisodeSearchFragment.SearchQuery;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.EpisodeSearchQuery;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -22,9 +22,9 @@ import com.battlelancer.seriesguide.util.Utils;
  * {@link CursorAdapter} displaying episode search results inside the {@link
  * com.battlelancer.seriesguide.ui.EpisodeSearchFragment}.
  */
-public class SearchResultsAdapter extends CursorAdapter {
+public class EpisodeResultsAdapter extends CursorAdapter {
 
-    public SearchResultsAdapter(Context context) {
+    public EpisodeResultsAdapter(Context context) {
         super(context, null, 0);
     }
 
@@ -43,23 +43,23 @@ public class SearchResultsAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
-        viewHolder.showTitle.setText(mCursor.getString(SearchQuery.SHOW_TITLE));
+        viewHolder.showTitle.setText(mCursor.getString(EpisodeSearchQuery.SHOW_TITLE));
         //noinspection ResourceType
         viewHolder.watchedStatus.setImageResource(
-                EpisodeTools.isWatched(mCursor.getInt(SearchQuery.WATCHED))
+                EpisodeTools.isWatched(mCursor.getInt(EpisodeSearchQuery.WATCHED))
                         ? Utils.resolveAttributeToResourceId(mContext.getTheme(),
                         R.attr.drawableWatched)
                         : Utils.resolveAttributeToResourceId(mContext.getTheme(),
                                 R.attr.drawableWatch));
 
         // ensure matched term is bold
-        String snippet = mCursor.getString(SearchQuery.OVERVIEW);
+        String snippet = mCursor.getString(EpisodeSearchQuery.OVERVIEW);
         viewHolder.searchSnippet.setText(snippet != null ? Html.fromHtml(snippet) : null);
 
         // episode
-        int number = mCursor.getInt(SearchQuery.NUMBER);
-        int season = mCursor.getInt(SearchQuery.SEASON);
-        String title = mCursor.getString(SearchQuery.TITLE);
+        int number = mCursor.getInt(EpisodeSearchQuery.NUMBER);
+        int season = mCursor.getInt(EpisodeSearchQuery.SEASON);
+        String title = mCursor.getString(EpisodeSearchQuery.TITLE);
         viewHolder.episodeTitle
                 .setText(TextTools.getNextEpisodeString(mContext, season, number, title));
     }
