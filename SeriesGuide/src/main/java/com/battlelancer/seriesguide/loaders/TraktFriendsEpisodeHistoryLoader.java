@@ -95,7 +95,7 @@ public class TraktFriendsEpisodeHistoryLoader
             Integer showTvdbId = entry.show.ids == null ? null : entry.show.ids.tvdb;
             if (showTvdbId != null && localShows != null) {
                 // prefer poster of already added show, fall back to first uploaded poster
-                posterUrl = TvdbImageTools.smallSizeOrFirstUrl(localShows.get(showTvdbId),
+                posterUrl = TvdbImageTools.smallSizeOrResolveUrl(localShows.get(showTvdbId),
                         showTvdbId);
             } else {
                 posterUrl = null;

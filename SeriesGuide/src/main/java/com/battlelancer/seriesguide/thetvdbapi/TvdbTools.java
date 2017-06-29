@@ -575,7 +575,7 @@ public class TvdbTools {
         return response.body().data;
     }
 
-    private retrofit2.Response<SeriesImageQueryResultResponse> getSeriesPosters(int showTvdbId,
+    public retrofit2.Response<SeriesImageQueryResultResponse> getSeriesPosters(int showTvdbId,
             @Nullable String language) throws TvdbException {
         try {
             return tvdbSeries.get()
@@ -587,7 +587,7 @@ public class TvdbTools {
     }
 
     @Nullable
-    private static String getHighestRatedPoster(List<SeriesImageQueryResult> posters) {
+    public static String getHighestRatedPoster(List<SeriesImageQueryResult> posters) {
         int highestRatedIndex = 0;
         double highestRating = 0.0;
         for (int i = 0; i < posters.size(); i++) {
@@ -618,7 +618,7 @@ public class TvdbTools {
         final HashMap<Integer, Long> localEpisodeIds = DBUtils.getEpisodeMapForShow(context,
                 showTvdbId);
         // just copy episodes list, then remove valid ones
-         final HashMap<Integer, Long> removableEpisodeIds = new HashMap<>(localEpisodeIds);
+        final HashMap<Integer, Long> removableEpisodeIds = new HashMap<>(localEpisodeIds);
 
         final HashSet<Integer> localSeasonIds = DBUtils.getSeasonIdsOfShow(context, showTvdbId);
         // store updated seasons to avoid duplicate ops
