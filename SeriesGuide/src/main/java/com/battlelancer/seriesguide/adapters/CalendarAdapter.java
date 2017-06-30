@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.support.annotation.Nullable;
 import android.support.v4.util.LongSparseArray;
 import android.support.v4.widget.CursorAdapter;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -208,7 +207,8 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
 
         long headerTime = getHeaderTime(item);
         // display headers like "Mon in 3 days", also "today" when applicable
-        holder.day.setText(TimeTools.formatToLocalDayAndRelativeWeek(new Date(headerTime)));
+        holder.day.setText(
+                TimeTools.formatToLocalDayAndRelativeWeek(mContext, new Date(headerTime)));
 
         return convertView;
     }

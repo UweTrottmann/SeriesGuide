@@ -490,9 +490,14 @@ public class TimeTools {
 
     /**
      * Formats to day and relative week in relation to the current system time (e.g. "Mon in 3
-     * weeks") as defined by the devices locale. If the time is this week, just returns the day.
+     * weeks") as defined by the devices locale. If the time is this week, just returns the day. If
+     * the time is today, returns local variant of 'Released today'.
      */
-    public static String formatToLocalDayAndRelativeWeek(Date dateThen) {
+    public static String formatToLocalDayAndRelativeWeek(Context context, Date dateThen) {
+        if (DateUtils.isToday(dateThen.getTime())) {
+            return context.getString(R.string.released_today);
+        }
+
         // day abbreviation, e.g. "Mon"
         SimpleDateFormat localDayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
         StringBuilder dayAndTime = new StringBuilder(localDayFormat.format(dateThen));
