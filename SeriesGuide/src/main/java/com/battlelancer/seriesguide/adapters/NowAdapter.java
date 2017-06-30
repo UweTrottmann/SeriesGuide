@@ -5,15 +5,17 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import java.lang.annotation.Retention;
@@ -35,24 +37,16 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     static class HistoryViewHolder extends RecyclerView.ViewHolder {
-        public TextView show;
-        public TextView episode;
-        public TextView timestamp;
-        public ImageView poster;
-        public TextView username;
-        public ImageView avatar;
-        public ImageView type;
+        @BindView(R.id.textViewHistoryShow) TextView show;
+        @BindView(R.id.textViewHistoryEpisode) TextView episode;
+        @BindView(R.id.imageViewHistoryPoster) ImageView poster;
+        @BindView(R.id.textViewHistoryInfo) TextView info;
+        @BindView(R.id.imageViewHistoryAvatar) ImageView avatar;
+        @BindView(R.id.imageViewHistoryType) ImageView type;
 
         public HistoryViewHolder(View itemView, final ItemClickListener listener) {
             super(itemView);
-            show = (TextView) itemView.findViewById(R.id.textViewFriendShow);
-            episode = (TextView) itemView.findViewById(R.id.textViewFriendEpisode);
-            timestamp = (TextView) itemView.findViewById(R.id.textViewFriendTimestamp);
-            poster = (ImageView) itemView.findViewById(R.id.imageViewFriendPoster);
-            username = (TextView) itemView.findViewById(R.id.textViewFriendUsername);
-            avatar = (ImageView) itemView.findViewById(R.id.imageViewFriendAvatar);
-            type = (ImageView) itemView.findViewById(R.id.imageViewFriendActionType);
-
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -235,20 +229,20 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (viewHolder instanceof HistoryViewHolder) {
             HistoryViewHolder holder = (HistoryViewHolder) viewHolder;
 
+            String time = TimeTools.formatToLocalRelativeTime(getContext(),
+                    new Date(item.timestamp));
             if (item.type == ItemType.HISTORY) {
                 // user history entry
-                holder.username.setVisibility(View.GONE);
                 holder.avatar.setVisibility(View.GONE);
+                holder.info.setText(time);
 
                 // a TVDb or no poster
                 TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster,
                         item.tvdbPosterUrl);
             } else {
                 // friend history entry
-                holder.username.setVisibility(View.VISIBLE);
                 holder.avatar.setVisibility(View.VISIBLE);
-
-                holder.username.setText(item.username);
+                holder.info.setText(TextTools.dotSeparate(item.username, time));
 
                 // a TVDb or no poster
                 TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster,
@@ -259,8 +253,6 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             holder.show.setText(item.title);
             holder.episode.setText(item.description);
-            holder.timestamp.setText(
-                    TimeTools.formatToLocalRelativeTime(getContext(), new Date(item.timestamp)));
 
             // action type indicator (only if showing trakt history)
             if (TRAKT_ACTION_WATCH.equals(item.action)) {
