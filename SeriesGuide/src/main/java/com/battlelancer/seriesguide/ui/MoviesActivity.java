@@ -95,8 +95,8 @@ public class MoviesActivity extends BaseTopActivity {
         tabsAdapter.addTab(R.string.title_discover, MoviesDiscoverFragment.class, null);
         // trakt-only tabs should only be visible if connected
         if (showNowTab) {
-            // (what to watch) now
-            tabsAdapter.addTab(R.string.now_tab, MoviesNowFragment.class, null);
+            // history tab
+            tabsAdapter.addTab(R.string.user_stream, MoviesNowFragment.class, null);
         }
         // watchlist
         tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
