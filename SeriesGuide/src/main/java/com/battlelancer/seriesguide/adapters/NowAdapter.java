@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
-import android.os.Build;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -25,8 +23,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Sectioned adapter displaying recently watched episodes, episodes released today and episodes
- * recently watched by trakt friends.
+ * Sectioned adapter displaying recently watched episodes and episodes recently watched by trakt
+ * friends.
  */
 public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -34,33 +32,6 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public interface ItemClickListener {
         void onItemClick(View view, int position);
-    }
-
-    static class ReleasedViewHolder extends RecyclerView.ViewHolder {
-        TextView show;
-        TextView episode;
-        TextView timestamp;
-        TextView info;
-        ImageView poster;
-
-        public ReleasedViewHolder(View itemView, final ItemClickListener listener) {
-            super(itemView);
-            show = (TextView) itemView.findViewById(R.id.textViewReleasedShow);
-            episode = (TextView) itemView.findViewById(R.id.textViewReleasedEpisode);
-            timestamp = (TextView) itemView.findViewById(R.id.textViewReleasedTimestamp);
-            info = (TextView) itemView.findViewById(R.id.textViewReleasedInfo);
-            poster = (ImageView) itemView.findViewById(R.id.imageViewReleasedPoster);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION && listener != null) {
-                        listener.onItemClick(v, position);
-                    }
-                }
-            });
-        }
     }
 
     static class HistoryViewHolder extends RecyclerView.ViewHolder {
@@ -123,10 +94,8 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({ ItemType.RELEASED, ItemType.HISTORY, ItemType.FRIEND, ItemType.MORE_LINK,
-            ItemType.HEADER })
+    @IntDef({ ItemType.HISTORY, ItemType.FRIEND, ItemType.MORE_LINK, ItemType.HEADER })
     public @interface ItemType {
-        int RELEASED = 0;
         int HISTORY = 1;
         int FRIEND = 2;
         int MORE_LINK = 3;
@@ -134,9 +103,8 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({ ViewType.RELEASED, ViewType.HISTORY, ViewType.MORE_LINK, ViewType.HEADER })
+    @IntDef({ ViewType.HISTORY, ViewType.MORE_LINK, ViewType.HEADER })
     public @interface ViewType {
-        int RELEASED = 0;
         int HISTORY = 1;
         int MORE_LINK = 2;
         int HEADER = 3;
@@ -149,7 +117,6 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<NowItem> dataset;
     private List<NowItem> recentlyWatched;
-    private List<NowItem> releasedToday;
     private List<NowItem> friendsRecently;
 
     public static class NowItem {
@@ -165,12 +132,6 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public String avatar;
         public String action;
         @ItemType public int type;
-
-        public NowItem releasedToday(String network) {
-            this.network = network;
-            this.type = ItemType.RELEASED;
-            return this;
-        }
 
         public NowItem recentlyWatchedLocal() {
             this.type = ItemType.HISTORY;
@@ -244,10 +205,6 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             View v = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_now_more, viewGroup, false);
             return new MoreViewHolder(v, listener);
-        } else if (viewType == ViewType.RELEASED) {
-            View v = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.item_now_released, viewGroup, false);
-            return new ReleasedViewHolder(v, listener);
         } else if (viewType == ViewType.HISTORY) {
             return getHistoryViewHolder(viewGroup, listener);
         } else {
@@ -275,35 +232,6 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             MoreViewHolder holder = (MoreViewHolder) viewHolder;
 
             holder.title.setText(item.title);
-        } else if (viewHolder instanceof ReleasedViewHolder) {
-            ReleasedViewHolder holder = (ReleasedViewHolder) viewHolder;
-
-            holder.show.setText(item.title);
-            holder.episode.setText(item.description);
-
-            // timestamp
-            Date actualRelease = TimeTools.applyUserOffset(getContext(), item.timestamp);
-            boolean displayExactDate = DisplaySettings.isDisplayExactDate(getContext());
-            holder.timestamp.setText(displayExactDate ?
-                    TimeTools.formatToLocalDateShort(getContext(), actualRelease)
-                    : TimeTools.formatToLocalRelativeTime(getContext(), actualRelease));
-
-            // absolute time and network
-            StringBuilder releaseInfo = new StringBuilder();
-            // "10:00 PM / Network", as left aligned, exactly mirrored from show list
-            releaseInfo.append(TimeTools.formatToLocalTime(getContext(), actualRelease));
-            if (!TextUtils.isEmpty(item.network)) {
-                releaseInfo.append(" / ").append(item.network);
-            }
-            holder.info.setText(releaseInfo);
-
-            // is a TVDb or no poster
-            TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster, item.tvdbPosterUrl);
-
-            // set unique transition names
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                holder.poster.setTransitionName("nowAdapterPoster_" + position);
-            }
         } else if (viewHolder instanceof HistoryViewHolder) {
             HistoryViewHolder holder = (HistoryViewHolder) viewHolder;
 
@@ -313,7 +241,8 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 holder.avatar.setVisibility(View.GONE);
 
                 // a TVDb or no poster
-                TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster, item.tvdbPosterUrl);
+                TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster,
+                        item.tvdbPosterUrl);
             } else {
                 // friend history entry
                 holder.username.setVisibility(View.VISIBLE);
@@ -322,7 +251,8 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 holder.username.setText(item.username);
 
                 // a TVDb or no poster
-                TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster, item.tvdbPosterUrl);
+                TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster,
+                        item.tvdbPosterUrl);
                 // trakt avatar
                 ServiceUtils.loadWithPicasso(getContext(), item.avatar).into(holder.avatar);
             }
@@ -355,8 +285,6 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemViewType(int position) {
         int itemType = getItem(position).type;
         switch (itemType) {
-            case ItemType.RELEASED:
-                return ViewType.RELEASED;
             case ItemType.HISTORY:
             case ItemType.FRIEND:
                 return ViewType.HISTORY;
@@ -384,32 +312,20 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return dataset.get(position);
     }
 
-    public void setReleasedTodayData(List<NowItem> items) {
-        int oldCount = releasedToday == null ? 0 : releasedToday.size();
-        int newCount = items == null ? 0 : items.size();
-
-        releasedToday = items;
-        reloadData();
-        notifyAboutChanges(0, oldCount, newCount);
-    }
-
     public void setRecentlyWatched(List<NowItem> items) {
         int oldCount = recentlyWatched == null ? 0 : recentlyWatched.size();
         int newCount = items == null ? 0 : items.size();
-        // items start after released today (if any)
-        int startPosition = releasedToday == null ? 0 : releasedToday.size();
 
         recentlyWatched = items;
         reloadData();
-        notifyAboutChanges(startPosition, oldCount, newCount);
+        notifyAboutChanges(0, oldCount, newCount);
     }
 
     public void setFriendsRecentlyWatched(List<NowItem> items) {
         int oldCount = friendsRecently == null ? 0 : friendsRecently.size();
         int newCount = items == null ? 0 : items.size();
-        // items start after released today and recently watched (if any)
-        int startPosition = (releasedToday == null ? 0 : releasedToday.size())
-                + (recentlyWatched == null ? 0 : recentlyWatched.size());
+        // items start after recently watched (if any)
+        int startPosition = recentlyWatched == null ? 0 : recentlyWatched.size();
 
         friendsRecently = items;
         reloadData();
@@ -418,9 +334,6 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private void reloadData() {
         dataset.clear();
-        if (releasedToday != null) {
-            dataset.addAll(releasedToday);
-        }
         if (recentlyWatched != null) {
             dataset.addAll(recentlyWatched);
         }

@@ -9,11 +9,4 @@
         android:title="@string/refresh"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/menu_action_now_filter_released_today"
-        android:checkable="true"
-        android:orderInCategory="3"
-        android:title="@string/released_today"
-        app:showAsAction="never" />
-
 </menu>

@@ -190,11 +190,6 @@ public class MoviesNowFragment extends Fragment {
         }
 
         inflater.inflate(R.menu.now_menu, menu);
-
-        // TODO ut: not currently using this
-        MenuItem todayFilterItem = menu.findItem(R.id.menu_action_now_filter_released_today);
-        todayFilterItem.setEnabled(false);
-        todayFilterItem.setVisible(false);
     }
 
     @Override

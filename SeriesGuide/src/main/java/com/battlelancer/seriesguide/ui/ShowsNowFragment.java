@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.ui;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -28,11 +27,9 @@ import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.loaders.RecentlyWatchedLoader;
-import com.battlelancer.seriesguide.loaders.ReleasedTodayLoader;
 import com.battlelancer.seriesguide.loaders.TraktFriendsEpisodeHistoryLoader;
 import com.battlelancer.seriesguide.loaders.TraktRecentEpisodeHistoryLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.settings.NowSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -47,8 +44,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 /**
- * Displays recently watched episodes, today's releases and recent episodes from friends (if
- * connected to trakt).
+ * Displays recently watched episodes and recent episodes from friends (if connected to trakt).
  */
 public class ShowsNowFragment extends Fragment {
 
@@ -62,7 +58,6 @@ public class ShowsNowFragment extends Fragment {
 
     private Unbinder unbinder;
     private NowAdapter adapter;
-    private boolean isLoadingReleasedToday;
     private boolean isLoadingRecentlyWatched;
     private boolean isLoadingFriends;
 
@@ -168,14 +163,10 @@ public class ShowsNowFragment extends Fragment {
         EventBus.getDefault().register(this);
 
         /*
-          Init recently watched and released today loaders here the earliest.
+          Init recently watched loader here the earliest.
           So we can restart them if they already exist to ensure up to date data (the loaders do
           not react to database changes themselves) and avoid loading data twice in a row.
          */
-        if (NowSettings.isDisplayingReleasedToday(getActivity())) {
-            isLoadingReleasedToday = true;
-            initAndMaybeRestartLoader(ShowsActivity.NOW_TODAY_LOADER_ID, releasedTodayCallbacks);
-        }
         if (!TraktCredentials.get(getActivity()).hasCredentials()) {
             isLoadingRecentlyWatched = true;
             initAndMaybeRestartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, recentlyLocalCallbacks);
@@ -227,9 +218,6 @@ public class ShowsNowFragment extends Fragment {
         }
 
         inflater.inflate(R.menu.now_menu, menu);
-
-        menu.findItem(R.id.menu_action_now_filter_released_today)
-                .setChecked(NowSettings.isDisplayingReleasedToday(getActivity()));
     }
 
     @Override
@@ -239,31 +227,12 @@ public class ShowsNowFragment extends Fragment {
             refreshStream();
             return true;
         }
-        if (itemId == R.id.menu_action_now_filter_released_today) {
-            PreferenceManager.getDefaultSharedPreferences(getActivity())
-                    .edit()
-                    .putBoolean(NowSettings.KEY_DISPLAY_RELEASED_TODAY,
-                            !NowSettings.isDisplayingReleasedToday(getActivity()))
-                    .apply();
-            refreshStream();
-            getActivity().supportInvalidateOptionsMenu();
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
     private void refreshStream() {
         showProgressBar(true);
         showError(null);
-
-        // reload released today, if enabled
-        if (NowSettings.isDisplayingReleasedToday(getActivity())) {
-            isLoadingReleasedToday = true;
-            getLoaderManager().restartLoader(ShowsActivity.NOW_TODAY_LOADER_ID, null,
-                    releasedTodayCallbacks);
-        } else {
-            destroyLoaderIfExists(ShowsActivity.NOW_TODAY_LOADER_ID);
-        }
 
         // if connected to trakt, replace local history with trakt history, show friends history
         // user might get disconnected during our life-time,
@@ -330,7 +299,7 @@ public class ShowsNowFragment extends Fragment {
     private void showProgressBar(boolean show) {
         // only hide if everybody has finished loading
         if (!show) {
-            if (isLoadingReleasedToday || isLoadingRecentlyWatched || isLoadingFriends) {
+            if (isLoadingRecentlyWatched || isLoadingFriends) {
                 return;
             }
         }
@@ -405,34 +374,6 @@ public class ShowsNowFragment extends Fragment {
                 AddShowDialogFragment.showAddDialog(item.showTvdbId, getFragmentManager());
             }
             query.close();
-        }
-    };
-
-    private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> releasedTodayCallbacks
-            = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
-        @Override
-        public Loader<List<NowAdapter.NowItem>> onCreateLoader(int id, Bundle args) {
-            return new ReleasedTodayLoader(getActivity());
-        }
-
-        @Override
-        public void onLoadFinished(Loader<List<NowAdapter.NowItem>> loader,
-                List<NowAdapter.NowItem> data) {
-            if (!isAdded()) {
-                return;
-            }
-            adapter.setReleasedTodayData(data);
-            isLoadingReleasedToday = false;
-            showProgressBar(false);
-        }
-
-        @Override
-        public void onLoaderReset(Loader<List<NowAdapter.NowItem>> loader) {
-            if (!isVisible()) {
-                return;
-            }
-            // clear existing data
-            adapter.setReleasedTodayData(null);
         }
     };
 
