@@ -2,13 +2,17 @@ package com.battlelancer.seriesguide.ui.streams;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.MovieHistoryAdapter;
 import com.battlelancer.seriesguide.loaders.TraktMovieHistoryLoader;
 import com.battlelancer.seriesguide.ui.HistoryActivity;
@@ -19,9 +23,22 @@ import com.uwetrottmann.trakt5.entities.HistoryEntry;
 /**
  * Displays a stream of movies the user has recently watched on trakt.
  */
-public class UserMovieStreamFragment extends StreamFragment {
+public class UserMovieStreamFragment extends StreamFragment implements
+        AdapterView.OnItemClickListener {
 
     private MovieHistoryAdapter mAdapter;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_stream_movies, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        gridView.setOnItemClickListener(this);
+    }
 
     @Override
     protected ListAdapter getListAdapter() {

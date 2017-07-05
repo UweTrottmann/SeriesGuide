@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -20,27 +22,39 @@ import java.util.List;
  */
 public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
 
+    public interface OnItemClickListener {
+        void onItemClick(View view, HistoryEntry item);
+    }
+
     public static class ViewHolder {
+        @BindView(R.id.textViewHistoryShow) TextView show;
+        @BindView(R.id.textViewHistoryEpisode) TextView episode;
+        @BindView(R.id.imageViewHistoryPoster) ImageView poster;
+        @BindView(R.id.textViewHistoryInfo) TextView info;
+        @BindView(R.id.imageViewHistoryAvatar) ImageView avatar;
+        @BindView(R.id.imageViewHistoryType) ImageView type;
+        HistoryEntry item;
 
-        TextView title;
-        TextView description;
-        TextView timestamp;
-        ImageView poster;
-        ImageView type;
-
-        public ViewHolder(View view) {
-            title = (TextView) view.findViewById(R.id.textViewHistoryTitle);
-            description = (TextView) view.findViewById(R.id.textViewHistoryDescription);
-            timestamp = (TextView) view.findViewById(R.id.textViewHistoryTimestamp);
-            poster = (ImageView) view.findViewById(R.id.imageViewHistoryPoster);
-            type = (ImageView) view.findViewById(R.id.imageViewHistoryType);
+        public ViewHolder(View itemView, final OnItemClickListener listener) {
+            ButterKnife.bind(this, itemView);
+            avatar.setVisibility(View.GONE);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onItemClick(v, item);
+                    }
+                }
+            });
         }
     }
 
+    private final OnItemClickListener itemClickListener;
     private SparseArrayCompat<String> localShowPosters;
 
-    public EpisodeHistoryAdapter(Context context) {
+    public EpisodeHistoryAdapter(Context context, OnItemClickListener itemClickListener) {
         super(context);
+        this.itemClickListener = itemClickListener;
     }
 
     @Override
@@ -58,7 +72,7 @@ public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
 
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_history, parent, false);
-            holder = new ViewHolder(convertView);
+            holder = new ViewHolder(convertView, itemClickListener);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -68,9 +82,9 @@ public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
         if (item == null) {
             return convertView; // all bets are off!
         }
-
+        holder.item = item;
         // show title
-        holder.title.setText(item.show == null ? null : item.show.title);
+        holder.show.setText(item.show == null ? null : item.show.title);
         // show poster, use a TVDB one
         String posterUrl;
         Integer showTvdbId = (item.show == null || item.show.ids == null)
@@ -89,9 +103,9 @@ public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
             CharSequence timestamp = DateUtils.getRelativeTimeSpanString(
                     item.watched_at.toInstant().toEpochMilli(), System.currentTimeMillis(),
                     DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
-            holder.timestamp.setText(timestamp);
+            holder.info.setText(timestamp);
         } else {
-            holder.timestamp.setText(null);
+            holder.info.setText(null);
         }
 
         // action type indicator
@@ -105,10 +119,10 @@ public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
 
         // episode
         if (item.episode != null && item.episode.season != null && item.episode.number != null) {
-            holder.description.setText(TextTools.getNextEpisodeString(getContext(), item.episode.season,
+            holder.episode.setText(TextTools.getNextEpisodeString(getContext(), item.episode.season,
                     item.episode.number, item.episode.title));
         } else {
-            holder.description.setText(null);
+            holder.episode.setText(null);
         }
 
         return convertView;

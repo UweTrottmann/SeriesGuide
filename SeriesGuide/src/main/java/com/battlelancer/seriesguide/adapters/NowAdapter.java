@@ -210,7 +210,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     protected RecyclerView.ViewHolder getHistoryViewHolder(ViewGroup viewGroup,
             ItemClickListener itemClickListener) {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_now_history, viewGroup, false);
+                .inflate(R.layout.item_history, viewGroup, false);
         return new HistoryViewHolder(v, itemClickListener);
     }
 
