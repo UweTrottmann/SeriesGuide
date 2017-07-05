@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,7 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.model.HeaderData;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import java.util.ArrayList;
@@ -28,17 +29,19 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
 
     private List<HeaderData> mHeaders;
     private Calendar mCalendar;
-    private final int mResIdDrawableWatched;
-    private final int mResIdDrawableCheckin;
+    private final VectorDrawableCompat drawableWatched;
+    private final VectorDrawableCompat drawableCheckin;
 
     public SectionedHistoryAdapter(Context context) {
         super(context, 0);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mCalendar = Calendar.getInstance();
-        mResIdDrawableWatched = Utils.resolveAttributeToResourceId(getContext().getTheme(),
-                R.attr.drawableWatch);
-        mResIdDrawableCheckin = Utils.resolveAttributeToResourceId(getContext().getTheme(),
-                R.attr.drawableCheckin);
+        drawableWatched = ViewTools.createVectorIconInactive(getContext(),
+                getContext().getTheme(),
+                R.drawable.ic_check_black_16dp);
+        drawableCheckin = ViewTools.createVectorIconInactive(getContext(),
+                getContext().getTheme(),
+                R.drawable.ic_message_black_16dp);
     }
 
     public void setData(List<HistoryEntry> data) {
@@ -48,12 +51,12 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
         }
     }
 
-    public int getResIdDrawableWatched() {
-        return mResIdDrawableWatched;
+    public VectorDrawableCompat getDrawableWatched() {
+        return drawableWatched;
     }
 
-    public int getResIdDrawableCheckin() {
-        return mResIdDrawableCheckin;
+    public VectorDrawableCompat getDrawableCheckin() {
+        return drawableCheckin;
     }
 
     @Override

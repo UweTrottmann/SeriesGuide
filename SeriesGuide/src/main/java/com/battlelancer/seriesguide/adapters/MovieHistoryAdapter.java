@@ -71,10 +71,10 @@ public class MovieHistoryAdapter extends SectionedHistoryAdapter {
         // action type indicator
         if ("watch".equals(item.action)) {
             // marked watched
-            holder.type.setImageResource(getResIdDrawableWatched());
+            holder.type.setImageDrawable(getDrawableWatched());
         } else {
             // check-in, scrobble
-            holder.type.setImageResource(getResIdDrawableCheckin());
+            holder.type.setImageDrawable(getDrawableCheckin());
         }
 
         return convertView;
