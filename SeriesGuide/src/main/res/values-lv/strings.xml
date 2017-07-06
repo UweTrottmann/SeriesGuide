@@ -140,20 +140,18 @@
   <string name="action_shows_sort_favorites">Sākot ar izlasi</string>
   <string name="context_updateshow">Atjaunināt</string>
   <string name="context_marknext">Nākamā epizode noskatīta</string>
-  <!-- Now -->
-  <string name="now_tab">šobrīd</string>
+  <!-- History -->
+  <string name="user_stream">Vēsture</string>
   <string name="recently_watched">Recently watched</string>
-  <string name="released_today">Released today</string>
   <string name="friends_recently">Trakt draugi</string>
   <string name="now_empty">Nekas nenotiek. Skatieties šovus!</string>
   <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
-  <!-- History -->
-  <string name="user_stream">Vēsture</string>
   <string name="user_stream_empty">Neeksistē nesena trakt aktivitāte. Iečeko kādus šovus!</string>
   <string name="user_movie_stream_empty">Neeksistē nesenas trakt aktivitātes. Iečeko kādas filmas!</string>
   <!-- Calendar -->
   <string name="upcoming">Gaidāmās</string>
   <string name="recent">Nesen</string>
+  <string name="released_today">Released today</string>
   <string name="noupcoming">Nav gaidāmu epizožu.</string>
   <string name="norecent">Nav nesenu epizožu.</string>
   <string name="calendar_settings">Calendar settings</string>

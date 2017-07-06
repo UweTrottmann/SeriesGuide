@@ -139,20 +139,18 @@
   <string name="action_shows_sort_favorites">Önce favoriler</string>
   <string name="context_updateshow">Güncelle</string>
   <string name="context_marknext">Sıradaki bölüm izlendi</string>
-  <!-- Now -->
-  <string name="now_tab">Şimdi</string>
+  <!-- History -->
+  <string name="user_stream">Geçmiş</string>
   <string name="recently_watched">Yakın zamanda izlenen</string>
-  <string name="released_today">Bugün yayınlanan</string>
   <string name="friends_recently">trakt arkadaşların</string>
   <string name="now_empty">Buralar boş. Biraz dizi izle!</string>
   <string name="now_movies_empty">Buralar boş. Biraz film izle!</string>
-  <!-- History -->
-  <string name="user_stream">Geçmiş</string>
   <string name="user_stream_empty">Yakın zamanda bir trakt aktiviteniz yok. Birkaç diziye check-in yapın!</string>
   <string name="user_movie_stream_empty">Yakın zamanda bir trakt aktiviteniz yok. Birkaç filme check-in yapın!</string>
   <!-- Calendar -->
   <string name="upcoming">Yaklaşan</string>
   <string name="recent">En Son</string>
+  <string name="released_today">Bugün yayınlanan</string>
   <string name="noupcoming">Yaklaşan bölüm yok.</string>
   <string name="norecent">Yeni tarihli bölüm yok.</string>
   <string name="calendar_settings">Calendar settings</string>

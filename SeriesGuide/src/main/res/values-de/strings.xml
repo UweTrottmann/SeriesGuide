@@ -139,20 +139,18 @@
   <string name="action_shows_sort_favorites">Favoriten zuerst</string>
   <string name="context_updateshow">Aktualisieren</string>
   <string name="context_marknext">Nächste Folge angesehen</string>
-  <!-- Now -->
-  <string name="now_tab">Jetzt</string>
+  <!-- History -->
+  <string name="user_stream">Verlauf</string>
   <string name="recently_watched">Vor kurzem angesehen</string>
-  <string name="released_today">Heute veröffentlicht</string>
   <string name="friends_recently">Ihre trakt Freunde</string>
   <string name="now_empty">Nichts los. Sehen Sie sich ein paar Serien an!</string>
   <string name="now_movies_empty">Nichts los. Sehen Sie sich ein paar Filme an!</string>
-  <!-- History -->
-  <string name="user_stream">Verlauf</string>
   <string name="user_stream_empty">In letzter Zeit keine Aktivitäten auf trakt. Checken Sie in Serien ein!</string>
   <string name="user_movie_stream_empty">In letzter Zeit keine Aktivitäten auf trakt. Checken Sie in Filme ein!</string>
   <!-- Calendar -->
   <string name="upcoming">Demnächst</string>
   <string name="recent">Vor kurzem</string>
+  <string name="released_today">Heute veröffentlicht</string>
   <string name="noupcoming">Keine kommenden Folgen.</string>
   <string name="norecent">Keine bereits gesendeten Folgen.</string>
   <string name="calendar_settings">Kalendereinstellungen</string>

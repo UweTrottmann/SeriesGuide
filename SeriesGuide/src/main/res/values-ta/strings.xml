@@ -139,20 +139,18 @@
   <string name="action_shows_sort_favorites">விருப்பங்களின் முதல்</string>
   <string name="context_updateshow">புதுப்பித்தல்</string>
   <string name="context_marknext">பார்த்த அடுத்த சம்பவம்</string>
-  <!-- Now -->
-  <string name="now_tab">இப்போது</string>
+  <!-- History -->
+  <string name="user_stream">வரலாறு</string>
   <string name="recently_watched">சமீபத்தில் பார்த்த</string>
-  <string name="released_today">இன்று விடுதலை</string>
   <string name="friends_recently">உங்கள் trakt நண்பர்கள்</string>
   <string name="now_empty">எதுவும் இல்லை அன்று செல்லும். சில காட்சிகள் கவனி!</string>
   <string name="now_movies_empty">எதுவும் இல்லை அன்று செல்லும். அதில் சில திரைப்படங்கள்!</string>
-  <!-- History -->
-  <string name="user_stream">வரலாறு</string>
   <string name="user_stream_empty">அன்று trakt வரலாறு இல்லை. கவனி மற்றும் சில காட்சிகள்-ஐ சரிபார்க்க!</string>
   <string name="user_movie_stream_empty">அன்று trakt வரலாறு இல்லை. கவனி மற்றும் சில திரைப்படங்கள்-ஐ சரிபார்க்க!</string>
   <!-- Calendar -->
   <string name="upcoming">வரவிருக்கும்</string>
   <string name="recent">சமீபத்திய</string>
+  <string name="released_today">இன்று விடுதலை</string>
   <string name="noupcoming">எந்த வரவிருக்கும் episodes உள்ளன.</string>
   <string name="norecent">எந்த சமீபத்திய episodes உள்ளன.</string>
   <string name="calendar_settings">Calendar settings</string>

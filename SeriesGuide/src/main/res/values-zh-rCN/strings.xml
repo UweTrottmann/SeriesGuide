@@ -138,20 +138,18 @@
   <string name="action_shows_sort_favorites">依据喜爱状态</string>
   <string name="context_updateshow">更新</string>
   <string name="context_marknext">标记本集为已观看</string>
-  <!-- Now -->
-  <string name="now_tab">今日</string>
+  <!-- History -->
+  <string name="user_stream">历史记录</string>
   <string name="recently_watched">最近观看</string>
-  <string name="released_today">今天播出</string>
   <string name="friends_recently">好友动态</string>
   <string name="now_empty">没有新鲜事</string>
   <string name="now_movies_empty">什么也没有。看一些电影吧！</string>
-  <!-- History -->
-  <string name="user_stream">历史记录</string>
   <string name="user_stream_empty">近期没有 trakt 动态\n观看剧集时的签到会显示在这里</string>
   <string name="user_movie_stream_empty">近期没有 trakt 动态\n观看电影时的签到会显示在这里</string>
   <!-- Calendar -->
   <string name="upcoming">即将播出</string>
   <string name="recent">已播剧集</string>
+  <string name="released_today">今天播出</string>
   <string name="noupcoming">没有即将播出的剧集</string>
   <string name="norecent">没有近期已播出的剧集</string>
   <string name="calendar_settings">日历设置</string>

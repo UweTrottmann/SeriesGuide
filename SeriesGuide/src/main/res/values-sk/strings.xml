@@ -140,20 +140,18 @@
   <string name="action_shows_sort_favorites">Uprednostniť obľúbené</string>
   <string name="context_updateshow">Aktualizovať</string>
   <string name="context_marknext">Označiť nasledujúcu ako videnú</string>
-  <!-- Now -->
-  <string name="now_tab">Teraz</string>
+  <!-- History -->
+  <string name="user_stream">História</string>
   <string name="recently_watched">Nedávno videné</string>
-  <string name="released_today">Odvysielané dnes</string>
   <string name="friends_recently">Vaši priatelia z trakt</string>
   <string name="now_empty">Nič nebeží. Pozrite si nejaké seriály!</string>
   <string name="now_movies_empty">Nič nebeží. Pozrite si nejaké filmy!</string>
-  <!-- History -->
-  <string name="user_stream">História</string>
   <string name="user_stream_empty">Žiadna história na trakt. Pozrite si nejaké seriály!</string>
   <string name="user_movie_stream_empty">Žiadna nedávna aktivita na trakt. Pozrite si nejaké filmy!</string>
   <!-- Calendar -->
   <string name="upcoming">Nadchádzajúce</string>
   <string name="recent">Nedávne</string>
+  <string name="released_today">Odvysielané dnes</string>
   <string name="noupcoming">Žiadne nadchádzajúce epizódy.</string>
   <string name="norecent">Žiadne nedávne epizódy.</string>
   <string name="calendar_settings">Nastavenia kalendára</string>

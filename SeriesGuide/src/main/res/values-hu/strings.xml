@@ -139,20 +139,18 @@
   <string name="action_shows_sort_favorites">Kedvencek előre</string>
   <string name="context_updateshow">Frissítés</string>
   <string name="context_marknext">Láttam a következő epizódot</string>
-  <!-- Now -->
-  <string name="now_tab">Friss</string>
+  <!-- History -->
+  <string name="user_stream">Előzmények</string>
   <string name="recently_watched">Nemrég megnézett</string>
-  <string name="released_today">Ma vetített</string>
   <string name="friends_recently">Trakt barátaid</string>
   <string name="now_empty">Nincs most folyamatban semmi. Nézz meg valamilyen sorozatot!</string>
   <string name="now_movies_empty">Nincs most folyamatban semmi. Nézz meg valamilyen filmet!</string>
-  <!-- History -->
-  <string name="user_stream">Előzmények</string>
   <string name="user_stream_empty">Nincs trakt előzmény. Nézz meg és jelölj be néhány sorozatot!</string>
   <string name="user_movie_stream_empty">Nem volt trakt aktivitás mostanában. Jelölj be néhány filmet!</string>
   <!-- Calendar -->
   <string name="upcoming">Következő</string>
   <string name="recent">Legutóbbi</string>
+  <string name="released_today">Ma vetített</string>
   <string name="noupcoming">Nincsenek következő epizódok.</string>
   <string name="norecent">Nincsenek mostanában vetített epizódok.</string>
   <string name="calendar_settings">Naptár beállításai</string>

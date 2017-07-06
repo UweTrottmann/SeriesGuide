@@ -140,20 +140,18 @@
   <string name="action_shows_sort_favorites">Favoritele primele</string>
   <string name="context_updateshow">Actualizare</string>
   <string name="context_marknext">Episodul următor a fost vizionat</string>
-  <!-- Now -->
-  <string name="now_tab">Acum</string>
+  <!-- History -->
+  <string name="user_stream">Istoric</string>
   <string name="recently_watched">Recent vizionate</string>
-  <string name="released_today">Lansate astăzi</string>
   <string name="friends_recently">Prietenii tăi trakt</string>
   <string name="now_empty">Nu se întâmplă nimic. Vizionează câteva emisiuni!</string>
   <string name="now_movies_empty">Nu se întâmplă nimic. Vizionează câteva filme!</string>
-  <!-- History -->
-  <string name="user_stream">Istoric</string>
   <string name="user_stream_empty">Nici o activitate recentă pe trakt. Vizionați câteva emisiuni!</string>
   <string name="user_movie_stream_empty">Nici o activitate recentă pe trakt. Vizionați câteva filme!</string>
   <!-- Calendar -->
   <string name="upcoming">Urmează</string>
   <string name="recent">Recente</string>
+  <string name="released_today">Lansate astăzi</string>
   <string name="noupcoming">Nu sunt episoade care urmează.</string>
   <string name="norecent">Nu sunt episoade recente.</string>
   <string name="calendar_settings">Setări calendar</string>

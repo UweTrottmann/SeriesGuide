@@ -139,20 +139,18 @@
   <string name="action_shows_sort_favorites">Листа на омилени</string>
   <string name="context_updateshow">Ажурирај</string>
   <string name="context_marknext">Гледај следна епизода</string>
-  <!-- Now -->
-  <string name="now_tab">Сега</string>
+  <!-- History -->
+  <string name="user_stream">Историја</string>
   <string name="recently_watched">Скоро гледана</string>
-  <string name="released_today">Објавено денес</string>
   <string name="friends_recently">Твои trakt пријатели</string>
   <string name="now_empty">Досадно ви е. Гледајте некои серии!</string>
   <string name="now_movies_empty">Ништо не се случува. Гледајте некој филм!</string>
-  <!-- History -->
-  <string name="user_stream">Историја</string>
   <string name="user_stream_empty">Нема историја на trakt. Гледај и провери во некои серии!</string>
   <string name="user_movie_stream_empty">Нема историја на trakt. Гледај и провери во некои филмови!</string>
   <!-- Calendar -->
   <string name="upcoming">Идни</string>
   <string name="recent">Скорешни</string>
+  <string name="released_today">Објавено денес</string>
   <string name="noupcoming">Нема претстојни епизоди.</string>
   <string name="norecent">Нема скорешни епизоди.</string>
   <string name="calendar_settings">Calendar settings</string>

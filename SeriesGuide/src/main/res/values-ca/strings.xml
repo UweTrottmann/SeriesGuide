@@ -139,20 +139,18 @@
   <string name="action_shows_sort_favorites">Preferits primer</string>
   <string name="context_updateshow">Actualitza</string>
   <string name="context_marknext">Següent episodi vist</string>
-  <!-- Now -->
-  <string name="now_tab">Ara</string>
+  <!-- History -->
+  <string name="user_stream">historic</string>
   <string name="recently_watched">Vist Recentment</string>
-  <string name="released_today">Publicat avui</string>
   <string name="friends_recently">Els teus amics de Trakt</string>
   <string name="now_empty">Res a veure. Mira alguna sèrie!</string>
   <string name="now_movies_empty">Res a veure. Mira alguna pel·lícula!</string>
-  <!-- History -->
-  <string name="user_stream">historic</string>
   <string name="user_stream_empty">No hi ha activitat recent al trakt. Seguiu alguna sèrie!</string>
   <string name="user_movie_stream_empty">No hi ha activitat en trakt. Apunteu-hi alguna peŀlícula!</string>
   <!-- Calendar -->
   <string name="upcoming">Propers</string>
   <string name="recent">Recent</string>
+  <string name="released_today">Publicat avui</string>
   <string name="noupcoming">No hi ha capítols pròximament.</string>
   <string name="norecent">No hi ha capítols recents.</string>
   <string name="calendar_settings">Ajustaments de calendari</string>

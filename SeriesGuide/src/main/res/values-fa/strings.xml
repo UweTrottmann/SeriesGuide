@@ -139,20 +139,18 @@
   <string name="action_shows_sort_favorites">نخست برگزیده‌ها</string>
   <string name="context_updateshow">به‌روز رسانی</string>
   <string name="context_marknext">قسمت بعدی تماشا شده</string>
-  <!-- Now -->
-  <string name="now_tab">اکنون</string>
+  <!-- History -->
+  <string name="user_stream">تاریخچه</string>
   <string name="recently_watched">به‌تازگی تماشا شده</string>
-  <string name="released_today">امروز منتشر شد</string>
   <string name="friends_recently">دوستان شما در trakt</string>
   <string name="now_empty">هیچ خبری نیست. چند اثر نمایشی تماشا کنید!</string>
   <string name="now_movies_empty">هیچ خبری نیست. چند فیلم تماشا کنید!</string>
-  <!-- History -->
-  <string name="user_stream">تاریخچه</string>
   <string name="user_stream_empty">هیچ تاریخچه ای در trakt یافت نشد. چند اثری نمایشی را مشاهده کنید و سپس علامت بزنید!</string>
   <string name="user_movie_stream_empty">هیچ فعالیت اخیری در trakt  نیست. تعدادی فیلم را علامت بزنید!</string>
   <!-- Calendar -->
   <string name="upcoming">بزودی</string>
   <string name="recent">اخیر</string>
+  <string name="released_today">امروز منتشر شد</string>
   <string name="noupcoming">هیچ قسمت آینده ای وجود ندارد.</string>
   <string name="norecent">هیچ قسمت اخیری وجود ندارد.</string>
   <string name="calendar_settings">Calendar settings</string>

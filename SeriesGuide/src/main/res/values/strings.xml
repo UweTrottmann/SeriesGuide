@@ -155,22 +155,19 @@
     <string name="context_updateshow">Update</string>
     <string name="context_marknext">Watched next episode</string>
 
-    <!-- Now -->
-    <string name="now_tab">Now</string>
+    <!-- History -->
+    <string name="user_stream">History</string>
     <string name="recently_watched">Recently watched</string>
-    <string name="released_today">Released today</string>
     <string name="friends_recently">Your trakt friends</string>
     <string name="now_empty">Nothing going on. Watch some shows!</string>
     <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
-
-    <!-- History -->
-    <string name="user_stream">History</string>
     <string name="user_stream_empty">No history on trakt. Watch and check into some shows!</string>
     <string name="user_movie_stream_empty">No history on trakt. Watch and check into some movies!</string>
 
     <!-- Calendar -->
     <string name="upcoming">Upcoming</string>
     <string name="recent">Recent</string>
+    <string name="released_today">Released today</string>
     <string name="noupcoming">There are no upcoming episodes.</string>
     <string name="norecent">There are no recent episodes.</string>
     <string name="calendar_settings">Calendar settings</string>

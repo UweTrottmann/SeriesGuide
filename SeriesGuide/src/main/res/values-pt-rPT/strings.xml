@@ -139,20 +139,18 @@
   <string name="action_shows_sort_favorites">Privilegiar Favoritos</string>
   <string name="context_updateshow">Atualizar</string>
   <string name="context_marknext">Marcar próximo episódio como visto</string>
-  <!-- Now -->
-  <string name="now_tab">Agora</string>
+  <!-- History -->
+  <string name="user_stream">Histórico</string>
   <string name="recently_watched">Visto recentemente</string>
-  <string name="released_today">Exibido hoje</string>
   <string name="friends_recently">Amigos do trakt</string>
   <string name="now_empty">Não tenho nada para te mostrar. Vai ver mas é algumas séries!</string>
   <string name="now_movies_empty">Não tenho nada para te mostrar, pá. Não tens filmes para ver?</string>
-  <!-- History -->
-  <string name="user_stream">Histórico</string>
   <string name="user_stream_empty">Parece que não usas o trakt há algum tempo. Procura por novas séries!</string>
   <string name="user_movie_stream_empty">Parece que não usas o trakt há algum tempo. Procura por novos filmes!</string>
   <!-- Calendar -->
   <string name="upcoming">Próximos</string>
   <string name="recent">Recentes</string>
+  <string name="released_today">Exibido hoje</string>
   <string name="noupcoming">Não existem próximos episódios.</string>
   <string name="norecent">Não existem episódios recentes.</string>
   <string name="calendar_settings">Configurações do calendário</string>

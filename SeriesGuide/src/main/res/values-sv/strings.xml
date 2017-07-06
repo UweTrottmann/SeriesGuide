@@ -140,20 +140,18 @@
   <string name="action_shows_sort_favorites">Favoriter först</string>
   <string name="context_updateshow">Uppdatera</string>
   <string name="context_marknext">Sett nästa avsnitt</string>
-  <!-- Now -->
-  <string name="now_tab">Nu</string>
+  <!-- History -->
+  <string name="user_stream">Historik</string>
   <string name="recently_watched">Nyligen sedda</string>
-  <string name="released_today">Utgivet idag</string>
   <string name="friends_recently">Dina trakt-vänner</string>
   <string name="now_empty">Inget att göra. Se några tv-serier!</string>
   <string name="now_movies_empty">Ingenting händer. Titta på några filmer!</string>
-  <!-- History -->
-  <string name="user_stream">Historik</string>
   <string name="user_stream_empty">Inga nya aktiviter på trakt. Bocka av några serier!</string>
   <string name="user_movie_stream_empty">Inga nya aktiviter på trakt. Bocka av några filmer!</string>
   <!-- Calendar -->
   <string name="upcoming">Kommande</string>
   <string name="recent">Senaste</string>
+  <string name="released_today">Utgivet idag</string>
   <string name="noupcoming">Det finns inga kommande avsnitt.</string>
   <string name="norecent">Det finns inga aktuella avsnitt.</string>
   <string name="calendar_settings">Kalenderinställningar</string>

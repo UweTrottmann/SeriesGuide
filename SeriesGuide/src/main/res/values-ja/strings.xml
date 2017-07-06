@@ -138,20 +138,18 @@
   <string name="action_shows_sort_favorites">お気に入りを最初に</string>
   <string name="context_updateshow">更新</string>
   <string name="context_marknext">視聴済次のエピソード</string>
-  <!-- Now -->
-  <string name="now_tab">今</string>
+  <!-- History -->
+  <string name="user_stream">履歴</string>
   <string name="recently_watched">最近視聴</string>
-  <string name="released_today">本日リリース</string>
   <string name="friends_recently">Trakt の友達</string>
   <string name="now_empty">何もありません。番組をご覧ください!</string>
   <string name="now_movies_empty">何もありません。映画をご覧ください!</string>
-  <!-- History -->
-  <string name="user_stream">履歴</string>
   <string name="user_stream_empty">Trakt に履歴がありません。番組を視聴およびチェックしてください!</string>
   <string name="user_movie_stream_empty">Trakt に履歴がありません。映画を視聴およびチェックしてください!</string>
   <!-- Calendar -->
   <string name="upcoming">今後</string>
   <string name="recent">最近</string>
+  <string name="released_today">本日リリース</string>
   <string name="noupcoming">今後のエピソードはありません。</string>
   <string name="norecent">最近のエピソードはありません。</string>
   <string name="calendar_settings">カレンダー設定</string>

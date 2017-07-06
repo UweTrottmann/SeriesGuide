@@ -139,20 +139,18 @@
   <string name="action_shows_sort_favorites">Foretrukne først</string>
   <string name="context_updateshow">Opdatér</string>
   <string name="context_marknext">Næste episode set</string>
-  <!-- Now -->
-  <string name="now_tab">Nu</string>
+  <!-- History -->
+  <string name="user_stream">Historik</string>
   <string name="recently_watched">Set for nylig</string>
-  <string name="released_today">Udgivet i dag</string>
   <string name="friends_recently">Dine trakt-venner</string>
   <string name="now_empty">Der sker intet. Se nogle serier!</string>
   <string name="now_movies_empty">Der sker intet. Se nogle film!</string>
-  <!-- History -->
-  <string name="user_stream">Historik</string>
   <string name="user_stream_empty">Ingen historik på trakt. Tjek nogle serier ind!</string>
   <string name="user_movie_stream_empty">Ingen historik på trakt. Tjek nogle film ind!</string>
   <!-- Calendar -->
   <string name="upcoming">Kommende</string>
   <string name="recent">Seneste</string>
+  <string name="released_today">Udgivet i dag</string>
   <string name="noupcoming">Ingen kommende episoder.</string>
   <string name="norecent">Ingen nylige episoder.</string>
   <string name="calendar_settings">Kalenderindstillinger</string>

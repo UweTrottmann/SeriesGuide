@@ -138,20 +138,18 @@
   <string name="action_shows_sort_favorites">Favorite di awal</string>
   <string name="context_updateshow">Pembaruan</string>
   <string name="context_marknext">Episode selanjutnya ditonton</string>
-  <!-- Now -->
-  <string name="now_tab">Sekarang</string>
+  <!-- History -->
+  <string name="user_stream">Riwayat</string>
   <string name="recently_watched">Baru-baru ini ditonton</string>
-  <string name="released_today">Dirislis hari ini</string>
   <string name="friends_recently">Teman trakt mu</string>
   <string name="now_empty">Tidak ada apa-apa. Tonton beberapa acara!</string>
   <string name="now_movies_empty">Tidak ada apa-apa. Tonton beberapa film!</string>
-  <!-- History -->
-  <string name="user_stream">Riwayat</string>
   <string name="user_stream_empty">Tidak ada riwayat di trakt. tonton dan cek beberapa acara!</string>
   <string name="user_movie_stream_empty">Tidak ada riwayat di trakt. tonton dan cek beberapa film!</string>
   <!-- Calendar -->
   <string name="upcoming">Mendatang</string>
   <string name="recent">Baru-baru ini</string>
+  <string name="released_today">Dirislis hari ini</string>
   <string name="noupcoming">Tidak ada episode mendatang.</string>
   <string name="norecent">Tak ada video terkini.</string>
   <string name="calendar_settings">Pengaturan kalender</string>

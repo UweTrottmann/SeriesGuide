@@ -138,20 +138,18 @@
   <string name="action_shows_sort_favorites">รายการโปรดก่อน</string>
   <string name="context_updateshow">อัปเดต</string>
   <string name="context_marknext">ดูตอนถัดไป</string>
-  <!-- Now -->
-  <string name="now_tab">ขณะนี้</string>
+  <!-- History -->
+  <string name="user_stream">ประวัติ</string>
   <string name="recently_watched">เพิ่งดู</string>
-  <string name="released_today">ออกวันนี้</string>
   <string name="friends_recently">เพื่อน trakt ของคุณ</string>
   <string name="now_empty">ไม่มีอะไรเกิดขึ้น เริ่มดูซีรีส์สักเรื่อง!</string>
   <string name="now_movies_empty">ไม่มีอะไรเกิดขึ้น เริ่มดูภาพยนตร์สักเรื่อง!</string>
-  <!-- History -->
-  <string name="user_stream">ประวัติ</string>
   <string name="user_stream_empty">ไม่มีประวัติบน trakt ดูและเช็กอินซีรีส์สักเรื่องสิ!</string>
   <string name="user_movie_stream_empty">ไม่มีประวัติบน trakt ดูและเช็กอินภาพยนตร์สักเรื่องสิ!</string>
   <!-- Calendar -->
   <string name="upcoming">เร็วๆ นี้</string>
   <string name="recent">ล่าสุด</string>
+  <string name="released_today">ออกวันนี้</string>
   <string name="noupcoming">ไม่มีตอนที่กำลังจะมาเร็วๆ นี้</string>
   <string name="norecent">ไม่มีตอนล่าสุด</string>
   <string name="calendar_settings">การตั้งค่าปฏิทิน</string>

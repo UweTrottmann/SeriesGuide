@@ -138,20 +138,18 @@
   <string name="action_shows_sort_favorites">喜愛影集優先</string>
   <string name="context_updateshow">更新</string>
   <string name="context_marknext">觀看下一集</string>
-  <!-- Now -->
-  <string name="now_tab">今日觀賞</string>
+  <!-- History -->
+  <string name="user_stream">歴史紀錄</string>
   <string name="recently_watched">最近觀賞</string>
-  <string name="released_today">今日播出</string>
   <string name="friends_recently">trakt好友</string>
   <string name="now_empty">沒什麼特別地事情發生，看節目去吧！</string>
   <string name="now_movies_empty">沒什麼特別地事情發生，看電影去吧！</string>
-  <!-- History -->
-  <string name="user_stream">歴史紀錄</string>
   <string name="user_stream_empty">Trakt上沒有任何記錄，去看一些節目並打卡吧！</string>
   <string name="user_movie_stream_empty">Trakt上沒有任何記錄，去看一些電影並打卡吧！</string>
   <!-- Calendar -->
   <string name="upcoming">即將播出</string>
   <string name="recent">最近</string>
+  <string name="released_today">今日播出</string>
   <string name="noupcoming">沒有即將播出的集數。</string>
   <string name="norecent">沒有最近的影集。</string>
   <string name="calendar_settings">Calendar settings</string>

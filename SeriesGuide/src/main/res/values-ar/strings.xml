@@ -143,20 +143,18 @@
   <string name="action_shows_sort_favorites">المفضلة أولاً</string>
   <string name="context_updateshow">تحديث</string>
   <string name="context_marknext">شاهد الحلقة التالية</string>
-  <!-- Now -->
-  <string name="now_tab">الآن</string>
+  <!-- History -->
+  <string name="user_stream">التاريخ</string>
   <string name="recently_watched">تم مشاهدته مؤخراً</string>
-  <string name="released_today">صدر اليوم</string>
   <string name="friends_recently">أصدقائك على موقع Trakt</string>
   <string name="now_empty">لا شيء يحدث. مشاهدة بعض البرامج!</string>
   <string name="now_movies_empty">لا يوجد شيء جديد. شاهد بعض الأفلام!</string>
-  <!-- History -->
-  <string name="user_stream">التاريخ</string>
   <string name="user_stream_empty">لا يوجد أي نشاط مؤخرا على موقع Trakt. تحقق من بعض المسلسلات!</string>
   <string name="user_movie_stream_empty">لا يوجد أي نشاط مؤخرا على موقع Trakt. تحقق من بعض الأفلام!</string>
   <!-- Calendar -->
   <string name="upcoming">القادم</string>
   <string name="recent">مؤخراً</string>
+  <string name="released_today">صدر اليوم</string>
   <string name="noupcoming">.لا توجد حلقات قادمة</string>
   <string name="norecent">.لا توجد حلقات حالية</string>
   <string name="calendar_settings">Calendar settings</string>

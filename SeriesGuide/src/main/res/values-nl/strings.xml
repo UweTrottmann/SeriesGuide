@@ -139,20 +139,18 @@
   <string name="action_shows_sort_favorites">Favorieten eerst</string>
   <string name="context_updateshow">Bijwerken</string>
   <string name="context_marknext">Volgende aflevering bekeken</string>
-  <!-- Now -->
-  <string name="now_tab">Nu</string>
+  <!-- History -->
+  <string name="user_stream">Geschiedenis</string>
   <string name="recently_watched">Laatst gekeken</string>
-  <string name="released_today">Vandaag uitgebracht</string>
   <string name="friends_recently">Uw Trakt-vrienden</string>
   <string name="now_empty">Nog niets, kijk eerst wat series!</string>
   <string name="now_movies_empty">Niks te doen. Kijk een film!</string>
-  <!-- History -->
-  <string name="user_stream">Geschiedenis</string>
   <string name="user_stream_empty">Geen recente activiteit op trakt. Check in bij shows!</string>
   <string name="user_movie_stream_empty">Geen recente activiteit op trakt. Check in bij films!</string>
   <!-- Calendar -->
   <string name="upcoming">Eerstvolgende</string>
   <string name="recent">Recente</string>
+  <string name="released_today">Vandaag uitgebracht</string>
   <string name="noupcoming">Er zijn geen toekomstige afleveringen.</string>
   <string name="norecent">Er zijn geen recente afleveringen.</string>
   <string name="calendar_settings">Kalenderinstellingen</string>

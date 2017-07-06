@@ -140,20 +140,18 @@
   <string name="action_shows_sort_favorites">Mėgstamų sąrašas</string>
   <string name="context_updateshow">Atnaujinti</string>
   <string name="context_marknext">Pažiūrėta kita serija</string>
-  <!-- Now -->
-  <string name="now_tab">Dabar</string>
+  <!-- History -->
+  <string name="user_stream">Istorija</string>
   <string name="recently_watched">Neseniai peržiūrėta</string>
-  <string name="released_today">Išleista šiandien</string>
   <string name="friends_recently">Trakt draugai</string>
   <string name="now_empty">Nieko nevyksta. Pažiūrek dar serialų!</string>
   <string name="now_movies_empty">Nieko nevyksta. Pažiūrek dar filmų!</string>
-  <!-- History -->
-  <string name="user_stream">Istorija</string>
   <string name="user_stream_empty">Nėra trakt istorijos. Žiūrėti ir pažymėti serialus!</string>
   <string name="user_movie_stream_empty">Nėra trakt istorijos. Žiūrėti ir pažymėti filmus!</string>
   <!-- Calendar -->
   <string name="upcoming">Artėjančios</string>
   <string name="recent">Paskutinės</string>
+  <string name="released_today">Išleista šiandien</string>
   <string name="noupcoming">Artėjančių serijų nėra.</string>
   <string name="norecent">Paskutinių serijų nėra.</string>
   <string name="calendar_settings">Calendar settings</string>

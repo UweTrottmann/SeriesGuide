@@ -140,20 +140,18 @@
   <string name="action_shows_sort_favorites">Lista favorita</string>
   <string name="context_updateshow">Ažuriraj</string>
   <string name="context_marknext">Pogledana sljedeća epizoda</string>
-  <!-- Now -->
-  <string name="now_tab">Now</string>
+  <!-- History -->
+  <string name="user_stream">History</string>
   <string name="recently_watched">Recently watched</string>
-  <string name="released_today">Released today</string>
   <string name="friends_recently">Your trakt friends</string>
   <string name="now_empty">Nothing going on. Watch some shows!</string>
   <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
-  <!-- History -->
-  <string name="user_stream">History</string>
   <string name="user_stream_empty">Nema nedavne aktivnosti na trakt-u Prijavite nove serije!</string>
   <string name="user_movie_stream_empty">Nema nedavne aktivnosti na trakt-u. Prijavite nove filmove!</string>
   <!-- Calendar -->
   <string name="upcoming">Nadolazeće</string>
   <string name="recent">Nedavno</string>
+  <string name="released_today">Released today</string>
   <string name="noupcoming">Nema nadolazećih epizoda.</string>
   <string name="norecent">Nema nedavnih epizoda.</string>
   <string name="calendar_settings">Calendar settings</string>
