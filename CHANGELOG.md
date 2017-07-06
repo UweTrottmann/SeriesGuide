@@ -9,6 +9,16 @@ Version 38
 ----------
 *(in development)*
 
+#### 38-beta4
+*(2017-07-06)*
+
+* 🔧 Rename 'Now' to 'History' tab, drop 'Released today' (still available in upcoming/recent).
+* 🔧 Reduce visual clutter of show and history cards, list widget.
+* 🔧 Display (expected) posters in show and movie history tabs, episode search. 
+* 🔧 Refine app icon, drop round variant.
+* 🌟 Adaptive app and shortcut icons on Android O.
+* 🌟 Support pinning show shortcuts on Android O.
+
 #### 38-beta3
 *(2017-06-24)*
 
