@@ -27,7 +27,6 @@ import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.loaders.TraktFriendsMovieHistoryLoader;
 import com.battlelancer.seriesguide.loaders.TraktRecentMovieHistoryLoader;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.util.GridInsetDecoration;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
@@ -59,7 +58,7 @@ public class MoviesNowFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_now_movies, container, false);
+        View v = inflater.inflate(R.layout.fragment_now, container, false);
         unbinder = ButterKnife.bind(this, v);
 
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewNow, R.id.recyclerViewNow);
@@ -105,7 +104,6 @@ public class MoviesNowFragment extends Fragment {
             }
         });
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new GridInsetDecoration(getResources()));
         recyclerView.setHasFixedSize(true);
 
         return v;

@@ -554,6 +554,12 @@ public class MovieTools {
     }
 
     @Nullable
+    public Movie getMovieSummary(int movieTmdbId) {
+        String languageCode = DisplaySettings.getMoviesLanguage(context);
+        return getMovieSummary("get local movie summary", languageCode, movieTmdbId);
+    }
+
+    @Nullable
     private Movie getMovieSummary(@NonNull String action, @Nullable String language,
             int movieTmdbId) {
         try {
