@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
@@ -13,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Request;
 import com.squareup.picasso.RequestHandler;
 import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResultResponse;
+import com.uwetrottmann.tmdb2.entities.Movie;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -69,6 +71,18 @@ public class SgPicassoRequestHandler extends RequestHandler {
                     }
                 }
             } catch (TvdbException ignored) {
+            }
+        }
+
+        if (SCHEME_MOVIE_TMDB.equals(scheme)) {
+            int movieTmdbId = Integer.valueOf(request.uri.getHost());
+
+            MovieTools movieTools = SgApp.getServicesComponent(context).movieTools();
+            Movie movieSummary = movieTools.getMovieSummary(movieTmdbId);
+            if (movieSummary != null && movieSummary.poster_path != null) {
+                final String imageUrl = TmdbSettings.getImageBaseUrl(context)
+                        + TmdbSettings.POSTER_SIZE_SPEC_W342 + movieSummary.poster_path;
+                return loadFromNetwork(Uri.parse(imageUrl), networkPolicy);
             }
         }
 
