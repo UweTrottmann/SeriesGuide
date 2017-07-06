@@ -20,7 +20,7 @@
   <string name="season_number">Évad %d</string>
   <string name="seasons">Évadok</string>
   <string name="specialseason">Extra epizódok</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">Értékelések</string>
   <!-- Descriptions -->
   <string name="description_overview">Tartalom</string>
   <string name="description_poster">Borító mutatása</string>
@@ -250,14 +250,14 @@
     <item quantity="other">%d perc</item>
   </plurals>
   <!-- Features -->
-  <string name="feature_supported">Supported</string>
-  <string name="feature_not_supported">Not supported</string>
-  <string name="feature_history">Personal and friend history</string>
-  <string name="feature_sync">Sync</string>
+  <string name="feature_supported">Támogatott</string>
+  <string name="feature_not_supported">Nem támogatott</string>
+  <string name="feature_history">Személyes és barátok trakt története</string>
+  <string name="feature_sync">Szinkronizálás</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Kísérleti fázisban!</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">A SeriesGuide Felhő segít a sorozatok, listák és filmek biztonsági mentésében és szinkronizálásban.</string>
+  <string name="hexagon_warning_trakt">Amíg a SeriesGuide Felhőbe vagy bejelentkezve, néhány trakt funkció nem lesz elérhető.</string>
   <string name="hexagon_signin">Bejelentkezés</string>
   <string name="hexagon_signout">Kijelentkezés</string>
   <string name="hexagon_setup_incomplete">A SeriesGuide Cloud beállítása nem fejeződött be.</string>

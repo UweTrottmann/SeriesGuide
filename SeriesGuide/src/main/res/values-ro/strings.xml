@@ -20,12 +20,12 @@
   <string name="season_number">Sezonul %d</string>
   <string name="seasons">Sezoane</string>
   <string name="specialseason">Episoade speciale</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">Evaluări</string>
   <!-- Descriptions -->
   <string name="description_overview">Prezentare generală</string>
   <string name="description_poster">Posterul emisiunii</string>
   <string name="description_image">Imaginea episodului</string>
-  <string name="description_menu_overflow">More options</string>
+  <string name="description_menu_overflow">Mai multe opțiuni</string>
   <!-- Actions -->
   <string name="clear">Ștergere</string>
   <string name="discard">Renunță</string>
@@ -33,14 +33,14 @@
   <string name="action_display_all">Arată tot</string>
   <string name="web_search">Căutare pe web</string>
   <string name="add_to_homescreen">Scurtătură</string>
-  <string name="action_open">Open</string>
-  <string name="sync_manually">Sync manually</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
-  <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="action_open">Deschide</string>
+  <string name="sync_manually">Sincronizare manuala</string>
+  <string name="sync_and_update">Sincronizare &amp; innoita</string>
+  <string name="sync_and_download_all">Sincronizare &amp; Descărcă tot</string>
   <!-- Search -->
   <string name="clear_search_history">Ștergere istoric căutare</string>
   <string name="search_hint">Căutaţi episoade</string>
-  <string name="any_language">Any language</string>
+  <string name="any_language">Orice limbă</string>
   <!-- Status messages -->
   <string name="updated">Actualizat la ultima versiune.</string>
   <string name="norating">n/a</string>
@@ -49,8 +49,8 @@
   <string name="app_not_available">Nu exista aplicatii instalate pentru a utiliza aceasta actiune.</string>
   <string name="people_empty">Nimeni aici?! Apăsați să încercați din nou.</string>
   <string name="database_error">Datele nu pot fi modificate.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
-  <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="reinstall_info">Încercați sa creați o copie de rezerva în Setări, reinstalati și restaurati.</string>
+  <string name="api_error_generic">Nu s-a putut comunica cu %s. Încercați mai tarziu.</string>
   <!-- Sharing -->
   <string name="share">Distribuie</string>
   <string name="share_show">Distribuie emisiunea</string>
@@ -58,19 +58,19 @@
   <string name="share_movie">Distribuie film</string>
   <string name="addtocalendar">Adăugați la calendar</string>
   <string name="addtocalendar_failed">Nu puteţi crea evenimentul în calendar.</string>
-  <string name="links">Links</string>
+  <string name="links">Link-uri</string>
   <!-- Comments -->
   <string name="comments">Comentarii</string>
   <string name="shout_hint">Scrieți un comentariu (engleză, 5+ cuvinte)</string>
   <string name="shout_invalid">Comentariul tău nu respectă regulile!</string>
-  <string name="action_post">Post</string>
+  <string name="action_post">Publică</string>
   <string name="isspoiler">Spoiler alert!</string>
   <string name="no_shouts">Fi primul care-și spune părerea!</string>
   <string name="refresh">Reîmprospătare</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d reply</item>
-    <item quantity="few">%d replies</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d răspuns</item>
+    <item quantity="few">%d răspunsuri</item>
+    <item quantity="other">%d răspunsuri</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_disk">DVD</string>
@@ -87,9 +87,9 @@
   <string name="show_isalive">Continuă</string>
   <string name="show_isnotalive">Terminat</string>
   <string name="lastEdit">Ultima editare//TVDb</string>
-  <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
-  <string name="no_translation_title">Not translated</string>
-  <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="no_translation">Nu există nici o traducere în %1$s disponibilă pe %2$s.</string>
+  <string name="no_translation_title">Ne tradus</string>
+  <string name="no_spoilers">Unele detalii sunt ascunse pentru a evita spoilere. Pentru a nu folosi aceasta protecție mergeți în Setări.</string>
   <!-- Date and Time -->
   <string name="today">astăzi</string>
   <string name="now">acum</string>
@@ -118,8 +118,8 @@
   <string name="context_unfavorite">Ștergeți din favorite</string>
   <string name="favorited">Adăugat la favorite</string>
   <string name="unfavorited">Șters din favorite</string>
-  <string name="action_episode_notifications_on">Turn on episode notifications</string>
-  <string name="action_episode_notifications_off">Turn off episode notifications</string>
+  <string name="action_episode_notifications_on">Activaţi notificările pentru episoade</string>
+  <string name="action_episode_notifications_off">Dezactivați notificările pentru episoade</string>
   <string name="context_hide">Ascunde</string>
   <string name="context_unhide">Arată</string>
   <string name="hidden">Emisiune ascunsă</string>
@@ -133,10 +133,10 @@
   <string name="action_shows_filter_hidden">Ascunse</string>
   <string name="action_shows_sort">Sortați serialele</string>
   <string name="action_shows_sort_title">Titlu</string>
-  <string name="action_shows_sort_latest_episode">Latest episode</string>
-  <string name="action_shows_sort_oldest_episode">Oldest episode</string>
-  <string name="action_shows_sort_last_watched">Last watched</string>
-  <string name="action_shows_sort_remaining">Remaining episodes</string>
+  <string name="action_shows_sort_latest_episode">Cel mai recent episod</string>
+  <string name="action_shows_sort_oldest_episode">Cel mai vechi episod</string>
+  <string name="action_shows_sort_last_watched">Ultimul vizionat</string>
+  <string name="action_shows_sort_remaining">Episoade rămase</string>
   <string name="action_shows_sort_favorites">Favoritele primele</string>
   <string name="context_updateshow">Actualizare</string>
   <string name="context_marknext">Episodul următor a fost vizionat</string>
@@ -156,9 +156,9 @@
   <string name="recent">Recente</string>
   <string name="noupcoming">Nu sunt episoade care urmează.</string>
   <string name="norecent">Nu sunt episoade recente.</string>
-  <string name="calendar_settings">Calendar settings</string>
+  <string name="calendar_settings">Setări calendar</string>
   <string name="only_favorites">Doar emisiunile preferate</string>
-  <string name="calendar_only_collected">Only collected episodes</string>
+  <string name="calendar_only_collected">Doar episoadele colecționate</string>
   <string name="pref_infinite_scrolling">Calendar infinit</string>
   <!-- Updating -->
   <string name="update_scheduled">Actualizare&#8230;</string>
@@ -167,34 +167,34 @@
   <!-- Seasons -->
   <string name="season_allwatched">Toate episoadele au fost vizionate</string>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="few">%d other episodes</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d alt episod</item>
+    <item quantity="few">%d alte episoade</item>
+    <item quantity="other">%d alte episoade</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="few">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">%d sa fie lansat</item>
+    <item quantity="few">%d sa fie lansate</item>
+    <item quantity="other">%d sa fie lansate</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="few">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">%d rămas</item>
+    <item quantity="few">%d rămase</item>
+    <item quantity="other">%d rămase</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Scrieți un nume de emisiune</string>
   <string name="add_empty">Nu există emisiuni aici.</string>
   <string name="no_results">Nici un rezultat, încercaţi folosind cuvinte întregi.</string>
-  <string name="action_try_any_language">Try any language</string>
-  <string name="action_try_again">Try again</string>
-  <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+  <string name="action_try_any_language">Încearcă orice limbă</string>
+  <string name="action_try_again">Încearcă din nou</string>
+  <string name="tvdb_error_does_not_exist">Acest serial nu există (încă) pe TheTVDB. Încercați mai târziu.</string>
   <string name="add_all">Adaugă-le pe toate</string>
   <string name="add_multiple">Toate emisiunile vor apărea în lista de emisiuni în scurt timp.</string>
   <string name="add_started">%s va apărea în lista de emisiuni în scurt timp.</string>
   <string name="add_error">Nu s-a putut adăuga %s.</string>
   <string name="add_already_exists">%s este deja în lista de emisiuni.</string>
   <string name="recommended">Recomandat</string>
-  <string name="watched_shows">Watched</string>
+  <string name="watched_shows">Vizionat</string>
   <string name="shows_collection">Colecție</string>
   <string name="watchlist">Watchlist</string>
   <!-- Lists -->
@@ -208,13 +208,13 @@
   <string name="list_empty">Puteţi adăuga emisiuni, sezoane sau episoade la această listă.</string>
   <string name="action_lists_sort">Sortează lista</string>
   <string name="action_lists_reorder">Reordonaţi lista</string>
-  <string name="error_name_already_exists">A list with this name already exists</string>
+  <string name="error_name_already_exists">O listă cu acest nume deja există</string>
   <!-- Movies -->
-  <string name="title_discover">Discover</string>
+  <string name="title_discover">Descoperă</string>
   <string name="title_popular">Popular</string>
-  <string name="title_digital_releases">Digital releases</string>
-  <string name="title_disc_releases">Disc releases</string>
-  <string name="movies_in_theatres">In theaters</string>
+  <string name="title_digital_releases">Lansări digitale</string>
+  <string name="title_disc_releases">Lansări pe disc</string>
+  <string name="movies_in_theatres">În cinematografe</string>
   <string name="movies_collection">Colecție</string>
   <string name="movies_watchlist">Watchlist</string>
   <string name="watchlist_add">Adaugă în watchlist</string>
@@ -231,7 +231,7 @@
   <string name="action_movies_sort_title">Titlu</string>
   <string name="action_movies_sort_release">Data de lansare</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Nu am putut calcula statisticile.</string>
   <string name="statistics_shows">Seriale</string>
   <string name="statistics_episodes">Episoade</string>
   <string name="statistics_movies">Filme</string>
@@ -242,29 +242,29 @@
   <string name="movies_on_watchlist">%s pe lista de urmărite</string>
   <string name="runtime_movies_watchlist">Total timp vizionat listă favorite</string>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
-    <item quantity="few">%d days</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">%d zi</item>
+    <item quantity="few">%d zile</item>
+    <item quantity="other">%d zile</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">%d hour</item>
-    <item quantity="few">%d hours</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="one">%d oră</item>
+    <item quantity="few">%d ore</item>
+    <item quantity="other">%d ore</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="one">%d minute</item>
-    <item quantity="few">%d minutes</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="one">%d minut</item>
+    <item quantity="few">%d minute</item>
+    <item quantity="other">%d minute</item>
   </plurals>
   <!-- Features -->
-  <string name="feature_supported">Supported</string>
-  <string name="feature_not_supported">Not supported</string>
-  <string name="feature_history">Personal and friend history</string>
-  <string name="feature_sync">Sync</string>
+  <string name="feature_supported">Suportate</string>
+  <string name="feature_not_supported">Fără suport</string>
+  <string name="feature_history">Istoricul personal și al prietenilor</string>
+  <string name="feature_sync">Sincronizare</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud ajuta la creerea unei copii de rezerva și sincronizarea serialelor, listelor și filmelor.</string>
+  <string name="hexagon_warning_trakt">Cat timp sunteți autentificat cu SeriesGuide Cloud unele funcții oferite de trakt nu sunt disponibile.</string>
   <string name="hexagon_signin">Conectare</string>
   <string name="hexagon_signout">Deconectare</string>
   <string name="hexagon_setup_incomplete">Setarea Series Guide cloud nu a putut fi finalizată.</string>
@@ -274,7 +274,7 @@
   <string name="hexagon_remove_account_failure">Nu se poate șterge contul.</string>
   <string name="hexagon_remove_account_confirmation">Ștergerea contului va rezulta în ștergerea emisiunilor și filmelor de pe SeriesGuide Cloud. Asigurați-vă că le veți șterge și de pe celelalte dispozitive.</string>
   <string name="hexagon_api_queued">Se trimite către SeriesGuide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Deconectat de pe SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Pentru a folosi SeriesGuide Cloud, Google Play Services este necesar.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Trimite pe trakt.</string>
@@ -289,8 +289,8 @@
   <string name="traktcheckin_wait">Voi aștepta</string>
   <string name="trakt_success">Trimis către trakt.</string>
   <string name="trakt_error_credentials">Ceva a mers prost. Vă rugăm să vă verificaţi acreditările şi să încercaţi din nou.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_error_not_exists">Nu este (încă) disponibil pe trakt. Încearcă mai târziu.</string>
+  <string name="trakt_notice_not_exists">Nu poate (încă) fi urmărit cu trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">Cont trakt</string>
   <string name="connect_trakt">Conectaţi trakt</string>
@@ -299,7 +299,7 @@
   <string name="waitplease">Un moment, vă rugăm&#8230;</string>
   <string name="connect">Conectează-te</string>
   <string name="disconnect">Deconectează-te</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
+  <string name="use_integrated_browser">Deschide în browser integrat</string>
   <string name="show_library">Arată biblioteca dvs. trakt</string>
   <string name="about_trakt">trakt ajută la păstrarea unei evidenţe a emisiunilor TV şi a filmelor la care te uiţi. <a href="https://trakt.tv">Află mai multe</a></string>
   <!-- trakt ratings -->
@@ -316,16 +316,16 @@
   <string name="rating8">Minunat</string>
   <string name="rating9">Superb</string>
   <plurals name="votes">
-    <item quantity="one">%d vote</item>
-    <item quantity="few">%d votes</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="one">%d vot</item>
+    <item quantity="few">%d voturi</item>
+    <item quantity="other">%d voturi</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Înregistrare</string>
   <string name="checkin_hint">Scrie un mesaj (opțional)</string>
   <string name="paste_title">Lipiți titlul</string>
-  <string name="pref_quick_checkin">Quick check in</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin">Raportare rapidă</string>
+  <string name="pref_quick_checkin_summary">Nu cere un mesaj de raportare</string>
   <!-- Help -->
   <string name="feedback">Trimiteţi feedback</string>
   <string name="action_open_in_browser">Deschide în browser</string>
@@ -338,29 +338,29 @@
   <string name="pref_onlyfuturesummary">Nu afișați episoadele deja difuzate</string>
   <string name="pref_onlyseasoneps">Ascundeți episoadele speciale</string>
   <string name="pref_onlyseasonepssummary">Episoadele speciale dispar de peste tot, cu excepţia celor din lista sezonului</string>
-  <string name="pref_exactdates">Display exact dates</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
-  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
+  <string name="pref_exactdates">Afișează datele exacte</string>
+  <string name="pref_exactdates_summary">\"31 Octombrie\" în loc de \"în 3 zile\"</string>
+  <string name="pref_nospoilers">Ascunde spoilerele</string>
+  <string name="pref_nospoilers_summary">Ascunde detaliile până episodul este vizionat</string>
   <string name="pref_seasonsorting">Sortare sezoane după&#8230;</string>
   <string name="pref_episodesorting">Sortare episoade după&#8230;</string>
   <string name="pref_language">Limba preferată</string>
   <string name="pref_updatewifionly">Imaginile se vor încarca doar prin intermediul Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <string name="pref_updatewifionlysummary">Pentru a micșora taxele operatorului, nu descărcați folosind rețelele mobile sau rețelele taxate</string>
   <plurals name="days_before_plural">
-    <item quantity="one">%d day before</item>
-    <item quantity="few">%d days before</item>
-    <item quantity="other">%d days before</item>
+    <item quantity="one">%d zi înainte</item>
+    <item quantity="few">%d zile înainte</item>
+    <item quantity="other">%d zile înainte</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="one">%d hour before</item>
-    <item quantity="few">%d hours before</item>
-    <item quantity="other">%d hours before</item>
+    <item quantity="one">%d ora înainte</item>
+    <item quantity="few">%d ore înainte</item>
+    <item quantity="other">%d ore înainte</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="one">%d minute before</item>
-    <item quantity="few">%d minutes before</item>
-    <item quantity="other">%d minutes before</item>
+    <item quantity="one">%d minut înainte</item>
+    <item quantity="few">%d de minute înainte</item>
+    <item quantity="other">%d de minute înainte</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Această aplicație folosește date și imagini ale TVDB sub licența CC BY-NC 4.0.</string>
@@ -396,7 +396,7 @@
   <string name="pref_theme">Temă</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Alte</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">Sincronizează automat și actualizează datele de pe SeriesGuide</string>
   <string name="pref_autobackup">Backup automat</string>
   <string name="pref_autobackupsummary">Backup săptămânal al serialelor, listelor si filmelor</string>
   <string name="backup">Arhivare/Restaurare</string>
@@ -406,17 +406,17 @@
   <string name="pref_offsetsummary">Compensare timp de difuzare cu %d ore</string>
   <string name="clear_cache">Șterge imaginile din cache</string>
   <string name="clear_cache_summary">Șterge toate imaginile din cache de pe acest dispozitiv</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Trimite statistici anonime către serviciul Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include toate detaliile ca descrieri, actori și evaluări.</string>
   <string name="backup_path">Fișier de arhive</string>
   <string name="backup_version">Versiunea bazei de date</string>
-  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+  <string name="backup_failed_file_access">Backup-ul nu poate fi efectuat. Un fișier de backup nu poate fi localizat sau accesat.</string>
   <string name="backup_inprogress">Baza de date se arhivează&#8230;</string>
   <string name="backup_success">Arhivare reușită.</string>
   <string name="backup_failed">Arhivare eșuată.</string>
   <string name="import_inprogress">Restaurarea bazei de date&#8230;</string>
-  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
+  <string name="import_failed_nosd">Nu se poate restaura arhiva. Fișierul de arhivare nu este disponibil.</string>
   <string name="import_failed_nofile">Nu există o arhivă care să poată fi citită.</string>
   <string name="import_failed_noread">Arhiva nu poate fi citită.</string>
   <string name="dbupgradefailed">Arhiva poate fi prea veche sau goală. Notă: Prima data importati o arhivă înainte de 2.0 într-o versiune 1.9.x.</string>
@@ -451,8 +451,8 @@
   <string name="pref_vibrate">Vibrează</string>
   <string name="pref_vibratesummary">Vibrează și la afişarea unei notificări</string>
   <string name="pref_notifications_treshold">Când să fiți notificat</string>
-  <string name="pref_notifications_select_shows">Select shows</string>
-  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notifications_select_shows">Seriale selecte</string>
+  <string name="pref_notifications_select_shows_summary">Seriale cu notificări pornite (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (mic)</string>
   <!-- List Widget -->
@@ -503,12 +503,12 @@
   <!-- People -->
   <string name="person_biography">Biografie</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_question_enjoy">Va place SeriesGuide?</string>
+  <string name="feedback_action_yes">Da!</string>
+  <string name="feedback_action_notreally">Nu chiar</string>
+  <string name="feedback_question_rate_google">Evaluați aplicația pe Google Play?</string>
+  <string name="feedback_question_rate_amazon">Evaluați aplicația pe Amazon?</string>
+  <string name="feedback_question_feedback">Spune-mi cum sa o improvizez</string>
+  <string name="feedback_action_ok">Ok, sigur</string>
+  <string name="feedback_action_nothanks">Nu, mulțumesc</string>
 </resources>

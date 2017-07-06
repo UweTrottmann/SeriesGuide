@@ -20,7 +20,7 @@
   <string name="season_number">Kausi %d</string>
   <string name="seasons">Kaudet</string>
   <string name="specialseason">Erikoisjaksot</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">Arvosanat</string>
   <!-- Descriptions -->
   <string name="description_overview">Yleiskatsaus</string>
   <string name="description_poster">Näytä juliste</string>
@@ -64,7 +64,7 @@
   <string name="shout_hint">Kirjoita kommentti (englanniksi, 5+ sanaa)</string>
   <string name="shout_invalid">Kommenttisi ei noudata sääntöjä!</string>
   <string name="action_post">Lähetä</string>
-  <string name="isspoiler">Juonipaljastusvaroitus!</string>
+  <string name="isspoiler">Juonipaljastus!</string>
   <string name="no_shouts">Huudahda ensimmäisenä!</string>
   <string name="refresh">Päivitä</string>
   <plurals name="replies_plural">
@@ -250,14 +250,14 @@
     <item quantity="other">%d minuuttia</item>
   </plurals>
   <!-- Features -->
-  <string name="feature_supported">Supported</string>
-  <string name="feature_not_supported">Not supported</string>
-  <string name="feature_history">Personal and friend history</string>
-  <string name="feature_sync">Sync</string>
+  <string name="feature_supported">Tuettu</string>
+  <string name="feature_not_supported">Ei tuettu</string>
+  <string name="feature_history">Henkilökohtainen ja ystävien historia</string>
+  <string name="feature_sync">Synkronointi</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Kokeellista ja helposti syttyvää!</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud auttaa varmuuskopioimaan ja synkronoimaan ohjelmat, listat ja elokuvat.</string>
+  <string name="hexagon_warning_trakt">Kun olet kirjautuneena sisään SeriesGuide Cloudiin, jotkut traktin ominaisuudet eivät ole käytettävissä.</string>
   <string name="hexagon_signin">Kirjaudu sisään</string>
   <string name="hexagon_signout">Kirjaudu ulos</string>
   <string name="hexagon_setup_incomplete">SeriesGuide Cloudin määrittäminen epäonnistui.</string>
