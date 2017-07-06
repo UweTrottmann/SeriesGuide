@@ -1,93 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
-    cardview:cardPreventCornerOverlap="false">
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardViewActivity"
+        android:layout_width="69dp"
+        android:layout_height="104dp"
+        android:layout_marginBottom="@dimen/grid_topbottom_padding"
+        android:layout_marginLeft="@dimen/grid_leftright_padding"
+        android:layout_marginStart="@dimen/grid_leftright_padding"
+        android:layout_marginTop="@dimen/grid_topbottom_padding"
+        app:cardBackgroundColor="?attr/sgColorBackgroundCard"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageViewActivityPoster"
-            android:layout_width="@dimen/show_poster_width_default"
-            android:layout_height="@dimen/show_poster_height_default"
-            android:layout_marginRight="@dimen/default_padding"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:contentDescription="@null"
-            android:scaleType="centerInside" />
+            android:scaleType="centerInside"
+            tools:src="?attr/sgColorShadow" />
 
-        <com.battlelancer.seriesguide.widgets.WatchedBox
-            android:id="@+id/watchedBoxActivity"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="26dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:scaleType="centerInside" />
+    </android.support.v7.widget.CardView>
 
-        <ImageView
-            android:id="@+id/imageViewActivityCollected"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/watchedBoxActivity"
-            android:layout_marginRight="18dp"
-            android:contentDescription="@string/action_collection_added"
-            android:src="@drawable/ic_collected" />
+    <com.battlelancer.seriesguide.widgets.WatchedBox
+        android:id="@+id/watchedBoxActivity"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textViewActivityShow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/watchedBoxActivity"
-            android:layout_toRightOf="@+id/imageViewActivityPoster"
-            android:ellipsize="end"
-            android:paddingTop="@dimen/default_padding"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Body.Secondary"
-            tools:text="Defiance" />
+    <ImageView
+        android:id="@+id/imageViewActivityCollected"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:contentDescription="@string/action_collection_added"
+        android:src="@drawable/ic_collected"
+        app:layout_constraintLeft_toLeftOf="@+id/watchedBoxActivity"
+        app:layout_constraintRight_toRightOf="@+id/watchedBoxActivity"
+        app:layout_constraintTop_toBottomOf="@+id/watchedBoxActivity" />
 
-        <TextView
-            android:id="@+id/textViewActivityEpisode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewActivityShow"
-            android:layout_toLeftOf="@+id/watchedBoxActivity"
-            android:layout_toRightOf="@+id/imageViewActivityPoster"
-            android:ellipsize="end"
-            android:paddingTop="@dimen/inline_padding"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Subhead"
-            tools:text="2x08 Somewhere in the middle of the park" />
+    <TextView
+        android:id="@+id/textViewActivityInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Caption.Dim"
+        app:layout_constraintLeft_toRightOf="@+id/cardViewActivity"
+        app:layout_constraintRight_toLeftOf="@+id/watchedBoxActivity"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Showtime Network · Tue 08:00 PM" />
 
-        <TextView
-            android:id="@+id/textViewActivityInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewActivityEpisode"
-            android:layout_toLeftOf="@+id/watchedBoxActivity"
-            android:layout_toRightOf="@+id/imageViewActivityPoster"
-            android:ellipsize="end"
-            android:paddingTop="@dimen/inline_padding"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Caption.Dim"
-            tools:text="8:00 PM / Showtime" />
+    <TextView
+        android:id="@+id/textViewActivityShow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Body.Bold"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/cardViewActivity"
+        app:layout_constraintRight_toLeftOf="@+id/watchedBoxActivity"
+        app:layout_constraintTop_toBottomOf="@+id/textViewActivityInfo"
+        tools:text="Defiance" />
 
-        <TextView
-            android:id="@+id/textViewActivityTimestamp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewActivityInfo"
-            android:layout_toLeftOf="@+id/watchedBoxActivity"
-            android:layout_toRightOf="@+id/imageViewActivityPoster"
-            android:ellipsize="end"
-            android:paddingBottom="@dimen/default_padding"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Caption.Dim"
-            tools:text="in 7 hours" />
+    <TextView
+        android:id="@+id/textViewActivityEpisode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Body"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/cardViewActivity"
+        app:layout_constraintRight_toLeftOf="@+id/watchedBoxActivity"
+        app:layout_constraintTop_toBottomOf="@+id/textViewActivityShow"
+        tools:text="2x08 Somewhere in the middle of the park" />
 
-    </RelativeLayout>
-</android.support.v7.widget.CardView>
+    <TextView
+        android:id="@+id/textViewActivityTimestamp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Caption.Dim"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/cardViewActivity"
+        app:layout_constraintRight_toLeftOf="@+id/watchedBoxActivity"
+        app:layout_constraintTop_toBottomOf="@+id/textViewActivityEpisode"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="in 7 hours" />
+
+</android.support.constraint.ConstraintLayout>

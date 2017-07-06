@@ -4,18 +4,21 @@ import android.content.Context;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
@@ -35,24 +38,16 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     static class HistoryViewHolder extends RecyclerView.ViewHolder {
-        public TextView show;
-        public TextView episode;
-        public TextView timestamp;
-        public ImageView poster;
-        public TextView username;
-        public ImageView avatar;
-        public ImageView type;
+        @BindView(R.id.textViewHistoryShow) TextView show;
+        @BindView(R.id.textViewHistoryEpisode) TextView episode;
+        @BindView(R.id.imageViewHistoryPoster) ImageView poster;
+        @BindView(R.id.textViewHistoryInfo) TextView info;
+        @BindView(R.id.imageViewHistoryAvatar) ImageView avatar;
+        @BindView(R.id.imageViewHistoryType) ImageView type;
 
         public HistoryViewHolder(View itemView, final ItemClickListener listener) {
             super(itemView);
-            show = (TextView) itemView.findViewById(R.id.textViewFriendShow);
-            episode = (TextView) itemView.findViewById(R.id.textViewFriendEpisode);
-            timestamp = (TextView) itemView.findViewById(R.id.textViewFriendTimestamp);
-            poster = (ImageView) itemView.findViewById(R.id.imageViewFriendPoster);
-            username = (TextView) itemView.findViewById(R.id.textViewFriendUsername);
-            avatar = (ImageView) itemView.findViewById(R.id.imageViewFriendAvatar);
-            type = (ImageView) itemView.findViewById(R.id.imageViewFriendActionType);
-
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -112,8 +107,8 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context context;
     private final ItemClickListener listener;
-    private final int resIdDrawableCheckin;
-    private final int resIdDrawableWatched;
+    private final VectorDrawableCompat drawableWatched;
+    private final VectorDrawableCompat drawableCheckin;
 
     private List<NowItem> dataset;
     private List<NowItem> recentlyWatched;
@@ -189,10 +184,12 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.context = context;
         this.listener = listener;
         this.dataset = new ArrayList<>();
-        this.resIdDrawableCheckin = Utils.resolveAttributeToResourceId(context.getTheme(),
-                R.attr.drawableCheckin);
-        this.resIdDrawableWatched = Utils.resolveAttributeToResourceId(context.getTheme(),
-                R.attr.drawableWatch);
+        this.drawableWatched = ViewTools.createVectorIconInactive(getContext(),
+                getContext().getTheme(),
+                R.drawable.ic_check_black_16dp);
+        this.drawableCheckin = ViewTools.createVectorIconInactive(getContext(),
+                getContext().getTheme(),
+                R.drawable.ic_message_black_16dp);
     }
 
     @Override
@@ -216,7 +213,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     protected RecyclerView.ViewHolder getHistoryViewHolder(ViewGroup viewGroup,
             ItemClickListener itemClickListener) {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_now_history, viewGroup, false);
+                .inflate(R.layout.item_history, viewGroup, false);
         return new HistoryViewHolder(v, itemClickListener);
     }
 
@@ -235,20 +232,20 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (viewHolder instanceof HistoryViewHolder) {
             HistoryViewHolder holder = (HistoryViewHolder) viewHolder;
 
+            String time = TimeTools.formatToLocalRelativeTime(getContext(),
+                    new Date(item.timestamp));
             if (item.type == ItemType.HISTORY) {
                 // user history entry
-                holder.username.setVisibility(View.GONE);
                 holder.avatar.setVisibility(View.GONE);
+                holder.info.setText(time);
 
                 // a TVDb or no poster
                 TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster,
                         item.tvdbPosterUrl);
             } else {
                 // friend history entry
-                holder.username.setVisibility(View.VISIBLE);
                 holder.avatar.setVisibility(View.VISIBLE);
-
-                holder.username.setText(item.username);
+                holder.info.setText(TextTools.dotSeparate(item.username, time));
 
                 // a TVDb or no poster
                 TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster,
@@ -259,16 +256,14 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             holder.show.setText(item.title);
             holder.episode.setText(item.description);
-            holder.timestamp.setText(
-                    TimeTools.formatToLocalRelativeTime(getContext(), new Date(item.timestamp)));
 
             // action type indicator (only if showing trakt history)
             if (TRAKT_ACTION_WATCH.equals(item.action)) {
-                holder.type.setImageResource(resIdDrawableWatched);
+                holder.type.setImageDrawable(getDrawableWatched());
                 holder.type.setVisibility(View.VISIBLE);
             } else if (item.action != null) {
                 // check-in, scrobble
-                holder.type.setImageResource(resIdDrawableCheckin);
+                holder.type.setImageDrawable(getDrawableCheckin());
                 holder.type.setVisibility(View.VISIBLE);
             } else {
                 holder.type.setVisibility(View.GONE);
@@ -300,12 +295,12 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return context;
     }
 
-    protected int getResIdDrawableWatched() {
-        return resIdDrawableWatched;
+    protected VectorDrawableCompat getDrawableWatched() {
+        return drawableWatched;
     }
 
-    protected int getResIdDrawableCheckin() {
-        return resIdDrawableCheckin;
+    protected VectorDrawableCompat getDrawableCheckin() {
+        return drawableCheckin;
     }
 
     public NowItem getItem(int position) {

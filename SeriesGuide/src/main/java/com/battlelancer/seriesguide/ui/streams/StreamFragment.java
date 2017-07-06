@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.ui.streams;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -12,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,8 +31,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
  * Displays a stream of activities that can be refreshed by the user via a swipe gesture (or an
  * action item).
  */
-public abstract class StreamFragment extends Fragment implements
-        AdapterView.OnItemClickListener {
+public abstract class StreamFragment extends Fragment {
 
     @BindView(R.id.swipeRefreshLayoutStream) EmptyViewSwipeRefreshLayout contentContainer;
 
@@ -45,8 +44,12 @@ public abstract class StreamFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_stream, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        return inflater.inflate(R.layout.fragment_stream, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        unbinder = ButterKnife.bind(this, view);
 
         contentContainer.setSwipeableChildren(R.id.scrollViewStream, R.id.gridViewStream);
         contentContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -56,18 +59,15 @@ public abstract class StreamFragment extends Fragment implements
             }
         });
         contentContainer.setProgressViewOffset(false, getResources().getDimensionPixelSize(
-                        R.dimen.swipe_refresh_progress_bar_start_margin),
+                R.dimen.swipe_refresh_progress_bar_start_margin),
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_end_margin));
 
-        gridView.setOnItemClickListener(this);
         gridView.setEmptyView(emptyView);
         gridView.setAreHeadersSticky(false);
 
         // set initial view states
         showProgressBar(true);
-
-        return v;
     }
 
     @Override

@@ -85,11 +85,11 @@ public class MoviesNowAdapter extends NowAdapter {
 
             // action type indicator (only if showing trakt history)
             if (TRAKT_ACTION_WATCH.equals(item.action)) {
-                holder.type.setImageResource(getResIdDrawableWatched());
+                holder.type.setImageDrawable(getDrawableWatched());
                 holder.type.setVisibility(View.VISIBLE);
             } else if (item.action != null) {
                 // check-in, scrobble
-                holder.type.setImageResource(getResIdDrawableCheckin());
+                holder.type.setImageDrawable(getDrawableCheckin());
                 holder.type.setVisibility(View.VISIBLE);
             } else {
                 holder.type.setVisibility(View.GONE);

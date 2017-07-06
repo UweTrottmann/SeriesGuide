@@ -101,7 +101,7 @@ public class ListItemsAdapter extends BaseShowsAdapter {
                 viewHolder.episode.setText(SeasonTools.getSeasonString(context,
                         cursor.getInt(Query.ITEM_TITLE)));
                 viewHolder.episodeTime.setText(null);
-                viewHolder.remainingCount.setText(null);
+                viewHolder.remainingCount.setVisibility(View.GONE);
                 break;
             case 3:
                 // episodes
@@ -119,7 +119,7 @@ public class ListItemsAdapter extends BaseShowsAdapter {
                             TimeTools.formatToLocalRelativeTime(context, actualRelease),
                             TimeTools.formatToLocalDay(actualRelease)));
                 }
-                viewHolder.remainingCount.setText(null);
+                viewHolder.remainingCount.setVisibility(View.GONE);
                 break;
         }
 

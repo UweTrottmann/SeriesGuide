@@ -1,78 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
-    cardview:cardPreventCornerOverlap="false">
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground">
 
-    <RelativeLayout
+    <!-- Add FrameLayout parent so we can set selectable foreground. -->
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
+
+        <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardViewHistory"
+            android:layout_width="69dp"
+            android:layout_height="104dp"
+            android:layout_marginBottom="@dimen/grid_topbottom_padding"
+            android:layout_marginLeft="@dimen/grid_leftright_padding"
+            android:layout_marginStart="@dimen/grid_leftright_padding"
+            android:layout_marginTop="@dimen/grid_topbottom_padding"
+            app:cardBackgroundColor="?attr/sgColorBackgroundCard"
+            app:cardPreventCornerOverlap="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageViewHistoryPoster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                tools:src="?attr/sgColorShadow" />
+
+        </android.support.v7.widget.CardView>
 
         <ImageView
-            android:id="@+id/imageViewHistoryPoster"
-            android:layout_width="@dimen/show_poster_width_default"
-            android:layout_height="@dimen/show_poster_height_default"
-            android:layout_marginRight="@dimen/default_padding"
+            android:id="@+id/imageViewHistoryAvatar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="0dp"
             android:contentDescription="@null"
-            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewHistoryInfo"
+            app:layout_constraintLeft_toRightOf="@+id/cardViewHistory"
+            app:layout_constraintTop_toTopOf="@+id/textViewHistoryInfo"
             tools:src="@color/protection_dark" />
 
         <TextView
-            android:id="@+id/textViewHistoryTimestamp"
+            android:id="@+id/textViewHistoryInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
             android:ellipsize="end"
-            android:gravity="end"
-            android:maxWidth="120dp"
-            android:paddingLeft="@dimen/default_padding"
-            android:paddingRight="@dimen/default_padding"
-            android:paddingTop="@dimen/default_padding"
-            android:singleLine="true"
+            android:maxLines="1"
             android:textAppearance="@style/TextAppearance.Caption.Dim"
-            tools:text="11 hours ago" />
-
-        <TextView
-            android:id="@+id/textViewHistoryTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/textViewHistoryTimestamp"
-            android:layout_toRightOf="@+id/imageViewHistoryPoster"
-            android:ellipsize="end"
-            android:paddingTop="@dimen/default_padding"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Body.Secondary"
-            tools:text="Somewhere in the middle of the park" />
-
-        <TextView
-            android:id="@+id/textViewHistoryDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewHistoryTitle"
-            android:layout_toRightOf="@+id/imageViewHistoryPoster"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:paddingRight="@dimen/default_padding"
-            android:paddingTop="@dimen/inline_padding"
-            android:textAppearance="@style/TextAppearance.Subhead"
-            tools:text="24x10 On a Troublesome Terribly Long Episode Name" />
+            app:layout_constraintLeft_toRightOf="@+id/imageViewHistoryAvatar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginLeft="8dp"
+            app:layout_goneMarginStart="8dp"
+            tools:text="sgtest" />
 
         <ImageView
             android:id="@+id/imageViewHistoryType"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="0dp"
             android:contentDescription="@null"
-            android:paddingBottom="@dimen/inline_padding"
-            android:paddingLeft="@dimen/default_padding"
-            android:paddingRight="@dimen/default_padding"
-            android:paddingTop="@dimen/default_padding"
-            android:src="?attr/drawableWatch" />
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewHistoryInfo"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toRightOf="@+id/textViewHistoryInfo"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewHistoryInfo"
+            tools:src="@drawable/ic_check_black_16dp"
+            tools:tint="?attr/sgColorIconInactive" />
 
-    </RelativeLayout>
-</android.support.v7.widget.CardView>
+        <TextView
+            android:id="@+id/textViewHistoryShow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Body.Bold"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toRightOf="@+id/cardViewHistory"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewHistoryInfo"
+            tools:text="Somewhere in the middle of the park" />
+
+        <TextView
+            android:id="@+id/textViewHistoryEpisode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Body"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toRightOf="@+id/cardViewHistory"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewHistoryShow"
+            tools:ignore="RtlSymmetry"
+            tools:text="24x10 On a Troublesome Terribly Long Episode Name" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

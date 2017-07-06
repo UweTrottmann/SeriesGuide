@@ -20,6 +20,10 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
+    <style name="TextAppearance.Subhead.Bold">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
     <style name="TextAppearance.Body.Bold">
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>

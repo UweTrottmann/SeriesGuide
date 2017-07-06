@@ -489,6 +489,47 @@ public class TimeTools {
     }
 
     /**
+     * Formats to day and relative week in relation to the current system time (e.g. "Mon in 3
+     * weeks") as defined by the devices locale. If the time is this week, just returns the day. If
+     * the time is today, returns local variant of 'Released today'.
+     */
+    public static String formatToLocalDayAndRelativeWeek(Context context, Date dateThen) {
+        if (DateUtils.isToday(dateThen.getTime())) {
+            return context.getString(R.string.released_today);
+        }
+
+        // day abbreviation, e.g. "Mon"
+        SimpleDateFormat localDayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+        StringBuilder dayAndTime = new StringBuilder(localDayFormat.format(dateThen));
+
+        // get week day of then
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateThen);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        // set to same time used for calendar headers
+        calendar.set(Calendar.HOUR_OF_DAY, 1);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        // move to same week day, but in this week
+        calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+        long timeDayOfWeekThisWeek = calendar.getTimeInMillis();
+
+        long timeThen = dateThen.getTime();
+        if (timeThen >= timeDayOfWeekThisWeek + DateUtils.WEEK_IN_MILLIS
+                || timeThen <= timeDayOfWeekThisWeek - DateUtils.WEEK_IN_MILLIS) {
+            dayAndTime.append(" ");
+            dayAndTime.append(DateUtils
+                    .getRelativeTimeSpanString(timeThen, timeDayOfWeekThisWeek,
+                            DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
+        }
+
+        return dayAndTime.toString();
+    }
+
+    /**
      * Formats to a date like "October 31", or if the date is not in the current year "October 31,
      * 2010".
      *

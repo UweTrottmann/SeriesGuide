@@ -9,6 +9,5 @@
     android:paddingLeft="@dimen/default_padding"
     android:paddingRight="@dimen/default_padding"
     android:paddingTop="@dimen/default_padding"
-    android:textAppearance="@style/TextAppearance.Body.Bold"
-    android:textColor="?android:attr/textColorSecondary"
+    android:textAppearance="@style/TextAppearance.Subhead.Bold"
     tools:text="Recently Watched" />

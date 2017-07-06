@@ -1253,93 +1253,77 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         }
     }
 
+    // This should match QUERY_SEARCH_EPISODES//
+    public interface EpisodeSearchQuery {
+        String[] PROJECTION = new String[] {
+                Episodes._ID,
+                Episodes.TITLE,
+                Episodes.NUMBER,
+                Episodes.SEASON,
+                Episodes.WATCHED,
+                Episodes.OVERVIEW,
+                Shows.TITLE,
+                Shows.POSTER
+        };
+
+        int _ID = 0;
+        int TITLE = 1;
+        int NUMBER = 2;
+        int SEASON = 3;
+        int WATCHED = 4;
+        int OVERVIEW = 5;
+        int SHOW_TITLE = 6;
+        int SHOW_POSTER = 7;
+    }
+
+    private final static String EPISODE_COLUMNS = Episodes._ID + ","
+            + Episodes.TITLE + ","
+            + Episodes.NUMBER + ","
+            + Episodes.SEASON + ","
+            + Episodes.WATCHED;
+
+    private final static String SELECT_SHOWS = "SELECT "
+            + BaseColumns._ID + " as sid,"
+            + Shows.TITLE + ","
+            + Shows.POSTER
+            + " FROM " + Tables.SHOWS;
+
+    private final static String SELECT_MATCH = "SELECT "
+            + EpisodeSearch._DOCID + ","
+            + "snippet(" + Tables.EPISODES_SEARCH + ",'<b>','</b>','...') AS " + Episodes.OVERVIEW
+            + " FROM " + Tables.EPISODES_SEARCH
+            + " WHERE " + Tables.EPISODES_SEARCH + " MATCH ?";
+
+    private final static String SELECT_EPISODES = "SELECT "
+            + EPISODE_COLUMNS + "," + Shows.REF_SHOW_ID
+            + " FROM " + Tables.EPISODES;
+
+    private final static String JOIN_MATCHES_EPISODES = "SELECT "
+            + EPISODE_COLUMNS + "," + Episodes.OVERVIEW + "," + Shows.REF_SHOW_ID
+            + " FROM (" + SELECT_MATCH + ")"
+            + " JOIN (" + SELECT_EPISODES + ")"
+            + " ON " + EpisodeSearch._DOCID + "=" + Episodes._ID;
+
+    private final static String QUERY_SEARCH_EPISODES = "SELECT "
+            + EPISODE_COLUMNS + "," + Episodes.OVERVIEW + "," + Shows.TITLE + "," + Shows.POSTER
+            + " FROM "
+            + "("
+            + "(" + SELECT_SHOWS + ") JOIN (" + JOIN_MATCHES_EPISODES + ") ON sid="
+            + Shows.REF_SHOW_ID
+            + ")";
+
+    private final static String ORDER_SEARCH_EPISODES = " ORDER BY "
+            + Shows.SORT_TITLE + ","
+            + Episodes.SEASON + " ASC,"
+            + Episodes.NUMBER + " ASC";
+
     @Nullable
     public static Cursor search(String selection, String[] selectionArgs, SQLiteDatabase db) {
-        // select
-        // _id,episodetitle,episodedescription,number,season,watched,seriestitle
-        // from (
-        // (select _id as sid,seriestitle from series)
-        // join
-        // (select
-        // _id,episodedescription,series_id,episodetitle,number,season,watched
-        // from(select rowid,snippet(searchtable) as episodedescription from
-        // searchtable where searchtable match 'QUERY')
-        // join (select
-        // _id,series_id,episodetitle,number,season,watched from episodes)
-        // on _id=rowid)
-        // on sid=series_id)
-
-        StringBuilder query = new StringBuilder();
-        // select final result columns
-        query.append("SELECT ");
-        query.append(Episodes._ID).append(",");
-        query.append(Episodes.TITLE).append(",");
-        query.append(Episodes.OVERVIEW).append(",");
-        query.append(Episodes.NUMBER).append(",");
-        query.append(Episodes.SEASON).append(",");
-        query.append(Episodes.WATCHED).append(",");
-        query.append(Shows.TITLE);
-
-        query.append(" FROM ");
-        query.append("(");
-
-        // join all shows...
-        query.append("(");
-        query.append("SELECT ").append(BaseColumns._ID).append(" as sid,").append(Shows.TITLE);
-        query.append(" FROM ").append(Tables.SHOWS);
-        query.append(")");
-
-        query.append(" JOIN ");
-
-        // ...with matching episodes
-        query.append("(");
-        query.append("SELECT ");
-        query.append(Episodes._ID).append(",");
-        query.append(Episodes.TITLE).append(",");
-        query.append(Episodes.OVERVIEW).append(",");
-        query.append(Episodes.NUMBER).append(",");
-        query.append(Episodes.SEASON).append(",");
-        query.append(Episodes.WATCHED).append(",");
-        query.append(Shows.REF_SHOW_ID);
-        query.append(" FROM ");
-        // join searchtable results...
-        query.append("(");
-        query.append("SELECT ");
-        query.append(EpisodeSearch._DOCID).append(",");
-        query.append("snippet(" + Tables.EPISODES_SEARCH + ",'<b>','</b>','...')").append(" AS ")
-                .append(Episodes.OVERVIEW);
-        query.append(" FROM ").append(Tables.EPISODES_SEARCH);
-        query.append(" WHERE ").append(Tables.EPISODES_SEARCH).append(" MATCH ?");
-        query.append(")");
-        query.append(" JOIN ");
-        // ...with episodes table
-        query.append("(");
-        query.append("SELECT ");
-        query.append(Episodes._ID).append(",");
-        query.append(Episodes.TITLE).append(",");
-        query.append(Episodes.NUMBER).append(",");
-        query.append(Episodes.SEASON).append(",");
-        query.append(Episodes.WATCHED).append(",");
-        query.append(Shows.REF_SHOW_ID);
-        query.append(" FROM ").append(Tables.EPISODES);
-        query.append(")");
-        query.append(" ON ").append(Episodes._ID).append("=").append(EpisodeSearch._DOCID);
-
-        query.append(")");
-        query.append(" ON ").append("sid=").append(Shows.REF_SHOW_ID);
-        query.append(")");
-
-        // append given selection
+        StringBuilder query = new StringBuilder(QUERY_SEARCH_EPISODES);
         if (selection != null) {
-            query.append(" WHERE ");
-            query.append("(").append(selection).append(")");
+            query.append(" WHERE (").append(selection).append(")");
         }
-
-        // ordering
-        query.append(" ORDER BY ");
-        query.append(Shows.SORT_TITLE).append(",");
-        query.append(Episodes.SEASON).append(" ASC,");
-        query.append(Episodes.NUMBER).append(" ASC");
+        query.append(ORDER_SEARCH_EPISODES);
 
         // ensure to strip double quotation marks (would break the MATCH query)
         String searchTerm = selectionArgs[0];
@@ -1357,22 +1341,22 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         }
     }
 
+    private final static String QUERY_SEARCH_SHOWS = "select _id,"
+            + Episodes.TITLE + " as " + SearchManager.SUGGEST_COLUMN_TEXT_1 + ","
+            + Shows.TITLE + " as " + SearchManager.SUGGEST_COLUMN_TEXT_2 + ","
+            + "_id as " + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID
+            + " from ((select _id as sid," + Shows.TITLE + " from " + Tables.SHOWS + ")"
+            + " join "
+            + "(select _id," + Episodes.TITLE + "," + Shows.REF_SHOW_ID
+            + " from " + "(select docid" + " from " + Tables.EPISODES_SEARCH
+            + " where " + Tables.EPISODES_SEARCH + " match " + "?)"
+            + " join "
+            + "(select _id," + Episodes.TITLE + "," + Shows.REF_SHOW_ID + " from episodes)"
+            + "on _id=docid)"
+            + "on sid=" + Shows.REF_SHOW_ID + ")";
+
     @Nullable
     public static Cursor getSuggestions(String searchTerm, SQLiteDatabase db) {
-        String query = "select _id," + Episodes.TITLE + " as "
-                + SearchManager.SUGGEST_COLUMN_TEXT_1 + "," + Shows.TITLE + " as "
-                + SearchManager.SUGGEST_COLUMN_TEXT_2 + "," + "_id as "
-                + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID
-                + " from ((select _id as sid," + Shows.TITLE + " from " + Tables.SHOWS + ")"
-                + " join "
-                + "(select _id," + Episodes.TITLE + "," + Shows.REF_SHOW_ID
-                + " from " + "(select docid" + " from " + Tables.EPISODES_SEARCH
-                + " where " + Tables.EPISODES_SEARCH + " match " + "?)"
-                + " join "
-                + "(select _id," + Episodes.TITLE + "," + Shows.REF_SHOW_ID + " from episodes)"
-                + "on _id=docid)"
-                + "on sid=" + Shows.REF_SHOW_ID + ")";
-
         // ensure to strip double quotation marks (would break the MATCH query)
         if (searchTerm != null) {
             searchTerm = searchTerm.replace("\"", "");
@@ -1380,7 +1364,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         try {
             // search for anything starting with the given search term
-            return db.rawQuery(query, new String[] {
+            return db.rawQuery(QUERY_SEARCH_SHOWS, new String[] {
                     "\"" + searchTerm + "*\""
             });
         } catch (SQLiteException e) {
