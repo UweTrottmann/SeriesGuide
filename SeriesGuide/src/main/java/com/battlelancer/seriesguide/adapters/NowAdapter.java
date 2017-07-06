@@ -238,21 +238,18 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 // user history entry
                 holder.avatar.setVisibility(View.GONE);
                 holder.info.setText(time);
-
-                // a TVDb or no poster
-                TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster,
-                        item.tvdbPosterUrl);
             } else {
                 // friend history entry
                 holder.avatar.setVisibility(View.VISIBLE);
                 holder.info.setText(TextTools.dotSeparate(item.username, time));
 
-                // a TVDb or no poster
-                TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster,
-                        item.tvdbPosterUrl);
                 // trakt avatar
                 ServiceUtils.loadWithPicasso(getContext(), item.avatar).into(holder.avatar);
             }
+
+            // a TVDb or no poster
+            TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster,
+                    item.tvdbPosterUrl);
 
             holder.show.setText(item.title);
             holder.episode.setText(item.description);
