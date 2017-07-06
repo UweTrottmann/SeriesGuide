@@ -8,6 +8,5 @@
     android:paddingLeft="@dimen/padding_button"
     android:paddingRight="@dimen/padding_button"
     android:paddingTop="@dimen/padding_button"
-    android:textAppearance="@style/TextAppearance.Body.Bold"
-    android:textColor="?android:attr/textColorSecondary"
-    tools:text="Recently Watched" />
+    android:textAppearance="@style/TextAppearance.Subhead.Bold"
+    tools:text="In theaters" />
