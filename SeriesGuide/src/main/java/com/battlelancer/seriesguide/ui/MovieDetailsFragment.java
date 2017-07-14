@@ -207,11 +207,13 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         final int decorationHeightPx;
         if (AndroidUtils.isKitKatOrHigher()) {
             // avoid overlap with status + action bar (adjust top margin)
-            // warning: status bar not always translucent (e.g. Nexus 10)
+            // warning: pre-M status bar not always translucent (e.g. Nexus 10)
             // (using fitsSystemWindows would not work correctly with multiple views)
             SystemBarTintManager.SystemBarConfig config
                     = ((MovieDetailsActivity) getActivity()).getSystemBarTintManager().getConfig();
-            int pixelInsetTop = config.getPixelInsetTop(false);
+            int pixelInsetTop = AndroidUtils.isMarshmallowOrHigher()
+                    ? config.getStatusBarHeight() // full screen, status bar transparent
+                    : config.getPixelInsetTop(false); // status bar translucent
 
             // action bar height is pre-set as top margin, add to it
             decorationHeightPx = pixelInsetTop + contentContainerMovie.getPaddingTop();

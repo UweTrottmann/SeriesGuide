@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- note: usage requires setting view.setSystemUiVisibility(
+         View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE) -->
+
+    <!-- Special themes -->
+    <style name="Theme.SeriesGuide.Immersive">
+
+        <!-- Transparent status bar (native, v21+) -->
+        <item name="android:statusBarColor">@color/black_38</item>
+
+    </style>
+
+    <style name="Theme.SeriesGuide.DarkBlue.Immersive">
+
+        <!-- Transparent status bar (native, v21+) -->
+        <item name="android:statusBarColor">@color/black_38</item>
+
+    </style>
+
+    <style name="Theme.SeriesGuide.Light.Immersive">
+
+        <!-- Transparent (v21+) and light status bar (native, v23+) -->
+        <item name="android:statusBarColor">@color/white_50</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+    </style>
+
+</resources>
