@@ -33,9 +33,10 @@
         android:layout_below="@id/containerMoviePoster"
         android:layout_marginLeft="@dimen/inline_padding"
         android:layout_marginRight="@dimen/inline_padding"
+        android:layout_marginTop="4dp"
         android:ellipsize="end"
         android:lines="2"
-        android:textAppearance="@style/TextAppearance.Subhead"
+        android:textAppearance="@style/TextAppearance.Body.Bold"
         tools:text="Awesome Movie Title" />
 
     <TextView
@@ -45,6 +46,7 @@
         android:layout_below="@+id/textViewMovieTitle"
         android:layout_marginLeft="@dimen/inline_padding"
         android:layout_marginRight="@dimen/larger_padding"
+        android:layout_marginTop="4dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:paddingBottom="@dimen/default_padding"
