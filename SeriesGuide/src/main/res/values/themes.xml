@@ -111,6 +111,8 @@
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
+        <!--   your app's branding color (for the app bar) -->
+        <item name="colorPrimary">@android:color/black</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">@color/teal_500</item>
 
