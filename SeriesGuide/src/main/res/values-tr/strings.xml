@@ -20,7 +20,7 @@
   <string name="season_number">Sezon %d</string>
   <string name="seasons">Sezonlar</string>
   <string name="specialseason">Özel Bölümler</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">Puanlar</string>
   <!-- Descriptions -->
   <string name="description_overview">Genel Bakış</string>
   <string name="description_poster">Posteri göster</string>
@@ -117,8 +117,8 @@
   <string name="context_unfavorite">Favorilerden Kaldır</string>
   <string name="favorited">Favorilere eklendi</string>
   <string name="unfavorited">Favorilerden kaldırıldı</string>
-  <string name="action_episode_notifications_on">Turn on episode notifications</string>
-  <string name="action_episode_notifications_off">Turn off episode notifications</string>
+  <string name="action_episode_notifications_on">Bölüm bildirimlerini aç</string>
+  <string name="action_episode_notifications_off">Bölüm bildirimlerini kapat</string>
   <string name="context_hide">Gizle</string>
   <string name="context_unhide">Göster</string>
   <string name="hidden">Gizli dizi</string>
@@ -153,9 +153,9 @@
   <string name="released_today">Bugün yayınlanan</string>
   <string name="noupcoming">Yaklaşan bölüm yok.</string>
   <string name="norecent">Yeni tarihli bölüm yok.</string>
-  <string name="calendar_settings">Calendar settings</string>
+  <string name="calendar_settings">Takvim ayarları</string>
   <string name="only_favorites">Sadece favori diziler</string>
-  <string name="calendar_only_collected">Only collected episodes</string>
+  <string name="calendar_only_collected">Sadece koleksiyonlanmış bölümler</string>
   <string name="pref_infinite_scrolling">Sonsuz takvim</string>
   <!-- Updating -->
   <string name="update_scheduled">Güncelleniyor&#8230;</string>
@@ -248,14 +248,14 @@
     <item quantity="other">%d dakika</item>
   </plurals>
   <!-- Features -->
-  <string name="feature_supported">Supported</string>
-  <string name="feature_not_supported">Not supported</string>
-  <string name="feature_history">Personal and friend history</string>
-  <string name="feature_sync">Sync</string>
+  <string name="feature_supported">Destekleniyor</string>
+  <string name="feature_not_supported">Desteklenmiyor</string>
+  <string name="feature_history">Kişisel ve arkadaş geçmişi</string>
+  <string name="feature_sync">Senkronizasyon</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Deneysel</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloudd, dizilerinizi, listelerinizi filmlerinizi yedeklemenizi ve senkronize etmenizi sağlar.</string>
+  <string name="hexagon_warning_trakt">SeriesGuide Cloud ile oturum açarken bazı trakt özellikleri mevcut değildir.</string>
   <string name="hexagon_signin">Giriş</string>
   <string name="hexagon_signout">Çıkış</string>
   <string name="hexagon_setup_incomplete">Series Guide Bulut kurulumu tamamlanmadı.</string>
@@ -438,8 +438,8 @@
   <string name="pref_vibrate">Titreşim</string>
   <string name="pref_vibratesummary">Uyarırken aynı zamanda titret</string>
   <string name="pref_notifications_treshold">Bildirim zamanı</string>
-  <string name="pref_notifications_select_shows">Select shows</string>
-  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notifications_select_shows">Dizi seç</string>
+  <string name="pref_notifications_select_shows_summary">Bildirimlerin etkinleştirildiği diziler (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (dar)</string>
   <!-- List Widget -->

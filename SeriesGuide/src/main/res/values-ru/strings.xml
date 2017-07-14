@@ -20,7 +20,7 @@
   <string name="season_number">Сезон %d</string>
   <string name="seasons">Сезоны</string>
   <string name="specialseason">Особые выпуски</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">Оценки</string>
   <!-- Descriptions -->
   <string name="description_overview">Обзор</string>
   <string name="description_poster">Показать постер</string>
@@ -165,18 +165,18 @@
   <!-- Seasons -->
   <string name="season_allwatched">Все эпизоды просмотрены</string>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="few">%d other episodes</item>
+    <item quantity="one">%d другой эпизод</item>
+    <item quantity="few">%d других эпизода</item>
     <item quantity="other">%d других эпизодов</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
     <item quantity="one">%d будет выпущен</item>
-    <item quantity="few">%d to be released</item>
-    <item quantity="other">%d будет выпущен</item>
+    <item quantity="few">%d будет выпущено</item>
+    <item quantity="other">%d будет выпущено</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="few">%d remaining</item>
+    <item quantity="one">%d остался</item>
+    <item quantity="few">%d осталось</item>
     <item quantity="other">%d осталось</item>
   </plurals>
   <!-- Add show -->
@@ -255,14 +255,14 @@
     <item quantity="other">%d минут</item>
   </plurals>
   <!-- Features -->
-  <string name="feature_supported">Supported</string>
-  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_supported">Поддерживается</string>
+  <string name="feature_not_supported">Не поддерживается</string>
   <string name="feature_history">Personal and friend history</string>
-  <string name="feature_sync">Sync</string>
+  <string name="feature_sync">Синхронизация</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Экспериментальный!</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud позволяет создавать резервную копию и синхронизировать ваши сериалы, списки и фильмы.</string>
+  <string name="hexagon_warning_trakt">При подкючении к SeriesGuide Cloud некоторые функции trakt недоступны.</string>
   <string name="hexagon_signin">Войти</string>
   <string name="hexagon_signout">Выйти</string>
   <string name="hexagon_setup_incomplete">Настройка SeriesGuide Cloud не была завершена.</string>
