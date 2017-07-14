@@ -21,7 +21,7 @@
         android:contentDescription="@null"
         android:scaleType="centerInside"
         android:src="@drawable/ic_image_missing"
-        tools:src="@color/background_dim" />
+        tools:src="@color/black_38" />
 
     <TextView
         android:id="@+id/textViewWidgetShow"

@@ -58,7 +58,7 @@
         <item name="sgTextColorGreen">@color/teal_500</item>
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_dark</item>
         <item name="sgColorBackgroundCard">@color/background_card_dark</item>
-        <item name="sgColorBackgroundDim">@color/background_dim</item>
+        <item name="sgColorBackgroundDim">@color/black_38</item>
         <item name="sgColorIcon">@color/white</item>
         <item name="sgColorIconInactive">@color/white_50</item>
         <item name="sgColorSeparator">@color/separator</item>
@@ -130,7 +130,7 @@
         <item name="sgTextColorGreen">@color/teal_500</item>
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_dark</item>
         <item name="sgColorBackgroundCard">@color/background_card_dark</item>
-        <item name="sgColorBackgroundDim">@color/background_dim</item>
+        <item name="sgColorBackgroundDim">@color/black_38</item>
         <item name="sgColorIcon">@color/white</item>
         <item name="sgColorIconInactive">@color/white_50</item>
         <item name="sgColorSeparator">@color/separator</item>
@@ -215,7 +215,7 @@
         <item name="sgTextColorGreen">@color/teal_500</item>
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_light</item>
         <item name="sgColorBackgroundCard">@color/background_card_light</item>
-        <item name="sgColorBackgroundDim">@color/background_dim_inverse</item>
+        <item name="sgColorBackgroundDim">@color/white_50</item>
         <item name="sgColorIcon">@color/black_54</item>
         <item name="sgColorIconInactive">@color/black_38</item>
         <item name="sgColorSeparator">@color/separator_inverse</item>
