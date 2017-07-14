@@ -16,7 +16,6 @@
     <attr name="sgColorIconInactive" format="reference|color" />
     <attr name="sgColorSeparator" format="reference|color" />
     <attr name="sgColorDivider" format="reference|color" />
-    <attr name="sgColorBackgroundDrawer" format="reference|color" />
     <attr name="sgColorNavDrawerIcon" format="reference" />
     <attr name="sgColorNavDrawerText" format="reference" />
     <attr name="sgColorShadow" format="reference|color" />

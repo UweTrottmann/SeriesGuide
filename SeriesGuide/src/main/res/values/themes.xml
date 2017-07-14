@@ -63,7 +63,6 @@
         <item name="sgColorIconInactive">@color/white_50</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
-        <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
         <item name="sgColorNavDrawerIcon">@color/nav_drawer_icon_sg</item>
         <item name="sgColorNavDrawerText">@color/nav_drawer_text_sg</item>
         <item name="sgColorShadow">@color/protection_dark</item>
@@ -135,7 +134,6 @@
         <item name="sgColorIconInactive">@color/white_50</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
-        <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
         <item name="sgColorNavDrawerIcon">@color/nav_drawer_icon_dark</item>
         <item name="sgColorNavDrawerText">@color/nav_drawer_text_dark</item>
         <item name="sgColorShadow">@color/protection_dark</item>
@@ -220,7 +218,6 @@
         <item name="sgColorIconInactive">@color/black_38</item>
         <item name="sgColorSeparator">@color/separator_inverse</item>
         <item name="sgColorDivider">@color/divider_inverse</item>
-        <item name="sgColorBackgroundDrawer">@color/background_navbar_inverse</item>
         <item name="sgColorNavDrawerIcon">@color/nav_drawer_icon_sg_light</item>
         <item name="sgColorNavDrawerText">@color/nav_drawer_text_sg_light</item>
         <item name="sgColorShadow">@color/protection_light</item>

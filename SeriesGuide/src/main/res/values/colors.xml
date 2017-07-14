@@ -13,8 +13,6 @@
 
     <color name="background">#ff222222</color>
     <color name="background_inverse">#ffebebeb</color>
-    <color name="background_navbar">#ff1c1c1c</color>
-    <color name="background_navbar_inverse">#ffffffff</color>
     <color name="background_black">#ff000000</color>
     <color name="background_card_dark">#ff2a2a2a</color>
     <color name="background_card_light">#ffffffff</color>
