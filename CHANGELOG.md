@@ -9,6 +9,15 @@ Version 38
 ----------
 *(in development)*
 
+#### 38-beta5
+*(2017-07-14)*
+
+* 🔧 Restore round laucher icon (Android 7).
+* 🔧 Change transparent status bars to material style, use dark icons for light theme (Android 6+).
+* 🔧 Change app bar color to black for 'Android Dark' theme.
+* 🔨 Potential fix for blank space appearing left of network text in rare occasions.
+* 📝 Latest translations from crowdin.
+
 #### 38-beta4
 *(2017-07-06)*
 
@@ -18,6 +27,7 @@ Version 38
 * 🔧 Refine app icon, drop round variant.
 * 🌟 Adaptive app and shortcut icons on Android O.
 * 🌟 Support pinning show shortcuts on Android O.
+* 📝 Latest translations from crowdin.
 
 #### 38-beta3
 *(2017-06-24)*
