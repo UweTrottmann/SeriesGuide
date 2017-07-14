@@ -54,9 +54,9 @@
         tools:ignore="RtlSymmetry"
         tools:text="2x13 If The Time Ever Comes" />
 
-    <!-- maxLines + start crashes pre-L https://issuetracker.google.com/issues/36950033 -->
     <TextView
         android:id="@+id/widgetNetwork"
+        style="@style/Widget.SeriesGuide.TextView.SingleLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -64,10 +64,8 @@
         android:fontFamily="sans-serif-condensed"
         android:maxWidth="90dp"
         android:paddingTop="2dp"
-        android:singleLine="true"
         android:textColor="@color/black_54"
         android:textSize="@dimen/widget_text_large"
-        tools:ignore="Deprecated"
         tools:text="Showtime Network · 08:00 PM" />
 
     <TextView

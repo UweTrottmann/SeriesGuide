@@ -7,14 +7,15 @@
 
     <TextView
         android:id="@+id/textViewItemListName"
+        style="@style/Widget.SeriesGuide.TextView.SingleLine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:paddingBottom="@dimen/large_padding"
         android:paddingLeft="40dp"
         android:paddingTop="@dimen/large_padding"
-        android:singleLine="true"
         android:textAppearance="@style/TextAppearance.Subhead"
+        tools:ignore="RtlSymmetry"
         tools:text="Sample List Name" />
 
     <com.battlelancer.seriesguide.widgets.DragGripView
@@ -26,6 +27,7 @@
         android:paddingBottom="@dimen/default_padding"
         android:paddingLeft="@dimen/large_padding"
         android:paddingTop="@dimen/default_padding"
-        android:src="?attr/sgColorDivider" />
+        android:src="?attr/sgColorDivider"
+        tools:ignore="RtlSymmetry" />
 
 </FrameLayout>

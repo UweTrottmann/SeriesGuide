@@ -67,28 +67,26 @@
         android:layout_marginLeft="@dimen/grid_leftright_padding"
         android:layout_marginTop="16dp"
         android:ellipsize="end"
-        android:maxLines="1"
+        android:lines="1"
         android:textAppearance="@style/TextAppearance.Caption.Dim"
         app:layout_constraintLeft_toRightOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="42 remaining" />
 
-    <!-- maxLines + start crashes pre-L https://issuetracker.google.com/issues/36950033 -->
     <TextView
         android:id="@+id/textViewShowsTimeAndNetwork"
+        style="@style/Widget.SeriesGuide.TextView.SingleLine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="38dp"
         android:layout_marginTop="16dp"
         android:ellipsize="start"
-        android:singleLine="true"
         android:text="@string/norating"
         android:textAppearance="@style/TextAppearance.Caption.Dim"
         app:layout_constraintLeft_toRightOf="@+id/textViewShowsRemaining"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="Deprecated"
         tools:text="Showtime Network · Tue 08:00 PM" />
 
     <!-- remaining count may be hidden, so to bottom of network -->

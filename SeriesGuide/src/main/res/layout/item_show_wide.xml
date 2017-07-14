@@ -74,16 +74,15 @@
         app:layout_constraintVertical_bias="0.0"
         tools:text="42 remaining" />
 
-    <!-- maxLines + start crashes pre-L https://issuetracker.google.com/issues/36950033 -->
     <TextView
         android:id="@+id/textViewShowsTimeAndNetwork"
+        style="@style/Widget.SeriesGuide.TextView.SingleLine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="16dp"
         android:ellipsize="start"
-        android:singleLine="true"
         android:text="@string/norating"
         android:textAppearance="@style/TextAppearance.Body.Dim"
         app:layout_constraintLeft_toRightOf="@+id/cardView"

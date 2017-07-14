@@ -53,23 +53,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <!-- With maxLines ellipsis text is cut off or ellipsis character is not shown.
-    Fixed in later versions of Android, but there maxLines cuts off text
-    on the word level. We want the maximum amount of chars shown instead
-    (which is what singleLine is doing). -->
     <TextView
         android:id="@+id/textViewAddTitle"
+        style="@style/Widget.SeriesGuide.TextView.SingleLine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="32dp"
         android:ellipsize="end"
-        android:singleLine="true"
         android:textAppearance="@style/TextAppearance.Subhead.Bold"
         app:layout_constraintLeft_toRightOf="@+id/cardViewAddPoster"
         app:layout_constraintRight_toLeftOf="@+id/addIndicatorAddShow"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="Deprecated"
         tools:text="Cosmos: A Spacetime Odyssey" />
 
     <TextView

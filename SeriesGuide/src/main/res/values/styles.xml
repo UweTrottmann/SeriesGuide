@@ -192,11 +192,14 @@
         <item name="android:lineSpacingMultiplier">1.25</item>
     </style>
 
-    <style name="Widget.SeriesGuide.TextView.ShowLabels">
+    <style name="Widget.SeriesGuide.TextView.SingleLine">
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.TextView.ShowLabels" parent="Widget.SeriesGuide.TextView.SingleLine">
         <item name="android:layout_marginLeft">@dimen/default_padding</item>
         <item name="android:layout_marginRight">@dimen/default_padding</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:ellipsize">marquee</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <!-- Action bar -->
