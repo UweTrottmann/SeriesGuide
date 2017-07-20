@@ -6,7 +6,7 @@
 
     <com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView
         android:id="@+id/gridViewCalendar"
-        style="@style/Widget.SeriesGuide.CardGrid.Declutter"
+        style="@style/Widget.SeriesGuide.Grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:columnWidth="@dimen/showgrid_columnWidth"
