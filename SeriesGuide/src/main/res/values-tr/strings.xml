@@ -251,6 +251,7 @@
   <string name="feature_supported">Destekleniyor</string>
   <string name="feature_not_supported">Desteklenmiyor</string>
   <string name="feature_history">Kişisel ve arkadaş geçmişi</string>
+  <string name="feature_comments">Post comments</string>
   <string name="feature_sync">Senkronizasyon</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Deneysel</string>

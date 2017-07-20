@@ -258,6 +258,7 @@
   <string name="feature_supported">Поддерживается</string>
   <string name="feature_not_supported">Не поддерживается</string>
   <string name="feature_history">Personal and friend history</string>
+  <string name="feature_comments">Post comments</string>
   <string name="feature_sync">Синхронизация</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Экспериментальный!</string>

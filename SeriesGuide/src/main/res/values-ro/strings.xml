@@ -258,6 +258,7 @@
   <string name="feature_supported">Suportate</string>
   <string name="feature_not_supported">Fără suport</string>
   <string name="feature_history">Istoricul personal și al prietenilor</string>
+  <string name="feature_comments">Post comments</string>
   <string name="feature_sync">Sincronizare</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental</string>

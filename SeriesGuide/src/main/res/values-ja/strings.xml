@@ -244,6 +244,7 @@
   <string name="feature_supported">サポートされています</string>
   <string name="feature_not_supported">サポートされていません</string>
   <string name="feature_history">個人と友達の履歴</string>
+  <string name="feature_comments">Post comments</string>
   <string name="feature_sync">同期</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">試験的</string>

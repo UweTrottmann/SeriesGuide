@@ -244,6 +244,7 @@
   <string name="feature_supported">Didukung</string>
   <string name="feature_not_supported">Tidak Didukung</string>
   <string name="feature_history">Riwayat pribadi dan teman</string>
+  <string name="feature_comments">Post comments</string>
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimentasi</string>

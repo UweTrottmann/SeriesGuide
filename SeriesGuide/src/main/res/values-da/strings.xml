@@ -251,6 +251,7 @@
   <string name="feature_supported">Supported</string>
   <string name="feature_not_supported">Not supported</string>
   <string name="feature_history">Personal and friend history</string>
+  <string name="feature_comments">Post comments</string>
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Eksperimentel!</string>

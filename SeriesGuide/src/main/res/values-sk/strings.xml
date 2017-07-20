@@ -258,6 +258,7 @@
   <string name="feature_supported">Podporované</string>
   <string name="feature_not_supported">Nepodporované</string>
   <string name="feature_history">Osobná história a história vašich priateľov</string>
+  <string name="feature_comments">Post comments</string>
   <string name="feature_sync">Synchronizácia</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimentálne</string>

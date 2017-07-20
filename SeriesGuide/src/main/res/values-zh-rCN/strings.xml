@@ -244,6 +244,7 @@
   <string name="feature_supported">支持</string>
   <string name="feature_not_supported">不支持</string>
   <string name="feature_history">个人及朋友的历史记录</string>
+  <string name="feature_comments">Post comments</string>
   <string name="feature_sync">同步</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">这是一个实验性功能！</string>

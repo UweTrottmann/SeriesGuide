@@ -251,6 +251,7 @@
   <string name="feature_supported">Támogatott</string>
   <string name="feature_not_supported">Nem támogatott</string>
   <string name="feature_history">Személyes és barátok trakt története</string>
+  <string name="feature_comments">Post comments</string>
   <string name="feature_sync">Szinkronizálás</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Kísérleti fázisban!</string>

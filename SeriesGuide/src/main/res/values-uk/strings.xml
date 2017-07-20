@@ -258,6 +258,7 @@
   <string name="feature_supported">Підтримка</string>
   <string name="feature_not_supported">Не підтримується</string>
   <string name="feature_history">Історія Особистих Рейтингів</string>
+  <string name="feature_comments">Post comments</string>
   <string name="feature_sync">Синхронізувати</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Експериментальна!</string>
