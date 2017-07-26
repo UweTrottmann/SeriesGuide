@@ -20,6 +20,7 @@
   <string name="season_number">第 %d 季</string>
   <string name="seasons">季</string>
   <string name="specialseason">特别篇</string>
+  <string name="ratings">评分</string>
   <!-- Descriptions -->
   <string name="description_overview">预览</string>
   <string name="description_poster">节目海报</string>
@@ -70,13 +71,11 @@
     <item quantity="other">%d 个回复</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">总集数</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">首播日期</string>
   <string name="episode_firstaired_unknown">没有已知播出计划</string>
   <string name="episode_dvdnumber">DVD 剧集</string>
   <string name="original_release">首播年份</string>
-  <string name="show_on_network">在 %s 播出</string>
   <string name="show_genres">类型</string>
   <string name="show_contentrating">内容分级</string>
   <string name="show_release_times">首映于</string>
@@ -93,7 +92,6 @@
   <string name="today">今天</string>
   <string name="now">现在</string>
   <string name="daily">每日</string>
-  <string name="release_date_and_day">%1$s（%2$s）</string>
   <string name="runtime_minutes">%s 分钟</string>
   <!-- Flagging -->
   <string name="mark_all">全部标记为已观看</string>
@@ -140,20 +138,18 @@
   <string name="action_shows_sort_favorites">依据喜爱状态</string>
   <string name="context_updateshow">更新</string>
   <string name="context_marknext">标记本集为已观看</string>
-  <!-- Now -->
-  <string name="now_tab">今日</string>
+  <!-- History -->
+  <string name="user_stream">历史记录</string>
   <string name="recently_watched">最近观看</string>
-  <string name="released_today">今天播出</string>
   <string name="friends_recently">好友动态</string>
   <string name="now_empty">没有新鲜事</string>
   <string name="now_movies_empty">什么也没有。看一些电影吧！</string>
-  <!-- History -->
-  <string name="user_stream">历史记录</string>
   <string name="user_stream_empty">近期没有 trakt 动态\n观看剧集时的签到会显示在这里</string>
   <string name="user_movie_stream_empty">近期没有 trakt 动态\n观看电影时的签到会显示在这里</string>
   <!-- Calendar -->
   <string name="upcoming">即将播出</string>
   <string name="recent">已播剧集</string>
+  <string name="released_today">今天播出</string>
   <string name="noupcoming">没有即将播出的剧集</string>
   <string name="norecent">没有近期已播出的剧集</string>
   <string name="calendar_settings">日历设置</string>
@@ -166,9 +162,6 @@
   <string name="update_inprogress">更新正在进行，请稍后重试。</string>
   <!-- Seasons -->
   <string name="season_allwatched">已观看全部剧集</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="other">%d 集未观看</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="other">%d 集其他剧集</item>
   </plurals>
@@ -247,23 +240,27 @@
   <plurals name="minutes_plural">
     <item quantity="other">%d 分钟</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">支持</string>
+  <string name="feature_not_supported">不支持</string>
+  <string name="feature_history">个人及朋友的历史记录</string>
+  <string name="feature_comments">发布评论</string>
+  <string name="feature_sync">同步</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">这是一个实验性功能！</string>
-  <string name="hexagon_description">连接到云服务来备份或同步节目和电影。</string>
-  <string name="hexagon_warning_lists">注意：列表不包括在备份或同步中。</string>
-  <string name="hexagon_warning_trakt">当连接到 SeriesGuide Cloud 时，trakt 同步将会禁用。</string>
+  <string name="hexagon_description">SeriesGuide Cloud 帮助您备份并同步您的节目、列表及电影。</string>
+  <string name="hexagon_warning_trakt">当您登陆到 SeriesGuide Cloud 时，trakt 的某些特性将不可用。</string>
   <string name="hexagon_signin">登录</string>
-  <string name="hexagon_signed_in">已关联 SeriesGuide 云服务。</string>
   <string name="hexagon_signout">注销</string>
-  <string name="hexagon_setup_incomplete">无法设置 SeriesGuide 云同步服务</string>
+  <string name="hexagon_setup_incomplete">设置 SeriesGuide Cloud 未完成。</string>
   <string name="hexagon_setup_fail_auth">处理 Google 帐户关联时出现问题！</string>
   <string name="hexagon_remove_account">删除帐户</string>
   <string name="hexagon_remove_account_success">用户数据已删除。</string>
   <string name="hexagon_remove_account_failure">无法删除帐户。</string>
-  <string name="hexagon_remove_account_confirmation">删除帐户会同时删除您储存的所有数据，包括在线备份的节目和电影。一旦您在此设备上完成删除，请记得从其它已同步设备上删除相同的 SeriesGuide 云服务帐户。</string>
+  <string name="hexagon_remove_account_confirmation">删除帐户会同时删除您储存的所有数据，包括在线备份的节目和电影。一旦您在此设备上完成删除，请记得从其它已同步设备上删除相同的 SeriesGuide Cloud 帐户。</string>
   <string name="hexagon_api_queued">正在同步 SeriesGuide Cloud…</string>
   <string name="hexagon_signed_out">已登出 SeriesGuide Cloud</string>
-  <string name="hexagon_google_play_missing">若要使用 SeriesGuide 云，需要谷歌Play服务。</string>
+  <string name="hexagon_google_play_missing">若要使用 SeriesGuide Cloud，需要 Google Play 服务。</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">正在与 trakt 同步…</string>
   <string name="trakt_seen">%s 已观看。</string>
@@ -281,18 +278,13 @@
   <string name="trakt_notice_not_exists">无法在 trakt 上追剧。</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt 帐户</string>
-  <string name="trakt_connect_instructions">请在下一界面登录或注册您的 trakt 帐户，然后允许 SeriesGuide 访问此帐户。</string>
   <string name="connect_trakt">关联 trakt 帐户</string>
   <string name="trakt_reconnect">关联 SeriesGuide 与 trakt</string>
   <string name="trakt_reconnect_details">请检查 trakt 授权信息。</string>
-  <string name="username">用户名</string>
   <string name="waitplease">请稍等一段时间&#8230;&#8230;</string>
   <string name="connect">关联</string>
   <string name="disconnect">断开</string>
   <string name="use_integrated_browser">使用内置浏览器</string>
-  <string name="connect_trakt_done">trakt 已关联</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide 会将此设备上的电视节目和电影数据与您的 trakt 帐户同步，这需要几分钟的时间。</string>
-  <string name="add_trakt_shows">同时，您也可以添加来自 trakt 资料库中先前观看的节目。</string>
   <string name="show_library">显示资料库</string>
   <string name="about_trakt">trakt 会记录您已观看的电影和电视节目。\n<a href="http://trakt.tv">了解详情</a></string>
   <!-- trakt ratings -->
@@ -391,7 +383,7 @@
   <string name="pref_offsetsummary">显示时间与原播出时间相差 %d 小时</string>
   <string name="clear_cache">清理图片缓存</string>
   <string name="clear_cache_summary">删除缓存图片</string>
-  <string name="pref_ganalyticssummary">向Google服务发送匿名使用情况统计信息</string>
+  <string name="pref_ganalyticssummary">向 Google 服务发送匿名使用情况统计信息</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">备份时包含所有「元数据」，例如节目简介、演员和评分。</string>
   <string name="backup_path">备份/还原数据库的路径</string>
@@ -428,7 +420,6 @@
   <string name="upcoming_show">%s 即将播出</string>
   <string name="upcoming_episodes">即将播出新的剧集</string>
   <string name="upcoming_episodes_number">%s 个剧集即将播出</string>
-  <string name="upcoming_show_detailed">%1$s 在 %2$s</string>
   <string name="more">还有 %d 个项目</string>
   <string name="upcoming_display">选中来显示即将播出的节目</string>
   <string name="pref_notifications">通知</string>

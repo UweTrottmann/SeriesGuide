@@ -20,6 +20,7 @@
   <string name="season_number">Сезон %d</string>
   <string name="seasons">Сезони</string>
   <string name="specialseason">Спец. епізоди</string>
+  <string name="ratings">Рейтинг</string>
   <!-- Descriptions -->
   <string name="description_overview">Огляд</string>
   <string name="description_poster">Показати постер</string>
@@ -68,17 +69,15 @@
   <string name="refresh">Оновити</string>
   <plurals name="replies_plural">
     <item quantity="one">%d відповідь</item>
-    <item quantity="few">%d replies</item>
+    <item quantity="few">%d відповіді</item>
     <item quantity="other">%d відповідей</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">Загалом</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Дата виходу</string>
   <string name="episode_firstaired_unknown">Дата виходу невідома</string>
   <string name="episode_dvdnumber">Серія на DVD</string>
   <string name="original_release">Оригінальне видання</string>
-  <string name="show_on_network">на %s</string>
   <string name="show_genres">Жанри</string>
   <string name="show_contentrating">Рейтинг</string>
   <string name="show_release_times">Дата релізу</string>
@@ -95,7 +94,6 @@
   <string name="today">сьогодні</string>
   <string name="now">Сьогодні</string>
   <string name="daily">Щодня</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s хвилин</string>
   <!-- Flagging -->
   <string name="mark_all">Всі переглянуті</string>
@@ -120,8 +118,8 @@
   <string name="context_unfavorite">Видалити з улюблених</string>
   <string name="favorited">Додано в улюблені</string>
   <string name="unfavorited">Видалено з улюблених</string>
-  <string name="action_episode_notifications_on">Turn on episode notifications</string>
-  <string name="action_episode_notifications_off">Turn off episode notifications</string>
+  <string name="action_episode_notifications_on">Увімкнути сповіщення</string>
+  <string name="action_episode_notifications_off">Вимкнути сповіщення</string>
   <string name="context_hide">Приховати</string>
   <string name="context_unhide">Показати</string>
   <string name="hidden">Приховані серіали</string>
@@ -142,25 +140,23 @@
   <string name="action_shows_sort_favorites">Улюблене спочатку</string>
   <string name="context_updateshow">Оновити</string>
   <string name="context_marknext">Переглянута наступна серія</string>
-  <!-- Now -->
-  <string name="now_tab">Зараз</string>
+  <!-- History -->
+  <string name="user_stream">Історія</string>
   <string name="recently_watched">Недавно переглянуті</string>
-  <string name="released_today">Вийшли сьогодні</string>
   <string name="friends_recently">Ваші друзі на trakt</string>
   <string name="now_empty">Немає подій. Перегляньте наступні серіали!</string>
   <string name="now_movies_empty">Немає подій. Подивіться якійсь фільми!</string>
-  <!-- History -->
-  <string name="user_stream">Історія</string>
   <string name="user_stream_empty">Немає недавньої активності на trakt.  Зареєструйте деякі серіали!</string>
   <string name="user_movie_stream_empty">Немає недавньої активності на trakt.  Зареєструйте деякі серіали!</string>
   <!-- Calendar -->
   <string name="upcoming">Незабаром</string>
   <string name="recent">Нещодавно</string>
+  <string name="released_today">Вийшли сьогодні</string>
   <string name="noupcoming">Немає наступних серій.</string>
   <string name="norecent">Немає недавніх серій.</string>
-  <string name="calendar_settings">Calendar settings</string>
+  <string name="calendar_settings">Налаштування календаря</string>
   <string name="only_favorites">Лише улюблені серіали</string>
-  <string name="calendar_only_collected">Only collected episodes</string>
+  <string name="calendar_only_collected">Тільки обрані епізоди</string>
   <string name="pref_infinite_scrolling">Вічний календар</string>
   <!-- Updating -->
   <string name="update_scheduled">Оновлюється&#8230;</string>
@@ -168,25 +164,20 @@
   <string name="update_inprogress">Оновлення в процесі, спробуйте ще раз пізніше.</string>
   <!-- Seasons -->
   <string name="season_allwatched">Усі серії переглянуті</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="few">%d episodes not watched</item>
-    <item quantity="other">%d episodes not watched</item>
-  </plurals>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d other episode</item>
-    <item quantity="few">%d other episodes</item>
-    <item quantity="other">%d other episodes</item>
+    <item quantity="one">%d епізод не переглянуто</item>
+    <item quantity="few">%d епізоди не переглянуто</item>
+    <item quantity="other">%d епізодів не переглянуто</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d to be released</item>
-    <item quantity="few">%d to be released</item>
-    <item quantity="other">%d to be released</item>
+    <item quantity="one">%d буде випущений</item>
+    <item quantity="few">%d буде випущено</item>
+    <item quantity="other">%d буде випущено</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="few">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">Залишився %d епізод</item>
+    <item quantity="few">Залишилось %d епізоди</item>
+    <item quantity="other">Залишилось %d епізодів</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Напишіть назву серіалу</string>
@@ -249,27 +240,31 @@
   <string name="movies_on_watchlist">%s в списку спостереження</string>
   <string name="runtime_movies_watchlist">Тривалість фільмів у списку переглядів</string>
   <plurals name="days_plural">
-    <item quantity="one">%d day</item>
-    <item quantity="few">%d days</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">%d день</item>
+    <item quantity="few">%d дні</item>
+    <item quantity="other">%d днів</item>
   </plurals>
   <plurals name="hours_plural">
-    <item quantity="one">%d hour</item>
-    <item quantity="few">%d hours</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="one">%d година</item>
+    <item quantity="few">%d години</item>
+    <item quantity="other">%d годин</item>
   </plurals>
   <plurals name="minutes_plural">
-    <item quantity="one">%d minute</item>
-    <item quantity="few">%d minutes</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="one">%d хвилина</item>
+    <item quantity="few">%d хвилини</item>
+    <item quantity="other">%d хвилин</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Підтримка</string>
+  <string name="feature_not_supported">Не підтримується</string>
+  <string name="feature_history">Історія Особистих Рейтингів</string>
+  <string name="feature_comments">Post comments</string>
+  <string name="feature_sync">Синхронізувати</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Експериментальна!</string>
-  <string name="hexagon_description">Підключіться до хмари для резервного копіювання і синхронізації серіалів та фільмів.</string>
-  <string name="hexagon_warning_lists">Списки не включено.</string>
-  <string name="hexagon_warning_trakt">При підключенні SeriesGuide Хмари, Тrakt синхронізацію буде вимкнено.</string>
+  <string name="hexagon_description">SeriesGuide Cloud допомагає резервно копіювати і синхронізувати серіали, списки та фільми.</string>
+  <string name="hexagon_warning_trakt">При прив\'язці SeriesGuide Cloud деякі функції trakt не працюватимуть.</string>
   <string name="hexagon_signin">Увійти</string>
-  <string name="hexagon_signed_in">Ви під\'єднані до хмари SeriesGuide.</string>
   <string name="hexagon_signout">Вийти</string>
   <string name="hexagon_setup_incomplete">Налаштування хмари SeriesGuide не було завершено.</string>
   <string name="hexagon_setup_fail_auth">Твій обліковий запис Google не пройшов перевірку.</string>
@@ -297,18 +292,13 @@
   <string name="trakt_notice_not_exists">Не можна (поки що) відслідкувати на trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt аккаунт</string>
-  <string name="trakt_connect_instructions">У наступному вікні увійдіть у свій trakt аккаунт або створіть новий. Потім дозвольте SeriesGuide доступ до вашого аккаунту на trakt.</string>
   <string name="connect_trakt">Підключитись до trakt</string>
   <string name="trakt_reconnect">Підключити SeriesGuide до trakt</string>
   <string name="trakt_reconnect_details">Перевірте свої облікові дані на trakt</string>
-  <string name="username">Ім\'я користувача</string>
   <string name="waitplease">Зачекайте хвилинку&#8230;</string>
   <string name="connect">Підключитись</string>
   <string name="disconnect">Від\'єднатись</string>
   <string name="use_integrated_browser">Використовувати вбудований браузер</string>
-  <string name="connect_trakt_done">Підключено до trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide зараз синхронізує серіали та фільми на цьому пристрої з trakt.  Це може зайняти деякий час.</string>
-  <string name="add_trakt_shows">Додати ще серіали з бібліотеки trakt:</string>
   <string name="show_library">Показати вашу бібліотеку з trakt</string>
   <string name="about_trakt">trakt допомагає зберігати запис про те які телесеріали та фільми ви дивитеся. <a href="http://trakt.tv">Дізнатись більше</a></string>
   <!-- trakt ratings -->
@@ -325,9 +315,9 @@
   <string name="rating8">Дуже добре</string>
   <string name="rating9">Прекрасно</string>
   <plurals name="votes">
-    <item quantity="one">%d vote</item>
-    <item quantity="few">%d votes</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="one">%d голос</item>
+    <item quantity="few">%d голоси</item>
+    <item quantity="other">%d голосів</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Зареєструвати</string>
@@ -355,21 +345,21 @@
   <string name="pref_episodesorting">Сортувати серії за&#8230;</string>
   <string name="pref_language">Бажана мова контенту</string>
   <string name="pref_updatewifionly">Зображення лише через Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <string name="pref_updatewifionlysummary">Не завантажуйте через мобільну мережу для уникнення витрат</string>
   <plurals name="days_before_plural">
-    <item quantity="one">%d day before</item>
-    <item quantity="few">%d days before</item>
-    <item quantity="other">%d days before</item>
+    <item quantity="one">%d день до</item>
+    <item quantity="few">%d дні до</item>
+    <item quantity="other">%d днів до</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="one">%d hour before</item>
-    <item quantity="few">%d hours before</item>
-    <item quantity="other">%d hours before</item>
+    <item quantity="one">%d година до</item>
+    <item quantity="few">%d години до</item>
+    <item quantity="other">%d годин до</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="one">%d minute before</item>
-    <item quantity="few">%d minutes before</item>
-    <item quantity="other">%d minutes before</item>
+    <item quantity="one">%d хвилина до</item>
+    <item quantity="few">%d хвилина до</item>
+    <item quantity="other">За %d хвилин</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Це додаток використовує дані та зображення ха допомогою TheTVDB з ліцензією CC BY-NC 4.0.</string>
@@ -405,7 +395,7 @@
   <string name="pref_theme">Тема</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Інші</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">Автоматично синхронізування та оновлення даних SeriesGuide</string>
   <string name="pref_autobackup">Автоматичне резервне копіювання</string>
   <string name="pref_autobackupsummary">Щотижневе резервне копіювання ваших серіалів, списків та фільмів</string>
   <string name="backup">Бекап/Відновлення</string>
@@ -415,7 +405,7 @@
   <string name="pref_offsetsummary">Зсув ефірного часу на %d годин</string>
   <string name="clear_cache">Очистити кеш зображень</string>
   <string name="clear_cache_summary">Видалити всі кешовані зображення з пристрою</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Відправляти анонімну статистику використання служб Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Включити усі мета-дані такі як опис, актори та рейтинги.</string>
   <string name="backup_path">Папка Бекапа</string>
@@ -452,7 +442,6 @@
   <string name="upcoming_show">%s наближається</string>
   <string name="upcoming_episodes">Виходять нові серії</string>
   <string name="upcoming_episodes_number">%s нових серій</string>
-  <string name="upcoming_show_detailed">%1$s на %2$s</string>
   <string name="more">%d більше</string>
   <string name="upcoming_display">Виберіть для відображення найближчих серіалів</string>
   <string name="pref_notifications">Сповіщення</string>
@@ -461,8 +450,8 @@
   <string name="pref_vibrate">Вібрація</string>
   <string name="pref_vibratesummary">Вібрувати при відображенні сповіщення</string>
   <string name="pref_notifications_treshold">Коли слід сповіщати</string>
-  <string name="pref_notifications_select_shows">Select shows</string>
-  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notifications_select_shows">Виберіть серіали</string>
+  <string name="pref_notifications_select_shows_summary">Серіалів зі включеним сповіщенням (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (малий)</string>
   <!-- List Widget -->
@@ -513,12 +502,12 @@
   <!-- People -->
   <string name="person_biography">Біографія</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
+  <string name="feedback_question_enjoy">Вам подобається SeriesGuide?</string>
   <string name="feedback_action_yes">Так!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_action_notreally">Не дуже</string>
+  <string name="feedback_question_rate_google">Оцініть нас в Google Play?</string>
+  <string name="feedback_question_rate_amazon">Оцініть нас в Amazon?</string>
+  <string name="feedback_question_feedback">Розкажіть, що Вас не влаштовує?</string>
+  <string name="feedback_action_ok">Так, звісно</string>
+  <string name="feedback_action_nothanks">Ні, дякую</string>
 </resources>

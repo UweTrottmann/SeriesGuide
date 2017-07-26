@@ -152,7 +152,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
     protected void onPostExecute(Integer resultCode) {
         if (resultCode == Result.SUCCESS) {
             // trigger a sync, notifies user via toast
-            SgSyncAdapter.requestSyncImmediate(context, SgSyncAdapter.SyncType.DELTA, 0, true);
+            SgSyncAdapter.requestSyncDeltaImmediate(context, true);
         }
 
         EventBus.getDefault().post(new FinishedEvent(resultCode));

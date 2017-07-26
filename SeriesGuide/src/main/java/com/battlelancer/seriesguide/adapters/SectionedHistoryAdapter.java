@@ -1,16 +1,22 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.model.HeaderData;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import java.util.ArrayList;
@@ -24,21 +30,29 @@ import java.util.List;
 public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry> implements
         StickyGridHeadersBaseAdapter {
 
-    protected final LayoutInflater mInflater;
+    public interface OnItemClickListener {
+        void onItemClick(View view, HistoryEntry item);
+    }
 
+    protected final LayoutInflater mInflater;
+    protected final OnItemClickListener itemClickListener;
+    private final VectorDrawableCompat drawableWatched;
+    private final VectorDrawableCompat drawableCheckin;
     private List<HeaderData> mHeaders;
     private Calendar mCalendar;
-    private final int mResIdDrawableWatched;
-    private final int mResIdDrawableCheckin;
 
-    public SectionedHistoryAdapter(Context context) {
+    public SectionedHistoryAdapter(@NonNull Context context,
+            OnItemClickListener itemClickListener) {
         super(context, 0);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.itemClickListener = itemClickListener;
         mCalendar = Calendar.getInstance();
-        mResIdDrawableWatched = Utils.resolveAttributeToResourceId(getContext().getTheme(),
-                R.attr.drawableWatch);
-        mResIdDrawableCheckin = Utils.resolveAttributeToResourceId(getContext().getTheme(),
-                R.attr.drawableCheckin);
+        drawableWatched = ViewTools.createVectorIconInactive(getContext(),
+                getContext().getTheme(),
+                R.drawable.ic_check_black_16dp);
+        drawableCheckin = ViewTools.createVectorIconInactive(getContext(),
+                getContext().getTheme(),
+                R.drawable.ic_message_black_16dp);
     }
 
     public void setData(List<HistoryEntry> data) {
@@ -48,12 +62,12 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
         }
     }
 
-    public int getResIdDrawableWatched() {
-        return mResIdDrawableWatched;
+    public VectorDrawableCompat getDrawableWatched() {
+        return drawableWatched;
     }
 
-    public int getResIdDrawableCheckin() {
-        return mResIdDrawableCheckin;
+    public VectorDrawableCompat getDrawableCheckin() {
+        return drawableCheckin;
     }
 
     @Override
@@ -71,6 +85,43 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
         }
         return 0;
     }
+
+    @NonNull
+    @Override
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        // A ViewHolder keeps references to child views to avoid
+        // unnecessary calls to findViewById() on each row.
+        ViewHolder holder;
+
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.item_history, parent, false);
+            holder = new ViewHolder(convertView, itemClickListener);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        HistoryEntry item = getItem(position);
+        if (item == null) {
+            return convertView; // all bets are off!
+        }
+        holder.item = item;
+
+        // action type indicator
+        if ("watch".equals(item.action)) {
+            // marked watched
+            holder.type.setImageDrawable(getDrawableWatched());
+        } else {
+            // check-in, scrobble
+            holder.type.setImageDrawable(getDrawableCheckin());
+        }
+
+        bindViewHolder(holder, item);
+
+        return convertView;
+    }
+
+    abstract void bindViewHolder(ViewHolder holder, HistoryEntry item);
 
     @Override
     public View getHeaderView(int position, View convertView, ViewGroup parent) {
@@ -169,5 +220,28 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
     static class HeaderViewHolder {
 
         public TextView day;
+    }
+
+    public static class ViewHolder {
+        @BindView(R.id.textViewHistoryShow) TextView show;
+        @BindView(R.id.textViewHistoryEpisode) TextView episode;
+        @BindView(R.id.imageViewHistoryPoster) ImageView poster;
+        @BindView(R.id.textViewHistoryInfo) TextView info;
+        @BindView(R.id.imageViewHistoryAvatar) ImageView avatar;
+        @BindView(R.id.imageViewHistoryType) ImageView type;
+        HistoryEntry item;
+
+        public ViewHolder(View itemView, final OnItemClickListener listener) {
+            ButterKnife.bind(this, itemView);
+            avatar.setVisibility(View.GONE);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onItemClick(v, item);
+                    }
+                }
+            });
+        }
     }
 }

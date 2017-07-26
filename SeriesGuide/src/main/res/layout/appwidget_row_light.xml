@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/appwidget_row"
@@ -21,18 +20,20 @@
         android:layout_marginRight="@dimen/default_padding"
         android:contentDescription="@null"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_image_missing" />
+        android:src="@drawable/ic_image_missing"
+        tools:src="@color/black_38" />
 
     <TextView
         android:id="@+id/textViewWidgetShow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/widgetAirtime"
+        android:layout_toLeftOf="@+id/widgetNetwork"
         android:layout_toRightOf="@+id/widgetPoster"
         android:ellipsize="end"
-        android:paddingRight="@dimen/default_padding"
+        android:maxLines="1"
+        android:layout_marginRight="4dp"
         android:paddingTop="2dp"
-        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.Body.Bold"
         android:textColor="@color/black_87"
         android:textSize="@dimen/widget_text_large"
         tools:ignore="RtlSymmetry"
@@ -43,39 +44,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewWidgetShow"
-        android:layout_toLeftOf="@+id/widgetNetwork"
+        android:layout_toLeftOf="@+id/widgetAirtime"
         android:layout_toRightOf="@+id/widgetPoster"
         android:ellipsize="end"
-        android:paddingRight="@dimen/default_padding"
-        android:singleLine="true"
-        android:textColor="@color/black_54"
+        android:maxLines="1"
+        android:layout_marginRight="4dp"
+        android:textColor="@color/black_87"
         android:textSize="@dimen/widget_text_large"
         tools:ignore="RtlSymmetry"
         tools:text="2x13 If The Time Ever Comes" />
+
+    <TextView
+        android:id="@+id/widgetNetwork"
+        style="@style/Widget.SeriesGuide.TextView.SingleLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:ellipsize="start"
+        android:fontFamily="sans-serif-condensed"
+        android:maxWidth="90dp"
+        android:paddingTop="2dp"
+        android:textColor="@color/black_54"
+        android:textSize="@dimen/widget_text_large"
+        tools:text="Showtime Network · 08:00 PM" />
 
     <TextView
         android:id="@+id/widgetAirtime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/widgetNetwork"
         android:fontFamily="sans-serif-condensed"
-        android:paddingTop="2dp"
-        android:singleLine="true"
+        android:maxLines="1"
         android:textColor="@color/black_54"
-        android:textSize="@dimen/widget_text_small"
+        android:textSize="@dimen/widget_text_large"
         tools:text="Mon yesterday" />
-
-    <TextView
-        android:id="@+id/widgetNetwork"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/widgetAirtime"
-        android:fontFamily="sans-serif-condensed"
-        android:maxWidth="90dp"
-        android:singleLine="true"
-        android:textColor="@color/black_54"
-        android:textSize="@dimen/widget_text_small"
-        tools:text="08:00 PM Comedy Central (US)" />
 
 </RelativeLayout>

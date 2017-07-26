@@ -1,25 +1,18 @@
 package com.battlelancer.seriesguide.util;
 
-import android.annotation.SuppressLint;
-import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.os.AsyncTaskCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.backend.HexagonTools;
-import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.MovieDetails;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
@@ -29,28 +22,18 @@ import com.battlelancer.seriesguide.util.tasks.RemoveMovieFromCollectionTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveMovieFromWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.SetMovieUnwatchedTask;
 import com.battlelancer.seriesguide.util.tasks.SetMovieWatchedTask;
-import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.backend.movies.model.MovieList;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.services.MoviesService;
-import com.uwetrottmann.trakt5.entities.BaseMovie;
-import com.uwetrottmann.trakt5.entities.LastActivityMore;
-import com.uwetrottmann.trakt5.entities.MovieIds;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.entities.SearchResult;
-import com.uwetrottmann.trakt5.entities.SyncItems;
-import com.uwetrottmann.trakt5.entities.SyncMovie;
-import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.enums.IdType;
 import com.uwetrottmann.trakt5.enums.Type;
 import com.uwetrottmann.trakt5.services.Movies;
 import com.uwetrottmann.trakt5.services.Search;
-import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
 import java.io.IOException;
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -60,8 +43,6 @@ import java.util.Set;
 import javax.inject.Inject;
 import retrofit2.Response;
 import timber.log.Timber;
-
-import static com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult;
 
 public class MovieTools {
 
@@ -84,31 +65,22 @@ public class MovieTools {
         }
     }
 
-    private static final String[] PROJECTION_MOVIES_IN_LISTS = {
-            SeriesGuideContract.Movies.TMDB_ID, // 0
-            SeriesGuideContract.Movies.IN_COLLECTION, // 1
-            SeriesGuideContract.Movies.IN_WATCHLIST // 2
-    };
-
     private final Context context;
     private final Lazy<MoviesService> tmdbMovies;
     private final Lazy<Movies> traktMovies;
     private final Lazy<Search> traktSearch;
-    private final Lazy<Sync> traktSync;
 
     @Inject
     public MovieTools(
             @ApplicationContext Context context,
             Lazy<MoviesService> tmdbMovies,
             Lazy<Movies> traktMovies,
-            Lazy<Search> traktSearch,
-            Lazy<Sync> traktSync
+            Lazy<Search> traktSearch
     ) {
         this.context = context;
         this.tmdbMovies = tmdbMovies;
         this.traktMovies = traktMovies;
         this.traktSearch = traktSearch;
-        this.traktSync = traktSync;
     }
 
     /**
@@ -457,332 +429,13 @@ public class MovieTools {
         return null;
     }
 
-    public static class Download {
-
-        /**
-         * Downloads movies from hexagon, updates existing movies with new properties, removes
-         * movies that are neither in collection or watchlist.
-         *
-         * <p> Adds movie tmdb ids to the respective collection or watchlist set.
-         */
-        @SuppressLint("ApplySharedPref")
-        public static boolean fromHexagon(Context context, HexagonTools hexagonTools,
-                @NonNull Set<Integer> newCollectionMovies, @NonNull Set<Integer> newWatchlistMovies,
-                boolean hasMergedMovies) {
-            List<com.uwetrottmann.seriesguide.backend.movies.model.Movie> movies;
-            boolean hasMoreMovies = true;
-            String cursor = null;
-            long currentTime = System.currentTimeMillis();
-            DateTime lastSyncTime = new DateTime(HexagonSettings.getLastMoviesSyncTime(context));
-            HashSet<Integer> localMovies = getMovieTmdbIdsAsSet(context);
-            if (localMovies == null) {
-                Timber.e("fromHexagon: querying for local movies failed.");
-                return false;
-            }
-
-            if (hasMergedMovies) {
-                Timber.d("fromHexagon: downloading movies changed since %s", lastSyncTime);
-            } else {
-                Timber.d("fromHexagon: downloading all movies");
-            }
-
-            while (hasMoreMovies) {
-                // abort if connection is lost
-                if (!AndroidUtils.isNetworkConnected(context)) {
-                    Timber.e("fromHexagon: no network connection");
-                    return false;
-                }
-
-                try {
-                    com.uwetrottmann.seriesguide.backend.movies.Movies moviesService
-                            = hexagonTools.getMoviesService();
-                    if (moviesService == null) {
-                        return false;
-                    }
-
-                    com.uwetrottmann.seriesguide.backend.movies.Movies.Get request
-                            = moviesService.get();  // use default server limit
-                    if (hasMergedMovies) {
-                        request.setUpdatedSince(lastSyncTime);
-                    }
-                    if (!TextUtils.isEmpty(cursor)) {
-                        request.setCursor(cursor);
-                    }
-
-                    MovieList response = request.execute();
-                    if (response == null) {
-                        // nothing more to do
-                        Timber.d("fromHexagon: response was null, done here");
-                        break;
-                    }
-
-                    movies = response.getMovies();
-
-                    if (response.getCursor() != null) {
-                        cursor = response.getCursor();
-                    } else {
-                        hasMoreMovies = false;
-                    }
-                } catch (IOException e) {
-                    HexagonTools.trackFailedRequest(context, "get movies", e);
-                    return false;
-                }
-
-                if (movies == null || movies.size() == 0) {
-                    // nothing more to do
-                    break;
-                }
-
-                ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-                for (com.uwetrottmann.seriesguide.backend.movies.model.Movie movie : movies) {
-                    if (localMovies.contains(movie.getTmdbId())) {
-                        // movie is in database
-                        if (movie.getIsInCollection() != null && movie.getIsInWatchlist() != null
-                                && !movie.getIsInCollection() && !movie.getIsInWatchlist()) {
-                            // if neither in watchlist or collection: remove movie
-                            batch.add(ContentProviderOperation.newDelete(
-                                    SeriesGuideContract.Movies.buildMovieUri(movie.getTmdbId()))
-                                    .build());
-                        } else {
-                            // update movie properties
-                            ContentValues values = new ContentValues();
-                            if (movie.getIsInCollection() != null) {
-                                values.put(SeriesGuideContract.Movies.IN_COLLECTION,
-                                        movie.getIsInCollection());
-                            }
-                            if (movie.getIsInWatchlist() != null) {
-                                values.put(SeriesGuideContract.Movies.IN_WATCHLIST,
-                                        movie.getIsInWatchlist());
-                            }
-                            batch.add(ContentProviderOperation.newUpdate(
-                                    SeriesGuideContract.Movies.buildMovieUri(movie.getTmdbId()))
-                                    .withValues(values).build());
-                        }
-                    } else {
-                        // schedule movie to be added
-                        if (movie.getIsInCollection() != null && movie.getIsInCollection()) {
-                            newCollectionMovies.add(movie.getTmdbId());
-                        }
-                        if (movie.getIsInWatchlist() != null && movie.getIsInWatchlist()) {
-                            newWatchlistMovies.add(movie.getTmdbId());
-                        }
-                    }
-                }
-
-                try {
-                    DBUtils.applyInSmallBatches(context, batch);
-                } catch (OperationApplicationException e) {
-                    Timber.e(e, "fromHexagon: applying movie updates failed");
-                    return false;
-                }
-            }
-
-            // set new last sync time
-            if (hasMergedMovies) {
-                PreferenceManager.getDefaultSharedPreferences(context)
-                        .edit()
-                        .putLong(HexagonSettings.KEY_LAST_SYNC_MOVIES, currentTime)
-                        .commit();
-            }
-
-            return true;
-        }
-    }
-
-    /**
-     * Updates the local movie database against trakt movie watchlist and collection. Adds, updates
-     * and removes movies in the database.
-     *
-     * <p> When syncing the first time, will upload any local movies missing from trakt collection
-     * or watchlist instead of removing them locally.
-     *
-     * <p> Performs <b>synchronous network access</b>, make sure to run this on a background
-     * thread.
-     */
-    @SuppressLint("ApplySharedPref")
-    public UpdateResult syncMovieListsWithTrakt(LastActivityMore activity) {
-        if (activity.collected_at == null) {
-            Timber.e("syncMoviesWithTrakt: null collected_at");
-            return UpdateResult.INCOMPLETE;
-        }
-        if (activity.watchlisted_at == null) {
-            Timber.e("syncMoviesWithTrakt: null watchlisted_at");
-            return UpdateResult.INCOMPLETE;
-        }
-
-        if (!TraktCredentials.get(context).hasCredentials()) {
-            return UpdateResult.INCOMPLETE;
-        }
-
-        final boolean merging = !TraktSettings.hasMergedMovies(context);
-        if (!merging && !TraktSettings.isMovieListsChanged(context, activity.collected_at,
-                activity.watchlisted_at)) {
-            Timber.d("syncMoviesWithTrakt: no changes");
-            return UpdateResult.SUCCESS;
-        }
-
-        // download collection
-        Set<Integer> collection;
-        try {
-            Response<List<BaseMovie>> response = traktSync.get()
-                    .collectionMovies(null)
-                    .execute();
-            if (response.isSuccessful()) {
-                collection = buildTmdbIdSet(response.body());
-            } else {
-                if (SgTrakt.isUnauthorized(context, response)) {
-                    return UpdateResult.INCOMPLETE;
-                }
-                SgTrakt.trackFailedRequest(context, "get movie collection", response);
-                return UpdateResult.INCOMPLETE;
-            }
-        } catch (IOException e) {
-            SgTrakt.trackFailedRequest(context, "get movie collection", e);
-            return UpdateResult.INCOMPLETE;
-        }
-        if (collection == null) {
-            Timber.e("syncMoviesWithTrakt: null collection response");
-            return UpdateResult.INCOMPLETE;
-        }
-        // download watchlist
-        Set<Integer> watchlist;
-        try {
-            Response<List<BaseMovie>> response = traktSync.get()
-                    .watchlistMovies(null)
-                    .execute();
-            if (response.isSuccessful()) {
-                watchlist = buildTmdbIdSet(response.body());
-            } else {
-                if (SgTrakt.isUnauthorized(context, response)) {
-                    return UpdateResult.INCOMPLETE;
-                }
-                SgTrakt.trackFailedRequest(context, "get movie watchlist", response);
-                return UpdateResult.INCOMPLETE;
-            }
-        } catch (IOException e) {
-            SgTrakt.trackFailedRequest(context, "get movie watchlist", e);
-            return UpdateResult.INCOMPLETE;
-        }
-        if (watchlist == null) {
-            Timber.e("syncMoviesWithTrakt: null watchlist response");
-            return UpdateResult.INCOMPLETE;
-        }
-
-        // build updates
-        // loop through all local movies
-        Set<Integer> moviesNotOnTraktCollection = new HashSet<>();
-        Set<Integer> moviesNotOnTraktWatchlist = new HashSet<>();
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        HashSet<Integer> localMovies = getMovieTmdbIdsAsSet(context);
-        if (localMovies == null) {
-            Timber.e("syncMoviesWithTrakt: querying local movies failed");
-            return UpdateResult.INCOMPLETE;
-        }
-        for (Integer tmdbId : localMovies) {
-            // is local movie in trakt collection or watchlist?
-            boolean inCollection = collection.remove(tmdbId);
-            boolean inWatchlist = watchlist.remove(tmdbId);
-
-            if (merging) {
-                // upload movie if missing from trakt collection or watchlist
-                if (!inCollection) {
-                    moviesNotOnTraktCollection.add(tmdbId);
-                }
-                if (!inWatchlist) {
-                    moviesNotOnTraktWatchlist.add(tmdbId);
-                }
-                // add to local collection or watchlist, but do NOT remove
-                if (inCollection || inWatchlist) {
-                    ContentProviderOperation.Builder builder = ContentProviderOperation
-                            .newUpdate(SeriesGuideContract.Movies.buildMovieUri(tmdbId));
-                    if (inCollection) {
-                        builder.withValue(SeriesGuideContract.Movies.IN_COLLECTION, true);
-                    }
-                    if (inWatchlist) {
-                        builder.withValue(SeriesGuideContract.Movies.IN_WATCHLIST, true);
-                    }
-                    batch.add(builder.build());
-                }
-            } else {
-                // mirror trakt collection and watchlist flag
-                // will take care of removing unneeded (not watched or in any list) movies
-                // in later sync step
-                ContentProviderOperation op = ContentProviderOperation
-                        .newUpdate(SeriesGuideContract.Movies.buildMovieUri(tmdbId))
-                        .withValue(SeriesGuideContract.Movies.IN_COLLECTION, inCollection)
-                        .withValue(SeriesGuideContract.Movies.IN_WATCHLIST, inWatchlist)
-                        .build();
-                batch.add(op);
-            }
-        }
-
-        // apply collection and watchlist updates to existing movies
-        try {
-            DBUtils.applyInSmallBatches(context, batch);
-            Timber.d("syncMoviesWithTrakt: updated %s", batch.size());
-        } catch (OperationApplicationException e) {
-            Timber.e(e, "syncMoviesWithTrakt: database updates failed");
-            return UpdateResult.INCOMPLETE;
-        }
-        batch.clear();
-
-        // merge on first run
-        if (merging) {
-            // upload movies not in trakt collection or watchlist
-            if (toTrakt(moviesNotOnTraktCollection, moviesNotOnTraktWatchlist)
-                    != UpdateResult.SUCCESS) {
-                return UpdateResult.INCOMPLETE;
-            } else {
-                // set merge successful
-                PreferenceManager.getDefaultSharedPreferences(context)
-                        .edit()
-                        .putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, true)
-                        .commit();
-            }
-        }
-
-        // add movies from trakt missing locally
-        // all local movies were removed from trakt collection and watchlist,
-        // so they only contain movies missing locally
-        UpdateResult result = addMovies(collection, watchlist);
-
-        if (result == UpdateResult.SUCCESS) {
-            // store last activity timestamps
-            TraktSettings.storeLastMoviesChangedAt(context, activity.collected_at,
-                    activity.watchlisted_at);
-            // if movies were added,
-            // ensure all movie ratings and watched flags are downloaded next
-            if (collection.size() > 0 || watchlist.size() > 0) {
-                TraktSettings.resetMoviesLastActivity(context);
-            }
-        }
-
-        return result;
-    }
-
-    private static Set<Integer> buildTmdbIdSet(List<BaseMovie> movies) {
-        if (movies == null) {
-            return null;
-        }
-
-        Set<Integer> tmdbIdSet = new HashSet<>();
-        for (BaseMovie movie : movies) {
-            if (movie.movie == null || movie.movie.ids == null
-                    || movie.movie.ids.tmdb == null) {
-                continue; // skip invalid values
-            }
-            tmdbIdSet.add(movie.movie.ids.tmdb);
-        }
-        return tmdbIdSet;
-    }
-
     /**
      * Adds new movies to the database.
      *
      * @param newCollectionMovies Movie TMDB ids to add to the collection.
      * @param newWatchlistMovies Movie TMDB ids to add to the watchlist.
      */
-    public UpdateResult addMovies(@NonNull Set<Integer> newCollectionMovies,
+    public boolean addMovies(@NonNull Set<Integer> newCollectionMovies,
             @NonNull Set<Integer> newWatchlistMovies) {
         Timber.d("addMovies: %s to collection, %s to watchlist", newCollectionMovies.size(),
                 newWatchlistMovies.size());
@@ -804,7 +457,7 @@ public class MovieTools {
             int tmdbId = iterator.next();
             if (!AndroidUtils.isNetworkConnected(context)) {
                 Timber.e("addMovies: no network connection");
-                return UpdateResult.INCOMPLETE;
+                return false;
             }
 
             // download movie data
@@ -832,7 +485,7 @@ public class MovieTools {
             }
         }
 
-        return UpdateResult.SUCCESS;
+        return true;
     }
 
     /**
@@ -901,6 +554,12 @@ public class MovieTools {
     }
 
     @Nullable
+    public Movie getMovieSummary(int movieTmdbId) {
+        String languageCode = DisplaySettings.getMoviesLanguage(context);
+        return getMovieSummary("get local movie summary", languageCode, movieTmdbId);
+    }
+
+    @Nullable
     private Movie getMovieSummary(@NonNull String action, @Nullable String language,
             int movieTmdbId) {
         try {
@@ -916,150 +575,5 @@ public class MovieTools {
             SgTmdb.trackFailedRequest(context, action, e);
         }
         return null;
-    }
-
-    public static class Upload {
-
-        /**
-         * Uploads all local movies to Hexagon.
-         */
-        public static boolean toHexagon(Context context, HexagonTools hexagonTools) {
-            Timber.d("toHexagon: uploading all movies");
-
-            List<com.uwetrottmann.seriesguide.backend.movies.model.Movie> movies = buildMovieList(
-                    context);
-            if (movies == null) {
-                Timber.e("toHexagon: movie query was null");
-                return false;
-            }
-            if (movies.size() == 0) {
-                // nothing to do
-                Timber.d("toHexagon: no movies to upload");
-                return true;
-            }
-
-            MovieList movieList = new MovieList();
-            movieList.setMovies(movies);
-
-            try {
-                com.uwetrottmann.seriesguide.backend.movies.Movies moviesService
-                        = hexagonTools.getMoviesService();
-                if (moviesService == null) {
-                    return false;
-                }
-                moviesService.save(movieList).execute();
-            } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "save movies", e);
-                return false;
-            }
-
-            return true;
-        }
-
-        private static List<com.uwetrottmann.seriesguide.backend.movies.model.Movie> buildMovieList(
-                Context context) {
-            List<com.uwetrottmann.seriesguide.backend.movies.model.Movie> movies
-                    = new ArrayList<>();
-
-            // query for movies in lists (excluding movies that are only watched)
-            Cursor moviesInLists = context.getContentResolver().query(
-                    SeriesGuideContract.Movies.CONTENT_URI, PROJECTION_MOVIES_IN_LISTS,
-                    SeriesGuideContract.Movies.SELECTION_IN_LIST, null, null);
-            if (moviesInLists == null) {
-                return null;
-            }
-
-            while (moviesInLists.moveToNext()) {
-                com.uwetrottmann.seriesguide.backend.movies.model.Movie movie
-                        = new com.uwetrottmann.seriesguide.backend.movies.model.Movie();
-                movie.setTmdbId(moviesInLists.getInt(0));
-                movie.setIsInCollection(moviesInLists.getInt(1) == 1);
-                movie.setIsInWatchlist(moviesInLists.getInt(2) == 1);
-                movies.add(movie);
-            }
-
-            moviesInLists.close();
-
-            return movies;
-        }
-    }
-
-    /**
-     * Checks if the given movies are in the local collection or watchlist, then uploads them to the
-     * appropriate list(s) on trakt.
-     */
-    public UpdateResult toTrakt(Set<Integer> moviesNotOnTraktCollection,
-            Set<Integer> moviesNotOnTraktWatchlist) {
-        if (moviesNotOnTraktCollection.size() == 0 && moviesNotOnTraktWatchlist.size() == 0) {
-            // nothing to upload
-            Timber.d("toTrakt: nothing to upload");
-            return UpdateResult.SUCCESS;
-        }
-
-        // return if connectivity is lost
-        if (!AndroidUtils.isNetworkConnected(context)) {
-            return UpdateResult.INCOMPLETE;
-        }
-
-        // query for movies in lists (excluding movies that are only watched)
-        Cursor moviesInLists = context.getContentResolver()
-                .query(SeriesGuideContract.Movies.CONTENT_URI, PROJECTION_MOVIES_IN_LISTS,
-                        SeriesGuideContract.Movies.SELECTION_IN_LIST, null, null);
-        if (moviesInLists == null) {
-            Timber.e("toTrakt: query failed");
-            return UpdateResult.INCOMPLETE;
-        }
-
-        // build list of collected, watchlisted movies to upload
-        List<SyncMovie> moviesToCollect = new LinkedList<>();
-        List<SyncMovie> moviesToWatchlist = new LinkedList<>();
-        while (moviesInLists.moveToNext()) {
-            int tmdbId = moviesInLists.getInt(0);
-
-            // in local collection, but not on trakt?
-            if (moviesInLists.getInt(1) == 1 && moviesNotOnTraktCollection.contains(tmdbId)) {
-                moviesToCollect.add(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
-            }
-            // in local watchlist, but not on trakt?
-            if (moviesInLists.getInt(2) == 1 && moviesNotOnTraktWatchlist.contains(tmdbId)) {
-                moviesToWatchlist.add(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
-            }
-        }
-
-        // clean up
-        moviesInLists.close();
-
-        // upload
-        String action = null;
-        SyncItems items = new SyncItems();
-        Response<SyncResponse> response = null;
-        try {
-            if (moviesToCollect.size() > 0) {
-                action = "add movies to collection";
-                items.movies(moviesToCollect);
-                response = traktSync.get().addItemsToCollection(items).execute();
-            }
-            if (response == null || response.isSuccessful()) {
-                if (moviesToWatchlist.size() > 0) {
-                    action = "add movies to watchlist";
-                    items.movies(moviesToWatchlist);
-                    response = traktSync.get().addItemsToWatchlist(items).execute();
-                }
-            }
-        } catch (IOException e) {
-            SgTrakt.trackFailedRequest(context, action, e);
-            return UpdateResult.INCOMPLETE;
-        }
-        if (response != null && !response.isSuccessful()) {
-            if (SgTrakt.isUnauthorized(context, response)) {
-                return UpdateResult.INCOMPLETE;
-            }
-            SgTrakt.trackFailedRequest(context, action, response);
-            return UpdateResult.INCOMPLETE;
-        }
-
-        Timber.d("toTrakt: success, uploaded %s to collection, %s to watchlist",
-                moviesToCollect.size(), moviesToWatchlist.size());
-        return UpdateResult.SUCCESS;
     }
 }

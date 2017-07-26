@@ -20,6 +20,7 @@
   <string name="season_number">Temporada %d</string>
   <string name="seasons">Temporades</string>
   <string name="specialseason">Episodis especials</string>
+  <string name="ratings">Valoracions</string>
   <!-- Descriptions -->
   <string name="description_overview">Visió general</string>
   <string name="description_poster">Mostra el cartell</string>
@@ -71,13 +72,11 @@
     <item quantity="other">%d respostes</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">ABSOLUT</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Data de llançament</string>
   <string name="episode_firstaired_unknown">Data de llançament desconeguda</string>
   <string name="episode_dvdnumber">Episodi de DVD</string>
   <string name="original_release">Versió original</string>
-  <string name="show_on_network">a %s</string>
   <string name="show_genres">Gèneres</string>
   <string name="show_contentrating">Contingut</string>
   <string name="show_release_times">Data d\'estrena</string>
@@ -94,7 +93,6 @@
   <string name="today">avui</string>
   <string name="now">ara</string>
   <string name="daily">Diàriament</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
   <!-- Flagging -->
   <string name="mark_all">Tots vists</string>
@@ -119,8 +117,8 @@
   <string name="context_unfavorite">No preferit</string>
   <string name="favorited">S\'ha afegit a preferits</string>
   <string name="unfavorited">S\'ha esborrat de preferits</string>
-  <string name="action_episode_notifications_on">Turn on episode notifications</string>
-  <string name="action_episode_notifications_off">Turn off episode notifications</string>
+  <string name="action_episode_notifications_on">Activa notificacions d\'episodis</string>
+  <string name="action_episode_notifications_off">Desactiva notificacions d\'episodis</string>
   <string name="context_hide">Oculta</string>
   <string name="context_unhide">Mostra</string>
   <string name="hidden">Sèrie oculta</string>
@@ -141,25 +139,23 @@
   <string name="action_shows_sort_favorites">Preferits primer</string>
   <string name="context_updateshow">Actualitza</string>
   <string name="context_marknext">Següent episodi vist</string>
-  <!-- Now -->
-  <string name="now_tab">Ara</string>
+  <!-- History -->
+  <string name="user_stream">historic</string>
   <string name="recently_watched">Vist Recentment</string>
-  <string name="released_today">Publicat avui</string>
   <string name="friends_recently">Els teus amics de Trakt</string>
   <string name="now_empty">Res a veure. Mira alguna sèrie!</string>
   <string name="now_movies_empty">Res a veure. Mira alguna pel·lícula!</string>
-  <!-- History -->
-  <string name="user_stream">historic</string>
   <string name="user_stream_empty">No hi ha activitat recent al trakt. Seguiu alguna sèrie!</string>
   <string name="user_movie_stream_empty">No hi ha activitat en trakt. Apunteu-hi alguna peŀlícula!</string>
   <!-- Calendar -->
   <string name="upcoming">Propers</string>
   <string name="recent">Recent</string>
+  <string name="released_today">Publicat avui</string>
   <string name="noupcoming">No hi ha capítols pròximament.</string>
   <string name="norecent">No hi ha capítols recents.</string>
-  <string name="calendar_settings">Calendar settings</string>
+  <string name="calendar_settings">Ajustaments de calendari</string>
   <string name="only_favorites">Només sèries preferides</string>
-  <string name="calendar_only_collected">Only collected episodes</string>
+  <string name="calendar_only_collected">Només els episodis col·leccionats</string>
   <string name="pref_infinite_scrolling">Calendari infinit</string>
   <!-- Updating -->
   <string name="update_scheduled">S\'està actualitzant&#8230;</string>
@@ -167,10 +163,6 @@
   <string name="update_inprogress">Ja s\'està actualitzant quelcom, intenteu-ho més tard. </string>
   <!-- Seasons -->
   <string name="season_allwatched">Tots els episodis vistos</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episodi no vist</item>
-    <item quantity="other">%d episodis per veure</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d episodi restant</item>
     <item quantity="other">%d episodis restants</item>
@@ -255,13 +247,17 @@
     <item quantity="one">%d minut</item>
     <item quantity="other">%d minuts</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Suportat</string>
+  <string name="feature_not_supported">No suportat</string>
+  <string name="feature_history">Historial personal i dels amics</string>
+  <string name="feature_comments">Post comments</string>
+  <string name="feature_sync">Sincronització</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental</string>
-  <string name="hexagon_description">Connecteu-vos al nostre Cloud per disposar de còpies de seguretat i poder sincronitzar les vostres sèries i peŀlícules.</string>
-  <string name="hexagon_warning_lists">Les llistes no hi són incloses.</string>
-  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
+  <string name="hexagon_description">SeriesGuide Cloud ajuda a fer còpia de seguretat i sincronitzar les teves sèries, llistes i pel·lícules.</string>
+  <string name="hexagon_warning_trakt">Mentre siguis connectat a SeriesGuide Cloud algunes funcionalitats de trakt no són disponibles.</string>
   <string name="hexagon_signin">Inicia la sessió</string>
-  <string name="hexagon_signed_in">Esteu connectat al Cloud de SeriesGuide.</string>
   <string name="hexagon_signout">Tanca la sessió</string>
   <string name="hexagon_setup_incomplete">No s\'ha pogut configurar el Cloud de SeriesGuide.</string>
   <string name="hexagon_setup_fail_auth">El vostre compte de Google no sembla correcte.</string>
@@ -270,8 +266,8 @@
   <string name="hexagon_remove_account_failure">No s\'ha pogut esborrar el compte.</string>
   <string name="hexagon_remove_account_confirmation">Si esborreu el vostre compte, també s\'esborraran totes les sèries i peŀlícules que tingueu al Cloud de SeriesGuide. Assegureu-vos d\'esborrar-ho dels altres dispositius on el tingueu sincronitzat.</string>
   <string name="hexagon_api_queued">Enviant a SeriesGuide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
-  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
+  <string name="hexagon_signed_out">Has desconnectat de SeriesGuide Cloud.</string>
+  <string name="hexagon_google_play_missing">Per utilitzar SeriesGuide Cloud es requereixen els Google Play Services.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">S\'està enviant a trakt.</string>
   <string name="trakt_seen">%s vists.</string>
@@ -285,22 +281,17 @@
   <string name="traktcheckin_wait">Esperaré</string>
   <string name="trakt_success">Enviat a trakt.</string>
   <string name="trakt_error_credentials">Alguna cosa no ha funcionat. Torneu a introduir les vostres credencials i proveu-ho una altra vegada.</string>
-  <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_error_not_exists">No disponible (encara) a trakt. Prova més tard.</string>
+  <string name="trakt_notice_not_exists">No pot ser registrada (encara) a trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">Compte de trakt</string>
-  <string name="trakt_connect_instructions">En la següent pantalla accedeix a trakt o crea un compte nou. Llavors permet a SeriesGuide que hi accedeixi.</string>
   <string name="connect_trakt">Connecta\'t al trakt</string>
   <string name="trakt_reconnect">Connecta SeriesGuide a trakt</string>
-  <string name="trakt_reconnect_details">Check your trakt credentials</string>
-  <string name="username">Nom d\'usuari</string>
+  <string name="trakt_reconnect_details">Comprova les credencials de trakt</string>
   <string name="waitplease">Un moment, si us plau&#8230;</string>
   <string name="connect">Connecta</string>
   <string name="disconnect">Desconnecta</string>
-  <string name="use_integrated_browser">Use integrated browser</string>
-  <string name="connect_trakt_done">S\'ha connectat a trakt!</string>
-  <string name="connect_trakt_done_explanation">Tot seguit, SeriesGuide sincronitzarà les sèries i peŀlícules en aquest dispositiu del trakt. Això pot trigar una estona.</string>
-  <string name="add_trakt_shows">Afegiu més sèries de la vostra biblioteca del trakt:</string>
+  <string name="use_integrated_browser">Utilitza el navegador integrat</string>
   <string name="show_library">Mostra\'m la biblioteca del trakt</string>
   <string name="about_trakt">La plataforma trakt us ajuda a controlar les sèries i peŀlícules que esteu veient. <a href="https://trakt.tv">Més informació</a></string>
   <!-- trakt ratings -->
@@ -317,15 +308,15 @@
   <string name="rating8">Molt bo</string>
   <string name="rating9">Superb</string>
   <plurals name="votes">
-    <item quantity="one">%d vote</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="one">%d vot</item>
+    <item quantity="other">%d vots</item>
   </plurals>
   <!-- Check Ins -->
   <string name="checkin">Inica sessió</string>
   <string name="checkin_hint">Escriviu un missatge (opcional)</string>
   <string name="paste_title">Enganxa el títol</string>
-  <string name="pref_quick_checkin">Quick check in</string>
-  <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
+  <string name="pref_quick_checkin">Registre immediat</string>
+  <string name="pref_quick_checkin_summary">No demanis un missatge de registre</string>
   <!-- Help -->
   <string name="feedback">Envia comentaris</string>
   <string name="action_open_in_browser">Obre al navegador</string>
@@ -338,33 +329,33 @@
   <string name="pref_onlyfuturesummary">No mostris cap episodi que ja s\'hagi emès</string>
   <string name="pref_onlyseasoneps">Amaga episodis especials</string>
   <string name="pref_onlyseasonepssummary">Els episodis especials desapareixeran d\'arreu, excepte de la llista de temporades</string>
-  <string name="pref_exactdates">Display exact dates</string>
-  <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
-  <string name="pref_nospoilers">Prevent spoilers</string>
-  <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
+  <string name="pref_exactdates">Mostra les dates exactes</string>
+  <string name="pref_exactdates_summary">\"31 d\'octubre\" enlloc de \"D\'aquí a 3 dies\"</string>
+  <string name="pref_nospoilers">Evita els spoilers</string>
+  <string name="pref_nospoilers_summary">Amaga els detalls fins que l\'episodi s\'hagi vist</string>
   <string name="pref_seasonsorting">Ordena les temporades per&#8230;</string>
   <string name="pref_episodesorting">Ordena els capítols per&#8230;</string>
-  <string name="pref_language">Preferred content language</string>
+  <string name="pref_language">Idioma preferit del contingut</string>
   <string name="pref_updatewifionly">Imatges només via xarxa sense fils</string>
-  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <string name="pref_updatewifionlysummary">Per reduir els càrrecs de dades, no descarregar en xarxes mòbils o comptabilitzades</string>
   <plurals name="days_before_plural">
-    <item quantity="one">%d day before</item>
-    <item quantity="other">%d days before</item>
+    <item quantity="one">%d dia abans</item>
+    <item quantity="other">%d dies abans</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="one">%d hour before</item>
-    <item quantity="other">%d hours before</item>
+    <item quantity="one">%d hora abans</item>
+    <item quantity="other">%d hores abans</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="one">%d minute before</item>
-    <item quantity="other">%d minutes before</item>
+    <item quantity="one">%d minut abans</item>
+    <item quantity="other">%d minuts abans</item>
   </plurals>
   <!-- About screen -->
-  <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
-  <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
-  <string name="licence_trakt">This app uses data and images by trakt.</string>
-  <string name="about_open_source">SeriesGuide is built using open source software.</string>
-  <string name="licences_and_credits">Licences and credits</string>
+  <string name="licence_tvdb">Aquesta aplicació fa servir dades i imatges de TheTVDB llicenciades sota CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">Aquest producte fa servir l\'API de TMDb però no està reconeguda ni certificada per TMDb.</string>
+  <string name="licence_trakt">Aquesta aplicació fa servir dades i imatges de trakt.</string>
+  <string name="about_open_source">SeriesGuide s\'ha construït utilitzant programari de codi obert.</string>
+  <string name="licences_and_credits">Llicències i credits</string>
   <!-- Sort -->
   <string name="sort">Ordena per</string>
   <string name="action_sort_ignore_articles">Ignora els articles</string>
@@ -440,7 +431,6 @@
   <string name="upcoming_show">%s és a punt de sortir</string>
   <string name="upcoming_episodes">Nous episodis són a punt de sortir</string>
   <string name="upcoming_episodes_number">%s episodis nous</string>
-  <string name="upcoming_show_detailed">%1$s a %2$s</string>
   <string name="more">%d més</string>
   <string name="upcoming_display">Seleccioneu-ho per veure les sèries que han de sortir</string>
   <string name="pref_notifications">Notificacions</string>

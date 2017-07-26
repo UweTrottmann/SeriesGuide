@@ -2,6 +2,7 @@
 <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/text1"
+    style="@style/Widget.SeriesGuide.TextView.SingleLine"
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
@@ -9,6 +10,5 @@
     android:gravity="center_vertical"
     android:paddingLeft="@dimen/larger_padding"
     android:paddingRight="@dimen/larger_padding"
-    android:singleLine="true"
     android:textAppearance="@style/TextAppearance.Menu"
     tools:text="Example List" />

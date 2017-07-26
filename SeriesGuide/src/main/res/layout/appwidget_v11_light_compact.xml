@@ -57,7 +57,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_launcher" />
+                    android:src="@mipmap/ic_app" />
             </FrameLayout>
 
             <FrameLayout

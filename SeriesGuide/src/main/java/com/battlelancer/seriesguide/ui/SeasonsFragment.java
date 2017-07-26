@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -44,6 +45,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes.SeasonWatchedType;
+import java.lang.ref.WeakReference;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -67,6 +69,7 @@ public class SeasonsFragment extends ListFragment {
     private SeasonsAdapter adapter;
     private boolean watchedAllEpisodes;
     private boolean collectedAllEpisodes;
+    private RemainingUpdateTask remainingUpdateTask;
 
     /**
      * All values have to be integer.
@@ -137,6 +140,9 @@ public class SeasonsFragment extends ListFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (remainingUpdateTask != null) {
+            remainingUpdateTask.cancel(true);
+        }
         unbinder.unbind();
     }
 
@@ -251,45 +257,49 @@ public class SeasonsFragment extends ListFragment {
     }
 
     private void updateRemainingCounter() {
-        AsyncTask<String, Void, int[]> task = new AsyncTask<String, Void, int[]>() {
+        if (remainingUpdateTask == null
+                || remainingUpdateTask.getStatus() == AsyncTask.Status.FINISHED) {
+            remainingUpdateTask = new RemainingUpdateTask(this);
+            AsyncTaskCompat.executeParallel(remainingUpdateTask, String.valueOf(getShowId()));
+        }
+    }
 
-            @Override
-            protected int[] doInBackground(String... params) {
-                if (isCancelled()) {
-                    return null;
-                }
+    private static class RemainingUpdateTask extends AsyncTask<String, Void, int[]> {
 
-                int[] counts = new int[2];
+        private final WeakReference<SeasonsFragment> seasonsFragment;
+        private final Context context;
 
-                counts[0] = DBUtils.getUnwatchedEpisodesOfShow(getActivity(), params[0]);
-                counts[1] = DBUtils.getUncollectedEpisodesOfShow(getActivity(), params[0]);
+        RemainingUpdateTask(SeasonsFragment seasonsFragment) {
+            this.seasonsFragment = new WeakReference<>(seasonsFragment);
+            this.context = seasonsFragment.getContext().getApplicationContext();
+        }
 
-                return counts;
+        @Override
+        protected int[] doInBackground(String... params) {
+            int[] counts = new int[2];
+            counts[0] = DBUtils.getUnwatchedEpisodesOfShow(context, params[0]);
+            counts[1] = DBUtils.getUncollectedEpisodesOfShow(context, params[0]);
+            return counts;
+        }
+
+        @Override
+        protected void onPostExecute(int[] result) {
+            SeasonsFragment seasonsFragment = this.seasonsFragment.get();
+            if (seasonsFragment == null) {
+                return;
             }
-
-            @Override
-            protected void onPostExecute(int[] result) {
-                if (isAdded()) {
-                    if (textViewRemaining != null) {
-                        if (result[0] <= 0) {
-                            textViewRemaining.setText(null);
-                        } else {
-                            int unwatched = result[0];
-                            textViewRemaining.setText(textViewRemaining.getResources()
-                                    .getQuantityString(R.plurals.remaining_episodes_plural,
-                                            unwatched, unwatched));
-                        }
-                    }
-                    if (buttonWatchedAll != null) {
-                        setWatchedToggleState(result[0]);
-                    }
-                    if (buttonCollectedAll != null) {
-                        setCollectedToggleState(result[1]);
-                    }
-                }
+            if (result[0] <= 0) {
+                seasonsFragment.textViewRemaining.setText(null);
+            } else {
+                int unwatched = result[0];
+                seasonsFragment.textViewRemaining.setText(
+                        seasonsFragment.textViewRemaining.getResources()
+                                .getQuantityString(R.plurals.remaining_episodes_plural,
+                                        unwatched, unwatched));
             }
-        };
-        AsyncTaskCompat.executeParallel(task, String.valueOf(getShowId()));
+            seasonsFragment.setWatchedToggleState(result[0]);
+            seasonsFragment.setCollectedToggleState(result[1]);
+        }
     }
 
     private void setWatchedToggleState(int unwatchedEpisodes) {
@@ -413,8 +423,6 @@ public class SeasonsFragment extends ListFragment {
                 Seasons.TAGS
         };
 
-        String SELECTION = Seasons.TOTALCOUNT + ">0";
-
         int _ID = 0;
         int COMBINED = 1;
         int WATCHCOUNT = 2;
@@ -429,9 +437,10 @@ public class SeasonsFragment extends ListFragment {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
             Constants.SeasonSorting sortOrder = DisplaySettings.getSeasonSortOrder(getActivity());
+            // can use SELECTION_WITH_EPISODES as count is updated when this fragment runs
             return new CursorLoader(getActivity(),
                     Seasons.buildSeasonsOfShowUri(String.valueOf(getShowId())),
-                    SeasonsQuery.PROJECTION, SeasonsQuery.SELECTION, null, sortOrder
+                    SeasonsQuery.PROJECTION, Seasons.SELECTION_WITH_EPISODES, null, sortOrder
                     .query()
             );
         }
@@ -455,7 +464,8 @@ public class SeasonsFragment extends ListFragment {
     private SeasonsAdapter.PopupMenuClickListener popupMenuClickListener =
             new SeasonsAdapter.PopupMenuClickListener() {
                 @Override
-                public void onPopupMenuClick(View v, final int seasonTvdbId, final int seasonNumber) {
+                public void onPopupMenuClick(View v, final int seasonTvdbId,
+                        final int seasonNumber) {
                     PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
                     popupMenu.inflate(R.menu.seasons_popup_menu);
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -469,17 +479,20 @@ public class SeasonsFragment extends ListFragment {
                                 }
                                 case R.id.menu_action_seasons_watched_none: {
                                     onFlagSeasonWatched(seasonTvdbId, seasonNumber, false);
-                                    Utils.trackContextMenu(getActivity(), TAG, "Flag all unwatched");
+                                    Utils.trackContextMenu(getActivity(), TAG,
+                                            "Flag all unwatched");
                                     return true;
                                 }
                                 case R.id.menu_action_seasons_collection_add: {
                                     onFlagSeasonCollected(seasonTvdbId, seasonNumber, true);
-                                    Utils.trackContextMenu(getActivity(), TAG, "Flag all collected");
+                                    Utils.trackContextMenu(getActivity(), TAG,
+                                            "Flag all collected");
                                     return true;
                                 }
                                 case R.id.menu_action_seasons_collection_remove: {
                                     onFlagSeasonCollected(seasonTvdbId, seasonNumber, false);
-                                    Utils.trackContextMenu(getActivity(), TAG, "Flag all uncollected");
+                                    Utils.trackContextMenu(getActivity(), TAG,
+                                            "Flag all uncollected");
                                     return true;
                                 }
                                 case R.id.menu_action_seasons_skip: {

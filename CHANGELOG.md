@@ -5,6 +5,77 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 38
+----------
+*(2017-07-26)*
+
+* Highlight show posters, improve text.
+* Rename 'Now' to 'History'. 'Released today' moved to calendar.
+* Display (expected) posters in history tabs and episode search.
+* Season info text no longer says all episodes are watched if none are watched.
+* trakt and Cloud account screens display sync details.
+* Adaptive icons on Android O.
+* Fix Arabic release date and time format.
+
+#### 38
+*(2017-07-26)*
+
+* 🔨 Do not show auto backup warning if issue was resolved.
+* 🔨 Auto backup screen checks permissions when opening it.
+* 🔧 Do not show week in calendar if released in the next or previous 6 days.
+* 📝 Latest translations from crowdin.
+
+#### 38-beta5
+*(2017-07-14)*
+
+* 🔧 Restore round laucher icon (Android 7).
+* 🔧 Change transparent status bars to material style, use dark icons for light theme (Android 6+).
+* 🔧 Change app bar color to black for 'Android Dark' theme.
+* 🔨 Potential fix for blank space appearing left of network text in rare occasions.
+* 📝 Latest translations from crowdin.
+
+#### 38-beta4
+*(2017-07-06)*
+
+* 🔧 Rename 'Now' to 'History' tab, drop 'Released today' (still available in upcoming/recent).
+* 🔧 Reduce visual clutter of show and history cards, list widget.
+* 🔧 Display (expected) posters in show and movie history tabs, episode search. 
+* 🔧 Refine app icon, drop round variant.
+* 🌟 Adaptive app and shortcut icons on Android O.
+* 🌟 Support pinning show shortcuts on Android O.
+* 📝 Latest translations from crowdin.
+
+#### 38-beta3
+*(2017-06-24)*
+
+* 🔨 Crash when viewing details of episode that is not part of any season.
+* 🔧 When updating shows, remove seasons without episodes.
+
+#### 38-beta2
+*(2017-06-23)*
+
+* 🔧 SeriesGuide Cloud and trakt account screens display available features and sync status.
+* 🔧 Simplified season info text, does not say all watched if none watched.
+* 🔧 Enable favorite (star) button of list items.
+* 🔧 In show list, do not display day of episode if it is the same as the regular release day.
+* 🔧 Skip TheTVDB sync after 3 consecutive timeouts.
+* 🔧 Dim episodes until actual release, matching season info text.
+* 🔨 Drop-down to change seasons contains empty or duplicate seasons.
+* 🔨 Last watched times not updated correctly when syncing with Cloud and show is not on device.
+* 🔨 Do not move Hulu shows released at midnight by one day.
+* 🔨 Wrong format of release date and time in Arabic.
+* 📝 Latest translations from crowdin.
+
+#### 38-beta1
+*(2017-05-26)*
+
+* 🔧 Add "Infinite calendar" setting to widget. Disable it for existing widgets.
+* 🌟 Add extension for German video-on-demand and streaming search engine vodster.de.
+* 🔧 Increase enabled extension limit to 10.
+* 🔨 Potential fix for sync adapter crashes.
+* 🔨 If adding multiple shows, the first one might never display as added.
+* 📝 Latest translations from crowdin.
+
 Version 37
 ----------
 *(2017-05-17)*

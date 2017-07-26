@@ -34,7 +34,7 @@
         android:layout_marginBottom="@dimen/large_padding"
         android:textAppearance="@style/TextAppearance.Caption"
         android:textIsSelectable="true"
-        tools:text="OCT 15, 2013 (TUE) ABSOLUTE 52" />
+        tools:text="OCT 15, 2013 (TUE) · 52" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/containerEpisodeImage"

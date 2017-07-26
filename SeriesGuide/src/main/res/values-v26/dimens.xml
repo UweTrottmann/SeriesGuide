@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Recommended size for adaptive icon for O+. -->
+    <dimen name="show_poster_width_shortcut">108dp</dimen>
+    <dimen name="show_poster_height_shortcut">108dp</dimen>
+
+</resources>

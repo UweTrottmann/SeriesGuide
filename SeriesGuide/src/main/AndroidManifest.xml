@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Extensions (package change receiver), Analytics (non-Google Play devices) -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -33,7 +34,7 @@
         android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
         android:fullBackupOnly="true"
         android:hardwareAccelerated="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:restrictedAccountType="${applicationId}"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -156,7 +157,7 @@
         <!-- trakt -->
         <activity
             android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity"
-            android:label="@string/connect_trakt" />
+            android:label="@string/trakt" />
         <activity
             android:name="com.battlelancer.seriesguide.traktapi.TraktAuthActivity"
             android:label="@string/connect_trakt"
@@ -327,7 +328,7 @@
         <service
             android:name="com.battlelancer.seriesguide.extensions.AmazonExtension"
             android:description="@string/description_extension_amazon"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@mipmap/ic_app"
             android:label="@string/extension_amazon">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
@@ -339,7 +340,7 @@
         <service
             android:name="com.battlelancer.seriesguide.extensions.YouTubeExtension"
             android:description="@string/description_extension_youtube"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@mipmap/ic_app"
             android:label="@string/extension_youtube">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
@@ -348,7 +349,7 @@
         <service
             android:name="com.battlelancer.seriesguide.extensions.VodsterExtension"
             android:description="@string/extension_vodster_description"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@mipmap/ic_app"
             android:label="@string/extension_vodster">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
@@ -357,7 +358,7 @@
         <service
             android:name="com.battlelancer.seriesguide.extensions.WebSearchExtension"
             android:description="@string/description_extension_web_search"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@mipmap/ic_app"
             android:label="@string/web_search">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
@@ -398,6 +399,21 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/sync_seriesguide" />
         </service>
+
+        <!-- Register AnalyticsReceiver and AnalyticsService to support background dispatching
+        on non-Google Play devices. -->
+        <receiver
+            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
+            android:enabled="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="com.google.android.gms.analytics.AnalyticsService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

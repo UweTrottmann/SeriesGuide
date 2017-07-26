@@ -347,12 +347,11 @@ public class NotificationService extends IntentService {
             );
             tickerText = getString(R.string.upcoming_show, contentTitle);
 
-            // "8:00 PM on Network"
-            final String releaseTime = TimeTools.formatToLocalTime(this, TimeTools
-                    .applyUserOffset(this,
+            // "8:00 PM Network"
+            final String time = TimeTools.formatToLocalTime(this, TimeTools.applyUserOffset(this,
                             upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
             final String network = upcomingEpisodes.getString(NotificationQuery.NETWORK);
-            contentText = getString(R.string.upcoming_show_detailed, releaseTime, network);
+            contentText = TextTools.dotSeparate(time, network); // switch on purpose
 
             Intent episodeDetailsIntent = new Intent(context, EpisodesActivity.class);
             episodeDetailsIntent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
@@ -455,14 +454,13 @@ public class NotificationService extends IntentService {
 
                     lineText.append(" ");
 
-                    // "8:00 PM on Network"
-                    String releaseTime = TimeTools.formatToLocalTime(this, TimeTools
+                    // "8:00 PM Network"
+                    String time = TimeTools.formatToLocalTime(this, TimeTools
                             .applyUserOffset(this, upcomingEpisodes
                                     .getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
                     String network = upcomingEpisodes
                             .getString(NotificationQuery.NETWORK);
-                    lineText.append(getString(R.string.upcoming_show_detailed, releaseTime,
-                            network));
+                    lineText.append(TextTools.dotSeparate(time, network)); // switch on purpose
 
                     inboxStyle.addLine(lineText);
                 }

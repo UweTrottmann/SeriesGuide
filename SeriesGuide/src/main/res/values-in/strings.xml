@@ -20,6 +20,7 @@
   <string name="season_number">Musim %d</string>
   <string name="seasons">Musim</string>
   <string name="specialseason">Episode Khusus</string>
+  <string name="ratings">Peringkat</string>
   <!-- Descriptions -->
   <string name="description_overview">Tinjauan</string>
   <string name="description_poster">Poster acara</string>
@@ -70,13 +71,11 @@
     <item quantity="other">%d balasan</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">SEBETULNYA</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Tanggal rilis</string>
   <string name="episode_firstaired_unknown">Tanggal rilis tidak diketahui</string>
   <string name="episode_dvdnumber">Episode DVD</string>
   <string name="original_release">Rilisan asli</string>
-  <string name="show_on_network">di %s</string>
   <string name="show_genres">Genre</string>
   <string name="show_contentrating">Nilai konten</string>
   <string name="show_release_times">Waktu rilis</string>
@@ -93,7 +92,6 @@
   <string name="today">hari ini</string>
   <string name="now">sekarang</string>
   <string name="daily">Harian</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s menit</string>
   <!-- Flagging -->
   <string name="mark_all">Ditonton semua</string>
@@ -118,8 +116,8 @@
   <string name="context_unfavorite">Hapus dari favorit</string>
   <string name="favorited">Ditambahkan ke favorit</string>
   <string name="unfavorited">Dihapus dari favorit</string>
-  <string name="action_episode_notifications_on">Turn on episode notifications</string>
-  <string name="action_episode_notifications_off">Turn off episode notifications</string>
+  <string name="action_episode_notifications_on">Aktifkan pemberitahuan episode</string>
+  <string name="action_episode_notifications_off">Matikan pemberitahuan episode</string>
   <string name="context_hide">Sembunyikan</string>
   <string name="context_unhide">Jangan sembunyikan</string>
   <string name="hidden">Dipindahkan ke tersembunyi</string>
@@ -140,25 +138,23 @@
   <string name="action_shows_sort_favorites">Favorite di awal</string>
   <string name="context_updateshow">Pembaruan</string>
   <string name="context_marknext">Episode selanjutnya ditonton</string>
-  <!-- Now -->
-  <string name="now_tab">Sekarang</string>
+  <!-- History -->
+  <string name="user_stream">Riwayat</string>
   <string name="recently_watched">Baru-baru ini ditonton</string>
-  <string name="released_today">Dirislis hari ini</string>
   <string name="friends_recently">Teman trakt mu</string>
   <string name="now_empty">Tidak ada apa-apa. Tonton beberapa acara!</string>
   <string name="now_movies_empty">Tidak ada apa-apa. Tonton beberapa film!</string>
-  <!-- History -->
-  <string name="user_stream">Riwayat</string>
   <string name="user_stream_empty">Tidak ada riwayat di trakt. tonton dan cek beberapa acara!</string>
   <string name="user_movie_stream_empty">Tidak ada riwayat di trakt. tonton dan cek beberapa film!</string>
   <!-- Calendar -->
   <string name="upcoming">Mendatang</string>
   <string name="recent">Baru-baru ini</string>
+  <string name="released_today">Dirislis hari ini</string>
   <string name="noupcoming">Tidak ada episode mendatang.</string>
   <string name="norecent">Tak ada video terkini.</string>
-  <string name="calendar_settings">Calendar settings</string>
+  <string name="calendar_settings">Pengaturan kalender</string>
   <string name="only_favorites">Hanya acara favorit</string>
-  <string name="calendar_only_collected">Only collected episodes</string>
+  <string name="calendar_only_collected">Hanya episode yang terkumpul</string>
   <string name="pref_infinite_scrolling">Kalender tidak terbatas</string>
   <!-- Updating -->
   <string name="update_scheduled">Memperbarui&#8230;</string>
@@ -166,9 +162,6 @@
   <string name="update_inprogress">Sebuah perbaruan sedang berlangsung, coba lagi nanti.</string>
   <!-- Seasons -->
   <string name="season_allwatched">Semua episode ditonton</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="other">%d episode belum di tonton</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="other">%d episode lainnya</item>
   </plurals>
@@ -247,13 +240,17 @@
   <plurals name="minutes_plural">
     <item quantity="other">%d menit</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Didukung</string>
+  <string name="feature_not_supported">Tidak Didukung</string>
+  <string name="feature_history">Riwayat pribadi dan teman</string>
+  <string name="feature_comments">Post comments</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimentasi</string>
-  <string name="hexagon_description">Hubungkan ke cadangan awan dan sinkronisasi acara dan filmmu.</string>
-  <string name="hexagon_warning_lists">Daftar tidak termasuk.</string>
-  <string name="hexagon_warning_trakt">Saat SeriesGuide Cloud terkoneksi, trakt sycn akan di nonaktifkan.</string>
+  <string name="hexagon_description">SeriesGuide Cloud membantumu untuk mencadangkan dan menyelaraskan acara, daftar, dan film anda.</string>
+  <string name="hexagon_warning_trakt">Selama masuk menggunakan SeriesGuide Cloud beberapa fitur trakt tidak tersedia.</string>
   <string name="hexagon_signin">Masuk</string>
-  <string name="hexagon_signed_in">Kau tidak terhubung ke SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Keluar</string>
   <string name="hexagon_setup_incomplete">Pengaturan SeriesGuide Cloud Tidak selesai.</string>
   <string name="hexagon_setup_fail_auth">Akun Google anda tidak melapor.</string>
@@ -281,18 +278,13 @@
   <string name="trakt_notice_not_exists">Tidak bisa (Belum) dilacak dengan trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">akun trakt</string>
-  <string name="trakt_connect_instructions">Pada layar berikutnya masuk ke trakt atau buat akun baru. Kemudian izinkan SeriesGuide mengakses akun trakt anda.</string>
   <string name="connect_trakt">Sambungkan trakt</string>
   <string name="trakt_reconnect">Sambungkan SeriesGuide ke trakt</string>
   <string name="trakt_reconnect_details">Periksa kredensial trakt Anda</string>
-  <string name="username">Nama pengguna</string>
   <string name="waitplease">Tunggu sebentar&#8230;</string>
   <string name="connect">Sambungkan</string>
   <string name="disconnect">Putuskan</string>
   <string name="use_integrated_browser">Gunakan browser bawaan</string>
-  <string name="connect_trakt_done">Terhubung ke trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide sekarang akan mensinkronkan acara dan film pada perangkat ini dengan trakt. Ini mungkin akan memakan waktu.</string>
-  <string name="add_trakt_shows">Tambahkan lebih banyak acara dari perpustakaan trakt Anda:</string>
   <string name="show_library">Tampilkan Perpustakaan trakt Anda</string>
   <string name="about_trakt">trakt membantu menyimpan catatan acara TV dan film apa yang anda tonton. <a href="https://trakt.tv"> selengkapnya</a></string>
   <!-- trakt ratings -->
@@ -428,7 +420,6 @@
   <string name="upcoming_show">%s akan datang</string>
   <string name="upcoming_episodes">Episode baru akan datang</string>
   <string name="upcoming_episodes_number">%s episode baru</string>
-  <string name="upcoming_show_detailed">%1$s di %2$s</string>
   <string name="more">%d lagi</string>
   <string name="upcoming_display">Pilih untuk menampilkan acara yang akan datang</string>
   <string name="pref_notifications">Notifikasi</string>
@@ -437,8 +428,8 @@
   <string name="pref_vibrate">Getar</string>
   <string name="pref_vibratesummary">Juga bergetar saat menampilkan pemberitahuan</string>
   <string name="pref_notifications_treshold">Kapan harus memberitahu</string>
-  <string name="pref_notifications_select_shows">Select shows</string>
-  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notifications_select_shows">Pilih acara</string>
+  <string name="pref_notifications_select_shows_summary">Acara yang memiliki Pemberitahuan aktif (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (kecil)</string>
   <!-- List Widget -->

@@ -1,7 +1,9 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.view.View;
 import android.view.ViewGroup;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ThemeUtils;
@@ -25,6 +27,13 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // support transparent status bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            findViewById(android.R.id.content).setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
+
         setContentView(R.layout.activity_movie);
         setupActionBar();
         setupNavDrawer();
@@ -50,11 +59,14 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
 
     private void setupViews() {
         if (AndroidUtils.isKitKatOrHigher()) {
-            // fix padding with translucent status bar
-            // warning: status bar not always translucent (e.g. Nexus 10)
+            // fix padding with translucent (K+)/transparent (M+) status bar
+            // warning: pre-M status bar not always translucent (e.g. Nexus 10)
             // (using fitsSystemWindows would not work correctly with multiple views)
             mSystemBarTintManager = new SystemBarTintManager(this);
-            int insetTop = mSystemBarTintManager.getConfig().getPixelInsetTop(false);
+            SystemBarTintManager.SystemBarConfig config = mSystemBarTintManager.getConfig();
+            int insetTop = AndroidUtils.isMarshmallowOrHigher()
+                    ? config.getStatusBarHeight() // transparent status bar
+                    : config.getPixelInsetTop(false); // translucent status bar
             ViewGroup actionBarToolbar = (ViewGroup) findViewById(R.id.sgToolbar);
             ViewGroup.MarginLayoutParams layoutParams
                     = (ViewGroup.MarginLayoutParams) actionBarToolbar.getLayoutParams();

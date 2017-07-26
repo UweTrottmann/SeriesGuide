@@ -20,8 +20,8 @@
         android:background="@drawable/list_selector_dark"
         android:focusable="true"
         android:paddingBottom="@dimen/default_padding"
-        android:paddingLeft="@dimen/large_padding"
-        android:paddingRight="@dimen/large_padding"
+        android:paddingLeft="@dimen/widget_padding_default"
+        android:paddingRight="@dimen/widget_padding_default"
         android:paddingTop="@dimen/default_padding">
 
         <TextView
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|start"
             android:ellipsize="end"
-            android:singleLine="true"
+            android:maxLines="1"
             android:text="@string/upcoming"
             android:textColor="@color/white" />
 

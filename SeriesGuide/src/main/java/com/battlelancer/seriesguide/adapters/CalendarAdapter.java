@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.support.annotation.Nullable;
 import android.support.v4.util.LongSparseArray;
 import android.support.v4.widget.CursorAdapter;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,8 +102,8 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         }
 
         // timestamp, absolute time and network
-        StringBuilder releaseInfo = new StringBuilder();
         long releaseTime = cursor.getLong(Query.RELEASE_TIME_MS);
+        String time = null;
         if (releaseTime != -1) {
             Date actualRelease = TimeTools.applyUserOffset(context, releaseTime);
             // timestamp
@@ -112,17 +111,12 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
             viewHolder.timestamp.setText(displayExactDate ?
                     TimeTools.formatToLocalDateShort(context, actualRelease)
                     : TimeTools.formatToLocalRelativeTime(context, actualRelease));
-
-            // "10:00 PM / Network", as left aligned, exactly mirrored from show list
-            releaseInfo.append(TimeTools.formatToLocalTime(context, actualRelease));
+            // release time of this episode
+            time = TimeTools.formatToLocalTime(context, actualRelease);
         } else {
             viewHolder.timestamp.setText(null);
         }
-        final String network = cursor.getString(Query.SHOW_NETWORK);
-        if (!TextUtils.isEmpty(network)) {
-            releaseInfo.append(" / ").append(network);
-        }
-        viewHolder.info.setText(releaseInfo);
+        viewHolder.info.setText(TextTools.dotSeparate(cursor.getString(Query.SHOW_NETWORK), time));
 
         // collected indicator
         boolean isCollected = EpisodeTools.isCollected(
@@ -214,7 +208,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         long headerTime = getHeaderTime(item);
         // display headers like "Mon in 3 days", also "today" when applicable
         holder.day.setText(
-                TimeTools.formatToLocalDayAndRelativeTime(mContext, new Date(headerTime)));
+                TimeTools.formatToLocalDayAndRelativeWeek(mContext, new Date(headerTime)));
 
         return convertView;
     }

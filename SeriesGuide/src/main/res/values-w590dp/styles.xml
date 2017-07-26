@@ -9,7 +9,6 @@
 
     <style name="FirstRunColumn">
         <item name="android:layout_width">350dp</item>
-        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <!-- Panes -->

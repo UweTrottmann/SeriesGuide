@@ -20,6 +20,7 @@
   <string name="season_number">シーズン %d</string>
   <string name="seasons">シーズン</string>
   <string name="specialseason">特別編</string>
+  <string name="ratings">評価</string>
   <!-- Descriptions -->
   <string name="description_overview">概要</string>
   <string name="description_poster">ポスターを表示</string>
@@ -70,13 +71,11 @@
     <item quantity="other">%d 返信</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">全</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">リリース日</string>
   <string name="episode_firstaired_unknown">リリース日不明</string>
   <string name="episode_dvdnumber">DVD エピソード</string>
   <string name="original_release">オリジナル リリース</string>
-  <string name="show_on_network">%s で</string>
   <string name="show_genres">ジャンル</string>
   <string name="show_contentrating">コンテンツの評価</string>
   <string name="show_release_times">リリース回</string>
@@ -93,7 +92,6 @@
   <string name="today">今日</string>
   <string name="now">今</string>
   <string name="daily">毎日</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s 分</string>
   <!-- Flagging -->
   <string name="mark_all">すべて視聴済</string>
@@ -140,20 +138,18 @@
   <string name="action_shows_sort_favorites">お気に入りを最初に</string>
   <string name="context_updateshow">更新</string>
   <string name="context_marknext">視聴済次のエピソード</string>
-  <!-- Now -->
-  <string name="now_tab">今</string>
+  <!-- History -->
+  <string name="user_stream">履歴</string>
   <string name="recently_watched">最近視聴</string>
-  <string name="released_today">本日リリース</string>
   <string name="friends_recently">Trakt の友達</string>
   <string name="now_empty">何もありません。番組をご覧ください!</string>
   <string name="now_movies_empty">何もありません。映画をご覧ください!</string>
-  <!-- History -->
-  <string name="user_stream">履歴</string>
   <string name="user_stream_empty">Trakt に履歴がありません。番組を視聴およびチェックしてください!</string>
   <string name="user_movie_stream_empty">Trakt に履歴がありません。映画を視聴およびチェックしてください!</string>
   <!-- Calendar -->
   <string name="upcoming">今後</string>
   <string name="recent">最近</string>
+  <string name="released_today">本日リリース</string>
   <string name="noupcoming">今後のエピソードはありません。</string>
   <string name="norecent">最近のエピソードはありません。</string>
   <string name="calendar_settings">カレンダー設定</string>
@@ -166,9 +162,6 @@
   <string name="update_inprogress">更新を実行中です。後でもう一度やり直してください。</string>
   <!-- Seasons -->
   <string name="season_allwatched">すべてのエピソードを視聴済</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="other">%d のエピソードを見ていません</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="other">%d の他のエピソード</item>
   </plurals>
@@ -247,13 +240,17 @@
   <plurals name="minutes_plural">
     <item quantity="other">%d 分</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">サポートされています</string>
+  <string name="feature_not_supported">サポートされていません</string>
+  <string name="feature_history">個人と友達の履歴</string>
+  <string name="feature_comments">コメントを投稿</string>
+  <string name="feature_sync">同期</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">試験的</string>
-  <string name="hexagon_description">クラウドに接続して、番組や映画をバックアップおよび同期します。</string>
-  <string name="hexagon_warning_lists">リストは含まれていません。</string>
-  <string name="hexagon_warning_trakt">SeriesGuide クラウドを接続している間、trakt 同期はできなくなります。</string>
+  <string name="hexagon_description">SeriesGuide クラウドは、番組、リスト、映画をバックアップおよび同期するのに役立ちます。</string>
+  <string name="hexagon_warning_trakt">SeriesGuide クラウドにログインしている間、一部の trakt 機能はご利用いただけません。</string>
   <string name="hexagon_signin">サインイン</string>
-  <string name="hexagon_signed_in">SeriesGuide クラウドに接続しています。</string>
   <string name="hexagon_signout">サインアウト</string>
   <string name="hexagon_setup_incomplete">SeriesGuide クラウドのセットアップは完了しませんでした。</string>
   <string name="hexagon_setup_fail_auth">Google アカウントを確認できませんでした。</string>
@@ -281,18 +278,13 @@
   <string name="trakt_notice_not_exists">Trakt で (まだ) トラックすることはできません。</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt アカウント</string>
-  <string name="trakt_connect_instructions">次の画面で trakt にサインインするか、新しいアカウントを作成してください。その後、trakt アカウントに SeriesGuide アクセスを許可します。</string>
   <string name="connect_trakt">Trakt に接続</string>
   <string name="trakt_reconnect">SeriesGuide を Trakt に 接続</string>
   <string name="trakt_reconnect_details">Trakt 資格情報を確認してください</string>
-  <string name="username">ユーザー名</string>
   <string name="waitplease">しばらくお待ちください&#8230;</string>
   <string name="connect">接続</string>
   <string name="disconnect">切断</string>
   <string name="use_integrated_browser">統合ブラウザーを使用</string>
-  <string name="connect_trakt_done">Trakt に接続しました!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide は Trakt とこのデバイスの番組や映画を同期します。これは、しばらく時間がかかることがあります。</string>
-  <string name="add_trakt_shows">Trakt ライブラリーからさらに番組を追加:</string>
   <string name="show_library">Trakt ライブラリーを表示</string>
   <string name="about_trakt">trakt は、あなたが見ているテレビ番組や映画の記録を保存するのに役立ちます。<a href="https://trakt.tv"> 詳細はこちら</a></string>
   <!-- trakt ratings -->
@@ -428,7 +420,6 @@
   <string name="upcoming_show">もうすぐ %s が始まります</string>
   <string name="upcoming_episodes">新しいエピソードが始まります</string>
   <string name="upcoming_episodes_number">%s 新しいエピソード</string>
-  <string name="upcoming_show_detailed">%1$s、 %2$s</string>
   <string name="more">%d さらに</string>
   <string name="upcoming_display">表示する今後の番組を選択</string>
   <string name="pref_notifications">通知</string>

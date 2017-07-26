@@ -12,11 +12,8 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.os.AsyncTaskCompat;
 import android.support.v4.widget.TextViewCompat;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,7 +29,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
@@ -65,6 +61,7 @@ import com.battlelancer.seriesguide.util.ViewTools;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.CheatSheet;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -115,6 +112,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     @BindView(R.id.labelEpisodeDvd) View mLabelDvd;
     @BindView(R.id.textViewEpisodeDvd) TextView mDvd;
     @BindView(R.id.textViewRatingsValue) TextView mTextRating;
+    @BindView(R.id.textViewRatingsRange) TextView mTextRatingRange;
     @BindView(R.id.textViewRatingsVotes) TextView mTextRatingVotes;
     @BindView(R.id.textViewRatingsUser) TextView mTextUserRating;
 
@@ -166,6 +164,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         unbinder = ButterKnife.bind(this, v);
 
         mEpisodeContainer.setVisibility(View.GONE);
+
+        mTextRatingRange.setText(getString(R.string.format_rating_range, 10));
 
         // comments button
         Resources.Theme theme = getActivity().getTheme();
@@ -394,7 +394,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // release date, also build release time and day
         boolean isReleased;
-        SpannableStringBuilder timeAndNumbersText = new SpannableStringBuilder();
+        String timeText;
         if (mEpisodeReleaseTime != -1) {
             Date actualRelease = TimeTools.applyUserOffset(getContext(), mEpisodeReleaseTime);
             isReleased = TimeTools.isReleased(actualRelease);
@@ -409,34 +409,25 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 dateTime = TimeTools.formatToLocalRelativeTime(getContext(), actualRelease);
             }
             // append day: "in 15 mins (Fri)"
-            timeAndNumbersText.append(getString(R.string.release_date_and_day, dateTime,
-                    TimeTools.formatToLocalDay(actualRelease)).toUpperCase(Locale.getDefault()));
+            timeText = getString(R.string.format_date_and_day, dateTime,
+                    TimeTools.formatToLocalDay(actualRelease)).toUpperCase(Locale.getDefault());
         } else {
             mReleaseDate.setText(R.string.unknown);
-            timeAndNumbersText.append(getString(R.string.episode_firstaired_unknown));
+            timeText = getString(R.string.episode_firstaired_unknown);
             isReleased = false;
         }
         // absolute number (e.g. relevant for Anime): "ABSOLUTE 142"
         int absoluteNumber = cursor.getInt(DetailsQuery.NUMBER_ABSOLUTE);
+        String absoluteNumberText = null;
         if (absoluteNumber > 0) {
-            timeAndNumbersText.append("  ");
-            int numberStartIndex = timeAndNumbersText.length();
-            timeAndNumbersText
-                    .append(getString(R.string.episode_number_absolute))
-                    .append(" ")
-                    .append(String.valueOf(absoluteNumber));
-            // de-emphasize number
-            timeAndNumbersText.setSpan(new TextAppearanceSpan(getActivity(),
-                            R.style.TextAppearance_Caption_Dim), numberStartIndex,
-                    timeAndNumbersText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            );
+            absoluteNumberText = NumberFormat.getIntegerInstance().format(absoluteNumber);
         }
-        mReleaseTime.setText(timeAndNumbersText);
+        mReleaseTime.setText(TextTools.dotSeparate(timeText, absoluteNumberText));
 
         // dim text color for title if not released
         TextViewCompat.setTextAppearance(mTitle, isReleased
                 ? R.style.TextAppearance_Title : R.style.TextAppearance_Title_Dim);
-        if (!isReleased) { // overrides text appearance span from above
+        if (!isReleased) {
             TextViewCompat.setTextAppearance(mReleaseTime, R.style.TextAppearance_Caption_Dim);
         }
 

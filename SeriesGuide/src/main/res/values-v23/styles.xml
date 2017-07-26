@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Note: With maxLines ellipsis text is cut off or ellipsis character is not shown.
+    Fixed in later versions of Android, but there maxLines cuts off text on the word level.
+    The maximum amount of chars is only shown with deprecated singleLine.
+    Though singleLine causes layout issues, so for now using lines/maxLines on new versions. -->
+
+    <!-- lines=1 and ellipsize start crashes pre-L and on L_MR1.
+    See also https://issuetracker.google.com/issues/36950033
+    ellipsize start does not work on L. -->
+    <style name="Widget.SeriesGuide.TextView.SingleLine">
+        <item name="android:lines">1</item>
+    </style>
+
+</resources>

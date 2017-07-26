@@ -17,7 +17,7 @@
 
     <GridView
         android:id="@+id/gridViewMovies"
-        style="@style/Widget.SeriesGuide.CardGrid"
+        style="@style/Widget.SeriesGuide.Grid.Cards"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:columnWidth="@dimen/movie_grid_columnWidth"

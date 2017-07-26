@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/imageViewSyncStatus"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:contentDescription="@string/feature_supported"
+        app:srcCompat="@drawable/ic_cancel_red_24dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBarSyncStatus"
+        android:layout_width="24dp"
+        android:layout_height="24dp" />
+
+    <TextView
+        android:id="@+id/textViewSyncStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="2dp"
+        android:textAppearance="@style/TextAppearance.Body"
+        tools:text="Sync &amp; Update - Cloud - Shows" />
+
+</merge>

@@ -1,52 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
-    cardview:cardPreventCornerOverlap="false">
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/large_padding">
+    <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardViewSearch"
+        android:layout_width="@dimen/show_poster_width_default"
+        android:layout_height="@dimen/show_poster_height_default"
+        android:layout_marginBottom="@dimen/grid_topbottom_padding"
+        android:layout_marginLeft="@dimen/grid_leftright_padding"
+        android:layout_marginTop="@dimen/grid_topbottom_padding"
+        app:cardBackgroundColor="?attr/sgColorBackgroundCard"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageViewWatchedStatus"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_alignParentRight="true"
+            android:id="@+id/imageViewSearchPoster"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:contentDescription="@null"
-            android:src="?attr/drawableWatch" />
+            android:scaleType="centerInside"
+            tools:src="?attr/sgColorShadow" />
 
-        <TextView
-            android:id="@+id/textViewShowTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="@dimen/inline_padding"
-            android:layout_toLeftOf="@id/imageViewWatchedStatus"
-            android:textAppearance="@style/TextAppearance.Caption"
-            tools:text="Homeland" />
+    </android.support.v7.widget.CardView>
 
-        <TextView
-            android:id="@+id/textViewEpisodeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/textViewShowTitle"
-            android:layout_toLeftOf="@id/imageViewWatchedStatus"
-            android:textAppearance="@style/TextAppearance.Subhead"
-            tools:text="2x13 If Tomorrow Never Comes" />
+    <ImageView
+        android:id="@+id/imageViewSearchWatched"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@null"
+        android:src="?attr/drawableWatch"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textViewSearchSnippet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewEpisodeTitle"
-            android:textAppearance="@style/TextAppearance.Body"
-            tools:text="...some text that was found to have the given search term in it..." />
+    <TextView
+        android:id="@+id/textViewSearchShow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Body"
+        app:layout_constraintLeft_toRightOf="@+id/cardViewSearch"
+        app:layout_constraintRight_toLeftOf="@+id/imageViewSearchWatched"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Some Show Name" />
 
-    </RelativeLayout>
-</android.support.v7.widget.CardView>
+    <TextView
+        android:id="@+id/textViewSearchEpisode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Body.Bold"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/cardViewSearch"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSearchShow"
+        tools:text="2x13 If Tomorrow Never Comes" />
+
+    <TextView
+        android:id="@+id/textViewSearchSnippet"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:lines="2"
+        android:textAppearance="@style/TextAppearance.Body"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/cardViewSearch"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSearchEpisode"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="...some text that was found to have the given search term in it..." />
+
+</android.support.constraint.ConstraintLayout>

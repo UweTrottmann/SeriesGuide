@@ -118,6 +118,7 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.labelGuestStars) View labelGuestStars;
     @BindView(R.id.TextViewEpisodeGuestStars) TextView textGuestStars;
     @BindView(R.id.textViewRatingsValue) TextView textRating;
+    @BindView(R.id.textViewRatingsRange) TextView textRatingRange;
     @BindView(R.id.textViewRatingsVotes) TextView textRatingVotes;
     @BindView(R.id.textViewRatingsUser) TextView textUserRating;
 
@@ -175,6 +176,7 @@ public class OverviewFragment extends Fragment implements
 
         // ratings
         CheatSheet.setup(containerRatings, R.string.action_rate);
+        textRatingRange.setText(getString(R.string.format_rating_range, 10));
 
         // comments button
         Resources.Theme theme = getActivity().getTheme();
@@ -681,7 +683,7 @@ public class OverviewFragment extends Fragment implements
             } else {
                 dateTime = TimeTools.formatToLocalRelativeTime(getContext(), actualRelease);
             }
-            textEpisodeTime.setText(getString(R.string.release_date_and_day, dateTime,
+            textEpisodeTime.setText(getString(R.string.format_date_and_day, dateTime,
                     TimeTools.formatToLocalDay(actualRelease)));
         } else {
             textEpisodeTime.setText(null);
@@ -866,14 +868,14 @@ public class OverviewFragment extends Fragment implements
         TvdbImageTools.loadShowPosterAlpha(getActivity(), imageBackground,
                 show.getString(ShowQuery.SHOW_POSTER));
 
-        // next release day and time
-        StringBuilder timeAndNetwork = new StringBuilder();
-        int releaseTime = show.getInt(ShowQuery.SHOW_RELEASE_TIME);
+        // regular network and time
         String network = show.getString(ShowQuery.SHOW_NETWORK);
+        String time = null;
+        int releaseTime = show.getInt(ShowQuery.SHOW_RELEASE_TIME);
         if (releaseTime != -1) {
             int weekDay = show.getInt(ShowQuery.SHOW_RELEASE_WEEKDAY);
             Date release = TimeTools.getShowReleaseDateTime(getActivity(),
-                    TimeTools.getShowReleaseTime(releaseTime),
+                    releaseTime,
                     weekDay,
                     show.getString(ShowQuery.SHOW_RELEASE_TIMEZONE),
                     show.getString(ShowQuery.SHOW_RELEASE_COUNTRY),
@@ -881,16 +883,10 @@ public class OverviewFragment extends Fragment implements
             String dayString = TimeTools.formatToLocalDayOrDaily(getActivity(), release, weekDay);
             String timeString = TimeTools.formatToLocalTime(getActivity(), release);
             // "Mon 08:30"
-            timeAndNetwork.append(dayString).append(" ").append(timeString);
+            time = dayString + " " + timeString;
         }
-        // network
-        if (!TextUtils.isEmpty(network)) {
-            if (timeAndNetwork.length() != 0) {
-                timeAndNetwork.append(" ");
-            }
-            timeAndNetwork.append(getString(R.string.show_on_network, network));
-        }
-        ((TextView) getView().findViewById(R.id.showmeta)).setText(timeAndNetwork.toString());
+        TextView textViewNetworkAndTime = ButterKnife.findById(getView(), R.id.showmeta);
+        textViewNetworkAndTime.setText(TextTools.dotSeparate(network, time));
 
         // episode description might need show language, so update it here as well
         populateEpisodeDescription();

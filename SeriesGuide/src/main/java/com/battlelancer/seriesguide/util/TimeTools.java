@@ -36,6 +36,7 @@ import timber.log.Timber;
  */
 public class TimeTools {
 
+    public static final int RELEASE_WEEKDAY_UNKNOWN = -1;
     public static final int RELEASE_WEEKDAY_DAILY = 0;
 
     private static final String TIMEZONE_ID_PREFIX_AMERICA = "America/";
@@ -49,18 +50,11 @@ public class TimeTools {
     public static final String TIMEZONE_ID_US_PACIFIC = "America/Los_Angeles";
 
     private static final String NETWORK_AMAZON = "Amazon";
+    private static final String NETWORK_HULU = "Hulu";
     private static final String NETWORK_NETFLIX = "Netflix";
-
-    public static boolean isBeforeMillis(Date date, long millis) {
-        return date.before(new Date(millis));
-    }
 
     public static boolean isBeforeMillis(OffsetDateTime dateTime, long millis) {
         return dateTime.toInstant().isBefore(Instant.ofEpochMilli(millis));
-    }
-
-    public static boolean isAfterMillis(Date date, long millis) {
-        return date.after(new Date(millis));
     }
 
     public static boolean isAfterMillis(OffsetDateTime dateTime, long millis) {
@@ -68,11 +62,14 @@ public class TimeTools {
     }
 
     /**
-     * Returns whether the given date is within the next 48 hours.
+     * Returns whether the given {@link Date} is before now.
+     *
+     * Note: this may seem harsh, but is equal to how to be released are calculated for seasons.
+     *
+     * @see DBUtils#updateUnwatchedCount
      */
     public static boolean isReleased(Date actualRelease) {
-        return actualRelease.before(new Date(System.currentTimeMillis()
-                + 2 * DateUtils.DAY_IN_MILLIS));
+        return actualRelease.before(new Date(System.currentTimeMillis()));
     }
 
     /**
@@ -113,7 +110,8 @@ public class TimeTools {
     /**
      * Converts US week day string to {@link DayOfWeek#getValue()} day.
      *
-     * <p> Returns -1 if no conversion is possible and 0 if it is "Daily".
+     * <p> Returns {@link #RELEASE_WEEKDAY_UNKNOWN} if no conversion is possible or {@link
+     * #RELEASE_WEEKDAY_DAILY} if it is "Daily".
      */
     public static int parseShowReleaseWeekDay(String day) {
         if (day == null || day.length() == 0) {
@@ -137,11 +135,30 @@ public class TimeTools {
             case "Sunday":
                 return DayOfWeek.SUNDAY.getValue();
             case "Daily":
-                return 0;
+                return RELEASE_WEEKDAY_DAILY;
         }
 
         // no match
-        return -1;
+        return RELEASE_WEEKDAY_UNKNOWN;
+    }
+
+    public static boolean isSameWeekDay(Date episodeDateTime, @Nullable Date showDateTime,
+            int weekDay) {
+        if (weekDay == RELEASE_WEEKDAY_DAILY) {
+            return true;
+        }
+        if (showDateTime == null || weekDay == RELEASE_WEEKDAY_UNKNOWN) {
+            return false;
+        }
+
+        Instant showInstant = Instant.ofEpochMilli(showDateTime.getTime());
+        DayOfWeek showDayOfWeek = LocalDateTime.ofInstant(showInstant, ZoneId.systemDefault())
+                .getDayOfWeek();
+
+        Instant episodeInstant = Instant.ofEpochMilli(episodeDateTime.getTime());
+        DayOfWeek episodeDayOfWeek = LocalDateTime.ofInstant(episodeInstant, ZoneId.systemDefault())
+                .getDayOfWeek();
+        return episodeDayOfWeek == showDayOfWeek;
     }
 
     /**
@@ -223,15 +240,16 @@ public class TimeTools {
      * delays between time zones (e.g. in the United States) and DST. Adjusts for user-defined
      * offset.
      *
-     * @param time See {@link #getShowReleaseTime(int)}.
+     * @param releaseTime The {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows#RELEASE_TIME}.
      * @return The date is today or on the next day matching the given week day.
      */
-    public static Date getShowReleaseDateTime(@NonNull Context context, @NonNull LocalTime time,
+    public static Date getShowReleaseDateTime(@NonNull Context context, int releaseTime,
             int weekDay, @Nullable String timeZone, @Nullable String country,
             @Nullable String network) {
         // determine show time zone (falls back to America/New_York)
         ZoneId showTimeZone = getDateTimeZone(timeZone);
 
+        LocalTime time = TimeTools.getShowReleaseTime(releaseTime);
         ZonedDateTime dateTime = getShowReleaseDateTime(time, weekDay,
                 showTimeZone, country, network, Clock.system(showTimeZone));
 
@@ -275,7 +293,7 @@ public class TimeTools {
 
     /**
      * If the release time is within the hour past midnight (0:00 until 0:59) moves the date one day
-     * into the future (currently US shows only, excluding Amazon and Netflix shows).
+     * into the future (currently US shows only, excluding Amazon, Hulu and Netflix shows).
      *
      * <p> This is based on late night shows being commonly listed as releasing the day before if
      * they air past midnight (e.g. "Monday night at 0:35" actually is Tuesday 0:35).
@@ -287,7 +305,9 @@ public class TimeTools {
     private static LocalDateTime handleHourPastMidnight(@Nullable String country,
             @Nullable String network, LocalDateTime localDateTime) {
         if (ISO3166_1_UNITED_STATES.equals(country)
-                && !NETWORK_AMAZON.equals(network) && !NETWORK_NETFLIX.equals(network)
+                && !NETWORK_AMAZON.equals(network)
+                && !NETWORK_HULU.equals(network)
+                && !NETWORK_NETFLIX.equals(network)
                 && localDateTime.getHour() == 0) {
             return localDateTime.plusDays(1);
         }
@@ -469,6 +489,49 @@ public class TimeTools {
     }
 
     /**
+     * Formats to day and relative week in relation to the current system time (e.g. "Mon in 3
+     * weeks") as defined by the devices locale. If the time is within the next or previous 6 days,
+     * just returns the day. If the time is today, returns local variant of 'Released today'.
+     */
+    public static String formatToLocalDayAndRelativeWeek(Context context, Date dateThen) {
+        if (DateUtils.isToday(dateThen.getTime())) {
+            return context.getString(R.string.released_today);
+        }
+
+        // day abbreviation, e.g. "Mon"
+        SimpleDateFormat localDayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+        StringBuilder dayAndTime = new StringBuilder(localDayFormat.format(dateThen));
+
+        // get week day of then
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateThen);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        // set to same time used for calendar headers
+        calendar.set(Calendar.HOUR_OF_DAY, 1);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        long timeThen = dateThen.getTime();
+        long timeToday = calendar.getTimeInMillis();
+        if (timeThen >= timeToday + DateUtils.WEEK_IN_MILLIS
+                || timeThen <= timeToday - DateUtils.WEEK_IN_MILLIS) {
+            // move to same week day, but in this week
+            calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+            long timeDayOfWeekThisWeek = calendar.getTimeInMillis();
+
+            dayAndTime.append(" ");
+            dayAndTime.append(DateUtils
+                    .getRelativeTimeSpanString(timeThen, timeDayOfWeekThisWeek,
+                            DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
+        }
+
+        return dayAndTime.toString();
+    }
+
+    /**
      * Formats to a date like "October 31", or if the date is not in the current year "October 31,
      * 2010".
      *
@@ -514,7 +577,7 @@ public class TimeTools {
             day = formatToLocalDay(dateTime);
         }
 
-        return context.getString(R.string.release_date_and_day, date.toString(), day);
+        return context.getString(R.string.format_date_and_day, date.toString(), day);
     }
 
     /**

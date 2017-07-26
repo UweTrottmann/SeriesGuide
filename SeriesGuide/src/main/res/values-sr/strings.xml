@@ -20,6 +20,7 @@
   <string name="season_number">Сезона %d</string>
   <string name="seasons">Сезоне</string>
   <string name="specialseason">Специјалне епизоде</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">Преглед</string>
   <string name="description_poster">Прикажи постер</string>
@@ -72,13 +73,11 @@
     <item quantity="other">%d replies</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">АПСОЛУТНО</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Датум емитовања</string>
   <string name="episode_firstaired_unknown">Датум емитовања је непознат</string>
   <string name="episode_dvdnumber">DVD епизода</string>
   <string name="original_release">Оригинално издање</string>
-  <string name="show_on_network">на %s</string>
   <string name="show_genres">Жанрови</string>
   <string name="show_contentrating">Оцена садржаја</string>
   <string name="show_release_times">Време емитовања</string>
@@ -95,7 +94,6 @@
   <string name="today">данас</string>
   <string name="now">сада</string>
   <string name="daily">Дневно</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s мин</string>
   <!-- Flagging -->
   <string name="mark_all">Све одгледано</string>
@@ -142,20 +140,18 @@
   <string name="action_shows_sort_favorites">Прво омиљене</string>
   <string name="context_updateshow">Ажурирање</string>
   <string name="context_marknext">Погледана, следећа епизода</string>
-  <!-- Now -->
-  <string name="now_tab">Сада</string>
+  <!-- History -->
+  <string name="user_stream">Историјат</string>
   <string name="recently_watched">Недавно гледано</string>
-  <string name="released_today">Објављено данас</string>
   <string name="friends_recently">Твоји trakt пријатељи</string>
   <string name="now_empty">Досадно вам је. Погледајте неке серије!</string>
   <string name="now_movies_empty">Досадно вам је. Погледајте неке филмове!</string>
-  <!-- History -->
-  <string name="user_stream">Историјат</string>
   <string name="user_stream_empty">Нема недавних активности на trakt-у. Одаберите неке серије!</string>
   <string name="user_movie_stream_empty">Нема недавних активности на trakt-у. Одаберите неке филмове!</string>
   <!-- Calendar -->
   <string name="upcoming">Предстојеће</string>
   <string name="recent">Скорашње</string>
+  <string name="released_today">Објављено данас</string>
   <string name="noupcoming">Нема предстојећих епизода.</string>
   <string name="norecent">Нема скорашњих епизода.</string>
   <string name="calendar_settings">Calendar settings</string>
@@ -168,11 +164,6 @@
   <string name="update_inprogress">Ажурирање је у току, покушајте поново касније.</string>
   <!-- Seasons -->
   <string name="season_allwatched">Све епизоде одгледане</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="few">%d episodes not watched</item>
-    <item quantity="other">%d episodes not watched</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d other episode</item>
     <item quantity="few">%d other episodes</item>
@@ -263,13 +254,17 @@
     <item quantity="few">%d minutes</item>
     <item quantity="other">%d minutes</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_comments">Post comments</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Експериментално</string>
-  <string name="hexagon_description">Повежи се на Cloud да сачуваш и синхронизујеш своје филмове и ТВ програме.</string>
-  <string name="hexagon_warning_lists">Листе нису укључене.</string>
-  <string name="hexagon_warning_trakt">While SeriesGuide Cloud is connected, trakt sync will be disabled.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">Пријави се</string>
-  <string name="hexagon_signed_in">Повезани сте на SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Одјави се</string>
   <string name="hexagon_setup_incomplete">Подешавање SeriesGuide Cloud-а није обављено.</string>
   <string name="hexagon_setup_fail_auth">Ваш Google налог није прошао проверу.</string>
@@ -297,18 +292,13 @@
   <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt налог</string>
-  <string name="trakt_connect_instructions">On the next screen sign into trakt or create a new account. Then allow SeriesGuide access to your trakt account.</string>
   <string name="connect_trakt">Повежи trakt</string>
   <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
   <string name="trakt_reconnect_details">Check your trakt credentials</string>
-  <string name="username">Корисничко име</string>
   <string name="waitplease">Тренутак, молим&#8230;</string>
   <string name="connect">Повежи</string>
   <string name="disconnect">Прекини везу</string>
   <string name="use_integrated_browser">Use integrated browser</string>
-  <string name="connect_trakt_done">Повезано са trakt-ом!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide ће сада синхронизовати серије и филмове са овог уређаја на trakt. Ово може потрајати неко време.</string>
-  <string name="add_trakt_shows">Додајте серије из ваше trakt библиотеке:</string>
   <string name="show_library">Прикажите вашу trakt библиотеку</string>
   <string name="about_trakt">trakt води евиденцију серија и филмова које гледате. <a href="http://trakt.tv">Сазнај више</a></string>
   <!-- trakt ratings -->
@@ -452,7 +442,6 @@
   <string name="upcoming_show">%s ускоро долази</string>
   <string name="upcoming_episodes">Нове епизоде долазе ускоро</string>
   <string name="upcoming_episodes_number">%s нових епизода</string>
-  <string name="upcoming_show_detailed">%1$s на %2$s</string>
   <string name="more">%d више</string>
   <string name="upcoming_display">Одабери долазеће серије за приказивање</string>
   <string name="pref_notifications">Обавештења</string>

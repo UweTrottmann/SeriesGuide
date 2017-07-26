@@ -20,6 +20,7 @@
   <string name="season_number">Évad %d</string>
   <string name="seasons">Évadok</string>
   <string name="specialseason">Extra epizódok</string>
+  <string name="ratings">Értékelések</string>
   <!-- Descriptions -->
   <string name="description_overview">Tartalom</string>
   <string name="description_poster">Borító mutatása</string>
@@ -71,13 +72,11 @@
     <item quantity="other">%d válasz</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">Abszolút</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Első adás</string>
   <string name="episode_firstaired_unknown">A vetítési időpont ismeretlen</string>
   <string name="episode_dvdnumber">DVD epizód</string>
   <string name="original_release">Eredeti megjelenés</string>
-  <string name="show_on_network">%s csatornán</string>
   <string name="show_genres">Műfaj</string>
   <string name="show_contentrating">Korhatár besorolás</string>
   <string name="show_release_times">Megjelenési idő</string>
@@ -94,7 +93,6 @@
   <string name="today">ma</string>
   <string name="now">most</string>
   <string name="daily">Napi</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s perc</string>
   <!-- Flagging -->
   <string name="mark_all">Mind megnézve</string>
@@ -141,25 +139,23 @@
   <string name="action_shows_sort_favorites">Kedvencek előre</string>
   <string name="context_updateshow">Frissítés</string>
   <string name="context_marknext">Láttam a következő epizódot</string>
-  <!-- Now -->
-  <string name="now_tab">Friss</string>
+  <!-- History -->
+  <string name="user_stream">Előzmények</string>
   <string name="recently_watched">Nemrég megnézett</string>
-  <string name="released_today">Ma vetített</string>
   <string name="friends_recently">Trakt barátaid</string>
   <string name="now_empty">Nincs most folyamatban semmi. Nézz meg valamilyen sorozatot!</string>
   <string name="now_movies_empty">Nincs most folyamatban semmi. Nézz meg valamilyen filmet!</string>
-  <!-- History -->
-  <string name="user_stream">Előzmények</string>
   <string name="user_stream_empty">Nincs trakt előzmény. Nézz meg és jelölj be néhány sorozatot!</string>
   <string name="user_movie_stream_empty">Nem volt trakt aktivitás mostanában. Jelölj be néhány filmet!</string>
   <!-- Calendar -->
   <string name="upcoming">Következő</string>
   <string name="recent">Legutóbbi</string>
+  <string name="released_today">Ma vetített</string>
   <string name="noupcoming">Nincsenek következő epizódok.</string>
   <string name="norecent">Nincsenek mostanában vetített epizódok.</string>
   <string name="calendar_settings">Naptár beállításai</string>
   <string name="only_favorites">Csak kedvenc sorozatok</string>
-  <string name="calendar_only_collected">Only collected episodes</string>
+  <string name="calendar_only_collected">Csak begyűjtött epizódok</string>
   <string name="pref_infinite_scrolling">Végtelen naptár</string>
   <!-- Updating -->
   <string name="update_scheduled">Frissítés&#8230;</string>
@@ -167,10 +163,6 @@
   <string name="update_inprogress">Egy frissítés van folyamatban, próbáld meg később.</string>
   <!-- Seasons -->
   <string name="season_allwatched">Minden epizód megnézve</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d nem látott epizód</item>
-    <item quantity="other">%d nem látott epizód</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d egyéb epizód</item>
     <item quantity="other">%d egyéb epizód</item>
@@ -255,13 +247,17 @@
     <item quantity="one">%d perc</item>
     <item quantity="other">%d perc</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Támogatott</string>
+  <string name="feature_not_supported">Nem támogatott</string>
+  <string name="feature_history">Személyes és barátok trakt története</string>
+  <string name="feature_comments">Post comments</string>
+  <string name="feature_sync">Szinkronizálás</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Kísérleti fázisban!</string>
-  <string name="hexagon_description">Csatlakozz a felhőhöz a sorozataid és filmjeid elmentéséhez és szinkronizálásához.</string>
-  <string name="hexagon_warning_lists">A listákat nem tartalmazza.</string>
-  <string name="hexagon_warning_trakt">Amíg a SeriesGuide Cloud csatlakozva van, a trakt szinkronizáció letiltásra kerül.</string>
+  <string name="hexagon_description">A SeriesGuide Felhő segít a sorozatok, listák és filmek biztonsági mentésében és szinkronizálásban.</string>
+  <string name="hexagon_warning_trakt">Amíg a SeriesGuide Felhőbe vagy bejelentkezve, néhány trakt funkció nem lesz elérhető.</string>
   <string name="hexagon_signin">Bejelentkezés</string>
-  <string name="hexagon_signed_in">Csatlakozva a SeriesGuide Cloudhoz.</string>
   <string name="hexagon_signout">Kijelentkezés</string>
   <string name="hexagon_setup_incomplete">A SeriesGuide Cloud beállítása nem fejeződött be.</string>
   <string name="hexagon_setup_fail_auth">A Google-fiókod hibás.</string>
@@ -286,21 +282,16 @@
   <string name="trakt_success">Továbbítva a trakt felé.</string>
   <string name="trakt_error_credentials">Hiba történt. Ellenőrizd a megadott adatokat és próbáld újra.</string>
   <string name="trakt_error_not_exists">(Még) nem található a trakton. Próbálkozz később.</string>
-  <string name="trakt_notice_not_exists">(Még) nem követhető nyomon a traktal.</string>
+  <string name="trakt_notice_not_exists">(Még) nem követhető nyomon a trakttal.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt fiók</string>
-  <string name="trakt_connect_instructions">A következő képernyőn lépj be a traktba, vagy hozz létre egy új fiókot. Majd engedélyezd a SeriesGuide-nak a trakt fiókodhoz való hozzáférését.</string>
   <string name="connect_trakt">Trakt csatlakozás</string>
   <string name="trakt_reconnect">A SeriesGuide csatlakoztatása a trakthoz</string>
   <string name="trakt_reconnect_details">Ellenőrizd a trakt engedélyeket</string>
-  <string name="username">Felhasználónév</string>
   <string name="waitplease">Kis türelmet&#8230;</string>
   <string name="connect">Kapcsolódás</string>
   <string name="disconnect">Megszakítás</string>
   <string name="use_integrated_browser">Beépített böngésző használata</string>
-  <string name="connect_trakt_done">Csatlakozva a trakthoz!</string>
-  <string name="connect_trakt_done_explanation">A SeriesGuide most szinkronizálni fogja a sorozatokat és filmeket a trakttal. Ez néhány percig eltarthat.</string>
-  <string name="add_trakt_shows">Műsor hozzáadása a gyűjteményedből:</string>
   <string name="show_library">Műsortárad mutatása</string>
   <string name="about_trakt">a trakt segít nyilvántartani a nézett sorozatokat és filmeket. <a href="http://trakt.tv">Továbbiak (angolul)</a></string>
   <!-- trakt ratings -->
@@ -440,7 +431,6 @@
   <string name="upcoming_show">%s kezdődik</string>
   <string name="upcoming_episodes">Új epizódok kezdődnek</string>
   <string name="upcoming_episodes_number">%s új epizód</string>
-  <string name="upcoming_show_detailed">%1$s itt: %2$s</string>
   <string name="more">még %d</string>
   <string name="upcoming_display">Válassza ki a közelgő műsorok megjelenítéséhez</string>
   <string name="pref_notifications">Értesítések</string>

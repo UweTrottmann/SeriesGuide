@@ -20,6 +20,7 @@
   <string name="season_number">Série %d</string>
   <string name="seasons">Série</string>
   <string name="specialseason">Bonusové Epizody</string>
+  <string name="ratings">Hodnocení</string>
   <!-- Descriptions -->
   <string name="description_overview">Přehled</string>
   <string name="description_poster">Zobrazit plakát</string>
@@ -72,13 +73,11 @@
     <item quantity="other">%d odpovědi</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">CELKOVĚ</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Datum vysílání</string>
   <string name="episode_firstaired_unknown">Datum vysílání neznámé</string>
   <string name="episode_dvdnumber">Epizoda na DVD</string>
   <string name="original_release">Původní vydání</string>
-  <string name="show_on_network">na %s</string>
   <string name="show_genres">Žánr</string>
   <string name="show_contentrating">Hodnocení obsahu</string>
   <string name="show_release_times">Časy vydání</string>
@@ -95,7 +94,6 @@
   <string name="today">dnes</string>
   <string name="now">nyní</string>
   <string name="daily">Denně</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
   <!-- Flagging -->
   <string name="mark_all">Zhlédnuty všechny</string>
@@ -142,25 +140,23 @@
   <string name="action_shows_sort_favorites">Oblíbené předně</string>
   <string name="context_updateshow">Aktualizovat</string>
   <string name="context_marknext">Následujicí epizoda zhlédnuta</string>
-  <!-- Now -->
-  <string name="now_tab">Nyní</string>
+  <!-- History -->
+  <string name="user_stream">Historie</string>
   <string name="recently_watched">Nedávno viděno</string>
-  <string name="released_today">Vysíláno dnes</string>
   <string name="friends_recently">Zaznamenáno přítelem</string>
   <string name="now_empty">Nic se děje. Podívejte se na pořady!</string>
   <string name="now_movies_empty">Zatím tu nic není. Podívejte se na některé filmy!</string>
-  <!-- History -->
-  <string name="user_stream">Historie</string>
   <string name="user_stream_empty">Žádná poslední aktivita na Traktu. Podívej se na některé seriály!</string>
   <string name="user_movie_stream_empty">Žádná poslední aktivita na Traktu. Podívej se na některé filmy!</string>
   <!-- Calendar -->
   <string name="upcoming">Nadcházející</string>
   <string name="recent">Nedávné</string>
+  <string name="released_today">Vysíláno dnes</string>
   <string name="noupcoming">Žádné nadcházející epizody.</string>
   <string name="norecent">Žádné nedávné epizody.</string>
-  <string name="calendar_settings">Calendar settings</string>
+  <string name="calendar_settings">Nastavení kalendáře</string>
   <string name="only_favorites">Pouze oblíbené seriály</string>
-  <string name="calendar_only_collected">Only collected episodes</string>
+  <string name="calendar_only_collected">Pouze epizody ve sbírce</string>
   <string name="pref_infinite_scrolling">Nekonečný kalendář</string>
   <!-- Updating -->
   <string name="update_scheduled">Probíhá aktualizace&#8230;</string>
@@ -168,25 +164,20 @@
   <string name="update_inprogress">Probíhá aktualizace, zkuste to později.</string>
   <!-- Seasons -->
   <string name="season_allwatched">Všechny epizody zhlédnuty</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d epizoda ke shlédnutí</item>
-    <item quantity="few">%d episodes not watched</item>
-    <item quantity="other">%d epizod ke shlédnutí</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d další epizoda</item>
-    <item quantity="few">%d other episodes</item>
-    <item quantity="other">%d další epizody</item>
+    <item quantity="few">%d další epizody</item>
+    <item quantity="other">%d dalších epizod</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
     <item quantity="one">%d neodvysílaná</item>
-    <item quantity="few">%d to be released</item>
-    <item quantity="other">%d neodvysílaná</item>
+    <item quantity="few">%d neodvysílané</item>
+    <item quantity="other">%d neodvysílaných</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d zbývá</item>
-    <item quantity="few">%d remaining</item>
-    <item quantity="other">%d zbývá</item>
+    <item quantity="one">%d zbývající</item>
+    <item quantity="few">%d zbývající</item>
+    <item quantity="other">%d zbývajících</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Napište název seriálu</string>
@@ -263,13 +254,17 @@
     <item quantity="few">%d minut</item>
     <item quantity="other">%d minut</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Podporováno</string>
+  <string name="feature_not_supported">Není podporováno</string>
+  <string name="feature_history">Osobní a historie přátel</string>
+  <string name="feature_comments">Post comments</string>
+  <string name="feature_sync">Synchronizace</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimentální!</string>
-  <string name="hexagon_description">Připojte se do cloudu a zálohujte a synchronizujte své seriály a filmy.</string>
-  <string name="hexagon_warning_lists">Neobsahuje vaše seznamy.</string>
-  <string name="hexagon_warning_trakt">Je-li SeriesGuide Cloud připojen, tak synchronizace z webu Trakt bude vypnuta.</string>
+  <string name="hexagon_description">SeriesGuide Cloud pomáhá zálohovat a synchronizovat své pořady, seznamy a filmy.</string>
+  <string name="hexagon_warning_trakt">Pokud jste přihlášení přes SeriesGuide Cloud, některé funkce trakt.tv nemusí být k dispozici.</string>
   <string name="hexagon_signin">Přihlásit se</string>
-  <string name="hexagon_signed_in">Jste připojen na SeriesGuide cloud.</string>
   <string name="hexagon_signout">Odhlásit se</string>
   <string name="hexagon_setup_incomplete">Nastavení SeriesGuide cloudu nebylo kompletní.</string>
   <string name="hexagon_setup_fail_auth">Nastala chyba s vaším Google účtem.</string>
@@ -297,18 +292,13 @@
   <string name="trakt_notice_not_exists">Nelze (zatím) synchronizovat s traktem.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt.tv účet</string>
-  <string name="trakt_connect_instructions">Na další obrazovce se přihlašte do trakt.tv nebo vytvořte nový účet. Poté umožněte SeriesGuide přístup k vašemu účtu na trakt.tv.</string>
   <string name="connect_trakt">Připojit trakt.tv</string>
   <string name="trakt_reconnect">Připojit SeriesGuide k trakt.tv</string>
   <string name="trakt_reconnect_details">Zkontrolujte své nastavení trakt.tv</string>
-  <string name="username">Uživatelské jméno</string>
   <string name="waitplease">Chvilku strpení&#8230;</string>
   <string name="connect">Připojit</string>
   <string name="disconnect">Odpojit</string>
   <string name="use_integrated_browser">Použít integrovaný prohlížeč</string>
-  <string name="connect_trakt_done">Připojeno k trakt.tv!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide bude nyní synchronizovat, pořady a filmy na tomto zařízení se službou Trakt. To může chvíli trvat.</string>
-  <string name="add_trakt_shows">Přidat seriály z vaší knihovny:</string>
   <string name="show_library">Ukázat vaši knihovnu</string>
   <string name="about_trakt">trakt vám pomáhá zaznamenávat které televizní seriály a filmy sledujete. <a href="http://trakt.tv">Zjistit více.</a></string>
   <!-- trakt ratings -->
@@ -358,17 +348,17 @@
   <string name="pref_updatewifionlysummary">Omezí přenos dat, nebude se stahovat před mobilní data nebo omezená připojení</string>
   <plurals name="days_before_plural">
     <item quantity="one">%d den předem</item>
-    <item quantity="few">%d days before</item>
+    <item quantity="few">%d dny předem</item>
     <item quantity="other">%d dní předem</item>
   </plurals>
   <plurals name="hours_before_plural">
     <item quantity="one">%d hodina předem</item>
-    <item quantity="few">%d hours before</item>
+    <item quantity="few">%d hodiny předem</item>
     <item quantity="other">%d hodin předem</item>
   </plurals>
   <plurals name="minutes_before_plural">
     <item quantity="one">%d minuta předem</item>
-    <item quantity="few">%d minutes before</item>
+    <item quantity="few">%d minuty předem</item>
     <item quantity="other">%d minut předem</item>
   </plurals>
   <!-- About screen -->
@@ -452,7 +442,6 @@
   <string name="upcoming_show">%s právě vychází</string>
   <string name="upcoming_episodes">Vycházející epizody</string>
   <string name="upcoming_episodes_number">%s nových epizod</string>
-  <string name="upcoming_show_detailed">%1$s na %2$s</string>
   <string name="more">%d další</string>
   <string name="upcoming_display">Vyberte pro zobrazení nadcházejících seriálů</string>
   <string name="pref_notifications">Upozornění</string>
@@ -462,7 +451,7 @@
   <string name="pref_vibratesummary">Při upozornění také vibrovat</string>
   <string name="pref_notifications_treshold">Čas upozornění</string>
   <string name="pref_notifications_select_shows">Vybrat pořad</string>
-  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notifications_select_shows_summary">Seriály, pro které byly povoleny upozornění (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (malý)</string>
   <!-- List Widget -->

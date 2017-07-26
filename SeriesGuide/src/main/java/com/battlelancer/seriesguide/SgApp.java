@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.modules.TraktModule;
 import com.battlelancer.seriesguide.modules.TvdbModule;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.SgPicassoRequestHandler;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -115,15 +116,20 @@ public class SgApp extends Application {
 
     private void initializeEventBus() {
         try {
-            EventBus.builder().addIndex(new SgEventBusIndex()).installDefaultEventBus();
+            EventBus.builder()
+                    .logNoSubscriberMessages(BuildConfig.DEBUG)
+                    .addIndex(new SgEventBusIndex())
+                    .installDefaultEventBus();
         } catch (EventBusException ignored) {
             // instance was already set
         }
     }
 
     private void initializePicasso() {
+        OkHttp3Downloader downloader = new OkHttp3Downloader(this);
         Picasso picasso = new Picasso.Builder(this)
-                .downloader(new OkHttp3Downloader(this))
+                .downloader(downloader)
+                .addRequestHandler(new SgPicassoRequestHandler(downloader, this))
                 .build();
         try {
             Picasso.setSingletonInstance(picasso);

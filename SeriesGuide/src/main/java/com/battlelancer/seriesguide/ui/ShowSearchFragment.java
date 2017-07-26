@@ -7,17 +7,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.AdapterView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -27,29 +24,22 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TimeTools;
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Displays show search results.
  */
-public class ShowSearchFragment extends ListFragment {
+public class ShowSearchFragment extends BaseSearchFragment {
 
     private ShowResultsAdapter adapter;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_search, container, false);
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         adapter = new ShowResultsAdapter(getActivity(), onItemClickListener);
-        setListAdapter(adapter);
+        gridView.setAdapter(adapter);
 
         // initially display shows with recently released episodes
         getLoaderManager().initLoader(SearchActivity.SHOWS_LOADER_ID, new Bundle(),
@@ -57,27 +47,13 @@ public class ShowSearchFragment extends ListFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent i = new Intent(getActivity(), OverviewActivity.class);
         i.putExtra(OverviewActivity.EXTRA_INT_SHOW_TVDBID, (int) id);
 
         ActivityCompat.startActivity(getActivity(), i,
-                ActivityOptionsCompat.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight())
-                        .toBundle());
+                ActivityOptionsCompat.makeScaleUpAnimation(view, 0, 0, view.getWidth(),
+                        view.getHeight()).toBundle());
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
@@ -88,7 +64,7 @@ public class ShowSearchFragment extends ListFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventTabClick(TabClickEvent event) {
         if (event.position == SearchActivity.TAB_POSITION_SHOWS) {
-            getListView().smoothScrollToPosition(0);
+            gridView.smoothScrollToPosition(0);
         }
     }
 

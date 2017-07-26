@@ -20,6 +20,7 @@
   <string name="season_number">فصل %d</string>
   <string name="seasons">فصل‌ها</string>
   <string name="specialseason">قسمت‌های ویژه</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">بررسی اجمالی</string>
   <string name="description_poster">پوستر نمایش</string>
@@ -71,13 +72,11 @@
     <item quantity="other">%Id پاسخ</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">کامل</string>
   <string name="episode_number_disk">دی‌وی‌دی</string>
   <string name="episode_firstaired">تاریخ انتشار</string>
   <string name="episode_firstaired_unknown">تاریخ انتشار نامشخّص</string>
   <string name="episode_dvdnumber">قسمت دی‌وی‌دی</string>
   <string name="original_release">انتشار اصلی</string>
-  <string name="show_on_network">در %s</string>
   <string name="show_genres">سبک‌ها</string>
   <string name="show_contentrating">رتبه‌بندی محتوایی</string>
   <string name="show_release_times">زمان‌های انتشار</string>
@@ -94,7 +93,6 @@
   <string name="today">امروز</string>
   <string name="now">اکنون</string>
   <string name="daily">روزانه</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s دقیقه</string>
   <!-- Flagging -->
   <string name="mark_all">همه تماشا شدن</string>
@@ -141,20 +139,18 @@
   <string name="action_shows_sort_favorites">نخست برگزیده‌ها</string>
   <string name="context_updateshow">به‌روز رسانی</string>
   <string name="context_marknext">قسمت بعدی تماشا شده</string>
-  <!-- Now -->
-  <string name="now_tab">اکنون</string>
+  <!-- History -->
+  <string name="user_stream">تاریخچه</string>
   <string name="recently_watched">به‌تازگی تماشا شده</string>
-  <string name="released_today">امروز منتشر شد</string>
   <string name="friends_recently">دوستان شما در trakt</string>
   <string name="now_empty">هیچ خبری نیست. چند اثر نمایشی تماشا کنید!</string>
   <string name="now_movies_empty">هیچ خبری نیست. چند فیلم تماشا کنید!</string>
-  <!-- History -->
-  <string name="user_stream">تاریخچه</string>
   <string name="user_stream_empty">هیچ تاریخچه ای در trakt یافت نشد. چند اثری نمایشی را مشاهده کنید و سپس علامت بزنید!</string>
   <string name="user_movie_stream_empty">هیچ فعالیت اخیری در trakt  نیست. تعدادی فیلم را علامت بزنید!</string>
   <!-- Calendar -->
   <string name="upcoming">بزودی</string>
   <string name="recent">اخیر</string>
+  <string name="released_today">امروز منتشر شد</string>
   <string name="noupcoming">هیچ قسمت آینده ای وجود ندارد.</string>
   <string name="norecent">هیچ قسمت اخیری وجود ندارد.</string>
   <string name="calendar_settings">Calendar settings</string>
@@ -167,10 +163,6 @@
   <string name="update_inprogress">به‌روز رسانی در حال اجرا است، بعداً دوباره تلاش کنید.</string>
   <!-- Seasons -->
   <string name="season_allwatched">تمامی قسمت‌ها تماشا شده‌اند</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">قسمت %d تماشا نشده است</item>
-    <item quantity="other">%d قسمت تماشا نشده است</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d قسمت دیگر</item>
     <item quantity="other">%d قسمت های دیگر</item>
@@ -255,13 +247,17 @@
     <item quantity="one">%d دقیقه</item>
     <item quantity="other">%d دقیقه</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_comments">Post comments</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">آزمایشی</string>
-  <string name="hexagon_description">وصل شدن به ابرواره برای پشتیبان گیری و هم‌گام سازی نمایش‌ها و فیلم‌هایتان.</string>
-  <string name="hexagon_warning_lists">فهرست‌ها گنجانده نشده‌اند.</string>
-  <string name="hexagon_warning_trakt">هنگامی که فضای ابری SeriesGuide متصل شود، هم‌گام سازی trakt غیرفعال خواد شد.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">ورود</string>
-  <string name="hexagon_signed_in">به ابروارهٔ سریزگاید وصل هستید.</string>
   <string name="hexagon_signout">خروج از سیستم</string>
   <string name="hexagon_setup_incomplete">راه اندازی فضای ابری SeriesGuide کامل نشد.</string>
   <string name="hexagon_setup_fail_auth">مشکل دردسترسی به حساب گوگل.</string>
@@ -289,18 +285,13 @@
   <string name="trakt_notice_not_exists">(هنوز) نمی‌توان با trakt ردیابی کرد.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">حساب trakt</string>
-  <string name="trakt_connect_instructions">در صفحهٔ بعدی به trakt وارد شده یا حساب کاربری جدید بسازید. سپس به SeriesGuide اجازهٔ دسترسی به حساب trakt را بدهید.</string>
   <string name="connect_trakt">اتصال به ترکت</string>
   <string name="trakt_reconnect">اتصال SeriesGuide به trakt</string>
   <string name="trakt_reconnect_details">اعتبارنامهٔ trakt را بررسی کنید</string>
-  <string name="username">نام کاربری</string>
   <string name="waitplease">یک لحظه، لطفا&#8230;</string>
   <string name="connect">وصل کردن</string>
   <string name="disconnect">قطع کردن</string>
   <string name="use_integrated_browser">استفاده از مرورگر یکپارچه</string>
-  <string name="connect_trakt_done">به ترکت وصل شد!</string>
-  <string name="connect_trakt_done_explanation">اکنون سریزگاید نمایش‌ها و فیلم‌های روی این افزاره را با ترکت هم‌گام خواهد کرد. این کار ممکن است کمی طول بکشد.</string>
-  <string name="add_trakt_shows">افزودن نمایش‌های بیش‌تر از کتاب‌خانهٔ ترکت:</string>
   <string name="show_library">نشان دادن کتاب‌خانهٔ ترکت</string>
   <string name="about_trakt">ترکت کمک می‌کند تا حساب نمایش‌های تلویزیونی و فیلم‌هایی که می‌بینید را داشته باشید. <a href="https://trakt.tv">بیش‌تر بدانید</a></string>
   <!-- trakt ratings -->
@@ -440,7 +431,6 @@
   <string name="upcoming_show">‫%s پیش رو است</string>
   <string name="upcoming_episodes">قسمت‌های جدید پیش رو هستند</string>
   <string name="upcoming_episodes_number">‫%s قسمت جدید</string>
-  <string name="upcoming_show_detailed">‫%1$s در %2$s</string>
   <string name="more">%d بیشتر</string>
   <string name="upcoming_display">گزینش برای نشان دادن نمایش‌های پیش رو</string>
   <string name="pref_notifications">آگاهی‌ها</string>

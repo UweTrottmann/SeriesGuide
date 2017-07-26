@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.IntDef;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import butterknife.ButterKnife;
@@ -20,7 +20,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import org.greenrobot.eventbus.EventBus;
 
-public class FirstRunView extends CardView {
+public class FirstRunView extends FrameLayout {
 
     private static final String PREF_KEY_FIRSTRUN = "accepted_eula";
 

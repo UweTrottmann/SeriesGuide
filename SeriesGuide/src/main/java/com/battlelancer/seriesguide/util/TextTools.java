@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -121,5 +122,35 @@ public class TextTools {
             result.append(string);
         }
         return result.toString();
+    }
+
+    /**
+     * Dot separates the two given strings. If one is empty, just returns the other string (no dot).
+     */
+    @NonNull
+    public static String dotSeparate(@Nullable String left, @Nullable String right) {
+        StringBuilder dotString = new StringBuilder(left == null ? "" : left);
+        if (!TextUtils.isEmpty(right)) {
+            if (dotString.length() > 0) {
+                dotString.append(" · ");
+            }
+            dotString.append(right);
+        }
+        return dotString.toString();
+    }
+
+    /**
+     * Builds a network + release time string for a show formatted like "Network · Tue 08:00 PM".
+     */
+    @NonNull
+    public static String networkAndTime(Context context, @Nullable Date release, int weekDay,
+            @Nullable String network) {
+        if (release != null) {
+            String dayString = TimeTools.formatToLocalDayOrDaily(context, release, weekDay);
+            String timeString = TimeTools.formatToLocalTime(context, release);
+            return TextTools.dotSeparate(network, dayString + " " + timeString);
+        } else {
+            return TextTools.dotSeparate(network, null);
+        }
     }
 }

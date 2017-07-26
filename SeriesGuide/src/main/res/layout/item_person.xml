@@ -26,19 +26,19 @@
 
         <TextView
             android:id="@+id/textViewPerson"
+            style="@style/Widget.SeriesGuide.TextView.SingleLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Subhead"
             tools:text="Bryan Cranston" />
 
         <TextView
             android:id="@+id/textViewPersonDescription"
+            style="@style/Widget.SeriesGuide.TextView.SingleLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Body"
             tools:text="Walter White" />
 

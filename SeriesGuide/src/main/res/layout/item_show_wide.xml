@@ -1,116 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:cardview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
-    cardview:cardPreventCornerOverlap="false">
+    android:clipToPadding="false">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="150dp">
+    <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="@dimen/show_poster_width_large"
+        android:layout_height="@dimen/show_poster_height_large"
+        android:layout_marginBottom="@dimen/grid_topbottom_padding"
+        android:layout_marginLeft="@dimen/grid_leftright_padding"
+        android:layout_marginTop="@dimen/grid_topbottom_padding"
+        app:cardBackgroundColor="?attr/sgColorBackgroundCard"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/showposter"
-            android:layout_width="@dimen/show_poster_width_large"
-            android:layout_height="@dimen/show_poster_height_large"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="@dimen/large_padding"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:contentDescription="@null"
-            android:scaleType="centerInside" />
-
-        <ImageView
-            android:id="@+id/favoritedLabel"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_alignParentRight="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:paddingBottom="8dp"
-            android:paddingLeft="8dp"
             android:scaleType="centerInside"
-            tools:src="@drawable/ic_star_black_24dp"
-            tools:tint="?attr/sgColorIcon"
-            tools:ignore="ContentDescription,RtlSymmetry" />
+            tools:src="?attr/sgColorShadow" />
 
-        <ImageView
-            android:id="@+id/imageViewShowsContextMenu"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/description_menu_overflow"
-            android:paddingLeft="12dp"
-            android:paddingTop="8dp"
-            android:scaleType="centerInside"
-            android:tint="?attr/sgColorIcon"
-            app:srcCompat="@drawable/ic_more_vert_white_20dp"
-            tools:ignore="ContentDescription,RtlSymmetry" />
+    </android.support.v7.widget.CardView>
 
-        <TextView
-            android:id="@+id/seriesname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_padding"
-            android:layout_toLeftOf="@id/favoritedLabel"
-            android:layout_toRightOf="@id/showposter"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Title"
-            tools:text="@string/show" />
+    <!-- 24dp regular icon, 48dp touch target -->
+    <ImageView
+        android:id="@+id/favoritedLabel"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="centerInside"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/ic_star_black_24dp"
+        tools:tint="?attr/sgColorIcon" />
 
-        <TextView
-            android:id="@+id/textViewShowsTimeAndNetwork"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/seriesname"
-            android:layout_toLeftOf="@id/favoritedLabel"
-            android:layout_toRightOf="@id/showposter"
-            android:ellipsize="end"
-            android:paddingBottom="@dimen/default_padding"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Caption.Dim"
-            tools:text="Showtime Network / Tue 08:00 PM" />
+    <!-- 20dp dense icon, though 48dp touch target -->
+    <ImageView
+        android:id="@+id/imageViewShowsContextMenu"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/description_menu_overflow"
+        android:scaleType="centerInside"
+        android:tint="?attr/sgColorIcon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/ic_more_vert_white_20dp"
+        tools:ignore="ContentDescription" />
 
-        <TextView
-            android:id="@+id/TextViewShowListNextEpisode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewShowsTimeAndNetwork"
-            android:layout_marginRight="@dimen/default_padding"
-            android:layout_toRightOf="@id/showposter"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textAppearance="@style/TextAppearance.Subhead"
-            tools:text="10x456 Some Very Cool Episode Title Therefore" />
+    <TextView
+        android:id="@+id/textViewShowsRemaining"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Body.Dim"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/cardView"
+        app:layout_constraintRight_toLeftOf="@+id/favoritedLabel"
+        app:layout_constraintTop_toBottomOf="@+id/episodetime"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="42 remaining" />
 
-        <TextView
-            android:id="@+id/episodetime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/TextViewShowListNextEpisode"
-            android:layout_marginRight="@dimen/default_padding"
-            android:layout_toRightOf="@id/showposter"
-            android:ellipsize="end"
-            android:paddingBottom="@dimen/item_padding"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Caption.Dim"
-            tools:text="Jan 8, 2009 (Thu)" />
+    <TextView
+        android:id="@+id/textViewShowsTimeAndNetwork"
+        style="@style/Widget.SeriesGuide.TextView.SingleLine"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="16dp"
+        android:ellipsize="start"
+        android:text="@string/norating"
+        android:textAppearance="@style/TextAppearance.Body.Dim"
+        app:layout_constraintLeft_toRightOf="@+id/cardView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="Deprecated"
+        tools:text="Showtime Network · Tue 08:00 PM" />
 
-        <TextView
-            android:id="@+id/textViewShowsRemaining"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/episodetime"
-            android:layout_toRightOf="@id/showposter"
-            android:ellipsize="end"
-            android:paddingBottom="@dimen/item_padding"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Caption.Dim"
-            tools:text="42 remaining" />
+    <!-- remaining count may be hidden, so to bottom of network -->
+    <TextView
+        android:id="@+id/seriesname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/grid_leftright_padding"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Subhead.Bold"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toRightOf="@+id/cardView"
+        app:layout_constraintRight_toLeftOf="@+id/favoritedLabel"
+        app:layout_constraintTop_toBottomOf="@+id/textViewShowsTimeAndNetwork"
+        tools:text="Some Show Title" />
 
-    </RelativeLayout>
-</android.support.v7.widget.CardView>
+    <TextView
+        android:id="@+id/TextViewShowListNextEpisode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/grid_leftright_padding"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Subhead"
+        app:layout_constraintLeft_toRightOf="@+id/cardView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seriesname"
+        tools:text="10x456 Some Very Cool Episode Title Therefore" />
+
+    <TextView
+        android:id="@+id/episodetime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/grid_leftright_padding"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Body.Dim"
+        app:layout_constraintLeft_toRightOf="@+id/cardView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewShowListNextEpisode"
+        tools:text="Jan 8, 2009 (Thur)" />
+
+</android.support.constraint.ConstraintLayout>

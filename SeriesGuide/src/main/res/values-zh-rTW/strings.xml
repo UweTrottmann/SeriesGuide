@@ -20,6 +20,7 @@
   <string name="season_number">第 %d 季</string>
   <string name="seasons">季數</string>
   <string name="specialseason">特集</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">簡介</string>
   <string name="description_poster">顯示海報</string>
@@ -70,13 +71,11 @@
     <item quantity="other">%d 回覆</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">人生必看！！！</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">播出日期</string>
   <string name="episode_firstaired_unknown">播出日期不明</string>
   <string name="episode_dvdnumber">DVD集數</string>
   <string name="original_release">原始版本</string>
-  <string name="show_on_network">於 %s 播出</string>
   <string name="show_genres">戲劇類別</string>
   <string name="show_contentrating">節目分級</string>
   <string name="show_release_times">發布時間</string>
@@ -93,7 +92,6 @@
   <string name="today">今天</string>
   <string name="now">目前</string>
   <string name="daily">每日</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s 分鐘</string>
   <!-- Flagging -->
   <string name="mark_all">全部已觀看</string>
@@ -140,20 +138,18 @@
   <string name="action_shows_sort_favorites">喜愛影集優先</string>
   <string name="context_updateshow">更新</string>
   <string name="context_marknext">觀看下一集</string>
-  <!-- Now -->
-  <string name="now_tab">今日觀賞</string>
+  <!-- History -->
+  <string name="user_stream">歴史紀錄</string>
   <string name="recently_watched">最近觀賞</string>
-  <string name="released_today">今日播出</string>
   <string name="friends_recently">trakt好友</string>
   <string name="now_empty">沒什麼特別地事情發生，看節目去吧！</string>
   <string name="now_movies_empty">沒什麼特別地事情發生，看電影去吧！</string>
-  <!-- History -->
-  <string name="user_stream">歴史紀錄</string>
   <string name="user_stream_empty">Trakt上沒有任何記錄，去看一些節目並打卡吧！</string>
   <string name="user_movie_stream_empty">Trakt上沒有任何記錄，去看一些電影並打卡吧！</string>
   <!-- Calendar -->
   <string name="upcoming">即將播出</string>
   <string name="recent">最近</string>
+  <string name="released_today">今日播出</string>
   <string name="noupcoming">沒有即將播出的集數。</string>
   <string name="norecent">沒有最近的影集。</string>
   <string name="calendar_settings">Calendar settings</string>
@@ -166,9 +162,6 @@
   <string name="update_inprogress">更新正在進行中，請稍後再試</string>
   <!-- Seasons -->
   <string name="season_allwatched">已觀看所有集數</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="other">%d episodes not watched</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="other">%d other episodes</item>
   </plurals>
@@ -247,13 +240,17 @@
   <plurals name="minutes_plural">
     <item quantity="other">%d 分鐘</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_comments">Post comments</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">實驗性</string>
-  <string name="hexagon_description">連接到雲端備份和同步你的節目和電影。</string>
-  <string name="hexagon_warning_lists">清單不包括在內。</string>
-  <string name="hexagon_warning_trakt">與SeriesGuide Cloud連接時，trakt會無法同步。</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">登入</string>
-  <string name="hexagon_signed_in">您已連接到 SeriesGuide Cloud。</string>
   <string name="hexagon_signout">登出</string>
   <string name="hexagon_setup_incomplete">SeriesGuide Cloud未完成設置。</string>
   <string name="hexagon_setup_fail_auth">你的Google帳戶無法使用。</string>
@@ -281,18 +278,13 @@
   <string name="trakt_notice_not_exists">還不能使用trakt追蹤。</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt 帳戶</string>
-  <string name="trakt_connect_instructions">到下一個畫面登入trakt或註冊新帳戶，接著允許SeriesGuide存取您的trakt帳戶。</string>
   <string name="connect_trakt">連接 trakt</string>
   <string name="trakt_reconnect">連結SeriesGuide與trakt</string>
   <string name="trakt_reconnect_details">檢查您的 trakt 憑證</string>
-  <string name="username">帳號</string>
   <string name="waitplease">請稍候&#8230;</string>
   <string name="connect">連接</string>
   <string name="disconnect">中斷連接</string>
   <string name="use_integrated_browser">使用內建瀏覽器</string>
-  <string name="connect_trakt_done">已與trakt連結！</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide將同步trakt上的電影和節目至此設備，可能會需要一些時間。</string>
-  <string name="add_trakt_shows">從您的trakt資料庫新增更多的節目</string>
   <string name="show_library">顯示您的 trakt 庫</string>
   <string name="about_trakt">trakt 幫助您追蹤及記錄正在看的電視節目和電影。<a href="HTTPs://trakt.tv"> 瞭解更多</a></string>
   <!-- trakt ratings -->
@@ -428,7 +420,6 @@
   <string name="upcoming_show">%s 就要來了</string>
   <string name="upcoming_episodes">新的集數來了</string>
   <string name="upcoming_episodes_number">%s新集數</string>
-  <string name="upcoming_show_detailed">%2$s 於 %1$s</string>
   <string name="more">%d 更多</string>
   <string name="upcoming_display">選擇以顯示即將撥出的節目</string>
   <string name="pref_notifications">提示信息</string>

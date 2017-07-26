@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,92 +8,81 @@
     cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
     cardview:cardPreventCornerOverlap="false">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
+    <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardViewAddPoster"
+        android:layout_width="@dimen/show_poster_width_large"
+        android:layout_height="@dimen/show_poster_height_large"
+        android:layout_marginBottom="@dimen/grid_topbottom_padding"
+        android:layout_marginLeft="@dimen/grid_leftright_padding"
+        android:layout_marginTop="@dimen/grid_topbottom_padding"
+        app:cardBackgroundColor="?attr/sgColorBackgroundCard"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:minHeight="@dimen/show_poster_height_large">
-
-            <ImageView
-                android:id="@+id/imageViewAddPoster"
-                android:layout_width="@dimen/show_poster_width_large"
-                android:layout_height="@dimen/show_poster_height_large"
-                android:layout_alignParentLeft="true"
-                android:contentDescription="@null"
-                android:scaleType="centerInside"
-                tools:src="#F50057" />
-
-            <!-- With maxLines ellipsis text is cut off or ellipsis character is not shown.
-            Fixed in later versions of Android, but there maxLines cuts off text
-            on the word level. We want the maximum amount of chars shown instead
-            (which is what singleLine is doing). -->
-            <TextView
-                android:id="@+id/textViewAddTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/large_padding"
-                android:layout_toRightOf="@id/imageViewAddPoster"
-                android:ellipsize="end"
-                android:paddingTop="@dimen/large_padding"
-                android:singleLine="true"
-                android:textAppearance="@style/TextAppearance.Title"
-                tools:ignore="Deprecated"
-                tools:text="Cosmos: A Spacetime Odyssey" />
-
-            <TextView
-                android:id="@+id/textViewAddDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAddTitle"
-                android:layout_toRightOf="@id/imageViewAddPoster"
-                android:ellipsize="end"
-                android:maxLines="3"
-                android:minHeight="54dp"
-                android:paddingBottom="@dimen/large_padding"
-                android:paddingLeft="@dimen/large_padding"
-                android:paddingTop="@dimen/large_padding"
-                android:textAppearance="@style/TextAppearance.Body"
-                tools:ignore="RtlSymmetry"
-                tools:text="Some awesome multi-line and pretty neat and very long description" />
-
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/imageViewAddPoster"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            tools:src="#F50057" />
 
-            <ImageView
-                android:id="@+id/buttonItemAddMore"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/description_menu_overflow"
-                android:paddingLeft="12dp"
-                android:paddingTop="4dp"
-                android:scaleType="centerInside"
-                android:tint="?attr/sgColorIcon"
-                app:srcCompat="@drawable/ic_more_vert_white_20dp"
-                tools:ignore="RtlSymmetry" />
+    </android.support.v7.widget.CardView>
 
-            <android.support.v4.widget.Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+    <ImageView
+        android:id="@+id/buttonItemAddMore"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/description_menu_overflow"
+        android:scaleType="centerInside"
+        android:tint="?attr/sgColorIcon"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_more_vert_white_20dp" />
 
-            <com.battlelancer.seriesguide.widgets.AddIndicator
-                android:id="@+id/addIndicatorAddShow"
-                android:layout_width="56dp"
-                android:layout_height="56dp" />
+    <com.battlelancer.seriesguide.widgets.AddIndicator
+        android:id="@+id/addIndicatorAddShow"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-        </LinearLayout>
+    <TextView
+        android:id="@+id/textViewAddTitle"
+        style="@style/Widget.SeriesGuide.TextView.SingleLine"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="32dp"
+        android:ellipsize="end"
+        android:textAppearance="@style/TextAppearance.Subhead.Bold"
+        app:layout_constraintLeft_toRightOf="@+id/cardViewAddPoster"
+        app:layout_constraintRight_toLeftOf="@+id/addIndicatorAddShow"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Cosmos: A Spacetime Odyssey" />
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/textViewAddDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:lines="3"
+        android:textAppearance="@style/TextAppearance.Subhead"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/cardViewAddPoster"
+        app:layout_constraintRight_toLeftOf="@+id/addIndicatorAddShow"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAddTitle"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Some awesome\nthree-line\ndescription" />
 
-</android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>

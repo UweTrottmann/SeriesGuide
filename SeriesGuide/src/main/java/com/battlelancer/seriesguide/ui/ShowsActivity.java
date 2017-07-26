@@ -62,7 +62,6 @@ public class ShowsActivity extends BaseTopActivity implements
     public static final int RECENT_LOADER_ID = 102;
     public static final int ADD_SHOW_LOADER_ID = 103;
     public static final int NOW_RECENTLY_LOADER_ID = 104;
-    public static final int NOW_TODAY_LOADER_ID = 105;
     public static final int NOW_TRAKT_USER_LOADER_ID = 106;
     public static final int NOW_TRAKT_FRIENDS_LOADER_ID = 107;
 
@@ -211,8 +210,8 @@ public class ShowsActivity extends BaseTopActivity implements
         // shows tab
         tabsAdapter.addTab(R.string.shows, ShowsFragment.class, null);
 
-        // now tab
-        tabsAdapter.addTab(R.string.now_tab, ShowsNowFragment.class, null);
+        // history tab
+        tabsAdapter.addTab(R.string.user_stream, ShowsNowFragment.class, null);
 
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
@@ -360,12 +359,12 @@ public class ShowsActivity extends BaseTopActivity implements
             startActivity(new Intent(this, SearchActivity.class));
             return true;
         } else if (itemId == R.id.menu_update) {
-            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.DELTA, 0, true);
+            SgSyncAdapter.requestSyncDeltaImmediate(this, true);
             Utils.trackAction(this, TAG, "Update (outdated)");
 
             return true;
         } else if (itemId == R.id.menu_fullupdate) {
-            SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, true);
+            SgSyncAdapter.requestSyncFullImmediate(this, true);
             Utils.trackAction(this, TAG, "Update (all)");
 
             return true;
@@ -454,7 +453,7 @@ public class ShowsActivity extends BaseTopActivity implements
                 // flag all shows outdated so delta sync will pick up, if full sync gets aborted
                 scheduleAllShowsUpdate();
                 // force a sync
-                SgSyncAdapter.requestSyncImmediate(this, SgSyncAdapter.SyncType.FULL, 0, true);
+                SgSyncAdapter.requestSyncFullImmediate(this, true);
             }
             if (lastVersion < SgApp.RELEASE_VERSION_34_BETA4) {
                 ActivityTools.populateShowsLastWatchedTime(this);

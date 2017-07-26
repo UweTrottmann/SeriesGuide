@@ -106,7 +106,7 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
         if (extension.icon != null) {
             viewHolder.icon.setImageDrawable(extension.icon);
         } else {
-            viewHolder.icon.setImageResource(R.drawable.ic_launcher);
+            viewHolder.icon.setImageResource(R.mipmap.ic_app);
         }
 
         // overflow menu

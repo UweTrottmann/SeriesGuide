@@ -224,6 +224,8 @@ public class SeriesGuideContract {
          * Example: "Apr 2 (Mon)"
          * Default: ""
          * </pre>
+         *
+         * @deprecated Use {@link #NEXTAIRDATEMS} and format.
          */
         String NEXTAIRDATETEXT = "series_nextairdatetext";
 
@@ -393,7 +395,7 @@ public class SeriesGuideContract {
 
         /**
          * Last time episode was edited on theTVDb.com (lastupdated field) in Unix time (seconds).
-         * Added in {@link SeriesGuideDatabase#DBVER_IMDBIDSLASTEDIT}.
+         * Added in {@link SeriesGuideDatabase#DBVER_27_IMDBIDSLASTEDIT}.
          *
          * <pre>
          * Range:   long (unix time)
@@ -798,6 +800,9 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.season";
 
+        /** Warning: total count may not be up to date. */
+        public static final String SELECTION_WITH_EPISODES = Seasons.TOTALCOUNT + ">0";
+
         public static Uri buildSeasonUri(String seasonTvdbId) {
             return CONTENT_URI.buildUpon().appendPath(seasonTvdbId).build();
         }
@@ -1001,6 +1006,11 @@ public class SeriesGuideContract {
         public static final String SELECTION_IN_LIST =
                 SeriesGuideContract.Movies.SELECTION_COLLECTION + " OR "
                         + SeriesGuideContract.Movies.SELECTION_WATCHLIST;
+        public static final String[] PROJECTION_IN_LIST = {
+                TMDB_ID, // 0
+                IN_COLLECTION, // 1
+                IN_WATCHLIST // 2
+        };
 
         public static final String SELECTION_UNWATCHED = Movies.WATCHED + "=0";
 

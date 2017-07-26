@@ -7,6 +7,9 @@ import android.view.View;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.TextTools;
+import com.battlelancer.seriesguide.util.TimeTools;
+import java.util.Date;
 
 /**
  * Adapter for show search result items.
@@ -31,15 +34,22 @@ public class ShowResultsAdapter extends BaseShowsAdapter {
         setFavoriteState(viewHolder.favorited, viewHolder.isFavorited);
 
         // network, day and time
-        viewHolder.timeAndNetwork.setText(buildNetworkAndTimeString(context,
-                cursor.getInt(Query.RELEASE_TIME),
-                cursor.getInt(Query.RELEASE_WEEKDAY),
-                cursor.getString(Query.RELEASE_TIMEZONE),
-                cursor.getString(Query.RELEASE_COUNTRY),
-                cursor.getString(Query.NETWORK)));
+        int time = cursor.getInt(Query.RELEASE_TIME);
+        int weekDay = cursor.getInt(Query.RELEASE_WEEKDAY);
+        String network = cursor.getString(Query.NETWORK);
+        Date showReleaseTime = null;
+        if (time != -1) {
+            showReleaseTime = TimeTools.getShowReleaseDateTime(context, time, weekDay,
+                    cursor.getString(Query.RELEASE_TIMEZONE),
+                    cursor.getString(Query.RELEASE_COUNTRY), network);
+        }
+        viewHolder.timeAndNetwork.setText(
+                TextTools.networkAndTime(context, showReleaseTime, weekDay, network));
+        viewHolder.remainingCount.setVisibility(View.GONE); // unused
 
         // poster
-        TvdbImageTools.loadShowPosterResizeCrop(context, viewHolder.poster, cursor.getString(Query.POSTER));
+        TvdbImageTools.loadShowPosterResizeCrop(context, viewHolder.poster,
+                cursor.getString(Query.POSTER));
 
         // context menu
         viewHolder.isHidden = DBUtils.restoreBooleanFromInt(cursor.getInt(Query.HIDDEN));

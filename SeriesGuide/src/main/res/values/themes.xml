@@ -58,18 +58,14 @@
         <item name="sgTextColorGreen">@color/teal_500</item>
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_dark</item>
         <item name="sgColorBackgroundCard">@color/background_card_dark</item>
-        <item name="sgColorBackgroundDim">@color/background_dim</item>
+        <item name="sgColorBackgroundDim">@color/black_38</item>
         <item name="sgColorIcon">@color/white</item>
         <item name="sgColorIconInactive">@color/white_50</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
-        <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
         <item name="sgColorNavDrawerIcon">@color/nav_drawer_icon_sg</item>
         <item name="sgColorNavDrawerText">@color/nav_drawer_text_sg</item>
         <item name="sgColorShadow">@color/protection_dark</item>
-
-        <!-- Color Arrays -->
-        <item name="colorsProgressBar">@array/progressBarColors</item>
 
         <!-- Drawables -->
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
@@ -115,6 +111,8 @@
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
+        <!--   your app's branding color (for the app bar) -->
+        <item name="colorPrimary">@android:color/black</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">@color/teal_500</item>
 
@@ -133,18 +131,14 @@
         <item name="sgTextColorGreen">@color/teal_500</item>
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_dark</item>
         <item name="sgColorBackgroundCard">@color/background_card_dark</item>
-        <item name="sgColorBackgroundDim">@color/background_dim</item>
+        <item name="sgColorBackgroundDim">@color/black_38</item>
         <item name="sgColorIcon">@color/white</item>
         <item name="sgColorIconInactive">@color/white_50</item>
         <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
-        <item name="sgColorBackgroundDrawer">@color/background_navbar</item>
         <item name="sgColorNavDrawerIcon">@color/nav_drawer_icon_dark</item>
         <item name="sgColorNavDrawerText">@color/nav_drawer_text_dark</item>
         <item name="sgColorShadow">@color/protection_dark</item>
-
-        <!-- Color Arrays -->
-        <item name="colorsProgressBar">@array/progressBarColorsAndroidDark</item>
 
         <!-- Drawables -->
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
@@ -221,18 +215,14 @@
         <item name="sgTextColorGreen">@color/teal_500</item>
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_light</item>
         <item name="sgColorBackgroundCard">@color/background_card_light</item>
-        <item name="sgColorBackgroundDim">@color/background_dim_inverse</item>
+        <item name="sgColorBackgroundDim">@color/white_50</item>
         <item name="sgColorIcon">@color/black_54</item>
         <item name="sgColorIconInactive">@color/black_38</item>
         <item name="sgColorSeparator">@color/separator_inverse</item>
         <item name="sgColorDivider">@color/divider_inverse</item>
-        <item name="sgColorBackgroundDrawer">@color/background_navbar_inverse</item>
         <item name="sgColorNavDrawerIcon">@color/nav_drawer_icon_sg_light</item>
         <item name="sgColorNavDrawerText">@color/nav_drawer_text_sg_light</item>
         <item name="sgColorShadow">@color/protection_light</item>
-
-        <!-- Color Arrays -->
-        <item name="colorsProgressBar">@array/progressBarColors</item>
 
         <!-- Drawables -->
         <item name="drawableBackgroundGradient">@drawable/background_gradient_light</item>

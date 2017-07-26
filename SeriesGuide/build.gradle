@@ -159,7 +159,6 @@ dependencies {
     compile("com.crashlytics.sdk.android:crashlytics:${versions.crashlytics}@aar") {
         transitive = true
     }
-    compile 'com.github.castorflex.smoothprogressbar:library:1.1.0'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     compile "com.google.code.gson:gson:${versions.gson}"
     compile "com.jakewharton.threetenabp:threetenabp:${versions.threetenABP}"
@@ -207,6 +206,7 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
     androidTestCompile "com.squareup.assertj:assertj-android:${versions.assertjAndroid}"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${versions.dagger}"
 
     // Local unit tests
     testCompile 'junit:junit:4.12'

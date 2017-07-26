@@ -20,6 +20,7 @@
   <string name="season_number">%dª Temporada</string>
   <string name="seasons">Temporadas</string>
   <string name="specialseason">Episódios Especiais</string>
+  <string name="ratings">Classificações</string>
   <!-- Descriptions -->
   <string name="description_overview">Resumo</string>
   <string name="description_poster">Exibir cartaz</string>
@@ -71,13 +72,11 @@
     <item quantity="other">%d respostas</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">TOTAL</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Data de exibição</string>
   <string name="episode_firstaired_unknown">Data de exibição desconhecida</string>
   <string name="episode_dvdnumber">Episódio de DVD</string>
   <string name="original_release">Exibição original</string>
-  <string name="show_on_network">em %s</string>
   <string name="show_genres">Gêneros</string>
   <string name="show_contentrating">Classificação</string>
   <string name="show_release_times">Horários de exibição</string>
@@ -94,7 +93,6 @@
   <string name="today">hoje</string>
   <string name="now">agora</string>
   <string name="daily">Diário</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s min</string>
   <!-- Flagging -->
   <string name="mark_all">Todos assistidos</string>
@@ -141,20 +139,18 @@
   <string name="action_shows_sort_favorites">Favoritos primeiro</string>
   <string name="context_updateshow">Atualizar</string>
   <string name="context_marknext">Próximo episódio já assistido</string>
-  <!-- Now -->
-  <string name="now_tab">Agora</string>
+  <!-- History -->
+  <string name="user_stream">Histórico</string>
   <string name="recently_watched">Recentemente assistido</string>
-  <string name="released_today">Lançado hoje</string>
   <string name="friends_recently">Seus amigos do trakt</string>
   <string name="now_empty">Nada passando. Assista algumas séries!</string>
   <string name="now_movies_empty">Nada acontecendo. Assista alguns filmes!</string>
-  <!-- History -->
-  <string name="user_stream">Histórico</string>
   <string name="user_stream_empty">Nenhuma atividade recente no trakt. Dê uma olhada em algumas séries!</string>
   <string name="user_movie_stream_empty">Nenhuma atividade recente no trakt. Dê uma olhada em alguns filmes!</string>
   <!-- Calendar -->
   <string name="upcoming">Em breve</string>
   <string name="recent">Recente</string>
+  <string name="released_today">Lançado hoje</string>
   <string name="noupcoming">Não há próximos episódios.</string>
   <string name="norecent">Não há episódios recentes.</string>
   <string name="calendar_settings">Configurações do calendário</string>
@@ -167,10 +163,6 @@
   <string name="update_inprogress">Atualização em andamento, tente novamente mais tarde.</string>
   <!-- Seasons -->
   <string name="season_allwatched">Todos os episódios assistidos</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episódio não assistido</item>
-    <item quantity="other">%d episódios não assistidos</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d outro episódio</item>
     <item quantity="other">%d outros episódios</item>
@@ -255,13 +247,17 @@
     <item quantity="one">%d minuto</item>
     <item quantity="other">%d minutos</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Suportado</string>
+  <string name="feature_not_supported">Não suportado</string>
+  <string name="feature_history">Histórico pessoal e de amigos</string>
+  <string name="feature_comments">Post comments</string>
+  <string name="feature_sync">Sincronizar</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental</string>
-  <string name="hexagon_description">Conecte-se a nuvem para realizar o backup e sincronizar suas séries e filmes.</string>
-  <string name="hexagon_warning_lists">Listas não estão incluídas.</string>
-  <string name="hexagon_warning_trakt">Enquanto o SeriesGuide Cloud está conectado, a sincronização do trakt sync vai estar desativada.</string>
+  <string name="hexagon_description">SeriesGuide Cloud ajuda a salvar e sincronizar suas séries, listas e filmes.</string>
+  <string name="hexagon_warning_trakt">Enquanto conectado ao SeriesGuide Cloud algumas funções do trakt não estarão disponíveis.</string>
   <string name="hexagon_signin">Entrar</string>
-  <string name="hexagon_signed_in">Você está conectado ao SeriesGuide Cloud.</string>
   <string name="hexagon_signout">Sair</string>
   <string name="hexagon_setup_incomplete">Não foi possível configurar o SeriesGuide Cloud.</string>
   <string name="hexagon_setup_fail_auth">Falha na verificação da conta do Google.</string>
@@ -289,18 +285,13 @@
   <string name="trakt_notice_not_exists">Não pode (ainda) ser rastreado com trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">Conta trakt</string>
-  <string name="trakt_connect_instructions">Na próxima tela faça login no trakt ou crie uma nova conta. Depois dê permissões de acesso à sua conta trakt.</string>
   <string name="connect_trakt">Conectar trakt</string>
   <string name="trakt_reconnect">Conecte o SeriesGuide ao trakt</string>
   <string name="trakt_reconnect_details">Verifique suas credenciais do trakt</string>
-  <string name="username">Usuário</string>
   <string name="waitplease">Um momento, por favor&#8230;</string>
   <string name="connect">Conectar</string>
   <string name="disconnect">Desconectar</string>
   <string name="use_integrated_browser">Usar o navegador integrado</string>
-  <string name="connect_trakt_done">Conectado ao trakt!</string>
-  <string name="connect_trakt_done_explanation">SeriesGuide irá sincronizar as séries e filmes neste dispositivo com o trakt. Isto pode demorar um pouco.</string>
-  <string name="add_trakt_shows">Adicione séries da sua coleção:</string>
   <string name="show_library">Mostrar sua coleção do trakt</string>
   <string name="about_trakt">trakt ajuda a manter um registro dos programas de TV e filmes você está assistindo. <a href="http://trakt.tv">Saiba mais</a></string>
   <!-- trakt ratings -->
@@ -440,7 +431,6 @@
   <string name="upcoming_show">%s está chegando</string>
   <string name="upcoming_episodes">Novos episódios estão chegando</string>
   <string name="upcoming_episodes_number">%s novos episódios</string>
-  <string name="upcoming_show_detailed">%1$s na %2$s</string>
   <string name="more">e outros %d</string>
   <string name="upcoming_display">Selecione para mostrar séries futuras</string>
   <string name="pref_notifications">Notificações</string>

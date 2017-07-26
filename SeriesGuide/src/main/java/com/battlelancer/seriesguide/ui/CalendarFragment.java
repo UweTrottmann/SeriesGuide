@@ -396,11 +396,11 @@ public class CalendarFragment extends Fragment
         gridView.setFastScrollEnabled(infiniteScrolling);
         gridView.setFastScrollAlwaysVisible(infiniteScrolling);
         Resources res = getResources();
-        int paddingLeft = res.getDimensionPixelSize(R.dimen.grid_leftright_padding);
+        int paddingLeft = 0;
         int paddingRight = infiniteScrolling
                 ? res.getDimensionPixelSize(R.dimen.grid_fast_scroll_padding)
                 : paddingLeft;
-        int paddingTopBottom = res.getDimensionPixelSize(R.dimen.grid_topbottom_padding);
+        int paddingTopBottom = res.getDimensionPixelSize(R.dimen.default_padding);
         gridView.setPadding(paddingLeft, paddingTopBottom, paddingRight, paddingTopBottom);
 
         updateTapIndicatorVisibility();

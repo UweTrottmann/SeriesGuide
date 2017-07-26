@@ -20,6 +20,7 @@
   <string name="season_number">பருவம் %d</string>
   <string name="seasons">பருவங்கள்</string>
   <string name="specialseason">சிறப்பு Episodes</string>
+  <string name="ratings">Ratings</string>
   <!-- Descriptions -->
   <string name="description_overview">மேற்பார்வை</string>
   <string name="description_poster">சுவரொட்டி காண்பி</string>
@@ -71,13 +72,11 @@
     <item quantity="other">%d பதில்கள்</item>
   </plurals>
   <!-- Metadata -->
-  <string name="episode_number_absolute">துல்லியமான</string>
   <string name="episode_number_disk">டிவிடி</string>
   <string name="episode_firstaired">வெளியீட்டு தேதி</string>
   <string name="episode_firstaired_unknown">வெளியீட்டு தேதி தெரியாத</string>
   <string name="episode_dvdnumber">DVD சம்பவம்</string>
   <string name="original_release">அசல் வெளியீடு</string>
-  <string name="show_on_network">அன்று %s</string>
   <string name="show_genres">வகைகள்</string>
   <string name="show_contentrating">உள்ளடக்க மதிப்பீடு</string>
   <string name="show_release_times">வெளியீட்டு முறை</string>
@@ -94,7 +93,6 @@
   <string name="today">இன்று</string>
   <string name="now">இப்போது</string>
   <string name="daily">தினசரி</string>
-  <string name="release_date_and_day">%1$s (%2$s)</string>
   <string name="runtime_minutes">%s நிமிடம்</string>
   <!-- Flagging -->
   <string name="mark_all">எல்லாம் பார்த்த</string>
@@ -141,20 +139,18 @@
   <string name="action_shows_sort_favorites">விருப்பங்களின் முதல்</string>
   <string name="context_updateshow">புதுப்பித்தல்</string>
   <string name="context_marknext">பார்த்த அடுத்த சம்பவம்</string>
-  <!-- Now -->
-  <string name="now_tab">இப்போது</string>
+  <!-- History -->
+  <string name="user_stream">வரலாறு</string>
   <string name="recently_watched">சமீபத்தில் பார்த்த</string>
-  <string name="released_today">இன்று விடுதலை</string>
   <string name="friends_recently">உங்கள் trakt நண்பர்கள்</string>
   <string name="now_empty">எதுவும் இல்லை அன்று செல்லும். சில காட்சிகள் கவனி!</string>
   <string name="now_movies_empty">எதுவும் இல்லை அன்று செல்லும். அதில் சில திரைப்படங்கள்!</string>
-  <!-- History -->
-  <string name="user_stream">வரலாறு</string>
   <string name="user_stream_empty">அன்று trakt வரலாறு இல்லை. கவனி மற்றும் சில காட்சிகள்-ஐ சரிபார்க்க!</string>
   <string name="user_movie_stream_empty">அன்று trakt வரலாறு இல்லை. கவனி மற்றும் சில திரைப்படங்கள்-ஐ சரிபார்க்க!</string>
   <!-- Calendar -->
   <string name="upcoming">வரவிருக்கும்</string>
   <string name="recent">சமீபத்திய</string>
+  <string name="released_today">இன்று விடுதலை</string>
   <string name="noupcoming">எந்த வரவிருக்கும் episodes உள்ளன.</string>
   <string name="norecent">எந்த சமீபத்திய episodes உள்ளன.</string>
   <string name="calendar_settings">Calendar settings</string>
@@ -167,10 +163,6 @@
   <string name="update_inprogress">ஒரு புதுப்பித்தல் இயங்கிக் கொண்டிருக்கிறது, பிறகு மீண்டும் முயற்சிக்கவும்.</string>
   <!-- Seasons -->
   <string name="season_allwatched">அனைத்து episodes பார்த்த</string>
-  <plurals name="not_watched_episodes_plural">
-    <item quantity="one">%d episode not watched</item>
-    <item quantity="other">%d episodes not watched</item>
-  </plurals>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d other episode</item>
     <item quantity="other">%d other episodes</item>
@@ -255,13 +247,17 @@
     <item quantity="one">%d நிமிடம்</item>
     <item quantity="other">%d நிமிடம்</item>
   </plurals>
+  <!-- Features -->
+  <string name="feature_supported">Supported</string>
+  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_comments">Post comments</string>
+  <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">பசோதனை</string>
-  <string name="hexagon_description">மறுபிரதிஎடு மற்றும் உங்கள் காட்சிகள் மற்றும் திரைப்படங்கள் ஒத்திசைக்க மேகம் இணைக்க.</string>
-  <string name="hexagon_warning_lists">பட்டியல்களை சேர்க்கப்பட்டுள்ளன இல்லை.</string>
-  <string name="hexagon_warning_trakt">SeriesGuide மேகம் இல்லாதபோது, trakt ஒத்திசைவு முடக்கப்படும்.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">உள்நுழைக</string>
-  <string name="hexagon_signed_in">நீங்கள் இணையத்துடன் SeriesGuide மேகம்.</string>
   <string name="hexagon_signout">வெளியில் செல்லவும்</string>
   <string name="hexagon_setup_incomplete">SeriesGuide மேகம் அமைக்கிறது நிறைவடையவில்லை.</string>
   <string name="hexagon_setup_fail_auth">உங்கள் Google கணக்கு இட்டு சரிபார்க்க.</string>
@@ -289,18 +285,13 @@
   <string name="trakt_notice_not_exists">இல்லை முடியும் (இதுவரை) குறியிட்ட கொண்டு trakt.</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt கணக்கு</string>
-  <string name="trakt_connect_instructions">அன்று அடுத்த குறி trakt-ஐ திரை அல்லது ஒரு புதிய கணக்கை உருவாக்கு. பின் உங்கள் trakt கணக்கு SeriesGuide பெற அனுமதி.</string>
   <string name="connect_trakt">Trakt இணை</string>
   <string name="trakt_reconnect">Trakt SeriesGuide இணைக்க</string>
   <string name="trakt_reconnect_details">Trakt அறிமுகங்களை சரிபார்க்கவும்</string>
-  <string name="username">பயனர் பெயர்</string>
   <string name="waitplease">ஒரு பெருக்கலின், தயவுசெய்து&#8230;</string>
   <string name="connect">இணை</string>
   <string name="disconnect">துண்டி</string>
   <string name="use_integrated_browser">ஒருங்கிணைந்த உலாவியைப் பயன்படுத்து</string>
-  <string name="connect_trakt_done">Trakt இணைத்த!</string>
-  <string name="connect_trakt_done_explanation">காட்சிகள் மற்றும் திரைப்படங்கள் trakt கொண்டு இந்த சாதனத்தில் SeriesGuide ஒத்திசைக்கும் இப்போது. சில நேரம் ஆகலாம்.</string>
-  <string name="add_trakt_shows">உங்கள் trakt நூலகத்தில் இருந்து அதிக காட்சிகள் சேர்:</string>
   <string name="show_library">உங்கள் trakt நூலகத்தில் காண்பி</string>
   <string name="about_trakt">trakt டிவி என்ன காண்பிக்கும் பதிவேட்டை வைத்திருக்க உதவுகிறது மற்றும் திரைப்படங்கள் நீங்கள் வருவதாக. <a href="https://trakt.tv"> மேலும் அறிய</a></string>
   <!-- trakt ratings -->
@@ -440,7 +431,6 @@
   <string name="upcoming_show">%s வந்து</string>
   <string name="upcoming_episodes">புதிய episodes உள்ளன வருவன</string>
   <string name="upcoming_episodes_number">%s புதிய episodes</string>
-  <string name="upcoming_show_detailed">%2$s %1$s</string>
   <string name="more">%d மேலும்</string>
   <string name="upcoming_display">வரவிருக்கும் காட்சிகள் காண்பிக்க தேர்ந்தெடு</string>
   <string name="pref_notifications">அறிவிப்புகள்</string>

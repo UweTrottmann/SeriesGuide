@@ -7,7 +7,6 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import com.battlelancer.seriesguide.adapters.MovieHistoryAdapter;
 import com.battlelancer.seriesguide.loaders.TraktMovieHistoryLoader;
@@ -21,55 +20,52 @@ import com.uwetrottmann.trakt5.entities.HistoryEntry;
  */
 public class UserMovieStreamFragment extends StreamFragment {
 
-    private MovieHistoryAdapter mAdapter;
+    private MovieHistoryAdapter adapter;
 
     @Override
     protected ListAdapter getListAdapter() {
-        if (mAdapter == null) {
-            mAdapter = new MovieHistoryAdapter(getActivity());
+        if (adapter == null) {
+            adapter = new MovieHistoryAdapter(getActivity(), itemClickListener);
         }
-        return mAdapter;
+        return adapter;
     }
 
     @Override
     protected void initializeStream() {
         getLoaderManager().initLoader(HistoryActivity.MOVIES_LOADER_ID, null,
-                mActivityLoaderCallbacks);
+                activityLoaderCallbacks);
     }
 
     @Override
     protected void refreshStream() {
         getLoaderManager().restartLoader(HistoryActivity.MOVIES_LOADER_ID, null,
-                mActivityLoaderCallbacks);
+                activityLoaderCallbacks);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // do not respond if we get a header position by accident
-        if (position < 0) {
-            return;
+    private MovieHistoryAdapter.OnItemClickListener itemClickListener
+            = new MovieHistoryAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(View view, HistoryEntry item) {
+            if (item == null) {
+                return;
+            }
+
+            // display movie details
+            if (item.movie == null || item.movie.ids == null) {
+                return;
+            }
+            Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
+            i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, item.movie.ids.tmdb);
+
+            ActivityCompat.startActivity(getActivity(), i,
+                    ActivityOptionsCompat
+                            .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                            .toBundle()
+            );
         }
+    };
 
-        HistoryEntry item = mAdapter.getItem(position);
-        if (item == null) {
-            return;
-        }
-
-        // display movie details
-        if (item.movie == null || item.movie.ids == null) {
-            return;
-        }
-        Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
-        i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, item.movie.ids.tmdb);
-
-        ActivityCompat.startActivity(getActivity(), i,
-                ActivityOptionsCompat
-                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
-                        .toBundle()
-        );
-    }
-
-    private LoaderManager.LoaderCallbacks<TraktMovieHistoryLoader.Result> mActivityLoaderCallbacks =
+    private LoaderManager.LoaderCallbacks<TraktMovieHistoryLoader.Result> activityLoaderCallbacks =
             new LoaderManager.LoaderCallbacks<TraktMovieHistoryLoader.Result>() {
                 @Override
                 public Loader<TraktMovieHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
@@ -83,7 +79,7 @@ public class UserMovieStreamFragment extends StreamFragment {
                     if (!isAdded()) {
                         return;
                     }
-                    mAdapter.setData(data.results);
+                    adapter.setData(data.results);
                     setEmptyMessage(data.emptyText);
                     showProgressBar(false);
                 }

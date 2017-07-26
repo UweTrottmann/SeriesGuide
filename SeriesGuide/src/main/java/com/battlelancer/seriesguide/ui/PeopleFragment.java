@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.PeopleAdapter;
@@ -20,7 +21,6 @@ import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.entities.Credits;
-import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 
 /**
  * A fragment loading and showing a list of cast or crew members.
@@ -43,7 +43,7 @@ public class PeopleFragment extends Fragment {
     private ListView mListView;
     private EmptyView mEmptyView;
     private PeopleAdapter mAdapter;
-    private SmoothProgressBar mProgressBar;
+    private ProgressBar mProgressBar;
 
     private PeopleActivity.MediaType mMediaType;
     private PeopleActivity.PeopleType mPeopleType;

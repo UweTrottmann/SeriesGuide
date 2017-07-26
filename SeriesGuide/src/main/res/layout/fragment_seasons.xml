@@ -38,7 +38,7 @@
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.Subhead.Narrow"
+        android:textAppearance="@style/TextAppearance.Body.Secondary.Narrow"
         tools:text="199 remaining" />
 
     <!-- Enable nested scrolling for Lollipop and up to scroll app bar. -->
@@ -51,6 +51,7 @@
         android:fastScrollEnabled="true"
         android:nestedScrollingEnabled="true"
         android:paddingTop="0dp"
-        tools:ignore="UnusedAttribute" />
+        tools:ignore="UnusedAttribute"
+        tools:listitem="@layout/item_season" />
 
 </RelativeLayout>

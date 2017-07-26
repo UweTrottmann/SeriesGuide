@@ -45,12 +45,12 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="TextAppearance.Subhead.Dim">
-        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
+    <style name="TextAppearance.Subhead.Bold">
+        <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextAppearance.Subhead.Narrow">
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
+    <style name="TextAppearance.Subhead.Dim">
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
 
     <style name="TextAppearance.Subhead.Secondary">
@@ -75,6 +75,10 @@
 
     <style name="TextAppearance.Body.Secondary">
         <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="TextAppearance.Body.Secondary.Narrow">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
     </style>
 
     <style name="TextAppearance.Body.Green">
@@ -153,10 +157,6 @@
         <item name="android:drawablePadding">32dp</item>
     </style>
 
-    <style name="Widget.SeriesGuide.Button.Borderless.Blue">
-        <item name="android:textColor">@color/text_blue</item>
-    </style>
-
     <style name="Widget.SeriesGuide.Button.Borderless.Accent">
         <item name="android:textColor">?attr/colorAccent</item>
     </style>
@@ -185,19 +185,6 @@
         <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
     </style>
 
-    <!-- Smooth Progress Bar -->
-    <style name="Widget.SeriesGuide.SmoothProgressBar" parent="SmoothProgressBar">
-        <item name="android:indeterminate">true</item>
-        <item name="spb_sections_count">4</item>
-        <item name="spb_speed">1.0</item>
-        <item name="spb_colors">?attr/colorsProgressBar</item>
-        <item name="spb_stroke_width">4dp</item>
-        <item name="spb_stroke_separator_length">0dp</item>
-        <item name="spb_reversed">false</item>
-        <item name="spb_mirror_mode">false</item>
-        <item name="spb_interpolator">spb_interpolator_linear</item>
-    </style>
-
     <!-- TextView -->
     <style name="Widget.SeriesGuide.TextView" />
 
@@ -205,11 +192,14 @@
         <item name="android:lineSpacingMultiplier">1.25</item>
     </style>
 
-    <style name="Widget.SeriesGuide.TextView.ShowLabels">
+    <style name="Widget.SeriesGuide.TextView.SingleLine">
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.TextView.ShowLabels" parent="Widget.SeriesGuide.TextView.SingleLine">
         <item name="android:layout_marginLeft">@dimen/default_padding</item>
         <item name="android:layout_marginRight">@dimen/default_padding</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:ellipsize">marquee</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <!-- Action bar -->
@@ -245,18 +235,24 @@
         <item name="android:windowExitAnimation">@anim/checkin_dialog_exit</item>
     </style>
 
-    <!-- Grid views with cards -->
-    <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
-    <!-- Note: Ripple breaks when setting selector on item instead of the List/GridView. -->
-    <style name="Widget.SeriesGuide.CardGrid">
+    <!-- Grid view with no space between items. -->
+    <style name="Widget.SeriesGuide.Grid">
         <item name="android:listSelector">?attr/selectableItemBackground</item>
         <item name="android:drawSelectorOnTop">true</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
         <item name="android:clipToPadding">false</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+    </style>
+
+    <!-- Grid views with cards, with space between items.  -->
+    <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
+    <!-- Note: Ripple breaks when setting selector on item instead of the List/GridView. -->
+    <style name="Widget.SeriesGuide.Grid.Cards">
         <item name="android:paddingTop">@dimen/grid_topbottom_padding</item>
         <item name="android:paddingBottom">@dimen/grid_topbottom_padding</item>
         <item name="android:paddingLeft">@dimen/grid_leftright_padding</item>
         <item name="android:paddingRight">@dimen/grid_leftright_padding</item>
-        <item name="android:scrollbarStyle">outsideOverlay</item>
         <item name="android:horizontalSpacing">@dimen/grid_horizontal_spacing</item>
         <item name="android:verticalSpacing">@dimen/grid_vertical_spacing</item>
     </style>
@@ -317,7 +313,6 @@
 
     <style name="FirstRunColumn">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <!-- Panes -->

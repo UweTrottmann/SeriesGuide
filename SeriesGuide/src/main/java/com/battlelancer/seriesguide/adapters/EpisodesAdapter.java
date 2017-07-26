@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.widgets.WatchedBox;
 import com.uwetrottmann.androidutils.CheatSheet;
+import java.text.NumberFormat;
 import java.util.Date;
 
 public class EpisodesAdapter extends CursorAdapter {
@@ -36,12 +37,14 @@ public class EpisodesAdapter extends CursorAdapter {
 
     private PopupMenuClickListener popupMenuClickListener;
     private OnFlagEpisodeListener onFlagListener;
+    private NumberFormat integerFormat;
 
     public EpisodesAdapter(Context context, PopupMenuClickListener listener,
             OnFlagEpisodeListener flagListener) {
         super(context, null, 0);
         popupMenuClickListener = listener;
         onFlagListener = flagListener;
+        integerFormat = NumberFormat.getIntegerInstance();
     }
 
     /**
@@ -94,7 +97,7 @@ public class EpisodesAdapter extends CursorAdapter {
         }
 
         // number
-        viewHolder.episodeNumber.setText(String.valueOf(episodeNumber));
+        viewHolder.episodeNumber.setText(integerFormat.format(episodeNumber));
 
         // watched box
         viewHolder.watchedBox.setEpisodeFlag(watchedFlag);
@@ -121,21 +124,18 @@ public class EpisodesAdapter extends CursorAdapter {
         viewHolder.collected.setVisibility(isCollected ? View.VISIBLE : View.INVISIBLE);
 
         // alternative numbers
-        StringBuilder altNumbers = new StringBuilder();
         int absoluteNumber = mCursor.getInt(EpisodesQuery.ABSOLUTE_NUMBER);
+        String absoluteNumberText = null;
         if (absoluteNumber > 0) {
-            altNumbers.append(mContext.getString(R.string.episode_number_absolute)).append(" ")
-                    .append(absoluteNumber);
+            absoluteNumberText = NumberFormat.getIntegerInstance().format(absoluteNumber);
         }
         double dvdNumber = mCursor.getDouble(EpisodesQuery.DVDNUMBER);
+        String dvdNumberText = null;
         if (dvdNumber > 0) {
-            if (altNumbers.length() != 0) {
-                altNumbers.append(" | ");
-            }
-            altNumbers.append(mContext.getString(R.string.episode_number_disk)).append(" ")
-                    .append(dvdNumber);
+            dvdNumberText = mContext.getString(R.string.episode_number_disk) + " " + dvdNumber;
         }
-        viewHolder.episodeAlternativeNumbers.setText(altNumbers);
+        viewHolder.episodeAlternativeNumbers.setText(
+                TextTools.dotSeparate(absoluteNumberText, dvdNumberText));
 
         // release time
         boolean isReleased;

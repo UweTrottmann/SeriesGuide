@@ -29,7 +29,8 @@
         android:paddingBottom="@dimen/default_padding"
         android:paddingLeft="@dimen/keyline_minus_16"
         android:paddingTop="@dimen/default_padding"
-        tools:listitem="@layout/item_person" />
+        tools:listitem="@layout/item_person"
+        tools:ignore="RtlSymmetry" />
 
     <com.battlelancer.seriesguide.widgets.EmptyView
         android:id="@+id/emptyViewPeople"
@@ -38,10 +39,11 @@
         app:emptyViewButtonText="@string/action_try_again"
         app:emptyViewMessage="@string/people_empty" />
 
-    <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+    <ProgressBar
         android:id="@+id/progressBarPeople"
-        style="@style/Widget.SeriesGuide.SmoothProgressBar"
-        android:layout_width="match_parent"
-        android:layout_height="4dp" />
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 
 </FrameLayout>

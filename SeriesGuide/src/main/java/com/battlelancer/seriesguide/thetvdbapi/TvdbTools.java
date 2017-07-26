@@ -25,17 +25,15 @@ import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
+import com.battlelancer.seriesguide.sync.TraktEpisodeSync;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.TraktTools;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.thetvdb.entities.Episode;
 import com.uwetrottmann.thetvdb.entities.EpisodesResponse;
 import com.uwetrottmann.thetvdb.entities.Series;
@@ -85,7 +83,6 @@ public class TvdbTools {
     private final Context context;
     Lazy<HexagonTools> hexagonTools;
     Lazy<ShowTools> showTools;
-    Lazy<TraktTools> traktTools;
     Lazy<TheTvdbSearch> tvdbSearch;
     Lazy<TheTvdbSeries> tvdbSeries;
     Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch;
@@ -97,7 +94,6 @@ public class TvdbTools {
             @ApplicationContext Context context,
             Lazy<HexagonTools> hexagonTools,
             Lazy<ShowTools> showTools,
-            Lazy<TraktTools> traktTools,
             Lazy<TheTvdbSearch> tvdbSearch,
             Lazy<TheTvdbSeries> tvdbSeries,
             Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch,
@@ -107,7 +103,6 @@ public class TvdbTools {
         this.context = context;
         this.hexagonTools = hexagonTools;
         this.showTools = showTools;
-        this.traktTools = traktTools;
         this.tvdbSearch = tvdbSearch;
         this.tvdbSeries = tvdbSeries;
         this.traktSearch = traktSearch;
@@ -149,7 +144,8 @@ public class TvdbTools {
      */
     public boolean addShow(int showTvdbId, @Nullable String language,
             @Nullable HashMap<Integer, BaseShow> traktCollection,
-            @Nullable HashMap<Integer, BaseShow> traktWatched)
+            @Nullable HashMap<Integer, BaseShow> traktWatched,
+            HexagonEpisodeSync hexagonEpisodeSync)
             throws TvdbException {
         boolean isShowExists = DBUtils.isShowExists(context, showTvdbId);
         if (isShowExists) {
@@ -169,8 +165,7 @@ public class TvdbTools {
         // restore episode flags...
         if (hexagonEnabled) {
             // ...from Hexagon
-            boolean success = EpisodeTools.Download.flagsFromHexagon(context, hexagonTools.get(),
-                    showTvdbId);
+            boolean success = hexagonEpisodeSync.downloadFlags(showTvdbId);
             if (!success) {
                 // failed to download episode flags
                 // flag show as needing an episode merge
@@ -184,13 +179,13 @@ public class TvdbTools {
             showTools.get().sendIsAdded(showTvdbId, language);
         } else {
             // ...from trakt
-            TraktTools traktTools = this.traktTools.get();
-            if (!traktTools.storeEpisodeFlags(traktWatched, showTvdbId,
-                    TraktTools.Flag.WATCHED)) {
+            TraktEpisodeSync traktEpisodeSync = new TraktEpisodeSync(context, null);
+            if (!traktEpisodeSync.storeEpisodeFlags(traktWatched, showTvdbId,
+                    TraktEpisodeSync.Flag.WATCHED)) {
                 throw new TvdbDataException("addShow: storing trakt watched episodes failed.");
             }
-            if (!traktTools.storeEpisodeFlags(traktCollection, showTvdbId,
-                    TraktTools.Flag.COLLECTED)) {
+            if (!traktEpisodeSync.storeEpisodeFlags(traktCollection, showTvdbId,
+                    TraktEpisodeSync.Flag.COLLECTED)) {
                 throw new TvdbDataException("addShow: storing trakt collected episodes failed.");
             }
         }
@@ -340,51 +335,6 @@ public class TvdbTools {
         downloadAndParse(root.getContentHandler(), url, false, "searchShow: ");
 
         return series;
-    }
-
-    // Values based on the assumption that sync runs about every 24 hours
-    private static final long UPDATE_THRESHOLD_WEEKLYS_MS = 6 * DateUtils.DAY_IN_MILLIS +
-            12 * DateUtils.HOUR_IN_MILLIS;
-    private static final long UPDATE_THRESHOLD_DAILYS_MS = DateUtils.DAY_IN_MILLIS
-            + 12 * DateUtils.HOUR_IN_MILLIS;
-
-    /**
-     * Return list of show TVDb ids hitting a x-day limit.
-     */
-    public static int[] deltaUpdateShows(long currentTime, Context context) {
-        final List<Integer> updatableShowIds = new ArrayList<>();
-
-        // get existing show ids
-        final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
-                Shows._ID, Shows.LASTUPDATED, Shows.RELEASE_WEEKDAY
-        }, null, null, null);
-
-        if (shows != null) {
-            while (shows.moveToNext()) {
-                boolean isDailyShow = shows.getInt(2) == TimeTools.RELEASE_WEEKDAY_DAILY;
-                long lastUpdatedTime = shows.getLong(1);
-                // update daily shows more frequently than weekly shows
-                if (currentTime - lastUpdatedTime >
-                        (isDailyShow ? UPDATE_THRESHOLD_DAILYS_MS : UPDATE_THRESHOLD_WEEKLYS_MS)) {
-                    // add shows that are due for updating
-                    updatableShowIds.add(shows.getInt(0));
-                }
-            }
-
-            int showCount = shows.getCount();
-            if (showCount > 0 && AppSettings.shouldReportStats(context)) {
-                Utils.trackCustomEvent(context, "Statistics", "Shows", String.valueOf(showCount));
-            }
-
-            shows.close();
-        }
-
-        // copy to int array
-        int[] showTvdbIds = new int[updatableShowIds.size()];
-        for (int i = 0; i < updatableShowIds.size(); i++) {
-            showTvdbIds[i] = updatableShowIds.get(i);
-        }
-        return showTvdbIds;
     }
 
     /**
@@ -625,7 +575,7 @@ public class TvdbTools {
         return response.body().data;
     }
 
-    private retrofit2.Response<SeriesImageQueryResultResponse> getSeriesPosters(int showTvdbId,
+    public retrofit2.Response<SeriesImageQueryResultResponse> getSeriesPosters(int showTvdbId,
             @Nullable String language) throws TvdbException {
         try {
             return tvdbSeries.get()
@@ -637,7 +587,7 @@ public class TvdbTools {
     }
 
     @Nullable
-    private static String getHighestRatedPoster(List<SeriesImageQueryResult> posters) {
+    public static String getHighestRatedPoster(List<SeriesImageQueryResult> posters) {
         int highestRatedIndex = 0;
         double highestRating = 0.0;
         for (int i = 0; i < posters.size(); i++) {
@@ -659,17 +609,20 @@ public class TvdbTools {
      * ContentValues} for new episodes.<br> Adds update ops for updated episodes and delete ops for
      * local orphaned episodes to the given {@link ContentProviderOperation} batch.
      */
+    @SuppressLint("UseSparseArrays")
     private ArrayList<ContentValues> fetchEpisodes(ArrayList<ContentProviderOperation> batch,
             Show show, @NonNull String language) throws TvdbException {
         final int showTvdbId = show.tvdb_id;
         final ArrayList<ContentValues> newEpisodesValues = new ArrayList<>();
+
         final HashMap<Integer, Long> localEpisodeIds = DBUtils.getEpisodeMapForShow(context,
                 showTvdbId);
-        @SuppressLint("UseSparseArrays") final HashMap<Integer, Long> removableEpisodeIds =
-                new HashMap<>(localEpisodeIds); // just copy episodes list, then remove valid ones
+        // just copy episodes list, then remove valid ones
+        final HashMap<Integer, Long> removableEpisodeIds = new HashMap<>(localEpisodeIds);
+
         final HashSet<Integer> localSeasonIds = DBUtils.getSeasonIdsOfShow(context, showTvdbId);
         // store updated seasons to avoid duplicate ops
-        final HashSet<Integer> seasonIdsToUpdate = new HashSet<>();
+        final HashSet<Integer> seasonsToAddOrUpdate = new HashSet<>();
 
         final long dateLastMonthEpoch = (System.currentTimeMillis()
                 - (DateUtils.DAY_IN_MILLIS * 30)) / 1000;
@@ -685,8 +638,19 @@ public class TvdbTools {
             final ContentValues values = new ContentValues();
             for (Episode episode : response.data) {
                 Integer episodeId = episode.id;
-                if (episodeId == null || episodeId <= 0) {
-                    continue; // invalid id, skip
+                Integer seasonNumber = episode.airedSeason;
+                Integer seasonId = episode.airedSeasonID;
+                if (episodeId == null || episodeId <= 0
+                        || seasonNumber == null || seasonNumber < 0 // season 0 allowed (specials)
+                        || seasonId == null || seasonId <= 0) {
+                    continue; // invalid ids, skip
+                }
+
+                // add insert/update op for season, prevents it from getting cleaned
+                if (!seasonsToAddOrUpdate.contains(seasonId)) {
+                    batch.add(DBUtils.buildSeasonOp(showTvdbId, seasonId, seasonNumber,
+                            !localSeasonIds.contains(seasonId)));
+                    seasonsToAddOrUpdate.add(seasonId);
                 }
 
                 // don't clean up this episode
@@ -712,14 +676,13 @@ public class TvdbTools {
                 }
 
                 // extract values
-                values.put(Episodes._ID, episode.id);
-                Integer seasonId = episode.airedSeasonID;
+                values.put(Episodes._ID, episodeId);
                 values.put(Seasons.REF_SEASON_ID, seasonId);
                 values.put(Shows.REF_SHOW_ID, showTvdbId);
 
                 values.put(Episodes.NUMBER, episode.airedEpisodeNumber);
                 values.put(Episodes.ABSOLUTE_NUMBER, episode.absoluteNumber);
-                values.put(Episodes.SEASON, episode.airedSeason);
+                values.put(Episodes.SEASON, seasonNumber);
                 values.put(Episodes.DVDNUMBER, episode.dvdEpisodeNumber);
 
                 long releaseDateTime = TimeTools.parseEpisodeReleaseDate(context, showTimeZone,
@@ -738,12 +701,6 @@ public class TvdbTools {
                     batch.add(DBUtils.buildEpisodeUpdateOp(values));
                 }
 
-                if (seasonId != null && !seasonIdsToUpdate.contains(seasonId)) {
-                    // add insert/update op for season
-                    batch.add(DBUtils.buildSeasonOp(values, !localSeasonIds.contains(seasonId)));
-                    seasonIdsToUpdate.add(seasonId);
-                }
-
                 values.clear();
             }
         }
@@ -752,6 +709,14 @@ public class TvdbTools {
         for (Integer episodeId : removableEpisodeIds.keySet()) {
             batch.add(ContentProviderOperation.newDelete(Episodes.buildEpisodeUri(episodeId))
                     .build());
+        }
+
+        // add delete ops for leftover seasonIds in our db
+        for (Integer seasonId : localSeasonIds) {
+            if (!seasonsToAddOrUpdate.contains(seasonId)) {
+                batch.add(ContentProviderOperation.newDelete(Seasons.buildSeasonUri(seasonId))
+                        .build());
+            }
         }
 
         return newEpisodesValues;
