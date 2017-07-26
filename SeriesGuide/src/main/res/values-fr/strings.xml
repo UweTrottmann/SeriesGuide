@@ -20,7 +20,7 @@
   <string name="season_number">Saison %d</string>
   <string name="seasons">Saisons</string>
   <string name="specialseason">Épisodes Spéciaux</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">Notes</string>
   <!-- Descriptions -->
   <string name="description_overview">Aperçu</string>
   <string name="description_poster">Affiche de la série</string>
@@ -248,14 +248,14 @@
     <item quantity="other">%d minutes</item>
   </plurals>
   <!-- Features -->
-  <string name="feature_supported">Supported</string>
-  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_supported">Pris en charge</string>
+  <string name="feature_not_supported">Non pris en charge</string>
   <string name="feature_history">Personal and friend history</string>
-  <string name="feature_comments">Post comments</string>
-  <string name="feature_sync">Sync</string>
+  <string name="feature_comments">Publier un commentaire</string>
+  <string name="feature_sync">Synchronisation</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Expérimental</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
+  <string name="hexagon_description">Le cloud SeriesGuide permet de sauvegarder et de synchroniser vos listes, émissions et films.</string>
   <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
   <string name="hexagon_signin">Connexion</string>
   <string name="hexagon_signout">Déconnexion</string>

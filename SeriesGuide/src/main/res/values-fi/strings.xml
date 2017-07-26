@@ -251,7 +251,7 @@
   <string name="feature_supported">Tuettu</string>
   <string name="feature_not_supported">Ei tuettu</string>
   <string name="feature_history">Henkilökohtainen ja ystävien historia</string>
-  <string name="feature_comments">Post comments</string>
+  <string name="feature_comments">Lähetä kommentteja</string>
   <string name="feature_sync">Synkronointi</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Kokeellista ja helposti syttyvää!</string>

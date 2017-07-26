@@ -251,11 +251,11 @@
   <string name="feature_supported">Destekleniyor</string>
   <string name="feature_not_supported">Desteklenmiyor</string>
   <string name="feature_history">Kişisel ve arkadaş geçmişi</string>
-  <string name="feature_comments">Post comments</string>
+  <string name="feature_comments">Gönderi yorumları</string>
   <string name="feature_sync">Senkronizasyon</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Deneysel</string>
-  <string name="hexagon_description">SeriesGuide Cloudd, dizilerinizi, listelerinizi filmlerinizi yedeklemenizi ve senkronize etmenizi sağlar.</string>
+  <string name="hexagon_description">SeriesGuide Cloud, dizilerinizi, listelerinizi ve filmlerinizi yedeklemenizi ve senkronize etmenizi sağlar.</string>
   <string name="hexagon_warning_trakt">SeriesGuide Cloud ile oturum açarken bazı trakt özellikleri mevcut değildir.</string>
   <string name="hexagon_signin">Giriş</string>
   <string name="hexagon_signout">Çıkış</string>
