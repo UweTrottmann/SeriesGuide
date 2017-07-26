@@ -5,7 +5,6 @@ import android.accounts.Account;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SyncStatusObserver;
-import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -19,7 +18,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import timber.log.Timber;
 
@@ -156,26 +155,17 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
                 if (event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
                     // user has acknowledged warning
                     // disable auto backup so warning is not shown again
-                    disableAutoBackup();
+                    DataLiberationTools.setAutoBackupDisabled(BaseTopActivity.this);
                 }
             }
         }).setAction(R.string.preferences, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // disable setting here (not in onDismissed)
-                // so settings screen is correctly showing as disabled
-                disableAutoBackup();
                 startActivity(
                         new Intent(BaseTopActivity.this, DataLiberationActivity.class).putExtra(
                                 DataLiberationActivity.InitBundle.EXTRA_SHOW_AUTOBACKUP, true));
             }
         });
-    }
-
-    private void disableAutoBackup() {
-        PreferenceManager.getDefaultSharedPreferences(this).edit()
-                .putBoolean(AdvancedSettings.KEY_AUTOBACKUP, false)
-                .apply();
     }
 
     @Override
