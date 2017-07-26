@@ -130,7 +130,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/backup_full_dump"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewDataLibMoviesExportFile" />
 
             <Button
@@ -140,7 +142,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/backup_button"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxDataLibFullDump" />
 
             <TextView
@@ -160,7 +164,9 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/shows"
                 android:textAppearance="@style/TextAppearance.Body.Bold"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewDataLibLabelImport" />
 
             <Button
@@ -192,7 +198,9 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/lists"
                 android:textAppearance="@style/TextAppearance.Body.Bold"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewDataLibShowsImportFile" />
 
             <Button
@@ -225,7 +233,9 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/movies"
                 android:textAppearance="@style/TextAppearance.Body.Bold"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewDataLibListsImportFile" />
 
             <Button
@@ -258,7 +268,9 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/import_warning"
                 android:textAppearance="@style/TextAppearance.Body.Bold"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewDataLibMoviesImportFile" />
 
             <Button
@@ -269,7 +281,9 @@
                 android:layout_marginTop="8dp"
                 android:enabled="false"
                 android:text="@string/import_button"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxDataLibImportWarning" />
 
         </android.support.constraint.ConstraintLayout>

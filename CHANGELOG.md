@@ -7,7 +7,23 @@ All dates are in the European Central timezone.
 
 Version 38
 ----------
-*(in development)*
+*(2017-07-26)*
+
+* Highlight show posters, improve text.
+* Rename 'Now' to 'History'. 'Released today' moved to calendar.
+* Display (expected) posters in history tabs and episode search.
+* Season info text no longer says all episodes are watched if none are watched.
+* trakt and Cloud account screens display sync details.
+* Adaptive icons on Android O.
+* Fix Arabic release date and time format.
+
+#### 38
+*(2017-07-26)*
+
+* 🔨 Do not show auto backup warning if issue was resolved.
+* 🔨 Auto backup screen checks permissions when opening it.
+* 🔧 Do not show week in calendar if released in the next or previous 6 days.
+* 📝 Latest translations from crowdin.
 
 #### 38-beta5
 *(2017-07-14)*

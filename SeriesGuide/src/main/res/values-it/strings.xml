@@ -251,7 +251,7 @@
   <string name="feature_supported">Supportato</string>
   <string name="feature_not_supported">Non supportato</string>
   <string name="feature_history">Cronologia personale e degli amici</string>
-  <string name="feature_comments">Post comments</string>
+  <string name="feature_comments">Invia commenti</string>
   <string name="feature_sync">Sincronizza</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Sperimentale</string>

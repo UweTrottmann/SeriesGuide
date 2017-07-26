@@ -1,10 +1,16 @@
 package com.battlelancer.seriesguide.dataliberation;
 
+import android.Manifest;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.Utils;
 import java.io.File;
@@ -22,6 +28,23 @@ public class DataLiberationTools {
         return (backupShows.exists() && backupShows.canRead())
                 || (backupLists.exists() && backupLists.canRead()
                 || (backupMovies.exists() && backupMovies.canRead()));
+    }
+
+    public static boolean isAutoBackupPermissionMissing(Context context) {
+        return ContextCompat.checkSelfPermission(context,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
+    }
+
+    public static void setAutoBackupEnabled(Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putBoolean(AdvancedSettings.KEY_AUTOBACKUP, true)
+                .apply();
+    }
+
+    public static void setAutoBackupDisabled(Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putBoolean(AdvancedSettings.KEY_AUTOBACKUP, false)
+                .apply();
     }
 
     /**

@@ -41,7 +41,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/backup_use_default_files"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -142,15 +144,25 @@
                     app:layout_constraintTop_toTopOf="@+id/buttonAutoBackupMoviesExportFile"
                     tools:text="content://some.path.on.storage/sg-movies-export.json" />
 
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/containerAutoBackupImport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:animateLayoutChanges="true">
+
                 <TextView
                     android:id="@+id/textViewAutoBackupLabelImport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
                     android:text="@string/restore_auto_backup"
                     android:textAppearance="@style/TextAppearance.Body.Bold.Accent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupMoviesExportFile" />
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textViewAutoBackupLastTime"
@@ -164,11 +176,12 @@
 
                 <CheckBox
                     android:id="@+id/checkBoxAutoBackupImportWarning"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_padding"
                     android:text="@string/import_warning"
                     android:textAppearance="@style/TextAppearance.Body.Bold"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupLastTime" />
@@ -180,7 +193,9 @@
                     android:layout_height="wrap_content"
                     android:enabled="false"
                     android:text="@string/restore_auto_backup"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/checkBoxAutoBackupImportWarning" />
 
             </android.support.constraint.ConstraintLayout>

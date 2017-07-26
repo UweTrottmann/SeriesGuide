@@ -258,7 +258,7 @@
   <string name="feature_supported">Obsługiwane</string>
   <string name="feature_not_supported">Nie obsługiwane</string>
   <string name="feature_history">Historia osobista i przyjaciół</string>
-  <string name="feature_comments">Post comments</string>
+  <string name="feature_comments">Dodaj komentarz</string>
   <string name="feature_sync">Synchronizacja</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Eksperymentalne</string>

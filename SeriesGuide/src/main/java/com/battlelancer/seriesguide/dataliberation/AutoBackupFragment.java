@@ -13,7 +13,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -88,28 +87,15 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
 
         progressBar.setVisibility(View.GONE);
 
-        // display last auto-backup date
-        long lastAutoBackupTime = AdvancedSettings.getLastAutoBackupTime(getActivity());
-        boolean showLastBackupTime = BackupSettings.isUseAutoBackupDefaultFiles(getContext())
-                ? DataLiberationTools.isAutoBackupDefaultFilesAvailable()
-                : !BackupSettings.isMissingAutoBackupFile(getContext());
-        textViewLastAutoBackup
-                .setText(getString(R.string.last_auto_backup, showLastBackupTime ?
-                        DateUtils.getRelativeDateTimeString(getActivity(),
-                                lastAutoBackupTime, DateUtils.SECOND_IN_MILLIS,
-                                DateUtils.DAY_IN_MILLIS, 0) : "n/a"));
-
         // setup listeners
-        boolean autoBackupEnabled = AdvancedSettings.isAutoBackupEnabled(getContext());
-        containerSettings.setVisibility(autoBackupEnabled ? View.VISIBLE : View.GONE);
-        switchAutoBackup.setChecked(autoBackupEnabled);
         switchAutoBackup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     tryEnableAutoBackup();
                 } else {
-                    setAutoBackupEnabled(false);
+                    DataLiberationTools.setAutoBackupDisabled(getContext());
+                    setContainerSettingsVisible(false);
                 }
             }
         });
@@ -187,6 +173,27 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
     public void onStart() {
         super.onStart();
 
+        // auto-disable if permission is missing
+        if (DataLiberationTools.isAutoBackupPermissionMissing(getContext())) {
+            DataLiberationTools.setAutoBackupDisabled(getContext());
+        }
+
+        // update enabled state
+        boolean autoBackupEnabled = AdvancedSettings.isAutoBackupEnabled(getContext());
+        setContainerSettingsVisible(autoBackupEnabled);
+        switchAutoBackup.setChecked(autoBackupEnabled);
+
+        // update last auto-backup date
+        long lastAutoBackupTime = AdvancedSettings.getLastAutoBackupTime(getActivity());
+        boolean showLastBackupTime = BackupSettings.isUseAutoBackupDefaultFiles(getContext())
+                ? DataLiberationTools.isAutoBackupDefaultFilesAvailable()
+                : !BackupSettings.isMissingAutoBackupFile(getContext());
+        textViewLastAutoBackup
+                .setText(getString(R.string.last_auto_backup, showLastBackupTime ?
+                        DateUtils.getRelativeDateTimeString(getActivity(),
+                                lastAutoBackupTime, DateUtils.SECOND_IN_MILLIS,
+                                DateUtils.DAY_IN_MILLIS, 0) : "n/a"));
+
         EventBus.getDefault().register(this);
     }
 
@@ -237,43 +244,15 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
         setProgressLock(false);
     }
 
-    private void setProgressLock(boolean isLocked) {
-        if (isLocked) {
-            buttonImportAutoBackup.setEnabled(false);
-        } else {
-            buttonImportAutoBackup.setEnabled(checkBoxImportWarning.isChecked());
-        }
-        progressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
-        checkBoxImportWarning.setEnabled(!isLocked);
-        buttonShowsExportFile.setEnabled(!isLocked);
-        buttonListsExportFile.setEnabled(!isLocked);
-        buttonMoviesExportFile.setEnabled(!isLocked);
-    }
-
-    private void tryEnableAutoBackup() {
-        // make sure we have the storage write permission
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            // don't have it? request it, do task if granted
-            requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
-                    REQUEST_CODE_ENABLE_AUTO_BACKUP);
-            return;
-        }
-        setAutoBackupEnabled(true);
-    }
-
-    private void tryDataLiberationAction() {
+    private boolean permissionRequired(int requestCode) {
         // make sure we have write permission
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            // don't have it? request it, do task if granted
+        if (DataLiberationTools.isAutoBackupPermissionMissing(getContext())) {
+            // don't have it? request it, resume task if granted
             requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
-                    REQUEST_CODE_IMPORT_AUTOBACKUP);
-            return;
+                    requestCode);
+            return true;
         }
-
-        doDataLiberationAction();
+        return false;
     }
 
     @Override
@@ -282,7 +261,7 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
         if (requestCode == REQUEST_CODE_ENABLE_AUTO_BACKUP) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                setAutoBackupEnabled(true);
+                tryEnableAutoBackup();
             } else {
                 if (getView() != null && switchAutoBackup != null) {
                     // disable auto backup as we don't have the required permission
@@ -294,7 +273,7 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
         }
         if (requestCode == REQUEST_CODE_IMPORT_AUTOBACKUP) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                doDataLiberationAction();
+                tryDataLiberationAction();
             } else {
                 if (getView() != null) {
                     Snackbar.make(getView(), R.string.dataliberation_permission_missing,
@@ -304,15 +283,18 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
         }
     }
 
-    private void setAutoBackupEnabled(boolean isEnabled) {
-        PreferenceManager.getDefaultSharedPreferences(getContext())
-                .edit()
-                .putBoolean(AdvancedSettings.KEY_AUTOBACKUP, isEnabled)
-                .apply();
-        containerSettings.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
+    private void tryEnableAutoBackup() {
+        if (permissionRequired(REQUEST_CODE_ENABLE_AUTO_BACKUP)) {
+            return; // will be called again if we get permission
+        }
+        DataLiberationTools.setAutoBackupEnabled(getContext());
+        setContainerSettingsVisible(true);
     }
 
-    private void doDataLiberationAction() {
+    private void tryDataLiberationAction() {
+        if (permissionRequired(REQUEST_CODE_IMPORT_AUTOBACKUP)) {
+            return; // will be called again if we get permission
+        }
         setProgressLock(true);
 
         importTask = new JsonImportTask(getContext());
@@ -352,6 +334,23 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
             }
             updateFileViews();
         }
+    }
+
+    private void setContainerSettingsVisible(boolean visible) {
+        containerSettings.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    private void setProgressLock(boolean isLocked) {
+        if (isLocked) {
+            buttonImportAutoBackup.setEnabled(false);
+        } else {
+            buttonImportAutoBackup.setEnabled(checkBoxImportWarning.isChecked());
+        }
+        progressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
+        checkBoxImportWarning.setEnabled(!isLocked);
+        buttonShowsExportFile.setEnabled(!isLocked);
+        buttonListsExportFile.setEnabled(!isLocked);
+        buttonMoviesExportFile.setEnabled(!isLocked);
     }
 
     private void updateFileViews() {

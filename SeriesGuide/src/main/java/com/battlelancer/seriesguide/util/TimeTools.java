@@ -490,8 +490,8 @@ public class TimeTools {
 
     /**
      * Formats to day and relative week in relation to the current system time (e.g. "Mon in 3
-     * weeks") as defined by the devices locale. If the time is this week, just returns the day. If
-     * the time is today, returns local variant of 'Released today'.
+     * weeks") as defined by the devices locale. If the time is within the next or previous 6 days,
+     * just returns the day. If the time is today, returns local variant of 'Released today'.
      */
     public static String formatToLocalDayAndRelativeWeek(Context context, Date dateThen) {
         if (DateUtils.isToday(dateThen.getTime())) {
@@ -513,13 +513,15 @@ public class TimeTools {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        // move to same week day, but in this week
-        calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
-        long timeDayOfWeekThisWeek = calendar.getTimeInMillis();
 
         long timeThen = dateThen.getTime();
-        if (timeThen >= timeDayOfWeekThisWeek + DateUtils.WEEK_IN_MILLIS
-                || timeThen <= timeDayOfWeekThisWeek - DateUtils.WEEK_IN_MILLIS) {
+        long timeToday = calendar.getTimeInMillis();
+        if (timeThen >= timeToday + DateUtils.WEEK_IN_MILLIS
+                || timeThen <= timeToday - DateUtils.WEEK_IN_MILLIS) {
+            // move to same week day, but in this week
+            calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+            long timeDayOfWeekThisWeek = calendar.getTimeInMillis();
+
             dayAndTime.append(" ");
             dayAndTime.append(DateUtils
                     .getRelativeTimeSpanString(timeThen, timeDayOfWeekThisWeek,
