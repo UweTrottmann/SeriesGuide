@@ -142,15 +142,23 @@
                     app:layout_constraintTop_toTopOf="@+id/buttonAutoBackupMoviesExportFile"
                     tools:text="content://some.path.on.storage/sg-movies-export.json" />
 
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/containerAutoBackupImport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:animateLayoutChanges="true">
+
                 <TextView
                     android:id="@+id/textViewAutoBackupLabelImport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
                     android:text="@string/restore_auto_backup"
                     android:textAppearance="@style/TextAppearance.Body.Bold.Accent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupMoviesExportFile" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textViewAutoBackupLastTime"
