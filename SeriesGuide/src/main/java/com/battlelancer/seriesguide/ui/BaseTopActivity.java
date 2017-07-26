@@ -88,6 +88,16 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        // dismiss any snackbar to avoid it getting restored
+        // if condition that led to its display is no longer true
+        if (snackbar != null && snackbar.isShown()) {
+            snackbar.dismiss();
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
 
