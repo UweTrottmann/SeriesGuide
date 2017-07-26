@@ -9,6 +9,11 @@ Version 38
 ----------
 *(in development)*
 
+* Rename 'Now' to 'History', drop 'Released today' (still available in upcoming/recent).
+* Display (expected) posters in show and movie history tabs, episode search.
+* Season info text does not say all watched if none watched.
+* Adaptive icons on Android O.
+
 #### 38-beta5
 *(2017-07-14)*
 
