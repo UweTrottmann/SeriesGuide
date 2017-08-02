@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Some CoordinatorLayouts have scrollable children which do not support app bar scrolling
-    pre-L, so only add scroll flags on L+. -->
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,11 +11,15 @@
     android:theme="?attr/actionBarTheme"
     app:layout_scrollFlags="scroll|enterAlways|snap"
     app:popupTheme="?attr/actionBarPopupTheme">
+    <!-- Some CoordinatorLayouts have scrollable children which do not support app bar scrolling
+    pre-L, so only add scroll flags on L+. -->
 
+    <!-- focusableInTouchMode: prevent auto-focus on search text view. -->
     <RelativeLayout
         android:id="@+id/containerSearchBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true">
 
         <AutoCompleteTextView
             android:id="@+id/editTextSearchBar"

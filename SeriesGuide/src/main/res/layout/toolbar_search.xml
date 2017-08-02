@@ -13,10 +13,12 @@
     android:theme="?attr/actionBarTheme"
     app:popupTheme="?attr/actionBarPopupTheme">
 
+    <!-- focusableInTouchMode: prevent auto-focus on search text view. -->
     <RelativeLayout
         android:id="@+id/containerSearchBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true">
 
         <AutoCompleteTextView
             android:id="@+id/editTextSearchBar"
