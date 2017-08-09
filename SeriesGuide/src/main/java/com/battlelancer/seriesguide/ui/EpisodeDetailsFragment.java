@@ -169,12 +169,12 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // comments button
         Resources.Theme theme = getActivity().getTheme();
-        ViewTools.setVectorDrawableLeft(theme, commentsButton, R.drawable.ic_forum_black_24dp);
+        ViewTools.setVectorIconLeft(theme, commentsButton, R.drawable.ic_forum_black_24dp);
 
         // other bottom buttons
-        ViewTools.setVectorDrawableLeft(theme, imdbButton, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorDrawableLeft(theme, tvdbButton, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorDrawableLeft(theme, traktButton, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, imdbButton, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, tvdbButton, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, traktButton, R.drawable.ic_link_black_24dp);
 
         return v;
     }

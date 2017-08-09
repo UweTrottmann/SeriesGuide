@@ -157,7 +157,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         // language button
         buttonMovieLanguage.setVisibility(View.GONE);
-        ViewTools.setVectorDrawableLeft(getActivity().getTheme(), buttonMovieLanguage,
+        ViewTools.setVectorIconLeft(getActivity().getTheme(), buttonMovieLanguage,
                 R.drawable.ic_language_white_24dp);
         CheatSheet.setup(buttonMovieLanguage, R.string.pref_language);
         buttonMovieLanguage.setOnClickListener(new OnClickListener() {
@@ -169,7 +169,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         // comments button
         buttonMovieComments.setVisibility(View.GONE);
-        ViewTools.setVectorDrawableLeft(getActivity().getTheme(), buttonMovieComments,
+        ViewTools.setVectorIconLeft(getActivity().getTheme(), buttonMovieComments,
                 R.drawable.ic_forum_black_24dp);
 
         // cast and crew

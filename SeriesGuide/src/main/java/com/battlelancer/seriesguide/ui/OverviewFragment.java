@@ -180,12 +180,12 @@ public class OverviewFragment extends Fragment implements
 
         // comments button
         Resources.Theme theme = getActivity().getTheme();
-        ViewTools.setVectorDrawableLeft(theme, buttonComments, R.drawable.ic_forum_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonComments, R.drawable.ic_forum_black_24dp);
 
         // other bottom buttons
-        ViewTools.setVectorDrawableLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorDrawableLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorDrawableLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp);
 
         return v;
     }
@@ -856,7 +856,7 @@ public class OverviewFragment extends Fragment implements
 
         // favorite
         boolean isFavorite = show.getInt(ShowQuery.SHOW_FAVORITE) == 1;
-        ViewTools.setVectorDrawable(getActivity().getTheme(), buttonFavorite, isFavorite
+        ViewTools.setVectorIcon(getActivity().getTheme(), buttonFavorite, isFavorite
                 ? R.drawable.ic_star_black_24dp
                 : R.drawable.ic_star_border_black_24dp);
         buttonFavorite.setContentDescription(getString(isFavorite ? R.string.context_unfavorite

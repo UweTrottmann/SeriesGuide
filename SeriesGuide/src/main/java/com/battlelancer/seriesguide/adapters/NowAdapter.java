@@ -184,10 +184,10 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.context = context;
         this.listener = listener;
         this.dataset = new ArrayList<>();
-        this.drawableWatched = ViewTools.createVectorIconInactive(getContext(),
+        this.drawableWatched = ViewTools.vectorIconInactive(getContext(),
                 getContext().getTheme(),
                 R.drawable.ic_check_black_16dp);
-        this.drawableCheckin = ViewTools.createVectorIconInactive(getContext(),
+        this.drawableCheckin = ViewTools.vectorIconInactive(getContext(),
                 getContext().getTheme(),
                 R.drawable.ic_message_black_16dp);
     }

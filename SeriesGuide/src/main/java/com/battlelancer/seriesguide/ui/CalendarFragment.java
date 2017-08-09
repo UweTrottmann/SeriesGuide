@@ -107,7 +107,7 @@ public class CalendarFragment extends Fragment
         gridView.setEmptyView(emptyView);
         gridView.setAreHeadersSticky(false);
 
-        VectorDrawableCompat drawableTouch = ViewTools.createVectorIconInactive(getContext(),
+        VectorDrawableCompat drawableTouch = ViewTools.vectorIconInactive(getContext(),
                 getActivity().getTheme(),
                 R.drawable.ic_touch_black_24dp);
         imageViewTapIndicator = ButterKnife.findById(v, R.id.imageViewCalendarTapIndicator);
@@ -195,7 +195,7 @@ public class CalendarFragment extends Fragment
 
         inflater.inflate(R.menu.calendar_menu, menu);
 
-        VectorDrawableCompat visibilitySettingsIcon = ViewTools.createVectorIconWhite(
+        VectorDrawableCompat visibilitySettingsIcon = ViewTools.vectorIconWhite(
                 getActivity(), getActivity().getTheme(), R.drawable.ic_visibility_black_24dp);
         menu.findItem(R.id.menu_calendar_visibility).setIcon(visibilitySettingsIcon);
 

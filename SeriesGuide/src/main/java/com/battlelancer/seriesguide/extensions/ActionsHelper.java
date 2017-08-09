@@ -41,7 +41,7 @@ public class ActionsHelper {
         actionsContainer.removeAllViews();
 
         // re-use drawable for all buttons
-        VectorDrawableCompat drawable = ViewTools.createVectorIcon(actionsContainer.getContext(),
+        VectorDrawableCompat drawable = ViewTools.vectorIconActive(actionsContainer.getContext(),
                 theme, R.drawable.ic_extension_black_24dp);
 
         // add a view per action

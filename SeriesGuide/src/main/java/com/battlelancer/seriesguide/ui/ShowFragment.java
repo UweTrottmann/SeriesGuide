@@ -148,7 +148,7 @@ public class ShowFragment extends Fragment {
 
         // language button
         Resources.Theme theme = getActivity().getTheme();
-        ViewTools.setVectorDrawableLeft(theme, buttonLanguage, R.drawable.ic_language_white_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonLanguage, R.drawable.ic_language_white_24dp);
         buttonLanguage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,14 +168,14 @@ public class ShowFragment extends Fragment {
         mTextViewRatingRange.setText(getString(R.string.format_rating_range, 10));
 
         // link, search and comments button
-        ViewTools.setVectorDrawableLeft(theme, mButtonImdb, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorDrawableLeft(theme, mButtonTvdb, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorDrawableLeft(theme, mButtonTrakt, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorDrawableLeft(theme, mButtonWebSearch, R.drawable.ic_search_white_24dp);
-        ViewTools.setVectorDrawableLeft(theme, mButtonComments, R.drawable.ic_forum_black_24dp);
+        ViewTools.setVectorIconLeft(theme, mButtonImdb, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, mButtonTvdb, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, mButtonTrakt, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, mButtonWebSearch, R.drawable.ic_search_white_24dp);
+        ViewTools.setVectorIconLeft(theme, mButtonComments, R.drawable.ic_forum_black_24dp);
 
         // share button
-        ViewTools.setVectorDrawableLeft(theme, buttonShare, R.drawable.ic_share_white_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonShare, R.drawable.ic_share_white_24dp);
         buttonShare.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,7 +184,7 @@ public class ShowFragment extends Fragment {
         });
 
         // shortcut button
-        ViewTools.setVectorDrawableLeft(theme, buttonShortcut, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonShortcut, R.drawable.ic_link_black_24dp);
         buttonShortcut.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -362,7 +362,7 @@ public class ShowFragment extends Fragment {
 
         // favorite button
         final boolean isFavorite = showCursor.getInt(ShowQuery.IS_FAVORITE) == 1;
-        ViewTools.setVectorDrawableTop(getActivity().getTheme(), buttonFavorite, isFavorite
+        ViewTools.setVectorIconTop(getActivity().getTheme(), buttonFavorite, isFavorite
                 ? R.drawable.ic_star_black_24dp
                 : R.drawable.ic_star_border_black_24dp);
         String labelFavorite = getString(
@@ -384,7 +384,7 @@ public class ShowFragment extends Fragment {
         buttonNotify.setContentDescription(getString(notify
                 ? R.string.action_episode_notifications_off
                 : R.string.action_episode_notifications_on));
-        ViewTools.setVectorDrawableTop(getActivity().getTheme(), buttonNotify, notify
+        ViewTools.setVectorIconTop(getActivity().getTheme(), buttonNotify, notify
                 ? R.drawable.ic_notifications_active_black_24dp
                 : R.drawable.ic_notifications_off_black_24dp);
         buttonNotify.setEnabled(true);
@@ -406,7 +406,7 @@ public class ShowFragment extends Fragment {
         String label = getString(isHidden ? R.string.context_unhide : R.string.context_hide);
         buttonHidden.setContentDescription(label);
         buttonHidden.setText(label);
-        ViewTools.setVectorDrawableTop(getActivity().getTheme(), buttonHidden,
+        ViewTools.setVectorIconTop(getActivity().getTheme(), buttonHidden,
                 isHidden
                         ? R.drawable.ic_visibility_off_black_24dp
                         : R.drawable.ic_visibility_black_24dp);

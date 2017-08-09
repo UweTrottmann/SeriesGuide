@@ -48,7 +48,7 @@ public class FeatureStatusView extends LinearLayout {
         if (featureSupported) {
             setFeatureEnabled(true);
         } else {
-            ViewTools.setVectorDrawable(getContext().getTheme(), imageViewStatus,
+            ViewTools.setVectorIcon(getContext().getTheme(), imageViewStatus,
                     R.drawable.ic_remove_circle_black_24dp);
             imageViewStatus.setContentDescription(
                     getContext().getString(R.string.feature_not_supported));

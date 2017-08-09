@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.AttrRes;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -45,37 +47,50 @@ public class ViewTools {
                 bottom != 0 ? ContextCompat.getDrawable(context, bottom) : null);
     }
 
-    public static void setVectorDrawableLeft(Resources.Theme theme, TextView textView,
-            @DrawableRes int vectorRes) {
-        VectorDrawableCompat drawable = createVectorIcon(textView.getContext(), theme, vectorRes);
-        setCompoundDrawablesRelativeWithIntrinsicBounds(textView, drawable, null, null, null);
+    public static void setVectorAttrTop(Resources.Theme theme, TextView textView,
+            @AttrRes int vectorAttr) {
+        int vectorRes = Utils.resolveAttributeToResourceId(theme, vectorAttr);
+        setVectorDrawableTop(theme, textView, vectorRes);
     }
 
     public static void setVectorDrawableTop(Resources.Theme theme, TextView textView,
             @DrawableRes int vectorRes) {
-        VectorDrawableCompat drawable = createVectorIcon(textView.getContext(), theme, vectorRes);
-        setCompoundDrawablesRelativeWithIntrinsicBounds(textView, null, drawable, null, null);
+        setCompoundDrawableTop(textView,
+                VectorDrawableCompat.create(textView.getResources(), vectorRes, theme));
     }
 
-    public static void setVectorDrawable(Resources.Theme theme, ImageView button,
+    public static void setVectorIcon(Resources.Theme theme, ImageView button,
             @DrawableRes int vectorRes) {
-        VectorDrawableCompat drawable = createVectorIcon(button.getContext(), theme, vectorRes);
-        button.setImageDrawable(drawable);
+        button.setImageDrawable(vectorIconActive(button.getContext(), theme, vectorRes));
     }
 
-    public static VectorDrawableCompat createVectorIcon(Context context,
+    public static void setVectorIconLeft(Resources.Theme theme, TextView textView,
+            @DrawableRes int vectorRes) {
+        VectorDrawableCompat drawable = vectorIconActive(textView.getContext(), theme, vectorRes);
+        if (drawable != null) {
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        }
+        textView.setCompoundDrawables(drawable, null, null, null);
+    }
+
+    public static void setVectorIconTop(Resources.Theme theme, TextView textView,
+            @DrawableRes int vectorRes) {
+        setCompoundDrawableTop(textView, vectorIconActive(textView.getContext(), theme, vectorRes));
+    }
+
+    public static VectorDrawableCompat vectorIconActive(Context context,
             Resources.Theme theme, @DrawableRes int vectorRes) {
-        return createTintedVectorDrawable(context, theme, vectorRes,
-                Utils.resolveAttributeToResourceId(theme, R.attr.sgColorIcon));
+        int colorRes = Utils.resolveAttributeToResourceId(theme, R.attr.sgColorIcon);
+        return createTintedVectorDrawable(context, theme, vectorRes, colorRes);
     }
 
-    public static VectorDrawableCompat createVectorIconInactive(Context context,
+    public static VectorDrawableCompat vectorIconInactive(Context context,
             Resources.Theme theme, @DrawableRes int vectorRes) {
-        return createTintedVectorDrawable(context, theme, vectorRes,
-                Utils.resolveAttributeToResourceId(theme, R.attr.sgColorIconInactive));
+        int colorRes = Utils.resolveAttributeToResourceId(theme, R.attr.sgColorIconInactive);
+        return createTintedVectorDrawable(context, theme, vectorRes, colorRes);
     }
 
-    public static VectorDrawableCompat createVectorIconWhite(Context context,
+    public static VectorDrawableCompat vectorIconWhite(Context context,
             Resources.Theme theme, @DrawableRes int vectorRes) {
         return createTintedVectorDrawable(context, theme, vectorRes, R.color.white);
     }
@@ -89,6 +104,14 @@ public class ViewTools {
             drawable.setTint(ContextCompat.getColor(context, colorRes));
         }
         return drawable;
+    }
+
+    private static void setCompoundDrawableTop(@NonNull TextView textView,
+            @Nullable Drawable drawable) {
+        if (drawable != null) {
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        }
+        textView.setCompoundDrawables(null, drawable, null, null);
     }
 
     /**
