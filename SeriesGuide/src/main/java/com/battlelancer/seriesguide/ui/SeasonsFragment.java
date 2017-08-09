@@ -70,6 +70,7 @@ public class SeasonsFragment extends ListFragment {
     private boolean watchedAllEpisodes;
     private boolean collectedAllEpisodes;
     private RemainingUpdateTask remainingUpdateTask;
+    private int vectorResIdWatch;
     private int vectorResIdCollect;
 
     /**
@@ -97,6 +98,9 @@ public class SeasonsFragment extends ListFragment {
         unbinder = ButterKnife.bind(this, view);
 
         // using vectors is safe because it will be an AppCompatImageView
+        vectorResIdWatch = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                R.attr.drawableWatchAll);
+        buttonWatchedAll.setImageResource(vectorResIdWatch);
         vectorResIdCollect = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
                 R.attr.drawableCollectAll);
         buttonCollectedAll.setImageResource(vectorResIdCollect);
@@ -311,12 +315,10 @@ public class SeasonsFragment extends ListFragment {
 
     private void setWatchedToggleState(int unwatchedEpisodes) {
         watchedAllEpisodes = unwatchedEpisodes == 0;
-        //noinspection ResourceType
-        buttonWatchedAll.setImageResource(watchedAllEpisodes ?
-                Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableWatchedAll)
-                : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableWatchAll));
+        // using vectors is safe because it will be an AppCompatImageView
+        buttonWatchedAll.setImageResource(watchedAllEpisodes
+                ? R.drawable.ic_watched_all_24dp
+                : vectorResIdWatch);
         buttonWatchedAll.setContentDescription(
                 getString(watchedAllEpisodes ? R.string.unmark_all : R.string.mark_all));
         // set onClick listener not before here to avoid unexpected actions

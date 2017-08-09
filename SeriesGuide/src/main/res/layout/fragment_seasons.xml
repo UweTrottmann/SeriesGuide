@@ -14,7 +14,7 @@
         android:contentDescription="@null"
         android:focusable="true"
         android:padding="@dimen/padding_button"
-        android:src="?attr/drawableWatchAll" />
+        tools:src="?attr/drawableWatchAll" />
 
     <ImageView
         android:id="@+id/imageViewSeasonsCollectedToggle"

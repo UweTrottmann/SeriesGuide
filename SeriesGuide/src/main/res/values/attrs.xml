@@ -32,7 +32,6 @@
     <attr name="drawableWatch" format="reference" />
     <attr name="drawableWatchAll" format="reference" />
     <attr name="drawableWatched" format="reference" />
-    <attr name="drawableWatchedAll" format="reference" />
     <attr name="drawableWatchSkipped" format="reference" />
 
     <!-- Custom view attributes -->

@@ -77,9 +77,8 @@
         <item name="drawableSkip">@drawable/ic_action_skip</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart</item>
         <item name="drawableWatch">@drawable/ic_action_tick</item>
-        <item name="drawableWatchAll">@drawable/ic_action_watch_all</item>
+        <item name="drawableWatchAll">@drawable/ic_watch_all_dark_24dp</item>
         <item name="drawableWatched">@drawable/ic_ticked</item>
-        <item name="drawableWatchedAll">@drawable/ic_watched_all</item>
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped</item>
 
     </style>
@@ -151,9 +150,8 @@
         <item name="drawableSkip">@drawable/ic_action_skip</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart</item>
         <item name="drawableWatch">@drawable/ic_action_tick</item>
-        <item name="drawableWatchAll">@drawable/ic_action_watch_all</item>
+        <item name="drawableWatchAll">@drawable/ic_watch_all_dark_24dp</item>
         <item name="drawableWatched">@drawable/ic_ticked</item>
-        <item name="drawableWatchedAll">@drawable/ic_watched_all</item>
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped</item>
 
     </style>
@@ -234,9 +232,8 @@
         <item name="drawableSkip">@drawable/ic_action_skip_inverse</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart_inverse</item>
         <item name="drawableWatch">@drawable/ic_action_tick_inverse</item>
-        <item name="drawableWatchAll">@drawable/ic_action_watch_all_inverse</item>
+        <item name="drawableWatchAll">@drawable/ic_watch_all_light_24dp</item>
         <item name="drawableWatched">@drawable/ic_ticked</item>
-        <item name="drawableWatchedAll">@drawable/ic_watched_all</item>
         <item name="drawableWatchSkipped">@drawable/ic_action_watch_skipped_inverse</item>
 
     </style>

@@ -49,5 +49,6 @@
     <color name="sg_icon_active_dark">@color/white</color>
     <color name="sg_icon_active_light">@color/black_54</color>
     <color name="sg_icon_blue">#ff33b5e5</color>
+    <color name="sg_icon_green">@color/teal_500</color>
 
 </resources>
