@@ -25,7 +25,7 @@
         android:contentDescription="@null"
         android:focusable="true"
         android:padding="@dimen/padding_button"
-        android:src="?attr/drawableCollectAll" />
+        tools:src="?attr/drawableCollectAll" />
 
     <TextView
         android:id="@+id/textViewSeasonsRemaining"

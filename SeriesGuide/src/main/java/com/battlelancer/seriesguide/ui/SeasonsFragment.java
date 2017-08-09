@@ -70,6 +70,7 @@ public class SeasonsFragment extends ListFragment {
     private boolean watchedAllEpisodes;
     private boolean collectedAllEpisodes;
     private RemainingUpdateTask remainingUpdateTask;
+    private int vectorResIdCollect;
 
     /**
      * All values have to be integer.
@@ -94,6 +95,12 @@ public class SeasonsFragment extends ListFragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_seasons, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        // using vectors is safe because it will be an AppCompatImageView
+        vectorResIdCollect = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                R.attr.drawableCollectAll);
+        buttonCollectedAll.setImageResource(vectorResIdCollect);
+
         return view;
     }
 
@@ -347,10 +354,9 @@ public class SeasonsFragment extends ListFragment {
 
     private void setCollectedToggleState(int uncollectedEpisodes) {
         collectedAllEpisodes = uncollectedEpisodes == 0;
-        //noinspection ResourceType
-        buttonCollectedAll.setImageResource(collectedAllEpisodes ? R.drawable.ic_collected_all
-                : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableCollectAll));
+        // using vectors is safe because it will be an AppCompatImageView
+        buttonCollectedAll.setImageResource(collectedAllEpisodes
+                ? R.drawable.ic_collected_all_24dp : vectorResIdCollect);
         buttonCollectedAll.setContentDescription(
                 getString(collectedAllEpisodes ? R.string.uncollect_all : R.string.collect_all));
         // set onClick listener not before here to avoid unexpected actions
