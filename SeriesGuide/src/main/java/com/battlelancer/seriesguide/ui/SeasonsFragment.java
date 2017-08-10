@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentManager;
@@ -44,6 +45,7 @@ import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes.SeasonWatchedType;
 import java.lang.ref.WeakReference;
 import org.greenrobot.eventbus.EventBus;
@@ -70,8 +72,8 @@ public class SeasonsFragment extends ListFragment {
     private boolean watchedAllEpisodes;
     private boolean collectedAllEpisodes;
     private RemainingUpdateTask remainingUpdateTask;
-    private int vectorResIdWatch;
-    private int vectorResIdCollect;
+    private VectorDrawableCompat drawableWatchAll;
+    private VectorDrawableCompat drawableCollectAll;
 
     /**
      * All values have to be integer.
@@ -97,13 +99,13 @@ public class SeasonsFragment extends ListFragment {
         View view = inflater.inflate(R.layout.fragment_seasons, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        // using vectors is safe because it will be an AppCompatImageView
-        vectorResIdWatch = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                R.attr.drawableWatchAll);
-        buttonWatchedAll.setImageResource(vectorResIdWatch);
-        vectorResIdCollect = Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                R.attr.drawableCollectAll);
-        buttonCollectedAll.setImageResource(vectorResIdCollect);
+        drawableWatchAll = ViewTools.vectorIconActive(buttonWatchedAll.getContext(),
+                buttonWatchedAll.getContext().getTheme(),
+                R.drawable.ic_watch_all_black_24dp);
+        buttonWatchedAll.setImageDrawable(drawableWatchAll);
+        drawableCollectAll = ViewTools.vectorIconActive(buttonCollectedAll.getContext(),
+                buttonCollectedAll.getContext().getTheme(), R.drawable.ic_collect_all_black_24dp);
+        buttonCollectedAll.setImageDrawable(drawableCollectAll);
 
         return view;
     }
@@ -316,9 +318,11 @@ public class SeasonsFragment extends ListFragment {
     private void setWatchedToggleState(int unwatchedEpisodes) {
         watchedAllEpisodes = unwatchedEpisodes == 0;
         // using vectors is safe because it will be an AppCompatImageView
-        buttonWatchedAll.setImageResource(watchedAllEpisodes
-                ? R.drawable.ic_watched_all_24dp
-                : vectorResIdWatch);
+        if (watchedAllEpisodes) {
+            buttonWatchedAll.setImageResource(R.drawable.ic_watched_all_24dp);
+        } else {
+            buttonWatchedAll.setImageDrawable(drawableWatchAll);
+        }
         buttonWatchedAll.setContentDescription(
                 getString(watchedAllEpisodes ? R.string.unmark_all : R.string.mark_all));
         // set onClick listener not before here to avoid unexpected actions
@@ -357,8 +361,11 @@ public class SeasonsFragment extends ListFragment {
     private void setCollectedToggleState(int uncollectedEpisodes) {
         collectedAllEpisodes = uncollectedEpisodes == 0;
         // using vectors is safe because it will be an AppCompatImageView
-        buttonCollectedAll.setImageResource(collectedAllEpisodes
-                ? R.drawable.ic_collected_all_24dp : vectorResIdCollect);
+        if (collectedAllEpisodes) {
+            buttonCollectedAll.setImageResource(R.drawable.ic_collected_all_24dp);
+        } else {
+            buttonCollectedAll.setImageDrawable(drawableCollectAll);
+        }
         buttonCollectedAll.setContentDescription(
                 getString(collectedAllEpisodes ? R.string.uncollect_all : R.string.collect_all));
         // set onClick listener not before here to avoid unexpected actions
