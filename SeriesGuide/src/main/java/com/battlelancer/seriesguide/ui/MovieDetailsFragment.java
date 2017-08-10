@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -154,10 +155,12 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         // important action buttons
         containerMovieButtons.setVisibility(View.GONE);
         containerRatings.setVisibility(View.GONE);
+        Resources.Theme theme = getActivity().getTheme();
+        ViewTools.setVectorIconTop(theme, buttonMovieWatched, R.drawable.ic_watch_black_24dp);
 
         // language button
         buttonMovieLanguage.setVisibility(View.GONE);
-        ViewTools.setVectorIconLeft(getActivity().getTheme(), buttonMovieLanguage,
+        ViewTools.setVectorIconLeft(theme, buttonMovieLanguage,
                 R.drawable.ic_language_white_24dp);
         CheatSheet.setup(buttonMovieLanguage, R.string.pref_language);
         buttonMovieLanguage.setOnClickListener(new OnClickListener() {
@@ -169,7 +172,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         // comments button
         buttonMovieComments.setVisibility(View.GONE);
-        ViewTools.setVectorIconLeft(getActivity().getTheme(), buttonMovieComments,
+        ViewTools.setVectorIconLeft(theme, buttonMovieComments,
                 R.drawable.ic_forum_black_24dp);
 
         // cast and crew
@@ -386,17 +389,19 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 displayCheckIn ? View.VISIBLE : View.GONE);
 
         // watched button (only supported when connected to trakt)
+        Resources.Theme theme = getActivity().getTheme();
         if (isConnectedToTrakt) {
             buttonMovieWatched.setText(
                     isWatched ? R.string.action_unwatched : R.string.action_watched);
             CheatSheet.setup(buttonMovieWatched,
                     isWatched ? R.string.action_unwatched : R.string.action_watched);
-            ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatched, 0,
-                    isWatched
-                            ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                            R.attr.drawableWatched)
-                            : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                                    R.attr.drawableWatch), 0, 0);
+            if (isWatched) {
+                ViewTools.setVectorDrawableTop(theme, buttonMovieWatched,
+                        R.drawable.ic_watched_24dp);
+            } else {
+                ViewTools.setVectorIconTop(theme, buttonMovieWatched,
+                        R.drawable.ic_watch_black_24dp);
+            }
             buttonMovieWatched.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -418,7 +423,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieCollected, 0,
                 inCollection
                         ? R.drawable.ic_collected
-                        : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                        : Utils.resolveAttributeToResourceId(theme,
                                 R.attr.drawableCollect), 0, 0);
         buttonMovieCollected.setText(inCollection ? R.string.action_collection_remove
                 : R.string.action_collection_add);
@@ -441,7 +446,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatchlisted, 0,
                 inWatchlist
                         ? R.drawable.ic_listed
-                        : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                        : Utils.resolveAttributeToResourceId(theme,
                                 R.attr.drawableList), 0, 0);
         buttonMovieWatchlisted.setText(
                 inWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
