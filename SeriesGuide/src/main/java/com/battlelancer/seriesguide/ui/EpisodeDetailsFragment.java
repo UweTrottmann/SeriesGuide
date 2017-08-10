@@ -167,8 +167,11 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         mTextRatingRange.setText(getString(R.string.format_rating_range, 10));
 
-        // comments button
+        // episode buttons
         Resources.Theme theme = getActivity().getTheme();
+        ViewTools.setVectorIconTop(theme, buttonWatch, R.drawable.ic_watch_black_24dp);
+
+        // comments button
         ViewTools.setVectorIconLeft(theme, commentsButton, R.drawable.ic_forum_black_24dp);
 
         // other bottom buttons
@@ -508,12 +511,13 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         dividerEpisodeButtons.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
 
         // watched button
+        Resources.Theme theme = getActivity().getTheme();
         boolean isWatched = EpisodeTools.isWatched(mEpisodeFlag);
-        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonWatch, 0,
-                isWatched ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableWatched)
-                        : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                                R.attr.drawableWatch), 0, 0);
+        if (isWatched) {
+            ViewTools.setVectorDrawableTop(theme, buttonWatch, R.drawable.ic_watched_24dp);
+        } else {
+            ViewTools.setVectorIconTop(theme, buttonWatch, R.drawable.ic_watch_black_24dp);
+        }
         buttonWatch.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -529,7 +533,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1;
         ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonCollect, 0,
                 mCollected ? R.drawable.ic_collected
-                        : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                        : Utils.resolveAttributeToResourceId(theme,
                                 R.attr.drawableCollect), 0, 0);
         buttonCollect.setOnClickListener(new OnClickListener() {
             @Override
@@ -553,7 +557,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonSkip, 0,
                     isSkipped
                             ? R.drawable.ic_skipped
-                            : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
+                            : Utils.resolveAttributeToResourceId(theme,
                                     R.attr.drawableSkip), 0, 0);
             buttonSkip.setOnClickListener(new OnClickListener() {
                 @Override

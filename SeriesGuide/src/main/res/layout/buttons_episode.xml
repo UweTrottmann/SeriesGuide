@@ -22,11 +22,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@string/action_watched"
-            android:drawableTop="?attr/drawableWatch"
             android:ellipsize="end"
             android:maxLines="2"
             android:padding="8dp"
-            android:text="@string/action_watched" />
+            android:text="@string/action_watched"
+            tools:drawableTint="?attr/sgColorIcon"
+            tools:drawableTop="@drawable/ic_watch_black_24dp" />
 
         <Button
             android:id="@+id/buttonEpisodeCollected"

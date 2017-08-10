@@ -170,7 +170,9 @@ public class OverviewFragment extends Fragment implements
         containerEpisode.setVisibility(View.GONE);
 
         // episode buttons
+        Resources.Theme theme = getActivity().getTheme();
         CheatSheet.setup(buttonCheckin);
+        ViewTools.setVectorIconTop(theme, buttonWatch, R.drawable.ic_watch_black_24dp);
         CheatSheet.setup(buttonWatch);
         CheatSheet.setup(buttonSkip);
 
@@ -179,7 +181,6 @@ public class OverviewFragment extends Fragment implements
         textRatingRange.setText(getString(R.string.format_rating_range, 10));
 
         // comments button
-        Resources.Theme theme = getActivity().getTheme();
         ViewTools.setVectorIconLeft(theme, buttonComments, R.drawable.ic_forum_black_24dp);
 
         // other bottom buttons
