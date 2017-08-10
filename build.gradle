@@ -4,7 +4,7 @@ buildscript {
             'minSdk': 15,
             'compileSdk': 26,
             'targetSdk': 25,
-            'buildTools': '26.0.0',
+            'buildTools': '26.0.1',
 
             'supportLibrary': '25.4.0',
             'playServices': '10.2.1', // developers.google.com/android/guides/releases
