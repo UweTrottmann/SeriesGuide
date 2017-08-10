@@ -9,12 +9,13 @@
         android:layout_width="@dimen/empty_view_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:drawableTop="?attr/drawableList"
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/list_empty"
         android:textAppearance="@style/TextAppearance.Body.Secondary"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:drawableTint="?attr/sgColorIcon"
+        tools:drawableTop="@drawable/ic_list_white_24dp" />
 
     <GridView
         android:id="@+android:id/list"
