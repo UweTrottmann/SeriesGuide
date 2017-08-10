@@ -160,6 +160,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         ViewTools.setVectorIconTop(theme, buttonMovieCollected, R.drawable.ic_collect_black_24dp);
         ViewTools.setVectorIconTop(theme, buttonMovieWatchlisted,
                 R.drawable.ic_list_add_white_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonMovieCheckIn, R.drawable.ic_checkin_black_24dp);
 
         // language button
         buttonMovieLanguage.setVisibility(View.GONE);

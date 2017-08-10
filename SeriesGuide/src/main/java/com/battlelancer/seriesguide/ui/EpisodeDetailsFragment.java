@@ -172,6 +172,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         ViewTools.setVectorIconTop(theme, buttonWatch, R.drawable.ic_watch_black_24dp);
         ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
         ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonCheckin, R.drawable.ic_checkin_black_24dp);
 
         // comments button
         ViewTools.setVectorIconLeft(theme, commentsButton, R.drawable.ic_forum_black_24dp);

@@ -189,7 +189,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 R.drawable.ic_watch_black_16dp);
         this.drawableCheckin = ViewTools.vectorIconInactive(getContext(),
                 getContext().getTheme(),
-                R.drawable.ic_message_black_16dp);
+                R.drawable.ic_checkin_black_16dp);
     }
 
     @Override
