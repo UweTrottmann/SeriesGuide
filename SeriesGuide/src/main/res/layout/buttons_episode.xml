@@ -35,11 +35,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="?attr/drawableCollect"
             android:ellipsize="end"
             android:maxLines="2"
             android:padding="8dp"
-            android:text="@string/action_collection_add" />
+            android:text="@string/action_collection_add"
+            tools:drawableTint="?attr/sgColorIcon"
+            tools:drawableTop="@drawable/ic_collect_black_24dp" />
 
         <Button
             android:id="@+id/buttonEpisodeSkip"
@@ -48,11 +49,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@string/action_skip"
-            android:drawableTop="?attr/drawableSkip"
             android:ellipsize="end"
             android:maxLines="2"
             android:padding="8dp"
-            android:text="@string/action_skip" />
+            android:text="@string/action_skip"
+            tools:drawableTint="?attr/sgColorIcon"
+            tools:drawableTop="@drawable/ic_skip_black_24dp" />
 
     </LinearLayout>
 

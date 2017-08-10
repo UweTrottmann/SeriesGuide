@@ -170,11 +170,13 @@ public class OverviewFragment extends Fragment implements
         containerEpisode.setVisibility(View.GONE);
 
         // episode buttons
-        Resources.Theme theme = getActivity().getTheme();
         CheatSheet.setup(buttonCheckin);
-        ViewTools.setVectorIconTop(theme, buttonWatch, R.drawable.ic_watch_black_24dp);
         CheatSheet.setup(buttonWatch);
         CheatSheet.setup(buttonSkip);
+        Resources.Theme theme = getActivity().getTheme();
+        ViewTools.setVectorIconTop(theme, buttonWatch, R.drawable.ic_watch_black_24dp);
+        ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
+        ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
 
         // ratings
         CheatSheet.setup(containerRatings, R.string.action_rate);
@@ -692,10 +694,12 @@ public class OverviewFragment extends Fragment implements
 
         // collected button
         boolean isCollected = episode.getInt(EpisodeQuery.COLLECTED) == 1;
-        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonCollect, 0,
-                isCollected ? R.drawable.ic_collected
-                        : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                                R.attr.drawableCollect), 0, 0);
+        Resources.Theme theme = getContext().getTheme();
+        if (isCollected) {
+            ViewTools.setVectorDrawableTop(theme, buttonCollect, R.drawable.ic_collected_24dp);
+        } else {
+            ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
+        }
         buttonCollect.setText(isCollected ? R.string.action_collection_remove
                 : R.string.action_collection_add);
         CheatSheet.setup(buttonCollect, isCollected ? R.string.action_collection_remove
