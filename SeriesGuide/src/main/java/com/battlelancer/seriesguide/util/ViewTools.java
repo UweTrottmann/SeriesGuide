@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -204,5 +205,14 @@ public class ViewTools {
                 }
             }
         }, 200); // have to add a little delay (http://stackoverflow.com/a/27540921/1000543)
+    }
+
+    public static void tintMenuItem(Context context, MenuItem item) {
+        int color = ContextCompat.getColor(context,
+                Utils.resolveAttributeToResourceId(context.getTheme(), R.attr.colorControlNormal));
+        Drawable wrapped = DrawableCompat.wrap(item.getIcon());
+        wrapped.mutate(); // avoid tinting for whole app
+        DrawableCompat.setTint(wrapped, color);
+        item.setIcon(wrapped);
     }
 }
