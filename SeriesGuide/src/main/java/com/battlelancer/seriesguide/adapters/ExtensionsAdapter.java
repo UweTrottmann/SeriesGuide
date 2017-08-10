@@ -78,7 +78,7 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
                             && !Utils.hasAccessToX(getContext());
             TextView textViewAdd = ButterKnife.findById(convertView,
                     R.id.textViewItemExtensionAddLabel);
-            ViewTools.setVectorDrawableLeft(getContext().getTheme(), textViewAdd,
+            ViewTools.setVectorIconLeft(getContext().getTheme(), textViewAdd,
                     R.drawable.ic_add_white_24dp);
             textViewAdd.setVisibility(isAtLimit ? View.GONE : View.VISIBLE);
             convertView.findViewById(R.id.textViewItemExtensionAddLimit)

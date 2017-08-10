@@ -167,14 +167,20 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         mTextRatingRange.setText(getString(R.string.format_rating_range, 10));
 
-        // comments button
+        // episode buttons
         Resources.Theme theme = getActivity().getTheme();
-        ViewTools.setVectorDrawableLeft(theme, commentsButton, R.drawable.ic_forum_black_24dp);
+        ViewTools.setVectorIconTop(theme, buttonWatch, R.drawable.ic_watch_black_24dp);
+        ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
+        ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonCheckin, R.drawable.ic_checkin_black_24dp);
+
+        // comments button
+        ViewTools.setVectorIconLeft(theme, commentsButton, R.drawable.ic_forum_black_24dp);
 
         // other bottom buttons
-        ViewTools.setVectorDrawableLeft(theme, imdbButton, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorDrawableLeft(theme, tvdbButton, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorDrawableLeft(theme, traktButton, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, imdbButton, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, tvdbButton, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, traktButton, R.drawable.ic_link_black_24dp);
 
         return v;
     }
@@ -508,12 +514,13 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         dividerEpisodeButtons.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
 
         // watched button
+        Resources.Theme theme = getActivity().getTheme();
         boolean isWatched = EpisodeTools.isWatched(mEpisodeFlag);
-        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonWatch, 0,
-                isWatched ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableWatched)
-                        : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                                R.attr.drawableWatch), 0, 0);
+        if (isWatched) {
+            ViewTools.setVectorDrawableTop(theme, buttonWatch, R.drawable.ic_watched_24dp);
+        } else {
+            ViewTools.setVectorIconTop(theme, buttonWatch, R.drawable.ic_watch_black_24dp);
+        }
         buttonWatch.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -527,10 +534,11 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // collected button
         mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1;
-        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonCollect, 0,
-                mCollected ? R.drawable.ic_collected
-                        : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                                R.attr.drawableCollect), 0, 0);
+        if (mCollected) {
+            ViewTools.setVectorDrawableTop(theme, buttonCollect, R.drawable.ic_collected_24dp);
+        } else {
+            ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
+        }
         buttonCollect.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -544,17 +552,18 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 ? R.string.action_collection_remove : R.string.action_collection_add);
 
         // skip button
-        boolean isSkipped = EpisodeTools.isSkipped(mEpisodeFlag);
         if (isWatched) {
             // if watched do not allow skipping
             buttonSkip.setVisibility(View.INVISIBLE);
         } else {
             buttonSkip.setVisibility(View.VISIBLE);
-            ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonSkip, 0,
-                    isSkipped
-                            ? R.drawable.ic_skipped
-                            : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                                    R.attr.drawableSkip), 0, 0);
+
+            boolean isSkipped = EpisodeTools.isSkipped(mEpisodeFlag);
+            if (isSkipped) {
+                ViewTools.setVectorDrawableTop(theme, buttonSkip, R.drawable.ic_skipped_24dp);
+            } else {
+                ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
+            }
             buttonSkip.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {

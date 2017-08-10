@@ -35,9 +35,9 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         this.onItemClickListener = listener;
 
         Resources.Theme theme = activity.getTheme();
-        drawableStar = ViewTools.createVectorIcon(activity, theme,
+        drawableStar = ViewTools.vectorIconActive(activity, theme,
                 R.drawable.ic_star_black_24dp);
-        drawableStarZero = ViewTools.createVectorIcon(activity, theme,
+        drawableStarZero = ViewTools.vectorIconActive(activity, theme,
                 R.drawable.ic_star_border_black_24dp);
     }
 

@@ -1,31 +1,29 @@
 package com.battlelancer.seriesguide.widgets;
 
 import android.content.Context;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 
-public class WatchedBox extends ImageView {
+/**
+ * Image view that displays a watched, skipped or watch icon depending on the given episode flag.
+ */
+public class WatchedBox extends AppCompatImageView {
 
     private int mEpisodeFlag;
-
-    private final int mResIdWatchDrawable;
-    private final int mResIdWatchedDrawable;
-    private final int mResIdWatchSkippedDrawable;
+    private VectorDrawableCompat drawableWatch;
 
     public WatchedBox(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mEpisodeFlag = EpisodeFlags.UNWATCHED;
-        mResIdWatchDrawable = Utils.resolveAttributeToResourceId(context.getTheme(),
-                R.attr.drawableWatch);
-        mResIdWatchedDrawable = Utils.resolveAttributeToResourceId(context.getTheme(),
-                R.attr.drawableWatched);
-        mResIdWatchSkippedDrawable = Utils.resolveAttributeToResourceId(context.getTheme(),
-                R.attr.drawableWatchSkipped);
-        updateStateImage();
+
+        if (isInEditMode()) {
+            mEpisodeFlag = EpisodeFlags.UNWATCHED;
+            updateStateImage();
+        }
     }
 
     public int getEpisodeFlag() {
@@ -44,16 +42,20 @@ public class WatchedBox extends ImageView {
     private void updateStateImage() {
         switch (mEpisodeFlag) {
             case EpisodeFlags.WATCHED: {
-                setImageResource(mResIdWatchedDrawable);
+                setImageResource(R.drawable.ic_watched_24dp);
                 break;
             }
             case EpisodeFlags.SKIPPED: {
-                setImageResource(mResIdWatchSkippedDrawable);
+                setImageResource(R.drawable.ic_skipped_24dp);
                 break;
             }
             case EpisodeFlags.UNWATCHED:
             default: {
-                setImageResource(mResIdWatchDrawable);
+                if (drawableWatch == null) {
+                    drawableWatch = ViewTools.vectorIconActive(getContext(),
+                            getContext().getTheme(), R.drawable.ic_watch_black_24dp);
+                }
+                setImageDrawable(drawableWatch);
                 break;
             }
         }

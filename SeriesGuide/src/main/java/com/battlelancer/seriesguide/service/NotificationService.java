@@ -413,6 +413,7 @@ public class NotificationService extends IntentService {
                 PendingIntent checkInIntent = PendingIntent.getActivity(context,
                         REQUEST_CODE_ACTION_CHECKIN,
                         checkInActionIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
                 nb.addAction(R.drawable.ic_action_checkin, getString(R.string.checkin),
                         checkInIntent);
 
@@ -425,6 +426,7 @@ public class NotificationService extends IntentService {
                 PendingIntent setWatchedPendingIntent = PendingIntent.getBroadcast(context,
                         REQUEST_CODE_ACTION_SET_WATCHED,
                         setWatchedIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
                 nb.addAction(R.drawable.ic_action_tick, getString(R.string.action_watched),
                         setWatchedPendingIntent);
 

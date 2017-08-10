@@ -48,10 +48,10 @@
         android:layout_width="14dp"
         android:layout_height="14dp"
         android:contentDescription="@string/action_collection_added"
-        android:src="@drawable/ic_collected"
         app:layout_constraintLeft_toLeftOf="@+id/watchedBoxActivity"
         app:layout_constraintRight_toRightOf="@+id/watchedBoxActivity"
-        app:layout_constraintTop_toBottomOf="@+id/watchedBoxActivity" />
+        app:layout_constraintTop_toBottomOf="@+id/watchedBoxActivity"
+        app:srcCompat="@drawable/ic_collected_24dp" />
 
     <TextView
         android:id="@+id/textViewActivityInfo"

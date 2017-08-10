@@ -14,7 +14,8 @@
         android:contentDescription="@null"
         android:focusable="true"
         android:padding="@dimen/padding_button"
-        android:src="?attr/drawableWatchAll" />
+        tools:src="@drawable/ic_watch_all_black_24dp"
+        tools:tint="?attr/sgColorIcon" />
 
     <ImageView
         android:id="@+id/imageViewSeasonsCollectedToggle"
@@ -25,7 +26,8 @@
         android:contentDescription="@null"
         android:focusable="true"
         android:padding="@dimen/padding_button"
-        android:src="?attr/drawableCollectAll" />
+        tools:src="@drawable/ic_collect_all_black_24dp"
+        tools:tint="?attr/sgColorIcon" />
 
     <TextView
         android:id="@+id/textViewSeasonsRemaining"

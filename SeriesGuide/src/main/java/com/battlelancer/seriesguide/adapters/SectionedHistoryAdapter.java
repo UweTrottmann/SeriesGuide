@@ -47,12 +47,12 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.itemClickListener = itemClickListener;
         mCalendar = Calendar.getInstance();
-        drawableWatched = ViewTools.createVectorIconInactive(getContext(),
+        drawableWatched = ViewTools.vectorIconInactive(getContext(),
                 getContext().getTheme(),
-                R.drawable.ic_check_black_16dp);
-        drawableCheckin = ViewTools.createVectorIconInactive(getContext(),
+                R.drawable.ic_watch_black_16dp);
+        drawableCheckin = ViewTools.vectorIconInactive(getContext(),
                 getContext().getTheme(),
-                R.drawable.ic_message_black_16dp);
+                R.drawable.ic_checkin_black_16dp);
     }
 
     public void setData(List<HistoryEntry> data) {

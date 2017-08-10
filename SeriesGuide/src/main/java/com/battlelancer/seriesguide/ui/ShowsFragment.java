@@ -87,7 +87,7 @@ public class ShowsFragment extends Fragment implements
 
         gridView = ButterKnife.findById(v, android.R.id.list);
         emptyView = ButterKnife.findById(v, R.id.emptyViewShows);
-        ViewTools.setVectorDrawableTop(getActivity().getTheme(), emptyView,
+        ViewTools.setVectorIconTop(getActivity().getTheme(), emptyView,
                 R.drawable.ic_add_white_24dp);
         emptyView.setOnClickListener(new OnClickListener() {
             @Override
@@ -96,7 +96,7 @@ public class ShowsFragment extends Fragment implements
             }
         });
         emptyViewFilter = ButterKnife.findById(v, R.id.emptyViewShowsFilter);
-        ViewTools.setVectorDrawableTop(getActivity().getTheme(), emptyViewFilter,
+        ViewTools.setVectorIconTop(getActivity().getTheme(), emptyViewFilter,
                 R.drawable.ic_filter_white_24dp);
         emptyViewFilter.setOnClickListener(new OnClickListener() {
             @Override
