@@ -21,7 +21,7 @@
         android:layout_height="match_parent"
         android:contentDescription="@null"
         android:scaleType="centerInside"
-        android:src="?attr/drawableWatched" />
+        app:srcCompat="@drawable/ic_watched_24dp" />
 
     <ProgressBar
         android:id="@+id/progressBarAddIndicator"
