@@ -30,7 +30,6 @@
     <attr name="drawableSkip" format="reference" />
     <attr name="drawableTraktHeart" format="reference" />
     <attr name="drawableWatchAll" format="reference" />
-    <attr name="drawableWatchSkipped" format="reference" />
 
     <!-- Custom view attributes -->
     <declare-styleable name="EmptyView">
