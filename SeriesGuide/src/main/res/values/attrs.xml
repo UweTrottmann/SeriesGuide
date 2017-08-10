@@ -29,7 +29,6 @@
     <attr name="drawableList" format="reference" />
     <attr name="drawableSkip" format="reference" />
     <attr name="drawableTraktHeart" format="reference" />
-    <attr name="drawableWatch" format="reference" />
     <attr name="drawableWatchAll" format="reference" />
     <attr name="drawableWatched" format="reference" />
     <attr name="drawableWatchSkipped" format="reference" />
