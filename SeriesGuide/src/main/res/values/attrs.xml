@@ -24,7 +24,6 @@
     <attr name="drawableBackgroundGradient" format="reference" />
     <attr name="drawableCancel" format="reference" />
     <attr name="drawableCheckin" format="reference" />
-    <attr name="drawableCollect" format="reference" />
     <attr name="drawableList" format="reference" />
     <attr name="drawableSkip" format="reference" />
     <attr name="drawableTraktHeart" format="reference" />
