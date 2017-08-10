@@ -2,7 +2,6 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- tint XML attribute uses SRC_ATOP for compat, so make sure to use a white drawable. -->
     <ImageView
         android:id="@+id/imageViewAddIndicator"
         android:layout_width="match_parent"
@@ -11,8 +10,8 @@
         android:contentDescription="@string/action_shows_add"
         android:focusable="false"
         android:scaleType="centerInside"
-        android:tint="?attr/sgColorIcon"
-        app:srcCompat="@drawable/ic_add_white_24dp" />
+        app:srcCompat="@drawable/ic_add_white_24dp"
+        app:tint="?attr/sgColorIcon" />
 
     <!-- Content description is set in code. -->
     <ImageView

@@ -39,11 +39,11 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/description_menu_overflow"
         android:scaleType="centerInside"
-        android:tint="?attr/sgColorIcon"
         app:layout_constraintBottom_toBottomOf="@+id/cardViewAddPoster"
         app:layout_constraintRight_toLeftOf="@+id/addIndicatorAddShow"
         app:layout_constraintTop_toTopOf="@+id/cardViewAddPoster"
-        app:srcCompat="@drawable/ic_more_vert_white_20dp" />
+        app:srcCompat="@drawable/ic_more_vert_black_20dp"
+        app:tint="?attr/sgColorIcon" />
 
     <com.battlelancer.seriesguide.widgets.AddIndicator
         android:id="@+id/addIndicatorAddShow"

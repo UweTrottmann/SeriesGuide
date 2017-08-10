@@ -64,8 +64,8 @@
         android:paddingLeft="28dp"
         android:paddingTop="@dimen/larger_padding"
         android:scaleType="centerInside"
-        android:tint="?attr/sgColorIcon"
-        app:srcCompat="@drawable/ic_more_vert_white_20dp"
+        app:srcCompat="@drawable/ic_more_vert_black_20dp"
+        app:tint="?attr/sgColorIcon"
         tools:ignore="RtlSymmetry" />
 
 </RelativeLayout>
