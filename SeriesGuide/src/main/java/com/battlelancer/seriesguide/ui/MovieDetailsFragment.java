@@ -158,6 +158,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         Resources.Theme theme = getActivity().getTheme();
         ViewTools.setVectorIconTop(theme, buttonMovieWatched, R.drawable.ic_watch_black_24dp);
         ViewTools.setVectorIconTop(theme, buttonMovieCollected, R.drawable.ic_collect_black_24dp);
+        ViewTools.setVectorIconTop(theme, buttonMovieWatchlisted,
+                R.drawable.ic_list_add_white_24dp);
 
         // language button
         buttonMovieLanguage.setVisibility(View.GONE);
@@ -446,11 +448,13 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         });
 
         // watchlist button
-        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatchlisted, 0,
-                inWatchlist
-                        ? R.drawable.ic_listed
-                        : Utils.resolveAttributeToResourceId(theme,
-                                R.attr.drawableList), 0, 0);
+        if (inWatchlist) {
+            ViewTools.setVectorDrawableTop(theme, buttonMovieWatchlisted,
+                    R.drawable.ic_list_added_24dp);
+        } else {
+            ViewTools.setVectorIconTop(theme, buttonMovieWatchlisted,
+                    R.drawable.ic_list_add_white_24dp);
+        }
         buttonMovieWatchlisted.setText(
                 inWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
         CheatSheet.setup(buttonMovieWatchlisted,
