@@ -79,7 +79,7 @@
             android:layout_below="@+id/watchedBoxEpisode"
             android:layout_marginLeft="29dp"
             android:contentDescription="@string/action_collection_added"
-            android:src="@drawable/ic_collected" />
+            app:srcCompat="@drawable/ic_collected_24dp" />
 
         <ImageView
             android:id="@+id/imageViewContextMenu"
