@@ -71,7 +71,6 @@
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
         <item name="drawableCheckin">@drawable/ic_action_checkin</item>
-        <item name="drawableList">@drawable/ic_action_list</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart</item>
 
     </style>
@@ -137,7 +136,6 @@
 
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
         <item name="drawableCheckin">@drawable/ic_action_checkin</item>
-        <item name="drawableList">@drawable/ic_action_list</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart</item>
 
     </style>
@@ -212,7 +210,6 @@
         <item name="drawableBackgroundGradient">@drawable/background_gradient_light</item>
         <item name="drawableCancel">@drawable/ic_action_cancel_inverse</item>
         <item name="drawableCheckin">@drawable/ic_action_checkin_inverse</item>
-        <item name="drawableList">@drawable/ic_action_list_inverse</item>
         <item name="drawableTraktHeart">@drawable/trakt_heart_inverse</item>
 
     </style>
