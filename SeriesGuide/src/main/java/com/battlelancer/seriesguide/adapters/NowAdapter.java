@@ -186,7 +186,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.dataset = new ArrayList<>();
         this.drawableWatched = ViewTools.vectorIconInactive(getContext(),
                 getContext().getTheme(),
-                R.drawable.ic_check_black_16dp);
+                R.drawable.ic_watch_black_16dp);
         this.drawableCheckin = ViewTools.vectorIconInactive(getContext(),
                 getContext().getTheme(),
                 R.drawable.ic_message_black_16dp);
