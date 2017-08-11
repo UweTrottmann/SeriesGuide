@@ -219,6 +219,9 @@ public class SlidingTabLayout extends HorizontalScrollView {
                 tabTitleView = (TextView) tabView;
             }
 
+            if (tabTitleView == null) {
+                throw new IllegalArgumentException("tabTitleView == null");
+            }
             tabTitleView.setText(adapter.getPageTitle(i));
             tabView.setOnClickListener(tabClickListener);
 

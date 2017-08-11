@@ -140,6 +140,7 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
         // display item title
         final int itemTvdbId = getArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
         final int itemType = getArguments().getInt(InitBundle.INT_ITEM_TYPE);
+        //noinspection ConstantConditions // fragment has a view
         final TextView itemTitle = getView().findViewById(R.id.item);
         Uri uri = null;
         String[] projection = null;
@@ -166,6 +167,7 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
                 };
                 break;
         }
+        //noinspection ConstantConditions // itemType might not match
         if (uri != null && projection != null) {
             Cursor item = getActivity().getContentResolver().query(uri, projection, null, null,
                     null);

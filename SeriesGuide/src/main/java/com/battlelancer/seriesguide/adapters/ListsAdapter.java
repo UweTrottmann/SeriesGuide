@@ -46,7 +46,9 @@ public class ListsAdapter extends ArrayAdapter<OrderedListsLoader.OrderedList> {
         }
 
         OrderedListsLoader.OrderedList item = getItem(position);
-        viewHolder.name.setText(item.name);
+        if (item != null) {
+            viewHolder.name.setText(item.name);
+        }
 
         return convertView;
     }
