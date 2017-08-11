@@ -5,6 +5,18 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 39
+----------
+*(in development)*
+
+#### 39-beta1
+*(2017-08-11)*
+
+* 🔧 Replace remaining icons with vector versions, use distinct shape for each state of toggleable icons.
+* 🔧 Explicitly display source of show, episode, movie and person data.
+* 🔧 Do not focus on show search bar when entering to add shows.
+* 📝 Latest translations from crowdin.
+
 Version 38
 ----------
 *(2017-07-26)*

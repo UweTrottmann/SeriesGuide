@@ -26,8 +26,8 @@ buildscript {
             'threetenABP': '1.0.5', // github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
 
             // API level 15+ -> version 15xxx
-            'code': 15265,
-            'name': '38',
+            'code': 15270,
+            'name': '39-beta1',
     ]
 
     repositories {
