@@ -14,7 +14,6 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -100,7 +99,6 @@ public class ShowFragment extends Fragment {
     @BindView(R.id.textViewRatingsRange) TextView mTextViewRatingRange;
     @BindView(R.id.textViewRatingsVotes) TextView mTextViewRatingVotes;
     @BindView(R.id.textViewRatingsUser) TextView mTextViewRatingUser;
-    @BindView(R.id.textViewShowLastEdit) TextView mTextViewLastEdit;
 
     @BindView(R.id.buttonShowFavorite) Button buttonFavorite;
     @BindView(R.id.buttonShowNotify) Button buttonNotify;
@@ -464,15 +462,6 @@ public class ShowFragment extends Fragment {
         // user rating
         mTextViewRatingUser.setText(TraktTools.buildUserRatingString(getActivity(),
                 showCursor.getInt(ShowQuery.RATING_USER)));
-
-        // last edit
-        if (lastEditSeconds > 0) {
-            mTextViewLastEdit.setText(
-                    DateUtils.formatDateTime(getActivity(), lastEditSeconds * 1000,
-                            DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
-        } else {
-            mTextViewLastEdit.setText(R.string.unknown);
-        }
 
         // IMDb button
         String imdbId = showCursor.getString(ShowQuery.IMDBID);

@@ -12,7 +12,6 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.TextViewCompat;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -103,7 +102,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     @BindView(R.id.textViewEpisodeDescription) TextView mDescription;
     @BindView(R.id.textViewEpisodeReleaseTime) TextView mReleaseTime;
     @BindView(R.id.textViewEpisodeReleaseDate) TextView mReleaseDate;
-    @BindView(R.id.textViewEpisodeLastEdit) TextView mLastEdit;
     @BindView(R.id.labelEpisodeGuestStars) View mLabelGuestStars;
     @BindView(R.id.textViewEpisodeGuestStars) TextView mGuestStars;
     @BindView(R.id.textViewEpisodeDirectors) TextView mDirectors;
@@ -447,14 +445,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         // writers
         ViewTools.setValueOrPlaceholder(mWriters, TextTools.splitAndKitTVDBStrings(cursor
                 .getString(DetailsQuery.WRITERS)));
-
-        // last TVDb edit date
-        if (lastEditSeconds > 0) {
-            mLastEdit.setText(DateUtils.formatDateTime(getActivity(), lastEditSeconds * 1000,
-                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
-        } else {
-            mLastEdit.setText(R.string.unknown);
-        }
 
         // ratings
         mRatingsContainer.setOnClickListener(new OnClickListener() {
