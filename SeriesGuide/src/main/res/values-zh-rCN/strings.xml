@@ -84,10 +84,11 @@
   <string name="episode_writers">编剧</string>
   <string name="show_isalive">连载中</string>
   <string name="show_isnotalive">已完结</string>
-  <string name="lastEdit">最后修改 // TVDb</string>
   <string name="no_translation">在 %2$s 上找不到 %1$s 语言的剧目信息。</string>
   <string name="no_translation_title">未翻译</string>
   <string name="no_spoilers">隐藏部分细节信息以防止剧透. 您可在设置菜单中关闭此功能</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">今天</string>
   <string name="now">现在</string>

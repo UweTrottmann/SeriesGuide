@@ -86,10 +86,11 @@
   <string name="episode_writers">Сценаристи</string>
   <string name="show_isalive">Наставља се</string>
   <string name="show_isnotalive">Завршена</string>
-  <string name="lastEdit">Последње уређено // TVDb</string>
   <string name="no_translation">Не постоји опис преведен на %1$s који је доступан на %2$s.</string>
   <string name="no_translation_title">Not translated</string>
   <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">данас</string>
   <string name="now">сада</string>

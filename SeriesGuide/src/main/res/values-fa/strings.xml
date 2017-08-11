@@ -85,10 +85,11 @@
   <string name="episode_writers">نویسندگان</string>
   <string name="show_isalive">در حال پخش</string>
   <string name="show_isnotalive">به پایان رسیده</string>
-  <string name="lastEdit">آخرین ویرایش / / TheTVDB</string>
   <string name="no_translation">هیج توضیحی برای %2$s به %1$s وجود ندارد.</string>
   <string name="no_translation_title">ترجمه نشده</string>
   <string name="no_spoilers">به‌منظور جلوگیری از لو رفتن، برخی جزئیات نهفته‌اند. برای خاموش کردن این ویژگی به تنظیمات بروید.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">امروز</string>
   <string name="now">اکنون</string>

@@ -85,10 +85,11 @@
   <string name="episode_writers">Συγγραφείς</string>
   <string name="show_isalive">Συνεχίζεται</string>
   <string name="show_isnotalive">Σταμάτησε</string>
-  <string name="lastEdit">Τελευταία επεξεργασία // TVDb</string>
   <string name="no_translation">Δεν υπάρχει περιγραφή μεταφρασμένη στα %1$s διαθέσιμη στο %2$s.</string>
   <string name="no_translation_title">Χωρίς μετάφραση</string>
   <string name="no_spoilers">Κάποιες λεπτομέρειες είναι μη ορατές ώστε να μην αποκαλυφθούν πληροφορίες για την υπόθεση. Για να το απενεργοποιήσετε πηγαίνετε στις Ρυθμίσεις.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">Σήμερα</string>
   <string name="now">τώρα</string>

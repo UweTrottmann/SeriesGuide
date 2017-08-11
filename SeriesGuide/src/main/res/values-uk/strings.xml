@@ -86,10 +86,11 @@
   <string name="episode_writers">Сценаристи</string>
   <string name="show_isalive">Продовжується</string>
   <string name="show_isnotalive">Закінчився</string>
-  <string name="lastEdit">Останнє редагування / / TVDb</string>
   <string name="no_translation">Переклад опису з %1$s недоступний для %2$s.</string>
   <string name="no_translation_title">Не перекладено</string>
   <string name="no_spoilers">Деякі деталі приховані для запобігання спойлерам. Щоб вимкнути це використовуйте Налаштцвання.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">сьогодні</string>
   <string name="now">Сьогодні</string>

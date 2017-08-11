@@ -84,10 +84,11 @@
   <string name="episode_writers">ผู้เขียนบท</string>
   <string name="show_isalive">ยังไม่จบ</string>
   <string name="show_isnotalive">จบแล้ว</string>
-  <string name="lastEdit">แก้ไขล่าสุด // TheTVDB</string>
   <string name="no_translation">ไม่มีรายละเอียดที่ถูกแปลเป็น %1$s พร้อมใช้งานที่ %2$s</string>
   <string name="no_translation_title">ยังไม่ถูกแปล</string>
   <string name="no_spoilers">รายละเอียดบางอย่างถูกซ่อนเพื่อป้องกันการสปอยล์ ปิดการป้องกันนี้ได้ในการตั้งค่า</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">วันนี้</string>
   <string name="now">ขณะนี้</string>

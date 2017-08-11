@@ -85,10 +85,11 @@
   <string name="episode_writers">Roteiristas</string>
   <string name="show_isalive">Em exibição</string>
   <string name="show_isnotalive">Finalizada</string>
-  <string name="lastEdit">Última Edição // TheTVDB</string>
   <string name="no_translation">Não há descrição traduzida para %1$s disponível em %2$s.</string>
   <string name="no_translation_title">Não traduzido</string>
   <string name="no_spoilers">Alguns detalhes estão ocultos para evitar spoilers. Para desativar vá até as configurações.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">hoje</string>
   <string name="now">agora</string>

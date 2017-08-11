@@ -85,10 +85,11 @@
   <string name="episode_writers">Kirjoittajat</string>
   <string name="show_isalive">Jatkuu</string>
   <string name="show_isnotalive">Päättynyt</string>
-  <string name="lastEdit">Viimeisin muokkaus // TVDb</string>
   <string name="no_translation">Kuvausta ei ole saatavilla kielellä %1$s palvelussa %2$s.</string>
   <string name="no_translation_title">Ei käännetty</string>
   <string name="no_spoilers">Osa tiedoista on piilotettu juonipaljastuksien varalta. Voit poistaa tämän käytöstä asetuksista.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">tänään</string>
   <string name="now">nyt</string>

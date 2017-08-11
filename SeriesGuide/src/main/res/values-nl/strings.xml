@@ -85,10 +85,11 @@
   <string name="episode_writers">Schrijvers</string>
   <string name="show_isalive">Lopende serie</string>
   <string name="show_isnotalive">Afgelopen</string>
-  <string name="lastEdit">Laatste bewerking //TVDb</string>
   <string name="no_translation">Er is geen beschrijving vertaald naar %1$s beschikbaar op %2$s.</string>
   <string name="no_translation_title">Niet vertaald</string>
   <string name="no_spoilers">Sommige details zijn verborgen om te voorkomen dat je spoilers ziet. Om dit uit te zetten ga naar Instellingen.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">vandaag</string>
   <string name="now">nu</string>

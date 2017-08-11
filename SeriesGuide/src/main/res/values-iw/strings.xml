@@ -87,10 +87,11 @@
   <string name="episode_writers">כותבים</string>
   <string name="show_isalive">ממשיכה</string>
   <string name="show_isnotalive">הסתיימה</string>
-  <string name="lastEdit">עדכון אחרון // TVDb</string>
   <string name="no_translation">אין תיאור זמין המתורגם ל%1$s ב-%2$s.</string>
   <string name="no_translation_title">לא תורגם</string>
   <string name="no_spoilers">פרטים מסוימים מוסתרים כדי למנוע ספוילרים. כדי לבטל את זה עבור להגדרות.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">היום</string>
   <string name="now">עכשיו</string>

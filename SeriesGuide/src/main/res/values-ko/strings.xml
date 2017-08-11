@@ -84,10 +84,11 @@
   <string name="episode_writers">작가</string>
   <string name="show_isalive">방영중</string>
   <string name="show_isnotalive">종료</string>
-  <string name="lastEdit">마지막 편집 // TVDb</string>
   <string name="no_translation">%2$s에 %1$s로 번역한 설명이 없습니다.</string>
   <string name="no_translation_title">Not translated</string>
   <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">오늘</string>
   <string name="now">지금</string>

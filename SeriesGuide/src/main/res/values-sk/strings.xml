@@ -86,10 +86,11 @@
   <string name="episode_writers">Scenár</string>
   <string name="show_isalive">Pokračuje</string>
   <string name="show_isnotalive">Skončil</string>
-  <string name="lastEdit">Posledná zmena // TheTVDB</string>
   <string name="no_translation">Na %2$s nie je dostupný žiadny popis v %1$s.</string>
   <string name="no_translation_title">Nie je preložené</string>
   <string name="no_spoilers">Niektoré detaily sú skryté aby sa zabránilo prezradeniu deja. Pre ich zobrazenie prejdite do nastavení.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">dnes</string>
   <string name="now">teraz</string>

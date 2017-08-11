@@ -86,10 +86,11 @@
   <string name="episode_writers">Scenarişti</string>
   <string name="show_isalive">Continuă</string>
   <string name="show_isnotalive">Terminat</string>
-  <string name="lastEdit">Ultima editare//TVDb</string>
   <string name="no_translation">Nu există nici o traducere în %1$s disponibilă pe %2$s.</string>
   <string name="no_translation_title">Ne tradus</string>
   <string name="no_spoilers">Unele detalii sunt ascunse pentru a evita spoilere. Pentru a nu folosi aceasta protecție mergeți în Setări.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">astăzi</string>
   <string name="now">acum</string>

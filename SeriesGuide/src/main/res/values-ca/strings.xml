@@ -85,10 +85,11 @@
   <string name="episode_writers">Guionistes</string>
   <string name="show_isalive">No ha finalitzat</string>
   <string name="show_isnotalive">Finalitzat</string>
-  <string name="lastEdit">Darrera edició // TVDb</string>
   <string name="no_translation">No hi ha cap descripció traduïda al %1$s disponible a %2$s.</string>
   <string name="no_translation_title">No traduït</string>
   <string name="no_spoilers">Alguns detalls estan amagats per evitar spoilers. Per desactivar aquesta opció aneu a a Configuració.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">avui</string>
   <string name="now">ara</string>

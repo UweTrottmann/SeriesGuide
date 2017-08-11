@@ -85,10 +85,11 @@
   <string name="episode_writers">எழுத்தாளர்கள்</string>
   <string name="show_isalive">தொடரும்</string>
   <string name="show_isnotalive">முடிவுக்கு வந்தது</string>
-  <string name="lastEdit">திருத்து கடைசி / / TheTVDB</string>
   <string name="no_translation">%1$s at %2$s கிடைக்கப்பெறும் மொழிபெயர்க்க விளக்கம் உள்ளது.</string>
   <string name="no_translation_title">இல்லை மொழிபெயர்க்க</string>
   <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">இன்று</string>
   <string name="now">இப்போது</string>

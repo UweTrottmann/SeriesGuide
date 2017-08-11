@@ -86,10 +86,11 @@
   <string name="episode_writers">Författare</string>
   <string name="show_isalive">Fortsätter</string>
   <string name="show_isnotalive">Avslutad</string>
-  <string name="lastEdit">Senast redigerad // TVDb</string>
   <string name="no_translation">Det finns ingen beskrivning översatt till %1$s tillgänglig på %2$s.</string>
   <string name="no_translation_title">Ej översatt</string>
   <string name="no_spoilers">Vissa detaljer är dolda för att undvika spoilers. För att stänga av detta, gå till inställningar.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">idag</string>
   <string name="now">nu</string>

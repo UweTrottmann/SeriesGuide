@@ -84,10 +84,11 @@
   <string name="episode_writers">Penulis</string>
   <string name="show_isalive">Berkelanjutan</string>
   <string name="show_isnotalive">Berakhir</string>
-  <string name="lastEdit">Terakhir disunting // TheTVDB</string>
   <string name="no_translation">Tidak ada deskripsi yang diterjemahkan ke %1$s tersedia di %2$s.</string>
   <string name="no_translation_title">Belum diterjemahkan</string>
   <string name="no_spoilers">Beberapa detail telah disembunyikan untuk mencegah bocoran. Untuk menonaktikan ini pergi ke pengaturan.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">hari ini</string>
   <string name="now">sekarang</string>
