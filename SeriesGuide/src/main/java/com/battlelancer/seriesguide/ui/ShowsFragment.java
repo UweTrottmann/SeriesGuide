@@ -115,7 +115,7 @@ public class ShowsFragment extends Fragment implements
                         .apply();
 
                 // refresh filter menu check box states
-                getActivity().supportInvalidateOptionsMenu();
+                getActivity().invalidateOptionsMenu();
             }
         });
 
@@ -333,7 +333,7 @@ public class ShowsFragment extends Fragment implements
                     .putBoolean(ShowsDistillationSettings.KEY_FILTER_HIDDEN, false)
                     .apply();
             // refresh filter icon state
-            getActivity().supportInvalidateOptionsMenu();
+            getActivity().invalidateOptionsMenu();
 
             Utils.trackAction(getActivity(), TAG, "Filter Removed");
             return true;
@@ -414,7 +414,7 @@ public class ShowsFragment extends Fragment implements
                 .putBoolean(key, state).apply();
 
         // refresh filter icon state
-        getActivity().supportInvalidateOptionsMenu();
+        getActivity().invalidateOptionsMenu();
     }
 
     private void changeSort() {
@@ -426,7 +426,7 @@ public class ShowsFragment extends Fragment implements
                 .putInt(ShowsDistillationSettings.KEY_SORT_ORDER, sortOrderId).apply();
 
         // refresh menu state to indicate current order
-        getActivity().supportInvalidateOptionsMenu();
+        getActivity().invalidateOptionsMenu();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

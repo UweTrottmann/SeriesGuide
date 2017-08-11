@@ -154,7 +154,7 @@ public class StatsFragment extends Fragment {
             PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                     .putBoolean(DisplaySettings.KEY_HIDE_SPECIALS, !item.isChecked())
                     .commit();
-            getActivity().supportInvalidateOptionsMenu();
+            getActivity().invalidateOptionsMenu();
             loadStats();
             return true;
         }

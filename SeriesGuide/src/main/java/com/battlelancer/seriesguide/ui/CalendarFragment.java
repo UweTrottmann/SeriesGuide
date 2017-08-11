@@ -245,7 +245,7 @@ public class CalendarFragment extends Fragment
         prefs.edit().putBoolean(key, !item.isChecked()).apply();
 
         // refresh filter icon state
-        getActivity().supportInvalidateOptionsMenu();
+        getActivity().invalidateOptionsMenu();
     }
 
     private int getLoaderId() {

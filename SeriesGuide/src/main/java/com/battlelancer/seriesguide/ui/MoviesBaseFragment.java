@@ -145,7 +145,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
                 .apply();
 
         // refresh icon state
-        getActivity().supportInvalidateOptionsMenu();
+        getActivity().invalidateOptionsMenu();
 
         EventBus.getDefault().post(new MoviesSortOrderChangedEvent());
     }
