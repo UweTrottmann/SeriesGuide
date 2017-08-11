@@ -440,7 +440,7 @@
   <string name="pref_vibratesummary">Δόνηση και κατά την εμφάνιση ειδοποίησης</string>
   <string name="pref_notifications_treshold">Πότε να ειδοποιήστε</string>
   <string name="pref_notifications_select_shows">Select shows</string>
-  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notifications_select_shows_summary">Σειρές που έχουν ενεργές ειδοποιήσεις (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (μικρό)</string>
   <!-- List Widget -->
@@ -491,8 +491,8 @@
   <!-- People -->
   <string name="person_biography">Βιογραφία</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
+  <string name="feedback_question_enjoy">Απολαμβάνετε το SeriesGuide;</string>
+  <string name="feedback_action_yes">Ναι!</string>
   <string name="feedback_action_notreally">Not really</string>
   <string name="feedback_question_rate_google">Rate it on Google Play?</string>
   <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>

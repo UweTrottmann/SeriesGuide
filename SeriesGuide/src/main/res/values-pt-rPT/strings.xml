@@ -20,7 +20,7 @@
   <string name="season_number">Temporada %d</string>
   <string name="seasons">Temporadas</string>
   <string name="specialseason">Episódios Especiais</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">Classificações</string>
   <!-- Descriptions -->
   <string name="description_overview">Visão geral</string>
   <string name="description_poster">Visualizar cartaz</string>
@@ -248,15 +248,15 @@
     <item quantity="other">%d minutos</item>
   </plurals>
   <!-- Features -->
-  <string name="feature_supported">Supported</string>
-  <string name="feature_not_supported">Not supported</string>
-  <string name="feature_history">Personal and friend history</string>
-  <string name="feature_comments">Post comments</string>
-  <string name="feature_sync">Sync</string>
+  <string name="feature_supported">Suportado</string>
+  <string name="feature_not_supported">Não suportado</string>
+  <string name="feature_history">Histórico pessoal e de amigos</string>
+  <string name="feature_comments">Publicar comentário</string>
+  <string name="feature_sync">Sincronizar</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud ajuda-te fazendo uma cópia de segurança e a sincronizar as tuas séries, listas e filmes.</string>
+  <string name="hexagon_warning_trakt">Enquanto conectado ao SeriesGuide Cloud algumas funções do trakt não estarão disponíveis.</string>
   <string name="hexagon_signin">Conectar</string>
   <string name="hexagon_signout">Desconectar</string>
   <string name="hexagon_setup_incomplete">A configuração do SeriesGuide Cloud não foi concluída.</string>

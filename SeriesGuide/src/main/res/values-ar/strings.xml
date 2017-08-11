@@ -20,7 +20,7 @@
   <string name="season_number">الموسم %d</string>
   <string name="seasons">المواسم</string>
   <string name="specialseason">حلقات خاصة</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">التقييم</string>
   <!-- Descriptions -->
   <string name="description_overview">نظرة عامة</string>
   <string name="description_poster">إظهار الملصقات</string>
@@ -121,8 +121,8 @@
   <string name="context_unfavorite">إزالة من المفضلة</string>
   <string name="favorited">إضافة إلى المفضلة</string>
   <string name="unfavorited">إزالة من المفضلة</string>
-  <string name="action_episode_notifications_on">Turn on episode notifications</string>
-  <string name="action_episode_notifications_off">Turn off episode notifications</string>
+  <string name="action_episode_notifications_on">تشغيل الاشعارات للحلقات الجديده</string>
+  <string name="action_episode_notifications_off">إغلاق الاشعارات للحلقات الجديده</string>
   <string name="context_hide">إخفاء</string>
   <string name="context_unhide">إظهار</string>
   <string name="hidden">تم إخفاء المسلسل</string>
@@ -157,9 +157,9 @@
   <string name="released_today">صدر اليوم</string>
   <string name="noupcoming">.لا توجد حلقات قادمة</string>
   <string name="norecent">.لا توجد حلقات حالية</string>
-  <string name="calendar_settings">Calendar settings</string>
+  <string name="calendar_settings">إعدادات التقويم</string>
   <string name="only_favorites">فقط المسلسلات المفضلة</string>
-  <string name="calendar_only_collected">Only collected episodes</string>
+  <string name="calendar_only_collected">الحلقات المجمعه فقط</string>
   <string name="pref_infinite_scrolling">رزنامة النهائية</string>
   <!-- Updating -->
   <string name="update_scheduled">جاري التحديث</string>
@@ -276,15 +276,15 @@
     <item quantity="other">%d دقائق</item>
   </plurals>
   <!-- Features -->
-  <string name="feature_supported">Supported</string>
-  <string name="feature_not_supported">Not supported</string>
-  <string name="feature_history">Personal and friend history</string>
-  <string name="feature_comments">Post comments</string>
-  <string name="feature_sync">Sync</string>
+  <string name="feature_supported">مدعوم</string>
+  <string name="feature_not_supported">غير مدعوم</string>
+  <string name="feature_history">التاريخ الشخصى و تاريخ الأصدقاء</string>
+  <string name="feature_comments">أضف تعليق</string>
+  <string name="feature_sync">نقل بيانات</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">تجريبي</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">يساعد سيرايس جايد كلاود على حفظ مسلسلاتك و افلامك على حسابك الخاص اونلاين.</string>
+  <string name="hexagon_warning_trakt">عندما تسجل الدخول لسيرايس كلاود سيتم فقد بعض خصائص موقع تراكت.</string>
   <string name="hexagon_signin">تسجيل الدخول</string>
   <string name="hexagon_signout">تسجيل الخروج</string>
   <string name="hexagon_setup_incomplete">لم يتم إكمال إعداد سحابة تخزين دليل المسلسلات.</string>
@@ -483,8 +483,8 @@
   <string name="pref_vibrate">إهتزاز</string>
   <string name="pref_vibratesummary">إهتزاز عند عرض التنبيه</string>
   <string name="pref_notifications_treshold">موعد التنبيه</string>
-  <string name="pref_notifications_select_shows">Select shows</string>
-  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notifications_select_shows">اختار العروض</string>
+  <string name="pref_notifications_select_shows_summary">يظهر عدد الاشعارات المتاحه للعروض (%d)</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">دليل المسلسلات (صغير)</string>
   <!-- List Widget -->
