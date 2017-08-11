@@ -6,7 +6,7 @@ buildscript {
             'targetSdk': 25,
             'buildTools': '26.0.1',
 
-            'supportLibrary': '25.4.0',
+            'supportLibrary': '26.0.1',
             'playServices': '10.2.1', // developers.google.com/android/guides/releases
 
             'butterknife': '8.6.0', // github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
