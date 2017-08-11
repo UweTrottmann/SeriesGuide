@@ -16,7 +16,7 @@ buildscript {
             'okhttp': '3.8.1', // github.com/square/okhttp/blob/master/CHANGELOG.md
             'timber': '4.5.1', // github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 
-            'androidUtils': '2.3.0', // github.com/UweTrottmann/AndroidUtils/blob/master/RELEASE_NOTES.md
+            'androidUtils': '2.3.1', // github.com/UweTrottmann/AndroidUtils/blob/master/RELEASE_NOTES.md
             'thetvdb': '1.4.2', // github.com/UweTrottmann/thetvdb-java/blob/master/CHANGELOG.md
             'tmdb': '1.7.0', // github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
             'trakt': '5.7.1', // github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
