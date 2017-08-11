@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.widgets;
 
 import android.content.Context;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.view.View;
@@ -49,7 +48,7 @@ public class EmptyViewSwipeRefreshLayout extends SwipeRefreshLayout {
         if (swipeableChildren != null) {
             // check if any supplied swipeable children can scroll up
             for (View view : swipeableChildren) {
-                if (view.isShown() && ViewCompat.canScrollVertically(view, -1)) {
+                if (view.isShown() && view.canScrollVertically(-1)) {
                     // prevent refresh gesture
                     return true;
                 }
