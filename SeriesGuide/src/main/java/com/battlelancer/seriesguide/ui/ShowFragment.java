@@ -421,15 +421,15 @@ public class ShowFragment extends Fragment {
 
         // overview
         String overview = showCursor.getString(ShowQuery.OVERVIEW);
-        if (TextUtils.isEmpty(overview) && showCursor != null) {
+        long lastEditSeconds = showCursor.getLong(ShowQuery.LAST_EDIT_MS);
+        if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
-            mTextViewOverview.setText(getString(R.string.no_translation,
+            overview = getString(R.string.no_translation,
                     LanguageTools.getShowLanguageStringFor(getContext(),
-                            showCursor.getString(ShowQuery.LANGUAGE)),
-                    getString(R.string.tvdb)));
-        } else {
-            mTextViewOverview.setText(overview);
+                            showCursor.getString(ShowQuery.LANGUAGE)), getString(R.string.tvdb));
         }
+        mTextViewOverview.setText(TextTools.textWithTvdbSource(mTextViewOverview.getContext(),
+                overview, lastEditSeconds));
 
         // language preferred for content
         LanguageTools.LanguageData languageData = LanguageTools.getShowLanguageDataFor(
@@ -466,10 +466,10 @@ public class ShowFragment extends Fragment {
                 showCursor.getInt(ShowQuery.RATING_USER)));
 
         // last edit
-        long lastEditRaw = showCursor.getLong(ShowQuery.LAST_EDIT_MS);
-        if (lastEditRaw > 0) {
-            mTextViewLastEdit.setText(DateUtils.formatDateTime(getActivity(), lastEditRaw * 1000,
-                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
+        if (lastEditSeconds > 0) {
+            mTextViewLastEdit.setText(
+                    DateUtils.formatDateTime(getActivity(), lastEditSeconds * 1000,
+                            DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
         } else {
             mTextViewLastEdit.setText(R.string.unknown);
         }

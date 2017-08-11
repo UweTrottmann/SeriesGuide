@@ -380,19 +380,18 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             mTitle.setText(mEpisodeTitle);
         }
         String overview = cursor.getString(DetailsQuery.OVERVIEW);
+        long lastEditSeconds = cursor.getLong(DetailsQuery.LAST_EDITED);
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
-            mDescription.setText(getString(R.string.no_translation,
+            overview = getString(R.string.no_translation,
                     LanguageTools.getShowLanguageStringFor(getContext(),
                             cursor.getString(DetailsQuery.SHOW_LANGUAGE)),
-                    getString(R.string.tvdb)));
-        } else {
-            if (hideDetails) {
-                mDescription.setText(R.string.no_spoilers);
-            } else {
-                mDescription.setText(overview);
-            }
+                    getString(R.string.tvdb));
+        } else if (hideDetails) {
+            overview = getString(R.string.no_spoilers);
         }
+        mDescription.setText(
+                TextTools.textWithTvdbSource(mDescription.getContext(), overview, lastEditSeconds));
 
         // show title
         mShowTitle = cursor.getString(DetailsQuery.SHOW_TITLE);
@@ -450,7 +449,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 .getString(DetailsQuery.WRITERS)));
 
         // last TVDb edit date
-        long lastEditSeconds = cursor.getLong(DetailsQuery.LAST_EDITED);
         if (lastEditSeconds > 0) {
             mLastEdit.setText(DateUtils.formatDateTime(getActivity(), lastEditSeconds * 1000,
                     DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));

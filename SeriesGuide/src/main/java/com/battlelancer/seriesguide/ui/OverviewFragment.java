@@ -751,17 +751,16 @@ public class OverviewFragment extends Fragment implements
         String overview = currentEpisodeCursor.getString(EpisodeQuery.OVERVIEW);
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
-            textDescription.setText(getString(R.string.no_translation,
+            overview = getString(R.string.no_translation,
                     LanguageTools.getShowLanguageStringFor(getContext(),
                             showCursor.getString(ShowQuery.SHOW_LANGUAGE)),
-                    getString(R.string.tvdb)));
-        } else {
-            if (DisplaySettings.preventSpoilers(getContext())) {
-                textDescription.setText(R.string.no_spoilers);
-            } else {
-                textDescription.setText(overview);
-            }
+                    getString(R.string.tvdb));
+        } else if (DisplaySettings.preventSpoilers(getContext())) {
+                overview = getString(R.string.no_spoilers);
         }
+        long lastEditSeconds = currentEpisodeCursor.getLong(EpisodeQuery.LAST_EDITED);
+        textDescription.setText(TextTools.textWithTvdbSource(textDescription.getContext(),
+                overview, lastEditSeconds));
     }
 
     @Override

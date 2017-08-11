@@ -101,6 +101,8 @@
     <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
     <string name="no_translation_title">Not translated</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+    <string name="format_source">Source: %s</string>
+    <string name="format_last_edited">Last edited: %s</string>
 
     <!-- Date and Time -->
     <string name="today">today</string>

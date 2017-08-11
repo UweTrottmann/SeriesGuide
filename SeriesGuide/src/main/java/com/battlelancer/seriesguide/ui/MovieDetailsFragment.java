@@ -59,6 +59,7 @@ import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TmdbTools;
 import com.battlelancer.seriesguide.util.TraktTools;
@@ -358,7 +359,9 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         textViewMovieTitle.setText(tmdbMovie.title);
         getActivity().setTitle(tmdbMovie.title);
-        textViewMovieDescription.setText(tmdbMovie.overview);
+        textViewMovieDescription.setText(
+                TextTools.textWithTmdbSource(textViewMovieDescription.getContext(),
+                        tmdbMovie.overview));
 
         // release date and runtime: "July 17, 2009 | 95 min"
         StringBuilder releaseAndRuntime = new StringBuilder();
