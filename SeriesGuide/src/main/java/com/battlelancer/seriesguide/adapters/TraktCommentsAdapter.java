@@ -48,11 +48,11 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
             convertView = inflater.inflate(R.layout.item_comment, parent, false);
 
             holder = new ViewHolder();
-            holder.username = (TextView) convertView.findViewById(R.id.textViewCommentUsername);
-            holder.comment = (TextView) convertView.findViewById(R.id.textViewComment);
-            holder.timestamp = (TextView) convertView.findViewById(R.id.textViewCommentTimestamp);
-            holder.replies = (TextView) convertView.findViewById(R.id.textViewCommentReplies);
-            holder.avatar = (ImageView) convertView.findViewById(R.id.imageViewCommentAvatar);
+            holder.username = convertView.findViewById(R.id.textViewCommentUsername);
+            holder.comment = convertView.findViewById(R.id.textViewComment);
+            holder.timestamp = convertView.findViewById(R.id.textViewCommentTimestamp);
+            holder.replies = convertView.findViewById(R.id.textViewCommentReplies);
+            holder.avatar = convertView.findViewById(R.id.imageViewCommentAvatar);
 
             convertView.setTag(holder);
         } else {

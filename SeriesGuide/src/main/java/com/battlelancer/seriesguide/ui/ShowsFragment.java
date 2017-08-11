@@ -145,8 +145,7 @@ public class ShowsFragment extends Fragment implements
         gridView.setOnItemClickListener(this);
 
         // hide floating action button when scrolling shows
-        FloatingActionButton buttonAddShow = (FloatingActionButton) getActivity().findViewById(
-                R.id.buttonShowsAdd);
+        FloatingActionButton buttonAddShow = getActivity().findViewById(R.id.buttonShowsAdd);
         gridView.setOnScrollListener(new FabAbsListViewScrollDetector(buttonAddShow));
 
         // listen for some settings changes

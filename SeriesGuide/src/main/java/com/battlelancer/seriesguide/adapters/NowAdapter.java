@@ -65,7 +65,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public MoreViewHolder(View itemView, final ItemClickListener listener) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.textViewNowMoreText);
+            title = itemView.findViewById(R.id.textViewNowMoreText);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -84,7 +84,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.textViewGridHeader);
+            title = itemView.findViewById(R.id.textViewGridHeader);
         }
     }
 

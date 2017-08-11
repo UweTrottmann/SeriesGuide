@@ -49,10 +49,10 @@ public abstract class MoviesBaseFragment extends Fragment implements
             Bundle savedInstanceState) {
         View v = inflater.inflate(LAYOUT, container, false);
 
-        gridView = (GridView) v.findViewById(R.id.gridViewMovies);
+        gridView = v.findViewById(R.id.gridViewMovies);
         // enable app bar scrolling out of view only on L or higher
         ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
-        emptyView = (TextView) v.findViewById(R.id.textViewMoviesEmpty);
+        emptyView = v.findViewById(R.id.textViewMoviesEmpty);
         gridView.setEmptyView(emptyView);
         gridView.setOnItemClickListener(this);
 

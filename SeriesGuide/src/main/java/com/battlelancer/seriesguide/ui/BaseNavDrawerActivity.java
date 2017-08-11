@@ -166,9 +166,9 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
-        actionBarToolbar = (Toolbar) drawerLayout.findViewById(R.id.sgToolbar);
+        actionBarToolbar = drawerLayout.findViewById(R.id.sgToolbar);
 
-        navigationView = (NavigationView) drawerLayout.findViewById(R.id.navigation);
+        navigationView = drawerLayout.findViewById(R.id.navigation);
 
         // setup nav drawer account header
         View headerView = navigationView.getHeaderView(0);

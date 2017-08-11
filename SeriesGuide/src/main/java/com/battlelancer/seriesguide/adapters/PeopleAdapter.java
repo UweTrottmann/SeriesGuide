@@ -38,10 +38,10 @@ public class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
 
             viewHolder = new ViewHolder();
 
-            viewHolder.name = (TextView) convertView.findViewById(R.id.textViewPerson);
-            viewHolder.description = (TextView) convertView.findViewById(
+            viewHolder.name = convertView.findViewById(R.id.textViewPerson);
+            viewHolder.description = convertView.findViewById(
                     R.id.textViewPersonDescription);
-            viewHolder.headshot = (ImageView) convertView.findViewById(R.id.imageViewPerson);
+            viewHolder.headshot = convertView.findViewById(R.id.imageViewPerson);
 
             convertView.setTag(viewHolder);
         } else {

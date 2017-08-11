@@ -138,7 +138,7 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
             convertView = mInflater.inflate(R.layout.item_grid_header, parent, false);
 
             holder = new HeaderViewHolder();
-            holder.day = (TextView) convertView.findViewById(R.id.textViewGridHeader);
+            holder.day = convertView.findViewById(R.id.textViewGridHeader);
 
             convertView.setTag(holder);
         } else {

@@ -856,7 +856,7 @@ public class OverviewFragment extends Fragment implements
         }
 
         // status
-        final TextView statusText = (TextView) getView().findViewById(R.id.showStatus);
+        final TextView statusText = getView().findViewById(R.id.showStatus);
         ShowTools.setStatusAndColor(statusText, show.getInt(ShowQuery.SHOW_STATUS));
 
         // favorite

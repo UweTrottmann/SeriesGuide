@@ -89,7 +89,7 @@ public abstract class BaseOAuthActivity extends BaseActivity {
         webview = (WebView) findViewById(R.id.webView);
         buttonContainer = findViewById(R.id.containerOauthButtons);
         progressBar = findViewById(R.id.progressBarOauth);
-        textViewMessage = (TextView) buttonContainer.findViewById(R.id.textViewOauthMessage);
+        textViewMessage = buttonContainer.findViewById(R.id.textViewOauthMessage);
 
         // setup buttons (can be used if browser launch fails or user comes back without code)
         Button buttonBrowser = (Button) findViewById(R.id.buttonOauthBrowser);

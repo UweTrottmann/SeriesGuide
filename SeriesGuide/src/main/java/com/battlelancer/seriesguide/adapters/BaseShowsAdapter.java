@@ -87,14 +87,14 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         private OnItemClickListener clickListener;
 
         public ShowViewHolder(View v, OnItemClickListener onItemClickListener) {
-            name = (TextView) v.findViewById(R.id.seriesname);
-            timeAndNetwork = (TextView) v.findViewById(R.id.textViewShowsTimeAndNetwork);
-            episode = (TextView) v.findViewById(R.id.TextViewShowListNextEpisode);
-            episodeTime = (TextView) v.findViewById(R.id.episodetime);
+            name = v.findViewById(R.id.seriesname);
+            timeAndNetwork = v.findViewById(R.id.textViewShowsTimeAndNetwork);
+            episode = v.findViewById(R.id.TextViewShowListNextEpisode);
+            episodeTime = v.findViewById(R.id.episodetime);
             remainingCount = ButterKnife.findById(v, R.id.textViewShowsRemaining);
-            poster = (ImageView) v.findViewById(R.id.showposter);
-            favorited = (ImageView) v.findViewById(R.id.favoritedLabel);
-            contextMenu = (ImageView) v.findViewById(R.id.imageViewShowsContextMenu);
+            poster = v.findViewById(R.id.showposter);
+            favorited = v.findViewById(R.id.favoritedLabel);
+            contextMenu = v.findViewById(R.id.imageViewShowsContextMenu);
             clickListener = onItemClickListener;
 
             // favorite star

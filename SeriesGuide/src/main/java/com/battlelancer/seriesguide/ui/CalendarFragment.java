@@ -98,10 +98,10 @@ public class CalendarFragment extends Fragment
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_calendar, container, false);
 
-        TextView emptyView = (TextView) v.findViewById(R.id.emptyViewCalendar);
+        TextView emptyView = v.findViewById(R.id.emptyViewCalendar);
         emptyView.setText(getString(getArguments().getInt(InitBundle.EMPTY_STRING_ID)));
 
-        gridView = (StickyGridHeadersGridView) v.findViewById(R.id.gridViewCalendar);
+        gridView = v.findViewById(R.id.gridViewCalendar);
         // enable app bar scrolling out of view only on L or higher
         ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
         gridView.setEmptyView(emptyView);

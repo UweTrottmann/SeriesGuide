@@ -141,11 +141,10 @@ public class PeopleListHelper {
                 .error(R.color.protection_dark)
                 .into((ImageView) personView.findViewById(R.id.imageViewPerson));
 
-        TextView nameView = (TextView) personView.findViewById(R.id.textViewPerson);
+        TextView nameView = personView.findViewById(R.id.textViewPerson);
         nameView.setText(name);
 
-        TextView descriptionView = (TextView) personView.findViewById(
-                R.id.textViewPersonDescription);
+        TextView descriptionView = personView.findViewById(R.id.textViewPersonDescription);
         descriptionView.setText(description);
 
         return personView;
