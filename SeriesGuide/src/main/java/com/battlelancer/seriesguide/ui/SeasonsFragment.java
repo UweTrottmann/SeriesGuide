@@ -17,7 +17,6 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.os.AsyncTaskCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -273,7 +272,8 @@ public class SeasonsFragment extends ListFragment {
         if (remainingUpdateTask == null
                 || remainingUpdateTask.getStatus() == AsyncTask.Status.FINISHED) {
             remainingUpdateTask = new RemainingUpdateTask(this);
-            AsyncTaskCompat.executeParallel(remainingUpdateTask, String.valueOf(getShowId()));
+            remainingUpdateTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+                    String.valueOf(getShowId()));
         }
     }
 

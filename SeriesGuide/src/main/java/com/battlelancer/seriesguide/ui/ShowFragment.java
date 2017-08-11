@@ -13,7 +13,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.os.AsyncTaskCompat;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -594,7 +593,7 @@ public class ShowFragment extends Fragment {
     private void loadTraktRatings() {
         if (traktTask == null || traktTask.getStatus() == AsyncTask.Status.FINISHED) {
             traktTask = new TraktRatingsTask(getContext(), getShowTvdbId());
-            AsyncTaskCompat.executeParallel(traktTask);
+            traktTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 

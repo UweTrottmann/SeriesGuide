@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.v4.os.AsyncTaskCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -148,7 +147,7 @@ public class EpisodeTools {
      * Run the task on the thread pool.
      */
     private static void execute(Context context, @NonNull EpisodeTaskTypes.FlagType type) {
-        AsyncTaskCompat.executeParallel(new EpisodeFlagTask(context, type));
+        new EpisodeFlagTask(context, type).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /**
@@ -439,8 +438,8 @@ public class EpisodeTools {
 
             if (isSuccessful) {
                 // update latest episode for the changed show
-                AsyncTaskCompat.executeParallel(new LatestEpisodeUpdateTask(context),
-                        flagType.getShowTvdbId());
+                new LatestEpisodeUpdateTask(context).executeOnExecutor(
+                        AsyncTask.THREAD_POOL_EXECUTOR, flagType.getShowTvdbId());
             }
         }
     }

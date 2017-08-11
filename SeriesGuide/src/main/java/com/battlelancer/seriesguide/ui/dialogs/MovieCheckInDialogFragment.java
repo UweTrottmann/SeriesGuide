@@ -1,9 +1,8 @@
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.os.AsyncTaskCompat;
 import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.Utils;
 
 /**
  * Allows to check into movies on trakt or GetGlue. Launching activities should subscribe to {@link
@@ -26,10 +25,9 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
      * Start the trakt check in task.
      */
     protected void checkInTrakt(String message) {
-        AsyncTaskCompat.executeParallel(
-                new TraktTask(getContext()).checkInMovie(
-                        getArguments().getInt(InitBundle.MOVIE_TMDB_ID),
-                        getArguments().getString(InitBundle.ITEM_TITLE),
-                        message));
+        new TraktTask(getContext()).checkInMovie(
+                getArguments().getInt(InitBundle.MOVIE_TMDB_ID),
+                getArguments().getString(InitBundle.ITEM_TITLE),
+                message).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }

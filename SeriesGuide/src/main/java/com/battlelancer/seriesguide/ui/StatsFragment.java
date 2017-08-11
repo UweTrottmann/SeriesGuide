@@ -182,7 +182,7 @@ public class StatsFragment extends Fragment {
 
     private void runStatsTask() {
         statsTask = new StatsTask(getActivity());
-        AsyncTaskCompat.executeParallel(statsTask);
+        statsTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

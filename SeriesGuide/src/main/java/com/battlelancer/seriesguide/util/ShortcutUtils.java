@@ -15,7 +15,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.os.AsyncTaskCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
@@ -150,7 +149,7 @@ public final class ShortcutUtils {
             }
         };
         // Do all the above async
-        AsyncTaskCompat.executeParallel(shortCutTask);
+        shortCutTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /** A {@link Transformation} used to draw a {@link Bitmap} with round corners */

@@ -14,7 +14,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.os.AsyncTaskCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -356,7 +355,7 @@ public class DataLiberationFragment extends Fragment implements
 
             dataLibTask = new JsonExportTask(getContext(), DataLiberationFragment.this,
                     checkBoxFullDump.isChecked(), false);
-            AsyncTaskCompat.executeParallel(dataLibTask);
+            dataLibTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else if (requestCode == REQUEST_CODE_IMPORT) {
             setProgressLock(true);
 

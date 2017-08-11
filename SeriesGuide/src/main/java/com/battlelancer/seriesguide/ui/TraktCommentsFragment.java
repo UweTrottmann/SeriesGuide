@@ -1,11 +1,11 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
-import android.support.v4.os.AsyncTaskCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -78,7 +78,7 @@ public class TraktCommentsFragment extends Fragment {
             }
         });
         swipeRefreshLayout.setProgressViewOffset(false, getResources().getDimensionPixelSize(
-                        R.dimen.swipe_refresh_progress_bar_start_margin),
+                R.dimen.swipe_refresh_progress_bar_start_margin),
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_end_margin));
         ViewTools.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
@@ -133,27 +133,24 @@ public class TraktCommentsFragment extends Fragment {
         // comment for an episode?
         int episodeTvdbId = args.getInt(InitBundle.EPISODE_TVDB_ID);
         if (episodeTvdbId != 0) {
-            AsyncTaskCompat.executeParallel(
-                    new TraktTask(getContext()).commentEpisode(episodeTvdbId, comment, isSpoiler)
-            );
+            new TraktTask(getContext()).commentEpisode(episodeTvdbId, comment, isSpoiler)
+                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             return;
         }
 
         // comment for a movie?
         int movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID);
         if (movieTmdbId != 0) {
-            AsyncTaskCompat.executeParallel(
-                    new TraktTask(getContext()).commentMovie(movieTmdbId, comment, isSpoiler)
-            );
+            new TraktTask(getContext()).commentMovie(movieTmdbId, comment, isSpoiler)
+                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             return;
         }
 
         // comment for a show?
         int showTvdbId = args.getInt(InitBundle.SHOW_TVDB_ID);
         if (showTvdbId != 0) {
-            AsyncTaskCompat.executeParallel(
-                    new TraktTask(getContext()).commentShow(showTvdbId, comment, isSpoiler)
-            );
+            new TraktTask(getContext()).commentShow(showTvdbId, comment, isSpoiler)
+                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
 
         // if all ids were 0, do nothing

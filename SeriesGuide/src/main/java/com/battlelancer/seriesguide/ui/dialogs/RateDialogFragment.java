@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui.dialogs;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
@@ -207,7 +208,7 @@ public class RateDialogFragment extends AppCompatDialogFragment {
             }
         }
         if (task != null) {
-            AsyncTaskCompat.executeParallel(task);
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
 
         // guard against onClick being called after onSaveInstanceState by allowing state loss

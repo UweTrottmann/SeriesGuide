@@ -2,9 +2,9 @@ package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.os.AsyncTaskCompat;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.tasks.AddListTask;
 import com.battlelancer.seriesguide.util.tasks.ChangeListItemListsTask;
@@ -47,32 +47,34 @@ public class ListsTools {
     }
 
     public static void addList(@NonNull Context context, @NonNull String listName) {
-        AsyncTaskCompat.executeParallel(new AddListTask(context, listName));
+        new AddListTask(context, listName).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public static void renameList(@NonNull Context context, @NonNull String listId,
             @NonNull String listName) {
-        AsyncTaskCompat.executeParallel(new RenameListTask(context, listId, listName));
+        new RenameListTask(context, listId, listName).executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public static void removeList(@NonNull Context context, @NonNull String listId) {
-        AsyncTaskCompat.executeParallel(new RemoveListTask(context, listId));
+        new RemoveListTask(context, listId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public static void reorderLists(@NonNull Context context,
             @NonNull List<String> listIdsInOrder) {
-        AsyncTaskCompat.executeParallel(new ReorderListsTask(context, listIdsInOrder));
+        new ReorderListsTask(context, listIdsInOrder).executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public static void changeListsOfItem(@NonNull Context context, int itemTvdbId, int itemType,
             @NonNull List<String> addToTheseLists, @NonNull List<String> removeFromTheseLists) {
-        AsyncTaskCompat.executeParallel(
-                new ChangeListItemListsTask(context, itemTvdbId, itemType, addToTheseLists,
-                        removeFromTheseLists));
+        new ChangeListItemListsTask(context, itemTvdbId, itemType, addToTheseLists,
+                removeFromTheseLists).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public static void removeListItem(@NonNull Context context, @NonNull String listItemId) {
-        AsyncTaskCompat.executeParallel(new RemoveListItemTask(context, listItemId));
+        new RemoveListItemTask(context, listItemId).executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /**

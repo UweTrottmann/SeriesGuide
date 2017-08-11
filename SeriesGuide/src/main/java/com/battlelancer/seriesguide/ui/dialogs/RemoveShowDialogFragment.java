@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.os.AsyncTaskCompat;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,7 +93,8 @@ public class RemoveShowDialogFragment extends AppCompatDialogFragment {
 
         EventBus.getDefault().register(this);
 
-        AsyncTaskCompat.executeParallel(new GetShowTitleTask(getActivity()), showTvdbId);
+        new GetShowTitleTask(getActivity())
+                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, showTvdbId);
     }
 
     @Override

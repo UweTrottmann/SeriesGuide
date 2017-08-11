@@ -13,7 +13,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.os.AsyncTaskCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -838,7 +837,7 @@ public class OverviewFragment extends Fragment implements
             int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             ratingsTask = new TraktRatingsTask(getContext(), showTvdbId,
                     currentEpisodeTvdbId, seasonNumber, episodeNumber);
-            AsyncTaskCompat.executeParallel(ratingsTask);
+            ratingsTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
