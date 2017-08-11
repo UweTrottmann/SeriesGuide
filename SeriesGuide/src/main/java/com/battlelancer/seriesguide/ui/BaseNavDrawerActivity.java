@@ -20,7 +20,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
@@ -163,7 +162,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
      * #onCreate(android.os.Bundle)} after {@link #setContentView(int)}.
      */
     public void setupNavDrawer() {
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         actionBarToolbar = drawerLayout.findViewById(R.id.sgToolbar);
@@ -172,12 +171,12 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
         // setup nav drawer account header
         View headerView = navigationView.getHeaderView(0);
-        ButterKnife.findById(headerView, R.id.containerDrawerAccountCloud).setOnClickListener(
+        headerView.findViewById(R.id.containerDrawerAccountCloud).setOnClickListener(
                 accountClickListener);
-        ButterKnife.findById(headerView, R.id.containerDrawerAccountTrakt).setOnClickListener(
+        headerView.findViewById(R.id.containerDrawerAccountTrakt).setOnClickListener(
                 accountClickListener);
-        textViewHeaderUserCloud = ButterKnife.findById(headerView, R.id.textViewDrawerUserCloud);
-        textViewHeaderUserTrakt = ButterKnife.findById(headerView, R.id.textViewDrawerUserTrakt);
+        textViewHeaderUserCloud = headerView.findViewById(R.id.textViewDrawerUserCloud);
+        textViewHeaderUserTrakt = headerView.findViewById(R.id.textViewDrawerUserTrakt);
 
         // setup nav drawer items
         navigationView.inflateMenu(R.menu.menu_drawer);
@@ -200,7 +199,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
             // add debug drawer
             View debugLayout = getLayoutInflater().inflate(R.layout.debug_drawer, drawerLayout,
                     true);
-            DebugView debugView = ButterKnife.findById(debugLayout, R.id.debugView);
+            DebugView debugView = debugLayout.findViewById(R.id.debugView);
 
             ButtonAction buttonClearTraktRefreshToken = new ButtonAction(
                     "Clear trakt refresh token",

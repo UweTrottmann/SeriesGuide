@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
 import java.lang.annotation.Retention;
@@ -65,9 +64,9 @@ public class FeedbackView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        questionTextView = ButterKnife.findById(this, R.id.textViewFeedback);
-        negativeButton = ButterKnife.findById(this, R.id.buttonFeedbackNegative);
-        positiveButton = ButterKnife.findById(this, R.id.buttonFeedbackPositive);
+        questionTextView = findViewById(R.id.textViewFeedback);
+        negativeButton = findViewById(R.id.buttonFeedbackNegative);
+        positiveButton = findViewById(R.id.buttonFeedbackPositive);
 
         negativeButton.setOnClickListener(buttonClickListener);
         positiveButton.setOnClickListener(buttonClickListener);

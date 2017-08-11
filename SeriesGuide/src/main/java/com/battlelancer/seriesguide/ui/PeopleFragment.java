@@ -12,7 +12,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.PeopleAdapter;
 import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
@@ -80,8 +79,8 @@ public class PeopleFragment extends Fragment {
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_people, container, false);
 
-        mListView = ButterKnife.findById(rootView, R.id.listViewPeople);
-        mEmptyView = ButterKnife.findById(rootView, R.id.emptyViewPeople);
+        mListView = rootView.findViewById(R.id.listViewPeople);
+        mEmptyView = rootView.findViewById(R.id.emptyViewPeople);
         mEmptyView.setContentVisibility(View.GONE);
         mListView.setEmptyView(mEmptyView);
 
@@ -91,7 +90,7 @@ public class PeopleFragment extends Fragment {
                 ? ListView.CHOICE_MODE_SINGLE
                 : ListView.CHOICE_MODE_NONE);
 
-        mProgressBar = ButterKnife.findById(rootView, R.id.progressBarPeople);
+        mProgressBar = rootView.findViewById(R.id.progressBarPeople);
 
         return rootView;
     }

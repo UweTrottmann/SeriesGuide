@@ -65,7 +65,7 @@ public class DataLiberationFragment extends Fragment implements
             if (view != null && message != null) {
                 Snackbar snackbar = Snackbar.make(view, message,
                         showIndefinite ? Snackbar.LENGTH_INDEFINITE : Snackbar.LENGTH_SHORT);
-                TextView textView = ButterKnife.findById(snackbar.getView(),
+                TextView textView = snackbar.getView().findViewById(
                         android.support.design.R.id.snackbar_text);
                 textView.setMaxLines(5);
                 snackbar.show();

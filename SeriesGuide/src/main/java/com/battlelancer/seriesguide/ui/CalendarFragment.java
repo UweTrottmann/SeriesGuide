@@ -30,7 +30,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
@@ -110,7 +109,7 @@ public class CalendarFragment extends Fragment
         VectorDrawableCompat drawableTouch = ViewTools.vectorIconInactive(getContext(),
                 getActivity().getTheme(),
                 R.drawable.ic_touch_black_24dp);
-        imageViewTapIndicator = ButterKnife.findById(v, R.id.imageViewCalendarTapIndicator);
+        imageViewTapIndicator = v.findViewById(R.id.imageViewCalendarTapIndicator);
         imageViewTapIndicator.setImageDrawable(drawableTouch);
 
         return v;

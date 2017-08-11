@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.items.Episode;
@@ -137,13 +136,13 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
     }
 
     private void setupViews() {
-        toolbarSpinner = ButterKnife.findById(this, R.id.sgToolbarSpinner);
+        toolbarSpinner = findViewById(R.id.sgToolbarSpinner);
         // prevent spinner from restoring selection, we do that ourselves
         toolbarSpinner.setSaveEnabled(false);
 
-        imageViewBackground = ButterKnife.findById(this, R.id.imageViewEpisodeDetailsBackground);
-        tabs = ButterKnife.findById(this, R.id.tabsEpisodeDetails);
-        viewPager = ButterKnife.findById(this, R.id.pagerEpisodeDetails);
+        imageViewBackground = findViewById(R.id.imageViewEpisodeDetailsBackground);
+        tabs = findViewById(R.id.tabsEpisodeDetails);
+        viewPager = findViewById(R.id.pagerEpisodeDetails);
 
         // setup tabs
         tabs.setCustomTabView(R.layout.tabstrip_item_transparent, R.id.textViewTabStripItem);

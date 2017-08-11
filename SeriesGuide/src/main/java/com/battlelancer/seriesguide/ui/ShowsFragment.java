@@ -26,7 +26,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.PopupMenu;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
@@ -85,8 +84,8 @@ public class ShowsFragment extends Fragment implements
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_shows, container, false);
 
-        gridView = ButterKnife.findById(v, android.R.id.list);
-        emptyView = ButterKnife.findById(v, R.id.emptyViewShows);
+        gridView = v.findViewById(android.R.id.list);
+        emptyView = v.findViewById(R.id.emptyViewShows);
         ViewTools.setVectorIconTop(getActivity().getTheme(), emptyView,
                 R.drawable.ic_add_white_24dp);
         emptyView.setOnClickListener(new OnClickListener() {
@@ -95,7 +94,7 @@ public class ShowsFragment extends Fragment implements
                 startActivityAddShows();
             }
         });
-        emptyViewFilter = ButterKnife.findById(v, R.id.emptyViewShowsFilter);
+        emptyViewFilter = v.findViewById(R.id.emptyViewShowsFilter);
         ViewTools.setVectorIconTop(getActivity().getTheme(), emptyViewFilter,
                 R.drawable.ic_filter_white_24dp);
         emptyViewFilter.setOnClickListener(new OnClickListener() {

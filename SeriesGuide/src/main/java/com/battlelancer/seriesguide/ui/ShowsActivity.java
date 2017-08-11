@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -185,7 +184,7 @@ public class ShowsActivity extends BaseTopActivity implements
 
     private void setupViews() {
         // setup floating action button for adding shows
-        FloatingActionButton buttonAddShow = ButterKnife.findById(this, R.id.buttonShowsAdd);
+        FloatingActionButton buttonAddShow = findViewById(R.id.buttonShowsAdd);
         buttonAddShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,8 +193,8 @@ public class ShowsActivity extends BaseTopActivity implements
             }
         });
 
-        viewPager = (ViewPager) findViewById(R.id.viewPagerTabs);
-        SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.tabLayoutTabs);
+        viewPager = findViewById(R.id.viewPagerTabs);
+        SlidingTabLayout tabs = findViewById(R.id.tabLayoutTabs);
         tabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
             @Override
             public void onTabClick(int position) {

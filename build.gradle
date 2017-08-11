@@ -9,7 +9,7 @@ buildscript {
             'supportLibrary': '26.0.1',
             'playServices': '10.2.1', // developers.google.com/android/guides/releases
 
-            'butterknife': '8.6.0', // github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
+            'butterknife': '8.8.1', // github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
             'crashlytics': '2.6.8', // docs.fabric.io/android/changelog.html
             'dagger': '2.10', // github.com/google/dagger/releases
             'gson': '2.8.1', // github.com/google/gson/blob/master/CHANGELOG.md
