@@ -47,8 +47,11 @@ public class EpisodeResultsAdapter extends CursorAdapter {
 
         viewHolder.showTitle.setText(mCursor.getString(EpisodeSearchQuery.SHOW_TITLE));
         Resources.Theme theme = mContext.getTheme();
-        if (EpisodeTools.isWatched(mCursor.getInt(EpisodeSearchQuery.WATCHED))) {
+        int episodeFlag = mCursor.getInt(EpisodeSearchQuery.WATCHED);
+        if (EpisodeTools.isWatched(episodeFlag)) {
             viewHolder.watchedStatus.setImageResource(R.drawable.ic_watched_24dp);
+        } else if (EpisodeTools.isSkipped(episodeFlag)) {
+            viewHolder.watchedStatus.setImageResource(R.drawable.ic_skipped_24dp);
         } else {
             ViewTools.setVectorIcon(theme, viewHolder.watchedStatus,
                     R.drawable.ic_watch_black_24dp);
