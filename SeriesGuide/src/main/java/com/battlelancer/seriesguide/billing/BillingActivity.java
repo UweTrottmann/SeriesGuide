@@ -36,10 +36,11 @@ public class BillingActivity extends BaseActivity {
     // The SKU product ids as set in the Developer Console
     public static final String SKU_X = "x_upgrade";
 
+    public static final String SKU_X_SUB_2017_08 = "x_sub_2017_08";
     public static final String SKU_X_SUB_2016_05 = "x_sub_2016_05";
     public static final String SKU_X_SUB_2014_02 = "x_sub_2014_02";
     public static final String SKU_X_SUB_LEGACY = "x_subscription";
-    public static final String SKU_X_SUB_NEW_PURCHASES = SKU_X_SUB_2016_05;
+    public static final String SKU_X_SUB_NEW_PURCHASES = SKU_X_SUB_2017_08;
 
     // (arbitrary) request code for the purchase flow
     private static final int RC_REQUEST = 21;
@@ -238,12 +239,15 @@ public class BillingActivity extends BaseActivity {
         boolean hasXUpgrade = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
 
         // Does the user have an active unlock all subscription?
-        Purchase subscriptionPurchase = inventory.getPurchase(SKU_X_SUB_LEGACY);
+        Purchase subscriptionPurchase = inventory.getPurchase(SKU_X_SUB_2017_08);
         if (subscriptionPurchase == null) {
             subscriptionPurchase = inventory.getPurchase(SKU_X_SUB_2014_02);
         }
         if (subscriptionPurchase == null) {
-            subscriptionPurchase = inventory.getPurchase(SKU_X_SUB_2016_05);
+            subscriptionPurchase = inventory.getPurchase(SKU_X_SUB_2014_02);
+        }
+        if (subscriptionPurchase == null) {
+            subscriptionPurchase = inventory.getPurchase(SKU_X_SUB_LEGACY);
         }
         boolean isSubscribedToX = subscriptionPurchase != null
                 && verifyDeveloperPayload(subscriptionPurchase);
