@@ -20,7 +20,7 @@
   <string name="season_number">עונה %d</string>
   <string name="seasons">עונות</string>
   <string name="specialseason">פרקים מיוחדים</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">דירוגים</string>
   <!-- Descriptions -->
   <string name="description_overview">תקציר</string>
   <string name="description_poster">הצג פוסטר</string>
@@ -66,7 +66,7 @@
   <string name="action_post">פוסט</string>
   <string name="isspoiler">אזהרת ספוילר!</string>
   <string name="no_shouts">תהיה הראשון להמליץ!</string>
-  <string name="refresh">רענון</string>
+  <string name="refresh">רענן</string>
   <plurals name="replies_plural">
     <item quantity="one">תגובה אחת</item>
     <item quantity="two">%d תגובות</item>
@@ -75,23 +75,23 @@
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">תאריך שחרור</string>
-  <string name="episode_firstaired_unknown">תאריך שחרור לא ידוע</string>
+  <string name="episode_firstaired">תאריך הפצה</string>
+  <string name="episode_firstaired_unknown">תאריך הפצה לא ידוע</string>
   <string name="episode_dvdnumber">פרק DVD</string>
   <string name="original_release">השחרור המקורי</string>
   <string name="show_genres">ז\'אנרים</string>
   <string name="show_contentrating">דירוג תוכן</string>
   <string name="show_release_times">זמני שחרור</string>
   <string name="episode_directors">במאים</string>
-  <string name="episode_gueststars">כוכבי אורח</string>
+  <string name="episode_gueststars">כוכבים אורחים</string>
   <string name="episode_writers">כותבים</string>
   <string name="show_isalive">ממשיכה</string>
   <string name="show_isnotalive">הסתיימה</string>
   <string name="no_translation">אין תיאור זמין המתורגם ל%1$s ב-%2$s.</string>
   <string name="no_translation_title">לא תורגם</string>
   <string name="no_spoilers">פרטים מסוימים מוסתרים כדי למנוע ספוילרים. כדי לבטל את זה עבור להגדרות.</string>
-  <string name="format_source">Source: %s</string>
-  <string name="format_last_edited">Last edited: %s</string>
+  <string name="format_source">מקור: %s</string>
+  <string name="format_last_edited">נערך לאחרונה: %s</string>
   <!-- Date and Time -->
   <string name="today">היום</string>
   <string name="now">עכשיו</string>
@@ -101,8 +101,8 @@
   <string name="mark_all">הכל נצפה</string>
   <string name="unmark_all">סמן הכל כלא נצפה</string>
   <string name="mark_untilhere">כל הפרקים ששודרו נצפו</string>
-  <string name="collect_all">אספתי הכל</string>
-  <string name="uncollect_all">לא אספתי כלל</string>
+  <string name="collect_all">אסוף הכול</string>
+  <string name="uncollect_all">אל תאסוף כלום</string>
   <string name="action_skip">דלג</string>
   <string name="action_dont_skip">לא לדלג</string>
   <string name="action_collection_add">הוסף לאוסף</string>
@@ -156,9 +156,9 @@
   <string name="released_today">יצא היום</string>
   <string name="noupcoming">אין פרקים שישודרו בקרוב</string>
   <string name="norecent">אין פרקים חדשים</string>
-  <string name="calendar_settings">Calendar settings</string>
+  <string name="calendar_settings">הגדרות לוח שידורים</string>
   <string name="only_favorites">סדרות מעודפות בלבד</string>
-  <string name="calendar_only_collected">Only collected episodes</string>
+  <string name="calendar_only_collected">רק פרקים שנאספו</string>
   <string name="pref_infinite_scrolling">לוח שנה אינסופית</string>
   <!-- Updating -->
   <string name="update_scheduled">מעדכן&#8230;</string>
@@ -220,19 +220,19 @@
   <string name="movies_in_theatres">בבתי הקולנוע</string>
   <string name="movies_collection">אוסף</string>
   <string name="movies_watchlist">רשימת מעקב</string>
-  <string name="watchlist_add">הוסף לרשימת מעקב</string>
-  <string name="watchlist_remove">הסר מרשימת מעקב</string>
-  <string name="watchlist_added">נוסף לרשימת מעקב</string>
-  <string name="watchlist_removed">הוסר מרשימת מעקב</string>
+  <string name="watchlist_add">הוסף לרשימת צפייה</string>
+  <string name="watchlist_remove">הסר מרשימת צפייה</string>
+  <string name="watchlist_added">נוסף לרשימת צפייה</string>
+  <string name="watchlist_removed">הוסר מרשימת צפייה</string>
   <string name="movies_search_hint">הקלד שם סרט</string>
   <string name="movies_collection_empty">לא הוספת סרטים לאוסף שלך.</string>
-  <string name="movies_watchlist_empty">לא הוספת סרטים לרשימת המעקב שלך.</string>
+  <string name="movies_watchlist_empty">לא הוספת סרטים לרשימת הצפייה שלך.</string>
   <string name="trailer">טריילר</string>
   <string name="movie_cast">משתתפים</string>
   <string name="movie_crew">צוות</string>
-  <string name="action_movies_sort">מיון סרטים</string>
+  <string name="action_movies_sort">מיין סרטים</string>
   <string name="action_movies_sort_title">שם</string>
-  <string name="action_movies_sort_release">תאריך שחרור</string>
+  <string name="action_movies_sort_release">תאריך הפצה</string>
   <!-- Statistics -->
   <string name="statistics_failed">לא ניתן לחשב את הסטטיסטיקה.</string>
   <string name="statistics_shows">סדרות</string>
@@ -241,8 +241,8 @@
   <string name="shows_with_next">%s עם הפרקים הבאים</string>
   <string name="shows_continuing">%s ממשיכים</string>
   <string name="episodes_watched">%s נצפו</string>
-  <string name="runtime_all_episodes">זמן הריצה של כל הפרקים שנצפו</string>
-  <string name="movies_on_watchlist">%s על רשימת המעקב</string>
+  <string name="runtime_all_episodes">משך כל הפרקים שנצפו</string>
+  <string name="movies_on_watchlist">%s ברשימת הצפייה</string>
   <string name="runtime_movies_watchlist">זמן כולל של רשימת הצפייה</string>
   <plurals name="days_plural">
     <item quantity="one">יום %d</item>
@@ -263,15 +263,15 @@
     <item quantity="other">%d דקות</item>
   </plurals>
   <!-- Features -->
-  <string name="feature_supported">Supported</string>
-  <string name="feature_not_supported">Not supported</string>
-  <string name="feature_history">Personal and friend history</string>
-  <string name="feature_comments">Post comments</string>
-  <string name="feature_sync">Sync</string>
+  <string name="feature_supported">נתמך</string>
+  <string name="feature_not_supported">לא נתמך</string>
+  <string name="feature_history">היסטוריה שלי ושל חברים</string>
+  <string name="feature_comments">פרסם תגובות</string>
+  <string name="feature_sync">סנכרן</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">ניסיוני!</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud עוזר לגבות ולסנכרון את התוכניות, הרשימות והסרטים שלך.</string>
+  <string name="hexagon_warning_trakt">בעת ההתחברות עם SeriesGuide Cloud, התכונות של trakt אינן זמינות.</string>
   <string name="hexagon_signin">התחבר</string>
   <string name="hexagon_signout">התנתק</string>
   <string name="hexagon_setup_incomplete">הגדרת SeriesGuide Cloud לא הושלמה.</string>
@@ -284,9 +284,9 @@
   <string name="hexagon_signed_out">אינך מחובר לענן SeriesGuide.</string>
   <string name="hexagon_google_play_missing">כדי להשתמש ב-SeriesGuide בענן, נדרש שירותי Google Play.</string>
   <!-- trakt -->
-  <string name="trakt_submitqueued">שלח ל-Trakt.</string>
+  <string name="trakt_submitqueued">שלח ל-trakt.</string>
   <string name="trakt_seen">%s נצפו.</string>
-  <string name="trakt_notseen">%s שטרם צפית.</string>
+  <string name="trakt_notseen">%s טרם נצפו.</string>
   <string name="trakt_collected">%s שאספת.</string>
   <string name="trakt_notcollected">%s שטרם אספת.</string>
   <string name="checkin_success_trakt">נעשה צ\'ק-אין ל-%s ב-trakt.</string>
@@ -374,9 +374,9 @@
     <item quantity="other">%d דקות לפני</item>
   </plurals>
   <!-- About screen -->
-  <string name="licence_tvdb">יישום זה משתמש בנתונים ותמונות על ידי TheTVDB תחת רישיון CC BY-NC 4.0.</string>
-  <string name="licence_themoviedb">מוצר זה עושה שימוש ב-API TMDb אך אינו נתמך או מאושר על ידי TMDb.</string>
-  <string name="licence_trakt">יישום זה משתמש בנתונים ותמונות על ידי trakt.</string>
+  <string name="licence_tvdb">יישום זה משתמש בנתונים ותמונות מאתר TheTVDB תחת רישיון CC BY-NC 4.0.</string>
+  <string name="licence_themoviedb">מוצר זה עושה שימוש בממשק התכנות של TMDb, אך הוא אינו נתמך או מאושר על ידי TMDb.</string>
+  <string name="licence_trakt">יישום זה משתמש בנתונים ותמונות מאתר trakt.</string>
   <string name="about_open_source">SeriesGuide בנוי באמצעות תוכנת קוד פתוח.</string>
   <string name="licences_and_credits">רישיונות ויוצרים</string>
   <!-- Sort -->

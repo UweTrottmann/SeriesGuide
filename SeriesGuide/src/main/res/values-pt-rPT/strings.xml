@@ -88,8 +88,8 @@
   <string name="no_translation">Não existe nenhuma descrição traduzida para %1$s disponível em %2$s.</string>
   <string name="no_translation_title">Por traduzir</string>
   <string name="no_spoilers">Alguns detalhes estão ocultados para prevenir spoilers. Aceda às Configurações para desativar esta prevenção.</string>
-  <string name="format_source">Source: %s</string>
-  <string name="format_last_edited">Last edited: %s</string>
+  <string name="format_source">Fonte: %s</string>
+  <string name="format_last_edited">Última edição: %s</string>
   <!-- Date and Time -->
   <string name="today">hoje</string>
   <string name="now">agora</string>

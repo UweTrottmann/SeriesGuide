@@ -364,7 +364,7 @@
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Această aplicație folosește date și imagini ale TVDB sub licența CC BY-NC 4.0.</string>
-  <string name="licence_themoviedb">Acest produs utilizează API-ul TMDb, dar nu este aprobat sau certificată de TMDb.</string>
+  <string name="licence_themoviedb">Acest produs utilizează API-ul TMDb, dar nu este aprobat sau certificat de TMDb.</string>
   <string name="licence_trakt">Această aplicație foloseste date şi imagini ale trakt.</string>
   <string name="about_open_source">SeriesGuide este dezvoltat folosind software open source.</string>
   <string name="licences_and_credits">Licențe și credite</string>

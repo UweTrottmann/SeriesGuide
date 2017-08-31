@@ -88,8 +88,8 @@
   <string name="no_translation">Nincs leírás %1$s nyelven a %2$s adatbázisban.</string>
   <string name="no_translation_title">Nincs lefordítva</string>
   <string name="no_spoilers">Néhány részlet elrejtésre kerül a spoilerek megakadályozása miatt. A kikapcsoláshoz menj a Beállításokba.</string>
-  <string name="format_source">Source: %s</string>
-  <string name="format_last_edited">Last edited: %s</string>
+  <string name="format_source">Forrás: %s</string>
+  <string name="format_last_edited">Utoljára szerkesztve: %s</string>
   <!-- Date and Time -->
   <string name="today">ma</string>
   <string name="now">most</string>

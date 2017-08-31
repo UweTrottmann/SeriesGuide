@@ -87,8 +87,8 @@
   <string name="no_translation">%2$s に %1$s 語で利用できる説明はありません。</string>
   <string name="no_translation_title">翻訳されていません</string>
   <string name="no_spoilers">一部の詳細を非表示にして、ネタバレを防ぎます。これをオフにするには設定に移動します。</string>
-  <string name="format_source">Source: %s</string>
-  <string name="format_last_edited">Last edited: %s</string>
+  <string name="format_source">ソース: %s</string>
+  <string name="format_last_edited">最終更新日: %s</string>
   <!-- Date and Time -->
   <string name="today">今日</string>
   <string name="now">今</string>
