@@ -82,16 +82,16 @@ public class BillingActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        mButtonSub = (Button) findViewById(R.id.buttonBillingGetSubscription);
+        mButtonSub = findViewById(R.id.buttonBillingGetSubscription);
         mButtonSub.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 onSubscribeToXButtonClicked();
             }
         });
-        mTextViewPriceSub = (TextView) findViewById(R.id.textViewBillingPriceSubscription);
+        mTextViewPriceSub = findViewById(R.id.textViewBillingPriceSubscription);
 
-        mButtonPass = (Button) findViewById(R.id.buttonBillingGetPass);
+        mButtonPass = findViewById(R.id.buttonBillingGetPass);
         mButtonPass.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -307,7 +307,9 @@ public class BillingActivity extends BaseActivity {
         // show the notification
         final NotificationManager nm = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(SgApp.NOTIFICATION_SUBSCRIPTION_ID, notification);
+        if (nm != null) {
+            nm.notify(SgApp.NOTIFICATION_SUBSCRIPTION_ID, notification);
+        }
     }
 
     /**
@@ -328,12 +330,10 @@ public class BillingActivity extends BaseActivity {
     private void onSubscribeToXButtonClicked() {
         Timber.d("Subscribe button clicked; launching purchase flow for X subscription.");
 
-        String payload = SOME_STRING;
-
         setWaitMode(true);
 
         billingHelper.launchSubscriptionPurchaseFlow(this, SKU_X_SUB_NEW_PURCHASES, RC_REQUEST,
-                purchaseFinishedListener, payload);
+                purchaseFinishedListener, SOME_STRING);
     }
 
     // Callback for when a purchase is finished
