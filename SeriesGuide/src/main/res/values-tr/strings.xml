@@ -463,7 +463,7 @@
   <string name="action_upgrade">Tüm özellikleri aç</string>
   <string name="billing_action_subscribe">Abone ol</string>
   <string name="billing_action_pass">X Pass alın</string>
-  <string name="billing_price_subscribe">%s/yıl, ücretsiz deneyin</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">tek seferlik ödeme</string>
   <string name="upgrade_description">Bildirimler, temalar, daha fazla widgetlar gibi özellikleri acın ve uygulamayı geliştirmeme yardım edin.</string>
   <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>

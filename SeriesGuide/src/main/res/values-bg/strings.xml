@@ -463,7 +463,7 @@
   <string name="action_upgrade">Отключване на всички функции</string>
   <string name="billing_action_subscribe">Абониране</string>
   <string name="billing_action_pass">Вземете X Pass</string>
-  <string name="billing_price_subscribe">%s/година, опитай безплатно</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">еднократно закупуване</string>
   <string name="upgrade_description">Отключване на всички функции, включително нотификации, теми и още опции. Помогни ми за бъдещи актуализации.</string>
   <string name="upgrade_success">Благодаря, че подкрепихте SeriesGuide! Имате достъп до всички фунцкии.</string>

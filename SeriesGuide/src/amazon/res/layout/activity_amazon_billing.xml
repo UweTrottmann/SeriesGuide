@@ -74,7 +74,7 @@
                 android:maxWidth="250dp"
                 android:textAppearance="@style/TextAppearance.Body.Highlight"
                 android:textStyle="italic"
-                tools:text="1.99 €/year, 30 day trial" />
+                tools:text="1.99 €/year, try for free, cancel any time through Amazon" />
 
             <Button
                 android:id="@+id/buttonAmazonBillingGetPass"

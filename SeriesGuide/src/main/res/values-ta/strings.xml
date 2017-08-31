@@ -463,7 +463,7 @@
   <string name="action_upgrade">அனைத்து அம்சங்களும் பூட்டவிழ்</string>
   <string name="billing_action_subscribe">சந்தாதராகு</string>
   <string name="billing_action_pass">பெறு X கடவுச்</string>
-  <string name="billing_price_subscribe">%s/ஆண்டு, முயற்சிக்கவும்-ஓய்வு</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">-முறை வாங்குதல்</string>
   <string name="upgrade_description">அறிவிப்புகள், கருப்பொருள்கள் மற்றும் கூடுதல் பட்டியலில் விட்ஜெட் விருப்பங்கள் உள்பட அனைத்து அம்சங்கள் பூட்டவிழ். என் வருங்கால புதுப்பித்தல்களை செய்யவும் உதவும்.</string>
   <string name="upgrade_success">SeriesGuide ஆதரவு நன்றி! உங்களுக்கு எல்லா அம்சங்களையும் அனுமதி.</string>

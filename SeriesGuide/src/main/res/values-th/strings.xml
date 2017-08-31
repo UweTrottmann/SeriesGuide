@@ -452,7 +452,7 @@
   <string name="action_upgrade">ปลดล็อกคุณสมบัติทั้งหมด</string>
   <string name="billing_action_subscribe">สมัครสมาชิก</string>
   <string name="billing_action_pass">รับ X Pass</string>
-  <string name="billing_price_subscribe">%s/ปี, ลองใช้ฟรี</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">จ่ายครั้งเดียว</string>
   <string name="upgrade_description">ปลดล็อกคุณสมบัติทั้งหมด รวมทั้งการแจ้งเตือน, ธีม และตัวเลือกวิตเจ็ตเพิ่มเติม ช่วยให้เราสร้างการอัปเดตในอนาคต</string>
   <string name="upgrade_success">ขอบคุณสำหรับการสนับสนุน SeriesGuide! คุณสามารถเข้าถึงคุณสมบัติทั้งหมดได้แล้ว</string>

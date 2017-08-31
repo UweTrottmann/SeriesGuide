@@ -463,7 +463,7 @@
   <string name="action_upgrade">باز کردن تمام ویژگی‌ها</string>
   <string name="billing_action_subscribe">اشتراک</string>
   <string name="billing_action_pass">گرفتن X Pass</string>
-  <string name="billing_price_subscribe">‫%s در سال. به رایگان امتحان کنید</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">خرید یک باره</string>
   <string name="upgrade_description">باز کردن تمام ویژگی‌ها شامل آگاهی‌ها، زمینه‌ها و انتخاب‌های ابزارک فهرست بیش‌تر. به من برای ساخت به‌روز رسانی‌های آینده کمک کنید.</string>
   <string name="upgrade_success">تشکّر برای حمایت از سریزگاید! شما به تمام ویژگی‌ها دسترسی دارید.</string>

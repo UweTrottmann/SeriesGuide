@@ -452,7 +452,7 @@
   <string name="action_upgrade">解鎖所有功能</string>
   <string name="billing_action_subscribe">訂閱</string>
   <string name="billing_action_pass">取得 X Pass</string>
-  <string name="billing_price_subscribe">%s 年，免費嘗試</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">一次購買</string>
   <string name="upgrade_description">解鎖所有功能，包括通知、 主題和更多清單小部件。幫助我進行更多地更新。</string>
   <string name="upgrade_success">謝謝贊助SeriesGuide ！您可以使用的所有功能。</string>

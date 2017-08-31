@@ -474,7 +474,7 @@
   <string name="action_upgrade">Розблокувати усі можливості</string>
   <string name="billing_action_subscribe">Підписатись</string>
   <string name="billing_action_pass">Отримати X Pass</string>
-  <string name="billing_price_subscribe">%s/рік, спробуй безкоштовно</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">Одноразове замовлення</string>
   <string name="upgrade_description">Розблокуйте усі функції включно зі сповіщеннями, темами і більшою кількістю опцій для віджетів. Допоможіть випускати майбутні оновлення.</string>
   <string name="upgrade_success">Дякую за підтримку SeriesGuide! Тепер ви маєте доступ до всіх функцій.</string>

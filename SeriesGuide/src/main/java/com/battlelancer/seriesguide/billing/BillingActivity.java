@@ -377,7 +377,10 @@ public class BillingActivity extends BaseActivity {
         // Only enable purchase button if the user does not have the upgrade yet
         mButtonSub.setEnabled(!hasUpgrade);
         mTextViewPriceSub.setText(
-                getString(R.string.billing_price_subscribe, mSubPrice != null ? mSubPrice : "--"));
+                getString(R.string.billing_price_subscribe,
+                        mSubPrice != null ? mSubPrice : "--",
+                        getString(R.string.google_play))
+        );
         mButtonPass.setEnabled(!hasUpgrade);
         mTextHasUpgrade.setVisibility(hasUpgrade ? View.VISIBLE : View.GONE);
     }

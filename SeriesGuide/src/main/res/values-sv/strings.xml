@@ -464,7 +464,7 @@
   <string name="action_upgrade">Lås upp alla funktioner</string>
   <string name="billing_action_subscribe">Prenumerera</string>
   <string name="billing_action_pass">Skaffa X Pass</string>
-  <string name="billing_price_subscribe">%s per år. Prova gratis</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">engångsköp</string>
   <string name="upgrade_description">Lås upp alla funktioner, inklusive aviseringar, teman och fler alternativ för widgets. Hjälp mig att göra framtida uppdateringar.</string>
   <string name="upgrade_success">Tack för att du stödjer SeriesGuide! Du har tillgång till alla funktioner.</string>

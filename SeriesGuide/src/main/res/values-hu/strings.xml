@@ -463,7 +463,7 @@
   <string name="action_upgrade">Összes beállítás feloldása</string>
   <string name="billing_action_subscribe">Előfizetés</string>
   <string name="billing_action_pass">X Pass beszerzése</string>
-  <string name="billing_price_subscribe">%s/év, próbáld ki ingyenesen</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">Egyszeri fizetés</string>
   <string name="upgrade_description">Old fel a összes funkciót, beleértve az értesítéseket, témákat és a több widget lista lehetőséget. Segíts, hogy frissíthessem a programot a jövőben is.</string>
   <string name="upgrade_success">Köszönöm a támogatást. Most már hozzáférsz az összes funkcióhoz.</string>

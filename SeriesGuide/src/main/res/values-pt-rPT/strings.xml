@@ -463,7 +463,7 @@
   <string name="action_upgrade">Desbloquear todas as funcionalidades</string>
   <string name="billing_action_subscribe">Subscrever</string>
   <string name="billing_action_pass">Obter X Pass</string>
-  <string name="billing_price_subscribe">%s/ano, experimenta gratuitamente</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">compra única</string>
   <string name="upgrade_description">Desbloqueias todas as funcionalidades, incluindo notificações, temas e mais opções na lista de widgets. E ajudas-me a fazer atualizações futuras.</string>
   <string name="upgrade_success">Obrigado por apoiares o SeriesGuide! Tens agora acesso a todas as funcionalidades.</string>

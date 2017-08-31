@@ -452,7 +452,7 @@
   <string name="action_upgrade">Buka semua fitur</string>
   <string name="billing_action_subscribe">Berlangganan</string>
   <string name="billing_action_pass">Dapatkan X Pass</string>
-  <string name="billing_price_subscribe">%s/tahun, Coba gratis</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">pembelian satu kali</string>
   <string name="upgrade_description">Buka semua fitur termasuk pemberitahuan, tema dan lebih banyak pilihan daftar widget. Membantu saya membuat pembaruan di masa mendatang.</string>
   <string name="upgrade_success">Terima kasih telah mendukung SeriesGuide! Anda memiliki akses ke semua fitur.</string>

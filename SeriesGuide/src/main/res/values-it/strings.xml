@@ -463,7 +463,7 @@
   <string name="action_upgrade">Sblocca tutte le funzionalità</string>
   <string name="billing_action_subscribe">Abbonati</string>
   <string name="billing_action_pass">Ottieni X Pass</string>
-  <string name="billing_price_subscribe">%s/anno, provalo gratis</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">paga una sola volta</string>
   <string name="upgrade_description">Sblocca tutte le funzionalità, incluse le notifiche, i temi e maggiori opzioni per i widget delle liste. Aiutami a rendere possibile i futuri aggiornamenti.</string>
   <string name="upgrade_success">Grazie per il sostegno a SeriesGuide! Hai accesso a tutte le funzionalità.</string>

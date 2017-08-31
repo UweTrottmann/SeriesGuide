@@ -463,7 +463,7 @@
   <string name="action_upgrade">Open alle restricties</string>
   <string name="billing_action_subscribe">Abonneren</string>
   <string name="billing_action_pass">Neem X-pas</string>
-  <string name="billing_price_subscribe">%s/jaar, probeer het gratis</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">eenmalige aankoop</string>
   <string name="upgrade_description">Ontgrendel alle toekomstige uitbreidingen, inclusief notificaties\' thema\'s en andere opties. Help me om deze applicatie uit te bereiden in de toekomst.</string>
   <string name="upgrade_success">Bedankt om Seriesguide te laten groeien. Je hebt toegang tot alle mogelijkheden.</string>

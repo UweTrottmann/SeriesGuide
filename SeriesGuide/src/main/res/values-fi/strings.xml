@@ -463,7 +463,7 @@
   <string name="action_upgrade">Avaa kaikki ominaisuudet</string>
   <string name="billing_action_subscribe">Tilaa</string>
   <string name="billing_action_pass">Hanki X Pass</string>
-  <string name="billing_price_subscribe">%s/vuosi, kokeile ilmaiseksi</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">kertaluontoinen osto</string>
   <string name="upgrade_description">Avaa kaikki ominaisuudet, kuten ilmoitukset, teemat ja lisää listawidgetin vaihtoehtoja. Auta minua tekemään tulevia päivityksiä.</string>
   <string name="upgrade_success">Kiitos SeriesGuiden tukemisesta! Voit käyttää kaikkia ominaisuuksia</string>

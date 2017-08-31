@@ -463,7 +463,7 @@
   <string name="action_upgrade">Déverrouiller toutes les fonctionnalités</string>
   <string name="billing_action_subscribe">Souscrire</string>
   <string name="billing_action_pass">Obtenir X Pass</string>
-  <string name="billing_price_subscribe">%s/an, essai gratuit</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">Achat à vie</string>
   <string name="upgrade_description">Déverrouille toutes les fonctionnalités dont les notifications, les thèmes et des options supplémentaires pour le widget. Cela m\'aide à réaliser de nouvelles fonctionnalités.</string>
   <string name="upgrade_success">Merci de supporter SeriesGuide ! Vous avez maintenant accès à toutes les fonctionnalités.</string>

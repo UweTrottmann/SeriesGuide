@@ -463,7 +463,7 @@
   <string name="action_upgrade">Oplås alle funktioner</string>
   <string name="billing_action_subscribe">Abonnér</string>
   <string name="billing_action_pass">Få X Pass</string>
-  <string name="billing_price_subscribe">%s/år, prøv gratis</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">engangskøb</string>
   <string name="upgrade_description">Oplås alle funktioner, herunder meddelelser, temaer og flere widget-indstillinger. Hjælp os med at udvikle fremtidige opdateringer.</string>
   <string name="upgrade_success">Tak for din støtte til SeriesGuide! Du har nu adgang til alle funktioner.</string>

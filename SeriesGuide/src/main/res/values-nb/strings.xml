@@ -463,7 +463,7 @@
   <string name="action_upgrade">Lås opp alle funksjoner</string>
   <string name="billing_action_subscribe">Abonner</string>
   <string name="billing_action_pass">Få X pass</string>
-  <string name="billing_price_subscribe">%s i året, prøv gratis</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">engangskjøp</string>
   <string name="upgrade_description">Lås opp alle funksjonene inkludert varslinger, temaer og flere alternativer for modulen. Hjelp meg å lage fremtidige oppdateringer.</string>
   <string name="upgrade_success">Takk for at du støtter SeriesGuide! Du har nå tilgang til alle funksjonene.</string>

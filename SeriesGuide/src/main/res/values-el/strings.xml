@@ -463,7 +463,7 @@
   <string name="action_upgrade">Ξεκλειδώσετε όλα τα χαρακτηριστικά</string>
   <string name="billing_action_subscribe">Παρακολούθηση</string>
   <string name="billing_action_pass">Αποκτήστε το X Pass</string>
-  <string name="billing_price_subscribe">%s/year, δοκιμάστε το δωρεάν</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">εφάπαξ αγοράς</string>
   <string name="upgrade_description">Ξεκλειδώσετε όλα τα χαρακτηριστικά συμπεριλαμβανομένων των κοινοποιήσεων, θεμάτων και περισσότερες επιλογές widget λιστών. Βοήθησε με να κάνω μελλοντικές ενημερώσεις.</string>
   <string name="upgrade_success">Ευχαριστούμε για την υποστήριξη του SeriesGuide! Έχετε πρόσβαση σε όλα τα χαρακτηριστικά.</string>
