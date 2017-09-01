@@ -9,6 +9,14 @@ Version 39
 ----------
 *(in development)*
 
+#### 39-beta2
+*(2017-09-01)*
+
+* 🔧 Widget: allow network text to be wider.
+* 🔧 Updated subscription and one-time purchase pricing.
+* 🔨 Setting episode watched from notification may not work if device is really busy.
+* 📝 Latest translations from crowdin.
+
 #### 39-beta1
 *(2017-08-11)*
 
