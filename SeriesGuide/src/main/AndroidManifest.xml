@@ -5,7 +5,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Extensions (package change receiver), Analytics (non-Google Play devices) -->
+    <!-- JobIntentServices, extensions (package change receiver), Analytics (non-Google Play devices) -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -232,6 +232,9 @@
 
         <!-- Unwatched counter update service -->
         <service android:name="com.battlelancer.seriesguide.service.UnwatchedUpdaterService" />
+        <service
+            android:name="com.battlelancer.seriesguide.service.EpisodeFlagService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <!-- Notification service -->
         <service android:name="com.battlelancer.seriesguide.service.NotificationService" />

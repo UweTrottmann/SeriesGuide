@@ -225,7 +225,7 @@ public class EpisodeTools {
                         return ERROR_NETWORK;
                     }
 
-                    int result = uploadToTrakt(traktId);
+                    int result = uploadToTrakt(context, flagType, traktId);
                     if (result < 0) {
                         return result;
                     }
@@ -239,7 +239,7 @@ public class EpisodeTools {
             return SUCCESS;
         }
 
-        private static int uploadToHexagon(Context app, HexagonTools hexagonTools, int showTvdbId,
+        public static int uploadToHexagon(Context app, HexagonTools hexagonTools, int showTvdbId,
                 @NonNull List<Episode> batch) {
             EpisodeList uploadWrapper = new EpisodeList();
             uploadWrapper.setShowTvdbId(showTvdbId);
@@ -293,7 +293,8 @@ public class EpisodeTools {
             return true;
         }
 
-        private int uploadToTrakt(int showTraktId) {
+        public static int uploadToTrakt(Context context, EpisodeTaskTypes.FlagType flagType,
+                int showTraktId) {
             List<SyncSeason> flags = flagType.getEpisodesForTrakt();
             if (flags != null && flags.isEmpty()) {
                 return SUCCESS; // nothing to upload, done.
