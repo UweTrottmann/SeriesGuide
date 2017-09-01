@@ -452,7 +452,7 @@
   <string name="action_upgrade">解锁高级功能</string>
   <string name="billing_action_subscribe">订阅</string>
   <string name="billing_action_pass">购买 SeriesGuide X</string>
-  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+  <string name="billing_price_subscribe">%1$s 每年，免费试用，通过 %2$s 随时取消订阅</string>
   <string name="billing_price_pass">一次性支付</string>
   <string name="upgrade_description">解锁完整版应用程序，包括推送通知、主题、小部件等功能。\n您支付的费用将帮助作者开发和完善新功能。</string>
   <string name="upgrade_success">恭喜，您已解锁全部高级功能！感谢您的支持！</string>

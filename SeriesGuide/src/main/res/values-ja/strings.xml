@@ -452,7 +452,7 @@
   <string name="action_upgrade">すべての機能のロックを解除</string>
   <string name="billing_action_subscribe">登録する</string>
   <string name="billing_action_pass">X Pass を入手</string>
-  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+  <string name="billing_price_subscribe">%1$s/年、無料でお試しください、%2$s からいつでもキャンセルできます</string>
   <string name="billing_price_pass">一回限りの支払</string>
   <string name="upgrade_description">通知、テーマ、および多くのリスト ウィジェットのオプションを含む、すべての機能のロックを解除します。将来の更新に役立ちます。</string>
   <string name="upgrade_success">SeriesGuide のサポートをありがとうございます! すべての機能にアクセスすることができます。</string>

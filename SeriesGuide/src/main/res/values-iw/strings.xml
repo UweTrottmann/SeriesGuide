@@ -485,7 +485,7 @@
   <string name="action_upgrade">פתח את כל האפשרויות</string>
   <string name="billing_action_subscribe">הצטרף כמנוי</string>
   <string name="billing_action_pass">קבל את X Pass</string>
-  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+  <string name="billing_price_subscribe">%1$s לשנה, נסה בחינם, בטל בכל עת באמצעות %2$s</string>
   <string name="billing_price_pass">רכישה חד פעמית</string>
   <string name="upgrade_description">פתח את כל האפשרויות, כולל התראות, ערכות נושא ואפשרויות נוספות בווידג\'ט הרשימה. עזור לי לפתח עדכונים עתידיים.</string>
   <string name="upgrade_success">תודה על תמיכתך ב-SeriesGuide! יש לך גישה לכל האפשרויות.</string>

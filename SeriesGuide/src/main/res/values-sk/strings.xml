@@ -474,7 +474,7 @@
   <string name="action_upgrade">Odomknúť všetky funkcie</string>
   <string name="billing_action_subscribe">Predplatiť</string>
   <string name="billing_action_pass">Získať X Pass</string>
-  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+  <string name="billing_price_subscribe">%1$s/ročne, vyskúšajte zadarmo, zrušte kedykoľvek prostredníctvom %2$s</string>
   <string name="billing_price_pass">jednorázová platba</string>
   <string name="upgrade_description">Odomknúť všetky funkcie vrátane upozornení, tém a možností pre miniaplikáciu. Pomôžte mi s budúcimi aktualizáciami.</string>
   <string name="upgrade_success">Ďakujeme za podporu SeriesGuide! Máte prístup ku všetkým funkciám.</string>
