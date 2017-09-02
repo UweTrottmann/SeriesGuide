@@ -241,7 +241,7 @@ public class BillingActivity extends BaseActivity {
         // Does the user have an active unlock all subscription?
         Purchase subscriptionPurchase = inventory.getPurchase(SKU_X_SUB_2017_08);
         if (subscriptionPurchase == null) {
-            subscriptionPurchase = inventory.getPurchase(SKU_X_SUB_2014_02);
+            subscriptionPurchase = inventory.getPurchase(SKU_X_SUB_2016_05);
         }
         if (subscriptionPurchase == null) {
             subscriptionPurchase = inventory.getPurchase(SKU_X_SUB_2014_02);
