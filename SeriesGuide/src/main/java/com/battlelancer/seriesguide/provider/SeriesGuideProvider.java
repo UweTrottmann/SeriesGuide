@@ -19,6 +19,7 @@ import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.SelectionBuilder;
 import java.util.ArrayList;
@@ -97,6 +98,8 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int RENEW_FTSTABLE = 1000;
 
+    private static final int JOBS = 1100;
+
     /**
      * Build and return a {@link UriMatcher} that catches all {@link Uri} variations supported by
      * this {@link ContentProvider}.
@@ -162,6 +165,9 @@ public class SeriesGuideProvider extends ContentProvider {
         // Activity
         matcher.addURI(authority, SeriesGuideContract.PATH_ACTIVITY, ACTIVITY);
 
+        // Jobs
+        matcher.addURI(authority, SeriesGuideContract.PATH_JOBS, JOBS);
+
         // Search
         matcher.addURI(authority, SeriesGuideContract.PATH_EPISODESEARCH + "/"
                 + SeriesGuideContract.PATH_SEARCH, EPISODESEARCH);
@@ -185,8 +191,8 @@ public class SeriesGuideProvider extends ContentProvider {
 
     @Override
     public void shutdown() {
-        /**
-         * If we ever do unit-testing, nice to have this already (no bug-hunt).
+        /*
+          If we ever do unit-testing, nice to have this already (no bug-hunt).
          */
         if (mDbHelper != null) {
             mDbHelper.close();
@@ -317,6 +323,8 @@ public class SeriesGuideProvider extends ContentProvider {
                 return Movies.CONTENT_ITEM_TYPE;
             case ACTIVITY:
                 return Activity.CONTENT_TYPE;
+            case JOBS:
+                return Jobs.CONTENT_TYPE;
             case SEARCH_SUGGEST:
                 return SearchManager.SUGGEST_MIME_TYPE;
             case RENEW_FTSTABLE:
@@ -469,6 +477,14 @@ public class SeriesGuideProvider extends ContentProvider {
                 notifyUri = Activity.buildActivityUri(values.getAsString(Activity.EPISODE_TVDB_ID));
                 break;
             }
+            case JOBS: {
+                long id = db.insert(Tables.JOBS, null, values);
+                if (id < 0) {
+                    break;
+                }
+                notifyUri = Jobs.buildJobUri(values.getAsLong(Jobs.CREATED_MS));
+                break;
+            }
             default: {
                 throw new IllegalArgumentException("Unknown uri: " + uri);
             }
@@ -486,7 +502,7 @@ public class SeriesGuideProvider extends ContentProvider {
         if (LOGV) {
             Timber.v("update(uri=%s, values=%s)", uri, values.toString());
         }
-        int count = 0;
+        int count;
 
         if (!applyingBatch()) {
             final SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -522,7 +538,7 @@ public class SeriesGuideProvider extends ContentProvider {
         if (LOGV) {
             Timber.v("delete(uri=%s)", uri);
         }
-        int count = 0;
+        int count;
 
         if (!applyingBatch()) {
             final SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -703,6 +719,9 @@ public class SeriesGuideProvider extends ContentProvider {
             }
             case ACTIVITY: {
                 return builder.table(Tables.ACTIVITY);
+            }
+            case JOBS: {
+                return builder.table(Tables.JOBS);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
