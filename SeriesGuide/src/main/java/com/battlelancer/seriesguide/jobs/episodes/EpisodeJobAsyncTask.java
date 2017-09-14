@@ -13,7 +13,6 @@ import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
@@ -300,11 +299,6 @@ public class EpisodeJobAsyncTask extends AsyncTask<Void, Void, Void> {
                 new BaseNavDrawerActivity.ServiceCompletedEvent(confirmationText,
                         displaySuccess));
         EventBus.getDefault().post(new CompletedEvent(job, isSuccessful));
-
-        if (isSuccessful) {
-            // update latest episode for the changed show
-            LatestEpisodeUpdateTask.updateLatestEpisodeFor(context, job.getShowTvdbId());
-        }
     }
 
     /**

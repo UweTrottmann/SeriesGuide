@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncSeason;
@@ -61,8 +62,8 @@ public abstract class BaseJob implements EpisodeFlagJob {
     protected abstract void setHexagonFlag(Episode episode);
 
     /**
-     * Builds a list of episodes ready to upload to hexagon. However, the show TVDb id is not
-     * set. It should be set in a wrapping {@link com.uwetrottmann.seriesguide.backend.episodes.model.EpisodeList}.
+     * Builds a list of episodes ready to upload to hexagon. However, the show TVDb id is not set.
+     * It should be set in a wrapping {@link com.uwetrottmann.seriesguide.backend.episodes.model.EpisodeList}.
      */
     @Override
     public List<Episode> getEpisodesForHexagon(Context context) {
@@ -167,10 +168,11 @@ public abstract class BaseJob implements EpisodeFlagJob {
     }
 
     /**
-     * Set last watched episode and/or last watched time of a show.
+     * Set last watched episode and/or last watched time of a show, then update the episode shown as
+     * next.
      *
-     * @param lastWatchedEpisodeId The last watched episode for a show to save to the database.
-     * -1 for no-op.
+     * @param lastWatchedEpisodeId The last watched episode for a show to save to the database. -1
+     * for no-op.
      * @param setLastWatchedToNow Whether to set the last watched time of a show to now.
      */
     protected final void updateLastWatched(Context context,
@@ -188,5 +190,6 @@ public abstract class BaseJob implements EpisodeFlagJob {
                     SeriesGuideContract.Shows.buildShowUri(String.valueOf(showTvdbId)),
                     values, null, null);
         }
+        LatestEpisodeUpdateTask.updateLatestEpisodeFor(context, getShowTvdbId());
     }
 }
