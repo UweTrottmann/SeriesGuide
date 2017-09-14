@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
+import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
 import com.battlelancer.seriesguide.loaders.RecentlyWatchedLoader;
 import com.battlelancer.seriesguide.loaders.TraktFriendsEpisodeHistoryLoader;
 import com.battlelancer.seriesguide.loaders.TraktRecentEpisodeHistoryLoader;
@@ -35,7 +36,6 @@ import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.ViewTools;
-import com.battlelancer.seriesguide.util.tasks.EpisodeFlagJobs;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
@@ -320,7 +320,7 @@ public class ShowsNowFragment extends Fragment {
         }
         // reload recently watched if user set or unset an episode watched
         // however, if connected to trakt do not show local history
-        if (event.job instanceof EpisodeFlagJobs.EpisodeWatchedJob
+        if (event.job instanceof EpisodeWatchedJob
                 && !TraktCredentials.get(getActivity()).hasCredentials()) {
             isLoadingRecentlyWatched = true;
             getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,

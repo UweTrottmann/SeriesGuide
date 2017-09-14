@@ -46,7 +46,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
-import com.battlelancer.seriesguide.util.tasks.EpisodeFlagJobs.SeasonWatchedJob;
+import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob;
 import java.lang.ref.WeakReference;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

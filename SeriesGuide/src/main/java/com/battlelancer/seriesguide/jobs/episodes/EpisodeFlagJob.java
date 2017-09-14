@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.util.tasks;
+package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.support.annotation.Nullable;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
@@ -10,7 +10,7 @@ public interface EpisodeFlagJob {
 
     int getFlagValue();
 
-    EpisodeFlagJobs.Action getAction();
+    JobAction getAction();
 
     List<Episode> getEpisodesForHexagon();
 

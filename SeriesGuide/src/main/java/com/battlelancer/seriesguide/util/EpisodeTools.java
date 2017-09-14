@@ -10,13 +10,20 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.jobs.episodes.EpisodeCollectedJob;
+import com.battlelancer.seriesguide.jobs.episodes.EpisodeFlagJob;
+import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
+import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedPreviousJob;
+import com.battlelancer.seriesguide.jobs.episodes.JobAction;
+import com.battlelancer.seriesguide.jobs.episodes.SeasonCollectedJob;
+import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob;
+import com.battlelancer.seriesguide.jobs.episodes.ShowCollectedJob;
+import com.battlelancer.seriesguide.jobs.episodes.ShowWatchedJob;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
-import com.battlelancer.seriesguide.util.tasks.EpisodeFlagJob;
-import com.battlelancer.seriesguide.util.tasks.EpisodeFlagJobs;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
@@ -89,19 +96,15 @@ public class EpisodeTools {
             int season, int episode, int episodeFlags) {
         validateFlags(episodeFlags);
         execute(context,
-                new EpisodeFlagJobs.EpisodeWatchedJob(context, showTvdbId, episodeTvdbId, season,
-                        episode,
-                        episodeFlags)
-        );
+                new EpisodeWatchedJob(context, showTvdbId, episodeTvdbId, season, episode,
+                        episodeFlags));
     }
 
     public static void episodeCollected(Context context, int showTvdbId, int episodeTvdbId,
             int season, int episode, boolean isFlag) {
         execute(context,
-                new EpisodeFlagJobs.EpisodeCollectedJob(context, showTvdbId, episodeTvdbId,
-                        season, episode,
-                        isFlag ? 1 : 0)
-        );
+                new EpisodeCollectedJob(context, showTvdbId, episodeTvdbId, season, episode,
+                        isFlag ? 1 : 0));
     }
 
     /**
@@ -110,39 +113,28 @@ public class EpisodeTools {
      */
     public static void episodeWatchedPrevious(Context context, int showTvdbId,
             long episodeFirstAired) {
-        execute(context,
-                new EpisodeFlagJobs.EpisodeWatchedPreviousJob(context, showTvdbId,
-                        episodeFirstAired)
-        );
+        execute(context, new EpisodeWatchedPreviousJob(context, showTvdbId, episodeFirstAired));
     }
 
     public static void seasonWatched(Context context, int showTvdbId, int seasonTvdbId, int season,
             int episodeFlags) {
         validateFlags(episodeFlags);
-        execute(context,
-                new EpisodeFlagJobs.SeasonWatchedJob(context, showTvdbId, seasonTvdbId, season,
-                        episodeFlags)
-        );
+        execute(context, new SeasonWatchedJob(context, showTvdbId, seasonTvdbId, season,
+                episodeFlags));
     }
 
     public static void seasonCollected(Context context, int showTvdbId, int seasonTvdbId,
             int season, boolean isFlag) {
         execute(context,
-                new EpisodeFlagJobs.SeasonCollectedJob(context, showTvdbId, seasonTvdbId, season,
-                        isFlag ? 1 : 0)
-        );
+                new SeasonCollectedJob(context, showTvdbId, seasonTvdbId, season, isFlag ? 1 : 0));
     }
 
     public static void showWatched(Context context, int showTvdbId, boolean isFlag) {
-        execute(context,
-                new EpisodeFlagJobs.ShowWatchedJob(context, showTvdbId, isFlag ? 1 : 0)
-        );
+        execute(context, new ShowWatchedJob(context, showTvdbId, isFlag ? 1 : 0));
     }
 
     public static void showCollected(Context context, int showTvdbId, boolean isFlag) {
-        execute(context,
-                new EpisodeFlagJobs.ShowCollectedJob(context, showTvdbId, isFlag ? 1 : 0)
-        );
+        execute(context, new ShowCollectedJob(context, showTvdbId, isFlag ? 1 : 0));
     }
 
     /**
@@ -310,12 +302,12 @@ public class EpisodeTools {
             SyncShow show = new SyncShow().id(ShowIds.trakt(showTraktId));
             SyncItems items = new SyncItems().shows(show);
             // add season or episodes
-            EpisodeFlagJobs.Action flagAction = flagType.getAction();
-            if (flagAction == EpisodeFlagJobs.Action.SEASON_WATCHED
-                    || flagAction == EpisodeFlagJobs.Action.SEASON_COLLECTED
-                    || flagAction == EpisodeFlagJobs.Action.EPISODE_WATCHED
-                    || flagAction == EpisodeFlagJobs.Action.EPISODE_COLLECTED
-                    || flagAction == EpisodeFlagJobs.Action.EPISODE_WATCHED_PREVIOUS) {
+            JobAction flagAction = flagType.getAction();
+            if (flagAction == JobAction.SEASON_WATCHED
+                    || flagAction == JobAction.SEASON_COLLECTED
+                    || flagAction == JobAction.EPISODE_WATCHED
+                    || flagAction == JobAction.EPISODE_COLLECTED
+                    || flagAction == JobAction.EPISODE_WATCHED_PREVIOUS) {
                 show.seasons(flags);
             }
 

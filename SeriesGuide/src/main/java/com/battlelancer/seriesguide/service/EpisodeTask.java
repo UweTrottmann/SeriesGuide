@@ -7,14 +7,14 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.battlelancer.seriesguide.util.ShowTools;
-import com.battlelancer.seriesguide.util.tasks.EpisodeFlagJob;
-import com.battlelancer.seriesguide.util.tasks.EpisodeFlagJobs;
+import com.battlelancer.seriesguide.jobs.episodes.EpisodeFlagJob;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 
@@ -38,8 +38,8 @@ public class EpisodeTask {
         if (details == null) {
             return null;
         }
-        EpisodeFlagJobs.EpisodeWatchedJob taskType
-                = new EpisodeFlagJobs.EpisodeWatchedJob(context, details.showTvdbId,
+        EpisodeWatchedJob taskType
+                = new EpisodeWatchedJob(context, details.showTvdbId,
                 episodeTvdbId, details.season, details.episode, flag);
         return new EpisodeTask(context, taskType);
     }
