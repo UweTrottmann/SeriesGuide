@@ -97,8 +97,7 @@ public class EpisodeTask {
         }
 
         // update local database (if uploading went smoothly or not uploading at all)
-        taskType.updateDatabase();
-        taskType.onPostExecute();
+        taskType.applyLocalChanges();
 
         handleWorkResult(SUCCESS);
     }

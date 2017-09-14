@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -171,6 +172,7 @@ public class EpisodeTools {
         private static final int ERROR_TRAKT_API = -3;
         private static final int ERROR_HEXAGON_API = -4;
 
+        @SuppressLint("StaticFieldLeak") // using application context
         private final Context context;
         private final EpisodeTaskTypes.FlagType flagType;
 
@@ -233,8 +235,7 @@ public class EpisodeTools {
             }
 
             // update local database (if uploading went smoothly or not uploading at all)
-            flagType.updateDatabase();
-            flagType.onPostExecute();
+            flagType.applyLocalChanges();
 
             return SUCCESS;
         }
