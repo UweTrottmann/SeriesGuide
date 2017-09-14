@@ -157,7 +157,7 @@ public class EpisodeTools {
         }
     }
 
-    public static class EpisodeAsyncFlagTask extends AsyncTask<Void, Void, Integer> {
+    public static class EpisodeAsyncFlagTask extends AsyncTask<Void, Void, Void> {
 
         private static final int SUCCESS = 0;
         private static final int ERROR_NETWORK = -1;
@@ -180,28 +180,27 @@ public class EpisodeTools {
         }
 
         @Override
-        protected void onPreExecute() {
+        protected Void doInBackground(Void... params) {
             shouldSendToHexagon = HexagonSettings.isEnabled(context);
             shouldSendToTrakt = TraktCredentials.get(context).hasCredentials()
                     && !isSkipped(job.getFlagValue());
 
             EventBus.getDefault().postSticky(new BaseNavDrawerActivity.ServiceActiveEvent(
                     shouldSendToHexagon, shouldSendToTrakt));
-        }
 
-        @Override
-        protected Integer doInBackground(Void... params) {
             // upload to hexagon
             if (shouldSendToHexagon) {
                 if (!AndroidUtils.isNetworkConnected(context)) {
-                    return ERROR_NETWORK;
+                    handleResult(ERROR_NETWORK);
+                    return null;
                 }
 
                 HexagonTools hexagonTools = SgApp.getServicesComponent(context).hexagonTools();
                 int result = uploadToHexagon(context, hexagonTools, job.getShowTvdbId(),
                         job.getEpisodesForHexagon());
                 if (result < 0) {
-                    return result;
+                    handleResult(result);
+                    return null;
                 }
             }
 
@@ -217,12 +216,14 @@ public class EpisodeTools {
                 canSendToTrakt = traktId != null;
                 if (canSendToTrakt) {
                     if (!AndroidUtils.isNetworkConnected(context)) {
-                        return ERROR_NETWORK;
+                        handleResult(ERROR_NETWORK);
+                        return null;
                     }
 
                     int result = uploadToTrakt(context, job, traktId);
                     if (result < 0) {
-                        return result;
+                        handleResult(result);
+                        return null;
                     }
                 }
             }
@@ -230,7 +231,8 @@ public class EpisodeTools {
             // update local database (if uploading went smoothly or not uploading at all)
             job.applyLocalChanges();
 
-            return SUCCESS;
+            handleResult(SUCCESS);
+            return null;
         }
 
         public static int uploadToHexagon(Context app, HexagonTools hexagonTools, int showTvdbId,
@@ -391,8 +393,7 @@ public class EpisodeTools {
             return true;
         }
 
-        @Override
-        protected void onPostExecute(Integer result) {
+        private void handleResult(Integer result) {
             EventBus.getDefault().removeStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent.class);
 
             // handle errors
@@ -426,15 +427,14 @@ public class EpisodeTools {
                 confirmationText = isSuccessful ? job.getConfirmationText() : error;
                 displaySuccess = isSuccessful;
             }
-            EventBus.getDefault()
-                    .post(new BaseNavDrawerActivity.ServiceCompletedEvent(confirmationText,
+            EventBus.getDefault().post(
+                    new BaseNavDrawerActivity.ServiceCompletedEvent(confirmationText,
                             displaySuccess));
             EventBus.getDefault().post(new EpisodeTaskCompletedEvent(job, isSuccessful));
 
             if (isSuccessful) {
                 // update latest episode for the changed show
-                new LatestEpisodeUpdateTask(context).executeOnExecutor(
-                        AsyncTask.THREAD_POOL_EXECUTOR, job.getShowTvdbId());
+                LatestEpisodeUpdateTask.updateLatestEpisodeFor(context, job.getShowTvdbId());
             }
         }
     }
