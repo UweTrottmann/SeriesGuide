@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,7 +46,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
-import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes.SeasonWatchedType;
+import com.battlelancer.seriesguide.util.tasks.EpisodeFlagJobs.SeasonWatchedJob;
 import java.lang.ref.WeakReference;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -209,9 +210,9 @@ public class SeasonsFragment extends ListFragment {
             return; // no longer added to activity
         }
         updateRemainingCounter();
-        if (event.flagType instanceof SeasonWatchedType) {
+        if (event.job instanceof SeasonWatchedJob) {
             // If we can narrow it down to just one season...
-            SeasonWatchedType seasonWatchedType = (SeasonWatchedType) event.flagType;
+            SeasonWatchedJob seasonWatchedType = (SeasonWatchedJob) event.job;
             getActivity().startService(UnwatchedUpdaterService.buildIntent(getContext(),
                     getShowId(), seasonWatchedType.getSeasonTvdbId()));
         } else {
@@ -280,6 +281,7 @@ public class SeasonsFragment extends ListFragment {
     private static class RemainingUpdateTask extends AsyncTask<String, Void, int[]> {
 
         private final WeakReference<SeasonsFragment> seasonsFragment;
+        @SuppressLint("StaticFieldLeak") // using application context
         private final Context context;
 
         RemainingUpdateTask(SeasonsFragment seasonsFragment) {

@@ -13,7 +13,8 @@ import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.battlelancer.seriesguide.util.ShowTools;
-import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes;
+import com.battlelancer.seriesguide.util.tasks.EpisodeFlagJob;
+import com.battlelancer.seriesguide.util.tasks.EpisodeFlagJobs;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 
@@ -26,7 +27,7 @@ public class EpisodeTask {
     private static final int ERROR_HEXAGON_API = -4;
 
     private final Context context;
-    private final EpisodeTaskTypes.FlagType taskType;
+    private final EpisodeFlagJob job;
 
     private boolean shouldSendToTrakt;
     private boolean canSendToTrakt;
@@ -37,21 +38,21 @@ public class EpisodeTask {
         if (details == null) {
             return null;
         }
-        EpisodeTaskTypes.EpisodeWatchedType taskType
-                = new EpisodeTaskTypes.EpisodeWatchedType(context, details.showTvdbId,
+        EpisodeFlagJobs.EpisodeWatchedJob taskType
+                = new EpisodeFlagJobs.EpisodeWatchedJob(context, details.showTvdbId,
                 episodeTvdbId, details.season, details.episode, flag);
         return new EpisodeTask(context, taskType);
     }
 
-    private EpisodeTask(Context context, EpisodeTaskTypes.FlagType taskType) {
+    private EpisodeTask(Context context, EpisodeFlagJob job) {
         this.context = context;
-        this.taskType = taskType;
+        this.job = job;
     }
 
     public void execute() {
         boolean shouldSendToHexagon = HexagonSettings.isEnabled(context);
         shouldSendToTrakt = TraktCredentials.get(context).hasCredentials()
-                && !EpisodeTools.isSkipped(taskType.getFlagValue());
+                && !EpisodeTools.isSkipped(job.getFlagValue());
 
         EventBus.getDefault().postSticky(new BaseNavDrawerActivity.ServiceActiveEvent(
                 shouldSendToHexagon, shouldSendToTrakt));
@@ -64,8 +65,8 @@ public class EpisodeTask {
             }
 
             HexagonTools hexagonTools = SgApp.getServicesComponent(context).hexagonTools();
-            int result = EpisodeTools.EpisodeFlagTask.uploadToHexagon(context, hexagonTools,
-                    taskType.getShowTvdbId(), taskType.getEpisodesForHexagon());
+            int result = EpisodeTools.EpisodeAsyncFlagTask.uploadToHexagon(context, hexagonTools,
+                    job.getShowTvdbId(), job.getEpisodesForHexagon());
             if (result < 0) {
                 handleWorkResult(result);
                 return;
@@ -80,7 +81,7 @@ public class EpisodeTask {
          */
         if (shouldSendToTrakt) {
             // Do not send if show has no trakt id (was not on trakt last time we checked).
-            Integer traktId = ShowTools.getShowTraktId(context, taskType.getShowTvdbId());
+            Integer traktId = ShowTools.getShowTraktId(context, job.getShowTvdbId());
             canSendToTrakt = traktId != null;
             if (canSendToTrakt) {
                 if (!AndroidUtils.isNetworkConnected(context)) {
@@ -88,7 +89,7 @@ public class EpisodeTask {
                     return;
                 }
 
-                int result = EpisodeTools.EpisodeFlagTask.uploadToTrakt(context, taskType, traktId);
+                int result = EpisodeTools.EpisodeAsyncFlagTask.uploadToTrakt(context, job, traktId);
                 if (result < 0) {
                     handleWorkResult(result);
                     return;
@@ -97,7 +98,7 @@ public class EpisodeTask {
         }
 
         // update local database (if uploading went smoothly or not uploading at all)
-        taskType.applyLocalChanges();
+        job.applyLocalChanges();
 
         handleWorkResult(SUCCESS);
     }
@@ -127,7 +128,7 @@ public class EpisodeTask {
 
         if (isSuccessful) {
             // update latest episode for the changed show
-            LatestEpisodeUpdateTask.updateLatestEpisodeFor(context, taskType.getShowTvdbId());
+            LatestEpisodeUpdateTask.updateLatestEpisodeFor(context, job.getShowTvdbId());
         }
 
         // post completed status
@@ -138,14 +139,14 @@ public class EpisodeTask {
             confirmationText = context.getString(R.string.trakt_notice_not_exists);
             displaySuccess = false;
         } else {
-            confirmationText = isSuccessful ? taskType.getConfirmationText() : error;
+            confirmationText = isSuccessful ? job.getConfirmationText() : error;
             displaySuccess = isSuccessful;
         }
         EventBus.getDefault()
                 .post(new BaseNavDrawerActivity.ServiceCompletedEvent(confirmationText,
                         displaySuccess));
         EventBus.getDefault()
-                .post(new EpisodeTools.EpisodeTaskCompletedEvent(taskType, isSuccessful));
+                .post(new EpisodeTools.EpisodeTaskCompletedEvent(job, isSuccessful));
     }
 
     @Nullable

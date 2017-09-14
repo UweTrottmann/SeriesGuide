@@ -15,7 +15,8 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
-import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes;
+import com.battlelancer.seriesguide.util.tasks.EpisodeFlagJob;
+import com.battlelancer.seriesguide.util.tasks.EpisodeFlagJobs;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
@@ -88,7 +89,7 @@ public class EpisodeTools {
             int season, int episode, int episodeFlags) {
         validateFlags(episodeFlags);
         execute(context,
-                new EpisodeTaskTypes.EpisodeWatchedType(context, showTvdbId, episodeTvdbId, season,
+                new EpisodeFlagJobs.EpisodeWatchedJob(context, showTvdbId, episodeTvdbId, season,
                         episode,
                         episodeFlags)
         );
@@ -97,7 +98,7 @@ public class EpisodeTools {
     public static void episodeCollected(Context context, int showTvdbId, int episodeTvdbId,
             int season, int episode, boolean isFlag) {
         execute(context,
-                new EpisodeTaskTypes.EpisodeCollectedType(context, showTvdbId, episodeTvdbId,
+                new EpisodeFlagJobs.EpisodeCollectedJob(context, showTvdbId, episodeTvdbId,
                         season, episode,
                         isFlag ? 1 : 0)
         );
@@ -110,7 +111,7 @@ public class EpisodeTools {
     public static void episodeWatchedPrevious(Context context, int showTvdbId,
             long episodeFirstAired) {
         execute(context,
-                new EpisodeTaskTypes.EpisodeWatchedPreviousType(context, showTvdbId,
+                new EpisodeFlagJobs.EpisodeWatchedPreviousJob(context, showTvdbId,
                         episodeFirstAired)
         );
     }
@@ -119,7 +120,7 @@ public class EpisodeTools {
             int episodeFlags) {
         validateFlags(episodeFlags);
         execute(context,
-                new EpisodeTaskTypes.SeasonWatchedType(context, showTvdbId, seasonTvdbId, season,
+                new EpisodeFlagJobs.SeasonWatchedJob(context, showTvdbId, seasonTvdbId, season,
                         episodeFlags)
         );
     }
@@ -127,44 +128,44 @@ public class EpisodeTools {
     public static void seasonCollected(Context context, int showTvdbId, int seasonTvdbId,
             int season, boolean isFlag) {
         execute(context,
-                new EpisodeTaskTypes.SeasonCollectedType(context, showTvdbId, seasonTvdbId, season,
+                new EpisodeFlagJobs.SeasonCollectedJob(context, showTvdbId, seasonTvdbId, season,
                         isFlag ? 1 : 0)
         );
     }
 
     public static void showWatched(Context context, int showTvdbId, boolean isFlag) {
         execute(context,
-                new EpisodeTaskTypes.ShowWatchedType(context, showTvdbId, isFlag ? 1 : 0)
+                new EpisodeFlagJobs.ShowWatchedJob(context, showTvdbId, isFlag ? 1 : 0)
         );
     }
 
     public static void showCollected(Context context, int showTvdbId, boolean isFlag) {
         execute(context,
-                new EpisodeTaskTypes.ShowCollectedType(context, showTvdbId, isFlag ? 1 : 0)
+                new EpisodeFlagJobs.ShowCollectedJob(context, showTvdbId, isFlag ? 1 : 0)
         );
     }
 
     /**
      * Run the task on the thread pool.
      */
-    private static void execute(Context context, @NonNull EpisodeTaskTypes.FlagType type) {
-        new EpisodeFlagTask(context, type).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    private static void execute(Context context, @NonNull EpisodeFlagJob job) {
+        new EpisodeAsyncFlagTask(context, job).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /**
      * Posted once the episode task has completed. It may not have been successful.
      */
     public static class EpisodeTaskCompletedEvent {
-        public final EpisodeTaskTypes.FlagType flagType;
+        public final EpisodeFlagJob job;
         public final boolean isSuccessful;
 
-        public EpisodeTaskCompletedEvent(EpisodeTaskTypes.FlagType flagType, boolean isSuccessful) {
-            this.flagType = flagType;
+        public EpisodeTaskCompletedEvent(EpisodeFlagJob job, boolean isSuccessful) {
+            this.job = job;
             this.isSuccessful = isSuccessful;
         }
     }
 
-    public static class EpisodeFlagTask extends AsyncTask<Void, Void, Integer> {
+    public static class EpisodeAsyncFlagTask extends AsyncTask<Void, Void, Integer> {
 
         private static final int SUCCESS = 0;
         private static final int ERROR_NETWORK = -1;
@@ -174,23 +175,23 @@ public class EpisodeTools {
 
         @SuppressLint("StaticFieldLeak") // using application context
         private final Context context;
-        private final EpisodeTaskTypes.FlagType flagType;
+        private final EpisodeFlagJob job;
 
         private boolean shouldSendToTrakt;
         private boolean shouldSendToHexagon;
 
         private boolean canSendToTrakt;
 
-        public EpisodeFlagTask(Context context, EpisodeTaskTypes.FlagType type) {
+        public EpisodeAsyncFlagTask(Context context, EpisodeFlagJob job) {
             this.context = context.getApplicationContext();
-            flagType = type;
+            this.job = job;
         }
 
         @Override
         protected void onPreExecute() {
             shouldSendToHexagon = HexagonSettings.isEnabled(context);
             shouldSendToTrakt = TraktCredentials.get(context).hasCredentials()
-                    && !isSkipped(flagType.getFlagValue());
+                    && !isSkipped(job.getFlagValue());
 
             EventBus.getDefault().postSticky(new BaseNavDrawerActivity.ServiceActiveEvent(
                     shouldSendToHexagon, shouldSendToTrakt));
@@ -205,8 +206,8 @@ public class EpisodeTools {
                 }
 
                 HexagonTools hexagonTools = SgApp.getServicesComponent(context).hexagonTools();
-                int result = uploadToHexagon(context, hexagonTools, flagType.getShowTvdbId(),
-                        flagType.getEpisodesForHexagon());
+                int result = uploadToHexagon(context, hexagonTools, job.getShowTvdbId(),
+                        job.getEpisodesForHexagon());
                 if (result < 0) {
                     return result;
                 }
@@ -220,14 +221,14 @@ public class EpisodeTools {
              */
             if (shouldSendToTrakt) {
                 // Do not send if show has no trakt id (was not on trakt last time we checked).
-                Integer traktId = ShowTools.getShowTraktId(context, flagType.getShowTvdbId());
+                Integer traktId = ShowTools.getShowTraktId(context, job.getShowTvdbId());
                 canSendToTrakt = traktId != null;
                 if (canSendToTrakt) {
                     if (!AndroidUtils.isNetworkConnected(context)) {
                         return ERROR_NETWORK;
                     }
 
-                    int result = uploadToTrakt(context, flagType, traktId);
+                    int result = uploadToTrakt(context, job, traktId);
                     if (result < 0) {
                         return result;
                     }
@@ -235,7 +236,7 @@ public class EpisodeTools {
             }
 
             // update local database (if uploading went smoothly or not uploading at all)
-            flagType.applyLocalChanges();
+            job.applyLocalChanges();
 
             return SUCCESS;
         }
@@ -294,7 +295,7 @@ public class EpisodeTools {
             return true;
         }
 
-        public static int uploadToTrakt(Context context, EpisodeTaskTypes.FlagType flagType,
+        public static int uploadToTrakt(Context context, EpisodeFlagJob flagType,
                 int showTraktId) {
             List<SyncSeason> flags = flagType.getEpisodesForTrakt();
             if (flags != null && flags.isEmpty()) {
@@ -309,12 +310,12 @@ public class EpisodeTools {
             SyncShow show = new SyncShow().id(ShowIds.trakt(showTraktId));
             SyncItems items = new SyncItems().shows(show);
             // add season or episodes
-            EpisodeTaskTypes.Action flagAction = flagType.getAction();
-            if (flagAction == EpisodeTaskTypes.Action.SEASON_WATCHED
-                    || flagAction == EpisodeTaskTypes.Action.SEASON_COLLECTED
-                    || flagAction == EpisodeTaskTypes.Action.EPISODE_WATCHED
-                    || flagAction == EpisodeTaskTypes.Action.EPISODE_COLLECTED
-                    || flagAction == EpisodeTaskTypes.Action.EPISODE_WATCHED_PREVIOUS) {
+            EpisodeFlagJobs.Action flagAction = flagType.getAction();
+            if (flagAction == EpisodeFlagJobs.Action.SEASON_WATCHED
+                    || flagAction == EpisodeFlagJobs.Action.SEASON_COLLECTED
+                    || flagAction == EpisodeFlagJobs.Action.EPISODE_WATCHED
+                    || flagAction == EpisodeFlagJobs.Action.EPISODE_COLLECTED
+                    || flagAction == EpisodeFlagJobs.Action.EPISODE_WATCHED_PREVIOUS) {
                 show.seasons(flags);
             }
 
@@ -430,18 +431,18 @@ public class EpisodeTools {
                 confirmationText = context.getString(R.string.trakt_notice_not_exists);
                 displaySuccess = false;
             } else {
-                confirmationText = isSuccessful ? flagType.getConfirmationText() : error;
+                confirmationText = isSuccessful ? job.getConfirmationText() : error;
                 displaySuccess = isSuccessful;
             }
             EventBus.getDefault()
                     .post(new BaseNavDrawerActivity.ServiceCompletedEvent(confirmationText,
                             displaySuccess));
-            EventBus.getDefault().post(new EpisodeTaskCompletedEvent(flagType, isSuccessful));
+            EventBus.getDefault().post(new EpisodeTaskCompletedEvent(job, isSuccessful));
 
             if (isSuccessful) {
                 // update latest episode for the changed show
                 new LatestEpisodeUpdateTask(context).executeOnExecutor(
-                        AsyncTask.THREAD_POOL_EXECUTOR, flagType.getShowTvdbId());
+                        AsyncTask.THREAD_POOL_EXECUTOR, job.getShowTvdbId());
             }
         }
     }

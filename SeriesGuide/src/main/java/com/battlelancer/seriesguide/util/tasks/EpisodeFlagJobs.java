@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.CallSuper;
-import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class EpisodeTaskTypes {
+public class EpisodeFlagJobs {
 
     private static final String[] PROJECTION_EPISODE = new String[] {
             SeriesGuideContract.Episodes._ID
@@ -44,39 +43,42 @@ public class EpisodeTaskTypes {
         }
     }
 
-    public static abstract class FlagType {
+    public static abstract class BaseJob implements EpisodeFlagJob {
 
         private Context context;
         private int showTvdbId;
         private int flagValue;
         private Action action;
 
-        public FlagType(Context context, int showTvdbId, int flagValue, Action action) {
+        public BaseJob(Context context, int showTvdbId, int flagValue, Action action) {
             this.context = context.getApplicationContext();
             this.action = action;
             this.showTvdbId = showTvdbId;
             this.flagValue = flagValue;
         }
 
-        public Context getContext() {
-            return context;
-        }
-
+        @Override
         public int getShowTvdbId() {
             return showTvdbId;
         }
 
+        @Override
         public int getFlagValue() {
             return flagValue;
         }
 
+        @Override
         public Action getAction() {
             return action;
         }
 
-        public abstract Uri getDatabaseUri();
+        protected Context getContext() {
+            return context;
+        }
 
-        public abstract String getDatabaseSelection();
+        protected abstract Uri getDatabaseUri();
+
+        protected abstract String getDatabaseSelection();
 
         /**
          * Return the column which should get updated, either {@link SeriesGuideContract.Episodes}
@@ -93,6 +95,7 @@ public class EpisodeTaskTypes {
          * Builds a list of episodes ready to upload to hexagon. However, the show TVDb id is not
          * set. It should be set in a wrapping {@link com.uwetrottmann.seriesguide.backend.episodes.model.EpisodeList}.
          */
+        @Override
         public List<Episode> getEpisodesForHexagon() {
             List<Episode> episodes = new ArrayList<>();
 
@@ -122,16 +125,10 @@ public class EpisodeTaskTypes {
         }
 
         /**
-         * Return {@code null} to upload the complete show.
-         */
-        @Nullable
-        public abstract List<SyncSeason> getEpisodesForTrakt();
-
-        /**
          * Builds a list of {@link com.uwetrottmann.trakt5.entities.SyncSeason} objects to submit to
          * trakt.
          */
-        List<SyncSeason> buildTraktEpisodeList() {
+        protected List<SyncSeason> buildTraktEpisodeList() {
             List<SyncSeason> seasons = new ArrayList<>();
 
             // determine uri
@@ -175,6 +172,7 @@ public class EpisodeTaskTypes {
          * Builds and executes the database op required to flag episodes in the local database,
          * notifies affected URIs, may update the list widget.
          */
+        @Override
         @CallSuper
         public boolean applyLocalChanges() {
             // determine query uri
@@ -208,7 +206,7 @@ public class EpisodeTaskTypes {
          * -1 for no-op.
          * @param setLastWatchedToNow Whether to set the last watched time of a show to now.
          */
-        final void updateLastWatched(int lastWatchedEpisodeId,
+        protected final void updateLastWatched(int lastWatchedEpisodeId,
                 boolean setLastWatchedToNow) {
             if (lastWatchedEpisodeId != -1 || setLastWatchedToNow) {
                 ContentValues values = new ContentValues();
@@ -224,24 +222,18 @@ public class EpisodeTaskTypes {
                         values, null, null);
             }
         }
-
-        /**
-         * Tells for example which episode was flagged watched.
-         */
-        @Nullable
-        public abstract String getConfirmationText();
     }
 
     /**
      * Flagging single episodes watched or collected.
      */
-    public static abstract class EpisodeType extends FlagType {
+    public static abstract class SingleEpisodeJob extends BaseJob {
 
         protected int episodeTvdbId;
         protected int season;
         protected int episode;
 
-        public EpisodeType(Context context, int showTvdbId, int episodeTvdbId, int season,
+        public SingleEpisodeJob(Context context, int showTvdbId, int episodeTvdbId, int season,
                 int episode, int flagValue, Action action) {
             super(context, showTvdbId, flagValue, action);
             this.episodeTvdbId = episodeTvdbId;
@@ -282,9 +274,9 @@ public class EpisodeTaskTypes {
         }
     }
 
-    public static class EpisodeWatchedType extends EpisodeType {
+    public static class EpisodeWatchedJob extends SingleEpisodeJob {
 
-        public EpisodeWatchedType(Context context, int showTvdbId, int episodeTvdbId, int season,
+        public EpisodeWatchedJob(Context context, int showTvdbId, int episodeTvdbId, int season,
                 int episode, int episodeFlags) {
             super(context, showTvdbId, episodeTvdbId, season, episode, episodeFlags,
                     Action.EPISODE_WATCHED);
@@ -395,9 +387,9 @@ public class EpisodeTaskTypes {
         }
     }
 
-    public static class EpisodeCollectedType extends EpisodeType {
+    public static class EpisodeCollectedJob extends SingleEpisodeJob {
 
-        public EpisodeCollectedType(Context context, int showTvdbId, int episodeTvdbId, int season,
+        public EpisodeCollectedJob(Context context, int showTvdbId, int episodeTvdbId, int season,
                 int episode, int episodeFlags) {
             super(context, showTvdbId, episodeTvdbId, season, episode, episodeFlags,
                     Action.EPISODE_COLLECTED);
@@ -424,12 +416,12 @@ public class EpisodeTaskTypes {
     /**
      * Flagging whole seasons watched or collected.
      */
-    public static abstract class SeasonType extends FlagType {
+    public static abstract class SeasonJob extends BaseJob {
 
         protected int seasonTvdbId;
         protected int season;
 
-        public SeasonType(Context context, int showTvdbId, int seasonTvdbId, int season,
+        public SeasonJob(Context context, int showTvdbId, int seasonTvdbId, int season,
                 int flagValue, Action action) {
             super(context, showTvdbId, flagValue, action);
             this.seasonTvdbId = seasonTvdbId;
@@ -447,11 +439,11 @@ public class EpisodeTaskTypes {
         }
     }
 
-    public static class SeasonWatchedType extends SeasonType {
+    public static class SeasonWatchedJob extends SeasonJob {
 
         private final long currentTime;
 
-        public SeasonWatchedType(Context context, int showTvdbId, int seasonTvdbId, int season,
+        public SeasonWatchedJob(Context context, int showTvdbId, int seasonTvdbId, int season,
                 int episodeFlags) {
             super(context, showTvdbId, seasonTvdbId, season, episodeFlags,
                     Action.SEASON_WATCHED);
@@ -552,9 +544,9 @@ public class EpisodeTaskTypes {
         }
     }
 
-    public static class SeasonCollectedType extends SeasonType {
+    public static class SeasonCollectedJob extends SeasonJob {
 
-        public SeasonCollectedType(Context context, int showTvdbId, int seasonTvdbId, int season,
+        public SeasonCollectedJob(Context context, int showTvdbId, int seasonTvdbId, int season,
                 int episodeFlags) {
             super(context, showTvdbId, seasonTvdbId, season, episodeFlags,
                     Action.SEASON_COLLECTED);
@@ -592,9 +584,9 @@ public class EpisodeTaskTypes {
         }
     }
 
-    public static abstract class ShowType extends FlagType {
+    public static abstract class ShowJob extends BaseJob {
 
-        public ShowType(Context context, int showTvdbId, int flagValue, Action action) {
+        public ShowJob(Context context, int showTvdbId, int flagValue, Action action) {
             super(context, showTvdbId, flagValue, action);
         }
 
@@ -610,11 +602,11 @@ public class EpisodeTaskTypes {
         }
     }
 
-    public static class ShowWatchedType extends ShowType {
+    public static class ShowWatchedJob extends ShowJob {
 
         private final long currentTime;
 
-        public ShowWatchedType(Context context, int showTvdbId, int flagValue) {
+        public ShowWatchedJob(Context context, int showTvdbId, int flagValue) {
             super(context, showTvdbId, flagValue, Action.SHOW_WATCHED);
             currentTime = TimeTools.getCurrentTime(context);
         }
@@ -674,9 +666,9 @@ public class EpisodeTaskTypes {
         }
     }
 
-    public static class ShowCollectedType extends ShowType {
+    public static class ShowCollectedJob extends ShowJob {
 
-        public ShowCollectedType(Context context, int showTvdbId, int episodeFlags) {
+        public ShowCollectedJob(Context context, int showTvdbId, int episodeFlags) {
             super(context, showTvdbId, episodeFlags, Action.SHOW_COLLECTED);
         }
 
@@ -703,11 +695,11 @@ public class EpisodeTaskTypes {
         }
     }
 
-    public static class EpisodeWatchedPreviousType extends FlagType {
+    public static class EpisodeWatchedPreviousJob extends BaseJob {
 
         private long episodeFirstAired;
 
-        public EpisodeWatchedPreviousType(Context context, int showTvdbId, long episodeFirstAired) {
+        public EpisodeWatchedPreviousJob(Context context, int showTvdbId, long episodeFirstAired) {
             super(context, showTvdbId, EpisodeFlags.WATCHED,
                     Action.EPISODE_WATCHED_PREVIOUS);
             this.episodeFirstAired = episodeFirstAired;
