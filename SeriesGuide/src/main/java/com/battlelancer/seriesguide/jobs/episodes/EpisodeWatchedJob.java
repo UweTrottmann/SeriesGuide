@@ -12,10 +12,9 @@ import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 
 public class EpisodeWatchedJob extends EpisodeBaseJob {
 
-    public EpisodeWatchedJob(Context context, int showTvdbId, int episodeTvdbId, int season,
-            int episode, int episodeFlags) {
-        super(context, showTvdbId, episodeTvdbId, season, episode, episodeFlags,
-                JobAction.EPISODE_WATCHED);
+    public EpisodeWatchedJob(int showTvdbId, int episodeTvdbId, int season, int episode,
+            int episodeFlags) {
+        super(showTvdbId, episodeTvdbId, season, episode, episodeFlags, JobAction.EPISODE_WATCHED);
     }
 
     @Override
@@ -28,7 +27,7 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
         return SeriesGuideContract.Episodes.WATCHED;
     }
 
-    private int getLastWatchedEpisodeTvdbId() {
+    private int getLastWatchedEpisodeTvdbId(Context context) {
         if (!EpisodeTools.isUnwatched(getFlagValue())) {
             return episodeTvdbId; // watched or skipped episode
         } else {
@@ -37,7 +36,7 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
 
             // if modified episode is identical to last watched one (e.g. was just watched),
             // find an appropriate last watched episode
-            final Cursor show = getContext().getContentResolver().query(
+            final Cursor show = context.getContentResolver().query(
                     SeriesGuideContract.Shows.buildShowUri(String.valueOf(getShowTvdbId())),
                     new String[] {
                             SeriesGuideContract.Shows._ID,
@@ -56,7 +55,7 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
 
                     // get latest watched before this one
                     String season = String.valueOf(this.season);
-                    final Cursor latestWatchedEpisode = getContext().getContentResolver()
+                    final Cursor latestWatchedEpisode = context.getContentResolver()
                             .query(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(String
                                             .valueOf(getShowTvdbId())),
                                     BaseJob.PROJECTION_EPISODE,
@@ -82,40 +81,40 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
     }
 
     @Override
-    public boolean applyLocalChanges() {
-        if (!super.applyLocalChanges()) {
+    public boolean applyLocalChanges(Context context) {
+        if (!super.applyLocalChanges(context)) {
             return false;
         }
 
         // set a new last watched episode
         // set last watched time to now if marking as watched or skipped
         boolean unwatched = EpisodeTools.isUnwatched(getFlagValue());
-        updateLastWatched(getLastWatchedEpisodeTvdbId(), !unwatched);
+        updateLastWatched(context, getLastWatchedEpisodeTvdbId(context), !unwatched);
 
         if (EpisodeTools.isWatched(getFlagValue())) {
             // create activity entry for watched episode
-            ActivityTools.addActivity(getContext(), episodeTvdbId, getShowTvdbId());
+            ActivityTools.addActivity(context, episodeTvdbId, getShowTvdbId());
         } else if (unwatched) {
             // remove any previous activity entries for this episode
             // use case: user accidentally toggled watched flag
-            ActivityTools.removeActivity(getContext(), episodeTvdbId);
+            ActivityTools.removeActivity(context, episodeTvdbId);
         }
 
-        ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getContext());
+        ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(context);
 
         return true;
     }
 
     @Override
-    public String getConfirmationText() {
+    public String getConfirmationText(Context context) {
         if (EpisodeTools.isSkipped(getFlagValue())) {
             // skipping is not sent to trakt, no need for a message
             return null;
         }
 
         // show episode seen/unseen message
-        String number = TextTools.getEpisodeNumber(getContext(), season, episode);
-        return getContext().getString(
+        String number = TextTools.getEpisodeNumber(context, season, episode);
+        return context.getString(
                 EpisodeTools.isWatched(getFlagValue()) ? R.string.trakt_seen
                         : R.string.trakt_notseen,
                 number

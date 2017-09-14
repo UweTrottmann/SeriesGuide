@@ -40,7 +40,7 @@ public class EpisodeTask {
             return null;
         }
         EpisodeWatchedJob taskType
-                = new EpisodeWatchedJob(context, details.showTvdbId,
+                = new EpisodeWatchedJob(details.showTvdbId,
                 episodeTvdbId, details.season, details.episode, flag);
         return new EpisodeTask(context, taskType);
     }
@@ -67,7 +67,7 @@ public class EpisodeTask {
 
             HexagonTools hexagonTools = SgApp.getServicesComponent(context).hexagonTools();
             int result = EpisodeJobAsyncTask.uploadToHexagon(context, hexagonTools,
-                    job.getShowTvdbId(), job.getEpisodesForHexagon());
+                    job.getShowTvdbId(), job.getEpisodesForHexagon(context));
             if (result < 0) {
                 handleWorkResult(result);
                 return;
@@ -99,7 +99,7 @@ public class EpisodeTask {
         }
 
         // update local database (if uploading went smoothly or not uploading at all)
-        job.applyLocalChanges();
+        job.applyLocalChanges(context);
 
         handleWorkResult(SUCCESS);
     }
@@ -140,7 +140,7 @@ public class EpisodeTask {
             confirmationText = context.getString(R.string.trakt_notice_not_exists);
             displaySuccess = false;
         } else {
-            confirmationText = isSuccessful ? job.getConfirmationText() : error;
+            confirmationText = isSuccessful ? job.getConfirmationText(context) : error;
             displaySuccess = isSuccessful;
         }
         EventBus.getDefault()

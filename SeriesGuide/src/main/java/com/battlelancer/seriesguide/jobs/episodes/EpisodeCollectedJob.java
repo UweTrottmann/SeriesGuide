@@ -9,9 +9,9 @@ import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 
 public class EpisodeCollectedJob extends EpisodeBaseJob {
 
-    public EpisodeCollectedJob(Context context, int showTvdbId, int episodeTvdbId, int season,
+    public EpisodeCollectedJob(int showTvdbId, int episodeTvdbId, int season,
             int episode, boolean isCollected) {
-        super(context, showTvdbId, episodeTvdbId, season, episode, isCollected ? 1 : 0,
+        super(showTvdbId, episodeTvdbId, season, episode, isCollected ? 1 : 0,
                 JobAction.EPISODE_COLLECTED);
     }
 
@@ -26,9 +26,9 @@ public class EpisodeCollectedJob extends EpisodeBaseJob {
     }
 
     @Override
-    public String getConfirmationText() {
-        String number = TextTools.getEpisodeNumber(getContext(), season, episode);
-        return getContext().getString(getFlagValue() == 1 ? R.string.trakt_collected
+    public String getConfirmationText(Context context) {
+        String number = TextTools.getEpisodeNumber(context, season, episode);
+        return context.getString(getFlagValue() == 1 ? R.string.trakt_collected
                 : R.string.trakt_notcollected, number);
     }
 }

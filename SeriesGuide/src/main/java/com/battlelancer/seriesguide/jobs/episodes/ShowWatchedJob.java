@@ -5,7 +5,6 @@ import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 import com.uwetrottmann.trakt5.entities.SyncSeason;
 import java.util.List;
@@ -14,9 +13,9 @@ public class ShowWatchedJob extends ShowBaseJob {
 
     private final long currentTime;
 
-    public ShowWatchedJob(Context context, int showTvdbId, int flagValue) {
-        super(context, showTvdbId, flagValue, JobAction.SHOW_WATCHED);
-        currentTime = TimeTools.getCurrentTime(context);
+    public ShowWatchedJob(int showTvdbId, int flagValue, long currentTime) {
+        super(showTvdbId, flagValue, JobAction.SHOW_WATCHED);
+        this.currentTime = currentTime;
     }
 
     @Override
@@ -49,13 +48,13 @@ public class ShowWatchedJob extends ShowBaseJob {
     }
 
     @Override
-    public List<SyncSeason> getEpisodesForTrakt() {
-        return buildTraktEpisodeList();
+    public List<SyncSeason> getEpisodesForTrakt(Context context) {
+        return buildTraktEpisodeList(context);
     }
 
     @Override
-    public boolean applyLocalChanges() {
-        if (!super.applyLocalChanges()) {
+    public boolean applyLocalChanges(Context context) {
+        if (!super.applyLocalChanges(context)) {
             return false;
         }
 
@@ -65,10 +64,10 @@ public class ShowWatchedJob extends ShowBaseJob {
 
         // set a new last watched episode
         // set last watched time to now if marking as watched or skipped
-        updateLastWatched(lastWatchedEpisodeTvdbId,
+        updateLastWatched(context, lastWatchedEpisodeTvdbId,
                 !EpisodeTools.isUnwatched(getFlagValue()));
 
-        ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getContext());
+        ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(context);
 
         return true;
     }

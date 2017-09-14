@@ -70,7 +70,7 @@ public class EpisodeJobAsyncTask extends AsyncTask<Void, Void, Void> {
 
             HexagonTools hexagonTools = SgApp.getServicesComponent(context).hexagonTools();
             int result = uploadToHexagon(context, hexagonTools, job.getShowTvdbId(),
-                    job.getEpisodesForHexagon());
+                    job.getEpisodesForHexagon(context));
             if (result < 0) {
                 handleResult(result);
                 return null;
@@ -102,7 +102,7 @@ public class EpisodeJobAsyncTask extends AsyncTask<Void, Void, Void> {
         }
 
         // update local database (if uploading went smoothly or not uploading at all)
-        job.applyLocalChanges();
+        job.applyLocalChanges(context);
 
         handleResult(SUCCESS);
         return null;
@@ -164,7 +164,7 @@ public class EpisodeJobAsyncTask extends AsyncTask<Void, Void, Void> {
 
     public static int uploadToTrakt(Context context, EpisodeFlagJob flagType,
             int showTraktId) {
-        List<SyncSeason> flags = flagType.getEpisodesForTrakt();
+        List<SyncSeason> flags = flagType.getEpisodesForTrakt(context);
         if (flags != null && flags.isEmpty()) {
             return SUCCESS; // nothing to upload, done.
         }
@@ -297,7 +297,7 @@ public class EpisodeJobAsyncTask extends AsyncTask<Void, Void, Void> {
             confirmationText = context.getString(R.string.trakt_notice_not_exists);
             displaySuccess = false;
         } else {
-            confirmationText = isSuccessful ? job.getConfirmationText() : error;
+            confirmationText = isSuccessful ? job.getConfirmationText(context) : error;
             displaySuccess = isSuccessful;
         }
         EventBus.getDefault().post(

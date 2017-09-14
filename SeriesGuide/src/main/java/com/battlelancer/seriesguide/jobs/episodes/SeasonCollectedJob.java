@@ -12,9 +12,8 @@ import java.util.List;
 
 public class SeasonCollectedJob extends SeasonBaseJob {
 
-    public SeasonCollectedJob(Context context, int showTvdbId, int seasonTvdbId, int season,
-            boolean isCollected) {
-        super(context, showTvdbId, seasonTvdbId, season, isCollected ? 1 : 0,
+    public SeasonCollectedJob(int showTvdbId, int seasonTvdbId, int season, boolean isCollected) {
+        super(showTvdbId, seasonTvdbId, season, isCollected ? 1 : 0,
                 JobAction.SEASON_COLLECTED);
     }
 
@@ -35,7 +34,7 @@ public class SeasonCollectedJob extends SeasonBaseJob {
     }
 
     @Override
-    public List<SyncSeason> getEpisodesForTrakt() {
+    public List<SyncSeason> getEpisodesForTrakt(Context context) {
         // flag the whole season
         List<SyncSeason> seasons = new LinkedList<>();
         seasons.add(new SyncSeason().number(season));
@@ -43,9 +42,9 @@ public class SeasonCollectedJob extends SeasonBaseJob {
     }
 
     @Override
-    public String getConfirmationText() {
-        String number = TextTools.getEpisodeNumber(getContext(), season, -1);
-        return getContext().getString(getFlagValue() == 1 ? R.string.trakt_collected
+    public String getConfirmationText(Context context) {
+        String number = TextTools.getEpisodeNumber(context, season, -1);
+        return context.getString(getFlagValue() == 1 ? R.string.trakt_collected
                 : R.string.trakt_notcollected, number);
     }
 }

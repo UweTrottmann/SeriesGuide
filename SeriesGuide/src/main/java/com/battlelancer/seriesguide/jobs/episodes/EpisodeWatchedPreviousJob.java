@@ -13,9 +13,8 @@ public class EpisodeWatchedPreviousJob extends BaseJob {
 
     private long episodeFirstAired;
 
-    public EpisodeWatchedPreviousJob(Context context, int showTvdbId, long episodeFirstAired) {
-        super(context, showTvdbId, EpisodeFlags.WATCHED,
-                JobAction.EPISODE_WATCHED_PREVIOUS);
+    public EpisodeWatchedPreviousJob(int showTvdbId, long episodeFirstAired) {
+        super(showTvdbId, EpisodeFlags.WATCHED, JobAction.EPISODE_WATCHED_PREVIOUS);
         this.episodeFirstAired = episodeFirstAired;
     }
 
@@ -37,8 +36,8 @@ public class EpisodeWatchedPreviousJob extends BaseJob {
     }
 
     @Override
-    public List<SyncSeason> getEpisodesForTrakt() {
-        return buildTraktEpisodeList();
+    public List<SyncSeason> getEpisodesForTrakt(Context context) {
+        return buildTraktEpisodeList(context);
     }
 
     @Override
@@ -52,22 +51,22 @@ public class EpisodeWatchedPreviousJob extends BaseJob {
     }
 
     @Override
-    public boolean applyLocalChanges() {
-        if (!super.applyLocalChanges()) {
+    public boolean applyLocalChanges(Context context) {
+        if (!super.applyLocalChanges(context)) {
             return false;
         }
 
         // we don't care about the last watched episode value
         // always update last watched time, this type only marks as watched
-        updateLastWatched(-1, true);
+        updateLastWatched(context, -1, true);
 
-        ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getContext());
+        ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(context);
 
         return true;
     }
 
     @Override
-    public String getConfirmationText() {
+    public String getConfirmationText(Context context) {
         return null;
     }
 }

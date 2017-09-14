@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 import com.uwetrottmann.trakt5.entities.SyncSeason;
@@ -12,19 +13,19 @@ public interface EpisodeFlagJob {
 
     JobAction getAction();
 
-    List<Episode> getEpisodesForHexagon();
+    List<Episode> getEpisodesForHexagon(Context context);
 
     /**
      * Return {@code null} to upload the complete show.
      */
     @Nullable
-    List<SyncSeason> getEpisodesForTrakt();
+    List<SyncSeason> getEpisodesForTrakt(Context context);
 
-    boolean applyLocalChanges();
+    boolean applyLocalChanges(Context context);
 
     /**
      * Tells for example which episode was flagged watched.
      */
     @Nullable
-    String getConfirmationText();
+    String getConfirmationText(Context context);
 }

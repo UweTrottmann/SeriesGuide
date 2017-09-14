@@ -19,9 +19,9 @@ public abstract class EpisodeBaseJob extends BaseJob {
     protected int season;
     protected int episode;
 
-    public EpisodeBaseJob(Context context, int showTvdbId, int episodeTvdbId, int season,
-            int episode, int flagValue, JobAction action) {
-        super(context, showTvdbId, flagValue, action);
+    public EpisodeBaseJob(int showTvdbId, int episodeTvdbId, int season, int episode, int flagValue,
+            JobAction action) {
+        super(showTvdbId, flagValue, action);
         this.episodeTvdbId = episodeTvdbId;
         this.season = season;
         this.episode = episode;
@@ -38,7 +38,7 @@ public abstract class EpisodeBaseJob extends BaseJob {
     }
 
     @Override
-    public List<Episode> getEpisodesForHexagon() {
+    public List<Episode> getEpisodesForHexagon(Context context) {
         List<Episode> episodes = new ArrayList<>();
 
         Episode episode = new Episode();
@@ -51,7 +51,7 @@ public abstract class EpisodeBaseJob extends BaseJob {
     }
 
     @Override
-    public List<SyncSeason> getEpisodesForTrakt() {
+    public List<SyncSeason> getEpisodesForTrakt(Context context) {
         // flag a single episode
         List<SyncSeason> seasons = new LinkedList<>();
         seasons.add(new SyncSeason().number(season)

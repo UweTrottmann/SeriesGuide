@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
-import android.content.Context;
 import android.net.Uri;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 
@@ -12,9 +11,9 @@ public abstract class SeasonBaseJob extends BaseJob {
     protected int seasonTvdbId;
     protected int season;
 
-    public SeasonBaseJob(Context context, int showTvdbId, int seasonTvdbId, int season,
-            int flagValue, JobAction action) {
-        super(context, showTvdbId, flagValue, action);
+    public SeasonBaseJob(int showTvdbId, int seasonTvdbId, int season, int flagValue,
+            JobAction action) {
+        super(showTvdbId, flagValue, action);
         this.seasonTvdbId = seasonTvdbId;
         this.season = season;
     }

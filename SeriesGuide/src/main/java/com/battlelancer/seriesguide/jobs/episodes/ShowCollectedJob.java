@@ -9,8 +9,8 @@ import java.util.List;
 
 public class ShowCollectedJob extends ShowBaseJob {
 
-    public ShowCollectedJob(Context context, int showTvdbId, boolean isCollected) {
-        super(context, showTvdbId, isCollected ? 1 : 0, JobAction.SHOW_COLLECTED);
+    public ShowCollectedJob(int showTvdbId, boolean isCollected) {
+        super(showTvdbId, isCollected ? 1 : 0, JobAction.SHOW_COLLECTED);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ShowCollectedJob extends ShowBaseJob {
     }
 
     @Override
-    public List<SyncSeason> getEpisodesForTrakt() {
+    public List<SyncSeason> getEpisodesForTrakt(Context context) {
         // send whole show
         return null;
     }

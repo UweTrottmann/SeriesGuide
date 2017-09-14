@@ -19,13 +19,11 @@ public abstract class BaseJob implements EpisodeFlagJob {
             SeriesGuideContract.Episodes._ID
     };
 
-    private Context context;
     private int showTvdbId;
     private int flagValue;
     private JobAction action;
 
-    public BaseJob(Context context, int showTvdbId, int flagValue, JobAction action) {
-        this.context = context.getApplicationContext();
+    public BaseJob(int showTvdbId, int flagValue, JobAction action) {
         this.action = action;
         this.showTvdbId = showTvdbId;
         this.flagValue = flagValue;
@@ -44,10 +42,6 @@ public abstract class BaseJob implements EpisodeFlagJob {
     @Override
     public JobAction getAction() {
         return action;
-    }
-
-    protected Context getContext() {
-        return context;
     }
 
     protected abstract Uri getDatabaseUri();
@@ -70,7 +64,7 @@ public abstract class BaseJob implements EpisodeFlagJob {
      * set. It should be set in a wrapping {@link com.uwetrottmann.seriesguide.backend.episodes.model.EpisodeList}.
      */
     @Override
-    public List<Episode> getEpisodesForHexagon() {
+    public List<Episode> getEpisodesForHexagon(Context context) {
         List<Episode> episodes = new ArrayList<>();
 
         // determine uri
@@ -102,7 +96,7 @@ public abstract class BaseJob implements EpisodeFlagJob {
      * Builds a list of {@link com.uwetrottmann.trakt5.entities.SyncSeason} objects to submit to
      * trakt.
      */
-    protected List<SyncSeason> buildTraktEpisodeList() {
+    protected List<SyncSeason> buildTraktEpisodeList(Context context) {
         List<SyncSeason> seasons = new ArrayList<>();
 
         // determine uri
@@ -148,7 +142,7 @@ public abstract class BaseJob implements EpisodeFlagJob {
      */
     @Override
     @CallSuper
-    public boolean applyLocalChanges() {
+    public boolean applyLocalChanges(Context context) {
         // determine query uri
         Uri uri = getDatabaseUri();
         if (uri == null) {
@@ -180,8 +174,8 @@ public abstract class BaseJob implements EpisodeFlagJob {
      * -1 for no-op.
      * @param setLastWatchedToNow Whether to set the last watched time of a show to now.
      */
-    protected final void updateLastWatched(int lastWatchedEpisodeId,
-            boolean setLastWatchedToNow) {
+    protected final void updateLastWatched(Context context,
+            int lastWatchedEpisodeId, boolean setLastWatchedToNow) {
         if (lastWatchedEpisodeId != -1 || setLastWatchedToNow) {
             ContentValues values = new ContentValues();
             if (lastWatchedEpisodeId != -1) {

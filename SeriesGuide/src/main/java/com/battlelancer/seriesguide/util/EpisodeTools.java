@@ -5,9 +5,9 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.jobs.episodes.EpisodeJobAsyncTask;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeCollectedJob;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeFlagJob;
+import com.battlelancer.seriesguide.jobs.episodes.EpisodeJobAsyncTask;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedPreviousJob;
 import com.battlelancer.seriesguide.jobs.episodes.SeasonCollectedJob;
@@ -70,16 +70,14 @@ public class EpisodeTools {
     public static void episodeWatched(Context context, int showTvdbId, int episodeTvdbId,
             int season, int episode, int episodeFlags) {
         validateFlags(episodeFlags);
-        execute(context,
-                new EpisodeWatchedJob(context, showTvdbId, episodeTvdbId, season, episode,
-                        episodeFlags));
+        execute(context, new EpisodeWatchedJob(showTvdbId, episodeTvdbId, season, episode,
+                episodeFlags));
     }
 
     public static void episodeCollected(Context context, int showTvdbId, int episodeTvdbId,
             int season, int episode, boolean isCollected) {
-        execute(context,
-                new EpisodeCollectedJob(context, showTvdbId, episodeTvdbId, season, episode,
-                        isCollected));
+        execute(context, new EpisodeCollectedJob(showTvdbId, episodeTvdbId, season, episode,
+                isCollected));
     }
 
     /**
@@ -88,28 +86,29 @@ public class EpisodeTools {
      */
     public static void episodeWatchedPrevious(Context context, int showTvdbId,
             long episodeFirstAired) {
-        execute(context, new EpisodeWatchedPreviousJob(context, showTvdbId, episodeFirstAired));
+        execute(context, new EpisodeWatchedPreviousJob(showTvdbId, episodeFirstAired));
     }
 
     public static void seasonWatched(Context context, int showTvdbId, int seasonTvdbId, int season,
             int episodeFlags) {
         validateFlags(episodeFlags);
-        execute(context, new SeasonWatchedJob(context, showTvdbId, seasonTvdbId, season,
-                episodeFlags));
+        execute(context, new SeasonWatchedJob(showTvdbId, seasonTvdbId, season,
+                episodeFlags, TimeTools.getCurrentTime(context)));
     }
 
     public static void seasonCollected(Context context, int showTvdbId, int seasonTvdbId,
             int season, boolean isCollected) {
         execute(context,
-                new SeasonCollectedJob(context, showTvdbId, seasonTvdbId, season, isCollected));
+                new SeasonCollectedJob(showTvdbId, seasonTvdbId, season, isCollected));
     }
 
     public static void showWatched(Context context, int showTvdbId, boolean isFlag) {
-        execute(context, new ShowWatchedJob(context, showTvdbId, isFlag ? 1 : 0));
+        execute(context,
+                new ShowWatchedJob(showTvdbId, isFlag ? 1 : 0, TimeTools.getCurrentTime(context)));
     }
 
     public static void showCollected(Context context, int showTvdbId, boolean isCollected) {
-        execute(context, new ShowCollectedJob(context, showTvdbId, isCollected));
+        execute(context, new ShowCollectedJob(showTvdbId, isCollected));
     }
 
     /**

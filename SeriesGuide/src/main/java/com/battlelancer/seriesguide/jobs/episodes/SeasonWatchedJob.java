@@ -8,7 +8,6 @@ import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
-import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 import com.uwetrottmann.trakt5.entities.SyncSeason;
 import java.util.List;
@@ -17,11 +16,10 @@ public class SeasonWatchedJob extends SeasonBaseJob {
 
     private final long currentTime;
 
-    public SeasonWatchedJob(Context context, int showTvdbId, int seasonTvdbId, int season,
-            int episodeFlags) {
-        super(context, showTvdbId, seasonTvdbId, season, episodeFlags,
-                JobAction.SEASON_WATCHED);
-        currentTime = TimeTools.getCurrentTime(context);
+    public SeasonWatchedJob(int showTvdbId, int seasonTvdbId, int season,
+            int episodeFlags, long currentTime) {
+        super(showTvdbId, seasonTvdbId, season, episodeFlags, JobAction.SEASON_WATCHED);
+        this.currentTime = currentTime;
     }
 
     @Override
@@ -52,11 +50,11 @@ public class SeasonWatchedJob extends SeasonBaseJob {
     }
 
     @Override
-    public List<SyncSeason> getEpisodesForTrakt() {
-        return buildTraktEpisodeList();
+    public List<SyncSeason> getEpisodesForTrakt(Context context) {
+        return buildTraktEpisodeList(context);
     }
 
-    private int getLastWatchedEpisodeTvdbId() {
+    private int getLastWatchedEpisodeTvdbId(Context context) {
         if (EpisodeTools.isUnwatched(getFlagValue())) {
             // unwatched season
             // just reset
@@ -66,7 +64,7 @@ public class SeasonWatchedJob extends SeasonBaseJob {
             int lastWatchedId = -1;
 
             // get the last flagged episode of the season
-            final Cursor seasonEpisodes = getContext().getContentResolver().query(
+            final Cursor seasonEpisodes = context.getContentResolver().query(
                     SeriesGuideContract.Episodes.buildEpisodesOfSeasonUri(
                             String.valueOf(seasonTvdbId)),
                     BaseJob.PROJECTION_EPISODE,
@@ -87,30 +85,30 @@ public class SeasonWatchedJob extends SeasonBaseJob {
     }
 
     @Override
-    public boolean applyLocalChanges() {
-        if (!super.applyLocalChanges()) {
+    public boolean applyLocalChanges(Context context) {
+        if (!super.applyLocalChanges(context)) {
             return false;
         }
 
         // set a new last watched episode
         // set last watched time to now if marking as watched or skipped
-        updateLastWatched(getLastWatchedEpisodeTvdbId(),
+        updateLastWatched(context, getLastWatchedEpisodeTvdbId(context),
                 !EpisodeTools.isUnwatched(getFlagValue()));
 
-        ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getContext());
+        ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(context);
 
         return true;
     }
 
     @Override
-    public String getConfirmationText() {
+    public String getConfirmationText(Context context) {
         if (EpisodeTools.isSkipped(getFlagValue())) {
             // skipping is not sent to trakt, no need for a message
             return null;
         }
 
-        String number = TextTools.getEpisodeNumber(getContext(), season, -1);
-        return getContext().getString(
+        String number = TextTools.getEpisodeNumber(context, season, -1);
+        return context.getString(
                 EpisodeTools.isWatched(getFlagValue()) ? R.string.trakt_seen
                         : R.string.trakt_notseen,
                 number

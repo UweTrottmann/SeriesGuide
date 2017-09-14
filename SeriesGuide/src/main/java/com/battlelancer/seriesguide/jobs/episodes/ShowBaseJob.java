@@ -6,8 +6,8 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 
 public abstract class ShowBaseJob extends BaseJob {
 
-    public ShowBaseJob(Context context, int showTvdbId, int flagValue, JobAction action) {
-        super(context, showTvdbId, flagValue, action);
+    public ShowBaseJob(int showTvdbId, int flagValue, JobAction action) {
+        super(showTvdbId, flagValue, action);
     }
 
     @Override
@@ -17,7 +17,7 @@ public abstract class ShowBaseJob extends BaseJob {
     }
 
     @Override
-    public String getConfirmationText() {
+    public String getConfirmationText(Context context) {
         return null;
     }
 }
