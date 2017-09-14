@@ -31,7 +31,6 @@ public class ShowCollectedJob extends ShowBaseJob {
 
     @Override
     public List<SyncSeason> getEpisodesForTrakt(Context context) {
-        // send whole show
-        return null;
+        return null; // send whole show
     }
 }

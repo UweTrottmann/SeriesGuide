@@ -16,7 +16,8 @@ public interface EpisodeFlagJob {
     List<Episode> getEpisodesForHexagon(Context context);
 
     /**
-     * Return {@code null} to upload the complete show.
+     * Builds a list of {@link com.uwetrottmann.trakt5.entities.SyncSeason} objects to submit to
+     * trakt. Return {@code null} to upload the complete show.
      */
     @Nullable
     List<SyncSeason> getEpisodesForTrakt(Context context);

@@ -6,8 +6,6 @@ import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
-import com.uwetrottmann.trakt5.entities.SyncSeason;
-import java.util.List;
 
 public class EpisodeWatchedPreviousJob extends BaseJob {
 
@@ -33,11 +31,6 @@ public class EpisodeWatchedPreviousJob extends BaseJob {
         return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<" + episodeFirstAired
                 + " AND " + SeriesGuideContract.Episodes.SELECTION_HAS_RELEASE_DATE
                 + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED;
-    }
-
-    @Override
-    public List<SyncSeason> getEpisodesForTrakt(Context context) {
-        return buildTraktEpisodeList(context);
     }
 
     @Override

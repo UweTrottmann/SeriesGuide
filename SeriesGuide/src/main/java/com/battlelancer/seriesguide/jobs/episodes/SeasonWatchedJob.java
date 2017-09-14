@@ -9,8 +9,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
-import com.uwetrottmann.trakt5.entities.SyncSeason;
-import java.util.List;
 
 public class SeasonWatchedJob extends SeasonBaseJob {
 
@@ -47,11 +45,6 @@ public class SeasonWatchedJob extends SeasonBaseJob {
     @Override
     protected String getDatabaseColumnToUpdate() {
         return SeriesGuideContract.Episodes.WATCHED;
-    }
-
-    @Override
-    public List<SyncSeason> getEpisodesForTrakt(Context context) {
-        return buildTraktEpisodeList(context);
     }
 
     private int getLastWatchedEpisodeTvdbId(Context context) {

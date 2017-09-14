@@ -176,13 +176,9 @@ public class EpisodeJobAsyncTask extends AsyncTask<Void, Void, Void> {
         // outer wrapper and show are always required
         SyncShow show = new SyncShow().id(ShowIds.trakt(showTraktId));
         SyncItems items = new SyncItems().shows(show);
-        // add season or episodes
+        // add season or episodes, otherwise affects whole show
         JobAction flagAction = flagType.getAction();
-        if (flagAction == JobAction.SEASON_WATCHED
-                || flagAction == JobAction.SEASON_COLLECTED
-                || flagAction == JobAction.EPISODE_WATCHED
-                || flagAction == JobAction.EPISODE_COLLECTED
-                || flagAction == JobAction.EPISODE_WATCHED_PREVIOUS) {
+        if (flags != null) {
             show.seasons(flags);
         }
 

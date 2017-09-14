@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.CallSuper;
+import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
@@ -92,11 +93,9 @@ public abstract class BaseJob implements EpisodeFlagJob {
         return episodes;
     }
 
-    /**
-     * Builds a list of {@link com.uwetrottmann.trakt5.entities.SyncSeason} objects to submit to
-     * trakt.
-     */
-    protected List<SyncSeason> buildTraktEpisodeList(Context context) {
+    @Nullable
+    @Override
+    public List<SyncSeason> getEpisodesForTrakt(Context context) {
         List<SyncSeason> seasons = new ArrayList<>();
 
         // determine uri
