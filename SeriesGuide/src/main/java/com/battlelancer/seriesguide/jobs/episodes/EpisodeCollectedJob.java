@@ -10,8 +10,8 @@ import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 public class EpisodeCollectedJob extends EpisodeBaseJob {
 
     public EpisodeCollectedJob(Context context, int showTvdbId, int episodeTvdbId, int season,
-            int episode, int episodeFlags) {
-        super(context, showTvdbId, episodeTvdbId, season, episode, episodeFlags,
+            int episode, boolean isCollected) {
+        super(context, showTvdbId, episodeTvdbId, season, episode, isCollected ? 1 : 0,
                 JobAction.EPISODE_COLLECTED);
     }
 

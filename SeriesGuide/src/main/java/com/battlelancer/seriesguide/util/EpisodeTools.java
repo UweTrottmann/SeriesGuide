@@ -101,10 +101,10 @@ public class EpisodeTools {
     }
 
     public static void episodeCollected(Context context, int showTvdbId, int episodeTvdbId,
-            int season, int episode, boolean isFlag) {
+            int season, int episode, boolean isCollected) {
         execute(context,
                 new EpisodeCollectedJob(context, showTvdbId, episodeTvdbId, season, episode,
-                        isFlag ? 1 : 0));
+                        isCollected));
     }
 
     /**
@@ -124,17 +124,17 @@ public class EpisodeTools {
     }
 
     public static void seasonCollected(Context context, int showTvdbId, int seasonTvdbId,
-            int season, boolean isFlag) {
+            int season, boolean isCollected) {
         execute(context,
-                new SeasonCollectedJob(context, showTvdbId, seasonTvdbId, season, isFlag ? 1 : 0));
+                new SeasonCollectedJob(context, showTvdbId, seasonTvdbId, season, isCollected));
     }
 
     public static void showWatched(Context context, int showTvdbId, boolean isFlag) {
         execute(context, new ShowWatchedJob(context, showTvdbId, isFlag ? 1 : 0));
     }
 
-    public static void showCollected(Context context, int showTvdbId, boolean isFlag) {
-        execute(context, new ShowCollectedJob(context, showTvdbId, isFlag ? 1 : 0));
+    public static void showCollected(Context context, int showTvdbId, boolean isCollected) {
+        execute(context, new ShowCollectedJob(context, showTvdbId, isCollected));
     }
 
     /**

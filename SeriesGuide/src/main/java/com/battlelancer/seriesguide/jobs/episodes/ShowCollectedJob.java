@@ -9,8 +9,8 @@ import java.util.List;
 
 public class ShowCollectedJob extends ShowBaseJob {
 
-    public ShowCollectedJob(Context context, int showTvdbId, int episodeFlags) {
-        super(context, showTvdbId, episodeFlags, JobAction.SHOW_COLLECTED);
+    public ShowCollectedJob(Context context, int showTvdbId, boolean isCollected) {
+        super(context, showTvdbId, isCollected ? 1 : 0, JobAction.SHOW_COLLECTED);
     }
 
     @Override

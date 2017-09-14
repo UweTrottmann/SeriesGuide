@@ -13,8 +13,8 @@ import java.util.List;
 public class SeasonCollectedJob extends SeasonBaseJob {
 
     public SeasonCollectedJob(Context context, int showTvdbId, int seasonTvdbId, int season,
-            int episodeFlags) {
-        super(context, showTvdbId, seasonTvdbId, season, episodeFlags,
+            boolean isCollected) {
+        super(context, showTvdbId, seasonTvdbId, season, isCollected ? 1 : 0,
                 JobAction.SEASON_COLLECTED);
     }
 
