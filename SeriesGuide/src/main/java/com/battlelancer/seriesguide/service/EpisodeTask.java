@@ -7,6 +7,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.jobs.episodes.EpisodeJobAsyncTask;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
@@ -65,7 +66,7 @@ public class EpisodeTask {
             }
 
             HexagonTools hexagonTools = SgApp.getServicesComponent(context).hexagonTools();
-            int result = EpisodeTools.EpisodeAsyncFlagTask.uploadToHexagon(context, hexagonTools,
+            int result = EpisodeJobAsyncTask.uploadToHexagon(context, hexagonTools,
                     job.getShowTvdbId(), job.getEpisodesForHexagon());
             if (result < 0) {
                 handleWorkResult(result);
@@ -89,7 +90,7 @@ public class EpisodeTask {
                     return;
                 }
 
-                int result = EpisodeTools.EpisodeAsyncFlagTask.uploadToTrakt(context, job, traktId);
+                int result = EpisodeJobAsyncTask.uploadToTrakt(context, job, traktId);
                 if (result < 0) {
                     handleWorkResult(result);
                     return;
@@ -146,7 +147,7 @@ public class EpisodeTask {
                 .post(new BaseNavDrawerActivity.ServiceCompletedEvent(confirmationText,
                         displaySuccess));
         EventBus.getDefault()
-                .post(new EpisodeTools.EpisodeTaskCompletedEvent(job, isSuccessful));
+                .post(new EpisodeJobAsyncTask.CompletedEvent(job, isSuccessful));
     }
 
     @Nullable

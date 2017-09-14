@@ -36,6 +36,7 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.SeasonsAdapter;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.jobs.episodes.EpisodeJobAsyncTask;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.service.UnwatchedUpdaterService;
@@ -202,7 +203,7 @@ public class SeasonsFragment extends ListFragment {
      * Updates the total remaining episodes counter, updates season counters after episode actions.
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(EpisodeTools.EpisodeTaskCompletedEvent event) {
+    public void onEvent(EpisodeJobAsyncTask.CompletedEvent event) {
         if (!event.isSuccessful) {
             return; // no changes applied
         }
