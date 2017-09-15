@@ -100,6 +100,8 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int JOBS = 1100;
 
+    private static final int JOBS_ID = 1101;
+
     /**
      * Build and return a {@link UriMatcher} that catches all {@link Uri} variations supported by
      * this {@link ContentProvider}.
@@ -167,6 +169,7 @@ public class SeriesGuideProvider extends ContentProvider {
 
         // Jobs
         matcher.addURI(authority, SeriesGuideContract.PATH_JOBS, JOBS);
+        matcher.addURI(authority, SeriesGuideContract.PATH_JOBS + "/*", JOBS_ID);
 
         // Search
         matcher.addURI(authority, SeriesGuideContract.PATH_EPISODESEARCH + "/"
@@ -325,6 +328,8 @@ public class SeriesGuideProvider extends ContentProvider {
                 return Activity.CONTENT_TYPE;
             case JOBS:
                 return Jobs.CONTENT_TYPE;
+            case JOBS_ID:
+                return Jobs.CONTENT_ITEM_TYPE;
             case SEARCH_SUGGEST:
                 return SearchManager.SUGGEST_MIME_TYPE;
             case RENEW_FTSTABLE:
@@ -722,6 +727,10 @@ public class SeriesGuideProvider extends ContentProvider {
             }
             case JOBS: {
                 return builder.table(Tables.JOBS);
+            }
+            case JOBS_ID: {
+                String jobId = Jobs.getJobId(uri);
+                return builder.table(Tables.JOBS).where(Jobs._ID + "=?", jobId);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
