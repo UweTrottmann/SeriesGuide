@@ -482,7 +482,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 if (id < 0) {
                     break;
                 }
-                notifyUri = Jobs.buildJobUri(values.getAsLong(Jobs.CREATED_MS));
+                notifyUri = Jobs.buildJobUri(id);
                 break;
             }
             default: {

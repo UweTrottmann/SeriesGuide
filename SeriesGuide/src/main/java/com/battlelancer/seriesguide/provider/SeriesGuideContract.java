@@ -1098,8 +1098,8 @@ public class SeriesGuideContract {
 
         public static final String SORT_LATEST = Jobs.CREATED_MS + " DESC";
 
-        public static Uri buildJobUri(long createdMs) {
-            return CONTENT_URI.buildUpon().appendPath(String.valueOf(createdMs)).build();
+        public static Uri buildJobUri(long id) {
+            return CONTENT_URI.buildUpon().appendPath(String.valueOf(id)).build();
         }
     }
 
