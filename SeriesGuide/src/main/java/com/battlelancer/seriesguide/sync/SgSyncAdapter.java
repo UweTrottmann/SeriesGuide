@@ -89,12 +89,15 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 ? "_IMMEDIATE" : "_REGULAR");
 
         // JOBS
-        if (options.syncType == SyncType.JOBS) {
+        if (options.syncType == SyncType.JOBS || options.syncType == SyncType.DELTA) {
             new NetworkJobProcessor(getContext()).process();
-            return; // do nothing else
+
+            if (options.syncType == SyncType.JOBS) {
+                return; // do nothing else
+            }
         }
 
-        // TVDB SYNC
+        // SYNC
         TvdbSync tvdbSync = new TvdbSync(options.syncType, options.singleShowTvdbId);
 
         // should we sync?
