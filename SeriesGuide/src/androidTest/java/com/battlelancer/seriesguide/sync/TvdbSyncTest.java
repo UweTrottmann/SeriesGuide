@@ -1,7 +1,5 @@
 package com.battlelancer.seriesguide.sync;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
@@ -23,6 +21,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+/**
+ * WARNING: uses app context so uses actual app database. Ensure it is empty or tests might fail.
+ */
 @RunWith(AndroidJUnit4.class)
 public class TvdbSyncTest {
 
@@ -42,10 +43,9 @@ public class TvdbSyncTest {
 
     @Test
     public void test_singleNoId() {
-        TvdbSync.SyncType syncType = TvdbSync.SyncType.SINGLE;
+        SyncOptions.SyncType syncType = SyncOptions.SyncType.SINGLE;
 
-        TvdbSync tvdbSync = new TvdbSync(syncArgs(syncType.id));
-        assertThat(tvdbSync.syncType(), is(syncType));
+        TvdbSync tvdbSync = new TvdbSync(syncType, 0);
 
         assertThat(sync(tvdbSync), equalTo(null));
         assertThat(tvdbSync.hasUpdatedShows(), is(false));
@@ -53,22 +53,20 @@ public class TvdbSyncTest {
 
     @Test
     public void test_fullNoShows() {
-        TvdbSync.SyncType syncType = TvdbSync.SyncType.FULL;
+        SyncOptions.SyncType syncType = SyncOptions.SyncType.FULL;
 
-        TvdbSync tvdbSync = new TvdbSync(syncArgs(syncType.id));
+        TvdbSync tvdbSync = new TvdbSync(syncType, 0);
 
-        assertThat(tvdbSync.syncType(), is(syncType));
         assertThat(sync(tvdbSync), equalTo(SgSyncAdapter.UpdateResult.SUCCESS));
         assertThat(tvdbSync.hasUpdatedShows(), is(false));
     }
 
     @Test
     public void test_deltaNoShows() {
-        TvdbSync.SyncType syncType = TvdbSync.SyncType.DELTA;
+        SyncOptions.SyncType syncType = SyncOptions.SyncType.DELTA;
 
-        TvdbSync tvdbSync = new TvdbSync(syncArgs(syncType.id));
+        TvdbSync tvdbSync = new TvdbSync(syncType, 0);
 
-        assertThat(tvdbSync.syncType(), is(syncType));
         assertThat(sync(tvdbSync), equalTo(SgSyncAdapter.UpdateResult.SUCCESS));
         assertThat(tvdbSync.hasUpdatedShows(), is(false));
     }
@@ -77,12 +75,5 @@ public class TvdbSyncTest {
     private SgSyncAdapter.UpdateResult sync(TvdbSync tvdbSync) {
         return tvdbSync.sync(InstrumentationRegistry.getContext(), tvdbToolsLazy,
                 System.currentTimeMillis());
-    }
-
-    @NonNull
-    private Bundle syncArgs(int id) {
-        Bundle args = new Bundle();
-        args.putInt(SgSyncAdapter.EXTRA_SYNC_TYPE, id);
-        return args;
     }
 }
