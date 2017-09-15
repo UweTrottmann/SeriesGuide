@@ -4,6 +4,7 @@ import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -124,10 +125,10 @@ public class NetworkJobProcessor {
     private void handleResult(Integer result, boolean canSendToTrakt) {
         // handle errors
         String error = null;
+
+        // being offline is not considered a true error as we can just try again once re-connected
+
         switch (result) {
-            case NetworkJob.ERROR_NETWORK:
-                error = context.getString(R.string.offline);
-                break;
             case NetworkJob.ERROR_TRAKT_AUTH:
                 error = context.getString(R.string.trakt_error_credentials);
                 break;
@@ -139,22 +140,19 @@ public class NetworkJobProcessor {
                 error = context.getString(R.string.api_error_generic,
                         context.getString(R.string.hexagon));
                 break;
-        }
-        boolean isSuccessful = error == null;
-
-        // post completed status
-        String confirmationText;
-        boolean displaySuccess;
-        if (isSuccessful && shouldSendToTrakt && !canSendToTrakt) {
-            // tell the user this change can not be sent to trakt for now
-            confirmationText = context.getString(R.string.trakt_notice_not_exists);
-            displaySuccess = false;
-        } else {
-//            confirmationText = isSuccessful ? job.getConfirmationText(context) : error;
-            displaySuccess = isSuccessful;
+            case NetworkJob.SUCCESS:
+                if (!canSendToTrakt) {
+                    // tell the user this change can not be sent to trakt for now
+                    error = context.getString(R.string.trakt_notice_not_exists);
+                }
+                break;
         }
 
-        // TODO show notification on error, offer to retry
+        // only notify if there is an issue
+        if (error != null) {
+            // TODO show notification on error, offer to retry
+            Toast.makeText(context, error, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void handleResult(Integer result) {
