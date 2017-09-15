@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
+import com.battlelancer.seriesguide.sync.SyncOptions.SyncType;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.MovieTools;
@@ -48,11 +49,11 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     /**
-     * One of {@link SyncOptions.SyncType}.
+     * One of {@link SyncType}.
      */
     static final String EXTRA_SYNC_TYPE = "com.battlelancer.seriesguide.sync_type";
     /**
-     * If {@link #EXTRA_SYNC_TYPE} is {@link SyncOptions.SyncType#SINGLE}, the TVDb id of the show
+     * If {@link #EXTRA_SYNC_TYPE} is {@link SyncType#SINGLE}, the TVDb id of the show
      * to sync.
      */
     static final String EXTRA_SYNC_SHOW_TVDB_ID = "com.battlelancer.seriesguide.sync_show";
@@ -84,9 +85,15 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             ContentProviderClient provider, SyncResult syncResult) {
         // determine type of sync
         SyncOptions options = new SyncOptions(extras);
-        TvdbSync tvdbSync = new TvdbSync(options.syncType, options.singleShowTvdbId);
         Timber.i("Syncing: %s%s", options.syncType, options.syncImmediately
                 ? "_IMMEDIATE" : "_REGULAR");
+
+        if (options.syncType == SyncType.JOBS) {
+            // TODO process network jobs
+            return;
+        }
+
+        TvdbSync tvdbSync = new TvdbSync(options.syncType, options.singleShowTvdbId);
 
         // should we sync?
         final long currentTime = System.currentTimeMillis();
@@ -221,7 +228,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             return;
         }
 
-        requestSyncIfConnected(context, SyncOptions.SyncType.DELTA, 0);
+        requestSyncIfConnected(context, SyncType.DELTA, 0);
     }
 
     /**
@@ -232,7 +239,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     public static void requestSyncIfTime(Context context, int showTvdbId) {
         if (TvdbTools.isUpdateShow(context, showTvdbId)) {
-            requestSyncIfConnected(context, SyncOptions.SyncType.SINGLE, showTvdbId);
+            requestSyncIfConnected(context, SyncType.SINGLE, showTvdbId);
         }
     }
 
@@ -240,9 +247,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Schedules a sync. Will only queue a sync request if there is a network connection and
      * auto-sync is enabled.
      *
-     * @param showTvdbId If using {@link SyncOptions.SyncType#SINGLE}, the TVDb id of a show.
+     * @param showTvdbId If using {@link SyncType#SINGLE}, the TVDb id of a show.
      */
-    private static void requestSyncIfConnected(Context context, SyncOptions.SyncType syncType,
+    private static void requestSyncIfConnected(Context context, SyncType syncType,
             int showTvdbId) {
         if (!AndroidUtils.isNetworkConnected(context) || !isSyncAutomatically(context)) {
             // offline or auto-sync disabled: abort
@@ -256,6 +263,19 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         requestSync(context, args);
     }
 
+    public static void requestSyncJobsImmediate(Context context) {
+        Bundle args = new Bundle();
+        args.putBoolean(EXTRA_SYNC_IMMEDIATE, true);
+        args.putInt(EXTRA_SYNC_TYPE, SyncType.JOBS.id);
+
+        // ignore sync settings and backoff
+        args.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
+        // push to front of sync queue
+        args.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+
+        requestSync(context, args);
+    }
+
     /**
      * Schedules an immediate sync even if auto-sync is disabled, it runs as soon as there is a
      * connection.
@@ -263,7 +283,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * @param showStatusToast If set, shows a status toast and aborts if offline.
      */
     public static void requestSyncDeltaImmediate(Context context, boolean showStatusToast) {
-        requestSyncImmediate(context, SyncOptions.SyncType.DELTA, 0, showStatusToast);
+        requestSyncImmediate(context, SyncType.DELTA, 0, showStatusToast);
     }
 
     /**
@@ -271,17 +291,17 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     public static void requestSyncSingleImmediate(Context context, boolean showStatusToast,
             int showTvdbId) {
-        requestSyncImmediate(context, SyncOptions.SyncType.SINGLE, showTvdbId, showStatusToast);
+        requestSyncImmediate(context, SyncType.SINGLE, showTvdbId, showStatusToast);
     }
 
     /**
      * @see #requestSyncDeltaImmediate(Context, boolean)
      */
     public static void requestSyncFullImmediate(Context context, boolean showStatusToast) {
-        requestSyncImmediate(context, SyncOptions.SyncType.FULL, 0, showStatusToast);
+        requestSyncImmediate(context, SyncType.FULL, 0, showStatusToast);
     }
 
-    private static void requestSyncImmediate(Context context, SyncOptions.SyncType syncType,
+    private static void requestSyncImmediate(Context context, SyncType syncType,
             int showTvdbId, boolean showStatusToast) {
         if (showStatusToast) {
             if (!AndroidUtils.isNetworkConnected(context)) {

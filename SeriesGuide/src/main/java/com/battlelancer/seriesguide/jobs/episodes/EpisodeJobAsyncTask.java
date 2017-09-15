@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import org.greenrobot.eventbus.EventBus;
@@ -25,13 +26,13 @@ public class EpisodeJobAsyncTask extends AsyncTask<Void, Void, Void> {
         boolean shouldSendToHexagon = HexagonSettings.isEnabled(context);
         boolean shouldSendToTrakt = TraktCredentials.get(context).hasCredentials()
                 && !EpisodeTools.isSkipped(job.getFlagValue());
+        boolean requiresNetworkJob = shouldSendToHexagon || shouldSendToTrakt;
 
         EventBus.getDefault().postSticky(new BaseNavDrawerActivity.ServiceActiveEvent(
                 shouldSendToHexagon, shouldSendToTrakt));
 
         // update local database and possibly prepare network job
-        boolean isSuccessful = job.applyLocalChanges(context,
-                shouldSendToHexagon || shouldSendToTrakt);
+        boolean isSuccessful = job.applyLocalChanges(context, requiresNetworkJob);
 
         EventBus.getDefault().removeStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent.class);
 
@@ -39,6 +40,10 @@ public class EpisodeJobAsyncTask extends AsyncTask<Void, Void, Void> {
                 new BaseNavDrawerActivity.ServiceCompletedEvent(job.getConfirmationText(context),
                         isSuccessful));
         EventBus.getDefault().post(new CompletedEvent(job, isSuccessful));
+
+        if (requiresNetworkJob) {
+            SgSyncAdapter.requestSyncJobsImmediate(context);
+        }
 
         return null;
     }

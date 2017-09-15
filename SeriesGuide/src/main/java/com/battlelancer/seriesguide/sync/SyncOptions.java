@@ -7,7 +7,8 @@ public class SyncOptions {
     public enum SyncType {
         DELTA(0),
         SINGLE(1),
-        FULL(2);
+        FULL(2),
+        JOBS(3);
 
         public int id;
 
