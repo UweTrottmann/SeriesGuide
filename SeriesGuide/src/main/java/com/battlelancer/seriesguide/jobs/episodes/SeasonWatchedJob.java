@@ -8,7 +8,6 @@ import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
-import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 
 public class SeasonWatchedJob extends SeasonBaseJob {
 
@@ -16,7 +15,7 @@ public class SeasonWatchedJob extends SeasonBaseJob {
 
     public SeasonWatchedJob(int showTvdbId, int seasonTvdbId, int season,
             int episodeFlags, long currentTime) {
-        super(showTvdbId, seasonTvdbId, season, episodeFlags, JobAction.SEASON_WATCHED);
+        super(showTvdbId, seasonTvdbId, season, episodeFlags, JobAction.EPISODE_WATCHED_FLAG);
         this.currentTime = currentTime;
     }
 

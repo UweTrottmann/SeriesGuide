@@ -11,7 +11,7 @@ public class EpisodeWatchedPreviousJob extends BaseJob {
     private long episodeFirstAired;
 
     public EpisodeWatchedPreviousJob(int showTvdbId, long episodeFirstAired) {
-        super(showTvdbId, EpisodeFlags.WATCHED, JobAction.EPISODE_WATCHED_PREVIOUS);
+        super(showTvdbId, EpisodeFlags.WATCHED, JobAction.EPISODE_WATCHED_FLAG);
         this.episodeFirstAired = episodeFirstAired;
     }
 

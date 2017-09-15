@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.battlelancer.seriesguide.jobs.episodes.JobAction.*;
+
 public class HexagonEpisodeJob extends NetworkJob {
 
     @NonNull private final HexagonTools hexagonTools;
@@ -84,14 +86,9 @@ public class HexagonEpisodeJob extends NetworkJob {
     @NonNull
     public List<Episode> getEpisodesForHexagon() {
         boolean isWatchedNotCollected;
-        if (action == JobAction.SHOW_WATCHED
-                || action == JobAction.SEASON_WATCHED
-                || action == JobAction.EPISODE_WATCHED
-                || action == JobAction.EPISODE_WATCHED_PREVIOUS) {
+        if (action == EPISODE_WATCHED_FLAG) {
             isWatchedNotCollected = true;
-        } else if (action == JobAction.SHOW_COLLECTED
-                || action == JobAction.SEASON_COLLECTED
-                || action == JobAction.EPISODE_COLLECTED) {
+        } else if (action == EPISODE_COLLECTION) {
             isWatchedNotCollected = false;
         } else {
             throw new IllegalArgumentException("Action " + action + " not supported.");

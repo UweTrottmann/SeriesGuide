@@ -61,10 +61,7 @@ public class TraktEpisodeJob extends NetworkJob {
         Sync traktSync = SgApp.getServicesComponent(context).traktSync();
         boolean isAddNotDelete = !EpisodeTools.isUnwatched(jobInfo.flagValue());
         switch (action) {
-            case SHOW_WATCHED:
-            case SEASON_WATCHED:
-            case EPISODE_WATCHED:
-            case EPISODE_WATCHED_PREVIOUS:
+            case EPISODE_WATCHED_FLAG:
                 if (isAddNotDelete) {
                     errorLabel = "set episodes watched";
                     call = traktSync.addItemsToWatchedHistory(items);
@@ -73,9 +70,7 @@ public class TraktEpisodeJob extends NetworkJob {
                     call = traktSync.deleteItemsFromWatchedHistory(items);
                 }
                 break;
-            case SHOW_COLLECTED:
-            case SEASON_COLLECTED:
-            case EPISODE_COLLECTED:
+            case EPISODE_COLLECTION:
                 if (isAddNotDelete) {
                     errorLabel = "add episodes to collection";
                     call = traktSync.addItemsToCollection(items);

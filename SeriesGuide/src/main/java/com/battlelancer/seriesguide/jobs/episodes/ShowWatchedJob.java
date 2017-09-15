@@ -5,14 +5,13 @@ import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 
 public class ShowWatchedJob extends ShowBaseJob {
 
     private final long currentTime;
 
     public ShowWatchedJob(int showTvdbId, int flagValue, long currentTime) {
-        super(showTvdbId, flagValue, JobAction.SHOW_WATCHED);
+        super(showTvdbId, flagValue, JobAction.EPISODE_WATCHED_FLAG);
         this.currentTime = currentTime;
     }
 

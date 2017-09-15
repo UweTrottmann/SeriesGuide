@@ -13,7 +13,8 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
 
     public EpisodeWatchedJob(int showTvdbId, int episodeTvdbId, int season, int episode,
             int episodeFlags) {
-        super(showTvdbId, episodeTvdbId, season, episode, episodeFlags, JobAction.EPISODE_WATCHED);
+        super(showTvdbId, episodeTvdbId, season, episode, episodeFlags,
+                JobAction.EPISODE_WATCHED_FLAG);
     }
 
     @Override
