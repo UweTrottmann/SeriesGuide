@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
@@ -18,12 +19,19 @@ import java.util.List;
 public abstract class BaseJob implements EpisodeFlagJob {
 
     public static final String[] PROJECTION_EPISODE = new String[] {
-            SeriesGuideContract.Episodes._ID
+            Episodes._ID
     };
+    public static final String[] PROJECTION_SEASON_NUMBER = new String[] {
+            Episodes.SEASON,
+            Episodes.NUMBER
+    };
+    public static final String ORDER_SEASON_ASC_NUMBER_ASC =
+            Episodes.SORT_SEASON_ASC + ", " + Episodes.SORT_NUMBER_ASC;
 
     private int showTvdbId;
     private int flagValue;
     private JobAction action;
+    private List<EpisodeInfo> episodeInfos;
 
     public BaseJob(int showTvdbId, int flagValue, JobAction action) {
         this.action = action;
@@ -51,8 +59,8 @@ public abstract class BaseJob implements EpisodeFlagJob {
     protected abstract String getDatabaseSelection();
 
     /**
-     * Return the column which should get updated, either {@link SeriesGuideContract.Episodes}
-     * .WATCHED or {@link SeriesGuideContract.Episodes}.COLLECTED.
+     * Return the column which should get updated, either {@link Episodes}
+     * .WATCHED or {@link Episodes}.COLLECTED.
      */
     protected abstract String getDatabaseColumnToUpdate();
 
@@ -77,7 +85,7 @@ public abstract class BaseJob implements EpisodeFlagJob {
         final Cursor episodeCursor = context.getContentResolver().query(
                 uri,
                 new String[] {
-                        SeriesGuideContract.Episodes.SEASON, SeriesGuideContract.Episodes.NUMBER
+                        Episodes.SEASON, Episodes.NUMBER
                 }, selection, null, null
         );
         if (episodeCursor != null) {
@@ -108,12 +116,12 @@ public abstract class BaseJob implements EpisodeFlagJob {
         final Cursor episodeCursor = context.getContentResolver().query(
                 uri,
                 new String[] {
-                        SeriesGuideContract.Episodes.SEASON, SeriesGuideContract.Episodes.NUMBER
+                        Episodes.SEASON, Episodes.NUMBER
                 },
                 selection,
                 null,
-                SeriesGuideContract.Episodes.SORT_SEASON_ASC + ", "
-                        + SeriesGuideContract.Episodes.SORT_NUMBER_ASC
+                Episodes.SORT_SEASON_ASC + ", "
+                        + Episodes.SORT_NUMBER_ASC
         );
         if (episodeCursor != null) {
             SyncSeason currentSeason = null;
@@ -149,6 +157,26 @@ public abstract class BaseJob implements EpisodeFlagJob {
             return false;
         }
 
+        // TODO only if there will be a network op
+        // store affected episodes for network part
+        episodeInfos = new ArrayList<>();
+        Cursor query = context.getContentResolver()
+                .query(uri, PROJECTION_SEASON_NUMBER, getDatabaseSelection(), null,
+                        ORDER_SEASON_ASC_NUMBER_ASC);
+        if (query == null) {
+            return false;
+        }
+        if (!query.moveToFirst()) {
+            query.close();
+            return false;
+        }
+        do {
+            int season = query.getInt(0);
+            int number = query.getInt(1);
+            episodeInfos.add(new EpisodeInfo(season, number));
+        } while (query.moveToNext());
+        query.close();
+
         // build and execute query
         ContentValues values = new ContentValues();
         values.put(getDatabaseColumnToUpdate(), getFlagValue());
@@ -160,7 +188,7 @@ public abstract class BaseJob implements EpisodeFlagJob {
 
         // notify some other URIs for updates
         context.getContentResolver()
-                .notifyChange(SeriesGuideContract.Episodes.CONTENT_URI, null);
+                .notifyChange(Episodes.CONTENT_URI, null);
         context.getContentResolver()
                 .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
 
@@ -191,5 +219,16 @@ public abstract class BaseJob implements EpisodeFlagJob {
                     values, null, null);
         }
         LatestEpisodeUpdateTask.updateLatestEpisodeFor(context, getShowTvdbId());
+    }
+
+    // TODO replace with flatbuffer class
+    public static class EpisodeInfo {
+        public int season;
+        public int number;
+
+        public EpisodeInfo(int season, int number) {
+            this.season = season;
+            this.number = number;
+        }
     }
 }
