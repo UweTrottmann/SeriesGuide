@@ -101,7 +101,7 @@ public class EpisodeJobAsyncTask extends AsyncTask<Void, Void, Void> {
         }
 
         // update local database (if uploading went smoothly or not uploading at all)
-        job.applyLocalChanges(context);
+        job.applyLocalChanges(context, shouldSendToHexagon || shouldSendToTrakt);
 
         handleResult(SUCCESS);
         return null;

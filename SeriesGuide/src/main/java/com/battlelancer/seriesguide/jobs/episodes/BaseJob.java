@@ -5,10 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import com.battlelancer.seriesguide.jobs.EpisodeInfo;
+import com.battlelancer.seriesguide.jobs.SgJobInfo;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
+import com.google.flatbuffers.FlatBufferBuilder;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncSeason;
@@ -31,7 +36,6 @@ public abstract class BaseJob implements EpisodeFlagJob {
     private int showTvdbId;
     private int flagValue;
     private JobAction action;
-    private List<EpisodeInfo> episodeInfos;
 
     public BaseJob(int showTvdbId, int flagValue, JobAction action) {
         this.action = action;
@@ -150,34 +154,23 @@ public abstract class BaseJob implements EpisodeFlagJob {
      */
     @Override
     @CallSuper
-    public boolean applyLocalChanges(Context context) {
+    public boolean applyLocalChanges(Context context, boolean requiresNetworkJob) {
         // determine query uri
         Uri uri = getDatabaseUri();
         if (uri == null) {
             return false;
         }
 
-        // TODO only if there will be a network op
-        // store affected episodes for network part
-        episodeInfos = new ArrayList<>();
-        Cursor query = context.getContentResolver()
-                .query(uri, PROJECTION_SEASON_NUMBER, getDatabaseSelection(), null,
-                        ORDER_SEASON_ASC_NUMBER_ASC);
-        if (query == null) {
-            return false;
+        // prepare network job
+        byte[] networkJobInfo = null;
+        if (requiresNetworkJob) {
+            networkJobInfo = prepareNetworkJob(context, uri);
+            if (networkJobInfo == null) {
+                return false;
+            }
         }
-        if (!query.moveToFirst()) {
-            query.close();
-            return false;
-        }
-        do {
-            int season = query.getInt(0);
-            int number = query.getInt(1);
-            episodeInfos.add(new EpisodeInfo(season, number));
-        } while (query.moveToNext());
-        query.close();
 
-        // build and execute query
+        // apply local updates
         ContentValues values = new ContentValues();
         values.put(getDatabaseColumnToUpdate(), getFlagValue());
         int updated = context.getContentResolver()
@@ -186,13 +179,64 @@ public abstract class BaseJob implements EpisodeFlagJob {
             return false; // -1 means error
         }
 
-        // notify some other URIs for updates
+        // persist network job after successful local updates
+        if (requiresNetworkJob) {
+            if (!persistNetworkJob(context, networkJobInfo)) {
+                return false;
+            }
+        }
+
+        // notify some other URIs about updates
         context.getContentResolver()
                 .notifyChange(Episodes.CONTENT_URI, null);
         context.getContentResolver()
                 .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
 
         return true;
+    }
+
+    @Nullable
+    private byte[] prepareNetworkJob(Context context, @NonNull Uri uri) {
+        // store affected episodes for network part
+        Cursor query = context.getContentResolver()
+                .query(uri, PROJECTION_SEASON_NUMBER, getDatabaseSelection(), null,
+                        ORDER_SEASON_ASC_NUMBER_ASC);
+        if (query == null) {
+            return null;
+        }
+        if (!query.moveToFirst()) {
+            query.close();
+            return null;
+        }
+
+        FlatBufferBuilder builder = new FlatBufferBuilder(0);
+
+        int[] episodeInfos = new int[query.getCount()];
+        int i = 0;
+        do {
+            int season = query.getInt(0);
+            int number = query.getInt(1);
+            episodeInfos[i] = EpisodeInfo.createEpisodeInfo(builder, season, number);
+            i++;
+        } while (query.moveToNext());
+        query.close();
+
+        int episodes = SgJobInfo.createEpisodesVector(builder, episodeInfos);
+        int jobInfo = SgJobInfo.createSgJobInfo(builder, showTvdbId, flagValue, episodes);
+
+        builder.finish(jobInfo);
+        return builder.dataBuffer().array();
+    }
+
+    private boolean persistNetworkJob(Context context, @NonNull byte[] jobInfo) {
+        ContentValues values = new ContentValues();
+        values.put(Jobs.TYPE, action.id);
+        values.put(Jobs.CREATED_MS, System.currentTimeMillis());
+        values.put(Jobs.EXTRAS, jobInfo);
+
+        Uri insert = context.getContentResolver().insert(Jobs.CONTENT_URI, values);
+
+        return insert != null;
     }
 
     /**
@@ -219,16 +263,5 @@ public abstract class BaseJob implements EpisodeFlagJob {
                     values, null, null);
         }
         LatestEpisodeUpdateTask.updateLatestEpisodeFor(context, getShowTvdbId());
-    }
-
-    // TODO replace with flatbuffer class
-    public static class EpisodeInfo {
-        public int season;
-        public int number;
-
-        public EpisodeInfo(int season, int number) {
-            this.season = season;
-            this.number = number;
-        }
     }
 }

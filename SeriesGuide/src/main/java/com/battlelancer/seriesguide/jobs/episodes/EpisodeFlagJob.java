@@ -22,7 +22,7 @@ public interface EpisodeFlagJob {
     @Nullable
     List<SyncSeason> getEpisodesForTrakt(Context context);
 
-    boolean applyLocalChanges(Context context);
+    boolean applyLocalChanges(Context context, boolean requiresNetworkJob);
 
     /**
      * Tells for example which episode was flagged watched.

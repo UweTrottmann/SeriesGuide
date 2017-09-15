@@ -81,8 +81,8 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
     }
 
     @Override
-    public boolean applyLocalChanges(Context context) {
-        if (!super.applyLocalChanges(context)) {
+    public boolean applyLocalChanges(Context context, boolean requiresNetworkJob) {
+        if (!super.applyLocalChanges(context, requiresNetworkJob)) {
             return false;
         }
 
