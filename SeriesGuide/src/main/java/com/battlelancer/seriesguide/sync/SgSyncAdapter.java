@@ -88,11 +88,13 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         Timber.i("Syncing: %s%s", options.syncType, options.syncImmediately
                 ? "_IMMEDIATE" : "_REGULAR");
 
+        // JOBS
         if (options.syncType == SyncType.JOBS) {
-            // TODO process network jobs
-            return;
+            new NetworkJobProcessor(getContext()).process();
+            return; // do nothing else
         }
 
+        // TVDB SYNC
         TvdbSync tvdbSync = new TvdbSync(options.syncType, options.singleShowTvdbId);
 
         // should we sync?
