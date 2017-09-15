@@ -133,7 +133,7 @@ public abstract class BaseJob implements EpisodeFlagJob {
         int jobInfo = SgJobInfo.createSgJobInfo(builder, showTvdbId, flagValue, episodes);
 
         builder.finish(jobInfo);
-        return builder.dataBuffer().array();
+        return builder.sizedByteArray();
     }
 
     private boolean persistNetworkJob(Context context, @NonNull byte[] jobInfo) {
