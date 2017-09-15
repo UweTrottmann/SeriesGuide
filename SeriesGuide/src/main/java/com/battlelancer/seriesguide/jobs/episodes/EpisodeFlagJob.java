@@ -22,6 +22,12 @@ public interface EpisodeFlagJob {
     @Nullable
     List<SyncSeason> getEpisodesForTrakt(Context context);
 
+    /**
+     * If requested, prepares a network job. Applies local changes, then persists the network job.
+     *
+     * @return If local changes were applied successfully and if requested the network op was
+     * persisted.
+     */
     boolean applyLocalChanges(Context context, boolean requiresNetworkJob);
 
     /**
