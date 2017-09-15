@@ -112,9 +112,10 @@ public class EpisodeTools {
     }
 
     /**
-     * Run the task on the thread pool.
+     * Run on serial executor, like all database ops to avoid concurrent database access as issues
+     * might occur due to ordering (ex: set watched + set not watched order matters).
      */
     private static void execute(Context context, @NonNull EpisodeFlagJob job) {
-        new EpisodeJobAsyncTask(context, job).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new EpisodeJobAsyncTask(context, job).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
     }
 }
