@@ -1,10 +1,12 @@
 package com.battlelancer.seriesguide.sync;
 
+import android.app.NotificationManager;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
-import android.widget.Toast;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -150,13 +152,23 @@ public class NetworkJobProcessor {
 
         // only notify if there is an issue
         if (error != null) {
-            // TODO show notification on error, offer to retry
-            Toast.makeText(context, error, Toast.LENGTH_LONG).show();
+            NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+            nb.setSmallIcon(R.drawable.ic_notification);
+            nb.setContentTitle(error);
+            nb.setContentText(error);
+            nb.setAutoCancel(true);
+            nb.setColor(ContextCompat.getColor(context, R.color.accent_primary));
+            nb.setPriority(NotificationCompat.PRIORITY_HIGH);
+            nb.setCategory(NotificationCompat.CATEGORY_ERROR);
+            NotificationManager nm = (NotificationManager) context.getSystemService(
+                    Context.NOTIFICATION_SERVICE);
+            if (nm != null) {
+                nm.notify(SgApp.NOTIFICATION_JOB_ID, nb.build());
+            }
         }
     }
 
     private void handleResult(Integer result) {
         handleResult(result, true);
     }
-
 }

@@ -37,6 +37,7 @@ public class SgApp extends Application {
     public static final int NOTIFICATION_EPISODE_ID = 1;
     public static final int NOTIFICATION_SUBSCRIPTION_ID = 2;
     public static final int NOTIFICATION_TRAKT_AUTH_ID = 3;
+    public static final int NOTIFICATION_JOB_ID = 4;
 
     /**
      * Time calculation has changed, all episodes need re-calculation.
