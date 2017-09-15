@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
 public enum JobAction {
+    UNKNOWN(0),
     EPISODE_COLLECTED(1),
     SEASON_COLLECTED(2),
     SHOW_COLLECTED(3),
@@ -13,5 +14,14 @@ public enum JobAction {
 
     JobAction(int id) {
         this.id = id;
+    }
+
+    public static JobAction fromId(int id) {
+        for (JobAction action : JobAction.values()) {
+            if (action.id == id) {
+                return action;
+            }
+        }
+        return UNKNOWN;
     }
 }

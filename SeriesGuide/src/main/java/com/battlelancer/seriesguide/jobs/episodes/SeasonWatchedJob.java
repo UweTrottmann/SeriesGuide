@@ -38,11 +38,6 @@ public class SeasonWatchedJob extends SeasonBaseJob {
     }
 
     @Override
-    protected void setHexagonFlag(Episode episode) {
-        episode.setWatchedFlag(getFlagValue());
-    }
-
-    @Override
     protected String getDatabaseColumnToUpdate() {
         return SeriesGuideContract.Episodes.WATCHED;
     }

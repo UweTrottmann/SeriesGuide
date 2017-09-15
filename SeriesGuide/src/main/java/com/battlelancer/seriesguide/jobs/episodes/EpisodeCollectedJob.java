@@ -16,11 +16,6 @@ public class EpisodeCollectedJob extends EpisodeBaseJob {
     }
 
     @Override
-    protected void setHexagonFlag(Episode episode) {
-        episode.setIsInCollection(EpisodeTools.isCollected(getFlagValue()));
-    }
-
-    @Override
     protected String getDatabaseColumnToUpdate() {
         return SeriesGuideContract.Episodes.COLLECTED;
     }

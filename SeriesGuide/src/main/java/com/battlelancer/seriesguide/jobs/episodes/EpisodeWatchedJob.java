@@ -8,18 +8,12 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
-import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 
 public class EpisodeWatchedJob extends EpisodeBaseJob {
 
     public EpisodeWatchedJob(int showTvdbId, int episodeTvdbId, int season, int episode,
             int episodeFlags) {
         super(showTvdbId, episodeTvdbId, season, episode, episodeFlags, JobAction.EPISODE_WATCHED);
-    }
-
-    @Override
-    protected void setHexagonFlag(Episode episode) {
-        episode.setWatchedFlag(getFlagValue());
     }
 
     @Override

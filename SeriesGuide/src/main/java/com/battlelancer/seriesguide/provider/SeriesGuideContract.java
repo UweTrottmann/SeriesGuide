@@ -1091,12 +1091,19 @@ public class SeriesGuideContract {
                 .appendPath(PATH_JOBS)
                 .build();
 
+        public static final String[] PROJECTION = {
+                Jobs._ID,
+                Jobs.TYPE,
+                Jobs.CREATED_MS,
+                Jobs.EXTRAS
+        };
+
         /**
          * Use if multiple items get returned
          */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.jobs";
 
-        public static final String SORT_LATEST = Jobs.CREATED_MS + " DESC";
+        public static final String SORT_OLDEST = Jobs.CREATED_MS + " ASC";
 
         public static Uri buildJobUri(long id) {
             return CONTENT_URI.buildUpon().appendPath(String.valueOf(id)).build();

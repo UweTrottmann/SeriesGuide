@@ -1,11 +1,8 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
-import android.content.Context;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
-import com.uwetrottmann.trakt5.entities.SyncSeason;
-import java.util.List;
 
 public class ShowCollectedJob extends ShowBaseJob {
 
@@ -20,17 +17,8 @@ public class ShowCollectedJob extends ShowBaseJob {
     }
 
     @Override
-    protected void setHexagonFlag(Episode episode) {
-        episode.setIsInCollection(EpisodeTools.isCollected(getFlagValue()));
-    }
-
-    @Override
     protected String getDatabaseColumnToUpdate() {
         return SeriesGuideContract.Episodes.COLLECTED;
     }
 
-    @Override
-    public List<SyncSeason> getEpisodesForTrakt(Context context) {
-        return null; // send whole show
-    }
 }

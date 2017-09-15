@@ -5,7 +5,6 @@ import android.net.Uri;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 
 public class EpisodeWatchedPreviousJob extends BaseJob {
 
@@ -31,11 +30,6 @@ public class EpisodeWatchedPreviousJob extends BaseJob {
         return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<" + episodeFirstAired
                 + " AND " + SeriesGuideContract.Episodes.SELECTION_HAS_RELEASE_DATE
                 + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED;
-    }
-
-    @Override
-    protected void setHexagonFlag(Episode episode) {
-        episode.setWatchedFlag(EpisodeFlags.WATCHED);
     }
 
     @Override

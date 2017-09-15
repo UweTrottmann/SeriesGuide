@@ -14,12 +14,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.google.flatbuffers.FlatBufferBuilder;
-import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
-import com.uwetrottmann.trakt5.entities.SyncEpisode;
-import com.uwetrottmann.trakt5.entities.SyncSeason;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public abstract class BaseJob implements EpisodeFlagJob {
 
@@ -33,9 +27,9 @@ public abstract class BaseJob implements EpisodeFlagJob {
     public static final String ORDER_SEASON_ASC_NUMBER_ASC =
             Episodes.SORT_SEASON_ASC + ", " + Episodes.SORT_NUMBER_ASC;
 
-    private int showTvdbId;
-    private int flagValue;
-    private JobAction action;
+    private final int showTvdbId;
+    private final int flagValue;
+    private final JobAction action;
 
     public BaseJob(int showTvdbId, int flagValue, JobAction action) {
         this.action = action;
@@ -43,7 +37,6 @@ public abstract class BaseJob implements EpisodeFlagJob {
         this.flagValue = flagValue;
     }
 
-    @Override
     public int getShowTvdbId() {
         return showTvdbId;
     }
@@ -51,11 +44,6 @@ public abstract class BaseJob implements EpisodeFlagJob {
     @Override
     public int getFlagValue() {
         return flagValue;
-    }
-
-    @Override
-    public JobAction getAction() {
-        return action;
     }
 
     protected abstract Uri getDatabaseUri();
@@ -67,86 +55,6 @@ public abstract class BaseJob implements EpisodeFlagJob {
      * .WATCHED or {@link Episodes}.COLLECTED.
      */
     protected abstract String getDatabaseColumnToUpdate();
-
-    /**
-     * Set watched or collection property.
-     */
-    protected abstract void setHexagonFlag(Episode episode);
-
-    /**
-     * Builds a list of episodes ready to upload to hexagon. However, the show TVDb id is not set.
-     * It should be set in a wrapping {@link com.uwetrottmann.seriesguide.backend.episodes.model.EpisodeList}.
-     */
-    @Override
-    public List<Episode> getEpisodesForHexagon(Context context) {
-        List<Episode> episodes = new ArrayList<>();
-
-        // determine uri
-        Uri uri = getDatabaseUri();
-        String selection = getDatabaseSelection();
-
-        // query and add episodes to list
-        final Cursor episodeCursor = context.getContentResolver().query(
-                uri,
-                new String[] {
-                        Episodes.SEASON, Episodes.NUMBER
-                }, selection, null, null
-        );
-        if (episodeCursor != null) {
-            while (episodeCursor.moveToNext()) {
-                Episode episode = new Episode();
-                setHexagonFlag(episode);
-                episode.setSeasonNumber(episodeCursor.getInt(0));
-                episode.setEpisodeNumber(episodeCursor.getInt(1));
-                episodes.add(episode);
-            }
-            episodeCursor.close();
-        }
-
-        return episodes;
-    }
-
-    @Nullable
-    @Override
-    public List<SyncSeason> getEpisodesForTrakt(Context context) {
-        List<SyncSeason> seasons = new ArrayList<>();
-
-        // determine uri
-        Uri uri = getDatabaseUri();
-        String selection = getDatabaseSelection();
-
-        // query and add episodes to list
-        // sort ascending by season, then number for trakt
-        final Cursor episodeCursor = context.getContentResolver().query(
-                uri,
-                new String[] {
-                        Episodes.SEASON, Episodes.NUMBER
-                },
-                selection,
-                null,
-                Episodes.SORT_SEASON_ASC + ", "
-                        + Episodes.SORT_NUMBER_ASC
-        );
-        if (episodeCursor != null) {
-            SyncSeason currentSeason = null;
-            while (episodeCursor.moveToNext()) {
-                int seasonNumber = episodeCursor.getInt(0);
-
-                // start new season?
-                if (currentSeason == null || seasonNumber > currentSeason.number) {
-                    currentSeason = new SyncSeason().number(seasonNumber);
-                    currentSeason.episodes = new LinkedList<>();
-                    seasons.add(currentSeason);
-                }
-
-                // add episode
-                currentSeason.episodes.add(new SyncEpisode().number(episodeCursor.getInt(1)));
-            }
-            episodeCursor.close();
-        }
-
-        return seasons;
-    }
 
     /**
      * Builds and executes the database op required to flag episodes in the local database,

@@ -6,9 +6,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
-import com.uwetrottmann.trakt5.entities.SyncSeason;
-import java.util.LinkedList;
-import java.util.List;
 
 public class SeasonCollectedJob extends SeasonBaseJob {
 
@@ -24,21 +21,8 @@ public class SeasonCollectedJob extends SeasonBaseJob {
     }
 
     @Override
-    protected void setHexagonFlag(Episode episode) {
-        episode.setIsInCollection(EpisodeTools.isCollected(getFlagValue()));
-    }
-
-    @Override
     protected String getDatabaseColumnToUpdate() {
         return SeriesGuideContract.Episodes.COLLECTED;
-    }
-
-    @Override
-    public List<SyncSeason> getEpisodesForTrakt(Context context) {
-        // flag the whole season
-        List<SyncSeason> seasons = new LinkedList<>();
-        seasons.add(new SyncSeason().number(season));
-        return seasons;
     }
 
     @Override

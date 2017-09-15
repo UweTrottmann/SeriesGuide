@@ -1,0 +1,166 @@
+package com.battlelancer.seriesguide.jobs;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.jobs.episodes.JobAction;
+import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.util.ShowTools;
+import com.uwetrottmann.trakt5.entities.ShowIds;
+import com.uwetrottmann.trakt5.entities.SyncEpisode;
+import com.uwetrottmann.trakt5.entities.SyncItems;
+import com.uwetrottmann.trakt5.entities.SyncResponse;
+import com.uwetrottmann.trakt5.entities.SyncSeason;
+import com.uwetrottmann.trakt5.entities.SyncShow;
+import com.uwetrottmann.trakt5.services.Sync;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import retrofit2.Call;
+import retrofit2.Response;
+
+public class TraktEpisodeJob extends NetworkJob {
+
+    private Integer showTraktId;
+
+    public TraktEpisodeJob(JobAction action, SgJobInfo jobInfo) {
+        super(action, jobInfo);
+    }
+
+    public boolean checkCanUpload(Context context) {
+        // Do not send if show has no trakt id (was not on trakt last time we checked).
+        showTraktId = ShowTools.getShowTraktId(context, jobInfo.showTvdbId());
+        return showTraktId != null;
+    }
+
+    public int upload(Context context) {
+        if (showTraktId == null) {
+            return NetworkJob.SUCCESS;
+        }
+
+        List<SyncSeason> flags = getEpisodesForTrakt();
+        if (flags.isEmpty()) {
+            return NetworkJob.SUCCESS; // nothing to upload, done.
+        }
+
+        if (!TraktCredentials.get(context).hasCredentials()) {
+            return NetworkJob.ERROR_TRAKT_AUTH;
+        }
+
+        // outer wrapper and show are always required
+        SyncShow show = new SyncShow().id(ShowIds.trakt(showTraktId));
+        SyncItems items = new SyncItems().shows(show);
+        show.seasons(flags);
+
+        // determine network call
+        String errorLabel;
+        Call<SyncResponse> call;
+        Sync traktSync = SgApp.getServicesComponent(context).traktSync();
+        boolean isAddNotDelete = !EpisodeTools.isUnwatched(jobInfo.flagValue());
+        switch (action) {
+            case SHOW_WATCHED:
+            case SEASON_WATCHED:
+            case EPISODE_WATCHED:
+            case EPISODE_WATCHED_PREVIOUS:
+                if (isAddNotDelete) {
+                    errorLabel = "set episodes watched";
+                    call = traktSync.addItemsToWatchedHistory(items);
+                } else {
+                    errorLabel = "set episodes not watched";
+                    call = traktSync.deleteItemsFromWatchedHistory(items);
+                }
+                break;
+            case SHOW_COLLECTED:
+            case SEASON_COLLECTED:
+            case EPISODE_COLLECTED:
+                if (isAddNotDelete) {
+                    errorLabel = "add episodes to collection";
+                    call = traktSync.addItemsToCollection(items);
+                } else {
+                    errorLabel = "remove episodes from collection";
+                    call = traktSync.deleteItemsFromCollection(items);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Action " + action + " not supported.");
+        }
+
+        // execute call
+        try {
+            Response<SyncResponse> response = call.execute();
+            if (response.isSuccessful()) {
+                // check if any items were not found
+                if (isSyncSuccessful(response.body())) {
+                    return NetworkJob.SUCCESS;
+                }
+            } else {
+                if (SgTrakt.isUnauthorized(context, response)) {
+                    return NetworkJob.ERROR_TRAKT_AUTH;
+                }
+                SgTrakt.trackFailedRequest(context, errorLabel, response);
+            }
+        } catch (IOException e) {
+            SgTrakt.trackFailedRequest(context, errorLabel, e);
+        }
+        return NetworkJob.ERROR_TRAKT_API;
+    }
+
+    /**
+     * Builds a list of {@link com.uwetrottmann.trakt5.entities.SyncSeason} objects to submit to
+     * trakt.
+     */
+    @NonNull
+    public List<SyncSeason> getEpisodesForTrakt() {
+        List<SyncSeason> seasons = new ArrayList<>();
+
+        SyncSeason currentSeason = null;
+        for (int i = 0; i < jobInfo.episodesLength(); i++) {
+            EpisodeInfo episodeInfo = jobInfo.episodes(i);
+
+            int seasonNumber = episodeInfo.season();
+
+            // start new season?
+            if (currentSeason == null || seasonNumber > currentSeason.number) {
+                currentSeason = new SyncSeason().number(seasonNumber);
+                currentSeason.episodes = new LinkedList<>();
+                seasons.add(currentSeason);
+            }
+
+            // add episode
+            currentSeason.episodes.add(new SyncEpisode().number(episodeInfo.number()));
+        }
+
+        return seasons;
+    }
+
+    /**
+     * If the {@link SyncResponse} is invalid or any show, season or episode was not found
+     * returns {@code false}.
+     */
+    private static boolean isSyncSuccessful(SyncResponse response) {
+        if (response == null || response.not_found == null) {
+            // invalid response, assume failure
+            return false;
+        }
+
+        if (response.not_found.shows != null && !response.not_found.shows.isEmpty()) {
+            // show not found
+            return false;
+        }
+        if (response.not_found.seasons != null && !response.not_found.seasons.isEmpty()) {
+            // show exists, but seasons not found
+            return false;
+        }
+        //noinspection RedundantIfStatement
+        if (response.not_found.episodes != null && !response.not_found.episodes.isEmpty()) {
+            // show and season exists, but episodes not found
+            return false;
+        }
+
+        return true;
+    }
+
+}

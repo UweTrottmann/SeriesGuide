@@ -24,6 +24,9 @@ public class EpisodeJobAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         boolean shouldSendToHexagon = HexagonSettings.isEnabled(context);
+        /* Do net send skipped episodes, this is not supported by trakt.
+        However, if the skipped flag is removed
+        this will be handled identical to flagging as unwatched. */
         boolean shouldSendToTrakt = TraktCredentials.get(context).hasCredentials()
                 && !EpisodeTools.isSkipped(job.getFlagValue());
         boolean requiresNetworkJob = shouldSendToHexagon || shouldSendToTrakt;
