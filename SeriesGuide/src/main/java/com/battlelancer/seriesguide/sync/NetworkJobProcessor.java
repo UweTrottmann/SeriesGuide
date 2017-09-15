@@ -55,7 +55,7 @@ public class NetworkJobProcessor {
                 ByteBuffer jobInfoBuffered = ByteBuffer.wrap(jobInfoArr);
                 SgJobInfo jobInfo = SgJobInfo.getRootAsSgJobInfo(jobInfoBuffered);
 
-                if (!doNetworkJob(action, jobInfo)) {
+                if (!doNetworkJob(action, jobInfo, createdAt)) {
                     break; // abort to avoid ordering issues
                 }
             }
@@ -79,7 +79,7 @@ public class NetworkJobProcessor {
         }
     }
 
-    private boolean doNetworkJob(JobAction action, SgJobInfo jobInfo) {
+    private boolean doNetworkJob(JobAction action, SgJobInfo jobInfo, long createdAt) {
         // upload to hexagon
         if (shouldSendToHexagon) {
             if (!AndroidUtils.isNetworkConnected(context)) {
@@ -99,7 +99,7 @@ public class NetworkJobProcessor {
         // upload to trakt
         if (shouldSendToTrakt) {
             // Do not send if show has no trakt id (was not on trakt last time we checked).
-            TraktEpisodeJob traktJob = new TraktEpisodeJob(action, jobInfo);
+            TraktEpisodeJob traktJob = new TraktEpisodeJob(action, jobInfo, createdAt);
             boolean canSendToTrakt = traktJob.checkCanUpload(context);
             if (canSendToTrakt) {
                 if (!AndroidUtils.isNetworkConnected(context)) {

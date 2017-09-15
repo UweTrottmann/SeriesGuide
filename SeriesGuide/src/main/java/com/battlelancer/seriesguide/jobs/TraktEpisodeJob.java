@@ -19,15 +19,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import org.threeten.bp.Instant;
+import org.threeten.bp.OffsetDateTime;
+import org.threeten.bp.ZoneOffset;
 import retrofit2.Call;
 import retrofit2.Response;
 
 public class TraktEpisodeJob extends NetworkJob {
 
+    private final long actionAtMs;
     private Integer showTraktId;
 
-    public TraktEpisodeJob(JobAction action, SgJobInfo jobInfo) {
+    public TraktEpisodeJob(JobAction action, SgJobInfo jobInfo, long actionAtMs) {
         super(action, jobInfo);
+        this.actionAtMs = actionAtMs;
     }
 
     public boolean checkCanUpload(Context context) {
@@ -109,6 +114,13 @@ public class TraktEpisodeJob extends NetworkJob {
      */
     @NonNull
     public List<SyncSeason> getEpisodesForTrakt() {
+        // send time of action to avoid adding duplicate plays/collection events at trakt
+        // if this job re-runs due to failure, but trakt already applied changes (it happens)
+        // also if execution is delayed to due being offline this will ensure
+        // the actual action time is stored at trakt
+        Instant instant = Instant.ofEpochMilli(actionAtMs);
+        OffsetDateTime actionAtDateTime = instant.atOffset(ZoneOffset.UTC);
+
         List<SyncSeason> seasons = new ArrayList<>();
 
         SyncSeason currentSeason = null;
@@ -125,7 +137,13 @@ public class TraktEpisodeJob extends NetworkJob {
             }
 
             // add episode
-            currentSeason.episodes.add(new SyncEpisode().number(episodeInfo.number()));
+            SyncEpisode episode = new SyncEpisode().number(episodeInfo.number());
+            if (action == JobAction.EPISODE_WATCHED_FLAG) {
+                episode.watchedAt(actionAtDateTime);
+            } else {
+                episode.collectedAt(actionAtDateTime);
+            }
+            currentSeason.episodes.add(episode);
         }
 
         return seasons;
@@ -157,5 +175,4 @@ public class TraktEpisodeJob extends NetworkJob {
 
         return true;
     }
-
 }
