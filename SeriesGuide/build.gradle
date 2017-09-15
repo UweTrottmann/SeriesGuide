@@ -143,6 +143,7 @@ dependencies {
     compile("com.crashlytics.sdk.android:crashlytics:${versions.crashlytics}@aar") {
         transitive = true
     }
+    compile 'com.github.davidmoten:flatbuffers-java:1.7.0.1'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     compile "com.google.code.gson:gson:${versions.gson}"
     compile "com.jakewharton.threetenabp:threetenabp:${versions.threetenABP}"
