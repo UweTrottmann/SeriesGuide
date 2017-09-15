@@ -10,9 +10,6 @@ android {
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
 
-        // only enable if debug builds exceed 64K method limit
-        multiDexEnabled false
-
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -99,6 +96,7 @@ android {
 
     buildTypes {
         release {
+            multiDexEnabled false
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
@@ -107,6 +105,7 @@ android {
             }
         }
         debug {
+            multiDexEnabled true
             // disable shrinking to use incremental dex in builds
             minifyEnabled false
             // en_XA (LTR) and ar_XB (RTL) to test UI adjusting to unusual glyphs and long strings
