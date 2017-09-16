@@ -42,7 +42,8 @@ public class TraktEpisodeJob extends NetworkJob {
     }
 
     public int upload(Context context) {
-        if (showTraktId == null) {
+        // can not (yet) track with trakt or is skipped flag not supported by trakt
+        if (showTraktId == null || EpisodeTools.isSkipped(jobInfo.flagValue())) {
             return NetworkJob.SUCCESS;
         }
 
