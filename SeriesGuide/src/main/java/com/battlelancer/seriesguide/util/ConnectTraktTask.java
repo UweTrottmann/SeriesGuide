@@ -73,10 +73,11 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         long expiresIn = -1;
         try {
             Response<AccessToken> response = trakt.exchangeCodeForAccessToken(authCode);
-            if (response.isSuccessful()) {
-                accessToken = response.body().access_token;
-                refreshToken = response.body().refresh_token;
-                expiresIn = response.body().expires_in;
+            AccessToken body = response.body();
+            if (response.isSuccessful() && body != null) {
+                accessToken = body.access_token;
+                refreshToken = body.refresh_token;
+                expiresIn = body.expires_in;
             } else {
                 SgTrakt.trackFailedRequest(context, "get access token", response);
             }
@@ -123,10 +124,11 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         String displayname = null;
         try {
             Response<Settings> response = traktUsers.settings().execute();
-            if (response.isSuccessful()) {
-                if (response.body().user != null) {
-                    username = response.body().user.username;
-                    displayname = response.body().user.name;
+            Settings body = response.body();
+            if (response.isSuccessful() && body != null) {
+                if (body.user != null) {
+                    username = body.user.username;
+                    displayname = body.user.name;
                 }
             } else {
                 SgTrakt.trackFailedRequest(context, "get user settings", response);
