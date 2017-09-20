@@ -644,6 +644,8 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.show";
 
+        public static final String[] PROJECTION_TITLE = { Shows.TITLE };
+
         public static final String SORT_TITLE = Shows.TITLE + " COLLATE NOCASE ASC";
         public static final String SORT_TITLE_NOARTICLE = Shows.TITLE_NOARTICLE
                 + " COLLATE NOCASE ASC";

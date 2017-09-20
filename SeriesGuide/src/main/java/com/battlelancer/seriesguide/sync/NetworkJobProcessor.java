@@ -1,11 +1,15 @@
 package com.battlelancer.seriesguide.sync;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentProviderOperation;
 import android.content.Context;
+import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -17,7 +21,10 @@ import com.battlelancer.seriesguide.jobs.SgJobInfo;
 import com.battlelancer.seriesguide.jobs.TraktEpisodeJob;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.OverviewActivity;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.nio.ByteBuffer;
@@ -48,6 +55,7 @@ public class NetworkJobProcessor {
         // process jobs, starting with oldest
         List<Long> jobsToRemove = new ArrayList<>();
         while (query.moveToNext()) {
+            long jobId = query.getLong(0);
             int typeId = query.getInt(1);
             JobAction action = JobAction.fromId(typeId);
 
@@ -57,12 +65,11 @@ public class NetworkJobProcessor {
                 ByteBuffer jobInfoBuffered = ByteBuffer.wrap(jobInfoArr);
                 SgJobInfo jobInfo = SgJobInfo.getRootAsSgJobInfo(jobInfoBuffered);
 
-                if (!doNetworkJob(action, jobInfo, createdAt)) {
+                if (!doNetworkJob(jobId, action, createdAt, jobInfo)) {
                     break; // abort to avoid ordering issues
                 }
             }
 
-            long jobId = query.getLong(0);
             jobsToRemove.add(jobId);
         }
         query.close();
@@ -73,11 +80,13 @@ public class NetworkJobProcessor {
         }
     }
 
-    private boolean doNetworkJob(JobAction action, SgJobInfo jobInfo, long createdAt) {
+    /**
+     * @return true if the job can be removed, false if it should be retried later.
+     */
+    private boolean doNetworkJob(long jobId, JobAction action, long createdAt, SgJobInfo jobInfo) {
         // upload to hexagon
         if (shouldSendToHexagon) {
             if (!AndroidUtils.isNetworkConnected(context)) {
-                handleResult(NetworkJob.ERROR_NETWORK);
                 return false;
             }
             HexagonTools hexagonTools = SgApp.getServicesComponent(context).hexagonTools();
@@ -85,8 +94,7 @@ public class NetworkJobProcessor {
             HexagonEpisodeJob hexagonJob = new HexagonEpisodeJob(hexagonTools, action, jobInfo);
             int result = hexagonJob.upload(context);
             if (result < 0) {
-                handleResult(result);
-                return false;
+                return handleResult(jobId, jobInfo, result);
             }
         }
 
@@ -97,31 +105,28 @@ public class NetworkJobProcessor {
             boolean canSendToTrakt = traktJob.checkCanUpload(context);
             if (canSendToTrakt) {
                 if (!AndroidUtils.isNetworkConnected(context)) {
-                    handleResult(NetworkJob.ERROR_NETWORK);
                     return false;
                 }
 
                 int result = traktJob.upload(context);
                 if (result < 0) {
-                    handleResult(result);
-                    return false;
+                    return handleResult(jobId, jobInfo, result);
                 }
             } else {
-                handleResult(NetworkJob.SUCCESS, false);
+                // show not on trakt: notify, but complete successfully
+                showCanNotSendToTraktNotification(jobId, jobInfo);
                 return true;
             }
         }
 
-        handleResult(NetworkJob.SUCCESS);
         return true;
     }
 
-    private void handleResult(Integer result, boolean canSendToTrakt) {
-        // handle errors
-        String error = null;
-
-        // being offline is not considered a true error as we can just try again once re-connected
-
+    /**
+     * @return true if the job can be removed, false if it should be retried later.
+     */
+    private boolean handleResult(long jobId, @NonNull SgJobInfo jobInfo, Integer result) {
+        String error;
         switch (result) {
             case NetworkJob.ERROR_TRAKT_AUTH:
                 error = context.getString(R.string.trakt_error_credentials);
@@ -134,34 +139,56 @@ public class NetworkJobProcessor {
                 error = context.getString(R.string.api_error_generic,
                         context.getString(R.string.hexagon));
                 break;
-            case NetworkJob.SUCCESS:
-                if (!canSendToTrakt) {
-                    // tell the user this change can not be sent to trakt for now
-                    error = context.getString(R.string.trakt_notice_not_exists);
-                }
-                break;
+            default:
+                return true; // unknown error, remove job
         }
-
-        // only notify if there is an issue
-        if (error != null) {
-            NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
-            nb.setSmallIcon(R.drawable.ic_notification);
-            nb.setContentTitle(error);
-            nb.setContentText(error);
-            nb.setAutoCancel(true);
-            nb.setColor(ContextCompat.getColor(context, R.color.accent_primary));
-            nb.setPriority(NotificationCompat.PRIORITY_HIGH);
-            nb.setCategory(NotificationCompat.CATEGORY_ERROR);
-            NotificationManager nm = (NotificationManager) context.getSystemService(
-                    Context.NOTIFICATION_SERVICE);
-            if (nm != null) {
-                nm.notify(SgApp.NOTIFICATION_JOB_ID, nb.build());
-            }
-        }
+        showNotification(jobId, jobInfo, error);
+        return true;
     }
 
-    private void handleResult(Integer result) {
-        handleResult(result, true);
+    private void showCanNotSendToTraktNotification(long jobId, @NonNull SgJobInfo jobInfo) {
+        showNotification(jobId, jobInfo, context.getString(R.string.trakt_notice_not_exists));
+    }
+
+    private void showNotification(long jobId, @NonNull SgJobInfo jobInfo, @NonNull String error) {
+        // get affected show title
+        int showTvdbId = jobInfo.showTvdbId();
+        Cursor query = context.getContentResolver()
+                .query(Shows.buildShowUri(showTvdbId),
+                        Shows.PROJECTION_TITLE, null,
+                        null, null);
+        if (query == null) {
+            return;
+        }
+        if (!query.moveToFirst()) {
+            query.close();
+            return;
+        }
+        String title = query.getString(query.getColumnIndexOrThrow(Shows.TITLE));
+        query.close();
+
+        // tapping the notification should open the affected show
+        PendingIntent contentIntent = TaskStackBuilder.create(context)
+                .addNextIntent(new Intent(context, ShowsActivity.class))
+                .addNextIntent(OverviewActivity.intentShow(context, showTvdbId))
+                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+        nb.setSmallIcon(R.drawable.ic_notification);
+        nb.setContentTitle(title);
+        nb.setContentText(error);
+        nb.setContentIntent(contentIntent);
+        nb.setAutoCancel(true);
+        nb.setColor(ContextCompat.getColor(context, R.color.accent_primary));
+        nb.setPriority(NotificationCompat.PRIORITY_HIGH);
+        nb.setCategory(NotificationCompat.CATEGORY_ERROR);
+
+        NotificationManager nm = (NotificationManager) context.getSystemService(
+                Context.NOTIFICATION_SERVICE);
+        if (nm != null) {
+            // notification for each job
+            nm.notify(String.valueOf(jobId), SgApp.NOTIFICATION_JOB_ID, nb.build());
+        }
     }
 
     private void removeJobs(List<Long> jobsToRemove) {
