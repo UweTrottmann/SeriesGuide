@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.jobs;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
@@ -42,13 +43,17 @@ public class TraktEpisodeJob extends NetworkJob {
     }
 
     public int upload(Context context) {
+        final int flagValue = jobInfo.flagValue();
+
         // can not (yet) track with trakt or is skipped flag not supported by trakt
-        if (showTraktId == null || EpisodeTools.isSkipped(jobInfo.flagValue())) {
+        if (showTraktId == null || EpisodeTools.isSkipped(flagValue)) {
             return NetworkJob.SUCCESS;
         }
 
-        List<SyncSeason> flags = getEpisodesForTrakt();
-        if (flags.isEmpty()) {
+        boolean isAddNotDelete = flagValue
+                != EpisodeFlags.UNWATCHED; // 0 for not watched or not collected
+        List<SyncSeason> seasons = getEpisodesForTrakt(isAddNotDelete);
+        if (seasons.isEmpty()) {
             return NetworkJob.SUCCESS; // nothing to upload, done.
         }
 
@@ -59,13 +64,12 @@ public class TraktEpisodeJob extends NetworkJob {
         // outer wrapper and show are always required
         SyncShow show = new SyncShow().id(ShowIds.trakt(showTraktId));
         SyncItems items = new SyncItems().shows(show);
-        show.seasons(flags);
+        show.seasons(seasons);
 
         // determine network call
         String errorLabel;
         Call<SyncResponse> call;
         Sync traktSync = SgApp.getServicesComponent(context).traktSync();
-        boolean isAddNotDelete = !EpisodeTools.isUnwatched(jobInfo.flagValue());
         switch (action) {
             case EPISODE_WATCHED_FLAG:
                 if (isAddNotDelete) {
@@ -114,7 +118,7 @@ public class TraktEpisodeJob extends NetworkJob {
      * trakt.
      */
     @NonNull
-    public List<SyncSeason> getEpisodesForTrakt() {
+    private List<SyncSeason> getEpisodesForTrakt(boolean isAddNotDelete) {
         // send time of action to avoid adding duplicate plays/collection events at trakt
         // if this job re-runs due to failure, but trakt already applied changes (it happens)
         // also if execution is delayed to due being offline this will ensure
@@ -139,10 +143,13 @@ public class TraktEpisodeJob extends NetworkJob {
 
             // add episode
             SyncEpisode episode = new SyncEpisode().number(episodeInfo.number());
-            if (action == JobAction.EPISODE_WATCHED_FLAG) {
-                episode.watchedAt(actionAtDateTime);
-            } else {
-                episode.collectedAt(actionAtDateTime);
+            if (isAddNotDelete) {
+                // only send timestamp if adding, not if removing to save data
+                if (action == JobAction.EPISODE_WATCHED_FLAG) {
+                    episode.watchedAt(actionAtDateTime);
+                } else {
+                    episode.collectedAt(actionAtDateTime);
+                }
             }
             currentSeason.episodes.add(episode);
         }
