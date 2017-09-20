@@ -126,31 +126,48 @@ public class NetworkJobProcessor {
      * @return true if the job can be removed, false if it should be retried later.
      */
     private boolean handleResult(long jobId, @NonNull SgJobInfo jobInfo, Integer result) {
-        String error;
+        String message;
+        boolean removeJob;
         switch (result) {
+            case NetworkJob.ERROR_CONNECTION:
+                // failed to connect or read response
+                return false;
+            case NetworkJob.ERROR_HEXAGON_SERVER:
+                // server or other connection issue
+                return false;
+            case NetworkJob.ERROR_HEXAGON_AUTH:
+                // TODO ut better error message if auth is missing, or drop?
+                message = context.getString(R.string.api_error_generic,
+                        context.getString(R.string.hexagon));
+                removeJob = false;
+                break;
             case NetworkJob.ERROR_TRAKT_AUTH:
-                error = context.getString(R.string.trakt_error_credentials);
+                message = context.getString(R.string.trakt_error_credentials);
+                removeJob = false;
                 break;
             case NetworkJob.ERROR_TRAKT_API:
-                error = context.getString(R.string.api_error_generic,
+                message = context.getString(R.string.api_error_generic,
                         context.getString(R.string.trakt));
+                removeJob = true;
                 break;
-            case NetworkJob.ERROR_HEXAGON_API:
-                error = context.getString(R.string.api_error_generic,
+            case NetworkJob.ERROR_HEXAGON_CLIENT:
+                message = context.getString(R.string.api_error_generic,
                         context.getString(R.string.hexagon));
+                removeJob = true;
                 break;
             default:
-                return true; // unknown error, remove job
+                // unknown error
+                return true;
         }
-        showNotification(jobId, jobInfo, error);
-        return true;
+        showNotification(jobId, jobInfo, message);
+        return removeJob; // remove job
     }
 
     private void showCanNotSendToTraktNotification(long jobId, @NonNull SgJobInfo jobInfo) {
         showNotification(jobId, jobInfo, context.getString(R.string.trakt_notice_not_exists));
     }
 
-    private void showNotification(long jobId, @NonNull SgJobInfo jobInfo, @NonNull String error) {
+    private void showNotification(long jobId, @NonNull SgJobInfo jobInfo, @NonNull String message) {
         // get affected show title
         int showTvdbId = jobInfo.showTvdbId();
         Cursor query = context.getContentResolver()
@@ -176,7 +193,7 @@ public class NetworkJobProcessor {
         NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
         nb.setSmallIcon(R.drawable.ic_notification);
         nb.setContentTitle(title);
-        nb.setContentText(error);
+        nb.setContentText(message);
         nb.setContentIntent(contentIntent);
         nb.setAutoCancel(true);
         nb.setColor(ContextCompat.getColor(context, R.color.accent_primary));

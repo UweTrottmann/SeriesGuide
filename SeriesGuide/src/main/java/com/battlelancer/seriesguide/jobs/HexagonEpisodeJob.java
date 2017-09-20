@@ -6,6 +6,7 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.google.api.client.http.HttpResponseException;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 import com.uwetrottmann.seriesguide.backend.episodes.model.EpisodeList;
@@ -13,7 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.battlelancer.seriesguide.jobs.episodes.JobAction.*;
+import static com.battlelancer.seriesguide.jobs.episodes.JobAction.EPISODE_COLLECTION;
+import static com.battlelancer.seriesguide.jobs.episodes.JobAction.EPISODE_WATCHED_FLAG;
 
 public class HexagonEpisodeJob extends NetworkJob {
 
@@ -48,8 +50,24 @@ public class HexagonEpisodeJob extends NetworkJob {
 
             // upload
             uploadWrapper.setEpisodes(smallBatch);
-            if (!uploadFlagsToHexagon(context, hexagonTools, uploadWrapper)) {
-                return NetworkJob.ERROR_HEXAGON_API;
+
+            try {
+                Episodes episodesService = hexagonTools.getEpisodesService();
+                if (episodesService == null) {
+                    return NetworkJob.ERROR_HEXAGON_AUTH;
+                }
+                episodesService.save(uploadWrapper).execute();
+            } catch (HttpResponseException e) {
+                HexagonTools.trackFailedRequest(context, "save episodes", e);
+                int code = e.getStatusCode();
+                if (code >= 400 && code < 500) {
+                    return NetworkJob.ERROR_HEXAGON_CLIENT;
+                } else {
+                    return NetworkJob.ERROR_HEXAGON_SERVER;
+                }
+            } catch (IOException e) {
+                HexagonTools.trackFailedRequest(context, "save episodes", e);
+                return NetworkJob.ERROR_CONNECTION;
             }
 
             // prepare for next batch
@@ -60,31 +78,11 @@ public class HexagonEpisodeJob extends NetworkJob {
     }
 
     /**
-     * Upload the given episodes to Hexagon. Assumes the given episode wrapper has valid
-     * values.
-     */
-    private static boolean uploadFlagsToHexagon(Context context, HexagonTools hexagonTools,
-            EpisodeList episodes) {
-        try {
-            Episodes episodesService = hexagonTools.getEpisodesService();
-            if (episodesService == null) {
-                return false;
-            }
-            episodesService.save(episodes).execute();
-        } catch (IOException e) {
-            HexagonTools.trackFailedRequest(context, "save episodes", e);
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Builds a list of episodes ready to upload to hexagon. However, the show TVDb id is not set.
      * It should be set in a wrapping {@link com.uwetrottmann.seriesguide.backend.episodes.model.EpisodeList}.
      */
     @NonNull
-    public List<Episode> getEpisodesForHexagon() {
+    private List<Episode> getEpisodesForHexagon() {
         boolean isWatchedNotCollected;
         if (action == EPISODE_WATCHED_FLAG) {
             isWatchedNotCollected = true;
