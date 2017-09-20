@@ -69,15 +69,7 @@ public class NetworkJobProcessor {
 
         // remove completed jobs
         if (!jobsToRemove.isEmpty()) {
-            ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-            for (Long jobId : jobsToRemove) {
-                batch.add(ContentProviderOperation.newDelete(Jobs.buildJobUri(jobId)).build());
-            }
-            try {
-                DBUtils.applyInSmallBatches(context, batch);
-            } catch (OperationApplicationException e) {
-                Timber.e(e, "process: failed to delete completed jobs");
-            }
+            removeJobs(jobsToRemove);
         }
     }
 
@@ -170,5 +162,27 @@ public class NetworkJobProcessor {
 
     private void handleResult(Integer result) {
         handleResult(result, true);
+    }
+
+    private void removeJobs(List<Long> jobsToRemove) {
+        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        for (Long jobId : jobsToRemove) {
+            batch.add(ContentProviderOperation.newDelete(Jobs.buildJobUri(jobId)).build());
+        }
+        try {
+            DBUtils.applyInSmallBatches(context, batch);
+        } catch (OperationApplicationException e) {
+            Timber.e(e, "process: failed to delete completed jobs");
+        }
+    }
+
+    /**
+     * If neither trakt or Cloud are connected, clears all remaining jobs.
+     */
+    public void removeObsoleteJobs() {
+        if (shouldSendToHexagon || shouldSendToTrakt) {
+            return; // still signed in to either service, do not clear jobs
+        }
+        context.getContentResolver().delete(Jobs.CONTENT_URI, null, null);
     }
 }
