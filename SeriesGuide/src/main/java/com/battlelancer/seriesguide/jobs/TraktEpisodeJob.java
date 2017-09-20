@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.jobs;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
@@ -11,6 +12,7 @@ import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
+import com.uwetrottmann.trakt5.entities.SyncErrors;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.SyncSeason;
@@ -98,19 +100,28 @@ public class TraktEpisodeJob extends NetworkJob {
             Response<SyncResponse> response = call.execute();
             if (response.isSuccessful()) {
                 // check if any items were not found
-                if (isSyncSuccessful(response.body())) {
-                    return NetworkJob.SUCCESS;
+                if (!isSyncSuccessful(response.body())) {
+                    return NetworkJob.ERROR_TRAKT_NOT_FOUND;
                 }
             } else {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return NetworkJob.ERROR_TRAKT_AUTH;
                 }
                 SgTrakt.trackFailedRequest(context, errorLabel, response);
+
+                int code = response.code();
+                if (code == 429 /* Rate Limit Exceeded */ || code >= 500) {
+                    return NetworkJob.ERROR_TRAKT_SERVER;
+                } else {
+                    return NetworkJob.ERROR_TRAKT_CLIENT;
+                }
             }
         } catch (IOException e) {
             SgTrakt.trackFailedRequest(context, errorLabel, e);
+            return NetworkJob.ERROR_CONNECTION;
         }
-        return NetworkJob.ERROR_TRAKT_API;
+
+        return NetworkJob.SUCCESS;
     }
 
     /**
@@ -158,13 +169,11 @@ public class TraktEpisodeJob extends NetworkJob {
     }
 
     /**
-     * If the {@link SyncResponse} is invalid or any show, season or episode was not found
-     * returns {@code false}.
+     * If the {@link SyncErrors} indicates any show, season or episode was not found returns {@code false}.
      */
-    private static boolean isSyncSuccessful(SyncResponse response) {
+    private static boolean isSyncSuccessful(@Nullable SyncResponse response) {
         if (response == null || response.not_found == null) {
-            // invalid response, assume failure
-            return false;
+            return true;
         }
 
         if (response.not_found.shows != null && !response.not_found.shows.isEmpty()) {
@@ -180,7 +189,6 @@ public class TraktEpisodeJob extends NetworkJob {
             // show and season exists, but episodes not found
             return false;
         }
-
         return true;
     }
 }

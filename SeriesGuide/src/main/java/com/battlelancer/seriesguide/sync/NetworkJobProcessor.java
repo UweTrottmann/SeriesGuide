@@ -130,10 +130,8 @@ public class NetworkJobProcessor {
         boolean removeJob;
         switch (result) {
             case NetworkJob.ERROR_CONNECTION:
-                // failed to connect or read response
-                return false;
             case NetworkJob.ERROR_HEXAGON_SERVER:
-                // server or other connection issue
+            case NetworkJob.ERROR_TRAKT_SERVER:
                 return false;
             case NetworkJob.ERROR_HEXAGON_AUTH:
                 // TODO ut better error message if auth is missing, or drop?
@@ -145,18 +143,20 @@ public class NetworkJobProcessor {
                 message = context.getString(R.string.trakt_error_credentials);
                 removeJob = false;
                 break;
-            case NetworkJob.ERROR_TRAKT_API:
-                message = context.getString(R.string.api_error_generic,
-                        context.getString(R.string.trakt));
-                removeJob = true;
-                break;
             case NetworkJob.ERROR_HEXAGON_CLIENT:
                 message = context.getString(R.string.api_error_generic,
                         context.getString(R.string.hexagon));
                 removeJob = true;
                 break;
+            case NetworkJob.ERROR_TRAKT_CLIENT:
+                message = context.getString(R.string.api_error_generic,
+                        context.getString(R.string.trakt));
+                removeJob = true;
+                break;
+            case NetworkJob.ERROR_TRAKT_NOT_FOUND:
+                showCanNotSendToTraktNotification(jobId, jobInfo);
+                return true;
             default:
-                // unknown error
                 return true;
         }
         showNotification(jobId, jobInfo, message);
