@@ -60,14 +60,18 @@ public class NetworkJobProcessor {
             JobAction action = JobAction.fromId(typeId);
 
             if (action != JobAction.UNKNOWN) {
+                Timber.d("Running job %d %s", jobId, action);
+
                 long createdAt = query.getLong(2);
                 byte[] jobInfoArr = query.getBlob(3);
                 ByteBuffer jobInfoBuffered = ByteBuffer.wrap(jobInfoArr);
                 SgJobInfo jobInfo = SgJobInfo.getRootAsSgJobInfo(jobInfoBuffered);
 
                 if (!doNetworkJob(jobId, action, createdAt, jobInfo)) {
+                    Timber.d("Job %d failed, will retry.", jobId);
                     break; // abort to avoid ordering issues
                 }
+                Timber.d("Job %d completed, will remove.", jobId);
             }
 
             jobsToRemove.add(jobId);
