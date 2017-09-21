@@ -30,6 +30,7 @@ import com.battlelancer.seriesguide.customtabs.CustomTabsHelper;
 import com.battlelancer.seriesguide.customtabs.FeedbackBroadcastReceiver;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.Utils;
 import io.palaima.debugdrawer.actions.ActionsModule;
 import io.palaima.debugdrawer.actions.ButtonAction;
@@ -231,11 +232,22 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                         }
                     });
 
+            ButtonAction buttonTriggerJobProcessor = new ButtonAction(
+                    "Schedule job processing",
+                    new ButtonAction.Listener() {
+                        @Override
+                        public void onClick() {
+                            SgSyncAdapter.requestSyncJobsImmediate(getApplicationContext());
+                        }
+                    }
+            );
+
             debugView.modules(
                     new ActionsModule(
                             buttonClearTraktRefreshToken,
                             buttonInvalidateTraktAccessToken,
-                            buttonInvalidateTraktRefreshToken
+                            buttonInvalidateTraktRefreshToken,
+                            buttonTriggerJobProcessor
                     ),
                     new TimberModule(),
                     new DeviceModule(this)
