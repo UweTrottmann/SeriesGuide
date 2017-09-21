@@ -41,26 +41,12 @@ public class EpisodeJobAsyncTask extends AsyncTask<Void, Void, Void> {
 
         EventBus.getDefault().post(
                 new BaseNavDrawerActivity.ServiceCompletedEvent(job.getConfirmationText(context),
-                        isSuccessful));
-        EventBus.getDefault().post(new CompletedEvent(job, isSuccessful));
+                        isSuccessful, job));
 
         if (requiresNetworkJob) {
             SgSyncAdapter.requestSyncJobsImmediate(context);
         }
 
         return null;
-    }
-
-    /**
-     * Posted once the episode task has completed. It may not have been successful.
-     */
-    public static class CompletedEvent {
-        public final EpisodeFlagJob job;
-        public final boolean isSuccessful;
-
-        public CompletedEvent(EpisodeFlagJob job, boolean isSuccessful) {
-            this.job = job;
-            this.isSuccessful = isSuccessful;
-        }
     }
 }

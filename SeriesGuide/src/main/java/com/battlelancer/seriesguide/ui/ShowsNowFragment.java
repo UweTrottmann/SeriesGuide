@@ -26,7 +26,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
-import com.battlelancer.seriesguide.jobs.episodes.EpisodeJobAsyncTask;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
 import com.battlelancer.seriesguide.loaders.RecentlyWatchedLoader;
 import com.battlelancer.seriesguide.loaders.TraktFriendsEpisodeHistoryLoader;
@@ -311,8 +310,8 @@ public class ShowsNowFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventEpisodeTask(EpisodeJobAsyncTask.CompletedEvent event) {
-        if (!event.isSuccessful) {
+    public void onEventEpisodeTask(BaseNavDrawerActivity.ServiceCompletedEvent event) {
+        if (event.episodeJob == null || !event.isSuccessful) {
             return; // no changes applied
         }
         if (!isAdded()) {
@@ -320,7 +319,7 @@ public class ShowsNowFragment extends Fragment {
         }
         // reload recently watched if user set or unset an episode watched
         // however, if connected to trakt do not show local history
-        if (event.job instanceof EpisodeWatchedJob
+        if (event.episodeJob instanceof EpisodeWatchedJob
                 && !TraktCredentials.get(getActivity()).hasCredentials()) {
             isLoadingRecentlyWatched = true;
             getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,

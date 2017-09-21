@@ -36,7 +36,7 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.SeasonsAdapter;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.jobs.episodes.EpisodeJobAsyncTask;
+import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.service.UnwatchedUpdaterService;
@@ -47,7 +47,6 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
-import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob;
 import java.lang.ref.WeakReference;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -203,17 +202,17 @@ public class SeasonsFragment extends ListFragment {
      * Updates the total remaining episodes counter, updates season counters after episode actions.
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(EpisodeJobAsyncTask.CompletedEvent event) {
-        if (!event.isSuccessful) {
+    public void onEvent(BaseNavDrawerActivity.ServiceCompletedEvent event) {
+        if (event.episodeJob == null || !event.isSuccessful) {
             return; // no changes applied
         }
         if (!isAdded()) {
             return; // no longer added to activity
         }
         updateRemainingCounter();
-        if (event.job instanceof SeasonWatchedJob) {
+        if (event.episodeJob instanceof SeasonWatchedJob) {
             // If we can narrow it down to just one season...
-            SeasonWatchedJob seasonWatchedType = (SeasonWatchedJob) event.job;
+            SeasonWatchedJob seasonWatchedType = (SeasonWatchedJob) event.episodeJob;
             getActivity().startService(UnwatchedUpdaterService.buildIntent(getContext(),
                     getShowId(), seasonWatchedType.getSeasonTvdbId()));
         } else {
