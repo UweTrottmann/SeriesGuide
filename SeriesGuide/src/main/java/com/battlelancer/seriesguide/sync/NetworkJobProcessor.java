@@ -4,27 +4,23 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentProviderOperation;
 import android.content.Context;
-import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
+import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.jobs.HexagonEpisodeJob;
-import com.battlelancer.seriesguide.jobs.NetworkJob;
 import com.battlelancer.seriesguide.jobs.SgJobInfo;
 import com.battlelancer.seriesguide.jobs.TraktEpisodeJob;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.ui.OverviewActivity;
-import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.nio.ByteBuffer;
@@ -96,120 +92,78 @@ public class NetworkJobProcessor {
             HexagonTools hexagonTools = SgApp.getServicesComponent(context).hexagonTools();
 
             HexagonEpisodeJob hexagonJob = new HexagonEpisodeJob(hexagonTools, action, jobInfo);
-            int result = hexagonJob.upload(context);
-            if (result < 0) {
-                return handleResult(jobId, jobInfo, result);
+            JobResult result = hexagonJob.execute(context);
+            if (!result.successful) {
+                showNotification(jobId, createdAt, result);
+                return result.jobRemovable;
             }
         }
 
         // upload to trakt
         if (shouldSendToTrakt) {
-            // Do not send if show has no trakt id (was not on trakt last time we checked).
-            TraktEpisodeJob traktJob = new TraktEpisodeJob(action, jobInfo, createdAt);
-            boolean canSendToTrakt = traktJob.checkCanUpload(context);
-            if (canSendToTrakt) {
-                if (!AndroidUtils.isNetworkConnected(context)) {
-                    return false;
-                }
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                return false;
+            }
 
-                int result = traktJob.upload(context);
-                if (result < 0) {
-                    return handleResult(jobId, jobInfo, result);
-                }
-            } else {
-                // show not on trakt: notify, but complete successfully
-                showCanNotSendToTraktNotification(jobId, jobInfo);
-                return true;
+            TraktEpisodeJob traktJob = new TraktEpisodeJob(action, jobInfo, createdAt);
+            JobResult result = traktJob.execute(context);
+            // may need to show notification if successful (for not found error)
+            showNotification(jobId, createdAt, result);
+            if (!result.successful) {
+                return result.jobRemovable;
             }
         }
 
         return true;
     }
 
-    /**
-     * @return true if the job can be removed, false if it should be retried later.
-     */
-    private boolean handleResult(long jobId, @NonNull SgJobInfo jobInfo, Integer result) {
-        String message;
-        boolean removeJob;
-        switch (result) {
-            case NetworkJob.ERROR_CONNECTION:
-            case NetworkJob.ERROR_HEXAGON_SERVER:
-            case NetworkJob.ERROR_TRAKT_SERVER:
-                return false;
-            case NetworkJob.ERROR_HEXAGON_AUTH:
-                // TODO ut better error message if auth is missing, or drop?
-                message = context.getString(R.string.api_error_generic,
-                        context.getString(R.string.hexagon));
-                removeJob = false;
-                break;
-            case NetworkJob.ERROR_TRAKT_AUTH:
-                message = context.getString(R.string.trakt_error_credentials);
-                removeJob = false;
-                break;
-            case NetworkJob.ERROR_HEXAGON_CLIENT:
-                message = context.getString(R.string.api_error_generic,
-                        context.getString(R.string.hexagon));
-                removeJob = true;
-                break;
-            case NetworkJob.ERROR_TRAKT_CLIENT:
-                message = context.getString(R.string.api_error_generic,
-                        context.getString(R.string.trakt));
-                removeJob = true;
-                break;
-            case NetworkJob.ERROR_TRAKT_NOT_FOUND:
-                showCanNotSendToTraktNotification(jobId, jobInfo);
-                return true;
-            default:
-                return true;
+    private void showNotification(long jobId, long jobCreatedAt, @NonNull JobResult result) {
+        if (result.action == null || result.error == null || result.item == null) {
+            return; // missing required values
         }
-        showNotification(jobId, jobInfo, message);
-        return removeJob; // remove job
-    }
-
-    private void showCanNotSendToTraktNotification(long jobId, @NonNull SgJobInfo jobInfo) {
-        showNotification(jobId, jobInfo, context.getString(R.string.trakt_notice_not_exists));
-    }
-
-    private void showNotification(long jobId, @NonNull SgJobInfo jobInfo, @NonNull String message) {
-        // get affected show title
-        int showTvdbId = jobInfo.showTvdbId();
-        Cursor query = context.getContentResolver()
-                .query(Shows.buildShowUri(showTvdbId),
-                        Shows.PROJECTION_TITLE, null,
-                        null, null);
-        if (query == null) {
-            return;
-        }
-        if (!query.moveToFirst()) {
-            query.close();
-            return;
-        }
-        String title = query.getString(query.getColumnIndexOrThrow(Shows.TITLE));
-        query.close();
-
-        // tapping the notification should open the affected show
-        PendingIntent contentIntent = TaskStackBuilder.create(context)
-                .addNextIntent(new Intent(context, ShowsActivity.class))
-                .addNextIntent(OverviewActivity.intentShow(context, showTvdbId))
-                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
         nb.setSmallIcon(R.drawable.ic_notification);
-        nb.setContentTitle(title);
-        nb.setContentText(message);
-        nb.setContentIntent(contentIntent);
+        // like: 'Failed: Remove from collection · BoJack Horseman'
+        nb.setContentTitle(
+                context.getString(R.string.api_failed, result.action + " · " + result.item));
+        nb.setContentText(result.error);
+        nb.setStyle(new NotificationCompat.BigTextStyle().bigText(
+                getErrorDetails(result.item, result.error, result.action, jobCreatedAt)));
+        nb.setContentIntent(result.contentIntent);
         nb.setAutoCancel(true);
         nb.setColor(ContextCompat.getColor(context, R.color.accent_primary));
+        nb.setDefaults(NotificationCompat.DEFAULT_SOUND | NotificationCompat.DEFAULT_LIGHTS);
         nb.setPriority(NotificationCompat.PRIORITY_HIGH);
         nb.setCategory(NotificationCompat.CATEGORY_ERROR);
 
         NotificationManager nm = (NotificationManager) context.getSystemService(
                 Context.NOTIFICATION_SERVICE);
         if (nm != null) {
-            // notification for each job
+            // notification for each failed job
             nm.notify(String.valueOf(jobId), SgApp.NOTIFICATION_JOB_ID, nb.build());
         }
+    }
+
+    @NonNull
+    private String getErrorDetails(@NonNull String item, @NonNull String error,
+            @NonNull String action, long jobCreatedAt) {
+        StringBuilder builder = new StringBuilder();
+        // build message like:
+        // 'Could not talk to server.
+        // BoJack Horseman · Set watched · 5 sec ago'
+        builder.append(error).append("\n").append(item).append(" · ").append(action);
+
+        // append time if job is executed a while after it was created
+        long currentTimeMillis = System.currentTimeMillis();
+        if (currentTimeMillis - jobCreatedAt > 3 * DateUtils.SECOND_IN_MILLIS) {
+            builder.append(" · ");
+            builder.append(DateUtils.getRelativeTimeSpanString(jobCreatedAt,
+                    currentTimeMillis, DateUtils.SECOND_IN_MILLIS,
+                    DateUtils.FORMAT_ABBREV_ALL));
+        }
+
+        return builder.toString();
     }
 
     private void removeJobs(List<Long> jobsToRemove) {
@@ -232,5 +186,19 @@ public class NetworkJobProcessor {
             return; // still signed in to either service, do not clear jobs
         }
         context.getContentResolver().delete(Jobs.CONTENT_URI, null, null);
+    }
+
+    public static class JobResult {
+        public boolean successful;
+        public boolean jobRemovable;
+        @Nullable public String action;
+        @Nullable public String error;
+        @Nullable public String item;
+        @Nullable public PendingIntent contentIntent;
+
+        public JobResult(boolean successful, boolean jobRemovable) {
+            this.successful = successful;
+            this.jobRemovable = jobRemovable;
+        }
     }
 }

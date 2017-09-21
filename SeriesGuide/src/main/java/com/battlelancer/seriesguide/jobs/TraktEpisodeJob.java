@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.modules.ServicesComponent;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ShowTools;
@@ -33,24 +34,31 @@ import retrofit2.Response;
 public class TraktEpisodeJob extends NetworkJob {
 
     private final long actionAtMs;
-    private Integer showTraktId;
 
     public TraktEpisodeJob(JobAction action, SgJobInfo jobInfo, long actionAtMs) {
         super(action, jobInfo);
         this.actionAtMs = actionAtMs;
     }
 
-    public boolean checkCanUpload(Context context) {
+    @NonNull
+    @Override
+    public NetworkJobProcessor.JobResult execute(Context context) {
         // Do not send if show has no trakt id (was not on trakt last time we checked).
-        showTraktId = ShowTools.getShowTraktId(context, jobInfo.showTvdbId());
-        return showTraktId != null;
+        Integer showTraktId = ShowTools.getShowTraktId(context, jobInfo.showTvdbId());
+        boolean canSendToTrakt = showTraktId != null;
+        if (!canSendToTrakt) {
+            return buildResult(context, NetworkJob.ERROR_TRAKT_NOT_FOUND);
+        }
+
+        int result = upload(context, showTraktId);
+        return buildResult(context, result);
     }
 
-    public int upload(Context context) {
+    private int upload(Context context, @NonNull Integer showTraktId) {
         final int flagValue = jobInfo.flagValue();
 
-        // can not (yet) track with trakt or is skipped flag not supported by trakt
-        if (showTraktId == null || EpisodeTools.isSkipped(flagValue)) {
+        // skipped flag not supported by trakt
+        if (EpisodeTools.isSkipped(flagValue)) {
             return NetworkJob.SUCCESS;
         }
 
@@ -173,7 +181,8 @@ public class TraktEpisodeJob extends NetworkJob {
     }
 
     /**
-     * If the {@link SyncErrors} indicates any show, season or episode was not found returns {@code false}.
+     * If the {@link SyncErrors} indicates any show, season or episode was not found returns {@code
+     * false}.
      */
     private static boolean isSyncSuccessful(@Nullable SyncResponse response) {
         if (response == null || response.not_found == null) {

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
+import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.google.api.client.http.HttpResponseException;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
@@ -27,7 +28,9 @@ public class HexagonEpisodeJob extends NetworkJob {
         this.hexagonTools = hexagonTools;
     }
 
-    public int upload(Context context) {
+    @NonNull
+    @Override
+    public NetworkJobProcessor.JobResult execute(Context context) {
         EpisodeList uploadWrapper = new EpisodeList();
         uploadWrapper.setShowTvdbId(jobInfo.showTvdbId());
 
@@ -54,27 +57,27 @@ public class HexagonEpisodeJob extends NetworkJob {
             try {
                 Episodes episodesService = hexagonTools.getEpisodesService();
                 if (episodesService == null) {
-                    return NetworkJob.ERROR_HEXAGON_AUTH;
+                    return buildResult(context, NetworkJob.ERROR_HEXAGON_AUTH);
                 }
                 episodesService.save(uploadWrapper).execute();
             } catch (HttpResponseException e) {
                 HexagonTools.trackFailedRequest(context, "save episodes", e);
                 int code = e.getStatusCode();
                 if (code >= 400 && code < 500) {
-                    return NetworkJob.ERROR_HEXAGON_CLIENT;
+                    return buildResult(context, NetworkJob.ERROR_HEXAGON_CLIENT);
                 } else {
-                    return NetworkJob.ERROR_HEXAGON_SERVER;
+                    return buildResult(context, NetworkJob.ERROR_HEXAGON_SERVER);
                 }
             } catch (IOException e) {
                 HexagonTools.trackFailedRequest(context, "save episodes", e);
-                return NetworkJob.ERROR_CONNECTION;
+                return buildResult(context, NetworkJob.ERROR_CONNECTION);
             }
 
             // prepare for next batch
             smallBatch.clear();
         }
 
-        return NetworkJob.SUCCESS;
+        return buildResult(context, NetworkJob.SUCCESS);
     }
 
     /**
