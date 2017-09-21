@@ -552,6 +552,12 @@ public class SeriesGuideContract {
         String SHOW_TVDB_ID = "activity_show";
     }
 
+    interface JobsColumns {
+        String CREATED_MS = "job_created_at";
+        String TYPE = "job_type";
+        String EXTRAS = "job_extras";
+    }
+
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://"
             + SgApp.CONTENT_AUTHORITY);
 
@@ -590,6 +596,8 @@ public class SeriesGuideContract {
     public static final String PATH_MOVIES = "movies";
 
     public static final String PATH_ACTIVITY = "activity";
+
+    public static final String PATH_JOBS = "jobs";
 
     public static class Shows implements ShowsColumns, BaseColumns {
 
@@ -635,6 +643,8 @@ public class SeriesGuideContract {
          */
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.show";
+
+        public static final String[] PROJECTION_TITLE = { Shows.TITLE };
 
         public static final String SORT_TITLE = Shows.TITLE + " COLLATE NOCASE ASC";
         public static final String SORT_TITLE_NOARTICLE = Shows.TITLE_NOARTICLE
@@ -1071,6 +1081,44 @@ public class SeriesGuideContract {
 
         public static Uri buildActivityUri(String episodeTvdbId) {
             return CONTENT_URI.buildUpon().appendPath(episodeTvdbId).build();
+        }
+    }
+
+    public static class Jobs implements JobsColumns, BaseColumns {
+        /**
+         * Jobs table.
+         * See {@link SeriesGuideProvider#JOBS}.
+         */
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_JOBS)
+                .build();
+
+        public static final String[] PROJECTION = {
+                Jobs._ID,
+                Jobs.TYPE,
+                Jobs.CREATED_MS,
+                Jobs.EXTRAS
+        };
+
+        /**
+         * Use if multiple items get returned
+         */
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.jobs";
+
+        /**
+         * Use if a single item is returned
+         */
+        public static final String CONTENT_ITEM_TYPE
+                = "vnd.android.cursor.item/vnd.seriesguide.jobs";
+
+        public static final String SORT_OLDEST = Jobs.CREATED_MS + " ASC";
+
+        public static Uri buildJobUri(long id) {
+            return CONTENT_URI.buildUpon().appendPath(String.valueOf(id)).build();
+        }
+
+        public static String getJobId(Uri uri) {
+            return uri.getLastPathSegment();
         }
     }
 

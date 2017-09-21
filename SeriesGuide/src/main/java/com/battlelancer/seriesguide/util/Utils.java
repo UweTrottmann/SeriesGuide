@@ -44,7 +44,6 @@ import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.google.android.gms.analytics.HitBuilders;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
-import retrofit2.Response;
 import timber.log.Timber;
 
 /**
@@ -244,12 +243,11 @@ public class Utils {
     }
 
     public static void trackFailedRequest(Context context, String category, String action,
-            Response response) {
-        Utils.trackCustomEvent(context, category, action,
-                response.code() + " " + response.message());
+            int code, String message) {
+        Utils.trackCustomEvent(context, category, action, code + " " + message);
         // log like "action: 404 not found"
         Timber.tag(category);
-        Timber.e("%s: %s %s", action, response.code(), response.message());
+        Timber.e("%s: %s %s", action, code, message);
     }
 
     public static void trackFailedRequest(Context context, String category, String action,

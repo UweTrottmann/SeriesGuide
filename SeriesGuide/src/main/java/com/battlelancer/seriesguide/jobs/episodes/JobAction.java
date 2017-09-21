@@ -1,11 +1,22 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
 public enum JobAction {
-    EPISODE_COLLECTED,
-    SEASON_COLLECTED,
-    SHOW_COLLECTED,
-    EPISODE_WATCHED,
-    EPISODE_WATCHED_PREVIOUS,
-    SEASON_WATCHED,
-    SHOW_WATCHED
+    UNKNOWN(0),
+    EPISODE_COLLECTION(1),
+    EPISODE_WATCHED_FLAG(2);
+
+    public int id;
+
+    JobAction(int id) {
+        this.id = id;
+    }
+
+    public static JobAction fromId(int id) {
+        for (JobAction action : JobAction.values()) {
+            if (action.id == id) {
+                return action;
+            }
+        }
+        return UNKNOWN;
+    }
 }

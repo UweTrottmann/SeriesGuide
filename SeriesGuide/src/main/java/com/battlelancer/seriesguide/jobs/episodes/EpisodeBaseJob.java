@@ -1,14 +1,7 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
-import android.content.Context;
 import android.net.Uri;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
-import com.uwetrottmann.trakt5.entities.SyncEpisode;
-import com.uwetrottmann.trakt5.entities.SyncSeason;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Flagging single episodes watched or collected.
@@ -35,27 +28,5 @@ public abstract class EpisodeBaseJob extends BaseJob {
     @Override
     public String getDatabaseSelection() {
         return null;
-    }
-
-    @Override
-    public List<Episode> getEpisodesForHexagon(Context context) {
-        List<Episode> episodes = new ArrayList<>();
-
-        Episode episode = new Episode();
-        setHexagonFlag(episode);
-        episode.setSeasonNumber(season);
-        episode.setEpisodeNumber(this.episode);
-        episodes.add(episode);
-
-        return episodes;
-    }
-
-    @Override
-    public List<SyncSeason> getEpisodesForTrakt(Context context) {
-        // flag a single episode
-        List<SyncSeason> seasons = new LinkedList<>();
-        seasons.add(new SyncSeason().number(season)
-                .episodes(new SyncEpisode().number(episode)));
-        return seasons;
     }
 }

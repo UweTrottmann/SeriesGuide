@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodesColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.JobsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListsColumns;
@@ -133,7 +134,12 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      */
     private static final int DBVER_41_EPISODE_LAST_UPDATED = 41;
 
-    public static final int DATABASE_VERSION = DBVER_41_EPISODE_LAST_UPDATED;
+    /**
+     * Added jobs table.
+     */
+    private static final int DBVER_42_JOBS = 42;
+
+    public static final int DATABASE_VERSION = DBVER_42_JOBS;
 
     /**
      * Qualifies column names by prefixing their {@link Tables} name.
@@ -204,6 +210,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         String MOVIES = "movies";
 
         String ACTIVITY = "activity";
+
+        String JOBS = "jobs";
     }
 
     private interface Selections {
@@ -542,6 +550,15 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + "UNIQUE (" + ActivityColumns.EPISODE_TVDB_ID + ") ON CONFLICT REPLACE"
             + ");";
 
+    private static final String CREATE_JOBS_TABLE = "CREATE TABLE " + Tables.JOBS
+            + " ("
+            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + JobsColumns.CREATED_MS + " INTEGER,"
+            + JobsColumns.TYPE + " INTEGER,"
+            + JobsColumns.EXTRAS + " BLOB,"
+            + "UNIQUE (" + JobsColumns.CREATED_MS + ") ON CONFLICT REPLACE"
+            + ");";
+
     private final Context context;
 
     public SeriesGuideDatabase(Context context) {
@@ -570,6 +587,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL(CREATE_MOVIES_TABLE);
 
         db.execSQL(CREATE_ACTIVITY_TABLE);
+
+        db.execSQL(CREATE_JOBS_TABLE);
     }
 
     @Override
@@ -635,7 +654,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 upgradeToForty(db, context);
             case DBVER_40_NOTIFY_PER_SHOW:
                 upgradeToFortyOne(db);
-                version = DBVER_41_EPISODE_LAST_UPDATED;
+            case DBVER_41_EPISODE_LAST_UPDATED:
+                upgradeToFortyTwo(db);
+                version = DBVER_42_JOBS;
         }
 
         // drop all tables if version is not right
@@ -657,10 +678,20 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.LIST_ITEMS);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.MOVIES);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.ACTIVITY);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.JOBS);
 
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
         onCreate(db);
+    }
+
+    /**
+     * See {@link #DBVER_42_JOBS}.
+     */
+    private void upgradeToFortyTwo(SQLiteDatabase db) {
+        if (!isTableExisting(db, Tables.JOBS)) {
+            db.execSQL(CREATE_JOBS_TABLE);
+        }
     }
 
     /**

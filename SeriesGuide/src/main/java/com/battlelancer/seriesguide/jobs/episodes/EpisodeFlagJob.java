@@ -1,32 +1,23 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
-import com.uwetrottmann.trakt5.entities.SyncSeason;
-import java.util.List;
+import android.support.annotation.NonNull;
 
 public interface EpisodeFlagJob {
-    int getShowTvdbId();
 
     int getFlagValue();
 
-    JobAction getAction();
-
-    List<Episode> getEpisodesForHexagon(Context context);
-
     /**
-     * Builds a list of {@link com.uwetrottmann.trakt5.entities.SyncSeason} objects to submit to
-     * trakt. Return {@code null} to upload the complete show.
+     * If requested, prepares a network job. Applies local changes, then persists the network job.
+     *
+     * @return If local changes were applied successfully and if requested the network op was
+     * persisted.
      */
-    @Nullable
-    List<SyncSeason> getEpisodesForTrakt(Context context);
-
-    boolean applyLocalChanges(Context context);
+    boolean applyLocalChanges(Context context, boolean requiresNetworkJob);
 
     /**
      * Tells for example which episode was flagged watched.
      */
-    @Nullable
+    @NonNull
     String getConfirmationText(Context context);
 }

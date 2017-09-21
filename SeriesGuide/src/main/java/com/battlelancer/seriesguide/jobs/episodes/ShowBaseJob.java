@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
-import android.content.Context;
 import android.net.Uri;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 
@@ -16,8 +15,4 @@ public abstract class ShowBaseJob extends BaseJob {
                 String.valueOf(getShowTvdbId()));
     }
 
-    @Override
-    public String getConfirmationText(Context context) {
-        return null;
-    }
 }

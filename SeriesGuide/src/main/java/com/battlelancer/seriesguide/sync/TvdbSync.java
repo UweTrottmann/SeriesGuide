@@ -3,11 +3,11 @@ package com.battlelancer.seriesguide.sync;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.AppSettings;
+import com.battlelancer.seriesguide.sync.SyncOptions.SyncType;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -31,9 +31,9 @@ public class TvdbSync {
     private final int singleShowTvdbId;
     private boolean hasUpdatedShows;
 
-    public TvdbSync(Bundle extras) {
-        syncType = SyncType.from(extras.getInt(SgSyncAdapter.EXTRA_SYNC_TYPE, SyncType.DELTA.id));
-        singleShowTvdbId = extras.getInt(SgSyncAdapter.EXTRA_SYNC_SHOW_TVDB_ID, 0);
+    public TvdbSync(SyncType syncType, int singleShowTvdbId) {
+        this.syncType = syncType;
+        this.singleShowTvdbId = singleShowTvdbId;
     }
 
     /**
@@ -128,8 +128,9 @@ public class TvdbSync {
                 return showIds;
             }
             case DELTA:
-            default:
                 return getShowsToDeltaUpdate(context, currentTime);
+            default:
+                throw new IllegalArgumentException("Sync type " + syncType + " is not supported.");
         }
     }
 
@@ -176,31 +177,12 @@ public class TvdbSync {
         return showTvdbIds;
     }
 
-    public SyncType syncType() {
-        return syncType;
-    }
-
     public boolean isSyncMultiple() {
-        return syncType != SyncType.SINGLE;
+        return syncType == SyncType.DELTA || syncType == SyncType.FULL;
     }
 
     public boolean hasUpdatedShows() {
         return hasUpdatedShows;
     }
 
-    public enum SyncType {
-        DELTA(0),
-        SINGLE(1),
-        FULL(2);
-
-        public int id;
-
-        SyncType(int id) {
-            this.id = id;
-        }
-
-        public static SyncType from(int id) {
-            return values()[id];
-        }
-    }
 }

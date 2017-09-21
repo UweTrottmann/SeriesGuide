@@ -1,18 +1,19 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 
 public class ShowWatchedJob extends ShowBaseJob {
 
     private final long currentTime;
 
     public ShowWatchedJob(int showTvdbId, int flagValue, long currentTime) {
-        super(showTvdbId, flagValue, JobAction.SHOW_WATCHED);
+        super(showTvdbId, flagValue, JobAction.EPISODE_WATCHED_FLAG);
         this.currentTime = currentTime;
     }
 
@@ -36,18 +37,13 @@ public class ShowWatchedJob extends ShowBaseJob {
     }
 
     @Override
-    protected void setHexagonFlag(Episode episode) {
-        episode.setWatchedFlag(getFlagValue());
-    }
-
-    @Override
     protected String getDatabaseColumnToUpdate() {
         return SeriesGuideContract.Episodes.WATCHED;
     }
 
     @Override
-    public boolean applyLocalChanges(Context context) {
-        if (!super.applyLocalChanges(context)) {
+    public boolean applyLocalChanges(Context context, boolean requiresNetworkJob) {
+        if (!super.applyLocalChanges(context, requiresNetworkJob)) {
             return false;
         }
 
@@ -63,5 +59,20 @@ public class ShowWatchedJob extends ShowBaseJob {
         ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(context);
 
         return true;
+    }
+
+    @NonNull
+    @Override
+    public String getConfirmationText(Context context) {
+        int actionResId;
+        int flagValue = getFlagValue();
+        if (EpisodeTools.isSkipped(flagValue)) {
+            actionResId = R.string.action_skip;
+        } else if (EpisodeTools.isWatched(flagValue)) {
+            actionResId = R.string.action_watched;
+        } else {
+            actionResId = R.string.action_unwatched;
+        }
+        return context.getString(actionResId);
     }
 }

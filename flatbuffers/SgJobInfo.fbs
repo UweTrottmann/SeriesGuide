@@ -1,0 +1,18 @@
+// each field is optional
+// add new fields ONLY at the end of a table definition (or assign IDs)
+// cannot delete fields, can mark them as deprecated which prevents the generation of accessors
+
+namespace com.battlelancer.seriesguide.jobs;
+
+table SgJobInfo {
+    showTvdbId:int;
+    flagValue:int;
+    episodes:[EpisodeInfo];
+}
+
+table EpisodeInfo {
+    season:int;
+    number:int;
+}
+
+root_type SgJobInfo;

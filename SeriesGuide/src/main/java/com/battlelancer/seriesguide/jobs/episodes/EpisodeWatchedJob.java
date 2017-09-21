@@ -2,24 +2,20 @@ package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
-import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 
 public class EpisodeWatchedJob extends EpisodeBaseJob {
 
     public EpisodeWatchedJob(int showTvdbId, int episodeTvdbId, int season, int episode,
             int episodeFlags) {
-        super(showTvdbId, episodeTvdbId, season, episode, episodeFlags, JobAction.EPISODE_WATCHED);
-    }
-
-    @Override
-    protected void setHexagonFlag(Episode episode) {
-        episode.setWatchedFlag(getFlagValue());
+        super(showTvdbId, episodeTvdbId, season, episode, episodeFlags,
+                JobAction.EPISODE_WATCHED_FLAG);
     }
 
     @Override
@@ -81,8 +77,8 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
     }
 
     @Override
-    public boolean applyLocalChanges(Context context) {
-        if (!super.applyLocalChanges(context)) {
+    public boolean applyLocalChanges(Context context, boolean requiresNetworkJob) {
+        if (!super.applyLocalChanges(context, requiresNetworkJob)) {
             return false;
         }
 
@@ -105,19 +101,20 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
         return true;
     }
 
+    @NonNull
     @Override
     public String getConfirmationText(Context context) {
-        if (EpisodeTools.isSkipped(getFlagValue())) {
-            // skipping is not sent to trakt, no need for a message
-            return null;
+        int actionResId;
+        int flagValue = getFlagValue();
+        if (EpisodeTools.isSkipped(flagValue)) {
+            actionResId = R.string.action_skip;
+        } else if (EpisodeTools.isWatched(flagValue)) {
+            actionResId = R.string.action_watched;
+        } else {
+            actionResId = R.string.action_unwatched;
         }
-
-        // show episode seen/unseen message
+        // format like '6x42 · Set watched'
         String number = TextTools.getEpisodeNumber(context, season, episode);
-        return context.getString(
-                EpisodeTools.isWatched(getFlagValue()) ? R.string.trakt_seen
-                        : R.string.trakt_notseen,
-                number
-        );
+        return TextTools.dotSeparate(number, context.getString(actionResId));
     }
 }

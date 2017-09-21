@@ -2,13 +2,13 @@ package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
-import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 
 public class SeasonWatchedJob extends SeasonBaseJob {
 
@@ -16,7 +16,7 @@ public class SeasonWatchedJob extends SeasonBaseJob {
 
     public SeasonWatchedJob(int showTvdbId, int seasonTvdbId, int season,
             int episodeFlags, long currentTime) {
-        super(showTvdbId, seasonTvdbId, season, episodeFlags, JobAction.SEASON_WATCHED);
+        super(showTvdbId, seasonTvdbId, season, episodeFlags, JobAction.EPISODE_WATCHED_FLAG);
         this.currentTime = currentTime;
     }
 
@@ -35,11 +35,6 @@ public class SeasonWatchedJob extends SeasonBaseJob {
                     + " AND " + SeriesGuideContract.Episodes.SELECTION_HAS_RELEASE_DATE
                     + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED;
         }
-    }
-
-    @Override
-    protected void setHexagonFlag(Episode episode) {
-        episode.setWatchedFlag(getFlagValue());
     }
 
     @Override
@@ -78,8 +73,8 @@ public class SeasonWatchedJob extends SeasonBaseJob {
     }
 
     @Override
-    public boolean applyLocalChanges(Context context) {
-        if (!super.applyLocalChanges(context)) {
+    public boolean applyLocalChanges(Context context, boolean requiresNetworkJob) {
+        if (!super.applyLocalChanges(context, requiresNetworkJob)) {
             return false;
         }
 
@@ -93,18 +88,20 @@ public class SeasonWatchedJob extends SeasonBaseJob {
         return true;
     }
 
+    @NonNull
     @Override
     public String getConfirmationText(Context context) {
-        if (EpisodeTools.isSkipped(getFlagValue())) {
-            // skipping is not sent to trakt, no need for a message
-            return null;
+        int actionResId;
+        int flagValue = getFlagValue();
+        if (EpisodeTools.isSkipped(flagValue)) {
+            actionResId = R.string.action_skip;
+        } else if (EpisodeTools.isWatched(flagValue)) {
+            actionResId = R.string.action_watched;
+        } else {
+            actionResId = R.string.action_unwatched;
         }
-
+        // format like '6x · Set watched'
         String number = TextTools.getEpisodeNumber(context, season, -1);
-        return context.getString(
-                EpisodeTools.isWatched(getFlagValue()) ? R.string.trakt_seen
-                        : R.string.trakt_notseen,
-                number
-        );
+        return TextTools.dotSeparate(number, context.getString(actionResId));
     }
 }

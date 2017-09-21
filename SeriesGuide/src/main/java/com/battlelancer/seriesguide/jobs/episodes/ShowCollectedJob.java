@@ -1,27 +1,23 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
-import com.uwetrottmann.trakt5.entities.SyncSeason;
-import java.util.List;
 
 public class ShowCollectedJob extends ShowBaseJob {
 
+    private final boolean isCollected;
+
     public ShowCollectedJob(int showTvdbId, boolean isCollected) {
-        super(showTvdbId, isCollected ? 1 : 0, JobAction.SHOW_COLLECTED);
+        super(showTvdbId, isCollected ? 1 : 0, JobAction.EPISODE_COLLECTION);
+        this.isCollected = isCollected;
     }
 
     @Override
     public String getDatabaseSelection() {
-        // only exclude specials (here will only affect database + hexagon)
+        // only exclude specials
         return SeriesGuideContract.Episodes.SELECTION_NO_SPECIALS;
-    }
-
-    @Override
-    protected void setHexagonFlag(Episode episode) {
-        episode.setIsInCollection(EpisodeTools.isCollected(getFlagValue()));
     }
 
     @Override
@@ -29,8 +25,11 @@ public class ShowCollectedJob extends ShowBaseJob {
         return SeriesGuideContract.Episodes.COLLECTED;
     }
 
+    @NonNull
     @Override
-    public List<SyncSeason> getEpisodesForTrakt(Context context) {
-        return null; // send whole show
+    public String getConfirmationText(Context context) {
+        return context.getString(isCollected
+                ? R.string.action_collection_add : R.string.action_collection_remove);
     }
+
 }

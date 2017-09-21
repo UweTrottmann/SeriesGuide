@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.nfc.NdefMessage;
@@ -58,6 +59,11 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     @Nullable @BindView(R.id.viewOverviewShadowStart) View shadowOverviewStart;
     @Nullable @BindView(R.id.viewOverviewShadowEnd) View shadowOverviewEnd;
     @Nullable @BindView(R.id.viewOverviewShadowBottom) View shadowShowBottom;
+
+    public static Intent intentShow(Context context, int showTvdbId) {
+        return new Intent(context, OverviewActivity.class)
+                .putExtra(OverviewActivity.EXTRA_INT_SHOW_TVDBID, showTvdbId);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

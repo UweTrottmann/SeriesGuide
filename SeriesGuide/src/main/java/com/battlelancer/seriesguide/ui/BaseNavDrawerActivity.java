@@ -28,8 +28,10 @@ import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.customtabs.CustomTabsHelper;
 import com.battlelancer.seriesguide.customtabs.FeedbackBroadcastReceiver;
+import com.battlelancer.seriesguide.jobs.episodes.EpisodeFlagJob;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.Utils;
 import io.palaima.debugdrawer.actions.ActionsModule;
 import io.palaima.debugdrawer.actions.ButtonAction;
@@ -83,10 +85,13 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
         @Nullable public final String confirmationText;
         public boolean isSuccessful;
+        @Nullable public final EpisodeFlagJob episodeJob;
 
-        public ServiceCompletedEvent(@Nullable String confirmationText, boolean isSuccessful) {
+        public ServiceCompletedEvent(@Nullable String confirmationText, boolean isSuccessful,
+                @Nullable EpisodeFlagJob episodeJob) {
             this.confirmationText = confirmationText;
             this.isSuccessful = isSuccessful;
+            this.episodeJob = episodeJob;
         }
     }
 
@@ -231,11 +236,22 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                         }
                     });
 
+            ButtonAction buttonTriggerJobProcessor = new ButtonAction(
+                    "Schedule job processing",
+                    new ButtonAction.Listener() {
+                        @Override
+                        public void onClick() {
+                            SgSyncAdapter.requestSyncJobsImmediate(getApplicationContext());
+                        }
+                    }
+            );
+
             debugView.modules(
                     new ActionsModule(
                             buttonClearTraktRefreshToken,
                             buttonInvalidateTraktAccessToken,
-                            buttonInvalidateTraktRefreshToken
+                            buttonInvalidateTraktRefreshToken,
+                            buttonTriggerJobProcessor
                     ),
                     new TimberModule(),
                     new DeviceModule(this)
@@ -399,12 +415,15 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
     public void onEventEpisodeTask(ServiceCompletedEvent event) {
         if (event.confirmationText != null) {
             // show a confirmation/error text, update any existing progress snackbar
-            if (snackbarProgress != null) {
+            if (snackbarProgress == null) {
+                snackbarProgress = Snackbar.make(getSnackbarParentView(), event.confirmationText,
+                        event.isSuccessful ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG);
+            } else {
                 snackbarProgress.setText(event.confirmationText);
                 snackbarProgress.setDuration(
                         event.isSuccessful ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG);
-                snackbarProgress.show();
             }
+            snackbarProgress.show();
         } else {
             handleServiceActiveEvent(null);
         }
