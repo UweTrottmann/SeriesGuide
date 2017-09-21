@@ -415,12 +415,15 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
     public void onEventEpisodeTask(ServiceCompletedEvent event) {
         if (event.confirmationText != null) {
             // show a confirmation/error text, update any existing progress snackbar
-            if (snackbarProgress != null) {
+            if (snackbarProgress == null) {
+                snackbarProgress = Snackbar.make(getSnackbarParentView(), event.confirmationText,
+                        event.isSuccessful ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG);
+            } else {
                 snackbarProgress.setText(event.confirmationText);
                 snackbarProgress.setDuration(
                         event.isSuccessful ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG);
-                snackbarProgress.show();
             }
+            snackbarProgress.show();
         } else {
             handleServiceActiveEvent(null);
         }

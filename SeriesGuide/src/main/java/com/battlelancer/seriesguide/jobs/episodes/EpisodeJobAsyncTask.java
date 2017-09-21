@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.jobs.episodes;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
@@ -41,7 +42,9 @@ public class EpisodeJobAsyncTask extends AsyncTask<Void, Void, Void> {
         EventBus.getDefault().removeStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent.class);
 
         EventBus.getDefault().post(
-                new BaseNavDrawerActivity.ServiceCompletedEvent(job.getConfirmationText(context),
+                new BaseNavDrawerActivity.ServiceCompletedEvent(isSuccessful
+                        ? job.getConfirmationText(context)
+                        : context.getString(R.string.database_error),
                         isSuccessful, job));
 
         if (requiresNetworkJob) {
