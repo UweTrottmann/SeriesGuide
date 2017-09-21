@@ -31,8 +31,9 @@ public class EpisodeJobAsyncTask extends AsyncTask<Void, Void, Void> {
                 && !EpisodeTools.isSkipped(job.getFlagValue());
         boolean requiresNetworkJob = shouldSendToHexagon || shouldSendToTrakt;
 
+        // set send flags to false to avoid showing 'Sending to...' message
         EventBus.getDefault().postSticky(new BaseNavDrawerActivity.ServiceActiveEvent(
-                shouldSendToHexagon, shouldSendToTrakt));
+                false, false));
 
         // update local database and possibly prepare network job
         boolean isSuccessful = job.applyLocalChanges(context, requiresNetworkJob);
