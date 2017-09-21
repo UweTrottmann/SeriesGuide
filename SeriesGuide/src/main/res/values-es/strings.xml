@@ -22,7 +22,7 @@
   <string name="specialseason">Episodios especiales</string>
   <string name="ratings">Valoraciones</string>
   <!-- Descriptions -->
-  <string name="description_overview">Reseña</string>
+  <string name="description_overview">Sinopsis</string>
   <string name="description_poster">Mostrar póster</string>
   <string name="description_image">Imagen del episodio</string>
   <string name="description_menu_overflow">Más opciones</string>
@@ -88,8 +88,8 @@
   <string name="no_translation">No hay ninguna descripción traducida al %1$s disponible en %2$s.</string>
   <string name="no_translation_title">Sin traducir</string>
   <string name="no_spoilers">Algunos detalles están ocultos para evitar spoilers. Para cambiarlo, ir a Ajustes > básico.</string>
-  <string name="format_source">Source: %s</string>
-  <string name="format_last_edited">Last edited: %s</string>
+  <string name="format_source">Fuente: %s</string>
+  <string name="format_last_edited">Última edición: %s</string>
   <!-- Date and Time -->
   <string name="today">Hoy</string>
   <string name="now">ahora</string>
@@ -464,7 +464,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="action_upgrade">Desbloquea todas las funciones</string>
   <string name="billing_action_subscribe">Suscríbete</string>
   <string name="billing_action_pass">Obtener X Pass</string>
-  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+  <string name="billing_price_subscribe">%1$s/año, prueba gratuita, cancela en cualquier momento mediante %2$s</string>
   <string name="billing_price_pass">Compra por única vez</string>
   <string name="upgrade_description">Desbloquea todas las funciones incluyendo notificaciones, temas y mas opciones para los widgets. Ayudame a hacer futuras actualizaciones.</string>
   <string name="upgrade_success">Gracias por apoyar a SeriesGuide! Tienes acceso a todas las funciones.</string>
