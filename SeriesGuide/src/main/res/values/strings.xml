@@ -311,10 +311,6 @@
 
     <!-- trakt -->
     <string name="trakt_submitqueued">Sending to trakt.</string>
-    <string name="trakt_seen">%s seen.</string>
-    <string name="trakt_notseen">%s not seen.</string>
-    <string name="trakt_collected">%s collected.</string>
-    <string name="trakt_notcollected">%s not collected.</string>
     <string name="checkin_success_trakt">Checked into %s on trakt.</string>
     <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
     <string name="traktcheckin_cancel">Override</string>

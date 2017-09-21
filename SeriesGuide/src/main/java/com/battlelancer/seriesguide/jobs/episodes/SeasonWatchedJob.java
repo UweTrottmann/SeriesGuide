@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
@@ -87,18 +88,20 @@ public class SeasonWatchedJob extends SeasonBaseJob {
         return true;
     }
 
+    @NonNull
     @Override
     public String getConfirmationText(Context context) {
-        if (EpisodeTools.isSkipped(getFlagValue())) {
-            // skipping is not sent to trakt, no need for a message
-            return null;
+        int actionResId;
+        int flagValue = getFlagValue();
+        if (EpisodeTools.isSkipped(flagValue)) {
+            actionResId = R.string.action_skip;
+        } else if (EpisodeTools.isWatched(flagValue)) {
+            actionResId = R.string.action_watched;
+        } else {
+            actionResId = R.string.action_unwatched;
         }
-
+        // format like '6x · Set watched'
         String number = TextTools.getEpisodeNumber(context, season, -1);
-        return context.getString(
-                EpisodeTools.isWatched(getFlagValue()) ? R.string.trakt_seen
-                        : R.string.trakt_notseen,
-                number
-        );
+        return TextTools.dotSeparate(number, context.getString(actionResId));
     }
 }

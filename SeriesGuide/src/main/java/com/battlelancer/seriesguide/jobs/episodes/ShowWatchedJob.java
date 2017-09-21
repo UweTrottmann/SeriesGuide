@@ -1,7 +1,9 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -57,5 +59,20 @@ public class ShowWatchedJob extends ShowBaseJob {
         ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(context);
 
         return true;
+    }
+
+    @NonNull
+    @Override
+    public String getConfirmationText(Context context) {
+        int actionResId;
+        int flagValue = getFlagValue();
+        if (EpisodeTools.isSkipped(flagValue)) {
+            actionResId = R.string.action_skip;
+        } else if (EpisodeTools.isWatched(flagValue)) {
+            actionResId = R.string.action_watched;
+        } else {
+            actionResId = R.string.action_unwatched;
+        }
+        return context.getString(actionResId);
     }
 }

@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 
 public interface EpisodeFlagJob {
 
@@ -18,6 +18,6 @@ public interface EpisodeFlagJob {
     /**
      * Tells for example which episode was flagged watched.
      */
-    @Nullable
+    @NonNull
     String getConfirmationText(Context context);
 }

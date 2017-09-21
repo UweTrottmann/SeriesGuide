@@ -2,6 +2,8 @@ package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -52,8 +54,9 @@ public class EpisodeWatchedPreviousJob extends BaseJob {
         return true;
     }
 
+    @NonNull
     @Override
     public String getConfirmationText(Context context) {
-        return null;
+        return context.getString(R.string.mark_untilhere);
     }
 }
