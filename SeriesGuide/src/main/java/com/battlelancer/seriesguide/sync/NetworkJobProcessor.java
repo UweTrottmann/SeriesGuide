@@ -68,7 +68,7 @@ public class NetworkJobProcessor {
                 SgJobInfo jobInfo = SgJobInfo.getRootAsSgJobInfo(jobInfoBuffered);
 
                 if (!doNetworkJob(jobId, action, createdAt, jobInfo)) {
-                    Timber.d("Job %d failed, will retry.", jobId);
+                    Timber.e("Job %d failed, will retry.", jobId);
                     break; // abort to avoid ordering issues
                 }
                 Timber.d("Job %d completed, will remove.", jobId);
