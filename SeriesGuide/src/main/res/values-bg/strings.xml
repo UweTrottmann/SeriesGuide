@@ -51,6 +51,7 @@
   <string name="database_error">Не може да промени данните.</string>
   <string name="reinstall_info">Опитайте се да архивирате от настройките, преинсталирайте и възстановете.</string>
   <string name="api_error_generic">Няма връзка с %s. trakt. Опитайте отново по-късно.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Сподели</string>
   <string name="share_show">Сподели ТВ предаване</string>
@@ -271,10 +272,6 @@
   <string name="hexagon_google_play_missing">Необходимо е да използвате SeriesGuide Cloud, Google Play Services.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Подаване към trakt.</string>
-  <string name="trakt_seen">%s гледани.</string>
-  <string name="trakt_notseen">%s не са гледани.</string>
-  <string name="trakt_collected">%s в колекция.</string>
-  <string name="trakt_notcollected">%s не са в колекция.</string>
   <string name="checkin_success_trakt">Отметнато %s в trakt.</string>
   <string name="checkin_canceled_success_trakt">Отменяне на отмятането в trakt.</string>
   <string name="traktcheckin_cancel">Замени</string>

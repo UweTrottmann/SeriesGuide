@@ -51,6 +51,7 @@
   <string name="database_error">Datele nu pot fi modificate.</string>
   <string name="reinstall_info">Încercați sa creați o copie de rezerva în Setări, reinstalati și restaurati.</string>
   <string name="api_error_generic">Nu s-a putut comunica cu %s. Încercați mai tarziu.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Distribuie</string>
   <string name="share_show">Distribuie emisiunea</string>
@@ -278,10 +279,6 @@
   <string name="hexagon_google_play_missing">Pentru a folosi SeriesGuide Cloud, Google Play Services este necesar.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Trimite pe trakt.</string>
-  <string name="trakt_seen">%s văzut.</string>
-  <string name="trakt_notseen">%s nevăzut.</string>
-  <string name="trakt_collected">%s colectat.</string>
-  <string name="trakt_notcollected">%s necolectat.</string>
   <string name="checkin_success_trakt">%s verificat pe trakt.</string>
   <string name="checkin_canceled_success_trakt">Verificare anulată pe trakt.</string>
   <string name="traktcheckin_cancel">Suprascrie</string>

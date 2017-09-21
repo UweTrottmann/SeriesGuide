@@ -51,6 +51,7 @@
   <string name="database_error">Nie można zmodyfikować danych.</string>
   <string name="reinstall_info">Spróbuj zrobić kopię zapasową w ustawieniach, przeinstalować program i przywrócić ustawienia.</string>
   <string name="api_error_generic">Nie można połączyć z %s. Spróbuj ponownie później.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Udostępnij</string>
   <string name="share_show">Współdziel serial</string>
@@ -278,10 +279,6 @@
   <string name="hexagon_google_play_missing">Aby użyć chmury SeriesGuide Cloud wymagane jest Google Play Services.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Wysyłanie do trakt.</string>
-  <string name="trakt_seen">%s obejrzane.</string>
-  <string name="trakt_notseen">%s nieobejrzane.</string>
-  <string name="trakt_collected">%s w kolekcji.</string>
-  <string name="trakt_notcollected">%s - brak w kolekcji.</string>
   <string name="checkin_success_trakt">%s oznaczono jako oglądane na trakt.</string>
   <string name="checkin_canceled_success_trakt">Anulowano oznaczenie jako oglądane na trakt.</string>
   <string name="traktcheckin_cancel">Zastąp</string>

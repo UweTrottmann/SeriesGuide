@@ -51,6 +51,7 @@
   <string name="database_error">Δεν ήταν δυνατή η τροποποίηση δεδομένων.</string>
   <string name="reinstall_info">Προσπαθήστε να κρατήσετε αντίγραφο ασφαλείας στις Ρυθμίσεις, να εγκαταστήσετε ξανά την εφαρμογή και να κάνετε επαναφορά.</string>
   <string name="api_error_generic">Δεν είναι δυνατή η επικοινωνία με το %s. Ξαναδοκιμάστε αργότερα.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Μοίρασε</string>
   <string name="share_show">Κοινοποίηση σειράς</string>
@@ -271,10 +272,6 @@
   <string name="hexagon_google_play_missing">Για να χρησιμοποιήσετε το SeriesGuide Cloud, απαιτούνται οι Υπηρεσίες Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Υποβολή στο trakt.</string>
-  <string name="trakt_seen">%s έχουν παρακολουθηθεί.</string>
-  <string name="trakt_notseen">το %s δεν έχουν παρακολουθηθεί.</string>
-  <string name="trakt_collected">%s εντός συλλογής.</string>
-  <string name="trakt_notcollected">%s εκτός συλλογής.</string>
   <string name="checkin_success_trakt">Ελέγχεται σε %s στο trakt.</string>
   <string name="checkin_canceled_success_trakt">Ακύρωσε το check-in στο trackt.</string>
   <string name="traktcheckin_cancel">Παράκαμψη</string>

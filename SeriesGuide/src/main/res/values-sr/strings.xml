@@ -51,6 +51,7 @@
   <string name="database_error">Није могуће променити податке.</string>
   <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Подели</string>
   <string name="share_show">Подели серију</string>
@@ -278,10 +279,6 @@
   <string name="hexagon_google_play_missing">Да би користили SeriesGuide Cloud, потребне су Google Play услуге.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Послато на тракт.</string>
-  <string name="trakt_seen">%s погледано.</string>
-  <string name="trakt_notseen">%s неодгледано.</string>
-  <string name="trakt_collected">%s у колекцији.</string>
-  <string name="trakt_notcollected">%s није у колекцији.</string>
   <string name="checkin_success_trakt">Пријављено гледање %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Отказана пријава гледања на тракту.</string>
   <string name="traktcheckin_cancel">Прескочи пријаву</string>

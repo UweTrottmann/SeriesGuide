@@ -51,6 +51,7 @@
   <string name="database_error">Wijziging niet mogelijk.</string>
   <string name="reinstall_info">Maak een backup, installeer opnieuw en herstel.</string>
   <string name="api_error_generic">Kon niet praten met %s. Probeer later opnieuw</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Delen</string>
   <string name="share_show">Serie delen</string>
@@ -271,10 +272,6 @@
   <string name="hexagon_google_play_missing">Voor het gebruik van Seriesguide Cloud moeten Google Play services zijn geïnstalleerd.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Toevoegen aan trakt.</string>
-  <string name="trakt_seen">%s bekeken.</string>
-  <string name="trakt_notseen">%s niet bekeken.</string>
-  <string name="trakt_collected">%s verzameld.</string>
-  <string name="trakt_notcollected">%s niet verzameld.</string>
   <string name="checkin_success_trakt">Aangemeld bij %s op trakt.</string>
   <string name="checkin_canceled_success_trakt">Check-in bij trakt geannuleerd.</string>
   <string name="traktcheckin_cancel">Overschrijven</string>

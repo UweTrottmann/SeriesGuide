@@ -51,6 +51,7 @@
   <string name="database_error">ไม่สามารถแก้ไขข้อมูล</string>
   <string name="reinstall_info">ลองสำรองข้อมูลในการตั้งค่า, ติดตั้งแอปใหม่ และเรียกคืนข้อมูล</string>
   <string name="api_error_generic">ไม่สามารถติดต่อกับ %s ลองอีกครั้งในภายหลัง</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">แบ่งปัน</string>
   <string name="share_show">แบ่งปันซีรีส์</string>
@@ -264,10 +265,6 @@
   <string name="hexagon_google_play_missing">ในการใช้ SeriesGuide Cloud, จำเป็นต้องมี Google Play Services</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">กำลังส่งไปยัง trakt</string>
-  <string name="trakt_seen">%s ดูแล้ว</string>
-  <string name="trakt_notseen">%s ยังไม่ได้ดู</string>
-  <string name="trakt_collected">เก็บแล้ว %s</string>
-  <string name="trakt_notcollected">ยังไม่ได้เก็บ %s</string>
   <string name="checkin_success_trakt">เช็กอิน %s บน trakt แล้ว</string>
   <string name="checkin_canceled_success_trakt">ยกเลิกการเช็กอินบน trakt แล้ว</string>
   <string name="traktcheckin_cancel">เขียนทับ</string>

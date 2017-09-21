@@ -51,6 +51,7 @@
   <string name="database_error">Klarte ikke endre dataene.</string>
   <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Klarte ikke å koble til %s. Prøv igjen senere.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Del</string>
   <string name="share_show">Del serie</string>
@@ -271,10 +272,6 @@
   <string name="hexagon_google_play_missing">For å kunne bruk SeriesGuide Cloud er Google Play-tjenester nødvendig.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Sender til trakt.</string>
-  <string name="trakt_seen">%s sett.</string>
-  <string name="trakt_notseen">%s ikke sett.</string>
-  <string name="trakt_collected">%s anskaffet.</string>
-  <string name="trakt_notcollected">%s ikke anskaffet.</string>
   <string name="checkin_success_trakt">Sjekket inn %s på trakt.</string>
   <string name="checkin_canceled_success_trakt">Avbrøt innsjekking på trakt.</string>
   <string name="traktcheckin_cancel">Overstyr</string>

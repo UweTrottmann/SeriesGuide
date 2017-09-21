@@ -51,6 +51,7 @@
   <string name="database_error">لا يمكن تعديل البيانات.</string>
   <string name="reinstall_info">حاول أخد نسخة احتياطية، اعادة تثبيت البرنامج ومن ثم استعادة البيانات.</string>
   <string name="api_error_generic">لا يمكن الاتصال ب %s. الرجاء المحاولة لاحقا.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">مشاركة</string>
   <string name="share_show">مشاركة المسلسل</string>
@@ -299,10 +300,6 @@
   <string name="hexagon_google_play_missing">حتى تستخدم سحابة برنامج دليل المسلسلات، لابد من توفر خدمات قوقل بلاي.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">تقديم إلى تراكت.</string>
-  <string name="trakt_seen">%s تمت  المشاهدة.</string>
-  <string name="trakt_notseen">%s لم تتم المشاهدة.</string>
-  <string name="trakt_collected">%s تم جمعها.</string>
-  <string name="trakt_notcollected">%s لم يتم جمعها.</string>
   <string name="checkin_success_trakt">تم فحص %s على التراكت.</string>
   <string name="checkin_canceled_success_trakt">تم إلغاء تسجيل الدخول على التراكت.</string>
   <string name="traktcheckin_cancel">تجاهل</string>

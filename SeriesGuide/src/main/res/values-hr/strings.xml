@@ -51,6 +51,7 @@
   <string name="database_error">Nije moguće izmijeniti podatke.</string>
   <string name="reinstall_info">Pokušajte sigurnosno kopirati postavke, ponovno instalirajte i vratite sig. kopiju.</string>
   <string name="api_error_generic">%s nedostupan. Pokušajte kasnije.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Podijeli</string>
   <string name="share_show">Podijeli seriju</string>
@@ -278,10 +279,6 @@
   <string name="hexagon_google_play_missing">Za korištenje SeriesGuide Oblaka potrebne su Google Play Usluge.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Poslano na trakt.</string>
-  <string name="trakt_seen">%s pogledano.</string>
-  <string name="trakt_notseen">%s nije pogledano.</string>
-  <string name="trakt_collected">%s prikupljeno.</string>
-  <string name="trakt_notcollected">%s neprikupljeno.</string>
   <string name="checkin_success_trakt">Prijavljen u %s na traktu.</string>
   <string name="checkin_canceled_success_trakt">Otkazana prijava na trakt.</string>
   <string name="traktcheckin_cancel">Zamijeni</string>

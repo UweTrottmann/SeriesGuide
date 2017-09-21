@@ -51,6 +51,7 @@
   <string name="database_error">Nie je možné zmeniť dáta.</string>
   <string name="reinstall_info">Skúste zálohovať cez nastavenia, preinštalovať a obnoviť.</string>
   <string name="api_error_generic">Nemožno komunikovať s %s. Skúste to znova neskôr.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Zdieľať</string>
   <string name="share_show">Zdieľať seriál</string>
@@ -278,10 +279,6 @@
   <string name="hexagon_google_play_missing">Pre použitie SeriesGuide Cloud sú potrebné Služby Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Odosiela sa na trakt.</string>
-  <string name="trakt_seen">%s videné.</string>
-  <string name="trakt_notseen">%s nových.</string>
-  <string name="trakt_collected">%s zozbieraných.</string>
-  <string name="trakt_notcollected">%s nezozbieraných.</string>
   <string name="checkin_success_trakt">Práve pozeráte %s na trakt.</string>
   <string name="checkin_canceled_success_trakt">Pozeranie na trakt zrušené.</string>
   <string name="traktcheckin_cancel">Zmeniť</string>

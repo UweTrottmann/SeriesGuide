@@ -51,6 +51,7 @@
   <string name="database_error">Daten konnten nicht geändert werden.</string>
   <string name="reinstall_info">Versuchen Sie ein Backup in den Einstellungen, eine Neu-Installation und Wiederherstellung.</string>
   <string name="api_error_generic">Konnte %s nicht erreichen. Versuchen Sie es später erneut.</string>
+  <string name="api_failed">Gescheitert: %s</string>
   <!-- Sharing -->
   <string name="share">Teilen</string>
   <string name="share_show">Serie teilen</string>
@@ -271,10 +272,6 @@
   <string name="hexagon_google_play_missing">Um SeriesGuide Cloud zu verwenden sind Google Play Services erforderlich.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Sende an trakt.</string>
-  <string name="trakt_seen">%s angesehen.</string>
-  <string name="trakt_notseen">%s nicht angesehen.</string>
-  <string name="trakt_collected">%s gesammelt.</string>
-  <string name="trakt_notcollected">%s nicht gesammelt.</string>
   <string name="checkin_success_trakt">Auf trakt in %s eingecheckt.</string>
   <string name="checkin_canceled_success_trakt">Check-in bei trakt widerrufen.</string>
   <string name="traktcheckin_cancel">Überschreiben</string>

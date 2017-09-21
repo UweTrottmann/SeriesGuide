@@ -52,6 +52,7 @@
   <string name="database_error">Kunde inte modifiera data.</string>
   <string name="reinstall_info">Försök att säkerhetskopiera i inställningar, installera om och återställ.</string>
   <string name="api_error_generic">Kunde inte kommunicera med %s. Försök igen senare.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Dela</string>
   <string name="share_show">Dela serie</string>
@@ -272,10 +273,6 @@
   <string name="hexagon_google_play_missing">För att använda SeriesGuide Cloud krävs Google Play-tjänster.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Skickar till trakt.</string>
-  <string name="trakt_seen">%s sedda.</string>
-  <string name="trakt_notseen">%s ej sedda.</string>
-  <string name="trakt_collected">%s samlad.</string>
-  <string name="trakt_notcollected">%s ej hämtade.</string>
   <string name="checkin_success_trakt">Checkat in %s på trakt.</string>
   <string name="checkin_canceled_success_trakt">Avbruten check-in på trakt.</string>
   <string name="traktcheckin_cancel">Hoppa över</string>

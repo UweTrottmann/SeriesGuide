@@ -51,6 +51,7 @@
   <string name="database_error">தரவு மாற்ற முடியவில்லை.</string>
   <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">பகிர்</string>
   <string name="share_show">பங்கு காண்பி</string>
@@ -271,10 +272,6 @@
   <string name="hexagon_google_play_missing">SeriesGuide மேகம் பயன்படுத்த, விளையாட சேவைகளை Google தேவைப்படுகின்றது.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Trakt அனுப்புகிறது.</string>
-  <string name="trakt_seen">பார்க்க %s.</string>
-  <string name="trakt_notseen">%s பார்க்கவில்லை.</string>
-  <string name="trakt_collected">%s சேகரிக்கப்படும்.</string>
-  <string name="trakt_notcollected">%s தொகுக்கப்பெறவில்லை.</string>
   <string name="checkin_success_trakt">%s trakt-ஐ சரிபார்க்கப்பட்டது.</string>
   <string name="checkin_canceled_success_trakt">காசோலை-ல் trakt மீது ரத்து.</string>
   <string name="traktcheckin_cancel">மேலேறி</string>

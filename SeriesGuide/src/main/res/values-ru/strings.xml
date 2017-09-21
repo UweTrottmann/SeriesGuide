@@ -51,6 +51,7 @@
   <string name="database_error">Не получается модифицирофавать данные.</string>
   <string name="reinstall_info">Попробуйте сделать бэкап в настройках, переустановите приложение и восстановите данные.</string>
   <string name="api_error_generic">Не могу связаться с %s. Попробуйте позже.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Отправить</string>
   <string name="share_show">Поделиться сериалом</string>
@@ -278,10 +279,6 @@
   <string name="hexagon_google_play_missing">Чтобы использовать облако SeriesGuide, требуются службы Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Отправка в trakt.</string>
-  <string name="trakt_seen">%s просмотрено.</string>
-  <string name="trakt_notseen">%s не просмотрено.</string>
-  <string name="trakt_collected">%s собрано.</string>
-  <string name="trakt_notcollected">%s не в коллекции.</string>
   <string name="checkin_success_trakt">Отмечено в %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Отменена регистрация на trakt.</string>
   <string name="traktcheckin_cancel">Отменить</string>

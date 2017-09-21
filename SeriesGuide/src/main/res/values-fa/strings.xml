@@ -51,6 +51,7 @@
   <string name="database_error">نمی‌توان داده را تغییر داد.</string>
   <string name="reinstall_info">در تنظیمات پشتیبان گرفته، دوباره نصب و بازیابی کنید.</string>
   <string name="api_error_generic">نمی‌توان با %s صحبت کرد. بعداً دوباره تلاش کنید.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">هم‌رسانی</string>
   <string name="share_show">هم‌رسانی نمایش</string>
@@ -271,10 +272,6 @@
   <string name="hexagon_google_play_missing">برای استفاده از فضای ابری SeriesGuide، نیاز به خدمات گوگل پلی است.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">ارسال به trakt.</string>
-  <string name="trakt_seen">‫%s دیده شده.</string>
-  <string name="trakt_notseen">‫%s دیده نشده.</string>
-  <string name="trakt_collected">‫%s به کلکسیون افزوده شده.</string>
-  <string name="trakt_notcollected">‫%s به کلکسیون افزوده نشده.</string>
   <string name="checkin_success_trakt">%s روی trakt ثبت شد.</string>
   <string name="checkin_canceled_success_trakt">ثبت روی trakt لغو شد.</string>
   <string name="traktcheckin_cancel">باطل کردن</string>

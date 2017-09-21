@@ -51,6 +51,7 @@
   <string name="database_error">데이터 수정에 실패하였습니다.</string>
   <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">공유</string>
   <string name="share_show">쇼 공유</string>
@@ -264,10 +265,6 @@
   <string name="hexagon_google_play_missing">SeriesGuide Cloud를 사용하기위해서 구글플레이에 로그인해주세요</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">trakt에 업로드 중.</string>
-  <string name="trakt_seen">%s 시청.</string>
-  <string name="trakt_notseen">%s 미시청.</string>
-  <string name="trakt_collected">%s 수집됨.</string>
-  <string name="trakt_notcollected">%s 수집되지 않음.</string>
   <string name="checkin_success_trakt">%s을 trakt에 체크인하였습니다.</string>
   <string name="checkin_canceled_success_trakt">trakt 체크인을 취소하였습니다.</string>
   <string name="traktcheckin_cancel">오버라이드</string>

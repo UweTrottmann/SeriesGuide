@@ -51,6 +51,7 @@
   <string name="database_error">Could not modify data.</string>
   <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Dalīties</string>
   <string name="share_show">Kopīgot seriālu</string>
@@ -278,10 +279,6 @@
   <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Augšupieladēju uz trakt.</string>
-  <string name="trakt_seen">%s redzētas.</string>
-  <string name="trakt_notseen">%s neredzētas.</string>
-  <string name="trakt_collected">%s kolekcionētas.</string>
-  <string name="trakt_notcollected">%s nekolekcionētas.</string>
   <string name="checkin_success_trakt">Iečekojies %s ar trakt.</string>
   <string name="checkin_canceled_success_trakt">Atcelta trakt iečekošanās.</string>
   <string name="traktcheckin_cancel">Pārraksti</string>

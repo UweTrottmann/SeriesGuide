@@ -51,6 +51,7 @@
   <string name="database_error">No se pueden modificar los datos.</string>
   <string name="reinstall_info">Intenta salvar los datos en Opciones, re-instalar y restauralos.</string>
   <string name="api_error_generic">No se pudo hablar con %s. Intenta nuevamente.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Compartir</string>
   <string name="share_show">Compartir serie</string>
@@ -272,10 +273,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="hexagon_google_play_missing">Para usar SeriesGuide Cloud, se requiere Google Play Services.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Enviando a trakt.</string>
-  <string name="trakt_seen">%s visto.</string>
-  <string name="trakt_notseen">%s no visto.</string>
-  <string name="trakt_collected">%s recopilados.</string>
-  <string name="trakt_notcollected">%s no recopilados.</string>
   <string name="checkin_success_trakt">Registrado en %s en trakt.</string>
   <string name="checkin_canceled_success_trakt">Check-in en trakt cancelado.</string>
   <string name="traktcheckin_cancel">Reemplazar</string>

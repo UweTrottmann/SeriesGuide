@@ -51,6 +51,7 @@
   <string name="database_error">Tidak dapat merubah data.</string>
   <string name="reinstall_info">Coba cadangkan di pengaturan, pasang ulang dan pulihkan.</string>
   <string name="api_error_generic">Tidak dapat bicara ke %s. Coba lagi nanti.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Bagikan</string>
   <string name="share_show">Bagikan acara</string>
@@ -264,10 +265,6 @@
   <string name="hexagon_google_play_missing">Untuk Menggunakan SeriesGuide Cloud, dibutuhkan Google Play Services.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Mengirim ke trakt.</string>
-  <string name="trakt_seen">%s dilihat.</string>
-  <string name="trakt_notseen">%s Belum dilihat.</string>
-  <string name="trakt_collected">%s dikoleksi.</string>
-  <string name="trakt_notcollected">%s belum dikoleksi.</string>
   <string name="checkin_success_trakt">Check-in %s pada trakt.</string>
   <string name="checkin_canceled_success_trakt">Membatalkan check-in pada trakt.</string>
   <string name="traktcheckin_cancel">Timpa</string>

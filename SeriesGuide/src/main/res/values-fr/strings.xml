@@ -51,6 +51,7 @@
   <string name="database_error">Les données n\'ont pu être modifiées.</string>
   <string name="reinstall_info">Essayez de sauvegarde les paramètres, puis réinstallez et restaurez.</string>
   <string name="api_error_generic">Impossible de communiquer avec %s. Réessayez ultérieurement.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Partager</string>
   <string name="share_show">Partager la série</string>
@@ -271,10 +272,6 @@
   <string name="hexagon_google_play_missing">Pour utiliser SeriesGuide Cloud les Services Google Play sont nécessaires.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Envoi vers trakt.</string>
-  <string name="trakt_seen">%s vu.</string>
-  <string name="trakt_notseen">%s non vu.</string>
-  <string name="trakt_collected">%s dans votre collection.</string>
-  <string name="trakt_notcollected">%s n\'est pas dans votre collection.</string>
   <string name="checkin_success_trakt">Check-in de %s sur trakt effectué.</string>
   <string name="checkin_canceled_success_trakt">Check-in sur trakt annulé.</string>
   <string name="traktcheckin_cancel">Annuler</string>

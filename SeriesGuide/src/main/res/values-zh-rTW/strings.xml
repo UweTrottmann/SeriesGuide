@@ -51,6 +51,7 @@
   <string name="database_error">無法修改資料。</string>
   <string name="reinstall_info">嘗試在設置中備份，然後重新安裝應用並恢復備份。</string>
   <string name="api_error_generic">無法移除節目%s。請稍後再試。</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">分享</string>
   <string name="share_show">分享節目</string>
@@ -264,10 +265,6 @@
   <string name="hexagon_google_play_missing">若要使用SeriesGuide Cloud，需要Google play服務。</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">正發送至trakt。</string>
-  <string name="trakt_seen">%s已觀賞</string>
-  <string name="trakt_notseen">%s未觀賞</string>
-  <string name="trakt_collected">%s已收藏</string>
-  <string name="trakt_notcollected">%s未收藏</string>
   <string name="checkin_success_trakt">在trakt上打卡%s</string>
   <string name="checkin_canceled_success_trakt">在trakt上取消打卡。</string>
   <string name="traktcheckin_cancel">覆蓋</string>

@@ -51,6 +51,7 @@
   <string name="database_error">No s\'han pogut modificar les dades.</string>
   <string name="reinstall_info">Intenta fer un backup en el panell de Configuraciò, torneu a instal·lar i restaurar.</string>
   <string name="api_error_generic">No es possible contactar amb %s. Proveu-ho més tard.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Comparteix</string>
   <string name="share_show">Comparteix la serie</string>
@@ -271,10 +272,6 @@
   <string name="hexagon_google_play_missing">Per utilitzar SeriesGuide Cloud es requereixen els Google Play Services.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">S\'està enviant a trakt.</string>
-  <string name="trakt_seen">%s vists.</string>
-  <string name="trakt_notseen">%s no vist.</string>
-  <string name="trakt_collected">%s recopilats.</string>
-  <string name="trakt_notcollected">%s no recopilats.</string>
   <string name="checkin_success_trakt">S\'ha enregistrat a %s de trakt.</string>
   <string name="checkin_canceled_success_trakt">S\'ha canceŀlat el registre a trakt.</string>
   <string name="traktcheckin_cancel">Substitueix</string>

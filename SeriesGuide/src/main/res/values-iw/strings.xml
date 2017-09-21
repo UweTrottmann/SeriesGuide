@@ -51,6 +51,7 @@
   <string name="database_error">לא הייתה אפשרות לשנות את הנתונים.</string>
   <string name="reinstall_info">נסה לגבות את ההגדרות, להתקין מחדש, ולשחזר.</string>
   <string name="api_error_generic">לא יכולה לדבר עם %s. נסה שוב מאוחר יותר.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">שתף</string>
   <string name="share_show">שתף סדרה</string>
@@ -285,10 +286,6 @@
   <string name="hexagon_google_play_missing">כדי להשתמש ב-SeriesGuide בענן, נדרש שירותי Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">שלח ל-trakt.</string>
-  <string name="trakt_seen">%s נצפו.</string>
-  <string name="trakt_notseen">%s טרם נצפו.</string>
-  <string name="trakt_collected">%s שאספת.</string>
-  <string name="trakt_notcollected">%s שטרם אספת.</string>
   <string name="checkin_success_trakt">נעשה צ\'ק-אין ל-%s ב-trakt.</string>
   <string name="checkin_canceled_success_trakt">הצ\'ק-אין ב-trakt בוטל.</string>
   <string name="traktcheckin_cancel">דרוס</string>

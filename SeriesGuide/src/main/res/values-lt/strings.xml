@@ -51,6 +51,7 @@
   <string name="database_error">Nepavyko modifikuoti duomenų.</string>
   <string name="reinstall_info">Pabandykite sukurti atsarginę kopiją parametrų, iš naujo įdiegti ir atkurti.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Dalintis</string>
   <string name="share_show">Dalintis serialu</string>
@@ -278,10 +279,6 @@
   <string name="hexagon_google_play_missing">Norint naudotis SeriesGuide Cloud, Google Play Services yra privalomos.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Siunčiama į trakt.</string>
-  <string name="trakt_seen">%s matyta.</string>
-  <string name="trakt_notseen">%s nematyta.</string>
-  <string name="trakt_collected">%s kolekcijoj.</string>
-  <string name="trakt_notcollected">%s nėra kolekcijoj.</string>
   <string name="checkin_success_trakt">Pažymėta %s trakt paskyroje.</string>
   <string name="checkin_canceled_success_trakt">Atšauktas trakt pažymėjimas.</string>
   <string name="traktcheckin_cancel">Perrašyti</string>

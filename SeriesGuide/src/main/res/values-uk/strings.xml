@@ -51,6 +51,7 @@
   <string name="database_error">Не вдалося змінити дані.</string>
   <string name="reinstall_info">Спробуйте зберегти копію в Налаштування, повторна інсталяція та відновлення.</string>
   <string name="api_error_generic">Не вдалося зв\'язатися з %s. Спробуйте пізніше.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Поділитись</string>
   <string name="share_show">Поділитись серіалом</string>
@@ -278,10 +279,6 @@
   <string name="hexagon_google_play_missing">Щоб використати SeriesGuide Хмару, потрібен Google Play Service.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Надсилання до trakt.</string>
-  <string name="trakt_seen">%s переглянуто.</string>
-  <string name="trakt_notseen">%s не переглянуто.</string>
-  <string name="trakt_collected">%s зібрано.</string>
-  <string name="trakt_notcollected">%s не зібрані.</string>
   <string name="checkin_success_trakt">Відзначено %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Скасована реєстрація на trakt.</string>
   <string name="traktcheckin_cancel">Перевизначити</string>

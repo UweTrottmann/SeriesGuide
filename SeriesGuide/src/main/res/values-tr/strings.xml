@@ -51,6 +51,7 @@
   <string name="database_error">Veri değiştirilemedi.</string>
   <string name="reinstall_info">Ayarlardan yedeklemeyi deneyin. Uygulamayı yediden yükleyip, veri tabanınızı geri yükleyin.</string>
   <string name="api_error_generic">%s ile iletişim kurulamadı. Daha sonra tekrar deneyin.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Paylaş</string>
   <string name="share_show">Diziyi paylaş</string>
@@ -271,10 +272,6 @@
   <string name="hexagon_google_play_missing">SeriesGuide Cloud\'u kullanabilmek için, Google Play Hizmetleri gereklidir.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">trakt\'e gönderiliyor.</string>
-  <string name="trakt_seen">%s görüldü.</string>
-  <string name="trakt_notseen">%s görülmedi.</string>
-  <string name="trakt_collected">Kolleksiyona dahil edilen: %s.</string>
-  <string name="trakt_notcollected">Kolleksiyonda bulunmayan: %s.</string>
   <string name="checkin_success_trakt">trakt üzerinden %s girişi yapıldı.</string>
   <string name="checkin_canceled_success_trakt">trakt üzerinden giriş iptal edildi.</string>
   <string name="traktcheckin_cancel">Geçersiz Kıl</string>
