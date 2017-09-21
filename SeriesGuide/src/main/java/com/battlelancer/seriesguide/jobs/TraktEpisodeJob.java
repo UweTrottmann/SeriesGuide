@@ -6,10 +6,12 @@ import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
+import com.battlelancer.seriesguide.modules.ServicesComponent;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ShowTools;
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncErrors;
@@ -71,7 +73,9 @@ public class TraktEpisodeJob extends NetworkJob {
         // determine network call
         String errorLabel;
         Call<SyncResponse> call;
-        Sync traktSync = SgApp.getServicesComponent(context).traktSync();
+        ServicesComponent component = SgApp.getServicesComponent(context);
+        TraktV2 trakt = component.trakt();
+        Sync traktSync = component.traktSync();
         switch (action) {
             case EPISODE_WATCHED_FLAG:
                 if (isAddNotDelete) {
@@ -107,7 +111,7 @@ public class TraktEpisodeJob extends NetworkJob {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return NetworkJob.ERROR_TRAKT_AUTH;
                 }
-                SgTrakt.trackFailedRequest(context, errorLabel, response);
+                SgTrakt.trackFailedRequest(context, trakt, errorLabel, response);
 
                 int code = response.code();
                 if (code == 429 /* Rate Limit Exceeded */ || code >= 500) {

@@ -31,7 +31,8 @@ public class SgTmdb extends Tmdb {
     }
 
     public static void trackFailedRequest(Context context, String action, Response response) {
-        Utils.trackFailedRequest(context, TAG_TMDB_ERROR, action, response);
+        Utils.trackFailedRequest(context, TAG_TMDB_ERROR, action, response.code(),
+                response.message());
     }
 
     public static void trackFailedRequest(Context context, String action, Throwable throwable) {

@@ -7,6 +7,7 @@ import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.ui.BaseOAuthActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt5.TraktV2;
+import com.uwetrottmann.trakt5.entities.TraktError;
 import java.io.IOException;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -68,9 +69,20 @@ public class SgTrakt extends TraktV2 {
         }
     }
 
+    public static void trackFailedRequest(Context context, TraktV2 trakt, String action,
+            retrofit2.Response response) {
+        String message = response.message();
+        TraktError error = trakt.checkForTraktError(response);
+        if (error != null && error.message != null) {
+            message += ", " + error.message;
+        }
+        Utils.trackFailedRequest(context, TAG_TRAKT_ERROR, action, response.code(), message);
+    }
+
     public static void trackFailedRequest(Context context, String action,
             retrofit2.Response response) {
-        Utils.trackFailedRequest(context, TAG_TRAKT_ERROR, action, response);
+        Utils.trackFailedRequest(context, TAG_TRAKT_ERROR, action, response.code(),
+                response.message());
     }
 
     public static void trackFailedRequest(Context context, String action, Throwable throwable) {
