@@ -94,17 +94,18 @@ public class TextTools {
     @NonNull
     public static String splitAndKitTVDBStrings(@Nullable String tvdbstring) {
         if (tvdbstring == null) {
-            tvdbstring = "";
+            return "";
         }
-        String[] splitted = tvdbstring.split("\\|");
-        tvdbstring = "";
-        for (String item : splitted) {
-            if (tvdbstring.length() != 0) {
-                tvdbstring += ", ";
+        String[] split = tvdbstring.split("\\|");
+        // capacity: source length - separator count, where separator count = parts - 1
+        StringBuilder builder = new StringBuilder(tvdbstring.length() - split.length - 1);
+        for (String item : split) {
+            if (builder.length() > 0) {
+                builder.append(", ");
             }
-            tvdbstring += item.trim();
+            builder.append(item.trim());
         }
-        return tvdbstring;
+        return builder.toString();
     }
 
     /**
