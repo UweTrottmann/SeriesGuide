@@ -50,7 +50,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/imageViewSeasonsWatchedToggle"
-        android:fastScrollEnabled="true"
         android:nestedScrollingEnabled="true"
         android:paddingTop="0dp"
         tools:ignore="UnusedAttribute"
