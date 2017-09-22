@@ -97,8 +97,7 @@ public class TextTools {
             return "";
         }
         String[] split = tvdbstring.split("\\|");
-        // capacity: source length - separator count, where separator count = parts - 1
-        StringBuilder builder = new StringBuilder(tvdbstring.length() - split.length - 1);
+        StringBuilder builder = new StringBuilder();
         for (String item : split) {
             if (builder.length() > 0) {
                 builder.append(", ");
