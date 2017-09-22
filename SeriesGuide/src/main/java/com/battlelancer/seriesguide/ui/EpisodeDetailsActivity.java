@@ -167,10 +167,7 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
                 TaskStackBuilder
                         .create(this)
                         .addNextIntent(new Intent(this, ShowsActivity.class))
-                        .addNextIntent(
-                                new Intent(this, OverviewActivity.class).putExtra(
-                                        OverviewActivity.EXTRA_INT_SHOW_TVDBID, showTvdbId)
-                        )
+                        .addNextIntent(OverviewActivity.intentShow(this, showTvdbId))
                         .addNextIntent(upIntent)
                         .startActivities();
                 finish();

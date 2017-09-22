@@ -88,8 +88,7 @@ public final class ShortcutUtils {
             @Override
             protected void onPostExecute(Void unused) {
                 // Intent used when the shortcut is tapped
-                final Intent shortcutIntent = new Intent(context, OverviewActivity.class);
-                shortcutIntent.putExtra(OverviewActivity.EXTRA_INT_SHOW_TVDBID, showTvdbId);
+                final Intent shortcutIntent = OverviewActivity.intentShow(context, showTvdbId);
                 shortcutIntent.setAction(Intent.ACTION_MAIN);
                 shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

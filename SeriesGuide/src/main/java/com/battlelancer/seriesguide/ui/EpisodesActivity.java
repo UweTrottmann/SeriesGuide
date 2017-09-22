@@ -286,9 +286,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
-            Intent upIntent;
-            upIntent = new Intent(this, OverviewActivity.class);
-            upIntent.putExtra(OverviewActivity.EXTRA_INT_SHOW_TVDBID, showTvdbId);
+            Intent upIntent = OverviewActivity.intentShow(this, showTvdbId);
             upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(upIntent);
             return true;

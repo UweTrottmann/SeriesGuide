@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -250,8 +249,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
             buttonPositive.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(getActivity(), OverviewActivity.class).putExtra(
-                            OverviewActivity.EXTRA_INT_SHOW_TVDBID, displayedShow.tvdbid));
+                    startActivity(OverviewActivity.intentShow(getContext(), displayedShow.tvdbid));
                     dismiss();
                 }
             });

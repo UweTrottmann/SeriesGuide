@@ -473,11 +473,8 @@ public class ShowsFragment extends Fragment implements
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // display overview for this show
-
-        Intent i = new Intent(getActivity(), OverviewActivity.class);
-        i.putExtra(OverviewActivity.EXTRA_INT_SHOW_TVDBID, (int) id);
-
-        ActivityCompat.startActivity(getActivity(), i,
+        Intent intent = OverviewActivity.intentShow(getContext(), (int) id);
+        ActivityCompat.startActivity(getActivity(), intent,
                 ActivityOptionsCompat
                         .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
                         .toBundle()

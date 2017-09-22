@@ -124,9 +124,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
         switch (itemType) {
             case 1: {
                 // display show overview
-                intent = new Intent(getActivity(), OverviewActivity.class);
-                intent.putExtra(OverviewActivity.EXTRA_INT_SHOW_TVDBID,
-                        Integer.valueOf(itemRefId));
+                intent = OverviewActivity.intentShow(getActivity(), Integer.valueOf(itemRefId));
                 break;
             }
             case 2: {
