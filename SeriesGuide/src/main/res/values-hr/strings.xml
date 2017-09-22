@@ -10,7 +10,7 @@
   <string name="preferences">Postavke</string>
   <string name="help">Pomoć</string>
   <string name="help_and_feedback">Pomoć i povratne informacije</string>
-  <string name="drawer_open">Otvori izbornik za navigaciju</string>
+  <string name="drawer_open">Otvori navigacijsku ladicu</string>
   <!-- Media items -->
   <string name="show">Serija</string>
   <string name="episode">Epizoda</string>
@@ -31,7 +31,7 @@
   <string name="discard">Odbaci</string>
   <string name="save_selection">Pohrani odabrano</string>
   <string name="action_display_all">Prikaži sve</string>
-  <string name="web_search">Pretraživanje weba</string>
+  <string name="web_search">Pretraži web</string>
   <string name="add_to_homescreen">Prečac</string>
   <string name="action_open">Otvori</string>
   <string name="sync_manually">Ručno sinkroniziraj</string>
@@ -51,7 +51,7 @@
   <string name="database_error">Nije moguće izmijeniti podatke.</string>
   <string name="reinstall_info">Pokušajte sigurnosno kopirati postavke, ponovno instalirajte i vratite sig. kopiju.</string>
   <string name="api_error_generic">%s nedostupan. Pokušajte kasnije.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">Nije uspjelo: %s</string>
   <!-- Sharing -->
   <string name="share">Podijeli</string>
   <string name="share_show">Podijeli seriju</string>
@@ -218,7 +218,7 @@
   <string name="movies_collection">Zbirka</string>
   <string name="movies_watchlist">Popis gledanja</string>
   <string name="watchlist_add">Dodaj na popis gledanja</string>
-  <string name="watchlist_remove">Makni s popisa gledanja</string>
+  <string name="watchlist_remove">Ukloni s popisa gledanja</string>
   <string name="watchlist_added">Dodano na popis gledanja</string>
   <string name="watchlist_removed">Uklonjeno s popisa gledanja</string>
   <string name="movies_search_hint">Upiši naslov filma</string>

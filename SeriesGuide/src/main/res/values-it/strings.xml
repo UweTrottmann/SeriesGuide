@@ -51,7 +51,7 @@
   <string name="database_error">Impossibile modificare i dati.</string>
   <string name="reinstall_info">Prova a eseguire un backup dalle impostazioni, reinstalla e ripristina.</string>
   <string name="api_error_generic">Non è possibile contattare %s. Riprova più tardi.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">Fallito: %s</string>
   <!-- Sharing -->
   <string name="share">Condividi</string>
   <string name="share_show">Condividi la serie</string>

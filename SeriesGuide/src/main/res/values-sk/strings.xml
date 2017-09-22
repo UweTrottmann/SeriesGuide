@@ -51,7 +51,7 @@
   <string name="database_error">Nie je možné zmeniť dáta.</string>
   <string name="reinstall_info">Skúste zálohovať cez nastavenia, preinštalovať a obnoviť.</string>
   <string name="api_error_generic">Nemožno komunikovať s %s. Skúste to znova neskôr.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">Zlyhanie: %s</string>
   <!-- Sharing -->
   <string name="share">Zdieľať</string>
   <string name="share_show">Zdieľať seriál</string>
