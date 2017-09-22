@@ -161,7 +161,7 @@ public class TextTools {
     /**
      * Appends an empty new line and a new line listing the source of the text as TMDB.
      */
-    public static SpannableStringBuilder textWithTmdbSource(Context context, String text) {
+    public static SpannableStringBuilder textWithTmdbSource(Context context, @Nullable String text) {
         return textWithSource(context, text,
                 context.getString(R.string.format_source, context.getString(R.string.tmdb)));
     }
@@ -170,7 +170,7 @@ public class TextTools {
      * Appends an empty new line and a new line listing the source of the text as TVDB and the last
      * edited date (is unknown if seconds value is less than 1).
      */
-    public static SpannableStringBuilder textWithTvdbSource(Context context, String text,
+    public static SpannableStringBuilder textWithTvdbSource(Context context, @Nullable String text,
             long lastEditSeconds) {
         String lastEdited;
         if (lastEditSeconds > 0) {
@@ -185,11 +185,13 @@ public class TextTools {
         return textWithSource(context, text, sourceAndTime);
     }
 
-    private static SpannableStringBuilder textWithSource(Context context, String text,
-            String source) {
+    private static SpannableStringBuilder textWithSource(Context context, @Nullable String text,
+            @NonNull String source) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
-        builder.append(text);
-        builder.append("\n\n");
+        if (text != null) {
+            builder.append(text);
+            builder.append("\n\n");
+        }
         int sourceStartIndex = builder.length();
         builder.append(source);
         builder.setSpan(new TextAppearanceSpan(context, R.style.TextAppearance_Body_Highlight),
