@@ -9,6 +9,21 @@ Version 39
 ----------
 *(in development)*
 
+#### 39-beta4
+*(2017-09-22)*
+
+* 🔧 SeriesGuide Cloud, trakt: For episodes, set (not) watched and add to/remove from collection is 
+     automatically re-tried, works offline and no longer blocks buttons. If it is impossible due 
+     to an error or a show/episode is not available on trakt, a notification is displayed.
+* 🔧 Remove fast scrolling for seasons, benefits do not outweigh issues with opening more options
+     menu.
+* 📝 Latest translations from crowdin.
+
+#### 39-beta3
+*(2017-09-02)*
+
+* 🔨 Did not recognize 2016 subscriptions.
+
 #### 39-beta2
 *(2017-09-01)*
 
