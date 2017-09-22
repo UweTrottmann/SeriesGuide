@@ -9,6 +9,11 @@ Version 39
 ----------
 *(in development)*
 
+#### 39-beta5
+*(2017-09-22)*
+
+* 🔨 Crash when trying to parse additional episode info.
+
 #### 39-beta4
 *(2017-09-22)*
 
@@ -17,6 +22,7 @@ Version 39
      to an error or a show/episode is not available on trakt, a notification is displayed.
 * 🔧 Remove fast scrolling for seasons, benefits do not outweigh issues with opening more options
      menu.
+* 🔨 Crash if episode or movie description was empty.
 * 📝 Latest translations from crowdin.
 
 #### 39-beta3
