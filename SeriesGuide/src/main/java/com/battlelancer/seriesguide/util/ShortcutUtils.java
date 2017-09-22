@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.util;
 
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -52,103 +53,115 @@ public final class ShortcutUtils {
             final String posterPath, final int showTvdbId) {
         // do not pass activity reference to AsyncTask, activity might leak if destroyed
         final Context context = localContext.getApplicationContext();
+        new ShortcutAsyncTask(context, showTitle, posterPath, showTvdbId)
+                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
 
-        AsyncTask<Void, Void, Void> shortCutTask = new AsyncTask<Void, Void, Void>() {
+    private static class ShortcutAsyncTask extends AsyncTask<Void, Void, Void> {
 
-            @Nullable private Bitmap posterBitmap;
+        @SuppressLint("StaticFieldLeak") // using application context
+        private final Context context;
+        private final String showTitle;
+        private final String posterPath;
+        private final int showTvdbId;
+        @Nullable private Bitmap posterBitmap;
 
-            @Override
-            protected Void doInBackground(Void... unused) {
-                // Try to get the show poster
-                try {
-                    final String posterUrl = TvdbImageTools.smallSizeUrl(posterPath);
-                    if (posterUrl != null) {
-                        RequestCreator requestCreator = Picasso.with(context)
-                                .load(posterUrl)
-                                .centerCrop()
-                                .memoryPolicy(MemoryPolicy.NO_STORE)
-                                .networkPolicy(NetworkPolicy.NO_STORE)
-                                .resizeDimen(R.dimen.show_poster_width_shortcut,
-                                        R.dimen.show_poster_height_shortcut);
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                            // on O+ we use 108x108dp adaptive icon, no need to cut its corners
-                            // pre-O full bitmap is displayed, so cut corners for nicer icon shape
-                            requestCreator.transform(
-                                    new RoundedCornerTransformation(posterUrl, 10f));
-                        }
-                        posterBitmap = requestCreator.get();
+        public ShortcutAsyncTask(Context context, String showTitle, String posterPath,
+                int showTvdbId) {
+            this.context = context;
+            this.showTitle = showTitle;
+            this.posterPath = posterPath;
+            this.showTvdbId = showTvdbId;
+        }
+
+        @Override
+        protected Void doInBackground(Void... unused) {
+            // Try to get the show poster
+            try {
+                final String posterUrl = TvdbImageTools.smallSizeUrl(posterPath);
+                if (posterUrl != null) {
+                    RequestCreator requestCreator = Picasso.with(context)
+                            .load(posterUrl)
+                            .centerCrop()
+                            .memoryPolicy(MemoryPolicy.NO_STORE)
+                            .networkPolicy(NetworkPolicy.NO_STORE)
+                            .resizeDimen(R.dimen.show_poster_width_shortcut,
+                                    R.dimen.show_poster_height_shortcut);
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                        // on O+ we use 108x108dp adaptive icon, no need to cut its corners
+                        // pre-O full bitmap is displayed, so cut corners for nicer icon shape
+                        requestCreator.transform(
+                                new RoundedCornerTransformation(posterUrl, 10f));
                     }
-                } catch (IOException e) {
-                    Timber.e(e, "Could not load show poster for shortcut %s", posterPath);
-                    posterBitmap = null;
+                    posterBitmap = requestCreator.get();
                 }
-                return null;
+            } catch (IOException e) {
+                Timber.e(e, "Could not load show poster for shortcut %s", posterPath);
+                posterBitmap = null;
             }
+            return null;
+        }
 
-            @Override
-            protected void onPostExecute(Void unused) {
-                // Intent used when the shortcut is tapped
-                final Intent shortcutIntent = OverviewActivity.intentShow(context, showTvdbId);
-                shortcutIntent.setAction(Intent.ACTION_MAIN);
-                shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        @Override
+        protected void onPostExecute(Void unused) {
+            // Intent used when the shortcut is tapped
+            final Intent shortcutIntent = OverviewActivity.intentShow(context, showTvdbId);
+            shortcutIntent.setAction(Intent.ACTION_MAIN);
+            shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    ShortcutManager shortcutManager =
-                            context.getSystemService(ShortcutManager.class);
-                    if (shortcutManager.isRequestPinShortcutSupported()) {
-                        ShortcutInfo.Builder builder = new ShortcutInfo.Builder(context,
-                                "shortcut-show-" + showTvdbId)
-                                .setIntent(shortcutIntent)
-                                .setShortLabel(showTitle);
-                        if (posterBitmap == null) {
-                            builder.setIcon(
-                                    Icon.createWithResource(context, R.drawable.ic_shortcut_show));
-                        } else {
-                            builder.setIcon(Icon.createWithAdaptiveBitmap(posterBitmap));
-                        }
-                        ShortcutInfo pinShortcutInfo = builder.build();
-
-                        // Create the PendingIntent object only if your app needs to be notified
-                        // that the user allowed the shortcut to be pinned. Note that, if the
-                        // pinning operation fails, your app isn't notified. We assume here that the
-                        // app has implemented a method called createShortcutResultIntent() that
-                        // returns a broadcast intent.
-                        Intent pinnedShortcutCallbackIntent =
-                                shortcutManager.createShortcutResultIntent(pinShortcutInfo);
-
-                        // Configure the intent so that your app's broadcast receiver gets
-                        // the callback successfully.
-                        PendingIntent successCallback = PendingIntent.getBroadcast(context, 0,
-                                pinnedShortcutCallbackIntent, 0);
-
-                        shortcutManager.requestPinShortcut(pinShortcutInfo,
-                                successCallback.getIntentSender());
-                    }
-                } else {
-                    // Intent that actually creates the shortcut
-                    final Intent intent = new Intent();
-                    intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-                    intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, showTitle);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+                if (shortcutManager != null && shortcutManager.isRequestPinShortcutSupported()) {
+                    ShortcutInfo.Builder builder = new ShortcutInfo.Builder(context,
+                            "shortcut-show-" + showTvdbId)
+                            .setIntent(shortcutIntent)
+                            .setShortLabel(showTitle);
                     if (posterBitmap == null) {
-                        // Fall back to the app icon
-                        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                                Intent.ShortcutIconResource.fromContext(context, R.mipmap.ic_app));
+                        builder.setIcon(
+                                Icon.createWithResource(context, R.drawable.ic_shortcut_show));
                     } else {
-                        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, posterBitmap);
+                        builder.setIcon(Icon.createWithAdaptiveBitmap(posterBitmap));
                     }
-                    intent.setAction(ACTION_INSTALL_SHORTCUT);
-                    context.sendBroadcast(intent);
+                    ShortcutInfo pinShortcutInfo = builder.build();
 
-                    // drop to home screen, launcher should animate to new shortcut
-                    context.startActivity(
-                            new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME)
-                                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    // Create the PendingIntent object only if your app needs to be notified
+                    // that the user allowed the shortcut to be pinned. Note that, if the
+                    // pinning operation fails, your app isn't notified. We assume here that the
+                    // app has implemented a method called createShortcutResultIntent() that
+                    // returns a broadcast intent.
+                    Intent pinnedShortcutCallbackIntent =
+                            shortcutManager.createShortcutResultIntent(pinShortcutInfo);
+
+                    // Configure the intent so that your app's broadcast receiver gets
+                    // the callback successfully.
+                    PendingIntent successCallback = PendingIntent.getBroadcast(context, 0,
+                            pinnedShortcutCallbackIntent, 0);
+
+                    shortcutManager.requestPinShortcut(pinShortcutInfo,
+                            successCallback.getIntentSender());
                 }
+            } else {
+                // Intent that actually creates the shortcut
+                final Intent intent = new Intent();
+                intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+                intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, showTitle);
+                if (posterBitmap == null) {
+                    // Fall back to the app icon
+                    intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                            Intent.ShortcutIconResource.fromContext(context, R.mipmap.ic_app));
+                } else {
+                    intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, posterBitmap);
+                }
+                intent.setAction(ACTION_INSTALL_SHORTCUT);
+                context.sendBroadcast(intent);
+
+                // drop to home screen, launcher should animate to new shortcut
+                context.startActivity(
+                        new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
-        };
-        // Do all the above async
-        shortCutTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
     }
 
     /** A {@link Transformation} used to draw a {@link Bitmap} with round corners */
