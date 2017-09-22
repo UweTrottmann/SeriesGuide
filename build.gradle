@@ -40,7 +40,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:2.3.2' // libraries, SeriesGuide
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.1' // SeriesGuide
-        classpath 'io.fabric.tools:gradle:1.24.1' // SeriesGuide
+        classpath 'io.fabric.tools:gradle:1.24.2' // SeriesGuide
         classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.8.0' // api
     }
 }
