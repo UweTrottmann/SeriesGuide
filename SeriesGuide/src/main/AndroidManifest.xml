@@ -365,17 +365,6 @@
             </intent-filter>
         </service>
 
-        <!-- Watch for extension package changes -->
-        <receiver android:name="com.battlelancer.seriesguide.extensions.ExtensionPackageChangeReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_CHANGED" />
-                <action android:name="android.intent.action.PACKAGE_REPLACED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
-
         <!-- Sync service -->
         <service
             android:name="com.battlelancer.seriesguide.sync.SgAuthenticationService"

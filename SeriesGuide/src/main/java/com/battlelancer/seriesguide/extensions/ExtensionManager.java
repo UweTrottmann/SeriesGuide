@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.extensions;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -175,10 +176,47 @@ public class ExtensionManager {
     }
 
     /**
+     * Checks if all extensions are still installed, re-subscribes to those that are in case one was
+     * updated, removes those unavailable.
+     */
+    public synchronized void checkEnabledExtensions(Context context) {
+        // make a copy of enabled extensions
+        List<ComponentName> enabledExtensions = getEnabledExtensions(context);
+
+        Timber.i("App restart: temporarily un-subscribing from all extensions.");
+        List<ComponentName> extensionsToKeep = new ArrayList<>();
+        setEnabledExtensions(context, extensionsToKeep);
+
+        // check which are still installed
+        for (ComponentName extension : enabledExtensions) {
+            try {
+                context.getPackageManager().getServiceInfo(extension, 0);
+                extensionsToKeep.add(extension);
+            } catch (PackageManager.NameNotFoundException e) {
+                Timber.i("Extension %s no longer available: removed", extension.toShortString());
+            }
+        }
+
+        // re-subscribe to those still installed
+        Timber.i("App restart: re-subscribing to installed extensions.");
+        setEnabledExtensions(context, extensionsToKeep);
+
+        // watch for further changes while the app is running
+        ExtensionPackageChangeReceiver packageChangeReceiver = new ExtensionPackageChangeReceiver();
+        IntentFilter packageChangeFilter = new IntentFilter();
+        packageChangeFilter.addDataScheme("package");
+        packageChangeFilter.addAction(Intent.ACTION_PACKAGE_CHANGED);
+        packageChangeFilter.addAction(Intent.ACTION_PACKAGE_REPLACED);
+        packageChangeFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        context.registerReceiver(packageChangeReceiver, packageChangeFilter);
+    }
+
+    /**
      * Compares the list of currently enabled extensions with the given list and enables added
      * extensions and disables removed extensions.
      */
-    public synchronized void setEnabledExtensions(Context context, List<ComponentName> extensions) {
+    public synchronized void setEnabledExtensions(Context context,
+            @NonNull List<ComponentName> extensions) {
         Set<ComponentName> extensionsToEnable = new HashSet<>(extensions);
         boolean isChanged = false;
 
