@@ -51,7 +51,7 @@
   <string name="database_error">データを更新できませんでした。</string>
   <string name="reinstall_info">設定で、バックアップ、再インストール、復元を試してください。</string>
   <string name="api_error_generic">%s に通信できませんでした。後でもう一度やり直してください。</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">失敗しました: %s</string>
   <!-- Sharing -->
   <string name="share">共有</string>
   <string name="share_show">番組を共有</string>

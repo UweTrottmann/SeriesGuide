@@ -51,7 +51,7 @@
   <string name="database_error">Tietojen muokkaaminen ei onnistunut.</string>
   <string name="reinstall_info">Yritä varmuuskopioida asetuksista, asenna uudelleen ja palauta.</string>
   <string name="api_error_generic">Kommunikointi %s kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">Epäonnistui: %s</string>
   <!-- Sharing -->
   <string name="share">Jaa</string>
   <string name="share_show">Jaa ohjelma</string>
@@ -137,7 +137,7 @@
   <string name="action_shows_sort_latest_episode">Uusin jakso</string>
   <string name="action_shows_sort_oldest_episode">Vanhin jakso</string>
   <string name="action_shows_sort_last_watched">Viimeksi katsottu</string>
-  <string name="action_shows_sort_remaining">Loput jaksot</string>
+  <string name="action_shows_sort_remaining">Jäljellä olevat jaksot</string>
   <string name="action_shows_sort_favorites">Suosikit ensin</string>
   <string name="context_updateshow">Päivitä</string>
   <string name="context_marknext">Seuraava jakso katsottu</string>

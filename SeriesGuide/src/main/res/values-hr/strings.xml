@@ -35,7 +35,7 @@
   <string name="add_to_homescreen">Prečac</string>
   <string name="action_open">Otvori</string>
   <string name="sync_manually">Ručno sinkroniziraj</string>
-  <string name="sync_and_update">Sinkroniziraj i ažuriraj</string>
+  <string name="sync_and_update">Sinkroniziranje i ažuriranje</string>
   <string name="sync_and_download_all">Sinkroniziraj i sve preuzmi</string>
   <!-- Search -->
   <string name="clear_search_history">Očisti povijest pretraživanja</string>
@@ -165,7 +165,7 @@
   <string name="update_no_connection">Poveži se na internet za ažuriranje.</string>
   <string name="update_inprogress">Ažuriranje u tijeku, pokušajte kasnije.</string>
   <!-- Seasons -->
-  <string name="season_allwatched">Sve epizode pogledane</string>
+  <string name="season_allwatched">Sve epizode su pogledane</string>
   <plurals name="other_episodes_plural">
     <item quantity="one">%d epizoda je ostala</item>
     <item quantity="few">%d epizoda je ostalo</item>
@@ -266,7 +266,7 @@
   <string name="hexagon_warning">Eksperimentalno</string>
   <string name="hexagon_description">SeriesGuide Oblak vam pomaže sigurnosno kopirati i sinkronizirati vaše serije, popise i filmove.</string>
   <string name="hexagon_warning_trakt">Dok ste prijavljeni na SeriesGuide Oblak neke trakt značajke nisu dostupne.</string>
-  <string name="hexagon_signin">Prijavi se</string>
+  <string name="hexagon_signin">Prijava</string>
   <string name="hexagon_signout">Odjava</string>
   <string name="hexagon_setup_incomplete">Postavljanje SeriesGuide oblaka nije dovršena.</string>
   <string name="hexagon_setup_fail_auth">Vaš Google račun nije uspio.</string>
@@ -298,9 +298,9 @@
   <string name="disconnect">Odspoji</string>
   <string name="use_integrated_browser">Koristi ugrađeni preglednik</string>
   <string name="show_library">Prikaži svoju zbirku</string>
-  <string name="about_trakt">trakt pomaže pratiti koje serije i filmove gledaš. <a href="http://trakt.tv">Saznaj više</a></string>
+  <string name="about_trakt">trakt vam pomaže pratiti koje serije i filmove gledate. <a href="https://trakt.tv">Saznajte više</a></string>
   <!-- trakt ratings -->
-  <string name="action_rate">Stopa</string>
+  <string name="action_rate">Ocijeni</string>
   <string name="your_rating">Tvoja ocjena</string>
   <string name="love">Zakon!</string>
   <string name="hate">Jadno :(</string>

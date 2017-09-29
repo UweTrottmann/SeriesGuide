@@ -51,7 +51,7 @@
   <string name="database_error">Não pode modificar os dados.</string>
   <string name="reinstall_info">Tente fazer o backup nas configurações, reinstalar e restaurar o backup.</string>
   <string name="api_error_generic">Não foi possível conectar-se com %s. Tente mais tarde.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">Falhou: %s</string>
   <!-- Sharing -->
   <string name="share">Compartilhar</string>
   <string name="share_show">Compartilhar série</string>
@@ -89,7 +89,7 @@
   <string name="no_translation">Não há descrição traduzida para %1$s disponível em %2$s.</string>
   <string name="no_translation_title">Não traduzido</string>
   <string name="no_spoilers">Alguns detalhes estão ocultos para evitar spoilers. Para desativar vá até as configurações.</string>
-  <string name="format_source">Source: %s</string>
+  <string name="format_source">Fonte: %s</string>
   <string name="format_last_edited">Editado pela última vez: %s</string>
   <!-- Date and Time -->
   <string name="today">hoje</string>
