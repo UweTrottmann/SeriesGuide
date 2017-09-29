@@ -9,6 +9,13 @@ Version 39
 ----------
 *(in development)*
 
+#### 39-beta6
+*(2017-09-29)*
+
+* 🔧 Check for new extensions when returning to manage extensions screen, like after installing one.
+* 🔨 Uninstalled and updated extensions not detected. 
+* 📝 Latest translations from crowdin.
+
 #### 39-beta5
 *(2017-09-22)*
 
