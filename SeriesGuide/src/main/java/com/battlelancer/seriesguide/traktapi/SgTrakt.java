@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
@@ -85,7 +86,8 @@ public class SgTrakt extends TraktV2 {
                 response.message());
     }
 
-    public static void trackFailedRequest(Context context, String action, Throwable throwable) {
+    public static void trackFailedRequest(Context context, String action,
+            @NonNull Throwable throwable) {
         Utils.trackFailedRequest(context, TAG_TRAKT_ERROR, action, throwable);
     }
 

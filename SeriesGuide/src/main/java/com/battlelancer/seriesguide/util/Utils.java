@@ -251,8 +251,9 @@ public class Utils {
     }
 
     public static void trackFailedRequest(Context context, String category, String action,
-            Throwable throwable) {
-        Utils.trackCustomEvent(context, category, action, throwable.getMessage());
+            @NonNull Throwable throwable) {
+        // for tracking only send exception name
+        Utils.trackCustomEvent(context, category, action, throwable.getClass().getSimpleName());
         // log like "action: Unable to resolve host"
         Timber.tag(category);
         Timber.e(throwable, "%s: %s", action, throwable.getMessage());

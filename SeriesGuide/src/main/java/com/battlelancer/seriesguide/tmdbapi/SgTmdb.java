@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.tmdbapi;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.tmdb2.Tmdb;
 import okhttp3.OkHttpClient;
@@ -35,7 +36,8 @@ public class SgTmdb extends Tmdb {
                 response.message());
     }
 
-    public static void trackFailedRequest(Context context, String action, Throwable throwable) {
+    public static void trackFailedRequest(Context context, String action,
+            @NonNull Throwable throwable) {
         Utils.trackFailedRequest(context, TAG_TMDB_ERROR, action, throwable);
     }
 }

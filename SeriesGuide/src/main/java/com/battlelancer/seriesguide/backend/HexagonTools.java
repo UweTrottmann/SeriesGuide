@@ -288,7 +288,7 @@ public class HexagonTools {
         return googleSignInOptions;
     }
 
-    public static void trackFailedRequest(Context context, String action, IOException e) {
+    public static void trackFailedRequest(Context context, String action, @NonNull IOException e) {
         if (e instanceof HttpResponseException) {
             HttpResponseException responseException = (HttpResponseException) e;
             Utils.trackCustomEvent(context, HEXAGON_ERROR_CATEGORY, action,
@@ -297,7 +297,9 @@ public class HexagonTools {
             Timber.e("%s: %s %s", action, responseException.getStatusCode(),
                     responseException.getStatusMessage());
         } else {
-            Utils.trackCustomEvent(context, HEXAGON_ERROR_CATEGORY, action, e.getMessage());
+            // for tracking only send exception name
+            Utils.trackCustomEvent(context, HEXAGON_ERROR_CATEGORY, action,
+                    e.getClass().getSimpleName());
             // log like "action: Unable to resolve host"
             Timber.e("%s: %s", action, e.getMessage());
         }
