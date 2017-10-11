@@ -20,7 +20,6 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
     public static int LOADER_ID_MOVIE = 100;
     public static int LOADER_ID_MOVIE_TRAILERS = 101;
     public static int LOADER_ID_MOVIE_CREDITS = 102;
-    public static int LOADER_ID_MOVIE_ACTIONS = 103;
 
     private SystemBarTintManager mSystemBarTintManager;
 
@@ -67,7 +66,7 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
             int insetTop = AndroidUtils.isMarshmallowOrHigher()
                     ? config.getStatusBarHeight() // transparent status bar
                     : config.getPixelInsetTop(false); // translucent status bar
-            ViewGroup actionBarToolbar = (ViewGroup) findViewById(R.id.sgToolbar);
+            ViewGroup actionBarToolbar = findViewById(R.id.sgToolbar);
             ViewGroup.MarginLayoutParams layoutParams
                     = (ViewGroup.MarginLayoutParams) actionBarToolbar.getLayoutParams();
             layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin + insetTop,
