@@ -864,7 +864,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             if (viewId == R.id.contentContainerMovie) {
                 boolean shouldShowTitle = scrollY > titleThresholdPx;
                 if (!showTitle && shouldShowTitle) {
-                    if (movieDetails != null && movieDetails.tmdbMovie() != null) {
+                    if (movieDetails.tmdbMovie() != null) {
                         actionBar.setTitle(movieDetails.tmdbMovie().title);
                         actionBar.setDisplayShowTitleEnabled(true);
                     }
