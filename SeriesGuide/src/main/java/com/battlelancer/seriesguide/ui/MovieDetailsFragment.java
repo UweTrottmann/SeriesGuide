@@ -150,7 +150,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
         textViewMovieGenresLabel.setVisibility(View.GONE);
 
         // important action buttons
@@ -659,8 +659,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 .putString(DisplaySettings.KEY_MOVIES_LANGUAGE, event.selectedLanguageCode)
                 .apply();
 
-        progressBar.setVisibility(View.VISIBLE);
-
         // reload movie details and trailers (but not cast/crew info which is not language dependent)
         restartMovieLoader();
         Bundle args = new Bundle();
@@ -740,6 +738,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             = new LoaderManager.LoaderCallbacks<MovieDetails>() {
         @Override
         public Loader<MovieDetails> onCreateLoader(int loaderId, Bundle args) {
+            progressBar.setVisibility(View.VISIBLE);
             return new MovieLoader(getContext(), args.getInt(InitBundle.TMDB_ID));
         }
 
