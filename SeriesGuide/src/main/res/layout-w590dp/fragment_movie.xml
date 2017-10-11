@@ -60,7 +60,6 @@
                             android:layout_height="match_parent"
                             android:contentDescription="@null"
                             android:scaleType="centerCrop"
-                            android:transitionName="@string/transitionNameMoviePoster"
                             tools:src="#F44336"
                             tools:targetApi="lollipop" />
 

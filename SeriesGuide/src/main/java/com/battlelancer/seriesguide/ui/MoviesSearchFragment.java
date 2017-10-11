@@ -24,7 +24,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.MoviesAdapter;
 import com.battlelancer.seriesguide.adapters.MoviesDiscoverAdapter;
 import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
@@ -209,9 +208,7 @@ public class MoviesSearchFragment extends Fragment {
             // launch details activity
             Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
             intent.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, movieTmdbId);
-            // transition poster
-            Utils.startActivityWithTransition(getActivity(), intent, posterView,
-                    R.string.transitionNameMoviePoster);
+            Utils.startActivityWithAnimation(getActivity(), intent, posterView);
         }
 
         @Override
