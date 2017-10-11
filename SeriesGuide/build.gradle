@@ -131,6 +131,8 @@ dependencies {
     compile "com.android.support:palette-v7:${versions.supportLibrary}"
     compile "com.android.support:recyclerview-v7:${versions.supportLibrary}"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile "android.arch.lifecycle:extensions:1.0.0-beta2"
+    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-beta2"
 
     compile "com.jakewharton:butterknife:${versions.butterknife}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${versions.butterknife}"
