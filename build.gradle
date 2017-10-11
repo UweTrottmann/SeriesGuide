@@ -26,8 +26,8 @@ buildscript {
             'threetenABP': '1.0.5', // github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
 
             // version 15xxxyy -> min SDK 15, release xxx, build yy
-            'code': 1502705,
-            'name': '39-beta6',
+            'code': 1502706,
+            'name': '39',
     ]
 
     repositories {
