@@ -14,6 +14,7 @@ import android.os.LocaleList;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.api.Episode;
 import com.battlelancer.seriesguide.api.Movie;
@@ -76,10 +77,12 @@ public class ExtensionManager {
         }
     }
 
-    @Nullable private Map<ComponentName, String> subscriptions; // extension + token = sub
-    @Nullable private Map<String, ComponentName> tokens; // mirrored map for faster token searching
-    @Nullable private List<ComponentName> enabledExtensions;
-            // order-preserving list of enabled extensions
+    @Nullable
+    private Map<ComponentName, String> subscriptions; // extension + token = sub
+    @Nullable
+    private Map<String, ComponentName> tokens; // mirrored map for faster token searching
+    @Nullable
+    private List<ComponentName> enabledExtensions; // order-preserving list of enabled extensions
 
     private static ExtensionManager _instance;
 
@@ -302,11 +305,17 @@ public class ExtensionManager {
 
         // unsubscribe
         Timber.d("disableExtension: unsubscribing from %s", extension);
-        context.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
-                .setComponent(extension)
-                .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
-                        subscriberComponentName(context))
-                .putExtra(IncomingConstants.EXTRA_TOKEN, (String) null));
+        try {
+            context.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
+                    .setComponent(extension)
+                    .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
+                            subscriberComponentName(context))
+                    .putExtra(IncomingConstants.EXTRA_TOKEN, (String) null));
+        } catch (SecurityException e) {
+            // never crash to not block removing broken extensions
+            // log in release builds to help extension developers debug
+            Log.i("ExtensionManager", "Failed to unsubscribe from extension " + extension + ".", e);
+        }
         tokens(context).remove(subscriptions.remove(extension));
     }
 
