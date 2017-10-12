@@ -10,7 +10,6 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.os.AsyncTaskCompat;
 import android.support.v4.util.SparseArrayCompat;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -296,20 +295,20 @@ public class ShowTools {
      * Add a show to the users trakt watchlist.
      */
     public static void addToWatchlist(Context context, int showTvdbId) {
-        AsyncTaskCompat.executeParallel(new AddShowToWatchlistTask(context, showTvdbId));
+        new AddShowToWatchlistTask(context, showTvdbId).executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /**
      * Remove a show from the users trakt watchlist.
      */
     public static void removeFromWatchlist(Context context, int showTvdbId) {
-        AsyncTaskCompat.executeParallel(new RemoveShowFromWatchlistTask(context, showTvdbId));
+        new RemoveShowFromWatchlistTask(context, showTvdbId).executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private void uploadShowAsync(Show show) {
-        AsyncTaskCompat.executeParallel(
-                new ShowsUploadTask(context, show)
-        );
+        new ShowsUploadTask(context, show).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public static class ShowsUploadTask extends AsyncTask<Void, Void, Void> {

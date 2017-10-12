@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.extensions;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -28,15 +29,13 @@ import com.battlelancer.seriesguide.loaders.AvailableExtensionsLoader;
 import com.battlelancer.seriesguide.util.Utils;
 import com.mobeta.android.dslv.DragSortController;
 import com.mobeta.android.dslv.DragSortListView;
-import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
@@ -57,9 +56,10 @@ public class ExtensionsConfigurationFragment extends Fragment
     private PopupMenu addExtensionPopupMenu;
     private Unbinder unbinder;
 
-    private List<ExtensionManager.Extension> availableExtensions = new ArrayList<>();
-    private List<ComponentName> enabledExtensions;
+    private List<ExtensionManager.Extension> disabledExtensions = new ArrayList<>();
+    private List<ComponentName> enabledNames;
 
+    @SuppressLint("ClickableViewAccessibility") // ordering not supported if non-touch
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -72,10 +72,9 @@ public class ExtensionsConfigurationFragment extends Fragment
         listView.setDropListener(new DragSortListView.DropListener() {
             @Override
             public void drop(int from, int to) {
-                ComponentName extension = enabledExtensions.remove(from);
-                enabledExtensions.add(to, extension);
-                getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID,
-                        null, mExtensionsLoaderCallbacks);
+                ComponentName extension = enabledNames.remove(from);
+                enabledNames.add(to, extension);
+                saveExtensions();
             }
         });
         listView.setOnItemClickListener(this);
@@ -90,9 +89,6 @@ public class ExtensionsConfigurationFragment extends Fragment
         adapter = new ExtensionsAdapter(getActivity());
         listView.setAdapter(adapter);
 
-        getLoaderManager().initLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
-                mExtensionsLoaderCallbacks);
-
         setHasOptionsMenu(true);
     }
 
@@ -100,6 +96,8 @@ public class ExtensionsConfigurationFragment extends Fragment
     public void onResume() {
         super.onResume();
 
+        getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
+                loaderCallbacks);
         EventBus.getDefault().register(this);
     }
 
@@ -108,10 +106,6 @@ public class ExtensionsConfigurationFragment extends Fragment
         super.onPause();
 
         EventBus.getDefault().unregister(this);
-        if (enabledExtensions != null) { // might not have finished loading, yet
-            ExtensionManager.get()
-                    .setEnabledExtensions(getContext(), enabledExtensions);
-        }
     }
 
     @Override
@@ -157,8 +151,7 @@ public class ExtensionsConfigurationFragment extends Fragment
         unbinder.unbind();
     }
 
-    private LoaderManager.LoaderCallbacks<List<ExtensionManager.Extension>>
-            mExtensionsLoaderCallbacks
+    private LoaderManager.LoaderCallbacks<List<ExtensionManager.Extension>> loaderCallbacks
             = new LoaderManager.LoaderCallbacks<List<ExtensionManager.Extension>>() {
         @Override
         public Loader<List<ExtensionManager.Extension>> onCreateLoader(int id, Bundle args) {
@@ -167,50 +160,34 @@ public class ExtensionsConfigurationFragment extends Fragment
 
         @Override
         public void onLoadFinished(Loader<List<ExtensionManager.Extension>> loader,
-                @NonNull List<ExtensionManager.Extension> availableExtensions) {
-            if (availableExtensions.size() == 0) {
+                @NonNull List<ExtensionManager.Extension> all) {
+            if (all.size() == 0) {
                 Timber.d("Did not find any extension");
             } else {
-                Timber.d("Found %d extensions", availableExtensions.size());
+                Timber.d("Found %d extensions", all.size());
             }
 
-            if (enabledExtensions == null) {
-                enabledExtensions = ExtensionManager.get().getEnabledExtensions(getContext());
-            }
-            Set<ComponentName> enabledExtensions = new HashSet<>(
-                    ExtensionsConfigurationFragment.this.enabledExtensions);
-
-            // find all extensions not yet enabled
-            ExtensionsConfigurationFragment.this.availableExtensions.clear();
-            Map<ComponentName, ExtensionManager.Extension> enabledExtensionsMap = new HashMap<>();
-            for (ExtensionManager.Extension extension : availableExtensions) {
-                if (enabledExtensions.contains(extension.componentName)) {
-                    // extension is already enabled
-                    enabledExtensionsMap.put(extension.componentName, extension);
-                    continue;
+            // find all disabled extensions
+            List<ComponentName> enabledNames = ExtensionManager.get()
+                    .getEnabledExtensions(getContext());
+            List<ExtensionManager.Extension> disabled = new ArrayList<>();
+            Map<ComponentName, ExtensionManager.Extension> enabledByComponent = new HashMap<>();
+            for (ExtensionManager.Extension extension : all) {
+                if (enabledNames.contains(extension.componentName)) {
+                    enabledByComponent.put(extension.componentName, extension);
+                } else {
+                    disabled.add(extension);
                 }
-
-                ExtensionsConfigurationFragment.this.availableExtensions.add(extension);
             }
 
-            // sort available extensions alphabetically
-            Collections.sort(ExtensionsConfigurationFragment.this.availableExtensions, new Comparator<ExtensionManager.Extension>() {
-                @Override
-                public int compare(ExtensionManager.Extension extension1,
-                        ExtensionManager.Extension extension2) {
-                    String title1 = createTitle(extension1);
-                    String title2 = createTitle(extension2);
-                    return title1.compareToIgnoreCase(title2);
-                }
+            // list enabled extensions in order dictated by extension manager
+            List<ExtensionManager.Extension> enabled = new ArrayList<>();
+            for (ComponentName component : enabledNames) {
+                enabled.add(enabledByComponent.get(component));
+            }
 
-                private String createTitle(ExtensionManager.Extension extension) {
-                    String title = extension.label;
-                    if (TextUtils.isEmpty(title)) {
-                        title = extension.componentName.flattenToShortString();
-                    }
-                    return title;
-                }
-            });
+            ExtensionsConfigurationFragment.this.enabledNames = enabledNames;
+            disabledExtensions = disabled;
 
             // force re-creation of extension add menu
             if (addExtensionPopupMenu != null) {
@@ -218,23 +195,9 @@ public class ExtensionsConfigurationFragment extends Fragment
                 addExtensionPopupMenu = null;
             }
 
-            // list enabled extensions in order dictated by extension manager
-            List<ExtensionManager.Extension> enabledExtensionsList = new ArrayList<>();
-            List<ComponentName> enabledExtensionNames = new ArrayList<>(
-                    ExtensionsConfigurationFragment.this.enabledExtensions);
-            for (ComponentName extensionName : enabledExtensionNames) {
-                ExtensionManager.Extension extension = enabledExtensionsMap.get(extensionName);
-                if (extension == null) {
-                    // filter out any unavailable/uninstalled extensions
-                    ExtensionsConfigurationFragment.this.enabledExtensions.remove(extensionName);
-                    continue;
-                }
-                enabledExtensionsList.add(extension);
-            }
-
             // refresh enabled extensions list
             adapter.clear();
-            adapter.addAll(enabledExtensionsList);
+            adapter.addAll(enabled);
         }
 
         @Override
@@ -259,9 +222,8 @@ public class ExtensionsConfigurationFragment extends Fragment
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ExtensionsAdapter.ExtensionDisableRequestEvent event) {
-        enabledExtensions.remove(event.position);
-        getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
-                mExtensionsLoaderCallbacks);
+        enabledNames.remove(event.position);
+        saveExtensions();
         Utils.trackAction(getActivity(), TAG, "Remove extension");
     }
 
@@ -272,9 +234,12 @@ public class ExtensionsConfigurationFragment extends Fragment
 
         addExtensionPopupMenu = new PopupMenu(getActivity(), anchorView);
         Menu menu = addExtensionPopupMenu.getMenu();
+
+        // sort disabled extensions alphabetically
+        Collections.sort(disabledExtensions, alphabeticalComparator);
         // list of installed, but disabled extensions
-        for (int i = 0; i < availableExtensions.size(); i++) {
-            ExtensionManager.Extension extension = availableExtensions.get(i);
+        for (int i = 0; i < disabledExtensions.size(); i++) {
+            ExtensionManager.Extension extension = disabledExtensions.get(i);
             menu.add(Menu.NONE, i + 1, Menu.NONE, extension.label);
         }
         // no third-party extensions supported on Amazon app store for now
@@ -292,12 +257,9 @@ public class ExtensionsConfigurationFragment extends Fragment
                 }
 
                 // add to enabled extensions
-                ExtensionManager.Extension extension = availableExtensions.get(
-                        item.getItemId() - 1);
-                enabledExtensions.add(extension.componentName);
-                // re-populate extension list
-                getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID,
-                        null, mExtensionsLoaderCallbacks);
+                ExtensionManager.Extension extension = disabledExtensions.get(item.getItemId() - 1);
+                enabledNames.add(extension.componentName);
+                saveExtensions();
                 // scroll to end of list
                 listView.smoothScrollToPosition(adapter.getCount() - 1);
                 return true;
@@ -311,6 +273,31 @@ public class ExtensionsConfigurationFragment extends Fragment
         Utils.launchWebsite(getActivity(), getString(R.string.url_extensions_search), TAG,
                 "Get more extensions");
     }
+
+    private void saveExtensions() {
+        ExtensionManager.get().setEnabledExtensions(getContext(), enabledNames);
+        getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID,
+                null, loaderCallbacks);
+    }
+
+    private Comparator<ExtensionManager.Extension> alphabeticalComparator
+            = new Comparator<ExtensionManager.Extension>() {
+        @Override
+        public int compare(ExtensionManager.Extension extension1,
+                ExtensionManager.Extension extension2) {
+            String title1 = createTitle(extension1);
+            String title2 = createTitle(extension2);
+            return title1.compareToIgnoreCase(title2);
+        }
+
+        private String createTitle(ExtensionManager.Extension extension) {
+            String title = extension.label;
+            if (TextUtils.isEmpty(title)) {
+                title = extension.componentName.flattenToShortString();
+            }
+            return title;
+        }
+    };
 
     private class ExtensionsDragSortController extends DragSortController {
 

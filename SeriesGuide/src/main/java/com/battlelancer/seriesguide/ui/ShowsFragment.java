@@ -26,7 +26,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.PopupMenu;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
@@ -85,9 +84,9 @@ public class ShowsFragment extends Fragment implements
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_shows, container, false);
 
-        gridView = ButterKnife.findById(v, android.R.id.list);
-        emptyView = ButterKnife.findById(v, R.id.emptyViewShows);
-        ViewTools.setVectorDrawableTop(getActivity().getTheme(), emptyView,
+        gridView = v.findViewById(android.R.id.list);
+        emptyView = v.findViewById(R.id.emptyViewShows);
+        ViewTools.setVectorIconTop(getActivity().getTheme(), emptyView,
                 R.drawable.ic_add_white_24dp);
         emptyView.setOnClickListener(new OnClickListener() {
             @Override
@@ -95,8 +94,8 @@ public class ShowsFragment extends Fragment implements
                 startActivityAddShows();
             }
         });
-        emptyViewFilter = ButterKnife.findById(v, R.id.emptyViewShowsFilter);
-        ViewTools.setVectorDrawableTop(getActivity().getTheme(), emptyViewFilter,
+        emptyViewFilter = v.findViewById(R.id.emptyViewShowsFilter);
+        ViewTools.setVectorIconTop(getActivity().getTheme(), emptyViewFilter,
                 R.drawable.ic_filter_white_24dp);
         emptyViewFilter.setOnClickListener(new OnClickListener() {
             @Override
@@ -116,7 +115,7 @@ public class ShowsFragment extends Fragment implements
                         .apply();
 
                 // refresh filter menu check box states
-                getActivity().supportInvalidateOptionsMenu();
+                getActivity().invalidateOptionsMenu();
             }
         });
 
@@ -145,8 +144,7 @@ public class ShowsFragment extends Fragment implements
         gridView.setOnItemClickListener(this);
 
         // hide floating action button when scrolling shows
-        FloatingActionButton buttonAddShow = (FloatingActionButton) getActivity().findViewById(
-                R.id.buttonShowsAdd);
+        FloatingActionButton buttonAddShow = getActivity().findViewById(R.id.buttonShowsAdd);
         gridView.setOnScrollListener(new FabAbsListViewScrollDetector(buttonAddShow));
 
         // listen for some settings changes
@@ -335,7 +333,7 @@ public class ShowsFragment extends Fragment implements
                     .putBoolean(ShowsDistillationSettings.KEY_FILTER_HIDDEN, false)
                     .apply();
             // refresh filter icon state
-            getActivity().supportInvalidateOptionsMenu();
+            getActivity().invalidateOptionsMenu();
 
             Utils.trackAction(getActivity(), TAG, "Filter Removed");
             return true;
@@ -416,7 +414,7 @@ public class ShowsFragment extends Fragment implements
                 .putBoolean(key, state).apply();
 
         // refresh filter icon state
-        getActivity().supportInvalidateOptionsMenu();
+        getActivity().invalidateOptionsMenu();
     }
 
     private void changeSort() {
@@ -428,7 +426,7 @@ public class ShowsFragment extends Fragment implements
                 .putInt(ShowsDistillationSettings.KEY_SORT_ORDER, sortOrderId).apply();
 
         // refresh menu state to indicate current order
-        getActivity().supportInvalidateOptionsMenu();
+        getActivity().invalidateOptionsMenu();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -475,11 +473,8 @@ public class ShowsFragment extends Fragment implements
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // display overview for this show
-
-        Intent i = new Intent(getActivity(), OverviewActivity.class);
-        i.putExtra(OverviewActivity.EXTRA_INT_SHOW_TVDBID, (int) id);
-
-        ActivityCompat.startActivity(getActivity(), i,
+        Intent intent = OverviewActivity.intentShow(getContext(), (int) id);
+        ActivityCompat.startActivity(getActivity(), intent,
                 ActivityOptionsCompat
                         .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
                         .toBundle()

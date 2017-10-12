@@ -46,4 +46,7 @@
     <color name="protection_dark">#66000000</color>
     <color name="protection_light">#12000000</color>
 
+    <color name="sg_icon_blue">#ff33b5e5</color>
+    <color name="sg_icon_green">@color/teal_500</color>
+
 </resources>

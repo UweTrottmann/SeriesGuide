@@ -51,6 +51,7 @@
   <string name="database_error">No s\'han pogut modificar les dades.</string>
   <string name="reinstall_info">Intenta fer un backup en el panell de Configuraciò, torneu a instal·lar i restaurar.</string>
   <string name="api_error_generic">No es possible contactar amb %s. Proveu-ho més tard.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Comparteix</string>
   <string name="share_show">Comparteix la serie</string>
@@ -85,10 +86,11 @@
   <string name="episode_writers">Guionistes</string>
   <string name="show_isalive">No ha finalitzat</string>
   <string name="show_isnotalive">Finalitzat</string>
-  <string name="lastEdit">Darrera edició // TVDb</string>
   <string name="no_translation">No hi ha cap descripció traduïda al %1$s disponible a %2$s.</string>
   <string name="no_translation_title">No traduït</string>
   <string name="no_spoilers">Alguns detalls estan amagats per evitar spoilers. Per desactivar aquesta opció aneu a a Configuració.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">avui</string>
   <string name="now">ara</string>
@@ -270,10 +272,6 @@
   <string name="hexagon_google_play_missing">Per utilitzar SeriesGuide Cloud es requereixen els Google Play Services.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">S\'està enviant a trakt.</string>
-  <string name="trakt_seen">%s vists.</string>
-  <string name="trakt_notseen">%s no vist.</string>
-  <string name="trakt_collected">%s recopilats.</string>
-  <string name="trakt_notcollected">%s no recopilats.</string>
   <string name="checkin_success_trakt">S\'ha enregistrat a %s de trakt.</string>
   <string name="checkin_canceled_success_trakt">S\'ha canceŀlat el registre a trakt.</string>
   <string name="traktcheckin_cancel">Substitueix</string>
@@ -462,7 +460,7 @@
   <string name="action_upgrade">Unlock all features</string>
   <string name="billing_action_subscribe">Vull subscriure\'m</string>
   <string name="billing_action_pass">Obtenir un «X Pass»</string>
-  <string name="billing_price_subscribe">%s/year, try for free</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">compra única</string>
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>

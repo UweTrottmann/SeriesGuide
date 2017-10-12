@@ -59,9 +59,9 @@ public class MoviesCursorAdapter extends CursorAdapter {
         @SuppressLint("InflateParams") View v = layoutInflater.inflate(R.layout.item_movie, null);
 
         ViewHolder viewHolder = new ViewHolder();
-        viewHolder.title = (TextView) v.findViewById(R.id.textViewMovieTitle);
-        viewHolder.releaseDate = (TextView) v.findViewById(R.id.textViewMovieDate);
-        viewHolder.poster = (ImageView) v.findViewById(R.id.imageViewMoviePoster);
+        viewHolder.title = v.findViewById(R.id.textViewMovieTitle);
+        viewHolder.releaseDate = v.findViewById(R.id.textViewMovieDate);
+        viewHolder.poster = v.findViewById(R.id.imageViewMoviePoster);
         viewHolder.contextMenu = v.findViewById(R.id.imageViewMovieItemContextMenu);
 
         v.setTag(viewHolder);

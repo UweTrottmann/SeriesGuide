@@ -51,6 +51,7 @@
   <string name="database_error">Kunne ikke ændre data.</string>
   <string name="reinstall_info">Prøv fra Indstillinger at oprette en sikkerhedskopi, geninstallere og gendanne.</string>
   <string name="api_error_generic">Kunne ikke tale med %s. Forsøg venligst igen senere.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Del</string>
   <string name="share_show">Del serie</string>
@@ -85,10 +86,11 @@
   <string name="episode_writers">Manuskriptforfattere</string>
   <string name="show_isalive">Fortsætter</string>
   <string name="show_isnotalive">Afsluttet</string>
-  <string name="lastEdit">Senest redigeret // TheTVDB</string>
   <string name="no_translation">Der er ingen beskrivelse oversat til %1$s tilgængelig på %2$s.</string>
   <string name="no_translation_title">Ikke oversat</string>
   <string name="no_spoilers">Visse detaljer er skjult for at undgå spoilers. Du kan slå dette fra under Indstillinger.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">i dag</string>
   <string name="now">nu</string>
@@ -270,10 +272,6 @@
   <string name="hexagon_google_play_missing">Google Play-tjenester kræves for at benytte SeriesGuide Cloud.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Sender til trakt.</string>
-  <string name="trakt_seen">%s sete.</string>
-  <string name="trakt_notseen">%s ikke sete.</string>
-  <string name="trakt_collected">%s samlet.</string>
-  <string name="trakt_notcollected">%s ikke samlet.</string>
   <string name="checkin_success_trakt">%s tjekket ind på trakt.</string>
   <string name="checkin_canceled_success_trakt">Indtjekning på trakt annulleret.</string>
   <string name="traktcheckin_cancel">Tilsidesæt</string>
@@ -462,7 +460,7 @@
   <string name="action_upgrade">Oplås alle funktioner</string>
   <string name="billing_action_subscribe">Abonnér</string>
   <string name="billing_action_pass">Få X Pass</string>
-  <string name="billing_price_subscribe">%s/år, prøv gratis</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">engangskøb</string>
   <string name="upgrade_description">Oplås alle funktioner, herunder meddelelser, temaer og flere widget-indstillinger. Hjælp os med at udvikle fremtidige opdateringer.</string>
   <string name="upgrade_success">Tak for din støtte til SeriesGuide! Du har nu adgang til alle funktioner.</string>

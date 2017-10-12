@@ -12,7 +12,6 @@ import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -65,13 +64,13 @@ public class FirstRunView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        RelativeLayout noSpoilerView = ButterKnife.findById(this, R.id.containerFirstRunNoSpoilers);
-        final CheckBox noSpoilerCheckBox = ButterKnife.findById(noSpoilerView,
+        RelativeLayout noSpoilerView = findViewById(R.id.containerFirstRunNoSpoilers);
+        final CheckBox noSpoilerCheckBox = noSpoilerView.findViewById(
                 R.id.checkboxFirstRunNoSpoilers);
-        Button buttonAddShow = ButterKnife.findById(this, R.id.buttonFirstRunAddShow);
-        Button buttonSignIn = ButterKnife.findById(this, R.id.buttonFirstRunSignIn);
-        Button buttonRestoreBackup = ButterKnife.findById(this, R.id.buttonFirstRunRestore);
-        ImageButton buttonDismiss = ButterKnife.findById(this, R.id.buttonFirstRunDismiss);
+        Button buttonAddShow = findViewById(R.id.buttonFirstRunAddShow);
+        Button buttonSignIn = findViewById(R.id.buttonFirstRunSignIn);
+        Button buttonRestoreBackup = findViewById(R.id.buttonFirstRunRestore);
+        ImageButton buttonDismiss = findViewById(R.id.buttonFirstRunDismiss);
 
         noSpoilerView.setOnClickListener(new OnClickListener() {
             @Override

@@ -5,7 +5,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
-import android.support.v4.os.AsyncTaskCompat;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -30,7 +29,7 @@ public class TvdbEpisodeDetailsTask extends AsyncTask<Void, Void, Void> {
                 && Utils.isAllowedLargeDataConnection(context)) {
             TvdbEpisodeDetailsTask detailsTask = new TvdbEpisodeDetailsTask(context, showTvdbId,
                     episodeTvdbId, lastEdited);
-            AsyncTaskCompat.executeParallel(detailsTask);
+            detailsTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             return detailsTask;
         } else {
             return null;

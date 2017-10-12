@@ -51,6 +51,7 @@
   <string name="database_error">Veri değiştirilemedi.</string>
   <string name="reinstall_info">Ayarlardan yedeklemeyi deneyin. Uygulamayı yediden yükleyip, veri tabanınızı geri yükleyin.</string>
   <string name="api_error_generic">%s ile iletişim kurulamadı. Daha sonra tekrar deneyin.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Paylaş</string>
   <string name="share_show">Diziyi paylaş</string>
@@ -85,10 +86,11 @@
   <string name="episode_writers">Yazarlar</string>
   <string name="show_isalive">Devam ediyor</string>
   <string name="show_isnotalive">Sona erdi</string>
-  <string name="lastEdit">Son Düzenleme // TheTVDB</string>
   <string name="no_translation">%2$s\'de %1$s\'ye çevrilmiş herhangi bir açıklama bulunmamaktadır.</string>
   <string name="no_translation_title">Çevrilmedi</string>
   <string name="no_spoilers">Bazı detaylar spoiler önlemek için gizli kalır. Bunu kapatmak için ayarlara gidiniz.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">bugün</string>
   <string name="now">şimdi</string>
@@ -270,10 +272,6 @@
   <string name="hexagon_google_play_missing">SeriesGuide Cloud\'u kullanabilmek için, Google Play Hizmetleri gereklidir.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">trakt\'e gönderiliyor.</string>
-  <string name="trakt_seen">%s görüldü.</string>
-  <string name="trakt_notseen">%s görülmedi.</string>
-  <string name="trakt_collected">Kolleksiyona dahil edilen: %s.</string>
-  <string name="trakt_notcollected">Kolleksiyonda bulunmayan: %s.</string>
   <string name="checkin_success_trakt">trakt üzerinden %s girişi yapıldı.</string>
   <string name="checkin_canceled_success_trakt">trakt üzerinden giriş iptal edildi.</string>
   <string name="traktcheckin_cancel">Geçersiz Kıl</string>
@@ -462,7 +460,7 @@
   <string name="action_upgrade">Tüm özellikleri aç</string>
   <string name="billing_action_subscribe">Abone ol</string>
   <string name="billing_action_pass">X Pass alın</string>
-  <string name="billing_price_subscribe">%s/yıl, ücretsiz deneyin</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">tek seferlik ödeme</string>
   <string name="upgrade_description">Bildirimler, temalar, daha fazla widgetlar gibi özellikleri acın ve uygulamayı geliştirmeme yardım edin.</string>
   <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>

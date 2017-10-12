@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 
 /**
  * Shows settings fragment for a specific app widget, hosted inside a {@link ListWidgetConfigure}
@@ -159,6 +160,8 @@ public class ListWidgetPreferenceFragment extends PreferenceFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.widget_config_menu, menu);
+        ViewTools.tintMenuItem(getActivity().findViewById(R.id.sgToolbar).getContext(),
+                menu.findItem(R.id.menu_save));
     }
 
     @Override

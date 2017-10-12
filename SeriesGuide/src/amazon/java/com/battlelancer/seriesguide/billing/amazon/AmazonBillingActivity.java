@@ -145,10 +145,6 @@ public class AmazonBillingActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(AmazonIapManager.AmazonIapAvailabilityEvent event) {
-        if (progressBar == null || buttonSubscribe == null || buttonGetPass == null
-                || textViewIsSupporter == null) {
-            return;
-        }
         progressBar.setVisibility(View.GONE);
 
         // enable or disable purchase buttons based on what can be purchased
@@ -176,17 +172,13 @@ public class AmazonBillingActivity extends BaseActivity {
             price = "--";
         }
         if (AmazonSku.SERIESGUIDE_SUB_YEARLY.getSku().equals(product.getSku())) {
-            if (textViewPriceSub != null) {
-                textViewPriceSub.setText(
-                        getString(R.string.billing_price_subscribe, price));
-            }
-            return;
-        }
-        if (AmazonSku.SERIESGUIDE_PASS.getSku().equals(product.getSku())) {
-            if (textViewPricePass != null) {
-                textViewPricePass.setText(
-                        String.format("%s\n%s", price, getString(R.string.billing_price_pass)));
-            }
+            textViewPriceSub.setText(
+                    getString(R.string.billing_price_subscribe,
+                            price, getString(R.string.amazon))
+            );
+        } else if (AmazonSku.SERIESGUIDE_PASS.getSku().equals(product.getSku())) {
+            textViewPricePass.setText(
+                    String.format("%s\n%s", price, getString(R.string.billing_price_pass)));
         }
     }
 }

@@ -49,10 +49,10 @@ public abstract class MoviesBaseFragment extends Fragment implements
             Bundle savedInstanceState) {
         View v = inflater.inflate(LAYOUT, container, false);
 
-        gridView = (GridView) v.findViewById(R.id.gridViewMovies);
+        gridView = v.findViewById(R.id.gridViewMovies);
         // enable app bar scrolling out of view only on L or higher
         ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
-        emptyView = (TextView) v.findViewById(R.id.textViewMoviesEmpty);
+        emptyView = v.findViewById(R.id.textViewMoviesEmpty);
         gridView.setEmptyView(emptyView);
         gridView.setOnItemClickListener(this);
 
@@ -145,7 +145,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
                 .apply();
 
         // refresh icon state
-        getActivity().supportInvalidateOptionsMenu();
+        getActivity().invalidateOptionsMenu();
 
         EventBus.getDefault().post(new MoviesSortOrderChangedEvent());
     }
@@ -180,8 +180,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
 
         MoviesCursorAdapter.ViewHolder viewHolder
                 = (MoviesCursorAdapter.ViewHolder) view.getTag();
-        Utils.startActivityWithTransition(getActivity(), i, viewHolder.poster,
-                R.string.transitionNameMoviePoster);
+        Utils.startActivityWithAnimation(getActivity(), i, viewHolder.poster);
     }
 
     @Override

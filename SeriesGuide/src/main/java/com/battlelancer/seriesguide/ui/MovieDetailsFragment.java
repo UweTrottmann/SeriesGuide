@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -58,6 +59,7 @@ import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TmdbTools;
 import com.battlelancer.seriesguide.util.TraktTools;
@@ -148,16 +150,22 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
         textViewMovieGenresLabel.setVisibility(View.GONE);
 
         // important action buttons
         containerMovieButtons.setVisibility(View.GONE);
         containerRatings.setVisibility(View.GONE);
+        Resources.Theme theme = getActivity().getTheme();
+        ViewTools.setVectorIconTop(theme, buttonMovieWatched, R.drawable.ic_watch_black_24dp);
+        ViewTools.setVectorIconTop(theme, buttonMovieCollected, R.drawable.ic_collect_black_24dp);
+        ViewTools.setVectorIconTop(theme, buttonMovieWatchlisted,
+                R.drawable.ic_list_add_white_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonMovieCheckIn, R.drawable.ic_checkin_black_24dp);
 
         // language button
         buttonMovieLanguage.setVisibility(View.GONE);
-        ViewTools.setVectorDrawableLeft(getActivity().getTheme(), buttonMovieLanguage,
+        ViewTools.setVectorIconLeft(theme, buttonMovieLanguage,
                 R.drawable.ic_language_white_24dp);
         CheatSheet.setup(buttonMovieLanguage, R.string.pref_language);
         buttonMovieLanguage.setOnClickListener(new OnClickListener() {
@@ -169,7 +177,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         // comments button
         buttonMovieComments.setVisibility(View.GONE);
-        ViewTools.setVectorDrawableLeft(getActivity().getTheme(), buttonMovieComments,
+        ViewTools.setVectorIconLeft(theme, buttonMovieComments,
                 R.drawable.ic_forum_black_24dp);
 
         // cast and crew
@@ -351,7 +359,9 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         textViewMovieTitle.setText(tmdbMovie.title);
         getActivity().setTitle(tmdbMovie.title);
-        textViewMovieDescription.setText(tmdbMovie.overview);
+        textViewMovieDescription.setText(
+                TextTools.textWithTmdbSource(textViewMovieDescription.getContext(),
+                        tmdbMovie.overview));
 
         // release date and runtime: "July 17, 2009 | 95 min"
         StringBuilder releaseAndRuntime = new StringBuilder();
@@ -386,17 +396,19 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 displayCheckIn ? View.VISIBLE : View.GONE);
 
         // watched button (only supported when connected to trakt)
+        Resources.Theme theme = getActivity().getTheme();
         if (isConnectedToTrakt) {
             buttonMovieWatched.setText(
                     isWatched ? R.string.action_unwatched : R.string.action_watched);
             CheatSheet.setup(buttonMovieWatched,
                     isWatched ? R.string.action_unwatched : R.string.action_watched);
-            ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatched, 0,
-                    isWatched
-                            ? Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                            R.attr.drawableWatched)
-                            : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                                    R.attr.drawableWatch), 0, 0);
+            if (isWatched) {
+                ViewTools.setVectorDrawableTop(theme, buttonMovieWatched,
+                        R.drawable.ic_watched_24dp);
+            } else {
+                ViewTools.setVectorIconTop(theme, buttonMovieWatched,
+                        R.drawable.ic_watch_black_24dp);
+            }
             buttonMovieWatched.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -415,11 +427,13 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
 
         // collected button
-        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieCollected, 0,
-                inCollection
-                        ? R.drawable.ic_collected
-                        : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                                R.attr.drawableCollect), 0, 0);
+        if (inCollection) {
+            ViewTools.setVectorDrawableTop(theme, buttonMovieCollected,
+                    R.drawable.ic_collected_24dp);
+        } else {
+            ViewTools.setVectorIconTop(theme, buttonMovieCollected,
+                    R.drawable.ic_collect_black_24dp);
+        }
         buttonMovieCollected.setText(inCollection ? R.string.action_collection_remove
                 : R.string.action_collection_add);
         CheatSheet.setup(buttonMovieCollected, inCollection ? R.string.action_collection_remove
@@ -438,11 +452,13 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         });
 
         // watchlist button
-        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonMovieWatchlisted, 0,
-                inWatchlist
-                        ? R.drawable.ic_listed
-                        : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                                R.attr.drawableList), 0, 0);
+        if (inWatchlist) {
+            ViewTools.setVectorDrawableTop(theme, buttonMovieWatchlisted,
+                    R.drawable.ic_list_added_24dp);
+        } else {
+            ViewTools.setVectorIconTop(theme, buttonMovieWatchlisted,
+                    R.drawable.ic_list_add_white_24dp);
+        }
         buttonMovieWatchlisted.setText(
                 inWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
         CheatSheet.setup(buttonMovieWatchlisted,
@@ -643,8 +659,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 .putString(DisplaySettings.KEY_MOVIES_LANGUAGE, event.selectedLanguageCode)
                 .apply();
 
-        progressBar.setVisibility(View.VISIBLE);
-
         // reload movie details and trailers (but not cast/crew info which is not language dependent)
         restartMovieLoader();
         Bundle args = new Bundle();
@@ -724,6 +738,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             = new LoaderManager.LoaderCallbacks<MovieDetails>() {
         @Override
         public Loader<MovieDetails> onCreateLoader(int loaderId, Bundle args) {
+            progressBar.setVisibility(View.VISIBLE);
             return new MovieLoader(getContext(), args.getInt(InitBundle.TMDB_ID));
         }
 
@@ -848,7 +863,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             if (viewId == R.id.contentContainerMovie) {
                 boolean shouldShowTitle = scrollY > titleThresholdPx;
                 if (!showTitle && shouldShowTitle) {
-                    if (movieDetails != null && movieDetails.tmdbMovie() != null) {
+                    if (movieDetails.tmdbMovie() != null) {
                         actionBar.setTitle(movieDetails.tmdbMovie().title);
                         actionBar.setDisplayShowTitleEnabled(true);
                     }

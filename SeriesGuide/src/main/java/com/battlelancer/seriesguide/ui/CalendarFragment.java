@@ -30,7 +30,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
@@ -98,19 +97,19 @@ public class CalendarFragment extends Fragment
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_calendar, container, false);
 
-        TextView emptyView = (TextView) v.findViewById(R.id.emptyViewCalendar);
+        TextView emptyView = v.findViewById(R.id.emptyViewCalendar);
         emptyView.setText(getString(getArguments().getInt(InitBundle.EMPTY_STRING_ID)));
 
-        gridView = (StickyGridHeadersGridView) v.findViewById(R.id.gridViewCalendar);
+        gridView = v.findViewById(R.id.gridViewCalendar);
         // enable app bar scrolling out of view only on L or higher
         ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
         gridView.setEmptyView(emptyView);
         gridView.setAreHeadersSticky(false);
 
-        VectorDrawableCompat drawableTouch = ViewTools.createVectorIconInactive(getContext(),
+        VectorDrawableCompat drawableTouch = ViewTools.vectorIconInactive(getContext(),
                 getActivity().getTheme(),
                 R.drawable.ic_touch_black_24dp);
-        imageViewTapIndicator = ButterKnife.findById(v, R.id.imageViewCalendarTapIndicator);
+        imageViewTapIndicator = v.findViewById(R.id.imageViewCalendarTapIndicator);
         imageViewTapIndicator.setImageDrawable(drawableTouch);
 
         return v;
@@ -195,7 +194,7 @@ public class CalendarFragment extends Fragment
 
         inflater.inflate(R.menu.calendar_menu, menu);
 
-        VectorDrawableCompat visibilitySettingsIcon = ViewTools.createVectorIconWhite(
+        VectorDrawableCompat visibilitySettingsIcon = ViewTools.vectorIconWhite(
                 getActivity(), getActivity().getTheme(), R.drawable.ic_visibility_black_24dp);
         menu.findItem(R.id.menu_calendar_visibility).setIcon(visibilitySettingsIcon);
 
@@ -246,7 +245,7 @@ public class CalendarFragment extends Fragment
         prefs.edit().putBoolean(key, !item.isChecked()).apply();
 
         // refresh filter icon state
-        getActivity().supportInvalidateOptionsMenu();
+        getActivity().invalidateOptionsMenu();
     }
 
     private int getLoaderId() {

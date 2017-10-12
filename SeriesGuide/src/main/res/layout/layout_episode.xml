@@ -183,23 +183,6 @@
         android:textIsSelectable="true"
         tools:text="2014/07/25 CEST (Fri)" />
 
-    <TextView
-        android:id="@+id/labelEpisodeLastEdit"
-        style="@style/Block.WithTopMargin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lastEdit"
-        android:textAppearance="@style/TextAppearance.Body.Bold" />
-
-    <TextView
-        android:id="@+id/textViewEpisodeLastEdit"
-        style="@style/Block"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Body"
-        android:textIsSelectable="true"
-        tools:text="July 17, 21:48" />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

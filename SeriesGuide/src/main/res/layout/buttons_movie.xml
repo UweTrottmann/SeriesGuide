@@ -18,11 +18,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="?attr/drawableWatch"
             android:ellipsize="end"
             android:maxLines="2"
             android:padding="8dp"
-            android:text="@string/action_watched" />
+            android:text="@string/action_watched"
+            tools:drawableTint="?attr/sgColorIcon"
+            tools:drawableTop="@drawable/ic_watch_black_24dp" />
 
         <Button
             android:id="@+id/buttonMovieWatchlisted"
@@ -30,11 +31,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="?attr/drawableList"
             android:ellipsize="end"
             android:maxLines="2"
             android:padding="8dp"
-            android:text="@string/watchlist_add" />
+            android:text="@string/watchlist_add"
+            tools:drawableTint="?attr/sgColorIcon"
+            tools:drawableTop="@drawable/ic_list_add_white_24dp" />
 
         <Button
             android:id="@+id/buttonMovieCollected"
@@ -42,11 +44,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="?attr/drawableCollect"
             android:ellipsize="end"
             android:maxLines="2"
             android:padding="8dp"
-            android:text="@string/action_collection_add" />
+            android:text="@string/action_collection_add"
+            tools:drawableTint="?attr/sgColorIcon"
+            tools:drawableTop="@drawable/ic_collect_black_24dp" />
 
     </LinearLayout>
 
@@ -66,7 +69,8 @@
         android:layout_marginLeft="@dimen/padding_button"
         android:layout_marginRight="@dimen/padding_button"
         android:contentDescription="@string/checkin"
-        android:drawableLeft="?attr/drawableCheckin"
-        android:text="@string/checkin" />
+        android:text="@string/checkin"
+        tools:drawableLeft="@drawable/ic_checkin_black_24dp"
+        tools:drawableTint="?attr/sgColorIcon" />
 
 </LinearLayout>

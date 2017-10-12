@@ -2,14 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.cloud.tools.endpoints-framework-client'
 apply plugin: 'io.fabric'
 
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-}
-
-def loadStringPropertyOrPlaceholder(String name) {
-    return rootProject.hasProperty(name) ? rootProject.property(name) : "MISSING"
-}
-
 android {
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.buildTools
@@ -17,9 +9,6 @@ android {
     defaultConfig {
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
-
-        // only enable if debug builds exceed 64K method limit
-        multiDexEnabled false
 
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -107,6 +96,7 @@ android {
 
     buildTypes {
         release {
+            multiDexEnabled false
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
@@ -115,6 +105,7 @@ android {
             }
         }
         debug {
+            multiDexEnabled true
             // disable shrinking to use incremental dex in builds
             minifyEnabled false
             // en_XA (LTR) and ar_XB (RTL) to test UI adjusting to unusual glyphs and long strings
@@ -124,14 +115,6 @@ android {
             ext.enableCrashlytics = false
         }
     }
-}
-
-endpointsClient {
-    discoveryDocs = ['src/endpoints/account-v2-rest.discovery',
-                     'src/endpoints/episodes-v2-rest.discovery',
-                     'src/endpoints/lists-v2-rest.discovery',
-                     'src/endpoints/movies-v2-rest.discovery',
-                     'src/endpoints/shows-v2-rest.discovery']
 }
 
 dependencies {
@@ -159,6 +142,7 @@ dependencies {
     compile("com.crashlytics.sdk.android:crashlytics:${versions.crashlytics}@aar") {
         transitive = true
     }
+    compile 'com.github.davidmoten:flatbuffers-java:1.7.0.1'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     compile "com.google.code.gson:gson:${versions.gson}"
     compile "com.jakewharton.threetenabp:threetenabp:${versions.threetenABP}"
@@ -192,7 +176,7 @@ dependencies {
 
     // App Engine
     // https://github.com/google/google-api-java-client/commits/dev
-    compile('com.google.api-client:google-api-client-android:1.22.0') {
+    compile('com.google.api-client:google-api-client-android:1.23.0') {
         exclude group: 'com.google.android.google-play-services' // including latest ourselves
         exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
         exclude group: 'com.google.guava', module: 'guava-jdk5' // out of date, conflict with dagger
@@ -203,8 +187,8 @@ dependencies {
 
     // Instrumented unit tests
     androidTestCompile "com.android.support:support-annotations:${versions.supportLibrary}"
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile 'com.android.support.test:runner:1.0.1'
+    androidTestCompile 'com.android.support.test:rules:1.0.1'
     androidTestCompile "com.squareup.assertj:assertj-android:${versions.assertjAndroid}"
     androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${versions.dagger}"
 
@@ -215,4 +199,16 @@ dependencies {
     // include regular threetenbp to have access to the tz database without init call
     testCompile 'org.threeten:threetenbp:1.3.3'
 
+}
+
+endpointsClient {
+    discoveryDocs = ['src/endpoints/account-v2-rest.discovery',
+                     'src/endpoints/episodes-v2-rest.discovery',
+                     'src/endpoints/lists-v2-rest.discovery',
+                     'src/endpoints/movies-v2-rest.discovery',
+                     'src/endpoints/shows-v2-rest.discovery']
+}
+
+def loadStringPropertyOrPlaceholder(String name) {
+    return rootProject.hasProperty(name) ? rootProject.property(name) : "MISSING"
 }

@@ -51,6 +51,7 @@
   <string name="database_error">Não pode modificar os dados.</string>
   <string name="reinstall_info">Tente fazer o backup nas configurações, reinstalar e restaurar o backup.</string>
   <string name="api_error_generic">Não foi possível conectar-se com %s. Tente mais tarde.</string>
+  <string name="api_failed">Falhou: %s</string>
   <!-- Sharing -->
   <string name="share">Compartilhar</string>
   <string name="share_show">Compartilhar série</string>
@@ -85,10 +86,11 @@
   <string name="episode_writers">Roteiristas</string>
   <string name="show_isalive">Em exibição</string>
   <string name="show_isnotalive">Finalizada</string>
-  <string name="lastEdit">Última Edição // TheTVDB</string>
   <string name="no_translation">Não há descrição traduzida para %1$s disponível em %2$s.</string>
   <string name="no_translation_title">Não traduzido</string>
   <string name="no_spoilers">Alguns detalhes estão ocultos para evitar spoilers. Para desativar vá até as configurações.</string>
+  <string name="format_source">Fonte: %s</string>
+  <string name="format_last_edited">Editado pela última vez: %s</string>
   <!-- Date and Time -->
   <string name="today">hoje</string>
   <string name="now">agora</string>
@@ -251,7 +253,7 @@
   <string name="feature_supported">Suportado</string>
   <string name="feature_not_supported">Não suportado</string>
   <string name="feature_history">Histórico pessoal e de amigos</string>
-  <string name="feature_comments">Post comments</string>
+  <string name="feature_comments">Postar comentários</string>
   <string name="feature_sync">Sincronizar</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental</string>
@@ -270,10 +272,6 @@
   <string name="hexagon_google_play_missing">Para usar o SeriesGuide Cloud, é necessário o Google Play Services.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Enviando ao trakt.</string>
-  <string name="trakt_seen">%s visto.</string>
-  <string name="trakt_notseen">%s não assistido.</string>
-  <string name="trakt_collected">%s colecionado.</string>
-  <string name="trakt_notcollected">%s não colecionado.</string>
   <string name="checkin_success_trakt">Feito check-in de %s no trakt.</string>
   <string name="checkin_canceled_success_trakt">Check-in no trakt cancelado.</string>
   <string name="traktcheckin_cancel">Substituir</string>
@@ -462,7 +460,7 @@
   <string name="action_upgrade">Desbloqueie todos os recursos</string>
   <string name="billing_action_subscribe">Inscrever</string>
   <string name="billing_action_pass">Adquira o X Pass</string>
-  <string name="billing_price_subscribe">%s/ano, teste grátis</string>
+  <string name="billing_price_subscribe">%1$s/ano, teste gratuitamente, cancele a qualquer momento até %2$s</string>
   <string name="billing_price_pass">compra única</string>
   <string name="upgrade_description">Desbloqueie todas os recursos incluindo notificações, temas e mais opções de widget. Me ajude a trazer as futuras atualizações.</string>
   <string name="upgrade_success">Obrigado por apoiar SeriesGuide! Você agora tem acesso a todos os recursos.</string>

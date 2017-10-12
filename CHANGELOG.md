@@ -5,6 +5,67 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 39
+----------
+*(2017-10-12)*
+
+* SeriesGuide Cloud and trakt: For episodes, 'Set watched' and 'Add to collection' is re-tried on 
+  failure, queued while offline.
+* Display source of show, episode, movie and person data.
+* Allow network text on widget to be wider.
+* Improve detecting new, updated and removed extensions.
+
+#### 39
+*(2017-10-12)*
+
+* 🔨 Crash if opening external app fails.
+* 🔨 Crash if trying to remove broken extension.
+* 📝 Latest translations from crowdin.
+
+#### 39-beta6
+*(2017-09-29)*
+
+* 🔧 Check for new extensions when returning to manage extensions screen, like after installing one.
+* 🔨 Uninstalled and updated extensions not detected. 
+* 📝 Latest translations from crowdin.
+
+#### 39-beta5
+*(2017-09-22)*
+
+* 🔨 Crash when trying to parse additional episode info.
+
+#### 39-beta4
+*(2017-09-22)*
+
+* 🔧 SeriesGuide Cloud, trakt: For episodes, set (not) watched and add to/remove from collection is 
+     automatically re-tried, works offline and no longer blocks buttons. If it is impossible due 
+     to an error or a show/episode is not available on trakt, a notification is displayed.
+* 🔧 Remove fast scrolling for seasons, benefits do not outweigh issues with opening more options
+     menu.
+* 🔨 Crash if episode or movie description was empty.
+* 📝 Latest translations from crowdin.
+
+#### 39-beta3
+*(2017-09-02)*
+
+* 🔨 Did not recognize 2016 subscriptions.
+
+#### 39-beta2
+*(2017-09-01)*
+
+* 🔧 Widget: allow network text to be wider.
+* 🔧 Updated subscription and one-time purchase pricing.
+* 🔨 Setting episode watched from notification may not work if device is really busy.
+* 📝 Latest translations from crowdin.
+
+#### 39-beta1
+*(2017-08-11)*
+
+* 🔧 Replace remaining icons with vector versions, use distinct shape for each state of toggleable icons.
+* 🔧 Explicitly display source of show, episode, movie and person data.
+* 🔧 Do not focus on show search bar when entering to add shows.
+* 📝 Latest translations from crowdin.
+
 Version 38
 ----------
 *(2017-07-26)*

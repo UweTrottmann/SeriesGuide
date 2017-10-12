@@ -23,13 +23,6 @@ public class ExtensionPackageChangeReceiver extends WakefulBroadcastReceiver {
         if (intent == null || intent.getData() == null) {
             return;
         }
-        String action = intent.getAction();
-        if (!Intent.ACTION_PACKAGE_CHANGED.equals(action)
-                || !Intent.ACTION_PACKAGE_REPLACED.equals(action)
-                || !Intent.ACTION_PACKAGE_REMOVED.equals(action)) {
-            // action does not match, ignore the intent
-            return;
-        }
 
         String changedPackage = intent.getData().getSchemeSpecificPart();
         ExtensionManager extensionManager = ExtensionManager.get();
@@ -53,12 +46,14 @@ public class ExtensionPackageChangeReceiver extends WakefulBroadcastReceiver {
         try {
             context.getPackageManager().getServiceInfo(changedExtension, 0);
         } catch (PackageManager.NameNotFoundException e) {
-            Timber.i(e, "Extension no longer available: removed");
+            Timber.i("Extension %s no longer available: removed",
+                    changedExtension.toShortString());
             return;
         }
 
         // changed or updated
-        Timber.i("Extension package changed or replaced: re-subscribing");
+        Timber.i("Extension %s changed or replaced: re-subscribing",
+                changedExtension.toShortString());
         enabledExtensions.add(affectedExtensionIndex, changedExtension);
         extensionManager.setEnabledExtensions(context, enabledExtensions);
     }

@@ -62,11 +62,11 @@ public abstract class BaseOAuthActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        /**
-         * Force the text-to-speech accessibility Javascript plug-in service on Android 4.2.2 to
-         * get shutdown, to avoid leaking its context.
-         *
-         * http://stackoverflow.com/a/18798305/1000543
+        /*
+          Force the text-to-speech accessibility Javascript plug-in service on Android 4.2.2 to
+          get shutdown, to avoid leaking its context.
+
+          http://stackoverflow.com/a/18798305/1000543
          */
         if (webview != null) {
             webview.getSettings().setJavaScriptEnabled(false);
@@ -89,7 +89,7 @@ public abstract class BaseOAuthActivity extends BaseActivity {
         webview = (WebView) findViewById(R.id.webView);
         buttonContainer = findViewById(R.id.containerOauthButtons);
         progressBar = findViewById(R.id.progressBarOauth);
-        textViewMessage = (TextView) buttonContainer.findViewById(R.id.textViewOauthMessage);
+        textViewMessage = buttonContainer.findViewById(R.id.textViewOauthMessage);
 
         // setup buttons (can be used if browser launch fails or user comes back without code)
         Button buttonBrowser = (Button) findViewById(R.id.buttonOauthBrowser);

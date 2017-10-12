@@ -20,7 +20,7 @@
   <string name="season_number">பருவம் %d</string>
   <string name="seasons">பருவங்கள்</string>
   <string name="specialseason">சிறப்பு Episodes</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">மதிப்பீடு</string>
   <!-- Descriptions -->
   <string name="description_overview">மேற்பார்வை</string>
   <string name="description_poster">சுவரொட்டி காண்பி</string>
@@ -51,6 +51,7 @@
   <string name="database_error">தரவு மாற்ற முடியவில்லை.</string>
   <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">பகிர்</string>
   <string name="share_show">பங்கு காண்பி</string>
@@ -85,10 +86,11 @@
   <string name="episode_writers">எழுத்தாளர்கள்</string>
   <string name="show_isalive">தொடரும்</string>
   <string name="show_isnotalive">முடிவுக்கு வந்தது</string>
-  <string name="lastEdit">திருத்து கடைசி / / TheTVDB</string>
   <string name="no_translation">%1$s at %2$s கிடைக்கப்பெறும் மொழிபெயர்க்க விளக்கம் உள்ளது.</string>
   <string name="no_translation_title">இல்லை மொழிபெயர்க்க</string>
   <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">இன்று</string>
   <string name="now">இப்போது</string>
@@ -134,8 +136,8 @@
   <string name="action_shows_sort_title">தலைப்பு</string>
   <string name="action_shows_sort_latest_episode">Latest episode</string>
   <string name="action_shows_sort_oldest_episode">Oldest episode</string>
-  <string name="action_shows_sort_last_watched">Last watched</string>
-  <string name="action_shows_sort_remaining">Remaining episodes</string>
+  <string name="action_shows_sort_last_watched">கடைசியாக பார்த்தது</string>
+  <string name="action_shows_sort_remaining">மீதமுள்ள காட்சிகள்</string>
   <string name="action_shows_sort_favorites">விருப்பங்களின் முதல்</string>
   <string name="context_updateshow">புதுப்பித்தல்</string>
   <string name="context_marknext">பார்த்த அடுத்த சம்பவம்</string>
@@ -153,7 +155,7 @@
   <string name="released_today">இன்று விடுதலை</string>
   <string name="noupcoming">எந்த வரவிருக்கும் episodes உள்ளன.</string>
   <string name="norecent">எந்த சமீபத்திய episodes உள்ளன.</string>
-  <string name="calendar_settings">Calendar settings</string>
+  <string name="calendar_settings">நாள் மற்றும் தேதி அமைப்புக்கள்</string>
   <string name="only_favorites">பிடித்த காட்சிகள்</string>
   <string name="calendar_only_collected">Only collected episodes</string>
   <string name="pref_infinite_scrolling">முடிவிலா காலண்டர்</string>
@@ -172,8 +174,8 @@
     <item quantity="other">%d to be released</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d remaining</item>
-    <item quantity="other">%d remaining</item>
+    <item quantity="one">%d மீதமுள்ளது</item>
+    <item quantity="other">%d மீதமுள்ளது</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">ஒரு காட்சி பெயர் தட்டச்சு செய்யவும்</string>
@@ -270,10 +272,6 @@
   <string name="hexagon_google_play_missing">SeriesGuide மேகம் பயன்படுத்த, விளையாட சேவைகளை Google தேவைப்படுகின்றது.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Trakt அனுப்புகிறது.</string>
-  <string name="trakt_seen">பார்க்க %s.</string>
-  <string name="trakt_notseen">%s பார்க்கவில்லை.</string>
-  <string name="trakt_collected">%s சேகரிக்கப்படும்.</string>
-  <string name="trakt_notcollected">%s தொகுக்கப்பெறவில்லை.</string>
   <string name="checkin_success_trakt">%s trakt-ஐ சரிபார்க்கப்பட்டது.</string>
   <string name="checkin_canceled_success_trakt">காசோலை-ல் trakt மீது ரத்து.</string>
   <string name="traktcheckin_cancel">மேலேறி</string>
@@ -339,8 +337,8 @@
   <string name="pref_updatewifionly">படிமங்கள் வழியாக Wi-Fi மட்டும்</string>
   <string name="pref_updatewifionlysummary">தரவு கட்டணங்களை குறைக்க, தகவலிறக்க வேண்டாம் மேல் மொபைல் அல்லது metered பிணையங்கள்</string>
   <plurals name="days_before_plural">
-    <item quantity="one">%d day before</item>
-    <item quantity="other">%d days before</item>
+    <item quantity="one">%d நாள் முன்பு</item>
+    <item quantity="other">%d நாட்கள் முன்பு</item>
   </plurals>
   <plurals name="hours_before_plural">
     <item quantity="one">%d hour before</item>
@@ -462,7 +460,7 @@
   <string name="action_upgrade">அனைத்து அம்சங்களும் பூட்டவிழ்</string>
   <string name="billing_action_subscribe">சந்தாதராகு</string>
   <string name="billing_action_pass">பெறு X கடவுச்</string>
-  <string name="billing_price_subscribe">%s/ஆண்டு, முயற்சிக்கவும்-ஓய்வு</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">-முறை வாங்குதல்</string>
   <string name="upgrade_description">அறிவிப்புகள், கருப்பொருள்கள் மற்றும் கூடுதல் பட்டியலில் விட்ஜெட் விருப்பங்கள் உள்பட அனைத்து அம்சங்கள் பூட்டவிழ். என் வருங்கால புதுப்பித்தல்களை செய்யவும் உதவும்.</string>
   <string name="upgrade_success">SeriesGuide ஆதரவு நன்றி! உங்களுக்கு எல்லா அம்சங்களையும் அனுமதி.</string>

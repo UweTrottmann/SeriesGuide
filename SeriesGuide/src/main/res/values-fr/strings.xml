@@ -51,6 +51,7 @@
   <string name="database_error">Les données n\'ont pu être modifiées.</string>
   <string name="reinstall_info">Essayez de sauvegarde les paramètres, puis réinstallez et restaurez.</string>
   <string name="api_error_generic">Impossible de communiquer avec %s. Réessayez ultérieurement.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Partager</string>
   <string name="share_show">Partager la série</string>
@@ -85,10 +86,11 @@
   <string name="episode_writers">Scénaristes</string>
   <string name="show_isalive">En cours</string>
   <string name="show_isnotalive">Terminé</string>
-  <string name="lastEdit">Dernière modification // TVDb</string>
   <string name="no_translation">La traduction en %1$s n\'est pas disponible sur %2$s.</string>
   <string name="no_translation_title">Non traduit</string>
   <string name="no_spoilers">Certains détails sont masqués afin d’éviter les spoilers. Pour modifier ceci allez dans paramètres.</string>
+  <string name="format_source">Source : %s</string>
+  <string name="format_last_edited">Dernière mise à jour : %s</string>
   <!-- Date and Time -->
   <string name="today">aujourd\'hui</string>
   <string name="now">maintenant</string>
@@ -250,13 +252,13 @@
   <!-- Features -->
   <string name="feature_supported">Pris en charge</string>
   <string name="feature_not_supported">Non pris en charge</string>
-  <string name="feature_history">Personal and friend history</string>
+  <string name="feature_history">Historique personnel et des amis</string>
   <string name="feature_comments">Publier un commentaire</string>
   <string name="feature_sync">Synchronisation</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Expérimental</string>
   <string name="hexagon_description">Le cloud SeriesGuide permet de sauvegarder et de synchroniser vos listes, émissions et films.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_warning_trakt">Quand vous êtes connecté a SeriesGuide Cloud certaines fonctions de Trakt sont indisponibles.</string>
   <string name="hexagon_signin">Connexion</string>
   <string name="hexagon_signout">Déconnexion</string>
   <string name="hexagon_setup_incomplete">La configuration du cloud SeriesGuide n\'était pas terminée.</string>
@@ -270,10 +272,6 @@
   <string name="hexagon_google_play_missing">Pour utiliser SeriesGuide Cloud les Services Google Play sont nécessaires.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Envoi vers trakt.</string>
-  <string name="trakt_seen">%s vu.</string>
-  <string name="trakt_notseen">%s non vu.</string>
-  <string name="trakt_collected">%s dans votre collection.</string>
-  <string name="trakt_notcollected">%s n\'est pas dans votre collection.</string>
   <string name="checkin_success_trakt">Check-in de %s sur trakt effectué.</string>
   <string name="checkin_canceled_success_trakt">Check-in sur trakt annulé.</string>
   <string name="traktcheckin_cancel">Annuler</string>
@@ -462,7 +460,7 @@
   <string name="action_upgrade">Déverrouiller toutes les fonctionnalités</string>
   <string name="billing_action_subscribe">Souscrire</string>
   <string name="billing_action_pass">Obtenir X Pass</string>
-  <string name="billing_price_subscribe">%s/an, essai gratuit</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">Achat à vie</string>
   <string name="upgrade_description">Déverrouille toutes les fonctionnalités dont les notifications, les thèmes et des options supplémentaires pour le widget. Cela m\'aide à réaliser de nouvelles fonctionnalités.</string>
   <string name="upgrade_success">Merci de supporter SeriesGuide ! Vous avez maintenant accès à toutes les fonctionnalités.</string>

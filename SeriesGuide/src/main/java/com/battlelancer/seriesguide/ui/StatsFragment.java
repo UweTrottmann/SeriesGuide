@@ -154,7 +154,7 @@ public class StatsFragment extends Fragment {
             PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                     .putBoolean(DisplaySettings.KEY_HIDE_SPECIALS, !item.isChecked())
                     .commit();
-            getActivity().supportInvalidateOptionsMenu();
+            getActivity().invalidateOptionsMenu();
             loadStats();
             return true;
         }
@@ -182,7 +182,7 @@ public class StatsFragment extends Fragment {
 
     private void runStatsTask() {
         statsTask = new StatsTask(getActivity());
-        AsyncTaskCompat.executeParallel(statsTask);
+        statsTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

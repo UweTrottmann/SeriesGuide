@@ -2,6 +2,7 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
 import android.text.Html;
@@ -17,7 +18,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.EpisodeSearchQu
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 
 /**
  * {@link CursorAdapter} displaying episode search results inside the {@link
@@ -45,13 +46,16 @@ public class EpisodeResultsAdapter extends CursorAdapter {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         viewHolder.showTitle.setText(mCursor.getString(EpisodeSearchQuery.SHOW_TITLE));
-        //noinspection ResourceType
-        viewHolder.watchedStatus.setImageResource(
-                EpisodeTools.isWatched(mCursor.getInt(EpisodeSearchQuery.WATCHED))
-                        ? Utils.resolveAttributeToResourceId(mContext.getTheme(),
-                        R.attr.drawableWatched)
-                        : Utils.resolveAttributeToResourceId(mContext.getTheme(),
-                                R.attr.drawableWatch));
+        Resources.Theme theme = mContext.getTheme();
+        int episodeFlag = mCursor.getInt(EpisodeSearchQuery.WATCHED);
+        if (EpisodeTools.isWatched(episodeFlag)) {
+            viewHolder.watchedStatus.setImageResource(R.drawable.ic_watched_24dp);
+        } else if (EpisodeTools.isSkipped(episodeFlag)) {
+            viewHolder.watchedStatus.setImageResource(R.drawable.ic_skipped_24dp);
+        } else {
+            ViewTools.setVectorIcon(theme, viewHolder.watchedStatus,
+                    R.drawable.ic_watch_black_24dp);
+        }
 
         // ensure matched term is bold
         String snippet = mCursor.getString(EpisodeSearchQuery.OVERVIEW);

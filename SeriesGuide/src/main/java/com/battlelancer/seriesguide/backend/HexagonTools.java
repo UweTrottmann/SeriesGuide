@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
+import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -72,6 +73,8 @@ public class HexagonTools {
         if (!HexagonSettings.resetSyncState(context)) {
             return false;
         }
+        // clear jobs before isEnabled may return true
+        new NetworkJobProcessor(context).removeObsoleteJobs();
         if (!PreferenceManager.getDefaultSharedPreferences(context).edit()
                 .putBoolean(HexagonSettings.KEY_ENABLED, true)
                 .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, false)
@@ -285,7 +288,7 @@ public class HexagonTools {
         return googleSignInOptions;
     }
 
-    public static void trackFailedRequest(Context context, String action, IOException e) {
+    public static void trackFailedRequest(Context context, String action, @NonNull IOException e) {
         if (e instanceof HttpResponseException) {
             HttpResponseException responseException = (HttpResponseException) e;
             Utils.trackCustomEvent(context, HEXAGON_ERROR_CATEGORY, action,
@@ -294,7 +297,9 @@ public class HexagonTools {
             Timber.e("%s: %s %s", action, responseException.getStatusCode(),
                     responseException.getStatusMessage());
         } else {
-            Utils.trackCustomEvent(context, HEXAGON_ERROR_CATEGORY, action, e.getMessage());
+            // for tracking only send exception name
+            Utils.trackCustomEvent(context, HEXAGON_ERROR_CATEGORY, action,
+                    e.getClass().getSimpleName());
             // log like "action: Unable to resolve host"
             Timber.e("%s: %s", action, e.getMessage());
         }

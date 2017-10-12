@@ -51,6 +51,7 @@
   <string name="database_error">Не е возможно да ги променити податоците.</string>
   <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
   <string name="api_error_generic">Неможе да се конектира со %s. Пробајте подоцна.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Сподели</string>
   <string name="share_show">Сподели серија</string>
@@ -85,10 +86,11 @@
   <string name="episode_writers">Сценаристи</string>
   <string name="show_isalive">Продолжува</string>
   <string name="show_isnotalive">Завршена</string>
-  <string name="lastEdit">Последна промена // Tvdb</string>
   <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
   <string name="no_translation_title">Не преведено</string>
   <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">денес</string>
   <string name="now">сега</string>
@@ -270,10 +272,6 @@
   <string name="hexagon_google_play_missing">За да го користите SeriesGuide Cloud, Google Play Services е потребно.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Испраќање на trakt.</string>
-  <string name="trakt_seen">%s гледани.</string>
-  <string name="trakt_notseen">%s не са гледани.</string>
-  <string name="trakt_collected">%s во колекција.</string>
-  <string name="trakt_notcollected">%s не е во коллекција.</string>
   <string name="checkin_success_trakt">Провери во %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Откажано чекирање на trakt.</string>
   <string name="traktcheckin_cancel">Замени</string>
@@ -462,7 +460,7 @@
   <string name="action_upgrade">Отклучи ги сите нови функционалност</string>
   <string name="billing_action_subscribe">Претплати се</string>
   <string name="billing_action_pass">Купи X Pass</string>
-  <string name="billing_price_subscribe">%s/година, пробај за бесплатно</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">еднократно купување</string>
   <string name="upgrade_description">Отклучување на сите функционалности, вклучувајќи нотификации, теми и повеќе опции за листата со widget. Помогнете да се направат нови надградби.</string>
   <string name="upgrade_success">Ви благодариме за поддршката SeriesGuide! Вие имате пристап до сите функции.</string>

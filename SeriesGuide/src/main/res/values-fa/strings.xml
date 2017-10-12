@@ -51,6 +51,7 @@
   <string name="database_error">نمی‌توان داده را تغییر داد.</string>
   <string name="reinstall_info">در تنظیمات پشتیبان گرفته، دوباره نصب و بازیابی کنید.</string>
   <string name="api_error_generic">نمی‌توان با %s صحبت کرد. بعداً دوباره تلاش کنید.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">هم‌رسانی</string>
   <string name="share_show">هم‌رسانی نمایش</string>
@@ -85,10 +86,11 @@
   <string name="episode_writers">نویسندگان</string>
   <string name="show_isalive">در حال پخش</string>
   <string name="show_isnotalive">به پایان رسیده</string>
-  <string name="lastEdit">آخرین ویرایش / / TheTVDB</string>
   <string name="no_translation">هیج توضیحی برای %2$s به %1$s وجود ندارد.</string>
   <string name="no_translation_title">ترجمه نشده</string>
   <string name="no_spoilers">به‌منظور جلوگیری از لو رفتن، برخی جزئیات نهفته‌اند. برای خاموش کردن این ویژگی به تنظیمات بروید.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">امروز</string>
   <string name="now">اکنون</string>
@@ -270,10 +272,6 @@
   <string name="hexagon_google_play_missing">برای استفاده از فضای ابری SeriesGuide، نیاز به خدمات گوگل پلی است.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">ارسال به trakt.</string>
-  <string name="trakt_seen">‫%s دیده شده.</string>
-  <string name="trakt_notseen">‫%s دیده نشده.</string>
-  <string name="trakt_collected">‫%s به کلکسیون افزوده شده.</string>
-  <string name="trakt_notcollected">‫%s به کلکسیون افزوده نشده.</string>
   <string name="checkin_success_trakt">%s روی trakt ثبت شد.</string>
   <string name="checkin_canceled_success_trakt">ثبت روی trakt لغو شد.</string>
   <string name="traktcheckin_cancel">باطل کردن</string>
@@ -462,7 +460,7 @@
   <string name="action_upgrade">باز کردن تمام ویژگی‌ها</string>
   <string name="billing_action_subscribe">اشتراک</string>
   <string name="billing_action_pass">گرفتن X Pass</string>
-  <string name="billing_price_subscribe">‫%s در سال. به رایگان امتحان کنید</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">خرید یک باره</string>
   <string name="upgrade_description">باز کردن تمام ویژگی‌ها شامل آگاهی‌ها، زمینه‌ها و انتخاب‌های ابزارک فهرست بیش‌تر. به من برای ساخت به‌روز رسانی‌های آینده کمک کنید.</string>
   <string name="upgrade_success">تشکّر برای حمایت از سریزگاید! شما به تمام ویژگی‌ها دسترسی دارید.</string>

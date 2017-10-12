@@ -51,6 +51,7 @@
   <string name="database_error">Tidak dapat merubah data.</string>
   <string name="reinstall_info">Coba cadangkan di pengaturan, pasang ulang dan pulihkan.</string>
   <string name="api_error_generic">Tidak dapat bicara ke %s. Coba lagi nanti.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Bagikan</string>
   <string name="share_show">Bagikan acara</string>
@@ -84,10 +85,11 @@
   <string name="episode_writers">Penulis</string>
   <string name="show_isalive">Berkelanjutan</string>
   <string name="show_isnotalive">Berakhir</string>
-  <string name="lastEdit">Terakhir disunting // TheTVDB</string>
   <string name="no_translation">Tidak ada deskripsi yang diterjemahkan ke %1$s tersedia di %2$s.</string>
   <string name="no_translation_title">Belum diterjemahkan</string>
   <string name="no_spoilers">Beberapa detail telah disembunyikan untuk mencegah bocoran. Untuk menonaktikan ini pergi ke pengaturan.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">hari ini</string>
   <string name="now">sekarang</string>
@@ -263,10 +265,6 @@
   <string name="hexagon_google_play_missing">Untuk Menggunakan SeriesGuide Cloud, dibutuhkan Google Play Services.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Mengirim ke trakt.</string>
-  <string name="trakt_seen">%s dilihat.</string>
-  <string name="trakt_notseen">%s Belum dilihat.</string>
-  <string name="trakt_collected">%s dikoleksi.</string>
-  <string name="trakt_notcollected">%s belum dikoleksi.</string>
   <string name="checkin_success_trakt">Check-in %s pada trakt.</string>
   <string name="checkin_canceled_success_trakt">Membatalkan check-in pada trakt.</string>
   <string name="traktcheckin_cancel">Timpa</string>
@@ -451,7 +449,7 @@
   <string name="action_upgrade">Buka semua fitur</string>
   <string name="billing_action_subscribe">Berlangganan</string>
   <string name="billing_action_pass">Dapatkan X Pass</string>
-  <string name="billing_price_subscribe">%s/tahun, Coba gratis</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">pembelian satu kali</string>
   <string name="upgrade_description">Buka semua fitur termasuk pemberitahuan, tema dan lebih banyak pilihan daftar widget. Membantu saya membuat pembaruan di masa mendatang.</string>
   <string name="upgrade_success">Terima kasih telah mendukung SeriesGuide! Anda memiliki akses ke semua fitur.</string>

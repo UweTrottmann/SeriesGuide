@@ -28,8 +28,8 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/description_menu_overflow"
         android:scaleType="centerInside"
-        android:tint="?attr/sgColorIcon"
-        app:srcCompat="@drawable/ic_more_vert_white_20dp" />
+        app:srcCompat="@drawable/ic_more_vert_black_20dp"
+        app:tint="?attr/sgColorIcon" />
 
     <TextView
         android:id="@+id/textViewSeasonProgress"
@@ -58,7 +58,7 @@
         android:layout_below="@id/progressBarSeason"
         android:layout_marginRight="4dp"
         android:contentDescription="@null"
-        android:src="@drawable/ic_skipped" />
+        app:srcCompat="@drawable/ic_skipped_24dp" />
 
     <TextView
         android:id="@+id/textViewSeasonWatchCount"

@@ -3,7 +3,11 @@ package com.battlelancer.seriesguide.util;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
+import android.text.style.TextAppearanceSpan;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import java.util.Date;
@@ -90,17 +94,17 @@ public class TextTools {
     @NonNull
     public static String splitAndKitTVDBStrings(@Nullable String tvdbstring) {
         if (tvdbstring == null) {
-            tvdbstring = "";
+            return "";
         }
-        String[] splitted = tvdbstring.split("\\|");
-        tvdbstring = "";
-        for (String item : splitted) {
-            if (tvdbstring.length() != 0) {
-                tvdbstring += ", ";
+        String[] split = tvdbstring.split("\\|");
+        StringBuilder builder = new StringBuilder();
+        for (String item : split) {
+            if (builder.length() > 0) {
+                builder.append(", ");
             }
-            tvdbstring += item.trim();
+            builder.append(item.trim());
         }
-        return tvdbstring;
+        return builder.toString();
     }
 
     /**
@@ -152,5 +156,47 @@ public class TextTools {
         } else {
             return TextTools.dotSeparate(network, null);
         }
+    }
+
+    /**
+     * Appends an empty new line and a new line listing the source of the text as TMDB.
+     */
+    public static SpannableStringBuilder textWithTmdbSource(Context context, @Nullable String text) {
+        return textWithSource(context, text,
+                context.getString(R.string.format_source, context.getString(R.string.tmdb)));
+    }
+
+    /**
+     * Appends an empty new line and a new line listing the source of the text as TVDB and the last
+     * edited date (is unknown if seconds value is less than 1).
+     */
+    public static SpannableStringBuilder textWithTvdbSource(Context context, @Nullable String text,
+            long lastEditSeconds) {
+        String lastEdited;
+        if (lastEditSeconds > 0) {
+            lastEdited = DateUtils.formatDateTime(context, lastEditSeconds * 1000,
+                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
+        } else {
+            lastEdited = context.getString(R.string.unknown);
+        }
+        String sourceAndTime =
+                context.getString(R.string.format_source, context.getString(R.string.tvdb))
+                        + "\n" + context.getString(R.string.format_last_edited, lastEdited);
+        return textWithSource(context, text, sourceAndTime);
+    }
+
+    private static SpannableStringBuilder textWithSource(Context context, @Nullable String text,
+            @NonNull String source) {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        if (text != null) {
+            builder.append(text);
+            builder.append("\n\n");
+        }
+        int sourceStartIndex = builder.length();
+        builder.append(source);
+        builder.setSpan(new TextAppearanceSpan(context, R.style.TextAppearance_Body_Highlight),
+                sourceStartIndex, builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        );
+        return builder;
     }
 }

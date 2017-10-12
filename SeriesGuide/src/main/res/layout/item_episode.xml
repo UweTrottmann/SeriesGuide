@@ -79,7 +79,7 @@
             android:layout_below="@+id/watchedBoxEpisode"
             android:layout_marginLeft="29dp"
             android:contentDescription="@string/action_collection_added"
-            android:src="@drawable/ic_collected" />
+            app:srcCompat="@drawable/ic_collected_24dp" />
 
         <ImageView
             android:id="@+id/imageViewContextMenu"
@@ -91,8 +91,8 @@
             android:contentDescription="@string/description_menu_overflow"
             android:paddingLeft="@dimen/default_padding"
             android:scaleType="centerInside"
-            android:tint="?attr/sgColorIcon"
-            app:srcCompat="@drawable/ic_more_vert_white_20dp"
+            app:srcCompat="@drawable/ic_more_vert_black_20dp"
+            app:tint="?attr/sgColorIcon"
             tools:ignore="RtlSymmetry" />
     </RelativeLayout>
 

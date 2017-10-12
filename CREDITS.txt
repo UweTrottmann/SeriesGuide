@@ -66,18 +66,11 @@ shows and movies you'll enjoy!
 Licensed under the Apache License, Version 2.0
 ----------------------------------------------
 
-Android Support Library (https://developer.android.com/topic/libraries/support-library/index.html)
+Android Support Libraries (https://developer.android.com/topic/libraries/support-library/index.html)
 Copyright 2013 The Android Open Source Project
 
 AndroidUtils (https://github.com/UweTrottmann/AndroidUtils)
 Copyright 2012 Uwe Trottmann
-
-Apache Commons Codec
-
-Apache Commons IO
-
-Apache Oltu - OAuth 2.0 (https://oltu.apache.org/)
-Copyright 2010 The Apache Software Foundation
 
 assertj-android (https://github.com/square/assertj-android)
 Copyright 2013 Square, Inc.
@@ -100,6 +93,9 @@ Copyright 2012 Carl Bauer
 EventBus (https://github.com/greenrobot/EventBus)
 Copyright 2012 Markus Junginger, greenrobot (http://greenrobot.de)
 
+Flatbuffers (https://github.com/google/flatbuffers)
+Copyright 2014 Google Inc.
+
 google-api-client (https://github.com/google/google-api-java-client)
 
 google-http-client (https://github.com/google/google-http-java-client)
@@ -109,14 +105,7 @@ google-oauth-client (https://github.com/google/google-oauth-java-client)
 gson (https://code.google.com/p/google-gson/)
 Copyright 2008 Google Inc.
 
-guava (https://github.com/google/guava)
-
 jackson-core (https://github.com/FasterXML/jackson-core)
-
-joda-time-android (https://github.com/dlew/joda-time-android)
-Copyright 2014 Daniel Lew
-
-joda-time (https://github.com/JodaOrg/joda-time)
 
 okhttp (https://github.com/square/okhttp)
 Copyright 2012 Square, Inc.
@@ -132,9 +121,6 @@ Copyright 2011, 2012 Chris Banes
 retrofit (https://github.com/square/retrofit)
 Copyright 2013 Square, Inc.
 
-SmoothProgressBar (https://github.com/castorflex/SmoothProgressBar)
-Copyright 2014 Antoine Merle
-
 StickyGridHeaders (https://github.com/TonicArtos/StickyGridHeaders)
 Copyright 2013 Tonic Artos
 
@@ -143,6 +129,9 @@ Copyright 2013 readyState Software Limited
 
 thetvdb-java (https://github.com/UweTrottmann/thetvdb-java)
 Copyright 2013 Uwe Trottmann
+
+threetenabp (https://github.com/JakeWharton/ThreeTenABP)
+Copyright (C) 2015 Jake Wharton
 
 timber (https://github.com/JakeWharton/timber)
 Copyright 2013 Jake Wharton
@@ -170,12 +159,8 @@ limitations under the License.
 Licensed under the BSD License
 ------------------------------
 
-antlr4 (https://github.com/antlr/antlr4)
-Copyright (c) 2015 Terence Parr, Sam Harwell
-
 hamcrest (https://github.com/hamcrest/JavaHamcrest)
 Copyright (c) 2000-2015 www.hamcrest.org
-
 
 All rights reserved.
 
@@ -203,51 +188,44 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-android-apt (https://bitbucket.org/hvisser/android-apt)
--------------------------------------------------------
-
-Hugo Visser, released into the public domain.
-
-For more information, please refer to <http://unlicense.org/>
-
-
 junit (https://github.com/junit-team/junit4)
 --------------------------------------------
 
 Eclipse Public License - v 1.0 (https://www.eclipse.org/legal/epl-v10.html)
 
 
-FloatingActionButton (https://github.com/makovkastar/FloatingActionButton)
---------------------------------------------------------------------------
+threetenbp (http://www.threeten.org/threetenbp/)
+------------------------------------------------
 
-The MIT License (MIT)
+Copyright (c) 2007-present, Stephen Colebourne & Michael Nascimento Santos
 
-Copyright (c) 2014 Oleksandr Melnykov
+All rights reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+ * Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+ * Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
 
+ * Neither the name of JSR-310 nor the names of its contributors
+   may be used to endorse or promote products derived from this software
+   without specific prior written permission.
 
-Androidicons Developer set (http://www.androidicons.com/)
----------------------------------------------------------
-
-They do not require crediting, but I'll do it anyways because you
-absolutely have to check their icons out!
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 Material Design Icons (https://github.com/google/material-design-icons)

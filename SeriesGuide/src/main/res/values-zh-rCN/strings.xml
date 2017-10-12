@@ -51,6 +51,7 @@
   <string name="database_error">无法修改数据。</string>
   <string name="reinstall_info">请尝试在设置中进行备份，然后重新安装本程序并恢复备份。</string>
   <string name="api_error_generic">无法连接到 %s。请稍后再试。</string>
+  <string name="api_failed">失败：%s</string>
   <!-- Sharing -->
   <string name="share">分享</string>
   <string name="share_show">分享此节目</string>
@@ -84,10 +85,11 @@
   <string name="episode_writers">编剧</string>
   <string name="show_isalive">连载中</string>
   <string name="show_isnotalive">已完结</string>
-  <string name="lastEdit">最后修改 // TVDb</string>
   <string name="no_translation">在 %2$s 上找不到 %1$s 语言的剧目信息。</string>
   <string name="no_translation_title">未翻译</string>
   <string name="no_spoilers">隐藏部分细节信息以防止剧透. 您可在设置菜单中关闭此功能</string>
+  <string name="format_source">来源：%s</string>
+  <string name="format_last_edited">最后编辑：%s</string>
   <!-- Date and Time -->
   <string name="today">今天</string>
   <string name="now">现在</string>
@@ -263,10 +265,6 @@
   <string name="hexagon_google_play_missing">若要使用 SeriesGuide Cloud，需要 Google Play 服务。</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">正在与 trakt 同步…</string>
-  <string name="trakt_seen">%s 已观看。</string>
-  <string name="trakt_notseen">%s 未观看。</string>
-  <string name="trakt_collected">%s 已收藏。</string>
-  <string name="trakt_notcollected">%s 未收藏。</string>
   <string name="checkin_success_trakt">已在 trakt 上为 %s 签到。</string>
   <string name="checkin_canceled_success_trakt">已取消 trakt 上的签到。</string>
   <string name="traktcheckin_cancel">替换</string>
@@ -451,7 +449,7 @@
   <string name="action_upgrade">解锁高级功能</string>
   <string name="billing_action_subscribe">订阅</string>
   <string name="billing_action_pass">购买 SeriesGuide X</string>
-  <string name="billing_price_subscribe">%s /年，免费试用</string>
+  <string name="billing_price_subscribe">%1$s 每年，免费试用，通过 %2$s 随时取消订阅</string>
   <string name="billing_price_pass">一次性支付</string>
   <string name="upgrade_description">解锁完整版应用程序，包括推送通知、主题、小部件等功能。\n您支付的费用将帮助作者开发和完善新功能。</string>
   <string name="upgrade_success">恭喜，您已解锁全部高级功能！感谢您的支持！</string>

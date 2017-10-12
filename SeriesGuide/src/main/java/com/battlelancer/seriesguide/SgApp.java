@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.os.StrictMode.VmPolicy;
+import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.modules.AppModule;
 import com.battlelancer.seriesguide.modules.DaggerServicesComponent;
 import com.battlelancer.seriesguide.modules.HttpClientModule;
@@ -37,6 +38,7 @@ public class SgApp extends Application {
     public static final int NOTIFICATION_EPISODE_ID = 1;
     public static final int NOTIFICATION_SUBSCRIPTION_ID = 2;
     public static final int NOTIFICATION_TRAKT_AUTH_ID = 3;
+    public static final int NOTIFICATION_JOB_ID = 4;
 
     /**
      * Time calculation has changed, all episodes need re-calculation.
@@ -87,6 +89,8 @@ public class SgApp extends Application {
 
         // Load the current theme into a global variable
         ThemeUtils.updateTheme(DisplaySettings.getThemeIndex(this));
+
+        ExtensionManager.get().checkEnabledExtensions(this);
     }
 
     private void initializeLogging() {

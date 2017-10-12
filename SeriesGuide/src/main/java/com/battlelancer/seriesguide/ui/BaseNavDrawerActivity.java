@@ -20,7 +20,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
@@ -29,8 +28,10 @@ import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.customtabs.CustomTabsHelper;
 import com.battlelancer.seriesguide.customtabs.FeedbackBroadcastReceiver;
+import com.battlelancer.seriesguide.jobs.episodes.EpisodeFlagJob;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.Utils;
 import io.palaima.debugdrawer.actions.ActionsModule;
 import io.palaima.debugdrawer.actions.ButtonAction;
@@ -84,10 +85,13 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
         @Nullable public final String confirmationText;
         public boolean isSuccessful;
+        @Nullable public final EpisodeFlagJob episodeJob;
 
-        public ServiceCompletedEvent(@Nullable String confirmationText, boolean isSuccessful) {
+        public ServiceCompletedEvent(@Nullable String confirmationText, boolean isSuccessful,
+                @Nullable EpisodeFlagJob episodeJob) {
             this.confirmationText = confirmationText;
             this.isSuccessful = isSuccessful;
+            this.episodeJob = episodeJob;
         }
     }
 
@@ -163,21 +167,21 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
      * #onCreate(android.os.Bundle)} after {@link #setContentView(int)}.
      */
     public void setupNavDrawer() {
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
-        actionBarToolbar = (Toolbar) drawerLayout.findViewById(R.id.sgToolbar);
+        actionBarToolbar = drawerLayout.findViewById(R.id.sgToolbar);
 
-        navigationView = (NavigationView) drawerLayout.findViewById(R.id.navigation);
+        navigationView = drawerLayout.findViewById(R.id.navigation);
 
         // setup nav drawer account header
         View headerView = navigationView.getHeaderView(0);
-        ButterKnife.findById(headerView, R.id.containerDrawerAccountCloud).setOnClickListener(
+        headerView.findViewById(R.id.containerDrawerAccountCloud).setOnClickListener(
                 accountClickListener);
-        ButterKnife.findById(headerView, R.id.containerDrawerAccountTrakt).setOnClickListener(
+        headerView.findViewById(R.id.containerDrawerAccountTrakt).setOnClickListener(
                 accountClickListener);
-        textViewHeaderUserCloud = ButterKnife.findById(headerView, R.id.textViewDrawerUserCloud);
-        textViewHeaderUserTrakt = ButterKnife.findById(headerView, R.id.textViewDrawerUserTrakt);
+        textViewHeaderUserCloud = headerView.findViewById(R.id.textViewDrawerUserCloud);
+        textViewHeaderUserTrakt = headerView.findViewById(R.id.textViewDrawerUserTrakt);
 
         // setup nav drawer items
         navigationView.inflateMenu(R.menu.menu_drawer);
@@ -200,7 +204,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
             // add debug drawer
             View debugLayout = getLayoutInflater().inflate(R.layout.debug_drawer, drawerLayout,
                     true);
-            DebugView debugView = ButterKnife.findById(debugLayout, R.id.debugView);
+            DebugView debugView = debugLayout.findViewById(R.id.debugView);
 
             ButtonAction buttonClearTraktRefreshToken = new ButtonAction(
                     "Clear trakt refresh token",
@@ -232,11 +236,22 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                         }
                     });
 
+            ButtonAction buttonTriggerJobProcessor = new ButtonAction(
+                    "Schedule job processing",
+                    new ButtonAction.Listener() {
+                        @Override
+                        public void onClick() {
+                            SgSyncAdapter.requestSyncJobsImmediate(getApplicationContext());
+                        }
+                    }
+            );
+
             debugView.modules(
                     new ActionsModule(
                             buttonClearTraktRefreshToken,
                             buttonInvalidateTraktAccessToken,
-                            buttonInvalidateTraktRefreshToken
+                            buttonInvalidateTraktRefreshToken,
+                            buttonTriggerJobProcessor
                     ),
                     new TimberModule(),
                     new DeviceModule(this)
@@ -400,12 +415,15 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
     public void onEventEpisodeTask(ServiceCompletedEvent event) {
         if (event.confirmationText != null) {
             // show a confirmation/error text, update any existing progress snackbar
-            if (snackbarProgress != null) {
+            if (snackbarProgress == null) {
+                snackbarProgress = Snackbar.make(getSnackbarParentView(), event.confirmationText,
+                        event.isSuccessful ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG);
+            } else {
                 snackbarProgress.setText(event.confirmationText);
                 snackbarProgress.setDuration(
                         event.isSuccessful ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG);
-                snackbarProgress.show();
             }
+            snackbarProgress.show();
         } else {
             handleServiceActiveEvent(null);
         }

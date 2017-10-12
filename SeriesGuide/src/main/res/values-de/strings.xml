@@ -51,6 +51,7 @@
   <string name="database_error">Daten konnten nicht geändert werden.</string>
   <string name="reinstall_info">Versuchen Sie ein Backup in den Einstellungen, eine Neu-Installation und Wiederherstellung.</string>
   <string name="api_error_generic">Konnte %s nicht erreichen. Versuchen Sie es später erneut.</string>
+  <string name="api_failed">Gescheitert: %s</string>
   <!-- Sharing -->
   <string name="share">Teilen</string>
   <string name="share_show">Serie teilen</string>
@@ -85,10 +86,11 @@
   <string name="episode_writers">Autoren</string>
   <string name="show_isalive">Wird fortgesetzt</string>
   <string name="show_isnotalive">Endete</string>
-  <string name="lastEdit">Zuletzt bearbeitet // TheTVDB</string>
   <string name="no_translation">Es ist keine auf %1$s übersetzte Beschreibung bei %2$s verfügbar.</string>
   <string name="no_translation_title">Nicht übersetzt</string>
   <string name="no_spoilers">Einige Details werden ausgeblendet um Spoiler zu vermeiden. Dies kann in den Einstellungen ausgeschaltet werden.</string>
+  <string name="format_source">Quelle: %s</string>
+  <string name="format_last_edited">Zuletzt bearbeitet: %s</string>
   <!-- Date and Time -->
   <string name="today">heute</string>
   <string name="now">jetzt</string>
@@ -270,10 +272,6 @@
   <string name="hexagon_google_play_missing">Um SeriesGuide Cloud zu verwenden sind Google Play Services erforderlich.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Sende an trakt.</string>
-  <string name="trakt_seen">%s angesehen.</string>
-  <string name="trakt_notseen">%s nicht angesehen.</string>
-  <string name="trakt_collected">%s gesammelt.</string>
-  <string name="trakt_notcollected">%s nicht gesammelt.</string>
   <string name="checkin_success_trakt">Auf trakt in %s eingecheckt.</string>
   <string name="checkin_canceled_success_trakt">Check-in bei trakt widerrufen.</string>
   <string name="traktcheckin_cancel">Überschreiben</string>
@@ -462,7 +460,7 @@
   <string name="action_upgrade">Alle Funktionen freischalten</string>
   <string name="billing_action_subscribe">Abonnieren</string>
   <string name="billing_action_pass">X Pass holen</string>
-  <string name="billing_price_subscribe">%s/Jahr, kostenlos testen</string>
+  <string name="billing_price_subscribe">%1$s/Jahr, kostenlos testen, bei %2$s jederzeit kündbar</string>
   <string name="billing_price_pass">einmaliger Kauf</string>
   <string name="upgrade_description">Schalten Sie alle Funktionen wie Benachrichtigungen, Designs und weitere Optionen für das Listen-Widget frei. Unterstützen Sie mich bei der Entwicklung weiterer Updates.</string>
   <string name="upgrade_success">Danke für die Unterstützung von SeriesGuide! Sie haben Zugriff auf alle Funktionen.</string>

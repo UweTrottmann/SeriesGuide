@@ -79,7 +79,7 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
         final View layout = inflater.inflate(R.layout.dialog_manage_lists, container, false);
 
         // buttons
-        Button dontAddButton = (Button) layout.findViewById(R.id.buttonNegative);
+        Button dontAddButton = layout.findViewById(R.id.buttonNegative);
         dontAddButton.setText(android.R.string.cancel);
         dontAddButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -87,7 +87,7 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
                 dismiss();
             }
         });
-        Button addButton = (Button) layout.findViewById(R.id.buttonPositive);
+        Button addButton = layout.findViewById(R.id.buttonPositive);
         addButton.setText(android.R.string.ok);
         addButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -123,7 +123,7 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
         });
 
         // lists list
-        mListView = (ListView) layout.findViewById(R.id.list);
+        mListView = layout.findViewById(R.id.list);
         /*
          * As using CHOICE_MODE_MULTIPLE does not seem to work before Jelly
          * Bean, do everything ourselves.
@@ -140,7 +140,8 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
         // display item title
         final int itemTvdbId = getArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
         final int itemType = getArguments().getInt(InitBundle.INT_ITEM_TYPE);
-        final TextView itemTitle = (TextView) getView().findViewById(R.id.item);
+        //noinspection ConstantConditions // fragment has a view
+        final TextView itemTitle = getView().findViewById(R.id.item);
         Uri uri = null;
         String[] projection = null;
         switch (itemType) {
@@ -166,6 +167,7 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
                 };
                 break;
         }
+        //noinspection ConstantConditions // itemType might not match
         if (uri != null && projection != null) {
             Cursor item = getActivity().getContentResolver().query(uri, projection, null, null,
                     null);
@@ -232,7 +234,7 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-            CheckedTextView checkedView = (CheckedTextView) view.findViewById(android.R.id.text1);
+            CheckedTextView checkedView = view.findViewById(android.R.id.text1);
             checkedView.setText(cursor.getString(ListsQuery.NAME));
 
             int position = cursor.getPosition();

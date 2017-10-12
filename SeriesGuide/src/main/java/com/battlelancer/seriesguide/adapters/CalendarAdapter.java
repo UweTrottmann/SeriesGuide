@@ -198,7 +198,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
                     .inflate(R.layout.item_grid_header, parent, false);
 
             holder = new HeaderViewHolder();
-            holder.day = (TextView) convertView.findViewById(R.id.textViewGridHeader);
+            holder.day = convertView.findViewById(R.id.textViewGridHeader);
 
             convertView.setTag(holder);
         } else {
@@ -309,13 +309,13 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         public int position;
 
         public ViewHolder(View v, final ItemClickListener itemClickListener) {
-            show = (TextView) v.findViewById(R.id.textViewActivityShow);
-            episode = (TextView) v.findViewById(R.id.textViewActivityEpisode);
+            show = v.findViewById(R.id.textViewActivityShow);
+            episode = v.findViewById(R.id.textViewActivityEpisode);
             collected = v.findViewById(R.id.imageViewActivityCollected);
-            watchedBox = (WatchedBox) v.findViewById(R.id.watchedBoxActivity);
-            info = (TextView) v.findViewById(R.id.textViewActivityInfo);
-            timestamp = (TextView) v.findViewById(R.id.textViewActivityTimestamp);
-            poster = (ImageView) v.findViewById(R.id.imageViewActivityPoster);
+            watchedBox = v.findViewById(R.id.watchedBoxActivity);
+            info = v.findViewById(R.id.textViewActivityInfo);
+            timestamp = v.findViewById(R.id.textViewActivityTimestamp);
+            poster = v.findViewById(R.id.imageViewActivityPoster);
 
             watchedBox.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {

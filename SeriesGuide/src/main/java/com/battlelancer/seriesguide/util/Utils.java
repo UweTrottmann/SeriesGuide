@@ -28,6 +28,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Toast;
@@ -44,7 +45,6 @@ import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.google.android.gms.analytics.HitBuilders;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
-import retrofit2.Response;
 import timber.log.Timber;
 
 /**
@@ -244,17 +244,17 @@ public class Utils {
     }
 
     public static void trackFailedRequest(Context context, String category, String action,
-            Response response) {
-        Utils.trackCustomEvent(context, category, action,
-                response.code() + " " + response.message());
+            int code, String message) {
+        Utils.trackCustomEvent(context, category, action, code + " " + message);
         // log like "action: 404 not found"
         Timber.tag(category);
-        Timber.e("%s: %s %s", action, response.code(), response.message());
+        Timber.e("%s: %s %s", action, code, message);
     }
 
     public static void trackFailedRequest(Context context, String category, String action,
-            Throwable throwable) {
-        Utils.trackCustomEvent(context, category, action, throwable.getMessage());
+            @NonNull Throwable throwable) {
+        // for tracking only send exception name
+        Utils.trackCustomEvent(context, category, action, throwable.getClass().getSimpleName());
         // log like "action: Unable to resolve host"
         Timber.tag(category);
         Timber.e(throwable, "%s: %s", action, throwable.getMessage());
@@ -321,8 +321,10 @@ public class Utils {
             try {
                 context.startActivity(intent);
                 handled = true;
-            } catch (ActivityNotFoundException ignored) {
+            } catch (ActivityNotFoundException | SecurityException e) {
                 // catch failure to handle explicit intents
+                // log in release builds to help extension developers debug
+                Log.i("Utils", "Failed to launch intent.", e);
             }
         }
 

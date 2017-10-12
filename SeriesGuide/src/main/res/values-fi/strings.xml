@@ -51,6 +51,7 @@
   <string name="database_error">Tietojen muokkaaminen ei onnistunut.</string>
   <string name="reinstall_info">Yritä varmuuskopioida asetuksista, asenna uudelleen ja palauta.</string>
   <string name="api_error_generic">Kommunikointi %s kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
+  <string name="api_failed">Epäonnistui: %s</string>
   <!-- Sharing -->
   <string name="share">Jaa</string>
   <string name="share_show">Jaa ohjelma</string>
@@ -85,10 +86,11 @@
   <string name="episode_writers">Kirjoittajat</string>
   <string name="show_isalive">Jatkuu</string>
   <string name="show_isnotalive">Päättynyt</string>
-  <string name="lastEdit">Viimeisin muokkaus // TVDb</string>
   <string name="no_translation">Kuvausta ei ole saatavilla kielellä %1$s palvelussa %2$s.</string>
   <string name="no_translation_title">Ei käännetty</string>
   <string name="no_spoilers">Osa tiedoista on piilotettu juonipaljastuksien varalta. Voit poistaa tämän käytöstä asetuksista.</string>
+  <string name="format_source">Lähde: %s</string>
+  <string name="format_last_edited">Viimeksi muokattu: %s</string>
   <!-- Date and Time -->
   <string name="today">tänään</string>
   <string name="now">nyt</string>
@@ -135,7 +137,7 @@
   <string name="action_shows_sort_latest_episode">Uusin jakso</string>
   <string name="action_shows_sort_oldest_episode">Vanhin jakso</string>
   <string name="action_shows_sort_last_watched">Viimeksi katsottu</string>
-  <string name="action_shows_sort_remaining">Loput jaksot</string>
+  <string name="action_shows_sort_remaining">Jäljellä olevat jaksot</string>
   <string name="action_shows_sort_favorites">Suosikit ensin</string>
   <string name="context_updateshow">Päivitä</string>
   <string name="context_marknext">Seuraava jakso katsottu</string>
@@ -270,10 +272,6 @@
   <string name="hexagon_google_play_missing">SeriesGuide Cloudin käyttämiseen vaaditaan Google Play Palvelut.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Lähetetään traktiin.</string>
-  <string name="trakt_seen">%s katsottu.</string>
-  <string name="trakt_notseen">%s ei ole katsottu.</string>
-  <string name="trakt_collected">%s kerätty.</string>
-  <string name="trakt_notcollected">%s ei ole kerätty.</string>
   <string name="checkin_success_trakt">Kuitattu kohteeseen %s traktissa.</string>
   <string name="checkin_canceled_success_trakt">Kuittaus peruttu traktissa.</string>
   <string name="traktcheckin_cancel">Korvaa</string>
@@ -462,7 +460,7 @@
   <string name="action_upgrade">Avaa kaikki ominaisuudet</string>
   <string name="billing_action_subscribe">Tilaa</string>
   <string name="billing_action_pass">Hanki X Pass</string>
-  <string name="billing_price_subscribe">%s/vuosi, kokeile ilmaiseksi</string>
+  <string name="billing_price_subscribe">%1$s/vuosi, kokeile ilmaiseksi, peruuta milloin tahansa %2$s -kaupan kautta</string>
   <string name="billing_price_pass">kertaluontoinen osto</string>
   <string name="upgrade_description">Avaa kaikki ominaisuudet, kuten ilmoitukset, teemat ja lisää listawidgetin vaihtoehtoja. Auta minua tekemään tulevia päivityksiä.</string>
   <string name="upgrade_success">Kiitos SeriesGuiden tukemisesta! Voit käyttää kaikkia ominaisuuksia</string>

@@ -2,8 +2,8 @@ package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.os.AsyncTaskCompat;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -65,11 +65,9 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
     @Override
     protected void checkInTrakt(String message) {
-        AsyncTaskCompat.executeParallel(
-                new TraktTask(getContext()).checkInEpisode(
-                        getArguments().getInt(InitBundle.EPISODE_TVDB_ID),
-                        getArguments().getString(InitBundle.ITEM_TITLE),
-                        message)
-        );
+        new TraktTask(getContext()).checkInEpisode(
+                getArguments().getInt(InitBundle.EPISODE_TVDB_ID),
+                getArguments().getString(InitBundle.ITEM_TITLE),
+                message).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
-import android.support.v4.os.AsyncTaskCompat;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
@@ -66,7 +65,7 @@ public class TaskManager {
         //noinspection ConstantConditions: null check in isAddTaskRunning
         if (!isAddTaskRunning() || !addShowTask.addShows(shows, isSilentMode, isMergingShows)) {
             addShowTask = new AddShowTask(context, shows, isSilentMode, isMergingShows);
-            AsyncTaskCompat.executeParallel(addShowTask);
+            addShowTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -88,7 +87,7 @@ public class TaskManager {
         if (!isAddTaskRunning()
                 && (backupTask == null || backupTask.getStatus() == AsyncTask.Status.FINISHED)) {
             backupTask = new JsonExportTask(context, null, false, true);
-            AsyncTaskCompat.executeParallel(backupTask);
+            backupTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -105,7 +104,7 @@ public class TaskManager {
         if (nextEpisodeUpdateTask == null
                 || nextEpisodeUpdateTask.getStatus() == AsyncTask.Status.FINISHED) {
             nextEpisodeUpdateTask = new LatestEpisodeUpdateTask(context);
-            AsyncTaskCompat.executeParallel(nextEpisodeUpdateTask);
+            nextEpisodeUpdateTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 

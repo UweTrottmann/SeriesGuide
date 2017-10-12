@@ -20,9 +20,6 @@ public class NotificationActionReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (!intent.hasExtra(EXTRA_EPISODE_TVDBID)) {
-            return;
-        }
         int episodeTvdbvId = intent.getIntExtra(EXTRA_EPISODE_TVDBID, -1);
         if (episodeTvdbvId <= 0) {
             return;
@@ -38,15 +35,18 @@ public class NotificationActionReceiver extends BroadcastReceiver {
         if (query == null) {
             return;
         }
-        if (query.moveToFirst()) {
-            int showTvdbId = query.getInt(0);
-            int season = query.getInt(1);
-            int episode = query.getInt(2);
-            // mark episode watched
-            EpisodeTools.episodeWatched(context, showTvdbId, episodeTvdbvId, season, episode,
-                    EpisodeFlags.WATCHED);
+        if (!query.moveToFirst()) {
+            query.close();
+            return;
         }
+        int showTvdbId = query.getInt(0);
+        int season = query.getInt(1);
+        int episode = query.getInt(2);
         query.close();
+
+        // mark episode watched
+        EpisodeTools.episodeWatched(context, showTvdbId, episodeTvdbvId, season, episode,
+                EpisodeFlags.WATCHED);
 
         // dismiss the notification
         NotificationManagerCompat manager = NotificationManagerCompat.from(context);

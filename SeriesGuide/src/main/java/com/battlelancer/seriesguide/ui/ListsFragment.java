@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
@@ -28,6 +29,7 @@ import com.battlelancer.seriesguide.settings.ListsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.ListsTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -40,7 +42,6 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
 
     /** LoaderManager is created unique to fragment, so use same id for all of them */
     private static final int LOADER_ID = 1;
-
     private static final String TAG = "Lists";
 
     public static ListsFragment newInstance(String list_id) {
@@ -58,31 +59,36 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
         String LIST_ID = "list_id";
     }
 
-    private ListItemsAdapter mAdapter;
+    private ListItemsAdapter adapter;
+    private TextView emptyView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        emptyView = view.findViewById(android.R.id.empty);
+        ViewTools.setVectorIconTop(emptyView.getContext().getTheme(), emptyView,
+                R.drawable.ic_list_white_24dp);
+        return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new ListItemsAdapter(getActivity(), onItemClickListener);
+        adapter = new ListItemsAdapter(getActivity(), onItemClickListener);
 
         if (getView() == null) {
             return;
         }
 
         // setup grid view
-        GridView gridView = (GridView) getView().findViewById(android.R.id.list);
+        GridView gridView = getView().findViewById(android.R.id.list);
         // enable app bar scrolling out of view only on L or higher
         ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
-        gridView.setAdapter(mAdapter);
+        gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(this);
-        gridView.setEmptyView(getView().findViewById(android.R.id.empty));
+        gridView.setEmptyView(emptyView);
         gridView.setFastScrollAlwaysVisible(false);
         gridView.setFastScrollEnabled(true);
 
@@ -110,7 +116,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        final Cursor listItem = (Cursor) mAdapter.getItem(position);
+        final Cursor listItem = (Cursor) adapter.getItem(position);
         int itemType = listItem.getInt(ListItemsAdapter.Query.ITEM_TYPE);
         String itemRefId = listItem.getString(ListItemsAdapter.Query.ITEM_REF_ID);
 
@@ -118,9 +124,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
         switch (itemType) {
             case 1: {
                 // display show overview
-                intent = new Intent(getActivity(), OverviewActivity.class);
-                intent.putExtra(OverviewActivity.EXTRA_INT_SHOW_TVDBID,
-                        Integer.valueOf(itemRefId));
+                intent = OverviewActivity.intentShow(getActivity(), Integer.valueOf(itemRefId));
                 break;
             }
             case 2: {
@@ -169,12 +173,12 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
 
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-            mAdapter.swapCursor(data);
+            adapter.swapCursor(data);
         }
 
         @Override
         public void onLoaderReset(Loader<Cursor> loader) {
-            mAdapter.swapCursor(null);
+            adapter.swapCursor(null);
         }
     };
 

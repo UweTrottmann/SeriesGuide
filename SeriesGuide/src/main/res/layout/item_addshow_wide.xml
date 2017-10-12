@@ -39,10 +39,10 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/description_menu_overflow"
         android:scaleType="centerInside"
-        android:tint="?attr/sgColorIcon"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_more_vert_white_20dp" />
+        app:srcCompat="@drawable/ic_more_vert_black_20dp"
+        app:tint="?attr/sgColorIcon" />
 
     <com.battlelancer.seriesguide.widgets.AddIndicator
         android:id="@+id/addIndicatorAddShow"

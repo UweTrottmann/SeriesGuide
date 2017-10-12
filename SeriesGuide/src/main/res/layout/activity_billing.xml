@@ -72,9 +72,11 @@
                     android:layout_below="@+id/buttonBillingGetSubscription"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/inline_padding"
+                    android:gravity="center_horizontal"
+                    android:maxWidth="250dp"
                     android:textAppearance="@style/TextAppearance.Body.Highlight"
                     android:textStyle="italic"
-                    tools:text="1.99 €/year, 30 day trial" />
+                    tools:text="1.99 €/year, try for free, cancel any time through Google Play" />
 
                 <Button
                     android:id="@+id/buttonBillingGetPass"

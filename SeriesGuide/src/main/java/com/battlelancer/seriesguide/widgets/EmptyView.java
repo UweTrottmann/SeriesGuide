@@ -22,8 +22,8 @@ public class EmptyView extends FrameLayout {
         super(context, attrs);
 
         LayoutInflater.from(context).inflate(R.layout.empty_view, this, true);
-        emptyViewText = (TextView) findViewById(R.id.textViewEmptyView);
-        emptyViewButton = (Button) findViewById(R.id.buttonEmptyView);
+        emptyViewText = findViewById(R.id.textViewEmptyView);
+        emptyViewButton = findViewById(R.id.buttonEmptyView);
 
         TypedArray a = context.getTheme()
                 .obtainStyledAttributes(attrs, R.styleable.EmptyView, 0, 0);

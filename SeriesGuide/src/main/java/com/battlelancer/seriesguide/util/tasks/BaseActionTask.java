@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.util.tasks;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.CallSuper;
@@ -20,6 +21,7 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
     public static final int ERROR_TRAKT_API_NOT_FOUND = -5;
     public static final int ERROR_HEXAGON_API = -6;
 
+    @SuppressLint("StaticFieldLeak") // using application context
     private final Context context;
     private boolean isSendingToHexagon;
     private boolean isSendingToTrakt;
@@ -100,7 +102,7 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
         }
         EventBus.getDefault()
                 .post(new BaseNavDrawerActivity.ServiceCompletedEvent(confirmationText,
-                        displaySuccess));
+                        displaySuccess, null));
     }
 
     protected Context getContext() {

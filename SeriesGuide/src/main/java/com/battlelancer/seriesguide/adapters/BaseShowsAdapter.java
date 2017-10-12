@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ViewTools;
 
@@ -35,9 +34,9 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         this.onItemClickListener = listener;
 
         Resources.Theme theme = activity.getTheme();
-        drawableStar = ViewTools.createVectorIcon(activity, theme,
+        drawableStar = ViewTools.vectorIconActive(activity, theme,
                 R.drawable.ic_star_black_24dp);
-        drawableStarZero = ViewTools.createVectorIcon(activity, theme,
+        drawableStarZero = ViewTools.vectorIconActive(activity, theme,
                 R.drawable.ic_star_border_black_24dp);
     }
 
@@ -87,14 +86,14 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         private OnItemClickListener clickListener;
 
         public ShowViewHolder(View v, OnItemClickListener onItemClickListener) {
-            name = (TextView) v.findViewById(R.id.seriesname);
-            timeAndNetwork = (TextView) v.findViewById(R.id.textViewShowsTimeAndNetwork);
-            episode = (TextView) v.findViewById(R.id.TextViewShowListNextEpisode);
-            episodeTime = (TextView) v.findViewById(R.id.episodetime);
-            remainingCount = ButterKnife.findById(v, R.id.textViewShowsRemaining);
-            poster = (ImageView) v.findViewById(R.id.showposter);
-            favorited = (ImageView) v.findViewById(R.id.favoritedLabel);
-            contextMenu = (ImageView) v.findViewById(R.id.imageViewShowsContextMenu);
+            name = v.findViewById(R.id.seriesname);
+            timeAndNetwork = v.findViewById(R.id.textViewShowsTimeAndNetwork);
+            episode = v.findViewById(R.id.TextViewShowListNextEpisode);
+            episodeTime = v.findViewById(R.id.episodetime);
+            remainingCount = v.findViewById(R.id.textViewShowsRemaining);
+            poster = v.findViewById(R.id.showposter);
+            favorited = v.findViewById(R.id.favoritedLabel);
+            contextMenu = v.findViewById(R.id.imageViewShowsContextMenu);
             clickListener = onItemClickListener;
 
             // favorite star

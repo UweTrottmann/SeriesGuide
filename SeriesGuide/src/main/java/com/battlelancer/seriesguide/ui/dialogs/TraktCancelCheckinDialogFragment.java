@@ -8,7 +8,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.os.AsyncTaskCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.text.format.DateUtils;
@@ -99,7 +98,8 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
 
                             // relaunch the trakt task which called us to
                             // try the check in again
-                            AsyncTaskCompat.executeParallel(new TraktTask(context, args));
+                            new TraktTask(context, args).executeOnExecutor(
+                                    AsyncTask.THREAD_POOL_EXECUTOR);
                         } else {
                             // well, something went wrong
                             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
@@ -107,7 +107,7 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
                     }
                 };
 
-                AsyncTaskCompat.executeParallel(cancelCheckinTask);
+                cancelCheckinTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         builder.setNegativeButton(R.string.traktcheckin_wait, new OnClickListener() {

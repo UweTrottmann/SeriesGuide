@@ -51,6 +51,7 @@
   <string name="database_error">Datele nu pot fi modificate.</string>
   <string name="reinstall_info">Încercați sa creați o copie de rezerva în Setări, reinstalati și restaurati.</string>
   <string name="api_error_generic">Nu s-a putut comunica cu %s. Încercați mai tarziu.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Distribuie</string>
   <string name="share_show">Distribuie emisiunea</string>
@@ -86,10 +87,11 @@
   <string name="episode_writers">Scenarişti</string>
   <string name="show_isalive">Continuă</string>
   <string name="show_isnotalive">Terminat</string>
-  <string name="lastEdit">Ultima editare//TVDb</string>
   <string name="no_translation">Nu există nici o traducere în %1$s disponibilă pe %2$s.</string>
   <string name="no_translation_title">Ne tradus</string>
   <string name="no_spoilers">Unele detalii sunt ascunse pentru a evita spoilere. Pentru a nu folosi aceasta protecție mergeți în Setări.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">astăzi</string>
   <string name="now">acum</string>
@@ -277,10 +279,6 @@
   <string name="hexagon_google_play_missing">Pentru a folosi SeriesGuide Cloud, Google Play Services este necesar.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Trimite pe trakt.</string>
-  <string name="trakt_seen">%s văzut.</string>
-  <string name="trakt_notseen">%s nevăzut.</string>
-  <string name="trakt_collected">%s colectat.</string>
-  <string name="trakt_notcollected">%s necolectat.</string>
   <string name="checkin_success_trakt">%s verificat pe trakt.</string>
   <string name="checkin_canceled_success_trakt">Verificare anulată pe trakt.</string>
   <string name="traktcheckin_cancel">Suprascrie</string>
@@ -363,7 +361,7 @@
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Această aplicație folosește date și imagini ale TVDB sub licența CC BY-NC 4.0.</string>
-  <string name="licence_themoviedb">Acest produs utilizează API-ul TMDb, dar nu este aprobat sau certificată de TMDb.</string>
+  <string name="licence_themoviedb">Acest produs utilizează API-ul TMDb, dar nu este aprobat sau certificat de TMDb.</string>
   <string name="licence_trakt">Această aplicație foloseste date şi imagini ale trakt.</string>
   <string name="about_open_source">SeriesGuide este dezvoltat folosind software open source.</string>
   <string name="licences_and_credits">Licențe și credite</string>
@@ -473,7 +471,7 @@
   <string name="action_upgrade">Deblocați toate opțiunile</string>
   <string name="billing_action_subscribe">Abonează-te</string>
   <string name="billing_action_pass">Obțineți abonamentul X</string>
-  <string name="billing_price_subscribe">%s/an, încercaţi gratis</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">plată unică</string>
   <string name="upgrade_description">Deblocați toate opțiunile, inclusiv notificări, teme si mai multe opțiuni widget-uri liste. Ajută-mă să fac actualizări viitoare.</string>
   <string name="upgrade_success">Mulțumim pentru suportul SeriesGuide! Ai access la toate opțiunile.</string>

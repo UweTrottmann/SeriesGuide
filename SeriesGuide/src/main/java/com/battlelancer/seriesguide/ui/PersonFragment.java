@@ -24,6 +24,7 @@ import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.loaders.PersonLoader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TmdbTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.entities.Person;
@@ -121,9 +122,11 @@ public class PersonFragment extends Fragment {
         this.person = person;
 
         textViewName.setText(person.name);
-        textViewBiography.setText(
-                TextUtils.isEmpty(person.biography) ? getString(R.string.not_available)
-                        : person.biography);
+        String biography = TextUtils.isEmpty(person.biography)
+                ? getString(R.string.not_available)
+                : person.biography;
+        textViewBiography.setText(TextTools.textWithTmdbSource(textViewBiography.getContext(),
+                biography));
 
         if (!TextUtils.isEmpty(person.profile_path)) {
             ServiceUtils.loadWithPicasso(getActivity(),

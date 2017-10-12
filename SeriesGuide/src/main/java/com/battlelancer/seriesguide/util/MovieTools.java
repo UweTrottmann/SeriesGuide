@@ -4,9 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.os.AsyncTaskCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.MovieDetails;
@@ -114,11 +114,13 @@ public class MovieTools {
     }
 
     public static void addToCollection(Context context, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new AddMovieToCollectionTask(context, movieTmdbId));
+        new AddMovieToCollectionTask(context, movieTmdbId).executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public static void addToWatchlist(Context context, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new AddMovieToWatchlistTask(context, movieTmdbId));
+        new AddMovieToWatchlistTask(context, movieTmdbId).executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /**
@@ -141,11 +143,13 @@ public class MovieTools {
     }
 
     public static void removeFromCollection(Context context, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new RemoveMovieFromCollectionTask(context, movieTmdbId));
+        new RemoveMovieFromCollectionTask(context, movieTmdbId).executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public static void removeFromWatchlist(Context context, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new RemoveMovieFromWatchlistTask(context, movieTmdbId));
+        new RemoveMovieFromWatchlistTask(context, movieTmdbId).executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /**
@@ -176,11 +180,13 @@ public class MovieTools {
     }
 
     public static void watchedMovie(Context context, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new SetMovieWatchedTask(context, movieTmdbId));
+        new SetMovieWatchedTask(context, movieTmdbId).executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public static void unwatchedMovie(Context context, int movieTmdbId) {
-        AsyncTaskCompat.executeParallel(new SetMovieUnwatchedTask(context, movieTmdbId));
+        new SetMovieUnwatchedTask(context, movieTmdbId).executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /**

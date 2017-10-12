@@ -10,15 +10,14 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <!-- tint XML attribute uses SRC_ATOP for compat, so make sure to use a white drawable. -->
     <ImageView
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginLeft="@dimen/keyline"
         android:layout_marginRight="@dimen/default_padding"
         android:contentDescription="@null"
-        android:tint="?attr/sgColorIcon"
-        app:srcCompat="@drawable/ic_arrow_forward_white_24dp" />
+        app:srcCompat="@drawable/ic_arrow_forward_black_24dp"
+        app:tint="?attr/sgColorIcon" />
 
     <TextView
         android:id="@+id/textViewNowMoreText"

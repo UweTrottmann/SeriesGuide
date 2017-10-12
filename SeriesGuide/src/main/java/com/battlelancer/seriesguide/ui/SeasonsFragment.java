@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentManager;
@@ -16,7 +18,6 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.os.AsyncTaskCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,6 +36,7 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.SeasonsAdapter;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.service.UnwatchedUpdaterService;
@@ -44,7 +46,7 @@ import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.util.tasks.EpisodeTaskTypes.SeasonWatchedType;
+import com.battlelancer.seriesguide.util.ViewTools;
 import java.lang.ref.WeakReference;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -70,6 +72,8 @@ public class SeasonsFragment extends ListFragment {
     private boolean watchedAllEpisodes;
     private boolean collectedAllEpisodes;
     private RemainingUpdateTask remainingUpdateTask;
+    private VectorDrawableCompat drawableWatchAll;
+    private VectorDrawableCompat drawableCollectAll;
 
     /**
      * All values have to be integer.
@@ -94,6 +98,15 @@ public class SeasonsFragment extends ListFragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_seasons, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        drawableWatchAll = ViewTools.vectorIconActive(buttonWatchedAll.getContext(),
+                buttonWatchedAll.getContext().getTheme(),
+                R.drawable.ic_watch_all_black_24dp);
+        buttonWatchedAll.setImageDrawable(drawableWatchAll);
+        drawableCollectAll = ViewTools.vectorIconActive(buttonCollectedAll.getContext(),
+                buttonCollectedAll.getContext().getTheme(), R.drawable.ic_collect_all_black_24dp);
+        buttonCollectedAll.setImageDrawable(drawableCollectAll);
+
         return view;
     }
 
@@ -189,17 +202,17 @@ public class SeasonsFragment extends ListFragment {
      * Updates the total remaining episodes counter, updates season counters after episode actions.
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(EpisodeTools.EpisodeTaskCompletedEvent event) {
-        if (!event.isSuccessful) {
+    public void onEvent(BaseNavDrawerActivity.ServiceCompletedEvent event) {
+        if (event.episodeJob == null || !event.isSuccessful) {
             return; // no changes applied
         }
         if (!isAdded()) {
             return; // no longer added to activity
         }
         updateRemainingCounter();
-        if (event.flagType instanceof SeasonWatchedType) {
+        if (event.episodeJob instanceof SeasonWatchedJob) {
             // If we can narrow it down to just one season...
-            SeasonWatchedType seasonWatchedType = (SeasonWatchedType) event.flagType;
+            SeasonWatchedJob seasonWatchedType = (SeasonWatchedJob) event.episodeJob;
             getActivity().startService(UnwatchedUpdaterService.buildIntent(getContext(),
                     getShowId(), seasonWatchedType.getSeasonTvdbId()));
         } else {
@@ -260,13 +273,15 @@ public class SeasonsFragment extends ListFragment {
         if (remainingUpdateTask == null
                 || remainingUpdateTask.getStatus() == AsyncTask.Status.FINISHED) {
             remainingUpdateTask = new RemainingUpdateTask(this);
-            AsyncTaskCompat.executeParallel(remainingUpdateTask, String.valueOf(getShowId()));
+            remainingUpdateTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+                    String.valueOf(getShowId()));
         }
     }
 
     private static class RemainingUpdateTask extends AsyncTask<String, Void, int[]> {
 
         private final WeakReference<SeasonsFragment> seasonsFragment;
+        @SuppressLint("StaticFieldLeak") // using application context
         private final Context context;
 
         RemainingUpdateTask(SeasonsFragment seasonsFragment) {
@@ -304,12 +319,12 @@ public class SeasonsFragment extends ListFragment {
 
     private void setWatchedToggleState(int unwatchedEpisodes) {
         watchedAllEpisodes = unwatchedEpisodes == 0;
-        //noinspection ResourceType
-        buttonWatchedAll.setImageResource(watchedAllEpisodes ?
-                Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableWatchedAll)
-                : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableWatchAll));
+        // using vectors is safe because it will be an AppCompatImageView
+        if (watchedAllEpisodes) {
+            buttonWatchedAll.setImageResource(R.drawable.ic_watched_all_24dp);
+        } else {
+            buttonWatchedAll.setImageDrawable(drawableWatchAll);
+        }
         buttonWatchedAll.setContentDescription(
                 getString(watchedAllEpisodes ? R.string.unmark_all : R.string.mark_all));
         // set onClick listener not before here to avoid unexpected actions
@@ -347,10 +362,12 @@ public class SeasonsFragment extends ListFragment {
 
     private void setCollectedToggleState(int uncollectedEpisodes) {
         collectedAllEpisodes = uncollectedEpisodes == 0;
-        //noinspection ResourceType
-        buttonCollectedAll.setImageResource(collectedAllEpisodes ? R.drawable.ic_collected_all
-                : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                        R.attr.drawableCollectAll));
+        // using vectors is safe because it will be an AppCompatImageView
+        if (collectedAllEpisodes) {
+            buttonCollectedAll.setImageResource(R.drawable.ic_collected_all_24dp);
+        } else {
+            buttonCollectedAll.setImageDrawable(drawableCollectAll);
+        }
         buttonCollectedAll.setContentDescription(
                 getString(collectedAllEpisodes ? R.string.uncollect_all : R.string.collect_all));
         // set onClick listener not before here to avoid unexpected actions

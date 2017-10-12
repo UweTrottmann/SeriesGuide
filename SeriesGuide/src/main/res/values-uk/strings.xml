@@ -51,6 +51,7 @@
   <string name="database_error">Не вдалося змінити дані.</string>
   <string name="reinstall_info">Спробуйте зберегти копію в Налаштування, повторна інсталяція та відновлення.</string>
   <string name="api_error_generic">Не вдалося зв\'язатися з %s. Спробуйте пізніше.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Поділитись</string>
   <string name="share_show">Поділитись серіалом</string>
@@ -86,10 +87,11 @@
   <string name="episode_writers">Сценаристи</string>
   <string name="show_isalive">Продовжується</string>
   <string name="show_isnotalive">Закінчився</string>
-  <string name="lastEdit">Останнє редагування / / TVDb</string>
   <string name="no_translation">Переклад опису з %1$s недоступний для %2$s.</string>
   <string name="no_translation_title">Не перекладено</string>
   <string name="no_spoilers">Деякі деталі приховані для запобігання спойлерам. Щоб вимкнути це використовуйте Налаштцвання.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">сьогодні</string>
   <string name="now">Сьогодні</string>
@@ -277,10 +279,6 @@
   <string name="hexagon_google_play_missing">Щоб використати SeriesGuide Хмару, потрібен Google Play Service.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Надсилання до trakt.</string>
-  <string name="trakt_seen">%s переглянуто.</string>
-  <string name="trakt_notseen">%s не переглянуто.</string>
-  <string name="trakt_collected">%s зібрано.</string>
-  <string name="trakt_notcollected">%s не зібрані.</string>
   <string name="checkin_success_trakt">Відзначено %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Скасована реєстрація на trakt.</string>
   <string name="traktcheckin_cancel">Перевизначити</string>
@@ -473,7 +471,7 @@
   <string name="action_upgrade">Розблокувати усі можливості</string>
   <string name="billing_action_subscribe">Підписатись</string>
   <string name="billing_action_pass">Отримати X Pass</string>
-  <string name="billing_price_subscribe">%s/рік, спробуй безкоштовно</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">Одноразове замовлення</string>
   <string name="upgrade_description">Розблокуйте усі функції включно зі сповіщеннями, темами і більшою кількістю опцій для віджетів. Допоможіть випускати майбутні оновлення.</string>
   <string name="upgrade_success">Дякую за підтримку SeriesGuide! Тепер ви маєте доступ до всіх функцій.</string>

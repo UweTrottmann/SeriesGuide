@@ -1,83 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/appwidget_row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:baselineAligned="false"
     android:minHeight="48dp"
+    android:orientation="horizontal"
     android:paddingBottom="@dimen/widget_padding_inline"
     android:paddingLeft="@dimen/widget_padding_default"
     android:paddingRight="@dimen/widget_padding_default"
     android:paddingTop="@dimen/widget_padding_inline"
-    tools:background="@android:color/holo_red_dark"
+    tools:background="@android:color/holo_orange_light"
     tools:ignore="UnusedAttribute,RtlHardcoded">
 
     <ImageView
         android:id="@+id/widgetPoster"
         android:layout_width="@dimen/widget_item_width"
         android:layout_height="@dimen/widget_item_height"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="@dimen/default_padding"
         android:contentDescription="@null"
         android:scaleType="centerInside"
         android:src="@drawable/ic_image_missing"
         tools:src="@color/black_38" />
 
-    <TextView
-        android:id="@+id/textViewWidgetShow"
-        android:layout_width="wrap_content"
+    <!-- Wrap in LinearLayout to avoid text overlapping image if small. -->
+    <RelativeLayout
+        android:id="@+id/relativeLayoutWidgetText"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/widgetNetwork"
-        android:layout_toRightOf="@+id/widgetPoster"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:layout_marginRight="4dp"
-        android:paddingTop="2dp"
-        android:textAppearance="@style/TextAppearance.Body.Bold"
-        android:textColor="@color/black_87"
-        android:textSize="@dimen/widget_text_large"
-        tools:ignore="RtlSymmetry"
-        tools:text="2 Broke Girls" />
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/textViewWidgetEpisode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewWidgetShow"
-        android:layout_toLeftOf="@+id/widgetAirtime"
-        android:layout_toRightOf="@+id/widgetPoster"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:layout_marginRight="4dp"
-        android:textColor="@color/black_87"
-        android:textSize="@dimen/widget_text_large"
-        tools:ignore="RtlSymmetry"
-        tools:text="2x13 If The Time Ever Comes" />
+        <TextView
+            android:id="@+id/textViewWidgetShow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/widgetNetwork"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Body.Bold"
+            android:textColor="@color/black_87"
+            android:textSize="@dimen/widget_text_large"
+            tools:ignore="RtlSymmetry"
+            tools:text="Star Trek: Discovery" />
 
-    <TextView
-        android:id="@+id/widgetNetwork"
-        style="@style/Widget.SeriesGuide.TextView.SingleLine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:ellipsize="start"
-        android:fontFamily="sans-serif-condensed"
-        android:maxWidth="90dp"
-        android:paddingTop="2dp"
-        android:textColor="@color/black_54"
-        android:textSize="@dimen/widget_text_large"
-        tools:text="Showtime Network · 08:00 PM" />
+        <TextView
+            android:id="@+id/textViewWidgetEpisode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textViewWidgetShow"
+            android:layout_marginRight="1sp"
+            android:layout_toLeftOf="@+id/widgetAirtime"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Body"
+            android:textColor="@color/black_87"
+            android:textSize="@dimen/widget_text_large"
+            tools:ignore="RtlSymmetry"
+            tools:text="2x13 If The Time Ever Comes" />
 
-    <TextView
-        android:id="@+id/widgetAirtime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/widgetNetwork"
-        android:fontFamily="sans-serif-condensed"
-        android:maxLines="1"
-        android:textColor="@color/black_54"
-        android:textSize="@dimen/widget_text_large"
-        tools:text="Mon yesterday" />
+        <TextView
+            android:id="@+id/widgetNetwork"
+            style="@style/Widget.SeriesGuide.TextView.SingleLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="1sp"
+            android:ellipsize="start"
+            android:fontFamily="sans-serif-condensed"
+            android:maxWidth="180dp"
+            android:textColor="@color/black_54"
+            android:textSize="@dimen/widget_text_large"
+            tools:text="Showtime Network · 08:00 PM" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/widgetAirtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/widgetNetwork"
+            android:fontFamily="sans-serif-condensed"
+            android:maxLines="1"
+            android:textColor="@color/black_54"
+            android:textSize="@dimen/widget_text_large"
+            tools:text="Mon yesterday" />
+
+    </RelativeLayout>
+
+</LinearLayout>

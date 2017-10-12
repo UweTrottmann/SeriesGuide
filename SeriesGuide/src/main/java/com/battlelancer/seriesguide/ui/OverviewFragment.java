@@ -13,7 +13,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.os.AsyncTaskCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -173,19 +172,23 @@ public class OverviewFragment extends Fragment implements
         CheatSheet.setup(buttonCheckin);
         CheatSheet.setup(buttonWatch);
         CheatSheet.setup(buttonSkip);
+        Resources.Theme theme = getActivity().getTheme();
+        ViewTools.setVectorIconTop(theme, buttonWatch, R.drawable.ic_watch_black_24dp);
+        ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
+        ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonCheckin, R.drawable.ic_checkin_black_24dp);
 
         // ratings
         CheatSheet.setup(containerRatings, R.string.action_rate);
         textRatingRange.setText(getString(R.string.format_rating_range, 10));
 
         // comments button
-        Resources.Theme theme = getActivity().getTheme();
-        ViewTools.setVectorDrawableLeft(theme, buttonComments, R.drawable.ic_forum_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonComments, R.drawable.ic_forum_black_24dp);
 
         // other bottom buttons
-        ViewTools.setVectorDrawableLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorDrawableLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorDrawableLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp);
 
         return v;
     }
@@ -691,10 +694,12 @@ public class OverviewFragment extends Fragment implements
 
         // collected button
         boolean isCollected = episode.getInt(EpisodeQuery.COLLECTED) == 1;
-        ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(buttonCollect, 0,
-                isCollected ? R.drawable.ic_collected
-                        : Utils.resolveAttributeToResourceId(getActivity().getTheme(),
-                                R.attr.drawableCollect), 0, 0);
+        Resources.Theme theme = getContext().getTheme();
+        if (isCollected) {
+            ViewTools.setVectorDrawableTop(theme, buttonCollect, R.drawable.ic_collected_24dp);
+        } else {
+            ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
+        }
         buttonCollect.setText(isCollected ? R.string.action_collection_remove
                 : R.string.action_collection_add);
         CheatSheet.setup(buttonCollect, isCollected ? R.string.action_collection_remove
@@ -747,17 +752,16 @@ public class OverviewFragment extends Fragment implements
         String overview = currentEpisodeCursor.getString(EpisodeQuery.OVERVIEW);
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
-            textDescription.setText(getString(R.string.no_translation,
+            overview = getString(R.string.no_translation,
                     LanguageTools.getShowLanguageStringFor(getContext(),
                             showCursor.getString(ShowQuery.SHOW_LANGUAGE)),
-                    getString(R.string.tvdb)));
-        } else {
-            if (DisplaySettings.preventSpoilers(getContext())) {
-                textDescription.setText(R.string.no_spoilers);
-            } else {
-                textDescription.setText(overview);
-            }
+                    getString(R.string.tvdb));
+        } else if (DisplaySettings.preventSpoilers(getContext())) {
+                overview = getString(R.string.no_spoilers);
         }
+        long lastEditSeconds = currentEpisodeCursor.getLong(EpisodeQuery.LAST_EDITED);
+        textDescription.setText(TextTools.textWithTvdbSource(textDescription.getContext(),
+                overview, lastEditSeconds));
     }
 
     @Override
@@ -833,7 +837,7 @@ public class OverviewFragment extends Fragment implements
             int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             ratingsTask = new TraktRatingsTask(getContext(), showTvdbId,
                     currentEpisodeTvdbId, seasonNumber, episodeNumber);
-            AsyncTaskCompat.executeParallel(ratingsTask);
+            ratingsTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -851,12 +855,12 @@ public class OverviewFragment extends Fragment implements
         }
 
         // status
-        final TextView statusText = (TextView) getView().findViewById(R.id.showStatus);
+        final TextView statusText = getView().findViewById(R.id.showStatus);
         ShowTools.setStatusAndColor(statusText, show.getInt(ShowQuery.SHOW_STATUS));
 
         // favorite
         boolean isFavorite = show.getInt(ShowQuery.SHOW_FAVORITE) == 1;
-        ViewTools.setVectorDrawable(getActivity().getTheme(), buttonFavorite, isFavorite
+        ViewTools.setVectorIcon(getActivity().getTheme(), buttonFavorite, isFavorite
                 ? R.drawable.ic_star_black_24dp
                 : R.drawable.ic_star_border_black_24dp);
         buttonFavorite.setContentDescription(getString(isFavorite ? R.string.context_unfavorite
@@ -885,7 +889,7 @@ public class OverviewFragment extends Fragment implements
             // "Mon 08:30"
             time = dayString + " " + timeString;
         }
-        TextView textViewNetworkAndTime = ButterKnife.findById(getView(), R.id.showmeta);
+        TextView textViewNetworkAndTime = getView().findViewById(R.id.showmeta);
         textViewNetworkAndTime.setText(TextTools.dotSeparate(network, time));
 
         // episode description might need show language, so update it here as well

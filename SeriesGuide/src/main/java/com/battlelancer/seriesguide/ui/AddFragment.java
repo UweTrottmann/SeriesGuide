@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -148,8 +147,7 @@ public abstract class AddFragment extends Fragment {
             if (show != null && show.state != SearchResult.STATE_ADDING) {
                 if (show.state == SearchResult.STATE_ADDED) {
                     // already in library, open it
-                    startActivity(new Intent(getContext(), OverviewActivity.class).putExtra(
-                            OverviewActivity.EXTRA_INT_SHOW_TVDBID, show.tvdbid));
+                    startActivity(OverviewActivity.intentShow(getContext(), show.tvdbid));
                 } else {
                     // guard against onClick called after fragment is paged away (multi-touch)
                     // onSaveInstanceState might already be called

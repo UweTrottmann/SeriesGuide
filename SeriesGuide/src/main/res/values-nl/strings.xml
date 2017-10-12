@@ -20,7 +20,7 @@
   <string name="season_number">Seizoen %d</string>
   <string name="seasons">Seizoenen</string>
   <string name="specialseason">Speciale afleveringen</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">Beoordelingen</string>
   <!-- Descriptions -->
   <string name="description_overview">Overzicht</string>
   <string name="description_poster">Affiche weergeven</string>
@@ -51,6 +51,7 @@
   <string name="database_error">Wijziging niet mogelijk.</string>
   <string name="reinstall_info">Maak een backup, installeer opnieuw en herstel.</string>
   <string name="api_error_generic">Kon niet praten met %s. Probeer later opnieuw</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Delen</string>
   <string name="share_show">Serie delen</string>
@@ -85,10 +86,11 @@
   <string name="episode_writers">Schrijvers</string>
   <string name="show_isalive">Lopende serie</string>
   <string name="show_isnotalive">Afgelopen</string>
-  <string name="lastEdit">Laatste bewerking //TVDb</string>
   <string name="no_translation">Er is geen beschrijving vertaald naar %1$s beschikbaar op %2$s.</string>
   <string name="no_translation_title">Niet vertaald</string>
   <string name="no_spoilers">Sommige details zijn verborgen om te voorkomen dat je spoilers ziet. Om dit uit te zetten ga naar Instellingen.</string>
+  <string name="format_source">Bron: %s</string>
+  <string name="format_last_edited">Aangepast op: %s</string>
   <!-- Date and Time -->
   <string name="today">vandaag</string>
   <string name="now">nu</string>
@@ -248,15 +250,15 @@
     <item quantity="other">%d minuten</item>
   </plurals>
   <!-- Features -->
-  <string name="feature_supported">Supported</string>
-  <string name="feature_not_supported">Not supported</string>
-  <string name="feature_history">Personal and friend history</string>
-  <string name="feature_comments">Post comments</string>
-  <string name="feature_sync">Sync</string>
+  <string name="feature_supported">Ondersteund</string>
+  <string name="feature_not_supported">Niet ondersteund</string>
+  <string name="feature_history">Persoonlijke en vriendengeschiedenis</string>
+  <string name="feature_comments">Reacties</string>
+  <string name="feature_sync">Synchronisatie</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimenteel!</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helpt uw series, lijsten en films te synchroniseren en te back-uppen.</string>
+  <string name="hexagon_warning_trakt">Terwijl u aangemeld bent bij SeriesGuide Cloud zijn bepaalde functies van trakt niet beschikbaar.</string>
   <string name="hexagon_signin">Log in</string>
   <string name="hexagon_signout">Uitloggen</string>
   <string name="hexagon_setup_incomplete">SeriesGuide cloud instellen is niet afgerond.</string>
@@ -270,10 +272,6 @@
   <string name="hexagon_google_play_missing">Voor het gebruik van Seriesguide Cloud moeten Google Play services zijn geïnstalleerd.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Toevoegen aan trakt.</string>
-  <string name="trakt_seen">%s bekeken.</string>
-  <string name="trakt_notseen">%s niet bekeken.</string>
-  <string name="trakt_collected">%s verzameld.</string>
-  <string name="trakt_notcollected">%s niet verzameld.</string>
   <string name="checkin_success_trakt">Aangemeld bij %s op trakt.</string>
   <string name="checkin_canceled_success_trakt">Check-in bij trakt geannuleerd.</string>
   <string name="traktcheckin_cancel">Overschrijven</string>
@@ -462,7 +460,7 @@
   <string name="action_upgrade">Open alle restricties</string>
   <string name="billing_action_subscribe">Abonneren</string>
   <string name="billing_action_pass">Neem X-pas</string>
-  <string name="billing_price_subscribe">%s/jaar, probeer het gratis</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">eenmalige aankoop</string>
   <string name="upgrade_description">Ontgrendel alle toekomstige uitbreidingen, inclusief notificaties\' thema\'s en andere opties. Help me om deze applicatie uit te bereiden in de toekomst.</string>
   <string name="upgrade_success">Bedankt om Seriesguide te laten groeien. Je hebt toegang tot alle mogelijkheden.</string>

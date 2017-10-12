@@ -51,6 +51,7 @@
   <string name="database_error">Не получается модифицирофавать данные.</string>
   <string name="reinstall_info">Попробуйте сделать бэкап в настройках, переустановите приложение и восстановите данные.</string>
   <string name="api_error_generic">Не могу связаться с %s. Попробуйте позже.</string>
+  <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
   <string name="share">Отправить</string>
   <string name="share_show">Поделиться сериалом</string>
@@ -86,10 +87,11 @@
   <string name="episode_writers">Сценаристы</string>
   <string name="show_isalive">Продолжается</string>
   <string name="show_isnotalive">Завершён</string>
-  <string name="lastEdit">Последние изменения / / TVDb</string>
   <string name="no_translation">Перевод описания с %1$s недоступно для %2$s.</string>
   <string name="no_translation_title">Не переведено</string>
   <string name="no_spoilers">Некоторые детали скрыты, чтобы предотвратить спойлеры. Чтобы отключить эту функцию, перейдите в Настройки.</string>
+  <string name="format_source">Source: %s</string>
+  <string name="format_last_edited">Last edited: %s</string>
   <!-- Date and Time -->
   <string name="today">сегодня</string>
   <string name="now">сейчас</string>
@@ -277,10 +279,6 @@
   <string name="hexagon_google_play_missing">Чтобы использовать облако SeriesGuide, требуются службы Google Play.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Отправка в trakt.</string>
-  <string name="trakt_seen">%s просмотрено.</string>
-  <string name="trakt_notseen">%s не просмотрено.</string>
-  <string name="trakt_collected">%s собрано.</string>
-  <string name="trakt_notcollected">%s не в коллекции.</string>
   <string name="checkin_success_trakt">Отмечено в %s на trakt.</string>
   <string name="checkin_canceled_success_trakt">Отменена регистрация на trakt.</string>
   <string name="traktcheckin_cancel">Отменить</string>
@@ -473,7 +471,7 @@
   <string name="action_upgrade">Разблокировать все возможности</string>
   <string name="billing_action_subscribe">Подписка</string>
   <string name="billing_action_pass">Получить X Pass</string>
-  <string name="billing_price_subscribe">%s/год, попробуйте бесплатно</string>
+  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">Единоразовая покупка</string>
   <string name="upgrade_description">Разблокируйте все возможности, включая уведомления, темы и расширенные настройки виджета. Помогите мне выпускать будущие обновления.</string>
   <string name="upgrade_success">Спасибо за поддержку SeriesGuide! У вас есть доступ ко всем расширенным возможностям.</string>
