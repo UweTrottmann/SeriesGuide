@@ -28,6 +28,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Toast;
@@ -320,8 +321,10 @@ public class Utils {
             try {
                 context.startActivity(intent);
                 handled = true;
-            } catch (ActivityNotFoundException ignored) {
+            } catch (ActivityNotFoundException | SecurityException e) {
                 // catch failure to handle explicit intents
+                // log in release builds to help extension developers debug
+                Log.i("Utils", "Failed to launch intent.", e);
             }
         }
 
