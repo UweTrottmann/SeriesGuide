@@ -7,7 +7,20 @@ All dates are in the European Central timezone.
 
 Version 39
 ----------
-*(in development)*
+*(2017-10-12)*
+
+* SeriesGuide Cloud and trakt: For episodes, 'Set watched' and 'Add to collection' is re-tried on 
+  failure, queued while offline.
+* Display source of show, episode, movie and person data.
+* Allow network text on widget to be wider.
+* Improve detecting new, updated and removed extensions.
+
+#### 39
+*(2017-10-12)*
+
+* 🔨 Crash if opening external app fails.
+* 🔨 Crash if trying to remove broken extension.
+* 📝 Latest translations from crowdin.
 
 #### 39-beta6
 *(2017-09-29)*

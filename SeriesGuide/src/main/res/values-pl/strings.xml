@@ -51,7 +51,7 @@
   <string name="database_error">Nie można zmodyfikować danych.</string>
   <string name="reinstall_info">Spróbuj zrobić kopię zapasową w ustawieniach, przeinstalować program i przywrócić ustawienia.</string>
   <string name="api_error_generic">Nie można połączyć z %s. Spróbuj ponownie później.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">Błąd: %s</string>
   <!-- Sharing -->
   <string name="share">Udostępnij</string>
   <string name="share_show">Współdziel serial</string>

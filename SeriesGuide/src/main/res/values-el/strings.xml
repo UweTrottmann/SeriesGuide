@@ -20,7 +20,7 @@
   <string name="season_number">Κύκλος %d</string>
   <string name="seasons">Σεζόν</string>
   <string name="specialseason">Ειδικά Επεισόδια</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">Βαθμολογίες</string>
   <!-- Descriptions -->
   <string name="description_overview">Επισκόπηση</string>
   <string name="description_poster">Εμφάνιση αφίσας</string>
@@ -51,7 +51,7 @@
   <string name="database_error">Δεν ήταν δυνατή η τροποποίηση δεδομένων.</string>
   <string name="reinstall_info">Προσπαθήστε να κρατήσετε αντίγραφο ασφαλείας στις Ρυθμίσεις, να εγκαταστήσετε ξανά την εφαρμογή και να κάνετε επαναφορά.</string>
   <string name="api_error_generic">Δεν είναι δυνατή η επικοινωνία με το %s. Ξαναδοκιμάστε αργότερα.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">Αποτυχία: %s</string>
   <!-- Sharing -->
   <string name="share">Μοίρασε</string>
   <string name="share_show">Κοινοποίηση σειράς</string>
@@ -89,8 +89,8 @@
   <string name="no_translation">Δεν υπάρχει περιγραφή μεταφρασμένη στα %1$s διαθέσιμη στο %2$s.</string>
   <string name="no_translation_title">Χωρίς μετάφραση</string>
   <string name="no_spoilers">Κάποιες λεπτομέρειες είναι μη ορατές ώστε να μην αποκαλυφθούν πληροφορίες για την υπόθεση. Για να το απενεργοποιήσετε πηγαίνετε στις Ρυθμίσεις.</string>
-  <string name="format_source">Source: %s</string>
-  <string name="format_last_edited">Last edited: %s</string>
+  <string name="format_source">Πηγή: %s</string>
+  <string name="format_last_edited">Τελευταία τροποποίηση: %s</string>
   <!-- Date and Time -->
   <string name="today">Σήμερα</string>
   <string name="now">τώρα</string>
@@ -120,7 +120,7 @@
   <string name="favorited">Προστέθηκε στα αγαπημένα</string>
   <string name="unfavorited">Αφαιρέθηκε από τα αγαπημένα</string>
   <string name="action_episode_notifications_on">Turn on episode notifications</string>
-  <string name="action_episode_notifications_off">Turn off episode notifications</string>
+  <string name="action_episode_notifications_off">Απενεργοποίηση ειδοποιήσεων επεισοδίων</string>
   <string name="context_hide">Απόκρυψη</string>
   <string name="context_unhide">Εμφάνιση</string>
   <string name="hidden">Κρυφή σειρα </string>
@@ -155,9 +155,9 @@
   <string name="released_today">Κυκλοφόρησαν σήμερα</string>
   <string name="noupcoming">Δεν υπάρχουν επερχόμενα επεισόδια.</string>
   <string name="norecent">Δεν υπάρχουν πρόσφατα επεισόδια.</string>
-  <string name="calendar_settings">Calendar settings</string>
+  <string name="calendar_settings">Ρυθμίσεις ημερολογίου</string>
   <string name="only_favorites">Μόνο αγαπημένες σειρές</string>
-  <string name="calendar_only_collected">Only collected episodes</string>
+  <string name="calendar_only_collected">Μόνο επεισόδια από την συλλογή</string>
   <string name="pref_infinite_scrolling">Απεριόριστο ημερολόγιο</string>
   <!-- Updating -->
   <string name="update_scheduled">Ενημέρωση&#8230;</string>
@@ -250,8 +250,8 @@
     <item quantity="other">%d λεπτά</item>
   </plurals>
   <!-- Features -->
-  <string name="feature_supported">Supported</string>
-  <string name="feature_not_supported">Not supported</string>
+  <string name="feature_supported">Υποστηρίζεται</string>
+  <string name="feature_not_supported">Δεν υποστηρίζεται</string>
   <string name="feature_history">Personal and friend history</string>
   <string name="feature_comments">Post comments</string>
   <string name="feature_sync">Sync</string>

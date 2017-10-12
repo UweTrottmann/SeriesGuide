@@ -51,7 +51,7 @@
   <string name="database_error">לא הייתה אפשרות לשנות את הנתונים.</string>
   <string name="reinstall_info">נסה לגבות את ההגדרות, להתקין מחדש, ולשחזר.</string>
   <string name="api_error_generic">לא יכולה לדבר עם %s. נסה שוב מאוחר יותר.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">נכשל: %s</string>
   <!-- Sharing -->
   <string name="share">שתף</string>
   <string name="share_show">שתף סדרה</string>
