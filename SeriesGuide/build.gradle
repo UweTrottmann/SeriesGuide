@@ -176,7 +176,7 @@ dependencies {
 
     // App Engine
     // https://github.com/google/google-api-java-client/commits/dev
-    compile('com.google.api-client:google-api-client-android:1.22.0') {
+    compile('com.google.api-client:google-api-client-android:1.23.0') {
         exclude group: 'com.google.android.google-play-services' // including latest ourselves
         exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
         exclude group: 'com.google.guava', module: 'guava-jdk5' // out of date, conflict with dagger
