@@ -85,8 +85,9 @@ public class EpisodeTools {
      * release date).
      */
     public static void episodeWatchedPrevious(Context context, int showTvdbId,
-            long episodeFirstAired) {
-        execute(context, new EpisodeWatchedPreviousJob(showTvdbId, episodeFirstAired));
+            long episodeFirstAired, int episodeNumber) {
+        execute(context,
+                new EpisodeWatchedPreviousJob(showTvdbId, episodeFirstAired, episodeNumber));
     }
 
     public static void seasonWatched(Context context, int showTvdbId, int seasonTvdbId, int season,

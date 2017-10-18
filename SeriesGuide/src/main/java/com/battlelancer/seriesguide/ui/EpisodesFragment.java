@@ -238,7 +238,8 @@ public class EpisodesFragment extends ListFragment
                         return true;
                     }
                     case R.id.menu_action_episodes_watched_previous: {
-                        onMarkUntilHere(releaseTimeMs);
+                        EpisodeTools.episodeWatchedPrevious(getContext(), getShowId(),
+                                releaseTimeMs, episodeNumber);
                         Utils.trackContextMenu(getActivity(), TAG, "Flag previously aired");
                         return true;
                     }
@@ -272,11 +273,6 @@ public class EpisodesFragment extends ListFragment
     public void onFlagEpisodeCollected(int episodeTvdbId, int episode, boolean isCollected) {
         EpisodeTools.episodeCollected(getContext(), getShowId(), episodeTvdbId,
                 getSeasonNumber(), episode, isCollected);
-    }
-
-    private void onMarkUntilHere(long episodeFirstReleaseMs) {
-        EpisodeTools.episodeWatchedPrevious(getContext(), getShowId(),
-                episodeFirstReleaseMs);
     }
 
     private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks
