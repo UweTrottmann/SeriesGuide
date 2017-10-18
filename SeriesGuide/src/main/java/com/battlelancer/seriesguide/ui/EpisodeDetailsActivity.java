@@ -159,15 +159,13 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
             if (seasonTvdbId == 0) {
                 return true; // season tvdb not determined yet, have no idea where to go up to.
             }
-            Intent upIntent = new Intent(this, EpisodesActivity.class);
-            upIntent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, seasonTvdbId);
+            Intent upIntent = OverviewActivity.intentSeasons(this, showTvdbId);
             if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
                 // This activity is not part of the application's task, so
                 // create a new task with a synthesized back stack.
                 TaskStackBuilder
                         .create(this)
                         .addNextIntent(new Intent(this, ShowsActivity.class))
-                        .addNextIntent(OverviewActivity.intentShow(this, showTvdbId))
                         .addNextIntent(upIntent)
                         .startActivities();
                 finish();

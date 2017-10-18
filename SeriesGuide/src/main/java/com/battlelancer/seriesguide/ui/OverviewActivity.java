@@ -43,14 +43,14 @@ import org.greenrobot.eventbus.ThreadMode;
  */
 public class OverviewActivity extends BaseNavDrawerActivity {
 
-    public static final String EXTRA_INT_SHOW_TVDBID = OverviewFragment.ARG_INT_SHOW_TVDBID;
-
     public static final int SHOW_LOADER_ID = 100;
     public static final int SHOW_CREDITS_LOADER_ID = 101;
     public static final int OVERVIEW_EPISODE_LOADER_ID = 102;
     public static final int OVERVIEW_SHOW_LOADER_ID = 103;
     public static final int OVERVIEW_ACTIONS_LOADER_ID = 104;
     public static final int SEASONS_LOADER_ID = 105;
+    private static final String EXTRA_INT_SHOW_TVDBID = OverviewFragment.ARG_INT_SHOW_TVDBID;
+    private static final String EXTRA_BOOLEAN_DISPLAY_SEASONS = "EXTRA_DISPLAY_SEASONS";
 
     // keep reference to adapter while activity is alive
     @SuppressWarnings("FieldCanBeLocal") private NfcAdapter nfcAdapter;
@@ -60,9 +60,15 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     @Nullable @BindView(R.id.viewOverviewShadowEnd) View shadowOverviewEnd;
     @Nullable @BindView(R.id.viewOverviewShadowBottom) View shadowShowBottom;
 
+    /** After opening, switches to overview tab (only if not multi-pane). */
     public static Intent intentShow(Context context, int showTvdbId) {
         return new Intent(context, OverviewActivity.class)
-                .putExtra(OverviewActivity.EXTRA_INT_SHOW_TVDBID, showTvdbId);
+                .putExtra(EXTRA_INT_SHOW_TVDBID, showTvdbId);
+    }
+
+    /** After opening, switches to seasons tab (only if not multi-pane). */
+    public static Intent intentSeasons(Context context, int showTvdbId) {
+        return intentShow(context, showTvdbId).putExtra(EXTRA_BOOLEAN_DISPLAY_SEASONS, true);
     }
 
     @Override
@@ -176,7 +182,8 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         tabsAdapter.notifyTabsChanged();
 
         // select overview to be shown initially
-        pager.setCurrentItem(1);
+        boolean displaySeasons = getIntent().getBooleanExtra(EXTRA_BOOLEAN_DISPLAY_SEASONS, false);
+        pager.setCurrentItem(displaySeasons ? 2 /* seasons */ : 1 /* overview */);
     }
 
     private void findAndRemoveFragment(int fragmentId) {
