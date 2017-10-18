@@ -41,6 +41,7 @@ import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
 import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.TabClickEvent;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.FirstRunView;
@@ -496,7 +497,7 @@ public class ShowsFragment extends Fragment implements
             selection.append(Shows.FAVORITE).append("=1");
         }
 
-        final long timeInAnHour = System.currentTimeMillis() + DateUtils.HOUR_IN_MILLIS;
+        final long timeInAnHour = TimeTools.getCurrentTime(getContext()) + DateUtils.HOUR_IN_MILLIS;
 
         // restrict to shows with a next episode?
         if (isFilterUnwatched) {
