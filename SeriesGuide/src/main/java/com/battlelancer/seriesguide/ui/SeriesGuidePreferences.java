@@ -32,6 +32,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
@@ -108,7 +109,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
     }
 
     private void setupActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.sgToolbar);
+        Toolbar toolbar = findViewById(R.id.sgToolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -278,8 +279,11 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             Preference enabledPref = findPreference(NotificationSettings.KEY_ENABLED);
             final Preference thresholdPref = findPreference(NotificationSettings.KEY_THRESHOLD);
             final Preference selectionPref = findPreference(NotificationSettings.KEY_SELECTION);
+            // only visible pre-O
             final Preference vibratePref = findPreference(NotificationSettings.KEY_VIBRATE);
             final Preference ringtonePref = findPreference(NotificationSettings.KEY_RINGTONE);
+            // only visible O+
+            final Preference channelsPref = findPreference(NotificationSettings.KEY_CHANNELS);
 
             // allow supporters to enable notifications
             if (Utils.hasAccessToX(getActivity())) {
@@ -292,8 +296,12 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
                         thresholdPref.setEnabled(isChecked);
                         selectionPref.setEnabled(isChecked);
-                        vibratePref.setEnabled(isChecked);
-                        ringtonePref.setEnabled(isChecked);
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                            channelsPref.setEnabled(isChecked);
+                        } else {
+                            vibratePref.setEnabled(isChecked);
+                            ringtonePref.setEnabled(isChecked);
+                        }
 
                         Utils.runNotificationService(getActivity());
                         return true;
@@ -304,16 +312,24 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                         getActivity());
                 thresholdPref.setEnabled(isNotificationsEnabled);
                 selectionPref.setEnabled(isNotificationsEnabled);
-                vibratePref.setEnabled(isNotificationsEnabled);
-                ringtonePref.setEnabled(isNotificationsEnabled);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    channelsPref.setEnabled(isNotificationsEnabled);
+                } else {
+                    vibratePref.setEnabled(isNotificationsEnabled);
+                    ringtonePref.setEnabled(isNotificationsEnabled);
+                }
             } else {
                 enabledPref.setOnPreferenceChangeListener(sNoOpChangeListener);
                 ((SwitchPreference) enabledPref).setChecked(false);
                 enabledPref.setSummary(R.string.onlyx);
                 thresholdPref.setEnabled(false);
                 selectionPref.setEnabled(false);
-                vibratePref.setEnabled(false);
-                ringtonePref.setEnabled(false);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    channelsPref.setEnabled(false);
+                } else {
+                    vibratePref.setEnabled(false);
+                    ringtonePref.setEnabled(false);
+                }
             }
 
             updateThresholdSummary(thresholdPref);
@@ -455,6 +471,16 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE_RINGTONE);
                 return true;
             }
+            if (NotificationSettings.KEY_CHANNELS.equals(key)) {
+                // launch system settings app at settings for episodes channel
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, SgApp.NOTIFICATION_CHANNEL_EPISODES);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, getActivity().getPackageName());
+                    startActivity(intent);
+                }
+                return true;
+            }
             if (AdvancedSettings.KEY_AUTOBACKUP.equals(key)) {
                 startActivity(new Intent(getActivity(), DataLiberationActivity.class).putExtra(
                         DataLiberationActivity.InitBundle.EXTRA_SHOW_AUTOBACKUP, true));
@@ -502,7 +528,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 if (DisplaySettings.KEY_LANGUAGE.equals(key)
                         || DisplaySettings.KEY_NUMBERFORMAT.equals(key)
                         || DisplaySettings.KEY_THEME.equals(key)) {
-                        setListPreferenceSummary((ListPreference) pref);
+                    setListPreferenceSummary((ListPreference) pref);
                 }
                 if (DisplaySettings.KEY_SHOWS_TIME_OFFSET.equals(key)) {
                     updateTimeOffsetSummary(pref);
@@ -515,7 +541,9 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     // demonstrate vibration pattern used by SeriesGuide
                     Vibrator vibrator = (Vibrator) getActivity().getSystemService(
                             Context.VIBRATOR_SERVICE);
-                    vibrator.vibrate(NotificationService.VIBRATION_PATTERN, -1);
+                    if (vibrator != null) {
+                        vibrator.vibrate(NotificationService.VIBRATION_PATTERN, -1);
+                    }
                 }
             }
 

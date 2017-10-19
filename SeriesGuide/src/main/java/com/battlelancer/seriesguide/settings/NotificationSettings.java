@@ -25,6 +25,10 @@ public class NotificationSettings {
     public static final String KEY_SELECTION
             = "com.battlelancer.seriesguide.notifications.shows";
 
+    /** Only visible on O+. Link to system settings app to modify further notification settings. */
+    public static final String KEY_CHANNELS
+            = "com.battlelancer.seriesguide.notifications.channels";
+
     public static final String KEY_LAST_CLEARED
             = "com.battlelancer.seriesguide.notifications.latestcleared";
 
@@ -34,8 +38,10 @@ public class NotificationSettings {
     public static final String KEY_NEXT_TO_NOTIFY
             = "com.battlelancer.seriesguide.notifications.next";
 
+    /** Only visible on pre-O. */
     public static final String KEY_RINGTONE = "com.battlelancer.seriesguide.notifications.ringtone";
 
+    /** Only visible on pre-O. */
     public static final String KEY_VIBRATE = "com.battlelancer.seriesguide.notifications.vibrate";
 
     private static final int THRESHOLD_DEFAULT_MIN = 10;
