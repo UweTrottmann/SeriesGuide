@@ -5,6 +5,18 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 40
+----------
+*(in development)*
+
+#### 40-beta1
+*(2017-10-19)*
+
+* 🔧 Going up from episode list or page view goes directly to seasons list.
+* 🔨 'Set all older watched' does not work if episodes released at the same time.
+* 🔨 Manual time offset not respected for unwatched and upcoming filters.
+* 🔨 Statistics are re-calculated when rotating or turning off screen, returning to app.
+
 Version 39
 ----------
 *(2017-10-12)*
