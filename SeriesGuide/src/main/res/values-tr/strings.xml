@@ -33,7 +33,7 @@
   <string name="action_display_all">Tümünü göster</string>
   <string name="web_search">Web araması</string>
   <string name="add_to_homescreen">Kısayol</string>
-  <string name="action_open">Açık</string>
+  <string name="action_open">Açın</string>
   <string name="sync_manually">Manuel senkronizasyon</string>
   <string name="sync_and_update">Senkronize Et &amp; Güncelle</string>
   <string name="sync_and_download_all">Senkronize Et &amp; Tümünü İndir</string>
@@ -51,7 +51,7 @@
   <string name="database_error">Veri değiştirilemedi.</string>
   <string name="reinstall_info">Ayarlardan yedeklemeyi deneyin. Uygulamayı yediden yükleyip, veri tabanınızı geri yükleyin.</string>
   <string name="api_error_generic">%s ile iletişim kurulamadı. Daha sonra tekrar deneyin.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">%s başarısız oldu</string>
   <!-- Sharing -->
   <string name="share">Paylaş</string>
   <string name="share_show">Diziyi paylaş</string>
@@ -90,7 +90,7 @@
   <string name="no_translation_title">Çevrilmedi</string>
   <string name="no_spoilers">Bazı detaylar spoiler önlemek için gizli kalır. Bunu kapatmak için ayarlara gidiniz.</string>
   <string name="format_source">Source: %s</string>
-  <string name="format_last_edited">Last edited: %s</string>
+  <string name="format_last_edited">Son güncelleme: %s</string>
   <!-- Date and Time -->
   <string name="today">bugün</string>
   <string name="now">şimdi</string>
@@ -269,7 +269,7 @@
   <string name="hexagon_remove_account_confirmation">Hesabınızı kaldırdığınızda SeriesGuide Cloud üzerindeki bütün film ve dizileriniz silinecektir. Hesabınızı diğer bağlı cihazlardan da kaldırdığınızdan emin olun.</string>
   <string name="hexagon_api_queued">SeriesGuide bulutuna gönder.</string>
   <string name="hexagon_signed_out">SeriesGuide Bulut servisinden çıkış yapıldı.</string>
-  <string name="hexagon_google_play_missing">SeriesGuide Cloud\'u kullanabilmek için, Google Play Hizmetleri gereklidir.</string>
+  <string name="hexagon_google_play_missing">SeriesGuide Bulut\'u kullanabilmek için, Google Play Hizmetleri gereklidir.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">trakt\'e gönderiliyor.</string>
   <string name="checkin_success_trakt">trakt üzerinden %s girişi yapıldı.</string>
@@ -328,7 +328,7 @@
   <string name="pref_onlyseasoneps">Özel bölümleri gizle</string>
   <string name="pref_onlyseasonepssummary">Özel bölümler sezon listesi haricinde hiçbir yerde görünmez</string>
   <string name="pref_exactdates">Kesinleşmiş tarihleri göster</string>
-  <string name="pref_exactdates_summary">\"3 gün\" yerine \"31 Ekim\"</string>
+  <string name="pref_exactdates_summary">\"3 gün içinde\" yerine \"31 Ekim\"</string>
   <string name="pref_nospoilers">Spoiler önle</string>
   <string name="pref_nospoilers_summary">Bölümü izlenene kadar detayları gizle</string>
   <string name="pref_seasonsorting">Sezonları sırala&#8230;</string>
