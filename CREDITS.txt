@@ -72,11 +72,6 @@ Copyright 2013 The Android Open Source Project
 AndroidUtils (https://github.com/UweTrottmann/AndroidUtils)
 Copyright 2012 Uwe Trottmann
 
-assertj-android (https://github.com/square/assertj-android)
-Copyright 2013 Square, Inc.
-
-assertj-core (https://github.com/joel-costigliola/assertj-core)
-
 butterknife (https://github.com/JakeWharton/butterknife)
 Copyright 2013 Jake Wharton
 
@@ -142,6 +137,8 @@ Copyright 2013 Uwe Trottmann
 trakt-java (https://github.com/UweTrottmann/trakt-java)
 Copyright 2013 Uwe Trottmann
 
+truth (https://github.com/google/truth)
+Copyright 2011 Google, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

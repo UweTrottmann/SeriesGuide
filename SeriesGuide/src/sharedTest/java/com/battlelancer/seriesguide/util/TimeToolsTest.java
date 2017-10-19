@@ -11,7 +11,8 @@ import org.threeten.bp.LocalTime;
 import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZonedDateTime;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth.assertWithMessage;
 
 public class TimeToolsTest {
 
@@ -27,8 +28,8 @@ public class TimeToolsTest {
         String year1 = TimeTools.getShowReleaseYear("2017-01-31T15:16:26.355Z");
         // legacy TVDB ISO date format
         String year2 = TimeTools.getShowReleaseYear("2017-01-31");
-        assertThat(year1).isEqualToIgnoringCase("2017");
-        assertThat(year1).isEqualToIgnoringCase(year2);
+        assertThat(year1).isEqualTo("2017");
+        assertThat(year1).isEqualTo(year2);
     }
 
     @Test
@@ -163,8 +164,8 @@ public class TimeToolsTest {
             String timeZone) {
         ZonedDateTime showTimeCorrected = TimeTools.applyUnitedStatesCorrections(
                 TimeTools.ISO3166_1_UNITED_STATES, timeZone, showDateTime);
-        assertThat(showTimeCorrected.withZoneSameInstant(ZoneId.of(timeZone)).toLocalTime())
-                .as("Check %s", timeZone)
+        assertWithMessage("Check %s", timeZone)
+                .that(showTimeCorrected.withZoneSameInstant(ZoneId.of(timeZone)).toLocalTime())
                 .isEqualTo(localTimeExpected);
     }
 }

@@ -3,8 +3,8 @@ package com.battlelancer.seriesguide.util;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
 public class EpisodeToolsTest {
 
@@ -29,7 +29,7 @@ public class EpisodeToolsTest {
         EpisodeTools.validateFlags(EpisodeFlags.SKIPPED);
         try {
             EpisodeTools.validateFlags(123);
-            failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
+            fail("IllegalArgumentException not thrown");
         } catch (Exception e) {
             assertThat(e).isInstanceOf(IllegalArgumentException.class);
         }

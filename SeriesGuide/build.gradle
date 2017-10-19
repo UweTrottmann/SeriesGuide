@@ -191,13 +191,13 @@ dependencies {
     androidTestCompile "com.android.support:support-annotations:${versions.supportLibrary}"
     androidTestCompile 'com.android.support.test:runner:1.0.1'
     androidTestCompile 'com.android.support.test:rules:1.0.1'
-    androidTestCompile "com.squareup.assertj:assertj-android:${versions.assertjAndroid}"
+    androidTestCompile "com.google.truth:truth:${versions.truth}"
     androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${versions.dagger}"
 
     // Local unit tests
     testCompile 'junit:junit:4.12'
     testCompile "com.android.support:support-annotations:${versions.supportLibrary}"
-    testCompile "com.squareup.assertj:assertj-android:${versions.assertjAndroid}"
+    testCompile "com.google.truth:truth:${versions.truth}"
     // include regular threetenbp to have access to the tz database without init call
     testCompile 'org.threeten:threetenbp:1.3.3'
 
