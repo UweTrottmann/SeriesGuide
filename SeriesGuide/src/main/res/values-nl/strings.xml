@@ -439,6 +439,7 @@
   <string name="pref_notifications_treshold">Wanneer te waarschuwen</string>
   <string name="pref_notifications_select_shows">Kies series</string>
   <string name="pref_notifications_select_shows_summary">Series waarvoor de meldingen aanstaan (%d)</string>
+  <string name="pref_notification_channel_errors">Errors</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (klein)</string>
   <!-- List Widget -->

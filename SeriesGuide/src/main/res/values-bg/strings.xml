@@ -439,6 +439,7 @@
   <string name="pref_notifications_treshold">Кога да извести</string>
   <string name="pref_notifications_select_shows">Select shows</string>
   <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notification_channel_errors">Errors</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (малка)</string>
   <!-- List Widget -->
