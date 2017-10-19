@@ -118,7 +118,9 @@ public class NotificationService extends IntentService {
             AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent i = new Intent(this, OnAlarmReceiver.class);
             PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
-            am.cancel(pi);
+            if (am != null) {
+                am.cancel(pi);
+            }
 
             resetLastEpisodeAirtime(prefs);
             return;
@@ -217,12 +219,14 @@ public class NotificationService extends IntentService {
         PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
         Timber.d("Going to sleep, setting wake-up alarm to: %s",
                 Instant.ofEpochMilli(nextWakeUpTime));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            am.setExact(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
-        } else {
-            am.set(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
+        if (am != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                am.setExact(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
+            } else {
+                am.set(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
+            }
         }
     }
 
@@ -349,7 +353,7 @@ public class NotificationService extends IntentService {
 
             // "8:00 PM Network"
             final String time = TimeTools.formatToLocalTime(this, TimeTools.applyUserOffset(this,
-                            upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
+                    upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
             final String network = upcomingEpisodes.getString(NotificationQuery.NETWORK);
             contentText = TextTools.dotSeparate(time, network); // switch on purpose
 
@@ -375,7 +379,8 @@ public class NotificationService extends IntentService {
                             PendingIntent.FLAG_CANCEL_CURRENT);
         }
 
-        final NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+        final NotificationCompat.Builder nb =
+                new NotificationCompat.Builder(context, SgApp.NOTIFICATION_CHANNEL_EPISODES);
 
         boolean richNotification = AndroidUtils.isJellyBeanOrHigher();
         if (richNotification) {

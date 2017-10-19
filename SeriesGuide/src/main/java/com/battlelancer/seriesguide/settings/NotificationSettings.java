@@ -5,6 +5,8 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 
@@ -123,5 +125,13 @@ public class NotificationSettings {
     public static boolean isNotificationVibrating(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_VIBRATE, false);
+    }
+
+    public static void setDefaultsForChannelErrors(Context context,
+            NotificationCompat.Builder builder) {
+        builder.setColor(ContextCompat.getColor(context, R.color.accent_primary));
+        builder.setDefaults(NotificationCompat.DEFAULT_SOUND | NotificationCompat.DEFAULT_LIGHTS);
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        builder.setCategory(NotificationCompat.CATEGORY_ERROR);
     }
 }

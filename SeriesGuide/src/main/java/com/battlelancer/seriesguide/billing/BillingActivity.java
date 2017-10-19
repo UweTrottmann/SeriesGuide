@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
@@ -278,18 +279,16 @@ public class BillingActivity extends BaseActivity {
      * BillingActivity}.
      */
     public static void onExpiredNotification(Context context) {
-        NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder nb =
+                new NotificationCompat.Builder(context, SgApp.NOTIFICATION_CHANNEL_ERRORS);
+        NotificationSettings.setDefaultsForChannelErrors(context, nb);
 
         // set required attributes
         nb.setSmallIcon(R.drawable.ic_notification);
         nb.setContentTitle(context.getString(R.string.subscription_expired));
         nb.setContentText(context.getString(R.string.subscription_expired_details));
-
-        // set additional attributes
-        nb.setDefaults(Notification.DEFAULT_LIGHTS);
-        nb.setAutoCancel(true);
         nb.setTicker(context.getString(R.string.subscription_expired_details));
-        nb.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        nb.setAutoCancel(true);
 
         // build task stack
         Intent notificationIntent = new Intent(context, BillingActivity.class);

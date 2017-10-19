@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -20,6 +19,7 @@ import com.battlelancer.seriesguide.jobs.SgJobInfo;
 import com.battlelancer.seriesguide.jobs.TraktEpisodeJob;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
+import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -122,7 +122,10 @@ public class NetworkJobProcessor {
             return; // missing required values
         }
 
-        NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder nb =
+                new NotificationCompat.Builder(context, SgApp.NOTIFICATION_CHANNEL_ERRORS);
+        NotificationSettings.setDefaultsForChannelErrors(context, nb);
+
         nb.setSmallIcon(R.drawable.ic_notification);
         // like: 'Failed: Remove from collection · BoJack Horseman'
         nb.setContentTitle(
@@ -132,10 +135,6 @@ public class NetworkJobProcessor {
                 getErrorDetails(result.item, result.error, result.action, jobCreatedAt)));
         nb.setContentIntent(result.contentIntent);
         nb.setAutoCancel(true);
-        nb.setColor(ContextCompat.getColor(context, R.color.accent_primary));
-        nb.setDefaults(NotificationCompat.DEFAULT_SOUND | NotificationCompat.DEFAULT_LIGHTS);
-        nb.setPriority(NotificationCompat.PRIORITY_HIGH);
-        nb.setCategory(NotificationCompat.CATEGORY_ERROR);
 
         NotificationManager nm = (NotificationManager) context.getSystemService(
                 Context.NOTIFICATION_SERVICE);

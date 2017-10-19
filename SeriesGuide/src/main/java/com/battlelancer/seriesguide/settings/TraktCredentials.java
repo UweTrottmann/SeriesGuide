@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -75,7 +74,10 @@ public class TraktCredentials {
         removeAccessToken();
         Timber.e("trakt credentials invalid, removed access token");
 
-        NotificationCompat.Builder nb = new NotificationCompat.Builder(mContext);
+        NotificationCompat.Builder nb =
+                new NotificationCompat.Builder(mContext, SgApp.NOTIFICATION_CHANNEL_ERRORS);
+        NotificationSettings.setDefaultsForChannelErrors(mContext, nb);
+
         nb.setSmallIcon(R.drawable.ic_notification);
         nb.setContentTitle(mContext.getString(R.string.trakt_reconnect));
         nb.setContentText(mContext.getString(R.string.trakt_reconnect_details));
@@ -86,15 +88,13 @@ public class TraktCredentials {
                 .addNextIntent(new Intent(mContext, ConnectTraktActivity.class))
                 .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         nb.setContentIntent(intent);
-
         nb.setAutoCancel(true);
-        nb.setColor(ContextCompat.getColor(mContext, R.color.accent_primary));
-        nb.setPriority(NotificationCompat.PRIORITY_HIGH);
-        nb.setCategory(NotificationCompat.CATEGORY_ERROR);
 
         NotificationManager nm = (NotificationManager) mContext.getSystemService(
                 Context.NOTIFICATION_SERVICE);
-        nm.notify(SgApp.NOTIFICATION_TRAKT_AUTH_ID, nb.build());
+        if (nm != null) {
+            nm.notify(SgApp.NOTIFICATION_TRAKT_AUTH_ID, nb.build());
+        }
     }
 
     /**
