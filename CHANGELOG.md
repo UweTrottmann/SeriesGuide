@@ -13,9 +13,11 @@ Version 40
 *(2017-10-19)*
 
 * 🔧 Going up from episode list or page view goes directly to seasons list.
+* 🔧 Add notification channel support on Android O.
 * 🔨 'Set all older watched' does not work if episodes released at the same time.
 * 🔨 Manual time offset not respected for unwatched and upcoming filters.
 * 🔨 Statistics are re-calculated when rotating or turning off screen, returning to app.
+* 📝 Latest translations from crowdin.
 
 Version 39
 ----------
