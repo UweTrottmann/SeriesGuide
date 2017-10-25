@@ -221,7 +221,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
 
             // set page listener afterwards to avoid null pointer for non-existing content view
             episodeDetailsPager.setCurrentItem(startPosition, false);
-            episodeDetailsTabs.setOnPageChangeListener(mOnPageChangeListener);
+            episodeDetailsTabs.setOnPageChangeListener(onPageChangeListener);
 
             if (shadowStart != null) {
                 Shadows.getInstance().setShadowDrawable(this, shadowStart,
@@ -248,7 +248,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
 
         if (isDualPane) {
             PreferenceManager.getDefaultSharedPreferences(this)
-                    .registerOnSharedPreferenceChangeListener(mSortOrderChangeListener);
+                    .registerOnSharedPreferenceChangeListener(onSortOrderChangedListener);
         }
     }
 
@@ -258,20 +258,20 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
 
         if (isDualPane) {
             PreferenceManager.getDefaultSharedPreferences(this)
-                    .unregisterOnSharedPreferenceChangeListener(mSortOrderChangeListener);
+                    .unregisterOnSharedPreferenceChangeListener(onSortOrderChangedListener);
         }
     }
 
-    List<WeakReference<Fragment>> mFragments = new ArrayList<>();
+    List<WeakReference<Fragment>> fragments = new ArrayList<>();
 
     @Override
     public void onAttachFragment(Fragment fragment) {
-        mFragments.add(new WeakReference<>(fragment));
+        fragments.add(new WeakReference<>(fragment));
     }
 
     public ArrayList<Fragment> getActiveFragments() {
         ArrayList<Fragment> ret = new ArrayList<>();
-        for (WeakReference<Fragment> ref : mFragments) {
+        for (WeakReference<Fragment> ref : fragments) {
             Fragment f = ref.get();
             if (f != null) {
                 if (f.isAdded()) {
@@ -348,7 +348,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         return startPosition;
     }
 
-    private OnPageChangeListener mOnPageChangeListener = new OnPageChangeListener() {
+    private OnPageChangeListener onPageChangeListener = new OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             // do nothing
@@ -366,7 +366,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         }
     };
 
-    private OnSharedPreferenceChangeListener mSortOrderChangeListener
+    private OnSharedPreferenceChangeListener onSortOrderChangedListener
             = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

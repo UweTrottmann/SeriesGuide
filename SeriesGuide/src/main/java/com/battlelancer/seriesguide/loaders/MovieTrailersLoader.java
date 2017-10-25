@@ -20,11 +20,11 @@ import timber.log.Timber;
  */
 public class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
 
-    private int mTmdbId;
+    private int tmdbId;
 
     public MovieTrailersLoader(Context context, int tmdbId) {
         super(context);
-        mTmdbId = tmdbId;
+        this.tmdbId = tmdbId;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
     private Videos.Video getTrailer(@Nullable String language, @NonNull String action) {
         MoviesService moviesService = SgApp.getServicesComponent(getContext()).moviesService();
         try {
-            Response<Videos> response = moviesService.videos(mTmdbId, language).execute();
+            Response<Videos> response = moviesService.videos(tmdbId, language).execute();
             if (response.isSuccessful()) {
                 return extractTrailer(response.body());
             } else {

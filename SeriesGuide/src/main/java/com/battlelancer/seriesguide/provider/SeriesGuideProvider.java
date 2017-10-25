@@ -186,21 +186,19 @@ public class SeriesGuideProvider extends ContentProvider {
         return matcher;
     }
 
-    private final ThreadLocal<Boolean> mApplyingBatch = new ThreadLocal<>();
-
-    private SeriesGuideDatabase mDbHelper;
-
-    protected SQLiteDatabase mDb;
+    private final ThreadLocal<Boolean> applyingBatch = new ThreadLocal<>();
+    private SeriesGuideDatabase databaseHelper;
+    protected SQLiteDatabase database;
 
     @Override
     public void shutdown() {
         /*
           If we ever do unit-testing, nice to have this already (no bug-hunt).
          */
-        if (mDbHelper != null) {
-            mDbHelper.close();
-            mDbHelper = null;
-            mDb = null;
+        if (databaseHelper != null) {
+            databaseHelper.close();
+            databaseHelper = null;
+            database = null;
         }
     }
 
@@ -210,15 +208,15 @@ public class SeriesGuideProvider extends ContentProvider {
 
         sUriMatcher = buildUriMatcher();
 
-        mDbHelper = new SeriesGuideDatabase(context);
+        databaseHelper = new SeriesGuideDatabase(context);
 
         PreferenceManager.getDefaultSharedPreferences(context)
-                .registerOnSharedPreferenceChangeListener(mImportListener);
+                .registerOnSharedPreferenceChangeListener(onDatabaseImportedListener);
 
         return true;
     }
 
-    final OnSharedPreferenceChangeListener mImportListener
+    final OnSharedPreferenceChangeListener onDatabaseImportedListener
             = new OnSharedPreferenceChangeListener() {
 
         @SuppressLint("CommitPrefEdits")
@@ -226,7 +224,7 @@ public class SeriesGuideProvider extends ContentProvider {
             if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_DATABASEIMPORTED)) {
                 if (sharedPreferences
                         .getBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, false)) {
-                    mDbHelper.close();
+                    databaseHelper.close();
                     sharedPreferences.edit()
                             .putBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, false)
                             .commit();
@@ -242,7 +240,7 @@ public class SeriesGuideProvider extends ContentProvider {
             Timber.v("query(uri=%s, proj=%s)", uri, Arrays.toString(projection));
         }
         // always get writable database, might have to be upgraded
-        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        final SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
         final int match = sUriMatcher.match(uri);
         switch (match) {
@@ -343,7 +341,7 @@ public class SeriesGuideProvider extends ContentProvider {
     public Uri insert(@NonNull Uri uri, ContentValues values) {
         Uri newItemUri;
 
-        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        final SQLiteDatabase db = databaseHelper.getWritableDatabase();
         if (!applyingBatch()) {
             db.beginTransaction();
             try {
@@ -369,7 +367,7 @@ public class SeriesGuideProvider extends ContentProvider {
         int numValues = values.length;
         boolean notifyChange = false;
 
-        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        final SQLiteDatabase db = databaseHelper.getWritableDatabase();
         db.beginTransaction();
         try {
             for (int i = 0; i < numValues; i++) {
@@ -510,7 +508,7 @@ public class SeriesGuideProvider extends ContentProvider {
         int count;
 
         if (!applyingBatch()) {
-            final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            final SQLiteDatabase db = databaseHelper.getWritableDatabase();
             db.beginTransaction();
             try {
                 count = buildSelection(uri, sUriMatcher.match(uri))
@@ -521,10 +519,10 @@ public class SeriesGuideProvider extends ContentProvider {
                 db.endTransaction();
             }
         } else {
-            mDb = mDbHelper.getWritableDatabase();
+            database = databaseHelper.getWritableDatabase();
             count = buildSelection(uri, sUriMatcher.match(uri))
                     .where(selection, selectionArgs)
-                    .update(mDb, values);
+                    .update(database, values);
         }
 
         if (count > 0) {
@@ -546,7 +544,7 @@ public class SeriesGuideProvider extends ContentProvider {
         int count;
 
         if (!applyingBatch()) {
-            final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            final SQLiteDatabase db = databaseHelper.getWritableDatabase();
             db.beginTransaction();
             try {
                 count = buildSelection(uri, sUriMatcher.match(uri))
@@ -557,10 +555,10 @@ public class SeriesGuideProvider extends ContentProvider {
                 db.endTransaction();
             }
         } else {
-            mDb = mDbHelper.getWritableDatabase();
+            database = databaseHelper.getWritableDatabase();
             count = buildSelection(uri, sUriMatcher.match(uri))
                     .where(selection, selectionArgs)
-                    .delete(mDb);
+                    .delete(database);
         }
 
         if (count > 0) {
@@ -585,28 +583,28 @@ public class SeriesGuideProvider extends ContentProvider {
             return new ContentProviderResult[0];
         }
 
-        mDb = mDbHelper.getWritableDatabase();
-        mDb.beginTransaction();
+        database = databaseHelper.getWritableDatabase();
+        database.beginTransaction();
         try {
-            mApplyingBatch.set(true);
+            applyingBatch.set(true);
             final ContentProviderResult[] results = new ContentProviderResult[numOperations];
             for (int i = 0; i < numOperations; i++) {
                 final ContentProviderOperation operation = operations.get(i);
                 if (i > 0 && operation.isYieldAllowed()) {
-                    mDb.yieldIfContendedSafely();
+                    database.yieldIfContendedSafely();
                 }
                 results[i] = operation.apply(this, results, i);
             }
-            mDb.setTransactionSuccessful();
+            database.setTransactionSuccessful();
             return results;
         } finally {
-            mApplyingBatch.set(false);
-            mDb.endTransaction();
+            applyingBatch.set(false);
+            database.endTransaction();
         }
     }
 
     private boolean applyingBatch() {
-        return mApplyingBatch.get() != null && mApplyingBatch.get();
+        return applyingBatch.get() != null && applyingBatch.get();
     }
 
     /**

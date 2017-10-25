@@ -68,7 +68,7 @@ public class ShowsActivity extends BaseTopActivity implements
 
     private ShowsTabPageAdapter tabsAdapter;
     private ViewPager viewPager;
-    private ProgressDialog mProgressDialog;
+    private ProgressDialog progressDialog;
 
     @SuppressWarnings("unused")
     public interface InitBundle {
@@ -404,18 +404,18 @@ public class ShowsActivity extends BaseTopActivity implements
     }
 
     private void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setCancelable(false);
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setCancelable(false);
         }
-        mProgressDialog.show();
+        progressDialog.show();
     }
 
     private void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
         }
-        mProgressDialog = null;
+        progressDialog = null;
     }
 
     /**

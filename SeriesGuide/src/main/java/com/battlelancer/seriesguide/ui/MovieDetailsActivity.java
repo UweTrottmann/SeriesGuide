@@ -21,7 +21,7 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
     public static int LOADER_ID_MOVIE_TRAILERS = 101;
     public static int LOADER_ID_MOVIE_CREDITS = 102;
 
-    private SystemBarTintManager mSystemBarTintManager;
+    private SystemBarTintManager systemBarTintManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +61,8 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
             // fix padding with translucent (K+)/transparent (M+) status bar
             // warning: pre-M status bar not always translucent (e.g. Nexus 10)
             // (using fitsSystemWindows would not work correctly with multiple views)
-            mSystemBarTintManager = new SystemBarTintManager(this);
-            SystemBarTintManager.SystemBarConfig config = mSystemBarTintManager.getConfig();
+            systemBarTintManager = new SystemBarTintManager(this);
+            SystemBarTintManager.SystemBarConfig config = systemBarTintManager.getConfig();
             int insetTop = AndroidUtils.isMarshmallowOrHigher()
                     ? config.getStatusBarHeight() // transparent status bar
                     : config.getPixelInsetTop(false); // translucent status bar
@@ -91,6 +91,6 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
     }
 
     public SystemBarTintManager getSystemBarTintManager() {
-        return mSystemBarTintManager;
+        return systemBarTintManager;
     }
 }

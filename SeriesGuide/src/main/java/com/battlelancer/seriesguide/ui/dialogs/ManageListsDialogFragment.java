@@ -61,9 +61,8 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
         String INT_ITEM_TYPE = "item-type";
     }
 
-    private ListView mListView;
-
-    private ListsAdapter mAdapter;
+    private ListView listView;
+    private ListsAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,11 +92,11 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
             @Override
             public void onClick(View v) {
                 // add item to selected lists, remove from previously selected lists
-                SparseBooleanArray checkedLists = mAdapter.getCheckedPositions();
+                SparseBooleanArray checkedLists = adapter.getCheckedPositions();
                 List<String> addToTheseLists = new ArrayList<>();
                 List<String> removeFromTheseLists = new ArrayList<>();
-                for (int position = 0; position < mAdapter.getCount(); position++) {
-                    final Cursor listEntry = (Cursor) mAdapter.getItem(position);
+                for (int position = 0; position < adapter.getCount(); position++) {
+                    final Cursor listEntry = (Cursor) adapter.getItem(position);
 
                     boolean wasListChecked = !TextUtils.isEmpty(listEntry
                             .getString(ListsQuery.LIST_ITEM_ID));
@@ -123,12 +122,12 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
         });
 
         // lists list
-        mListView = layout.findViewById(R.id.list);
+        listView = layout.findViewById(R.id.list);
         /*
          * As using CHOICE_MODE_MULTIPLE does not seem to work before Jelly
          * Bean, do everything ourselves.
          */
-        mListView.setOnItemClickListener(this);
+        listView.setOnItemClickListener(this);
 
         return layout;
     }
@@ -186,8 +185,8 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
             }
         }
 
-        mAdapter = new ListsAdapter(getActivity());
-        mListView.setAdapter(mAdapter);
+        adapter = new ListsAdapter(getActivity());
+        listView.setAdapter(adapter);
 
         getLoaderManager().initLoader(0, getArguments(), this);
     }
@@ -196,7 +195,7 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Checkable checkable = (Checkable) view;
         checkable.toggle();
-        mAdapter.setItemChecked(position, checkable.isChecked());
+        adapter.setItemChecked(position, checkable.isChecked());
     }
 
     @Override
@@ -212,24 +211,23 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mAdapter.swapCursor(data);
+        adapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        mAdapter.swapCursor(null);
+        adapter.swapCursor(null);
     }
 
     private class ListsAdapter extends CursorAdapter {
 
-        private LayoutInflater mInflater;
-
-        private SparseBooleanArray mCheckedItems;
+        private LayoutInflater layoutInflater;
+        private SparseBooleanArray checkedItems;
 
         public ListsAdapter(Context context) {
             super(context, null, 0);
-            mInflater = LayoutInflater.from(context);
-            mCheckedItems = new SparseBooleanArray();
+            layoutInflater = LayoutInflater.from(context);
+            checkedItems = new SparseBooleanArray();
         }
 
         @Override
@@ -241,29 +239,29 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
 
             // prefer state set by user over database
             boolean isChecked;
-            if (mCheckedItems.indexOfKey(position) >= 0) {
+            if (checkedItems.indexOfKey(position) >= 0) {
                 // user has changed checked state, prefer it
-                isChecked = mCheckedItems.get(position);
+                isChecked = checkedItems.get(position);
             } else {
                 // otherwise prefer database state, check if item is in this list
                 String itemId = cursor.getString(ListsQuery.LIST_ITEM_ID);
                 isChecked = !TextUtils.isEmpty(itemId);
-                mCheckedItems.put(position, isChecked);
+                checkedItems.put(position, isChecked);
             }
             checkedView.setChecked(isChecked);
         }
 
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            return mInflater.inflate(R.layout.item_list_checked, parent, false);
+            return layoutInflater.inflate(R.layout.item_list_checked, parent, false);
         }
 
         public void setItemChecked(int position, boolean value) {
-            mCheckedItems.put(position, value);
+            checkedItems.put(position, value);
         }
 
         public SparseBooleanArray getCheckedPositions() {
-            return mCheckedItems;
+            return checkedItems;
         }
     }
 

@@ -55,7 +55,7 @@ public class RemoveShowWorkerFragment extends Fragment {
         }
     }
 
-    private RemoveShowTask mTask;
+    private RemoveShowTask removeTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,14 +69,14 @@ public class RemoveShowWorkerFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // do not overwrite existing task
-        if (mTask == null) {
-            mTask = new RemoveShowTask(getContext(), getArguments().getInt(KEY_SHOW_TVDBID));
-            Utils.executeInOrder(mTask);
+        if (removeTask == null) {
+            removeTask = new RemoveShowTask(getContext(), getArguments().getInt(KEY_SHOW_TVDBID));
+            Utils.executeInOrder(removeTask);
         }
     }
 
     public boolean isTaskFinished() {
-        return mTask == null || mTask.getStatus() == AsyncTask.Status.FINISHED;
+        return removeTask == null || removeTask.getStatus() == AsyncTask.Status.FINISHED;
     }
 
     private static class RemoveShowTask extends AsyncTask<Integer, Void, Integer> {

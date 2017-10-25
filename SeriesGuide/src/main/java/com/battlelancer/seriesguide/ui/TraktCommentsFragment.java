@@ -83,7 +83,7 @@ public class TraktCommentsFragment extends Fragment {
                         R.dimen.swipe_refresh_progress_bar_end_margin));
         ViewTools.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
 
-        list.setOnItemClickListener(mOnClickListener);
+        list.setOnItemClickListener(onItemClickListener);
         list.setEmptyView(emptyView);
 
         buttonShout.setOnClickListener(new OnClickListener() {
@@ -167,7 +167,7 @@ public class TraktCommentsFragment extends Fragment {
 
         // load data
         getLoaderManager().initLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
-                mCommentsCallbacks);
+                commentsLoaderCallbacks);
 
         // enable menu
         setHasOptionsMenu(true);
@@ -212,7 +212,7 @@ public class TraktCommentsFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private final AdapterView.OnItemClickListener mOnClickListener
+    private final AdapterView.OnItemClickListener onItemClickListener
             = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
             onListItemClick((ListView) parent, v, position);
@@ -238,7 +238,7 @@ public class TraktCommentsFragment extends Fragment {
         }
     }
 
-    private LoaderCallbacks<TraktCommentsLoader.Result> mCommentsCallbacks
+    private LoaderCallbacks<TraktCommentsLoader.Result> commentsLoaderCallbacks
             = new LoaderCallbacks<TraktCommentsLoader.Result>() {
         @Override
         public Loader<TraktCommentsLoader.Result> onCreateLoader(int id, Bundle args) {
@@ -277,7 +277,7 @@ public class TraktCommentsFragment extends Fragment {
 
     private void refreshComments() {
         getLoaderManager().restartLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
-                mCommentsCallbacks);
+                commentsLoaderCallbacks);
     }
 
     /**
@@ -297,14 +297,14 @@ public class TraktCommentsFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(TraktTask.TraktActionCompleteEvent event) {
-        if (event.mTraktAction != TraktAction.COMMENT || getView() == null) {
+        if (event.traktAction != TraktAction.COMMENT || getView() == null) {
             return;
         }
 
         // reenable the shout button
         buttonShout.setEnabled(true);
 
-        if (event.mWasSuccessful) {
+        if (event.wasSuccessful) {
             // clear the text field and show recent shout
             editTextShout.setText("");
             refreshCommentsWithNetworkCheck();

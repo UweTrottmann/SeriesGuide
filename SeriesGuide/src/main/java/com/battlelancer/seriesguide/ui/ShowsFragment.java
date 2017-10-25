@@ -151,7 +151,7 @@ public class ShowsFragment extends Fragment implements
         // listen for some settings changes
         PreferenceManager
                 .getDefaultSharedPreferences(getActivity())
-                .registerOnSharedPreferenceChangeListener(mPrefsListener);
+                .registerOnSharedPreferenceChangeListener(onPreferenceChangeListener);
 
         setHasOptionsMenu(true);
     }
@@ -232,7 +232,7 @@ public class ShowsFragment extends Fragment implements
     public void onDestroy() {
         super.onDestroy();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        prefs.unregisterOnSharedPreferenceChangeListener(mPrefsListener);
+        prefs.unregisterOnSharedPreferenceChangeListener(onPreferenceChangeListener);
     }
 
     @Override
@@ -578,13 +578,13 @@ public class ShowsFragment extends Fragment implements
         if (handler == null) {
             handler = new Handler();
         }
-        handler.removeCallbacks(mDataRefreshRunnable);
+        handler.removeCallbacks(dataRefreshRunnable);
         if (enableRefresh) {
-            handler.postDelayed(mDataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
+            handler.postDelayed(dataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
         }
     }
 
-    private Runnable mDataRefreshRunnable = new Runnable() {
+    private Runnable dataRefreshRunnable = new Runnable() {
         @Override
         public void run() {
             if (isAdded()) {
@@ -628,7 +628,7 @@ public class ShowsFragment extends Fragment implements
         }
     };
 
-    private final OnSharedPreferenceChangeListener mPrefsListener
+    private final OnSharedPreferenceChangeListener onPreferenceChangeListener
             = new OnSharedPreferenceChangeListener() {
 
         @Override

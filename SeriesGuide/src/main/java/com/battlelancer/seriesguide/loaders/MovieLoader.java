@@ -19,25 +19,25 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
  */
 public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
 
-    private int mTmdbId;
+    private int tmdbId;
 
     public MovieLoader(Context context, int tmdbId) {
         super(context);
-        mTmdbId = tmdbId;
+        this.tmdbId = tmdbId;
     }
 
     @Override
     public MovieDetails loadInBackground() {
         // try loading from trakt and tmdb, this might return a cached response
         MovieTools movieTools = SgApp.getServicesComponent(getContext()).movieTools();
-        MovieDetails details = movieTools.getMovieDetails(mTmdbId);
+        MovieDetails details = movieTools.getMovieDetails(tmdbId);
 
         // update local database
-        updateLocalMovie(getContext(), details, mTmdbId);
+        updateLocalMovie(getContext(), details, tmdbId);
 
         // fill in details from local database
         Cursor movieQuery = getContext().getContentResolver()
-                .query(Movies.buildMovieUri(mTmdbId), MovieQuery.PROJECTION, null, null, null);
+                .query(Movies.buildMovieUri(tmdbId), MovieQuery.PROJECTION, null, null, null);
         if (movieQuery == null || !movieQuery.moveToFirst() || movieQuery.getCount() < 1) {
             if (movieQuery != null) {
                 movieQuery.close();

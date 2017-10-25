@@ -85,7 +85,7 @@ public abstract class AddFragment extends Fragment {
 
         // basic setup of grid view
         resultsGridView.setEmptyView(emptyView);
-        resultsGridView.setOnItemClickListener(mItemClickListener);
+        resultsGridView.setOnItemClickListener(onItemClickListener);
         // enable app bar scrolling out of view only on L or higher
         ViewCompat.setNestedScrollingEnabled(resultsGridView, AndroidUtils.isLollipopOrHigher());
 
@@ -139,7 +139,7 @@ public abstract class AddFragment extends Fragment {
         progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
-    protected AdapterView.OnItemClickListener mItemClickListener
+    protected AdapterView.OnItemClickListener onItemClickListener
             = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -159,9 +159,9 @@ public class FullscreenImageActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    Handler mHideHandler = new Handler();
+    Handler hideHandler = new Handler();
 
-    Runnable mHideRunnable = new Runnable() {
+    Runnable hideRunnable = new Runnable() {
         @Override
         public void run() {
             systemUiHider.hide();
@@ -173,7 +173,7 @@ public class FullscreenImageActivity extends BaseActivity {
      * calls.
      */
     private void delayedHide() {
-        mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, DELAY_100_MS);
+        hideHandler.removeCallbacks(hideRunnable);
+        hideHandler.postDelayed(hideRunnable, DELAY_100_MS);
     }
 }

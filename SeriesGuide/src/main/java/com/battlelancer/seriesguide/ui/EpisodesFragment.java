@@ -42,14 +42,11 @@ public class EpisodesFragment extends ListFragment
 
     private static final String TAG = "Episodes";
 
-    private Constants.EpisodeSorting mSorting;
-
-    private boolean mDualPane;
-
-    private EpisodesAdapter mAdapter;
-
-    private int mStartingPosition;
-    private long mLastCheckedItemId;
+    private Constants.EpisodeSorting sortOrder;
+    private boolean isDualPane;
+    private EpisodesAdapter adapter;
+    private int startingPosition;
+    private long lastCheckedItemId;
 
     /**
      * All values have to be integer.
@@ -94,25 +91,26 @@ public class EpisodesFragment extends ListFragment
         // listen to changes to the sorting preference
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
-        prefs.registerOnSharedPreferenceChangeListener(mSortOrderChangeListener);
+        prefs.registerOnSharedPreferenceChangeListener(onSortOrderChangedListener);
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
         View pager = getActivity().findViewById(R.id.pagerEpisodes);
-        mDualPane = pager != null && pager.getVisibility() == View.VISIBLE;
+        isDualPane = pager != null && pager.getVisibility() == View.VISIBLE;
 
-        if (mDualPane) {
+        if (isDualPane) {
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            mStartingPosition = getArguments().getInt(InitBundle.STARTING_POSITION);
+            startingPosition = getArguments().getInt(InitBundle.STARTING_POSITION);
         } else {
-            mStartingPosition = -1;
+            startingPosition = -1;
         }
-        mLastCheckedItemId = -1;
+        lastCheckedItemId = -1;
 
-        mAdapter = new EpisodesAdapter(getActivity(), this, this);
-        setListAdapter(mAdapter);
+        adapter = new EpisodesAdapter(getActivity(), this, this);
+        setListAdapter(adapter);
 
-        getLoaderManager().initLoader(EpisodesActivity.EPISODES_LOADER_ID, null, mLoaderCallbacks);
+        getLoaderManager().initLoader(EpisodesActivity.EPISODES_LOADER_ID, null,
+                episodesLoaderCallbacks);
 
         setHasOptionsMenu(true);
     }
@@ -134,7 +132,7 @@ public class EpisodesFragment extends ListFragment
      * activity.
      */
     private void showDetails(View view, int position) {
-        if (mDualPane) {
+        if (isDualPane) {
             EpisodesActivity activity = (EpisodesActivity) getActivity();
             activity.setCurrentPage(position);
             setItemChecked(position);
@@ -162,7 +160,7 @@ public class EpisodesFragment extends ListFragment
         // stop listening to sort pref changes
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
-        prefs.unregisterOnSharedPreferenceChangeListener(mSortOrderChangeListener);
+        prefs.unregisterOnSharedPreferenceChangeListener(onSortOrderChangedListener);
     }
 
     @Override
@@ -275,33 +273,33 @@ public class EpisodesFragment extends ListFragment
                 getSeasonNumber(), episode, isCollected);
     }
 
-    private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks
+    private LoaderManager.LoaderCallbacks<Cursor> episodesLoaderCallbacks
             = new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
             return new CursorLoader(getActivity(),
                     Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(getSeasonId())),
-                    EpisodesQuery.PROJECTION, null, null, mSorting.query());
+                    EpisodesQuery.PROJECTION, null, null, sortOrder.query());
         }
 
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-            mAdapter.swapCursor(data);
+            adapter.swapCursor(data);
             // set an initial checked item
-            if (mStartingPosition != -1) {
-                setItemChecked(mStartingPosition);
-                mStartingPosition = -1;
+            if (startingPosition != -1) {
+                setItemChecked(startingPosition);
+                startingPosition = -1;
             }
             // correctly restore the last checked item
-            else if (mLastCheckedItemId != -1) {
-                setItemChecked(mAdapter.getItemPosition(mLastCheckedItemId));
-                mLastCheckedItemId = -1;
+            else if (lastCheckedItemId != -1) {
+                setItemChecked(adapter.getItemPosition(lastCheckedItemId));
+                lastCheckedItemId = -1;
             }
         }
 
         @Override
         public void onLoaderReset(Loader<Cursor> loader) {
-            mAdapter.swapCursor(null);
+            adapter.swapCursor(null);
         }
     };
 
@@ -331,19 +329,19 @@ public class EpisodesFragment extends ListFragment
     }
 
     private void loadSortOrder() {
-        mSorting = DisplaySettings.getEpisodeSortOrder(getActivity());
+        sortOrder = DisplaySettings.getEpisodeSortOrder(getActivity());
     }
 
     private void showSortDialog() {
         FragmentManager fm = getFragmentManager();
         SingleChoiceDialogFragment sortDialog = SingleChoiceDialogFragment.newInstance(
                 R.array.epsorting,
-                R.array.epsortingData, mSorting.index(),
+                R.array.epsortingData, sortOrder.index(),
                 DisplaySettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting);
         sortDialog.show(fm, "fragment_sort");
     }
 
-    private final OnSharedPreferenceChangeListener mSortOrderChangeListener
+    private final OnSharedPreferenceChangeListener onSortOrderChangedListener
             = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -356,12 +354,12 @@ public class EpisodesFragment extends ListFragment
     private void onSortOrderChanged() {
         loadSortOrder();
 
-        mLastCheckedItemId = getListView().getItemIdAtPosition(
+        lastCheckedItemId = getListView().getItemIdAtPosition(
                 getListView().getCheckedItemPosition());
         getLoaderManager().restartLoader(EpisodesActivity.EPISODES_LOADER_ID, null,
-                mLoaderCallbacks);
+                episodesLoaderCallbacks);
 
-        Utils.trackCustomEvent(getActivity(), TAG, "Sorting", mSorting.name());
+        Utils.trackCustomEvent(getActivity(), TAG, "Sorting", sortOrder.name());
     }
 
     /**

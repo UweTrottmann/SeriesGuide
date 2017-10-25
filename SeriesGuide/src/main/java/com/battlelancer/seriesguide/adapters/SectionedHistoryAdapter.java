@@ -33,19 +33,19 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
         void onItemClick(View view, HistoryEntry item);
     }
 
-    protected final LayoutInflater mInflater;
+    protected final LayoutInflater layoutInflater;
     protected final OnItemClickListener itemClickListener;
     private final VectorDrawableCompat drawableWatched;
     private final VectorDrawableCompat drawableCheckin;
-    private List<HeaderData> mHeaders;
-    private Calendar mCalendar;
+    private List<HeaderData> headers;
+    private Calendar calendar;
 
     public SectionedHistoryAdapter(@NonNull Context context,
             OnItemClickListener itemClickListener) {
         super(context, 0);
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.itemClickListener = itemClickListener;
-        mCalendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
         drawableWatched = ViewTools.vectorIconInactive(getContext(),
                 getContext().getTheme(),
                 R.drawable.ic_watch_black_16dp);
@@ -71,16 +71,16 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
 
     @Override
     public int getCountForHeader(int position) {
-        if (mHeaders != null) {
-            return mHeaders.get(position).getCount();
+        if (headers != null) {
+            return headers.get(position).getCount();
         }
         return 0;
     }
 
     @Override
     public int getNumHeaders() {
-        if (mHeaders != null) {
-            return mHeaders.size();
+        if (headers != null) {
+            return headers.size();
         }
         return 0;
     }
@@ -93,7 +93,7 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_history, parent, false);
+            convertView = layoutInflater.inflate(R.layout.item_history, parent, false);
             holder = new ViewHolder(convertView, itemClickListener);
             convertView.setTag(holder);
         } else {
@@ -125,7 +125,7 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
     @Override
     public View getHeaderView(int position, View convertView, ViewGroup parent) {
         // get header position for item position
-        position = mHeaders.get(position).getRefPosition();
+        position = headers.get(position).getRefPosition();
 
         HistoryEntry item = getItem(position);
         if (item == null) {
@@ -134,7 +134,7 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
 
         HeaderViewHolder holder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_grid_header, parent, false);
+            convertView = layoutInflater.inflate(R.layout.item_grid_header, parent, false);
 
             holder = new HeaderViewHolder();
             holder.day = convertView.findViewById(R.id.textViewGridHeader);
@@ -155,14 +155,14 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
     @Override
     public void notifyDataSetChanged() {
         // re-create headers before letting notifyDataSetChanged reach the AdapterView
-        mHeaders = generateHeaderList();
+        headers = generateHeaderList();
         super.notifyDataSetChanged();
     }
 
     @Override
     public void notifyDataSetInvalidated() {
         // remove headers before letting notifyDataSetChanged reach the AdapterView
-        mHeaders = null;
+        headers = null;
         super.notifyDataSetInvalidated();
     }
 
@@ -206,14 +206,14 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
      * device time zone.
      */
     private long getHeaderTime(HistoryEntry item) {
-        mCalendar.setTimeInMillis(item.watched_at.toInstant().toEpochMilli());
+        calendar.setTimeInMillis(item.watched_at.toInstant().toEpochMilli());
         //
-        mCalendar.set(Calendar.HOUR_OF_DAY, 0);
-        mCalendar.set(Calendar.MINUTE, 0);
-        mCalendar.set(Calendar.SECOND, 0);
-        mCalendar.set(Calendar.MILLISECOND, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 1);
 
-        return mCalendar.getTimeInMillis();
+        return calendar.getTimeInMillis();
     }
 
     static class HeaderViewHolder {

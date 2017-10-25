@@ -48,21 +48,15 @@ public class BillingActivity extends BaseActivity {
 
     private static final String SOME_STRING = "SURPTk9UQ0FSRUlGWU9VUElSQVRFVEhJUw==";
 
+    private View progressScreen;
+    private View contentContainer;
+    private Button buttonSubscribe;
+    private Button buttonPass;
+    private TextView textViewSubscriptionPrice;
+    private View textViewHasUpgrade;
+
     private IabHelper billingHelper;
-
-    private View mProgressScreen;
-
-    private View mContentContainer;
-
-    private Button mButtonSub;
-
-    private Button mButtonPass;
-
-    private TextView mTextViewPriceSub;
-
-    private String mSubPrice;
-
-    private View mTextHasUpgrade;
+    private String subPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,17 +77,17 @@ public class BillingActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        mButtonSub = findViewById(R.id.buttonBillingGetSubscription);
-        mButtonSub.setOnClickListener(new OnClickListener() {
+        buttonSubscribe = findViewById(R.id.buttonBillingGetSubscription);
+        buttonSubscribe.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 onSubscribeToXButtonClicked();
             }
         });
-        mTextViewPriceSub = findViewById(R.id.textViewBillingPriceSubscription);
+        textViewSubscriptionPrice = findViewById(R.id.textViewBillingPriceSubscription);
 
-        mButtonPass = findViewById(R.id.buttonBillingGetPass);
-        mButtonPass.setOnClickListener(new OnClickListener() {
+        buttonPass = findViewById(R.id.buttonBillingGetPass);
+        buttonPass.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utils.launchWebsite(BillingActivity.this, getString(R.string.url_x_pass), TAG,
@@ -101,10 +95,10 @@ public class BillingActivity extends BaseActivity {
             }
         });
 
-        mTextHasUpgrade = findViewById(R.id.textViewBillingExisting);
+        textViewHasUpgrade = findViewById(R.id.textViewBillingExisting);
 
-        mProgressScreen = findViewById(R.id.progressBarBilling);
-        mContentContainer = findViewById(R.id.containerBilling);
+        progressScreen = findViewById(R.id.progressBarBilling);
+        contentContainer = findViewById(R.id.containerBilling);
 
         findViewById(R.id.textViewBillingMoreInfo).setOnClickListener(new OnClickListener() {
             @Override
@@ -214,7 +208,7 @@ public class BillingActivity extends BaseActivity {
             // get local sub price
             SkuDetails skuDetails = inventory.getSkuDetails(SKU_X_SUB_NEW_PURCHASES);
             if (skuDetails != null) {
-                mSubPrice = skuDetails.getPrice();
+                subPrice = skuDetails.getPrice();
             }
 
             updateViewStates(hasUpgrade);
@@ -374,28 +368,28 @@ public class BillingActivity extends BaseActivity {
 
     private void updateViewStates(boolean hasUpgrade) {
         // Only enable purchase button if the user does not have the upgrade yet
-        mButtonSub.setEnabled(!hasUpgrade);
-        mTextViewPriceSub.setText(
+        buttonSubscribe.setEnabled(!hasUpgrade);
+        textViewSubscriptionPrice.setText(
                 getString(R.string.billing_price_subscribe,
-                        mSubPrice != null ? mSubPrice : "--",
+                        subPrice != null ? subPrice : "--",
                         getString(R.string.google_play))
         );
-        mButtonPass.setEnabled(!hasUpgrade);
-        mTextHasUpgrade.setVisibility(hasUpgrade ? View.VISIBLE : View.GONE);
+        buttonPass.setEnabled(!hasUpgrade);
+        textViewHasUpgrade.setVisibility(hasUpgrade ? View.VISIBLE : View.GONE);
     }
 
     /**
      * Disables the purchase button and hides the subscribed message.
      */
     private void enableFallBackMode() {
-        mButtonSub.setEnabled(false);
-        mButtonPass.setEnabled(true);
-        mTextHasUpgrade.setVisibility(View.GONE);
+        buttonSubscribe.setEnabled(false);
+        buttonPass.setEnabled(true);
+        textViewHasUpgrade.setVisibility(View.GONE);
     }
 
     private void setWaitMode(boolean isActive) {
-        mProgressScreen.setVisibility(isActive ? View.VISIBLE : View.GONE);
-        mContentContainer.setVisibility(isActive ? View.GONE : View.VISIBLE);
+        progressScreen.setVisibility(isActive ? View.VISIBLE : View.GONE);
+        contentContainer.setVisibility(isActive ? View.GONE : View.VISIBLE);
     }
 
     private void logAndShowAlertDialog(int errorResId, String message) {

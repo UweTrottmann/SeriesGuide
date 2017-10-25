@@ -34,11 +34,9 @@ public class TraktCredentials {
 
     private static TraktCredentials _instance;
 
-    private Context mContext;
-
-    private boolean mHasCredentials;
-
-    private String mUsername;
+    private Context context;
+    private boolean hasCredentials;
+    private String username;
 
     public static synchronized TraktCredentials get(Context context) {
         if (_instance == null) {
@@ -48,17 +46,17 @@ public class TraktCredentials {
     }
 
     private TraktCredentials(Context context) {
-        mContext = context.getApplicationContext();
-        mUsername = PreferenceManager.getDefaultSharedPreferences(mContext)
+        this.context = context.getApplicationContext();
+        username = PreferenceManager.getDefaultSharedPreferences(this.context)
                 .getString(KEY_USERNAME, null);
-        mHasCredentials = !TextUtils.isEmpty(getAccessToken());
+        hasCredentials = !TextUtils.isEmpty(getAccessToken());
     }
 
     /**
      * If there is a username and access token.
      */
     public boolean hasCredentials() {
-        return mHasCredentials;
+        return hasCredentials;
     }
 
     /**
@@ -66,7 +64,7 @@ public class TraktCredentials {
      * will return {@code false}, and shows a notification asking the user to re-connect.
      */
     public synchronized void setCredentialsInvalid() {
-        if (!mHasCredentials) {
+        if (!hasCredentials) {
             // already invalidated credentials
             return;
         }
@@ -75,22 +73,22 @@ public class TraktCredentials {
         Timber.e("trakt credentials invalid, removed access token");
 
         NotificationCompat.Builder nb =
-                new NotificationCompat.Builder(mContext, SgApp.NOTIFICATION_CHANNEL_ERRORS);
-        NotificationSettings.setDefaultsForChannelErrors(mContext, nb);
+                new NotificationCompat.Builder(context, SgApp.NOTIFICATION_CHANNEL_ERRORS);
+        NotificationSettings.setDefaultsForChannelErrors(context, nb);
 
         nb.setSmallIcon(R.drawable.ic_notification);
-        nb.setContentTitle(mContext.getString(R.string.trakt_reconnect));
-        nb.setContentText(mContext.getString(R.string.trakt_reconnect_details));
-        nb.setTicker(mContext.getString(R.string.trakt_reconnect_details));
+        nb.setContentTitle(context.getString(R.string.trakt_reconnect));
+        nb.setContentText(context.getString(R.string.trakt_reconnect_details));
+        nb.setTicker(context.getString(R.string.trakt_reconnect_details));
 
-        PendingIntent intent = TaskStackBuilder.create(mContext)
-                .addNextIntent(new Intent(mContext, ShowsActivity.class))
-                .addNextIntent(new Intent(mContext, ConnectTraktActivity.class))
+        PendingIntent intent = TaskStackBuilder.create(context)
+                .addNextIntent(new Intent(context, ShowsActivity.class))
+                .addNextIntent(new Intent(context, ConnectTraktActivity.class))
                 .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         nb.setContentIntent(intent);
         nb.setAutoCancel(true);
 
-        NotificationManager nm = (NotificationManager) mContext.getSystemService(
+        NotificationManager nm = (NotificationManager) context.getSystemService(
                 Context.NOTIFICATION_SERVICE);
         if (nm != null) {
             nm.notify(SgApp.NOTIFICATION_TRAKT_AUTH_ID, nb.build());
@@ -101,7 +99,7 @@ public class TraktCredentials {
      * Only removes the access token, but keeps the username.
      */
     private void removeAccessToken() {
-        mHasCredentials = false;
+        hasCredentials = false;
         setAccessToken(null);
     }
 
@@ -117,7 +115,7 @@ public class TraktCredentials {
      * Get the username.
      */
     public String getUsername() {
-        return mUsername;
+        return username;
     }
 
     /**
@@ -125,7 +123,7 @@ public class TraktCredentials {
      */
     @Nullable
     public String getDisplayName() {
-        return PreferenceManager.getDefaultSharedPreferences(mContext)
+        return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(KEY_DISPLAYNAME, null);
     }
 
@@ -134,12 +132,12 @@ public class TraktCredentials {
      * is sufficient.
      */
     public String getAccessToken() {
-        Account account = AccountUtils.getAccount(mContext);
+        Account account = AccountUtils.getAccount(context);
         if (account == null) {
             return null;
         }
 
-        AccountManager manager = AccountManager.get(mContext);
+        AccountManager manager = AccountManager.get(context);
         return manager.getPassword(account);
     }
 
@@ -150,7 +148,7 @@ public class TraktCredentials {
         if (TextUtils.isEmpty(accessToken)) {
             throw new IllegalArgumentException("Access token is null or empty.");
         }
-        mHasCredentials = setAccessToken(accessToken);
+        hasCredentials = setAccessToken(accessToken);
     }
 
     /**
@@ -166,34 +164,34 @@ public class TraktCredentials {
     }
 
     private boolean setUsername(String username) {
-        mUsername = username;
-        return PreferenceManager.getDefaultSharedPreferences(mContext)
+        this.username = username;
+        return PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putString(KEY_USERNAME, username)
                 .commit();
     }
 
     private boolean setDisplayname(String displayname) {
-        return PreferenceManager.getDefaultSharedPreferences(mContext)
+        return PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putString(KEY_DISPLAYNAME, displayname)
                 .commit();
     }
 
     private boolean setAccessToken(String accessToken) {
-        Account account = AccountUtils.getAccount(mContext);
+        Account account = AccountUtils.getAccount(context);
         if (account == null) {
             // try to create a new account
-            AccountUtils.createAccount(mContext);
+            AccountUtils.createAccount(context);
         }
 
-        account = AccountUtils.getAccount(mContext);
+        account = AccountUtils.getAccount(context);
         if (account == null) {
             // give up
             return false;
         }
 
-        AccountManager manager = AccountManager.get(mContext);
+        AccountManager manager = AccountManager.get(context);
         manager.setPassword(account, accessToken);
 
         return true;
@@ -220,7 +218,7 @@ public class TraktCredentials {
      */
     public synchronized boolean refreshAccessToken(TraktV2 trakt) {
         // do we even have a refresh token?
-        String oldRefreshToken = TraktOAuthSettings.getRefreshToken(mContext);
+        String oldRefreshToken = TraktOAuthSettings.getRefreshToken(context);
         if (TextUtils.isEmpty(oldRefreshToken)) {
             Timber.d("refreshAccessToken: no refresh token, give up.");
             return false;
@@ -239,11 +237,11 @@ public class TraktCredentials {
                 expiresIn = token.expires_in;
             } else {
                 if (!SgTrakt.isUnauthorized(response)) {
-                    SgTrakt.trackFailedRequest(mContext, "refresh access token", response);
+                    SgTrakt.trackFailedRequest(context, "refresh access token", response);
                 }
             }
         } catch (IOException e) {
-            SgTrakt.trackFailedRequest(mContext, "refresh access token", e);
+            SgTrakt.trackFailedRequest(context, "refresh access token", e);
         }
 
         // did we obtain all required data?
@@ -254,7 +252,7 @@ public class TraktCredentials {
 
         // store the new access token, refresh token and expiry date
         if (!setAccessToken(accessToken)
-                || !TraktOAuthSettings.storeRefreshData(mContext, refreshToken, expiresIn)) {
+                || !TraktOAuthSettings.storeRefreshData(context, refreshToken, expiresIn)) {
             Timber.e("refreshAccessToken: saving failed");
             return false;
         }

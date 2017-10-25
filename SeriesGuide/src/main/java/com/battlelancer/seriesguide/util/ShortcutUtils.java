@@ -168,14 +168,14 @@ public final class ShortcutUtils {
     private static final class RoundedCornerTransformation implements Transformation {
 
         /** A key used to uniquely identify this {@link Transformation} */
-        private final String mKey;
+        private final String key;
         /** The corner radius */
-        private final float mRadius;
+        private final float radius;
 
         /** Constructor for {@code RoundedCornerTransformation} */
         private RoundedCornerTransformation(@NonNull String key, float radius) {
-            mKey = key;
-            mRadius = radius;
+            this.key = key;
+            this.radius = radius;
         }
 
         @Override
@@ -188,7 +188,7 @@ public final class ShortcutUtils {
 
             final Bitmap transformed = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
             Canvas c = new Canvas(transformed);
-            c.drawRoundRect(new RectF(0f, 0f, w, h), mRadius, mRadius, p);
+            c.drawRoundRect(new RectF(0f, 0f, w, h), radius, radius, p);
 
             // Picasso requires the original Bitmap to be recycled if we aren't returning it
             source.recycle();
@@ -207,7 +207,7 @@ public final class ShortcutUtils {
 
         @Override
         public String key() {
-            return mKey;
+            return key;
         }
     }
 }

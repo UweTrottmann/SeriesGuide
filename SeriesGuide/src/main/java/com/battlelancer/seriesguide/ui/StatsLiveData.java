@@ -233,67 +233,67 @@ public class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
     }
 
     public static class Stats {
-        private int mShows;
-        private int mShowsContinuing;
-        private int mShowsWithNext;
-        private int mEpisodes;
-        private int mEpisodesWatched;
-        private long mEpisodesWatchedRuntime;
+        private int shows;
+        private int showsContinuing;
+        private int showsWithNext;
+        private int episodes;
+        private int episodesWatched;
+        private long episodesWatchedRuntime;
         public int movies;
         public int moviesWatchlist;
         public long moviesWatchlistRuntime;
 
         public int shows() {
-            return mShows;
+            return shows;
         }
 
         public Stats shows(int number) {
-            mShows = number;
+            shows = number;
             return this;
         }
 
         public int showsWithNextEpisodes() {
-            return mShowsWithNext;
+            return showsWithNext;
         }
 
         public Stats showsWithNextEpisodes(int number) {
-            mShowsWithNext = number;
+            showsWithNext = number;
             return this;
         }
 
         public int showsContinuing() {
-            return mShowsContinuing;
+            return showsContinuing;
         }
 
         public Stats showsContinuing(int number) {
-            mShowsContinuing = number;
+            showsContinuing = number;
             return this;
         }
 
         public int episodes() {
-            return mEpisodes;
+            return episodes;
         }
 
         public Stats episodes(int number) {
-            mEpisodes = number;
+            episodes = number;
             return this;
         }
 
         public long episodesWatchedRuntime() {
-            return mEpisodesWatchedRuntime;
+            return episodesWatchedRuntime;
         }
 
         public Stats episodesWatchedRuntime(long runtime) {
-            mEpisodesWatchedRuntime = runtime;
+            episodesWatchedRuntime = runtime;
             return this;
         }
 
         public int episodesWatched() {
-            return mEpisodesWatched;
+            return episodesWatched;
         }
 
         public Stats episodesWatched(int number) {
-            mEpisodesWatched = number;
+            episodesWatched = number;
             return this;
         }
     }

@@ -40,12 +40,11 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
     private static final int VIEW_TYPE_EXTENSION = 0;
     private static final int VIEW_TYPE_ADD = 1;
 
-    private final LayoutInflater mLayoutInflater;
+    private final LayoutInflater layoutInflater;
 
     public ExtensionsAdapter(Context context) {
         super(context, 0);
-        mLayoutInflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -70,7 +69,7 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
     public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
         if (getItemViewType(position) == VIEW_TYPE_ADD) {
             if (convertView == null) {
-                convertView = mLayoutInflater.inflate(LAYOUT_ADD, parent, false);
+                convertView = layoutInflater.inflate(LAYOUT_ADD, parent, false);
             }
             // warn non-supporters that they only can add a few extensions
             boolean isAtLimit =
@@ -87,7 +86,7 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
 
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(LAYOUT_EXTENSION, parent, false);
+            convertView = layoutInflater.inflate(LAYOUT_EXTENSION, parent, false);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
@@ -130,17 +129,17 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
 
     private class OverflowItemClickListener implements PopupMenu.OnMenuItemClickListener {
 
-        private final int mPosition;
+        private final int position;
 
         public OverflowItemClickListener(int position) {
-            mPosition = position;
+            this.position = position;
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_action_extension_settings:
-                    ExtensionManager.Extension extension = getItem(mPosition);
+                    ExtensionManager.Extension extension = getItem(position);
                     // launch settings activity
                     Utils.tryStartActivity(getContext(), new Intent()
                                     .setComponent(extension.settingsActivity)
@@ -152,7 +151,7 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
                     return true;
                 case R.id.menu_action_extension_disable:
                     EventBus.getDefault()
-                            .post(new ExtensionDisableRequestEvent(mPosition));
+                            .post(new ExtensionDisableRequestEvent(position));
                     return true;
             }
             return false;

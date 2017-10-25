@@ -13,24 +13,24 @@ import android.view.ViewGroup;
  * {@link #POSITION_NONE} in addition to detaching them.
  */
 public abstract class MultiPagerAdapter extends FragmentPagerAdapter {
-    private FragmentManager mFragmentManager;
 
-    private FragmentTransaction mCurTransaction;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction currentTransaction;
 
     public MultiPagerAdapter(FragmentManager fm) {
         super(fm);
-        mFragmentManager = fm;
+        fragmentManager = fm;
     }
 
     @SuppressLint("CommitTransaction")
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         if (getItemPosition(object) == POSITION_NONE) {
-            if (mCurTransaction == null) {
+            if (currentTransaction == null) {
                 // transaction is committed in #finishUpdate
-                mCurTransaction = mFragmentManager.beginTransaction();
+                currentTransaction = fragmentManager.beginTransaction();
             }
-            mCurTransaction.remove((Fragment) object);
+            currentTransaction.remove((Fragment) object);
         } else {
             super.destroyItem(container, position, object);
         }
@@ -40,10 +40,10 @@ public abstract class MultiPagerAdapter extends FragmentPagerAdapter {
     public void finishUpdate(ViewGroup container) {
         super.finishUpdate(container);
 
-        if (mCurTransaction != null) {
-            mCurTransaction.commitAllowingStateLoss();
-            mCurTransaction = null;
-            mFragmentManager.executePendingTransactions();
+        if (currentTransaction != null) {
+            currentTransaction.commitAllowingStateLoss();
+            currentTransaction = null;
+            fragmentManager.executePendingTransactions();
         }
     }
 }
