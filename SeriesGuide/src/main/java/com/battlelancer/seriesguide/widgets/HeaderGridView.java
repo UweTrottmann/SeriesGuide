@@ -295,7 +295,7 @@ public class HeaderGridView extends GridView {
             }
             // Adapter
             final int adjPosition = position - numHeadersAndPlaceholders;
-            int adapterCount = 0;
+            int adapterCount;
             if (adapter != null) {
                 adapterCount = adapter.getCount();
                 if (adjPosition < adapterCount) {
@@ -317,7 +317,7 @@ public class HeaderGridView extends GridView {
             }
             // Adapter
             final int adjPosition = position - numHeadersAndPlaceholders;
-            int adapterCount = 0;
+            int adapterCount;
             if (adapter != null) {
                 adapterCount = adapter.getCount();
                 if (adjPosition < adapterCount) {
@@ -342,10 +342,7 @@ public class HeaderGridView extends GridView {
 
         @Override
         public boolean hasStableIds() {
-            if (adapter != null) {
-                return adapter.hasStableIds();
-            }
-            return false;
+            return adapter != null && adapter.hasStableIds();
         }
 
         @Override
@@ -370,7 +367,7 @@ public class HeaderGridView extends GridView {
             }
             // Adapter
             final int adjPosition = position - numHeadersAndPlaceholders;
-            int adapterCount = 0;
+            int adapterCount;
             if (adapter != null) {
                 adapterCount = adapter.getCount();
                 if (adjPosition < adapterCount) {
