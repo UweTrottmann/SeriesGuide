@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.adapters.model;
+package com.battlelancer.seriesguide.adapters;
 
 /**
  * Stores information about a header, used by
@@ -7,24 +7,24 @@ package com.battlelancer.seriesguide.adapters.model;
  */
 public class HeaderData {
 
-    private int mCount;
+    private int count;
 
-    private int mRefPosition;
+    private int refPosition;
 
     public HeaderData(int refPosition) {
-        mRefPosition = refPosition;
-        mCount = 0;
+        this.refPosition = refPosition;
+        count = 0;
     }
 
     public int getCount() {
-        return mCount;
+        return count;
     }
 
     public int getRefPosition() {
-        return mRefPosition;
+        return refPosition;
     }
 
     public void incrementCount() {
-        mCount++;
+        count++;
     }
 }
