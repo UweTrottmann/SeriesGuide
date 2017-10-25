@@ -86,20 +86,20 @@ public abstract class BaseOAuthActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        webview = (WebView) findViewById(R.id.webView);
+        webview = findViewById(R.id.webView);
         buttonContainer = findViewById(R.id.containerOauthButtons);
         progressBar = findViewById(R.id.progressBarOauth);
         textViewMessage = buttonContainer.findViewById(R.id.textViewOauthMessage);
 
         // setup buttons (can be used if browser launch fails or user comes back without code)
-        Button buttonBrowser = (Button) findViewById(R.id.buttonOauthBrowser);
+        Button buttonBrowser = findViewById(R.id.buttonOauthBrowser);
         buttonBrowser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 launchBrowser();
             }
         });
-        Button buttonWebView = (Button) findViewById(R.id.buttonOauthWebView);
+        Button buttonWebView = findViewById(R.id.buttonOauthWebView);
         buttonWebView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

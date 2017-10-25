@@ -52,7 +52,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * activity ({@link #setTitle(CharSequence)}) for better accessibility.
      */
     protected void setupActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.sgToolbar);
+        Toolbar toolbar = findViewById(R.id.sgToolbar);
         setSupportActionBar(toolbar);
     }
 

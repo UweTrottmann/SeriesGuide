@@ -66,7 +66,7 @@ public class FullscreenImageActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        photoView = (PhotoView) findViewById(R.id.fullscreen_content);
+        photoView = findViewById(R.id.fullscreen_content);
 
         // try to immediately show cached preview image
         String previewImagePath = getIntent().getStringExtra(EXTRA_PREVIEW_IMAGE);

@@ -65,14 +65,14 @@ public class BackupDeleteActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        Button exportDbToSdButton = (Button) findViewById(R.id.ButtonExportDBtoSD);
+        Button exportDbToSdButton = findViewById(R.id.ButtonExportDBtoSD);
         exportDbToSdButton.setOnClickListener(new OnClickListener() {
             public void onClick(final View v) {
                 showExportDialog();
             }
         });
 
-        Button importDbFromSdButton = (Button) findViewById(R.id.ButtonImportDBfromSD);
+        Button importDbFromSdButton = findViewById(R.id.ButtonImportDBfromSD);
         importDbFromSdButton.setOnClickListener(new OnClickListener() {
             public void onClick(final View v) {
                 showImportDialog();
@@ -80,12 +80,12 @@ public class BackupDeleteActivity extends BaseActivity {
         });
 
         // display backup path
-        TextView backuppath = (TextView) findViewById(R.id.textViewBackupPath);
+        TextView backuppath = findViewById(R.id.textViewBackupPath);
         String path = getBackupFolder().toString();
         backuppath.setText(getString(R.string.backup_path) + ": " + path);
 
         // display current db version
-        TextView dbVersion = (TextView) findViewById(R.id.textViewBackupDatabaseVersion);
+        TextView dbVersion = findViewById(R.id.textViewBackupDatabaseVersion);
         dbVersion.setText(getString(R.string.backup_version) + ": "
                 + SeriesGuideDatabase.DATABASE_VERSION);
     }

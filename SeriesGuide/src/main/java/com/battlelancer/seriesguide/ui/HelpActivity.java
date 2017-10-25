@@ -48,7 +48,7 @@ public class HelpActivity extends BaseActivity {
         setContentView(R.layout.activity_webview);
         setupActionBar();
 
-        webview = (WebView) findViewById(R.id.webView);
+        webview = findViewById(R.id.webView);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.setWebViewClient(webViewClient);
         webview.loadUrl(getString(R.string.help_url));

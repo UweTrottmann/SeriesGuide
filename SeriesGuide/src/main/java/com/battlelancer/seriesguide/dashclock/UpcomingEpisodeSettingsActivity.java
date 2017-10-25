@@ -41,7 +41,7 @@ public class UpcomingEpisodeSettingsActivity extends AppCompatActivity {
     }
 
     private void setupActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.sgToolbar);
+        Toolbar toolbar = findViewById(R.id.sgToolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
