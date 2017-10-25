@@ -329,10 +329,10 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         String action = intent.getAction();
         // global or Google Now voice search
         if (Intent.ACTION_SEARCH.equals(action) || SearchIntents.ACTION_SEARCH.equals(action)) {
-            Bundle extras = getIntent().getExtras();
+            Intent launchIntent = getIntent();
 
             // searching episodes within a show?
-            Bundle appData = extras.getBundle(SearchManager.APP_DATA);
+            Bundle appData = launchIntent.getBundleExtra(SearchManager.APP_DATA);
             if (appData != null) {
                 String showTitle = appData.getString(EpisodeSearchFragment.InitBundle.SHOW_TITLE);
                 if (!TextUtils.isEmpty(showTitle)) {
@@ -342,7 +342,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             }
 
             // setting the query automatically triggers a search
-            String query = extras.getString(SearchManager.QUERY);
+            String query = launchIntent.getStringExtra(SearchManager.QUERY);
             searchView.setText(query);
         } else if (Intent.ACTION_VIEW.equals(action)) {
             Uri data = intent.getData();
