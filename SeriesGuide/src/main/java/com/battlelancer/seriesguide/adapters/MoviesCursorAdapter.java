@@ -23,7 +23,6 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 public class MoviesCursorAdapter extends CursorAdapter {
 
-    private final LayoutInflater layoutInflater;
     private final int uniqueId;
     private final String tmdbImageBaseUrl;
 
@@ -39,8 +38,6 @@ public class MoviesCursorAdapter extends CursorAdapter {
             int uniqueId) {
         super(context, null, 0);
         this.uniqueId = uniqueId;
-        this.layoutInflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.popupMenuClickListener = popupMenuClickListener;
 
         // figure out which size of posters to load based on screen density
@@ -56,7 +53,8 @@ public class MoviesCursorAdapter extends CursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         // do not use parent layout params to avoid padding issues
-        @SuppressLint("InflateParams") View v = layoutInflater.inflate(R.layout.item_movie, null);
+        @SuppressLint("InflateParams") View v =
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie, null);
 
         ViewHolder viewHolder = new ViewHolder();
         viewHolder.title = v.findViewById(R.id.textViewMovieTitle);

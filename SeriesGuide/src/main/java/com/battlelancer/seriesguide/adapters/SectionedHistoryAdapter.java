@@ -33,7 +33,6 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
         void onItemClick(View view, HistoryEntry item);
     }
 
-    protected final LayoutInflater layoutInflater;
     protected final OnItemClickListener itemClickListener;
     private final VectorDrawableCompat drawableWatched;
     private final VectorDrawableCompat drawableCheckin;
@@ -43,7 +42,6 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
     public SectionedHistoryAdapter(@NonNull Context context,
             OnItemClickListener itemClickListener) {
         super(context, 0);
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.itemClickListener = itemClickListener;
         calendar = Calendar.getInstance();
         drawableWatched = ViewTools.vectorIconInactive(getContext(),
@@ -93,7 +91,8 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.item_history, parent, false);
+            convertView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_history, parent, false);
             holder = new ViewHolder(convertView, itemClickListener);
             convertView.setTag(holder);
         } else {
@@ -134,7 +133,8 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
 
         HeaderViewHolder holder;
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.item_grid_header, parent, false);
+            convertView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_grid_header, parent, false);
 
             holder = new HeaderViewHolder();
             holder.day = convertView.findViewById(R.id.textViewGridHeader);

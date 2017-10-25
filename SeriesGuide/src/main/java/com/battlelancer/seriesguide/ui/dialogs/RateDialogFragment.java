@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.os.AsyncTaskCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
@@ -114,10 +113,8 @@ public class RateDialogFragment extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder;
 
-        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(
-                Context.LAYOUT_INFLATER_SERVICE);
-        @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.dialog_trakt_rate,
-                null);
+        @SuppressLint("InflateParams") View layout = LayoutInflater.from(getContext())
+                .inflate(R.layout.dialog_trakt_rate, null);
 
         unbinder = ButterKnife.bind(this, layout);
 
