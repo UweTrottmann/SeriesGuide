@@ -27,7 +27,7 @@ import org.greenrobot.eventbus.EventBus;
 public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> {
 
     public class ExtensionDisableRequestEvent {
-        public int position;
+        public final int position;
 
         public ExtensionDisableRequestEvent(int position) {
             this.position = position;
@@ -44,7 +44,7 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
 
     public ExtensionsAdapter(Context context) {
         super(context, 0);
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -94,6 +94,9 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
         }
 
         final ExtensionManager.Extension extension = getItem(position);
+        if (extension == null) {
+            return convertView;
+        }
 
         viewHolder.description.setText(extension.description);
 
@@ -141,12 +144,14 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
                 case R.id.menu_action_extension_settings:
                     ExtensionManager.Extension extension = getItem(position);
                     // launch settings activity
-                    Utils.tryStartActivity(getContext(), new Intent()
-                                    .setComponent(extension.settingsActivity)
-                                    .putExtra(SeriesGuideExtension.EXTRA_FROM_SERIESGUIDE_SETTINGS,
-                                            true),
-                            true
-                    );
+                    if (extension != null) {
+                        Utils.tryStartActivity(getContext(), new Intent()
+                                        .setComponent(extension.settingsActivity)
+                                        .putExtra(SeriesGuideExtension.EXTRA_FROM_SERIESGUIDE_SETTINGS,
+                                                true),
+                                true
+                        );
+                    }
                     ExtensionManager.get().clearActionsCache();
                     return true;
                 case R.id.menu_action_extension_disable:
