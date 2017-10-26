@@ -28,11 +28,6 @@ public abstract class MovieJob extends BaseJob implements FlagJob {
     }
 
     @Override
-    public int getFlagValue() {
-        return 0; // unused
-    }
-
-    @Override
     public boolean applyLocalChanges(Context context, boolean requiresNetworkJob) {
         // prepare network job
         byte[] networkJobInfo = null;

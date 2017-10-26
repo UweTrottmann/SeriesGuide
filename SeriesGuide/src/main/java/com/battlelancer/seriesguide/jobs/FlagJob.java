@@ -9,8 +9,6 @@ public interface FlagJob {
 
     boolean supportsTrakt();
 
-    int getFlagValue();
-
     /**
      * If requested, prepares a network job. Applies local changes, then persists the network job.
      *

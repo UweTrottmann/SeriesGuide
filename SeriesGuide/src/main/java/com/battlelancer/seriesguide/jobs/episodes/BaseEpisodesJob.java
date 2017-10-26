@@ -54,8 +54,7 @@ public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
         return !EpisodeTools.isSkipped(flagValue);
     }
 
-    @Override
-    public int getFlagValue() {
+    protected int getFlagValue() {
         return flagValue;
     }
 
