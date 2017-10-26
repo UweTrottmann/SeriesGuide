@@ -55,7 +55,7 @@ public class SeasonWatchedJob extends SeasonBaseJob {
             final Cursor seasonEpisodes = context.getContentResolver().query(
                     SeriesGuideContract.Episodes.buildEpisodesOfSeasonUri(
                             String.valueOf(seasonTvdbId)),
-                    BaseJob.PROJECTION_EPISODE,
+                    BaseEpisodesJob.PROJECTION_EPISODE,
                     SeriesGuideContract.Episodes.FIRSTAIREDMS + "<=" + (currentTime
                             + DateUtils.HOUR_IN_MILLIS), null,
                     SeriesGuideContract.Episodes.NUMBER + " DESC"

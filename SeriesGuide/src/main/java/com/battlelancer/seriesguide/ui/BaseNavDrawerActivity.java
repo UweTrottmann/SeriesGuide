@@ -28,7 +28,7 @@ import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.customtabs.CustomTabsHelper;
 import com.battlelancer.seriesguide.customtabs.FeedbackBroadcastReceiver;
-import com.battlelancer.seriesguide.jobs.episodes.EpisodeFlagJob;
+import com.battlelancer.seriesguide.jobs.FlagJob;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
@@ -85,13 +85,13 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
         @Nullable public final String confirmationText;
         public boolean isSuccessful;
-        @Nullable public final EpisodeFlagJob episodeJob;
+        @Nullable public final FlagJob flagJob;
 
         public ServiceCompletedEvent(@Nullable String confirmationText, boolean isSuccessful,
-                @Nullable EpisodeFlagJob episodeJob) {
+                @Nullable FlagJob flagJob) {
             this.confirmationText = confirmationText;
             this.isSuccessful = isSuccessful;
-            this.episodeJob = episodeJob;
+            this.flagJob = flagJob;
         }
     }
 

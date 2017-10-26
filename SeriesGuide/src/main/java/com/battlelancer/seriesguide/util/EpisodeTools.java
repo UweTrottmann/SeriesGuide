@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeCollectedJob;
-import com.battlelancer.seriesguide.jobs.episodes.EpisodeFlagJob;
+import com.battlelancer.seriesguide.jobs.FlagJob;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeJobAsyncTask;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedPreviousJob;
@@ -116,7 +116,7 @@ public class EpisodeTools {
      * Run on serial executor, like all database ops to avoid concurrent database access as issues
      * might occur due to ordering (ex: set watched + set not watched order matters).
      */
-    private static void execute(Context context, @NonNull EpisodeFlagJob job) {
+    private static void execute(Context context, @NonNull FlagJob job) {
         new EpisodeJobAsyncTask(context, job).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
     }
 }
