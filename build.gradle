@@ -4,7 +4,7 @@ buildscript {
             'minSdk': 15,
             'compileSdk': 26,
             'targetSdk': 26,
-            'buildTools': '26.0.1',
+            'buildTools': '26.0.2',
 
             'supportLibrary': '26.1.0',
             'playServices': '11.4.0', // developers.google.com/android/guides/releases
@@ -37,7 +37,7 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.2' // libraries, SeriesGuide
+        classpath 'com.android.tools.build:gradle:3.0.0' // libraries, SeriesGuide
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.1' // SeriesGuide
         classpath 'io.fabric.tools:gradle:1.24.2' // SeriesGuide

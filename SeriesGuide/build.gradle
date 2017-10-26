@@ -56,6 +56,8 @@ android {
         exclude 'LICENSE.txt'
     }
 
+    flavorDimensions "flavor"
+
     productFlavors {
         free {
             applicationId "com.battlelancer.seriesguide"
