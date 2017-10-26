@@ -15,6 +15,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.jobs.HexagonEpisodeJob;
+import com.battlelancer.seriesguide.jobs.NetworkJob;
 import com.battlelancer.seriesguide.jobs.SgJobInfo;
 import com.battlelancer.seriesguide.jobs.TraktEpisodeJob;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
@@ -91,7 +92,7 @@ public class NetworkJobProcessor {
             }
             HexagonTools hexagonTools = SgApp.getServicesComponent(context).hexagonTools();
 
-            HexagonEpisodeJob hexagonJob = new HexagonEpisodeJob(hexagonTools, action, jobInfo);
+            NetworkJob hexagonJob = new HexagonEpisodeJob(hexagonTools, action, jobInfo);
             JobResult result = hexagonJob.execute(context);
             if (!result.successful) {
                 showNotification(jobId, createdAt, result);
@@ -105,7 +106,7 @@ public class NetworkJobProcessor {
                 return false;
             }
 
-            TraktEpisodeJob traktJob = new TraktEpisodeJob(action, jobInfo, createdAt);
+            NetworkJob traktJob = new TraktEpisodeJob(action, jobInfo, createdAt);
             JobResult result = traktJob.execute(context);
             // may need to show notification if successful (for not found error)
             showNotification(jobId, createdAt, result);
