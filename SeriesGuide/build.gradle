@@ -74,12 +74,6 @@ android {
             versionCode versions.code
             versionName versions.name
         }
-        // temporarily unused
-//        preview {
-//            applicationId "com.uwetrottmann.seriesguide.preview"
-//            versionCode versions.code
-//            versionName versions.name + "-preview"
-//        }
     }
 
     signingConfigs {
