@@ -59,7 +59,7 @@ android {
     flavorDimensions "flavor"
 
     productFlavors {
-        free {
+        pure {
             applicationId "com.battlelancer.seriesguide"
             versionCode versions.code
             versionName versions.name
