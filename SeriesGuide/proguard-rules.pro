@@ -85,8 +85,3 @@
 
 ## Testing
 -dontwarn android.test.**
-
-# Assertj
--dontwarn org.assertj.core.**
--dontwarn org.junit.**
--dontwarn java.beans.**
