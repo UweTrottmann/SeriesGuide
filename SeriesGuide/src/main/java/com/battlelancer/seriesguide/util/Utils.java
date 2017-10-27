@@ -344,7 +344,7 @@ public class Utils {
      * Similar to {@link #tryStartActivity(Context, Intent, boolean)}, but starting an activity for
      * a result.
      */
-    public static boolean tryStartActivityForResult(Fragment fragment, Intent intent,
+    public static void tryStartActivityForResult(Fragment fragment, Intent intent,
             int requestCode) {
         Context context = fragment.getContext();
 
@@ -362,8 +362,6 @@ public class Utils {
         if (!handled) {
             Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show();
         }
-
-        return handled;
     }
 
     public static void startActivityWithAnimation(Activity activity, Intent intent, View view) {
@@ -458,8 +456,8 @@ public class Utils {
      * <p> This is useful for executing non-blocking operations (e.g. NO network activity, etc.).
      */
     @SafeVarargs
-    public static <Params, Progress, Result> AsyncTask<Params, Progress, Result> executeInOrder(
+    public static <Params, Progress, Result> void executeInOrder(
             AsyncTask<Params, Progress, Result> task, Params... args) {
-        return task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, args);
+        task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, args);
     }
 }
