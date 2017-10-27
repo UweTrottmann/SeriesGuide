@@ -26,7 +26,7 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
     private SystemBarTintManager systemBarTintManager;
 
     public static Intent intentMovie(Context context, int movieTmdbId) {
-        return new Intent(context, OverviewActivity.class)
+        return new Intent(context, MovieDetailsActivity.class)
                 .putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, movieTmdbId);
     }
 

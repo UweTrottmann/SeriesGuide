@@ -289,8 +289,7 @@ public class MoviesNowFragment extends Fragment {
             }
 
             // display movie details
-            Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
-            i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, item.movieTmdbId);
+            Intent i = MovieDetailsActivity.intentMovie(getActivity(), item.movieTmdbId);
 
             // simple scale up animation as there are no images
             Utils.startActivityWithAnimation(getActivity(), i, view);
