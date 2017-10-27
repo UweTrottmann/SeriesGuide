@@ -41,12 +41,11 @@ buildscript {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.2' // SeriesGuide
         classpath 'io.fabric.tools:gradle:1.24.4' // SeriesGuide
-        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.11.0' // api
+        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.10.0' // api
     }
 }
 
 apply plugin: 'com.github.ben-manes.versions'
-apply plugin: 'io.codearte.nexus-staging'
 
 allprojects {
     repositories {
