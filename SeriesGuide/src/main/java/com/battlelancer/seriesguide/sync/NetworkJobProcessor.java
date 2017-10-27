@@ -15,6 +15,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.jobs.HexagonEpisodeJob;
+import com.battlelancer.seriesguide.jobs.HexagonMovieJob;
 import com.battlelancer.seriesguide.jobs.NetworkJob;
 import com.battlelancer.seriesguide.jobs.SgJobInfo;
 import com.battlelancer.seriesguide.jobs.TraktEpisodeJob;
@@ -92,11 +93,13 @@ public class NetworkJobProcessor {
             }
             HexagonTools hexagonTools = SgApp.getServicesComponent(context).hexagonTools();
 
-            NetworkJob hexagonJob = new HexagonEpisodeJob(hexagonTools, action, jobInfo);
-            JobResult result = hexagonJob.execute(context);
-            if (!result.successful) {
-                showNotification(jobId, createdAt, result);
-                return result.jobRemovable;
+            NetworkJob hexagonJob = getHexagonJobForAction(hexagonTools, action, jobInfo);
+            if (hexagonJob != null) {
+                JobResult result = hexagonJob.execute(context);
+                if (!result.successful) {
+                    showNotification(jobId, createdAt, result);
+                    return result.jobRemovable;
+                }
             }
         }
 
@@ -116,6 +119,23 @@ public class NetworkJobProcessor {
         }
 
         return true;
+    }
+
+    @Nullable
+    private NetworkJob getHexagonJobForAction(HexagonTools hexagonTools, JobAction action,
+            SgJobInfo jobInfo) {
+        switch (action) {
+            case EPISODE_COLLECTION:
+            case EPISODE_WATCHED_FLAG:
+                return new HexagonEpisodeJob(hexagonTools, action, jobInfo);
+            case MOVIE_COLLECTION_ADD:
+            case MOVIE_COLLECTION_REMOVE:
+            case MOVIE_WATCHLIST_ADD:
+            case MOVIE_WATCHLIST_REMOVE:
+                return new HexagonMovieJob(hexagonTools, action, jobInfo);
+            default:
+                return null; // action not supported by hexagon
+        }
     }
 
     private void showNotification(long jobId, long jobCreatedAt, @NonNull JobResult result) {
