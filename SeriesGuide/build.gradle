@@ -56,8 +56,6 @@ android {
         exclude 'LICENSE.txt'
     }
 
-    flavorDimensions "flavor"
-
     productFlavors {
         pure {
             applicationId "com.battlelancer.seriesguide"
