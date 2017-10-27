@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.jobs.HexagonMovieJob;
 import com.battlelancer.seriesguide.jobs.NetworkJob;
 import com.battlelancer.seriesguide.jobs.SgJobInfo;
 import com.battlelancer.seriesguide.jobs.TraktEpisodeJob;
+import com.battlelancer.seriesguide.jobs.TraktMovieJob;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
@@ -109,12 +110,14 @@ public class NetworkJobProcessor {
                 return false;
             }
 
-            NetworkJob traktJob = new TraktEpisodeJob(action, jobInfo, createdAt);
-            JobResult result = traktJob.execute(context);
-            // may need to show notification if successful (for not found error)
-            showNotification(jobId, createdAt, result);
-            if (!result.successful) {
-                return result.jobRemovable;
+            NetworkJob traktJob = getTraktJobForAction(action, jobInfo, createdAt);
+            if (traktJob != null) {
+                JobResult result = traktJob.execute(context);
+                // may need to show notification if successful (for not found error)
+                showNotification(jobId, createdAt, result);
+                if (!result.successful) {
+                    return result.jobRemovable;
+                }
             }
         }
 
@@ -133,8 +136,28 @@ public class NetworkJobProcessor {
             case MOVIE_WATCHLIST_ADD:
             case MOVIE_WATCHLIST_REMOVE:
                 return new HexagonMovieJob(hexagonTools, action, jobInfo);
+            case MOVIE_WATCHED_SET:
+            case MOVIE_WATCHED_REMOVE:
             default:
                 return null; // action not supported by hexagon
+        }
+    }
+
+    @Nullable
+    private NetworkJob getTraktJobForAction(JobAction action, SgJobInfo jobInfo, long createdAt) {
+        switch (action) {
+            case EPISODE_COLLECTION:
+            case EPISODE_WATCHED_FLAG:
+                return new TraktEpisodeJob(action, jobInfo, createdAt);
+            case MOVIE_COLLECTION_ADD:
+            case MOVIE_COLLECTION_REMOVE:
+            case MOVIE_WATCHLIST_ADD:
+            case MOVIE_WATCHLIST_REMOVE:
+            case MOVIE_WATCHED_SET:
+            case MOVIE_WATCHED_REMOVE:
+                return new TraktMovieJob(action, jobInfo, createdAt);
+            default:
+                return null; // action not supported by trakt
         }
     }
 
