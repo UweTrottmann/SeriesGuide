@@ -18,7 +18,7 @@ import java.util.List;
 import static com.battlelancer.seriesguide.jobs.episodes.JobAction.EPISODE_COLLECTION;
 import static com.battlelancer.seriesguide.jobs.episodes.JobAction.EPISODE_WATCHED_FLAG;
 
-public class HexagonEpisodeJob extends NetworkJob {
+public class HexagonEpisodeJob extends BaseNetworkEpisodeJob {
 
     @NonNull private final HexagonTools hexagonTools;
 

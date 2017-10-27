@@ -18,7 +18,7 @@ import static com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_COLLECT
 import static com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHLIST_ADD;
 import static com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHLIST_REMOVE;
 
-public class HexagonMovieJob extends NetworkJob {
+public class HexagonMovieJob extends BaseNetworkMovieJob {
 
     @NonNull private final HexagonTools hexagonTools;
 

@@ -31,7 +31,7 @@ import org.threeten.bp.ZoneOffset;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class TraktEpisodeJob extends NetworkJob {
+public class TraktEpisodeJob extends BaseNetworkEpisodeJob {
 
     private final long actionAtMs;
 
