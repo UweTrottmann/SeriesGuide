@@ -174,6 +174,10 @@ public class MovieTools {
 
     public static void watchedMovie(Context context, int movieTmdbId) {
         FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, true));
+        // background: watched state currently only supported with trakt
+        // trakt removes from watchlist automatically, but app would not show until next sync
+        // and not mirror on hexagon, so do it manually
+        removeFromWatchlist(context, movieTmdbId);
     }
 
     public static void unwatchedMovie(Context context, int movieTmdbId) {
