@@ -6,7 +6,9 @@ import com.battlelancer.seriesguide.jobs.BaseJob;
 import com.battlelancer.seriesguide.jobs.FlagJob;
 import com.battlelancer.seriesguide.jobs.SgJobInfo;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
+import com.battlelancer.seriesguide.util.MovieTools;
 import com.google.flatbuffers.FlatBufferBuilder;
+import org.greenrobot.eventbus.EventBus;
 
 public abstract class MovieJob extends BaseJob implements FlagJob {
 
@@ -48,6 +50,9 @@ public abstract class MovieJob extends BaseJob implements FlagJob {
                 return false;
             }
         }
+
+        // post event to update button states
+        EventBus.getDefault().post(new MovieTools.MovieChangedEvent(movieTmdbId));
 
         return true;
     }
