@@ -85,3 +85,10 @@
 
 ## Testing
 -dontwarn android.test.**
+
+# Ignore some notes about unused classes referenced in method signatures
+-dontnote com.tonicartos.widget.stickygridheaders.**
+-dontnote com.uwetrottmann.thetvdb.**
+-dontnote com.uwetrottmann.tmdb2.**
+-dontnote com.uwetrottmann.trakt5.**
+-dontnote uk.co.senab.photoview.**
