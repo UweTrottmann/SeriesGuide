@@ -181,7 +181,7 @@ public abstract class GenericCheckInDialogFragment extends AppCompatDialogFragme
         setProgressLock(true);
 
         // connected?
-        if (Utils.isNotConnected(getActivity(), true)) {
+        if (Utils.isNotConnected(getActivity())) {
             // no? abort
             setProgressLock(false);
             return;

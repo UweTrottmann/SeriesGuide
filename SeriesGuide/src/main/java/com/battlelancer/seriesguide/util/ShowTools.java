@@ -163,7 +163,7 @@ public class ShowTools {
      */
     public void storeIsFavorite(int showTvdbId, boolean isFavorite) {
         if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context, true)) {
+            if (Utils.isNotConnected(context)) {
                 return;
             }
             // send to cloud
@@ -197,7 +197,7 @@ public class ShowTools {
      */
     public void storeIsHidden(int showTvdbId, boolean isHidden) {
         if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context, true)) {
+            if (Utils.isNotConnected(context)) {
                 return;
             }
             // send to cloud
@@ -223,7 +223,7 @@ public class ShowTools {
 
     public void storeLanguage(final int showTvdbId, final String languageCode) {
         if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context, true)) {
+            if (Utils.isNotConnected(context)) {
                 return;
             }
             // send to cloud
@@ -271,7 +271,7 @@ public class ShowTools {
      */
     public void storeNotify(int showTvdbId, boolean notify) {
         if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context, true)) {
+            if (Utils.isNotConnected(context)) {
                 return;
             }
             // send to cloud

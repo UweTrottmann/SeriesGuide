@@ -295,15 +295,12 @@ public class Utils {
 
     /**
      * Checks for an available network connection.
-     *
-     * @param showOfflineToast If not connected, displays a toast asking the user to connect to a
-     * network.
      */
-    public static boolean isNotConnected(Context context, boolean showOfflineToast) {
+    public static boolean isNotConnected(Context context) {
         boolean isConnected = AndroidUtils.isNetworkConnected(context);
 
-        // display optional offline toast
-        if (!isConnected && showOfflineToast) {
+        // display offline toast
+        if (!isConnected) {
             Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show();
         }
 
