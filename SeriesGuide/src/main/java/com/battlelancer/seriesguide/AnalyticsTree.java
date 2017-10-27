@@ -7,6 +7,7 @@ import android.util.Log;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
+import java.net.UnknownHostException;
 import timber.log.Timber;
 
 /**
@@ -37,6 +38,10 @@ public class AnalyticsTree extends Timber.DebugTree {
             // special treatment for some exceptions
             if (t instanceof TvdbException) {
                 TvdbException e = (TvdbException) t;
+                Throwable cause = e.getCause();
+                if (cause != null && cause instanceof UnknownHostException) {
+                    return; // do not track
+                }
                 Utils.trackCustomEvent(context,
                         CATEGORY_THETVDB_ERROR,
                         tag + ": " + message,
