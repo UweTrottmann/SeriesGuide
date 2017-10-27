@@ -4,15 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.MovieDetails;
+import com.battlelancer.seriesguide.jobs.FlagJobAsyncTask;
 import com.battlelancer.seriesguide.jobs.movies.MovieCollectionJob;
-import com.battlelancer.seriesguide.jobs.movies.MovieJob;
-import com.battlelancer.seriesguide.jobs.movies.MovieJobAsyncTask;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
@@ -112,20 +110,12 @@ public class MovieTools {
         Timber.d("deleteUnusedMovies: removed %s movies", rowsDeleted);
     }
 
-    /**
-     * Run on serial executor, like all database ops to avoid concurrent database access as issues
-     * might occur due to ordering (ex: set watched + set not watched order matters).
-     */
-    private static void executeMovieJob(Context context, MovieJob movieJob) {
-        new MovieJobAsyncTask(context, movieJob).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-    }
-
     public static void addToCollection(Context context, int movieTmdbId) {
-        executeMovieJob(context, new MovieCollectionJob(movieTmdbId, true));
+        FlagJobAsyncTask.executeJob(context, new MovieCollectionJob(movieTmdbId, true));
     }
 
     public static void addToWatchlist(Context context, int movieTmdbId) {
-        executeMovieJob(context, new MovieWatchlistJob(movieTmdbId, true));
+        FlagJobAsyncTask.executeJob(context, new MovieWatchlistJob(movieTmdbId, true));
     }
 
     /**
@@ -148,11 +138,11 @@ public class MovieTools {
     }
 
     public static void removeFromCollection(Context context, int movieTmdbId) {
-        executeMovieJob(context, new MovieCollectionJob(movieTmdbId, false));
+        FlagJobAsyncTask.executeJob(context, new MovieCollectionJob(movieTmdbId, false));
     }
 
     public static void removeFromWatchlist(Context context, int movieTmdbId) {
-        executeMovieJob(context, new MovieWatchlistJob(movieTmdbId, false));
+        FlagJobAsyncTask.executeJob(context, new MovieWatchlistJob(movieTmdbId, false));
     }
 
     /**
@@ -183,11 +173,11 @@ public class MovieTools {
     }
 
     public static void watchedMovie(Context context, int movieTmdbId) {
-        executeMovieJob(context, new MovieWatchedJob(movieTmdbId, true));
+        FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, true));
     }
 
     public static void unwatchedMovie(Context context, int movieTmdbId) {
-        executeMovieJob(context, new MovieWatchedJob(movieTmdbId, false));
+        FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, false));
     }
 
     /**
