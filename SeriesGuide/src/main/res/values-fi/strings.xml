@@ -123,7 +123,7 @@
   <string name="action_episode_notifications_off">Poista jaksoilmoitukset käytöstä</string>
   <string name="context_hide">Piilota</string>
   <string name="context_unhide">Paljasta</string>
-  <string name="hidden">Piilotettu ohjelma</string>
+  <string name="hidden">Siirretty piilotettuihin</string>
   <string name="unhidden">Paljasta ohjelma</string>
   <string name="action_shows_add">Lisää ohjelma</string>
   <string name="action_shows_filter">Suodata ohjelmat</string>
@@ -439,7 +439,7 @@
   <string name="pref_notifications_treshold">Milloin ilmoittaa</string>
   <string name="pref_notifications_select_shows">Valitse ohjelmat</string>
   <string name="pref_notifications_select_shows_summary">Ohjelmat, joissa ilmoitukset ovat käytössä (%d)</string>
-  <string name="pref_notification_channel_errors">Errors</string>
+  <string name="pref_notification_channel_errors">Virheet</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (pieni)</string>
   <!-- List Widget -->

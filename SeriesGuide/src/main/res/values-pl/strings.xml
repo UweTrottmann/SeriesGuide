@@ -450,7 +450,7 @@
   <string name="pref_notifications_treshold">Powiadamiaj</string>
   <string name="pref_notifications_select_shows">Wybierz seriale</string>
   <string name="pref_notifications_select_shows_summary">Seriale z aktywnymi powiadomieniami (%d)</string>
-  <string name="pref_notification_channel_errors">Errors</string>
+  <string name="pref_notification_channel_errors">Błędy</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (mały)</string>
   <!-- List Widget -->
