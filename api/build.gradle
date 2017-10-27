@@ -52,7 +52,7 @@ artifacts {
 }
 
 dependencies {
-    implementation files("${android.sdk}/platforms/${android.target}/android.jar")
+    compile files("${android.sdk}/platforms/${android.target}/android.jar")
 }
 
 signing {
