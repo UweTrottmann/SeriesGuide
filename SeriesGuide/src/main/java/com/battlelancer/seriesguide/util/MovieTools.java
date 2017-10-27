@@ -439,12 +439,8 @@ public class MovieTools {
 
         // build a single list of tmdb ids
         Set<Integer> newMovies = new HashSet<>();
-        for (Integer tmdbId : newCollectionMovies) {
-            newMovies.add(tmdbId);
-        }
-        for (Integer tmdbId : newWatchlistMovies) {
-            newMovies.add(tmdbId);
-        }
+        newMovies.addAll(newCollectionMovies);
+        newMovies.addAll(newWatchlistMovies);
 
         String languageCode = DisplaySettings.getMoviesLanguage(context);
         List<MovieDetails> movies = new LinkedList<>();
