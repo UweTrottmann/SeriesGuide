@@ -1,34 +1,42 @@
-apply plugin: "java"
-apply plugin: "maven"
-apply plugin: "signing"
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 group = "com.uwetrottmann.seriesguide"
 archivesBaseName = "seriesguide-api"
-version = "1.3.0"
+version = "1.4.0"
+
+android {
+    compileSdkVersion versions.compileSdk
+
+    defaultConfig {
+        minSdkVersion versions.minSdk
+        targetSdkVersion 24
+    }
+
+    compileOptions {
+        encoding = "UTF-8"
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
 
 // load properties file
-def Properties props = new Properties()
+Properties props = new Properties()
 props.load(new FileInputStream(file("../local.properties")))
-// extract Android SDK dir
-def android = [
-        sdk: props["sdk.dir"],
-        target: "android-24"
-]
-
-compileJava {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
-}
+def localSdkDir = props["sdk.dir"]
 
 task generateJavadoc(type: Javadoc) {
     // do not fail due to exclude being broken https://discuss.gradle.org/t/javadoc-exclusion-question/11875
     failOnError false
-    source = sourceSets.main.allJava
+    source = android.sourceSets.main.java.srcDirs
     exclude "**/constants/**"
     title = "SeriesGuide API"
+
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+
     options.windowTitle = "SeriesGuide API"
-    options.linksOffline("http://developer.android.com/reference", "${android.sdk}/docs/reference")
-    classpath = files("${android.sdk}/platforms/${android.target}/android.jar", "${android.sdk}/tools/support/annotations.jar")
+    options.linksOffline("http://developer.android.com/reference", "${localSdkDir}/docs/reference")
     options.noDeprecated = true
     options.noHelp = true
     options.noIndex = true
@@ -36,23 +44,26 @@ task generateJavadoc(type: Javadoc) {
     options.stylesheetFile = file('./javadoc_stylesheet.css')
 }
 
+// Add in dependency classpath to avoid cannot find symbol (http://stackoverflow.com/a/34572606/1676363)
+afterEvaluate {
+    generateJavadoc.classpath += files(android.libraryVariants.collect { variant ->
+        variant.javaCompile.classpath.files
+    })
+}
+
 task javadocJar(type: Jar, dependsOn: generateJavadoc) {
-    classifier = "javadoc"
-    from javadoc
+    classifier = 'javadoc'
+    from generateJavadoc.destinationDir
 }
 
 task sourcesJar(type: Jar) {
-    classifier = "sources"
-    from sourceSets.main.allSource
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
 }
 
 artifacts {
     archives sourcesJar
     archives javadocJar
-}
-
-dependencies {
-    implementation files("${android.sdk}/platforms/${android.target}/android.jar")
 }
 
 signing {
@@ -74,7 +85,7 @@ uploadArchives {
 
             pom.project {
                 name "SeriesGuide API"
-                packaging "jar"
+                packaging "aar"
                 description "Extension API for SeriesGuide to provide custom actions on media items"
                 url "http://seriesgui.de/api"
 
