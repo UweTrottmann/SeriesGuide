@@ -9,6 +9,15 @@ Version 40
 ----------
 *(in development)*
 
+#### 40-beta2
+*(2017-10-27)*
+
+* 🔧 SeriesGuide Cloud and trakt: For movies 'Set watched', 'Add to collection' and 
+     'Add to watchlist' is re-tried on failure, queued while offline.
+* 🔧 trakt: when setting a movie watched, it is removed from your watchlist.
+* 📝 Latest translations from crowdin.
+* 📝 Targeting Android O.
+
 #### 40-beta1
 *(2017-10-19)*
 
