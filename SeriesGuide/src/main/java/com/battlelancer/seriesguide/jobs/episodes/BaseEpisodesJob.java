@@ -7,15 +7,17 @@ import android.net.Uri;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import com.battlelancer.seriesguide.jobs.BaseJob;
 import com.battlelancer.seriesguide.jobs.EpisodeInfo;
+import com.battlelancer.seriesguide.jobs.FlagJob;
 import com.battlelancer.seriesguide.jobs.SgJobInfo;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
+import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.google.flatbuffers.FlatBufferBuilder;
 
-public abstract class BaseJob implements EpisodeFlagJob {
+public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
 
     public static final String[] PROJECTION_EPISODE = new String[] {
             Episodes._ID
@@ -29,10 +31,9 @@ public abstract class BaseJob implements EpisodeFlagJob {
 
     private final int showTvdbId;
     private final int flagValue;
-    private final JobAction action;
 
-    public BaseJob(int showTvdbId, int flagValue, JobAction action) {
-        this.action = action;
+    public BaseEpisodesJob(int showTvdbId, int flagValue, JobAction action) {
+        super(action);
         this.showTvdbId = showTvdbId;
         this.flagValue = flagValue;
     }
@@ -42,7 +43,18 @@ public abstract class BaseJob implements EpisodeFlagJob {
     }
 
     @Override
-    public int getFlagValue() {
+    public boolean supportsHexagon() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsTrakt() {
+        /* No need to create network job for skipped episodes, not supported by trakt.
+        Note that a network job might still be created if hexagon is connected. */
+        return !EpisodeTools.isSkipped(flagValue);
+    }
+
+    protected int getFlagValue() {
         return flagValue;
     }
 
@@ -130,21 +142,10 @@ public abstract class BaseJob implements EpisodeFlagJob {
         query.close();
 
         int episodes = SgJobInfo.createEpisodesVector(builder, episodeInfos);
-        int jobInfo = SgJobInfo.createSgJobInfo(builder, showTvdbId, flagValue, episodes);
+        int jobInfo = SgJobInfo.createSgJobInfo(builder, showTvdbId, flagValue, episodes, 0);
 
         builder.finish(jobInfo);
         return builder.sizedByteArray();
-    }
-
-    private boolean persistNetworkJob(Context context, @NonNull byte[] jobInfo) {
-        ContentValues values = new ContentValues();
-        values.put(Jobs.TYPE, action.id);
-        values.put(Jobs.CREATED_MS, System.currentTimeMillis());
-        values.put(Jobs.EXTRAS, jobInfo);
-
-        Uri insert = context.getContentResolver().insert(Jobs.CONTENT_URI, values);
-
-        return insert != null;
     }
 
     /**

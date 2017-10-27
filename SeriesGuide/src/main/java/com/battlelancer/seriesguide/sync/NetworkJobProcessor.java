@@ -15,9 +15,11 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.jobs.HexagonEpisodeJob;
+import com.battlelancer.seriesguide.jobs.HexagonMovieJob;
 import com.battlelancer.seriesguide.jobs.NetworkJob;
 import com.battlelancer.seriesguide.jobs.SgJobInfo;
 import com.battlelancer.seriesguide.jobs.TraktEpisodeJob;
+import com.battlelancer.seriesguide.jobs.TraktMovieJob;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
@@ -92,11 +94,13 @@ public class NetworkJobProcessor {
             }
             HexagonTools hexagonTools = SgApp.getServicesComponent(context).hexagonTools();
 
-            NetworkJob hexagonJob = new HexagonEpisodeJob(hexagonTools, action, jobInfo);
-            JobResult result = hexagonJob.execute(context);
-            if (!result.successful) {
-                showNotification(jobId, createdAt, result);
-                return result.jobRemovable;
+            NetworkJob hexagonJob = getHexagonJobForAction(hexagonTools, action, jobInfo);
+            if (hexagonJob != null) {
+                JobResult result = hexagonJob.execute(context);
+                if (!result.successful) {
+                    showNotification(jobId, createdAt, result);
+                    return result.jobRemovable;
+                }
             }
         }
 
@@ -106,16 +110,55 @@ public class NetworkJobProcessor {
                 return false;
             }
 
-            NetworkJob traktJob = new TraktEpisodeJob(action, jobInfo, createdAt);
-            JobResult result = traktJob.execute(context);
-            // may need to show notification if successful (for not found error)
-            showNotification(jobId, createdAt, result);
-            if (!result.successful) {
-                return result.jobRemovable;
+            NetworkJob traktJob = getTraktJobForAction(action, jobInfo, createdAt);
+            if (traktJob != null) {
+                JobResult result = traktJob.execute(context);
+                // may need to show notification if successful (for not found error)
+                showNotification(jobId, createdAt, result);
+                if (!result.successful) {
+                    return result.jobRemovable;
+                }
             }
         }
 
         return true;
+    }
+
+    @Nullable
+    private NetworkJob getHexagonJobForAction(HexagonTools hexagonTools, JobAction action,
+            SgJobInfo jobInfo) {
+        switch (action) {
+            case EPISODE_COLLECTION:
+            case EPISODE_WATCHED_FLAG:
+                return new HexagonEpisodeJob(hexagonTools, action, jobInfo);
+            case MOVIE_COLLECTION_ADD:
+            case MOVIE_COLLECTION_REMOVE:
+            case MOVIE_WATCHLIST_ADD:
+            case MOVIE_WATCHLIST_REMOVE:
+                return new HexagonMovieJob(hexagonTools, action, jobInfo);
+            case MOVIE_WATCHED_SET:
+            case MOVIE_WATCHED_REMOVE:
+            default:
+                return null; // action not supported by hexagon
+        }
+    }
+
+    @Nullable
+    private NetworkJob getTraktJobForAction(JobAction action, SgJobInfo jobInfo, long createdAt) {
+        switch (action) {
+            case EPISODE_COLLECTION:
+            case EPISODE_WATCHED_FLAG:
+                return new TraktEpisodeJob(action, jobInfo, createdAt);
+            case MOVIE_COLLECTION_ADD:
+            case MOVIE_COLLECTION_REMOVE:
+            case MOVIE_WATCHLIST_ADD:
+            case MOVIE_WATCHLIST_REMOVE:
+            case MOVIE_WATCHED_SET:
+            case MOVIE_WATCHED_REMOVE:
+                return new TraktMovieJob(action, jobInfo, createdAt);
+            default:
+                return null; // action not supported by trakt
+        }
     }
 
     private void showNotification(long jobId, long jobCreatedAt, @NonNull JobResult result) {

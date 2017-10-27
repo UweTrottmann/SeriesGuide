@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.jobs.episodes;
+package com.battlelancer.seriesguide.jobs;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,28 +8,33 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
-import com.battlelancer.seriesguide.util.EpisodeTools;
 import org.greenrobot.eventbus.EventBus;
 
-public class EpisodeJobAsyncTask extends AsyncTask<Void, Void, Void> {
+public class FlagJobAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @SuppressLint("StaticFieldLeak") // using application context
     private final Context context;
-    private final EpisodeFlagJob job;
+    private final FlagJob job;
 
-    public EpisodeJobAsyncTask(Context context, EpisodeFlagJob job) {
+    /**
+     * Run on serial executor, like all database ops to avoid concurrent database access as issues
+     * might occur due to ordering (ex: set watched + set not watched order matters).
+     */
+    public static void executeJob(Context context, FlagJob job) {
+        new FlagJobAsyncTask(context, job).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+    }
+
+    public FlagJobAsyncTask(Context context, FlagJob job) {
         this.context = context.getApplicationContext();
         this.job = job;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        boolean shouldSendToHexagon = HexagonSettings.isEnabled(context);
-        /* Do net send skipped episodes, this is not supported by trakt.
-        However, if the skipped flag is removed
-        this will be handled identical to flagging as unwatched. */
-        boolean shouldSendToTrakt = TraktCredentials.get(context).hasCredentials()
-                && !EpisodeTools.isSkipped(job.getFlagValue());
+        boolean shouldSendToHexagon = job.supportsHexagon()
+                && HexagonSettings.isEnabled(context);
+        boolean shouldSendToTrakt = job.supportsTrakt()
+                && TraktCredentials.get(context).hasCredentials();
         boolean requiresNetworkJob = shouldSendToHexagon || shouldSendToTrakt;
 
         // set send flags to false to avoid showing 'Sending to...' message

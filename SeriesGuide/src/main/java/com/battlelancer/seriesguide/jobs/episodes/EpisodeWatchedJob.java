@@ -54,7 +54,7 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
                     final Cursor latestWatchedEpisode = context.getContentResolver()
                             .query(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(String
                                             .valueOf(getShowTvdbId())),
-                                    BaseJob.PROJECTION_EPISODE,
+                                    BaseEpisodesJob.PROJECTION_EPISODE,
                                     SeriesGuideContract.Episodes.SELECTION_PREVIOUS_WATCHED,
                                     new String[] {
                                             season, season, String.valueOf(episode)

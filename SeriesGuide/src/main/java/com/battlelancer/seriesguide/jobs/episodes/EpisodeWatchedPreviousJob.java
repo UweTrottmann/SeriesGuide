@@ -8,7 +8,7 @@ import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 
-public class EpisodeWatchedPreviousJob extends BaseJob {
+public class EpisodeWatchedPreviousJob extends BaseEpisodesJob {
 
     private final long episodeFirstAired;
     private final int episodeNumber;

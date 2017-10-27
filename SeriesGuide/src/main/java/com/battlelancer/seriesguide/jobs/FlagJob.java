@@ -1,11 +1,13 @@
-package com.battlelancer.seriesguide.jobs.episodes;
+package com.battlelancer.seriesguide.jobs;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-public interface EpisodeFlagJob {
+public interface FlagJob {
 
-    int getFlagValue();
+    boolean supportsHexagon();
+
+    boolean supportsTrakt();
 
     /**
      * If requested, prepares a network job. Applies local changes, then persists the network job.
@@ -16,7 +18,7 @@ public interface EpisodeFlagJob {
     boolean applyLocalChanges(Context context, boolean requiresNetworkJob);
 
     /**
-     * Tells for example which episode was flagged watched.
+     * A message to be shown to the user that an action has completed (locally).
      */
     @NonNull
     String getConfirmationText(Context context);

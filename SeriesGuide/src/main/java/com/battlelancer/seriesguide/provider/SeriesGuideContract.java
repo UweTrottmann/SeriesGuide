@@ -1005,6 +1005,8 @@ public class SeriesGuideContract {
                 .appendPath(PATH_MOVIES)
                 .build();
 
+        public static final String[] PROJECTION_TITLE = { Movies.TITLE };
+
         public static final String SELECTION_COLLECTION = Movies.IN_COLLECTION + "=1";
 
         public static final String SELECTION_NOT_COLLECTION = Movies.IN_COLLECTION + "=0";

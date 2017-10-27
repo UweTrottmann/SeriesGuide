@@ -1,5 +1,7 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -22,6 +24,11 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
     public static int LOADER_ID_MOVIE_CREDITS = 102;
 
     private SystemBarTintManager systemBarTintManager;
+
+    public static Intent intentMovie(Context context, int movieTmdbId) {
+        return new Intent(context, OverviewActivity.class)
+                .putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, movieTmdbId);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

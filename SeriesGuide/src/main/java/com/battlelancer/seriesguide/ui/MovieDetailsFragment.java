@@ -612,7 +612,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         loadMovieActionsDelayed();
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(MovieTools.MovieChangedEvent event) {
         if (event.movieTmdbId != tmdbId) {
             return;
