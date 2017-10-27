@@ -45,6 +45,7 @@ import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.google.android.gms.analytics.HitBuilders;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
+import java.net.UnknownHostException;
 import timber.log.Timber;
 
 /**
@@ -247,19 +248,24 @@ public class Utils {
 
     public static void trackFailedRequest(Context context, String category, String action,
             int code, String message) {
-        Utils.trackCustomEvent(context, category, action, code + " " + message);
         // log like "action: 404 not found"
         Timber.tag(category);
         Timber.e("%s: %s %s", action, code, message);
+
+        Utils.trackCustomEvent(context, category, action, code + " " + message);
     }
 
     public static void trackFailedRequest(Context context, String category, String action,
             @NonNull Throwable throwable) {
-        // for tracking only send exception name
-        Utils.trackCustomEvent(context, category, action, throwable.getClass().getSimpleName());
         // log like "action: Unable to resolve host"
         Timber.tag(category);
         Timber.e(throwable, "%s: %s", action, throwable.getMessage());
+
+        if (throwable instanceof UnknownHostException /* mostly devices loosing connection */) {
+            return; // do not track
+        }
+        // for tracking only send exception name
+        Utils.trackCustomEvent(context, category, action, throwable.getClass().getSimpleName());
     }
 
     /**
