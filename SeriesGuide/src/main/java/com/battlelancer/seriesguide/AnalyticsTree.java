@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteException;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbTraktException;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
 import java.net.UnknownHostException;
@@ -37,6 +38,9 @@ public class AnalyticsTree extends Timber.DebugTree {
 
             // special treatment for some exceptions
             if (t instanceof TvdbException) {
+                if (t instanceof TvdbTraktException) {
+                    return; // already tracked as trakt error
+                }
                 TvdbException e = (TvdbException) t;
                 Throwable cause = e.getCause();
                 if (cause != null && cause instanceof UnknownHostException) {
