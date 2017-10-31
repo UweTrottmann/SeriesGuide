@@ -439,7 +439,7 @@
   <string name="pref_notifications_treshold">Mikor értesítsen</string>
   <string name="pref_notifications_select_shows">Sorozatok kiválasztása</string>
   <string name="pref_notifications_select_shows_summary">Sorozatok, melyek értesítései engedélyezve vannak (%d)</string>
-  <string name="pref_notification_channel_errors">Errors</string>
+  <string name="pref_notification_channel_errors">Hibák</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (kicsi)</string>
   <!-- List Widget -->
