@@ -9,6 +9,12 @@ Version 40
 ----------
 *(in development)*
 
+#### 40-beta3
+*(2017-10-31)*
+
+* 🔨 Crash: services may start in the background. (Revert targeting Android O.)
+* 📝 Latest translations from crowdin.
+
 #### 40-beta2
 *(2017-10-27)*
 
