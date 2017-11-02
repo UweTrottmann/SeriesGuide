@@ -39,6 +39,7 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import org.threeten.bp.Instant;
@@ -369,7 +370,8 @@ public class NotificationService extends IntentService {
         } else {
             // notify about multiple episodes
             tickerText = getString(R.string.upcoming_episodes);
-            contentTitle = getString(R.string.upcoming_episodes_number, count);
+            contentTitle = getString(R.string.upcoming_episodes_number,
+                    NumberFormat.getIntegerInstance().format(count));
             contentText = getString(R.string.upcoming_display);
 
             contentIntent = TaskStackBuilder.create(context)
