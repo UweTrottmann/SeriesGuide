@@ -13,6 +13,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -45,17 +46,17 @@ import timber.log.Timber;
 
 public class NotificationService extends IntentService {
 
-    private static final String KEY_EPISODE_CLEARED_TIME
+    public static final String ACTION_CLEARED = "seriesguide.intent.action.CLEARED";
+    public static final String EXTRA_EPISODE_TVDBID
+            = "com.battlelancer.seriesguide.EXTRA_EPISODE_TVDBID";
+    private static final String EXTRA_EPISODE_CLEARED_TIME
             = "com.battlelancer.seriesguide.episode_cleared_time";
 
     private static final boolean DEBUG = false;
 
     private static final int REQUEST_CODE_DELETE_INTENT = 1;
-
     private static final int REQUEST_CODE_SINGLE_EPISODE = 2;
-
     private static final int REQUEST_CODE_MULTIPLE_EPISODES = 3;
-
     private static final int REQUEST_CODE_ACTION_CHECKIN = 4;
     private static final int REQUEST_CODE_ACTION_SET_WATCHED = 4;
 
@@ -108,9 +109,7 @@ public class NotificationService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Timber.d("Waking up...");
-        if (handleDeleteIntent(this, intent)) {
-            return;
-        }
+
         // remove notification service wake-up alarm if notifications are disabled or not unlocked
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (!NotificationSettings.isNotificationsEnabled(this) || !Utils.hasAccessToX(this)) {
@@ -233,12 +232,12 @@ public class NotificationService extends IntentService {
     /**
      * Extracts the last cleared time and stores it in settings.
      */
-    public static boolean handleDeleteIntent(Context context, Intent intent) {
+    public static boolean handleDeleteIntent(Context context, @Nullable Intent intent) {
         if (intent == null) {
             return false;
         }
 
-        long clearedTime = intent.getLongExtra(KEY_EPISODE_CLEARED_TIME, 0);
+        long clearedTime = intent.getLongExtra(EXTRA_EPISODE_CLEARED_TIME, 0);
         if (clearedTime != 0) {
             // Never show the cleared episode(s) again
             Timber.d("Notification cleared, setting last cleared episode time: %d", clearedTime);
@@ -360,7 +359,7 @@ public class NotificationService extends IntentService {
             Intent episodeDetailsIntent = new Intent(context, EpisodesActivity.class);
             episodeDetailsIntent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                     upcomingEpisodes.getInt(NotificationQuery._ID));
-            episodeDetailsIntent.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
+            episodeDetailsIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime);
 
             contentIntent = TaskStackBuilder.create(context)
                     .addNextIntent(showsIntent)
@@ -374,7 +373,7 @@ public class NotificationService extends IntentService {
             contentText = getString(R.string.upcoming_display);
 
             contentIntent = TaskStackBuilder.create(context)
-                    .addNextIntent(showsIntent.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime))
+                    .addNextIntent(showsIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime))
                     .getPendingIntent(REQUEST_CODE_MULTIPLE_EPISODES,
                             PendingIntent.FLAG_CANCEL_CURRENT);
         }
@@ -412,7 +411,7 @@ public class NotificationService extends IntentService {
                 Intent checkInActionIntent = new Intent(context, QuickCheckInActivity.class);
                 checkInActionIntent.putExtra(QuickCheckInActivity.InitBundle.EPISODE_TVDBID,
                         upcomingEpisodes.getInt(NotificationQuery._ID));
-                checkInActionIntent.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
+                checkInActionIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime);
                 checkInActionIntent.addFlags(
                         Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
                 PendingIntent checkInIntent = PendingIntent.getActivity(context,
@@ -424,10 +423,10 @@ public class NotificationService extends IntentService {
 
                 // Action button to set watched
                 Intent setWatchedIntent = new Intent(context, NotificationActionReceiver.class);
-                setWatchedIntent.putExtra(NotificationActionReceiver.EXTRA_EPISODE_TVDBID,
+                setWatchedIntent.putExtra(EXTRA_EPISODE_TVDBID,
                         upcomingEpisodes.getInt(NotificationQuery._ID));
                 // data to handle delete
-                checkInActionIntent.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
+                checkInActionIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime);
                 PendingIntent setWatchedPendingIntent = PendingIntent.getBroadcast(context,
                         REQUEST_CODE_ACTION_SET_WATCHED,
                         setWatchedIntent, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -513,9 +512,10 @@ public class NotificationService extends IntentService {
         nb.setColor(ContextCompat.getColor(this, R.color.accent_primary));
         nb.setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        Intent i = new Intent(this, NotificationService.class);
-        i.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
-        PendingIntent deleteIntent = PendingIntent.getService(this, REQUEST_CODE_DELETE_INTENT, i,
+        Intent i = new Intent(this, NotificationActionReceiver.class);
+        i.setAction(ACTION_CLEARED);
+        i.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime);
+        PendingIntent deleteIntent = PendingIntent.getBroadcast(this, REQUEST_CODE_DELETE_INTENT, i,
                 PendingIntent.FLAG_CANCEL_CURRENT);
         nb.setDeleteIntent(deleteIntent);
 
