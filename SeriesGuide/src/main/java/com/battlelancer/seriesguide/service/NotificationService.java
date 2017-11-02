@@ -233,9 +233,9 @@ public class NotificationService extends IntentService {
     /**
      * Extracts the last cleared time and stores it in settings.
      */
-    public static boolean handleDeleteIntent(Context context, @Nullable Intent intent) {
+    public static void handleDeleteIntent(Context context, @Nullable Intent intent) {
         if (intent == null) {
-            return false;
+            return;
         }
 
         long clearedTime = intent.getLongExtra(EXTRA_EPISODE_CLEARED_TIME, 0);
@@ -246,9 +246,7 @@ public class NotificationService extends IntentService {
                     .edit()
                     .putLong(NotificationSettings.KEY_LAST_CLEARED, clearedTime)
                     .apply();
-            return true;
         }
-        return false;
     }
 
     /**
