@@ -41,6 +41,8 @@ import timber.log.Timber;
  */
 public class SgApp extends Application {
 
+    public static final int JOB_ID_NOTIFICATION_SERVICE = 1000;
+
     public static final int NOTIFICATION_EPISODE_ID = 1;
     public static final int NOTIFICATION_SUBSCRIPTION_ID = 2;
     public static final int NOTIFICATION_TRAKT_AUTH_ID = 3;

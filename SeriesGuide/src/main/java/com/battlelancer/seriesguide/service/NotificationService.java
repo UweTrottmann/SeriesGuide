@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.service;
 
 import android.app.AlarmManager;
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -13,7 +12,9 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.JobIntentService;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -45,7 +46,7 @@ import java.util.List;
 import org.threeten.bp.Instant;
 import timber.log.Timber;
 
-public class NotificationService extends IntentService {
+public class NotificationService extends JobIntentService {
 
     public static final String ACTION_CLEARED = "seriesguide.intent.action.CLEARED";
     public static final String EXTRA_EPISODE_TVDBID
@@ -82,33 +83,27 @@ public class NotificationService extends IntentService {
             + Episodes.FIRSTAIREDMS + ">=?";
 
     interface NotificationQuery {
-
         int _ID = 0;
-
         int TITLE = 1;
-
         int EPISODE_FIRST_RELEASE_MS = 2;
-
         int SHOW_TITLE = 3;
-
         int NETWORK = 4;
-
         int NUMBER = 5;
-
         int SEASON = 6;
-
         int POSTER = 7;
-
         int OVERVIEW = 8;
     }
 
-    public NotificationService() {
-        super("Episode Notification Service");
-        setIntentRedelivery(true);
+    /**
+     * Convenience method for enqueuing the service to run.
+     */
+    public static void enqueue(Context context) {
+        enqueueWork(context, NotificationService.class, SgApp.JOB_ID_NOTIFICATION_SERVICE,
+                new Intent()); // empty work intent
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onHandleWork(@NonNull Intent intent) {
         Timber.d("Waking up...");
 
         // remove notification service wake-up alarm if notifications are disabled or not unlocked
@@ -116,7 +111,7 @@ public class NotificationService extends IntentService {
         if (!NotificationSettings.isNotificationsEnabled(this) || !Utils.hasAccessToX(this)) {
             Timber.d("Notifications disabled, removing wake-up alarm");
             AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            Intent i = new Intent(this, OnAlarmReceiver.class);
+            Intent i = new Intent(this, NotificationAlarmReceiver.class);
             PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
             if (am != null) {
                 am.cancel(pi);

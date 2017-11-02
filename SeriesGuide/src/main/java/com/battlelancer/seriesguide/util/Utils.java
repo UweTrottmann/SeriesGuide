@@ -3,8 +3,6 @@ package com.battlelancer.seriesguide.util;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +15,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.AnyRes;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
@@ -27,7 +24,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -39,7 +35,6 @@ import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.google.android.gms.analytics.HitBuilders;
@@ -85,22 +80,7 @@ public class Utils {
      * Run the notification service to display and (re)schedule upcoming episode alarms.
      */
     public static void runNotificationService(Context context) {
-        Intent i = new Intent(context, NotificationService.class);
-        context.startService(i);
-    }
-
-    /**
-     * Run the notification service delayed by a minute to display and (re)schedule upcoming episode
-     * alarms.
-     */
-    public static void runNotificationServiceDelayed(Context context) {
-        Intent i = new Intent(context, OnAlarmReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
-        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        if (am != null) {
-            am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    SystemClock.elapsedRealtime() + DateUtils.MINUTE_IN_MILLIS, pi);
-        }
+        NotificationService.enqueue(context);
     }
 
     /**
