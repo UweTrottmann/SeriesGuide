@@ -153,16 +153,14 @@ public abstract class SeriesGuideExtension extends JobIntentService {
     private static final String PREF_SUBSCRIPTIONS = "subscriptions";
     private static final String PREF_LAST_ACTION = "action";
 
-    private final String mName;
+    private final String name;
+    private SharedPreferences sharedPrefs;
+    private Map<ComponentName, String> subscribers;
 
-    private SharedPreferences mSharedPrefs;
-
-    private Map<ComponentName, String> mSubscribers;
-
-    private Action mCurrentAction;
+    private Action currentAction;
     private int currentActionType;
 
-    private Handler mHandler = new Handler();
+    private Handler handler = new Handler();
 
     /**
      * Enqueues this service to process the given intent received from a subscriber.
@@ -178,13 +176,13 @@ public abstract class SeriesGuideExtension extends JobIntentService {
      * preferences and state for the extension.
      */
     public SeriesGuideExtension(String name) {
-        mName = name;
+        this.name = name;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mSharedPrefs = getSharedPreferences();
+        sharedPrefs = getSharedPreferences();
         loadSubscriptions();
         loadLastAction();
     }
@@ -209,7 +207,7 @@ public abstract class SeriesGuideExtension extends JobIntentService {
      * @see #getSharedPreferences(android.content.Context, String)
      */
     protected final SharedPreferences getSharedPreferences() {
-        return getSharedPreferences(this, mName);
+        return getSharedPreferences(this, name);
     }
 
     /**
@@ -282,7 +280,7 @@ public abstract class SeriesGuideExtension extends JobIntentService {
      * Publishes the provided {@link Action}. It will be sent to all current subscribers.
      */
     protected final void publishAction(Action action) {
-        mCurrentAction = action;
+        currentAction = action;
         publishCurrentAction();
         saveLastAction();
     }
@@ -292,7 +290,7 @@ public abstract class SeriesGuideExtension extends JobIntentService {
      */
     @SuppressWarnings("unused")
     protected final Action getCurrentAction() {
-        return mCurrentAction;
+        return currentAction;
     }
 
     @Override
@@ -323,20 +321,20 @@ public abstract class SeriesGuideExtension extends JobIntentService {
             return;
         }
 
-        String oldToken = mSubscribers.get(subscriber);
+        String oldToken = subscribers.get(subscriber);
         if (TextUtils.isEmpty(token)) {
             if (oldToken == null) {
                 return;
             }
 
             // Unsubscribing
-            mSubscribers.remove(subscriber);
+            subscribers.remove(subscriber);
             handleSubscriberRemoved(subscriber);
         } else {
             // Subscribing
             if (!TextUtils.isEmpty(oldToken)) {
                 // Was previously subscribed, treat this as a unsubscribe + subscribe
-                mSubscribers.remove(subscriber);
+                subscribers.remove(subscriber);
                 handleSubscriberRemoved(subscriber);
             }
 
@@ -344,7 +342,7 @@ public abstract class SeriesGuideExtension extends JobIntentService {
                 return;
             }
 
-            mSubscribers.put(subscriber, token);
+            subscribers.put(subscriber, token);
             handleSubscriberAdded(subscriber);
         }
 
@@ -352,7 +350,7 @@ public abstract class SeriesGuideExtension extends JobIntentService {
     }
 
     private synchronized void handleSubscriberAdded(ComponentName subscriber) {
-        if (mSubscribers.size() == 1) {
+        if (subscribers.size() == 1) {
             onEnabled();
         }
 
@@ -362,54 +360,54 @@ public abstract class SeriesGuideExtension extends JobIntentService {
     private synchronized void handleSubscriberRemoved(ComponentName subscriber) {
         onSubscriberRemoved(subscriber);
 
-        if (mSubscribers.size() == 0) {
+        if (subscribers.size() == 0) {
             onDisabled();
         }
     }
 
     private synchronized void loadSubscriptions() {
-        mSubscribers = new HashMap<>();
-        Set<String> serializedSubscriptions = mSharedPrefs.getStringSet(PREF_SUBSCRIPTIONS, null);
+        subscribers = new HashMap<>();
+        Set<String> serializedSubscriptions = sharedPrefs.getStringSet(PREF_SUBSCRIPTIONS, null);
         if (serializedSubscriptions != null) {
             for (String serializedSubscription : serializedSubscriptions) {
                 String[] arr = serializedSubscription.split("\\|", 2);
                 ComponentName subscriber = ComponentName.unflattenFromString(arr[0]);
                 String token = arr[1];
-                mSubscribers.put(subscriber, token);
+                subscribers.put(subscriber, token);
             }
         }
     }
 
     private synchronized void saveSubscriptions() {
         Set<String> serializedSubscriptions = new HashSet<>();
-        for (ComponentName subscriber : mSubscribers.keySet()) {
+        for (ComponentName subscriber : subscribers.keySet()) {
             serializedSubscriptions.add(subscriber.flattenToShortString() + "|"
-                    + mSubscribers.get(subscriber));
+                    + subscribers.get(subscriber));
         }
-        mSharedPrefs.edit().putStringSet(PREF_SUBSCRIPTIONS, serializedSubscriptions).commit();
+        sharedPrefs.edit().putStringSet(PREF_SUBSCRIPTIONS, serializedSubscriptions).apply();
     }
 
     private void loadLastAction() {
-        String stateString = mSharedPrefs.getString(PREF_LAST_ACTION, null);
+        String stateString = sharedPrefs.getString(PREF_LAST_ACTION, null);
         if (stateString != null) {
             try {
-                mCurrentAction = Action.fromJson(
+                currentAction = Action.fromJson(
                         (JSONObject) new JSONTokener(stateString).nextValue());
             } catch (JSONException e) {
-                Log.e(TAG, "Couldn't deserialize current state, id=" + mName, e);
+                Log.e(TAG, "Couldn't deserialize current state, id=" + name, e);
             }
         } else {
-            mCurrentAction = null;
+            currentAction = null;
         }
     }
 
     private void saveLastAction() {
         try {
-            mSharedPrefs.edit()
-                    .putString(PREF_LAST_ACTION, mCurrentAction.toJson().toString())
-                    .commit();
+            sharedPrefs.edit()
+                    .putString(PREF_LAST_ACTION, currentAction.toJson().toString())
+                    .apply();
         } catch (JSONException e) {
-            Log.e(TAG, "Couldn't serialize current state, id=" + mName, e);
+            Log.e(TAG, "Couldn't serialize current state, id=" + name, e);
         }
     }
 
@@ -433,15 +431,15 @@ public abstract class SeriesGuideExtension extends JobIntentService {
 
     private synchronized void publishCurrentAction() {
         // TODO possibly only publish to requester (identify via token)
-        for (ComponentName subscription : mSubscribers.keySet()) {
+        for (ComponentName subscription : subscribers.keySet()) {
             publishCurrentAction(subscription);
         }
     }
 
     private synchronized void publishCurrentAction(final ComponentName subscriber) {
-        String token = mSubscribers.get(subscriber);
+        String token = subscribers.get(subscriber);
         if (TextUtils.isEmpty(token)) {
-            Log.w(TAG, "Not active, canceling update, id=" + mName);
+            Log.w(TAG, "Not active, canceling update, id=" + name);
             return;
         }
 
@@ -450,15 +448,15 @@ public abstract class SeriesGuideExtension extends JobIntentService {
                 .setComponent(subscriber)
                 .putExtra(EXTRA_TOKEN, token)
                 .putExtra(EXTRA_ACTION,
-                        (mCurrentAction != null) ? mCurrentAction.toBundle() : null)
+                        (currentAction != null) ? currentAction.toBundle() : null)
                 .putExtra(EXTRA_ACTION_TYPE, currentActionType);
         try {
             ComponentName returnedSubscriber = startService(intent);
             if (returnedSubscriber == null) {
                 Log.e(TAG, "Update wasn't published because subscriber no longer exists"
-                        + ", id=" + mName);
+                        + ", id=" + name);
                 // Unsubscribe the now-defunct subscriber
-                mHandler.post(new Runnable() {
+                handler.post(new Runnable() {
                     @Override
                     public void run() {
                         handleSubscribe(subscriber, null);
@@ -466,7 +464,7 @@ public abstract class SeriesGuideExtension extends JobIntentService {
                 });
             }
         } catch (SecurityException e) {
-            Log.e(TAG, "Couldn't publish update, id=" + mName, e);
+            Log.e(TAG, "Couldn't publish update, id=" + name, e);
         }
     }
 }
