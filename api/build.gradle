@@ -32,10 +32,7 @@ props.load(new FileInputStream(file("../local.properties")))
 def localSdkDir = props["sdk.dir"]
 
 task generateJavadoc(type: Javadoc) {
-    // do not fail due to exclude being broken https://discuss.gradle.org/t/javadoc-exclusion-question/11875
-    failOnError false
     source = android.sourceSets.main.java.srcDirs
-    exclude "**/constants/**"
     title = "SeriesGuide API"
 
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))

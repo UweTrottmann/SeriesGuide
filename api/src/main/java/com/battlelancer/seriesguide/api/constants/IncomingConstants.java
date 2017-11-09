@@ -1,5 +1,8 @@
 package com.battlelancer.seriesguide.api.constants;
 
+/**
+ * Internal constants, do not use.
+ */
 public interface IncomingConstants {
 
     String ACTION_SUBSCRIBE = "com.battlelancer.seriesguide.api.action.SUBSCRIBE";
