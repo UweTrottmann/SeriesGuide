@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.JobIntentService;
 
+/**
+ * Base class to expose a {@link SeriesGuideExtension} service. See the documentation of {@link
+ * SeriesGuideExtension} for how to create an extension.
+ */
 public abstract class SeriesGuideExtensionReceiver extends BroadcastReceiver {
 
     /**
@@ -21,7 +25,7 @@ public abstract class SeriesGuideExtensionReceiver extends BroadcastReceiver {
     protected abstract int getJobId();
 
     /**
-     * The class implementing the {@link SeriesGuideExtension} {@link JobIntentService}.
+     * The class implementing {@link SeriesGuideExtension}.
      */
     protected abstract Class<? extends SeriesGuideExtension> getExtensionClass();
 

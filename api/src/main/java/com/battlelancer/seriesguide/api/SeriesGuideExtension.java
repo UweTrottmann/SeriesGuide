@@ -1,6 +1,6 @@
 package com.battlelancer.seriesguide.api;
 
-import android.app.IntentService;
+import android.app.job.JobService;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -34,9 +34,12 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA
 
 /**
  * Base class for a SeriesGuide extension. Extensions are a way for other apps to
- * feed actions (represented through {@linkplain Action actions}) for media items to SeriesGuide.
- * Actions may for example launch other apps or just display interesting information related to a
- * media item. Extensions are specialized {@link IntentService} classes.
+ * feed actions (represented through {@linkplain Action actions}) for episodes and movies to
+ * SeriesGuide. Actions may for example launch other apps or display interesting information related
+ * to an episode or movie.
+ *
+ * <p> Extensions are specialized {@link JobIntentService} classes in combination with a broadcast
+ * receiver.
  *
  * <p> Multiple extensions may be enabled within SeriesGuide at the same time. When a SeriesGuide
  * user chooses to enable an extension, SeriesGuide will <em>subscribe</em> to it prior of
@@ -48,28 +51,37 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA
  *
  * <h3>Subclassing {@link SeriesGuideExtension}</h3>
  *
- * Subclasses must at least implement {@link #onRequest(int, Episode)}, which is called when
- * SeriesGuide requests actions to display for a media item. Do not perform long running operations
- * here as the user will get frustrated while waiting for this extensions action to be published.
+ * Subclasses must at least implement {@link #onRequest(int, Episode)} or {@link #onRequest(int, Movie)},
+ * which is called when SeriesGuide requests actions to display for an episode or movie. Do not
+ * perform long running operations here as the user will get frustrated while waiting for the
+ * action to appear.
  *
  * <p> To publish an action, call {@link #publishAction(Action)} from {@link #onRequest(int,
- * Episode)}. All current subscribers will then immediately receive an update with the new action
- * information. Under the hood, this is all done with {@linkplain Context#startService(Intent)
- * service intents}.
+ * Episode)} or {@link #onRequest(int, Movie)}. All current subscribers will then immediately
+ * receive an update with the new action information. Under the hood, this is done with
+ * {@linkplain Context#startService(Intent) service intents}.
+ *
+ * <p> As the subclass is a {@link JobIntentService}, it needs be declared as a
+ * <code>&lt;service&gt;</code> component in the application's <code>AndroidManifest.xml</code>. In
+ * addition it must be exported and given the {@link JobService#PERMISSION_BIND} permission to
+ * integrate with the platforms job scheduler.
  *
  * <h3>Registering your extension</h3>
  *
- * An extension is simply a service that SeriesGuide and other apps interact with via
- * {@linkplain Context#startService(Intent) service intents}. Subclasses of {@link
- * SeriesGuideExtension} should thus be declared as <code>&lt;service&gt;</code> components in the
+ * An extension is exposed through a broadcast receiver that SeriesGuide and other apps interact
+ * with via {@linkplain Context#sendBroadcast(Intent) broadcast intents}. This receiver enqueues
+ * requests from subscribers to be processed by this service. A simple receiver can be implemented
+ * by subclassing {@link SeriesGuideExtensionReceiver}.
+ *
+ * <p> The receiver must be declared as a <code>&lt;receiver&gt;</code> component in the
  * application's <code>AndroidManifest.xml</code> file.
  *
  * <p> The SeriesGuide app and other potential subscribers discover available extensions using
- * Android's {@link Intent} mechanism. Ensure that your <code>service</code> definition includes an
+ * Android's {@link Intent} mechanism. Ensure that your <code>receiver</code> definition includes an
  * <code>&lt;intent-filter&gt;</code> with an action of {@link SeriesGuideExtensionReceiver#ACTION_SERIESGUIDE_EXTENSION}.
  *
  * <p> To make your extension easier to identify for users you should add the following attributes
- * to your service definition:
+ * to your receiver definition:
  *
  * <ul>
  * <li><code>android:label</code> (optional): the name to display when displaying your extension in
@@ -80,8 +92,8 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA
  * interface.</li>
  * </ul>
  *
- * <p> Lastly, you may want to add the following <code>&lt;meta-data&gt;</code> element to your
- * service definition:
+ * <p> If you want to provide a settings activity, add the following <code>&lt;meta-data&gt;</code>
+ * element to your receiver definition:
  *
  * <ul>
  * <li><code>settingsActivity</code> (optional): if present, should be the qualified
@@ -94,17 +106,21 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA
  * Below is an example extension declaration in the manifest:
  *
  * <pre class="prettyprint">
- * &lt;service android:name=".ExampleExtension"
- *     android:label="@string/extension_title"
+ * &lt;receiver android:name=".ExampleExtensionReceiver"
+ *     android:description="@string/extension_description"
  *     android:icon="@drawable/ic_extension_example"
- *     android:description="@string/extension_description"&gt;
+ *     android:label="@string/extension_title"&gt;
  *     &lt;intent-filter&gt;
  *         &lt;action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" /&gt;
  *     &lt;/intent-filter&gt;
  *     &lt;!-- A settings activity is optional --&gt;
  *     &lt;meta-data android:name="settingsActivity"
  *         android:value=".ExampleSettingsActivity" /&gt;
- * &lt;/service&gt;
+ * &lt;/receiver&gt;
+ * &lt;service
+ *     android:name=".ExampleExtension"
+ *     android:exported="true"
+ *     android:permission="android.permission.BIND_JOB_SERVICE" /&gt;
  * </pre>
  *
  * If a <code>settingsActivity</code> meta-data element is present, an activity with the given
@@ -118,17 +134,28 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA
  *     android:exported="true" /&gt;
  * </pre>
  *
- * Finally, below is a simple example {@link SeriesGuideExtension} subclass that publishes actions
- * for episodes performing a simple Google search:
+ * Finally, below are a simple example {@link SeriesGuideExtensionReceiver} and
+ * {@link SeriesGuideExtension} subclass that publishes actions for episodes performing a simple
+ * Google search:
  *
  * <pre class="prettyprint">
+ * public class ExampleExtensionReceiver extends SeriesGuideExtensionReceiver {
+ *     protected int getJobId() {
+ *         return 1000;
+ *     }
+ *
+ *     protected Class&lt;? extends SeriesGuideExtension&gt; getExtensionClass() {
+ *         return ExampleExtension.class;
+ *     }
+ * }
+ *
  * public class ExampleExtension extends SeriesGuideExtension {
  *     protected void onRequest(int episodeIdentifier, Episode episode) {
  *         publishAction(new Action.Builder("Google search", episodeIdentifier)
  *                 .viewIntent(new Intent(Intent.ACTION_VIEW)
  *                          .setData(Uri.parse("https://www.google.com/#q="
  *                                 + episode.getTitle())))
-                   .build());
+ *                 .build());
  *     }
  * }
  * </pre>
