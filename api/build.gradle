@@ -5,14 +5,14 @@ apply plugin: 'io.codearte.nexus-staging'
 
 group = "com.uwetrottmann.seriesguide"
 archivesBaseName = "seriesguide-api"
-version = "1.4.0"
+version = "2.0.0"
 
 android {
     compileSdkVersion versions.compileSdk
 
     defaultConfig {
         minSdkVersion versions.minSdk
-        targetSdkVersion 24
+        targetSdkVersion 26
     }
 
     compileOptions {
@@ -20,6 +20,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+}
+
+dependencies {
+    implementation "com.android.support:support-compat:${versions.supportLibrary}"
 }
 
 // load properties file

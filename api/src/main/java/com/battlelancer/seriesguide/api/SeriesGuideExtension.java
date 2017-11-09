@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v4.app.JobIntentService;
 import android.text.TextUtils;
 import android.util.Log;
 import java.util.HashMap;
@@ -64,7 +66,7 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA
  *
  * <p> The SeriesGuide app and other potential subscribers discover available extensions using
  * Android's {@link Intent} mechanism. Ensure that your <code>service</code> definition includes an
- * <code>&lt;intent-filter&gt;</code> with an action of {@link #ACTION_SERIESGUIDE_EXTENSION}.
+ * <code>&lt;intent-filter&gt;</code> with an action of {@link SeriesGuideExtensionReceiver#ACTION_SERIESGUIDE_EXTENSION}.
  *
  * <p> To make your extension easier to identify for users you should add the following attributes
  * to your service definition:
@@ -134,16 +136,9 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA
  * <p> Based on code from <a href="https://github.com/romannurik/muzei">Muzei</a>, an awesome Live
  * Wallpaper by Roman Nurik.
  */
-public abstract class SeriesGuideExtension extends IntentService {
+public abstract class SeriesGuideExtension extends JobIntentService {
 
     private static final String TAG = "SeriesGuideExtension";
-
-    /**
-     * The {@link Intent} action that this extension should declare an
-     * <code>&lt;intent-filter&gt;</code> for to let SeriesGuide pick it up.
-     */
-    public static final String ACTION_SERIESGUIDE_EXTENSION
-            = "com.battlelancer.seriesguide.api.SeriesGuideExtension";
 
     /**
      * Boolean extra that will be set to true when SeriesGuide starts the extensions (optionally)
@@ -170,13 +165,19 @@ public abstract class SeriesGuideExtension extends IntentService {
     private Handler mHandler = new Handler();
 
     /**
+     * Enqueues this service to process the given intent received from a subscriber.
+     */
+    static void enqueue(Context context, Class cls, int jobId, Intent subscriberIntent) {
+        enqueueWork(context, cls, jobId, subscriberIntent);
+    }
+
+    /**
      * Call from your default constructor.
      *
-     * <p> Gives the extension a name. This is not user-visible, but will be used to store preferences
-     * and state for the extension.
+     * @param name Gives the extension a name. This is not user-visible, but will be used to store
+     * preferences and state for the extension.
      */
     public SeriesGuideExtension(String name) {
-        super(name);
         mName = name;
     }
 
@@ -295,11 +296,7 @@ public abstract class SeriesGuideExtension extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
-        if (intent == null) {
-            return;
-        }
-
+    protected void onHandleWork(@NonNull Intent intent) {
         String action = intent.getAction();
         if (ACTION_SUBSCRIBE.equals(action)) {
             // just subscribing or unsubscribing
