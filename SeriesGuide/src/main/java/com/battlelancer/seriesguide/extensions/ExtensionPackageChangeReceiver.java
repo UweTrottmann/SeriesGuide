@@ -1,10 +1,10 @@
 package com.battlelancer.seriesguide.extensions;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.support.v4.content.WakefulBroadcastReceiver;
 import android.text.TextUtils;
 import java.util.List;
 import timber.log.Timber;
@@ -16,7 +16,7 @@ import timber.log.Timber;
  * <p> Adapted from <a href="https://github.com/romannurik/muzei">muzei's</a>
  * SourcePackageChangeReceiver.
  */
-public class ExtensionPackageChangeReceiver extends WakefulBroadcastReceiver {
+public class ExtensionPackageChangeReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
