@@ -18,7 +18,7 @@ import android.util.Log;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.api.Episode;
 import com.battlelancer.seriesguide.api.Movie;
-import com.battlelancer.seriesguide.api.SeriesGuideExtension;
+import com.battlelancer.seriesguide.api.SeriesGuideExtensionReceiver;
 import com.battlelancer.seriesguide.api.constants.IncomingConstants;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,9 +106,9 @@ public class ExtensionManager {
      */
     @NonNull
     public List<Extension> queryAllAvailableExtensions(Context context) {
-        Intent queryIntent = new Intent(SeriesGuideExtension.ACTION_SERIESGUIDE_EXTENSION);
+        Intent queryIntent = new Intent(SeriesGuideExtensionReceiver.ACTION_SERIESGUIDE_EXTENSION);
         PackageManager pm = context.getPackageManager();
-        List<ResolveInfo> resolveInfos = pm.queryIntentServices(queryIntent,
+        List<ResolveInfo> resolveInfos = pm.queryBroadcastReceivers(queryIntent,
                 PackageManager.GET_META_DATA);
 
         List<Extension> extensions = new ArrayList<>();
@@ -117,26 +117,26 @@ public class ExtensionManager {
             // get label, icon and component name
             extension.label = info.loadLabel(pm).toString();
             extension.icon = info.loadIcon(pm);
-            extension.componentName = new ComponentName(info.serviceInfo.packageName,
-                    info.serviceInfo.name);
+            extension.componentName = new ComponentName(info.activityInfo.packageName,
+                    info.activityInfo.name);
             // get description
             Context packageContext;
             try {
                 packageContext = context.createPackageContext(
                         extension.componentName.getPackageName(), 0);
                 Resources packageRes = packageContext.getResources();
-                extension.description = packageRes.getString(info.serviceInfo.descriptionRes);
+                extension.description = packageRes.getString(info.activityInfo.descriptionRes);
             } catch (SecurityException | PackageManager.NameNotFoundException | Resources.NotFoundException e) {
                 Timber.e(e, "Reading description for extension %s failed", extension.componentName);
                 extension.description = "";
             }
             // get (optional) settings activity
-            Bundle metaData = info.serviceInfo.metaData;
+            Bundle metaData = info.activityInfo.metaData;
             if (metaData != null) {
                 String settingsActivity = metaData.getString("settingsActivity");
                 if (!TextUtils.isEmpty(settingsActivity)) {
                     extension.settingsActivity = ComponentName.unflattenFromString(
-                            info.serviceInfo.packageName + "/" + settingsActivity);
+                            info.activityInfo.packageName + "/" + settingsActivity);
                 }
             }
 
@@ -155,10 +155,10 @@ public class ExtensionManager {
         List<ComponentName> defaultExtensions = new ArrayList<>();
         if (hasGermanLocale(context)) {
             // vodster.de is in German
-            defaultExtensions.add(new ComponentName(context, VodsterExtension.class));
+            defaultExtensions.add(new ComponentName(context, VodsterExtensionReceiver.class));
         }
-        defaultExtensions.add(new ComponentName(context, WebSearchExtension.class));
-        defaultExtensions.add(new ComponentName(context, YouTubeExtension.class));
+        defaultExtensions.add(new ComponentName(context, WebSearchExtensionReceiver.class));
+        defaultExtensions.add(new ComponentName(context, YouTubeExtensionReceiver.class));
         setEnabledExtensions(context, defaultExtensions);
     }
 
@@ -193,7 +193,7 @@ public class ExtensionManager {
         // check which are still installed
         for (ComponentName extension : enabledExtensions) {
             try {
-                context.getPackageManager().getServiceInfo(extension, 0);
+                context.getPackageManager().getReceiverInfo(extension, 0);
                 extensionsToKeep.add(extension);
             } catch (PackageManager.NameNotFoundException e) {
                 Timber.i("Extension %s no longer available: removed", extension.toShortString());
@@ -285,7 +285,7 @@ public class ExtensionManager {
         Timber.d("enableExtension: subscribing to %s", extension);
         subscriptions.put(extension, token);
         tokens.put(token, extension);
-        context.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
+        context.sendBroadcast(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
                 .setComponent(extension)
                 .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
                         subscriberComponentName(context))
@@ -306,7 +306,7 @@ public class ExtensionManager {
         // unsubscribe
         Timber.d("disableExtension: unsubscribing from %s", extension);
         try {
-            context.startService(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
+            context.sendBroadcast(new Intent(IncomingConstants.ACTION_SUBSCRIBE)
                     .setComponent(extension)
                     .putExtra(IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT,
                             subscriberComponentName(context))
@@ -371,7 +371,7 @@ public class ExtensionManager {
             sEpisodeActionsCache.put(episode.getTvdbId(), new HashMap<ComponentName, Action>());
         }
         // actually request actions
-        context.startService(new Intent(IncomingConstants.ACTION_UPDATE)
+        context.sendBroadcast(new Intent(IncomingConstants.ACTION_UPDATE)
                 .setComponent(extension)
                 .putExtra(IncomingConstants.EXTRA_ENTITY_IDENTIFIER, episode.getTvdbId())
                 .putExtra(IncomingConstants.EXTRA_EPISODE, episode.toBundle()));
@@ -397,7 +397,7 @@ public class ExtensionManager {
             sMovieActionsCache.put(movie.getTmdbId(), new HashMap<ComponentName, Action>());
         }
         // actually request actions
-        context.startService(new Intent(IncomingConstants.ACTION_UPDATE)
+        context.sendBroadcast(new Intent(IncomingConstants.ACTION_UPDATE)
                 .setComponent(extension)
                 .putExtra(IncomingConstants.EXTRA_ENTITY_IDENTIFIER, movie.getTmdbId())
                 .putExtra(IncomingConstants.EXTRA_MOVIE, movie.toBundle()));

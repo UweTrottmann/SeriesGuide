@@ -5,14 +5,14 @@ apply plugin: 'io.codearte.nexus-staging'
 
 group = "com.uwetrottmann.seriesguide"
 archivesBaseName = "seriesguide-api"
-version = "1.4.0"
+version = "2.0.0"
 
 android {
     compileSdkVersion versions.compileSdk
 
     defaultConfig {
         minSdkVersion versions.minSdk
-        targetSdkVersion 24
+        targetSdkVersion 26
     }
 
     compileOptions {
@@ -22,20 +22,22 @@ android {
     }
 }
 
+dependencies {
+    implementation "com.android.support:support-compat:${versions.supportLibrary}"
+}
+
 // load properties file
 Properties props = new Properties()
 props.load(new FileInputStream(file("../local.properties")))
 def localSdkDir = props["sdk.dir"]
 
 task generateJavadoc(type: Javadoc) {
-    // do not fail due to exclude being broken https://discuss.gradle.org/t/javadoc-exclusion-question/11875
-    failOnError false
     source = android.sourceSets.main.java.srcDirs
-    exclude "**/constants/**"
     title = "SeriesGuide API"
 
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 
+    options.locale = "en"
     options.windowTitle = "SeriesGuide API"
     options.linksOffline("http://developer.android.com/reference", "${localSdkDir}/docs/reference")
     options.noDeprecated = true

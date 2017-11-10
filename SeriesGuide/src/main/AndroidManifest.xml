@@ -326,45 +326,68 @@
             android:exported="true" />
 
         <!-- Built-in SeriesGuide extensions -->
-        <service
-            android:name="com.battlelancer.seriesguide.extensions.AmazonExtension"
+        <receiver
+            android:name="com.battlelancer.seriesguide.extensions.AmazonExtensionReceiver"
             android:description="@string/description_extension_amazon"
             android:icon="@mipmap/ic_app"
-            android:label="@string/extension_amazon">
+            android:label="@string/extension_amazon"
+            tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
             </intent-filter>
             <meta-data
                 android:name="settingsActivity"
                 android:value="com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity" />
-        </service>
+        </receiver>
         <service
-            android:name="com.battlelancer.seriesguide.extensions.YouTubeExtension"
+            android:name="com.battlelancer.seriesguide.extensions.AmazonExtension"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="true" />
+
+        <receiver
+            android:name="com.battlelancer.seriesguide.extensions.YouTubeExtensionReceiver"
             android:description="@string/description_extension_youtube"
             android:icon="@mipmap/ic_app"
-            android:label="@string/extension_youtube">
+            android:label="@string/extension_youtube"
+            tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
             </intent-filter>
-        </service>
+        </receiver>
         <service
-            android:name="com.battlelancer.seriesguide.extensions.VodsterExtension"
+            android:name="com.battlelancer.seriesguide.extensions.YouTubeExtension"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="true" />
+
+        <receiver
+            android:name="com.battlelancer.seriesguide.extensions.VodsterExtensionReceiver"
             android:description="@string/extension_vodster_description"
             android:icon="@mipmap/ic_app"
-            android:label="@string/extension_vodster">
+            android:label="@string/extension_vodster"
+            tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
             </intent-filter>
-        </service>
+        </receiver>
         <service
-            android:name="com.battlelancer.seriesguide.extensions.WebSearchExtension"
+            android:name="com.battlelancer.seriesguide.extensions.VodsterExtension"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="true" />
+
+        <receiver
+            android:name="com.battlelancer.seriesguide.extensions.WebSearchExtensionReceiver"
             android:description="@string/description_extension_web_search"
             android:icon="@mipmap/ic_app"
-            android:label="@string/web_search">
+            android:label="@string/web_search"
+            tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
             </intent-filter>
-        </service>
+        </receiver>
+        <service
+            android:name="com.battlelancer.seriesguide.extensions.WebSearchExtension"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <!-- Sync service -->
         <service
