@@ -37,6 +37,7 @@ task generateJavadoc(type: Javadoc) {
 
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 
+    options.locale = "en"
     options.windowTitle = "SeriesGuide API"
     options.linksOffline("http://developer.android.com/reference", "${localSdkDir}/docs/reference")
     options.noDeprecated = true
