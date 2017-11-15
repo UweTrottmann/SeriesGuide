@@ -6,7 +6,8 @@ buildscript {
             'targetSdk': 26,
             'buildTools': '26.0.2',
 
-            'supportLibrary': '27.0.1',
+            'supportLibrary': '27.0.1', // developer.android.com/topic/libraries/support-library/revisions.html
+            'lifecycle': '1.0.0', // developer.android.com/topic/libraries/architecture/release-notes.html
             'playServices': '11.4.0', // developers.google.com/android/guides/releases
 
             'butterknife': '8.8.1', // github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
