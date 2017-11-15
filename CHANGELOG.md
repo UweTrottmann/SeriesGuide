@@ -10,6 +10,14 @@ Version 40
 *(in development)*
 
 #### 40-beta3
+*(2017-11-15)*
+
+* 📝 Extensions have changed (API v2): your enabled extensions will be replaced by the default set. 
+     Existing extensions need to be updated and enabled to work again.
+* 📝 Targeting Android O.
+* 📝 Latest translations from crowdin.
+
+#### 40-beta3
 *(2017-10-31)*
 
 * 🔨 Crash: services may start in the background. (Revert targeting Android O.)
