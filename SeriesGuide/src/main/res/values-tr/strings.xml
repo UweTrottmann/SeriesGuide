@@ -89,7 +89,7 @@
   <string name="no_translation">%2$s\'de %1$s\'ye çevrilmiş herhangi bir açıklama bulunmamaktadır.</string>
   <string name="no_translation_title">Çevrilmedi</string>
   <string name="no_spoilers">Bazı detaylar spoiler önlemek için gizli kalır. Bunu kapatmak için ayarlara gidiniz.</string>
-  <string name="format_source">Source: %s</string>
+  <string name="format_source">Kaynak: %s</string>
   <string name="format_last_edited">Son güncelleme: %s</string>
   <!-- Date and Time -->
   <string name="today">bugün</string>
@@ -115,8 +115,8 @@
   <string name="delete_error">Dizi kaldırılamadı. Sonra tekrar deneyin.</string>
   <string name="delete_show">Kaldır</string>
   <string name="no_nextepisode">sonraki bölüm bulunamadı</string>
-  <string name="context_favorite">Favorilere Ekle</string>
-  <string name="context_unfavorite">Favorilerden Kaldır</string>
+  <string name="context_favorite">Favorilere ekle</string>
+  <string name="context_unfavorite">Favorilerden kaldır</string>
   <string name="favorited">Favorilere eklendi</string>
   <string name="unfavorited">Favorilerden kaldırıldı</string>
   <string name="action_episode_notifications_on">Bölüm bildirimlerini aç</string>
@@ -439,7 +439,7 @@
   <string name="pref_notifications_treshold">Bildirim zamanı</string>
   <string name="pref_notifications_select_shows">Dizi seç</string>
   <string name="pref_notifications_select_shows_summary">Bildirimlerin etkinleştirildiği diziler (%d)</string>
-  <string name="pref_notification_channel_errors">Errors</string>
+  <string name="pref_notification_channel_errors">Hatalar</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (dar)</string>
   <!-- List Widget -->
@@ -461,7 +461,7 @@
   <string name="action_upgrade">Tüm özellikleri aç</string>
   <string name="billing_action_subscribe">Abone ol</string>
   <string name="billing_action_pass">X Pass alın</string>
-  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+  <string name="billing_price_subscribe">%1$s/yıl, ücretsiz dene, %2$s üzerinden istediğin zaman iptal et</string>
   <string name="billing_price_pass">tek seferlik ödeme</string>
   <string name="upgrade_description">Bildirimler, temalar, daha fazla widgetlar gibi özellikleri acın ve uygulamayı geliştirmeme yardım edin.</string>
   <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>

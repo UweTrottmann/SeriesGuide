@@ -439,7 +439,7 @@
   <string name="pref_notifications_treshold">Quand notifier</string>
   <string name="pref_notifications_select_shows">Visibilité des notifications</string>
   <string name="pref_notifications_select_shows_summary">Montrer qu\'il y a de nouvelles notifications (%d)</string>
-  <string name="pref_notification_channel_errors">Errors</string>
+  <string name="pref_notification_channel_errors">Erreurs</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (petit)</string>
   <!-- List Widget -->

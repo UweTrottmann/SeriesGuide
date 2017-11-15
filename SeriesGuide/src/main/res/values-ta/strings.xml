@@ -35,7 +35,7 @@
   <string name="add_to_homescreen">எளியவழி</string>
   <string name="action_open">திற</string>
   <string name="sync_manually">கைமுறையாக ஒத்திசை</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_update">ஒத்திசை &amp; புதுப்பி</string>
   <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">தேடல் வரலாற்றை நீக்கு</string>

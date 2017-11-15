@@ -35,7 +35,7 @@
   <string name="add_to_homescreen">Pikakuvake</string>
   <string name="action_open">Avaa</string>
   <string name="sync_manually">Synkronoi manuaalisesti</string>
-  <string name="sync_and_update">Synkronoi ja päivitä</string>
+  <string name="sync_and_update">Synkronoi ja päivittää</string>
   <string name="sync_and_download_all">Synkronoi ja lataa kaikki</string>
   <!-- Search -->
   <string name="clear_search_history">Tyhjennä hakuhistoria</string>

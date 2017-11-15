@@ -450,7 +450,7 @@
   <string name="pref_notifications_treshold">Kada obavijestiti</string>
   <string name="pref_notifications_select_shows">Odaberi serije</string>
   <string name="pref_notifications_select_shows_summary">Serije za koje su obavijesti omogućene (%d)</string>
-  <string name="pref_notification_channel_errors">Errors</string>
+  <string name="pref_notification_channel_errors">Pogreške</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (mali)</string>
   <!-- List Widget -->
