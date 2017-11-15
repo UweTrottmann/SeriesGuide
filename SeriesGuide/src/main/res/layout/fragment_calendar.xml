@@ -34,7 +34,7 @@
         android:layout_marginRight="@dimen/large_padding"
         android:layout_marginTop="-24dp"
         android:contentDescription="@null"
-        tools:src="@drawable/ic_touch_black_24dp"
+        tools:src="@drawable/ic_swap_vert_black_24dp"
         tools:tint="?attr/sgColorIconInactive" />
 
 </FrameLayout>
