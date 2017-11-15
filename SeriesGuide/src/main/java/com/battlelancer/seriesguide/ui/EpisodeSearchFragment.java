@@ -4,6 +4,8 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -28,6 +30,14 @@ public class EpisodeSearchFragment extends BaseSearchFragment {
     interface InitBundle {
         /** Set to pre-filter search results by show title. */
         String SHOW_TITLE = "title";
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        // list items do not have right hand-side buttons, list may be long: enable fast scrolling
+        gridView.setFastScrollAlwaysVisible(false);
+        gridView.setFastScrollEnabled(true);
     }
 
     @Override
