@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.api.Intents;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.IabHelper;
 import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager;
+import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -463,6 +464,9 @@ public class ShowsActivity extends BaseTopActivity implements
                     // tell users to sign in again
                     editor.putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, true);
                 }
+            }
+            if (lastVersion < SgApp.RELEASE_VERSION_40_BETA4) {
+                ExtensionManager.get().setDefaultEnabledExtensions(this);
             }
 
             // set this as lastVersion

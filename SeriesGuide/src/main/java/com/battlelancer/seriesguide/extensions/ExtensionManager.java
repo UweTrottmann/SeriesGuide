@@ -151,7 +151,7 @@ public class ExtensionManager {
     /**
      * Enables the default list of extensions that come with this app.
      */
-    private void setDefaultEnabledExtensions(Context context) {
+    public void setDefaultEnabledExtensions(Context context) {
         List<ComponentName> defaultExtensions = new ArrayList<>();
         if (hasGermanLocale(context)) {
             // vodster.de is in German

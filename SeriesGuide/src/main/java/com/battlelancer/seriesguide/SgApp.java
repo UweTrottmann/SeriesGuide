@@ -80,6 +80,10 @@ public class SgApp extends Application {
      * Switched to Google Sign-In: notify existing Cloud users to sign in again.
      */
     public static final int RELEASE_VERSION_36_BETA2 = 15241;
+    /**
+     * Extensions API v2, old extensions no longer work.
+     */
+    public static final int RELEASE_VERSION_40_BETA4 = 1502803;
 
     /**
      * The content authority used to identify the SeriesGuide {@link ContentProvider}
