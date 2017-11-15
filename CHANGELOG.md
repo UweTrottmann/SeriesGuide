@@ -14,6 +14,7 @@ Version 40
 
 * 📝 Extensions have changed (API v2): your enabled extensions will be replaced by the default set. 
      Existing extensions need to be updated and enabled to work again.
+* 🔨 Localize more numbers (episodes, stats screen).
 * 📝 Targeting Android O.
 * 📝 Latest translations from crowdin.
 
