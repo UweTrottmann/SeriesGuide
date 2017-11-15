@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.ui.StatsLiveData.Stats;
 import com.battlelancer.seriesguide.ui.StatsLiveData.StatsUpdateEvent;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.widgets.EmptyView;
+import java.text.NumberFormat;
 import java.util.Locale;
 
 /**
@@ -58,7 +59,7 @@ public class StatsFragment extends Fragment {
     private boolean hasFinalValues;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_stats, container, false);
         unbinder = ButterKnife.bind(this, v);
@@ -136,6 +137,7 @@ public class StatsFragment extends Fragment {
             PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                     .putBoolean(DisplaySettings.KEY_HIDE_SPECIALS, !item.isChecked())
                     .apply();
+            //noinspection ConstantConditions always attached to activity
             getActivity().invalidateOptionsMenu();
             loadStats();
             return true;
@@ -160,8 +162,10 @@ public class StatsFragment extends Fragment {
         // display error if not all stats could be calculated
         errorView.setVisibility(successful ? View.GONE : View.VISIBLE);
 
+        NumberFormat format = NumberFormat.getIntegerInstance();
+
         // all shows
-        textViewShows.setText(String.valueOf(stats.shows()));
+        textViewShows.setText(format.format(stats.shows()));
 
         // shows with next episodes
         progressBarShowsWithNextEpisode.setMax(stats.shows());
@@ -169,7 +173,7 @@ public class StatsFragment extends Fragment {
         progressBarShowsWithNextEpisode.setVisibility(View.VISIBLE);
 
         textViewShowsWithNextEpisode.setText(getString(R.string.shows_with_next,
-                stats.showsWithNextEpisodes()).toUpperCase(Locale.getDefault()));
+                format.format(stats.showsWithNextEpisodes())).toUpperCase(Locale.getDefault()));
         textViewShowsWithNextEpisode.setVisibility(View.VISIBLE);
 
         // continuing shows
@@ -178,11 +182,11 @@ public class StatsFragment extends Fragment {
         progressBarShowsContinuing.setVisibility(View.VISIBLE);
 
         textViewShowsContinuing.setText(getString(R.string.shows_continuing,
-                stats.showsContinuing()).toUpperCase(Locale.getDefault()));
+                format.format(stats.showsContinuing())).toUpperCase(Locale.getDefault()));
         textViewShowsContinuing.setVisibility(View.VISIBLE);
 
         // all episodes
-        textViewEpisodes.setText(String.valueOf(stats.episodes()));
+        textViewEpisodes.setText(format.format(stats.episodes()));
 
         // watched episodes
         progressBarEpisodesWatched.setMax(stats.episodes());
@@ -190,7 +194,7 @@ public class StatsFragment extends Fragment {
         progressBarEpisodesWatched.setVisibility(View.VISIBLE);
 
         textViewEpisodesWatched.setText(getString(R.string.episodes_watched,
-                stats.episodesWatched()).toUpperCase(Locale.getDefault()));
+                format.format(stats.episodesWatched())).toUpperCase(Locale.getDefault()));
         textViewEpisodesWatched.setVisibility(View.VISIBLE);
 
         // episode runtime
@@ -206,7 +210,7 @@ public class StatsFragment extends Fragment {
                 : View.GONE);
 
         // movies
-        textViewMovies.setText(String.valueOf(stats.movies));
+        textViewMovies.setText(format.format(stats.movies));
 
         // movies in watchlist
         progressBarMoviesWatchlist.setMax(stats.movies);
@@ -214,7 +218,7 @@ public class StatsFragment extends Fragment {
         progressBarMoviesWatchlist.setVisibility(View.VISIBLE);
 
         textViewMoviesWatchlist.setText(getString(R.string.movies_on_watchlist,
-                stats.moviesWatchlist).toUpperCase(Locale.getDefault()));
+                format.format(stats.moviesWatchlist)).toUpperCase(Locale.getDefault()));
         textViewMoviesWatchlist.setVisibility(View.VISIBLE);
 
         // runtime of movie watchlist
@@ -258,6 +262,8 @@ public class StatsFragment extends Fragment {
             return;
         }
 
+        NumberFormat format = NumberFormat.getIntegerInstance();
+
         StringBuilder statsString = new StringBuilder();
         statsString.append(getString(R.string.app_name))
                 .append(" ")
@@ -265,21 +271,23 @@ public class StatsFragment extends Fragment {
         statsString.append("\n");
         statsString.append("\n");
         // shows
-        statsString.append(currentStats.shows())
+        statsString.append(format.format(currentStats.shows()))
                 .append(" ")
                 .append(getString(R.string.statistics_shows));
         statsString.append("\n");
-        statsString.append(
-                getString(R.string.shows_with_next, currentStats.showsWithNextEpisodes()));
+        statsString.append(getString(R.string.shows_with_next,
+                format.format(currentStats.showsWithNextEpisodes())));
         statsString.append("\n");
-        statsString.append(getString(R.string.shows_continuing, currentStats.showsContinuing()));
+        statsString.append(getString(R.string.shows_continuing,
+                format.format(currentStats.showsContinuing())));
         statsString.append("\n");
         statsString.append("\n");
         // episodes
-        statsString.append(currentStats.episodes()).append(" ").append(
+        statsString.append(format.format(currentStats.episodes())).append(" ").append(
                 getString(R.string.statistics_episodes));
         statsString.append("\n");
-        statsString.append(getString(R.string.episodes_watched, currentStats.episodesWatched()));
+        statsString.append(getString(R.string.episodes_watched,
+                format.format(currentStats.episodesWatched())));
         statsString.append("\n");
         if (currentStats.episodesWatchedRuntime() != 0) {
             String watchedDuration = getTimeDuration(currentStats.episodesWatchedRuntime());
@@ -294,11 +302,12 @@ public class StatsFragment extends Fragment {
         }
         statsString.append("\n");
         // movies
-        statsString.append(currentStats.movies)
+        statsString.append(format.format(currentStats.movies))
                 .append(" ")
                 .append(getString(R.string.statistics_movies));
         statsString.append("\n");
-        statsString.append(getString(R.string.movies_on_watchlist, currentStats.moviesWatchlist));
+        statsString.append(getString(R.string.movies_on_watchlist,
+                format.format(currentStats.moviesWatchlist)));
         statsString.append("\n");
         statsString.append(getTimeDuration(currentStats.moviesWatchlistRuntime))
                 .append(" ")
