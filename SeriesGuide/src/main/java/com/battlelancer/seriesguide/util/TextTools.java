@@ -10,6 +10,7 @@ import android.text.format.DateUtils;
 import android.text.style.TextAppearanceSpan;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -27,8 +28,9 @@ public class TextTools {
      * 'S01E01', ...).
      */
     public static String getEpisodeNumber(Context context, int season, int episode) {
+        NumberFormat numberFormat = NumberFormat.getIntegerInstance();
         String format = DisplaySettings.getNumberFormat(context);
-        String result = String.valueOf(season);
+        String result = numberFormat.format(season);
         if (DisplaySettings.NUMBERFORMAT_DEFAULT.equals(format)) {
             // 1x01 format
             result += "x";
@@ -36,7 +38,7 @@ public class TextTools {
             // S01E01 format
             // make season number always two chars long
             if (season < 10) {
-                result = "0" + result;
+                result = numberFormat.format(0) + result;
             }
             if (DisplaySettings.NUMBERFORMAT_ENGLISHLOWER.equals(format)) {
                 result = "s" + result + "e";
@@ -48,10 +50,10 @@ public class TextTools {
         if (episode != -1) {
             // make episode number always two chars long
             if (episode < 10) {
-                result += "0";
+                result += numberFormat.format(0);
             }
 
-            result += episode;
+            result += numberFormat.format(episode);
         }
         return result;
     }
