@@ -47,14 +47,14 @@
     <string name="any_language">Any language</string>
 
     <!-- Status messages -->
-    <string name="updated">Updated to latest version.</string>
+    <string name="updated">Updated to latest version</string>
     <string name="norating">n/a</string>
     <string name="unknown">unknown</string>
-    <string name="offline">Connect to a network, then try again.</string>
-    <string name="app_not_available">No app available to handle this.</string>
+    <string name="offline">Connect to a network, then try again</string>
+    <string name="app_not_available">No app available to handle this</string>
     <string name="people_empty">Nobody here?! Touch to try again.</string>
-    <string name="database_error">Could not modify data.</string>
-    <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+    <string name="database_error">Could not modify data</string>
+    <string name="reinstall_info">Try to backup in Settings, re-install and restore</string>
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Failed: %s</string>
 
@@ -64,7 +64,7 @@
     <string name="share_episode">Share episode</string>
     <string name="share_movie">Share movie</string>
     <string name="addtocalendar">Add to calendar</string>
-    <string name="addtocalendar_failed">Can not create a calendar event.</string>
+    <string name="addtocalendar_failed">Can not create a calendar event</string>
     <string name="links">Links</string>
 
     <!-- Comments -->
@@ -170,8 +170,8 @@
     <string name="upcoming">Upcoming</string>
     <string name="recent">Recent</string>
     <string name="released_today">Released today</string>
-    <string name="noupcoming">There are no upcoming episodes.</string>
-    <string name="norecent">There are no recent episodes.</string>
+    <string name="noupcoming">There are no upcoming episodes</string>
+    <string name="norecent">There are no recent episodes</string>
     <string name="calendar_settings">Calendar settings</string>
     <string name="only_favorites">Only favorite shows</string>
     <string name="calendar_only_collected">Only collected episodes</string>
@@ -179,8 +179,8 @@
 
     <!-- Updating -->
     <string name="update_scheduled">Updating…</string>
-    <string name="update_no_connection">To update connect to the internet.</string>
-    <string name="update_inprogress">An update is in progress, try again later.</string>
+    <string name="update_no_connection">To update connect to the internet</string>
+    <string name="update_inprogress">An update is in progress, try again later</string>
 
     <!-- Seasons -->
     <string name="season_allwatched">All episodes watched</string>
@@ -199,16 +199,16 @@
 
     <!-- Add show -->
     <string name="checkin_searchhint">Type a show name</string>
-    <string name="add_empty">There are no shows here.</string>
-    <string name="no_results">No results, try complete words.</string>
+    <string name="add_empty">There are no shows here</string>
+    <string name="no_results">No results, try complete words</string>
     <string name="action_try_any_language">Try any language</string>
     <string name="action_try_again">Try again</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
     <string name="add_all">Add all</string>
-    <string name="add_multiple">All shows will appear in your show list shortly.</string>
-    <string name="add_started">%s will appear in your show list shortly.</string>
-    <string name="add_error">Could not add %s.</string>
-    <string name="add_already_exists">%s is already in your show list.</string>
+    <string name="add_multiple">All shows will appear in your show list shortly</string>
+    <string name="add_started">%s will appear in your show list shortly</string>
+    <string name="add_error">Could not add %s</string>
+    <string name="add_already_exists">%s is already in your show list</string>
     <string name="recommended">Recommended</string>
     <string name="watched_shows">Watched</string>
     <string name="shows_collection">Collection</string>
@@ -222,7 +222,7 @@
     <string name="list_manage">Manage list</string>
     <string name="list_item_manage">Manage lists</string>
     <string name="list_item_remove">Remove from list</string>
-    <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
+    <string name="list_empty">You can add shows, seasons or episodes to this list</string>
     <string name="action_lists_sort">Sort lists</string>
     <string name="action_lists_reorder">Reorder lists</string>
     <string name="error_name_already_exists">A list with this name already exists</string>
@@ -240,8 +240,8 @@
     <string name="watchlist_added">Added to watchlist</string>
     <string name="watchlist_removed">Removed from watchlist</string>
     <string name="movies_search_hint">Type a movie title</string>
-    <string name="movies_collection_empty">You have not added movies to your collection.</string>
-    <string name="movies_watchlist_empty">You have not added movies to your watchlist.</string>
+    <string name="movies_collection_empty">You have not added movies to your collection</string>
+    <string name="movies_watchlist_empty">You have not added movies to your watchlist</string>
     <string name="trailer">Trailer</string>
     <string name="movie_cast">Cast</string>
     <string name="movie_crew">Crew</string>
@@ -250,7 +250,7 @@
     <string name="action_movies_sort_release">Release date</string>
 
     <!-- Statistics -->
-    <string name="statistics_failed">Could not calculate statistics.</string>
+    <string name="statistics_failed">Could not calculate statistics</string>
     <string name="statistics_shows">shows</string>
     <string name="statistics_episodes">episodes</string>
     <string name="statistics_movies">movies</string>
@@ -295,31 +295,31 @@
 
     <!-- Hexagon -->
     <string name="hexagon_warning">Experimental</string>
-    <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+    <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
     <string name="hexagon_signin">Sign In</string>
     <string name="hexagon_signout">Sign Out</string>
-    <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed.</string>
-    <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
+    <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed</string>
+    <string name="hexagon_setup_fail_auth">Your Google account did not check out</string>
     <string name="hexagon_remove_account">Remove account</string>
-    <string name="hexagon_remove_account_success">Account obliterated.</string>
-    <string name="hexagon_remove_account_failure">Could not remove account.</string>
-    <string name="hexagon_remove_account_confirmation">This will delete your shows, lists and movies from SeriesGuide Cloud.</string>
-    <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
-    <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
-    <string name="hexagon_google_play_missing">Google Play Services not installed.</string>
+    <string name="hexagon_remove_account_success">Account obliterated</string>
+    <string name="hexagon_remove_account_failure">Could not remove account</string>
+    <string name="hexagon_remove_account_confirmation">This will delete your shows, lists and movies from SeriesGuide Cloud</string>
+    <string name="hexagon_api_queued">Sending to SeriesGuide Cloud</string>
+    <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
+    <string name="hexagon_google_play_missing">Google Play Services not installed</string>
 
     <!-- trakt -->
-    <string name="trakt_submitqueued">Sending to trakt.</string>
-    <string name="checkin_success_trakt">Checked into %s on trakt.</string>
-    <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
+    <string name="trakt_submitqueued">Sending to trakt</string>
+    <string name="checkin_success_trakt">Checked into %s on trakt</string>
+    <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt</string>
     <string name="traktcheckin_cancel">Override</string>
     <string name="traktcheckin_inprogress">You are already checked in. Override the check-in or wait %s and try again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
-    <string name="trakt_success">Sent to trakt.</string>
+    <string name="trakt_success">Sent to trakt</string>
     <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
     <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-    <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+    <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt</string>
 
     <!-- Connect trakt -->
     <string name="trakt_account">trakt account</string>
@@ -451,20 +451,20 @@
     <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
 
     <!-- Backup and Restore -->
-    <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
+    <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings</string>
     <string name="backup_path">Backup folder</string>
     <string name="backup_version">Database version</string>
     <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
     <string name="backup_inprogress">Backing up database…</string>
-    <string name="backup_success">Backup successful.</string>
-    <string name="backup_failed">Backup failed.</string>
+    <string name="backup_success">Backup successful</string>
+    <string name="backup_failed">Backup failed</string>
     <string name="import_inprogress">Restoring database…</string>
     <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
-    <string name="import_failed_nofile">There is no readable backup file.</string>
-    <string name="import_failed_noread">The backup file is not readable.</string>
+    <string name="import_failed_nofile">There is no readable backup file</string>
+    <string name="import_failed_noread">The backup file is not readable</string>
     <string name="dbupgradefailed">Your backup may be too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
-    <string name="import_success">Backup successfully restored.</string>
-    <string name="import_failed">Restoring the backup failed.</string>
+    <string name="import_success">Backup successfully restored</string>
+    <string name="import_failed">Restoring the backup failed</string>
     <string name="backup_button">Create backup</string>
     <string name="import_button">Restore backup</string>
     <string name="backup_question">This will overwrite the current backup file in the backup folder!</string>
@@ -472,9 +472,9 @@
     <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
     <string name="last_auto_backup">Last Auto Backup: %s</string>
     <string name="restore_auto_backup">Restore Auto Backup</string>
-    <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
-    <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
-    <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
+    <string name="dataliberation_permission_missing">To backup or restore, allow access to your files</string>
+    <string name="autobackup_permission_missing">To use auto backup, allow access to your files</string>
+    <string name="autobackup_files_missing">To use auto backup, select valid backup files</string>
     <string name="no_file_selected">No file selected</string>
     <string name="action_select_file">Select file</string>
     <string name="backup_use_default_files">Use default backup files</string>
@@ -517,7 +517,7 @@
 
     <!-- DashClock extension -->
     <string name="dashclock_extension_label">Upcoming episode</string>
-    <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
+    <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows</string>
     <string name="dashclock_pref_upcoming_threshold">Display episode within…</string>
 
     <!-- Google In-App Billing -->
@@ -529,15 +529,15 @@
     <string name="billing_price_pass">one-time purchase</string>
     <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
     <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
-    <string name="billing_learn_more">Why pay? Learn more.</string>
+    <string name="billing_learn_more">Why pay? Learn more</string>
     <string name="subscription_expired">Subscription expired</string>
-    <string name="subscription_expired_details">Your SeriesGuide subscription has expired.</string>
+    <string name="subscription_expired_details">Your SeriesGuide subscription has expired</string>
 
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
-    <string name="subscription_unavailable">The subscription is currently not available.</string>
-    <string name="subscription_failed">Purchase not completed.</string>
-    <string name="pass_unavailable">X Pass is currently not available.</string>
+    <string name="subscription_not_signed_in">Sign into your Amazon account</string>
+    <string name="subscription_unavailable">The subscription is currently not available</string>
+    <string name="subscription_failed">Purchase not completed</string>
+    <string name="pass_unavailable">X Pass is currently not available</string>
 
     <!-- Extensions -->
     <string name="action_extensions_configure">Customize extensions</string>
