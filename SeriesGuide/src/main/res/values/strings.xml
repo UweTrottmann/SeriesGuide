@@ -451,7 +451,7 @@
     <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
 
     <!-- Backup and Restore -->
-    <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings</string>
+    <string name="backup_full_dump">Include descriptions, details, ratings</string>
     <string name="backup_path">Backup folder</string>
     <string name="backup_version">Database version</string>
     <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
@@ -469,7 +469,7 @@
     <string name="import_button">Restore backup</string>
     <string name="backup_question">This will overwrite the current backup file in the backup folder!</string>
     <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
-    <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+    <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
     <string name="last_auto_backup">Last Auto Backup: %s</string>
     <string name="restore_auto_backup">Restore Auto Backup</string>
     <string name="dataliberation_permission_missing">To backup or restore, allow access to your files</string>
