@@ -46,10 +46,10 @@
   <string name="norating">n/a</string>
   <string name="unknown">ukjent</string>
   <string name="offline">Koble til et nettverk, og prøv på nytt.</string>
-  <string name="app_not_available">Ingen app tilgjengelig for å håndtere dette.</string>
+  <string name="app_not_available">No app available to handle this</string>
   <string name="people_empty">Ingen her?! Trykk for å prøve på nytt.</string>
   <string name="database_error">Klarte ikke endre dataene.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore</string>
   <string name="api_error_generic">Klarte ikke å koble til %s. Prøv igjen senere.</string>
   <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
@@ -257,8 +257,8 @@
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Eksperimentell!</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
   <string name="hexagon_signin">Logg inn</string>
   <string name="hexagon_signout">Logg ut</string>
   <string name="hexagon_setup_incomplete">Oppsettet av SeriesGuide Cloud er ikke fullført.</string>
@@ -268,7 +268,7 @@
   <string name="hexagon_remove_account_failure">Klarte ikke fjerne kontoen.</string>
   <string name="hexagon_remove_account_confirmation">Fjerning av kontoen vil slette alle serier og filmer fra SeriesGuide Cloud. Husk å fjerne den fra andre tilkoblede enheter også.</string>
   <string name="hexagon_api_queued">Sender til SeriesGuide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
   <string name="hexagon_google_play_missing">For å kunne bruk SeriesGuide Cloud er Google Play-tjenester nødvendig.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Sender til trakt.</string>
@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Fjern alle hurtiglagrede bilder fra enheten</string>
   <string name="pref_ganalyticssummary">Sende anonym brukerstatistikk til en Google-tjeneste</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Inkluder alle metadata som beskrivelser, skuespillere og vurderinger.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Sikkerhetskopimappe</string>
   <string name="backup_version">Databaseversjon</string>
   <string name="backup_failed_file_access">Sikkerhetskopiering mislyktes. Klarte ikke finne eller åpne filen.</string>

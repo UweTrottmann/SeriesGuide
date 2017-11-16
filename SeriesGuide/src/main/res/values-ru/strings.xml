@@ -405,7 +405,7 @@
   <string name="clear_cache_summary">Удалить все кэшированные изображения с Вашего устройства</string>
   <string name="pref_ganalyticssummary">Отправлять анонимную статистику использования в сервис Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Включить все данные: описания, актеры и рейтинги.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Папка резервного копирования</string>
   <string name="backup_version">Версия базы данных</string>
   <string name="backup_failed_file_access">Не могу произвести резервное копирование. Файл резервной копии не может быть найден или к нему нет доступа.</string>

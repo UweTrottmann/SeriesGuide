@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Supprimer toutes les images en cache sur votre périphérique</string>
   <string name="pref_ganalyticssummary">Envoyer des statistiques d’utilisation anonymes à un service Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Inclure toutes les métadonnées telles que les descriptions, les acteurs et les notes.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Dossier de sauvegarde</string>
   <string name="backup_version">Version de la base de données</string>
   <string name="backup_failed_file_access">Impossible de sauvegarder. Un fichier de sauvegarde ne peut pas être trouvé ou consulté.</string>

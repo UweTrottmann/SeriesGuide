@@ -46,7 +46,7 @@
   <string name="norating">няма</string>
   <string name="unknown">неизвестен</string>
   <string name="offline">Свържете се към мрежа и пробвайте отново.</string>
-  <string name="app_not_available">Няма налично подходящо приложение.</string>
+  <string name="app_not_available">No app available to handle this</string>
   <string name="people_empty">Няма никой тук?! Натисни, за да опиташ отново.</string>
   <string name="database_error">Не може да промени данните.</string>
   <string name="reinstall_info">Опитайте се да архивирате от настройките, преинсталирайте и възстановете.</string>
@@ -257,8 +257,8 @@
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Експериментално</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
   <string name="hexagon_signin">Вписване</string>
   <string name="hexagon_signout">Отписване</string>
   <string name="hexagon_setup_incomplete">Настройването на SeriesGuide облака не беше завършено.</string>
@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Премахнете всички кеширани снимки от вашето устройство</string>
   <string name="pref_ganalyticssummary">Изпрати анонимни данни за потреблението на Google услугите</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Включете всички мета-данни като описания, актьори и рейтинги.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Папка за архивиране</string>
   <string name="backup_version">Версията на базата данни</string>
   <string name="backup_failed_file_access">Не може да се архивира. Архивения файл не може да бъде намерен или е не достъпен.</string>

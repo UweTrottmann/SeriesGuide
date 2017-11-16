@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Remove todas as imagens em cache do teu dispositivo</string>
   <string name="pref_ganalyticssummary">Enviar estatísticas de uso anónimas para um serviço da Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Inclui todos os meta-dados como descrições, atores e classificações.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Pasta para as cópias de segurança</string>
   <string name="backup_version">Versão da Base de Dados</string>
   <string name="backup_failed_file_access">Cópia de segurança interrompida. Uma cópia de segurança não pôde ser encontrada ou acedida.</string>

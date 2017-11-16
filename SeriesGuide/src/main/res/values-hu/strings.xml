@@ -46,7 +46,7 @@
   <string name="norating">n/a</string>
   <string name="unknown">ismeretlen</string>
   <string name="offline">Csatlakozz a hálózathoz és próbáld újra.</string>
-  <string name="app_not_available">Nincs kezelő alkalmazás.</string>
+  <string name="app_not_available">No app available to handle this</string>
   <string name="people_empty">Nincs senki?! Kattints az újrapróbálkozáshoz.</string>
   <string name="database_error">Nem sikerült az adatbázis módosítása.</string>
   <string name="reinstall_info">Próbálj biztonsági mentést készíteni a Beállításokban, újra telepíteni az alkalmazást és visszaállítani a biztonsági mentést.</string>
@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Az összes tárolt kép törlése az eszközről</string>
   <string name="pref_ganalyticssummary">Névtelen használati statisztikák küldése Google szolgáltatás felé</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Minden metaadat mentése (pl. leírások, színészek, értékelések).</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Mentési mappa</string>
   <string name="backup_version">Adatbázis verzió</string>
   <string name="backup_failed_file_access">Nem sikerült a mentés. A biztonsági mentés fájl nem található vagy nem hozzáférhető.</string>

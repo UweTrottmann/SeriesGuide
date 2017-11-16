@@ -405,7 +405,7 @@
   <string name="clear_cache_summary">Usuwa wszystkie buforowane obrazy z urządzenia</string>
   <string name="pref_ganalyticssummary">Wysyła anonimowe statystyki użytkowania do usług Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Uwzględnij wszystkie meta dane, takie jak opisy, aktorzy i oceny.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Folder kopii zapasowej</string>
   <string name="backup_version">Wersja bazy danych</string>
   <string name="backup_failed_file_access">Nie można utworzyć kopii zapasowej. Nie można odnaleźć lub uzyskać dostępu do pliku kopii.</string>

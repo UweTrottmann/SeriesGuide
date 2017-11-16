@@ -257,8 +257,8 @@
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">آزمایشی</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
   <string name="hexagon_signin">ورود</string>
   <string name="hexagon_signout">خروج از سیستم</string>
   <string name="hexagon_setup_incomplete">راه اندازی فضای ابری SeriesGuide کامل نشد.</string>
@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">حذف همه تصاویر ذخیره شده از حافظه دستگاه شما</string>
   <string name="pref_ganalyticssummary">ارسال آمار استفاده به سرویس گوگل بصورت ناشناس</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">گنجاندن تمامی فراداده‌ها چون توضیحات، بازیگران و نمره‌ها.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">پوشهٔ پشتیبان‌گیری</string>
   <string name="backup_version">نسخه پایگاه داده</string>
   <string name="backup_failed_file_access">نمی‌توان پشتیبان گرفت. پروندهٔ پشتیبانی نمی‌تواند پیدا یا دیده شود.</string>

@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Tüm resim önbelleğini cihazınızdan silin</string>
   <string name="pref_ganalyticssummary">Kullanım istatistiklerini Google Servislerine anonim olarak gönder</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Öneriler, aktörler ve değerlendirmeler gibi bilgiler dâhil.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Yedekleme klasörü</string>
   <string name="backup_version">Veritabanı versiyonu</string>
   <string name="backup_failed_file_access">Yedekleme başarısız. Bir yedek dosyası bulunamadı ya da dosyaya erişilemedi.</string>

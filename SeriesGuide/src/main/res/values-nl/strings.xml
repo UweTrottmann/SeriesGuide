@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Alle gebufferde afbeeldingen van het apparaat verwijderen</string>
   <string name="pref_ganalyticssummary">Anonieme gebruiksstatistieken verzenden naar een Google-dienst</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Inclusief alle metadata zoals beschrijvingen, acteurs en beoordelingen.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Back-upmap</string>
   <string name="backup_version">Database-versie</string>
   <string name="backup_failed_file_access">Kan geen backup maken. Een backup bestand kon niet gevonden of geopend worden.</string>

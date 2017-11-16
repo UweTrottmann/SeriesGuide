@@ -46,7 +46,7 @@
   <string name="norating">Nedostupné</string>
   <string name="unknown">neznámy</string>
   <string name="offline">Pripojte sa k sieti a skúste to znova.</string>
-  <string name="app_not_available">Žiadna použiteľná aplikácia k dispozícii.</string>
+  <string name="app_not_available">No app available to handle this</string>
   <string name="people_empty">Nikde nikto?! Skúste to znova.</string>
   <string name="database_error">Nie je možné zmeniť dáta.</string>
   <string name="reinstall_info">Skúste zálohovať cez nastavenia, preinštalovať a obnoviť.</string>
@@ -405,7 +405,7 @@
   <string name="clear_cache_summary">Odstrániť všetky obrázky stiahnuté do zariadenia</string>
   <string name="pref_ganalyticssummary">Posielať anonymné štatistiky o používaní do služby Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Zahrnúť metadáta ako popisy, hercov alebo hodnotenie.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Priečinok zálohy</string>
   <string name="backup_version">Verzia databázy</string>
   <string name="backup_failed_file_access">Nie je možné zálohovať. Záložný súbor nie je možné nájsť alebo k nemu nie je prístup.</string>

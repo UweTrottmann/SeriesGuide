@@ -46,7 +46,7 @@
   <string name="norating">لا يوجد</string>
   <string name="unknown">غير معروف</string>
   <string name="offline">اتصل بشبكة، ثم حاول مرة أخرى.</string>
-  <string name="app_not_available">ليس هناك تطبيق متاح للتعامل مع هذا.</string>
+  <string name="app_not_available">No app available to handle this</string>
   <string name="people_empty">لا أحد هنا ؟! قم باللمس من أجل المحاولة مرة أخرى.</string>
   <string name="database_error">لا يمكن تعديل البيانات.</string>
   <string name="reinstall_info">حاول أخد نسخة احتياطية، اعادة تثبيت البرنامج ومن ثم استعادة البيانات.</string>
@@ -438,7 +438,7 @@
   <string name="clear_cache_summary">إزالة جميع الصور المخزنة مؤقتاً من الجهاز</string>
   <string name="pref_ganalyticssummary">سيتم إرسال إحصاءات مجهولة الهوية لخدمة جوجل</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">تشمل جميع البيانات الفوقية مثل الوصف، والممثلين ودرجات التقييم.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">مجلد النسخ الإحتياطي</string>
   <string name="backup_version">إصدار قاعدة البيانات</string>
   <string name="backup_failed_file_access">لايمكن عمل نسخ إحتياطي، ملف النسخة الإحتياطي لايمكن إجاده أو لا يمكن الوصل إليه.</string>
