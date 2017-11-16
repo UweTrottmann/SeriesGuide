@@ -305,12 +305,12 @@
     <string name="hexagon_remove_account_success">Account obliterated</string>
     <string name="hexagon_remove_account_failure">Could not remove account</string>
     <string name="hexagon_remove_account_confirmation">This will delete your shows, lists and movies from SeriesGuide Cloud</string>
-    <string name="hexagon_api_queued">Sending to SeriesGuide Cloud</string>
+    <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
     <string name="hexagon_google_play_missing">Google Play Services not installed</string>
 
     <!-- trakt -->
-    <string name="trakt_submitqueued">Sending to trakt</string>
+    <string name="trakt_submitqueued">Sending to trakt.</string>
     <string name="checkin_success_trakt">Checked into %s on trakt</string>
     <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt</string>
     <string name="traktcheckin_cancel">Override</string>
