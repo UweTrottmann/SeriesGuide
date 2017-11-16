@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +7,6 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -40,14 +38,11 @@ import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Provides the apps main screen, displaying a list of shows and their next episodes.
@@ -69,7 +64,6 @@ public class ShowsActivity extends BaseTopActivity implements
 
     private ShowsTabPageAdapter tabsAdapter;
     private ViewPager viewPager;
-    private ProgressDialog progressDialog;
 
     @SuppressWarnings("unused")
     public interface InitBundle {
@@ -269,19 +263,6 @@ public class ShowsActivity extends BaseTopActivity implements
         super.onStart();
 
         setDrawerSelectedItem(R.id.navigation_item_shows);
-
-        // check for running show removal worker
-        Fragment f = getSupportFragmentManager().findFragmentByTag(RemoveShowWorkerFragment.TAG);
-        if (f != null && !((RemoveShowWorkerFragment) f).isTaskFinished()) {
-            showProgressDialog();
-        }
-        // now listen to events
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void registerEventBus() {
-        // do nothing, we handle that ourselves in onStart
     }
 
     @Override
@@ -326,14 +307,6 @@ public class ShowsActivity extends BaseTopActivity implements
         PreferenceManager.getDefaultSharedPreferences(this).edit()
                 .putInt(DisplaySettings.KEY_LAST_ACTIVE_SHOWS_TAB, viewPager.getCurrentItem())
                 .apply();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        // now prevent dialog from restoring itself (we would loose ref to it)
-        hideProgressDialog();
     }
 
     @Override
@@ -384,39 +357,6 @@ public class ShowsActivity extends BaseTopActivity implements
     @Override
     public void onAddShow(SearchResult show) {
         TaskManager.getInstance().performAddTask(this, show);
-    }
-
-    /**
-     * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
-     */
-    @SuppressWarnings("UnusedParameters")
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(RemoveShowWorkerFragment.OnRemovingShowEvent event) {
-        showProgressDialog();
-    }
-
-    /**
-     * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
-     */
-    @SuppressWarnings("UnusedParameters")
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(RemoveShowWorkerFragment.OnShowRemovedEvent event) {
-        hideProgressDialog();
-    }
-
-    private void showProgressDialog() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setCancelable(false);
-        }
-        progressDialog.show();
-    }
-
-    private void hideProgressDialog() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
-        progressDialog = null;
     }
 
     /**

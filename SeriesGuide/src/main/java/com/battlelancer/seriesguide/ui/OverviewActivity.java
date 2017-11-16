@@ -27,8 +27,8 @@ import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.Shadows;
+import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.lang.ref.WeakReference;
@@ -269,7 +269,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(RemoveShowWorkerFragment.OnRemovingShowEvent event) {
+    public void onEventMainThread(RemoveShowTask.OnRemovingShowEvent event) {
         if (event.showTvdbId == showTvdbId) {
             finish(); // finish this activity if the show it displays is about to get removed
         }

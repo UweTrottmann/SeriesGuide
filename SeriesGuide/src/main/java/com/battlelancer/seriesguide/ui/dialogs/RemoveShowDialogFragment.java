@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -11,18 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
+import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 /**
- * Dialog asking if a show should be removed from the database.
+ * Dialog asking if a show should be removed from the database. On confirmation launches {@link
+ * RemoveShowTask}.
  */
 public class RemoveShowDialogFragment extends AppCompatDialogFragment {
 
@@ -105,9 +108,9 @@ public class RemoveShowDialogFragment extends AppCompatDialogFragment {
         unbinder.unbind();
     }
 
-    private static class GetShowTitleTask
-            extends AsyncTask<Integer, Void, ShowTitleEvent> {
+    private static class GetShowTitleTask extends AsyncTask<Integer, Void, ShowTitleEvent> {
 
+        @SuppressLint("StaticFieldLeak") // using application context
         private final Context context;
 
         public GetShowTitleTask(Context context) {
@@ -147,6 +150,7 @@ public class RemoveShowDialogFragment extends AppCompatDialogFragment {
     public void onEventMainThread(ShowTitleEvent event) {
         if (event.showTitle == null) {
             // failed to find show
+            Toast.makeText(getContext(), R.string.delete_error, Toast.LENGTH_LONG).show();
             dismiss();
             return;
         }
@@ -155,11 +159,7 @@ public class RemoveShowDialogFragment extends AppCompatDialogFragment {
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RemoveShowWorkerFragment f = RemoveShowWorkerFragment.newInstance(showTvdbId);
-                getFragmentManager().beginTransaction()
-                        .add(f, RemoveShowWorkerFragment.TAG)
-                        .commit();
-
+                RemoveShowTask.execute(getContext(), showTvdbId);
                 dismiss();
             }
         });
