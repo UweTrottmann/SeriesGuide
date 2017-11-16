@@ -440,7 +440,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_notifications_treshold">Cuando notificar</string>
   <string name="pref_notifications_select_shows">Elegir series</string>
   <string name="pref_notifications_select_shows_summary">Series que tienen las notificaciones habilitadas (%d)</string>
-  <string name="pref_notification_channel_errors">Errors</string>
+  <string name="pref_notification_channel_errors">Errores</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (pequeño)</string>
   <!-- List Widget -->

@@ -51,7 +51,7 @@
   <string name="database_error">No s\'han pogut modificar les dades.</string>
   <string name="reinstall_info">Intenta fer un backup en el panell de Configuraciò, torneu a instal·lar i restaurar.</string>
   <string name="api_error_generic">No es possible contactar amb %s. Proveu-ho més tard.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">Ha fallat: %s</string>
   <!-- Sharing -->
   <string name="share">Comparteix</string>
   <string name="share_show">Comparteix la serie</string>
@@ -89,8 +89,8 @@
   <string name="no_translation">No hi ha cap descripció traduïda al %1$s disponible a %2$s.</string>
   <string name="no_translation_title">No traduït</string>
   <string name="no_spoilers">Alguns detalls estan amagats per evitar spoilers. Per desactivar aquesta opció aneu a a Configuració.</string>
-  <string name="format_source">Source: %s</string>
-  <string name="format_last_edited">Last edited: %s</string>
+  <string name="format_source">Font: %s</string>
+  <string name="format_last_edited">Darrera actualització: %s</string>
   <!-- Date and Time -->
   <string name="today">avui</string>
   <string name="now">ara</string>
@@ -253,7 +253,7 @@
   <string name="feature_supported">Suportat</string>
   <string name="feature_not_supported">No suportat</string>
   <string name="feature_history">Historial personal i dels amics</string>
-  <string name="feature_comments">Post comments</string>
+  <string name="feature_comments">Publicar comentaris</string>
   <string name="feature_sync">Sincronització</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental</string>
@@ -366,7 +366,7 @@
   <string name="sort_order_latest_first_dvd">Primer els darrers (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Primer els més antics (DVD)</string>
   <!-- Upcoming thresholds -->
-  <string name="pref_upcominglimit">Upcoming range</string>
+  <string name="pref_upcominglimit">Rang de propers</string>
   <string name="upcoming_upto_now">ara</string>
   <string name="upcoming_upto_one_day">1 dia</string>
   <string name="upcoming_upto_three_days">3 dies</string>
@@ -382,9 +382,9 @@
   <string name="pref_theme">Tema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Altres</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
-  <string name="pref_autobackup">Auto Backup</string>
-  <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
+  <string name="pref_autoupdatesummary">Sincronitzar i actualitzar les dades de SeriesGuide automàticament</string>
+  <string name="pref_autobackup">Còpies de seguretat automàtiques</string>
+  <string name="pref_autobackupsummary">Còpia de seguretat setmanal de les teves sèries, llistes i pel·lícules</string>
   <string name="backup">Còpies de seguretat</string>
   <string name="backup_summary">Creeu una còpia de seguretat de les vostres sèries o restaureu-ne alguna d\'existent</string>
   <string name="pref_number">Format de número</string>
@@ -392,17 +392,17 @@
   <string name="pref_offsetsummary">Les hores d\'estrena tenen un desfasament de %d hores</string>
   <string name="clear_cache">Buida la memòria cau d\'imatges</string>
   <string name="clear_cache_summary">Elimina totes les imatges que SeriesGuide hagi baixat i encara siguin al dispositiu</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Enviar estadístiques d\'ús anònimes un servei de Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inclou tota la informació disponible, com ara descripcions, actors i puntuacions.</string>
   <string name="backup_path">Carpeta de còpies de seguretat</string>
   <string name="backup_version">Versió de la base de dades</string>
-  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+  <string name="backup_failed_file_access">No es pot fer còpia de seguretat. No es pot trobar o accedir un arxiu de còpia de seguretat.</string>
   <string name="backup_inprogress">S\'està fent una còpia de seguretat de la base de dades&#8230;</string>
   <string name="backup_success">S\'ha realitzat la còpia de seguretat.</string>
   <string name="backup_failed">Ha fallat la còpia de seguretat.</string>
   <string name="import_inprogress">S\'està restaurant la base de dades&#8230;</string>
-  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
+  <string name="import_failed_nosd">No es pot restaurar la còpia de seguretat. La carpeta de còpia de seguretat no està disponible.</string>
   <string name="import_failed_nofile">No hi ha cap còpia de seguretat que es pugui llegir.</string>
   <string name="import_failed_noread">El fitxer amb la còpia de seguretat no té permisos de lectura.</string>
   <string name="dbupgradefailed">La còpia de seguretat és massa vella o està buida. Nota: importeu a una versió 1.9.x, en primer lloc, les còpies de seguretat anteriors a la versió 2.0.</string>
@@ -412,15 +412,15 @@
   <string name="import_button">Restaura</string>
   <string name="backup_question">Això sobreescriurà la còpia de seguretat actual que hi ha a la carpeta de còpies de seguretat!</string>
   <string name="import_question">La llista de sèries actuals es perdrà! Assegureu-vos que disposeu d\'una còpia de seguretat a la carpeta de còpies de seguretat.</string>
-  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+  <string name="import_warning">Entenc que les meves sèries, llistes i pel·lícules actuals seràn reemplaçats!</string>
   <string name="last_auto_backup">Darrera còpia de seguretat automàtica: %s</string>
   <string name="restore_auto_backup">Restaura la còpia de seguretat automàtica</string>
-  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
-  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
-  <string name="no_file_selected">No file selected</string>
-  <string name="action_select_file">Select file</string>
-  <string name="backup_use_default_files">Use default backup files</string>
+  <string name="dataliberation_permission_missing">Per fer còpies de seguretat o restaurar, permet accés als teus arxius.</string>
+  <string name="autobackup_permission_missing">Per utilitzar la còpia de seguretat automàtica, permet accés als teus arxius.</string>
+  <string name="autobackup_files_missing">Per utilitzar la còpia de seguretat automàtica, selecciona arxius de còpia de seguretat vàlids.</string>
+  <string name="no_file_selected">Cap arxiu seleccionat</string>
+  <string name="action_select_file">Seleccionar arxiu</string>
+  <string name="backup_use_default_files">Utilitzar arxius de còpia de seguretat per defecte</string>
   <!-- Welcome dialog -->
   <string name="get_started">Inici</string>
   <string name="welcome_setuplanguage">Trieu la llengua</string>
@@ -437,8 +437,8 @@
   <string name="pref_vibrate">Vibració</string>
   <string name="pref_vibratesummary">Vibra quan mostris una notificació</string>
   <string name="pref_notifications_treshold">Moment per notificar</string>
-  <string name="pref_notifications_select_shows">Select shows</string>
-  <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notifications_select_shows">Seleccionar sèries</string>
+  <string name="pref_notifications_select_shows_summary">Sèries que tenen notificacions habilitades (%d)</string>
   <string name="pref_notification_channel_errors">Errors</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (petit)</string>
@@ -457,22 +457,22 @@
   <string name="dashclock_extension_description">Mostra el proper episodi de les sèries que teniu a SeriesGuide.</string>
   <string name="dashclock_pref_upcoming_threshold">Mostra episodi dins&#8230;</string>
   <!-- Google In-App Billing -->
-  <string name="onlyx">Only for supporters</string>
-  <string name="action_upgrade">Unlock all features</string>
+  <string name="onlyx">Només per a patrocinadors</string>
+  <string name="action_upgrade">Desbloquejar totes les opcions</string>
   <string name="billing_action_subscribe">Vull subscriure\'m</string>
   <string name="billing_action_pass">Obtenir un «X Pass»</string>
-  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+  <string name="billing_price_subscribe">%1$s/any, prova de forma gratuïta, cancel·la en qualsevol moment mitjançant %2$s</string>
   <string name="billing_price_pass">compra única</string>
-  <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
-  <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
+  <string name="upgrade_description">Desbloqueja totes les opcions, incloent notificacions, temes i més opcions de llista de widget. Ajuda\'m a fer futures actualitzacions.</string>
+  <string name="upgrade_success">Gràcies per donar support a SeriesGuide! Tens accés a totes les opcions.</string>
   <string name="billing_learn_more">Per què pagar? Vegeu més informació.</string>
   <string name="subscription_expired">La subscripció ha caducat</string>
   <string name="subscription_expired_details">La subscripció a les característiques X ha caducat.</string>
   <!-- Amazon In-App Billing -->
-  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
-  <string name="subscription_unavailable">The subscription is currently not available.</string>
-  <string name="subscription_failed">Purchase not completed.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="subscription_not_signed_in">Inicia sessió al teu compte Amazon!</string>
+  <string name="subscription_unavailable">La subscripció no està disponible actualment.</string>
+  <string name="subscription_failed">Compra no completada.</string>
+  <string name="pass_unavailable">X Pass no està disponible actualment.</string>
   <!-- Extensions -->
   <string name="action_extensions_configure">Personalitzeu extensions</string>
   <string name="action_extensions_add">Afegeix extensió</string>
@@ -490,12 +490,12 @@
   <!-- People -->
   <string name="person_biography">Biografia</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-  <string name="feedback_action_yes">Yes!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_question_enjoy">Estàs gaudint de SeriesGuide?</string>
+  <string name="feedback_action_yes">Si!</string>
+  <string name="feedback_action_notreally">No ben bé</string>
+  <string name="feedback_question_rate_google">Valorar a Google Play?</string>
+  <string name="feedback_question_rate_amazon">Valorar a Amazon?</string>
+  <string name="feedback_question_feedback">Digues-me com millorar-ho?</string>
+  <string name="feedback_action_ok">OK, d\'acord</string>
+  <string name="feedback_action_nothanks">No, gràcies</string>
 </resources>
