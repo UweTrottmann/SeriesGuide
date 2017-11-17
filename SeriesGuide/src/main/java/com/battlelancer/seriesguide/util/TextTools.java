@@ -29,6 +29,7 @@ public class TextTools {
      */
     public static String getEpisodeNumber(Context context, int season, int episode) {
         NumberFormat numberFormat = NumberFormat.getIntegerInstance();
+        numberFormat.setGroupingUsed(false);
         String format = DisplaySettings.getNumberFormat(context);
         String result = numberFormat.format(season);
         if (DisplaySettings.NUMBERFORMAT_DEFAULT.equals(format)) {
