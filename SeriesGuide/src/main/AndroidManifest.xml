@@ -321,9 +321,14 @@
             android:exported="true" />
 
         <!-- SeriesGuide Extension listener -->
+        <receiver
+            android:name="com.battlelancer.seriesguide.extensions.ExtensionActionReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver" />
         <service
-            android:name="com.battlelancer.seriesguide.extensions.ExtensionSubscriberService"
-            android:exported="true" />
+            android:name="com.battlelancer.seriesguide.extensions.ExtensionActionService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <!-- Built-in SeriesGuide extensions -->
         <receiver

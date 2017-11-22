@@ -47,6 +47,7 @@ public class SgApp extends Application {
     public static final int JOB_ID_EXTENSION_VODSTER = 1003;
     public static final int JOB_ID_EXTENSION_WEBSEARCH = 1004;
     public static final int JOB_ID_EXTENSION_YOUTUBE = 1005;
+    public static final int JOB_ID_EXTENSION_ACTIONS_SERVICE = 1006;
 
     public static final int NOTIFICATION_EPISODE_ID = 1;
     public static final int NOTIFICATION_SUBSCRIPTION_ID = 2;

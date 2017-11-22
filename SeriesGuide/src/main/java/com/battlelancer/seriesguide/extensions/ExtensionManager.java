@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.extensions;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -292,6 +293,7 @@ public class ExtensionManager {
                 .putExtra(IncomingConstants.EXTRA_TOKEN, token));
     }
 
+    @SuppressLint("LogNotTimber")
     private void disableExtension(Context context, ComponentName extension) {
         if (extension == null) {
             Timber.e("disableExtension: extension empty");
@@ -523,7 +525,7 @@ public class ExtensionManager {
 
     @NonNull
     private ComponentName subscriberComponentName(Context context) {
-        return new ComponentName(context, ExtensionSubscriberService.class);
+        return new ComponentName(context, ExtensionActionReceiver.class);
     }
 
     /**

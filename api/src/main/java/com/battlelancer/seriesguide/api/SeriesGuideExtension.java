@@ -1,12 +1,13 @@
 package com.battlelancer.seriesguide.api;
 
+import android.annotation.SuppressLint;
 import android.app.job.JobService;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.JobIntentService;
 import android.text.TextUtils;
@@ -59,7 +60,7 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA
  * <p> To publish an action, call {@link #publishAction(Action)} from {@link #onRequest(int,
  * Episode)} or {@link #onRequest(int, Movie)}. All current subscribers will then immediately
  * receive an update with the new action information. Under the hood, this is done with
- * {@linkplain Context#startService(Intent) service intents}.
+ * {@linkplain Context#sendBroadcast(Intent) broadcast intents}.
  *
  * <p> As the subclass is a {@link JobIntentService}, it needs be declared as a
  * <code>&lt;service&gt;</code> component in the application's <code>AndroidManifest.xml</code>. In
@@ -186,8 +187,6 @@ public abstract class SeriesGuideExtension extends JobIntentService {
 
     private Action currentAction;
     private int currentActionType;
-
-    private Handler handler = new Handler();
 
     /**
      * Enqueues this service to process the given intent received from a subscriber.
@@ -342,6 +341,7 @@ public abstract class SeriesGuideExtension extends JobIntentService {
         }
     }
 
+    @SuppressLint("LogNotTimber")
     private synchronized void handleSubscribe(ComponentName subscriber, String token) {
         if (subscriber == null) {
             Log.w(TAG, "No subscriber given.");
@@ -414,6 +414,7 @@ public abstract class SeriesGuideExtension extends JobIntentService {
         sharedPrefs.edit().putStringSet(PREF_SUBSCRIPTIONS, serializedSubscriptions).apply();
     }
 
+    @SuppressLint("LogNotTimber")
     private void loadLastAction() {
         String stateString = sharedPrefs.getString(PREF_LAST_ACTION, null);
         if (stateString != null) {
@@ -428,6 +429,7 @@ public abstract class SeriesGuideExtension extends JobIntentService {
         }
     }
 
+    @SuppressLint("LogNotTimber")
     private void saveLastAction() {
         try {
             sharedPrefs.edit()
@@ -463,10 +465,21 @@ public abstract class SeriesGuideExtension extends JobIntentService {
         }
     }
 
+    @SuppressLint("LogNotTimber")
     private synchronized void publishCurrentAction(final ComponentName subscriber) {
         String token = subscribers.get(subscriber);
         if (TextUtils.isEmpty(token)) {
             Log.w(TAG, "Not active, canceling update, id=" + name);
+            return;
+        }
+
+        // check if the subscriber still exists
+        try {
+            getPackageManager().getReceiverInfo(subscriber, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "Update not published because subscriber no longer exists, id=" + name);
+            // Unsubscribe the now-defunct subscriber
+            handleSubscribe(subscriber, null);
             return;
         }
 
@@ -477,21 +490,6 @@ public abstract class SeriesGuideExtension extends JobIntentService {
                 .putExtra(EXTRA_ACTION,
                         (currentAction != null) ? currentAction.toBundle() : null)
                 .putExtra(EXTRA_ACTION_TYPE, currentActionType);
-        try {
-            ComponentName returnedSubscriber = startService(intent);
-            if (returnedSubscriber == null) {
-                Log.e(TAG, "Update wasn't published because subscriber no longer exists"
-                        + ", id=" + name);
-                // Unsubscribe the now-defunct subscriber
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        handleSubscribe(subscriber, null);
-                    }
-                });
-            }
-        } catch (SecurityException e) {
-            Log.e(TAG, "Couldn't publish update, id=" + name, e);
-        }
+        sendBroadcast(intent);
     }
 }
