@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.JobIntentService;
 import android.text.TextUtils;
@@ -187,6 +188,8 @@ public abstract class SeriesGuideExtension extends JobIntentService {
 
     private Action currentAction;
     private int currentActionType;
+
+    private Handler handler = new Handler();
 
     /**
      * Enqueues this service to process the given intent received from a subscriber.
@@ -479,7 +482,13 @@ public abstract class SeriesGuideExtension extends JobIntentService {
         } catch (PackageManager.NameNotFoundException e) {
             Log.e(TAG, "Update not published because subscriber no longer exists, id=" + name);
             // Unsubscribe the now-defunct subscriber
-            handleSubscribe(subscriber, null);
+            // post to Handler to avoid concurrent modification of subscribers
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    handleSubscribe(subscriber, null);
+                }
+            });
             return;
         }
 
