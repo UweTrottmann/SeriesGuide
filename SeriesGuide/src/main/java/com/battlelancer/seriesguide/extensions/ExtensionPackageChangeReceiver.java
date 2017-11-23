@@ -44,7 +44,7 @@ public class ExtensionPackageChangeReceiver extends BroadcastReceiver {
         extensionManager.setEnabledExtensions(context, enabledExtensions);
 
         try {
-            context.getPackageManager().getServiceInfo(changedExtension, 0);
+            context.getPackageManager().getReceiverInfo(changedExtension, 0);
         } catch (PackageManager.NameNotFoundException e) {
             Timber.i("Extension %s no longer available: removed",
                     changedExtension.toShortString());
