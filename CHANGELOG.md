@@ -9,7 +9,16 @@ Version 40
 ----------
 *(in development)*
 
-#### 40-beta3
+#### 40-beta5
+*(2017-11-23)*
+
+* 🔨 Fix issue where extensions may crash if SeriesGuide is in the background. Third-party 
+     extensions need to be updated to work again.
+* 🔨 Fix notifications not displaying on Android O until using the app.
+* 🔨 Do not group digits in season or episode numbers.
+* 📝 Latest translations from crowdin.
+
+#### 40-beta4
 *(2017-11-15)*
 
 * 📝 Extensions have changed (API v2): your enabled extensions will be replaced by the default set. 
