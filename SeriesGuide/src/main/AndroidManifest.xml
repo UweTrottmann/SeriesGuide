@@ -234,10 +234,6 @@
         <service android:name="com.battlelancer.seriesguide.service.UnwatchedUpdaterService" />
 
         <!-- Notification service -->
-        <service
-            android:name="com.battlelancer.seriesguide.service.NotificationService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true"/>
         <receiver android:name="com.battlelancer.seriesguide.service.NotificationActionReceiver" />
         <receiver android:name="com.battlelancer.seriesguide.service.NotificationAlarmReceiver">
             <intent-filter>

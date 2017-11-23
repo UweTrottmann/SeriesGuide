@@ -34,7 +34,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.google.android.gms.analytics.HitBuilders;
@@ -74,13 +73,6 @@ public class Utils {
             return context.getString(R.string.format_version, getVersion(context),
                     SeriesGuideDatabase.DATABASE_VERSION);
         }
-    }
-
-    /**
-     * Run the notification service to display and (re)schedule upcoming episode alarms.
-     */
-    public static void runNotificationService(Context context) {
-        NotificationService.enqueue(context);
     }
 
     /**

@@ -12,9 +12,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.JobIntentService;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -43,10 +41,11 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
 import org.threeten.bp.Instant;
 import timber.log.Timber;
 
-public class NotificationService extends JobIntentService {
+public class NotificationService {
 
     public static final String ACTION_CLEARED = "seriesguide.intent.action.CLEARED";
     public static final String EXTRA_EPISODE_TVDBID
@@ -94,25 +93,32 @@ public class NotificationService extends JobIntentService {
         int OVERVIEW = 8;
     }
 
+    static final Executor SERIAL_EXECUTOR = new SerialExecutor();
+
+    private final Context context;
+
     /**
-     * Convenience method for enqueuing the service to run.
+     * Send broadcast to run the notification service to display and (re)schedule upcoming episode
+     * alarms.
      */
-    public static void enqueue(Context context) {
-        enqueueWork(context, NotificationService.class, SgApp.JOB_ID_NOTIFICATION_SERVICE,
-                new Intent()); // empty work intent
+    public static void trigger(Context context) {
+        context.sendBroadcast(new Intent(context, NotificationAlarmReceiver.class));
     }
 
-    @Override
-    protected void onHandleWork(@NonNull Intent intent) {
+    public NotificationService(Context context) {
+        this.context = context.getApplicationContext();
+    }
+
+    public void run() {
         Timber.d("Waking up...");
 
         // remove notification service wake-up alarm if notifications are disabled or not unlocked
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (!NotificationSettings.isNotificationsEnabled(this) || !Utils.hasAccessToX(this)) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (!NotificationSettings.isNotificationsEnabled(context) || !Utils.hasAccessToX(context)) {
             Timber.d("Notifications disabled, removing wake-up alarm");
-            AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            Intent i = new Intent(this, NotificationAlarmReceiver.class);
-            PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
+            AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            Intent i = new Intent(context, NotificationAlarmReceiver.class);
+            PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
             if (am != null) {
                 am.cancel(pi);
             }
@@ -123,10 +129,10 @@ public class NotificationService extends JobIntentService {
 
         long nextWakeUpTime = 0;
 
-        final long customCurrentTime = TimeTools.getCurrentTime(this);
+        final long customCurrentTime = TimeTools.getCurrentTime(context);
         final Cursor upcomingEpisodes = queryUpcomingEpisodes(customCurrentTime);
         if (upcomingEpisodes != null) {
-            int notificationThreshold = NotificationSettings.getLatestToIncludeTreshold(this);
+            int notificationThreshold = NotificationSettings.getLatestToIncludeTreshold(context);
             if (DEBUG) {
                 Timber.d("DEBUG MODE: notification threshold is 1 week");
                 // a week, for debugging (use only one show to get single
@@ -136,10 +142,10 @@ public class NotificationService extends JobIntentService {
                 resetLastEpisodeAirtime(prefs);
             }
 
-            final long nextEpisodeReleaseTime = NotificationSettings.getNextToNotifyAbout(this);
+            final long nextEpisodeReleaseTime = NotificationSettings.getNextToNotifyAbout(context);
             // wake user-defined amount of time earlier than next episode release time
             final long plannedWakeUpTime =
-                    TimeTools.applyUserOffset(this, nextEpisodeReleaseTime).getTime()
+                    TimeTools.applyUserOffset(context, nextEpisodeReleaseTime).getTime()
                             - DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
 
             // note: on first run plannedWakeUpTime will be <= 0
@@ -148,7 +154,7 @@ public class NotificationService extends JobIntentService {
             if (System.currentTimeMillis() < plannedWakeUpTime) {
                 Timber.d("Woke up earlier than planned, checking for new episodes");
                 checkForNewEpisodes = false;
-                long releaseTimeLastNotified = NotificationSettings.getLastNotifiedAbout(this);
+                long releaseTimeLastNotified = NotificationSettings.getLastNotifiedAbout(context);
 
                 while (upcomingEpisodes.moveToNext()) {
                     final long releaseTime = upcomingEpisodes.getLong(
@@ -189,7 +195,7 @@ public class NotificationService extends JobIntentService {
 
                         // calc wake up time to notify about this episode
                         // taking into account time offset and notification threshold
-                        nextWakeUpTime = TimeTools.applyUserOffset(this, releaseTime).getTime()
+                        nextWakeUpTime = TimeTools.applyUserOffset(context, releaseTime).getTime()
                                 - DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
                         break;
                     }
@@ -209,9 +215,9 @@ public class NotificationService extends JobIntentService {
             Timber.d("No future episodes found, wake up in 6 hours");
         }
 
-        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent i = new Intent(this, NotificationService.class);
-        PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent i = new Intent(context, NotificationService.class);
+        PendingIntent pi = PendingIntent.getService(context, 0, i, 0);
         Timber.d("Going to sleep, setting wake-up alarm to: %s",
                 Instant.ofEpochMilli(nextWakeUpTime));
         if (am != null) {
@@ -263,7 +269,7 @@ public class NotificationService extends JobIntentService {
     private Cursor queryUpcomingEpisodes(long customCurrentTime) {
         StringBuilder selection = new StringBuilder(SELECTION);
 
-        boolean isNoSpecials = DisplaySettings.isHidingSpecials(this);
+        boolean isNoSpecials = DisplaySettings.isHidingSpecials(context);
         Timber.d("Settings: specials: %s", isNoSpecials ? "YES" : "NO");
         if (isNoSpecials) {
             selection.append(" AND ").append(Episodes.SELECTION_NO_SPECIALS);
@@ -271,7 +277,7 @@ public class NotificationService extends JobIntentService {
         // always exclude hidden shows
         selection.append(" AND ").append(Shows.SELECTION_NO_HIDDEN);
 
-        return getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
+        return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 PROJECTION, selection.toString(), new String[] {
                         String.valueOf(customCurrentTime - 12 * DateUtils.HOUR_IN_MILLIS)
                 }, SORTING
@@ -281,7 +287,7 @@ public class NotificationService extends JobIntentService {
     private void maybeNotify(SharedPreferences prefs, Cursor upcomingEpisodes,
             long latestTimeToInclude) {
         final List<Integer> notifyPositions = new ArrayList<>();
-        final long latestTimeCleared = NotificationSettings.getLastCleared(this);
+        final long latestTimeCleared = NotificationSettings.getLastCleared(context);
 
         int position = -1;
         upcomingEpisodes.moveToPosition(position);
@@ -318,8 +324,6 @@ public class NotificationService extends JobIntentService {
 
     private void notifyAbout(final Cursor upcomingEpisodes, List<Integer> notifyPositions,
             long latestAirtime) {
-        final Context context = getApplicationContext();
-
         CharSequence tickerText;
         CharSequence contentTitle;
         CharSequence contentText;
@@ -337,16 +341,17 @@ public class NotificationService extends JobIntentService {
             final String showTitle = upcomingEpisodes.getString(NotificationQuery.SHOW_TITLE);
             // show title and number, like 'Show 1x01'
             contentTitle = TextTools.getShowWithEpisodeNumber(
-                    this,
+                    context,
                     showTitle,
                     upcomingEpisodes.getInt(NotificationQuery.SEASON),
                     upcomingEpisodes.getInt(NotificationQuery.NUMBER)
             );
-            tickerText = getString(R.string.upcoming_show, contentTitle);
+            tickerText = context.getString(R.string.upcoming_show, contentTitle);
 
             // "8:00 PM Network"
-            final String time = TimeTools.formatToLocalTime(this, TimeTools.applyUserOffset(this,
-                    upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
+            final String time = TimeTools.formatToLocalTime(context,
+                    TimeTools.applyUserOffset(context,
+                            upcomingEpisodes.getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
             final String network = upcomingEpisodes.getString(NotificationQuery.NETWORK);
             contentText = TextTools.dotSeparate(time, network); // switch on purpose
 
@@ -362,10 +367,10 @@ public class NotificationService extends JobIntentService {
                             PendingIntent.FLAG_CANCEL_CURRENT);
         } else {
             // notify about multiple episodes
-            tickerText = getString(R.string.upcoming_episodes);
-            contentTitle = getString(R.string.upcoming_episodes_number,
+            tickerText = context.getString(R.string.upcoming_episodes);
+            contentTitle = context.getString(R.string.upcoming_episodes_number,
                     NumberFormat.getIntegerInstance().format(count));
-            contentText = getString(R.string.upcoming_display);
+            contentText = context.getString(R.string.upcoming_display);
 
             contentIntent = TaskStackBuilder.create(context)
                     .addNextIntent(showsIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime))
@@ -413,7 +418,7 @@ public class NotificationService extends JobIntentService {
                         REQUEST_CODE_ACTION_CHECKIN,
                         checkInActionIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                 // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
-                nb.addAction(R.drawable.ic_action_checkin, getString(R.string.checkin),
+                nb.addAction(R.drawable.ic_action_checkin, context.getString(R.string.checkin),
                         checkInIntent);
 
                 // Action button to set watched
@@ -426,7 +431,7 @@ public class NotificationService extends JobIntentService {
                         REQUEST_CODE_ACTION_SET_WATCHED,
                         setWatchedIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                 // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
-                nb.addAction(R.drawable.ic_action_tick, getString(R.string.action_watched),
+                nb.addAction(R.drawable.ic_action_tick, context.getString(R.string.action_watched),
                         setWatchedPendingIntent);
 
                 nb.setNumber(1);
@@ -445,7 +450,7 @@ public class NotificationService extends JobIntentService {
 
                     // show title and number, like 'Show 1x01'
                     String title = TextTools.getShowWithEpisodeNumber(
-                            this,
+                            context,
                             upcomingEpisodes.getString(NotificationQuery.SHOW_TITLE),
                             upcomingEpisodes.getInt(NotificationQuery.SEASON),
                             upcomingEpisodes.getInt(NotificationQuery.NUMBER)
@@ -456,8 +461,8 @@ public class NotificationService extends JobIntentService {
                     lineText.append(" ");
 
                     // "8:00 PM Network"
-                    String time = TimeTools.formatToLocalTime(this, TimeTools
-                            .applyUserOffset(this, upcomingEpisodes
+                    String time = TimeTools.formatToLocalTime(context, TimeTools
+                            .applyUserOffset(context, upcomingEpisodes
                                     .getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
                     String network = upcomingEpisodes
                             .getString(NotificationQuery.NETWORK);
@@ -468,7 +473,7 @@ public class NotificationService extends JobIntentService {
 
                 // tell if we could not display all episodes
                 if (count > 5) {
-                    inboxStyle.setSummaryText(getString(R.string.more, count - 5));
+                    inboxStyle.setSummaryText(context.getString(R.string.more, count - 5));
                 }
 
                 nb.setStyle(inboxStyle);
@@ -504,13 +509,14 @@ public class NotificationService extends JobIntentService {
         nb.setContentText(contentText);
         nb.setContentIntent(contentIntent);
         nb.setSmallIcon(R.drawable.ic_notification);
-        nb.setColor(ContextCompat.getColor(this, R.color.accent_primary));
+        nb.setColor(ContextCompat.getColor(context, R.color.accent_primary));
         nb.setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        Intent i = new Intent(this, NotificationActionReceiver.class);
+        Intent i = new Intent(context, NotificationActionReceiver.class);
         i.setAction(ACTION_CLEARED);
         i.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime);
-        PendingIntent deleteIntent = PendingIntent.getBroadcast(this, REQUEST_CODE_DELETE_INTENT, i,
+        PendingIntent deleteIntent = PendingIntent.getBroadcast(context, REQUEST_CODE_DELETE_INTENT,
+                i,
                 PendingIntent.FLAG_CANCEL_CURRENT);
         nb.setDeleteIntent(deleteIntent);
 
@@ -518,7 +524,7 @@ public class NotificationService extends JobIntentService {
         Notification notification = nb.build();
 
         // use a unique id within the app
-        NotificationManagerCompat nm = NotificationManagerCompat.from(getApplicationContext());
+        NotificationManagerCompat nm = NotificationManagerCompat.from(context);
         nm.notify(SgApp.NOTIFICATION_EPISODE_ID, notification);
 
         Timber.d("Notification: count=%d, rich(JB+)=%s, sound=%s, vibrate=%s, delete=%s",
@@ -531,7 +537,7 @@ public class NotificationService extends JobIntentService {
 
     private void maybeSetPoster(NotificationCompat.Builder nb, String posterPath) {
         try {
-            Bitmap poster = ServiceUtils.loadWithPicasso(this,
+            Bitmap poster = ServiceUtils.loadWithPicasso(context,
                     TvdbImageTools.smallSizeUrl(posterPath))
                     .centerCrop()
                     .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
@@ -540,7 +546,7 @@ public class NotificationService extends JobIntentService {
 
             // add special large resolution background for wearables
             // https://developer.android.com/training/wearables/notifications/creating.html#AddWearableFeatures
-            Bitmap posterSquare = ServiceUtils.loadWithPicasso(this,
+            Bitmap posterSquare = ServiceUtils.loadWithPicasso(context,
                     TvdbImageTools.fullSizeUrl(posterPath))
                     .centerCrop()
                     .resize(400, 400)

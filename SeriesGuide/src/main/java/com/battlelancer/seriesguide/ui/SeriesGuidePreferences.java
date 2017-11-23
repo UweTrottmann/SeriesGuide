@@ -163,7 +163,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
     private static void resetAndRunNotificationsService(Context context) {
         NotificationService.resetLastEpisodeAirtime(PreferenceManager
                 .getDefaultSharedPreferences(context));
-        Utils.runNotificationService(context);
+        NotificationService.trigger(context);
     }
 
     public static void setListPreferenceSummary(@Nullable ListPreference listPref) {
@@ -303,7 +303,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                             ringtonePref.setEnabled(isChecked);
                         }
 
-                        Utils.runNotificationService(getActivity());
+                        NotificationService.trigger(getActivity());
                         return true;
                     }
                 });
