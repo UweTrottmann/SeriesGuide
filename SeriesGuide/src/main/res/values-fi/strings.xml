@@ -46,7 +46,7 @@
   <string name="norating">puuttuu</string>
   <string name="unknown">tuntematon</string>
   <string name="offline">Muodosta yhteys verkkoon ja yritä uudelleen.</string>
-  <string name="app_not_available">No app available to handle this</string>
+  <string name="app_not_available">Tähän toimintoon ei löydy sovellusta</string>
   <string name="people_empty">Onko kukaan täällä?! Kosketa yrittääksesi uudelleen.</string>
   <string name="database_error">Tietojen muokkaaminen ei onnistunut.</string>
   <string name="reinstall_info">Yritä varmuuskopioida asetuksista, asenna uudelleen ja palauta.</string>
@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Poistaa kaikki välimuistiin tallennetut kuvat</string>
   <string name="pref_ganalyticssummary">Lähetä anonyymia käyttötilastoja Googlen palveluun</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Include descriptions, details, ratings</string>
+  <string name="backup_full_dump">Sisältää kuvaukset, tiedot, arvosanat</string>
   <string name="backup_path">Varmuuskopiokansio</string>
   <string name="backup_version">Tietokannan versio</string>
   <string name="backup_failed_file_access">Ei voida varmuuskopioida. Varmuuskopiota ei löydy tai sitä ei voida käyttää.</string>

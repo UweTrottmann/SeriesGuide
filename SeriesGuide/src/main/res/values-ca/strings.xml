@@ -46,7 +46,7 @@
   <string name="norating">cap</string>
   <string name="unknown">deconegut</string>
   <string name="offline">Conecteu-vos a la xarxa i torneu-ho a intentar.</string>
-  <string name="app_not_available">No app available to handle this</string>
+  <string name="app_not_available">Cap aplicació disponible per gestionar això</string>
   <string name="people_empty">No hi ha ningú? Toqueu per intentar-ho novament.</string>
   <string name="database_error">No s\'han pogut modificar les dades.</string>
   <string name="reinstall_info">Intenta fer un backup en el panell de Configuraciò, torneu a instal·lar i restaurar.</string>
@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Elimina totes les imatges que SeriesGuide hagi baixat i encara siguin al dispositiu</string>
   <string name="pref_ganalyticssummary">Enviar estadístiques d\'ús anònimes un servei de Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Include descriptions, details, ratings</string>
+  <string name="backup_full_dump">Incloure descripcions, detalls, valoracions</string>
   <string name="backup_path">Carpeta de còpies de seguretat</string>
   <string name="backup_version">Versió de la base de dades</string>
   <string name="backup_failed_file_access">No es pot fer còpia de seguretat. No es pot trobar o accedir un arxiu de còpia de seguretat.</string>

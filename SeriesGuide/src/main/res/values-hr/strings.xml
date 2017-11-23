@@ -46,7 +46,7 @@
   <string name="norating">nedostupno</string>
   <string name="unknown">nepoznato</string>
   <string name="offline">Spojite se na mrežu i probajte ponovno.</string>
-  <string name="app_not_available">No app available to handle this</string>
+  <string name="app_not_available">Ne postoji aplikacija koja može ovo otvoriti</string>
   <string name="people_empty">Ima li koga? Dodirnite kako bi pokušali ponovno.</string>
   <string name="database_error">Nije moguće izmijeniti podatke.</string>
   <string name="reinstall_info">Pokušajte sigurnosno kopirati postavke, ponovno instalirajte i vratite sig. kopiju.</string>
@@ -405,7 +405,7 @@
   <string name="clear_cache_summary">Uklonite sve slike iz predmemorije vašeg uređaja</string>
   <string name="pref_ganalyticssummary">Pošalji anonimne statistike korištenja na Google usluge</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Include descriptions, details, ratings</string>
+  <string name="backup_full_dump">Uključi opise, detalje i ocjene</string>
   <string name="backup_path">Mapa sigurnosne kopije</string>
   <string name="backup_version">Verzija baze podataka</string>
   <string name="backup_failed_file_access">Nije moguće stvoriti sigur. kopiju. Datoteka sigur. kopije nije pronađena ili je nedostupna.</string>

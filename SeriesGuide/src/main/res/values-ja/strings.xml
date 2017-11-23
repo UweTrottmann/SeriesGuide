@@ -383,7 +383,7 @@
   <string name="clear_cache_summary">お使いのデバイスからキャッシュされた画像をすべて削除します</string>
   <string name="pref_ganalyticssummary">匿名の使用状況に関する統計情報をGoogle サービスに送信します</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Include descriptions, details, ratings</string>
+  <string name="backup_full_dump">説明、詳細、評価を含める</string>
   <string name="backup_path">バックアップ フォルダー</string>
   <string name="backup_version">データベースのバージョン</string>
   <string name="backup_failed_file_access">バックアップできません。バックアップ ファイルが見つからないか、アクセスできません。</string>

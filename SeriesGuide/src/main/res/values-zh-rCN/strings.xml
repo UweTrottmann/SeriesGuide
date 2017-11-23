@@ -383,7 +383,7 @@
   <string name="clear_cache_summary">删除缓存图片</string>
   <string name="pref_ganalyticssummary">向 Google 服务发送匿名使用情况统计信息</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Include descriptions, details, ratings</string>
+  <string name="backup_full_dump">包括说明、详细信息、评级</string>
   <string name="backup_path">备份/还原数据库的路径</string>
   <string name="backup_version">数据库版本</string>
   <string name="backup_failed_file_access">备份失败：不能访问备份文件。</string>
