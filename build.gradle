@@ -2,9 +2,9 @@
 buildscript {
     ext.versions = [
             'minSdk': 15,
-            'compileSdk': 26,
+            'compileSdk': 27,
             'targetSdk': 26,
-            'buildTools': '26.0.2',
+            'buildTools': '27.0.1',
 
             'supportLibrary': '27.0.1', // developer.android.com/topic/libraries/support-library/revisions.html
             'lifecycle': '1.0.0', // developer.android.com/topic/libraries/architecture/release-notes.html
