@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -28,6 +29,7 @@ import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_MOVIE;
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT;
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_TOKEN;
+import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_VERSION;
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_PUBLISH_ACTION;
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_EPISODE;
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_MOVIE;
@@ -188,6 +190,7 @@ public abstract class SeriesGuideExtension extends JobIntentService {
 
     private Action currentAction;
     private int currentActionType;
+    private int currentVersion;
 
     private Handler handler = new Handler();
 
@@ -222,9 +225,9 @@ public abstract class SeriesGuideExtension extends JobIntentService {
      * {@link #SeriesGuideExtension(String)} constructor. This static method is useful for exposing
      * extension preferences to other application components such as a settings activity.
      *
-     * @param context       The context; can be an application context.
+     * @param context The context; can be an application context.
      * @param extensionName The source name, provided in the {@link #SeriesGuideExtension(String)}
-     *                      constructor.
+     * constructor.
      */
     protected static SharedPreferences getSharedPreferences(Context context, String extensionName) {
         return context.getSharedPreferences(PREF_PREFIX + extensionName, 0);
@@ -333,12 +336,13 @@ public abstract class SeriesGuideExtension extends JobIntentService {
         } else if (ACTION_UPDATE.equals(action)) {
             // subscriber requests an updated action
             if (intent.hasExtra(EXTRA_ENTITY_IDENTIFIER)) {
+                int version = intent.getIntExtra(EXTRA_VERSION, 1);
                 if (intent.hasExtra(EXTRA_EPISODE)) {
                     handleEpisodeRequest(intent.getIntExtra(EXTRA_ENTITY_IDENTIFIER, 0),
-                            intent.getBundleExtra(EXTRA_EPISODE));
+                            intent.getBundleExtra(EXTRA_EPISODE), version);
                 } else if (intent.hasExtra(EXTRA_MOVIE)) {
                     handleMovieRequest(intent.getIntExtra(EXTRA_ENTITY_IDENTIFIER, 0),
-                            intent.getBundleExtra(EXTRA_MOVIE));
+                            intent.getBundleExtra(EXTRA_MOVIE), version);
                 }
             }
         }
@@ -443,20 +447,22 @@ public abstract class SeriesGuideExtension extends JobIntentService {
         }
     }
 
-    private void handleEpisodeRequest(int episodeIdentifier, Bundle episodeBundle) {
+    private void handleEpisodeRequest(int episodeIdentifier, Bundle episodeBundle, int version) {
         if (episodeIdentifier <= 0 || episodeBundle == null) {
             return;
         }
         currentActionType = ACTION_TYPE_EPISODE;
+        currentVersion = version;
         Episode episode = Episode.fromBundle(episodeBundle);
         onRequest(episodeIdentifier, episode);
     }
 
-    private void handleMovieRequest(int movieIdentifier, Bundle movieBundle) {
+    private void handleMovieRequest(int movieIdentifier, Bundle movieBundle, int version) {
         if (movieIdentifier <= 0 || movieBundle == null) {
             return;
         }
         currentActionType = ACTION_TYPE_MOVIE;
+        currentVersion = version;
         Movie movie = Movie.fromBundle(movieBundle);
         onRequest(movieIdentifier, movie);
     }
@@ -476,29 +482,53 @@ public abstract class SeriesGuideExtension extends JobIntentService {
             return;
         }
 
-        // check if the subscriber still exists
-        try {
-            getPackageManager().getReceiverInfo(subscriber, 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Update not published because subscriber no longer exists, id=" + name);
-            // Unsubscribe the now-defunct subscriber
-            // post to Handler to avoid concurrent modification of subscribers
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    handleSubscribe(subscriber, null);
-                }
-            });
-            return;
-        }
-
-        // Publish update
         Intent intent = new Intent(ACTION_PUBLISH_ACTION)
                 .setComponent(subscriber)
                 .putExtra(EXTRA_TOKEN, token)
                 .putExtra(EXTRA_ACTION,
                         (currentAction != null) ? currentAction.toBundle() : null)
                 .putExtra(EXTRA_ACTION_TYPE, currentActionType);
-        sendBroadcast(intent);
+
+        if (currentVersion == 2) {
+            // API 2 uses broadcast intents
+
+            // check if the subscriber still exists
+            try {
+                getPackageManager().getReceiverInfo(subscriber, 0);
+            } catch (PackageManager.NameNotFoundException e) {
+                // Unsubscribe the now-defunct subscriber
+                unsubscribeAsync(subscriber);
+                return;
+            }
+
+            // Publish update
+            sendBroadcast(intent);
+        } else if (currentVersion == 1 && Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            // API 1 uses service intents, not compatible with O background restrictions
+
+            // Publish update
+            try {
+                ComponentName returnedSubscriber = startService(intent);
+                if (returnedSubscriber == null) {
+                    // Unsubscribe the now-defunct subscriber
+                    unsubscribeAsync(subscriber);
+                }
+            } catch (SecurityException e) {
+                Log.e(TAG, "Couldn't publish update, id=" + name, e);
+            }
+        }
+    }
+
+    @SuppressLint("LogNotTimber")
+    private void unsubscribeAsync(final ComponentName subscriber) {
+        Log.e(TAG,
+                "Update not published because subscriber no longer exists, id=" + name);
+        // post to Handler to avoid concurrent modification of subscribers
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                handleSubscribe(subscriber, null);
+            }
+        });
     }
 }

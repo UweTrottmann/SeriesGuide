@@ -376,7 +376,8 @@ public class ExtensionManager {
         context.sendBroadcast(new Intent(IncomingConstants.ACTION_UPDATE)
                 .setComponent(extension)
                 .putExtra(IncomingConstants.EXTRA_ENTITY_IDENTIFIER, episode.getTvdbId())
-                .putExtra(IncomingConstants.EXTRA_EPISODE, episode.toBundle()));
+                .putExtra(IncomingConstants.EXTRA_EPISODE, episode.toBundle())
+                .putExtra(IncomingConstants.EXTRA_VERSION, 2));
     }
 
     /**
@@ -402,7 +403,8 @@ public class ExtensionManager {
         context.sendBroadcast(new Intent(IncomingConstants.ACTION_UPDATE)
                 .setComponent(extension)
                 .putExtra(IncomingConstants.EXTRA_ENTITY_IDENTIFIER, movie.getTmdbId())
-                .putExtra(IncomingConstants.EXTRA_MOVIE, movie.toBundle()));
+                .putExtra(IncomingConstants.EXTRA_MOVIE, movie.toBundle())
+                .putExtra(IncomingConstants.EXTRA_VERSION, 2));
     }
 
     public void handlePublishedAction(Context context, String token, Action action, int type) {
