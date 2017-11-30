@@ -29,7 +29,7 @@ public class ListManageDialogFragment extends AppCompatDialogFragment {
 
     private static final String ARG_LIST_ID = "listId";
 
-    public static ListManageDialogFragment newInstance(String listId) {
+    private static ListManageDialogFragment newInstance(String listId) {
         ListManageDialogFragment f = new ListManageDialogFragment();
 
         Bundle args = new Bundle();

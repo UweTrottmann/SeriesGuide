@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.tasks.AddListTask;
 import com.battlelancer.seriesguide.util.tasks.ChangeListItemListsTask;
@@ -145,7 +146,11 @@ public class ListsTools {
         List<SgListItem> items = new ArrayList<>(itemCount);
         while (query.moveToNext()) {
             SgListItem item = new SgListItem();
-            item.setListItemId(query.getString(Query.LIST_ITEM_ID));
+            String itemId = query.getString(Query.LIST_ITEM_ID);
+            if (TextUtils.isEmpty(itemId)) {
+                continue; // skip, no item id
+            }
+            item.setListItemId(itemId);
             items.add(item);
         }
 

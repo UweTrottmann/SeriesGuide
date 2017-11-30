@@ -103,6 +103,9 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
                     boolean isListChecked = checkedLists.get(position);
 
                     String listId = listEntry.getString(ListsQuery.LIST_ID);
+                    if (TextUtils.isEmpty(listId)) {
+                        continue; // skip, no id
+                    }
                     if (wasListChecked && !isListChecked) {
                         // remove from list
                         removeFromTheseLists.add(listId);
