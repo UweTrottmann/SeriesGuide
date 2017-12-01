@@ -26,9 +26,9 @@ import timber.log.Timber;
 @TargetApi(11)
 public class ListWidgetProvider extends AppWidgetProvider {
 
-    private static final String ACTION_DATA_CHANGED
+    public static final String ACTION_DATA_CHANGED
             = "com.battlelancer.seriesguide.appwidget.UPDATE";
-    private static final int REQUEST_CODE = 195;
+    public static final int REQUEST_CODE = 195;
 
     private static final long REPETITION_INTERVAL = 5 * DateUtils.MINUTE_IN_MILLIS;
 

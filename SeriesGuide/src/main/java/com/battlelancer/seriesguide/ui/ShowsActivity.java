@@ -1,5 +1,7 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +23,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.api.Intents;
+import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.IabHelper;
 import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager;
@@ -407,6 +410,17 @@ public class ShowsActivity extends BaseTopActivity implements
             }
             if (lastVersion < SgApp.RELEASE_VERSION_40_BETA4) {
                 ExtensionManager.get().setDefaultEnabledExtensions(this);
+            }
+            if (lastVersion < SgApp.RELEASE_VERSION_40_BETA6) {
+                // cancel old widget alarm using implicit intent
+                AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                if (am != null) {
+                    PendingIntent pi = PendingIntent.getBroadcast(this,
+                            ListWidgetProvider.REQUEST_CODE,
+                            new Intent(ListWidgetProvider.ACTION_DATA_CHANGED), 0);
+                    am.cancel(pi);
+                }
+                // new alarm is set automatically as upgrading causes app widgets to update
             }
 
             // set this as lastVersion

@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.ContentProvider;
 import android.content.Context;
 import android.os.Build;
 import android.os.StrictMode;
@@ -85,9 +84,13 @@ public class SgApp extends Application {
      * Extensions API v2, old extensions no longer work.
      */
     public static final int RELEASE_VERSION_40_BETA4 = 1502803;
+    /**
+     * ListWidgetProvider alarm intent is now explicit.
+     */
+    public static final int RELEASE_VERSION_40_BETA6 = 1502805;
 
     /**
-     * The content authority used to identify the SeriesGuide {@link ContentProvider}
+     * The content authority used to identify the SeriesGuide {@link android.content.ContentProvider}.
      */
     public static final String CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider";
 
