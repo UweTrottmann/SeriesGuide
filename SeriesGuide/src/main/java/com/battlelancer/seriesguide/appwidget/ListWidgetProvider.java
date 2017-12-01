@@ -26,11 +26,11 @@ import timber.log.Timber;
 @TargetApi(11)
 public class ListWidgetProvider extends AppWidgetProvider {
 
-    public static final String ACTION_DATA_CHANGED
+    private static final String ACTION_DATA_CHANGED
             = "com.battlelancer.seriesguide.appwidget.UPDATE";
-    public static final int REQUEST_CODE = 195;
+    private static final int REQUEST_CODE = 195;
 
-    public static final long REPETITION_INTERVAL = 5 * DateUtils.MINUTE_IN_MILLIS;
+    private static final long REPETITION_INTERVAL = 5 * DateUtils.MINUTE_IN_MILLIS;
 
     private static final int DIP_THRESHOLD_COMPACT_LAYOUT = 80;
 
@@ -38,9 +38,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
      * Send broadcast to update lists of all list widgets.
      */
     public static void notifyDataChanged(Context context) {
-        Intent intent = new Intent(context, ListWidgetProvider.class);
-        intent.setAction(ACTION_DATA_CHANGED);
-        context.getApplicationContext().sendBroadcast(intent);
+        context.getApplicationContext().sendBroadcast(getDataChangedIntent(context));
     }
 
     @Override
@@ -213,9 +211,16 @@ public class ListWidgetProvider extends AppWidgetProvider {
         return false;
     }
 
-    private static PendingIntent getDataChangedPendingIntent(Context context) {
-        Intent update = new Intent(ACTION_DATA_CHANGED);
-        return PendingIntent.getBroadcast(context, REQUEST_CODE, update,
+    private PendingIntent getDataChangedPendingIntent(Context context) {
+        return PendingIntent.getBroadcast(context, REQUEST_CODE, getDataChangedIntent(context),
                 PendingIntent.FLAG_UPDATE_CURRENT);
     }
+
+    private static Intent getDataChangedIntent(Context context) {
+        // use explicit intent to work around implicit broadcast restrictions on O+
+        Intent intent = new Intent(context, ListWidgetProvider.class);
+        intent.setAction(ACTION_DATA_CHANGED);
+        return intent;
+    }
+
 }
