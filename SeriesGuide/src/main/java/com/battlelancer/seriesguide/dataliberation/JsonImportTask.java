@@ -1,11 +1,13 @@
 package com.battlelancer.seriesguide.dataliberation;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport;
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
@@ -15,6 +17,7 @@ import com.battlelancer.seriesguide.dataliberation.model.Movie;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
@@ -52,7 +55,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     private static final int ERROR_LARGE_DB_OP = -2;
     private static final int ERROR_FILE_ACCESS = -3;
 
-    private Context context;
+    @SuppressLint("StaticFieldLeak") private Context context;
     private String[] languageCodes;
     private boolean isImportingAutoBackup;
     private boolean isUseDefaultFolders;
@@ -498,6 +501,13 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private void addListToDatabase(List list) {
+        if (TextUtils.isEmpty(list.listId)) {
+            if (TextUtils.isEmpty(list.name)) {
+                return; // can't rebuild list id
+            }
+            list.listId = SeriesGuideContract.Lists.generateListId(list.name);
+        }
+
         // Insert the list
         ContentValues values = new ContentValues();
         values.put(Lists.LIST_ID, list.listId);
@@ -523,6 +533,15 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                 // Unknown item type, skip
                 continue;
             }
+
+            if (TextUtils.isEmpty(item.listItemId)) {
+                if (item.tvdbId <= 0) {
+                    continue; // can't rebuild item id
+                }
+                item.listItemId = SeriesGuideContract.ListItems.generateListItemId(item.tvdbId,
+                        type, list.listId);
+            }
+
             ContentValues itemValues = new ContentValues();
             itemValues.put(ListItems.LIST_ITEM_ID, item.listItemId);
             itemValues.put(Lists.LIST_ID, list.listId);

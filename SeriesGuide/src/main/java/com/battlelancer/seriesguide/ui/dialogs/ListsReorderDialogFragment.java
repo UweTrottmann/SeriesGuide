@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,7 +115,9 @@ public class ListsReorderDialogFragment extends AppCompatDialogFragment {
         List<String> listIdsInOrder = new ArrayList<>(count);
         for (int position = 0; position < count; position++) {
             OrderedListsLoader.OrderedList list = adapter.getItem(position);
-            listIdsInOrder.add(list.id);
+            if (list != null && !TextUtils.isEmpty(list.id)) {
+                listIdsInOrder.add(list.id);
+            }
         }
         ListsTools.reorderLists(getContext(), listIdsInOrder);
     }
