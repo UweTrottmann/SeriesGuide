@@ -23,6 +23,19 @@ import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import timber.log.Timber;
 
+/**
+ * <p>Useful commands for testing:
+ *
+ * <p>Dump alarms:
+ * <pre>{@code
+ * adb shell dumpsys alarm > alarms.txt
+ * }</pre>
+ *
+ * <p>Note: Doze mode and App Standby should have no effect on the alarm. Instead turn off the
+ * device screen.
+ *
+ * <p>https://developer.android.com/training/monitoring-device-state/doze-standby.html
+ */
 @TargetApi(11)
 public class ListWidgetProvider extends AppWidgetProvider {
 
@@ -52,7 +65,6 @@ public class ListWidgetProvider extends AppWidgetProvider {
         if (ACTION_DATA_CHANGED.equals(intent.getAction())) {
             // trigger refresh of list widgets
             Timber.d("onReceive: widget DATA_CHANGED action.");
-            // use app context as this may be called by activities that can be destroyed
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             if (appWidgetManager == null) {
                 return;
@@ -63,6 +75,8 @@ public class ListWidgetProvider extends AppWidgetProvider {
                 return;
             }
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_view);
+
+            scheduleWidgetUpdate(context);
         } else {
             super.onReceive(context, intent);
         }
@@ -85,14 +99,19 @@ public class ListWidgetProvider extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, null);
         }
+        scheduleWidgetUpdate(context);
+    }
 
+    private void scheduleWidgetUpdate(Context context) {
         // set an alarm to update widgets every x mins if the device is awake
+        // use one-shot alarm as repeating alarms get batched while the device is asleep
+        // and are then *all* delivered
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (am != null) {
             PendingIntent pi = getDataChangedPendingIntent(context);
-            am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()
-                    + REPETITION_INTERVAL, REPETITION_INTERVAL, pi);
-            Timber.d("onUpdate: scheduled widget UPDATE alarm.");
+            am.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()
+                    + REPETITION_INTERVAL, pi);
+            Timber.d("scheduled widget UPDATE alarm.");
         }
     }
 
