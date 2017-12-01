@@ -45,7 +45,6 @@ public class ShowResultsAdapter extends BaseShowsAdapter {
         }
         viewHolder.timeAndNetwork.setText(
                 TextTools.networkAndTime(context, showReleaseTime, weekDay, network));
-        viewHolder.remainingCount.setVisibility(View.GONE); // unused
 
         // poster
         TvdbImageTools.loadShowPosterResizeCrop(context, viewHolder.poster,

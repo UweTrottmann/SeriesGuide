@@ -77,11 +77,11 @@ public class ShowsAdapter extends BaseShowsAdapter {
             }
         }
 
-        setRemainingCount(viewHolder.remainingCount, cursor.getInt(Query.UNWATCHED_COUNT));
+        // remaining count, network, day and time
+        viewHolder.timeAndNetwork.setText(TextTools.remainingAndNetworkAndTime(
+                context, makeRemainingCount(viewHolder.timeAndNetwork, cursor.getInt(Query.UNWATCHED_COUNT)),
+                releaseTimeShow, weekDay, network));
 
-        // network, day and time
-        viewHolder.timeAndNetwork.setText(
-                TextTools.networkAndTime(context, releaseTimeShow, weekDay, network));
 
         // set poster
         TvdbImageTools.loadShowPosterResizeCrop(context, viewHolder.poster,
