@@ -13,6 +13,10 @@ import timber.log.Timber;
 
 public class NotificationAlarmReceiver extends BroadcastReceiver {
 
+    public static Intent intent(Context context) {
+        return new Intent(context, NotificationAlarmReceiver.class);
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {

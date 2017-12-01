@@ -102,7 +102,7 @@ public class NotificationService {
      * alarms.
      */
     public static void trigger(Context context) {
-        context.sendBroadcast(new Intent(context, NotificationAlarmReceiver.class));
+        context.sendBroadcast(NotificationAlarmReceiver.intent(context));
     }
 
     public NotificationService(Context context) {
@@ -117,8 +117,8 @@ public class NotificationService {
         if (!NotificationSettings.isNotificationsEnabled(context) || !Utils.hasAccessToX(context)) {
             Timber.d("Notifications disabled, removing wake-up alarm");
             AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            Intent i = new Intent(context, NotificationAlarmReceiver.class);
-            PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
+            PendingIntent pi = PendingIntent.getBroadcast(context, 0,
+                    NotificationAlarmReceiver.intent(context), 0);
             if (am != null) {
                 am.cancel(pi);
             }
@@ -216,8 +216,8 @@ public class NotificationService {
         }
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent i = new Intent(context, NotificationService.class);
-        PendingIntent pi = PendingIntent.getService(context, 0, i, 0);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0,
+                NotificationAlarmReceiver.intent(context), 0);
         Timber.d("Going to sleep, setting wake-up alarm to: %s",
                 Instant.ofEpochMilli(nextWakeUpTime));
         if (am != null) {
