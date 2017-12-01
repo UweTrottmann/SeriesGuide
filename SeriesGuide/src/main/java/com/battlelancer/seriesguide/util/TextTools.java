@@ -162,6 +162,22 @@ public class TextTools {
     }
 
     /**
+     * Builds a remaining + network + release time string for a show formatted like "44 remaining Network · Tue 08:00 PM".
+     * If remaining is null returns just network + release time
+     */
+    @NonNull
+    public static String remainingAndNetworkAndTime(Context context, @Nullable String remaining,
+            @Nullable Date release, int weekDay, @Nullable String network) {
+        StringBuilder fullString = new StringBuilder();
+        if(remaining != null) {
+            fullString.append(remaining);
+            fullString.append(" ");
+        }
+        fullString.append(networkAndTime(context, release, weekDay, network));
+        return fullString.toString();
+
+    }
+    /**
      * Appends an empty new line and a new line listing the source of the text as TMDB.
      */
     public static SpannableStringBuilder textWithTmdbSource(Context context, @Nullable String text) {

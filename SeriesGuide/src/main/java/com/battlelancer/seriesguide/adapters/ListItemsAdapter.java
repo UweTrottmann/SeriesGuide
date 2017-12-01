@@ -60,10 +60,6 @@ public class ListItemsAdapter extends BaseShowsAdapter {
                     releaseTimeShow = null;
                 }
 
-                // network, regular day and time
-                viewHolder.timeAndNetwork.setText(
-                        TextTools.networkAndTime(context, releaseTimeShow, weekDay, network));
-
                 // next episode info
                 String fieldValue = cursor.getString(Query.SHOW_NEXTTEXT);
                 if (TextUtils.isEmpty(fieldValue)) {
@@ -91,9 +87,13 @@ public class ListItemsAdapter extends BaseShowsAdapter {
                     }
                 }
 
-                // remaining count
-                setRemainingCount(viewHolder.remainingCount,
-                        cursor.getInt(Query.SHOW_UNWATCHED_COUNT));
+                // remaining count, network, regular day and time
+                viewHolder.timeAndNetwork.setText(
+                        TextTools.remainingAndNetworkAndTime(context,
+                                makeRemainingCount(viewHolder.timeAndNetwork,
+                                        cursor.getInt(Query.SHOW_UNWATCHED_COUNT)),
+                                releaseTimeShow, weekDay, network));
+
                 break;
             case 2:
                 // seasons
@@ -101,7 +101,6 @@ public class ListItemsAdapter extends BaseShowsAdapter {
                 viewHolder.episode.setText(SeasonTools.getSeasonString(context,
                         cursor.getInt(Query.ITEM_TITLE)));
                 viewHolder.episodeTime.setText(null);
-                viewHolder.remainingCount.setVisibility(View.GONE);
                 break;
             case 3:
                 // episodes
@@ -119,7 +118,6 @@ public class ListItemsAdapter extends BaseShowsAdapter {
                             TimeTools.formatToLocalRelativeTime(context, actualRelease),
                             TimeTools.formatToLocalDay(actualRelease)));
                 }
-                viewHolder.remainingCount.setVisibility(View.GONE);
                 break;
         }
 

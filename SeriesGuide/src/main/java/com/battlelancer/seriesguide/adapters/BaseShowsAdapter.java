@@ -56,14 +56,12 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
                 .getString(isFavorite ? R.string.context_unfavorite : R.string.context_favorite));
     }
 
-    void setRemainingCount(TextView textView, int unwatched) {
+    String makeRemainingCount(TextView textView, int unwatched) {
         if (unwatched > 0) {
-            textView.setText(textView.getResources()
-                    .getQuantityString(R.plurals.remaining_episodes_plural, unwatched, unwatched));
-            textView.setVisibility(View.VISIBLE);
+            return textView.getResources()
+                    .getQuantityString(R.plurals.remaining_episodes_plural, unwatched, unwatched);
         } else {
-            textView.setText(null);
-            textView.setVisibility(View.GONE);
+            return null;
         }
     }
 
@@ -73,7 +71,6 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         public TextView timeAndNetwork;
         public TextView episode;
         public TextView episodeTime;
-        public TextView remainingCount;
         public ImageView poster;
         public ImageView favorited;
         public ImageView contextMenu;
@@ -90,7 +87,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
             timeAndNetwork = v.findViewById(R.id.textViewShowsTimeAndNetwork);
             episode = v.findViewById(R.id.TextViewShowListNextEpisode);
             episodeTime = v.findViewById(R.id.episodetime);
-            remainingCount = v.findViewById(R.id.textViewShowsRemaining);
+            //remainingCount = v.findViewById(R.id.textViewShowsRemaining);
             poster = v.findViewById(R.id.showposter);
             favorited = v.findViewById(R.id.favoritedLabel);
             contextMenu = v.findViewById(R.id.imageViewShowsContextMenu);
