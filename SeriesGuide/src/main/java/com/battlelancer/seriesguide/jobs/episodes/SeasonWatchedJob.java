@@ -83,7 +83,7 @@ public class SeasonWatchedJob extends SeasonBaseJob {
         updateLastWatched(context, getLastWatchedEpisodeTvdbId(context),
                 !EpisodeTools.isUnwatched(getFlagValue()));
 
-        ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(context);
+        ListWidgetProvider.notifyDataChanged(context);
 
         return true;
     }

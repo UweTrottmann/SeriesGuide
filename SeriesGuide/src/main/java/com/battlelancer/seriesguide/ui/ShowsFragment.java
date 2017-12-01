@@ -397,7 +397,7 @@ public class ShowsFragment extends Fragment implements
             changeSortOrFilter(DisplaySettings.KEY_SORT_IGNORE_ARTICLE,
                     isSortIgnoreArticles);
             // refresh all list widgets
-            ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getContext());
+            ListWidgetProvider.notifyDataChanged(getContext());
 
             Utils.trackAction(getActivity(), TAG, "Sort Ignore Articles");
             return true;
@@ -637,7 +637,7 @@ public class ShowsFragment extends Fragment implements
                 getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null,
                         ShowsFragment.this);
                 // refresh all list widgets
-                ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getContext());
+                ListWidgetProvider.notifyDataChanged(getContext());
             }
         }
     };

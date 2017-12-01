@@ -96,7 +96,7 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
             ActivityTools.removeActivity(context, episodeTvdbId);
         }
 
-        ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(context);
+        ListWidgetProvider.notifyDataChanged(context);
 
         return true;
     }

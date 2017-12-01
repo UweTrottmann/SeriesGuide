@@ -225,7 +225,7 @@ public class ListsActivity extends BaseTopActivity {
         supportInvalidateOptionsMenu();
 
         // refresh all list widgets
-        ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(this);
+        ListWidgetProvider.notifyDataChanged(this);
 
         // post event, so all active list fragments can react
         EventBus.getDefault().post(new ListsDistillationSettings.ListsSortOrderChangedEvent());

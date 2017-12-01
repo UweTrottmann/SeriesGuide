@@ -53,7 +53,7 @@ public class EpisodeWatchedPreviousJob extends BaseEpisodesJob {
         // always update last watched time, this type only marks as watched
         updateLastWatched(context, -1, true);
 
-        ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(context);
+        ListWidgetProvider.notifyDataChanged(context);
 
         return true;
     }

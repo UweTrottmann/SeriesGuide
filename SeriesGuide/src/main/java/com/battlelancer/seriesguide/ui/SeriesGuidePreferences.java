@@ -559,7 +559,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     || DisplaySettings.KEY_DISPLAY_EXACT_DATE.equals(key)
                     || DisplaySettings.KEY_PREVENT_SPOILERS.equals(key)) {
                 // update any widgets
-                ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getActivity());
+                ListWidgetProvider.notifyDataChanged(getActivity());
             }
 
             if (DisplaySettings.KEY_LANGUAGE.equals(key)) {

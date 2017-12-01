@@ -59,6 +59,8 @@ public class ListWidgetService extends RemoteViewsService {
         }
 
         private void onQueryForData() {
+            Timber.d("onQueryForData: %d", appWidgetId);
+
             int widgetType = WidgetSettings.getWidgetListType(context, appWidgetId);
             boolean isOnlyCollected = WidgetSettings.isOnlyCollectedEpisodes(context, appWidgetId);
             boolean isOnlyFavorites = WidgetSettings.isOnlyFavoriteShows(context, appWidgetId);
