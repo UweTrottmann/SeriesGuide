@@ -45,6 +45,35 @@ import java.util.concurrent.Executor;
 import org.threeten.bp.Instant;
 import timber.log.Timber;
 
+/**
+ * To debug set {@link #DEBUG} to true.
+ *
+ * <p>Useful commands:
+ *
+ * <p>Dump alarms:
+ * <pre>{@code
+ * adb shell dumpsys alarm > alarms.txt
+ * }</pre>
+ *
+ * <p>Doze mode:
+ * <pre>{@code
+ * adb shell dumpsys deviceidle force-idle
+ *
+ * adb shell dumpsys deviceidle unforce
+ * }</pre>
+ *
+ * <p>App Standby:
+ * <pre>{@code
+ * adb shell dumpsys battery unplug
+ * adb shell am set-inactive com.battlelancer.seriesguide true
+ *
+ * adb shell am set-inactive com.battlelancer.seriesguide false
+ *
+ * adb shell am get-inactive com.battlelancer.seriesguide
+ * }</pre>
+ *
+ * <p>https://developer.android.com/training/monitoring-device-state/doze-standby.html
+ */
 public class NotificationService {
 
     public static final String ACTION_CLEARED = "seriesguide.intent.action.CLEARED";
@@ -134,7 +163,7 @@ public class NotificationService {
         if (upcomingEpisodes != null) {
             int notificationThreshold = NotificationSettings.getLatestToIncludeTreshold(context);
             if (DEBUG) {
-                Timber.d("DEBUG MODE: notification threshold is 1 week");
+                Timber.d("DEBUG MODE: always notify about next episode within 1 week");
                 // a week, for debugging (use only one show to get single
                 // episode notifications)
                 notificationThreshold = 10080;
@@ -213,6 +242,11 @@ public class NotificationService {
         if (nextWakeUpTime <= 0) {
             nextWakeUpTime = System.currentTimeMillis() + 6 * DateUtils.HOUR_IN_MILLIS;
             Timber.d("No future episodes found, wake up in 6 hours");
+        }
+
+        if (DEBUG) {
+            Timber.d("DEBUG MODE: wake up in 1 minute");
+            nextWakeUpTime = System.currentTimeMillis() + DateUtils.MINUTE_IN_MILLIS;
         }
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
