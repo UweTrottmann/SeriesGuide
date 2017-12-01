@@ -40,7 +40,6 @@ import timber.log.Timber;
  */
 public class SgApp extends Application {
 
-    public static final int JOB_ID_NOTIFICATION_SERVICE = 1000;
     public static final int JOB_ID_EXTENSION_AMAZON = 1001;
     public static final int JOB_ID_EXTENSION_GOOGLE_PLAY = 1002;
     public static final int JOB_ID_EXTENSION_VODSTER = 1003;
