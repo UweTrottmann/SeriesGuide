@@ -51,7 +51,7 @@
   <string name="database_error">Wijziging niet mogelijk.</string>
   <string name="reinstall_info">Maak een backup, installeer opnieuw en herstel.</string>
   <string name="api_error_generic">Kon niet praten met %s. Probeer later opnieuw</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">Mislukt: %s</string>
   <!-- Sharing -->
   <string name="share">Delen</string>
   <string name="share_show">Serie delen</string>
@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Alle gebufferde afbeeldingen van het apparaat verwijderen</string>
   <string name="pref_ganalyticssummary">Anonieme gebruiksstatistieken verzenden naar een Google-dienst</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Include descriptions, details, ratings</string>
+  <string name="backup_full_dump">Neem beschrijvingen, details en ratings op</string>
   <string name="backup_path">Back-upmap</string>
   <string name="backup_version">Database-versie</string>
   <string name="backup_failed_file_access">Kan geen backup maken. Een backup bestand kon niet gevonden of geopend worden.</string>
@@ -439,7 +439,7 @@
   <string name="pref_notifications_treshold">Wanneer te waarschuwen</string>
   <string name="pref_notifications_select_shows">Kies series</string>
   <string name="pref_notifications_select_shows_summary">Series waarvoor de meldingen aanstaan (%d)</string>
-  <string name="pref_notification_channel_errors">Errors</string>
+  <string name="pref_notification_channel_errors">Fouten</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (klein)</string>
   <!-- List Widget -->
@@ -461,7 +461,7 @@
   <string name="action_upgrade">Open alle restricties</string>
   <string name="billing_action_subscribe">Abonneren</string>
   <string name="billing_action_pass">Neem X-pas</string>
-  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+  <string name="billing_price_subscribe">%1$s/jaar, probeer gratis, annuleer op elk moment via %2$s</string>
   <string name="billing_price_pass">eenmalige aankoop</string>
   <string name="upgrade_description">Ontgrendel alle toekomstige uitbreidingen, inclusief notificaties\' thema\'s en andere opties. Help me om deze applicatie uit te bereiden in de toekomst.</string>
   <string name="upgrade_success">Bedankt om Seriesguide te laten groeien. Je hebt toegang tot alle mogelijkheden.</string>

@@ -46,7 +46,7 @@
   <string name="norating">n/a</string>
   <string name="unknown">tidak diketahui</string>
   <string name="offline">Hubungkan ke jaringan, kemudian coba lagi.</string>
-  <string name="app_not_available">No app available to handle this</string>
+  <string name="app_not_available">Tidak ada aplikasi yang tersedia untuk menangani hal ini</string>
   <string name="people_empty">Tidak ada siapa-siapa di sini? Sentuh untuk mencoba lagi.</string>
   <string name="database_error">Tidak dapat merubah data.</string>
   <string name="reinstall_info">Coba cadangkan di pengaturan, pasang ulang dan pulihkan.</string>
@@ -383,7 +383,7 @@
   <string name="clear_cache_summary">Hapus semua cache gambar dari perangkat Anda</string>
   <string name="pref_ganalyticssummary">Kirim statistik penggunaan anonim ke layanan Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Include descriptions, details, ratings</string>
+  <string name="backup_full_dump">Termasuk deskripsi, rincian, peringkat</string>
   <string name="backup_path">Folder cadangan</string>
   <string name="backup_version">Versi database</string>
   <string name="backup_failed_file_access">Tidak dapat mencadangkan. File cadangan tidak dapat ditemukan atau diakses.</string>
