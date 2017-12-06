@@ -116,15 +116,9 @@ public class AppWidget extends AppWidgetProvider {
                     String title = upcomingEpisodes.getString(CalendarAdapter.Query.TITLE);
                     int watchedFlag = upcomingEpisodes.getInt(CalendarAdapter.Query.WATCHED);
                     String nextEpisodeString;
-                    if (EpisodeTools.isUnwatched(watchedFlag) && preventSpoilers) {
-                        // just display the episode number
-                        nextEpisodeString = TextTools.getEpisodeNumber(context, seasonNumber,
-                                episodeNumber);
-                    } else {
-                        // display episode number and title
-                        nextEpisodeString = TextTools.getNextEpisodeString(context, seasonNumber,
-                                episodeNumber, title);
-                    }
+                    boolean hideTitle = EpisodeTools.isUnwatched(watchedFlag) && preventSpoilers;
+                    nextEpisodeString = TextTools.getNextEpisodeString(context, seasonNumber,
+                            episodeNumber, hideTitle ? null : title);
                     item.setTextViewText(R.id.textViewWidgetEpisode, nextEpisodeString);
 
                     Date actualRelease = TimeTools.applyUserOffset(context,

@@ -707,19 +707,15 @@ public class DBUtils {
                 final String nextEpisodeString;
                 int seasonNumber = next.getInt(NextEpisodesQuery.SEASON);
                 int episodeNumber = next.getInt(NextEpisodesQuery.NUMBER);
-                if (preventSpoilers) {
-                    // just the number, like '0x12'
-                    nextEpisodeString = TextTools.getEpisodeNumber(context,
-                            seasonNumber,
-                            episodeNumber);
-                } else {
-                    // next episode text, like '0x12 Episode Name'
-                    nextEpisodeString = TextTools.getNextEpisodeString(context,
-                            seasonNumber,
-                            episodeNumber,
-                            next.getString(NextEpisodesQuery.TITLE));
-                }
-
+                nextEpisodeString = TextTools.getNextEpisodeString(context,
+                        seasonNumber,
+                        episodeNumber,
+                        preventSpoilers
+                                // just the number, like '0x12 Episode 12'
+                                ? null
+                                // next episode text, like '0x12 Episode Name'
+                                : next.getString(NextEpisodesQuery.TITLE)
+                );
                 // next release date text, e.g. "in 15 mins (Fri)"
                 long releaseTimeNext = next.getLong(NextEpisodesQuery.FIRST_RELEASE_MS);
 

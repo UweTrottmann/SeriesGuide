@@ -371,12 +371,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 cursor.getString(DetailsQuery.TITLE), episodeNumber);
         boolean hideDetails = EpisodeTools.isUnwatched(episodeFlag)
                 && DisplaySettings.preventSpoilers(getContext());
-        if (hideDetails) {
-            // just show the episode number "1x02"
-            textViewTitle.setText(TextTools.getEpisodeNumber(getContext(), seasonNumber, episodeNumber));
-        } else {
-            textViewTitle.setText(episodeTitle);
-        }
+        textViewTitle.setText(
+                TextTools.getEpisodeTitle(getContext(), hideDetails ? null : episodeTitle,
+                        episodeNumber));
         String overview = cursor.getString(DetailsQuery.OVERVIEW);
         long lastEditSeconds = cursor.getLong(DetailsQuery.LAST_EDITED);
         if (TextUtils.isEmpty(overview)) {
@@ -389,7 +386,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             overview = getString(R.string.no_spoilers);
         }
         textViewDescription.setText(
-                TextTools.textWithTvdbSource(textViewDescription.getContext(), overview, lastEditSeconds));
+                TextTools.textWithTvdbSource(textViewDescription.getContext(), overview,
+                        lastEditSeconds));
 
         // show title
         showTitle = cursor.getString(DetailsQuery.SHOW_TITLE);
@@ -400,7 +398,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         if (episodeReleaseTime != -1) {
             Date actualRelease = TimeTools.applyUserOffset(getContext(), episodeReleaseTime);
             isReleased = TimeTools.isReleased(actualRelease);
-            textViewReleaseDate.setText(TimeTools.formatToLocalDateAndDay(getContext(), actualRelease));
+            textViewReleaseDate.setText(
+                    TimeTools.formatToLocalDateAndDay(getContext(), actualRelease));
 
             String dateTime;
             if (DisplaySettings.isDisplayExactDate(getContext())) {
@@ -430,7 +429,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         TextViewCompat.setTextAppearance(textViewTitle, isReleased
                 ? R.style.TextAppearance_Title : R.style.TextAppearance_Title_Dim);
         if (!isReleased) {
-            TextViewCompat.setTextAppearance(textViewReleaseTime, R.style.TextAppearance_Caption_Dim);
+            TextViewCompat.setTextAppearance(textViewReleaseTime,
+                    R.style.TextAppearance_Caption_Dim);
         }
 
         // guest stars
@@ -438,7 +438,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 TextTools.splitAndKitTVDBStrings(cursor.getString(DetailsQuery.GUESTSTARS))
         );
         // DVD episode number
-        ViewTools.setLabelValueOrHide(textViewDvdLabel, textViewDvd, cursor.getDouble(DetailsQuery.NUMBER_DVD));
+        ViewTools.setLabelValueOrHide(textViewDvdLabel, textViewDvd,
+                cursor.getDouble(DetailsQuery.NUMBER_DVD));
         // directors
         ViewTools.setValueOrPlaceholder(textViewDirectors, TextTools.splitAndKitTVDBStrings(cursor
                 .getString(DetailsQuery.DIRECTORS)));
@@ -651,7 +652,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
                                 @Override
                                 public void onError() {
-                                    imageViewEpisode.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                    imageViewEpisode.setScaleType(
+                                            ImageView.ScaleType.CENTER_INSIDE);
                                 }
                             }
                     );

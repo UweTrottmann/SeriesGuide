@@ -91,14 +91,10 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         // episode number and title
         final int season = cursor.getInt(Query.SEASON);
         final int episode = cursor.getInt(Query.NUMBER);
-        if (EpisodeTools.isUnwatched(episodeFlag) && DisplaySettings.preventSpoilers(context)) {
-            // just show the number
-            viewHolder.episode.setText(TextTools.getEpisodeNumber(context, season, episode));
-        } else {
-            // show number and title
-            viewHolder.episode.setText(TextTools.getNextEpisodeString(context, season, episode,
-                    cursor.getString(Query.TITLE)));
-        }
+        boolean hideTitle = EpisodeTools.isUnwatched(episodeFlag)
+                && DisplaySettings.preventSpoilers(context);
+        viewHolder.episode.setText(TextTools.getNextEpisodeString(context, season, episode,
+                hideTitle ? null : cursor.getString(Query.TITLE)));
 
         // timestamp, absolute time and network
         long releaseTime = cursor.getLong(Query.RELEASE_TIME_MS);
