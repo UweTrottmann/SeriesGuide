@@ -7,7 +7,22 @@ All dates are in the European Central timezone.
 
 Version 40
 ----------
-*(in development)*
+*(2017-12-07)*
+
+* Extensions have changed (API v2): your enabled extensions are replaced with the default selection. 
+  You can enable yours again, though the extension may have to be updated by the developer.
+* SeriesGuide Cloud and trakt: For movies 'Set watched', 'Add to collection' and 'Add to watchlist'
+  is re-tried on failure, queued while offline.
+* Going up from the episode list or detail view goes directly to seasons.
+* Display placeholder episode title if 'No spoilers' is enabled.
+* Widget now updating more frequently on Android 8 (Oreo).
+* Add notification channel support on Android 8 (Oreo).
+
+#### 40-beta6
+*(2017-12-01)*
+
+* 🔧 Display placeholder episode title if 'No spoilers' is enabled.
+* 📝 Latest translations from crowdin.
 
 #### 40-beta6
 *(2017-12-01)*

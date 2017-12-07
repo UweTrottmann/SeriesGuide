@@ -256,7 +256,7 @@
   <string name="feature_comments">Lähetä kommentteja</string>
   <string name="feature_sync">Synkronointi</string>
   <!-- Hexagon -->
-  <string name="hexagon_warning">Kokeellista ja helposti syttyvää!</string>
+  <string name="hexagon_warning">Kokeellinen</string>
   <string name="hexagon_description">SeriesGuide Cloud auttaa varmuuskopioimaan ja synkronoimaan ohjelmat, listat ja elokuvat.</string>
   <string name="hexagon_warning_trakt">Kun olet kirjautuneena sisään SeriesGuide Cloudiin, jotkut traktin ominaisuudet eivät ole käytettävissä.</string>
   <string name="hexagon_signin">Kirjaudu sisään</string>
@@ -268,7 +268,7 @@
   <string name="hexagon_remove_account_failure">Tiliä ei voitu poistaa.</string>
   <string name="hexagon_remove_account_confirmation">Tilin poistaminen poistaa kaikki ohjelmat ja elokuvat SeriesGuide Cloud -palvelimelta. Muista poistaa ne myös muista yhdistetyistä laitteista.</string>
   <string name="hexagon_api_queued">Lähetetään SeriesGuide Cloudiin.</string>
-  <string name="hexagon_signed_out">Kirjauduttu ulos seriesGuide Cloudista.</string>
+  <string name="hexagon_signed_out">Kirjauduttu ulos SeriesGuide Cloudista.</string>
   <string name="hexagon_google_play_missing">SeriesGuide Cloudin käyttämiseen vaaditaan Google Play Palvelut.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Lähetetään traktiin.</string>
