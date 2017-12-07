@@ -29,7 +29,7 @@ import org.greenrobot.eventbus.EventBus;
  */
 public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
 
-    private int mWait;
+    private int waitTimeMinutes;
 
     /**
      * @param waitInMinutes The time to wait. If negative, will show as no time available.
@@ -38,7 +38,7 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
             int waitInMinutes) {
         TraktCancelCheckinDialogFragment f = new TraktCancelCheckinDialogFragment();
         f.setArguments(traktTaskData);
-        f.mWait = waitInMinutes;
+        f.waitTimeMinutes = waitInMinutes;
         return f;
     }
 
@@ -51,8 +51,8 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setMessage(context.getString(R.string.traktcheckin_inprogress,
-                mWait < 0 ? context.getString(R.string.not_available)
-                        : DateUtils.formatElapsedTime(mWait)));
+                waitTimeMinutes < 0 ? context.getString(R.string.not_available)
+                        : DateUtils.formatElapsedTime(waitTimeMinutes)));
 
         builder.setPositiveButton(R.string.traktcheckin_cancel, new OnClickListener() {
 

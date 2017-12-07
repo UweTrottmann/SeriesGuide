@@ -19,71 +19,66 @@ import java.util.Locale;
  */
 public class TabStripAdapter extends FragmentPagerAdapter {
 
-    private final ArrayList<TabInfo> mTabs = new ArrayList<>();
-
-    private final Context mContext;
-
-    private final FragmentManager mFragmentManager;
-
-    private final ViewPager mViewPager;
-
-    private final SlidingTabLayout mTabLayout;
-
     static final class TabInfo {
 
-        private final Class<?> mClass;
-
-        private final Bundle mArgs;
-
-        private final int mTitleRes;
+        private final Class<?> fragmentClass;
+        private final Bundle args;
+        private final int titleRes;
 
         TabInfo(Class<?> fragmentClass, Bundle args, int titleRes) {
-            mClass = fragmentClass;
-            mArgs = args;
-            mTitleRes = titleRes;
+            this.fragmentClass = fragmentClass;
+            this.args = args;
+            this.titleRes = titleRes;
         }
     }
 
-    public TabStripAdapter(FragmentManager fm, Context context, ViewPager pager,
-            SlidingTabLayout tabs) {
-        super(fm);
-        mFragmentManager = fm;
-        mContext = context;
+    private final ArrayList<TabInfo> tabs = new ArrayList<>();
+    private final Context context;
+    private final FragmentManager fragmentManager;
+
+    private final ViewPager viewPager;
+    private final SlidingTabLayout tabLayout;
+
+    public TabStripAdapter(FragmentManager fragmentManager, Context context, ViewPager pager,
+            SlidingTabLayout tabLayout) {
+        super(fragmentManager);
+        this.fragmentManager = fragmentManager;
+        this.context = context;
 
         // setup view pager
-        mViewPager = pager;
-        mViewPager.setAdapter(this);
+        viewPager = pager;
+        viewPager.setAdapter(this);
 
         // setup tabs
-        mTabLayout = tabs;
-        mTabLayout.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
-        mTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(context, R.color.white));
-        mTabLayout.setViewPager(mViewPager);
+        this.tabLayout = tabLayout;
+        this.tabLayout.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
+        this.tabLayout.setSelectedIndicatorColors(ContextCompat.getColor(context, R.color.white));
+        this.tabLayout.setViewPager(viewPager);
     }
 
     /**
      * Adds a new tab. Make sure to call {@link #notifyTabsChanged} after you have added them all.
      */
     public void addTab(@StringRes int titleRes, Class<?> fragmentClass, Bundle args) {
-        mTabs.add(new TabInfo(fragmentClass, args, titleRes));
+        tabs.add(new TabInfo(fragmentClass, args, titleRes));
     }
 
     /**
      * Update an existing tab. Make sure to call {@link #notifyTabsChanged} afterwards.
      */
     public void updateTab(int titleRes, Class<?> fragmentClass, Bundle args, int position) {
-        if (position >= 0 && position < mTabs.size()) {
+        if (position >= 0 && position < tabs.size()) {
             // update tab info
-            mTabs.set(position, new TabInfo(fragmentClass, args, titleRes));
+            tabs.set(position, new TabInfo(fragmentClass, args, titleRes));
 
             // find current fragment of tab
-            Fragment oldFragment = mFragmentManager
-                    .findFragmentByTag(makeFragmentName(mViewPager.getId(), getItemId(position)));
+            Fragment oldFragment = fragmentManager
+                    .findFragmentByTag(makeFragmentName(viewPager.getId(), getItemId(position)));
             // remove it
-            FragmentTransaction transaction = mFragmentManager.beginTransaction();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.remove(oldFragment);
             transaction.commitAllowingStateLoss();
-            mFragmentManager.executePendingTransactions();
+            fragmentManager.executePendingTransactions();
         }
     }
 
@@ -92,25 +87,25 @@ public class TabStripAdapter extends FragmentPagerAdapter {
      */
     public void notifyTabsChanged() {
         notifyDataSetChanged();
-        mTabLayout.setViewPager(mViewPager);
+        tabLayout.setViewPager(viewPager);
     }
 
     @Override
     public Fragment getItem(int position) {
-        TabInfo tab = mTabs.get(position);
-        return Fragment.instantiate(mContext, tab.mClass.getName(), tab.mArgs);
+        TabInfo tab = tabs.get(position);
+        return Fragment.instantiate(context, tab.fragmentClass.getName(), tab.args);
     }
 
     @Override
     public int getCount() {
-        return mTabs.size();
+        return tabs.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        TabInfo tabInfo = mTabs.get(position);
+        TabInfo tabInfo = tabs.get(position);
         if (tabInfo != null) {
-            return mContext.getString(tabInfo.mTitleRes).toUpperCase(Locale.getDefault());
+            return context.getString(tabInfo.titleRes).toUpperCase(Locale.getDefault());
         }
         return "";
     }

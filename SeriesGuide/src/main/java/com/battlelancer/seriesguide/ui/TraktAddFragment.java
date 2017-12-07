@@ -84,7 +84,7 @@ public class TraktAddFragment extends AddFragment {
 
         // load data
         getLoaderManager().initLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType, null,
-                mTraktAddCallbacks);
+                traktAddCallbacks);
 
         // add menu options
         setHasOptionsMenu(true);
@@ -184,7 +184,7 @@ public class TraktAddFragment extends AddFragment {
         if (listType == TYPE_WATCHLIST) {
             // reload watchlist if a show was removed
             getLoaderManager().restartLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType, null,
-                    mTraktAddCallbacks);
+                    traktAddCallbacks);
         }
     }
 
@@ -196,7 +196,7 @@ public class TraktAddFragment extends AddFragment {
                 setProgressVisible(true, false);
                 getLoaderManager().restartLoader(
                         SearchActivity.TRAKT_BASE_LOADER_ID + listType, null,
-                        mTraktAddCallbacks);
+                        traktAddCallbacks);
             }
         });
     }
@@ -217,7 +217,7 @@ public class TraktAddFragment extends AddFragment {
         }
     }
 
-    private LoaderManager.LoaderCallbacks<TraktAddLoader.Result> mTraktAddCallbacks
+    private LoaderManager.LoaderCallbacks<TraktAddLoader.Result> traktAddCallbacks
             = new LoaderManager.LoaderCallbacks<TraktAddLoader.Result>() {
         @Override
         public Loader<TraktAddLoader.Result> onCreateLoader(int id, Bundle args) {

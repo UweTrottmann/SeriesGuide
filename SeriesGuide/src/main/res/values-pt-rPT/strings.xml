@@ -51,7 +51,7 @@
   <string name="database_error">Não foi possível modificar os dados.</string>
   <string name="reinstall_info">Tenta fazer uma cópia de segurança nas Configurações, reinstalar e restaurar.</string>
   <string name="api_error_generic">Houve uma falha ao comunicar com o %s. Tenta mais tarde.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">Falhou: %s</string>
   <!-- Sharing -->
   <string name="share">Partilhar</string>
   <string name="share_show">Partilhar série</string>
@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Remove todas as imagens em cache do teu dispositivo</string>
   <string name="pref_ganalyticssummary">Enviar estatísticas de uso anónimas para um serviço da Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Inclui todos os meta-dados como descrições, atores e classificações.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Pasta para as cópias de segurança</string>
   <string name="backup_version">Versão da Base de Dados</string>
   <string name="backup_failed_file_access">Cópia de segurança interrompida. Uma cópia de segurança não pôde ser encontrada ou acedida.</string>
@@ -439,6 +439,7 @@
   <string name="pref_notifications_treshold">Quando notificar</string>
   <string name="pref_notifications_select_shows">Selecionar séries</string>
   <string name="pref_notifications_select_shows_summary">Séries que possuem notificações ativadas (%d)</string>
+  <string name="pref_notification_channel_errors">Erros</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (pequeno)</string>
   <!-- List Widget -->

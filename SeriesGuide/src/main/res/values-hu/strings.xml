@@ -46,12 +46,12 @@
   <string name="norating">n/a</string>
   <string name="unknown">ismeretlen</string>
   <string name="offline">Csatlakozz a hálózathoz és próbáld újra.</string>
-  <string name="app_not_available">Nincs kezelő alkalmazás.</string>
+  <string name="app_not_available">No app available to handle this</string>
   <string name="people_empty">Nincs senki?! Kattints az újrapróbálkozáshoz.</string>
   <string name="database_error">Nem sikerült az adatbázis módosítása.</string>
   <string name="reinstall_info">Próbálj biztonsági mentést készíteni a Beállításokban, újra telepíteni az alkalmazást és visszaállítani a biztonsági mentést.</string>
   <string name="api_error_generic">Nincs kapcsolat ezzel: %s. Próbáld újra később.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">Meghiúsult: %s</string>
   <!-- Sharing -->
   <string name="share">Megosztás</string>
   <string name="share_show">Műsor megosztása</string>
@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Az összes tárolt kép törlése az eszközről</string>
   <string name="pref_ganalyticssummary">Névtelen használati statisztikák küldése Google szolgáltatás felé</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Minden metaadat mentése (pl. leírások, színészek, értékelések).</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Mentési mappa</string>
   <string name="backup_version">Adatbázis verzió</string>
   <string name="backup_failed_file_access">Nem sikerült a mentés. A biztonsági mentés fájl nem található vagy nem hozzáférhető.</string>
@@ -439,6 +439,7 @@
   <string name="pref_notifications_treshold">Mikor értesítsen</string>
   <string name="pref_notifications_select_shows">Sorozatok kiválasztása</string>
   <string name="pref_notifications_select_shows_summary">Sorozatok, melyek értesítései engedélyezve vannak (%d)</string>
+  <string name="pref_notification_channel_errors">Hibák</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (kicsi)</string>
   <!-- List Widget -->
@@ -460,7 +461,7 @@
   <string name="action_upgrade">Összes beállítás feloldása</string>
   <string name="billing_action_subscribe">Előfizetés</string>
   <string name="billing_action_pass">X Pass beszerzése</string>
-  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+  <string name="billing_price_subscribe">%1$s/év, próbálja ki ingyen, bármikor kiléphet a %2$s segítségével</string>
   <string name="billing_price_pass">Egyszeri fizetés</string>
   <string name="upgrade_description">Old fel a összes funkciót, beleértve az értesítéseket, témákat és a több widget lista lehetőséget. Segíts, hogy frissíthessem a programot a jövőben is.</string>
   <string name="upgrade_success">Köszönöm a támogatást. Most már hozzáférsz az összes funkcióhoz.</string>

@@ -102,7 +102,6 @@ public class DataLiberationFragment extends Fragment implements
     @BindView(R.id.buttonDataLibImport) Button buttonImport;
     @BindView(R.id.progressBarDataLib) ProgressBar progressBar;
     @BindView(R.id.checkBoxDataLibFullDump) CheckBox checkBoxFullDump;
-    @BindView(R.id.checkBoxDataLibImportWarning) CheckBox checkBoxImportWarning;
 
     private AsyncTask<Void, Integer, Integer> dataLibTask;
     private Unbinder unbinder;
@@ -131,12 +130,6 @@ public class DataLiberationFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 tryDataLiberationAction(REQUEST_CODE_EXPORT);
-            }
-        });
-        checkBoxImportWarning.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                updateImportButtonEnabledState();
             }
         });
         checkBoxShows.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -229,7 +222,7 @@ public class DataLiberationFragment extends Fragment implements
         if (checkBoxShows.isChecked()
                 || checkBoxLists.isChecked()
                 || checkBoxMovies.isChecked()) {
-            buttonImport.setEnabled(checkBoxImportWarning.isChecked());
+            buttonImport.setEnabled(true);
         } else {
             buttonImport.setEnabled(false);
         }
@@ -308,7 +301,6 @@ public class DataLiberationFragment extends Fragment implements
         buttonExport.setEnabled(!isLocked);
         progressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
         checkBoxFullDump.setEnabled(!isLocked);
-        checkBoxImportWarning.setEnabled(!isLocked);
         buttonShowsExportFile.setEnabled(!isLocked);
         buttonShowsImportFile.setEnabled(!isLocked);
         buttonListsExportFile.setEnabled(!isLocked);

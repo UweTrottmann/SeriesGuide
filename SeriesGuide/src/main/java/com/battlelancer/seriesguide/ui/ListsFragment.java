@@ -89,8 +89,6 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(this);
         gridView.setEmptyView(emptyView);
-        gridView.setFastScrollAlwaysVisible(false);
-        gridView.setFastScrollEnabled(true);
 
         getLoaderManager().initLoader(LOADER_ID, getArguments(), loaderCallbacks);
     }

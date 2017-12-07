@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Remover todas as imagens em cache do seu dispositivo</string>
   <string name="pref_ganalyticssummary">Enviar estatísticas anônimas de uso para um serviço do Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Incluir todas os meta-dados como descrições, atores e classificações.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Pasta de backup</string>
   <string name="backup_version">Versão do banco de dados</string>
   <string name="backup_failed_file_access">Não foi possível fazer o backup. Um arquivo de backup não foi encontrado ou não pode ser acessado.</string>
@@ -439,6 +439,7 @@
   <string name="pref_notifications_treshold">Quando notificar</string>
   <string name="pref_notifications_select_shows">Selecionar séries</string>
   <string name="pref_notifications_select_shows_summary">Séries que possuem notificações ativadas (%d)</string>
+  <string name="pref_notification_channel_errors">Erros</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (pequeno)</string>
   <!-- List Widget -->

@@ -8,6 +8,7 @@ table SgJobInfo {
     showTvdbId:int;
     flagValue:int;
     episodes:[EpisodeInfo];
+    movieTmdbId:int;
 }
 
 table EpisodeInfo {

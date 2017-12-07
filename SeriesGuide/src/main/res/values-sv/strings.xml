@@ -395,7 +395,7 @@
   <string name="clear_cache_summary">Ta bort alla cachade bilder från enheten</string>
   <string name="pref_ganalyticssummary">Skicka anonym användardata till Googles tjänster</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Inkludera all metadata som beskrivningar, skådespelare och betyg.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Mapp för säkerhetskopia</string>
   <string name="backup_version">Databasversion</string>
   <string name="backup_failed_file_access">Kan inte säkerhetskopiera. En fil för säkerhetskopiering kan inte hittas eller öppnas.</string>
@@ -440,6 +440,7 @@
   <string name="pref_notifications_treshold">När aviseringar ska visas</string>
   <string name="pref_notifications_select_shows">Välj serie</string>
   <string name="pref_notifications_select_shows_summary">Serier som har aviseringar aktiverade (%d)</string>
+  <string name="pref_notification_channel_errors">Errors</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (liten)</string>
   <!-- List Widget -->

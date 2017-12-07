@@ -655,13 +655,9 @@ public class OverviewFragment extends Fragment implements
         // title
         int season = episode.getInt(EpisodeQuery.SEASON);
         int number = episode.getInt(EpisodeQuery.NUMBER);
-        final String title;
-        if (DisplaySettings.preventSpoilers(getContext())) {
-            title = TextTools.getEpisodeNumber(getContext(), season, number);
-        } else {
-            title = TextTools.getEpisodeTitle(getContext(),
-                    episode.getString(EpisodeQuery.TITLE), number);
-        }
+        final String title = TextTools.getEpisodeTitle(getContext(),
+                DisplaySettings.preventSpoilers(getContext())
+                        ? null : episode.getString(EpisodeQuery.TITLE), number);
         textEpisodeTitle.setText(title);
 
         // number
@@ -757,7 +753,7 @@ public class OverviewFragment extends Fragment implements
                             showCursor.getString(ShowQuery.SHOW_LANGUAGE)),
                     getString(R.string.tvdb));
         } else if (DisplaySettings.preventSpoilers(getContext())) {
-                overview = getString(R.string.no_spoilers);
+            overview = getString(R.string.no_spoilers);
         }
         long lastEditSeconds = currentEpisodeCursor.getLong(EpisodeQuery.LAST_EDITED);
         textDescription.setText(TextTools.textWithTvdbSource(textDescription.getContext(),

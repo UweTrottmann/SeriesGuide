@@ -108,7 +108,7 @@ public class CalendarFragment extends Fragment
 
         VectorDrawableCompat drawableTouch = ViewTools.vectorIconInactive(getContext(),
                 getActivity().getTheme(),
-                R.drawable.ic_touch_black_24dp);
+                R.drawable.ic_swap_vert_black_24dp);
         imageViewTapIndicator = v.findViewById(R.id.imageViewCalendarTapIndicator);
         imageViewTapIndicator.setImageDrawable(drawableTouch);
 

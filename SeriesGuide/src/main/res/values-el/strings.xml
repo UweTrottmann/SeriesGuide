@@ -46,7 +46,7 @@
   <string name="norating">n/a</string>
   <string name="unknown">άγνωστο</string>
   <string name="offline">Συνδεθείτε σε ένα δίκτυο και, ξανά προσπαθήστε.</string>
-  <string name="app_not_available">Δεν υπάρχει διαθέσιμη εφαρμογή για να το χειριστεί.</string>
+  <string name="app_not_available">No app available to handle this</string>
   <string name="people_empty">Κανείς εδώ;! Πατήστε για να προσπαθήσετε ξανά.</string>
   <string name="database_error">Δεν ήταν δυνατή η τροποποίηση δεδομένων.</string>
   <string name="reinstall_info">Προσπαθήστε να κρατήσετε αντίγραφο ασφαλείας στις Ρυθμίσεις, να εγκαταστήσετε ξανά την εφαρμογή και να κάνετε επαναφορά.</string>
@@ -257,8 +257,8 @@
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Πειραματική έκδοση!</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
   <string name="hexagon_signin">Σύνδεση</string>
   <string name="hexagon_signout">Αποσύνδεση</string>
   <string name="hexagon_setup_incomplete">Η ρύθμιση του SeriesGuide cloud δεν ολοκληρώθηκε.</string>
@@ -382,7 +382,7 @@
   <string name="pref_theme">Θέμα</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Άλλα</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update content</string>
   <string name="pref_autobackup">Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Αφαιρέστε όλες τις προσωρινά αποθηκευμένες εικόνες από τη συσκευή σας</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Περιλαμβάνει όλα τα μετα-δεδομένα όπως περιγραφές, ηθοποιούς και βαθμολογίες.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Φάκελος αντιγράφων ασφαλείας</string>
   <string name="backup_version">Έκδοση βάσης δεδομένων</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
@@ -412,12 +412,12 @@
   <string name="import_button">Επαναφορά</string>
   <string name="backup_question">Θα αντικατασταθεί το υπάρχον αρχείο αντιγράφου ασφαλείας στο φάκελο!</string>
   <string name="import_question">Η τρέχουσα λίστα σειρών θα χαθεί! Βεβαιωθείτε ότι το αρχείο αντίγραφου ασφαλείας βρίσκεται μέσα στον φάκελο αντιγράφων ασφαλείας.</string>
-  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+  <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
   <string name="last_auto_backup">Τελευταίο αυτόματο αντίγραφο ασφαλείας: %s</string>
   <string name="restore_auto_backup">Επαναφορά αντιγράφου ασφαλείας στο αυτόματο</string>
-  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
-  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files</string>
+  <string name="autobackup_files_missing">To use auto backup, select valid backup files</string>
   <string name="no_file_selected">No file selected</string>
   <string name="action_select_file">Select file</string>
   <string name="backup_use_default_files">Use default backup files</string>
@@ -439,6 +439,7 @@
   <string name="pref_notifications_treshold">Πότε να ειδοποιήστε</string>
   <string name="pref_notifications_select_shows">Select shows</string>
   <string name="pref_notifications_select_shows_summary">Σειρές που έχουν ενεργές ειδοποιήσεις (%d)</string>
+  <string name="pref_notification_channel_errors">Errors</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (μικρό)</string>
   <!-- List Widget -->

@@ -160,7 +160,7 @@ public abstract class GenericCheckInDialogFragment extends AppCompatDialogFragme
         // done with checking in, unlock UI
         setProgressLock(false);
 
-        if (event.mWasSuccessful) {
+        if (event.wasSuccessful) {
             // all went well, dismiss ourselves
             dismissAllowingStateLoss();
         }
@@ -181,7 +181,7 @@ public abstract class GenericCheckInDialogFragment extends AppCompatDialogFragme
         setProgressLock(true);
 
         // connected?
-        if (Utils.isNotConnected(getActivity(), true)) {
+        if (Utils.isNotConnected(getActivity())) {
             // no? abort
             setProgressLock(false);
             return;

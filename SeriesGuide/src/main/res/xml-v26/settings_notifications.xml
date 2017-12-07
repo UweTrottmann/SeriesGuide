@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="True"
+        android:key="com.battlelancer.seriesguide.notifications"
+        android:summary="@string/pref_notificationssummary"
+        android:title="@string/pref_notifications" />
+
+    <Preference
+        android:key="com.battlelancer.seriesguide.notifications.threshold"
+        android:title="@string/pref_notifications_treshold" />
+
+    <Preference
+        android:key="com.battlelancer.seriesguide.notifications.shows"
+        android:title="@string/pref_notifications_select_shows" />
+
+    <Preference
+        android:key="com.battlelancer.seriesguide.notifications.channels"
+        android:title="@string/preferences" />
+
+</PreferenceScreen>

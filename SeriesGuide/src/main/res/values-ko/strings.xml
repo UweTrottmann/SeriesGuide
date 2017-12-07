@@ -46,10 +46,10 @@
   <string name="norating">n/a</string>
   <string name="unknown">알 수 없음</string>
   <string name="offline">데이터 네트워크에 접속 후 다시 시도해주세요.</string>
-  <string name="app_not_available">이 형식을 실행할 수 있는 앱이 없습니다.</string>
+  <string name="app_not_available">No app available to handle this</string>
   <string name="people_empty">다시 시도해보세요.</string>
   <string name="database_error">데이터 수정에 실패하였습니다.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
@@ -223,7 +223,7 @@
   <string name="action_movies_sort_title">제목</string>
   <string name="action_movies_sort_release">첫 방영 날짜</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Could not calculate statistics</string>
   <string name="statistics_shows">쇼</string>
   <string name="statistics_episodes">에피소드</string>
   <string name="statistics_movies">영화</string>
@@ -250,8 +250,8 @@
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">실험적인 기능</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
   <string name="hexagon_signin">로그인</string>
   <string name="hexagon_signout">로그아웃</string>
   <string name="hexagon_setup_incomplete">시리즈가이드 클라우드 설정이 완료 되지 않았습니다.</string>
@@ -261,7 +261,7 @@
   <string name="hexagon_remove_account_failure">계정을 제거할 수 없습니다.</string>
   <string name="hexagon_remove_account_confirmation">계정 삭제는 모든 쇼와 영화를 SeriesGuide 클라우드에서 제거합니다. 다른 장치에서도 제거 되었는지 확인하세요.</string>
   <string name="hexagon_api_queued">SeriesGuide 클라우드로 전송합니다.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
   <string name="hexagon_google_play_missing">SeriesGuide Cloud를 사용하기위해서 구글플레이에 로그인해주세요</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">trakt에 업로드 중.</string>
@@ -371,7 +371,7 @@
   <string name="pref_theme">테마</string>
   <!-- Other advanced settings -->
   <string name="pref_other">기타</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update content</string>
   <string name="pref_autobackup">자동 백업</string>
   <string name="pref_autobackupsummary">매주 쇼, 리스트 및 영화를 백업합니다.</string>
   <string name="backup">백업/복원</string>
@@ -383,7 +383,7 @@
   <string name="clear_cache_summary">디바이스에 있는 모든 캐쉬된 이미지를 제거합니다</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">설명, 배우 및 등급과 같은 모든 메타데이터를 포함합니다.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">백업폴더</string>
   <string name="backup_version">데이터베이스 버전</string>
   <string name="backup_failed_file_access">백업 실패. 백업 파일이 없거나 접근할 수 없습니다.</string>
@@ -428,6 +428,7 @@
   <string name="pref_notifications_treshold">알람시기</string>
   <string name="pref_notifications_select_shows">Select shows</string>
   <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notification_channel_errors">Errors</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">시리즈가이드 (소형)</string>
   <!-- List Widget -->

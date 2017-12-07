@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ProgressDialog;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +9,6 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -23,9 +23,11 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.api.Intents;
+import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.IabHelper;
 import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager;
+import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -39,14 +41,11 @@ import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Provides the apps main screen, displaying a list of shows and their next episodes.
@@ -68,7 +67,6 @@ public class ShowsActivity extends BaseTopActivity implements
 
     private ShowsTabPageAdapter tabsAdapter;
     private ViewPager viewPager;
-    private ProgressDialog mProgressDialog;
 
     @SuppressWarnings("unused")
     public interface InitBundle {
@@ -268,19 +266,6 @@ public class ShowsActivity extends BaseTopActivity implements
         super.onStart();
 
         setDrawerSelectedItem(R.id.navigation_item_shows);
-
-        // check for running show removal worker
-        Fragment f = getSupportFragmentManager().findFragmentByTag(RemoveShowWorkerFragment.TAG);
-        if (f != null && !((RemoveShowWorkerFragment) f).isTaskFinished()) {
-            showProgressDialog();
-        }
-        // now listen to events
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void registerEventBus() {
-        // do nothing, we handle that ourselves in onStart
     }
 
     @Override
@@ -325,14 +310,6 @@ public class ShowsActivity extends BaseTopActivity implements
         PreferenceManager.getDefaultSharedPreferences(this).edit()
                 .putInt(DisplaySettings.KEY_LAST_ACTIVE_SHOWS_TAB, viewPager.getCurrentItem())
                 .apply();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        // now prevent dialog from restoring itself (we would loose ref to it)
-        hideProgressDialog();
     }
 
     @Override
@@ -386,39 +363,6 @@ public class ShowsActivity extends BaseTopActivity implements
     }
 
     /**
-     * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
-     */
-    @SuppressWarnings("UnusedParameters")
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(RemoveShowWorkerFragment.OnRemovingShowEvent event) {
-        showProgressDialog();
-    }
-
-    /**
-     * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
-     */
-    @SuppressWarnings("UnusedParameters")
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(RemoveShowWorkerFragment.OnShowRemovedEvent event) {
-        hideProgressDialog();
-    }
-
-    private void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setCancelable(false);
-        }
-        mProgressDialog.show();
-    }
-
-    private void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
-        mProgressDialog = null;
-    }
-
-    /**
      * Runs any upgrades necessary if coming from earlier versions.
      */
     private void onUpgrade() {
@@ -463,6 +407,20 @@ public class ShowsActivity extends BaseTopActivity implements
                     // tell users to sign in again
                     editor.putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, true);
                 }
+            }
+            if (lastVersion < SgApp.RELEASE_VERSION_40_BETA4) {
+                ExtensionManager.get().setDefaultEnabledExtensions(this);
+            }
+            if (lastVersion < SgApp.RELEASE_VERSION_40_BETA6) {
+                // cancel old widget alarm using implicit intent
+                AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                if (am != null) {
+                    PendingIntent pi = PendingIntent.getBroadcast(this,
+                            ListWidgetProvider.REQUEST_CODE,
+                            new Intent(ListWidgetProvider.ACTION_DATA_CHANGED), 0);
+                    am.cancel(pi);
+                }
+                // new alarm is set automatically as upgrading causes app widgets to update
             }
 
             // set this as lastVersion

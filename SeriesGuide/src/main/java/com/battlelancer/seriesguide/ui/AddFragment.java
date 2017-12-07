@@ -25,8 +25,8 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.AddShowTask;
-import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.TabClickEvent;
+import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;
 import com.battlelancer.seriesguide.widgets.AddIndicator;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -85,7 +85,7 @@ public abstract class AddFragment extends Fragment {
 
         // basic setup of grid view
         resultsGridView.setEmptyView(emptyView);
-        resultsGridView.setOnItemClickListener(mItemClickListener);
+        resultsGridView.setOnItemClickListener(onItemClickListener);
         // enable app bar scrolling out of view only on L or higher
         ViewCompat.setNestedScrollingEnabled(resultsGridView, AndroidUtils.isLollipopOrHigher());
 
@@ -139,7 +139,7 @@ public abstract class AddFragment extends Fragment {
         progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
-    protected AdapterView.OnItemClickListener mItemClickListener
+    protected AdapterView.OnItemClickListener onItemClickListener
             = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -185,7 +185,7 @@ public abstract class AddFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RemoveShowWorkerFragment.OnShowRemovedEvent event) {
+    public void onEvent(RemoveShowTask.OnShowRemovedEvent event) {
         if (event.resultCode == NetworkResult.SUCCESS) {
             setShowNotAdded(event.showTvdbId);
         }

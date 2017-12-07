@@ -201,7 +201,9 @@ public class ViewTools {
                 if (searchView.requestFocus()) {
                     InputMethodManager imm = (InputMethodManager)
                             context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
+                    if (imm != null) {
+                        imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
+                    }
                 }
             }
         }, 200); // have to add a little delay (http://stackoverflow.com/a/27540921/1000543)

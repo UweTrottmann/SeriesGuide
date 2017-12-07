@@ -56,7 +56,7 @@ public class ShowWatchedJob extends ShowBaseJob {
         updateLastWatched(context, lastWatchedEpisodeTvdbId,
                 !EpisodeTools.isUnwatched(getFlagValue()));
 
-        ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(context);
+        ListWidgetProvider.notifyDataChanged(context);
 
         return true;
     }

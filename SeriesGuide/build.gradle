@@ -56,8 +56,10 @@ android {
         exclude 'LICENSE.txt'
     }
 
+    flavorDimensions "flavor"
+
     productFlavors {
-        free {
+        pure {
             applicationId "com.battlelancer.seriesguide"
             versionCode versions.code
             versionName versions.name
@@ -72,12 +74,6 @@ android {
             versionCode versions.code
             versionName versions.name
         }
-        // temporarily unused
-//        preview {
-//            applicationId "com.uwetrottmann.seriesguide.preview"
-//            versionCode versions.code
-//            versionName versions.name + "-preview"
-//        }
     }
 
     signingConfigs {
@@ -118,86 +114,88 @@ android {
 }
 
 dependencies {
-    compile project(':api')
-    compile project(':libraries:drag-sort-listview')
-    compile project(':libraries:stickygridheaders')
+    implementation project(':api')
+    implementation project(':libraries:drag-sort-listview')
+    implementation project(':libraries:stickygridheaders')
 
-    compile "com.android.support:support-v4:${versions.supportLibrary}"
-    compile "com.android.support:support-annotations:${versions.supportLibrary}"
-    compile "com.android.support:appcompat-v7:${versions.supportLibrary}"
-    compile "com.android.support:cardview-v7:${versions.supportLibrary}"
-    compile "com.android.support:customtabs:${versions.supportLibrary}"
-    compile "com.android.support:design:${versions.supportLibrary}"
-    compile "com.android.support:palette-v7:${versions.supportLibrary}"
-    compile "com.android.support:recyclerview-v7:${versions.supportLibrary}"
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation "com.android.support:support-v4:${versions.supportLibrary}"
+    implementation "com.android.support:support-annotations:${versions.supportLibrary}"
+    implementation "com.android.support:appcompat-v7:${versions.supportLibrary}"
+    implementation "com.android.support:cardview-v7:${versions.supportLibrary}"
+    implementation "com.android.support:customtabs:${versions.supportLibrary}"
+    implementation "com.android.support:design:${versions.supportLibrary}"
+    implementation "com.android.support:palette-v7:${versions.supportLibrary}"
+    implementation "com.android.support:recyclerview-v7:${versions.supportLibrary}"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation "android.arch.lifecycle:extensions:${versions.lifecycle}"
+    annotationProcessor "android.arch.lifecycle:compiler:${versions.lifecycle}"
 
-    compile "com.jakewharton:butterknife:${versions.butterknife}"
+    implementation "com.jakewharton:butterknife:${versions.butterknife}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${versions.butterknife}"
-    compile "com.google.dagger:dagger:${versions.dagger}"
+    implementation "com.google.dagger:dagger:${versions.dagger}"
     annotationProcessor "com.google.dagger:dagger-compiler:${versions.dagger}"
-    compile 'org.greenrobot:eventbus:3.0.0'
+    implementation 'org.greenrobot:eventbus:3.0.0'
     annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'
 
-    compile("com.crashlytics.sdk.android:crashlytics:${versions.crashlytics}@aar") {
+    implementation("com.crashlytics.sdk.android:crashlytics:${versions.crashlytics}@aar") {
         transitive = true
     }
-    compile 'com.github.davidmoten:flatbuffers-java:1.7.0.1'
-    compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
-    compile "com.google.code.gson:gson:${versions.gson}"
-    compile "com.jakewharton.threetenabp:threetenabp:${versions.threetenABP}"
-    compile "com.jakewharton.timber:timber:${versions.timber}"
-    compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
+    implementation 'com.google.flatbuffers:flatbuffers-java:1.7.2'
+    implementation 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
+    implementation "com.google.code.gson:gson:${versions.gson}"
+    implementation "com.jakewharton.threetenabp:threetenabp:${versions.threetenABP}"
+    implementation "com.jakewharton.timber:timber:${versions.timber}"
+    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.4'
 
-    compile "com.squareup.okhttp3:okhttp:${versions.okhttp}"
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
+    implementation "com.squareup.okhttp3:okhttp:${versions.okhttp}"
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
 
-    compile ("com.uwetrottmann.androidutils:androidutils:${versions.androidUtils}") {
+    implementation ("com.uwetrottmann.androidutils:androidutils:${versions.androidUtils}") {
         exclude group: 'com.android.support'
     }
-    compile 'com.uwetrottmann.photoview:library:1.2.4'
-    compile "com.uwetrottmann.thetvdb-java:thetvdb-java:${versions.thetvdb}"
-    compile "com.uwetrottmann.tmdb2:tmdb-java:${versions.tmdb}"
-    compile ("com.uwetrottmann.trakt5:trakt-java:${versions.trakt}") {
+    implementation 'com.uwetrottmann.photoview:library:1.2.4'
+    implementation "com.uwetrottmann.thetvdb-java:thetvdb-java:${versions.thetvdb}"
+    implementation "com.uwetrottmann.tmdb2:tmdb-java:${versions.tmdb}"
+    implementation ("com.uwetrottmann.trakt5:trakt-java:${versions.trakt}") {
         exclude group: 'org.threeten', module: 'threetenbp' // using ThreeTenABP instead
     }
 
     // https://github.com/palaima/DebugDrawer
-    debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.7.0'
-    releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.7.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-commons:0.7.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-actions:0.7.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-timber:0.7.0'
+    debugImplementation 'io.palaima.debugdrawer:debugdrawer-view:0.7.0'
+    releaseImplementation 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.7.0'
+    implementation 'io.palaima.debugdrawer:debugdrawer-commons:0.7.0'
+    implementation 'io.palaima.debugdrawer:debugdrawer-actions:0.7.0'
+    implementation 'io.palaima.debugdrawer:debugdrawer-timber:0.7.0'
 
     // Google Play Services
-    compile "com.google.android.gms:play-services-analytics:${versions.playServices}"
-    compile "com.google.android.gms:play-services-auth:${versions.playServices}"
+    implementation "com.google.android.gms:play-services-analytics:${versions.playServices}"
+    implementation "com.google.android.gms:play-services-auth:${versions.playServices}"
 
     // App Engine
     // https://github.com/google/google-api-java-client/commits/dev
-    compile('com.google.api-client:google-api-client-android:1.23.0') {
+    implementation('com.google.api-client:google-api-client-android:1.23.0') {
         exclude group: 'com.google.android.google-play-services' // including latest ourselves
         exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
         exclude group: 'com.google.guava', module: 'guava-jdk5' // out of date, conflict with dagger
     }
 
     // Amazon flavor specific
-    amazonCompile files('libs/amazon/in-app-purchasing-2.0.76.jar')
+    amazonImplementation files('libs/amazon/in-app-purchasing-2.0.76.jar')
 
     // Instrumented unit tests
-    androidTestCompile "com.android.support:support-annotations:${versions.supportLibrary}"
-    androidTestCompile 'com.android.support.test:runner:1.0.1'
-    androidTestCompile 'com.android.support.test:rules:1.0.1'
-    androidTestCompile "com.squareup.assertj:assertj-android:${versions.assertjAndroid}"
+    androidTestImplementation "com.android.support:support-annotations:${versions.supportLibrary}"
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test:rules:1.0.1'
+    androidTestImplementation "com.google.truth:truth:${versions.truth}"
     androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${versions.dagger}"
 
     // Local unit tests
-    testCompile 'junit:junit:4.12'
-    testCompile "com.android.support:support-annotations:${versions.supportLibrary}"
-    testCompile "com.squareup.assertj:assertj-android:${versions.assertjAndroid}"
+    testImplementation 'junit:junit:4.12'
+    testImplementation "com.android.support:support-annotations:${versions.supportLibrary}"
+    testImplementation "com.google.truth:truth:${versions.truth}"
     // include regular threetenbp to have access to the tz database without init call
-    testCompile 'org.threeten:threetenbp:1.3.3'
+    testImplementation 'org.threeten:threetenbp:1.3.3'
 
 }
 

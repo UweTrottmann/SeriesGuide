@@ -46,7 +46,7 @@
   <string name="norating">ikke tilgængelig</string>
   <string name="unknown">ukendt</string>
   <string name="offline">Forbind til et netværk, og prøv igen.</string>
-  <string name="app_not_available">Ingen app tilgængelig til at håndtere dette.</string>
+  <string name="app_not_available">No app available to handle this</string>
   <string name="people_empty">Ingen her?! Tryk for at prøve igen.</string>
   <string name="database_error">Kunne ikke ændre data.</string>
   <string name="reinstall_info">Prøv fra Indstillinger at oprette en sikkerhedskopi, geninstallere og gendanne.</string>
@@ -257,8 +257,8 @@
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Eksperimentel!</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
   <string name="hexagon_signin">Log ind</string>
   <string name="hexagon_signout">Log ud</string>
   <string name="hexagon_setup_incomplete">Opsætning af SeriesGuide Cloud blev ikke fuldført.</string>
@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Fjern alle gemte billeder fra din enhed</string>
   <string name="pref_ganalyticssummary">Send anonym brugsstatistik til en Google-tjeneste</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Inkludér alle meta-data såsom beskrivelser, skuespillere and bedømmelser.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Sikkerhedskopieringsmappe</string>
   <string name="backup_version">Database-version</string>
   <string name="backup_failed_file_access">Kan ikke sikkerhedskopiere. En sikkerhedskopieringsfil kan ikke findes eller tilgås.</string>
@@ -439,6 +439,7 @@
   <string name="pref_notifications_treshold">Meddelelsesfrekvens</string>
   <string name="pref_notifications_select_shows">Vælg serier</string>
   <string name="pref_notifications_select_shows_summary">Serier med episodemeddelelser slået til (%d)</string>
+  <string name="pref_notification_channel_errors">Errors</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (lille)</string>
   <!-- List Widget -->

@@ -82,35 +82,35 @@ public class ShowFragment extends Fragment {
         return f;
     }
 
-    @BindView(R.id.imageViewShowPosterBackground) ImageView posterBackgroundView;
+    @BindView(R.id.imageViewShowPosterBackground) ImageView imageViewBackground;
 
-    @BindView(R.id.containerShowPoster) View posterContainer;
-    @BindView(R.id.imageViewShowPoster) ImageView posterView;
-    @BindView(R.id.textViewShowStatus) TextView mTextViewStatus;
-    @BindView(R.id.textViewShowReleaseTime) TextView mTextViewReleaseTime;
-    @BindView(R.id.textViewShowRuntime) TextView mTextViewRuntime;
-    @BindView(R.id.textViewShowNetwork) TextView mTextViewNetwork;
-    @BindView(R.id.textViewShowOverview) TextView mTextViewOverview;
-    @BindView(R.id.textViewShowReleaseCountry) TextView mTextViewReleaseCountry;
-    @BindView(R.id.textViewShowFirstAirdate) TextView mTextViewFirstRelease;
-    @BindView(R.id.textViewShowContentRating) TextView mTextViewContentRating;
-    @BindView(R.id.textViewShowGenres) TextView mTextViewGenres;
-    @BindView(R.id.textViewRatingsValue) TextView mTextViewRatingGlobal;
-    @BindView(R.id.textViewRatingsRange) TextView mTextViewRatingRange;
-    @BindView(R.id.textViewRatingsVotes) TextView mTextViewRatingVotes;
-    @BindView(R.id.textViewRatingsUser) TextView mTextViewRatingUser;
+    @BindView(R.id.containerShowPoster) View containerPoster;
+    @BindView(R.id.imageViewShowPoster) ImageView imageViewPoster;
+    @BindView(R.id.textViewShowStatus) TextView textViewStatus;
+    @BindView(R.id.textViewShowReleaseTime) TextView textViewReleaseTime;
+    @BindView(R.id.textViewShowRuntime) TextView textViewRuntime;
+    @BindView(R.id.textViewShowNetwork) TextView textViewNetwork;
+    @BindView(R.id.textViewShowOverview) TextView textViewOverview;
+    @BindView(R.id.textViewShowReleaseCountry) TextView textViewReleaseCountry;
+    @BindView(R.id.textViewShowFirstAirdate) TextView textViewFirstRelease;
+    @BindView(R.id.textViewShowContentRating) TextView textViewContentRating;
+    @BindView(R.id.textViewShowGenres) TextView textViewGenres;
+    @BindView(R.id.textViewRatingsValue) TextView textViewRating;
+    @BindView(R.id.textViewRatingsRange) TextView textViewRatingRange;
+    @BindView(R.id.textViewRatingsVotes) TextView textViewRatingVotes;
+    @BindView(R.id.textViewRatingsUser) TextView textViewRatingUser;
 
     @BindView(R.id.buttonShowFavorite) Button buttonFavorite;
     @BindView(R.id.buttonShowNotify) Button buttonNotify;
     @BindView(R.id.buttonShowHidden) Button buttonHidden;
     @BindView(R.id.buttonShowShortcut) Button buttonShortcut;
     @BindView(R.id.buttonShowLanguage) Button buttonLanguage;
-    @BindView(R.id.containerRatings) View mButtonRate;
-    @BindView(R.id.buttonShowImdb) Button mButtonImdb;
-    @BindView(R.id.buttonShowTvdb) Button mButtonTvdb;
-    @BindView(R.id.buttonShowTrakt) Button mButtonTrakt;
-    @BindView(R.id.buttonShowWebSearch) Button mButtonWebSearch;
-    @BindView(R.id.buttonShowComments) Button mButtonComments;
+    @BindView(R.id.containerRatings) View buttonRate;
+    @BindView(R.id.buttonShowImdb) Button buttonImdb;
+    @BindView(R.id.buttonShowTvdb) Button buttonTvdb;
+    @BindView(R.id.buttonShowTrakt) Button buttonTrakt;
+    @BindView(R.id.buttonShowWebSearch) Button buttonWebSearch;
+    @BindView(R.id.buttonShowComments) Button buttonComments;
     @BindView(R.id.buttonShowShare) Button buttonShare;
 
     @BindView(R.id.labelCast) TextView castLabel;
@@ -155,21 +155,21 @@ public class ShowFragment extends Fragment {
         CheatSheet.setup(buttonLanguage, R.string.pref_language);
 
         // rate button
-        mButtonRate.setOnClickListener(new OnClickListener() {
+        buttonRate.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 rateShow();
             }
         });
-        CheatSheet.setup(mButtonRate, R.string.action_rate);
-        mTextViewRatingRange.setText(getString(R.string.format_rating_range, 10));
+        CheatSheet.setup(buttonRate, R.string.action_rate);
+        textViewRatingRange.setText(getString(R.string.format_rating_range, 10));
 
         // link, search and comments button
-        ViewTools.setVectorIconLeft(theme, mButtonImdb, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorIconLeft(theme, mButtonTvdb, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorIconLeft(theme, mButtonTrakt, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorIconLeft(theme, mButtonWebSearch, R.drawable.ic_search_white_24dp);
-        ViewTools.setVectorIconLeft(theme, mButtonComments, R.drawable.ic_forum_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonWebSearch, R.drawable.ic_search_white_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonComments, R.drawable.ic_forum_black_24dp);
 
         // share button
         ViewTools.setVectorIconLeft(theme, buttonShare, R.drawable.ic_share_white_24dp);
@@ -199,9 +199,9 @@ public class ShowFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getLoaderManager().initLoader(OverviewActivity.SHOW_LOADER_ID, null, mShowLoaderCallbacks);
+        getLoaderManager().initLoader(OverviewActivity.SHOW_LOADER_ID, null, showLoaderCallbacks);
         getLoaderManager().initLoader(OverviewActivity.SHOW_CREDITS_LOADER_ID, null,
-                mCreditsLoaderCallbacks);
+                creditsLoaderCallbacks);
 
         setHasOptionsMenu(true);
     }
@@ -296,7 +296,7 @@ public class ShowFragment extends Fragment {
         int HIDDEN = 22;
     }
 
-    private LoaderCallbacks<Cursor> mShowLoaderCallbacks = new LoaderCallbacks<Cursor>() {
+    private LoaderCallbacks<Cursor> showLoaderCallbacks = new LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
             return new CursorLoader(getActivity(), Shows.buildShowUri(getShowTvdbId()),
@@ -330,7 +330,7 @@ public class ShowFragment extends Fragment {
         posterPath = showCursor.getString(ShowQuery.POSTER);
 
         // status
-        ShowTools.setStatusAndColor(mTextViewStatus, showCursor.getInt(ShowQuery.STATUS));
+        ShowTools.setStatusAndColor(textViewStatus, showCursor.getInt(ShowQuery.STATUS));
 
         // next release day and time
         String releaseCountry = showCursor.getString(ShowQuery.RELEASE_COUNTRY);
@@ -345,17 +345,17 @@ public class ShowFragment extends Fragment {
                     releaseCountry, network);
             String dayString = TimeTools.formatToLocalDayOrDaily(getActivity(), release, weekDay);
             String timeString = TimeTools.formatToLocalTime(getActivity(), release);
-            mTextViewReleaseTime.setText(String.format("%s %s", dayString, timeString));
+            textViewReleaseTime.setText(String.format("%s %s", dayString, timeString));
         } else {
-            mTextViewReleaseTime.setText(null);
+            textViewReleaseTime.setText(null);
         }
 
         // runtime
-        mTextViewRuntime.setText(getString(R.string.runtime_minutes,
+        textViewRuntime.setText(getString(R.string.runtime_minutes,
                 String.valueOf(showCursor.getInt(ShowQuery.RUNTIME))));
 
         // network
-        mTextViewNetwork.setText(network);
+        textViewNetwork.setText(network);
 
         // favorite button
         final boolean isFavorite = showCursor.getInt(ShowQuery.IS_FAVORITE) == 1;
@@ -426,7 +426,7 @@ public class ShowFragment extends Fragment {
                     LanguageTools.getShowLanguageStringFor(getContext(),
                             showCursor.getString(ShowQuery.LANGUAGE)), getString(R.string.tvdb));
         }
-        mTextViewOverview.setText(TextTools.textWithTvdbSource(mTextViewOverview.getContext(),
+        textViewOverview.setText(TextTools.textWithTvdbSource(textViewOverview.getContext(),
                 overview, lastEditSeconds));
 
         // language preferred for content
@@ -439,45 +439,45 @@ public class ShowFragment extends Fragment {
 
         // country for release time calculation
         // show "unknown" if country is not supported
-        mTextViewReleaseCountry.setText(TimeTools.getCountry(getActivity(), releaseCountry));
+        textViewReleaseCountry.setText(TimeTools.getCountry(getActivity(), releaseCountry));
 
         // original release
         String firstRelease = showCursor.getString(ShowQuery.FIRST_RELEASE);
-        ViewTools.setValueOrPlaceholder(mTextViewFirstRelease,
+        ViewTools.setValueOrPlaceholder(textViewFirstRelease,
                 TimeTools.getShowReleaseYear(firstRelease));
 
         // content rating
-        ViewTools.setValueOrPlaceholder(mTextViewContentRating,
+        ViewTools.setValueOrPlaceholder(textViewContentRating,
                 showCursor.getString(ShowQuery.CONTENT_RATING));
         // genres
-        ViewTools.setValueOrPlaceholder(mTextViewGenres,
+        ViewTools.setValueOrPlaceholder(textViewGenres,
                 TextTools.splitAndKitTVDBStrings(showCursor.getString(ShowQuery.GENRES)));
 
         // trakt rating
-        mTextViewRatingGlobal.setText(TraktTools.buildRatingString(
+        textViewRating.setText(TraktTools.buildRatingString(
                 showCursor.getDouble(ShowQuery.RATING_GLOBAL)));
-        mTextViewRatingVotes.setText(TraktTools.buildRatingVotesString(getActivity(),
+        textViewRatingVotes.setText(TraktTools.buildRatingVotesString(getActivity(),
                 showCursor.getInt(ShowQuery.RATING_VOTES)));
 
         // user rating
-        mTextViewRatingUser.setText(TraktTools.buildUserRatingString(getActivity(),
+        textViewRatingUser.setText(TraktTools.buildUserRatingString(getActivity(),
                 showCursor.getInt(ShowQuery.RATING_USER)));
 
         // IMDb button
         String imdbId = showCursor.getString(ShowQuery.IMDBID);
-        ServiceUtils.setUpImdbButton(imdbId, mButtonImdb, TAG);
+        ServiceUtils.setUpImdbButton(imdbId, buttonImdb, TAG);
 
         // TVDb button
-        ServiceUtils.setUpTvdbButton(getShowTvdbId(), mButtonTvdb, TAG);
+        ServiceUtils.setUpTvdbButton(getShowTvdbId(), buttonTvdb, TAG);
 
         // trakt button
-        ServiceUtils.setUpTraktShowButton(mButtonTrakt, getShowTvdbId(), TAG);
+        ServiceUtils.setUpTraktShowButton(buttonTrakt, getShowTvdbId(), TAG);
 
         // web search button
-        ServiceUtils.setUpWebSearchButton(showTitle, mButtonWebSearch, TAG);
+        ServiceUtils.setUpWebSearchButton(showTitle, buttonWebSearch, TAG);
 
         // shout button
-        mButtonComments.setOnClickListener(new OnClickListener() {
+        buttonComments.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
@@ -491,13 +491,13 @@ public class ShowFragment extends Fragment {
         // poster, full screen poster button
         if (TextUtils.isEmpty(posterPath)) {
             // have no poster
-            posterContainer.setClickable(false);
-            posterContainer.setFocusable(false);
+            containerPoster.setClickable(false);
+            containerPoster.setFocusable(false);
         } else {
             // poster and fullscreen button
-            TvdbImageTools.loadShowPoster(getActivity(), posterView, posterPath);
-            posterContainer.setFocusable(true);
-            posterContainer.setOnClickListener(new OnClickListener() {
+            TvdbImageTools.loadShowPoster(getActivity(), imageViewPoster, posterPath);
+            containerPoster.setFocusable(true);
+            containerPoster.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
@@ -510,13 +510,13 @@ public class ShowFragment extends Fragment {
             });
 
             // poster background
-            TvdbImageTools.loadShowPosterAlpha(getActivity(), posterBackgroundView, posterPath);
+            TvdbImageTools.loadShowPosterAlpha(getActivity(), imageViewBackground, posterPath);
         }
 
         loadTraktRatings();
     }
 
-    private LoaderCallbacks<Credits> mCreditsLoaderCallbacks = new LoaderCallbacks<Credits>() {
+    private LoaderCallbacks<Credits> creditsLoaderCallbacks = new LoaderCallbacks<Credits>() {
         @Override
         public Loader<Credits> onCreateLoader(int id, Bundle args) {
             return new ShowCreditsLoader(getContext(), getShowTvdbId(), true);

@@ -40,17 +40,17 @@ public class DragGripView extends View {
 
     private static final int HORIZ_RIDGES = 2;
 
-    private int mGravity = Gravity.START;
-    private int mColor = 0x33333333;
+    private int gravity = Gravity.START;
+    private int color = 0x33333333;
 
-    private Paint mRidgePaint;
-    private RectF mTempRectF = new RectF();
+    private Paint ridgePaint;
+    private RectF tempRectF = new RectF();
 
-    private float mRidgeSize;
-    private float mRidgeGap;
+    private float tidgeSize;
+    private float ridgeGap;
 
-    private int mWidth;
-    private int mHeight;
+    private int width;
+    private int height;
 
     public DragGripView(Context context) {
         this(context, null, 0);
@@ -64,29 +64,29 @@ public class DragGripView extends View {
         super(context, attrs, defStyle);
 
         final TypedArray a = context.obtainStyledAttributes(attrs, ATTRS);
-        mGravity = a.getInteger(0, mGravity);
+        gravity = a.getInteger(0, gravity);
         //noinspection ResourceType
-        mColor = a.getColor(1, mColor);
+        color = a.getColor(1, color);
         a.recycle();
 
         final Resources res = getResources();
-        mRidgeSize = res.getDimensionPixelSize(R.dimen.drag_grip_ridge_size);
-        mRidgeGap = res.getDimensionPixelSize(R.dimen.drag_grip_ridge_gap);
+        tidgeSize = res.getDimensionPixelSize(R.dimen.drag_grip_ridge_size);
+        ridgeGap = res.getDimensionPixelSize(R.dimen.drag_grip_ridge_gap);
 
-        mRidgePaint = new Paint();
-        mRidgePaint.setColor(mColor);
+        ridgePaint = new Paint();
+        ridgePaint.setColor(color);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(
                 View.resolveSize(
-                        (int) (HORIZ_RIDGES * (mRidgeSize + mRidgeGap) - mRidgeGap)
+                        (int) (HORIZ_RIDGES * (tidgeSize + ridgeGap) - ridgeGap)
                                 + getPaddingLeft() + getPaddingRight(),
                         widthMeasureSpec
                 ),
                 View.resolveSize(
-                        (int) mRidgeSize,
+                        (int) tidgeSize,
                         heightMeasureSpec)
         );
     }
@@ -96,15 +96,15 @@ public class DragGripView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        float drawWidth = HORIZ_RIDGES * (mRidgeSize + mRidgeGap) - mRidgeGap;
+        float drawWidth = HORIZ_RIDGES * (tidgeSize + ridgeGap) - ridgeGap;
         float drawLeft;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            switch (Gravity.getAbsoluteGravity(mGravity, getLayoutDirection())
+            switch (Gravity.getAbsoluteGravity(gravity, getLayoutDirection())
                     & Gravity.HORIZONTAL_GRAVITY_MASK) {
                 case Gravity.CENTER_HORIZONTAL:
                     drawLeft = getPaddingLeft()
-                            + ((mWidth - getPaddingLeft() - getPaddingRight()) - drawWidth) / 2;
+                            + ((width - getPaddingLeft() - getPaddingRight()) - drawWidth) / 2;
                     break;
                 case Gravity.RIGHT:
                     drawLeft = getWidth() - getPaddingRight() - drawWidth;
@@ -116,20 +116,20 @@ public class DragGripView extends View {
             drawLeft = getPaddingLeft();
         }
 
-        int vertRidges = (int) ((mHeight - getPaddingTop() - getPaddingBottom() + mRidgeGap)
-                / (mRidgeSize + mRidgeGap));
-        float drawHeight = vertRidges * (mRidgeSize + mRidgeGap) - mRidgeGap;
+        int vertRidges = (int) ((height - getPaddingTop() - getPaddingBottom() + ridgeGap)
+                / (tidgeSize + ridgeGap));
+        float drawHeight = vertRidges * (tidgeSize + ridgeGap) - ridgeGap;
         float drawTop = getPaddingTop()
-                + ((mHeight - getPaddingTop() - getPaddingBottom()) - drawHeight) / 2;
+                + ((height - getPaddingTop() - getPaddingBottom()) - drawHeight) / 2;
 
         for (int y = 0; y < vertRidges; y++) {
             for (int x = 0; x < HORIZ_RIDGES; x++) {
-                mTempRectF.set(
-                        drawLeft + x * (mRidgeSize + mRidgeGap),
-                        drawTop + y * (mRidgeSize + mRidgeGap),
-                        drawLeft + x * (mRidgeSize + mRidgeGap) + mRidgeSize,
-                        drawTop + y * (mRidgeSize + mRidgeGap) + mRidgeSize);
-                canvas.drawOval(mTempRectF, mRidgePaint);
+                tempRectF.set(
+                        drawLeft + x * (tidgeSize + ridgeGap),
+                        drawTop + y * (tidgeSize + ridgeGap),
+                        drawLeft + x * (tidgeSize + ridgeGap) + tidgeSize,
+                        drawTop + y * (tidgeSize + ridgeGap) + tidgeSize);
+                canvas.drawOval(tempRectF, ridgePaint);
             }
         }
     }
@@ -137,7 +137,7 @@ public class DragGripView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mHeight = h;
-        mWidth = w;
+        height = h;
+        width = w;
     }
 }

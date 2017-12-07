@@ -19,24 +19,28 @@ public final class SgJobInfo extends Table {
   public EpisodeInfo episodes(int j) { return episodes(new EpisodeInfo(), j); }
   public EpisodeInfo episodes(EpisodeInfo obj, int j) { int o = __offset(8); return o != 0 ? obj.__assign(__indirect(__vector(o) + j * 4), bb) : null; }
   public int episodesLength() { int o = __offset(8); return o != 0 ? __vector_len(o) : 0; }
+  public int movieTmdbId() { int o = __offset(10); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
 
   public static int createSgJobInfo(FlatBufferBuilder builder,
       int showTvdbId,
       int flagValue,
-      int episodesOffset) {
-    builder.startObject(3);
+      int episodesOffset,
+      int movieTmdbId) {
+    builder.startObject(4);
+    SgJobInfo.addMovieTmdbId(builder, movieTmdbId);
     SgJobInfo.addEpisodes(builder, episodesOffset);
     SgJobInfo.addFlagValue(builder, flagValue);
     SgJobInfo.addShowTvdbId(builder, showTvdbId);
     return SgJobInfo.endSgJobInfo(builder);
   }
 
-  public static void startSgJobInfo(FlatBufferBuilder builder) { builder.startObject(3); }
+  public static void startSgJobInfo(FlatBufferBuilder builder) { builder.startObject(4); }
   public static void addShowTvdbId(FlatBufferBuilder builder, int showTvdbId) { builder.addInt(0, showTvdbId, 0); }
   public static void addFlagValue(FlatBufferBuilder builder, int flagValue) { builder.addInt(1, flagValue, 0); }
   public static void addEpisodes(FlatBufferBuilder builder, int episodesOffset) { builder.addOffset(2, episodesOffset, 0); }
   public static int createEpisodesVector(FlatBufferBuilder builder, int[] data) { builder.startVector(4, data.length, 4); for (int i = data.length - 1; i >= 0; i--) builder.addOffset(data[i]); return builder.endVector(); }
   public static void startEpisodesVector(FlatBufferBuilder builder, int numElems) { builder.startVector(4, numElems, 4); }
+  public static void addMovieTmdbId(FlatBufferBuilder builder, int movieTmdbId) { builder.addInt(3, movieTmdbId, 0); }
   public static int endSgJobInfo(FlatBufferBuilder builder) {
     int o = builder.endObject();
     return o;

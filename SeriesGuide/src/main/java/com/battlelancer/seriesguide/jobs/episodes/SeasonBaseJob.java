@@ -6,7 +6,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 /**
  * Flagging whole seasons watched or collected.
  */
-public abstract class SeasonBaseJob extends BaseJob {
+public abstract class SeasonBaseJob extends BaseEpisodesJob {
 
     protected int seasonTvdbId;
     protected int season;

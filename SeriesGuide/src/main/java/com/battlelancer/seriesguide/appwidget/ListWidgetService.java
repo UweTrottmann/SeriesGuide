@@ -59,6 +59,8 @@ public class ListWidgetService extends RemoteViewsService {
         }
 
         private void onQueryForData() {
+            Timber.d("onQueryForData: %d", appWidgetId);
+
             int widgetType = WidgetSettings.getWidgetListType(context, appWidgetId);
             boolean isOnlyCollected = WidgetSettings.isOnlyCollectedEpisodes(context, appWidgetId);
             boolean isOnlyFavorites = WidgetSettings.isOnlyFavoriteShows(context, appWidgetId);
@@ -177,21 +179,13 @@ public class ListWidgetService extends RemoteViewsService {
                     ShowsQuery.EPISODE_NUMBER : CalendarAdapter.Query.NUMBER);
             String title = dataCursor.getString(isShowQuery ?
                     ShowsQuery.EPISODE_TITLE : CalendarAdapter.Query.TITLE);
-            boolean preventSpoilers = DisplaySettings.preventSpoilers(context);
+            boolean hideTitle = DisplaySettings.preventSpoilers(context);
             if (!isShowQuery) {
                 int episodeFlag = dataCursor.getInt(CalendarAdapter.Query.WATCHED);
-                preventSpoilers = preventSpoilers && EpisodeTools.isUnwatched(episodeFlag);
+                hideTitle = hideTitle && EpisodeTools.isUnwatched(episodeFlag);
             }
-            String nextEpisodeString;
-            if (preventSpoilers) {
-                // just display the episode number
-                nextEpisodeString = TextTools.getEpisodeNumber(context, seasonNumber,
-                        episodeNumber);
-            } else {
-                // display episode number and title
-                nextEpisodeString = TextTools.getNextEpisodeString(context, seasonNumber,
-                        episodeNumber, title);
-            }
+            String nextEpisodeString = TextTools.getNextEpisodeString(context, seasonNumber,
+                    episodeNumber, hideTitle ? null : title);
             rv.setTextViewText(R.id.textViewWidgetEpisode, nextEpisodeString);
 
             // relative release time

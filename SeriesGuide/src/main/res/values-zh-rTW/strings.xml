@@ -250,8 +250,8 @@
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">實驗性</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
   <string name="hexagon_signin">登入</string>
   <string name="hexagon_signout">登出</string>
   <string name="hexagon_setup_incomplete">SeriesGuide Cloud未完成設置。</string>
@@ -261,7 +261,7 @@
   <string name="hexagon_remove_account_failure">無法刪除帳戶。</string>
   <string name="hexagon_remove_account_confirmation">移除你的帳戶將會刪除SeriesGuide Cloud上所有節目與電影的紀錄。請確認其他裝置上的資料也一併刪除。</string>
   <string name="hexagon_api_queued">發送至SeriesGuide Cloud。</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
   <string name="hexagon_google_play_missing">若要使用SeriesGuide Cloud，需要Google play服務。</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">正發送至trakt。</string>
@@ -383,7 +383,7 @@
   <string name="clear_cache_summary">從您的設備中刪除所有暫存的圖片</string>
   <string name="pref_ganalyticssummary">向Google服務寄送匿名的使用資料統計</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">包括所有的資料描述、 演員和評級等。</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">備份資料夾</string>
   <string name="backup_version">資料庫版本</string>
   <string name="backup_failed_file_access">無法備份。找不到或無法存取備份檔案。</string>
@@ -428,6 +428,7 @@
   <string name="pref_notifications_treshold">何時通知</string>
   <string name="pref_notifications_select_shows">Select shows</string>
   <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notification_channel_errors">Errors</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (小)</string>
   <!-- List Widget -->

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -185,7 +186,7 @@ public class ListsActivity extends BaseTopActivity {
 
     private void showListManageDialog(int selectedListIndex) {
         String listId = listsAdapter.getListId(selectedListIndex);
-        if (listId != null) {
+        if (!TextUtils.isEmpty(listId)) {
             ListManageDialogFragment.show(listId, getSupportFragmentManager());
         }
     }
@@ -225,7 +226,7 @@ public class ListsActivity extends BaseTopActivity {
         supportInvalidateOptionsMenu();
 
         // refresh all list widgets
-        ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(this);
+        ListWidgetProvider.notifyDataChanged(this);
 
         // post event, so all active list fragments can react
         EventBus.getDefault().post(new ListsDistillationSettings.ListsSortOrderChangedEvent());

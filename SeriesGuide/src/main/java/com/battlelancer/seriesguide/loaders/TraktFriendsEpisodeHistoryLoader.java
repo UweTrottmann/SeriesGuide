@@ -61,7 +61,7 @@ public class TraktFriendsEpisodeHistoryLoader
 
         // add last watched episode for each friend
         SparseArrayCompat<String> localShows = ShowTools.getShowTvdbIdsAndPosters(getContext());
-        boolean preventSpoilers = DisplaySettings.preventSpoilers(getContext());
+        boolean hideTitle = DisplaySettings.preventSpoilers(getContext());
         for (int i = 0; i < size; i++) {
             Friend friend = friends.get(i);
 
@@ -103,16 +103,9 @@ public class TraktFriendsEpisodeHistoryLoader
 
             String avatar = (friend.user.images == null || friend.user.images.avatar == null)
                     ? null : friend.user.images.avatar.full;
-            String episodeString;
-            if (preventSpoilers) {
-                // just display the number
-                episodeString = TextTools.getEpisodeNumber(getContext(), entry.episode.season,
-                        entry.episode.number);
-            } else {
-                // display number and title
-                episodeString = TextTools.getNextEpisodeString(getContext(), entry.episode.season,
-                        entry.episode.number, entry.episode.title);
-            }
+            String episodeString = TextTools.getNextEpisodeString(getContext(),
+                    entry.episode.season, entry.episode.number,
+                    hideTitle ? null : entry.episode.title);
             NowAdapter.NowItem nowItem = new NowAdapter.NowItem().
                     displayData(
                             entry.watched_at.toInstant().toEpochMilli(),

@@ -77,41 +77,41 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
 
-    private Handler mHandler = new Handler();
+    private Handler handler = new Handler();
     private TvdbEpisodeDetailsTask detailsTask;
     private TraktRatingsTask ratingsTask;
 
-    protected int mEpisodeFlag;
-    protected boolean mCollected;
-    protected int mShowTvdbId;
-    protected int mSeasonNumber;
-    protected int mEpisodeNumber;
-    private String mEpisodeTitle;
-    private String mShowTitle;
-    private int mShowRunTime;
-    private long mEpisodeReleaseTime;
+    protected int episodeFlag;
+    protected boolean collected;
+    protected int showTvdbId;
+    protected int seasonNumber;
+    protected int episodeNumber;
+    private String episodeTitle;
+    private String showTitle;
+    private int showRunTime;
+    private long episodeReleaseTime;
 
-    @BindView(R.id.containerEpisode) View mEpisodeContainer;
-    @BindView(R.id.containerRatings) View mRatingsContainer;
-    @BindView(R.id.containerEpisodeActions) LinearLayout mActionsContainer;
+    @BindView(R.id.containerEpisode) View containerEpisode;
+    @BindView(R.id.containerRatings) View containerRatings;
+    @BindView(R.id.containerEpisodeActions) LinearLayout containerActions;
 
-    @BindView(R.id.containerEpisodeImage) View mImageContainer;
-    @BindView(R.id.imageViewEpisode) ImageView mEpisodeImage;
+    @BindView(R.id.containerEpisodeImage) View containerImage;
+    @BindView(R.id.imageViewEpisode) ImageView imageViewEpisode;
 
-    @BindView(R.id.textViewEpisodeTitle) TextView mTitle;
-    @BindView(R.id.textViewEpisodeDescription) TextView mDescription;
-    @BindView(R.id.textViewEpisodeReleaseTime) TextView mReleaseTime;
-    @BindView(R.id.textViewEpisodeReleaseDate) TextView mReleaseDate;
-    @BindView(R.id.labelEpisodeGuestStars) View mLabelGuestStars;
-    @BindView(R.id.textViewEpisodeGuestStars) TextView mGuestStars;
-    @BindView(R.id.textViewEpisodeDirectors) TextView mDirectors;
-    @BindView(R.id.textViewEpisodeWriters) TextView mWriters;
-    @BindView(R.id.labelEpisodeDvd) View mLabelDvd;
-    @BindView(R.id.textViewEpisodeDvd) TextView mDvd;
-    @BindView(R.id.textViewRatingsValue) TextView mTextRating;
-    @BindView(R.id.textViewRatingsRange) TextView mTextRatingRange;
-    @BindView(R.id.textViewRatingsVotes) TextView mTextRatingVotes;
-    @BindView(R.id.textViewRatingsUser) TextView mTextUserRating;
+    @BindView(R.id.textViewEpisodeTitle) TextView textViewTitle;
+    @BindView(R.id.textViewEpisodeDescription) TextView textViewDescription;
+    @BindView(R.id.textViewEpisodeReleaseTime) TextView textViewReleaseTime;
+    @BindView(R.id.textViewEpisodeReleaseDate) TextView textViewReleaseDate;
+    @BindView(R.id.labelEpisodeGuestStars) View textViewGuestStarsLabel;
+    @BindView(R.id.textViewEpisodeGuestStars) TextView textViewGuestStars;
+    @BindView(R.id.textViewEpisodeDirectors) TextView textViewDirectors;
+    @BindView(R.id.textViewEpisodeWriters) TextView textViewWriters;
+    @BindView(R.id.labelEpisodeDvd) View textViewDvdLabel;
+    @BindView(R.id.textViewEpisodeDvd) TextView textViewDvd;
+    @BindView(R.id.textViewRatingsValue) TextView textViewRating;
+    @BindView(R.id.textViewRatingsRange) TextView textViewRatingRange;
+    @BindView(R.id.textViewRatingsVotes) TextView textViewRatingVotes;
+    @BindView(R.id.textViewRatingsUser) TextView textViewRatingUser;
 
     @BindView(R.id.dividerEpisodeButtons) View dividerEpisodeButtons;
     @BindView(R.id.buttonEpisodeCheckin) Button buttonCheckin;
@@ -160,9 +160,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         View v = inflater.inflate(R.layout.fragment_episode, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-        mEpisodeContainer.setVisibility(View.GONE);
+        containerEpisode.setVisibility(View.GONE);
 
-        mTextRatingRange.setText(getString(R.string.format_rating_range, 10));
+        textViewRatingRange.setText(getString(R.string.format_rating_range, 10));
 
         // episode buttons
         Resources.Theme theme = getActivity().getTheme();
@@ -187,7 +187,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         super.onActivityCreated(savedInstanceState);
 
         getLoaderManager().initLoader(EpisodesActivity.EPISODE_LOADER_ID, null,
-                mEpisodeDataLoaderCallbacks);
+                episodeLoaderCallbacks);
 
         setHasOptionsMenu(true);
     }
@@ -208,8 +208,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     public void onPause() {
         super.onPause();
 
-        if (mHandler != null) {
-            mHandler.removeCallbacks(mEpisodeActionsRunnable);
+        if (handler != null) {
+            handler.removeCallbacks(actionsRunnable);
         }
         EventBus.getDefault().unregister(this);
     }
@@ -222,7 +222,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         // This ensures that the anonymous callback we have does not prevent the fragment from
         // being garbage collected. It also prevents our callback from getting invoked even after the
         // fragment is destroyed.
-        Picasso.with(getContext()).cancelRequest(mEpisodeImage);
+        Picasso.with(getContext()).cancelRequest(imageViewEpisode);
         unbinder.unbind();
     }
 
@@ -262,9 +262,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             Utils.trackAction(getActivity(), TAG, "Manage lists");
             return true;
         } else if (itemId == R.id.menu_action_episode_calendar) {
-            ShareUtils.suggestCalendarEvent(getActivity(), mShowTitle,
-                    TextTools.getNextEpisodeString(getActivity(), mSeasonNumber, mEpisodeNumber,
-                            mEpisodeTitle), mEpisodeReleaseTime, mShowRunTime);
+            ShareUtils.suggestCalendarEvent(getActivity(), showTitle,
+                    TextTools.getNextEpisodeString(getActivity(), seasonNumber, episodeNumber,
+                            episodeTitle), episodeReleaseTime, showRunTime);
             Utils.trackAction(getActivity(), TAG, "Add to calendar");
             return true;
         }
@@ -279,7 +279,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
      * If episode was watched, flags as unwatched. Otherwise, flags as watched.
      */
     private void onToggleWatched() {
-        changeEpisodeFlag(EpisodeTools.isWatched(mEpisodeFlag)
+        changeEpisodeFlag(EpisodeTools.isWatched(episodeFlag)
                 ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED);
     }
 
@@ -287,20 +287,20 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
      * If episode was skipped, flags as unwatched. Otherwise, flags as skipped.
      */
     private void onToggleSkipped() {
-        changeEpisodeFlag(EpisodeTools.isSkipped(mEpisodeFlag)
+        changeEpisodeFlag(EpisodeTools.isSkipped(episodeFlag)
                 ? EpisodeFlags.UNWATCHED : EpisodeFlags.SKIPPED);
     }
 
     private void changeEpisodeFlag(int episodeFlag) {
-        mEpisodeFlag = episodeFlag;
-        EpisodeTools.episodeWatched(getContext(), mShowTvdbId, getEpisodeTvdbId(),
-                mSeasonNumber, mEpisodeNumber, episodeFlag);
+        this.episodeFlag = episodeFlag;
+        EpisodeTools.episodeWatched(getContext(), showTvdbId, getEpisodeTvdbId(),
+                seasonNumber, episodeNumber, episodeFlag);
     }
 
     private void onToggleCollected() {
-        mCollected = !mCollected;
-        EpisodeTools.episodeCollected(getContext(), mShowTvdbId, getEpisodeTvdbId(),
-                mSeasonNumber, mEpisodeNumber, mCollected);
+        collected = !collected;
+        EpisodeTools.episodeCollected(getContext(), showTvdbId, getEpisodeTvdbId(),
+                seasonNumber, episodeNumber, collected);
     }
 
     @Override
@@ -328,7 +328,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         buttonCheckin.setEnabled(enabled);
     }
 
-    private LoaderManager.LoaderCallbacks<Cursor> mEpisodeDataLoaderCallbacks
+    private LoaderManager.LoaderCallbacks<Cursor> episodeLoaderCallbacks
             = new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -353,30 +353,27 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private void populateEpisodeData(Cursor cursor) {
         if (cursor == null || !cursor.moveToFirst()) {
             // no data to display
-            if (mEpisodeContainer != null) {
-                mEpisodeContainer.setVisibility(View.GONE);
+            if (containerEpisode != null) {
+                containerEpisode.setVisibility(View.GONE);
             }
             return;
         }
 
-        mShowTvdbId = cursor.getInt(DetailsQuery.SHOW_ID);
-        mSeasonNumber = cursor.getInt(DetailsQuery.SEASON);
-        mEpisodeNumber = cursor.getInt(DetailsQuery.NUMBER);
-        mShowRunTime = cursor.getInt(DetailsQuery.SHOW_RUNTIME);
-        mEpisodeReleaseTime = cursor.getLong(DetailsQuery.FIRST_RELEASE_MS);
+        showTvdbId = cursor.getInt(DetailsQuery.SHOW_ID);
+        seasonNumber = cursor.getInt(DetailsQuery.SEASON);
+        episodeNumber = cursor.getInt(DetailsQuery.NUMBER);
+        showRunTime = cursor.getInt(DetailsQuery.SHOW_RUNTIME);
+        episodeReleaseTime = cursor.getLong(DetailsQuery.FIRST_RELEASE_MS);
 
         // title and description
-        mEpisodeFlag = cursor.getInt(DetailsQuery.WATCHED);
-        mEpisodeTitle = TextTools.getEpisodeTitle(getContext(),
-                cursor.getString(DetailsQuery.TITLE), mEpisodeNumber);
-        boolean hideDetails = EpisodeTools.isUnwatched(mEpisodeFlag)
+        episodeFlag = cursor.getInt(DetailsQuery.WATCHED);
+        episodeTitle = TextTools.getEpisodeTitle(getContext(),
+                cursor.getString(DetailsQuery.TITLE), episodeNumber);
+        boolean hideDetails = EpisodeTools.isUnwatched(episodeFlag)
                 && DisplaySettings.preventSpoilers(getContext());
-        if (hideDetails) {
-            // just show the episode number "1x02"
-            mTitle.setText(TextTools.getEpisodeNumber(getContext(), mSeasonNumber, mEpisodeNumber));
-        } else {
-            mTitle.setText(mEpisodeTitle);
-        }
+        textViewTitle.setText(
+                TextTools.getEpisodeTitle(getContext(), hideDetails ? null : episodeTitle,
+                        episodeNumber));
         String overview = cursor.getString(DetailsQuery.OVERVIEW);
         long lastEditSeconds = cursor.getLong(DetailsQuery.LAST_EDITED);
         if (TextUtils.isEmpty(overview)) {
@@ -388,19 +385,21 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         } else if (hideDetails) {
             overview = getString(R.string.no_spoilers);
         }
-        mDescription.setText(
-                TextTools.textWithTvdbSource(mDescription.getContext(), overview, lastEditSeconds));
+        textViewDescription.setText(
+                TextTools.textWithTvdbSource(textViewDescription.getContext(), overview,
+                        lastEditSeconds));
 
         // show title
-        mShowTitle = cursor.getString(DetailsQuery.SHOW_TITLE);
+        showTitle = cursor.getString(DetailsQuery.SHOW_TITLE);
 
         // release date, also build release time and day
         boolean isReleased;
         String timeText;
-        if (mEpisodeReleaseTime != -1) {
-            Date actualRelease = TimeTools.applyUserOffset(getContext(), mEpisodeReleaseTime);
+        if (episodeReleaseTime != -1) {
+            Date actualRelease = TimeTools.applyUserOffset(getContext(), episodeReleaseTime);
             isReleased = TimeTools.isReleased(actualRelease);
-            mReleaseDate.setText(TimeTools.formatToLocalDateAndDay(getContext(), actualRelease));
+            textViewReleaseDate.setText(
+                    TimeTools.formatToLocalDateAndDay(getContext(), actualRelease));
 
             String dateTime;
             if (DisplaySettings.isDisplayExactDate(getContext())) {
@@ -414,7 +413,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             timeText = getString(R.string.format_date_and_day, dateTime,
                     TimeTools.formatToLocalDay(actualRelease)).toUpperCase(Locale.getDefault());
         } else {
-            mReleaseDate.setText(R.string.unknown);
+            textViewReleaseDate.setText(R.string.unknown);
             timeText = getString(R.string.episode_firstaired_unknown);
             isReleased = false;
         }
@@ -424,50 +423,52 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         if (absoluteNumber > 0) {
             absoluteNumberText = NumberFormat.getIntegerInstance().format(absoluteNumber);
         }
-        mReleaseTime.setText(TextTools.dotSeparate(timeText, absoluteNumberText));
+        textViewReleaseTime.setText(TextTools.dotSeparate(timeText, absoluteNumberText));
 
         // dim text color for title if not released
-        TextViewCompat.setTextAppearance(mTitle, isReleased
+        TextViewCompat.setTextAppearance(textViewTitle, isReleased
                 ? R.style.TextAppearance_Title : R.style.TextAppearance_Title_Dim);
         if (!isReleased) {
-            TextViewCompat.setTextAppearance(mReleaseTime, R.style.TextAppearance_Caption_Dim);
+            TextViewCompat.setTextAppearance(textViewReleaseTime,
+                    R.style.TextAppearance_Caption_Dim);
         }
 
         // guest stars
-        ViewTools.setLabelValueOrHide(mLabelGuestStars, mGuestStars,
+        ViewTools.setLabelValueOrHide(textViewGuestStarsLabel, textViewGuestStars,
                 TextTools.splitAndKitTVDBStrings(cursor.getString(DetailsQuery.GUESTSTARS))
         );
         // DVD episode number
-        ViewTools.setLabelValueOrHide(mLabelDvd, mDvd, cursor.getDouble(DetailsQuery.NUMBER_DVD));
+        ViewTools.setLabelValueOrHide(textViewDvdLabel, textViewDvd,
+                cursor.getDouble(DetailsQuery.NUMBER_DVD));
         // directors
-        ViewTools.setValueOrPlaceholder(mDirectors, TextTools.splitAndKitTVDBStrings(cursor
+        ViewTools.setValueOrPlaceholder(textViewDirectors, TextTools.splitAndKitTVDBStrings(cursor
                 .getString(DetailsQuery.DIRECTORS)));
         // writers
-        ViewTools.setValueOrPlaceholder(mWriters, TextTools.splitAndKitTVDBStrings(cursor
+        ViewTools.setValueOrPlaceholder(textViewWriters, TextTools.splitAndKitTVDBStrings(cursor
                 .getString(DetailsQuery.WRITERS)));
 
         // ratings
-        mRatingsContainer.setOnClickListener(new OnClickListener() {
+        containerRatings.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 rateEpisode();
             }
         });
-        CheatSheet.setup(mRatingsContainer, R.string.action_rate);
+        CheatSheet.setup(containerRatings, R.string.action_rate);
 
         // trakt rating
-        mTextRating.setText(
+        textViewRating.setText(
                 TraktTools.buildRatingString(cursor.getDouble(DetailsQuery.RATING_GLOBAL)));
-        mTextRatingVotes.setText(TraktTools.buildRatingVotesString(getActivity(),
+        textViewRatingVotes.setText(TraktTools.buildRatingVotesString(getActivity(),
                 cursor.getInt(DetailsQuery.RATING_VOTES)));
 
         // user rating
-        mTextUserRating.setText(TraktTools.buildUserRatingString(getActivity(),
+        textViewRatingUser.setText(TraktTools.buildUserRatingString(getActivity(),
                 cursor.getInt(DetailsQuery.RATING_USER)));
 
         // episode image
         final String imagePath = cursor.getString(DetailsQuery.IMAGE);
-        mImageContainer.setOnClickListener(new OnClickListener() {
+        containerImage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
@@ -502,7 +503,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // watched button
         Resources.Theme theme = getActivity().getTheme();
-        boolean isWatched = EpisodeTools.isWatched(mEpisodeFlag);
+        boolean isWatched = EpisodeTools.isWatched(episodeFlag);
         if (isWatched) {
             ViewTools.setVectorDrawableTop(theme, buttonWatch, R.drawable.ic_watched_24dp);
         } else {
@@ -520,8 +521,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 : R.string.action_watched);
 
         // collected button
-        mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1;
-        if (mCollected) {
+        collected = cursor.getInt(DetailsQuery.COLLECTED) == 1;
+        if (collected) {
             ViewTools.setVectorDrawableTop(theme, buttonCollect, R.drawable.ic_collected_24dp);
         } else {
             ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
@@ -533,9 +534,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 Utils.trackAction(getActivity(), TAG, "Toggle collected");
             }
         });
-        buttonCollect.setText(mCollected
+        buttonCollect.setText(collected
                 ? R.string.action_collection_remove : R.string.action_collection_add);
-        CheatSheet.setup(buttonCollect, mCollected
+        CheatSheet.setup(buttonCollect, collected
                 ? R.string.action_collection_remove : R.string.action_collection_add);
 
         // skip button
@@ -545,7 +546,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         } else {
             buttonSkip.setVisibility(View.VISIBLE);
 
-            boolean isSkipped = EpisodeTools.isSkipped(mEpisodeFlag);
+            boolean isSkipped = EpisodeTools.isSkipped(episodeFlag);
             if (isSkipped) {
                 ViewTools.setVectorDrawableTop(theme, buttonSkip, R.drawable.ic_skipped_24dp);
             } else {
@@ -574,14 +575,14 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         ServiceUtils.setUpImdbButton(imdbId, imdbButton, TAG);
         // TVDb
         final int seasonTvdbId = cursor.getInt(DetailsQuery.SEASON_ID);
-        ServiceUtils.setUpTvdbButton(mShowTvdbId, seasonTvdbId, getEpisodeTvdbId(), tvdbButton,
+        ServiceUtils.setUpTvdbButton(showTvdbId, seasonTvdbId, getEpisodeTvdbId(), tvdbButton,
                 TAG);
         // trakt comments
         commentsButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), TraktCommentsActivity.class);
-                intent.putExtras(TraktCommentsActivity.createInitBundleEpisode(mEpisodeTitle,
+                intent.putExtras(TraktCommentsActivity.createInitBundleEpisode(episodeTitle,
                         getEpisodeTvdbId()
                 ));
                 Utils.startActivityWithAnimation(getActivity(), intent, v);
@@ -589,7 +590,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             }
         });
 
-        mEpisodeContainer.setVisibility(View.VISIBLE);
+        containerEpisode.setVisibility(View.VISIBLE);
 
         loadDetails(cursor);
     }
@@ -599,14 +600,14 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         if (detailsTask == null || detailsTask.getStatus() == AsyncTask.Status.FINISHED) {
             long lastEdited = cursor.getLong(DetailsQuery.LAST_EDITED);
             long lastUpdated = cursor.getLong(DetailsQuery.LAST_UPDATED);
-            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(getContext(), mShowTvdbId,
+            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(getContext(), showTvdbId,
                     getEpisodeTvdbId(), lastEdited, lastUpdated);
         }
 
         // update trakt ratings
         if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {
-            ratingsTask = new TraktRatingsTask(getContext(), mShowTvdbId,
-                    getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber);
+            ratingsTask = new TraktRatingsTask(getContext(), showTvdbId,
+                    getEpisodeTvdbId(), seasonNumber, episodeNumber);
             ratingsTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
@@ -618,47 +619,48 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     }
 
     private void shareEpisode() {
-        if (mEpisodeTitle == null || mShowTitle == null) {
+        if (episodeTitle == null || showTitle == null) {
             return;
         }
-        ShareUtils.shareEpisode(getActivity(), getEpisodeTvdbId(), mSeasonNumber, mEpisodeNumber,
-                mShowTitle, mEpisodeTitle);
+        ShareUtils.shareEpisode(getActivity(), getEpisodeTvdbId(), seasonNumber, episodeNumber,
+                showTitle, episodeTitle);
         Utils.trackAction(getActivity(), TAG, "Share");
     }
 
     private void loadImage(String imagePath, boolean hideDetails) {
         // immediately hide container if there is no image
         if (TextUtils.isEmpty(imagePath)) {
-            mImageContainer.setVisibility(View.GONE);
+            containerImage.setVisibility(View.GONE);
             return;
         }
 
         if (hideDetails) {
             // show image placeholder
-            mEpisodeImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            mEpisodeImage.setImageResource(R.drawable.ic_image_missing);
+            imageViewEpisode.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            imageViewEpisode.setImageResource(R.drawable.ic_image_missing);
         } else {
             // try loading image
-            mImageContainer.setVisibility(View.VISIBLE);
+            containerImage.setVisibility(View.VISIBLE);
             ServiceUtils.loadWithPicasso(getActivity(), TvdbImageTools.fullSizeUrl(imagePath))
                     .error(R.drawable.ic_image_missing)
-                    .into(mEpisodeImage,
+                    .into(imageViewEpisode,
                             new Callback() {
                                 @Override
                                 public void onSuccess() {
-                                    mEpisodeImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                                    imageViewEpisode.setScaleType(ImageView.ScaleType.CENTER_CROP);
                                 }
 
                                 @Override
                                 public void onError() {
-                                    mEpisodeImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                    imageViewEpisode.setScaleType(
+                                            ImageView.ScaleType.CENTER_INSIDE);
                                 }
                             }
                     );
         }
     }
 
-    private LoaderManager.LoaderCallbacks<List<Action>> mEpisodeActionsLoaderCallbacks =
+    private LoaderManager.LoaderCallbacks<List<Action>> actionsLoaderCallbacks =
             new LoaderManager.LoaderCallbacks<List<Action>>() {
                 @Override
                 public Loader<List<Action>> onCreateLoader(int id, Bundle args) {
@@ -679,7 +681,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                                 getEpisodeTvdbId());
                     }
                     ActionsHelper.populateActions(getActivity().getLayoutInflater(),
-                            getActivity().getTheme(), mActionsContainer, data, TAG);
+                            getActivity().getTheme(), containerActions, data, TAG);
                 }
 
                 @Override
@@ -692,10 +694,10 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         Bundle args = new Bundle();
         args.putInt(KEY_EPISODE_TVDB_ID, getEpisodeTvdbId());
         getLoaderManager().restartLoader(EpisodesActivity.ACTIONS_LOADER_ID, args,
-                mEpisodeActionsLoaderCallbacks);
+                actionsLoaderCallbacks);
     }
 
-    Runnable mEpisodeActionsRunnable = new Runnable() {
+    Runnable actionsRunnable = new Runnable() {
         @Override
         public void run() {
             loadEpisodeActions();
@@ -703,8 +705,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     };
 
     public void loadEpisodeActionsDelayed() {
-        mHandler.removeCallbacks(mEpisodeActionsRunnable);
-        mHandler.postDelayed(mEpisodeActionsRunnable,
+        handler.removeCallbacks(actionsRunnable);
+        handler.postDelayed(actionsRunnable,
                 EpisodeActionsContract.ACTION_LOADER_DELAY_MILLIS);
     }
 

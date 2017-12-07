@@ -35,7 +35,7 @@
   <string name="add_to_homescreen">எளியவழி</string>
   <string name="action_open">திற</string>
   <string name="sync_manually">கைமுறையாக ஒத்திசை</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_and_update">ஒத்திசை &amp; புதுப்பி</string>
   <string name="sync_and_download_all">Sync &amp; Download all</string>
   <!-- Search -->
   <string name="clear_search_history">தேடல் வரலாற்றை நீக்கு</string>
@@ -46,10 +46,10 @@
   <string name="norating">n/a</string>
   <string name="unknown">அறியாத</string>
   <string name="offline">பிணையத்துடன் இணைக்கவும், பிறகு மீண்டும் முயற்சிக்கவும்.</string>
-  <string name="app_not_available">எந்த பயன்பாட்டு நிரலும் இது.</string>
+  <string name="app_not_available">No app available to handle this</string>
   <string name="people_empty">யாரும் இங்கே?! மீண்டும் முயற்சிக்க தொடர்பு.</string>
   <string name="database_error">தரவு மாற்ற முடியவில்லை.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
@@ -257,8 +257,8 @@
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">பசோதனை</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
   <string name="hexagon_signin">உள்நுழைக</string>
   <string name="hexagon_signout">வெளியில் செல்லவும்</string>
   <string name="hexagon_setup_incomplete">SeriesGuide மேகம் அமைக்கிறது நிறைவடையவில்லை.</string>
@@ -268,7 +268,7 @@
   <string name="hexagon_remove_account_failure">கணக்கை அகற்ற முடியவில்லை.</string>
   <string name="hexagon_remove_account_confirmation">உங்கள் கணக்கு அகற்றுவது இருக்கும் அனைத்து காட்சிகள் மற்றும் திரைப்படங்கள் இருந்து நீக்க SeriesGuide மேகம். மற்ற இணைக்கப்பட்ட சாதனங்கள் நன்றாக அதை அகற்ற உறுதி.</string>
   <string name="hexagon_api_queued">SeriesGuide மேகம் அனுப்புகிறது.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
   <string name="hexagon_google_play_missing">SeriesGuide மேகம் பயன்படுத்த, விளையாட சேவைகளை Google தேவைப்படுகின்றது.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Trakt அனுப்புகிறது.</string>
@@ -382,7 +382,7 @@
   <string name="pref_theme">கருப்பொருள்</string>
   <!-- Other advanced settings -->
   <string name="pref_other">மற்ற</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update content</string>
   <string name="pref_autobackup">தானியங்கு மறுபிரதி</string>
   <string name="pref_autobackupsummary">உங்கள் காட்சிகள், பட்டியல்கள் மற்றும் திரைப்படங்கள் வார மறுபிரதி</string>
   <string name="backup">மறுபிரதி/மீட்டெடுத்தல்</string>
@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">உங்கள் சாதனத்தில் இருந்து அனைத்து தேக்கக படிமங்களை அகற்று</string>
   <string name="pref_ganalyticssummary">Google சேவைக்கு பெயரிலா பயன்பாட்டு புள்ளிவிவரம் அனுப்பு</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">அனைத்து மெட்டா-தரவு விளக்கங்களும், நடிகர்கள், தரமதிப்பு போன்ற அடங்கும்.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">மறுபிரதி கோப்புறை</string>
   <string name="backup_version">தகவல்தள பதிப்பிற்கு</string>
   <string name="backup_failed_file_access">மறுபிரதி எடு முடியாது. மறுபிரதி கோப்பு அல்ல கண்டறியப்பட்ட அல்லது இயலும் அணுக.</string>
@@ -439,6 +439,7 @@
   <string name="pref_notifications_treshold">எப்போது அறிவிக்க</string>
   <string name="pref_notifications_select_shows">Select shows</string>
   <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notification_channel_errors">Errors</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (சிறிய)</string>
   <!-- List Widget -->

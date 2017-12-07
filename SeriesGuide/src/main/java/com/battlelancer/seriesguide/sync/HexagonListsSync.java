@@ -282,8 +282,12 @@ public class HexagonListsSync {
             lists.add(list);
             // add list properties
             String listId = listsQuery.getString(ListsTools.Query.LIST_ID);
+            String listName = listsQuery.getString(ListsTools.Query.NAME);
+            if (TextUtils.isEmpty(listId)) {
+                continue; // skip, no list id
+            }
             list.setListId(listId);
-            list.setName(listsQuery.getString(ListsTools.Query.NAME));
+            list.setName(listName);
             int order = listsQuery.getInt(ListsTools.Query.ORDER);
             if (order != 0) {
                 list.setOrder(order);

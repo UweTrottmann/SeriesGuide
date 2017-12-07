@@ -13,8 +13,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.text.format.DateUtils;
@@ -23,18 +21,38 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import timber.log.Timber;
 
+/**
+ * <p>Useful commands for testing:
+ *
+ * <p>Dump alarms:
+ * <pre>{@code
+ * adb shell dumpsys alarm > alarms.txt
+ * }</pre>
+ *
+ * <p>Note: Doze mode and App Standby should have no effect on the alarm. Instead turn off the
+ * device screen.
+ *
+ * <p>https://developer.android.com/training/monitoring-device-state/doze-standby.html
+ */
 @TargetApi(11)
 public class ListWidgetProvider extends AppWidgetProvider {
 
-    public static final String UPDATE = "com.battlelancer.seriesguide.appwidget.UPDATE";
+    public static final String ACTION_DATA_CHANGED
+            = "com.battlelancer.seriesguide.appwidget.UPDATE";
     public static final int REQUEST_CODE = 195;
 
-    public static final long REPETITION_INTERVAL = 5 * DateUtils.MINUTE_IN_MILLIS;
+    private static final long REPETITION_INTERVAL = 5 * DateUtils.MINUTE_IN_MILLIS;
 
     private static final int DIP_THRESHOLD_COMPACT_LAYOUT = 80;
+
+    /**
+     * Send broadcast to update lists of all list widgets.
+     */
+    public static void notifyDataChanged(Context context) {
+        context.getApplicationContext().sendBroadcast(getDataChangedIntent(context));
+    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -44,11 +62,21 @@ public class ListWidgetProvider extends AppWidgetProvider {
             return;
         }
 
-        // check if we received our update alarm
-        if (UPDATE.equals(intent.getAction())) {
+        if (ACTION_DATA_CHANGED.equals(intent.getAction())) {
             // trigger refresh of list widgets
-            Timber.d("onReceive: received widget UPDATE alarm.");
-            notifyAllAppWidgetsViewDataChanged(context);
+            Timber.d("onReceive: widget DATA_CHANGED action.");
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            if (appWidgetManager == null) {
+                return;
+            }
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context,
+                    ListWidgetProvider.class));
+            if (appWidgetIds == null || appWidgetIds.length == 0) {
+                return;
+            }
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_view);
+
+            scheduleWidgetUpdate(context);
         } else {
             super.onReceive(context, intent);
         }
@@ -59,32 +87,10 @@ public class ListWidgetProvider extends AppWidgetProvider {
         // remove the update alarm if the last widget is gone
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (am != null) {
-            PendingIntent pi = getUpdatePendingIntent(context);
+            PendingIntent pi = getDataChangedPendingIntent(context);
             am.cancel(pi);
             Timber.d("onDisabled: canceled widget UPDATE alarm.");
         }
-    }
-
-    /**
-     * Notifies all list widgets bound to this provider to update their views.
-     */
-    public static void notifyAllAppWidgetsViewDataChanged(@Nullable Context context) {
-        if (context == null) {
-            return;
-        }
-        // use app context as this may be called by activities that can be destroyed
-        context = context.getApplicationContext();
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        if (appWidgetManager == null) {
-            return;
-        }
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context,
-                ListWidgetProvider.class));
-        if (appWidgetIds == null || appWidgetIds.length == 0) {
-            return;
-        }
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_view);
-        Timber.d("notifyAllAppWidgetsViewDataChanged: updated list widget contents.");
     }
 
     @Override
@@ -93,14 +99,19 @@ public class ListWidgetProvider extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, null);
         }
+        scheduleWidgetUpdate(context);
+    }
 
+    private void scheduleWidgetUpdate(Context context) {
         // set an alarm to update widgets every x mins if the device is awake
+        // use one-shot alarm as repeating alarms get batched while the device is asleep
+        // and are then *all* delivered
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (am != null) {
-            PendingIntent pi = getUpdatePendingIntent(context);
-            am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()
-                    + REPETITION_INTERVAL, REPETITION_INTERVAL, pi);
-            Timber.d("onUpdate: scheduled widget UPDATE alarm.");
+            PendingIntent pi = getDataChangedPendingIntent(context);
+            am.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()
+                    + REPETITION_INTERVAL, pi);
+            Timber.d("scheduled widget UPDATE alarm.");
         }
     }
 
@@ -219,8 +230,16 @@ public class ListWidgetProvider extends AppWidgetProvider {
         return false;
     }
 
-    private static PendingIntent getUpdatePendingIntent(Context context) {
-        Intent update = new Intent(UPDATE);
-        return PendingIntent.getBroadcast(context, REQUEST_CODE, update, 0);
+    private PendingIntent getDataChangedPendingIntent(Context context) {
+        return PendingIntent.getBroadcast(context, REQUEST_CODE, getDataChangedIntent(context),
+                PendingIntent.FLAG_UPDATE_CURRENT);
     }
+
+    private static Intent getDataChangedIntent(Context context) {
+        // use explicit intent to work around implicit broadcast restrictions on O+
+        Intent intent = new Intent(context, ListWidgetProvider.class);
+        intent.setAction(ACTION_DATA_CHANGED);
+        return intent;
+    }
+
 }

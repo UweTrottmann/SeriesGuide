@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.battlelancer.seriesguide.api" >
+
+    <!-- JobIntentService manages wake lock on its own pre-O -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" android:maxSdkVersion="25" />
+
+    <application>
+    </application>
+</manifest>

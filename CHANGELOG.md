@@ -5,6 +5,77 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 40
+----------
+*(2017-12-07)*
+
+* Extensions have changed (API v2): your enabled extensions are replaced with the default selection. 
+  You can enable yours again, though the extension may have to be updated by the developer.
+* SeriesGuide Cloud and trakt: For movies 'Set watched', 'Add to collection' and 'Add to watchlist'
+  is re-tried on failure, queued while offline.
+* Going up from the episode list or detail view goes directly to seasons.
+* Display placeholder episode title if 'No spoilers' is enabled.
+* Widget now updating more frequently on Android 8 (Oreo).
+* Add notification channel support on Android 8 (Oreo).
+
+#### 40-beta6
+*(2017-12-01)*
+
+* 🔧 Display placeholder episode title if 'No spoilers' is enabled.
+* 📝 Latest translations from crowdin.
+
+#### 40-beta6
+*(2017-12-01)*
+
+* 🔨 Support latest extensions interface. https://seriesgui.de/api/
+* 🔨 Notifications not displaying until using the app.
+* 🔨 Widget not updating frequently on Android 8 (Oreo).
+* 📝 Latest translations from crowdin.
+
+#### 40-beta5
+*(2017-11-23)*
+
+* 🔨 Issue where extensions may crash if SeriesGuide is in the background. Third-party 
+     extensions need to be updated to work again.
+* 🔨 Notifications not displaying on Android 8 (Oreo) while the device is asleep.
+* 🔨 Do not group digits in season or episode numbers.
+* 📝 Latest translations from crowdin.
+
+#### 40-beta4
+*(2017-11-15)*
+
+* 📝 Extensions have changed (API v2): your enabled extensions will be replaced by the default set. 
+     Existing extensions need to be updated and enabled to work again.
+* 🔧 Drop progress dialog when removing a show. 
+* 🔨 Localize more numbers (episodes, stats screen).
+* 📝 Targeting Android 8.0 (Oreo).
+* 📝 Latest translations from crowdin.
+
+#### 40-beta3
+*(2017-10-31)*
+
+* 🔨 Crash: services may start in the background. (Revert targeting Android 8.0)
+* 📝 Latest translations from crowdin.
+
+#### 40-beta2
+*(2017-10-27)*
+
+* 🔧 SeriesGuide Cloud and trakt: For movies 'Set watched', 'Add to collection' and 
+     'Add to watchlist' is re-tried on failure, queued while offline.
+* 🔧 trakt: when setting a movie watched, it is removed from your watchlist.
+* 📝 Latest translations from crowdin.
+* 📝 Targeting Android 8.0 (Oreo).
+
+#### 40-beta1
+*(2017-10-19)*
+
+* 🔧 Going up from episode list or page view goes directly to seasons list.
+* 🔧 Add notification channel support on Android 8.0 (Oreo).
+* 🔨 'Set all older watched' does not work if episodes released at the same time.
+* 🔨 Manual time offset not respected for unwatched and upcoming filters.
+* 🔨 Statistics are re-calculated when rotating or turning off screen, returning to app.
+* 📝 Latest translations from crowdin.
+
 Version 39
 ----------
 *(2017-10-12)*

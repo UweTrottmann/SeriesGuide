@@ -33,7 +33,7 @@
   <string name="action_display_all">Tümünü göster</string>
   <string name="web_search">Web araması</string>
   <string name="add_to_homescreen">Kısayol</string>
-  <string name="action_open">Açık</string>
+  <string name="action_open">Açın</string>
   <string name="sync_manually">Manuel senkronizasyon</string>
   <string name="sync_and_update">Senkronize Et &amp; Güncelle</string>
   <string name="sync_and_download_all">Senkronize Et &amp; Tümünü İndir</string>
@@ -51,7 +51,7 @@
   <string name="database_error">Veri değiştirilemedi.</string>
   <string name="reinstall_info">Ayarlardan yedeklemeyi deneyin. Uygulamayı yediden yükleyip, veri tabanınızı geri yükleyin.</string>
   <string name="api_error_generic">%s ile iletişim kurulamadı. Daha sonra tekrar deneyin.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">%s başarısız oldu</string>
   <!-- Sharing -->
   <string name="share">Paylaş</string>
   <string name="share_show">Diziyi paylaş</string>
@@ -89,8 +89,8 @@
   <string name="no_translation">%2$s\'de %1$s\'ye çevrilmiş herhangi bir açıklama bulunmamaktadır.</string>
   <string name="no_translation_title">Çevrilmedi</string>
   <string name="no_spoilers">Bazı detaylar spoiler önlemek için gizli kalır. Bunu kapatmak için ayarlara gidiniz.</string>
-  <string name="format_source">Source: %s</string>
-  <string name="format_last_edited">Last edited: %s</string>
+  <string name="format_source">Kaynak: %s</string>
+  <string name="format_last_edited">Son güncelleme: %s</string>
   <!-- Date and Time -->
   <string name="today">bugün</string>
   <string name="now">şimdi</string>
@@ -115,8 +115,8 @@
   <string name="delete_error">Dizi kaldırılamadı. Sonra tekrar deneyin.</string>
   <string name="delete_show">Kaldır</string>
   <string name="no_nextepisode">sonraki bölüm bulunamadı</string>
-  <string name="context_favorite">Favorilere Ekle</string>
-  <string name="context_unfavorite">Favorilerden Kaldır</string>
+  <string name="context_favorite">Favorilere ekle</string>
+  <string name="context_unfavorite">Favorilerden kaldır</string>
   <string name="favorited">Favorilere eklendi</string>
   <string name="unfavorited">Favorilerden kaldırıldı</string>
   <string name="action_episode_notifications_on">Bölüm bildirimlerini aç</string>
@@ -166,8 +166,8 @@
   <!-- Seasons -->
   <string name="season_allwatched">Tüm bölümler izlendi</string>
   <plurals name="other_episodes_plural">
-    <item quantity="one">%d diğer bölümler</item>
-    <item quantity="other">%d diğer bölümler</item>
+    <item quantity="one">%d diğer bölüm</item>
+    <item quantity="other">%d diğer bölüm</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
     <item quantity="one">%d yayınlanacak</item>
@@ -269,7 +269,7 @@
   <string name="hexagon_remove_account_confirmation">Hesabınızı kaldırdığınızda SeriesGuide Cloud üzerindeki bütün film ve dizileriniz silinecektir. Hesabınızı diğer bağlı cihazlardan da kaldırdığınızdan emin olun.</string>
   <string name="hexagon_api_queued">SeriesGuide bulutuna gönder.</string>
   <string name="hexagon_signed_out">SeriesGuide Bulut servisinden çıkış yapıldı.</string>
-  <string name="hexagon_google_play_missing">SeriesGuide Cloud\'u kullanabilmek için, Google Play Hizmetleri gereklidir.</string>
+  <string name="hexagon_google_play_missing">SeriesGuide Bulut\'u kullanabilmek için, Google Play Hizmetleri gereklidir.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">trakt\'e gönderiliyor.</string>
   <string name="checkin_success_trakt">trakt üzerinden %s girişi yapıldı.</string>
@@ -328,7 +328,7 @@
   <string name="pref_onlyseasoneps">Özel bölümleri gizle</string>
   <string name="pref_onlyseasonepssummary">Özel bölümler sezon listesi haricinde hiçbir yerde görünmez</string>
   <string name="pref_exactdates">Kesinleşmiş tarihleri göster</string>
-  <string name="pref_exactdates_summary">\"3 gün\" yerine \"31 Ekim\"</string>
+  <string name="pref_exactdates_summary">\"3 gün içinde\" yerine \"31 Ekim\"</string>
   <string name="pref_nospoilers">Spoiler önle</string>
   <string name="pref_nospoilers_summary">Bölümü izlenene kadar detayları gizle</string>
   <string name="pref_seasonsorting">Sezonları sırala&#8230;</string>
@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Tüm resim önbelleğini cihazınızdan silin</string>
   <string name="pref_ganalyticssummary">Kullanım istatistiklerini Google Servislerine anonim olarak gönder</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Öneriler, aktörler ve değerlendirmeler gibi bilgiler dâhil.</string>
+  <string name="backup_full_dump">Açıklamalar, ayrıntılar ve değerlendirmeler dahil</string>
   <string name="backup_path">Yedekleme klasörü</string>
   <string name="backup_version">Veritabanı versiyonu</string>
   <string name="backup_failed_file_access">Yedekleme başarısız. Bir yedek dosyası bulunamadı ya da dosyaya erişilemedi.</string>
@@ -439,6 +439,7 @@
   <string name="pref_notifications_treshold">Bildirim zamanı</string>
   <string name="pref_notifications_select_shows">Dizi seç</string>
   <string name="pref_notifications_select_shows_summary">Bildirimlerin etkinleştirildiği diziler (%d)</string>
+  <string name="pref_notification_channel_errors">Hatalar</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (dar)</string>
   <!-- List Widget -->
@@ -460,7 +461,7 @@
   <string name="action_upgrade">Tüm özellikleri aç</string>
   <string name="billing_action_subscribe">Abone ol</string>
   <string name="billing_action_pass">X Pass alın</string>
-  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+  <string name="billing_price_subscribe">%1$s/yıl, ücretsiz dene, %2$s üzerinden istediğin zaman iptal et</string>
   <string name="billing_price_pass">tek seferlik ödeme</string>
   <string name="upgrade_description">Bildirimler, temalar, daha fazla widgetlar gibi özellikleri acın ve uygulamayı geliştirmeme yardım edin.</string>
   <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>

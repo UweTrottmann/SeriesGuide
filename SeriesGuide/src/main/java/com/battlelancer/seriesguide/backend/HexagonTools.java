@@ -297,11 +297,7 @@ public class HexagonTools {
             Timber.e("%s: %s %s", action, responseException.getStatusCode(),
                     responseException.getStatusMessage());
         } else {
-            // for tracking only send exception name
-            Utils.trackCustomEvent(context, HEXAGON_ERROR_CATEGORY, action,
-                    e.getClass().getSimpleName());
-            // log like "action: Unable to resolve host"
-            Timber.e("%s: %s", action, e.getMessage());
+            Utils.trackFailedRequest(context, HEXAGON_ERROR_CATEGORY, action, e);
         }
     }
 

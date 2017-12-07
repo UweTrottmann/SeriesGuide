@@ -206,8 +206,7 @@ public class MoviesSearchFragment extends Fragment {
         @Override
         public void onClickMovie(int movieTmdbId, ImageView posterView) {
             // launch details activity
-            Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
-            intent.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, movieTmdbId);
+            Intent intent = MovieDetailsActivity.intentMovie(getActivity(), movieTmdbId);
             Utils.startActivityWithAnimation(getActivity(), intent, posterView);
         }
 

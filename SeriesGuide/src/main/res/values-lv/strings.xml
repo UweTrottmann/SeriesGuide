@@ -46,10 +46,10 @@
   <string name="norating">n/a</string>
   <string name="unknown">nezināms</string>
   <string name="offline">Lūdzu pievienojies internetam, un tad mēģini vēlreiz.</string>
-  <string name="app_not_available">Nav pieejama aplikācija, lai šo izdarītu.</string>
+  <string name="app_not_available">No app available to handle this</string>
   <string name="people_empty">Neviena te nav?! Pieskaries lai mēģinātu vēlreiz.</string>
-  <string name="database_error">Could not modify data.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="database_error">Could not modify data</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
@@ -231,7 +231,7 @@
   <string name="action_movies_sort_title">Nosaukums</string>
   <string name="action_movies_sort_release">Raidīšanas datums</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Could not calculate statistics</string>
   <string name="statistics_shows">Šovi</string>
   <string name="statistics_episodes">Epizodes</string>
   <string name="statistics_movies">Filmas</string>
@@ -264,19 +264,19 @@
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
   <string name="hexagon_signin">Ielogojies</string>
   <string name="hexagon_signout">Izlogoties</string>
   <string name="hexagon_setup_incomplete">SeriesGuide mākoņa uzstādīšana netika pabeigta.</string>
-  <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
+  <string name="hexagon_setup_fail_auth">Your Google account did not check out</string>
   <string name="hexagon_remove_account">Remove account</string>
-  <string name="hexagon_remove_account_success">Account obliterated.</string>
-  <string name="hexagon_remove_account_failure">Could not remove account.</string>
-  <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
+  <string name="hexagon_remove_account_success">Account obliterated</string>
+  <string name="hexagon_remove_account_failure">Could not remove account</string>
+  <string name="hexagon_remove_account_confirmation">This will delete your shows, lists and movies from SeriesGuide Cloud</string>
   <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
-  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
+  <string name="hexagon_google_play_missing">Google Play Services not installed</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Augšupieladēju uz trakt.</string>
   <string name="checkin_success_trakt">Iečekojies %s ar trakt.</string>
@@ -284,10 +284,10 @@
   <string name="traktcheckin_cancel">Pārraksti</string>
   <string name="traktcheckin_inprogress">Tu jau esi iečekojies citā epizodē vai filmā. Pārraksti savu iepriekšējo izvēli vai arī gaidi %s un mēģini vēlreiz.</string>
   <string name="traktcheckin_wait">Es gaidīšu</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">Sent to trakt</string>
   <string name="trakt_error_credentials">Kaut kas izgāzās. Lūdzu pārbaudi savus datus un mēģini vēlreiz.</string>
   <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt account</string>
   <string name="connect_trakt">Savieno trakt</string>
@@ -393,7 +393,7 @@
   <string name="pref_theme">Theme</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Citi</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update content</string>
   <string name="pref_autobackup">Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Dublēt/Atjaunot</string>
@@ -405,7 +405,7 @@
   <string name="clear_cache_summary">Noņemt visus kešatmiņā ievietotos attēlus no ierīces</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Ietvert visus metadatus, kā piemēram aprakstus, aktierus un vērtējumus.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Dublējuma mape</string>
   <string name="backup_version">Datu bāzes versija</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
@@ -423,12 +423,12 @@
   <string name="import_button">Atjaunot</string>
   <string name="backup_question">Tādējādi tiks pārrakstīts mapes pašreizējais dublējums!</string>
   <string name="import_question">Pašreizējais seriālu saraksts pazudīs! Pārliecinieties, ka dublējuma fails atrodas dublējuma mapē.</string>
-  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+  <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
   <string name="last_auto_backup">Pēdējais automātiskais dublējums: %s</string>
   <string name="restore_auto_backup">Atjaunot no automātiskā dublējuma</string>
-  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
-  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files</string>
+  <string name="autobackup_files_missing">To use auto backup, select valid backup files</string>
   <string name="no_file_selected">No file selected</string>
   <string name="action_select_file">Select file</string>
   <string name="backup_use_default_files">Use default backup files</string>
@@ -450,6 +450,7 @@
   <string name="pref_notifications_treshold">Kad paziņot</string>
   <string name="pref_notifications_select_shows">Select shows</string>
   <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notification_channel_errors">Errors</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (neliels)</string>
   <!-- List Widget -->
@@ -479,10 +480,10 @@
   <string name="subscription_expired">Abonements ir beidzies</string>
   <string name="subscription_expired_details">Tavs X funkciju abonements ir beidzies.</string>
   <!-- Amazon In-App Billing -->
-  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
-  <string name="subscription_unavailable">The subscription is currently not available.</string>
-  <string name="subscription_failed">Purchase not completed.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="subscription_not_signed_in">Sign into your Amazon account</string>
+  <string name="subscription_unavailable">The subscription is currently not available</string>
+  <string name="subscription_failed">Purchase not completed</string>
+  <string name="pass_unavailable">X Pass is currently not available</string>
   <!-- Extensions -->
   <string name="action_extensions_configure">Personalizēt papildinājumus</string>
   <string name="action_extensions_add">Pievienot papildinājumus</string>

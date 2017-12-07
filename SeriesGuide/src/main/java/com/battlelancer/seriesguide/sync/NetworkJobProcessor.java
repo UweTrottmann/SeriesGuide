@@ -9,17 +9,20 @@ import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.jobs.HexagonEpisodeJob;
+import com.battlelancer.seriesguide.jobs.HexagonMovieJob;
+import com.battlelancer.seriesguide.jobs.NetworkJob;
 import com.battlelancer.seriesguide.jobs.SgJobInfo;
 import com.battlelancer.seriesguide.jobs.TraktEpisodeJob;
+import com.battlelancer.seriesguide.jobs.TraktMovieJob;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
+import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -91,11 +94,13 @@ public class NetworkJobProcessor {
             }
             HexagonTools hexagonTools = SgApp.getServicesComponent(context).hexagonTools();
 
-            HexagonEpisodeJob hexagonJob = new HexagonEpisodeJob(hexagonTools, action, jobInfo);
-            JobResult result = hexagonJob.execute(context);
-            if (!result.successful) {
-                showNotification(jobId, createdAt, result);
-                return result.jobRemovable;
+            NetworkJob hexagonJob = getHexagonJobForAction(hexagonTools, action, jobInfo);
+            if (hexagonJob != null) {
+                JobResult result = hexagonJob.execute(context);
+                if (!result.successful) {
+                    showNotification(jobId, createdAt, result);
+                    return result.jobRemovable;
+                }
             }
         }
 
@@ -105,16 +110,55 @@ public class NetworkJobProcessor {
                 return false;
             }
 
-            TraktEpisodeJob traktJob = new TraktEpisodeJob(action, jobInfo, createdAt);
-            JobResult result = traktJob.execute(context);
-            // may need to show notification if successful (for not found error)
-            showNotification(jobId, createdAt, result);
-            if (!result.successful) {
-                return result.jobRemovable;
+            NetworkJob traktJob = getTraktJobForAction(action, jobInfo, createdAt);
+            if (traktJob != null) {
+                JobResult result = traktJob.execute(context);
+                // may need to show notification if successful (for not found error)
+                showNotification(jobId, createdAt, result);
+                if (!result.successful) {
+                    return result.jobRemovable;
+                }
             }
         }
 
         return true;
+    }
+
+    @Nullable
+    private NetworkJob getHexagonJobForAction(HexagonTools hexagonTools, JobAction action,
+            SgJobInfo jobInfo) {
+        switch (action) {
+            case EPISODE_COLLECTION:
+            case EPISODE_WATCHED_FLAG:
+                return new HexagonEpisodeJob(hexagonTools, action, jobInfo);
+            case MOVIE_COLLECTION_ADD:
+            case MOVIE_COLLECTION_REMOVE:
+            case MOVIE_WATCHLIST_ADD:
+            case MOVIE_WATCHLIST_REMOVE:
+                return new HexagonMovieJob(hexagonTools, action, jobInfo);
+            case MOVIE_WATCHED_SET:
+            case MOVIE_WATCHED_REMOVE:
+            default:
+                return null; // action not supported by hexagon
+        }
+    }
+
+    @Nullable
+    private NetworkJob getTraktJobForAction(JobAction action, SgJobInfo jobInfo, long createdAt) {
+        switch (action) {
+            case EPISODE_COLLECTION:
+            case EPISODE_WATCHED_FLAG:
+                return new TraktEpisodeJob(action, jobInfo, createdAt);
+            case MOVIE_COLLECTION_ADD:
+            case MOVIE_COLLECTION_REMOVE:
+            case MOVIE_WATCHLIST_ADD:
+            case MOVIE_WATCHLIST_REMOVE:
+            case MOVIE_WATCHED_SET:
+            case MOVIE_WATCHED_REMOVE:
+                return new TraktMovieJob(action, jobInfo, createdAt);
+            default:
+                return null; // action not supported by trakt
+        }
     }
 
     private void showNotification(long jobId, long jobCreatedAt, @NonNull JobResult result) {
@@ -122,7 +166,10 @@ public class NetworkJobProcessor {
             return; // missing required values
         }
 
-        NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder nb =
+                new NotificationCompat.Builder(context, SgApp.NOTIFICATION_CHANNEL_ERRORS);
+        NotificationSettings.setDefaultsForChannelErrors(context, nb);
+
         nb.setSmallIcon(R.drawable.ic_notification);
         // like: 'Failed: Remove from collection · BoJack Horseman'
         nb.setContentTitle(
@@ -132,10 +179,6 @@ public class NetworkJobProcessor {
                 getErrorDetails(result.item, result.error, result.action, jobCreatedAt)));
         nb.setContentIntent(result.contentIntent);
         nb.setAutoCancel(true);
-        nb.setColor(ContextCompat.getColor(context, R.color.accent_primary));
-        nb.setDefaults(NotificationCompat.DEFAULT_SOUND | NotificationCompat.DEFAULT_LIGHTS);
-        nb.setPriority(NotificationCompat.PRIORITY_HIGH);
-        nb.setCategory(NotificationCompat.CATEGORY_ERROR);
 
         NotificationManager nm = (NotificationManager) context.getSystemService(
                 Context.NOTIFICATION_SERVICE);

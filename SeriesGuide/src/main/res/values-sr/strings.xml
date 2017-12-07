@@ -46,10 +46,10 @@
   <string name="norating">непознато</string>
   <string name="unknown">непознато</string>
   <string name="offline">Спојите се на мрежу и покушајте поново.</string>
-  <string name="app_not_available">Немате потребну апликацију за ово.</string>
+  <string name="app_not_available">No app available to handle this</string>
   <string name="people_empty">Нема никога?! Поновите претрагу.</string>
   <string name="database_error">Није могуће променити податке.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
@@ -231,7 +231,7 @@
   <string name="action_movies_sort_title">Наслов</string>
   <string name="action_movies_sort_release">Датум емитовања</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Could not calculate statistics</string>
   <string name="statistics_shows">Серије</string>
   <string name="statistics_episodes">Епизоде</string>
   <string name="statistics_movies">Филмови</string>
@@ -264,8 +264,8 @@
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Експериментално</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
   <string name="hexagon_signin">Пријави се</string>
   <string name="hexagon_signout">Одјави се</string>
   <string name="hexagon_setup_incomplete">Подешавање SeriesGuide Cloud-а није обављено.</string>
@@ -275,7 +275,7 @@
   <string name="hexagon_remove_account_failure">Налог није уклоњен.</string>
   <string name="hexagon_remove_account_confirmation">Брисање вашег налога ће обрисати све серије и филмове са SeriesGuide Cloud. Побрините се да га обришете и са осталих повезаних уређаја.</string>
   <string name="hexagon_api_queued">Слање на SeriesGuide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
   <string name="hexagon_google_play_missing">Да би користили SeriesGuide Cloud, потребне су Google Play услуге.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Послато на тракт.</string>
@@ -287,7 +287,7 @@
   <string name="trakt_success">Пошаљу на Trakt.</string>
   <string name="trakt_error_credentials">Нешто није у реду. Молимо проверите Ваше акредитиве и покушајте поново.</string>
   <string name="trakt_error_not_exists">Није (још) доступно на Trakt-у. Покушајте поново касније.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt налог</string>
   <string name="connect_trakt">Повежи trakt</string>
@@ -393,7 +393,7 @@
   <string name="pref_theme">Тема</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Остало</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update content</string>
   <string name="pref_autobackup">Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Архивирање/ повраћај архиве</string>
@@ -405,7 +405,7 @@
   <string name="clear_cache_summary">Уклони све слике у кеш меморији вашег уређаја</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Обухвати све податке (попут описа, глумаца, оцене).</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Фасцикла за архивирање</string>
   <string name="backup_version">Верзија базе података</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
@@ -423,12 +423,12 @@
   <string name="import_button">Поврати архивирану ставку</string>
   <string name="backup_question">Ово ће уписати преко већ архивиране датотеке!</string>
   <string name="import_question">Тренутна листа серија ће бити изгубљена! Постарајте се да је ово већ архивирано у архивској фасцикли.</string>
-  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+  <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
   <string name="last_auto_backup">Задње аутоматско архивирање: %s</string>
   <string name="restore_auto_backup">Поврати податке</string>
-  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
-  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files</string>
+  <string name="autobackup_files_missing">To use auto backup, select valid backup files</string>
   <string name="no_file_selected">Нема одабраних фајлова</string>
   <string name="action_select_file">Изаберите фајл</string>
   <string name="backup_use_default_files">Use default backup files</string>
@@ -450,6 +450,7 @@
   <string name="pref_notifications_treshold">Кад да обавештава</string>
   <string name="pref_notifications_select_shows">Select shows</string>
   <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notification_channel_errors">Errors</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (мали)</string>
   <!-- List Widget -->

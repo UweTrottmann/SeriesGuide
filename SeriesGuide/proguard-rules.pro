@@ -56,13 +56,12 @@
 
 # OkHttp 3
 -dontwarn okhttp3.**
-
--keep class okhttp3.** { *; }
--keep interface okhttp3.** { *; }
+-dontwarn javax.annotation.**
+# A resource is loaded with a relative path so the package of this class must be preserved.
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
 
 # Okio
--dontwarn java.nio.file.*
--dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-dontwarn okio.**
 
 # Picasso
 # Using with OkHttp 3 downloader, but has references to OkHttp2
@@ -71,8 +70,6 @@
 # Retrofit 2.X
 # Platform calls Class.forName on types which do not exist on Android to determine platform.
 -dontnote retrofit2.Platform
-# Platform used when running on RoboVM on iOS. Will not be used at runtime.
--dontnote retrofit2.Platform$IOS$MainThreadExecutor
 # Platform used when running on Java 8 VMs. Will not be used at runtime.
 -dontwarn retrofit2.Platform$Java8
 # Retain generic type information for use by reflection by converters and adapters.
@@ -89,7 +86,9 @@
 ## Testing
 -dontwarn android.test.**
 
-# Assertj
--dontwarn org.assertj.core.**
--dontwarn org.junit.**
--dontwarn java.beans.**
+# Ignore some notes about unused classes referenced in method signatures
+-dontnote com.tonicartos.widget.stickygridheaders.**
+-dontnote com.uwetrottmann.thetvdb.**
+-dontnote com.uwetrottmann.tmdb2.**
+-dontnote com.uwetrottmann.trakt5.**
+-dontnote uk.co.senab.photoview.**

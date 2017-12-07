@@ -46,12 +46,12 @@
   <string name="norating">لا يوجد</string>
   <string name="unknown">غير معروف</string>
   <string name="offline">اتصل بشبكة، ثم حاول مرة أخرى.</string>
-  <string name="app_not_available">ليس هناك تطبيق متاح للتعامل مع هذا.</string>
+  <string name="app_not_available">ليس هناك تطبيق متاح للتعامل مع هذا</string>
   <string name="people_empty">لا أحد هنا ؟! قم باللمس من أجل المحاولة مرة أخرى.</string>
   <string name="database_error">لا يمكن تعديل البيانات.</string>
   <string name="reinstall_info">حاول أخد نسخة احتياطية، اعادة تثبيت البرنامج ومن ثم استعادة البيانات.</string>
   <string name="api_error_generic">لا يمكن الاتصال ب %s. الرجاء المحاولة لاحقا.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">فشل: %s</string>
   <!-- Sharing -->
   <string name="share">مشاركة</string>
   <string name="share_show">مشاركة المسلسل</string>
@@ -93,8 +93,8 @@
   <string name="no_translation">لا يوجد وصف باللغة %1$s على موقع %2$s.</string>
   <string name="no_translation_title">غير مترجمة</string>
   <string name="no_spoilers">يتم إخفاء بعض التفاصيل لمنع المفسدين. لإيقاف هذا الانتقال إلى إعدادات.</string>
-  <string name="format_source">Source: %s</string>
-  <string name="format_last_edited">Last edited: %s</string>
+  <string name="format_source">المصدر: %s</string>
+  <string name="format_last_edited">آخر تعديل: %s</string>
   <!-- Date and Time -->
   <string name="today">اليوم</string>
   <string name="now">الآن</string>
@@ -438,7 +438,7 @@
   <string name="clear_cache_summary">إزالة جميع الصور المخزنة مؤقتاً من الجهاز</string>
   <string name="pref_ganalyticssummary">سيتم إرسال إحصاءات مجهولة الهوية لخدمة جوجل</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">تشمل جميع البيانات الفوقية مثل الوصف، والممثلين ودرجات التقييم.</string>
+  <string name="backup_full_dump">يتضمن الأوصاف، و التفاصيل، و التقييمات</string>
   <string name="backup_path">مجلد النسخ الإحتياطي</string>
   <string name="backup_version">إصدار قاعدة البيانات</string>
   <string name="backup_failed_file_access">لايمكن عمل نسخ إحتياطي، ملف النسخة الإحتياطي لايمكن إجاده أو لا يمكن الوصل إليه.</string>
@@ -483,6 +483,7 @@
   <string name="pref_notifications_treshold">موعد التنبيه</string>
   <string name="pref_notifications_select_shows">اختار العروض</string>
   <string name="pref_notifications_select_shows_summary">يظهر عدد الاشعارات المتاحه للعروض (%d)</string>
+  <string name="pref_notification_channel_errors">أخطاء</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">دليل المسلسلات (صغير)</string>
   <!-- List Widget -->
@@ -504,7 +505,7 @@
   <string name="action_upgrade">فتح كافة الميزات</string>
   <string name="billing_action_subscribe">إشتراك</string>
   <string name="billing_action_pass">أحصل على X Pass</string>
-  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+  <string name="billing_price_subscribe">%1$s/سنة، جرب مجاناً، و قم بالإلغاء في أي وقت عبر %2$s</string>
   <string name="billing_price_pass">الشراء يكون مرة واحدة</string>
   <string name="upgrade_description">فتح جميع الميزات بما في ذلك التنبيهات والتصميم والمزيد من الميزات. مساعدتي في التحديثات المستقبلية.</string>
   <string name="upgrade_success">شكرا لك لدعم SeriesGuide! . لديك حق الوصول إلى كافة الميزات .</string>

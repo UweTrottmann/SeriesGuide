@@ -65,13 +65,13 @@ apiSecret=0000000000000000000000000000000000000000000000000000000000000000
 apiKey=0
 ```
 
-Now build any variant of the **free flavor**, for developing probably `freeDebug` (flavor + build type, see [instructions about product flavors][5]) defined in `SeriesGuide/build.gradle`.
+Now build any variant of the **pure flavor**, for developing probably `pureDebug` (flavor + build type, see [instructions about product flavors][5]) defined in `SeriesGuide/build.gradle`.
 
  [1]: https://seriesgui.de
  [2]: https://github.com/UweTrottmann/SeriesGuide/wiki/Beta
- [3]: http://tools.android.com/tech-docs/new-build-system/user-guide
+ [3]: https://developer.android.com/studio/build/index.html
  [4]: https://crowdin.com/project/seriesguide-translations
- [5]: http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Product-flavors
+ [5]: https://developer.android.com/studio/build/build-variants.html#product-flavors
  [6]: https://github.com/UweTrottmann/SeriesGuide/compare
  [7]: https://github.com/UweTrottmann/SeriesGuide/issues
  [8]: https://github.com/UweTrottmann/SeriesGuide/issues/new

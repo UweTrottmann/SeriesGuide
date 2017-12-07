@@ -32,22 +32,18 @@ public class PeopleFragment extends Fragment {
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
-    private OnShowPersonListener mListener = sDummyListener;
+    private ListView listView;
+    private EmptyView emptyView;
+    private PeopleAdapter adapter;
+    private ProgressBar progressBar;
 
-    /**
-     * The current activated item position. Only used on tablets.
-     */
-    private int mActivatedPosition = ListView.INVALID_POSITION;
-
-    private ListView mListView;
-    private EmptyView mEmptyView;
-    private PeopleAdapter mAdapter;
-    private ProgressBar mProgressBar;
-
-    private PeopleActivity.MediaType mMediaType;
-    private PeopleActivity.PeopleType mPeopleType;
-    private int mTmdbId;
-    private boolean mActivateOnItemClick;
+    private OnShowPersonListener onShowPersonListener = sDummyListener;
+    private PeopleActivity.MediaType mediaType;
+    private PeopleActivity.PeopleType peopleType;
+    private int tmdbId;
+    private boolean activateOnItemClick;
+    /** The current activated item position. Only used on tablets. */
+    private int activatedPosition = ListView.INVALID_POSITION;
 
     public interface OnShowPersonListener {
         void showPerson(View view, int tmdbId);
@@ -67,11 +63,11 @@ public class PeopleFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mMediaType = PeopleActivity.MediaType.valueOf(
+        mediaType = PeopleActivity.MediaType.valueOf(
                 getArguments().getString(PeopleActivity.InitBundle.MEDIA_TYPE));
-        mPeopleType = PeopleActivity.PeopleType.valueOf(
+        peopleType = PeopleActivity.PeopleType.valueOf(
                 getArguments().getString(PeopleActivity.InitBundle.PEOPLE_TYPE));
-        mTmdbId = getArguments().getInt(PeopleActivity.InitBundle.ITEM_TMDB_ID);
+        tmdbId = getArguments().getInt(PeopleActivity.InitBundle.ITEM_TMDB_ID);
     }
 
     @Override
@@ -79,18 +75,18 @@ public class PeopleFragment extends Fragment {
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_people, container, false);
 
-        mListView = rootView.findViewById(R.id.listViewPeople);
-        mEmptyView = rootView.findViewById(R.id.emptyViewPeople);
-        mEmptyView.setContentVisibility(View.GONE);
-        mListView.setEmptyView(mEmptyView);
+        listView = rootView.findViewById(R.id.listViewPeople);
+        emptyView = rootView.findViewById(R.id.emptyViewPeople);
+        emptyView.setContentVisibility(View.GONE);
+        listView.setEmptyView(emptyView);
 
         // When setting CHOICE_MODE_SINGLE, ListView will automatically
         // give items the 'activated' state when touched.
-        mListView.setChoiceMode(mActivateOnItemClick
+        listView.setChoiceMode(activateOnItemClick
                 ? ListView.CHOICE_MODE_SINGLE
                 : ListView.CHOICE_MODE_NONE);
 
-        mProgressBar = rootView.findViewById(R.id.progressBarPeople);
+        progressBar = rootView.findViewById(R.id.progressBarPeople);
 
         return rootView;
     }
@@ -111,7 +107,7 @@ public class PeopleFragment extends Fragment {
         super.onAttach(context);
 
         try {
-            mListener = (OnShowPersonListener) context;
+            onShowPersonListener = (OnShowPersonListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement OnShowPersonListener");
@@ -122,19 +118,19 @@ public class PeopleFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new PeopleAdapter(getActivity());
-        mListView.setAdapter(mAdapter);
+        adapter = new PeopleAdapter(getActivity());
+        listView.setAdapter(adapter);
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PeopleListHelper.Person person = mAdapter.getItem(position);
+                PeopleListHelper.Person person = adapter.getItem(position);
                 PeopleAdapter.ViewHolder viewHolder = (PeopleAdapter.ViewHolder) view.getTag();
-                mListener.showPerson(viewHolder.headshot, person.tmdbId);
+                onShowPersonListener.showPerson(viewHolder.headshot, person.tmdbId);
             }
         });
 
-        mEmptyView.setButtonClickListener(new View.OnClickListener() {
+        emptyView.setButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 refresh();
@@ -142,28 +138,28 @@ public class PeopleFragment extends Fragment {
         });
 
         getLoaderManager().initLoader(PeopleActivity.PEOPLE_LOADER_ID, null,
-                mCreditsLoaderCallbacks);
+                creditsLoaderCallbacks);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
 
-        mListener = sDummyListener;
+        onShowPersonListener = sDummyListener;
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (mActivatedPosition != ListView.INVALID_POSITION) {
+        if (activatedPosition != ListView.INVALID_POSITION) {
             // Serialize and persist the activated item position.
-            outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
+            outState.putInt(STATE_ACTIVATED_POSITION, activatedPosition);
         }
     }
 
     public void refresh() {
         getLoaderManager().restartLoader(PeopleActivity.PEOPLE_LOADER_ID, null,
-                mCreditsLoaderCallbacks);
+                creditsLoaderCallbacks);
     }
 
     /**
@@ -171,52 +167,52 @@ public class PeopleFragment extends Fragment {
      * 'activated' state when touched.
      */
     public void setActivateOnItemClick() {
-        mActivateOnItemClick = true;
+        activateOnItemClick = true;
     }
 
     private void setActivatedPosition(int position) {
         if (position == ListView.INVALID_POSITION) {
-            mListView.setItemChecked(mActivatedPosition, false);
+            listView.setItemChecked(activatedPosition, false);
         } else {
-            mListView.setItemChecked(position, true);
+            listView.setItemChecked(position, true);
         }
 
-        mActivatedPosition = position;
+        activatedPosition = position;
     }
 
     /**
      * Shows or hides a custom indeterminate progress indicator inside this activity layout.
      */
     private void setProgressVisibility(boolean isVisible) {
-        if (mProgressBar.getVisibility() == (isVisible ? View.VISIBLE : View.GONE)) {
+        if (progressBar.getVisibility() == (isVisible ? View.VISIBLE : View.GONE)) {
             // already in desired state, avoid replaying animation
             return;
         }
-        mProgressBar.startAnimation(AnimationUtils.loadAnimation(mProgressBar.getContext(),
+        progressBar.startAnimation(AnimationUtils.loadAnimation(progressBar.getContext(),
                 isVisible ? R.anim.fade_in : R.anim.fade_out));
-        mProgressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
     private void setEmptyMessage() {
         // display error message if we are offline
         if (!AndroidUtils.isNetworkConnected(getActivity())) {
-            mEmptyView.setMessage(R.string.offline);
+            emptyView.setMessage(R.string.offline);
         } else {
-            mEmptyView.setMessage(R.string.people_empty);
+            emptyView.setMessage(R.string.people_empty);
         }
-        mEmptyView.setContentVisibility(View.VISIBLE);
+        emptyView.setContentVisibility(View.VISIBLE);
     }
 
-    private LoaderManager.LoaderCallbacks<Credits> mCreditsLoaderCallbacks
+    private LoaderManager.LoaderCallbacks<Credits> creditsLoaderCallbacks
             = new LoaderManager.LoaderCallbacks<Credits>() {
         @Override
         public Loader<Credits> onCreateLoader(int id, Bundle args) {
             setProgressVisibility(true);
 
-            if (mMediaType == PeopleActivity.MediaType.MOVIE) {
-                return new MovieCreditsLoader(getContext(), mTmdbId);
+            if (mediaType == PeopleActivity.MediaType.MOVIE) {
+                return new MovieCreditsLoader(getContext(), tmdbId);
             } else {
-                return new ShowCreditsLoader(getContext(), mTmdbId, false);
+                return new ShowCreditsLoader(getContext(), tmdbId, false);
             }
         }
 
@@ -226,13 +222,13 @@ public class PeopleFragment extends Fragment {
             setEmptyMessage();
 
             if (data == null) {
-                mAdapter.setData(null);
+                adapter.setData(null);
                 return;
             }
-            if (mPeopleType == PeopleActivity.PeopleType.CAST) {
-                mAdapter.setData(PeopleListHelper.transformCastToPersonList(data.cast));
+            if (peopleType == PeopleActivity.PeopleType.CAST) {
+                adapter.setData(PeopleListHelper.transformCastToPersonList(data.cast));
             } else {
-                mAdapter.setData(PeopleListHelper.transformCrewToPersonList(data.crew));
+                adapter.setData(PeopleListHelper.transformCrewToPersonList(data.crew));
             }
         }
 

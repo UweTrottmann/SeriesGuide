@@ -46,12 +46,12 @@
   <string name="norating">n/a</string>
   <string name="unknown">tidak diketahui</string>
   <string name="offline">Hubungkan ke jaringan, kemudian coba lagi.</string>
-  <string name="app_not_available">Tidak ada aplikasi yang tersedia untuk menangani hal ini.</string>
+  <string name="app_not_available">Tidak ada aplikasi yang tersedia untuk menangani hal ini</string>
   <string name="people_empty">Tidak ada siapa-siapa di sini? Sentuh untuk mencoba lagi.</string>
   <string name="database_error">Tidak dapat merubah data.</string>
   <string name="reinstall_info">Coba cadangkan di pengaturan, pasang ulang dan pulihkan.</string>
   <string name="api_error_generic">Tidak dapat bicara ke %s. Coba lagi nanti.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">Gagal: %s</string>
   <!-- Sharing -->
   <string name="share">Bagikan</string>
   <string name="share_show">Bagikan acara</string>
@@ -88,8 +88,8 @@
   <string name="no_translation">Tidak ada deskripsi yang diterjemahkan ke %1$s tersedia di %2$s.</string>
   <string name="no_translation_title">Belum diterjemahkan</string>
   <string name="no_spoilers">Beberapa detail telah disembunyikan untuk mencegah bocoran. Untuk menonaktikan ini pergi ke pengaturan.</string>
-  <string name="format_source">Source: %s</string>
-  <string name="format_last_edited">Last edited: %s</string>
+  <string name="format_source">Sumber: %s</string>
+  <string name="format_last_edited">Terakhir diubah: %s</string>
   <!-- Date and Time -->
   <string name="today">hari ini</string>
   <string name="now">sekarang</string>
@@ -246,7 +246,7 @@
   <string name="feature_supported">Didukung</string>
   <string name="feature_not_supported">Tidak Didukung</string>
   <string name="feature_history">Riwayat pribadi dan teman</string>
-  <string name="feature_comments">Post comments</string>
+  <string name="feature_comments">Kirim komentar</string>
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimentasi</string>
@@ -383,7 +383,7 @@
   <string name="clear_cache_summary">Hapus semua cache gambar dari perangkat Anda</string>
   <string name="pref_ganalyticssummary">Kirim statistik penggunaan anonim ke layanan Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Termasuk semua meta-data seperti deskripsi, aktor, dan penilaian.</string>
+  <string name="backup_full_dump">Termasuk deskripsi, rincian, peringkat</string>
   <string name="backup_path">Folder cadangan</string>
   <string name="backup_version">Versi database</string>
   <string name="backup_failed_file_access">Tidak dapat mencadangkan. File cadangan tidak dapat ditemukan atau diakses.</string>
@@ -428,6 +428,7 @@
   <string name="pref_notifications_treshold">Kapan harus memberitahu</string>
   <string name="pref_notifications_select_shows">Pilih acara</string>
   <string name="pref_notifications_select_shows_summary">Acara yang memiliki Pemberitahuan aktif (%d)</string>
+  <string name="pref_notification_channel_errors">Kesalahan</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (kecil)</string>
   <!-- List Widget -->
@@ -449,7 +450,7 @@
   <string name="action_upgrade">Buka semua fitur</string>
   <string name="billing_action_subscribe">Berlangganan</string>
   <string name="billing_action_pass">Dapatkan X Pass</string>
-  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+  <string name="billing_price_subscribe">%1$s/tahun, coba gratis, batalkan Kapan saja melalui %2$s</string>
   <string name="billing_price_pass">pembelian satu kali</string>
   <string name="upgrade_description">Buka semua fitur termasuk pemberitahuan, tema dan lebih banyak pilihan daftar widget. Membantu saya membuat pembaruan di masa mendatang.</string>
   <string name="upgrade_success">Terima kasih telah mendukung SeriesGuide! Anda memiliki akses ke semua fitur.</string>

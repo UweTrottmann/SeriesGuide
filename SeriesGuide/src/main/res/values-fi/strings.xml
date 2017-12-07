@@ -35,7 +35,7 @@
   <string name="add_to_homescreen">Pikakuvake</string>
   <string name="action_open">Avaa</string>
   <string name="sync_manually">Synkronoi manuaalisesti</string>
-  <string name="sync_and_update">Synkronoi ja päivitä</string>
+  <string name="sync_and_update">Synkronoi ja päivittää</string>
   <string name="sync_and_download_all">Synkronoi ja lataa kaikki</string>
   <!-- Search -->
   <string name="clear_search_history">Tyhjennä hakuhistoria</string>
@@ -46,7 +46,7 @@
   <string name="norating">puuttuu</string>
   <string name="unknown">tuntematon</string>
   <string name="offline">Muodosta yhteys verkkoon ja yritä uudelleen.</string>
-  <string name="app_not_available">Tähän toimintoon ei löydy sovellusta.</string>
+  <string name="app_not_available">Tähän toimintoon ei löydy sovellusta</string>
   <string name="people_empty">Onko kukaan täällä?! Kosketa yrittääksesi uudelleen.</string>
   <string name="database_error">Tietojen muokkaaminen ei onnistunut.</string>
   <string name="reinstall_info">Yritä varmuuskopioida asetuksista, asenna uudelleen ja palauta.</string>
@@ -123,7 +123,7 @@
   <string name="action_episode_notifications_off">Poista jaksoilmoitukset käytöstä</string>
   <string name="context_hide">Piilota</string>
   <string name="context_unhide">Paljasta</string>
-  <string name="hidden">Piilotettu ohjelma</string>
+  <string name="hidden">Siirretty piilotettuihin</string>
   <string name="unhidden">Paljasta ohjelma</string>
   <string name="action_shows_add">Lisää ohjelma</string>
   <string name="action_shows_filter">Suodata ohjelmat</string>
@@ -218,7 +218,7 @@
   <string name="watchlist_added">Lisätty seurantalistalle</string>
   <string name="watchlist_removed">Poistettu seurantalistalta</string>
   <string name="movies_search_hint">Elokuvan nimi</string>
-  <string name="movies_collection_empty">Et ole lisännyt elokuvien kokoelmaasi.</string>
+  <string name="movies_collection_empty">Et ole lisännyt elokuvia kokoelmaasi.</string>
   <string name="movies_watchlist_empty">Et ole lisännyt elokuvia seurantalistallesi.</string>
   <string name="trailer">Traileri</string>
   <string name="movie_cast">Näyttelijät</string>
@@ -256,7 +256,7 @@
   <string name="feature_comments">Lähetä kommentteja</string>
   <string name="feature_sync">Synkronointi</string>
   <!-- Hexagon -->
-  <string name="hexagon_warning">Kokeellista ja helposti syttyvää!</string>
+  <string name="hexagon_warning">Kokeellinen</string>
   <string name="hexagon_description">SeriesGuide Cloud auttaa varmuuskopioimaan ja synkronoimaan ohjelmat, listat ja elokuvat.</string>
   <string name="hexagon_warning_trakt">Kun olet kirjautuneena sisään SeriesGuide Cloudiin, jotkut traktin ominaisuudet eivät ole käytettävissä.</string>
   <string name="hexagon_signin">Kirjaudu sisään</string>
@@ -268,7 +268,7 @@
   <string name="hexagon_remove_account_failure">Tiliä ei voitu poistaa.</string>
   <string name="hexagon_remove_account_confirmation">Tilin poistaminen poistaa kaikki ohjelmat ja elokuvat SeriesGuide Cloud -palvelimelta. Muista poistaa ne myös muista yhdistetyistä laitteista.</string>
   <string name="hexagon_api_queued">Lähetetään SeriesGuide Cloudiin.</string>
-  <string name="hexagon_signed_out">Kirjauduttu ulos seriesGuide Cloudista.</string>
+  <string name="hexagon_signed_out">Kirjauduttu ulos SeriesGuide Cloudista.</string>
   <string name="hexagon_google_play_missing">SeriesGuide Cloudin käyttämiseen vaaditaan Google Play Palvelut.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Lähetetään traktiin.</string>
@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Poistaa kaikki välimuistiin tallennetut kuvat</string>
   <string name="pref_ganalyticssummary">Lähetä anonyymia käyttötilastoja Googlen palveluun</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Sisällytä kaikki metatiedot, kuten kuvaukset, näyttelijät ja arvosanat.</string>
+  <string name="backup_full_dump">Sisältää kuvaukset, tiedot, arvosanat</string>
   <string name="backup_path">Varmuuskopiokansio</string>
   <string name="backup_version">Tietokannan versio</string>
   <string name="backup_failed_file_access">Ei voida varmuuskopioida. Varmuuskopiota ei löydy tai sitä ei voida käyttää.</string>
@@ -439,6 +439,7 @@
   <string name="pref_notifications_treshold">Milloin ilmoittaa</string>
   <string name="pref_notifications_select_shows">Valitse ohjelmat</string>
   <string name="pref_notifications_select_shows_summary">Ohjelmat, joissa ilmoitukset ovat käytössä (%d)</string>
+  <string name="pref_notification_channel_errors">Virheet</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (pieni)</string>
   <!-- List Widget -->

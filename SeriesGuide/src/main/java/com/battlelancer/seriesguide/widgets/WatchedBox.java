@@ -14,20 +14,20 @@ import com.battlelancer.seriesguide.util.ViewTools;
  */
 public class WatchedBox extends AppCompatImageView {
 
-    private int mEpisodeFlag;
+    private int episodeFlag;
     private VectorDrawableCompat drawableWatch;
 
     public WatchedBox(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         if (isInEditMode()) {
-            mEpisodeFlag = EpisodeFlags.UNWATCHED;
+            episodeFlag = EpisodeFlags.UNWATCHED;
             updateStateImage();
         }
     }
 
     public int getEpisodeFlag() {
-        return mEpisodeFlag;
+        return episodeFlag;
     }
 
     /**
@@ -35,12 +35,12 @@ public class WatchedBox extends AppCompatImageView {
      */
     public void setEpisodeFlag(int episodeFlag) {
         EpisodeTools.validateFlags(episodeFlag);
-        mEpisodeFlag = episodeFlag;
+        this.episodeFlag = episodeFlag;
         updateStateImage();
     }
 
     private void updateStateImage() {
-        switch (mEpisodeFlag) {
+        switch (episodeFlag) {
             case EpisodeFlags.WATCHED: {
                 setImageResource(R.drawable.ic_watched_24dp);
                 break;

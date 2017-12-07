@@ -41,6 +41,7 @@ import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
 import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
 import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.TabClickEvent;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.FirstRunView;
@@ -150,7 +151,7 @@ public class ShowsFragment extends Fragment implements
         // listen for some settings changes
         PreferenceManager
                 .getDefaultSharedPreferences(getActivity())
-                .registerOnSharedPreferenceChangeListener(mPrefsListener);
+                .registerOnSharedPreferenceChangeListener(onPreferenceChangeListener);
 
         setHasOptionsMenu(true);
     }
@@ -231,7 +232,7 @@ public class ShowsFragment extends Fragment implements
     public void onDestroy() {
         super.onDestroy();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        prefs.unregisterOnSharedPreferenceChangeListener(mPrefsListener);
+        prefs.unregisterOnSharedPreferenceChangeListener(onPreferenceChangeListener);
     }
 
     @Override
@@ -396,7 +397,7 @@ public class ShowsFragment extends Fragment implements
             changeSortOrFilter(DisplaySettings.KEY_SORT_IGNORE_ARTICLE,
                     isSortIgnoreArticles);
             // refresh all list widgets
-            ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getContext());
+            ListWidgetProvider.notifyDataChanged(getContext());
 
             Utils.trackAction(getActivity(), TAG, "Sort Ignore Articles");
             return true;
@@ -496,7 +497,7 @@ public class ShowsFragment extends Fragment implements
             selection.append(Shows.FAVORITE).append("=1");
         }
 
-        final long timeInAnHour = System.currentTimeMillis() + DateUtils.HOUR_IN_MILLIS;
+        final long timeInAnHour = TimeTools.getCurrentTime(getContext()) + DateUtils.HOUR_IN_MILLIS;
 
         // restrict to shows with a next episode?
         if (isFilterUnwatched) {
@@ -577,13 +578,13 @@ public class ShowsFragment extends Fragment implements
         if (handler == null) {
             handler = new Handler();
         }
-        handler.removeCallbacks(mDataRefreshRunnable);
+        handler.removeCallbacks(dataRefreshRunnable);
         if (enableRefresh) {
-            handler.postDelayed(mDataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
+            handler.postDelayed(dataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
         }
     }
 
-    private Runnable mDataRefreshRunnable = new Runnable() {
+    private Runnable dataRefreshRunnable = new Runnable() {
         @Override
         public void run() {
             if (isAdded()) {
@@ -627,7 +628,7 @@ public class ShowsFragment extends Fragment implements
         }
     };
 
-    private final OnSharedPreferenceChangeListener mPrefsListener
+    private final OnSharedPreferenceChangeListener onPreferenceChangeListener
             = new OnSharedPreferenceChangeListener() {
 
         @Override
@@ -636,7 +637,7 @@ public class ShowsFragment extends Fragment implements
                 getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null,
                         ShowsFragment.this);
                 // refresh all list widgets
-                ListWidgetProvider.notifyAllAppWidgetsViewDataChanged(getContext());
+                ListWidgetProvider.notifyDataChanged(getContext());
             }
         }
     };

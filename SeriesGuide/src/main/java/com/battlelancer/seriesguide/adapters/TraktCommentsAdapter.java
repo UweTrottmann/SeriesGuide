@@ -21,11 +21,8 @@ import java.util.List;
  */
 public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
 
-    private final LayoutInflater inflater;
-
     public TraktCommentsAdapter(Context context) {
         super(context, R.layout.item_comment);
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public void setData(List<Comment> data) {
@@ -45,7 +42,8 @@ public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
         TraktCommentsAdapter.ViewHolder holder;
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.item_comment, parent, false);
+            convertView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_comment, parent, false);
 
             holder = new ViewHolder();
             holder.username = convertView.findViewById(R.id.textViewCommentUsername);

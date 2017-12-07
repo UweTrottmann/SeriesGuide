@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui;
 
-import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -11,7 +10,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.text.Editable;
@@ -34,7 +32,6 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
-import com.battlelancer.seriesguide.util.RemoveShowWorkerFragment;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -103,7 +100,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
     @BindView(R.id.imageButtonSearchClear) View clearButton;
     @BindView(R.id.tabsSearch) SlidingTabLayout tabs;
     @BindView(R.id.pagerSearch) ViewPager viewPager;
-    private ProgressDialog progressDialog;
 
     private SearchHistory searchHistory;
     private ArrayAdapter<String> searchHistoryAdapter;
@@ -329,10 +325,10 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         String action = intent.getAction();
         // global or Google Now voice search
         if (Intent.ACTION_SEARCH.equals(action) || SearchIntents.ACTION_SEARCH.equals(action)) {
-            Bundle extras = getIntent().getExtras();
+            Intent launchIntent = getIntent();
 
             // searching episodes within a show?
-            Bundle appData = extras.getBundle(SearchManager.APP_DATA);
+            Bundle appData = launchIntent.getBundleExtra(SearchManager.APP_DATA);
             if (appData != null) {
                 String showTitle = appData.getString(EpisodeSearchFragment.InitBundle.SHOW_TITLE);
                 if (!TextUtils.isEmpty(showTitle)) {
@@ -342,7 +338,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             }
 
             // setting the query automatically triggers a search
-            String query = extras.getString(SearchManager.QUERY);
+            String query = launchIntent.getStringExtra(SearchManager.QUERY);
             searchView.setText(query);
         } else if (Intent.ACTION_VIEW.equals(action)) {
             Uri data = intent.getData();
@@ -444,32 +440,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        // check for running show removal worker
-        Fragment f = getSupportFragmentManager().findFragmentByTag(RemoveShowWorkerFragment.TAG);
-        if (f != null && !((RemoveShowWorkerFragment) f).isTaskFinished()) {
-            showProgressDialog();
-        }
-        // now listen to events
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void registerEventBus() {
-        // do nothing, we handle that ourselves in onStart
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        // now prevent dialog from restoring itself (we would loose ref to it)
-        hideProgressDialog();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
 
@@ -492,24 +462,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         TaskManager.getInstance().performAddTask(this, show);
     }
 
-    /**
-     * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
-     */
-    @SuppressWarnings("UnusedParameters")
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(RemoveShowWorkerFragment.OnRemovingShowEvent event) {
-        showProgressDialog();
-    }
-
-    /**
-     * Called from {@link com.battlelancer.seriesguide.util.RemoveShowWorkerFragment}.
-     */
-    @SuppressWarnings("UnusedParameters")
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(RemoveShowWorkerFragment.OnShowRemovedEvent event) {
-        hideProgressDialog();
-    }
-
     @SuppressWarnings("UnusedParameters")
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(TvdbAddFragment.ClearSearchHistoryEvent event) {
@@ -519,21 +471,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             // setting text to null seems to fix the dropdown from not clearing
             searchView.setText(null);
         }
-    }
-
-    private void showProgressDialog() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setCancelable(false);
-        }
-        progressDialog.show();
-    }
-
-    private void hideProgressDialog() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
-        progressDialog = null;
     }
 
     @Override

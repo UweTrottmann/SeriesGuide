@@ -83,7 +83,7 @@ public class TvdbAddFragment extends AddFragment {
         Bundle args = new Bundle();
         args.putString(KEY_LANGUAGE, languageCode);
         args.putString(KEY_QUERY, currentQuery);
-        getLoaderManager().initLoader(SearchActivity.SEARCH_LOADER_ID, args, mTvdbAddCallbacks);
+        getLoaderManager().initLoader(SearchActivity.SEARCH_LOADER_ID, args, tvdbAddLoaderCallbacks);
 
         // enable menu
         setHasOptionsMenu(true);
@@ -216,10 +216,11 @@ public class TvdbAddFragment extends AddFragment {
         Bundle args = new Bundle();
         args.putString(KEY_QUERY, currentQuery);
         args.putString(KEY_LANGUAGE, languageCode);
-        getLoaderManager().restartLoader(SearchActivity.SEARCH_LOADER_ID, args, mTvdbAddCallbacks);
+        getLoaderManager().restartLoader(SearchActivity.SEARCH_LOADER_ID, args,
+                tvdbAddLoaderCallbacks);
     }
 
-    private LoaderManager.LoaderCallbacks<TvdbAddLoader.Result> mTvdbAddCallbacks
+    private LoaderManager.LoaderCallbacks<TvdbAddLoader.Result> tvdbAddLoaderCallbacks
             = new LoaderManager.LoaderCallbacks<TvdbAddLoader.Result>() {
         @Override
         public Loader<TvdbAddLoader.Result> onCreateLoader(int id, Bundle args) {

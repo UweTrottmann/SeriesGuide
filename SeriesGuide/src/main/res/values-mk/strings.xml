@@ -46,10 +46,10 @@
   <string name="norating">Непознато</string>
   <string name="unknown">Непознато</string>
   <string name="offline">Поврзи се на интернет, после пробај повторно.</string>
-  <string name="app_not_available">Не постои апликација која може да го отвори ова.</string>
+  <string name="app_not_available">No app available to handle this</string>
   <string name="people_empty">Никој не е тука? Пробајте повторно.</string>
   <string name="database_error">Не е возможно да ги променити податоците.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore</string>
   <string name="api_error_generic">Неможе да се конектира со %s. Пробајте подоцна.</string>
   <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
@@ -257,8 +257,8 @@
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Експериментално!</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
   <string name="hexagon_signin">Пријави се</string>
   <string name="hexagon_signout">Одјави се</string>
   <string name="hexagon_setup_incomplete">Подесувањето на SeriesGuide Cloud не е завршено.</string>
@@ -268,7 +268,7 @@
   <string name="hexagon_remove_account_failure">Неможе да ја избрише корисничката сметка.</string>
   <string name="hexagon_remove_account_confirmation">Отстранување на вашиот профил ќе бидат избришани сите емисии и филмови од SeriesGuide Cloud. Бидете сигурни да го отстраните како и од другите поврзани уреди.</string>
   <string name="hexagon_api_queued">Испраќање во SeriesGuide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
   <string name="hexagon_google_play_missing">За да го користите SeriesGuide Cloud, Google Play Services е потребно.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Испраќање на trakt.</string>
@@ -382,7 +382,7 @@
   <string name="pref_theme">Тема</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Друго</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update content</string>
   <string name="pref_autobackup">Автoмaтски бекaп</string>
   <string name="pref_autobackupsummary">Неделни бекупи од вашите серии, листи и филмови</string>
   <string name="backup">Backup/Restore</string>
@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Избриши ги сите кеширани слики од вашиот уред</string>
   <string name="pref_ganalyticssummary">Пратете анонимни статистики за користење на Google service</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Вклучи ги сите метаподатоци како описи, актери и рејтинзи.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Фолдер за архивирање</string>
   <string name="backup_version">Верзија на базата на податоци</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
@@ -412,7 +412,7 @@
   <string name="import_button">Restore backup</string>
   <string name="backup_question">Ова ќе ја пребрише моменталната backup датотеката во backup фолдерот!</string>
   <string name="import_question">Тековната листа на серии ќе бидат изгубени! Бидете сигурни дека backup датотеката е внатре во фолдерот на backup.</string>
-  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+  <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
   <string name="last_auto_backup">Последен автоматски Backup: %s</string>
   <string name="restore_auto_backup">Обнови автоматски Backup</string>
   <string name="dataliberation_permission_missing">За да направите backup или restore, дозволете пристап до вашите фајлови.</string>
@@ -439,6 +439,7 @@
   <string name="pref_notifications_treshold">Кога да потсети</string>
   <string name="pref_notifications_select_shows">Select shows</string>
   <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notification_channel_errors">Errors</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (мало)</string>
   <!-- List Widget -->

@@ -46,10 +46,10 @@
   <string name="norating">n/a</string>
   <string name="unknown">neznano</string>
   <string name="offline">Vzpostavite povezavo z omrežjem in nato poskusite znova.</string>
-  <string name="app_not_available">Za obravnavo tega ni na voljo nobene aplikacije.</string>
+  <string name="app_not_available">No app available to handle this</string>
   <string name="people_empty">Nihče tukaj?! Dotik in poskusite znova.</string>
   <string name="database_error">Podatkov ni bilo mogoče spremeniti.</string>
-  <string name="reinstall_info">Try to backup in Settings, re-install and restore.</string>
+  <string name="reinstall_info">Try to backup in Settings, re-install and restore</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <string name="api_failed">Failed: %s</string>
   <!-- Sharing -->
@@ -194,7 +194,7 @@
   <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
   <string name="add_all">Dodaj vse</string>
   <string name="add_multiple">Vse oddaje se bodo v kratkem pojavile v tvojem spisku oddaj.</string>
-  <string name="add_started">%s will appear in your show list shortly.</string>
+  <string name="add_started">%s will appear in your show list shortly</string>
   <string name="add_error">%s ni bilo mogoče dodati.</string>
   <string name="add_already_exists">%s je že na vašem seznamu.</string>
   <string name="recommended">Priporočeno</string>
@@ -226,8 +226,8 @@
   <string name="watchlist_added">Dodan v opazovanja</string>
   <string name="watchlist_removed">Odstranjeno iz opazovanj</string>
   <string name="movies_search_hint">Vpiši naslov filma</string>
-  <string name="movies_collection_empty">You have not added movies to your collection.</string>
-  <string name="movies_watchlist_empty">You have not added movies to your watchlist.</string>
+  <string name="movies_collection_empty">You have not added movies to your collection</string>
+  <string name="movies_watchlist_empty">You have not added movies to your watchlist</string>
   <string name="trailer">Predlogled</string>
   <string name="movie_cast">Cast</string>
   <string name="movie_crew">Zasedba</string>
@@ -235,7 +235,7 @@
   <string name="action_movies_sort_title">Naslov</string>
   <string name="action_movies_sort_release">Datum izdaje</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Could not calculate statistics</string>
   <string name="statistics_shows">Oddaje</string>
   <string name="statistics_episodes">Epizode</string>
   <string name="statistics_movies">Filmi</string>
@@ -271,19 +271,19 @@
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Preizkusno!</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
   <string name="hexagon_signin">Prijava</string>
   <string name="hexagon_signout">Izpis</string>
-  <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed.</string>
-  <string name="hexagon_setup_fail_auth">Your Google account did not check out.</string>
+  <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed</string>
+  <string name="hexagon_setup_fail_auth">Your Google account did not check out</string>
   <string name="hexagon_remove_account">Odstrani račun</string>
-  <string name="hexagon_remove_account_success">Account obliterated.</string>
+  <string name="hexagon_remove_account_success">Account obliterated</string>
   <string name="hexagon_remove_account_failure">Računa ni bilo mogoče odstraniti.</string>
-  <string name="hexagon_remove_account_confirmation">Removing your account will delete all shows and movies from SeriesGuide Cloud. Make sure to remove it on other connected devices as well.</string>
+  <string name="hexagon_remove_account_confirmation">This will delete your shows, lists and movies from SeriesGuide Cloud</string>
   <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
-  <string name="hexagon_google_play_missing">To use SeriesGuide Cloud, Google Play Services are required.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
+  <string name="hexagon_google_play_missing">Google Play Services not installed</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Dodajanje na trakt.</string>
   <string name="checkin_success_trakt">Prijavljen v %s v trakt.</string>
@@ -291,10 +291,10 @@
   <string name="traktcheckin_cancel">Razveljavi</string>
   <string name="traktcheckin_inprogress">Prijavljen si že v drugo epizodo ali film. Ali razveljavi prejšnji vnos ali pa počakaj %s in poizkusi ponovno.</string>
   <string name="traktcheckin_wait">Počakal bom</string>
-  <string name="trakt_success">Sent to trakt.</string>
+  <string name="trakt_success">Sent to trakt</string>
   <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
   <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt account</string>
   <string name="connect_trakt">Poveži trakt</string>
@@ -404,7 +404,7 @@
   <string name="pref_theme">Tema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Ostalo</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update content</string>
   <string name="pref_autobackup">Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Varnostno kopiranje/Obnovitev</string>
@@ -416,7 +416,7 @@
   <string name="clear_cache_summary">Odstrani vse predpomnjene slike iz naprave</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Backup mapa</string>
   <string name="backup_version">Različica zbirke podatkov</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
@@ -434,12 +434,12 @@
   <string name="import_button">Obnovitev</string>
   <string name="backup_question">To bo prepisalo trenutno varnostno kopijo v mapi za varnostne kopije!</string>
   <string name="import_question">Trenutni spisek oddaj bo izgubljen! Poskrbite, da bo datoteka z varnostno kopijo znotraj mape varnostnih kopij.</string>
-  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+  <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
   <string name="last_auto_backup">Nazadnje Auto Backup: %s</string>
   <string name="restore_auto_backup">Obnovite varnostno kopijo</string>
-  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
-  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files</string>
+  <string name="autobackup_files_missing">To use auto backup, select valid backup files</string>
   <string name="no_file_selected">No file selected</string>
   <string name="action_select_file">Select file</string>
   <string name="backup_use_default_files">Use default backup files</string>
@@ -461,6 +461,7 @@
   <string name="pref_notifications_treshold">Čas obveščanja</string>
   <string name="pref_notifications_select_shows">Select shows</string>
   <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notification_channel_errors">Errors</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (majhen)</string>
   <!-- List Widget -->
@@ -475,7 +476,7 @@
   <string name="widget_background_opaque">Opaque</string>
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">Upcoming episode</string>
-  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
+  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows</string>
   <string name="dashclock_pref_upcoming_threshold">Display episode within&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">Only for supporters</string>
@@ -486,14 +487,14 @@
   <string name="billing_price_pass">enkratni nakup</string>
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
-  <string name="billing_learn_more">Why pay? Learn more.</string>
+  <string name="billing_learn_more">Why pay? Learn more</string>
   <string name="subscription_expired">Naročnina potekla</string>
   <string name="subscription_expired_details">Naročnina na X funkcije je potekla.</string>
   <!-- Amazon In-App Billing -->
-  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
-  <string name="subscription_unavailable">The subscription is currently not available.</string>
-  <string name="subscription_failed">Purchase not completed.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="subscription_not_signed_in">Sign into your Amazon account</string>
+  <string name="subscription_unavailable">The subscription is currently not available</string>
+  <string name="subscription_failed">Purchase not completed</string>
+  <string name="pass_unavailable">X Pass is currently not available</string>
   <!-- Extensions -->
   <string name="action_extensions_configure">Customize extensions</string>
   <string name="action_extensions_add">Add extension</string>

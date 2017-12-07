@@ -60,7 +60,6 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
     @BindView(R.id.textViewAutoBackupMoviesExportFile) TextView textMoviesExportFile;
     @BindView(R.id.buttonAutoBackupMoviesExportFile) Button buttonMoviesExportFile;
 
-    @BindView(R.id.checkBoxAutoBackupImportWarning) CheckBox checkBoxImportWarning;
     @BindView(R.id.textViewAutoBackupLastTime) TextView textViewLastAutoBackup;
     @BindView(R.id.buttonAutoBackupImport) Button buttonImportAutoBackup;
     @BindView(R.id.progressBarAutoBackup) ProgressBar progressBar;
@@ -97,12 +96,6 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
                     DataLiberationTools.setAutoBackupDisabled(getContext());
                     setContainerSettingsVisible(false);
                 }
-            }
-        });
-        checkBoxImportWarning.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                buttonImportAutoBackup.setEnabled(isChecked);
             }
         });
         buttonImportAutoBackup.setOnClickListener(new OnClickListener() {
@@ -344,10 +337,9 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
         if (isLocked) {
             buttonImportAutoBackup.setEnabled(false);
         } else {
-            buttonImportAutoBackup.setEnabled(checkBoxImportWarning.isChecked());
+            buttonImportAutoBackup.setEnabled(true);
         }
         progressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
-        checkBoxImportWarning.setEnabled(!isLocked);
         buttonShowsExportFile.setEnabled(!isLocked);
         buttonListsExportFile.setEnabled(!isLocked);
         buttonMoviesExportFile.setEnabled(!isLocked);

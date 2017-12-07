@@ -85,16 +85,10 @@ public class EpisodesAdapter extends CursorAdapter {
         // episode title
         final int watchedFlag = mCursor.getInt(EpisodesQuery.WATCHED);
         final int episodeNumber = mCursor.getInt(EpisodesQuery.NUMBER);
-        if (EpisodeTools.isUnwatched(watchedFlag) && DisplaySettings.preventSpoilers(mContext)) {
-            // just display the episode number "1x02"
-            int season = mCursor.getInt(EpisodesQuery.SEASON);
-            viewHolder.episodeTitle.setText(
-                    TextTools.getEpisodeNumber(mContext, season, episodeNumber));
-        } else {
-            viewHolder.episodeTitle.setText(
-                    TextTools.getEpisodeTitle(mContext, mCursor.getString(EpisodesQuery.TITLE),
-                            episodeNumber));
-        }
+        boolean hideTitle = EpisodeTools.isUnwatched(watchedFlag)
+                && DisplaySettings.preventSpoilers(mContext);
+        viewHolder.episodeTitle.setText(TextTools.getEpisodeTitle(mContext,
+                hideTitle ? null : mCursor.getString(EpisodesQuery.TITLE), episodeNumber));
 
         // number
         viewHolder.episodeNumber.setText(integerFormat.format(episodeNumber));

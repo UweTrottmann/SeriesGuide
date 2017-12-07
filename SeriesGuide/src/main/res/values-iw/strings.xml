@@ -46,7 +46,7 @@
   <string name="norating">לא ידוע</string>
   <string name="unknown">לא ידוע</string>
   <string name="offline">התחבר לרשת, ואז נסה שוב.</string>
-  <string name="app_not_available">אין יישום זמין בשביל זה.</string>
+  <string name="app_not_available">אין יישום זמין בשביל זה</string>
   <string name="people_empty">אין כאן אף אחד?! לחץ כדי לנסות שוב.</string>
   <string name="database_error">לא הייתה אפשרות לשנות את הנתונים.</string>
   <string name="reinstall_info">נסה לגבות את ההגדרות, להתקין מחדש, ולשחזר.</string>
@@ -416,7 +416,7 @@
   <string name="clear_cache_summary">הסר את כל מטמוני התמונות ממכשירך</string>
   <string name="pref_ganalyticssummary">שלח סטטיסטיקת שימוש אנונימית לשירות גוגל</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">כלול את כל הנתונים כמו תיאור, שחקנים ודירוגים.</string>
+  <string name="backup_full_dump">כוללים תיאורים, פרטים, דירוגים</string>
   <string name="backup_path">תיקיית גיבוי</string>
   <string name="backup_version">גרסת מסד נתונים</string>
   <string name="backup_failed_file_access">לא ניתן לגבות. קובץ גיבוי לא נמצא או נגיש.</string>
@@ -461,6 +461,7 @@
   <string name="pref_notifications_treshold">מתי להתריע</string>
   <string name="pref_notifications_select_shows">בחר סדרות</string>
   <string name="pref_notifications_select_shows_summary">סדרות עבורן מופעלות (%d)</string>
+  <string name="pref_notification_channel_errors">שגיאות</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (קטן)</string>
   <!-- List Widget -->

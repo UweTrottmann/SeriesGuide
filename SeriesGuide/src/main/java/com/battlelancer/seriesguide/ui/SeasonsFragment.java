@@ -203,16 +203,16 @@ public class SeasonsFragment extends ListFragment {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseNavDrawerActivity.ServiceCompletedEvent event) {
-        if (event.episodeJob == null || !event.isSuccessful) {
+        if (event.flagJob == null || !event.isSuccessful) {
             return; // no changes applied
         }
         if (!isAdded()) {
             return; // no longer added to activity
         }
         updateRemainingCounter();
-        if (event.episodeJob instanceof SeasonWatchedJob) {
+        if (event.flagJob instanceof SeasonWatchedJob) {
             // If we can narrow it down to just one season...
-            SeasonWatchedJob seasonWatchedType = (SeasonWatchedJob) event.episodeJob;
+            SeasonWatchedJob seasonWatchedType = (SeasonWatchedJob) event.flagJob;
             getActivity().startService(UnwatchedUpdaterService.buildIntent(getContext(),
                     getShowId(), seasonWatchedType.getSeasonTvdbId()));
         } else {

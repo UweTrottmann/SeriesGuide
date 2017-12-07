@@ -3,8 +3,6 @@ package com.battlelancer.seriesguide.util;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +15,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.AnyRes;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
@@ -27,7 +24,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -38,13 +34,12 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.google.android.gms.analytics.HitBuilders;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
+import java.net.UnknownHostException;
 import timber.log.Timber;
 
 /**
@@ -78,26 +73,6 @@ public class Utils {
             return context.getString(R.string.format_version, getVersion(context),
                     SeriesGuideDatabase.DATABASE_VERSION);
         }
-    }
-
-    /**
-     * Run the notification service to display and (re)schedule upcoming episode alarms.
-     */
-    public static void runNotificationService(Context context) {
-        Intent i = new Intent(context, NotificationService.class);
-        context.startService(i);
-    }
-
-    /**
-     * Run the notification service delayed by a minute to display and (re)schedule upcoming episode
-     * alarms.
-     */
-    public static void runNotificationServiceDelayed(Context context) {
-        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent i = new Intent(context, OnAlarmReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
-        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() + DateUtils.MINUTE_IN_MILLIS, pi);
     }
 
     /**
@@ -245,19 +220,24 @@ public class Utils {
 
     public static void trackFailedRequest(Context context, String category, String action,
             int code, String message) {
-        Utils.trackCustomEvent(context, category, action, code + " " + message);
         // log like "action: 404 not found"
         Timber.tag(category);
         Timber.e("%s: %s %s", action, code, message);
+
+        Utils.trackCustomEvent(context, category, action, code + " " + message);
     }
 
     public static void trackFailedRequest(Context context, String category, String action,
             @NonNull Throwable throwable) {
-        // for tracking only send exception name
-        Utils.trackCustomEvent(context, category, action, throwable.getClass().getSimpleName());
         // log like "action: Unable to resolve host"
         Timber.tag(category);
         Timber.e(throwable, "%s: %s", action, throwable.getMessage());
+
+        if (throwable instanceof UnknownHostException /* mostly devices loosing connection */) {
+            return; // do not track
+        }
+        // for tracking only send exception name
+        Utils.trackCustomEvent(context, category, action, throwable.getClass().getSimpleName());
     }
 
     /**
@@ -287,15 +267,12 @@ public class Utils {
 
     /**
      * Checks for an available network connection.
-     *
-     * @param showOfflineToast If not connected, displays a toast asking the user to connect to a
-     * network.
      */
-    public static boolean isNotConnected(Context context, boolean showOfflineToast) {
+    public static boolean isNotConnected(Context context) {
         boolean isConnected = AndroidUtils.isNetworkConnected(context);
 
-        // display optional offline toast
-        if (!isConnected && showOfflineToast) {
+        // display offline toast
+        if (!isConnected) {
             Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show();
         }
 
@@ -339,7 +316,7 @@ public class Utils {
      * Similar to {@link #tryStartActivity(Context, Intent, boolean)}, but starting an activity for
      * a result.
      */
-    public static boolean tryStartActivityForResult(Fragment fragment, Intent intent,
+    public static void tryStartActivityForResult(Fragment fragment, Intent intent,
             int requestCode) {
         Context context = fragment.getContext();
 
@@ -357,8 +334,6 @@ public class Utils {
         if (!handled) {
             Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show();
         }
-
-        return handled;
     }
 
     public static void startActivityWithAnimation(Activity activity, Intent intent, View view) {
@@ -453,8 +428,8 @@ public class Utils {
      * <p> This is useful for executing non-blocking operations (e.g. NO network activity, etc.).
      */
     @SafeVarargs
-    public static <Params, Progress, Result> AsyncTask<Params, Progress, Result> executeInOrder(
+    public static <Params, Progress, Result> void executeInOrder(
             AsyncTask<Params, Progress, Result> task, Params... args) {
-        return task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, args);
+        task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, args);
     }
 }

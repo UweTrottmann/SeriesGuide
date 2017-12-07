@@ -301,7 +301,7 @@ public class ExtensionsConfigurationFragment extends Fragment
 
     private class ExtensionsDragSortController extends DragSortController {
 
-        private int mFloatViewOriginPosition;
+        private int floatViewOriginPosition;
 
         public ExtensionsDragSortController() {
             super(listView, R.id.drag_handle, DragSortController.ON_DOWN,
@@ -321,11 +321,11 @@ public class ExtensionsConfigurationFragment extends Fragment
 
         @Override
         public View onCreateFloatView(int position) {
-            mFloatViewOriginPosition = position;
+            floatViewOriginPosition = position;
             return super.onCreateFloatView(position);
         }
 
-        private int mFloatViewHeight = -1; // cache height
+        private int floatViewHeight = -1; // cache height
 
         @Override
         public void onDragFloatView(View floatView, Point floatPoint, Point touchPoint) {
@@ -333,8 +333,8 @@ public class ExtensionsConfigurationFragment extends Fragment
             final int first = listView.getFirstVisiblePosition();
             final int lvDivHeight = listView.getDividerHeight();
 
-            if (mFloatViewHeight == -1) {
-                mFloatViewHeight = floatView.getHeight();
+            if (floatViewHeight == -1) {
+                floatViewHeight = floatView.getHeight();
             }
 
             View div = listView.getChildAt(addButtonPosition - first);
@@ -343,12 +343,12 @@ public class ExtensionsConfigurationFragment extends Fragment
                 float scale = touchPoint.x - listView.getWidth() / 2;
                 scale /= (float) (listView.getWidth() / 5);
                 ViewGroup.LayoutParams lp = floatView.getLayoutParams();
-                lp.height = Math.max(mFloatViewHeight, (int) (scale * mFloatViewHeight));
+                lp.height = Math.max(floatViewHeight, (int) (scale * floatViewHeight));
                 floatView.setLayoutParams(lp);
             }
 
             if (div != null) {
-                if (mFloatViewOriginPosition > addButtonPosition) {
+                if (floatViewOriginPosition > addButtonPosition) {
                     // don't allow floating View to go above
                     // section divider
                     final int limit = div.getBottom() + lvDivHeight;

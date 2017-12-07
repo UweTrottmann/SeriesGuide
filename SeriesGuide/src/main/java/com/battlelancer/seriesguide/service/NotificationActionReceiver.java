@@ -15,14 +15,16 @@ import com.battlelancer.seriesguide.util.EpisodeTools;
  */
 public class NotificationActionReceiver extends BroadcastReceiver {
 
-    public static final String EXTRA_EPISODE_TVDBID
-            = "com.battlelancer.seriesguide.EXTRA_EPISODE_TVDBID";
-
     @Override
     public void onReceive(Context context, Intent intent) {
-        int episodeTvdbvId = intent.getIntExtra(EXTRA_EPISODE_TVDBID, -1);
-        if (episodeTvdbvId <= 0) {
+        if (NotificationService.ACTION_CLEARED.equals(intent.getAction())) {
+            NotificationService.handleDeleteIntent(context, intent);
             return;
+        }
+
+        int episodeTvdbvId = intent.getIntExtra(NotificationService.EXTRA_EPISODE_TVDBID, -1);
+        if (episodeTvdbvId <= 0) {
+            return; // not notification set watched action
         }
 
         // query for episode details

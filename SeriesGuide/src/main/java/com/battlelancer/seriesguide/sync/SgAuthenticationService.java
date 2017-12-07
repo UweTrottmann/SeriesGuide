@@ -8,18 +8,18 @@ import timber.log.Timber;
 
 public class SgAuthenticationService extends Service {
 
-    SgAccountAuthenticator mAuthenticator;
+    SgAccountAuthenticator authenticator;
 
     @Override
     public void onCreate() {
         Timber.d("Creating authenticator service");
-        mAuthenticator = new SgAccountAuthenticator(this);
+        authenticator = new SgAccountAuthenticator(this);
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         Timber.d("Binding authenticator");
-        return mAuthenticator.getIBinder();
+        return authenticator.getIBinder();
     }
 
 }

@@ -41,8 +41,8 @@ import timber.log.Timber;
  */
 public class BackupDeleteActivity extends BaseActivity {
 
-    private AsyncTask<Void, Void, String> mTask;
-    private ProgressDialog mProgressDialog;
+    private AsyncTask<Void, Void, String> task;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -65,14 +65,14 @@ public class BackupDeleteActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        Button exportDbToSdButton = (Button) findViewById(R.id.ButtonExportDBtoSD);
+        Button exportDbToSdButton = findViewById(R.id.ButtonExportDBtoSD);
         exportDbToSdButton.setOnClickListener(new OnClickListener() {
             public void onClick(final View v) {
                 showExportDialog();
             }
         });
 
-        Button importDbFromSdButton = (Button) findViewById(R.id.ButtonImportDBfromSD);
+        Button importDbFromSdButton = findViewById(R.id.ButtonImportDBfromSD);
         importDbFromSdButton.setOnClickListener(new OnClickListener() {
             public void onClick(final View v) {
                 showImportDialog();
@@ -80,12 +80,12 @@ public class BackupDeleteActivity extends BaseActivity {
         });
 
         // display backup path
-        TextView backuppath = (TextView) findViewById(R.id.textViewBackupPath);
+        TextView backuppath = findViewById(R.id.textViewBackupPath);
         String path = getBackupFolder().toString();
         backuppath.setText(getString(R.string.backup_path) + ": " + path);
 
         // display current db version
-        TextView dbVersion = (TextView) findViewById(R.id.textViewBackupDatabaseVersion);
+        TextView dbVersion = findViewById(R.id.textViewBackupDatabaseVersion);
         dbVersion.setText(getString(R.string.backup_version) + ": "
                 + SeriesGuideDatabase.DATABASE_VERSION);
     }
@@ -106,10 +106,10 @@ public class BackupDeleteActivity extends BaseActivity {
     }
 
     private void onCancelTasks() {
-        if (mTask != null && mTask.getStatus() != AsyncTask.Status.FINISHED) {
-            mTask.cancel(true);
+        if (task != null && task.getStatus() != AsyncTask.Status.FINISHED) {
+            task.cancel(true);
         }
-        mTask = null;
+        task = null;
     }
 
     private File getBackupFolder() {
@@ -248,8 +248,8 @@ public class BackupDeleteActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(final String errMsg) {
-            if (mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
             }
             if (errMsg == null) {
                 Toast.makeText(BackupDeleteActivity.this, getString(R.string.import_success),
@@ -265,19 +265,19 @@ public class BackupDeleteActivity extends BaseActivity {
     }
 
     private void showProgressDialog(int messageId) {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setCancelable(false);
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setCancelable(false);
         }
-        mProgressDialog.setMessage(getString(messageId));
-        mProgressDialog.show();
+        progressDialog.setMessage(getString(messageId));
+        progressDialog.show();
     }
 
     private void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
         }
-        mProgressDialog = null;
+        progressDialog = null;
     }
 
     private boolean isExternalStorageAvailable(int errorMessageID) {
@@ -301,15 +301,15 @@ public class BackupDeleteActivity extends BaseActivity {
 
     public void exportDatabase() {
         if (isExternalStorageAvailable(R.string.backup_failed_file_access)) {
-            mTask = new ExportDatabaseTask();
-            Utils.executeInOrder(mTask);
+            task = new ExportDatabaseTask();
+            Utils.executeInOrder(task);
         }
     }
 
     public void importDatabase() {
         if (isExternalStorageAvailable(R.string.import_failed_nosd)) {
-            mTask = new ImportDatabaseTask();
-            Utils.executeInOrder(mTask);
+            task = new ImportDatabaseTask();
+            Utils.executeInOrder(task);
         }
     }
 

@@ -4,24 +4,21 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.MovieDetails;
+import com.battlelancer.seriesguide.jobs.FlagJobAsyncTask;
+import com.battlelancer.seriesguide.jobs.movies.MovieCollectionJob;
+import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob;
+import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.util.tasks.AddMovieToCollectionTask;
-import com.battlelancer.seriesguide.util.tasks.AddMovieToWatchlistTask;
-import com.battlelancer.seriesguide.util.tasks.RemoveMovieFromCollectionTask;
-import com.battlelancer.seriesguide.util.tasks.RemoveMovieFromWatchlistTask;
-import com.battlelancer.seriesguide.util.tasks.SetMovieUnwatchedTask;
-import com.battlelancer.seriesguide.util.tasks.SetMovieWatchedTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.services.MoviesService;
@@ -114,13 +111,11 @@ public class MovieTools {
     }
 
     public static void addToCollection(Context context, int movieTmdbId) {
-        new AddMovieToCollectionTask(context, movieTmdbId).executeOnExecutor(
-                AsyncTask.THREAD_POOL_EXECUTOR);
+        FlagJobAsyncTask.executeJob(context, new MovieCollectionJob(movieTmdbId, true));
     }
 
     public static void addToWatchlist(Context context, int movieTmdbId) {
-        new AddMovieToWatchlistTask(context, movieTmdbId).executeOnExecutor(
-                AsyncTask.THREAD_POOL_EXECUTOR);
+        FlagJobAsyncTask.executeJob(context, new MovieWatchlistJob(movieTmdbId, true));
     }
 
     /**
@@ -143,13 +138,11 @@ public class MovieTools {
     }
 
     public static void removeFromCollection(Context context, int movieTmdbId) {
-        new RemoveMovieFromCollectionTask(context, movieTmdbId).executeOnExecutor(
-                AsyncTask.THREAD_POOL_EXECUTOR);
+        FlagJobAsyncTask.executeJob(context, new MovieCollectionJob(movieTmdbId, false));
     }
 
     public static void removeFromWatchlist(Context context, int movieTmdbId) {
-        new RemoveMovieFromWatchlistTask(context, movieTmdbId).executeOnExecutor(
-                AsyncTask.THREAD_POOL_EXECUTOR);
+        FlagJobAsyncTask.executeJob(context, new MovieWatchlistJob(movieTmdbId, false));
     }
 
     /**
@@ -180,13 +173,15 @@ public class MovieTools {
     }
 
     public static void watchedMovie(Context context, int movieTmdbId) {
-        new SetMovieWatchedTask(context, movieTmdbId).executeOnExecutor(
-                AsyncTask.THREAD_POOL_EXECUTOR);
+        FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, true));
+        // background: watched state currently only supported with trakt
+        // trakt removes from watchlist automatically, but app would not show until next sync
+        // and not mirror on hexagon, so do it manually
+        removeFromWatchlist(context, movieTmdbId);
     }
 
     public static void unwatchedMovie(Context context, int movieTmdbId) {
-        new SetMovieUnwatchedTask(context, movieTmdbId).executeOnExecutor(
-                AsyncTask.THREAD_POOL_EXECUTOR);
+        FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, false));
     }
 
     /**
@@ -448,12 +443,8 @@ public class MovieTools {
 
         // build a single list of tmdb ids
         Set<Integer> newMovies = new HashSet<>();
-        for (Integer tmdbId : newCollectionMovies) {
-            newMovies.add(tmdbId);
-        }
-        for (Integer tmdbId : newWatchlistMovies) {
-            newMovies.add(tmdbId);
-        }
+        newMovies.addAll(newCollectionMovies);
+        newMovies.addAll(newWatchlistMovies);
 
         String languageCode = DisplaySettings.getMoviesLanguage(context);
         List<MovieDetails> movies = new LinkedList<>();

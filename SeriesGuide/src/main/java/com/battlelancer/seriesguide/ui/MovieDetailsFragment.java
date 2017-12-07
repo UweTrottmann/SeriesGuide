@@ -202,11 +202,11 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         Bundle args = new Bundle();
         args.putInt(InitBundle.TMDB_ID, tmdbId);
         getLoaderManager().initLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args,
-                mMovieLoaderCallbacks);
+                movieLoaderCallbacks);
         getLoaderManager().initLoader(MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args,
-                mMovieTrailerLoaderCallbacks);
+                trailerLoaderCallbacks);
         getLoaderManager().initLoader(MovieDetailsActivity.LOADER_ID_MOVIE_CREDITS, args,
-                mMovieCreditsLoaderCallbacks);
+                creditsLoaderCallbacks);
 
         setHasOptionsMenu(true);
     }
@@ -612,7 +612,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         loadMovieActionsDelayed();
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(MovieTools.MovieChangedEvent event) {
         if (event.movieTmdbId != tmdbId) {
             return;
@@ -664,7 +664,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         Bundle args = new Bundle();
         args.putInt(InitBundle.TMDB_ID, tmdbId);
         getLoaderManager().restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args,
-                mMovieTrailerLoaderCallbacks);
+                trailerLoaderCallbacks);
     }
 
     @Override
@@ -731,10 +731,10 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         Bundle args = new Bundle();
         args.putInt(InitBundle.TMDB_ID, tmdbId);
         getLoaderManager().restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args,
-                mMovieLoaderCallbacks);
+                movieLoaderCallbacks);
     }
 
-    private LoaderManager.LoaderCallbacks<MovieDetails> mMovieLoaderCallbacks
+    private LoaderManager.LoaderCallbacks<MovieDetails> movieLoaderCallbacks
             = new LoaderManager.LoaderCallbacks<MovieDetails>() {
         @Override
         public Loader<MovieDetails> onCreateLoader(int loaderId, Bundle args) {
@@ -773,7 +773,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
     };
 
-    private LoaderManager.LoaderCallbacks<Videos.Video> mMovieTrailerLoaderCallbacks
+    private LoaderManager.LoaderCallbacks<Videos.Video> trailerLoaderCallbacks
             = new LoaderManager.LoaderCallbacks<Videos.Video>() {
         @Override
         public Loader<Videos.Video> onCreateLoader(int loaderId, Bundle args) {
@@ -797,7 +797,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
     };
 
-    private LoaderManager.LoaderCallbacks<Credits> mMovieCreditsLoaderCallbacks
+    private LoaderManager.LoaderCallbacks<Credits> creditsLoaderCallbacks
             = new LoaderManager.LoaderCallbacks<Credits>() {
         @Override
         public Loader<Credits> onCreateLoader(int loaderId, Bundle args) {

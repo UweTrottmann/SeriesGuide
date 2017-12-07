@@ -12,7 +12,6 @@ import com.battlelancer.seriesguide.adapters.MovieHistoryAdapter;
 import com.battlelancer.seriesguide.loaders.TraktMovieHistoryLoader;
 import com.battlelancer.seriesguide.ui.HistoryActivity;
 import com.battlelancer.seriesguide.ui.MovieDetailsActivity;
-import com.battlelancer.seriesguide.ui.MovieDetailsFragment;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 
 /**
@@ -54,8 +53,7 @@ public class UserMovieStreamFragment extends StreamFragment {
             if (item.movie == null || item.movie.ids == null) {
                 return;
             }
-            Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
-            i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, item.movie.ids.tmdb);
+            Intent i = MovieDetailsActivity.intentMovie(getActivity(), item.movie.ids.tmdb);
 
             ActivityCompat.startActivity(getActivity(), i,
                     ActivityOptionsCompat

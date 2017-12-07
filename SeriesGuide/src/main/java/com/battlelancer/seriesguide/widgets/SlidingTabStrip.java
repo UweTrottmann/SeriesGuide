@@ -29,14 +29,14 @@ class SlidingTabStrip extends LinearLayout {
     private static final int SELECTED_INDICATOR_THICKNESS_DIPS = 2;
     private static final int DEFAULT_SELECTED_INDICATOR_COLOR = 0xFF33B5E5;
 
-    private final int mSelectedIndicatorThickness;
-    private final Paint mSelectedIndicatorPaint;
+    private final int selectedIndicatorThickness;
+    private final Paint selectedIndicatorPaint;
 
-    private int mSelectedPosition;
-    private float mSelectionOffset;
+    private int selectedPosition;
+    private float selectionOffset;
 
-    private SlidingTabLayout.TabColorizer mCustomTabColorizer;
-    private final SimpleTabColorizer mDefaultTabColorizer;
+    private SlidingTabLayout.TabColorizer tabColorizerCustom;
+    private final SimpleTabColorizer tabColorizerDefault;
 
     SlidingTabStrip(Context context) {
         this(context, null);
@@ -48,28 +48,28 @@ class SlidingTabStrip extends LinearLayout {
 
         final float density = getResources().getDisplayMetrics().density;
 
-        mDefaultTabColorizer = new SimpleTabColorizer();
-        mDefaultTabColorizer.setIndicatorColors(DEFAULT_SELECTED_INDICATOR_COLOR);
+        tabColorizerDefault = new SimpleTabColorizer();
+        tabColorizerDefault.setIndicatorColors(DEFAULT_SELECTED_INDICATOR_COLOR);
 
-        mSelectedIndicatorThickness = (int) (SELECTED_INDICATOR_THICKNESS_DIPS * density);
-        mSelectedIndicatorPaint = new Paint();
+        selectedIndicatorThickness = (int) (SELECTED_INDICATOR_THICKNESS_DIPS * density);
+        selectedIndicatorPaint = new Paint();
     }
 
-    void setCustomTabColorizer(SlidingTabLayout.TabColorizer customTabColorizer) {
-        mCustomTabColorizer = customTabColorizer;
+    void setCustomTabColorizer(SlidingTabLayout.TabColorizer tabColorizer) {
+        this.tabColorizerCustom = tabColorizer;
         invalidate();
     }
 
     void setSelectedIndicatorColors(int... colors) {
         // Make sure that the custom colorizer is removed
-        mCustomTabColorizer = null;
-        mDefaultTabColorizer.setIndicatorColors(colors);
+        tabColorizerCustom = null;
+        tabColorizerDefault.setIndicatorColors(colors);
         invalidate();
     }
 
     void onViewPagerPageChanged(int position, float positionOffset) {
-        mSelectedPosition = position;
-        mSelectionOffset = positionOffset;
+        selectedPosition = position;
+        selectionOffset = positionOffset;
         invalidate();
     }
 
@@ -77,35 +77,35 @@ class SlidingTabStrip extends LinearLayout {
     protected void onDraw(Canvas canvas) {
         final int height = getHeight();
         final int childCount = getChildCount();
-        final SlidingTabLayout.TabColorizer tabColorizer = mCustomTabColorizer != null
-                ? mCustomTabColorizer
-                : mDefaultTabColorizer;
+        final SlidingTabLayout.TabColorizer tabColorizer = tabColorizerCustom != null
+                ? tabColorizerCustom
+                : tabColorizerDefault;
 
         // Colored underline below the current selection
         if (childCount > 0) {
-            View selectedTitle = getChildAt(mSelectedPosition);
+            View selectedTitle = getChildAt(selectedPosition);
             int left = selectedTitle.getLeft();
             int right = selectedTitle.getRight();
-            int color = tabColorizer.getIndicatorColor(mSelectedPosition);
+            int color = tabColorizer.getIndicatorColor(selectedPosition);
 
-            if (mSelectionOffset > 0f && mSelectedPosition < (getChildCount() - 1)) {
-                int nextColor = tabColorizer.getIndicatorColor(mSelectedPosition + 1);
+            if (selectionOffset > 0f && selectedPosition < (getChildCount() - 1)) {
+                int nextColor = tabColorizer.getIndicatorColor(selectedPosition + 1);
                 if (color != nextColor) {
-                    color = blendColors(nextColor, color, mSelectionOffset);
+                    color = blendColors(nextColor, color, selectionOffset);
                 }
 
                 // Draw the selection partway between the tabs
-                View nextTitle = getChildAt(mSelectedPosition + 1);
-                left = (int) (mSelectionOffset * nextTitle.getLeft() +
-                        (1.0f - mSelectionOffset) * left);
-                right = (int) (mSelectionOffset * nextTitle.getRight() +
-                        (1.0f - mSelectionOffset) * right);
+                View nextTitle = getChildAt(selectedPosition + 1);
+                left = (int) (selectionOffset * nextTitle.getLeft() +
+                        (1.0f - selectionOffset) * left);
+                right = (int) (selectionOffset * nextTitle.getRight() +
+                        (1.0f - selectionOffset) * right);
             }
 
-            mSelectedIndicatorPaint.setColor(color);
+            selectedIndicatorPaint.setColor(color);
 
-            canvas.drawRect(left, height - mSelectedIndicatorThickness, right,
-                    height, mSelectedIndicatorPaint);
+            canvas.drawRect(left, height - selectedIndicatorThickness, right,
+                    height, selectedIndicatorPaint);
         }
     }
 
@@ -131,15 +131,15 @@ class SlidingTabStrip extends LinearLayout {
     }
 
     private static class SimpleTabColorizer implements SlidingTabLayout.TabColorizer {
-        private int[] mIndicatorColors;
+        private int[] indicatorColors;
 
         @Override
         public final int getIndicatorColor(int position) {
-            return mIndicatorColors[position % mIndicatorColors.length];
+            return indicatorColors[position % indicatorColors.length];
         }
 
         void setIndicatorColors(int... colors) {
-            mIndicatorColors = colors;
+            indicatorColors = colors;
         }
     }
 }

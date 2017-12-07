@@ -32,15 +32,15 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
         SHOW("SHOW"),
         MOVIE("MOVIE");
 
-        private final String mValue;
+        private final String value;
 
         MediaType(String value) {
-            mValue = value;
+            this.value = value;
         }
 
         @Override
         public String toString() {
-            return mValue;
+            return value;
         }
     }
 
@@ -48,15 +48,15 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
         CAST("CAST"),
         CREW("CREW");
 
-        private final String mValue;
+        private final String value;
 
         PeopleType(String value) {
-            mValue = value;
+            this.value = value;
         }
 
         @Override
         public String toString() {
-            return mValue;
+            return value;
         }
     }
 

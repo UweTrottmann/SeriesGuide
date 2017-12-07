@@ -80,42 +80,40 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
 
     public static class TraktActionCompleteEvent {
 
-        public TraktAction mTraktAction;
-
-        public boolean mWasSuccessful;
-
-        public String mMessage;
+        public TraktAction traktAction;
+        public boolean wasSuccessful;
+        public String message;
 
         public TraktActionCompleteEvent(TraktAction traktAction, boolean wasSuccessful,
                 String message) {
-            mTraktAction = traktAction;
-            mWasSuccessful = wasSuccessful;
-            mMessage = message;
+            this.traktAction = traktAction;
+            this.wasSuccessful = wasSuccessful;
+            this.message = message;
         }
 
         /**
          * Displays status toasts dependent on the result of the trakt action performed.
          */
         public void handle(Context context) {
-            if (TextUtils.isEmpty(mMessage)) {
+            if (TextUtils.isEmpty(message)) {
                 return;
             }
 
-            if (!mWasSuccessful) {
+            if (!wasSuccessful) {
                 // display error toast
-                Toast.makeText(context, mMessage, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                 return;
             }
 
             // display success toast
-            switch (mTraktAction) {
+            switch (traktAction) {
                 case CHECKIN_EPISODE:
                 case CHECKIN_MOVIE:
-                    Toast.makeText(context, mMessage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     Toast.makeText(context,
-                            mMessage + " " + context.getString(R.string.ontrakt),
+                            message + " " + context.getString(R.string.ontrakt),
                             Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -134,9 +132,9 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
         }
     }
 
-    private final Context mContext;
-    private Bundle mArgs;
-    private TraktAction mAction;
+    private final Context context;
+    private Bundle args;
+    private TraktAction action;
 
     /**
      * Initial constructor. Call <b>one</b> of the setup-methods like {@link #commentEpisode(int,
@@ -155,18 +153,18 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
      * launch {@link ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context, Bundle args) {
-        mContext = context.getApplicationContext();
-        mArgs = args;
+        this.context = context.getApplicationContext();
+        this.args = args;
     }
 
     /**
      * Check into an episode. Optionally provide a checkin message.
      */
     public TraktTask checkInEpisode(int episodeTvdbId, String title, String message) {
-        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.CHECKIN_EPISODE.name());
-        mArgs.putInt(InitBundle.EPISODE_TVDBID, episodeTvdbId);
-        mArgs.putString(InitBundle.TITLE, title);
-        mArgs.putString(InitBundle.MESSAGE, message);
+        args.putString(InitBundle.TRAKTACTION, TraktAction.CHECKIN_EPISODE.name());
+        args.putInt(InitBundle.EPISODE_TVDBID, episodeTvdbId);
+        args.putString(InitBundle.TITLE, title);
+        args.putString(InitBundle.MESSAGE, message);
         return this;
     }
 
@@ -174,10 +172,10 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
      * Check into an episode. Optionally provide a checkin message.
      */
     public TraktTask checkInMovie(int tmdbId, String title, String message) {
-        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.CHECKIN_MOVIE.name());
-        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, tmdbId);
-        mArgs.putString(InitBundle.TITLE, title);
-        mArgs.putString(InitBundle.MESSAGE, message);
+        args.putString(InitBundle.TRAKTACTION, TraktAction.CHECKIN_MOVIE.name());
+        args.putInt(InitBundle.MOVIE_TMDB_ID, tmdbId);
+        args.putString(InitBundle.TITLE, title);
+        args.putString(InitBundle.MESSAGE, message);
         return this;
     }
 
@@ -185,10 +183,10 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
      * Post a comment for a show.
      */
     public TraktTask commentShow(int showTvdbid, String comment, boolean isSpoiler) {
-        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.COMMENT.name());
-        mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
-        mArgs.putString(InitBundle.MESSAGE, comment);
-        mArgs.putBoolean(InitBundle.ISSPOILER, isSpoiler);
+        args.putString(InitBundle.TRAKTACTION, TraktAction.COMMENT.name());
+        args.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
+        args.putString(InitBundle.MESSAGE, comment);
+        args.putBoolean(InitBundle.ISSPOILER, isSpoiler);
         return this;
     }
 
@@ -196,10 +194,10 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
      * Post a comment for an episode.
      */
     public TraktTask commentEpisode(int episodeTvdbid, String comment, boolean isSpoiler) {
-        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.COMMENT.name());
-        mArgs.putInt(InitBundle.EPISODE_TVDBID, episodeTvdbid);
-        mArgs.putString(InitBundle.MESSAGE, comment);
-        mArgs.putBoolean(InitBundle.ISSPOILER, isSpoiler);
+        args.putString(InitBundle.TRAKTACTION, TraktAction.COMMENT.name());
+        args.putInt(InitBundle.EPISODE_TVDBID, episodeTvdbid);
+        args.putString(InitBundle.MESSAGE, comment);
+        args.putBoolean(InitBundle.ISSPOILER, isSpoiler);
         return this;
     }
 
@@ -207,26 +205,26 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
      * Post a comment for a movie.
      */
     public TraktTask commentMovie(int movieTmdbId, String comment, boolean isSpoiler) {
-        mArgs.putString(InitBundle.TRAKTACTION, TraktAction.COMMENT.name());
-        mArgs.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
-        mArgs.putString(InitBundle.MESSAGE, comment);
-        mArgs.putBoolean(InitBundle.ISSPOILER, isSpoiler);
+        args.putString(InitBundle.TRAKTACTION, TraktAction.COMMENT.name());
+        args.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
+        args.putString(InitBundle.MESSAGE, comment);
+        args.putBoolean(InitBundle.ISSPOILER, isSpoiler);
         return this;
     }
 
     @Override
     protected TraktResponse doInBackground(Void... params) {
         // we need this value in onPostExecute, so preserve it here
-        mAction = TraktAction.valueOf(mArgs.getString(InitBundle.TRAKTACTION));
+        action = TraktAction.valueOf(args.getString(InitBundle.TRAKTACTION));
 
         // check for network connection
-        if (!AndroidUtils.isNetworkConnected(mContext)) {
-            return new TraktResponse(false, mContext.getString(R.string.offline));
+        if (!AndroidUtils.isNetworkConnected(context)) {
+            return new TraktResponse(false, context.getString(R.string.offline));
         }
 
         // check for credentials
-        if (!TraktCredentials.get(mContext).hasCredentials()) {
-            return new TraktResponse(false, mContext.getString(R.string.trakt_error_credentials));
+        if (!TraktCredentials.get(context).hasCredentials()) {
+            return new TraktResponse(false, context.getString(R.string.trakt_error_credentials));
         }
 
         // last chance to abort
@@ -234,7 +232,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
             return null;
         }
 
-        switch (mAction) {
+        switch (action) {
             case CHECKIN_EPISODE:
             case CHECKIN_MOVIE: {
                 return doCheckInAction();
@@ -248,13 +246,13 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     }
 
     private TraktResponse doCheckInAction() {
-        Checkin traktCheckin = SgApp.getServicesComponent(mContext).traktCheckin();
+        Checkin traktCheckin = SgApp.getServicesComponent(context).traktCheckin();
         try {
             retrofit2.Response response;
-            String message = mArgs.getString(InitBundle.MESSAGE);
-            switch (mAction) {
+            String message = args.getString(InitBundle.MESSAGE);
+            switch (action) {
                 case CHECKIN_EPISODE: {
-                    int episodeTvdbId = mArgs.getInt(InitBundle.EPISODE_TVDBID);
+                    int episodeTvdbId = args.getInt(InitBundle.EPISODE_TVDBID);
                     EpisodeCheckin checkin = new EpisodeCheckin.Builder(
                             new SyncEpisode().id(EpisodeIds.tvdb(episodeTvdbId)), APP_VERSION, null)
                             .message(message)
@@ -264,7 +262,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                     break;
                 }
                 case CHECKIN_MOVIE: {
-                    int movieTmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
+                    int movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID);
                     MovieCheckin checkin = new MovieCheckin.Builder(
                             new SyncMovie().id(MovieIds.tmdb(movieTmdbId)), APP_VERSION, null)
                             .message(message)
@@ -278,11 +276,11 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
             }
 
             if (response.isSuccessful()) {
-                return new TraktResponse(true, mContext.getString(R.string.checkin_success_trakt,
-                        mArgs.getString(InitBundle.TITLE)));
+                return new TraktResponse(true, context.getString(R.string.checkin_success_trakt,
+                        args.getString(InitBundle.TITLE)));
             } else {
                 // check if the user wants to check-in, but there is already a check-in in progress
-                TraktV2 trakt = SgApp.getServicesComponent(mContext).trakt();
+                TraktV2 trakt = SgApp.getServicesComponent(context).trakt();
                 CheckinError checkinError = trakt.checkForCheckinError(response);
                 if (checkinError != null) {
                     OffsetDateTime expiresAt = checkinError.expires_at;
@@ -294,16 +292,16 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                 // check if item does not exist on trakt (yet)
                 else if (response.code() == 404) {
                     return new TraktResponse(false,
-                            mContext.getString(R.string.trakt_error_not_exists));
-                } else if (SgTrakt.isUnauthorized(mContext, response)) {
+                            context.getString(R.string.trakt_error_not_exists));
+                } else if (SgTrakt.isUnauthorized(context, response)) {
                     return new TraktResponse(false,
-                            mContext.getString(R.string.trakt_error_credentials));
+                            context.getString(R.string.trakt_error_credentials));
                 } else {
-                    SgTrakt.trackFailedRequest(mContext, "check-in", response);
+                    SgTrakt.trackFailedRequest(context, "check-in", response);
                 }
             }
         } catch (IOException e) {
-            SgTrakt.trackFailedRequest(mContext, "check-in", e);
+            SgTrakt.trackFailedRequest(context, "check-in", e);
         }
 
         // return generic failure message
@@ -311,7 +309,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     }
 
     private TraktResponse doCommentAction() {
-        Comments traktComments = SgApp.getServicesComponent(mContext).traktComments();
+        Comments traktComments = SgApp.getServicesComponent(context).traktComments();
         try {
             // post comment
             retrofit2.Response<Comment> response = traktComments.post(buildComment())
@@ -324,18 +322,18 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
             } else {
                 // check if comment failed validation or item does not exist on trakt
                 if (response.code() == 422) {
-                    return new TraktResponse(false, mContext.getString(R.string.shout_invalid));
+                    return new TraktResponse(false, context.getString(R.string.shout_invalid));
                 } else if (response.code() == 404) {
-                    return new TraktResponse(false, mContext.getString(R.string.shout_invalid));
-                } else if (SgTrakt.isUnauthorized(mContext, response)) {
+                    return new TraktResponse(false, context.getString(R.string.shout_invalid));
+                } else if (SgTrakt.isUnauthorized(context, response)) {
                     return new TraktResponse(false,
-                            mContext.getString(R.string.trakt_error_credentials));
+                            context.getString(R.string.trakt_error_credentials));
                 } else {
-                    SgTrakt.trackFailedRequest(mContext, "post comment", response);
+                    SgTrakt.trackFailedRequest(context, "post comment", response);
                 }
             }
         } catch (IOException e) {
-            SgTrakt.trackFailedRequest(mContext, "post comment", e);
+            SgTrakt.trackFailedRequest(context, "post comment", e);
         }
 
         // return generic failure message
@@ -344,12 +342,12 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
 
     private Comment buildComment() {
         Comment comment = new Comment();
-        comment.comment = mArgs.getString(InitBundle.MESSAGE);
-        comment.spoiler = mArgs.getBoolean(InitBundle.ISSPOILER);
+        comment.comment = args.getString(InitBundle.MESSAGE);
+        comment.spoiler = args.getBoolean(InitBundle.ISSPOILER);
 
         // as determined by "science", episode comments are most likely, so check for them first
         // episode?
-        int episodeTvdbId = mArgs.getInt(InitBundle.EPISODE_TVDBID);
+        int episodeTvdbId = args.getInt(InitBundle.EPISODE_TVDBID);
         if (episodeTvdbId != 0) {
             comment.episode = new Episode();
             comment.episode.ids = EpisodeIds.tvdb(episodeTvdbId);
@@ -357,7 +355,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
         }
 
         // show?
-        int showTvdbId = mArgs.getInt(InitBundle.SHOW_TVDBID);
+        int showTvdbId = args.getInt(InitBundle.SHOW_TVDBID);
         if (showTvdbId != 0) {
             comment.show = new Show();
             comment.show.ids = ShowIds.tvdb(showTvdbId);
@@ -365,7 +363,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
         }
 
         // movie!
-        int movieTmdbId = mArgs.getInt(InitBundle.MOVIE_TMDB_ID);
+        int movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID);
         comment.movie = new Movie();
         comment.movie.ids = MovieIds.tmdb(movieTmdbId);
         return comment;
@@ -373,7 +371,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
 
     private TraktResponse buildErrorResponse() {
         return new TraktResponse(false,
-                mContext.getString(R.string.api_error_generic, mContext.getString(R.string.trakt)));
+                context.getString(R.string.api_error_generic, context.getString(R.string.trakt)));
     }
 
     @Override
@@ -385,17 +383,17 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
 
         if (r.succesful) {
             // all good
-            EventBus.getDefault().post(new TraktActionCompleteEvent(mAction, true, r.message));
+            EventBus.getDefault().post(new TraktActionCompleteEvent(action, true, r.message));
         } else {
             // special handling of blocked check-ins
-            if (mAction == TraktAction.CHECKIN_EPISODE
-                    || mAction == TraktAction.CHECKIN_MOVIE) {
+            if (action == TraktAction.CHECKIN_EPISODE
+                    || action == TraktAction.CHECKIN_MOVIE) {
                 if (r instanceof CheckinBlockedResponse) {
                     CheckinBlockedResponse checkinBlockedResponse = (CheckinBlockedResponse) r;
                     if (checkinBlockedResponse.waitTimeMin > 0) {
                         // looks like a check in is already in progress
                         EventBus.getDefault().post(
-                                new TraktCheckInBlockedEvent(mArgs,
+                                new TraktCheckInBlockedEvent(args,
                                         checkinBlockedResponse.waitTimeMin));
                         return;
                     }
@@ -403,7 +401,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
             }
 
             // well, something went wrong
-            EventBus.getDefault().post(new TraktActionCompleteEvent(mAction, false, r.message));
+            EventBus.getDefault().post(new TraktActionCompleteEvent(action, false, r.message));
         }
     }
 }

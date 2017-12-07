@@ -5,6 +5,8 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 
@@ -23,6 +25,10 @@ public class NotificationSettings {
     public static final String KEY_SELECTION
             = "com.battlelancer.seriesguide.notifications.shows";
 
+    /** Only visible on O+. Link to system settings app to modify further notification settings. */
+    public static final String KEY_CHANNELS
+            = "com.battlelancer.seriesguide.notifications.channels";
+
     public static final String KEY_LAST_CLEARED
             = "com.battlelancer.seriesguide.notifications.latestcleared";
 
@@ -32,8 +38,10 @@ public class NotificationSettings {
     public static final String KEY_NEXT_TO_NOTIFY
             = "com.battlelancer.seriesguide.notifications.next";
 
+    /** Only visible on pre-O. */
     public static final String KEY_RINGTONE = "com.battlelancer.seriesguide.notifications.ringtone";
 
+    /** Only visible on pre-O. */
     public static final String KEY_VIBRATE = "com.battlelancer.seriesguide.notifications.vibrate";
 
     private static final int THRESHOLD_DEFAULT_MIN = 10;
@@ -123,5 +131,13 @@ public class NotificationSettings {
     public static boolean isNotificationVibrating(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_VIBRATE, false);
+    }
+
+    public static void setDefaultsForChannelErrors(Context context,
+            NotificationCompat.Builder builder) {
+        builder.setColor(ContextCompat.getColor(context, R.color.accent_primary));
+        builder.setDefaults(NotificationCompat.DEFAULT_SOUND | NotificationCompat.DEFAULT_LIGHTS);
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        builder.setCategory(NotificationCompat.CATEGORY_ERROR);
     }
 }

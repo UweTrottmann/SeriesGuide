@@ -31,8 +31,6 @@ public abstract class BaseSearchFragment extends Fragment
         ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
         gridView.setOnItemClickListener(this);
         gridView.setEmptyView(textViewEmpty);
-        gridView.setFastScrollAlwaysVisible(false);
-        gridView.setFastScrollEnabled(true);
 
         return view;
     }

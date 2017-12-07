@@ -46,7 +46,7 @@
   <string name="norating">n/a</string>
   <string name="unknown">ไม่ทราบ</string>
   <string name="offline">เชื่อมต่อไปยังเครือข่าย, จากนั้นลองอีกครั้ง</string>
-  <string name="app_not_available">ไม่มีแอปที่สามารถจัดการกับสิ่งนี้</string>
+  <string name="app_not_available">No app available to handle this</string>
   <string name="people_empty">ไม่มีใครอยู่ที่นี่เลยหรือ? แตะเพื่อลองอีกครั้ง</string>
   <string name="database_error">ไม่สามารถแก้ไขข้อมูล</string>
   <string name="reinstall_info">ลองสำรองข้อมูลในการตั้งค่า, ติดตั้งแอปใหม่ และเรียกคืนข้อมูล</string>
@@ -250,8 +250,8 @@
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">การทดลอง!</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
   <string name="hexagon_signin">เข้าสู่ระบบ</string>
   <string name="hexagon_signout">ออกจากระบบ</string>
   <string name="hexagon_setup_incomplete">การตั้งค่า SeriesGuide Cloud ไม่เสร็จสมบูรณ์</string>
@@ -383,7 +383,7 @@
   <string name="clear_cache_summary">ลบแคชรูปภาพทั้งหมดออกจากอุปกรณ์ของคุณ</string>
   <string name="pref_ganalyticssummary">ส่งสถิติการใช้งานแบบไม่ระบุชื่อกับบริการของ Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">รวมข้อมูลทั้งหมด เช่น รายละเอียด, นักแสดง และการจัดอันดับ</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">โฟลเดอร์สำรองข้อมูล</string>
   <string name="backup_version">เวอร์ชันฐานข้อมูล</string>
   <string name="backup_failed_file_access">ไม่สามารถสำรองข้อมูล ไม่พบหรือไม่สามารถเข้าถึงไฟล์สำรอง</string>
@@ -428,6 +428,7 @@
   <string name="pref_notifications_treshold">แจ้งเตือนตอนไหนดี</string>
   <string name="pref_notifications_select_shows">เลือกรายการ</string>
   <string name="pref_notifications_select_shows_summary">รายการที่เปิดใช้การแจ้งเตือน (%d)</string>
+  <string name="pref_notification_channel_errors">Errors</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (เล็ก)</string>
   <!-- List Widget -->

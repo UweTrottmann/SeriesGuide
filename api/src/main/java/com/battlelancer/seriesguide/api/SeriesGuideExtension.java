@@ -1,12 +1,17 @@
 package com.battlelancer.seriesguide.api;
 
-import android.app.IntentService;
+import android.annotation.SuppressLint;
+import android.app.job.JobService;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v4.app.JobIntentService;
 import android.text.TextUtils;
 import android.util.Log;
 import java.util.HashMap;
@@ -24,6 +29,7 @@ import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_MOVIE;
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_SUBSCRIBER_COMPONENT;
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_TOKEN;
+import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_VERSION;
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_PUBLISH_ACTION;
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_EPISODE;
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_MOVIE;
@@ -32,9 +38,12 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA
 
 /**
  * Base class for a SeriesGuide extension. Extensions are a way for other apps to
- * feed actions (represented through {@linkplain Action actions}) for media items to SeriesGuide.
- * Actions may for example launch other apps or just display interesting information related to a
- * media item. Extensions are specialized {@link IntentService} classes.
+ * feed actions (represented through {@linkplain Action actions}) for episodes and movies to
+ * SeriesGuide. Actions may for example launch other apps or display interesting information related
+ * to an episode or movie.
+ *
+ * <p> Extensions are specialized {@link JobIntentService} classes in combination with a broadcast
+ * receiver.
  *
  * <p> Multiple extensions may be enabled within SeriesGuide at the same time. When a SeriesGuide
  * user chooses to enable an extension, SeriesGuide will <em>subscribe</em> to it prior of
@@ -46,28 +55,37 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA
  *
  * <h3>Subclassing {@link SeriesGuideExtension}</h3>
  *
- * Subclasses must at least implement {@link #onRequest(int, Episode)}, which is called when
- * SeriesGuide requests actions to display for a media item. Do not perform long running operations
- * here as the user will get frustrated while waiting for this extensions action to be published.
+ * Subclasses must at least implement {@link #onRequest(int, Episode)} or {@link #onRequest(int, Movie)},
+ * which is called when SeriesGuide requests actions to display for an episode or movie. Do not
+ * perform long running operations here as the user will get frustrated while waiting for the
+ * action to appear.
  *
  * <p> To publish an action, call {@link #publishAction(Action)} from {@link #onRequest(int,
- * Episode)}. All current subscribers will then immediately receive an update with the new action
- * information. Under the hood, this is all done with {@linkplain Context#startService(Intent)
- * service intents}.
+ * Episode)} or {@link #onRequest(int, Movie)}. All current subscribers will then immediately
+ * receive an update with the new action information. Under the hood, this is done with
+ * {@linkplain Context#sendBroadcast(Intent) broadcast intents}.
+ *
+ * <p> As the subclass is a {@link JobIntentService}, it needs be declared as a
+ * <code>&lt;service&gt;</code> component in the application's <code>AndroidManifest.xml</code>. In
+ * addition it must be exported and given the {@link JobService#PERMISSION_BIND} permission to
+ * integrate with the platforms job scheduler.
  *
  * <h3>Registering your extension</h3>
  *
- * An extension is simply a service that SeriesGuide and other apps interact with via
- * {@linkplain Context#startService(Intent) service intents}. Subclasses of {@link
- * SeriesGuideExtension} should thus be declared as <code>&lt;service&gt;</code> components in the
+ * An extension is exposed through a broadcast receiver that SeriesGuide and other apps interact
+ * with via {@linkplain Context#sendBroadcast(Intent) broadcast intents}. This receiver enqueues
+ * requests from subscribers to be processed by this service. A simple receiver can be implemented
+ * by subclassing {@link SeriesGuideExtensionReceiver}.
+ *
+ * <p> The receiver must be declared as a <code>&lt;receiver&gt;</code> component in the
  * application's <code>AndroidManifest.xml</code> file.
  *
  * <p> The SeriesGuide app and other potential subscribers discover available extensions using
- * Android's {@link Intent} mechanism. Ensure that your <code>service</code> definition includes an
- * <code>&lt;intent-filter&gt;</code> with an action of {@link #ACTION_SERIESGUIDE_EXTENSION}.
+ * Android's {@link Intent} mechanism. Ensure that your <code>receiver</code> definition includes an
+ * <code>&lt;intent-filter&gt;</code> with an action of {@link SeriesGuideExtensionReceiver#ACTION_SERIESGUIDE_EXTENSION}.
  *
  * <p> To make your extension easier to identify for users you should add the following attributes
- * to your service definition:
+ * to your receiver definition:
  *
  * <ul>
  * <li><code>android:label</code> (optional): the name to display when displaying your extension in
@@ -78,8 +96,8 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA
  * interface.</li>
  * </ul>
  *
- * <p> Lastly, you may want to add the following <code>&lt;meta-data&gt;</code> element to your
- * service definition:
+ * <p> If you want to provide a settings activity, add the following <code>&lt;meta-data&gt;</code>
+ * element to your receiver definition:
  *
  * <ul>
  * <li><code>settingsActivity</code> (optional): if present, should be the qualified
@@ -92,17 +110,21 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA
  * Below is an example extension declaration in the manifest:
  *
  * <pre class="prettyprint">
- * &lt;service android:name=".ExampleExtension"
- *     android:label="@string/extension_title"
+ * &lt;receiver android:name=".ExampleExtensionReceiver"
+ *     android:description="@string/extension_description"
  *     android:icon="@drawable/ic_extension_example"
- *     android:description="@string/extension_description"&gt;
+ *     android:label="@string/extension_title"&gt;
  *     &lt;intent-filter&gt;
  *         &lt;action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" /&gt;
  *     &lt;/intent-filter&gt;
  *     &lt;!-- A settings activity is optional --&gt;
  *     &lt;meta-data android:name="settingsActivity"
  *         android:value=".ExampleSettingsActivity" /&gt;
- * &lt;/service&gt;
+ * &lt;/receiver&gt;
+ * &lt;service
+ *     android:name=".ExampleExtension"
+ *     android:exported="true"
+ *     android:permission="android.permission.BIND_JOB_SERVICE" /&gt;
  * </pre>
  *
  * If a <code>settingsActivity</code> meta-data element is present, an activity with the given
@@ -116,17 +138,28 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA
  *     android:exported="true" /&gt;
  * </pre>
  *
- * Finally, below is a simple example {@link SeriesGuideExtension} subclass that publishes actions
- * for episodes performing a simple Google search:
+ * Finally, below are a simple example {@link SeriesGuideExtensionReceiver} and
+ * {@link SeriesGuideExtension} subclass that publishes actions for episodes performing a simple
+ * Google search:
  *
  * <pre class="prettyprint">
+ * public class ExampleExtensionReceiver extends SeriesGuideExtensionReceiver {
+ *     protected int getJobId() {
+ *         return 1000;
+ *     }
+ *
+ *     protected Class&lt;? extends SeriesGuideExtension&gt; getExtensionClass() {
+ *         return ExampleExtension.class;
+ *     }
+ * }
+ *
  * public class ExampleExtension extends SeriesGuideExtension {
  *     protected void onRequest(int episodeIdentifier, Episode episode) {
  *         publishAction(new Action.Builder("Google search", episodeIdentifier)
  *                 .viewIntent(new Intent(Intent.ACTION_VIEW)
  *                          .setData(Uri.parse("https://www.google.com/#q="
  *                                 + episode.getTitle())))
-                   .build());
+ *                 .build());
  *     }
  * }
  * </pre>
@@ -134,16 +167,9 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA
  * <p> Based on code from <a href="https://github.com/romannurik/muzei">Muzei</a>, an awesome Live
  * Wallpaper by Roman Nurik.
  */
-public abstract class SeriesGuideExtension extends IntentService {
+public abstract class SeriesGuideExtension extends JobIntentService {
 
     private static final String TAG = "SeriesGuideExtension";
-
-    /**
-     * The {@link Intent} action that this extension should declare an
-     * <code>&lt;intent-filter&gt;</code> for to let SeriesGuide pick it up.
-     */
-    public static final String ACTION_SERIESGUIDE_EXTENSION
-            = "com.battlelancer.seriesguide.api.SeriesGuideExtension";
 
     /**
      * Boolean extra that will be set to true when SeriesGuide starts the extensions (optionally)
@@ -158,32 +184,37 @@ public abstract class SeriesGuideExtension extends IntentService {
     private static final String PREF_SUBSCRIPTIONS = "subscriptions";
     private static final String PREF_LAST_ACTION = "action";
 
-    private final String mName;
+    private final String name;
+    private SharedPreferences sharedPrefs;
+    private Map<ComponentName, String> subscribers;
 
-    private SharedPreferences mSharedPrefs;
-
-    private Map<ComponentName, String> mSubscribers;
-
-    private Action mCurrentAction;
+    private Action currentAction;
     private int currentActionType;
+    private int currentVersion;
 
-    private Handler mHandler = new Handler();
+    private Handler handler = new Handler();
+
+    /**
+     * Enqueues this service to process the given intent received from a subscriber.
+     */
+    static void enqueue(Context context, Class cls, int jobId, Intent subscriberIntent) {
+        enqueueWork(context, cls, jobId, subscriberIntent);
+    }
 
     /**
      * Call from your default constructor.
      *
-     * <p> Gives the extension a name. This is not user-visible, but will be used to store preferences
-     * and state for the extension.
+     * @param name Gives the extension a name. This is not user-visible, but will be used to store
+     * preferences and state for the extension.
      */
     public SeriesGuideExtension(String name) {
-        super(name);
-        mName = name;
+        this.name = name;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mSharedPrefs = getSharedPreferences();
+        sharedPrefs = getSharedPreferences();
         loadSubscriptions();
         loadLastAction();
     }
@@ -194,9 +225,9 @@ public abstract class SeriesGuideExtension extends IntentService {
      * {@link #SeriesGuideExtension(String)} constructor. This static method is useful for exposing
      * extension preferences to other application components such as a settings activity.
      *
-     * @param context       The context; can be an application context.
+     * @param context The context; can be an application context.
      * @param extensionName The source name, provided in the {@link #SeriesGuideExtension(String)}
-     *                      constructor.
+     * constructor.
      */
     protected static SharedPreferences getSharedPreferences(Context context, String extensionName) {
         return context.getSharedPreferences(PREF_PREFIX + extensionName, 0);
@@ -208,7 +239,7 @@ public abstract class SeriesGuideExtension extends IntentService {
      * @see #getSharedPreferences(android.content.Context, String)
      */
     protected final SharedPreferences getSharedPreferences() {
-        return getSharedPreferences(this, mName);
+        return getSharedPreferences(this, name);
     }
 
     /**
@@ -281,7 +312,7 @@ public abstract class SeriesGuideExtension extends IntentService {
      * Publishes the provided {@link Action}. It will be sent to all current subscribers.
      */
     protected final void publishAction(Action action) {
-        mCurrentAction = action;
+        currentAction = action;
         publishCurrentAction();
         saveLastAction();
     }
@@ -291,15 +322,11 @@ public abstract class SeriesGuideExtension extends IntentService {
      */
     @SuppressWarnings("unused")
     protected final Action getCurrentAction() {
-        return mCurrentAction;
+        return currentAction;
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
-        if (intent == null) {
-            return;
-        }
-
+    protected void onHandleWork(@NonNull Intent intent) {
         String action = intent.getAction();
         if (ACTION_SUBSCRIBE.equals(action)) {
             // just subscribing or unsubscribing
@@ -309,37 +336,39 @@ public abstract class SeriesGuideExtension extends IntentService {
         } else if (ACTION_UPDATE.equals(action)) {
             // subscriber requests an updated action
             if (intent.hasExtra(EXTRA_ENTITY_IDENTIFIER)) {
+                int version = intent.getIntExtra(EXTRA_VERSION, 1);
                 if (intent.hasExtra(EXTRA_EPISODE)) {
                     handleEpisodeRequest(intent.getIntExtra(EXTRA_ENTITY_IDENTIFIER, 0),
-                            intent.getBundleExtra(EXTRA_EPISODE));
+                            intent.getBundleExtra(EXTRA_EPISODE), version);
                 } else if (intent.hasExtra(EXTRA_MOVIE)) {
                     handleMovieRequest(intent.getIntExtra(EXTRA_ENTITY_IDENTIFIER, 0),
-                            intent.getBundleExtra(EXTRA_MOVIE));
+                            intent.getBundleExtra(EXTRA_MOVIE), version);
                 }
             }
         }
     }
 
+    @SuppressLint("LogNotTimber")
     private synchronized void handleSubscribe(ComponentName subscriber, String token) {
         if (subscriber == null) {
             Log.w(TAG, "No subscriber given.");
             return;
         }
 
-        String oldToken = mSubscribers.get(subscriber);
+        String oldToken = subscribers.get(subscriber);
         if (TextUtils.isEmpty(token)) {
             if (oldToken == null) {
                 return;
             }
 
             // Unsubscribing
-            mSubscribers.remove(subscriber);
+            subscribers.remove(subscriber);
             handleSubscriberRemoved(subscriber);
         } else {
             // Subscribing
             if (!TextUtils.isEmpty(oldToken)) {
                 // Was previously subscribed, treat this as a unsubscribe + subscribe
-                mSubscribers.remove(subscriber);
+                subscribers.remove(subscriber);
                 handleSubscriberRemoved(subscriber);
             }
 
@@ -347,7 +376,7 @@ public abstract class SeriesGuideExtension extends IntentService {
                 return;
             }
 
-            mSubscribers.put(subscriber, token);
+            subscribers.put(subscriber, token);
             handleSubscriberAdded(subscriber);
         }
 
@@ -355,7 +384,7 @@ public abstract class SeriesGuideExtension extends IntentService {
     }
 
     private synchronized void handleSubscriberAdded(ComponentName subscriber) {
-        if (mSubscribers.size() == 1) {
+        if (subscribers.size() == 1) {
             onEnabled();
         }
 
@@ -365,111 +394,141 @@ public abstract class SeriesGuideExtension extends IntentService {
     private synchronized void handleSubscriberRemoved(ComponentName subscriber) {
         onSubscriberRemoved(subscriber);
 
-        if (mSubscribers.size() == 0) {
+        if (subscribers.size() == 0) {
             onDisabled();
         }
     }
 
     private synchronized void loadSubscriptions() {
-        mSubscribers = new HashMap<>();
-        Set<String> serializedSubscriptions = mSharedPrefs.getStringSet(PREF_SUBSCRIPTIONS, null);
+        subscribers = new HashMap<>();
+        Set<String> serializedSubscriptions = sharedPrefs.getStringSet(PREF_SUBSCRIPTIONS, null);
         if (serializedSubscriptions != null) {
             for (String serializedSubscription : serializedSubscriptions) {
                 String[] arr = serializedSubscription.split("\\|", 2);
                 ComponentName subscriber = ComponentName.unflattenFromString(arr[0]);
                 String token = arr[1];
-                mSubscribers.put(subscriber, token);
+                subscribers.put(subscriber, token);
             }
         }
     }
 
     private synchronized void saveSubscriptions() {
         Set<String> serializedSubscriptions = new HashSet<>();
-        for (ComponentName subscriber : mSubscribers.keySet()) {
+        for (ComponentName subscriber : subscribers.keySet()) {
             serializedSubscriptions.add(subscriber.flattenToShortString() + "|"
-                    + mSubscribers.get(subscriber));
+                    + subscribers.get(subscriber));
         }
-        mSharedPrefs.edit().putStringSet(PREF_SUBSCRIPTIONS, serializedSubscriptions).commit();
+        sharedPrefs.edit().putStringSet(PREF_SUBSCRIPTIONS, serializedSubscriptions).apply();
     }
 
+    @SuppressLint("LogNotTimber")
     private void loadLastAction() {
-        String stateString = mSharedPrefs.getString(PREF_LAST_ACTION, null);
+        String stateString = sharedPrefs.getString(PREF_LAST_ACTION, null);
         if (stateString != null) {
             try {
-                mCurrentAction = Action.fromJson(
+                currentAction = Action.fromJson(
                         (JSONObject) new JSONTokener(stateString).nextValue());
             } catch (JSONException e) {
-                Log.e(TAG, "Couldn't deserialize current state, id=" + mName, e);
+                Log.e(TAG, "Couldn't deserialize current state, id=" + name, e);
             }
         } else {
-            mCurrentAction = null;
+            currentAction = null;
         }
     }
 
+    @SuppressLint("LogNotTimber")
     private void saveLastAction() {
         try {
-            mSharedPrefs.edit()
-                    .putString(PREF_LAST_ACTION, mCurrentAction.toJson().toString())
-                    .commit();
+            sharedPrefs.edit()
+                    .putString(PREF_LAST_ACTION, currentAction.toJson().toString())
+                    .apply();
         } catch (JSONException e) {
-            Log.e(TAG, "Couldn't serialize current state, id=" + mName, e);
+            Log.e(TAG, "Couldn't serialize current state, id=" + name, e);
         }
     }
 
-    private void handleEpisodeRequest(int episodeIdentifier, Bundle episodeBundle) {
+    private void handleEpisodeRequest(int episodeIdentifier, Bundle episodeBundle, int version) {
         if (episodeIdentifier <= 0 || episodeBundle == null) {
             return;
         }
         currentActionType = ACTION_TYPE_EPISODE;
+        currentVersion = version;
         Episode episode = Episode.fromBundle(episodeBundle);
         onRequest(episodeIdentifier, episode);
     }
 
-    private void handleMovieRequest(int movieIdentifier, Bundle movieBundle) {
+    private void handleMovieRequest(int movieIdentifier, Bundle movieBundle, int version) {
         if (movieIdentifier <= 0 || movieBundle == null) {
             return;
         }
         currentActionType = ACTION_TYPE_MOVIE;
+        currentVersion = version;
         Movie movie = Movie.fromBundle(movieBundle);
         onRequest(movieIdentifier, movie);
     }
 
     private synchronized void publishCurrentAction() {
         // TODO possibly only publish to requester (identify via token)
-        for (ComponentName subscription : mSubscribers.keySet()) {
+        for (ComponentName subscription : subscribers.keySet()) {
             publishCurrentAction(subscription);
         }
     }
 
+    @SuppressLint("LogNotTimber")
     private synchronized void publishCurrentAction(final ComponentName subscriber) {
-        String token = mSubscribers.get(subscriber);
+        String token = subscribers.get(subscriber);
         if (TextUtils.isEmpty(token)) {
-            Log.w(TAG, "Not active, canceling update, id=" + mName);
+            Log.w(TAG, "Not active, canceling update, id=" + name);
             return;
         }
 
-        // Publish update
         Intent intent = new Intent(ACTION_PUBLISH_ACTION)
                 .setComponent(subscriber)
                 .putExtra(EXTRA_TOKEN, token)
                 .putExtra(EXTRA_ACTION,
-                        (mCurrentAction != null) ? mCurrentAction.toBundle() : null)
+                        (currentAction != null) ? currentAction.toBundle() : null)
                 .putExtra(EXTRA_ACTION_TYPE, currentActionType);
-        try {
-            ComponentName returnedSubscriber = startService(intent);
-            if (returnedSubscriber == null) {
-                Log.e(TAG, "Update wasn't published because subscriber no longer exists"
-                        + ", id=" + mName);
+
+        if (currentVersion == 2) {
+            // API 2 uses broadcast intents
+
+            // check if the subscriber still exists
+            try {
+                getPackageManager().getReceiverInfo(subscriber, 0);
+            } catch (PackageManager.NameNotFoundException e) {
                 // Unsubscribe the now-defunct subscriber
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        handleSubscribe(subscriber, null);
-                    }
-                });
+                unsubscribeAsync(subscriber);
+                return;
             }
-        } catch (SecurityException e) {
-            Log.e(TAG, "Couldn't publish update, id=" + mName, e);
+
+            // Publish update
+            sendBroadcast(intent);
+        } else if (currentVersion == 1 && Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            // API 1 uses service intents, not compatible with O background restrictions
+
+            // Publish update
+            try {
+                ComponentName returnedSubscriber = startService(intent);
+                if (returnedSubscriber == null) {
+                    // Unsubscribe the now-defunct subscriber
+                    unsubscribeAsync(subscriber);
+                }
+            } catch (SecurityException e) {
+                Log.e(TAG, "Couldn't publish update, id=" + name, e);
+            }
         }
+    }
+
+    @SuppressLint("LogNotTimber")
+    private void unsubscribeAsync(final ComponentName subscriber) {
+        Log.e(TAG,
+                "Update not published because subscriber no longer exists, id=" + name);
+        // post to Handler to avoid concurrent modification of subscribers
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                handleSubscribe(subscriber, null);
+            }
+        });
     }
 }

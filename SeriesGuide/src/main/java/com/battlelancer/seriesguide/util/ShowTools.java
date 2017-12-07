@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.sync.HexagonShowSync;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
@@ -163,7 +164,7 @@ public class ShowTools {
      */
     public void storeIsFavorite(int showTvdbId, boolean isFavorite) {
         if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context, true)) {
+            if (Utils.isNotConnected(context)) {
                 return;
             }
             // send to cloud
@@ -186,7 +187,7 @@ public class ShowTools {
                 .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
 
         // favorite status may determine eligibility for notifications
-        Utils.runNotificationService(context);
+        NotificationService.trigger(context);
 
         Toast.makeText(context, context.getString(isFavorite ?
                 R.string.favorited : R.string.unfavorited), Toast.LENGTH_SHORT).show();
@@ -197,7 +198,7 @@ public class ShowTools {
      */
     public void storeIsHidden(int showTvdbId, boolean isHidden) {
         if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context, true)) {
+            if (Utils.isNotConnected(context)) {
                 return;
             }
             // send to cloud
@@ -223,7 +224,7 @@ public class ShowTools {
 
     public void storeLanguage(final int showTvdbId, final String languageCode) {
         if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context, true)) {
+            if (Utils.isNotConnected(context)) {
                 return;
             }
             // send to cloud
@@ -271,7 +272,7 @@ public class ShowTools {
      */
     public void storeNotify(int showTvdbId, boolean notify) {
         if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context, true)) {
+            if (Utils.isNotConnected(context)) {
                 return;
             }
             // send to cloud
@@ -288,7 +289,7 @@ public class ShowTools {
                 SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
 
         // new notify setting may determine eligibility for notifications
-        Utils.runNotificationService(context);
+        NotificationService.trigger(context);
     }
 
     /**

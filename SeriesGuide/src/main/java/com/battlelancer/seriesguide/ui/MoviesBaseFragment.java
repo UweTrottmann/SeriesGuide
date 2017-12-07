@@ -175,8 +175,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
         int tmdbId = movie.getInt(MoviesCursorAdapter.MoviesQuery.TMDB_ID);
 
         // launch movie details activity
-        Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
-        i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, tmdbId);
+        Intent i = MovieDetailsActivity.intentMovie(getActivity(), tmdbId);
 
         MoviesCursorAdapter.ViewHolder viewHolder
                 = (MoviesCursorAdapter.ViewHolder) view.getTag();

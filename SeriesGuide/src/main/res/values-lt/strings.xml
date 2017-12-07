@@ -46,7 +46,7 @@
   <string name="norating">n/a</string>
   <string name="unknown">Nežinomas</string>
   <string name="offline">Prisijunkite prie tinklo ir bandykite dar kartą.</string>
-  <string name="app_not_available">Nėra tinkamų programėlių.</string>
+  <string name="app_not_available">No app available to handle this</string>
   <string name="people_empty">Nieko nėra?! Bandykite dar kartą.</string>
   <string name="database_error">Nepavyko modifikuoti duomenų.</string>
   <string name="reinstall_info">Pabandykite sukurti atsarginę kopiją parametrų, iš naujo įdiegti ir atkurti.</string>
@@ -231,7 +231,7 @@
   <string name="action_movies_sort_title">Pavadinimas</string>
   <string name="action_movies_sort_release">Išleidimo data</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Could not calculate statistics.</string>
+  <string name="statistics_failed">Could not calculate statistics</string>
   <string name="statistics_shows">Serialai</string>
   <string name="statistics_episodes">Serijos</string>
   <string name="statistics_movies">Filmai</string>
@@ -264,8 +264,8 @@
   <string name="feature_sync">Sync</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Eksperimentinis</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies.</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available.</string>
+  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
   <string name="hexagon_signin">Prisijungti</string>
   <string name="hexagon_signout">Atsijungti</string>
   <string name="hexagon_setup_incomplete">SeriesGuide Cloud nustatymas nebuvo baigtas.</string>
@@ -275,19 +275,19 @@
   <string name="hexagon_remove_account_failure">Nepavyko pašalinti paskyros.</string>
   <string name="hexagon_remove_account_confirmation">Pašalinus paskyrą bus panaikintos visos laidos ir filmai iš SeriesGuide Cloud. Įsitikinkite, kad tai pašalinot, ir kituose įtaisuose.</string>
   <string name="hexagon_api_queued">Siunčiama į SeriesGuide Cloud.</string>
-  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud.</string>
+  <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
   <string name="hexagon_google_play_missing">Norint naudotis SeriesGuide Cloud, Google Play Services yra privalomos.</string>
   <!-- trakt -->
   <string name="trakt_submitqueued">Siunčiama į trakt.</string>
   <string name="checkin_success_trakt">Pažymėta %s trakt paskyroje.</string>
   <string name="checkin_canceled_success_trakt">Atšauktas trakt pažymėjimas.</string>
   <string name="traktcheckin_cancel">Perrašyti</string>
-  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
+  <string name="traktcheckin_inprogress">You are already checked in. Override the check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Palauksiu</string>
   <string name="trakt_success">Nusiųsta į trakt.</string>
   <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
   <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt.</string>
+  <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt</string>
   <!-- Connect trakt -->
   <string name="trakt_account">trakt paskyra</string>
   <string name="connect_trakt">Prisijungti prie trakt</string>
@@ -393,7 +393,7 @@
   <string name="pref_theme">Tema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Kita</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update SeriesGuide data</string>
+  <string name="pref_autoupdatesummary">Automatically sync and update content</string>
   <string name="pref_autobackup">Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Atsarginė kopija/atstatymas</string>
@@ -405,30 +405,30 @@
   <string name="clear_cache_summary">Pašalina visus išsaugotus paveikslus iš jūsų įrenginio</string>
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
+  <string name="backup_full_dump">Include descriptions, details, ratings</string>
   <string name="backup_path">Backup folder</string>
   <string name="backup_version">Database version</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
   <string name="backup_inprogress">Backing up database&#8230;</string>
-  <string name="backup_success">Backup successful.</string>
+  <string name="backup_success">Backup successful</string>
   <string name="backup_failed">Nepavyko padaryti atsarginės kopijos.</string>
   <string name="import_inprogress">Atkurti duomenų bazę&#8230;</string>
   <string name="import_failed_nosd">Negalima atkurti atsarginės kopijos. Nėra atsarginių kopijų aplanko.</string>
   <string name="import_failed_nofile">Atsarginis failas nepasiekiamas.</string>
-  <string name="import_failed_noread">The backup file is not readable.</string>
+  <string name="import_failed_noread">The backup file is not readable</string>
   <string name="dbupgradefailed">Your backup may be too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
-  <string name="import_success">Backup successfully restored.</string>
-  <string name="import_failed">Restoring the backup failed.</string>
+  <string name="import_success">Backup successfully restored</string>
+  <string name="import_failed">Restoring the backup failed</string>
   <string name="backup_button">Create backup</string>
   <string name="import_button">Restore backup</string>
   <string name="backup_question">This will overwrite the current backup file in the backup folder!</string>
   <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
-  <string name="import_warning">I understand my current shows, lists and movies will be replaced!</string>
+  <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
   <string name="last_auto_backup">Last Auto Backup: %s</string>
   <string name="restore_auto_backup">Restore Auto Backup</string>
-  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files.</string>
-  <string name="autobackup_permission_missing">To use auto backup, allow access to your files.</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files.</string>
+  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files</string>
+  <string name="autobackup_permission_missing">To use auto backup, allow access to your files</string>
+  <string name="autobackup_files_missing">To use auto backup, select valid backup files</string>
   <string name="no_file_selected">No file selected</string>
   <string name="action_select_file">Pasirinkite failą</string>
   <string name="backup_use_default_files">Use default backup files</string>
@@ -450,6 +450,7 @@
   <string name="pref_notifications_treshold">Kada išsiųsti notifikaciją</string>
   <string name="pref_notifications_select_shows">Select shows</string>
   <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+  <string name="pref_notification_channel_errors">Errors</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (small)</string>
   <!-- List Widget -->
@@ -464,7 +465,7 @@
   <string name="widget_background_opaque">Opaque</string>
   <!-- DashClock extension -->
   <string name="dashclock_extension_label">Upcoming episode</string>
-  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
+  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows</string>
   <string name="dashclock_pref_upcoming_threshold">Display episode within&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">Only for supporters</string>
@@ -475,14 +476,14 @@
   <string name="billing_price_pass">one-time purchase</string>
   <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
   <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
-  <string name="billing_learn_more">Why pay? Learn more.</string>
+  <string name="billing_learn_more">Why pay? Learn more</string>
   <string name="subscription_expired">Subscription expired</string>
-  <string name="subscription_expired_details">Your SeriesGuide subscription has expired.</string>
+  <string name="subscription_expired_details">Your SeriesGuide subscription has expired</string>
   <!-- Amazon In-App Billing -->
-  <string name="subscription_not_signed_in">Sign into your Amazon account!</string>
-  <string name="subscription_unavailable">The subscription is currently not available.</string>
-  <string name="subscription_failed">Purchase not completed.</string>
-  <string name="pass_unavailable">X Pass is currently not available.</string>
+  <string name="subscription_not_signed_in">Sign into your Amazon account</string>
+  <string name="subscription_unavailable">The subscription is currently not available</string>
+  <string name="subscription_failed">Purchase not completed</string>
+  <string name="pass_unavailable">X Pass is currently not available</string>
   <!-- Extensions -->
   <string name="action_extensions_configure">Customize extensions</string>
   <string name="action_extensions_add">Add extension</string>

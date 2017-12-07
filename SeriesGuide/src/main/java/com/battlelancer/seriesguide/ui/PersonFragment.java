@@ -77,7 +77,7 @@ public class PersonFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         getLoaderManager().initLoader(PeopleActivity.PERSON_LOADER_ID, null,
-                mPersonLoaderCallbacks);
+                personLoaderCallbacks);
 
         setHasOptionsMenu(true);
     }
@@ -155,7 +155,7 @@ public class PersonFragment extends Fragment {
         progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
-    private LoaderManager.LoaderCallbacks<Person> mPersonLoaderCallbacks
+    private LoaderManager.LoaderCallbacks<Person> personLoaderCallbacks
             = new LoaderManager.LoaderCallbacks<Person>() {
         @Override
         public Loader<Person> onCreateLoader(int id, Bundle args) {

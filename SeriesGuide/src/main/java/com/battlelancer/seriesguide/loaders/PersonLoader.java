@@ -14,11 +14,11 @@ import retrofit2.Response;
  */
 public class PersonLoader extends GenericSimpleLoader<Person> {
 
-    private final int mTmdbId;
+    private final int tmdbId;
 
     public PersonLoader(Context context, int tmdbId) {
         super(context);
-        mTmdbId = tmdbId;
+        this.tmdbId = tmdbId;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class PersonLoader extends GenericSimpleLoader<Person> {
         PeopleService peopleService = SgApp.getServicesComponent(getContext()).peopleService();
         Response<Person> response;
         try {
-            response = peopleService.summary(mTmdbId).execute();
+            response = peopleService.summary(tmdbId).execute();
             if (response.isSuccessful()) {
                 return response.body();
             } else {

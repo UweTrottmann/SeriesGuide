@@ -32,8 +32,8 @@ import org.greenrobot.eventbus.ThreadMode;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private Handler mHandler;
-    private Runnable mUpdateShowRunnable;
+    private Handler handler;
+    private Runnable updateShowRunnable;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -52,7 +52,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * activity ({@link #setTitle(CharSequence)}) for better accessibility.
      */
     protected void setupActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.sgToolbar);
+        Toolbar toolbar = findViewById(R.id.sgToolbar);
         setSupportActionBar(toolbar);
     }
 
@@ -79,8 +79,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        if (mHandler != null && mUpdateShowRunnable != null) {
-            mHandler.removeCallbacks(mUpdateShowRunnable);
+        if (handler != null && updateShowRunnable != null) {
+            handler.removeCallbacks(updateShowRunnable);
         }
 
         unregisterEventBus();
@@ -197,18 +197,18 @@ public abstract class BaseActivity extends AppCompatActivity {
      * int)}.
      */
     protected void updateShowDelayed(final int showTvdbId) {
-        if (mHandler == null) {
-            mHandler = new Handler();
+        if (handler == null) {
+            handler = new Handler();
         }
 
         // delay sync request to avoid slowing down UI
         final Context context = getApplicationContext();
-        mUpdateShowRunnable = new Runnable() {
+        updateShowRunnable = new Runnable() {
             @Override
             public void run() {
                 SgSyncAdapter.requestSyncIfTime(context, showTvdbId);
             }
         };
-        mHandler.postDelayed(mUpdateShowRunnable, DateUtils.SECOND_IN_MILLIS);
+        handler.postDelayed(updateShowRunnable, DateUtils.SECOND_IN_MILLIS);
     }
 }

@@ -22,11 +22,8 @@ public class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
 
     private static int LAYOUT = R.layout.item_person;
 
-    private final LayoutInflater inflater;
-
     public PeopleAdapter(Context context) {
         super(context, LAYOUT);
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @NonNull
@@ -34,7 +31,8 @@ public class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = inflater.inflate(LAYOUT, parent, false);
+            convertView = LayoutInflater.from(parent.getContext())
+                    .inflate(LAYOUT, parent, false);
 
             viewHolder = new ViewHolder();
 
