@@ -2,9 +2,13 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -15,11 +19,13 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.ListsDistillationSettings;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsReorderDialogFragment;
+import com.battlelancer.seriesguide.util.ListsTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
@@ -38,7 +44,8 @@ public class ListsActivity extends BaseTopActivity {
     }
 
     public static final String TAG = "Lists";
-    public static final int LISTS_REORDER_LOADER_ID = 1;
+    public static final int LISTS_LOADER_ID = 1;
+    public static final int LISTS_REORDER_LOADER_ID = 2;
 
     @BindView(R.id.viewPagerTabs) ViewPager viewPager;
     @BindView(R.id.tabLayoutTabs) SlidingTabLayout tabs;
@@ -53,12 +60,14 @@ public class ListsActivity extends BaseTopActivity {
 
         setupViews(savedInstanceState);
         setupSyncProgressBar(R.id.progressBarTabs);
+
+        getSupportLoaderManager().initLoader(LISTS_LOADER_ID, null, listsLoaderCallbacks);
     }
 
     private void setupViews(Bundle savedInstanceState) {
         ButterKnife.bind(this);
 
-        listsAdapter = new ListsPagerAdapter(this, getSupportFragmentManager());
+        listsAdapter = new ListsPagerAdapter(getSupportFragmentManager());
 
         viewPager.setAdapter(listsAdapter);
 
@@ -93,13 +102,6 @@ public class ListsActivity extends BaseTopActivity {
         PreferenceManager.getDefaultSharedPreferences(this).edit()
                 .putInt(DisplaySettings.KEY_LAST_ACTIVE_LISTS_TAB, viewPager.getCurrentItem())
                 .apply();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        listsAdapter.onCleanUp();
     }
 
     @Override
@@ -194,14 +196,7 @@ public class ListsActivity extends BaseTopActivity {
     @SuppressWarnings("UnusedParameters")
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ListsChangedEvent event) {
-        onListsChanged();
-    }
-
-    private void onListsChanged() {
-        // refresh list adapter
-        listsAdapter.onListsChanged();
-        // update tabs
-        tabs.setViewPager(viewPager);
+        getSupportLoaderManager().restartLoader(LISTS_LOADER_ID, null, listsLoaderCallbacks);
     }
 
     private void changeSortOrder(int sortOrderId) {
@@ -236,4 +231,33 @@ public class ListsActivity extends BaseTopActivity {
     protected View getSnackbarParentView() {
         return findViewById(R.id.rootLayoutTabs);
     }
+
+    private LoaderManager.LoaderCallbacks<Cursor> listsLoaderCallbacks
+            = new LoaderManager.LoaderCallbacks<Cursor>() {
+        @Override
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            // load lists, order by order number, then name
+            return new CursorLoader(ListsActivity.this,
+                    SeriesGuideContract.Lists.CONTENT_URI,
+                    ListsPagerAdapter.ListsQuery.PROJECTION, null, null,
+                    SeriesGuideContract.Lists.SORT_ORDER_THEN_NAME);
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            // precreate first list
+            if (data != null && data.getCount() == 0) {
+                String listName = getString(R.string.first_list);
+                ListsTools.addList(ListsActivity.this, listName);
+            }
+            listsAdapter.swapCursor(data);
+            // update tabs
+            tabs.setViewPager(viewPager);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Cursor> loader) {
+            listsAdapter.swapCursor(null);
+        }
+    };
 }

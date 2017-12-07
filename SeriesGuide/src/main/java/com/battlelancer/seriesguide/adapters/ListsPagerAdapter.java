@@ -1,16 +1,13 @@
 
 package com.battlelancer.seriesguide.adapters;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.ui.ListsFragment;
-import com.battlelancer.seriesguide.util.ListsTools;
 
 /**
  * Returns {@link ListsFragment}s for every list in the database, makes sure there is always at
@@ -18,37 +15,31 @@ import com.battlelancer.seriesguide.util.ListsTools;
  */
 public class ListsPagerAdapter extends MultiPagerAdapter {
 
-    private final Context context;
     private final ListsDataSetObserver dataSetObserver;
     @Nullable private Cursor cursorLists;
     private boolean dataValid;
 
-    public ListsPagerAdapter(Context context, FragmentManager fm) {
+    public ListsPagerAdapter(FragmentManager fm) {
         super(fm);
-        this.context = context;
         this.dataSetObserver = new ListsDataSetObserver();
-
-        cursorLists = queryLists();
-
-        // precreate first list
-        if (cursorLists != null && cursorLists.getCount() == 0) {
-            String listName = this.context.getString(R.string.first_list);
-            ListsTools.addList(this.context, listName);
-        }
     }
 
-    @Nullable
-    private Cursor queryLists() {
-        // load lists, order by order number, then name
-        Cursor cursorNew = context.getContentResolver()
-                .query(Lists.CONTENT_URI, ListsQuery.PROJECTION, null, null,
-                        Lists.SORT_ORDER_THEN_NAME);
+    public void swapCursor(@Nullable Cursor cursorNew) {
+        if (cursorLists == cursorNew) {
+            return;
+        }
+        Cursor oldCursor = cursorLists;
+        if (oldCursor != null) {
+            oldCursor.unregisterDataSetObserver(dataSetObserver);
+        }
+        cursorLists = cursorNew;
+
         boolean cursorPresent = cursorNew != null;
         dataValid = cursorPresent;
         if (cursorPresent) {
             cursorNew.registerDataSetObserver(dataSetObserver);
+            notifyDataSetChanged();
         }
-        return cursorNew;
     }
 
     @Override
@@ -91,34 +82,11 @@ public class ListsPagerAdapter extends MultiPagerAdapter {
         return cursorLists.getString(ListsQuery.ID);
     }
 
-    public void onListsChanged() {
-        Cursor oldCursor = cursorLists;
-        if (oldCursor != null) {
-            oldCursor.unregisterDataSetObserver(dataSetObserver);
-            oldCursor.close();
-        }
-
-        cursorLists = queryLists();
-
-        notifyDataSetChanged();
-    }
-
-    /**
-     * Close the {@link Cursor} backing this {@link ListsPagerAdapter}.
-     */
-    public void onCleanUp() {
-        if (cursorLists != null && !cursorLists.isClosed()) {
-            cursorLists.unregisterDataSetObserver(dataSetObserver);
-            cursorLists.close();
-            cursorLists = null;
-            dataValid = false;
-        }
-    }
-
     private class ListsDataSetObserver extends DataSetObserver {
         @Override
         public void onChanged() {
             dataValid = true;
+            notifyDataSetChanged();
         }
 
         @Override
@@ -127,7 +95,7 @@ public class ListsPagerAdapter extends MultiPagerAdapter {
         }
     }
 
-    interface ListsQuery {
+    public interface ListsQuery {
         String[] PROJECTION = new String[] {
                 Lists.LIST_ID,
                 Lists.NAME
