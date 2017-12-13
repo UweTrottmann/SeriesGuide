@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,10 +42,13 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
     private static final int VIEW_TYPE_ADD = 1;
 
     private final LayoutInflater layoutInflater;
+    private final VectorDrawableCompat iconExtension;
 
     public ExtensionsAdapter(Context context) {
         super(context, 0);
         layoutInflater = LayoutInflater.from(context);
+        iconExtension = ViewTools.vectorIconActive(context,
+                context.getTheme(), R.drawable.ic_extension_black_24dp);
     }
 
     @Override
@@ -107,7 +111,7 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
         if (extension.icon != null) {
             viewHolder.icon.setImageDrawable(extension.icon);
         } else {
-            viewHolder.icon.setImageResource(R.mipmap.ic_app);
+            viewHolder.icon.setImageDrawable(iconExtension);
         }
 
         // overflow menu
