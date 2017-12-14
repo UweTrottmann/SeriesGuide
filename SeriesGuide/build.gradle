@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.google.cloud.tools.endpoints-framework-client'
 apply plugin: 'io.fabric'
 
@@ -114,6 +115,8 @@ android {
 }
 
 dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     implementation project(':api')
     implementation project(':libraries:drag-sort-listview')
     implementation project(':libraries:stickygridheaders')
