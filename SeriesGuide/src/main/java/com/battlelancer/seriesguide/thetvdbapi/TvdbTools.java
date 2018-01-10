@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.thetvdbapi;
 
-import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
@@ -23,7 +22,6 @@ import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
@@ -34,8 +32,6 @@ import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.uwetrottmann.thetvdb.entities.Episode;
-import com.uwetrottmann.thetvdb.entities.EpisodesResponse;
 import com.uwetrottmann.thetvdb.entities.Series;
 import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResult;
 import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResultResponse;
@@ -54,17 +50,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.zip.ZipInputStream;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.threeten.bp.LocalTime;
-import org.threeten.bp.ZoneId;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import timber.log.Timber;
@@ -78,7 +70,7 @@ public class TvdbTools {
     private static final String TVDB_API_URL = "http://thetvdb.com/api/";
     private static final String TVDB_API_GETSERIES = TVDB_API_URL + "GetSeries.php?seriesname=";
     private static final String TVDB_PARAM_LANGUAGE = "&language=";
-    private static final String[] LANGUAGE_QUERY_PROJECTION = new String[] { Shows.LANGUAGE };
+    private static final String[] LANGUAGE_QUERY_PROJECTION = new String[]{Shows.LANGUAGE};
 
     private final Context context;
     Lazy<HexagonTools> hexagonTools;
@@ -115,7 +107,7 @@ public class TvdbTools {
      */
     public static boolean isUpdateShow(Context context, int showTvdbId) {
         final Cursor show = context.getContentResolver().query(Shows.buildShowUri(showTvdbId),
-                new String[] {
+                new String[]{
                         Shows._ID, Shows.LASTUPDATED
                 }, null, null, null
         );
@@ -344,7 +336,9 @@ public class TvdbTools {
     private void getEpisodesAndUpdateDatabase(final ArrayList<ContentProviderOperation> batch,
             Show show, String language) throws TvdbException {
         // get ops for episodes of this show
-        ArrayList<ContentValues> importShowEpisodes = fetchEpisodes(batch, show, language);
+        TvdbEpisodeTools episodeTools = new TvdbEpisodeTools(context, tvdbSeries);
+        ArrayList<ContentValues> importShowEpisodes = episodeTools
+                .fetchEpisodes(batch, show, language);
         ContentValues[] newEpisodesValues = new ContentValues[importShowEpisodes.size()];
         newEpisodesValues = importShowEpisodes.toArray(newEpisodesValues);
 
@@ -605,139 +599,6 @@ public class TvdbTools {
     }
 
     /**
-     * Loads and parses episodes for the given show and language to create an array of {@link
-     * ContentValues} for new episodes.<br> Adds update ops for updated episodes and delete ops for
-     * local orphaned episodes to the given {@link ContentProviderOperation} batch.
-     */
-    @SuppressLint("UseSparseArrays")
-    private ArrayList<ContentValues> fetchEpisodes(ArrayList<ContentProviderOperation> batch,
-            Show show, @NonNull String language) throws TvdbException {
-        final int showTvdbId = show.tvdb_id;
-        final ArrayList<ContentValues> newEpisodesValues = new ArrayList<>();
-
-        final HashMap<Integer, Long> localEpisodeIds = DBUtils.getEpisodeMapForShow(context,
-                showTvdbId);
-        // just copy episodes list, then remove valid ones
-        final HashMap<Integer, Long> removableEpisodeIds = new HashMap<>(localEpisodeIds);
-
-        final HashSet<Integer> localSeasonIds = DBUtils.getSeasonIdsOfShow(context, showTvdbId);
-        // store updated seasons to avoid duplicate ops
-        final HashSet<Integer> seasonsToAddOrUpdate = new HashSet<>();
-
-        final long dateLastMonthEpoch = (System.currentTimeMillis()
-                - (DateUtils.DAY_IN_MILLIS * 30)) / 1000;
-        final ZoneId showTimeZone = TimeTools.getDateTimeZone(show.release_timezone);
-        final LocalTime showReleaseTime = TimeTools.getShowReleaseTime(show.release_time);
-        final String deviceTimeZone = TimeZone.getDefault().getID();
-
-        Integer page = 0;
-        while (page != null) {
-            EpisodesResponse response = getEpisodes(showTvdbId, page, language);
-            page = response.links.next;
-
-            final ContentValues values = new ContentValues();
-            for (Episode episode : response.data) {
-                Integer episodeId = episode.id;
-                Integer seasonNumber = episode.airedSeason;
-                Integer seasonId = episode.airedSeasonID;
-                if (episodeId == null || episodeId <= 0
-                        || seasonNumber == null || seasonNumber < 0 // season 0 allowed (specials)
-                        || seasonId == null || seasonId <= 0) {
-                    continue; // invalid ids, skip
-                }
-
-                // add insert/update op for season, prevents it from getting cleaned
-                if (!seasonsToAddOrUpdate.contains(seasonId)) {
-                    batch.add(DBUtils.buildSeasonOp(showTvdbId, seasonId, seasonNumber,
-                            !localSeasonIds.contains(seasonId)));
-                    seasonsToAddOrUpdate.add(seasonId);
-                }
-
-                // don't clean up this episode
-                removableEpisodeIds.remove(episodeId);
-
-                boolean insert = true;
-                if (localEpisodeIds.containsKey(episodeId)) {
-                    /*
-                     * Update uses provider ops which take a long time. Only
-                     * update if episode was edited on TVDb or is not older than
-                     * a month (ensures show air time changes get stored).
-                     */
-                    Long lastEditEpoch = localEpisodeIds.get(episodeId);
-                    Long lastEditEpochNew = episode.lastUpdated;
-                    if (lastEditEpoch != null && lastEditEpochNew != null
-                            && (lastEditEpoch < lastEditEpochNew
-                            || dateLastMonthEpoch < lastEditEpoch)) {
-                        // update episode
-                        insert = false;
-                    } else {
-                        continue; // too old to update, skip
-                    }
-                }
-
-                // extract values
-                values.put(Episodes._ID, episodeId);
-                values.put(Seasons.REF_SEASON_ID, seasonId);
-                values.put(Shows.REF_SHOW_ID, showTvdbId);
-
-                values.put(Episodes.NUMBER, episode.airedEpisodeNumber);
-                values.put(Episodes.ABSOLUTE_NUMBER, episode.absoluteNumber);
-                values.put(Episodes.SEASON, seasonNumber);
-                values.put(Episodes.DVDNUMBER, episode.dvdEpisodeNumber);
-
-                long releaseDateTime = TimeTools.parseEpisodeReleaseDate(context, showTimeZone,
-                        episode.firstAired, showReleaseTime, show.country, show.network,
-                        deviceTimeZone);
-                values.put(Episodes.FIRSTAIREDMS, releaseDateTime);
-                values.put(Episodes.TITLE, episode.episodeName == null ? "" : episode.episodeName);
-                values.put(Episodes.OVERVIEW, episode.overview);
-                values.put(Episodes.LAST_EDITED, episode.lastUpdated);
-
-                if (insert) {
-                    // episode does not exist, yet: insert
-                    newEpisodesValues.add(new ContentValues(values));
-                } else {
-                    // episode exists: update
-                    batch.add(DBUtils.buildEpisodeUpdateOp(values));
-                }
-
-                values.clear();
-            }
-        }
-
-        // add delete ops for leftover episodeIds in our db
-        for (Integer episodeId : removableEpisodeIds.keySet()) {
-            batch.add(ContentProviderOperation.newDelete(Episodes.buildEpisodeUri(episodeId))
-                    .build());
-        }
-
-        // add delete ops for leftover seasonIds in our db
-        for (Integer seasonId : localSeasonIds) {
-            if (!seasonsToAddOrUpdate.contains(seasonId)) {
-                batch.add(ContentProviderOperation.newDelete(Seasons.buildSeasonUri(seasonId))
-                        .build());
-            }
-        }
-
-        return newEpisodesValues;
-    }
-
-    @NonNull
-    private EpisodesResponse getEpisodes(int showTvdbId, int page, @Nullable String language)
-            throws TvdbException {
-        retrofit2.Response<EpisodesResponse> response;
-        try {
-            response = tvdbSeries.get().episodes(showTvdbId, page, language).execute();
-        } catch (IOException e) {
-            throw new TvdbException("getEpisodes: " + e.getMessage(), e);
-        }
-
-        ensureSuccessfulResponse(response.raw(), "getEpisodes: ");
-
-        return response.body();
-    }
-
-    /**
      * Downloads the XML or ZIP file from the given URL, passing a valid response to {@link
      * Xml#parse(InputStream, android.util.Xml.Encoding, ContentHandler)} using the given {@link
      * ContentHandler}.
@@ -783,8 +644,7 @@ public class TvdbTools {
         }
     }
 
-    private static void ensureSuccessfulResponse(Response response, String logTag)
-            throws TvdbException {
+    static void ensureSuccessfulResponse(Response response, String logTag) throws TvdbException {
         if (response.code() == 404) {
             // special case: item does not exist (any longer)
             throw new TvdbException(
