@@ -5,6 +5,19 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 41
+----------
+*(in development)*
+
+#### 40-beta1
+*(2018-01-11)*
+
+* 🔧 If episode titles or overviews are not available in the language selected for a show, fall back
+  to the preferred content language defined in settings.
+* 🔧 Use dots to separate season info text.
+* 📝 Start switching to Kotlin. The app will require a little more storage space.
+* 📝 Latest translations from crowdin.
+
 Version 40
 ----------
 *(2017-12-07)*
