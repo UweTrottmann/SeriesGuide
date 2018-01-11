@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.cloud.tools.endpoints-framework-client'
 apply plugin: 'io.fabric'
 
@@ -114,6 +116,8 @@ android {
 }
 
 dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     implementation project(':api')
     implementation project(':libraries:drag-sort-listview')
     implementation project(':libraries:stickygridheaders')
@@ -128,14 +132,14 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:${versions.supportLibrary}"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation "android.arch.lifecycle:extensions:${versions.lifecycle}"
-    annotationProcessor "android.arch.lifecycle:compiler:${versions.lifecycle}"
+    kapt "android.arch.lifecycle:compiler:${versions.lifecycle}"
 
     implementation "com.jakewharton:butterknife:${versions.butterknife}"
-    annotationProcessor "com.jakewharton:butterknife-compiler:${versions.butterknife}"
+    kapt "com.jakewharton:butterknife-compiler:${versions.butterknife}"
     implementation "com.google.dagger:dagger:${versions.dagger}"
-    annotationProcessor "com.google.dagger:dagger-compiler:${versions.dagger}"
+    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
     implementation 'org.greenrobot:eventbus:3.0.0'
-    annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'
+    kapt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
 
     implementation("com.crashlytics.sdk.android:crashlytics:${versions.crashlytics}@aar") {
         transitive = true
@@ -188,7 +192,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test:rules:1.0.1'
     androidTestImplementation "com.google.truth:truth:${versions.truth}"
-    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${versions.dagger}"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:${versions.dagger}"
 
     // Local unit tests
     testImplementation 'junit:junit:4.12'
