@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Remover todas as imagens em cache do seu dispositivo</string>
   <string name="pref_ganalyticssummary">Enviar estatísticas anônimas de uso para um serviço do Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Include descriptions, details, ratings</string>
+  <string name="backup_full_dump">Incluir descrições, detalhes, avaliações</string>
   <string name="backup_path">Pasta de backup</string>
   <string name="backup_version">Versão do banco de dados</string>
   <string name="backup_failed_file_access">Não foi possível fazer o backup. Um arquivo de backup não foi encontrado ou não pode ser acessado.</string>

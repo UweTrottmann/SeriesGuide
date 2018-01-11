@@ -35,7 +35,7 @@
   <string name="add_to_homescreen">Pikakuvake</string>
   <string name="action_open">Avaa</string>
   <string name="sync_manually">Synkronoi manuaalisesti</string>
-  <string name="sync_and_update">Synkronoi ja päivittää</string>
+  <string name="sync_and_update">Synkronoi ja päivitä</string>
   <string name="sync_and_download_all">Synkronoi ja lataa kaikki</string>
   <!-- Search -->
   <string name="clear_search_history">Tyhjennä hakuhistoria</string>
@@ -50,7 +50,7 @@
   <string name="people_empty">Onko kukaan täällä?! Kosketa yrittääksesi uudelleen.</string>
   <string name="database_error">Tietojen muokkaaminen ei onnistunut.</string>
   <string name="reinstall_info">Yritä varmuuskopioida asetuksista, asenna uudelleen ja palauta.</string>
-  <string name="api_error_generic">Kommunikointi %s kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
+  <string name="api_error_generic">Kommunikointi %sin kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
   <string name="api_failed">Epäonnistui: %s</string>
   <!-- Sharing -->
   <string name="share">Jaa</string>
@@ -382,10 +382,10 @@
   <string name="pref_theme">Teema</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Muu</string>
-  <string name="pref_autoupdatesummary">Automaattisesti synkronoi ja päivitä SeriesGuiden tiedot</string>
+  <string name="pref_autoupdatesummary">Synkronoi ja päivitä sisältö automaattisesti</string>
   <string name="pref_autobackup">Automaattinen varmuuskopiointi</string>
   <string name="pref_autobackupsummary">Viikoittainen varmuuskopio ohjelmistasi, listoistasi ja elokuvistasi</string>
-  <string name="backup">Varmuuskopioi/Palauta</string>
+  <string name="backup">Varmuuskopiointi/Palautus</string>
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
   <string name="pref_number">Lukumuoto</string>
   <string name="pref_offset">Manuaalinen ajansiirto</string>
@@ -394,7 +394,7 @@
   <string name="clear_cache_summary">Poistaa kaikki välimuistiin tallennetut kuvat</string>
   <string name="pref_ganalyticssummary">Lähetä anonyymia käyttötilastoja Googlen palveluun</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Sisältää kuvaukset, tiedot, arvosanat</string>
+  <string name="backup_full_dump">Sisällyttä kuvaukset, tiedot, arvosanat</string>
   <string name="backup_path">Varmuuskopiokansio</string>
   <string name="backup_version">Tietokannan versio</string>
   <string name="backup_failed_file_access">Ei voida varmuuskopioida. Varmuuskopiota ei löydy tai sitä ei voida käyttää.</string>
