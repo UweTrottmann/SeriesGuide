@@ -108,7 +108,7 @@ public class SeasonsAdapter extends CursorAdapter {
         if (noReleaseDate > 0) {
             // there are unwatched episodes without a release date
             if (countText.length() > 0) {
-                countText.append(" - ");
+                countText.append(" · ");
             }
             countText.append(res.getQuantityString(R.plurals.other_episodes_plural,
                     noReleaseDate, noReleaseDate));
@@ -116,7 +116,7 @@ public class SeasonsAdapter extends CursorAdapter {
         if (notReleased > 0) {
             // there are not yet released episodes
             if (countText.length() > 0) {
-                countText.append(" - ");
+                countText.append(" · ");
             }
             countText.append(res.getQuantityString(R.plurals.not_released_episodes_plural,
                     notReleased, notReleased));
