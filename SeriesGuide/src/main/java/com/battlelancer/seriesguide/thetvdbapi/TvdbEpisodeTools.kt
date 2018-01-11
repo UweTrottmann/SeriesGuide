@@ -6,6 +6,7 @@ import android.content.Context
 import android.text.format.DateUtils
 import com.battlelancer.seriesguide.dataliberation.model.Show
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools.ensureSuccessfulResponse
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.TimeTools
@@ -49,10 +50,24 @@ class TvdbEpisodeTools constructor(
         val showReleaseTime = TimeTools.getShowReleaseTime(show.release_time)
         val deviceTimeZone = TimeZone.getDefault().id
 
+        val defaultLanguage = DisplaySettings.getContentLanguage(context)
+        val fallbackLanguage: String? = if (defaultLanguage != language) defaultLanguage else null
+
         var page: Int? = 0
         while (page != null) {
             val response = getEpisodes(showTvdbId, page, language)
-            page = response.links.next
+
+            // fall back if no translation is available for some episodes
+            // note: just checking errors is not enough as no error if just some are not translated
+            val fallbackResponse = if (fallbackLanguage != null
+                    && (response.errors?.invalidLanguage != null
+                    || response.data.find { it.episodeName.isNullOrEmpty() || it.overview.isNullOrEmpty() } != null)) {
+                // assumes that episode pages match between languages
+                // worst case: no fallback title or overview
+                getEpisodes(showTvdbId, page, fallbackLanguage)
+            } else {
+                null
+            }
 
             val values = ContentValues()
             for (episode in response.data) {
@@ -108,9 +123,18 @@ class TvdbEpisodeTools constructor(
                         episode.firstAired, showReleaseTime, show.country, show.network,
                         deviceTimeZone)
                 values.put(SeriesGuideContract.Episodes.FIRSTAIREDMS, releaseDateTime)
+
+                val hasName = !episode.episodeName.isNullOrEmpty()
+                val hasOverview = !episode.overview.isNullOrEmpty()
+                val fallbackEpisode = if (!hasName || !hasOverview) {
+                    fallbackResponse?.data?.find { it.id == episodeId }
+                } else {
+                    null
+                }
                 values.put(SeriesGuideContract.Episodes.TITLE,
-                        if (episode.episodeName == null) "" else episode.episodeName)
-                values.put(SeriesGuideContract.Episodes.OVERVIEW, episode.overview)
+                        if (hasName) episode.episodeName else fallbackEpisode?.episodeName ?: "")
+                values.put(SeriesGuideContract.Episodes.OVERVIEW,
+                        if (hasOverview) episode.overview else fallbackEpisode?.overview)
                 values.put(SeriesGuideContract.Episodes.LAST_EDITED, episode.lastUpdated)
 
                 if (insert) {
@@ -123,6 +147,7 @@ class TvdbEpisodeTools constructor(
 
                 values.clear()
             }
+            page = response.links.next
         }
 
         // add delete ops for leftover episodeIds in our db
