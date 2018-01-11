@@ -15,16 +15,16 @@ android {
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "TVDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TVDB_API_KEY")}\"")
-        buildConfigField("String", "TMDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TMDB_API_KEY")}\"")
-        buildConfigField("String", "TRAKT_CLIENT_ID", "\"${loadStringPropertyOrPlaceholder("TRAKT_CLIENT_ID")}\"")
-        buildConfigField("String", "TRAKT_CLIENT_SECRET", "\"${loadStringPropertyOrPlaceholder("TRAKT_CLIENT_SECRET")}\"")
-        buildConfigField("String", "IAP_KEY_A", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_A")}\"")
-        buildConfigField("String", "IAP_KEY_B", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_B")}\"")
-        buildConfigField("String", "IAP_KEY_C", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_C")}\"")
-        buildConfigField("String", "IAP_KEY_D", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_D")}\"")
-        buildConfigField("String", "IMAGE_CACHE_URL", "\"${loadStringPropertyOrPlaceholder("IMAGE_CACHE_URL")}\"")
-        buildConfigField("String", "IMAGE_CACHE_SECRET", "\"${loadStringPropertyOrPlaceholder("IMAGE_CACHE_SECRET")}\"")
+        buildConfigField("String", "TVDB_API_KEY", stringPropertyOrPlaceholder("TVDB_API_KEY"))
+        buildConfigField("String", "TMDB_API_KEY", stringPropertyOrPlaceholder("TMDB_API_KEY"))
+        buildConfigField("String", "TRAKT_CLIENT_ID", stringPropertyOrPlaceholder("TRAKT_CLIENT_ID"))
+        buildConfigField("String", "TRAKT_CLIENT_SECRET", stringPropertyOrPlaceholder("TRAKT_CLIENT_SECRET"))
+        buildConfigField("String", "IAP_KEY_A", stringPropertyOrPlaceholder("IAP_KEY_A"))
+        buildConfigField("String", "IAP_KEY_B", stringPropertyOrPlaceholder("IAP_KEY_B"))
+        buildConfigField("String", "IAP_KEY_C", stringPropertyOrPlaceholder("IAP_KEY_C"))
+        buildConfigField("String", "IAP_KEY_D", stringPropertyOrPlaceholder("IAP_KEY_D"))
+        buildConfigField("String", "IMAGE_CACHE_URL", stringPropertyOrNull("IMAGE_CACHE_URL"))
+        buildConfigField("String", "IMAGE_CACHE_SECRET", stringPropertyOrPlaceholder("IMAGE_CACHE_SECRET"))
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -211,6 +211,10 @@ endpointsClient {
                      'src/endpoints/shows-v2-rest.discovery']
 }
 
-def loadStringPropertyOrPlaceholder(String name) {
-    return rootProject.hasProperty(name) ? rootProject.property(name) : "MISSING"
+def stringPropertyOrPlaceholder(String name) {
+    return rootProject.hasProperty(name) ? "\"${rootProject.property(name)}\"" : "\"MISSING\""
+}
+
+def stringPropertyOrNull(String name) {
+    return rootProject.hasProperty(name) ? "\"${rootProject.property(name)}\"" : "null"
 }
