@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.Episode;
+import com.battlelancer.seriesguide.jobs.episodes.BaseEpisodesJob;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -38,6 +39,8 @@ import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 /**
@@ -50,11 +53,21 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     public static final int EPISODE_LOADER_ID = 101;
     public static final int ACTIONS_LOADER_ID = 102;
 
-    @Nullable @BindView(R.id.pagerEpisodes) ViewPager episodeDetailsPager;
-    @Nullable @BindView(R.id.tabsEpisodes) SlidingTabLayout episodeDetailsTabs;
-    @Nullable @BindView(R.id.imageViewEpisodesBackground) ImageView backgroundImageView;
-    @Nullable @BindView(R.id.viewEpisodesShadowStart) View shadowStart;
-    @Nullable @BindView(R.id.viewEpisodesShadowEnd) View shadowEnd;
+    @Nullable
+    @BindView(R.id.pagerEpisodes)
+    ViewPager episodeDetailsPager;
+    @Nullable
+    @BindView(R.id.tabsEpisodes)
+    SlidingTabLayout episodeDetailsTabs;
+    @Nullable
+    @BindView(R.id.imageViewEpisodesBackground)
+    ImageView backgroundImageView;
+    @Nullable
+    @BindView(R.id.viewEpisodesShadowStart)
+    View shadowStart;
+    @Nullable
+    @BindView(R.id.viewEpisodesShadowEnd)
+    View shadowEnd;
 
     private EpisodesFragment episodesListFragment;
     private EpisodePagerAdapter episodeDetailsAdapter;
@@ -103,7 +116,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
             } else {
                 // get season id
                 final Cursor episode = getContentResolver().query(
-                        Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[] {
+                        Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[]{
                                 Episodes._ID, Seasons.REF_SEASON_ID
                         }, null, null, null
                 );
@@ -130,7 +143,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
 
         // get show id and season number
         final Cursor season = getContentResolver().query(
-                Seasons.buildSeasonUri(String.valueOf(seasonTvdbId)), new String[] {
+                Seasons.buildSeasonUri(String.valueOf(seasonTvdbId)), new String[]{
                         Seasons._ID, Seasons.COMBINED, Shows.REF_SHOW_ID
                 }, null, null, null
         );
@@ -321,7 +334,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
 
         Cursor episodeCursor = getContentResolver().query(
                 Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(seasonTvdbId)),
-                new String[] {
+                new String[]{
                         Episodes._ID, Episodes.NUMBER
                 }, null, null, sortOrder.query()
         );
@@ -370,22 +383,42 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
             = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (DisplaySettings.KEY_EPISODE_SORT_ORDER.equals(key)
-                    && episodeDetailsPager != null && episodeDetailsTabs != null) {
-                // save currently selected episode
-                int oldPosition = episodeDetailsPager.getCurrentItem();
-                int episodeId = episodes.get(oldPosition).episodeId;
-
-                // reorder and update tabs
-                updateEpisodeList();
-                episodeDetailsAdapter.updateEpisodeList(episodes);
-                episodeDetailsTabs.setViewPager(episodeDetailsPager);
-
-                // scroll to previously selected episode
-                setCurrentPage(getPositionForEpisode(episodeId));
+            if (DisplaySettings.KEY_EPISODE_SORT_ORDER.equals(key)) {
+                reorderAndUpdateTabs();
             }
         }
     };
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseNavDrawerActivity.ServiceCompletedEvent event) {
+        if (isDualPane
+                && event.isSuccessful && event.flagJob != null
+                && event.flagJob instanceof BaseEpisodesJob) {
+            // order can only change if sorted by unwatched first
+            Constants.EpisodeSorting sortOrder = DisplaySettings.getEpisodeSortOrder(this);
+            if (sortOrder == Constants.EpisodeSorting.UNWATCHED_FIRST) {
+                reorderAndUpdateTabs();
+            }
+        }
+    }
+
+    private void reorderAndUpdateTabs() {
+        if (episodeDetailsPager == null || episodeDetailsTabs == null) {
+            return;
+        }
+
+        // save currently selected episode
+        int oldPosition = episodeDetailsPager.getCurrentItem();
+        int episodeId = episodes.get(oldPosition).episodeId;
+
+        // reorder and update tabs
+        updateEpisodeList();
+        episodeDetailsAdapter.updateEpisodeList(episodes);
+        episodeDetailsTabs.setViewPager(episodeDetailsPager);
+
+        // scroll to previously selected episode
+        setCurrentPage(getPositionForEpisode(episodeId));
+    }
 
     private int getPositionForEpisode(int episodeTvdbId) {
         // find page index for this episode
