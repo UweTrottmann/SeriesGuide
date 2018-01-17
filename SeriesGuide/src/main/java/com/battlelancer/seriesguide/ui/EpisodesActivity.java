@@ -396,8 +396,12 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
                 && event.flagJob instanceof BaseEpisodesJob) {
             // order can only change if sorted by unwatched first
             Constants.EpisodeSorting sortOrder = DisplaySettings.getEpisodeSortOrder(this);
-            if (sortOrder == Constants.EpisodeSorting.UNWATCHED_FIRST) {
+            if (sortOrder == Constants.EpisodeSorting.UNWATCHED_FIRST
+                    && episodeDetailsTabs != null) {
+                // temporarily remove page change listener to avoid scrolling to checked item
+                episodeDetailsTabs.setOnPageChangeListener(null);
                 reorderAndUpdateTabs();
+                episodeDetailsTabs.setOnPageChangeListener(onPageChangeListener);
             }
         }
     }
