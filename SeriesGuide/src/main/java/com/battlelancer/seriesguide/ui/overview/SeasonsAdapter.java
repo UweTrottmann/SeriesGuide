@@ -1,5 +1,5 @@
 
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.overview;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -17,20 +17,20 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ui.SeasonsFragment.SeasonsQuery;
+import com.battlelancer.seriesguide.ui.overview.SeasonsFragment.SeasonsQuery;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
-public class SeasonsAdapter extends CursorAdapter {
+class SeasonsAdapter extends CursorAdapter {
 
-    public interface PopupMenuClickListener {
+    interface PopupMenuClickListener {
         void onPopupMenuClick(View v, int seasonTvdbId, int seasonNumber);
     }
 
     private final PopupMenuClickListener popupMenuClickListener;
     private final boolean isRtlLayout;
 
-    public SeasonsAdapter(Context context, PopupMenuClickListener listener) {
+    SeasonsAdapter(Context context, PopupMenuClickListener listener) {
         super(context, null, 0);
         popupMenuClickListener = listener;
         isRtlLayout = AndroidUtils.isRtlLayout();

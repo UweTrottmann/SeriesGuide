@@ -1,4 +1,6 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.overview;
+
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +36,9 @@ import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
+import com.battlelancer.seriesguide.ui.FullscreenImageActivity;
+import com.battlelancer.seriesguide.ui.OverviewActivity;
+import com.battlelancer.seriesguide.ui.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
@@ -56,8 +61,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
-
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 
 /**
  * Displays extended information (poster, release info, description, ...) and actions (favoriting,

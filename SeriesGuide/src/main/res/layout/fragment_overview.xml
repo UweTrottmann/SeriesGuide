@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    tools:context="com.battlelancer.seriesguide.ui.OverviewFragment">
+    tools:context="com.battlelancer.seriesguide.ui.overview.OverviewFragment">
 
     <ImageView
         android:id="@+id/background"

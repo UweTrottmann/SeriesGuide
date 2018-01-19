@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.service;
+package com.battlelancer.seriesguide.ui.overview;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -18,12 +18,11 @@ public class UnwatchedUpdaterService extends IntentService {
     public static final String EXTRA_SHOW_TVDB_ID = "showTvdbId";
     public static final String EXTRA_OPTIONAL_SEASON_TVDB_ID = "seasonTvdbId";
 
-    public static Intent buildIntent(Context context, int showTvdbId) {
+    static Intent buildIntent(Context context, int showTvdbId) {
         return buildIntent(context, showTvdbId, null);
     }
 
-    public static Intent buildIntent(Context context, int showTvdbId,
-            @Nullable Integer seasonTvdbId) {
+    static Intent buildIntent(Context context, int showTvdbId, @Nullable Integer seasonTvdbId) {
         Intent intent = new Intent(context, UnwatchedUpdaterService.class);
         intent.putExtra(EXTRA_SHOW_TVDB_ID, showTvdbId);
         if (seasonTvdbId != null) {

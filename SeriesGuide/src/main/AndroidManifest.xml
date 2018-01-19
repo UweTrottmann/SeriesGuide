@@ -231,7 +231,7 @@
         <activity android:name="com.battlelancer.seriesguide.ui.PersonActivity" />
 
         <!-- Unwatched counter update service -->
-        <service android:name="com.battlelancer.seriesguide.service.UnwatchedUpdaterService" />
+        <service android:name="com.battlelancer.seriesguide.ui.overview.UnwatchedUpdaterService" />
 
         <!-- Notification service -->
         <receiver android:name="com.battlelancer.seriesguide.service.NotificationActionReceiver" />
