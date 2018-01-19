@@ -1,8 +1,9 @@
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -12,9 +13,9 @@ import java.util.Date;
 /**
  * An adapted version of {@link NowAdapter} with a special layout for movies.
  */
-public class MoviesNowAdapter extends NowAdapter {
+class MoviesNowAdapter extends NowAdapter {
 
-    public MoviesNowAdapter(Context context, ItemClickListener listener) {
+    MoviesNowAdapter(Context context, ItemClickListener listener) {
         super(context, listener);
     }
 

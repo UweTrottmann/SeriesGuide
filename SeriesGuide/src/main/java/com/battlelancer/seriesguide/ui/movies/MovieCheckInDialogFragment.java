@@ -1,7 +1,8 @@
-package com.battlelancer.seriesguide.ui.dialogs;
+package com.battlelancer.seriesguide.ui.movies;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import com.battlelancer.seriesguide.ui.dialogs.GenericCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.TraktTask;
 
 /**
@@ -10,7 +11,7 @@ import com.battlelancer.seriesguide.util.TraktTask;
  */
 public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
 
-    public static MovieCheckInDialogFragment newInstance(int movieTmdbId, String movieTitle) {
+    static MovieCheckInDialogFragment newInstance(int movieTmdbId, String movieTitle) {
         MovieCheckInDialogFragment f = new MovieCheckInDialogFragment();
 
         Bundle args = new Bundle();

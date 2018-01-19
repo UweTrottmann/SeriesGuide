@@ -1,9 +1,13 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.movies;
+
+import static com.battlelancer.seriesguide.ui.movies.MoviesDistillationSettings.MoviesSortOrder;
+import static com.battlelancer.seriesguide.ui.movies.MoviesDistillationSettings.MoviesSortOrderChangedEvent;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -18,17 +22,13 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.MoviesDistillationSettings;
+import com.battlelancer.seriesguide.ui.MoviesActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import static com.battlelancer.seriesguide.settings.MoviesDistillationSettings.MoviesSortOrder;
-import static com.battlelancer.seriesguide.settings.MoviesDistillationSettings.MoviesSortOrderChangedEvent;
 
 /**
  * A shell for a fragment displaying a number of movies.
@@ -40,12 +40,12 @@ public abstract class MoviesBaseFragment extends Fragment implements
     private static final int LAYOUT = R.layout.fragment_movies;
 
     private GridView gridView;
-    protected TextView emptyView;
+    TextView emptyView;
 
-    protected MoviesCursorAdapter adapter;
+    MoviesCursorAdapter adapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(LAYOUT, container, false);
 
@@ -160,7 +160,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
      * @return The current position in the tab strip.
      * @see MoviesActivity
      */
-    protected abstract int getTabPosition(boolean showingNowTab);
+    abstract int getTabPosition(boolean showingNowTab);
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventTabClick(MoviesActivity.MoviesTabClickEvent event) {
@@ -198,5 +198,5 @@ public abstract class MoviesBaseFragment extends Fragment implements
     /**
      * Return a loader id different from any other used within {@link com.battlelancer.seriesguide.ui.MoviesActivity}.
      */
-    protected abstract int getLoaderId();
+    abstract int getLoaderId();
 }

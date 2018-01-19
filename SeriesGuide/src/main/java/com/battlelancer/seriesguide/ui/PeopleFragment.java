@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.PeopleAdapter;
-import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
+import com.battlelancer.seriesguide.ui.movies.MovieCreditsLoader;
 import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
 import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.widgets.EmptyView;

@@ -1,7 +1,10 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.movies;
+
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
@@ -10,11 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.MoviesCursorAdapter;
-import com.battlelancer.seriesguide.settings.MoviesDistillationSettings;
+import com.battlelancer.seriesguide.ui.MoviesActivity;
 import com.battlelancer.seriesguide.util.MovieTools;
-
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 /**
  * Loads and displays the users trakt movie watchlist.
@@ -24,7 +24,7 @@ public class MoviesWatchListFragment extends MoviesBaseFragment {
     private static final int CONTEXT_WATCHLIST_REMOVE_ID = 0;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
 
@@ -60,12 +60,12 @@ public class MoviesWatchListFragment extends MoviesBaseFragment {
     }
 
     @Override
-    protected int getLoaderId() {
+    int getLoaderId() {
         return MoviesActivity.WATCHLIST_LOADER_ID;
     }
 
     @Override
-    protected int getTabPosition(boolean showingNowTab) {
+    int getTabPosition(boolean showingNowTab) {
         return showingNowTab
                 ? MoviesActivity.TAB_POSITION_WATCHLIST_WITH_NOW
                 : MoviesActivity.TAB_POSITION_WATCHLIST_DEFAULT;

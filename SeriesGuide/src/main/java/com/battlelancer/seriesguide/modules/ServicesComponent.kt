@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.modules
 
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.loaders.ShowCreditsLoader
-import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader
+import com.battlelancer.seriesguide.ui.movies.TmdbMoviesLoader
 import com.battlelancer.seriesguide.loaders.TraktAddLoader
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsLoader
 import com.battlelancer.seriesguide.loaders.TvdbAddLoader

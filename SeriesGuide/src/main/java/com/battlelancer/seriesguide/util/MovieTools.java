@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.items.MovieDetails;
+import com.battlelancer.seriesguide.ui.movies.MovieDetails;
 import com.battlelancer.seriesguide.jobs.FlagJobAsyncTask;
 import com.battlelancer.seriesguide.jobs.movies.MovieCollectionJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob;
@@ -217,9 +217,9 @@ public class MovieTools {
         ContentValues values = buildBasicMovieContentValuesWithId(details);
 
         values.put(SeriesGuideContract.Movies.IN_COLLECTION,
-                DBUtils.convertBooleanToInt(details.inCollection));
+                DBUtils.convertBooleanToInt(details.isInCollection()));
         values.put(SeriesGuideContract.Movies.IN_WATCHLIST,
-                DBUtils.convertBooleanToInt(details.inWatchlist));
+                DBUtils.convertBooleanToInt(details.isInWatchlist()));
 
         return values;
     }
@@ -466,8 +466,8 @@ public class MovieTools {
             }
 
             // set flags
-            movieDetails.inCollection = newCollectionMovies.contains(tmdbId);
-            movieDetails.inWatchlist = newWatchlistMovies.contains(tmdbId);
+            movieDetails.setInCollection(newCollectionMovies.contains(tmdbId));
+            movieDetails.setInWatchlist(newWatchlistMovies.contains(tmdbId));
 
             movies.add(movieDetails);
 

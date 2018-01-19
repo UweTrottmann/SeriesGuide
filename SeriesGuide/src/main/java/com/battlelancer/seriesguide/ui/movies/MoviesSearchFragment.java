@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.movies;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,12 +24,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.MoviesAdapter;
-import com.battlelancer.seriesguide.adapters.MoviesDiscoverAdapter;
-import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
-import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.util.AutoGridLayoutManager;
+import com.battlelancer.seriesguide.ui.MoviesActivity;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
@@ -42,7 +38,7 @@ import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
  */
 public class MoviesSearchFragment extends Fragment {
 
-    public interface OnSearchClickListener {
+    interface OnSearchClickListener {
         void onSearchClick();
     }
 
@@ -58,7 +54,7 @@ public class MoviesSearchFragment extends Fragment {
     private MoviesAdapter adapter;
     private Unbinder unbinder;
 
-    public static MoviesSearchFragment newInstance(@NonNull MoviesDiscoverLink link) {
+    static MoviesSearchFragment newInstance(@NonNull MoviesDiscoverLink link) {
         MoviesSearchFragment f = new MoviesSearchFragment();
 
         Bundle args = new Bundle();
@@ -142,7 +138,7 @@ public class MoviesSearchFragment extends Fragment {
         return args;
     }
 
-    public void search(String query) {
+    void search(String query) {
         if (!swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(true);
         }
@@ -191,15 +187,15 @@ public class MoviesSearchFragment extends Fragment {
         }
     };
 
-    public static class MovieItemClickListener implements MoviesAdapter.ItemClickListener {
+    static class MovieItemClickListener implements MoviesAdapter.ItemClickListener {
 
         private Activity activity;
 
-        public MovieItemClickListener(Activity activity) {
+        MovieItemClickListener(Activity activity) {
             this.activity = activity;
         }
 
-        public Activity getActivity() {
+        Activity getActivity() {
             return activity;
         }
 

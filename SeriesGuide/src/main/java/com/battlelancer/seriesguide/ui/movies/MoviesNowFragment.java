@@ -1,7 +1,8 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -22,11 +23,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.MoviesNowAdapter;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
-import com.battlelancer.seriesguide.loaders.TraktFriendsMovieHistoryLoader;
-import com.battlelancer.seriesguide.loaders.TraktRecentMovieHistoryLoader;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.HistoryActivity;
+import com.battlelancer.seriesguide.ui.MoviesActivity;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
@@ -56,7 +57,7 @@ public class MoviesNowFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_now, container, false);
         unbinder = ButterKnife.bind(this, v);

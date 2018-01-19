@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -7,14 +7,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.battlelancer.seriesguide.R;
 
-public class AutoGridLayoutManager extends GridLayoutManager {
+class AutoGridLayoutManager extends GridLayoutManager {
 
     private final int columnWidth;
     private final int minItemSpanSize;
     private final int minSpanCount;
     private boolean columnWidthChanged;
 
-    public AutoGridLayoutManager(Context context, @DimenRes int itemWidthRes, int minItemSpanSize,
+    AutoGridLayoutManager(Context context, @DimenRes int itemWidthRes, int minItemSpanSize,
             int minSpanCount) {
         super(context, minSpanCount);
 

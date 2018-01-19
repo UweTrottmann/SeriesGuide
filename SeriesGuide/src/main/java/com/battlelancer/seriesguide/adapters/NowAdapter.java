@@ -37,13 +37,13 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         void onItemClick(View view, int position);
     }
 
-    static class HistoryViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.textViewHistoryShow) TextView show;
-        @BindView(R.id.textViewHistoryEpisode) TextView episode;
-        @BindView(R.id.imageViewHistoryPoster) ImageView poster;
-        @BindView(R.id.textViewHistoryInfo) TextView info;
-        @BindView(R.id.imageViewHistoryAvatar) ImageView avatar;
-        @BindView(R.id.imageViewHistoryType) ImageView type;
+    protected static class HistoryViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.textViewHistoryShow) public TextView show;
+        @BindView(R.id.textViewHistoryEpisode) public TextView episode;
+        @BindView(R.id.imageViewHistoryPoster) public ImageView poster;
+        @BindView(R.id.textViewHistoryInfo) public TextView info;
+        @BindView(R.id.imageViewHistoryAvatar) public ImageView avatar;
+        @BindView(R.id.imageViewHistoryType) public ImageView type;
 
         public HistoryViewHolder(View itemView, final ItemClickListener listener) {
             super(itemView);
@@ -89,7 +89,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({ ItemType.HISTORY, ItemType.FRIEND, ItemType.MORE_LINK, ItemType.HEADER })
+    @IntDef({ItemType.HISTORY, ItemType.FRIEND, ItemType.MORE_LINK, ItemType.HEADER})
     public @interface ItemType {
         int HISTORY = 1;
         int FRIEND = 2;
@@ -98,7 +98,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({ ViewType.HISTORY, ViewType.MORE_LINK, ViewType.HEADER })
+    @IntDef({ViewType.HISTORY, ViewType.MORE_LINK, ViewType.HEADER})
     public @interface ViewType {
         int HISTORY = 1;
         int MORE_LINK = 2;

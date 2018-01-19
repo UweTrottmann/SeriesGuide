@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -54,7 +53,7 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
      * If a query is given, will load search results for that query. Otherwise will load a list of
      * movies based on the given link.
      */
-    public TmdbMoviesLoader(Context context, @NonNull MoviesDiscoverLink link,
+    TmdbMoviesLoader(Context context, @NonNull MoviesDiscoverLink link,
             @Nullable String query) {
         super(context);
         this.link = link;

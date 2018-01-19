@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.Context;
 import android.os.Build;
@@ -24,9 +24,9 @@ import java.util.List;
 /**
  * Displays movie titles of the given {@link Movie} array.
  */
-public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public interface ItemClickListener {
+    interface ItemClickListener {
         void onClickMovie(int movieTmdbId, ImageView posterView);
 
         void onClickMovieMoreOptions(int movieTmdbId, View anchor);
@@ -36,9 +36,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private final String posterBaseUrl;
     private final DateFormat dateFormatMovieReleaseDate;
     private final ItemClickListener itemClickListener;
-    protected final List<Movie> movies;
+    final List<Movie> movies;
 
-    public MoviesAdapter(Context context, ItemClickListener itemClickListener) {
+    MoviesAdapter(Context context, ItemClickListener itemClickListener) {
         this.context = context;
         this.itemClickListener = itemClickListener;
         this.dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat();
@@ -46,7 +46,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         this.posterBaseUrl = TmdbSettings.getPosterBaseUrl(context);
     }
 
-    public void updateMovies(@Nullable List<Movie> newMovies) {
+    void updateMovies(@Nullable List<Movie> newMovies) {
         movies.clear();
         if (newMovies != null) {
             movies.addAll(newMovies);
@@ -93,12 +93,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return movies.size();
     }
 
-    protected Movie getMovie(int position) {
+    Movie getMovie(int position) {
         return movies.get(position);
     }
 
     @NonNull
-    protected String getTransitionNamePrefix() {
+    String getTransitionNamePrefix() {
         return "moviesAdapterPoster_";
     }
 

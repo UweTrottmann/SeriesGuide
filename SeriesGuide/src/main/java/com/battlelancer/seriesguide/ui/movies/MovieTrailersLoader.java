@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -18,11 +18,11 @@ import timber.log.Timber;
  * Loads a YouTube movie trailer from TMDb. Tries to get a local trailer, if not falls back to
  * English.
  */
-public class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
+class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
 
     private int tmdbId;
 
-    public MovieTrailersLoader(Context context, int tmdbId) {
+    MovieTrailersLoader(Context context, int tmdbId) {
         super(context);
         this.tmdbId = tmdbId;
     }

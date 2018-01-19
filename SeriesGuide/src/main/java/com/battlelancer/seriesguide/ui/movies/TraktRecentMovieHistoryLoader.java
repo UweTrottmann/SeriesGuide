@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.movies;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.NowAdapter;
+import com.battlelancer.seriesguide.loaders.TraktRecentEpisodeHistoryLoader;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.UserSlug;
@@ -19,7 +20,7 @@ import retrofit2.Call;
  */
 public class TraktRecentMovieHistoryLoader extends TraktRecentEpisodeHistoryLoader {
 
-    public TraktRecentMovieHistoryLoader(Activity activity) {
+    TraktRecentMovieHistoryLoader(Activity activity) {
         super(activity);
     }
 

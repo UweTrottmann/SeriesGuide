@@ -1,4 +1,6 @@
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.movies;
+
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -19,22 +21,20 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import java.text.DateFormat;
 import java.util.Date;
 
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
-
-public class MoviesCursorAdapter extends CursorAdapter {
+class MoviesCursorAdapter extends CursorAdapter {
 
     private final int uniqueId;
     private final String tmdbImageBaseUrl;
 
-    private DateFormat dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat();
+    private final DateFormat dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat();
 
-    private PopupMenuClickListener popupMenuClickListener;
+    private final PopupMenuClickListener popupMenuClickListener;
 
-    public interface PopupMenuClickListener {
+    interface PopupMenuClickListener {
         void onPopupMenuClick(View v, int movieTmdbId);
     }
 
-    public MoviesCursorAdapter(Context context, PopupMenuClickListener popupMenuClickListener,
+    MoviesCursorAdapter(Context context, PopupMenuClickListener popupMenuClickListener,
             int uniqueId) {
         super(context, null, 0);
         this.uniqueId = uniqueId;

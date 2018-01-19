@@ -107,7 +107,7 @@
             android:name="com.battlelancer.seriesguide.ui.MoviesActivity"
             android:label="@string/movies" />
         <activity
-            android:name="com.battlelancer.seriesguide.ui.MoviesSearchActivity"
+            android:name="com.battlelancer.seriesguide.ui.movies.MoviesSearchActivity"
             android:parentActivityName="com.battlelancer.seriesguide.ui.MoviesActivity"
             android:windowSoftInputMode="stateHidden">
             <!-- Parent activity meta-data to support ICS -->
@@ -116,7 +116,7 @@
                 android:value="com.battlelancer.seriesguide.ui.MoviesActivity" />
         </activity>
         <activity
-            android:name="com.battlelancer.seriesguide.ui.MovieDetailsActivity"
+            android:name="com.battlelancer.seriesguide.ui.movies.MovieDetailsActivity"
             android:parentActivityName="com.battlelancer.seriesguide.ui.MoviesActivity">
             <!-- Parent activity meta-data to support ICS -->
             <meta-data

@@ -10,7 +10,7 @@ import android.support.v4.app.TaskStackBuilder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.ui.MovieDetailsActivity;
+import com.battlelancer.seriesguide.ui.movies.MovieDetailsActivity;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.movies;
 
 import android.annotation.TargetApi;
 import android.content.res.TypedArray;
@@ -19,10 +19,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.MoviesDiscoverAdapter;
-import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
 import com.battlelancer.seriesguide.settings.SearchSettings;
-import com.battlelancer.seriesguide.ui.dialogs.MovieLocalizationDialogFragment;
+import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.ViewTools;
 import org.greenrobot.eventbus.Subscribe;
@@ -31,7 +29,7 @@ import org.greenrobot.eventbus.ThreadMode;
 public class MoviesSearchActivity extends BaseNavDrawerActivity implements
         MoviesSearchFragment.OnSearchClickListener {
 
-    public static final String EXTRA_ID_LINK = "idLink";
+    static final String EXTRA_ID_LINK = "idLink";
     private static final String STATE_SEARCH_VISIBLE = "searchVisible";
 
     @BindView(R.id.containerSearchBar) View containerSearchBar;

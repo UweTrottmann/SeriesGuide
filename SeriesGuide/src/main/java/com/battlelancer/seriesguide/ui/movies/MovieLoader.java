@@ -1,27 +1,26 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.movies;
+
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.items.MovieDetails;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.trakt5.entities.Ratings;
 
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
-
 /**
  * Tries to load current movie details from trakt and TMDb, if failing tries to fall back to local
  * database copy.
  */
-public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
+class MovieLoader extends GenericSimpleLoader<MovieDetails> {
 
     private int tmdbId;
 
-    public MovieLoader(Context context, int tmdbId) {
+    MovieLoader(Context context, int tmdbId) {
         super(context);
         this.tmdbId = tmdbId;
     }
@@ -44,21 +43,21 @@ public class MovieLoader extends GenericSimpleLoader<MovieDetails> {
             }
             // ensure list flags and watched flag are false on failure
             // (assumption: movie not in db, it has the truth, so can't be in any lists or watched)
-            details.inCollection = false;
-            details.inWatchlist = false;
-            details.isWatched = false;
+            details.setInCollection(false);
+            details.setInWatchlist(false);
+            details.setWatched(false);
             return details;
         }
 
         // set local state for watched, collected and watchlist status
         // assumption: local db has the truth for these
-        details.inCollection = DBUtils.restoreBooleanFromInt(
-                movieQuery.getInt(MovieQuery.IN_COLLECTION));
-        details.inWatchlist = DBUtils.restoreBooleanFromInt(
-                movieQuery.getInt(MovieQuery.IN_WATCHLIST));
-        details.isWatched = DBUtils.restoreBooleanFromInt(movieQuery.getInt(MovieQuery.WATCHED));
+        details.setInCollection(DBUtils.restoreBooleanFromInt(
+                movieQuery.getInt(MovieQuery.IN_COLLECTION)));
+        details.setInWatchlist(DBUtils.restoreBooleanFromInt(
+                movieQuery.getInt(MovieQuery.IN_WATCHLIST)));
+        details.setWatched(DBUtils.restoreBooleanFromInt(movieQuery.getInt(MovieQuery.WATCHED)));
         // also use local state of user rating
-        details.userRating = movieQuery.getInt(MovieQuery.RATING_USER);
+        details.setUserRating(movieQuery.getInt(MovieQuery.RATING_USER));
 
         // only overwrite other info if remote data failed to load
         if (details.traktRatings() == null) {

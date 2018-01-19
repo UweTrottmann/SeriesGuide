@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -44,16 +45,14 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.extensions.MovieActionsContract;
-import com.battlelancer.seriesguide.items.MovieDetails;
-import com.battlelancer.seriesguide.loaders.MovieCreditsLoader;
-import com.battlelancer.seriesguide.loaders.MovieLoader;
-import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
+import com.battlelancer.seriesguide.ui.FullscreenImageActivity;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.MovieTools;
@@ -87,7 +86,7 @@ import timber.log.Timber;
  */
 public class MovieDetailsFragment extends Fragment implements MovieActionsContract {
 
-    public static MovieDetailsFragment newInstance(int tmdbId) {
+    static MovieDetailsFragment newInstance(int tmdbId) {
         MovieDetailsFragment f = new MovieDetailsFragment();
 
         Bundle args = new Bundle();
@@ -97,7 +96,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         return f;
     }
 
-    public interface InitBundle {
+    interface InitBundle {
 
         String TMDB_ID = "tmdbid";
     }
@@ -146,7 +145,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     private AsyncTask<Bitmap, Void, Palette> paletteAsyncTask;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
         unbinder = ButterKnife.bind(this, view);
@@ -353,10 +352,10 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
          */
         final Ratings traktRatings = movieDetails.traktRatings();
         final Movie tmdbMovie = movieDetails.tmdbMovie();
-        final boolean inCollection = movieDetails.inCollection;
-        final boolean inWatchlist = movieDetails.inWatchlist;
-        final boolean isWatched = movieDetails.isWatched;
-        final int rating = movieDetails.userRating;
+        final boolean inCollection = movieDetails.isInCollection();
+        final boolean inWatchlist = movieDetails.isInWatchlist();
+        final boolean isWatched = movieDetails.isWatched();
+        final int rating = movieDetails.getUserRating();
 
         textViewMovieTitle.setText(tmdbMovie.title);
         getActivity().setTitle(tmdbMovie.title);

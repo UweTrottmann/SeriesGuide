@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.dialogs;
+package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -37,21 +37,20 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
 
     private static final String STATE_LIST_VISIBLE = "listVisible";
 
-    public static class LocalizationChangedEvent {
+    static class LocalizationChangedEvent {
     }
 
-    public static class ItemsLoadedEvent {
-        public final List<LocalizationAdapter.LocalizationItem> items;
-        public final int type;
+    static class ItemsLoadedEvent {
+        final List<LocalizationAdapter.LocalizationItem> items;
+        final int type;
 
-        public ItemsLoadedEvent(
-                List<LocalizationAdapter.LocalizationItem> items, int type) {
+        ItemsLoadedEvent(List<LocalizationAdapter.LocalizationItem> items, int type) {
             this.items = items;
             this.type = type;
         }
     }
 
-    public static void show(FragmentManager fragmentManager) {
+    static void show(FragmentManager fragmentManager) {
         MovieLocalizationDialogFragment dialog = new MovieLocalizationDialogFragment();
         dialog.show(fragmentManager, "dialog-language");
     }
@@ -65,11 +64,11 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
     @BindView(R.id.buttonLocalizationRegion) Button buttonRegion;
 
     private LocalizationAdapter adapter;
-    int type;
+    private int type;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.dialog_localization, container, false);
         unbinder = ButterKnife.bind(this, view);
@@ -218,7 +217,7 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
         buttonRegion.setText(new Locale("", regionCode).getDisplayCountry());
     }
 
-    public void setListVisible(boolean visible) {
+    private void setListVisible(boolean visible) {
         recyclerView.setVisibility(visible ? View.VISIBLE : View.GONE);
         int visibility = visible ? View.GONE : View.VISIBLE;
         buttonLanguage.setVisibility(visibility);
@@ -245,31 +244,31 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
         }
     };
 
-    public static class LocalizationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    static class LocalizationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        public static class LocalizationItem {
-            public final String code;
-            public final String displayText;
+        static class LocalizationItem {
+            final String code;
+            final String displayText;
 
-            public LocalizationItem(String code, String displayText) {
+            LocalizationItem(String code, String displayText) {
                 this.code = code;
                 this.displayText = displayText;
             }
         }
 
-        public interface OnItemClickListener {
+        interface OnItemClickListener {
             void onItemClick(String code);
         }
 
         @NonNull private final List<LocalizationItem> items;
         @NonNull private final OnItemClickListener onItemClickListener;
 
-        public LocalizationAdapter(@NonNull OnItemClickListener onItemClickListener) {
+        LocalizationAdapter(@NonNull OnItemClickListener onItemClickListener) {
             this.items = new ArrayList<>();
             this.onItemClickListener = onItemClickListener;
         }
 
-        public void updateItems(@NonNull List<LocalizationItem> items) {
+        void updateItems(@NonNull List<LocalizationItem> items) {
             this.items.clear();
             this.items.addAll(items);
             notifyDataSetChanged();

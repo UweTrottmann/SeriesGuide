@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,22 +11,21 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoviesDiscoverAdapter extends MoviesAdapter {
+class MoviesDiscoverAdapter extends MoviesAdapter {
 
-    public static final int VIEW_TYPE_LINK = R.layout.item_discover_link;
-    public static final int VIEW_TYPE_HEADER = R.layout.item_discover_header;
-    public static final int VIEW_TYPE_MOVIE = R.layout.item_discover_movie;
+    static final int VIEW_TYPE_LINK = R.layout.item_discover_link;
+    static final int VIEW_TYPE_HEADER = R.layout.item_discover_header;
+    static final int VIEW_TYPE_MOVIE = R.layout.item_discover_movie;
 
-    public interface ItemClickListener extends MoviesAdapter.ItemClickListener {
+    interface ItemClickListener extends MoviesAdapter.ItemClickListener {
         void onClickLink(MoviesDiscoverLink link, View anchor);
     }
 
-    public static final MoviesDiscoverLink DISCOVER_LINK_DEFAULT = MoviesDiscoverLink.IN_THEATERS;
+    static final MoviesDiscoverLink DISCOVER_LINK_DEFAULT = MoviesDiscoverLink.IN_THEATERS;
     @NonNull private static final List<MoviesDiscoverLink> links;
 
     static {
@@ -38,7 +37,7 @@ public class MoviesDiscoverAdapter extends MoviesAdapter {
 
     private final ItemClickListener itemClickListener;
 
-    public MoviesDiscoverAdapter(Context context, @Nullable ItemClickListener itemClickListener) {
+    MoviesDiscoverAdapter(Context context, @Nullable ItemClickListener itemClickListener) {
         super(context, null);
         this.itemClickListener = itemClickListener;
     }
@@ -100,13 +99,13 @@ public class MoviesDiscoverAdapter extends MoviesAdapter {
     }
 
     @Override
-    protected Movie getMovie(int position) {
-        return movies.get(position - links.size() - 1 /** header **/);
+    Movie getMovie(int position) {
+        return movies.get(position - links.size() - 1 /* header */);
     }
 
     @NonNull
     @Override
-    protected String getTransitionNamePrefix() {
+    String getTransitionNamePrefix() {
         return "moviesDiscoverAdapterPoster_";
     }
 

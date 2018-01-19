@@ -1,8 +1,9 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.movies;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -20,11 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.MoviesDiscoverAdapter;
-import com.battlelancer.seriesguide.enums.MoviesDiscoverLink;
-import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
-import com.battlelancer.seriesguide.ui.dialogs.MovieLocalizationDialogFragment;
-import com.battlelancer.seriesguide.util.AutoGridLayoutManager;
+import com.battlelancer.seriesguide.ui.MoviesActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import org.greenrobot.eventbus.EventBus;
@@ -50,7 +47,7 @@ public class MoviesDiscoverFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movies_discover, container, false);
         unbinder = ButterKnife.bind(this, view);
@@ -150,10 +147,10 @@ public class MoviesDiscoverFragment extends Fragment {
         }
     }
 
-    public static class MovieItemClickListener extends MoviesSearchFragment.MovieItemClickListener
+    private static class MovieItemClickListener extends MoviesSearchFragment.MovieItemClickListener
             implements MoviesDiscoverAdapter.ItemClickListener {
 
-        public MovieItemClickListener(Activity activity) {
+        MovieItemClickListener(Activity activity) {
             super(activity);
         }
 

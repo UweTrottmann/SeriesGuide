@@ -1,25 +1,26 @@
-package com.battlelancer.seriesguide.settings;
-
-import android.content.Context;
-import android.preference.PreferenceManager;
+package com.battlelancer.seriesguide.ui.movies;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
+
 /**
  * Provides settings used to sort displayed movies in
- * {@link com.battlelancer.seriesguide.ui.MoviesBaseFragment} subclasses.
+ * {@link MoviesBaseFragment} subclasses.
  */
-public class MoviesDistillationSettings {
+class MoviesDistillationSettings {
 
-    public static class MoviesSortOrderChangedEvent {
+    static class MoviesSortOrderChangedEvent {
     }
 
-    public static String KEY_SORT_ORDER = "com.battlelancer.seriesguide.movies.sort.order";
+    static final String KEY_SORT_ORDER = "com.battlelancer.seriesguide.movies.sort.order";
 
     /**
      * Builds an appropriate SQL sort statement for sorting movies.
      */
-    public static String getSortQuery(Context context) {
+    static String getSortQuery(Context context) {
         int sortOrderId = getSortOrderId(context);
 
         if (sortOrderId == MoviesSortOrder.TITLE_REVERSE_ALHPABETICAL_ID) {
@@ -43,15 +44,15 @@ public class MoviesDistillationSettings {
 
     /**
      * Returns the id as of
-     * {@link com.battlelancer.seriesguide.settings.MoviesDistillationSettings.MoviesSortOrder}
+     * {@link MoviesDistillationSettings.MoviesSortOrder}
      * of the current movie sort order.
      */
-    public static int getSortOrderId(Context context) {
+    static int getSortOrderId(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getInt(KEY_SORT_ORDER, MoviesSortOrder.TITLE_ALPHABETICAL_ID);
     }
 
-    public interface MoviesSortOrder {
+    interface MoviesSortOrder {
         int TITLE_ALPHABETICAL_ID = 0;
         int TITLE_REVERSE_ALHPABETICAL_ID = 1;
         int RELEASE_DATE_NEWEST_FIRST_ID = 2;

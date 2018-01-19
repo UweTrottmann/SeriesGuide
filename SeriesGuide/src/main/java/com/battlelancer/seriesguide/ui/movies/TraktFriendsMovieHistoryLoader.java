@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.movies;
 
 import android.app.Activity;
 import android.text.TextUtils;
@@ -21,9 +21,9 @@ import java.util.List;
 /**
  * Loads trakt friends, then returns the most recently watched movie for each friend.
  */
-public class TraktFriendsMovieHistoryLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>> {
+class TraktFriendsMovieHistoryLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>> {
 
-    public TraktFriendsMovieHistoryLoader(Activity activity) {
+    TraktFriendsMovieHistoryLoader(Activity activity) {
         super(activity);
     }
 

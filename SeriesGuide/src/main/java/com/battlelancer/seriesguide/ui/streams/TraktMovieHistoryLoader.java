@@ -1,8 +1,10 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.streams;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.loaders.TraktEpisodeHistoryLoader;
+import com.battlelancer.seriesguide.ui.movies.TraktRecentMovieHistoryLoader;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import java.util.List;
 import retrofit2.Call;
@@ -10,9 +12,9 @@ import retrofit2.Call;
 /**
  * Loads the last few movies watched on trakt.
  */
-public class TraktMovieHistoryLoader extends TraktEpisodeHistoryLoader {
+class TraktMovieHistoryLoader extends TraktEpisodeHistoryLoader {
 
-    public TraktMovieHistoryLoader(Activity activity) {
+    TraktMovieHistoryLoader(Activity activity) {
         super(activity);
     }
 
