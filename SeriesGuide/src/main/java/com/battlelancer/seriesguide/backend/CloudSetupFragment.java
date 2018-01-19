@@ -26,7 +26,6 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.sync.SyncProgress;
 import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
-import com.battlelancer.seriesguide.ui.dialogs.RemoveCloudAccountDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SyncStatusView;
 import com.google.android.gms.auth.api.Auth;
@@ -78,7 +77,7 @@ public class CloudSetupFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_cloud_setup, container, false);
         unbinder = ButterKnife.bind(this, v);

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.dialogs;
+package com.battlelancer.seriesguide.backend;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatDialogFragment;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
