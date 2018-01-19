@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.episodes;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,9 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
@@ -28,16 +25,15 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
-import com.battlelancer.seriesguide.items.Episode;
-import com.battlelancer.seriesguide.loaders.SeasonEpisodesLoader;
-import com.battlelancer.seriesguide.loaders.SeasonsLoader;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
+import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
+import com.battlelancer.seriesguide.ui.OverviewActivity;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.SeasonTools;
-import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -349,72 +345,6 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
             view.setText(SeasonTools.getSeasonString(context, item.season));
 
             return view;
-        }
-    }
-
-    public static class EpisodePagerAdapter extends FragmentStatePagerAdapter {
-
-        @NonNull private final ArrayList<Episode> episodesList;
-        private final Context context;
-        private final boolean isMultiPane;
-
-        public EpisodePagerAdapter(Context context, FragmentManager fm,
-                @NonNull ArrayList<Episode> episodes, boolean isMultiPane) {
-            super(fm);
-            episodesList = episodes;
-            this.context = context;
-            this.isMultiPane = isMultiPane;
-        }
-
-        @Nullable
-        public Integer getItemEpisodeTvdbId(int position) {
-            if (position < episodesList.size()) {
-                return episodesList.get(position).episodeId;
-            } else {
-                return null;
-            }
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return EpisodeDetailsFragment.newInstance(episodesList.get(position).episodeId,
-                    isMultiPane);
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            /*
-             * This breaks the FragmentStatePagerAdapter (see
-             * http://code.google.com/p/android/issues/detail?id=37990), so we
-             * just destroy everything!
-             */
-            // EpisodeDetailsFragment fragment = (EpisodeDetailsFragment)
-            // object;
-            // int episodeId = fragment.getEpisodeId();
-            // for (int i = 0; i < mEpisodes.size(); i++) {
-            // if (episodeId == mEpisodes.get(i).episodeId) {
-            // return i;
-            // }
-            // }
-            return POSITION_NONE;
-        }
-
-        @Override
-        public int getCount() {
-            return episodesList.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            Episode episode = episodesList.get(position);
-            return TextTools.getEpisodeNumber(context, episode.seasonNumber,
-                    episode.episodeNumber);
-        }
-
-        public void updateEpisodeList(@NonNull ArrayList<Episode> list) {
-            episodesList.clear();
-            episodesList.addAll(list);
-            notifyDataSetChanged();
         }
     }
 }

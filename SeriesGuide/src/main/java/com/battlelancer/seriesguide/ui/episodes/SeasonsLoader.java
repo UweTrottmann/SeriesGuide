@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.episodes;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -13,11 +13,11 @@ import java.util.List;
 /**
  * Loads show and season info based on a given episode.
  */
-public class SeasonsLoader extends GenericSimpleLoader<SeasonsLoader.Result> {
+class SeasonsLoader extends GenericSimpleLoader<SeasonsLoader.Result> {
 
     private final int episodeTvdbId;
 
-    public static class Result {
+    static class Result {
         public int showTvdbId;
         public String showTitle;
         public String showPoster;
@@ -35,7 +35,7 @@ public class SeasonsLoader extends GenericSimpleLoader<SeasonsLoader.Result> {
         }
     }
 
-    public SeasonsLoader(Context context, int episodeTvdbId) {
+    SeasonsLoader(Context context, int episodeTvdbId) {
         super(context);
         this.episodeTvdbId = episodeTvdbId;
     }

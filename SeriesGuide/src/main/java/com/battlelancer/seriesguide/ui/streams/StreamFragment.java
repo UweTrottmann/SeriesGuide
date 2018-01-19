@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.ui.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;

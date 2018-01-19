@@ -1,5 +1,5 @@
 
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.episodes;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -14,8 +14,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.EpisodesFragment.EpisodesQuery;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -24,13 +25,13 @@ import com.uwetrottmann.androidutils.CheatSheet;
 import java.text.NumberFormat;
 import java.util.Date;
 
-public class EpisodesAdapter extends CursorAdapter {
+class EpisodesAdapter extends CursorAdapter {
 
-    public interface OnFlagEpisodeListener {
+    interface OnFlagEpisodeListener {
         void onFlagEpisodeWatched(int episodeId, int episodeNumber, boolean isWatched);
     }
 
-    public interface PopupMenuClickListener {
+    interface PopupMenuClickListener {
         void onPopupMenuClick(View v, int episodeTvdbId, int episodeNumber,
                 long releaseTimeMs, int watchedFlag, boolean isCollected);
     }
@@ -39,7 +40,7 @@ public class EpisodesAdapter extends CursorAdapter {
     private OnFlagEpisodeListener onFlagListener;
     private NumberFormat integerFormat;
 
-    public EpisodesAdapter(Context context, PopupMenuClickListener listener,
+    EpisodesAdapter(Context context, PopupMenuClickListener listener,
             OnFlagEpisodeListener flagListener) {
         super(context, null, 0);
         popupMenuClickListener = listener;
@@ -50,7 +51,7 @@ public class EpisodesAdapter extends CursorAdapter {
     /**
      * Get the item position in the data set, or the position of the first item if it is not found.
      */
-    public int getItemPosition(long itemId) {
+    int getItemPosition(long itemId) {
         Cursor cursor = getCursor();
         if (cursor != null) {
             int rowId = cursor.getColumnIndexOrThrow("_id");
@@ -178,5 +179,30 @@ public class EpisodesAdapter extends CursorAdapter {
         public ViewHolder(View itemView) {
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    interface EpisodesQuery {
+
+        String[] PROJECTION = new String[] {
+                SeriesGuideDatabase.Tables.EPISODES + "." + Episodes._ID, // 0
+                Episodes.WATCHED,
+                Episodes.TITLE,
+                Episodes.NUMBER, // 3
+                Episodes.SEASON,
+                Episodes.FIRSTAIREDMS,
+                Episodes.DVDNUMBER,
+                Episodes.ABSOLUTE_NUMBER,
+                Episodes.COLLECTED // 8
+        };
+
+        int _ID = 0;
+        int WATCHED = 1;
+        int TITLE = 2;
+        int NUMBER = 3;
+        int SEASON = 4;
+        int FIRSTAIREDMS = 5;
+        int DVDNUMBER = 6;
+        int ABSOLUTE_NUMBER = 7;
+        int COLLECTED = 8;
     }
 }

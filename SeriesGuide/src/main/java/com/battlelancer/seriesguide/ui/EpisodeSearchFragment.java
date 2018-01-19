@@ -15,6 +15,7 @@ import com.battlelancer.seriesguide.adapters.EpisodeResultsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.Utils;
 import org.greenrobot.eventbus.Subscribe;

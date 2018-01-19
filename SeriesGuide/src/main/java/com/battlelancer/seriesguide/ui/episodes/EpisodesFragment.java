@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.episodes;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,15 +22,13 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.EpisodesAdapter;
-import com.battlelancer.seriesguide.adapters.EpisodesAdapter.OnFlagEpisodeListener;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
+import com.battlelancer.seriesguide.ui.episodes.EpisodesAdapter.OnFlagEpisodeListener;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 
@@ -279,7 +277,7 @@ public class EpisodesFragment extends ListFragment
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
             return new CursorLoader(getActivity(),
                     Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(getSeasonId())),
-                    EpisodesQuery.PROJECTION, null, null, sortOrder.query());
+                    EpisodesAdapter.EpisodesQuery.PROJECTION, null, null, sortOrder.query());
         }
 
         @Override
@@ -302,31 +300,6 @@ public class EpisodesFragment extends ListFragment
             adapter.swapCursor(null);
         }
     };
-
-    public interface EpisodesQuery {
-
-        String[] PROJECTION = new String[] {
-                Tables.EPISODES + "." + Episodes._ID, // 0
-                Episodes.WATCHED,
-                Episodes.TITLE,
-                Episodes.NUMBER, // 3
-                Episodes.SEASON,
-                Episodes.FIRSTAIREDMS,
-                Episodes.DVDNUMBER,
-                Episodes.ABSOLUTE_NUMBER,
-                Episodes.COLLECTED // 8
-        };
-
-        int _ID = 0;
-        int WATCHED = 1;
-        int TITLE = 2;
-        int NUMBER = 3;
-        int SEASON = 4;
-        int FIRSTAIREDMS = 5;
-        int DVDNUMBER = 6;
-        int ABSOLUTE_NUMBER = 7;
-        int COLLECTED = 8;
-    }
 
     private void loadSortOrder() {
         sortOrder = DisplaySettings.getEpisodeSortOrder(getActivity());

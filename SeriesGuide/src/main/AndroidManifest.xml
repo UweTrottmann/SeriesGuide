@@ -93,8 +93,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.EpisodesActivity" />
-        <activity android:name="com.battlelancer.seriesguide.ui.EpisodeDetailsActivity" />
+        <activity android:name="com.battlelancer.seriesguide.ui.episodes.EpisodesActivity" />
+        <activity android:name="com.battlelancer.seriesguide.ui.episodes.EpisodeDetailsActivity" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.ListsActivity"
             android:label="@string/lists" />

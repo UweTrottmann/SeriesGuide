@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.episodes;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -14,12 +14,12 @@ import java.util.ArrayList;
  * Loads episode of a season from the database and returns them as a list of {@link Episode}
  * objects. Also looks for the given episode in the list and returns its index.
  */
-public class SeasonEpisodesLoader extends GenericSimpleLoader<SeasonEpisodesLoader.Result> {
+class SeasonEpisodesLoader extends GenericSimpleLoader<SeasonEpisodesLoader.Result> {
 
     private final int seasonTvdbId;
     private final int episodeTvdbId;
 
-    public static class Result {
+    static class Result {
         @NonNull
         public ArrayList<Episode> episodes;
         public int requestedEpisodeIndex;
@@ -30,7 +30,7 @@ public class SeasonEpisodesLoader extends GenericSimpleLoader<SeasonEpisodesLoad
         }
     }
 
-    public SeasonEpisodesLoader(Context context, int seasonTvdbId, int episodeTvdbId) {
+    SeasonEpisodesLoader(Context context, int seasonTvdbId, int episodeTvdbId) {
         super(context);
         this.seasonTvdbId = seasonTvdbId;
         this.episodeTvdbId = episodeTvdbId;
