@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.people;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,10 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.PeopleAdapter;
-import com.battlelancer.seriesguide.ui.movies.MovieCreditsLoader;
-import com.battlelancer.seriesguide.loaders.ShowCreditsLoader;
-import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.entities.Credits;
@@ -45,7 +41,7 @@ public class PeopleFragment extends Fragment {
     /** The current activated item position. Only used on tablets. */
     private int activatedPosition = ListView.INVALID_POSITION;
 
-    public interface OnShowPersonListener {
+    interface OnShowPersonListener {
         void showPerson(View view, int tmdbId);
     }
 
@@ -157,7 +153,7 @@ public class PeopleFragment extends Fragment {
         }
     }
 
-    public void refresh() {
+    private void refresh() {
         getLoaderManager().restartLoader(PeopleActivity.PEOPLE_LOADER_ID, null,
                 creditsLoaderCallbacks);
     }
@@ -166,7 +162,7 @@ public class PeopleFragment extends Fragment {
      * Turns on activate-on-click mode. When this mode is on, list items will be given the
      * 'activated' state when touched.
      */
-    public void setActivateOnItemClick() {
+    void setActivateOnItemClick() {
         activateOnItemClick = true;
     }
 

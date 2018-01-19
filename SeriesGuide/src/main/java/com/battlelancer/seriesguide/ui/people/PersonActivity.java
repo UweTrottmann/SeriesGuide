@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.people;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -6,10 +6,11 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.Window;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.BaseActivity;
 
 /**
- * Hosts a {@link com.battlelancer.seriesguide.ui.PersonFragment}, only used on handset devices. On
- * tablet-size devices a two-pane layout inside {@link com.battlelancer.seriesguide.ui.PeopleActivity}
+ * Hosts a {@link PersonFragment}, only used on handset devices. On
+ * tablet-size devices a two-pane layout inside {@link PeopleActivity}
  * is used.
  */
 public class PersonActivity extends BaseActivity {

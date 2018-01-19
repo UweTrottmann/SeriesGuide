@@ -227,8 +227,8 @@
         <activity
             android:name="com.battlelancer.seriesguide.ui.FullscreenImageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity android:name="com.battlelancer.seriesguide.ui.PeopleActivity" />
-        <activity android:name="com.battlelancer.seriesguide.ui.PersonActivity" />
+        <activity android:name="com.battlelancer.seriesguide.ui.people.PeopleActivity" />
+        <activity android:name="com.battlelancer.seriesguide.ui.people.PersonActivity" />
 
         <!-- Unwatched counter update service -->
         <service android:name="com.battlelancer.seriesguide.ui.overview.UnwatchedUpdaterService" />

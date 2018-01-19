@@ -1,7 +1,8 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.people;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
@@ -22,7 +23,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.loaders.PersonLoader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TmdbTools;
@@ -45,7 +45,7 @@ public class PersonFragment extends Fragment {
     private Person person;
     private Unbinder unbinder;
 
-    public static PersonFragment newInstance(int tmdbId) {
+    static PersonFragment newInstance(int tmdbId) {
         PersonFragment f = new PersonFragment();
 
         Bundle args = new Bundle();
@@ -55,7 +55,7 @@ public class PersonFragment extends Fragment {
         return f;
     }
 
-    public interface InitBundle {
+    interface InitBundle {
         String PERSON_TMDB_ID = "person_tmdb_id";
     }
 
@@ -64,7 +64,7 @@ public class PersonFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_person, container, false);
         unbinder = ButterKnife.bind(this, rootView);

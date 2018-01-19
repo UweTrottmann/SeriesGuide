@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.people;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.Utils;
 
@@ -22,13 +23,13 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
 
     private boolean isTwoPane;
 
-    public interface InitBundle {
+    interface InitBundle {
         String MEDIA_TYPE = "media_title";
         String ITEM_TMDB_ID = "item_tmdb_id";
         String PEOPLE_TYPE = "people_type";
     }
 
-    public enum MediaType {
+    enum MediaType {
         SHOW("SHOW"),
         MOVIE("MOVIE");
 
@@ -44,7 +45,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
         }
     }
 
-    public enum PeopleType {
+    enum PeopleType {
         CAST("CAST"),
         CREW("CREW");
 
@@ -60,8 +61,8 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
         }
     }
 
-    public static final int PEOPLE_LOADER_ID = 100;
-    public static final int PERSON_LOADER_ID = 101;
+    static final int PEOPLE_LOADER_ID = 100;
+    static final int PERSON_LOADER_ID = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

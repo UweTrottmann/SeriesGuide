@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.people;
 
 import android.content.Context;
 import com.battlelancer.seriesguide.SgApp;
@@ -12,11 +12,11 @@ import retrofit2.Response;
 /**
  * Loads details of a crew or cast member from TMDb.
  */
-public class PersonLoader extends GenericSimpleLoader<Person> {
+class PersonLoader extends GenericSimpleLoader<Person> {
 
     private final int tmdbId;
 
-    public PersonLoader(Context context, int tmdbId) {
+    PersonLoader(Context context, int tmdbId) {
         super(context);
         this.tmdbId = tmdbId;
     }

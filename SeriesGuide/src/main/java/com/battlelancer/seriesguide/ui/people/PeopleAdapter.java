@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.people;
 
 import android.content.Context;
 import android.os.Build;
@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.PeopleListHelper;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TmdbTools;
 import java.util.List;
@@ -18,11 +17,11 @@ import java.util.List;
 /**
  * Shows a list of people in rows with headshots, name and description.
  */
-public class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
+class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
 
     private static int LAYOUT = R.layout.item_person;
 
-    public PeopleAdapter(Context context) {
+    PeopleAdapter(Context context) {
         super(context, LAYOUT);
     }
 
@@ -75,14 +74,14 @@ public class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
     /**
      * Replace the data in this {@link android.widget.ArrayAdapter} with the given list.
      */
-    public void setData(List<PeopleListHelper.Person> data) {
+    void setData(List<PeopleListHelper.Person> data) {
         clear();
         if (data != null) {
             addAll(data);
         }
     }
 
-    public static class ViewHolder {
+    static class ViewHolder {
         public TextView name;
         public TextView description;
         public ImageView headshot;
