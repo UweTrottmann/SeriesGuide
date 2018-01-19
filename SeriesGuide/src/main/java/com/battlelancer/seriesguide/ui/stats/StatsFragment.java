@@ -156,47 +156,48 @@ public class StatsFragment extends Fragment {
         updateStats(event.stats, event.finalValues, event.successful);
     }
 
-    private void updateStats(@NonNull StatsLiveData.Stats stats, boolean hasFinalValues, boolean successful) {
+    private void updateStats(@NonNull StatsLiveData.Stats stats, boolean hasFinalValues,
+            boolean successful) {
         // display error if not all stats could be calculated
         errorView.setVisibility(successful ? View.GONE : View.VISIBLE);
 
         NumberFormat format = NumberFormat.getIntegerInstance();
 
         // all shows
-        textViewShows.setText(format.format(stats.shows()));
+        textViewShows.setText(format.format(stats.shows));
 
         // shows with next episodes
-        progressBarShowsWithNextEpisode.setMax(stats.shows());
-        progressBarShowsWithNextEpisode.setProgress(stats.showsWithNextEpisodes());
+        progressBarShowsWithNextEpisode.setMax(stats.shows);
+        progressBarShowsWithNextEpisode.setProgress(stats.showsWithNextEpisodes);
         progressBarShowsWithNextEpisode.setVisibility(View.VISIBLE);
 
         textViewShowsWithNextEpisode.setText(getString(R.string.shows_with_next,
-                format.format(stats.showsWithNextEpisodes())).toUpperCase(Locale.getDefault()));
+                format.format(stats.showsWithNextEpisodes)).toUpperCase(Locale.getDefault()));
         textViewShowsWithNextEpisode.setVisibility(View.VISIBLE);
 
         // continuing shows
-        progressBarShowsContinuing.setMax(stats.shows());
-        progressBarShowsContinuing.setProgress(stats.showsContinuing());
+        progressBarShowsContinuing.setMax(stats.shows);
+        progressBarShowsContinuing.setProgress(stats.showsContinuing);
         progressBarShowsContinuing.setVisibility(View.VISIBLE);
 
         textViewShowsContinuing.setText(getString(R.string.shows_continuing,
-                format.format(stats.showsContinuing())).toUpperCase(Locale.getDefault()));
+                format.format(stats.showsContinuing)).toUpperCase(Locale.getDefault()));
         textViewShowsContinuing.setVisibility(View.VISIBLE);
 
         // all episodes
-        textViewEpisodes.setText(format.format(stats.episodes()));
+        textViewEpisodes.setText(format.format(stats.episodes));
 
         // watched episodes
-        progressBarEpisodesWatched.setMax(stats.episodes());
-        progressBarEpisodesWatched.setProgress(stats.episodesWatched());
+        progressBarEpisodesWatched.setMax(stats.episodes);
+        progressBarEpisodesWatched.setProgress(stats.episodesWatched);
         progressBarEpisodesWatched.setVisibility(View.VISIBLE);
 
         textViewEpisodesWatched.setText(getString(R.string.episodes_watched,
-                format.format(stats.episodesWatched())).toUpperCase(Locale.getDefault()));
+                format.format(stats.episodesWatched)).toUpperCase(Locale.getDefault()));
         textViewEpisodesWatched.setVisibility(View.VISIBLE);
 
         // episode runtime
-        String watchedDuration = getTimeDuration(stats.episodesWatchedRuntime());
+        String watchedDuration = getTimeDuration(stats.episodesWatchedRuntime);
         if (!hasFinalValues) {
             // showing minimum (= not the final value)
             watchedDuration = "> " + watchedDuration;
@@ -269,26 +270,26 @@ public class StatsFragment extends Fragment {
         statsString.append("\n");
         statsString.append("\n");
         // shows
-        statsString.append(format.format(currentStats.shows()))
+        statsString.append(format.format(currentStats.shows))
                 .append(" ")
                 .append(getString(R.string.statistics_shows));
         statsString.append("\n");
         statsString.append(getString(R.string.shows_with_next,
-                format.format(currentStats.showsWithNextEpisodes())));
+                format.format(currentStats.showsWithNextEpisodes)));
         statsString.append("\n");
         statsString.append(getString(R.string.shows_continuing,
-                format.format(currentStats.showsContinuing())));
+                format.format(currentStats.showsContinuing)));
         statsString.append("\n");
         statsString.append("\n");
         // episodes
-        statsString.append(format.format(currentStats.episodes())).append(" ").append(
+        statsString.append(format.format(currentStats.episodes)).append(" ").append(
                 getString(R.string.statistics_episodes));
         statsString.append("\n");
         statsString.append(getString(R.string.episodes_watched,
-                format.format(currentStats.episodesWatched())));
+                format.format(currentStats.episodesWatched)));
         statsString.append("\n");
-        if (currentStats.episodesWatchedRuntime() != 0) {
-            String watchedDuration = getTimeDuration(currentStats.episodesWatchedRuntime());
+        if (currentStats.episodesWatchedRuntime != 0) {
+            String watchedDuration = getTimeDuration(currentStats.episodesWatchedRuntime);
             if (!hasFinalValues) {
                 // showing minimum (= not the final value)
                 watchedDuration = "> " + watchedDuration;

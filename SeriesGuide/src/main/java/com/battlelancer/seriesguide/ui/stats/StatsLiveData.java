@@ -89,7 +89,7 @@ class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
                         null, -1);
                 if (watchedEpisodesOfShowCount == -1) {
                     // episode query failed, return what we have so far
-                    stats.episodesWatchedRuntime(totalRuntimeMin * DateUtils.MINUTE_IN_MILLIS);
+                    stats.episodesWatchedRuntime = totalRuntimeMin * DateUtils.MINUTE_IN_MILLIS;
                     return buildFailure(stats);
                 }
                 // make sure we calculate with long here (first arg is long) to avoid overflows
@@ -101,11 +101,11 @@ class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
                 long currentTime = System.currentTimeMillis();
                 if (currentTime > previewTime) {
                     previewTime = currentTime + PREVIEW_UPDATE_INTERVAL_MS;
-                    stats.episodesWatchedRuntime(totalRuntimeMin * DateUtils.MINUTE_IN_MILLIS);
+                    stats.episodesWatchedRuntime = totalRuntimeMin * DateUtils.MINUTE_IN_MILLIS;
                     publishProgress(buildUpdate(stats));
                 }
             }
-            stats.episodesWatchedRuntime(totalRuntimeMin * DateUtils.MINUTE_IN_MILLIS);
+            stats.episodesWatchedRuntime = totalRuntimeMin * DateUtils.MINUTE_IN_MILLIS;
 
             // return final values
             return new StatsUpdateEvent(stats, true, true);
@@ -132,9 +132,9 @@ class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
         private boolean processMovies(ContentResolver resolver, Stats stats) {
             // movies (count, in watchlist, runtime of watchlist)
             final Cursor movies = resolver.query(SeriesGuideContract.Movies.CONTENT_URI,
-                    new String[] { SeriesGuideContract.Movies._ID,
+                    new String[]{SeriesGuideContract.Movies._ID,
                             SeriesGuideContract.Movies.IN_WATCHLIST,
-                            SeriesGuideContract.Movies.RUNTIME_MIN }, null, null, null
+                            SeriesGuideContract.Movies.RUNTIME_MIN}, null, null, null
             );
             if (movies == null) {
                 return false;
@@ -159,7 +159,7 @@ class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
         @Nullable
         private SparseIntArray processShows(ContentResolver resolver, Stats stats) {
             Cursor shows = resolver.query(Shows.CONTENT_URI,
-                    new String[] {
+                    new String[]{
                             Shows._ID, // 0
                             Shows.STATUS,
                             Shows.NEXTEPISODE,
@@ -189,9 +189,9 @@ class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
             }
             shows.close();
 
-            stats.shows(showsCount)
-                    .showsContinuing(continuing)
-                    .showsWithNextEpisodes(withnext);
+            stats.shows = showsCount;
+            stats.showsContinuing = continuing;
+            stats.showsWithNextEpisodes = withnext;
             return showRuntimes;
         }
 
@@ -203,7 +203,7 @@ class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
             if (allEpisodesCount == -1) {
                 return false;
             }
-            stats.episodes(allEpisodesCount);
+            stats.episodes = allEpisodesCount;
 
             // watched episodes
             int watchedEpisodesCount = DBUtils.getCountOf(resolver, Episodes.CONTENT_URI,
@@ -213,7 +213,7 @@ class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
             if (watchedEpisodesCount == -1) {
                 return false;
             }
-            stats.episodesWatched(watchedEpisodesCount);
+            stats.episodesWatched = watchedEpisodesCount;
 
             return true;
         }
@@ -231,70 +231,16 @@ class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
         }
     }
 
+    // class is package-private so direct member access is fine
     static class Stats {
-        private int shows;
-        private int showsContinuing;
-        private int showsWithNext;
-        private int episodes;
-        private int episodesWatched;
-        private long episodesWatchedRuntime;
-        public int movies;
-        public int moviesWatchlist;
-        public long moviesWatchlistRuntime;
-
-        public int shows() {
-            return shows;
-        }
-
-        public Stats shows(int number) {
-            shows = number;
-            return this;
-        }
-
-        public int showsWithNextEpisodes() {
-            return showsWithNext;
-        }
-
-        public Stats showsWithNextEpisodes(int number) {
-            showsWithNext = number;
-            return this;
-        }
-
-        public int showsContinuing() {
-            return showsContinuing;
-        }
-
-        public Stats showsContinuing(int number) {
-            showsContinuing = number;
-            return this;
-        }
-
-        public int episodes() {
-            return episodes;
-        }
-
-        public Stats episodes(int number) {
-            episodes = number;
-            return this;
-        }
-
-        public long episodesWatchedRuntime() {
-            return episodesWatchedRuntime;
-        }
-
-        public Stats episodesWatchedRuntime(long runtime) {
-            episodesWatchedRuntime = runtime;
-            return this;
-        }
-
-        public int episodesWatched() {
-            return episodesWatched;
-        }
-
-        public Stats episodesWatched(int number) {
-            episodesWatched = number;
-            return this;
-        }
+        int shows;
+        int showsContinuing;
+        int showsWithNextEpisodes;
+        int episodes;
+        int episodesWatched;
+        long episodesWatchedRuntime;
+        int movies;
+        int moviesWatchlist;
+        long moviesWatchlistRuntime;
     }
-
 }
