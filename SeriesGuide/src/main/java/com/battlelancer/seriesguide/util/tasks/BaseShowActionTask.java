@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.util.tasks;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.uwetrottmann.trakt5.entities.ShowIds;

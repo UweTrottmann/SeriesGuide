@@ -1,14 +1,10 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.traktapi;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationManagerCompat;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.GenericCheckInDialogFragment;
-import com.battlelancer.seriesguide.util.TraktTask;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 

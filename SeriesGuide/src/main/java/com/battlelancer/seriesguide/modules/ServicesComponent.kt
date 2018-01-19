@@ -9,10 +9,10 @@ import com.battlelancer.seriesguide.ui.search.TvdbAddLoader
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools
 import com.battlelancer.seriesguide.ui.search.AddShowTask
-import com.battlelancer.seriesguide.util.ConnectTraktTask
+import com.battlelancer.seriesguide.traktapi.ConnectTraktTask
 import com.battlelancer.seriesguide.ui.movies.MovieTools
 import com.battlelancer.seriesguide.ui.shows.ShowTools
-import com.battlelancer.seriesguide.util.TraktRatingsTask
+import com.battlelancer.seriesguide.traktapi.TraktRatingsTask
 import com.uwetrottmann.thetvdb.services.TheTvdbEpisodes
 import com.uwetrottmann.tmdb2.services.MoviesService
 import com.uwetrottmann.tmdb2.services.PeopleService

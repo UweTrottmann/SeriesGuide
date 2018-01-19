@@ -1,17 +1,15 @@
-package com.battlelancer.seriesguide.ui.movies;
+package com.battlelancer.seriesguide.traktapi;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import com.battlelancer.seriesguide.ui.dialogs.GenericCheckInDialogFragment;
-import com.battlelancer.seriesguide.util.TraktTask;
 
 /**
  * Allows to check into movies on trakt or GetGlue. Launching activities should subscribe to {@link
- * com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent} to display status toasts.
+ * TraktTask.TraktActionCompleteEvent} to display status toasts.
  */
 public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
 
-    static MovieCheckInDialogFragment newInstance(int movieTmdbId, String movieTitle) {
+    public static MovieCheckInDialogFragment newInstance(int movieTmdbId, String movieTitle) {
         MovieCheckInDialogFragment f = new MovieCheckInDialogFragment();
 
         Bundle args = new Bundle();

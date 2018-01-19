@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.settings;
+package com.battlelancer.seriesguide.traktapi;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -14,9 +14,8 @@ import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.AccessToken;
@@ -63,7 +62,7 @@ public class TraktCredentials {
      * Removes the current trakt access token (but not the username), so {@link #hasCredentials()}
      * will return {@code false}, and shows a notification asking the user to re-connect.
      */
-    public synchronized void setCredentialsInvalid() {
+    synchronized void setCredentialsInvalid() {
         if (!hasCredentials) {
             // already invalidated credentials
             return;
@@ -106,7 +105,7 @@ public class TraktCredentials {
     /**
      * Removes the username and access token.
      */
-    public synchronized void removeCredentials() {
+    synchronized void removeCredentials() {
         removeAccessToken();
         setUsername(null);
     }
@@ -122,7 +121,7 @@ public class TraktCredentials {
      * Get the optional display name.
      */
     @Nullable
-    public String getDisplayName() {
+    String getDisplayName() {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(KEY_DISPLAYNAME, null);
     }
@@ -154,8 +153,7 @@ public class TraktCredentials {
     /**
      * Stores the given user name and display name.
      */
-    public synchronized boolean storeUsername(@NonNull String username,
-            @Nullable String displayname) {
+    synchronized boolean storeUsername(@NonNull String username, @Nullable String displayname) {
         if (TextUtils.isEmpty(username)) {
             throw new IllegalArgumentException("Username is null or empty.");
         }

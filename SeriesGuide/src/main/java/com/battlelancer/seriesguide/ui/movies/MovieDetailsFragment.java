@@ -47,13 +47,14 @@ import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.extensions.MovieActionsContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
+import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
 import com.battlelancer.seriesguide.ui.people.MovieCreditsLoader;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper;
@@ -62,7 +63,7 @@ import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TmdbTools;
-import com.battlelancer.seriesguide.util.TraktTools;
+import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -555,7 +556,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                             paletteAsyncTask = Palette.from(bitmap)
                                     .generate(new Palette.PaletteAsyncListener() {
                                         @Override
-                                        public void onGenerated(Palette palette) {
+                                        public void onGenerated(@NonNull Palette palette) {
                                             int color = palette.getVibrantColor(Color.WHITE);
                                             color = ColorUtils.setAlphaComponent(color, 50);
                                             rootLayoutMovie.setBackgroundColor(color);

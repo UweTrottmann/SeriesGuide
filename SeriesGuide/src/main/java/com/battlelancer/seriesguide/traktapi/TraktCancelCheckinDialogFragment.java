@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.dialogs;
+package com.battlelancer.seriesguide.traktapi;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -14,11 +14,7 @@ import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
+import com.battlelancer.seriesguide.traktapi.TraktTask.InitBundle;
 import com.uwetrottmann.trakt5.services.Checkin;
 import java.io.IOException;
 import org.greenrobot.eventbus.EventBus;
@@ -34,7 +30,7 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
     /**
      * @param waitInMinutes The time to wait. If negative, will show as no time available.
      */
-    public static TraktCancelCheckinDialogFragment newInstance(Bundle traktTaskData,
+    static TraktCancelCheckinDialogFragment newInstance(Bundle traktTaskData,
             int waitInMinutes) {
         TraktCancelCheckinDialogFragment f = new TraktCancelCheckinDialogFragment();
         f.setArguments(traktTaskData);

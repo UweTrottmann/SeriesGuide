@@ -18,7 +18,7 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.search.AddShowTask;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.traktapi.TraktTask;
 import com.battlelancer.seriesguide.ui.shows.FirstRunView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.dialogs;
+package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -7,11 +7,10 @@ import android.os.Bundle;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.util.TextTools;
-import com.battlelancer.seriesguide.util.TraktTask;
 
 /**
  * Allows to check into an episode on trakt, into a show on GetGlue. Launching activities should
- * subscribe to {@link com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent} to
+ * subscribe to {@link TraktTask.TraktActionCompleteEvent} to
  * display status toasts.
  */
 public class CheckInDialogFragment extends GenericCheckInDialogFragment {

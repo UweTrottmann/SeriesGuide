@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.settings;
+package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,7 +16,7 @@ public class TraktOAuthSettings {
      * Returns the refresh token or {@code null} if there is none.
      */
     @Nullable
-    public static String getRefreshToken(Context context) {
+    static String getRefreshToken(Context context) {
         return getSettings(context).getString(KEY_REFRESH_TOKEN, null);
     }
 

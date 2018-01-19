@@ -1,4 +1,6 @@
-package com.battlelancer.seriesguide.enums;
+package com.battlelancer.seriesguide.traktapi;
+
+import com.battlelancer.seriesguide.enums.NetworkResult;
 
 /**
  * Adds trakt API related error codes.

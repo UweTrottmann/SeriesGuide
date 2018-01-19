@@ -1,7 +1,8 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
@@ -15,9 +16,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.SyncProgress;
-import com.battlelancer.seriesguide.traktapi.TraktAuthActivity;
+import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.widgets.FeatureStatusView;
 import com.battlelancer.seriesguide.widgets.SyncStatusView;
 import org.greenrobot.eventbus.EventBus;
@@ -42,7 +42,7 @@ public class ConnectTraktCredentialsFragment extends Fragment {
     private Unbinder unbinder;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_connect_trakt_credentials, container, false);
         unbinder = ButterKnife.bind(this, view);

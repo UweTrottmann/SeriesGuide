@@ -1,11 +1,12 @@
 
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.traktapi;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.BaseActivity;
 
 /**
  * Shows a {@link ConnectTraktCredentialsFragment}.

@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.movies.MoviesCollectionFragment;
 import com.battlelancer.seriesguide.ui.movies.MoviesDiscoverFragment;
 import com.battlelancer.seriesguide.ui.movies.MoviesNowFragment;

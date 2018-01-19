@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.dialogs;
+package com.battlelancer.seriesguide.traktapi;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -16,8 +16,6 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.util.TraktTools;
 import com.battlelancer.seriesguide.util.tasks.BaseRateItemTask;
 import com.battlelancer.seriesguide.util.tasks.RateEpisodeTask;
 import com.battlelancer.seriesguide.util.tasks.RateMovieTask;

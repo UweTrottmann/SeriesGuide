@@ -3,8 +3,6 @@ package com.battlelancer.seriesguide.traktapi;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.BuildConfig;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.TraktError;
@@ -15,7 +13,7 @@ import retrofit2.Response;
 
 /**
  * Extends {@link TraktV2} to use our own caching OkHttp client and {@link
- * com.battlelancer.seriesguide.settings.TraktCredentials} to store user credentials.
+ * TraktCredentials} to store user credentials.
  */
 public class SgTrakt extends TraktV2 {
 

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -8,10 +8,6 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.CheckinError;
@@ -139,7 +135,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     /**
      * Initial constructor. Call <b>one</b> of the setup-methods like {@link #commentEpisode(int,
      * String, boolean)} afterwards.<br> <br> Make sure the user has valid trakt credentials (check
-     * with {@link com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()} and then
+     * with {@link TraktCredentials#hasCredentials()} and then
      * possibly launch {@link ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context) {
@@ -149,7 +145,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     /**
      * Fast constructor, allows passing of an already pre-built {@code args} {@link Bundle}.<br>
      * <br> Make sure the user has valid trakt credentials (check with {@link
-     * com.battlelancer.seriesguide.settings.TraktCredentials#hasCredentials()} and then possibly
+     * TraktCredentials#hasCredentials()} and then possibly
      * launch {@link ConnectTraktActivity}) or execution will fail.
      */
     public TraktTask(Context context, Bundle args) {

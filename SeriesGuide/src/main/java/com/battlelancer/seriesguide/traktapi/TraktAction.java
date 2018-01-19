@@ -1,7 +1,5 @@
 
-package com.battlelancer.seriesguide.enums;
-
-import com.battlelancer.seriesguide.util.TraktTask;
+package com.battlelancer.seriesguide.traktapi;
 
 /**
  * The trakt action to be performed by {@link TraktTask}.

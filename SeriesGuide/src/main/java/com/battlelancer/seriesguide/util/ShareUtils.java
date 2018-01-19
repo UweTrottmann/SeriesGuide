@@ -11,6 +11,7 @@ import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.traktapi.TraktTools;
 
 /**
  * Contains various ways to share something about an episode (android share intent, trakt, calendar

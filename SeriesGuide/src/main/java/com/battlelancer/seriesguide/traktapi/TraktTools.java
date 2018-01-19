@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.traktapi;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.uwetrottmann.trakt5.TraktLink;
 import com.uwetrottmann.trakt5.entities.BaseEpisode;
 import com.uwetrottmann.trakt5.entities.BaseSeason;
@@ -151,15 +150,5 @@ public class TraktTools {
             default:
                 return 0;
         }
-    }
-
-    public interface EpisodesQuery {
-
-        String[] PROJECTION = new String[] {
-                SeriesGuideContract.Episodes.SEASON, SeriesGuideContract.Episodes.NUMBER
-        };
-
-        int SEASON = 0;
-        int EPISODE = 1;
     }
 }

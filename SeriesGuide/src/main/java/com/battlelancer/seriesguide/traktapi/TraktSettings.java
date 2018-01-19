@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.settings;
+package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Context;
 import android.preference.PreferenceManager;

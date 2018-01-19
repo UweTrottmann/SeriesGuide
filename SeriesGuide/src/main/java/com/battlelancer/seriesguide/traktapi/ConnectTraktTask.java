@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.traktapi;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,13 +8,8 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.enums.Result;
-import com.battlelancer.seriesguide.enums.TraktResult;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
-import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.AccessToken;
@@ -31,13 +26,13 @@ import retrofit2.Response;
  */
 public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
-    public class FinishedEvent {
+    class FinishedEvent {
         /**
          * One of {@link com.battlelancer.seriesguide.enums.NetworkResult}.
          */
         public int resultCode;
 
-        public FinishedEvent(int resultCode) {
+        FinishedEvent(int resultCode) {
             this.resultCode = resultCode;
         }
     }
@@ -47,7 +42,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
     @Inject TraktV2 trakt;
     @Inject Users traktUsers;
 
-    public ConnectTraktTask(Context context) {
+    ConnectTraktTask(Context context) {
         this.context = context.getApplicationContext();
         SgApp.getServicesComponent(context).inject(this);
     }

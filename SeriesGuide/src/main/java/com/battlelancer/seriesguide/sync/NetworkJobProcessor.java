@@ -23,7 +23,7 @@ import com.battlelancer.seriesguide.jobs.TraktMovieJob;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.nio.ByteBuffer;
