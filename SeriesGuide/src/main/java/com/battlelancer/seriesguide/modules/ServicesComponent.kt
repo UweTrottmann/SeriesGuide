@@ -3,12 +3,12 @@ package com.battlelancer.seriesguide.modules
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader
 import com.battlelancer.seriesguide.ui.movies.TmdbMoviesLoader
-import com.battlelancer.seriesguide.loaders.TraktAddLoader
+import com.battlelancer.seriesguide.ui.search.TraktAddLoader
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsLoader
-import com.battlelancer.seriesguide.loaders.TvdbAddLoader
+import com.battlelancer.seriesguide.ui.search.TvdbAddLoader
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools
-import com.battlelancer.seriesguide.util.AddShowTask
+import com.battlelancer.seriesguide.ui.search.AddShowTask
 import com.battlelancer.seriesguide.util.ConnectTraktTask
 import com.battlelancer.seriesguide.ui.movies.MovieTools
 import com.battlelancer.seriesguide.ui.shows.ShowTools

@@ -1,8 +1,9 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.search;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -16,8 +17,7 @@ import android.widget.PopupMenu;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.loaders.TraktAddLoader;
+import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.widgets.EmptyView;
@@ -62,7 +62,7 @@ public class TraktAddFragment extends AddFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_addshow_trakt, container, false);
         unbinder = ButterKnife.bind(this, v);
@@ -95,7 +95,7 @@ public class TraktAddFragment extends AddFragment {
 
         @Override
         public void onAddClick(SearchResult item) {
-            EventBus.getDefault().post(new OnAddingShowEvent(item.tvdbid));
+            EventBus.getDefault().post(new OnAddingShowEvent(item.getTvdbid()));
             TaskManager.getInstance().performAddTask(getContext(), item);
         }
 
@@ -157,9 +157,9 @@ public class TraktAddFragment extends AddFragment {
                 List<SearchResult> showsToAdd = new LinkedList<>();
                 // only include shows not already added
                 for (SearchResult result : searchResults) {
-                    if (result.state == SearchResult.STATE_ADD) {
+                    if (result.getState() == SearchResult.STATE_ADD) {
                         showsToAdd.add(result);
-                        result.state = SearchResult.STATE_ADDING;
+                        result.setState(SearchResult.STATE_ADDING);
                     }
                 }
                 EventBus.getDefault().post(new OnAddingShowEvent());

@@ -6,9 +6,9 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.ui.BaseActivity;
-import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
+import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import timber.log.Timber;
 

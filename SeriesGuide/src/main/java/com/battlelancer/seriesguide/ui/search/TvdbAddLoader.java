@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.search;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,7 +8,6 @@ import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
@@ -29,14 +28,14 @@ import timber.log.Timber;
 
 public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
 
-    public static class Result {
+    static class Result {
         @NonNull
         public List<SearchResult> results;
         public String emptyText;
         /** Whether the network call completed. Does not mean there are any results. */
         public boolean successful;
 
-        public Result(@NonNull List<SearchResult> results, String emptyText, boolean successful) {
+        Result(@NonNull List<SearchResult> results, String emptyText, boolean successful) {
             this.results = results;
             this.emptyText = emptyText;
             this.successful = successful;
@@ -56,7 +55,7 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
      *
      * @param language If not provided, will search for results in all languages.
      */
-    public TvdbAddLoader(Context context, @Nullable String query, @Nullable String language) {
+    TvdbAddLoader(Context context, @Nullable String query, @Nullable String language) {
         super(context);
         this.context = context;
         this.query = query;
@@ -146,13 +145,14 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
         }
 
         for (SearchResult result : results) {
-            result.overview = String.format("(%s) %s", result.language, result.overview);
+            result.setOverview(
+                    String.format("(%s) %s", result.getLanguage(), result.getOverview()));
 
-            if (existingPosterPaths.indexOfKey(result.tvdbid) >= 0) {
+            if (existingPosterPaths.indexOfKey(result.getTvdbid()) >= 0) {
                 // is already in local database
-                result.state = SearchResult.STATE_ADDED;
+                result.setState(SearchResult.STATE_ADDED);
                 // use the poster we fetched for it (or null if there is none)
-                result.posterPath = existingPosterPaths.get(result.tvdbid);
+                result.setPosterPath(existingPosterPaths.get(result.getTvdbid()));
             }
         }
     }

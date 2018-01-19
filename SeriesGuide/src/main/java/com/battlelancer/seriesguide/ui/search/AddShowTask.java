@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.ui.search;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -9,13 +9,15 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.TraktTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.services.Sync;
@@ -144,7 +146,7 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
         if (!AndroidUtils.isNetworkConnected(context)) {
             Timber.d("Finished. No internet connection.");
             SearchResult nextShow = addQueue.peek();
-            publishProgress(RESULT_OFFLINE, nextShow.tvdbid, nextShow.title);
+            publishProgress(RESULT_OFFLINE, nextShow.getTvdbid(), nextShow.getTitle());
             return null;
         }
 
@@ -188,8 +190,8 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
 
             SearchResult nextShow = addQueue.removeFirst();
             // set values required for progress update
-            String currentShowName = nextShow.title;
-            int currentShowTvdbId = nextShow.tvdbid;
+            String currentShowName = nextShow.getTitle();
+            int currentShowTvdbId = nextShow.getTvdbid();
 
             if (!AndroidUtils.isNetworkConnected(context)) {
                 Timber.d("Finished. No connection.");
@@ -200,8 +202,8 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
 
             try {
                 boolean addedShow = tvdbTools
-                        .addShow(nextShow.tvdbid, nextShow.language, traktCollection, traktWatched,
-                                hexagonEpisodeSync);
+                        .addShow(nextShow.getTvdbid(), nextShow.getLanguage(), traktCollection,
+                                traktWatched, hexagonEpisodeSync);
                 result = addedShow ? PROGRESS_SUCCESS : PROGRESS_EXISTS;
                 addedAtLeastOneShow = addedShow
                         || addedAtLeastOneShow; // do not overwrite previous success
@@ -285,7 +287,8 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
                 break;
             case PROGRESS_ERROR_TVDB:
                 event = OnShowAddedEvent.failedDetails(context, currentShowTvdbId, currentShowName,
-                        context.getString(R.string.api_error_generic, context.getString(R.string.tvdb)));
+                        context.getString(R.string.api_error_generic,
+                                context.getString(R.string.tvdb)));
                 break;
             case PROGRESS_ERROR_TVDB_NOT_EXISTS:
                 event = OnShowAddedEvent.failedDetails(context, currentShowTvdbId, currentShowName,
@@ -293,11 +296,13 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
                 break;
             case PROGRESS_ERROR_TRAKT:
                 event = OnShowAddedEvent.failedDetails(context, currentShowTvdbId, currentShowName,
-                        context.getString(R.string.api_error_generic, context.getString(R.string.trakt)));
+                        context.getString(R.string.api_error_generic,
+                                context.getString(R.string.trakt)));
                 break;
             case PROGRESS_ERROR_HEXAGON:
                 event = OnShowAddedEvent.failedDetails(context, currentShowTvdbId, currentShowName,
-                        context.getString(R.string.api_error_generic, context.getString(R.string.hexagon)));
+                        context.getString(R.string.api_error_generic,
+                                context.getString(R.string.hexagon)));
                 break;
             case PROGRESS_ERROR_DATA:
                 event = OnShowAddedEvent.failedDetails(context, currentShowTvdbId, currentShowName,
@@ -311,7 +316,8 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
                         context.getString(R.string.trakt)));
                 break;
             case RESULT_TRAKT_AUTH_ERROR:
-                event = OnShowAddedEvent.aborted(context.getString(R.string.trakt_error_credentials));
+                event = OnShowAddedEvent
+                        .aborted(context.getString(R.string.trakt_error_credentials));
                 break;
         }
 

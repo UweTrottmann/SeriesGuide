@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.search;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -21,13 +21,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
-import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
-import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
-import com.battlelancer.seriesguide.util.AddShowTask;
+import com.battlelancer.seriesguide.ui.OverviewActivity;
+import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;
-import com.battlelancer.seriesguide.widgets.AddIndicator;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.List;
@@ -40,18 +38,18 @@ import org.greenrobot.eventbus.ThreadMode;
  */
 public abstract class AddFragment extends Fragment {
 
-    public static class OnAddingShowEvent {
+    static class OnAddingShowEvent {
         /** Is -1 if adding all shows of a tab. Not updating other tabs then. */
         public final int showTvdbId;
 
-        public OnAddingShowEvent(int showTvdbId) {
+        OnAddingShowEvent(int showTvdbId) {
             this.showTvdbId = showTvdbId;
         }
 
         /**
          * Sets TVDB id to -1 to indicate all shows of a tab are added.
          */
-        public OnAddingShowEvent() {
+        OnAddingShowEvent() {
             this(-1);
         }
     }
@@ -69,11 +67,11 @@ public abstract class AddFragment extends Fragment {
      * butterknife.ButterKnife}.
      */
     @Override
-    public abstract View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState);
+    public abstract View onCreateView(@NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container, @Nullable Bundle savedInstanceState);
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         setupEmptyView(emptyView);
@@ -114,7 +112,7 @@ public abstract class AddFragment extends Fragment {
     /**
      * Changes the empty message.
      */
-    public void setEmptyMessage(CharSequence message) {
+    protected void setEmptyMessage(CharSequence message) {
         emptyView.setMessage(message);
     }
 
@@ -128,7 +126,7 @@ public abstract class AddFragment extends Fragment {
     /**
      * Hides the content container and shows a progress bar.
      */
-    public void setProgressVisible(boolean visible, boolean animate) {
+    protected void setProgressVisible(boolean visible, boolean animate) {
         if (animate) {
             Animation out = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out);
             Animation in = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in);
@@ -144,10 +142,10 @@ public abstract class AddFragment extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             SearchResult show = adapter.getItem(position);
-            if (show != null && show.state != SearchResult.STATE_ADDING) {
-                if (show.state == SearchResult.STATE_ADDED) {
+            if (show != null && show.getState() != SearchResult.STATE_ADDING) {
+                if (show.getState() == SearchResult.STATE_ADDED) {
                     // already in library, open it
-                    startActivity(OverviewActivity.intentShow(getContext(), show.tvdbid));
+                    startActivity(OverviewActivity.intentShow(getContext(), show.getTvdbid()));
                 } else {
                     // guard against onClick called after fragment is paged away (multi-touch)
                     // onSaveInstanceState might already be called
@@ -238,7 +236,7 @@ public abstract class AddFragment extends Fragment {
             int count = getCount();
             for (int i = 0; i < count; i++) {
                 SearchResult item = getItem(i);
-                if (item != null && item.tvdbid == showTvdbId) {
+                if (item != null && item.getTvdbid() == showTvdbId) {
                     return item;
                 }
             }
@@ -248,7 +246,7 @@ public abstract class AddFragment extends Fragment {
         public void setStateForTvdbId(int showTvdbId, int state) {
             SearchResult item = getItemForShowTvdbId(showTvdbId);
             if (item != null) {
-                item.state = state;
+                item.setState(state);
                 notifyDataSetChanged();
             }
         }
@@ -257,8 +255,8 @@ public abstract class AddFragment extends Fragment {
             int count = getCount();
             for (int i = 0; i < count; i++) {
                 SearchResult item = getItem(i);
-                if (item != null && item.state == SearchResult.STATE_ADDING) {
-                    item.state = SearchResult.STATE_ADD;
+                if (item != null && item.getState() == SearchResult.STATE_ADDING) {
+                    item.setState(SearchResult.STATE_ADD);
                 }
             }
             notifyDataSetChanged();
@@ -286,23 +284,24 @@ public abstract class AddFragment extends Fragment {
 
             // hide watchlist menu if not useful
             boolean showMenuWatchlistActual = showMenuWatchlist
-                    && (!hideMenuWatchlistIfAdded || item.state != SearchResult.STATE_ADDED);
+                    && (!hideMenuWatchlistIfAdded || item.getState() != SearchResult.STATE_ADDED);
             holder.buttonContextMenu.setVisibility(showMenuWatchlistActual
                     ? View.VISIBLE : View.GONE);
             // display added indicator instead of add button if already added that show
-            holder.addIndicator.setState(item.state);
-            String showTitle = item.title;
+            holder.addIndicator.setState(item.getState());
+            String showTitle = item.getTitle();
             holder.addIndicator.setContentDescriptionAdded(
                     getContext().getString(R.string.add_already_exists, showTitle));
 
             // set text properties immediately
             holder.title.setText(showTitle);
-            holder.description.setText(item.overview);
+            holder.description.setText(item.getOverview());
 
             // only local shows will have a poster path set
             // try to fall back to the first uploaded TVDB poster for all others
-            String posterUrl = TvdbImageTools.smallSizeOrResolveUrl(item.posterPath, item.tvdbid,
-                    item.language);
+            String posterUrl = TvdbImageTools.smallSizeOrResolveUrl(item.getPosterPath(),
+                    item.getTvdbid(),
+                    item.getLanguage());
             TvdbImageTools.loadUrlResizeCrop(getContext(), holder.poster, posterUrl);
 
             return convertView;
@@ -333,7 +332,7 @@ public abstract class AddFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         if (onItemClickListener != null) {
-                            onItemClickListener.onMenuWatchlistClick(v, item.tvdbid);
+                            onItemClickListener.onMenuWatchlistClick(v, item.getTvdbid());
                         }
                     }
                 });

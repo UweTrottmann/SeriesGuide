@@ -32,7 +32,7 @@ import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.streams.HistoryActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
+import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.ViewTools;

@@ -15,7 +15,7 @@ import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.util.AddShowTask;
+import com.battlelancer.seriesguide.ui.search.AddShowTask;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTask;

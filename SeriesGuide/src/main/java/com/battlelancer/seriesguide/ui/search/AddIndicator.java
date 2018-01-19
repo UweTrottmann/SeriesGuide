@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.widgets;
+package com.battlelancer.seriesguide.ui.search;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -9,7 +9,6 @@ import android.widget.ProgressBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.items.SearchResult;
 
 public class AddIndicator extends FrameLayout {
 

@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.UpdateSettings;

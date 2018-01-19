@@ -29,6 +29,7 @@ import com.battlelancer.seriesguide.ui.dialogs.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.ui.overview.OverviewFragment;
 import com.battlelancer.seriesguide.ui.overview.SeasonsFragment;
 import com.battlelancer.seriesguide.ui.overview.ShowFragment;
+import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;

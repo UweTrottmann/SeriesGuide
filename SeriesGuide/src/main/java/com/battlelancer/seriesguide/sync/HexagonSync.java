@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.preference.PreferenceManager;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.ListsActivity;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;

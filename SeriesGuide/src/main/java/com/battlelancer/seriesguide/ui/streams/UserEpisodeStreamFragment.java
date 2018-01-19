@@ -7,7 +7,7 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
+import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 
 /**

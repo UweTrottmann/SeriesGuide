@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.search;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -11,10 +11,10 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.AdapterView;
-import com.battlelancer.seriesguide.adapters.EpisodeResultsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.Utils;
@@ -28,7 +28,7 @@ public class EpisodeSearchFragment extends BaseSearchFragment {
 
     private EpisodeResultsAdapter adapter;
 
-    interface InitBundle {
+    public interface InitBundle {
         /** Set to pre-filter search results by show title. */
         String SHOW_TITLE = "title";
     }
@@ -69,7 +69,7 @@ public class EpisodeSearchFragment extends BaseSearchFragment {
         }
     }
 
-    public void search(Bundle args) {
+    private void search(Bundle args) {
         getLoaderManager().restartLoader(SearchActivity.EPISODES_LOADER_ID, args,
                 searchLoaderCallbacks);
     }

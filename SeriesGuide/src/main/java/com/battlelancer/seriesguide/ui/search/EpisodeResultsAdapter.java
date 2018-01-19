@@ -1,5 +1,5 @@
 
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.search;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -22,11 +22,11 @@ import com.battlelancer.seriesguide.util.ViewTools;
 
 /**
  * {@link CursorAdapter} displaying episode search results inside the {@link
- * com.battlelancer.seriesguide.ui.EpisodeSearchFragment}.
+ * EpisodeSearchFragment}.
  */
-public class EpisodeResultsAdapter extends CursorAdapter {
+class EpisodeResultsAdapter extends CursorAdapter {
 
-    public EpisodeResultsAdapter(Context context) {
+    EpisodeResultsAdapter(Context context) {
         super(context, null, 0);
     }
 

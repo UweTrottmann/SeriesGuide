@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.dialogs;
+package com.battlelancer.seriesguide.ui.search;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -27,10 +27,7 @@ import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.loaders.TvdbShowLoader;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
-import com.battlelancer.seriesguide.ui.AddFragment;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
@@ -54,7 +51,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
     private static final String KEY_SHOW_LANGUAGE = "show_language";
 
     /**
-     * Display a {@link com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment} for the given
+     * Display a {@link AddShowDialogFragment} for the given
      * show.
      */
     public static void showAddDialog(SearchResult show, FragmentManager fm) {
@@ -74,18 +71,18 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
     }
 
     /**
-     * Display a {@link com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment} for the given
+     * Display a {@link AddShowDialogFragment} for the given
      * show.
      *
      * <p> Use if there is no actual search result, but just a TheTVDB id available.
      */
     public static void showAddDialog(int showTvdbId, FragmentManager fm) {
         SearchResult fakeResult = new SearchResult();
-        fakeResult.tvdbid = showTvdbId;
+        fakeResult.setTvdbid(showTvdbId);
         showAddDialog(fakeResult, fm);
     }
 
-    public static AddShowDialogFragment newInstance(SearchResult show) {
+    private static AddShowDialogFragment newInstance(SearchResult show) {
         AddShowDialogFragment f = new AddShowDialogFragment();
         Bundle args = new Bundle();
         args.putParcelable(InitBundle.SEARCH_RESULT, show);
@@ -149,7 +146,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         super.onCreate(savedInstanceState);
 
         displayedShow = getArguments().getParcelable(InitBundle.SEARCH_RESULT);
-        if (displayedShow == null || displayedShow.tvdbid <= 0) {
+        if (displayedShow == null || displayedShow.getTvdbid() <= 0) {
             // invalid TVDb id
             dismiss();
             return;
@@ -160,7 +157,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.dialog_addshow, container, false);
         unbinder = ButterKnife.bind(this, v);
@@ -190,8 +187,8 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
 
         // load show details
         Bundle args = new Bundle();
-        args.putInt(KEY_SHOW_TVDBID, displayedShow.tvdbid);
-        args.putString(KEY_SHOW_LANGUAGE, displayedShow.language);
+        args.putInt(KEY_SHOW_TVDBID, displayedShow.getTvdbid());
+        args.putString(KEY_SHOW_LANGUAGE, displayedShow.getLanguage());
         getLoaderManager().initLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args,
                 showLoaderCallbacks);
     }
@@ -249,7 +246,8 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
             buttonPositive.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(OverviewActivity.intentShow(getContext(), displayedShow.tvdbid));
+                    startActivity(OverviewActivity.intentShow(getContext(),
+                            displayedShow.getTvdbid()));
                     dismiss();
                 }
             });
@@ -260,7 +258,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
                 @Override
                 public void onClick(View v) {
                     EventBus.getDefault()
-                            .post(new AddFragment.OnAddingShowEvent(displayedShow.tvdbid));
+                            .post(new AddFragment.OnAddingShowEvent(displayedShow.getTvdbid()));
 
                     addShowListener.onAddShow(displayedShow);
                     dismiss();
@@ -270,7 +268,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         buttonPositive.setVisibility(View.VISIBLE);
 
         // store title for add task
-        displayedShow.title = show.title;
+        displayedShow.setTitle(show.title);
 
         // title, overview
         title.setText(show.title);

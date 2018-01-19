@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.search;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,9 +15,9 @@ import java.util.Date;
 /**
  * Adapter for show search result items.
  */
-public class ShowResultsAdapter extends BaseShowsAdapter {
+class ShowResultsAdapter extends BaseShowsAdapter {
 
-    public ShowResultsAdapter(Activity activity, OnItemClickListener listener) {
+    ShowResultsAdapter(Activity activity, OnItemClickListener listener) {
         super(activity, listener);
     }
 
@@ -56,7 +56,7 @@ public class ShowResultsAdapter extends BaseShowsAdapter {
         viewHolder.isHidden = DBUtils.restoreBooleanFromInt(cursor.getInt(Query.HIDDEN));
     }
 
-    public interface Query {
+    interface Query {
         String[] PROJECTION = new String[] {
                 SeriesGuideContract.Shows._ID, // 0
                 SeriesGuideContract.Shows.TITLE,

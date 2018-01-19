@@ -45,7 +45,7 @@
         app:srcCompat="@drawable/ic_more_vert_black_20dp"
         app:tint="?attr/sgColorIcon" />
 
-    <com.battlelancer.seriesguide.widgets.AddIndicator
+    <com.battlelancer.seriesguide.ui.search.AddIndicator
         android:id="@+id/addIndicatorAddShow"
         android:layout_width="48dp"
         android:layout_height="48dp"

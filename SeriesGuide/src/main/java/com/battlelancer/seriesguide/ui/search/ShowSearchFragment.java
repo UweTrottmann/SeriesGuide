@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.search;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -18,8 +18,10 @@ import android.widget.AdapterView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.ui.ListsActivity;
+import com.battlelancer.seriesguide.ui.OverviewActivity;
+import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter;
-import com.battlelancer.seriesguide.adapters.ShowResultsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.shows.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.TabClickEvent;

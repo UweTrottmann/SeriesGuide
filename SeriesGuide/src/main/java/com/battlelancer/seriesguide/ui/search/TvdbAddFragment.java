@@ -1,7 +1,8 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.search;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -17,10 +18,9 @@ import android.widget.PopupMenu;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.loaders.TvdbAddLoader;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.widgets.EmptyView;
@@ -57,7 +57,7 @@ public class TvdbAddFragment extends AddFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_addshow_tvdb, container, false);
         unbinder = ButterKnife.bind(this, v);
@@ -94,7 +94,7 @@ public class TvdbAddFragment extends AddFragment {
 
         @Override
         public void onAddClick(SearchResult item) {
-            EventBus.getDefault().post(new OnAddingShowEvent(item.tvdbid));
+            EventBus.getDefault().post(new OnAddingShowEvent(item.getTvdbid()));
             TaskManager.getInstance().performAddTask(getContext(), item);
         }
 
@@ -115,7 +115,7 @@ public class TvdbAddFragment extends AddFragment {
     };
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(KEY_QUERY, currentQuery);
     }

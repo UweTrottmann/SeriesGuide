@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.search;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,9 +8,7 @@ import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.ui.TraktAddFragment;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -51,7 +49,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
     @Inject Lazy<Sync> traktSync;
     private final int type;
 
-    public TraktAddLoader(Context context, int type) {
+    TraktAddLoader(Context context, int type) {
         super(context);
         this.type = type;
         SgApp.getServicesComponent(context).inject(this);
@@ -150,7 +148,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
      * Transforms a list of trakt shows to a list of {@link SearchResult}, marks shows already in
      * the local database as added.
      */
-    public static List<SearchResult> parseTraktShowsToSearchResults(Context context,
+    static List<SearchResult> parseTraktShowsToSearchResults(Context context,
             @NonNull List<Show> traktShows, @Nullable String overrideLanguage) {
         List<SearchResult> results = new ArrayList<>();
 
@@ -162,19 +160,19 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                 continue;
             }
             SearchResult result = new SearchResult();
-            result.tvdbid = show.ids.tvdb;
-            result.title = show.title;
+            result.setTvdbid(show.ids.tvdb);
+            result.setTitle(show.title);
             // search results return an overview, while trending and other lists do not
-            result.overview = !TextUtils.isEmpty(show.overview) ? show.overview
-                    : show.year != null ? String.valueOf(show.year) : "";
+            result.setOverview(!TextUtils.isEmpty(show.overview) ? show.overview
+                    : show.year != null ? String.valueOf(show.year) : "");
             if (existingPosterPaths != null && existingPosterPaths.indexOfKey(show.ids.tvdb) >= 0) {
                 // is already in local database
-                result.state = SearchResult.STATE_ADDED;
+                result.setState(SearchResult.STATE_ADDED);
                 // use the poster we fetched for it (or null if there is none)
-                result.posterPath = existingPosterPaths.get(show.ids.tvdb);
+                result.setPosterPath(existingPosterPaths.get(show.ids.tvdb));
             }
             if (overrideLanguage != null) {
-                result.language = overrideLanguage;
+                result.setLanguage(overrideLanguage);
             }
             results.add(result);
         }

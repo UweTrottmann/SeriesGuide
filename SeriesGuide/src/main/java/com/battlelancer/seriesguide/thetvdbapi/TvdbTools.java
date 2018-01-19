@@ -19,7 +19,7 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -256,10 +256,10 @@ public class TvdbTools {
         List<SearchResult> results = new ArrayList<>(tvdbResults.size());
         for (Series tvdbResult : tvdbResults) {
             SearchResult result = new SearchResult();
-            result.tvdbid = tvdbResult.id;
-            result.title = tvdbResult.seriesName;
-            result.overview = tvdbResult.overview;
-            result.language = language;
+            result.setTvdbid(tvdbResult.id);
+            result.setTitle(tvdbResult.seriesName);
+            result.setOverview(tvdbResult.overview);
+            result.setLanguage(language);
             results.add(result);
         }
         return results;
@@ -283,30 +283,30 @@ public class TvdbTools {
         item.setEndElementListener(new EndElementListener() {
             public void end() {
                 // only take results in the selected language
-                if (language == null || language.equals(currentShow.language)) {
+                if (language == null || language.equals(currentShow.getLanguage())) {
                     series.add(currentShow.copy());
                 }
             }
         });
         item.getChild("id").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.tvdbid = Integer.valueOf(body);
+                currentShow.setTvdbid(Integer.valueOf(body));
             }
         });
         item.getChild("language").setEndTextElementListener(new EndTextElementListener() {
             @Override
             public void end(String body) {
-                currentShow.language = body.trim();
+                currentShow.setLanguage(body.trim());
             }
         });
         item.getChild("SeriesName").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.title = body.trim();
+                currentShow.setTitle(body.trim());
             }
         });
         item.getChild("Overview").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.overview = body.trim();
+                currentShow.setOverview(body.trim());
             }
         });
 

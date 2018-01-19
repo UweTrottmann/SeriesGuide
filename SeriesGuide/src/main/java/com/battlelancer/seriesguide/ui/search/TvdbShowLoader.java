@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.search;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -15,9 +15,9 @@ import timber.log.Timber;
 /**
  * Loads show details from TVDb.
  */
-public class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
+class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
 
-    public static class Result {
+    static class Result {
         public Show show;
         public boolean isAdded;
         public boolean doesNotExist;
@@ -26,7 +26,7 @@ public class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
     private final int showTvdbId;
     private String language;
 
-    public TvdbShowLoader(Context context, int showTvdbId, @Nullable String language) {
+    TvdbShowLoader(Context context, int showTvdbId, @Nullable String language) {
         super(context);
         this.showTvdbId = showTvdbId;
         this.language = language;
