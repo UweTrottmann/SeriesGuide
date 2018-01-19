@@ -51,6 +51,7 @@ import com.battlelancer.seriesguide.loaders.MovieTrailersLoader;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;

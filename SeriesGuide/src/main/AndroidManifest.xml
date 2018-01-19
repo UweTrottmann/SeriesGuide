@@ -173,7 +173,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.battlelancer.seriesguide.ui.TraktCommentsActivity"
+            android:name="com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity"
             android:windowSoftInputMode="stateHidden" />
 
         <!-- Others -->

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.comments;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,7 +8,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.ui.TraktCommentsFragment;
 import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -48,7 +47,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
     @Inject Lazy<Movies> traktMovies;
     @Inject Lazy<Shows> traktShows;
 
-    public TraktCommentsLoader(Context context, Bundle args) {
+    TraktCommentsLoader(Context context, Bundle args) {
         super(context);
         this.args = args;
         SgApp.getServicesComponent(context).inject(this);

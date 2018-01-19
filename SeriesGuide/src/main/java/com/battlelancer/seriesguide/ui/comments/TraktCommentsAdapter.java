@@ -1,5 +1,5 @@
 
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.comments;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -19,13 +19,13 @@ import java.util.List;
 /**
  * Custom ArrayAdapter which binds {@link Comment} items to views using the ViewHolder pattern.
  */
-public class TraktCommentsAdapter extends ArrayAdapter<Comment> {
+class TraktCommentsAdapter extends ArrayAdapter<Comment> {
 
-    public TraktCommentsAdapter(Context context) {
+    TraktCommentsAdapter(Context context) {
         super(context, R.layout.item_comment);
     }
 
-    public void setData(List<Comment> data) {
+    void setData(List<Comment> data) {
         clear();
         if (data != null) {
             for (Comment item : data) {

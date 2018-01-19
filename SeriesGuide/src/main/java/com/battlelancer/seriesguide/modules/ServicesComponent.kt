@@ -4,7 +4,7 @@ import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.loaders.ShowCreditsLoader
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader
 import com.battlelancer.seriesguide.loaders.TraktAddLoader
-import com.battlelancer.seriesguide.loaders.TraktCommentsLoader
+import com.battlelancer.seriesguide.ui.comments.TraktCommentsLoader
 import com.battlelancer.seriesguide.loaders.TvdbAddLoader
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools

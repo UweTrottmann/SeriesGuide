@@ -55,7 +55,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.HelpActivity;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
-import com.battlelancer.seriesguide.ui.TraktCommentsActivity;
+import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;

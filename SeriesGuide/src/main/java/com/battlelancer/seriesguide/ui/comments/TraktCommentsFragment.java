@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.comments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,9 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.TraktCommentsAdapter;
 import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.loaders.TraktCommentsLoader;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
