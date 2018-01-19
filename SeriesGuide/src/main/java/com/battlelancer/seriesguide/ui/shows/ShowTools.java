@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
@@ -24,6 +24,8 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.sync.HexagonShowSync;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -440,7 +442,7 @@ public class ShowTools {
      * Decodes the show status and returns the localized text representation. May be {@code null} if
      * status is unknown.
      *
-     * @param encodedStatus Detection based on {@link com.battlelancer.seriesguide.util.ShowTools.Status}.
+     * @param encodedStatus Detection based on {@link ShowTools.Status}.
      */
     @Nullable
     public static String getStatus(@NonNull Context context, int encodedStatus) {
@@ -458,7 +460,7 @@ public class ShowTools {
      * Gets the show status from {@link #getStatus} and sets a status dependant text color on the
      * given view.
      *
-     * @param encodedStatus Detection based on {@link com.battlelancer.seriesguide.util.ShowTools.Status}.
+     * @param encodedStatus Detection based on {@link ShowTools.Status}.
      */
     public static void setStatusAndColor(@NonNull TextView view, int encodedStatus) {
         view.setText(getStatus(view.getContext(), encodedStatus));

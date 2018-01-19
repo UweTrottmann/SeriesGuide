@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v4.util.SparseArrayCompat;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
-import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import java.util.List;

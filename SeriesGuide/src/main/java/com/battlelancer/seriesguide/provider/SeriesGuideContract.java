@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -39,7 +40,7 @@ public class SeriesGuideContract {
         String CONTENTRATING = "contentrating";
 
         /**
-         * Show status. Encoded as integer. See {@link com.battlelancer.seriesguide.util.ShowTools.Status}.
+         * Show status. Encoded as integer. See {@link ShowTools.Status}.
          */
         String STATUS = "status";
 

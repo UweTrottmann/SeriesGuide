@@ -29,7 +29,7 @@ import com.battlelancer.seriesguide.sync.TraktEpisodeSync;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.LanguageTools;
-import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.thetvdb.entities.Series;

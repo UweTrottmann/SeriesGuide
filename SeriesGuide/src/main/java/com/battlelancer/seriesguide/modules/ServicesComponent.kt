@@ -11,7 +11,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbTools
 import com.battlelancer.seriesguide.util.AddShowTask
 import com.battlelancer.seriesguide.util.ConnectTraktTask
 import com.battlelancer.seriesguide.ui.movies.MovieTools
-import com.battlelancer.seriesguide.util.ShowTools
+import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.TraktRatingsTask
 import com.uwetrottmann.thetvdb.services.TheTvdbEpisodes
 import com.uwetrottmann.tmdb2.services.MoviesService

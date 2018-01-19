@@ -13,7 +13,7 @@ import com.battlelancer.seriesguide.settings.TraktSettings;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
-import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TraktTools;
 import com.uwetrottmann.trakt5.entities.BaseSeason;

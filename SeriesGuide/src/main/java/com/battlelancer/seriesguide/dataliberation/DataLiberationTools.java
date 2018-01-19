@@ -11,7 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.Utils;
 import java.io.File;
 
@@ -49,10 +49,10 @@ public class DataLiberationTools {
 
     /**
      * Transform a string representation of {@link com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport}
-     * to a {@link com.battlelancer.seriesguide.util.ShowTools.Status} to be stored in the
+     * to a {@link ShowTools.Status} to be stored in the
      * database.
      *
-     * <p>If neither continuing or ended will default to {@link com.battlelancer.seriesguide.util.ShowTools.Status#UNKNOWN}.
+     * <p>If neither continuing or ended will default to {@link ShowTools.Status#UNKNOWN}.
      */
     public static int encodeShowStatus(@Nullable String status) {
         if (status == null) {
@@ -69,11 +69,11 @@ public class DataLiberationTools {
     }
 
     /**
-     * Transform an int representation of {@link com.battlelancer.seriesguide.util.ShowTools.Status}
+     * Transform an int representation of {@link ShowTools.Status}
      * to a {@link com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport} to
      * be used for exporting data.
      *
-     * @param encodedStatus Detection based on {@link com.battlelancer.seriesguide.util.ShowTools.Status}.
+     * @param encodedStatus Detection based on {@link ShowTools.Status}.
      */
     public static String decodeShowStatus(int encodedStatus) {
         switch (encodedStatus) {
