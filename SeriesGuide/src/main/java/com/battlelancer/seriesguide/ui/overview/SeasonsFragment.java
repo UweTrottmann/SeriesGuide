@@ -45,7 +45,7 @@ import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import java.lang.ref.WeakReference;

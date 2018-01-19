@@ -6,7 +6,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
-import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.ViewTools;
 
 /**

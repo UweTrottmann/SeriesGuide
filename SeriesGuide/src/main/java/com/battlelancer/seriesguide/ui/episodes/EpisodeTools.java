@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.ui.episodes;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob;
 import com.battlelancer.seriesguide.jobs.episodes.ShowCollectedJob;
 import com.battlelancer.seriesguide.jobs.episodes.ShowWatchedJob;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.util.TimeTools;
 
 public class EpisodeTools {
 

@@ -10,7 +10,7 @@ import com.battlelancer.seriesguide.modules.ServicesComponent;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.ShowIds;

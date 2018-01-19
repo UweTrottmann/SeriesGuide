@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.EpisodeSearchQuery;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
-import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.ViewTools;
 

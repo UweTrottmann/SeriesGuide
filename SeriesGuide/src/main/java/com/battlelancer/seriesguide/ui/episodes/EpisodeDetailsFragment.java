@@ -51,7 +51,6 @@ import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
-import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;

@@ -45,7 +45,7 @@ import com.battlelancer.seriesguide.ui.shows.ShowsFragment;
 import com.battlelancer.seriesguide.ui.shows.ShowsNowFragment;
 import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;

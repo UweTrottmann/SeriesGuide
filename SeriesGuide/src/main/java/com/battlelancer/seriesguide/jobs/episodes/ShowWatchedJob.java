@@ -6,7 +6,7 @@ import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 
 public class ShowWatchedJob extends ShowBaseJob {
 
