@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.streams;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * A sectioned {@link HistoryEntry} adapter, grouping watched items by day.
  */
-public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry> implements
+abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry> implements
         StickyGridHeadersBaseAdapter {
 
     public interface OnItemClickListener {
@@ -40,8 +40,7 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
     private List<HeaderData> headers;
     private Calendar calendar;
 
-    public SectionedHistoryAdapter(@NonNull Context context,
-            OnItemClickListener itemClickListener) {
+    SectionedHistoryAdapter(@NonNull Context context, OnItemClickListener itemClickListener) {
         super(context, 0);
         this.itemClickListener = itemClickListener;
         calendar = Calendar.getInstance();
@@ -53,18 +52,18 @@ public abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry>
                 R.drawable.ic_checkin_black_16dp);
     }
 
-    public void setData(List<HistoryEntry> data) {
+    void setData(List<HistoryEntry> data) {
         clear();
         if (data != null) {
             addAll(data);
         }
     }
 
-    public VectorDrawableCompat getDrawableWatched() {
+    private VectorDrawableCompat getDrawableWatched() {
         return drawableWatched;
     }
 
-    public VectorDrawableCompat getDrawableCheckin() {
+    private VectorDrawableCompat getDrawableCheckin() {
         return drawableCheckin;
     }
 

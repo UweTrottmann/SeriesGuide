@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.streams;
 
 import android.content.Context;
 import android.text.format.DateUtils;
@@ -8,9 +8,9 @@ import com.uwetrottmann.trakt5.entities.HistoryEntry;
 /**
  * Creates a list of movies from a list of {@link HistoryEntry}.
  */
-public class MovieHistoryAdapter extends SectionedHistoryAdapter {
+class MovieHistoryAdapter extends SectionedHistoryAdapter {
 
-    public MovieHistoryAdapter(Context context, OnItemClickListener itemClickListener) {
+    MovieHistoryAdapter(Context context, OnItemClickListener itemClickListener) {
         super(context, itemClickListener);
     }
 

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.streams;
 
 import android.content.Context;
 import android.support.v4.util.SparseArrayCompat;
@@ -12,16 +12,16 @@ import java.util.List;
 /**
  * Creates a list of episodes from a list of trakt {@link HistoryEntry} objects.
  */
-public class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
+class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
 
     private SparseArrayCompat<String> localShowPosters;
 
-    public EpisodeHistoryAdapter(Context context, OnItemClickListener itemClickListener) {
+    EpisodeHistoryAdapter(Context context, OnItemClickListener itemClickListener) {
         super(context, itemClickListener);
     }
 
     @Override
-    public void setData(List<HistoryEntry> data) {
+    void setData(List<HistoryEntry> data) {
         super.setData(data);
         localShowPosters = ShowTools.getShowTvdbIdsAndPosters(getContext());
     }

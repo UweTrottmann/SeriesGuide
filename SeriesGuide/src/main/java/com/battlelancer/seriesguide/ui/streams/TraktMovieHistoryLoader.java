@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.ui.streams;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.loaders.TraktEpisodeHistoryLoader;
 import com.battlelancer.seriesguide.ui.movies.TraktRecentMovieHistoryLoader;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import java.util.List;

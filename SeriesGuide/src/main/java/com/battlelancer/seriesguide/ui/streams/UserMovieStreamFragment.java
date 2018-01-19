@@ -8,8 +8,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListAdapter;
-import com.battlelancer.seriesguide.adapters.MovieHistoryAdapter;
-import com.battlelancer.seriesguide.ui.HistoryActivity;
 import com.battlelancer.seriesguide.ui.movies.MovieDetailsActivity;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 

@@ -99,7 +99,7 @@
             android:name="com.battlelancer.seriesguide.ui.ListsActivity"
             android:label="@string/lists" />
         <activity
-            android:name="com.battlelancer.seriesguide.ui.HistoryActivity"
+            android:name="com.battlelancer.seriesguide.ui.streams.HistoryActivity"
             android:label="@string/user_stream" />
 
         <!-- Movies -->

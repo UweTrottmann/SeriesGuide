@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.streams;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -18,10 +18,9 @@ import retrofit2.Response;
 /**
  * Loads the last few episodes watched on trakt.
  */
-public class TraktEpisodeHistoryLoader
-        extends GenericSimpleLoader<TraktEpisodeHistoryLoader.Result> {
+class TraktEpisodeHistoryLoader extends GenericSimpleLoader<TraktEpisodeHistoryLoader.Result> {
 
-    public static class Result {
+    static class Result {
         public List<HistoryEntry> results;
         public String emptyText;
 
@@ -31,7 +30,7 @@ public class TraktEpisodeHistoryLoader
         }
     }
 
-    public TraktEpisodeHistoryLoader(Activity activity) {
+    TraktEpisodeHistoryLoader(Activity activity) {
         super(activity);
     }
 
