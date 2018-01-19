@@ -22,7 +22,6 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.jobs.episodes.BaseEpisodesJob;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;

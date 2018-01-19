@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import java.lang.annotation.Retention;

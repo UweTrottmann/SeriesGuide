@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.episodes;
 
 import android.content.Context;
 import android.database.Cursor;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
 import com.battlelancer.seriesguide.jobs.FlagJobAsyncTask;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeCollectedJob;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;

@@ -1,6 +1,6 @@
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import org.junit.Test;
 

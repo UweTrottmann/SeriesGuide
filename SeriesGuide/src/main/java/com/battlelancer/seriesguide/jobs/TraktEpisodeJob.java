@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.modules.ServicesComponent;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
