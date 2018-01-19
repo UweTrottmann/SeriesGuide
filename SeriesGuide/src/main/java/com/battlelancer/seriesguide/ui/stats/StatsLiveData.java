@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.stats;
 
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.LiveData;
@@ -17,16 +17,16 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShowTools;
 
-public class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
+class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
 
     private final Context context;
     private AsyncTask<Void, StatsUpdateEvent, StatsUpdateEvent> task;
 
-    public StatsLiveData(Context context) {
+    StatsLiveData(Context context) {
         this.context = context;
     }
 
-    public void loadStats() {
+    void loadStats() {
         if (task == null || task.getStatus() == AsyncTask.Status.FINISHED) {
             task = new StatsTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
@@ -219,20 +219,19 @@ public class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
         }
     }
 
-    public static class StatsUpdateEvent {
-        @NonNull public final Stats stats;
-        public final boolean finalValues;
-        public final boolean successful;
+    static class StatsUpdateEvent {
+        @NonNull  final Stats stats;
+        final boolean finalValues;
+        final boolean successful;
 
-        public StatsUpdateEvent(@NonNull Stats stats, boolean finalValues,
-                boolean successful) {
+        StatsUpdateEvent(@NonNull Stats stats, boolean finalValues, boolean successful) {
             this.stats = stats;
             this.finalValues = finalValues;
             this.successful = successful;
         }
     }
 
-    public static class Stats {
+    static class Stats {
         private int shows;
         private int showsContinuing;
         private int showsWithNext;

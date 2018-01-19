@@ -32,6 +32,7 @@ import com.battlelancer.seriesguide.jobs.FlagJob;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.settings.TraktOAuthSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.ui.stats.StatsActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import io.palaima.debugdrawer.actions.ActionsModule;
 import io.palaima.debugdrawer.actions.ButtonAction;

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.stats;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -21,8 +21,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.StatsLiveData.Stats;
-import com.battlelancer.seriesguide.ui.StatsLiveData.StatsUpdateEvent;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import java.text.NumberFormat;
@@ -55,7 +53,7 @@ public class StatsFragment extends Fragment {
 
     private Unbinder unbinder;
     private StatsViewModel model;
-    private Stats currentStats;
+    private StatsLiveData.Stats currentStats;
     private boolean hasFinalValues;
 
     @Override
@@ -95,9 +93,9 @@ public class StatsFragment extends Fragment {
         setHasOptionsMenu(true);
 
         model = ViewModelProviders.of(this).get(StatsViewModel.class);
-        model.getStatsData().observe(this, new Observer<StatsUpdateEvent>() {
+        model.getStatsData().observe(this, new Observer<StatsLiveData.StatsUpdateEvent>() {
             @Override
-            public void onChanged(@Nullable StatsUpdateEvent statsUpdateEvent) {
+            public void onChanged(@Nullable StatsLiveData.StatsUpdateEvent statsUpdateEvent) {
                 handleStatsUpdate(statsUpdateEvent);
             }
         });
@@ -149,7 +147,7 @@ public class StatsFragment extends Fragment {
         model.getStatsData().loadStats();
     }
 
-    private void handleStatsUpdate(StatsUpdateEvent event) {
+    private void handleStatsUpdate(StatsLiveData.StatsUpdateEvent event) {
         if (!isAdded()) {
             return;
         }
@@ -158,7 +156,7 @@ public class StatsFragment extends Fragment {
         updateStats(event.stats, event.finalValues, event.successful);
     }
 
-    private void updateStats(@NonNull Stats stats, boolean hasFinalValues, boolean successful) {
+    private void updateStats(@NonNull StatsLiveData.Stats stats, boolean hasFinalValues, boolean successful) {
         // display error if not all stats could be calculated
         errorView.setVisibility(successful ? View.GONE : View.VISIBLE);
 

@@ -179,7 +179,7 @@
         <!-- Others -->
         <activity android:name="com.battlelancer.seriesguide.billing.BillingActivity" />
         <activity
-            android:name="com.battlelancer.seriesguide.ui.StatsActivity"
+            android:name="com.battlelancer.seriesguide.ui.stats.StatsActivity"
             android:label="@string/statistics" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.SearchActivity"

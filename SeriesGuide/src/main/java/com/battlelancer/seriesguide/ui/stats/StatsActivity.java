@@ -1,16 +1,15 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.stats;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.BaseTopActivity;
 
 /**
  * Hosts fragments displaying statistics.
  */
 public class StatsActivity extends BaseTopActivity {
-
-    private static final String TAG = "Statistics";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
