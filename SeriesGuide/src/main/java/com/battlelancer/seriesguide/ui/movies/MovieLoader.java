@@ -7,7 +7,6 @@ import android.content.Context;
 import android.database.Cursor;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.MovieTools;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.trakt5.entities.Ratings;

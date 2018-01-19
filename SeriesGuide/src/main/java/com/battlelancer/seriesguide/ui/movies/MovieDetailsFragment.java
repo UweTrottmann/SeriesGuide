@@ -56,7 +56,6 @@ import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RateDialogFragment;
 import com.battlelancer.seriesguide.ui.people.MovieCreditsLoader;
 import com.battlelancer.seriesguide.util.LanguageTools;
-import com.battlelancer.seriesguide.util.MovieTools;
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;

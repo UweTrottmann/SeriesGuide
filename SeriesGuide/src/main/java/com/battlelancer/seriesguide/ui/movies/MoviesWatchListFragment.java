@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
-import com.battlelancer.seriesguide.util.MovieTools;
 
 /**
  * Loads and displays the users trakt movie watchlist.

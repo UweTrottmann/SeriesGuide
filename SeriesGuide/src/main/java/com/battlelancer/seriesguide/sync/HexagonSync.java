@@ -9,7 +9,7 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.ListsActivity;
-import com.battlelancer.seriesguide.util.MovieTools;
+import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.HashMap;
