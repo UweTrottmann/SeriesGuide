@@ -2,10 +2,9 @@ package com.battlelancer.seriesguide.traktapi;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import com.battlelancer.seriesguide.util.ConnectTraktTask;
 
 /**
- * Keeps the reference to a {@link com.battlelancer.seriesguide.util.ConnectTraktTask}.
+ * Keeps the reference to a {@link ConnectTraktTask}.
  */
 public class ConnectTraktTaskFragment extends Fragment {
 
@@ -19,11 +18,11 @@ public class ConnectTraktTaskFragment extends Fragment {
         setRetainInstance(true);
     }
 
-    public void setTask(ConnectTraktTask task) {
+    void setTask(ConnectTraktTask task) {
         this.task = task;
     }
 
-    public ConnectTraktTask getTask() {
+    ConnectTraktTask getTask() {
         return task;
     }
 }

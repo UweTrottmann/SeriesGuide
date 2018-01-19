@@ -7,15 +7,15 @@ import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.EpisodeTools;
-import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
+import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.TraktTools;
+import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.uwetrottmann.trakt5.entities.BaseSeason;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.ShowIds;
@@ -406,7 +406,7 @@ public class TraktEpisodeSync {
         // query for watched/collected episodes
         Cursor localEpisodes = context.getContentResolver().query(
                 SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
-                TraktTools.EpisodesQuery.PROJECTION,
+                EpisodesQuery.PROJECTION,
                 flag.flagSelection,
                 null,
                 SeriesGuideContract.Episodes.SORT_SEASON_ASC);
@@ -503,8 +503,8 @@ public class TraktEpisodeSync {
 
         SyncSeason currentSeason = null;
         while (episodesCursor.moveToNext()) {
-            int season = episodesCursor.getInt(TraktTools.EpisodesQuery.SEASON);
-            int episode = episodesCursor.getInt(TraktTools.EpisodesQuery.EPISODE);
+            int season = episodesCursor.getInt(EpisodesQuery.SEASON);
+            int episode = episodesCursor.getInt(EpisodesQuery.EPISODE);
 
             // create new season if none exists or number has changed
             if (currentSeason == null || currentSeason.number != season) {
@@ -518,6 +518,16 @@ public class TraktEpisodeSync {
         }
 
         return seasons;
+    }
+
+    private interface EpisodesQuery {
+
+        String[] PROJECTION = new String[] {
+                SeriesGuideContract.Episodes.SEASON, SeriesGuideContract.Episodes.NUMBER
+        };
+
+        int SEASON = 0;
+        int EPISODE = 1;
     }
 
     public enum Flag {

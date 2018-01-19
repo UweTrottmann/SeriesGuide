@@ -93,13 +93,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.EpisodesActivity" />
-        <activity android:name="com.battlelancer.seriesguide.ui.EpisodeDetailsActivity" />
+        <activity android:name="com.battlelancer.seriesguide.ui.episodes.EpisodesActivity" />
+        <activity android:name="com.battlelancer.seriesguide.ui.episodes.EpisodeDetailsActivity" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.ListsActivity"
             android:label="@string/lists" />
         <activity
-            android:name="com.battlelancer.seriesguide.ui.HistoryActivity"
+            android:name="com.battlelancer.seriesguide.ui.streams.HistoryActivity"
             android:label="@string/user_stream" />
 
         <!-- Movies -->
@@ -107,7 +107,7 @@
             android:name="com.battlelancer.seriesguide.ui.MoviesActivity"
             android:label="@string/movies" />
         <activity
-            android:name="com.battlelancer.seriesguide.ui.MoviesSearchActivity"
+            android:name="com.battlelancer.seriesguide.ui.movies.MoviesSearchActivity"
             android:parentActivityName="com.battlelancer.seriesguide.ui.MoviesActivity"
             android:windowSoftInputMode="stateHidden">
             <!-- Parent activity meta-data to support ICS -->
@@ -116,7 +116,7 @@
                 android:value="com.battlelancer.seriesguide.ui.MoviesActivity" />
         </activity>
         <activity
-            android:name="com.battlelancer.seriesguide.ui.MovieDetailsActivity"
+            android:name="com.battlelancer.seriesguide.ui.movies.MovieDetailsActivity"
             android:parentActivityName="com.battlelancer.seriesguide.ui.MoviesActivity">
             <!-- Parent activity meta-data to support ICS -->
             <meta-data
@@ -156,7 +156,7 @@
 
         <!-- trakt -->
         <activity
-            android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity"
+            android:name="com.battlelancer.seriesguide.traktapi.ConnectTraktActivity"
             android:label="@string/trakt" />
         <activity
             android:name="com.battlelancer.seriesguide.traktapi.TraktAuthActivity"
@@ -173,13 +173,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.battlelancer.seriesguide.ui.TraktCommentsActivity"
+            android:name="com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity"
             android:windowSoftInputMode="stateHidden" />
 
         <!-- Others -->
         <activity android:name="com.battlelancer.seriesguide.billing.BillingActivity" />
         <activity
-            android:name="com.battlelancer.seriesguide.ui.StatsActivity"
+            android:name="com.battlelancer.seriesguide.ui.stats.StatsActivity"
             android:label="@string/statistics" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.SearchActivity"
@@ -214,7 +214,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.battlelancer.seriesguide.ui.QuickCheckInActivity"
+            android:name="com.battlelancer.seriesguide.traktapi.QuickCheckInActivity"
             android:exported="true"
             android:taskAffinity="com.battlelancer.seriesguide.task.quickcheckin" />
         <activity
@@ -227,11 +227,11 @@
         <activity
             android:name="com.battlelancer.seriesguide.ui.FullscreenImageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity android:name="com.battlelancer.seriesguide.ui.PeopleActivity" />
-        <activity android:name="com.battlelancer.seriesguide.ui.PersonActivity" />
+        <activity android:name="com.battlelancer.seriesguide.ui.people.PeopleActivity" />
+        <activity android:name="com.battlelancer.seriesguide.ui.people.PersonActivity" />
 
         <!-- Unwatched counter update service -->
-        <service android:name="com.battlelancer.seriesguide.service.UnwatchedUpdaterService" />
+        <service android:name="com.battlelancer.seriesguide.ui.overview.UnwatchedUpdaterService" />
 
         <!-- Notification service -->
         <receiver android:name="com.battlelancer.seriesguide.service.NotificationActionReceiver" />

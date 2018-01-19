@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import org.greenrobot.eventbus.EventBus;

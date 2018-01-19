@@ -28,19 +28,24 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.IabHelper;
 import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
-import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.TraktSettings;
+import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
+import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
+import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.shows.CalendarFragment;
+import com.battlelancer.seriesguide.ui.shows.CalendarType;
+import com.battlelancer.seriesguide.ui.shows.ShowsFragment;
+import com.battlelancer.seriesguide.ui.shows.ShowsNowFragment;
 import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
@@ -212,7 +217,7 @@ public class ShowsActivity extends BaseTopActivity implements
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
         argsUpcoming.putString(CalendarFragment.InitBundle.TYPE,
-                CalendarFragment.CalendarType.UPCOMING);
+                CalendarType.UPCOMING);
         argsUpcoming.putString(CalendarFragment.InitBundle.ANALYTICS_TAG, "Upcoming");
         argsUpcoming.putInt(CalendarFragment.InitBundle.LOADER_ID, UPCOMING_LOADER_ID);
         argsUpcoming.putInt(CalendarFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
@@ -221,7 +226,7 @@ public class ShowsActivity extends BaseTopActivity implements
         // recent tab
         final Bundle argsRecent = new Bundle();
         argsRecent
-                .putString(CalendarFragment.InitBundle.TYPE, CalendarFragment.CalendarType.RECENT);
+                .putString(CalendarFragment.InitBundle.TYPE, CalendarType.RECENT);
         argsRecent.putString(CalendarFragment.InitBundle.ANALYTICS_TAG, "Recent");
         argsRecent.putInt(CalendarFragment.InitBundle.LOADER_ID, RECENT_LOADER_ID);
         argsRecent.putInt(CalendarFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);

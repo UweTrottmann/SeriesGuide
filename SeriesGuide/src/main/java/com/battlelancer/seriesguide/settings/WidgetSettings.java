@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings;
 
 /**
  * Access some widget related settings values.
@@ -56,7 +57,7 @@ public class WidgetSettings {
     /**
      * Returns the sort order of shows. Should be used when the widget is set to the shows type.
      *
-     * @return A {@link com.battlelancer.seriesguide.settings.ShowsDistillationSettings.ShowsSortOrder}
+     * @return A {@link ShowsDistillationSettings.ShowsSortOrder}
      * id.
      */
     public static int getWidgetShowsSortOrderId(Context context, int appWidgetId) {

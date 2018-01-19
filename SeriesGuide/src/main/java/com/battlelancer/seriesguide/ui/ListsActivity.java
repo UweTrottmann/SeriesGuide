@@ -1,6 +1,8 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import static com.battlelancer.seriesguide.ui.lists.ListsDistillationSettings.ListsSortOrder;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -17,23 +19,21 @@ import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.ListsDistillationSettings;
-import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.ListsReorderDialogFragment;
-import com.battlelancer.seriesguide.util.ListsTools;
+import com.battlelancer.seriesguide.ui.lists.ListsDistillationSettings;
+import com.battlelancer.seriesguide.ui.lists.AddListDialogFragment;
+import com.battlelancer.seriesguide.ui.lists.ListManageDialogFragment;
+import com.battlelancer.seriesguide.ui.lists.ListsPagerAdapter;
+import com.battlelancer.seriesguide.ui.lists.ListsReorderDialogFragment;
+import com.battlelancer.seriesguide.ui.lists.ListsTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import static com.battlelancer.seriesguide.settings.ListsDistillationSettings.ListsSortOrder;
 
 /**
  * Hosts a view pager to display and manage lists of shows, seasons and episodes.

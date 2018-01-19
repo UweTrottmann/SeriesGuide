@@ -24,8 +24,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.ExtensionsAdapter;
-import com.battlelancer.seriesguide.loaders.AvailableExtensionsLoader;
 import com.battlelancer.seriesguide.util.Utils;
 import com.mobeta.android.dslv.DragSortController;
 import com.mobeta.android.dslv.DragSortListView;
@@ -61,7 +59,7 @@ public class ExtensionsConfigurationFragment extends Fragment
 
     @SuppressLint("ClickableViewAccessibility") // ordering not supported if non-touch
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_extensions_configuration, container, false);
         unbinder = ButterKnife.bind(this, v);

@@ -7,7 +7,8 @@ import android.support.annotation.Nullable;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
-import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.ui.search.AddShowTask;
+import com.battlelancer.seriesguide.ui.search.SearchResult;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class TaskManager {
             if (shows.size() == 1) {
                 // say title of show
                 SearchResult show = shows.get(0);
-                Toast.makeText(context, context.getString(R.string.add_started, show.title),
+                Toast.makeText(context, context.getString(R.string.add_started, show.getTitle()),
                         Toast.LENGTH_SHORT).show();
             } else {
                 // generic adding multiple message

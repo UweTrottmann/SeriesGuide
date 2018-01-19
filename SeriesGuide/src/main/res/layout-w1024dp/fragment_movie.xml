@@ -4,7 +4,7 @@
     android:id="@+id/rootLayoutMovie"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MovieDetailsFragment"
+    tools:context=".ui.movies.MovieDetailsFragment"
     tools:ignore="RtlHardcoded">
 
     <!-- Parent used for fullscreen color background. -->
