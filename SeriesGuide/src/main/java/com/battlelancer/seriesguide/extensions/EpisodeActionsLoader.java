@@ -1,17 +1,16 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.extensions;
+
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 
 import android.content.Context;
 import android.database.Cursor;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.api.Episode;
-import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 
 /**
  * Tries returning existing actions for an episode. If no actions have been published, will ask

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.extensions;
 
 import android.content.SharedPreferences;
 import android.preference.ListPreference;
@@ -41,7 +41,7 @@ public abstract class BaseSettingsFragment extends PreferenceFragment {
      * immediately updated upon calling this method. The exact display format is
      * dependent on the type of preference.
      */
-    public static void bindPreferenceSummaryToValue(SharedPreferences prefs,
+    protected static void bindPreferenceSummaryToValue(SharedPreferences prefs,
             Preference preference) {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(sSetSummaryListener);

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.extensions;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,8 +16,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.SeriesGuideExtension;
-import com.battlelancer.seriesguide.extensions.ExtensionManager;
-import com.battlelancer.seriesguide.extensions.ExtensionsConfigurationFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import org.greenrobot.eventbus.EventBus;
@@ -25,12 +23,12 @@ import org.greenrobot.eventbus.EventBus;
 /**
  * Creates views for a list of {@link com.battlelancer.seriesguide.extensions.ExtensionManager.Extension}.
  */
-public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> {
+class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> {
 
-    public class ExtensionDisableRequestEvent {
+    class ExtensionDisableRequestEvent {
         public final int position;
 
-        public ExtensionDisableRequestEvent(int position) {
+        ExtensionDisableRequestEvent(int position) {
             this.position = position;
         }
     }
@@ -44,7 +42,7 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
     private final LayoutInflater layoutInflater;
     private final VectorDrawableCompat iconExtension;
 
-    public ExtensionsAdapter(Context context) {
+    ExtensionsAdapter(Context context) {
         super(context, 0);
         layoutInflater = LayoutInflater.from(context);
         iconExtension = ViewTools.vectorIconActive(context,
