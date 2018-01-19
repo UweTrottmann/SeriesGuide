@@ -3,7 +3,8 @@ package com.battlelancer.seriesguide.settings;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.settings.ShowsDistillationSettings.ShowsSortOrder;
+import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings;
+import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings.ShowsSortOrder;
 
 /**
  * Provides settings used to sort displayed list items in {@link com.battlelancer.seriesguide.ui.ListsFragment}.

@@ -1,11 +1,10 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.shows;
 
 import android.app.Activity;
 import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
@@ -26,10 +25,9 @@ import java.util.List;
 /**
  * Loads trakt friends, then returns the most recently watched episode for each friend.
  */
-public class TraktFriendsEpisodeHistoryLoader
-        extends GenericSimpleLoader<List<NowAdapter.NowItem>> {
+class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>> {
 
-    public TraktFriendsEpisodeHistoryLoader(Activity activity) {
+    TraktFriendsEpisodeHistoryLoader(Activity activity) {
         super(activity);
     }
 

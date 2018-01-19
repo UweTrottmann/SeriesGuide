@@ -1,12 +1,12 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.NowAdapter;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Activity;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -17,9 +17,9 @@ import java.util.List;
 /**
  * Loads a list of recently watched episodes.
  */
-public class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>> {
+class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>> {
 
-    public RecentlyWatchedLoader(Context context) {
+    RecentlyWatchedLoader(Context context) {
         super(context);
     }
 
@@ -44,17 +44,17 @@ public class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.N
 
             // get episode details
             Cursor episodeQuery = getContext().getContentResolver().query(
-                    SeriesGuideContract.Episodes.buildEpisodeWithShowUri(episodeTvdbId),
+                    Episodes.buildEpisodeWithShowUri(episodeTvdbId),
                     new String[] {
                             SeriesGuideDatabase.Tables.EPISODES + "."
-                                    + SeriesGuideContract.Episodes._ID, // 0
-                            SeriesGuideContract.Episodes.TITLE,
-                            SeriesGuideContract.Episodes.NUMBER,
-                            SeriesGuideContract.Episodes.SEASON, // 3
-                            SeriesGuideContract.Episodes.FIRSTAIREDMS,
-                            SeriesGuideContract.Shows.REF_SHOW_ID,
-                            SeriesGuideContract.Shows.TITLE,
-                            SeriesGuideContract.Shows.POSTER // 7
+                                    + Episodes._ID, // 0
+                            Episodes.TITLE,
+                            Episodes.NUMBER,
+                            Episodes.SEASON, // 3
+                            Episodes.FIRSTAIREDMS,
+                            Shows.REF_SHOW_ID,
+                            Shows.TITLE,
+                            Shows.POSTER // 7
                     }, null, null, null);
             if (episodeQuery == null) {
                 continue;

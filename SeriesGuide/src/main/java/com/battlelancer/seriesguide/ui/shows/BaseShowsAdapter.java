@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.shows;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,7 +29,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
     private final VectorDrawableCompat drawableStar;
     private final VectorDrawableCompat drawableStarZero;
 
-    BaseShowsAdapter(Activity activity, OnItemClickListener listener) {
+    protected BaseShowsAdapter(Activity activity, OnItemClickListener listener) {
         super(activity, null, 0);
         this.onItemClickListener = listener;
 
@@ -50,13 +50,13 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         return v;
     }
 
-    void setFavoriteState(ImageView view, boolean isFavorite) {
+    protected void setFavoriteState(ImageView view, boolean isFavorite) {
         view.setImageDrawable(isFavorite ? drawableStar : drawableStarZero);
         view.setContentDescription(view.getContext()
                 .getString(isFavorite ? R.string.context_unfavorite : R.string.context_favorite));
     }
 
-    void setRemainingCount(TextView textView, int unwatched) {
+    protected void setRemainingCount(TextView textView, int unwatched) {
         if (unwatched > 0) {
             textView.setText(textView.getResources()
                     .getQuantityString(R.plurals.remaining_episodes_plural, unwatched, unwatched));

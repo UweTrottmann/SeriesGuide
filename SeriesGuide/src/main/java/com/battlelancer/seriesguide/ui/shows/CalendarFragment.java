@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
@@ -31,18 +32,18 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.settings.CalendarSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TabClickEvent;
+import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
@@ -65,6 +66,8 @@ public class CalendarFragment extends Fragment
     private static final int CONTEXT_COLLECTION_ADD_ID = 3;
     private static final int CONTEXT_COLLECTION_REMOVE_ID = 4;
 
+    private static final int ACTIVITY_DAY_LIMIT = 30;
+
     private StickyGridHeadersGridView gridView;
     private CalendarAdapter adapter;
     private ImageView imageViewTapIndicator;
@@ -82,11 +85,6 @@ public class CalendarFragment extends Fragment
         String EMPTY_STRING_ID = "emptyid";
     }
 
-    public interface CalendarType {
-        String UPCOMING = "upcoming";
-        String RECENT = "recent";
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +92,7 @@ public class CalendarFragment extends Fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_calendar, container, false);
 
@@ -282,12 +280,12 @@ public class CalendarFragment extends Fragment
         }
 
         // only display the action appropriate for the items current state
-        if (EpisodeTools.isWatched(episode.getInt(CalendarAdapter.Query.WATCHED))) {
+        if (EpisodeTools.isWatched(episode.getInt(CalendarQuery.WATCHED))) {
             menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 0, R.string.action_unwatched);
         } else {
             menu.add(0, CONTEXT_FLAG_WATCHED_ID, 0, R.string.action_watched);
         }
-        if (EpisodeTools.isCollected(episode.getInt(CalendarAdapter.Query.COLLECTED))) {
+        if (EpisodeTools.isCollected(episode.getInt(CalendarQuery.COLLECTED))) {
             menu.add(0, CONTEXT_COLLECTION_REMOVE_ID, 1, R.string.action_collection_remove);
         } else {
             menu.add(0, CONTEXT_COLLECTION_ADD_ID, 1, R.string.action_collection_add);
@@ -298,10 +296,10 @@ public class CalendarFragment extends Fragment
             menu.add(0, CONTEXT_CHECKIN_ID, 2, R.string.checkin);
         }
 
-        final int showTvdbId = episode.getInt(CalendarAdapter.Query.SHOW_ID);
-        final int episodeTvdbId = episode.getInt(CalendarAdapter.Query._ID);
-        final int seasonNumber = episode.getInt(CalendarAdapter.Query.SEASON);
-        final int episodeNumber = episode.getInt(CalendarAdapter.Query.NUMBER);
+        final int showTvdbId = episode.getInt(CalendarQuery.SHOW_ID);
+        final int episodeTvdbId = episode.getInt(CalendarQuery._ID);
+        final int seasonNumber = episode.getInt(CalendarQuery.SEASON);
+        final int episodeNumber = episode.getInt(CalendarQuery.NUMBER);
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -452,14 +450,14 @@ public class CalendarFragment extends Fragment
             boolean isInfiniteScrolling = CalendarSettings.isInfiniteScrolling(getActivity());
 
             // infinite or 30 days activity stream
-            String[][] queryArgs = DBUtils.buildActivityQuery(getActivity(), type, isOnlyCollected,
+            String[][] queryArgs = buildActivityQuery(getActivity(), type, isOnlyCollected,
                     isOnlyFavorites, isOnlyUnwatched, isInfiniteScrolling);
 
             // prevent upcoming/recent episodes from becoming stale
             schedulePeriodicDataRefresh(true);
 
             return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
-                    CalendarAdapter.Query.PROJECTION, queryArgs[0][0], queryArgs[1],
+                    CalendarQuery.PROJECTION, queryArgs[0][0], queryArgs[1],
                     queryArgs[2][0]);
         }
 
@@ -473,6 +471,86 @@ public class CalendarFragment extends Fragment
         }
     };
 
+    /**
+     * Returns an array of size 3. The built query is stored in {@code [0][0]}, the built selection
+     * args in {@code [1]} and the sort order in {@code [2][0]}.
+     *
+     * @param type A {@link CalendarType}, defaults to UPCOMING.
+     * @param isInfinite If false, limits the release time range of returned episodes to {@link
+     * #ACTIVITY_DAY_LIMIT} days from today.
+     */
+    public static String[][] buildActivityQuery(Context context, String type,
+            boolean isOnlyCollected, boolean isOnlyFavorites, boolean isOnlyUnwatched,
+            boolean isInfinite) {
+        // go an hour back in time, so episodes move to recent one hour late
+        long recentThreshold = TimeTools.getCurrentTime(context) - DateUtils.HOUR_IN_MILLIS;
+
+        StringBuilder query;
+        String[] selectionArgs;
+        String sortOrder;
+        long timeThreshold;
+
+        if (CalendarType.RECENT.equals(type)) {
+            query = new StringBuilder(CalendarQuery.QUERY_RECENT);
+            sortOrder = CalendarQuery.SORTING_RECENT;
+            if (isInfinite) {
+                // to the past!
+                timeThreshold = Long.MIN_VALUE;
+            } else {
+                // last x days
+                timeThreshold = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS
+                        * ACTIVITY_DAY_LIMIT;
+            }
+        } else {
+            query = new StringBuilder(CalendarQuery.QUERY_UPCOMING);
+            sortOrder = CalendarQuery.SORTING_UPCOMING;
+            if (isInfinite) {
+                // to the future!
+                timeThreshold = Long.MAX_VALUE;
+            } else {
+                // coming x days
+                timeThreshold = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS
+                        * ACTIVITY_DAY_LIMIT;
+            }
+        }
+
+        selectionArgs = new String[] {
+                String.valueOf(recentThreshold), String.valueOf(timeThreshold)
+        };
+
+        // append only favorites selection if necessary
+        if (isOnlyFavorites) {
+            query.append(" AND ").append(SeriesGuideContract.Shows.SELECTION_FAVORITES);
+        }
+
+        // append no specials selection if necessary
+        boolean isNoSpecials = DisplaySettings.isHidingSpecials(context);
+        if (isNoSpecials) {
+            query.append(" AND ").append(Episodes.SELECTION_NO_SPECIALS);
+        }
+
+        // append unwatched selection if necessary
+        if (isOnlyUnwatched) {
+            query.append(" AND ").append(Episodes.SELECTION_UNWATCHED);
+        }
+
+        // only show collected episodes
+        if (isOnlyCollected) {
+            query.append(" AND ").append(Episodes.SELECTION_COLLECTED);
+        }
+
+        // build result array
+        String[][] results = new String[3][];
+        results[0] = new String[] {
+                query.toString()
+        };
+        results[1] = selectionArgs;
+        results[2] = new String[] {
+                sortOrder
+        };
+        return results;
+    }
+
     private CalendarAdapter.ItemClickListener itemClickListener
             = new CalendarAdapter.ItemClickListener() {
         @Override
@@ -482,10 +560,10 @@ public class CalendarFragment extends Fragment
                 return;
             }
 
-            int showTvdbId = episode.getInt(CalendarAdapter.Query.SHOW_ID);
-            int episodeTvdbId = episode.getInt(CalendarAdapter.Query._ID);
-            int seasonNumber = episode.getInt(CalendarAdapter.Query.SEASON);
-            int episodeNumber = episode.getInt(CalendarAdapter.Query.NUMBER);
+            int showTvdbId = episode.getInt(CalendarQuery.SHOW_ID);
+            int episodeTvdbId = episode.getInt(CalendarQuery._ID);
+            int seasonNumber = episode.getInt(CalendarQuery.SEASON);
+            int episodeNumber = episode.getInt(CalendarQuery.NUMBER);
 
             updateEpisodeWatchedState(showTvdbId, episodeTvdbId, seasonNumber, episodeNumber,
                     !isWatched);

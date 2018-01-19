@@ -21,7 +21,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
+import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter;
 import com.battlelancer.seriesguide.adapters.ListItemsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;

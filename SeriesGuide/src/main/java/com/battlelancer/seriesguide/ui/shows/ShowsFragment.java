@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -28,24 +29,21 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.adapters.BaseShowsAdapter;
-import com.battlelancer.seriesguide.adapters.ShowsAdapter;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
-import com.battlelancer.seriesguide.settings.ShowsDistillationSettings.ShowsSortOrder;
+import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings.ShowsSortOrder;
+import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
+import com.battlelancer.seriesguide.ui.OverviewActivity;
+import com.battlelancer.seriesguide.ui.SearchActivity;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
-import com.battlelancer.seriesguide.util.FabAbsListViewScrollDetector;
-import com.battlelancer.seriesguide.util.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
-import com.battlelancer.seriesguide.widgets.FirstRunView;
-import com.battlelancer.seriesguide.widgets.HeaderGridView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -81,7 +79,7 @@ public class ShowsFragment extends Fragment implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_shows, container, false);
 

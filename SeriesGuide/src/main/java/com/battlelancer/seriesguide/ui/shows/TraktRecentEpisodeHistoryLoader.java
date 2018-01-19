@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.shows;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.support.v4.util.SparseArrayCompat;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
@@ -34,7 +33,7 @@ import retrofit2.Response;
 public class TraktRecentEpisodeHistoryLoader
         extends GenericSimpleLoader<TraktRecentEpisodeHistoryLoader.Result> {
 
-    public static final int MAX_HISTORY_SIZE = 25;
+    protected static final int MAX_HISTORY_SIZE = 25;
 
     public static class Result {
         public List<NowAdapter.NowItem> items;

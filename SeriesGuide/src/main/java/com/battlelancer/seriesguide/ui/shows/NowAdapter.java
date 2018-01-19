@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.Context;
 import android.support.annotation.IntDef;
@@ -31,7 +31,7 @@ import java.util.List;
  */
 public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public static final String TRAKT_ACTION_WATCH = "watch";
+    protected static final String TRAKT_ACTION_WATCH = "watch";
 
     public interface ItemClickListener {
         void onItemClick(View view, int position);

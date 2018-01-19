@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
+import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;

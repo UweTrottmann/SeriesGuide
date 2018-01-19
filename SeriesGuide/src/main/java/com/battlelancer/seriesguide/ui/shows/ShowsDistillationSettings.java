@@ -1,23 +1,21 @@
-package com.battlelancer.seriesguide.settings;
+package com.battlelancer.seriesguide.ui.shows;
+
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
 
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-
 /**
- * Provides settings used to filter and sort displayed shows in {@link
- * com.battlelancer.seriesguide.ui.ShowsFragment}.
+ * Provides settings used to filter and sort displayed shows in {@link ShowsFragment}.
  */
 public class ShowsDistillationSettings {
 
-    public static String KEY_SORT_ORDER = "com.battlelancer.seriesguide.sort.order";
-    public static String KEY_SORT_FAVORITES_FIRST
-            = "com.battlelancer.seriesguide.sort.favoritesfirst";
-    public static String KEY_FILTER_FAVORITES = "com.battlelancer.seriesguide.filter.favorites";
-    public static String KEY_FILTER_UNWATCHED = "com.battlelancer.seriesguide.filter.unwatched";
-    public static String KEY_FILTER_UPCOMING = "com.battlelancer.seriesguide.filter.upcoming";
-    public static String KEY_FILTER_HIDDEN = "com.battlelancer.seriesguide.filter.hidden";
+    static String KEY_SORT_ORDER = "com.battlelancer.seriesguide.sort.order";
+    static String KEY_SORT_FAVORITES_FIRST = "com.battlelancer.seriesguide.sort.favoritesfirst";
+    static String KEY_FILTER_FAVORITES = "com.battlelancer.seriesguide.filter.favorites";
+    static String KEY_FILTER_UNWATCHED = "com.battlelancer.seriesguide.filter.unwatched";
+    static String KEY_FILTER_UPCOMING = "com.battlelancer.seriesguide.filter.upcoming";
+    static String KEY_FILTER_HIDDEN = "com.battlelancer.seriesguide.filter.hidden";
 
     /**
      * Builds an appropriate SQL sort statement for sorting shows.
@@ -47,34 +45,34 @@ public class ShowsDistillationSettings {
     }
 
     /**
-     * Returns the id as of {@link com.battlelancer.seriesguide.settings.ShowsDistillationSettings.ShowsSortOrder}
+     * Returns the id as of {@link ShowsDistillationSettings.ShowsSortOrder}
      * of the current show sort order.
      */
-    public static int getSortOrderId(Context context) {
+    static int getSortOrderId(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getInt(KEY_SORT_ORDER, 0);
     }
 
-    public static boolean isSortFavoritesFirst(Context context) {
+    static boolean isSortFavoritesFirst(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_SORT_FAVORITES_FIRST, true);
     }
 
-    public static boolean isFilteringFavorites(Context context) {
+    static boolean isFilteringFavorites(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_FILTER_FAVORITES, false);
     }
 
-    public static boolean isFilteringUnwatched(Context context) {
+    static boolean isFilteringUnwatched(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_FILTER_UNWATCHED, false);
     }
 
-    public static boolean isFilteringUpcoming(Context context) {
+    static boolean isFilteringUpcoming(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_FILTER_UPCOMING, false);
     }
 
-    public static boolean isFilteringHidden(Context context) {
+    static boolean isFilteringHidden(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_FILTER_HIDDEN, false);
     }
@@ -95,7 +93,7 @@ public class ShowsDistillationSettings {
     }
 
     /**
-     * Used by {@link com.battlelancer.seriesguide.ui.ShowsFragment} loader to sort the list of
+     * Used by {@link ShowsFragment} loader to sort the list of
      * shows.
      */
     public interface ShowsSortOrder {

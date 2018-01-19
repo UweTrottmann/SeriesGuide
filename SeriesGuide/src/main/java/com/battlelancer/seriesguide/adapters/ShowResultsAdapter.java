@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.view.View;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
+import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;

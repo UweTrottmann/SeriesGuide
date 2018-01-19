@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.adapters.NowAdapter;
+import com.battlelancer.seriesguide.ui.shows.NowAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;

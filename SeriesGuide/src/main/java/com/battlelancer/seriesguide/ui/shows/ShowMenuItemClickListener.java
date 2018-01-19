@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +10,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.RemoveShowDialogFragment;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ShowTools;
+import com.battlelancer.seriesguide.util.Utils;
 
 /**
 * Item click listener for show item popup menu.

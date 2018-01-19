@@ -34,7 +34,7 @@
         tools:drawableTop="@drawable/ic_filter_white_24dp" />
 
     <!-- Add large bottom padding to make room for FAB if scrolled to bottom. -->
-    <com.battlelancer.seriesguide.widgets.HeaderGridView
+    <com.battlelancer.seriesguide.ui.shows.HeaderGridView
         android:id="@+android:id/list"
         style="@style/Widget.SeriesGuide.Grid"
         android:layout_width="match_parent"

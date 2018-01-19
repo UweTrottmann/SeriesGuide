@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.ui.shows;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -12,14 +12,14 @@ import com.battlelancer.seriesguide.R;
  *
  * <p>Built upon https://github.com/makovkastar/FloatingActionButton scroll detectors.
  */
-public class FabAbsListViewScrollDetector implements AbsListView.OnScrollListener {
+class FabAbsListViewScrollDetector implements AbsListView.OnScrollListener {
 
     private final FloatingActionButton button;
     private int lastScrollY;
     private int previousFirstVisibleItem;
     private int scrollThreshold;
 
-    public FabAbsListViewScrollDetector(@NonNull FloatingActionButton button) {
+    FabAbsListViewScrollDetector(@NonNull FloatingActionButton button) {
         this.button = button;
         scrollThreshold = button.getContext()
                 .getResources()

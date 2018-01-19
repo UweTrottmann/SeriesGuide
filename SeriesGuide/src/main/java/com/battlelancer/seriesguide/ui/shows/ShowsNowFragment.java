@@ -1,8 +1,9 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -25,13 +26,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.NowAdapter;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
-import com.battlelancer.seriesguide.loaders.RecentlyWatchedLoader;
-import com.battlelancer.seriesguide.loaders.TraktFriendsEpisodeHistoryLoader;
-import com.battlelancer.seriesguide.loaders.TraktRecentEpisodeHistoryLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
+import com.battlelancer.seriesguide.ui.HistoryActivity;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.util.TabClickEvent;
@@ -61,7 +61,7 @@ public class ShowsNowFragment extends Fragment {
     private boolean isLoadingFriends;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_now, container, false);
         unbinder = ButterKnife.bind(this, v);
@@ -264,7 +264,7 @@ public class ShowsNowFragment extends Fragment {
     /**
      * Starts an activity to display the given episode.
      */
-    protected void showDetails(View view, int episodeId) {
+    private void showDetails(View view, int episodeId) {
         Intent intent = new Intent();
         intent.setClass(getActivity(), EpisodesActivity.class);
         intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);

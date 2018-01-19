@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.shows;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,9 +19,9 @@ import java.util.Date;
 /**
  * Adapter for show items.
  */
-public class ShowsAdapter extends BaseShowsAdapter {
+class ShowsAdapter extends BaseShowsAdapter {
 
-    public ShowsAdapter(Activity activity, OnItemClickListener listener) {
+    ShowsAdapter(Activity activity, OnItemClickListener listener) {
         super(activity, listener);
     }
 
@@ -92,7 +92,7 @@ public class ShowsAdapter extends BaseShowsAdapter {
         viewHolder.episodeTvdbId = cursor.getInt(Query.NEXTEPISODE);
     }
 
-    public interface Query {
+    interface Query {
 
         String[] PROJECTION = {
                 BaseColumns._ID, // 0

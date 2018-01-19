@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.NowAdapter;
+import com.battlelancer.seriesguide.ui.shows.NowAdapter;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.ui.HistoryActivity;
 import com.battlelancer.seriesguide.ui.MoviesActivity;

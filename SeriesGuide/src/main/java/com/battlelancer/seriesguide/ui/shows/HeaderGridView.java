@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.battlelancer.seriesguide.widgets;
+package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.Context;
 import android.database.DataSetObservable;

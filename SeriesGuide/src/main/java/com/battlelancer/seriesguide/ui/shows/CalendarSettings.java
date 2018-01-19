@@ -1,5 +1,5 @@
 
-package com.battlelancer.seriesguide.settings;
+package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
@@ -9,16 +9,16 @@ import android.preference.PreferenceManager;
  */
 public class CalendarSettings {
 
-    public static final String KEY_HIDE_WATCHED_EPISODES
+    static final String KEY_HIDE_WATCHED_EPISODES
             = "com.battlelancer.seriesguide.activity.nowatched";
 
-    public static final String KEY_INFINITE_SCROLLING
+    static final String KEY_INFINITE_SCROLLING
             = "com.battlelancer.seriesguide.activity.infinite";
 
-    public static final String KEY_ONLY_COLLECTED
+    static final String KEY_ONLY_COLLECTED
             = "com.battlelancer.seriesguide.activity.onlycollected";
 
-    public static final String KEY_ONLY_FAVORITE_SHOWS
+    static final String KEY_ONLY_FAVORITE_SHOWS
             = "com.battlelancer.seriesguide.onlyfavorites";
 
     /**
@@ -32,7 +32,7 @@ public class CalendarSettings {
     /**
      * Whether the calendar should be infinite or limited to a number of days.
      */
-    public static boolean isInfiniteScrolling(Context context) {
+    static boolean isInfiniteScrolling(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
                 KEY_INFINITE_SCROLLING,
                 false);

@@ -7,9 +7,9 @@ import android.database.Cursor;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.settings.DashClockSettings;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.ui.shows.CalendarQuery;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -40,15 +40,15 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
 
                 // Ensure those episodes are within the user set time frame
                 long releaseTime = upcomingEpisodes
-                        .getLong(CalendarAdapter.Query.RELEASE_TIME_MS);
+                        .getLong(CalendarQuery.RELEASE_TIME_MS);
                 if (releaseTime <= latestTimeToInclude) {
                     // build our DashClock panel
 
                     // title and episode of first show, like 'Title 1x01'
                     String expandedTitle = TextTools.getShowWithEpisodeNumber(context,
-                            upcomingEpisodes.getString(CalendarAdapter.Query.SHOW_TITLE),
-                            upcomingEpisodes.getInt(CalendarAdapter.Query.SEASON),
-                            upcomingEpisodes.getInt(CalendarAdapter.Query.NUMBER)
+                            upcomingEpisodes.getString(CalendarQuery.SHOW_TITLE),
+                            upcomingEpisodes.getInt(CalendarQuery.SEASON),
+                            upcomingEpisodes.getInt(CalendarQuery.NUMBER)
                     );
 
                     // get the actual release time
@@ -63,7 +63,7 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
                     }
                     expandedBody.append(absoluteTime);
                     String network = upcomingEpisodes
-                            .getString(CalendarAdapter.Query.SHOW_NETWORK);
+                            .getString(CalendarQuery.SHOW_NETWORK);
                     if (!TextUtils.isEmpty(network)) {
                         expandedBody.append(" — ").append(network);
                     }
@@ -72,7 +72,7 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
                     int additionalEpisodes = 0;
                     while (upcomingEpisodes.moveToNext()
                             && releaseTime == upcomingEpisodes
-                            .getLong(CalendarAdapter.Query.RELEASE_TIME_MS)) {
+                            .getLong(CalendarQuery.RELEASE_TIME_MS)) {
                         additionalEpisodes++;
                     }
                     if (additionalEpisodes > 0) {

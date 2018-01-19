@@ -6,6 +6,7 @@ import android.support.annotation.StringRes;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.ui.shows.TraktRecentEpisodeHistoryLoader;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;

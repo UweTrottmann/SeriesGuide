@@ -10,17 +10,17 @@ import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.ShowsDistillationSettings;
+import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
-import com.battlelancer.seriesguide.ui.CalendarFragment;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.shows.CalendarQuery;
+import com.battlelancer.seriesguide.ui.shows.CalendarType;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -103,13 +103,13 @@ public class ListWidgetService extends RemoteViewsService {
                     );
                     break;
                 case WidgetSettings.Type.RECENT:
-                    newCursor = DBUtils.activityQuery(context, CalendarFragment.CalendarType.RECENT,
+                    newCursor = DBUtils.activityQuery(context, CalendarType.RECENT,
                             isOnlyCollected, isOnlyFavorites, isOnlyUnwatched, isInfinite);
                     break;
                 case WidgetSettings.Type.UPCOMING:
                 default:
                     newCursor = DBUtils.activityQuery(context,
-                            CalendarFragment.CalendarType.UPCOMING,
+                            CalendarType.UPCOMING,
                             isOnlyCollected, isOnlyFavorites, isOnlyUnwatched, isInfinite);
                     break;
             }
@@ -167,21 +167,21 @@ public class ListWidgetService extends RemoteViewsService {
             Bundle extras = new Bundle();
             extras.putInt(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                     dataCursor.getInt(isShowQuery ?
-                            ShowsQuery.SHOW_NEXT_EPISODE_ID : CalendarAdapter.Query._ID));
+                            ShowsQuery.SHOW_NEXT_EPISODE_ID : CalendarQuery._ID));
             Intent fillInIntent = new Intent();
             fillInIntent.putExtras(extras);
             rv.setOnClickFillInIntent(R.id.appwidget_row, fillInIntent);
 
             // episode description
             int seasonNumber = dataCursor.getInt(isShowQuery ?
-                    ShowsQuery.EPISODE_SEASON : CalendarAdapter.Query.SEASON);
+                    ShowsQuery.EPISODE_SEASON : CalendarQuery.SEASON);
             int episodeNumber = dataCursor.getInt(isShowQuery ?
-                    ShowsQuery.EPISODE_NUMBER : CalendarAdapter.Query.NUMBER);
+                    ShowsQuery.EPISODE_NUMBER : CalendarQuery.NUMBER);
             String title = dataCursor.getString(isShowQuery ?
-                    ShowsQuery.EPISODE_TITLE : CalendarAdapter.Query.TITLE);
+                    ShowsQuery.EPISODE_TITLE : CalendarQuery.TITLE);
             boolean hideTitle = DisplaySettings.preventSpoilers(context);
             if (!isShowQuery) {
-                int episodeFlag = dataCursor.getInt(CalendarAdapter.Query.WATCHED);
+                int episodeFlag = dataCursor.getInt(CalendarQuery.WATCHED);
                 hideTitle = hideTitle && EpisodeTools.isUnwatched(episodeFlag);
             }
             String nextEpisodeString = TextTools.getNextEpisodeString(context, seasonNumber,
@@ -192,7 +192,7 @@ public class ListWidgetService extends RemoteViewsService {
             Date actualRelease = TimeTools.applyUserOffset(context,
                     dataCursor.getLong(isShowQuery ?
                             ShowsQuery.EPISODE_FIRSTAIRED_MS
-                            : CalendarAdapter.Query.RELEASE_TIME_MS));
+                            : CalendarQuery.RELEASE_TIME_MS));
             // "Fri Oct 31" or "Fri 2 days ago"
             boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
             rv.setTextViewText(R.id.widgetAirtime, displayExactDate ?
@@ -203,16 +203,16 @@ public class ListWidgetService extends RemoteViewsService {
             // absolute release time and network (if any)
             String absoluteTime = TimeTools.formatToLocalTime(context, actualRelease);
             String network = dataCursor.getString(isShowQuery ?
-                    ShowsQuery.SHOW_NETWORK : CalendarAdapter.Query.SHOW_NETWORK);
+                    ShowsQuery.SHOW_NETWORK : CalendarQuery.SHOW_NETWORK);
             rv.setTextViewText(R.id.widgetNetwork, TextTools.dotSeparate(network, absoluteTime));
 
             // show name
             rv.setTextViewText(R.id.textViewWidgetShow, dataCursor.getString(isShowQuery ?
-                    ShowsQuery.SHOW_TITLE : CalendarAdapter.Query.SHOW_TITLE));
+                    ShowsQuery.SHOW_TITLE : CalendarQuery.SHOW_TITLE));
 
             // show poster
             String posterPath = dataCursor.getString(isShowQuery
-                    ? ShowsQuery.SHOW_POSTER : CalendarAdapter.Query.SHOW_POSTER_PATH);
+                    ? ShowsQuery.SHOW_POSTER : CalendarQuery.SHOW_POSTER_PATH);
             maybeSetPoster(rv, posterPath);
 
             // Return the remote views object.

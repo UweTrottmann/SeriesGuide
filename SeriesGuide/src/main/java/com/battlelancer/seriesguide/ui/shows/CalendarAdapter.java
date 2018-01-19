@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.shows;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,12 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
-import com.battlelancer.seriesguide.ui.CalendarFragment;
 import com.battlelancer.seriesguide.util.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -35,7 +31,7 @@ import java.util.List;
  */
 public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersBaseAdapter {
 
-    public interface ItemClickListener {
+    interface ItemClickListener {
         void onWatchedBoxClick(int episodePosition, boolean isWatched);
     }
 
@@ -45,7 +41,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
     private List<HeaderData> headers;
     private boolean isShowingHeaders;
 
-    public CalendarAdapter(Activity activity, ItemClickListener itemClickListener) {
+    CalendarAdapter(Activity activity, ItemClickListener itemClickListener) {
         super(activity, null, 0);
         this.itemClickListener = itemClickListener;
         this.calendar = Calendar.getInstance();
@@ -55,7 +51,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
      * Whether to show episodes grouped by day with header. Disable headers for larger data sets as
      * calculating them is expensive. Make sure to reload the data afterwards.
      */
-    public void setIsShowingHeaders(boolean isShowingHeaders) {
+    void setIsShowingHeaders(boolean isShowingHeaders) {
         this.isShowingHeaders = isShowingHeaders;
     }
 
@@ -79,25 +75,25 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         viewHolder.position = cursor.getPosition();
 
         // watched box
-        int episodeFlag = cursor.getInt(Query.WATCHED);
+        int episodeFlag = cursor.getInt(CalendarQuery.WATCHED);
         viewHolder.watchedBox.setEpisodeFlag(episodeFlag);
         boolean watched = EpisodeTools.isWatched(episodeFlag);
         viewHolder.watchedBox.setContentDescription(
                 context.getString(watched ? R.string.action_unwatched : R.string.action_watched));
 
         // show title
-        viewHolder.show.setText(cursor.getString(Query.SHOW_TITLE));
+        viewHolder.show.setText(cursor.getString(CalendarQuery.SHOW_TITLE));
 
         // episode number and title
-        final int season = cursor.getInt(Query.SEASON);
-        final int episode = cursor.getInt(Query.NUMBER);
+        final int season = cursor.getInt(CalendarQuery.SEASON);
+        final int episode = cursor.getInt(CalendarQuery.NUMBER);
         boolean hideTitle = EpisodeTools.isUnwatched(episodeFlag)
                 && DisplaySettings.preventSpoilers(context);
         viewHolder.episode.setText(TextTools.getNextEpisodeString(context, season, episode,
-                hideTitle ? null : cursor.getString(Query.TITLE)));
+                hideTitle ? null : cursor.getString(CalendarQuery.TITLE)));
 
         // timestamp, absolute time and network
-        long releaseTime = cursor.getLong(Query.RELEASE_TIME_MS);
+        long releaseTime = cursor.getLong(CalendarQuery.RELEASE_TIME_MS);
         String time = null;
         if (releaseTime != -1) {
             Date actualRelease = TimeTools.applyUserOffset(context, releaseTime);
@@ -111,16 +107,16 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         } else {
             viewHolder.timestamp.setText(null);
         }
-        viewHolder.info.setText(TextTools.dotSeparate(cursor.getString(Query.SHOW_NETWORK), time));
+        viewHolder.info.setText(TextTools.dotSeparate(cursor.getString(CalendarQuery.SHOW_NETWORK), time));
 
         // collected indicator
         boolean isCollected = EpisodeTools.isCollected(
-                cursor.getInt(Query.COLLECTED));
+                cursor.getInt(CalendarQuery.COLLECTED));
         viewHolder.collected.setVisibility(isCollected ? View.VISIBLE : View.GONE);
 
         // set poster
         TvdbImageTools.loadShowPosterResizeSmallCrop(context, viewHolder.poster,
-                TvdbImageTools.smallSizeUrl(cursor.getString(Query.SHOW_POSTER_PATH)));
+                TvdbImageTools.smallSizeUrl(cursor.getString(CalendarQuery.SHOW_POSTER_PATH)));
     }
 
     @Override
@@ -147,7 +143,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
     }
 
     private long getHeaderTime(Cursor item) {
-        long releaseTime = item.getLong(Query.RELEASE_TIME_MS);
+        long releaseTime = item.getLong(CalendarQuery.RELEASE_TIME_MS);
         Date actualRelease = TimeTools.applyUserOffset(mContext, releaseTime);
 
         calendar.setTime(actualRelease);
@@ -222,7 +218,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         super.notifyDataSetInvalidated();
     }
 
-    protected List<HeaderData> generateHeaderList() {
+    private List<HeaderData> generateHeaderList() {
         int count = getCount();
         if (count == 0 || !isShowingHeaders) {
             return null;
@@ -244,52 +240,6 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         }
 
         return headers;
-    }
-
-    public interface Query {
-
-        String[] PROJECTION = new String[] {
-                SeriesGuideDatabase.Tables.EPISODES + "." + Episodes._ID,
-                Episodes.TITLE,
-                Episodes.NUMBER,
-                Episodes.SEASON,
-                Episodes.FIRSTAIREDMS,
-                Episodes.WATCHED,
-                Episodes.COLLECTED,
-                SeriesGuideContract.Shows.REF_SHOW_ID,
-                SeriesGuideContract.Shows.TITLE,
-                SeriesGuideContract.Shows.NETWORK,
-                SeriesGuideContract.Shows.POSTER
-        };
-
-        String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND "
-                + Episodes.FIRSTAIREDMS
-                + "<? AND " + SeriesGuideContract.Shows.SELECTION_NO_HIDDEN;
-
-        String QUERY_RECENT = Episodes.SELECTION_HAS_RELEASE_DATE + " AND "
-                + Episodes.FIRSTAIREDMS + "<? AND "
-                + Episodes.FIRSTAIREDMS + ">? AND "
-                + SeriesGuideContract.Shows.SELECTION_NO_HIDDEN;
-
-        String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC,"
-                + SeriesGuideContract.Shows.SORT_TITLE + ","
-                + Episodes.NUMBER + " ASC";
-
-        String SORTING_RECENT = Episodes.FIRSTAIREDMS + " DESC,"
-                + SeriesGuideContract.Shows.SORT_TITLE + ","
-                + Episodes.NUMBER + " DESC";
-
-        int _ID = 0;
-        int TITLE = 1;
-        int NUMBER = 2;
-        int SEASON = 3;
-        int RELEASE_TIME_MS = 4;
-        int WATCHED = 5;
-        int COLLECTED = 6;
-        int SHOW_ID = 7;
-        int SHOW_TITLE = 8;
-        int SHOW_NETWORK = 9;
-        int SHOW_POSTER_PATH = 10;
     }
 
     static class ViewHolder {

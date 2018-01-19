@@ -39,6 +39,10 @@ import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.shows.CalendarFragment;
+import com.battlelancer.seriesguide.ui.shows.CalendarType;
+import com.battlelancer.seriesguide.ui.shows.ShowsFragment;
+import com.battlelancer.seriesguide.ui.shows.ShowsNowFragment;
 import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EpisodeTools;
@@ -213,7 +217,7 @@ public class ShowsActivity extends BaseTopActivity implements
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
         argsUpcoming.putString(CalendarFragment.InitBundle.TYPE,
-                CalendarFragment.CalendarType.UPCOMING);
+                CalendarType.UPCOMING);
         argsUpcoming.putString(CalendarFragment.InitBundle.ANALYTICS_TAG, "Upcoming");
         argsUpcoming.putInt(CalendarFragment.InitBundle.LOADER_ID, UPCOMING_LOADER_ID);
         argsUpcoming.putInt(CalendarFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
@@ -222,7 +226,7 @@ public class ShowsActivity extends BaseTopActivity implements
         // recent tab
         final Bundle argsRecent = new Bundle();
         argsRecent
-                .putString(CalendarFragment.InitBundle.TYPE, CalendarFragment.CalendarType.RECENT);
+                .putString(CalendarFragment.InitBundle.TYPE, CalendarType.RECENT);
         argsRecent.putString(CalendarFragment.InitBundle.ANALYTICS_TAG, "Recent");
         argsRecent.putInt(CalendarFragment.InitBundle.LOADER_ID, RECENT_LOADER_ID);
         argsRecent.putInt(CalendarFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
