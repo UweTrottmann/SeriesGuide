@@ -1,6 +1,7 @@
-package com.battlelancer.seriesguide.ui.dialogs;
+package com.battlelancer.seriesguide.ui.lists;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
@@ -15,10 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.ListsAdapter;
-import com.battlelancer.seriesguide.loaders.OrderedListsLoader;
 import com.battlelancer.seriesguide.ui.ListsActivity;
-import com.battlelancer.seriesguide.util.ListsTools;
 import com.mobeta.android.dslv.DragSortController;
 import com.mobeta.android.dslv.DragSortListView;
 import java.util.ArrayList;
@@ -43,7 +41,7 @@ public class ListsReorderDialogFragment extends AppCompatDialogFragment {
     private ListsAdapter adapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialog_lists_reorder, container, false);
         unbinder = ButterKnife.bind(this, v);

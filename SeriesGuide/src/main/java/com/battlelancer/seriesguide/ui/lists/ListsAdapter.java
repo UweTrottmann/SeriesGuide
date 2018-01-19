@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.lists;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,25 +8,24 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.loaders.OrderedListsLoader;
 import java.util.List;
 
 /**
- * Used with {@link com.battlelancer.seriesguide.ui.dialogs.ListsReorderDialogFragment}.
+ * Used with {@link ListsReorderDialogFragment}.
  */
-public class ListsAdapter extends ArrayAdapter<OrderedListsLoader.OrderedList> {
+class ListsAdapter extends ArrayAdapter<OrderedListsLoader.OrderedList> {
 
     static class ListsViewHolder {
         public TextView name;
 
-        public ListsViewHolder(View v) {
+        ListsViewHolder(View v) {
             name = v.findViewById(R.id.textViewItemListName);
         }
     }
 
     private List<OrderedListsLoader.OrderedList> dataset;
 
-    public ListsAdapter(Context context) {
+    ListsAdapter(Context context) {
         super(context, 0);
     }
 
@@ -53,7 +52,7 @@ public class ListsAdapter extends ArrayAdapter<OrderedListsLoader.OrderedList> {
         return convertView;
     }
 
-    public synchronized void setData(List<OrderedListsLoader.OrderedList> dataset) {
+    synchronized void setData(List<OrderedListsLoader.OrderedList> dataset) {
         this.dataset = dataset;
 
         clear();
@@ -62,7 +61,7 @@ public class ListsAdapter extends ArrayAdapter<OrderedListsLoader.OrderedList> {
         }
     }
 
-    public synchronized void reorderList(int from, int to) {
+    synchronized void reorderList(int from, int to) {
         if (dataset == null || from >= dataset.size()) {
             return;
         }

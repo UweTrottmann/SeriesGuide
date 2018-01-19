@@ -1,9 +1,10 @@
-package com.battlelancer.seriesguide.ui.dialogs;
+package com.battlelancer.seriesguide.ui.lists;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -34,7 +35,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.util.ListsTools;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ import java.util.List;
 public class ManageListsDialogFragment extends AppCompatDialogFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
 
-    public static ManageListsDialogFragment newInstance(int itemTvdbId,
+    private static ManageListsDialogFragment newInstance(int itemTvdbId,
             @SeriesGuideContract.ListItemTypes int itemType) {
         ManageListsDialogFragment f = new ManageListsDialogFragment();
         Bundle args = new Bundle();
@@ -73,7 +73,7 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         final View layout = inflater.inflate(R.layout.dialog_manage_lists, container, false);
 
@@ -259,11 +259,11 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
             return layoutInflater.inflate(R.layout.item_list_checked, parent, false);
         }
 
-        public void setItemChecked(int position, boolean value) {
+        void setItemChecked(int position, boolean value) {
             checkedItems.put(position, value);
         }
 
-        public SparseBooleanArray getCheckedPositions() {
+        SparseBooleanArray getCheckedPositions() {
             return checkedItems;
         }
     }

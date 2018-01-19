@@ -1,5 +1,5 @@
 
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.lists;
 
 import android.database.Cursor;
 import android.database.DataSetObserver;
@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.ui.ListsFragment;
 
 /**
  * Returns {@link ListsFragment}s for every list in the database, makes sure there is always at

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.ui.lists;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -51,29 +51,29 @@ public class ListsTools {
         new AddListTask(context, listName).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public static void renameList(@NonNull Context context, @NonNull String listId,
+    static void renameList(@NonNull Context context, @NonNull String listId,
             @NonNull String listName) {
         new RenameListTask(context, listId, listName).executeOnExecutor(
                 AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public static void removeList(@NonNull Context context, @NonNull String listId) {
+    static void removeList(@NonNull Context context, @NonNull String listId) {
         new RemoveListTask(context, listId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public static void reorderLists(@NonNull Context context,
+    static void reorderLists(@NonNull Context context,
             @NonNull List<String> listIdsInOrder) {
         new ReorderListsTask(context, listIdsInOrder).executeOnExecutor(
                 AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public static void changeListsOfItem(@NonNull Context context, int itemTvdbId, int itemType,
+    static void changeListsOfItem(@NonNull Context context, int itemTvdbId, int itemType,
             @NonNull List<String> addToTheseLists, @NonNull List<String> removeFromTheseLists) {
         new ChangeListItemListsTask(context, itemTvdbId, itemType, addToTheseLists,
                 removeFromTheseLists).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public static void removeListItem(@NonNull Context context, @NonNull String listItemId) {
+    static void removeListItem(@NonNull Context context, @NonNull String listItemId) {
         new RemoveListItemTask(context, listItemId).executeOnExecutor(
                 AsyncTask.THREAD_POOL_EXECUTOR);
     }

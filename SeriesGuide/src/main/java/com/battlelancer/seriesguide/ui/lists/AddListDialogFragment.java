@@ -1,5 +1,5 @@
 
-package com.battlelancer.seriesguide.ui.dialogs;
+package com.battlelancer.seriesguide.ui.lists;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -25,7 +25,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.util.ListsTools;
 import java.util.HashSet;
 
 /**

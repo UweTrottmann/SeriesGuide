@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.lists;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,9 +22,9 @@ import java.util.Date;
 /**
  * Adapter for a list in the Lists section.
  */
-public class ListItemsAdapter extends BaseShowsAdapter {
+class ListItemsAdapter extends BaseShowsAdapter {
 
-    public ListItemsAdapter(Activity activity, OnItemClickListener listener) {
+    ListItemsAdapter(Activity activity, OnItemClickListener listener) {
         super(activity, listener);
     }
 

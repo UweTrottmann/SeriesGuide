@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.loaders;
+package com.battlelancer.seriesguide.ui.lists;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -10,20 +10,20 @@ import java.util.List;
 /**
  * Loads all user-created lists from the database into a list.
  */
-public class OrderedListsLoader extends GenericSimpleLoader<List<OrderedListsLoader.OrderedList>> {
+class OrderedListsLoader extends GenericSimpleLoader<List<OrderedListsLoader.OrderedList>> {
 
-    public static class OrderedList {
+    static class OrderedList {
 
         public String id;
         public String name;
 
-        public OrderedList(String id, String name) {
+        OrderedList(String id, String name) {
             this.id = id;
             this.name = name;
         }
     }
 
-    public OrderedListsLoader(Context context) {
+    OrderedListsLoader(Context context) {
         super(context);
     }
 
@@ -51,7 +51,7 @@ public class OrderedListsLoader extends GenericSimpleLoader<List<OrderedListsLoa
         return items;
     }
 
-    public interface ListsQuery {
+    private interface ListsQuery {
         String[] PROJECTION = new String[] {
                 SeriesGuideContract.Lists._ID,
                 SeriesGuideContract.Lists.LIST_ID,

@@ -1,5 +1,5 @@
 
-package com.battlelancer.seriesguide.ui.dialogs;
+package com.battlelancer.seriesguide.ui.lists;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -20,7 +20,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.util.ListsTools;
 
 /**
  * Dialog to rename or remove a list.

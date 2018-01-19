@@ -1,13 +1,14 @@
-package com.battlelancer.seriesguide.settings;
+package com.battlelancer.seriesguide.ui.lists;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings.ShowsSortOrder;
 
 /**
- * Provides settings used to sort displayed list items in {@link com.battlelancer.seriesguide.ui.ListsFragment}.
+ * Provides settings used to sort displayed list items in {@link ListsFragment}.
  */
 public class ListsDistillationSettings {
 
@@ -19,7 +20,7 @@ public class ListsDistillationSettings {
     /**
      * Builds an appropriate SQL sort statement for sorting lists.
      */
-    public static String getSortQuery(Context context) {
+    static String getSortQuery(Context context) {
         int sortOrderId = getSortOrderId(context);
 
         // convert to show sort order id
@@ -49,7 +50,7 @@ public class ListsDistillationSettings {
     }
 
     /**
-     * Returns the id as of {@link com.battlelancer.seriesguide.settings.ListsDistillationSettings.ListsSortOrder}
+     * Returns the id as of {@link ListsDistillationSettings.ListsSortOrder}
      * of the current list sort order.
      */
     public static int getSortOrderId(Context context) {

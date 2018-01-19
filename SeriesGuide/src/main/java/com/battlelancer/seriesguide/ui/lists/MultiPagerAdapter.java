@@ -1,5 +1,5 @@
 
-package com.battlelancer.seriesguide.adapters;
+package com.battlelancer.seriesguide.ui.lists;
 
 import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
