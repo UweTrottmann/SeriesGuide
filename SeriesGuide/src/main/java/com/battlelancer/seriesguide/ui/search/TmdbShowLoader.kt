@@ -46,8 +46,7 @@ class TmdbShowLoader(val context: Context, val tmdb: Tmdb, val language: String)
                 val searchResult = SearchResult()
                 searchResult.tvdbid = externalIds.tvdb_id
                 searchResult.title = it.name
-//                searchResult.overview = it.overview
-                searchResult.overview = if (it.name != it.original_name) it.original_name else ""
+                searchResult.overview = it.overview
                 searchResult.language = language
                 searchResult
             }
