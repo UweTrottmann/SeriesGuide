@@ -1,19 +1,20 @@
 package com.battlelancer.seriesguide.modules
 
 import com.battlelancer.seriesguide.backend.HexagonTools
-import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader
-import com.battlelancer.seriesguide.ui.movies.TmdbMoviesLoader
-import com.battlelancer.seriesguide.ui.search.TraktAddLoader
-import com.battlelancer.seriesguide.ui.comments.TraktCommentsLoader
-import com.battlelancer.seriesguide.ui.search.TvdbAddLoader
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools
-import com.battlelancer.seriesguide.ui.search.AddShowTask
 import com.battlelancer.seriesguide.traktapi.ConnectTraktTask
-import com.battlelancer.seriesguide.ui.movies.MovieTools
-import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.traktapi.TraktRatingsTask
+import com.battlelancer.seriesguide.ui.comments.TraktCommentsLoader
+import com.battlelancer.seriesguide.ui.movies.MovieTools
+import com.battlelancer.seriesguide.ui.movies.TmdbMoviesLoader
+import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader
+import com.battlelancer.seriesguide.ui.search.AddShowTask
+import com.battlelancer.seriesguide.ui.search.TraktAddLoader
+import com.battlelancer.seriesguide.ui.search.TvdbAddLoader
+import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.uwetrottmann.thetvdb.services.TheTvdbEpisodes
+import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.services.MoviesService
 import com.uwetrottmann.tmdb2.services.PeopleService
 import com.uwetrottmann.trakt5.TraktV2
@@ -42,6 +43,7 @@ interface ServicesComponent {
     fun movieTools(): MovieTools
     fun peopleService(): PeopleService
     fun showTools(): ShowTools
+    fun tmdb(): Tmdb
     fun trakt(): TraktV2
     fun traktCheckin(): Checkin
     fun traktComments(): Comments
