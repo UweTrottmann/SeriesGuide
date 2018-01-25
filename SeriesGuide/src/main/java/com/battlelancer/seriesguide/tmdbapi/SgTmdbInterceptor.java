@@ -1,9 +1,11 @@
 package com.battlelancer.seriesguide.tmdbapi;
 
-import com.battlelancer.seriesguide.BuildConfig;
+import android.support.annotation.NonNull;
 import com.uwetrottmann.tmdb2.Tmdb;
 import com.uwetrottmann.tmdb2.TmdbInterceptor;
+import dagger.Lazy;
 import java.io.IOException;
+import javax.inject.Inject;
 import okhttp3.Interceptor;
 import okhttp3.Response;
 
@@ -13,11 +15,15 @@ import okhttp3.Response;
  */
 public class SgTmdbInterceptor implements Interceptor {
 
-    public SgTmdbInterceptor() {
+    private final Lazy<Tmdb> tmdb;
+
+    @Inject
+    public SgTmdbInterceptor(Lazy<Tmdb> tmdb) {
+        this.tmdb = tmdb;
     }
 
     @Override
-    public Response intercept(Chain chain) throws IOException {
-        return TmdbInterceptor.handleIntercept(chain, BuildConfig.TMDB_API_KEY);
+    public Response intercept(@NonNull Chain chain) throws IOException {
+        return TmdbInterceptor.handleIntercept(chain, tmdb.get());
     }
 }

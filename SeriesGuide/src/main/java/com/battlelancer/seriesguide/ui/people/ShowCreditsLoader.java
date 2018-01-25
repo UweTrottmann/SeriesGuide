@@ -4,9 +4,9 @@ import android.content.Context;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
+import com.uwetrottmann.tmdb2.entities.BaseTvShow;
 import com.uwetrottmann.tmdb2.entities.Credits;
 import com.uwetrottmann.tmdb2.entities.FindResults;
-import com.uwetrottmann.tmdb2.entities.TvShow;
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource;
 import com.uwetrottmann.tmdb2.services.FindService;
 import com.uwetrottmann.tmdb2.services.TvService;
@@ -71,7 +71,7 @@ public class ShowCreditsLoader extends GenericSimpleLoader<Credits> {
                     .find(String.valueOf(showId), ExternalSource.TVDB_ID, null)
                     .execute();
             if (response.isSuccessful()) {
-                List<TvShow> tvResults = response.body().tv_results;
+                List<BaseTvShow> tvResults = response.body().tv_results;
                 if (!tvResults.isEmpty()) {
                     showId = tvResults.get(0).id;
                     return true; // found it!

@@ -11,8 +11,8 @@ import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.Tmdb;
+import com.uwetrottmann.tmdb2.entities.BaseMovie;
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter;
-import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.entities.MovieResultsPage;
 import com.uwetrottmann.tmdb2.entities.TmdbDate;
 import com.uwetrottmann.tmdb2.enumerations.ReleaseType;
@@ -34,10 +34,10 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
 
     public static class Result {
         /** If loading failed, is null. Empty if no results. */
-        @Nullable public List<Movie> results;
+        @Nullable public List<BaseMovie> results;
         @NonNull public String emptyText;
 
-        public Result(@Nullable List<Movie> results, @NonNull String emptyText) {
+        public Result(@Nullable List<BaseMovie> results, @NonNull String emptyText) {
             this.results = results;
             this.emptyText = emptyText;
         }
@@ -66,7 +66,7 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
         String languageCode = DisplaySettings.getMoviesLanguage(getContext());
         String regionCode = DisplaySettings.getMoviesRegion(getContext());
 
-        List<Movie> results = null;
+        List<BaseMovie> results = null;
         String action = null;
         try {
             Response<MovieResultsPage> response;
