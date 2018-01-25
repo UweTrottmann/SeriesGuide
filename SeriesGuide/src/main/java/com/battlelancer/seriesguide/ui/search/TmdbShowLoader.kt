@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui.search
 import android.content.Context
 import android.support.annotation.StringRes
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.TmdbDate
@@ -32,23 +33,31 @@ class TmdbShowLoader(val context: Context, val tmdb: Tmdb, val language: String)
         }
 
         val tvService = tmdb.tvService()
+        val existingPosterPaths = ShowTools.getShowTvdbIdsAndPosters(context)
+
         val searchResults = results.results.mapNotNull {
             val idResponse = try {
                 tvService.externalIds(it.id, null).execute()
             } catch (e: IOException) {
                 null
             }
+
             val externalIds = idResponse?.body()
             if (idResponse == null || !idResponse.isSuccessful ||
                     externalIds == null || externalIds.tvdb_id == null) {
                 null // just ignore this show
             } else {
-                val searchResult = SearchResult()
-                searchResult.tvdbid = externalIds.tvdb_id
-                searchResult.title = it.name
-                searchResult.overview = it.overview
-                searchResult.language = language
-                searchResult
+                SearchResult().apply {
+                    tvdbid = externalIds.tvdb_id
+                    title = it.name
+                    overview = it.overview
+                    language = language
+                    if (existingPosterPaths != null &&
+                            existingPosterPaths.indexOfKey(externalIds.tvdb_id) >= 0) {
+                        state = SearchResult.STATE_ADDED // is already in local database
+                        posterPath = existingPosterPaths[externalIds.tvdb_id]
+                    }
+                }
             }
         }
         return TvdbAddLoader.Result(searchResults, context.getString(R.string.add_empty), true)
