@@ -11,7 +11,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.uwetrottmann.tmdb2.entities.Movie;
+import com.uwetrottmann.tmdb2.entities.BaseMovie;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,7 +99,7 @@ class MoviesDiscoverAdapter extends MoviesAdapter {
     }
 
     @Override
-    Movie getMovie(int position) {
+    BaseMovie getMovie(int position) {
         return movies.get(position - links.size() - 1 /* header */);
     }
 
