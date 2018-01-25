@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui.search;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -41,9 +42,9 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
         }
     }
 
-    private final Context context;
-    private final String query;
-    private final String language;
+    @SuppressLint("StaticFieldLeak") private final Context context;
+    @Nullable private final String query;
+    @Nullable private final String language;
     @Inject Lazy<TvdbTools> tvdbTools;
     @Inject Lazy<Shows> traktShows;
     @Inject Lazy<Search> traktSearch;
@@ -69,7 +70,8 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
         if (TextUtils.isEmpty(query)) {
             // no query? load a list of shows with new episodes in the last 7 days
             TmdbShowLoader tmdbShowLoader = new TmdbShowLoader(context,
-                    SgApp.getServicesComponent(context).tmdb(), language);
+                    SgApp.getServicesComponent(context).tmdb(), language == null
+                    ? context.getString(R.string.show_default_language) : language);
             return tmdbShowLoader.getShowsWithNewEpisodes();
         } else {
             // have a query?
