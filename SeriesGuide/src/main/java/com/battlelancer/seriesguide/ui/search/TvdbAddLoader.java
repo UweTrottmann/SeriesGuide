@@ -16,7 +16,6 @@ import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.Show;
-import com.uwetrottmann.trakt5.entities.TrendingShow;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.services.Search;
 import com.uwetrottmann.trakt5.services.Shows;
@@ -28,7 +27,7 @@ import timber.log.Timber;
 
 public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
 
-    static class Result {
+    public static class Result {
         @NonNull
         public List<SearchResult> results;
         public String emptyText;
@@ -68,27 +67,10 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
         List<SearchResult> results;
 
         if (TextUtils.isEmpty(query)) {
-            // no query? load a list of trending shows from trakt
-            List<TrendingShow> trendingShows = SgTrakt.executeCall(context,
-                    traktShows.get().trending(1, 35, Extended.FULL),
-                    "get trending shows"
-            );
-            if (trendingShows != null) {
-                List<Show> shows = new LinkedList<>();
-                for (TrendingShow show : trendingShows) {
-                    if (show.show == null || show.show.ids == null || show.show.ids.tvdb == null) {
-                        // skip if required values are missing
-                        continue;
-                    }
-                    shows.add(show.show);
-                }
-                // manually set the language to the current search language
-                results = TraktAddLoader.parseTraktShowsToSearchResults(getContext(), shows,
-                        language);
-                return buildResultSuccess(results, R.string.add_empty);
-            } else {
-                return buildResultFailure(R.string.trakt);
-            }
+            // no query? load a list of shows with new episodes in the last 7 days
+            TmdbShowLoader tmdbShowLoader = new TmdbShowLoader(context,
+                    SgApp.getServicesComponent(context).tmdb(), language);
+            return tmdbShowLoader.getShowsWithNewEpisodes();
         } else {
             // have a query?
             // search trakt (has better search) when using English
