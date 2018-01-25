@@ -238,18 +238,31 @@ class SgApp : Application() {
      */
     private fun enableStrictMode() {
         // Enable StrictMode
-        val threadPolicyBuilder = ThreadPolicy.Builder()
-        threadPolicyBuilder.detectAll()
-        threadPolicyBuilder.penaltyLog()
-        StrictMode.setThreadPolicy(threadPolicyBuilder.build())
-
-        // Policy applied to all threads in the virtual machine's process
-        val vmPolicyBuilder = VmPolicy.Builder()
-        vmPolicyBuilder.detectAll()
-        vmPolicyBuilder.penaltyLog()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            vmPolicyBuilder.detectLeakedRegistrationObjects()
+        with(ThreadPolicy.Builder()) {
+            detectAll()
+            penaltyLog()
+            StrictMode.setThreadPolicy(build())
         }
-        StrictMode.setVmPolicy(vmPolicyBuilder.build())
+
+        // custom config to disable detecting untagged sockets
+        with(VmPolicy.Builder()) {
+            penaltyLog()
+
+            detectLeakedSqlLiteObjects()
+            detectActivityLeaks()
+            detectLeakedClosableObjects()
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                detectLeakedRegistrationObjects()
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                detectFileUriExposure()
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                detectContentUriWithoutPermission()
+            }
+            // Policy applied to all threads in the virtual machine's process
+            StrictMode.setVmPolicy(build())
+        }
     }
 }
