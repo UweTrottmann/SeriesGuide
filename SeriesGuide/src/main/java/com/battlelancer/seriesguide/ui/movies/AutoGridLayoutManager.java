@@ -7,14 +7,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.battlelancer.seriesguide.R;
 
-class AutoGridLayoutManager extends GridLayoutManager {
+public class AutoGridLayoutManager extends GridLayoutManager {
 
     private final int columnWidth;
     private final int minItemSpanSize;
     private final int minSpanCount;
     private boolean columnWidthChanged;
 
-    AutoGridLayoutManager(Context context, @DimenRes int itemWidthRes, int minItemSpanSize,
+    public AutoGridLayoutManager(Context context, @DimenRes int itemWidthRes, int minItemSpanSize,
             int minSpanCount) {
         super(context, minSpanCount);
 
