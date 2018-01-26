@@ -32,6 +32,7 @@ class ShowsDiscoverFragment : Fragment() {
     lateinit var emptyView: EmptyView
 
     private lateinit var unbinder: Unbinder
+    private lateinit var adapter: ShowsDiscoverAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
@@ -60,6 +61,9 @@ class ShowsDiscoverFragment : Fragment() {
             setHasFixedSize(true)
             this.layoutManager = layoutManager
         }
+
+        adapter = ShowsDiscoverAdapter()
+        recyclerView.adapter = adapter
     }
 
     override fun onDestroyView() {
