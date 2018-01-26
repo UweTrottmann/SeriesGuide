@@ -36,6 +36,7 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment;
 import com.battlelancer.seriesguide.ui.search.ShowSearchFragment;
+import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFragment;
 import com.battlelancer.seriesguide.ui.search.TraktAddFragment;
 import com.battlelancer.seriesguide.ui.search.TvdbAddFragment;
 import com.battlelancer.seriesguide.util.SearchHistory;
@@ -225,7 +226,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
         tabsAdapter.addTab(R.string.shows, ShowSearchFragment.class, null);
         tabsAdapter.addTab(R.string.episodes, EpisodeSearchFragment.class, null);
-        tabsAdapter.addTab(R.string.title_discover, TvdbAddFragment.class, null);
+        tabsAdapter.addTab(R.string.title_discover, ShowsDiscoverFragment.class, null);
         if (TraktCredentials.get(this).hasCredentials()) {
             addTraktTab(tabsAdapter, R.string.recommended, TraktAddFragment.TYPE_RECOMMENDED);
             addTraktTab(tabsAdapter, R.string.watched_shows, TraktAddFragment.TYPE_WATCHED);
