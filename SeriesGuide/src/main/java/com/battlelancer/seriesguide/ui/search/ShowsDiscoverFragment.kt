@@ -1,5 +1,7 @@
 package com.battlelancer.seriesguide.ui.search
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -12,6 +14,7 @@ import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.EmptyView
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout
 
@@ -33,6 +36,7 @@ class ShowsDiscoverFragment : Fragment() {
 
     private lateinit var unbinder: Unbinder
     private lateinit var adapter: ShowsDiscoverAdapter
+    private lateinit var model: ShowsDiscoverViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
@@ -44,9 +48,11 @@ class ShowsDiscoverFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewShowsDiscover,
                 R.id.recyclerViewShowsDiscover)
-        swipeRefreshLayout.setOnRefreshListener { TODO("Refresh") }
+        swipeRefreshLayout.setOnRefreshListener { loadResults() }
+        swipeRefreshLayout.isRefreshing = false
+        ViewTools.setSwipeRefreshLayoutColors(activity!!.theme, swipeRefreshLayout)
 
-        emptyView.setButtonClickListener { TODO("Refresh") }
+        emptyView.setButtonClickListener { loadResults() }
 
         val layoutManager = AutoGridLayoutManager(context, R.dimen.showgrid_columnWidth,
                 1, 1).apply {
@@ -64,6 +70,29 @@ class ShowsDiscoverFragment : Fragment() {
 
         adapter = ShowsDiscoverAdapter()
         recyclerView.adapter = adapter
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        model = ViewModelProviders.of(this).get(ShowsDiscoverViewModel::class.java)
+        model.data.observe(this, Observer { handleResultsUpdate(it) })
+        loadResults()
+    }
+
+    private fun loadResults() {
+        model.data.load()
+    }
+
+    private fun handleResultsUpdate(result: ShowsDiscoverLiveData.Result?) {
+        result?.let {
+            val hasResults = result.searchResults.isNotEmpty()
+            emptyView.visibility = if (hasResults) View.GONE else View.VISIBLE
+            recyclerView.visibility = if (hasResults) View.VISIBLE else View.GONE
+            swipeRefreshLayout.isRefreshing = false
+            emptyView.setMessage(result.emptyText)
+            adapter.updateSearchResults(result.searchResults)
+        }
     }
 
     override fun onDestroyView() {
