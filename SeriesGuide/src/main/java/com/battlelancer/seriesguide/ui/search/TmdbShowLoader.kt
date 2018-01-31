@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui.search
 import android.content.Context
 import android.support.annotation.StringRes
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.ui.search.ShowsDiscoverLiveData.Result
 import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.Tmdb
@@ -10,11 +11,13 @@ import com.uwetrottmann.tmdb2.entities.TmdbDate
 import java.io.IOException
 import java.util.Calendar
 import java.util.Date
-import java.util.LinkedList
 
+/**
+ * Loads shows from TMDb, using two letter ISO 639-1 [language] code.
+ */
 class TmdbShowLoader(val context: Context, val tmdb: Tmdb, val language: String) {
 
-    fun getShowsWithNewEpisodes(): TvdbAddLoader.Result {
+    fun getShowsWithNewEpisodes(): Result {
         val call = tmdb.discoverTv()
                 .air_date_lte(dateNow)
                 .air_date_gte(dateOneWeekAgo)
@@ -60,7 +63,7 @@ class TmdbShowLoader(val context: Context, val tmdb: Tmdb, val language: String)
                 }
             }
         }
-        return TvdbAddLoader.Result(searchResults, context.getString(R.string.add_empty), true)
+        return Result(searchResults, context.getString(R.string.add_empty))
     }
 
     private val dateNow: TmdbDate
@@ -73,7 +76,7 @@ class TmdbShowLoader(val context: Context, val tmdb: Tmdb, val language: String)
             return TmdbDate(calendar.time)
         }
 
-    private fun buildResultFailure(@StringRes serviceResId: Int): TvdbAddLoader.Result {
+    private fun buildResultFailure(@StringRes serviceResId: Int): Result {
         // only check for network here to allow hitting the response cache
         val emptyText: String
         if (AndroidUtils.isNetworkConnected(context)) {
@@ -82,7 +85,7 @@ class TmdbShowLoader(val context: Context, val tmdb: Tmdb, val language: String)
         } else {
             emptyText = context.getString(R.string.offline)
         }
-        return TvdbAddLoader.Result(LinkedList<SearchResult>(), emptyText, false)
+        return Result(emptyList(), emptyText)
     }
 
 }

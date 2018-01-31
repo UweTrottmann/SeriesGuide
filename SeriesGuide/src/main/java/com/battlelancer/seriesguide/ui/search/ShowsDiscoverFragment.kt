@@ -13,6 +13,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.EmptyView
@@ -48,11 +49,12 @@ class ShowsDiscoverFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewShowsDiscover,
                 R.id.recyclerViewShowsDiscover)
-        swipeRefreshLayout.setOnRefreshListener { loadResults() }
-        swipeRefreshLayout.isRefreshing = false
+        swipeRefreshLayout.setOnRefreshListener { loadResults(true) }
+        swipeRefreshLayout.isRefreshing = true
         ViewTools.setSwipeRefreshLayoutColors(activity!!.theme, swipeRefreshLayout)
 
-        emptyView.setButtonClickListener { loadResults() }
+        emptyView.setButtonClickListener { loadResults(true) }
+        emptyView.visibility = View.GONE
 
         val layoutManager = AutoGridLayoutManager(context, R.dimen.showgrid_columnWidth,
                 1, 1).apply {
@@ -72,16 +74,21 @@ class ShowsDiscoverFragment : Fragment() {
         recyclerView.adapter = adapter
     }
 
+    /** Two letter ISO 639-1 language code or 'xx' meaning any language. */
+    private lateinit var languageCode: String
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        languageCode = DisplaySettings.getSearchLanguage(context)
 
         model = ViewModelProviders.of(this).get(ShowsDiscoverViewModel::class.java)
         model.data.observe(this, Observer { handleResultsUpdate(it) })
         loadResults()
     }
 
-    private fun loadResults() {
-        model.data.load()
+    private fun loadResults(forceLoad: Boolean = false) {
+        model.data.load(languageCode, forceLoad)
     }
 
     private fun handleResultsUpdate(result: ShowsDiscoverLiveData.Result?) {

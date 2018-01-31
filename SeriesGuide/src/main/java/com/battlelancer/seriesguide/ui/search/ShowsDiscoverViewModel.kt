@@ -5,6 +5,6 @@ import android.arch.lifecycle.AndroidViewModel
 
 class ShowsDiscoverViewModel(application: Application) : AndroidViewModel(application) {
 
-    val data = ShowsDiscoverLiveData()
+    val data = ShowsDiscoverLiveData(application)
 
 }
