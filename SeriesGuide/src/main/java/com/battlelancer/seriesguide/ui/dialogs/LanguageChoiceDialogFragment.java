@@ -30,6 +30,10 @@ public class LanguageChoiceDialogFragment extends AppCompatDialogFragment {
     private static final String ARG_ARRAY_LANGUAGE_CODES = "languageCodes";
     private static final String ARG_SELECTED_LANGUAGE_CODE = "selectedLanguageCode";
 
+    /**
+     * @param selectedLanguageCode two letter ISO 639-1 language code or 'xx' meaning any language,
+     * if null selects first item of languageCodes.
+     */
     public static LanguageChoiceDialogFragment newInstance(@ArrayRes int languageCodes,
             @Nullable String selectedLanguageCode) {
         LanguageChoiceDialogFragment f = new LanguageChoiceDialogFragment();

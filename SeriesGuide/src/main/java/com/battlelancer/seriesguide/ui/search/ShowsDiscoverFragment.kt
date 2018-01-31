@@ -3,10 +3,14 @@ package com.battlelancer.seriesguide.ui.search
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import butterknife.BindView
@@ -14,10 +18,15 @@ import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.EmptyView
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+import timber.log.Timber
 
 /**
  * Displays a list of shows with new episodes with links to popular shows and if connected to trakt
@@ -39,6 +48,11 @@ class ShowsDiscoverFragment : Fragment() {
     private lateinit var adapter: ShowsDiscoverAdapter
     private lateinit var model: ShowsDiscoverViewModel
 
+    /** Two letter ISO 639-1 language code or 'xx' meaning any language. */
+    private lateinit var languageCode: String
+    private var shouldTryAnyLanguage = false
+    private val languageCodeAny: String by lazy { getString(R.string.language_code_any) }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_shows_discover, container, false).also {
@@ -53,8 +67,18 @@ class ShowsDiscoverFragment : Fragment() {
         swipeRefreshLayout.isRefreshing = true
         ViewTools.setSwipeRefreshLayoutColors(activity!!.theme, swipeRefreshLayout)
 
-        emptyView.setButtonClickListener { loadResults(true) }
         emptyView.visibility = View.GONE
+        emptyView.setButtonClickListener {
+            if (shouldTryAnyLanguage && languageCode != languageCodeAny) {
+                // try again with any language
+                shouldTryAnyLanguage = false
+                changeLanguage(languageCodeAny)
+                loadResults()
+            } else {
+                // already set to any language or retrying, force loading results again
+                loadResults(true)
+            }
+        }
 
         val layoutManager = AutoGridLayoutManager(context, R.dimen.showgrid_columnWidth,
                 1, 1).apply {
@@ -74,14 +98,15 @@ class ShowsDiscoverFragment : Fragment() {
         recyclerView.adapter = adapter
     }
 
-    /** Two letter ISO 639-1 language code or 'xx' meaning any language. */
-    private lateinit var languageCode: String
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        // enable menu
+        setHasOptionsMenu(true)
+
         languageCode = DisplaySettings.getSearchLanguage(context)
 
+        // observe and load results
         model = ViewModelProviders.of(this).get(ShowsDiscoverViewModel::class.java)
         model.data.observe(this, Observer { handleResultsUpdate(it) })
         loadResults()
@@ -93,13 +118,64 @@ class ShowsDiscoverFragment : Fragment() {
 
     private fun handleResultsUpdate(result: ShowsDiscoverLiveData.Result?) {
         result?.let {
-            val hasResults = result.searchResults.isNotEmpty()
-            emptyView.visibility = if (hasResults) View.GONE else View.VISIBLE
-            recyclerView.visibility = if (hasResults) View.VISIBLE else View.GONE
             swipeRefreshLayout.isRefreshing = false
+
+            val hasResults = result.searchResults.isNotEmpty()
+
+            if (it.successful && !hasResults && languageCode != languageCodeAny) {
+                shouldTryAnyLanguage = true
+                emptyView.setButtonText(R.string.action_try_any_language)
+            } else {
+                emptyView.setButtonText(R.string.action_try_again)
+            }
             emptyView.setMessage(result.emptyText)
+            emptyView.visibility = if (hasResults) View.GONE else View.VISIBLE
+
+            recyclerView.visibility = if (hasResults) View.VISIBLE else View.GONE
             adapter.updateSearchResults(result.searchResults)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.tvdb_add_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val itemId = item?.itemId
+        if (itemId == R.id.menu_action_shows_search_clear_history) {
+            // tell the hosting activity to clear the search view history
+            EventBus.getDefault().post(ClearSearchHistoryEvent())
+            return true
+        }
+        if (itemId == R.id.menu_action_shows_search_change_language) {
+            displayLanguageSettings()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun displayLanguageSettings() {
+        // guard against onClick called after fragment is up navigated (multi-touch)
+        // onSaveInstanceState might already be called
+        if (isResumed) {
+            fragmentManager?.let {
+                val dialogFragment = LanguageChoiceDialogFragment.newInstance(
+                        R.array.languageCodesShowsWithAny, languageCode)
+                dialogFragment.show(fragmentManager, "dialog-language")
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        EventBus.getDefault().unregister(this)
     }
 
     override fun onDestroyView() {
@@ -117,5 +193,23 @@ class ShowsDiscoverFragment : Fragment() {
 
         unbinder.unbind()
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventMainThread(event: LanguageChoiceDialogFragment.LanguageChangedEvent) {
+        changeLanguage(event.selectedLanguageCode)
+        loadResults()
+    }
+
+    private fun changeLanguage(languageCode: String) {
+        this.languageCode = languageCode
+
+        // save selected search language
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putString(DisplaySettings.KEY_LANGUAGE_SEARCH, languageCode)
+                .apply()
+        Timber.d("Set search language to %s", languageCode)
+    }
+
+    class ClearSearchHistoryEvent
 
 }

@@ -63,7 +63,7 @@ class TmdbShowLoader(val context: Context, val tmdb: Tmdb, val language: String)
                 }
             }
         }
-        return Result(searchResults, context.getString(R.string.add_empty))
+        return Result(searchResults, context.getString(R.string.add_empty), true)
     }
 
     private val dateNow: TmdbDate
@@ -85,7 +85,7 @@ class TmdbShowLoader(val context: Context, val tmdb: Tmdb, val language: String)
         } else {
             emptyText = context.getString(R.string.offline)
         }
-        return Result(emptyList(), emptyText)
+        return Result(emptyList(), emptyText, false)
     }
 
 }

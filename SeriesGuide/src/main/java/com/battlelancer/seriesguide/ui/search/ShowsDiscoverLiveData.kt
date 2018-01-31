@@ -11,7 +11,8 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
 
     data class Result(
             val searchResults: List<SearchResult>,
-            val emptyText: String
+            val emptyText: String,
+            val successful: Boolean
     )
 
     private var task: AsyncTask<Void, Void, Result>? = null

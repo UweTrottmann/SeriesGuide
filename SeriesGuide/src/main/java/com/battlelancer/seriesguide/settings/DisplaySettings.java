@@ -124,12 +124,14 @@ public class DisplaySettings {
 
     /**
      * @return Two letter ISO 639-1 language code of the language the user prefers when searching or
-     * an empty string if all languages should be searched. Defaults to {@link
-     * #getContentLanguage(Context)} if the value does not exist.
+     * 'xx' if all languages should be searched. Defaults to {@link #getContentLanguage(Context)}.
      */
     public static String getSearchLanguage(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
+        String languageCode = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(KEY_LANGUAGE_SEARCH, getContentLanguage(context));
+        return TextUtils.isEmpty(languageCode)
+                ? context.getString(R.string.language_code_any)
+                : languageCode;
     }
 
     public static String getNumberFormat(Context context) {
