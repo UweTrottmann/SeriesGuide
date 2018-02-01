@@ -13,14 +13,21 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.search.AddFragment.OnAddingShowEvent
+import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.tasks.RemoveShowTask
 import com.battlelancer.seriesguide.widgets.EmptyView
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout
 import org.greenrobot.eventbus.EventBus
@@ -94,8 +101,44 @@ class ShowsDiscoverFragment : Fragment() {
             this.layoutManager = layoutManager
         }
 
-        adapter = ShowsDiscoverAdapter()
+        adapter = ShowsDiscoverAdapter(context!!, itemClickListener,
+                TraktCredentials.get(context).hasCredentials(), true)
         recyclerView.adapter = adapter
+    }
+
+    private val itemClickListener = object : ShowsDiscoverAdapter.OnItemClickListener {
+
+        override fun onItemClick(item: SearchResult) {
+            if (item.state != SearchResult.STATE_ADDING) {
+                if (item.state == SearchResult.STATE_ADDED) {
+                    // already in library, open it
+                    startActivity(OverviewActivity.intentShow(context, item.tvdbid))
+                } else {
+                    // guard against onClick called after fragment is paged away (multi-touch)
+                    // onSaveInstanceState might already be called
+                    if (isResumed) {
+                        // display more details in a dialog
+                        AddShowDialogFragment.showAddDialog(item, fragmentManager)
+                    }
+                }
+            }
+        }
+
+        override fun onAddClick(item: SearchResult) {
+            // post to let other fragments know show is getting added
+            EventBus.getDefault().post(OnAddingShowEvent(item.tvdbid))
+            TaskManager.getInstance().performAddTask(context, item)
+        }
+
+        override fun onMenuWatchlistClick(view: View, showTvdbId: Int) {
+            PopupMenu(view.context, view).apply {
+                inflate(R.menu.add_dialog_popup_menu)
+                // only support adding shows to watchlist
+                menu.findItem(R.id.menu_action_show_watchlist_remove).isVisible = false
+                setOnMenuItemClickListener(
+                        TraktAddFragment.AddItemMenuItemClickListener(context, showTvdbId))
+            }.show()
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -144,7 +187,7 @@ class ShowsDiscoverFragment : Fragment() {
         val itemId = item?.itemId
         if (itemId == R.id.menu_action_shows_search_clear_history) {
             // tell the hosting activity to clear the search view history
-            EventBus.getDefault().post(ClearSearchHistoryEvent())
+            EventBus.getDefault().post(TvdbAddFragment.ClearSearchHistoryEvent())
             return true
         }
         if (itemId == R.id.menu_action_shows_search_change_language) {
@@ -210,6 +253,41 @@ class ShowsDiscoverFragment : Fragment() {
         Timber.d("Set search language to %s", languageCode)
     }
 
-    class ClearSearchHistoryEvent
+    /**
+     * Called if the user triggers adding a single new show through the add dialog. The show is not
+     * actually added, yet.
+     *
+     * @see [onShowAddedEvent]
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onAddingShowEvent(event: OnAddingShowEvent) {
+        if (event.showTvdbId > 0) {
+            adapter.setStateForTvdbId(event.showTvdbId, SearchResult.STATE_ADDING)
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onShowAddedEvent(event: AddShowTask.OnShowAddedEvent) {
+        when {
+            event.successful -> setShowAdded(event.showTvdbId)
+            event.showTvdbId > 0 -> setShowNotAdded(event.showTvdbId)
+            else -> adapter.setAllPendingNotAdded()
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onShowRemovedEvent(event: RemoveShowTask.OnShowRemovedEvent) {
+        if (event.resultCode == NetworkResult.SUCCESS) {
+            setShowNotAdded(event.showTvdbId)
+        }
+    }
+
+    private fun setShowAdded(showTvdbId: Int) {
+        adapter.setStateForTvdbId(showTvdbId, SearchResult.STATE_ADDED)
+    }
+
+    private fun setShowNotAdded(showTvdbId: Int) {
+        adapter.setStateForTvdbId(showTvdbId, SearchResult.STATE_ADD)
+    }
 
 }

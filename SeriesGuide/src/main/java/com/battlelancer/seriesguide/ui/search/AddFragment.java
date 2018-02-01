@@ -38,7 +38,7 @@ import org.greenrobot.eventbus.ThreadMode;
  */
 public abstract class AddFragment extends Fragment {
 
-    static class OnAddingShowEvent {
+    public static class OnAddingShowEvent {
         /** Is -1 if adding all shows of a tab. Not updating other tabs then. */
         public final int showTvdbId;
 
