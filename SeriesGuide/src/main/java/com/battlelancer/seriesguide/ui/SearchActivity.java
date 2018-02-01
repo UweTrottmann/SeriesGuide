@@ -28,17 +28,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
-import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment;
+import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.ui.search.ShowSearchFragment;
 import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFragment;
 import com.battlelancer.seriesguide.ui.search.TraktAddFragment;
-import com.battlelancer.seriesguide.ui.search.TvdbAddFragment;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -75,32 +74,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
     public static final int SHOWS_LOADER_ID = 100;
     public static final int EPISODES_LOADER_ID = 101;
-    public static final int SEARCH_LOADER_ID = 102;
     public static final int TRAKT_BASE_LOADER_ID = 200;
-
-    /**
-     * Used by {@link ShowSearchFragment} and {@link EpisodeSearchFragment} to search as the user
-     * types.
-     */
-    public class SearchQueryEvent {
-        public final Bundle args;
-
-        public SearchQueryEvent(Bundle args) {
-            this.args = args;
-        }
-    }
-
-    /**
-     * Used by {@link TvdbAddFragment} to submit a query. Unlike local search it is not type and
-     * search.
-     */
-    public class SearchQuerySubmitEvent {
-        public final String query;
-
-        public SearchQuerySubmitEvent(String query) {
-            this.query = query;
-        }
-    }
 
     @BindView(R.id.containerSearchBar) View searchContainer;
     @BindView(R.id.editTextSearchBar) AutoCompleteTextView searchView;
@@ -180,7 +154,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         // manually retrieve the auto complete view popup background to override the theme
         TypedValue outValue = new TypedValue();
         getTheme().resolveAttribute(android.R.attr.autoCompleteTextViewStyle, outValue, true);
-        int[] attributes = new int[] { android.R.attr.popupBackground };
+        int[] attributes = new int[]{android.R.attr.popupBackground};
         TypedArray a = getTheme().obtainStyledAttributes(outValue.data, attributes);
         if (a.hasValue(0)) {
             searchView.setDropDownBackgroundDrawable(a.getDrawable(0));
@@ -471,7 +445,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
     @SuppressWarnings("UnusedParameters")
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(TvdbAddFragment.ClearSearchHistoryEvent event) {
+    public void onEventMainThread(ClearSearchHistoryEvent event) {
         if (searchHistory != null && searchHistoryAdapter != null) {
             searchHistory.clearHistory();
             searchHistoryAdapter.clear();
@@ -486,6 +460,34 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             return findViewById(R.id.coordinatorLayoutSearch);
         } else {
             return super.getSnackbarParentView();
+        }
+    }
+
+    /** Used by {@link ShowsDiscoverFragment} to indicate the search history should be cleared. */
+    public static class ClearSearchHistoryEvent {
+    }
+
+    /**
+     * Used by {@link ShowSearchFragment} and {@link EpisodeSearchFragment} to search as the user
+     * types.
+     */
+    public static class SearchQueryEvent {
+        public final Bundle args;
+
+        public SearchQueryEvent(Bundle args) {
+            this.args = args;
+        }
+    }
+
+    /**
+     * Used by {@link ShowsDiscoverFragment} to submit a query. Unlike local search it is not type
+     * and search.
+     */
+    public static class SearchQuerySubmitEvent {
+        public final String query;
+
+        public SearchQuerySubmitEvent(String query) {
+            this.query = query;
         }
     }
 }

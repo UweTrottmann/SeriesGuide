@@ -211,7 +211,7 @@ class ShowsDiscoverFragment : Fragment() {
         val itemId = item?.itemId
         if (itemId == R.id.menu_action_shows_search_clear_history) {
             // tell the hosting activity to clear the search view history
-            EventBus.getDefault().post(TvdbAddFragment.ClearSearchHistoryEvent())
+            EventBus.getDefault().post(SearchActivity.ClearSearchHistoryEvent())
             return true
         }
         if (itemId == R.id.menu_action_shows_search_change_language) {
