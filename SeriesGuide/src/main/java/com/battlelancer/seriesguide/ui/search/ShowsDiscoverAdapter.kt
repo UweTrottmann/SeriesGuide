@@ -25,15 +25,16 @@ class ShowsDiscoverAdapter(
 
     private val searchResults = mutableListOf<SearchResult>()
     private val linksCount = 0
+    private var showOnlyResults = false
 
-    fun updateSearchResults(newSearchResults: List<SearchResult>?) {
+    fun updateSearchResults(newSearchResults: List<SearchResult>?, showOnlyResults: Boolean) {
+        this.showOnlyResults = showOnlyResults
         searchResults.clear()
         if (newSearchResults != null) {
             searchResults.addAll(newSearchResults)
         }
         notifyDataSetChanged()
     }
-
 
     fun setStateForTvdbId(showTvdbId: Int, state: Int) {
         // multiple items may have the same TVDB id
@@ -53,10 +54,30 @@ class ShowsDiscoverAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when {
-            position < linksCount -> VIEW_TYPE_LINK
-            position == linksCount -> VIEW_TYPE_HEADER
-            else -> VIEW_TYPE_SHOW
+        return if (showOnlyResults) {
+            VIEW_TYPE_SHOW
+        } else {
+            when {
+                position < linksCount -> VIEW_TYPE_LINK
+                position == linksCount -> VIEW_TYPE_HEADER
+                else -> VIEW_TYPE_SHOW
+            }
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return if (showOnlyResults) {
+            searchResults.size
+        } else {
+            linksCount + 1 /* header */ + searchResults.size
+        }
+    }
+
+    private fun getSearchResultFor(position: Int): SearchResult {
+        return if (showOnlyResults) {
+            searchResults[position]
+        } else {
+            searchResults[position - linksCount - 1 /* header */]
         }
     }
 
@@ -76,12 +97,6 @@ class ShowsDiscoverAdapter(
                     .let { ShowViewHolder(it, menuClickListener) }
             else -> throw IllegalArgumentException("View type $viewType is unknown")
         }
-    }
-
-    override fun getItemCount(): Int = linksCount + 1 /* header */ + searchResults.size
-
-    private fun getSearchResultFor(position: Int): SearchResult {
-        return searchResults[position - linksCount - 1 /* header */]
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {

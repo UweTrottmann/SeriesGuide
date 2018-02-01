@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.OverviewActivity
+import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.search.AddFragment.OnAddingShowEvent
@@ -42,6 +43,8 @@ import timber.log.Timber
  */
 class ShowsDiscoverFragment : Fragment() {
 
+    private val KEY_QUERY = "searchQuery"
+
     @BindView(R.id.swipeRefreshLayoutShowsDiscover)
     lateinit var swipeRefreshLayout: EmptyViewSwipeRefreshLayout
 
@@ -57,8 +60,17 @@ class ShowsDiscoverFragment : Fragment() {
 
     /** Two letter ISO 639-1 language code or 'xx' meaning any language. */
     private lateinit var languageCode: String
-    private var shouldTryAnyLanguage = false
     private val languageCodeAny: String by lazy { getString(R.string.language_code_any) }
+    private var shouldTryAnyLanguage = false
+    private var query: String = ""
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (savedInstanceState != null) {
+            query = savedInstanceState.getString(KEY_QUERY)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
@@ -155,8 +167,14 @@ class ShowsDiscoverFragment : Fragment() {
         loadResults()
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventMainThread(event: SearchActivity.SearchQuerySubmitEvent) {
+        query = event.query
+        loadResults()
+    }
+
     private fun loadResults(forceLoad: Boolean = false) {
-        model.data.load(languageCode, forceLoad)
+        model.data.load(query, languageCode, forceLoad)
     }
 
     private fun handleResultsUpdate(result: ShowsDiscoverLiveData.Result?) {
@@ -175,7 +193,7 @@ class ShowsDiscoverFragment : Fragment() {
             emptyView.visibility = if (hasResults) View.GONE else View.VISIBLE
 
             recyclerView.visibility = if (hasResults) View.VISIBLE else View.GONE
-            adapter.updateSearchResults(result.searchResults)
+            adapter.updateSearchResults(result.searchResults, result.isResultsForQuery)
         }
     }
 
@@ -213,6 +231,11 @@ class ShowsDiscoverFragment : Fragment() {
         super.onStart()
 
         EventBus.getDefault().register(this)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_QUERY, query)
     }
 
     override fun onStop() {
