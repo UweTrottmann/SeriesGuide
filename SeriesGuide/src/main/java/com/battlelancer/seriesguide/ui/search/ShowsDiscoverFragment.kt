@@ -28,6 +28,7 @@ import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.search.AddFragment.OnAddingShowEvent
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
+import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.tasks.RemoveShowTask
 import com.battlelancer.seriesguide.widgets.EmptyView
@@ -125,6 +126,11 @@ class ShowsDiscoverFragment : Fragment() {
     }
 
     private val itemClickListener = object : ShowsDiscoverAdapter.OnItemClickListener {
+        override fun onLinkClick(anchor: View, link: TraktShowsLink) {
+            Utils.startActivityWithAnimation(activity,
+                    TraktShowsActivity.intent(context!!, link),
+                    anchor)
+        }
 
         override fun onItemClick(item: SearchResult) {
             if (item.state != SearchResult.STATE_ADDING) {

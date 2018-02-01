@@ -11,17 +11,28 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
 
 class ShowsDiscoverAdapter(
         private val context: Context,
-        private val menuClickListener: OnItemClickListener,
+        private val itemClickListener: OnItemClickListener,
         private val showMenuWatchlist: Boolean,
         private val hideMenuWatchlistIfAdded: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val searchResults = mutableListOf<SearchResult>()
-    private val linksCount = 0
+    private val links: MutableList<TraktShowsLink> = mutableListOf()
     private var showOnlyResults = false
+
+    init {
+        links.add(TraktShowsLink.POPULAR)
+        if (TraktCredentials.get(context).hasCredentials()) {
+            links.add(TraktShowsLink.RECOMMENDED)
+            links.add(TraktShowsLink.WATCHED)
+            links.add(TraktShowsLink.COLLECTION)
+            links.add(TraktShowsLink.WATCHLIST)
+        }
+    }
 
     fun updateSearchResults(newSearchResults: List<SearchResult>?, showOnlyResults: Boolean) {
         this.showOnlyResults = showOnlyResults
@@ -54,8 +65,8 @@ class ShowsDiscoverAdapter(
             VIEW_TYPE_SHOW
         } else {
             when {
-                position < linksCount -> VIEW_TYPE_LINK
-                position == linksCount -> VIEW_TYPE_HEADER
+                position < links.size -> VIEW_TYPE_LINK
+                position == links.size -> VIEW_TYPE_HEADER
                 else -> VIEW_TYPE_SHOW
             }
         }
@@ -65,7 +76,7 @@ class ShowsDiscoverAdapter(
         return if (showOnlyResults) {
             searchResults.size
         } else {
-            linksCount + 1 /* header */ + searchResults.size
+            links.size + 1 /* header */ + searchResults.size
         }
     }
 
@@ -73,7 +84,7 @@ class ShowsDiscoverAdapter(
         return if (showOnlyResults) {
             searchResults[position]
         } else {
-            searchResults[position - linksCount - 1 /* header */]
+            searchResults[position - links.size - 1 /* header */]
         }
     }
 
@@ -82,7 +93,7 @@ class ShowsDiscoverAdapter(
             VIEW_TYPE_LINK -> LayoutInflater
                     .from(parent.context)
                     .inflate(VIEW_TYPE_LINK, parent, false)
-                    .let { LinkViewHolder(it) }
+                    .let { LinkViewHolder(it, itemClickListener) }
             VIEW_TYPE_HEADER -> LayoutInflater
                     .from(parent.context)
                     .inflate(VIEW_TYPE_HEADER, parent, false)
@@ -90,7 +101,7 @@ class ShowsDiscoverAdapter(
             VIEW_TYPE_SHOW -> LayoutInflater
                     .from(parent.context)
                     .inflate(VIEW_TYPE_SHOW, parent, false)
-                    .let { ShowViewHolder(it, menuClickListener) }
+                    .let { ShowViewHolder(it, itemClickListener) }
             else -> throw IllegalArgumentException("View type $viewType is unknown")
         }
     }
@@ -98,7 +109,8 @@ class ShowsDiscoverAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         when (holder) {
             is LinkViewHolder -> {
-
+                holder.link = links[position]
+                holder.title.text = context.getString(holder.link.titleRes)
             }
             is HeaderViewHolder -> {
                 holder.header.setText(R.string.title_new_episodes)
@@ -135,14 +147,22 @@ class ShowsDiscoverAdapter(
     }
 
     interface OnItemClickListener {
+        fun onLinkClick(anchor: View, link: TraktShowsLink)
         fun onItemClick(item: SearchResult)
         fun onAddClick(item: SearchResult)
         fun onMenuWatchlistClick(view: View, showTvdbId: Int)
     }
 
-    class LinkViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class LinkViewHolder(itemView: View, onItemClickListener: OnItemClickListener)
+        : RecyclerView.ViewHolder(itemView) {
+
+        lateinit var link: TraktShowsLink
+        @BindView(R.id.textViewDiscoverLink)
+        lateinit var title: TextView
+
         init {
             ButterKnife.bind(this, itemView)
+            itemView.setOnClickListener { onItemClickListener.onLinkClick(itemView, link) }
         }
     }
 

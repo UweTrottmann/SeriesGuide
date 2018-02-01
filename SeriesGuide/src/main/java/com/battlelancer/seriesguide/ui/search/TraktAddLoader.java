@@ -16,6 +16,7 @@ import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.services.Recommendations;
+import com.uwetrottmann.trakt5.services.Shows;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
 import java.io.IOException;
@@ -47,9 +48,10 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
 
     @Inject Lazy<Recommendations> traktRecommendations;
     @Inject Lazy<Sync> traktSync;
-    private final int type;
+    @Inject Lazy<Shows> traktShows;
+    private final TraktShowsLink type;
 
-    TraktAddLoader(Context context, int type) {
+    TraktAddLoader(Context context, TraktShowsLink type) {
         super(context);
         this.type = type;
         SgApp.getServicesComponent(context).inject(this);
@@ -60,7 +62,18 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         List<Show> shows = new LinkedList<>();
         String action = null;
         try {
-            if (type == TraktAddFragment.TYPE_RECOMMENDED) {
+            if (type == TraktShowsLink.POPULAR) {
+                action = "load popular shows";
+                Response<List<Show>> response = traktShows.get()
+                        .popular(null, 25, Extended.FULL)
+                        .execute();
+                if (response.isSuccessful()) {
+                    shows = response.body();
+                } else {
+                    SgTrakt.trackFailedRequest(getContext(), action, response);
+                    return buildResultGenericFailure();
+                }
+            } else if (type == TraktShowsLink.RECOMMENDED) {
                 action = "load recommended shows";
                 Response<List<Show>> response = traktRecommendations.get()
                         .shows(Extended.FULL)
@@ -77,18 +90,17 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                 }
             } else {
                 Response<List<BaseShow>> response;
-                if (type == TraktAddFragment.TYPE_WATCHED) {
+                if (type == TraktShowsLink.WATCHED) {
                     action = "load watched shows";
                     response = traktSync.get().watchedShows(Extended.NOSEASONS).execute();
-                } else if (type == TraktAddFragment.TYPE_COLLECTION) {
+                } else if (type == TraktShowsLink.COLLECTION) {
                     action = "load show collection";
                     response = traktSync.get().collectionShows(null).execute();
-                } else if (type == TraktAddFragment.TYPE_WATCHLIST) {
+                } else if (type == TraktShowsLink.WATCHLIST) {
                     action = "load show watchlist";
                     response = traktSync.get().watchlistShows(Extended.FULL).execute();
                 } else {
-                    // cause NPE if used incorrectly
-                    return null;
+                    throw new IllegalArgumentException("Unknown type " + type);
                 }
                 if (response.isSuccessful()) {
                     extractShows(response.body(), shows);
