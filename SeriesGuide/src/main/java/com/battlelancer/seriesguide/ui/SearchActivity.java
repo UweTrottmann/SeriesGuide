@@ -9,7 +9,6 @@ import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.text.Editable;
@@ -29,7 +28,6 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.settings.SearchSettings;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
@@ -37,7 +35,6 @@ import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.ui.search.ShowSearchFragment;
 import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFragment;
-import com.battlelancer.seriesguide.ui.search.TraktAddFragment;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -67,10 +64,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
     public static final int TAB_POSITION_SHOWS = 0;
     public static final int TAB_POSITION_EPISODES = 1;
     public static final int TAB_POSITION_SEARCH = 2;
-    public static final int TAB_POSITION_RECOMMENDED = 3;
-    public static final int TAB_POSITION_WATCHED = 4;
-    public static final int TAB_POSITION_COLLECTION = 5;
-    public static final int TAB_POSITION_WATCHLIST = 6;
 
     public static final int SHOWS_LOADER_ID = 100;
     public static final int EPISODES_LOADER_ID = 101;
@@ -201,13 +194,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         tabsAdapter.addTab(R.string.shows, ShowSearchFragment.class, null);
         tabsAdapter.addTab(R.string.episodes, EpisodeSearchFragment.class, null);
         tabsAdapter.addTab(R.string.title_discover, ShowsDiscoverFragment.class, null);
-        if (TraktCredentials.get(this).hasCredentials()) {
-            addTraktTab(tabsAdapter, R.string.recommended, TraktAddFragment.TYPE_RECOMMENDED);
-            addTraktTab(tabsAdapter, R.string.watched_shows, TraktAddFragment.TYPE_WATCHED);
-            addTraktTab(tabsAdapter, R.string.shows_collection, TraktAddFragment.TYPE_COLLECTION);
-            addTraktTab(tabsAdapter, R.string.watchlist, TraktAddFragment.TYPE_WATCHLIST);
-        }
-
         tabsAdapter.notifyTabsChanged();
 
         // set default tab
@@ -224,13 +210,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             // also show keyboard when showing first tab (added tab)
             ViewTools.showSoftKeyboardOnSearchView(this, searchView);
         }
-    }
-
-    private static void addTraktTab(TabStripAdapter tabsAdapter, @StringRes int titleResId,
-            @TraktAddFragment.ListType int type) {
-        Bundle args = new Bundle();
-        args.putInt(TraktAddFragment.ARG_TYPE, type);
-        tabsAdapter.addTab(titleResId, TraktAddFragment.class, args);
     }
 
     private final ViewPager.OnPageChangeListener pageChangeListener

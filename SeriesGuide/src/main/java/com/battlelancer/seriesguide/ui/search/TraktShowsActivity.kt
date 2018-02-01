@@ -40,6 +40,7 @@ class TraktShowsActivity : BaseNavDrawerActivity(), AddShowDialogFragment.OnAddS
     companion object {
         const val EXTRA_LINK = "LINK"
 
+        @JvmStatic
         fun intent(context: Context, link: TraktShowsLink): Intent{
             return Intent(context, TraktShowsActivity::class.java).putExtra(EXTRA_LINK, link.id)
         }

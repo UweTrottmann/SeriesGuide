@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.search;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
@@ -21,8 +20,6 @@ import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.widgets.EmptyView;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,14 +34,9 @@ import org.greenrobot.eventbus.ThreadMode;
 public class TraktAddFragment extends AddFragment {
 
     /**
-     * Which trakt list should be shown. One of {@link TraktAddFragment.ListType}.
+     * Which trakt list should be shown. One of {@link TraktShowsLink}.
      */
     public final static String ARG_TYPE = "traktListType";
-
-    public final static int TYPE_RECOMMENDED = 0;
-    public final static int TYPE_WATCHED = 1;
-    public final static int TYPE_COLLECTION = 2;
-    public final static int TYPE_WATCHLIST = 3;
 
     public static TraktAddFragment newInstance(TraktShowsLink link) {
         TraktAddFragment f = new TraktAddFragment();
@@ -56,11 +48,6 @@ public class TraktAddFragment extends AddFragment {
         return f;
     }
 
-    @IntDef({TYPE_RECOMMENDED, TYPE_WATCHED, TYPE_COLLECTION, TYPE_WATCHLIST})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface ListType {
-    }
-
     private Unbinder unbinder;
     private TraktShowsLink listType;
 
@@ -68,7 +55,8 @@ public class TraktAddFragment extends AddFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        listType = TraktShowsLink.fromId(getArguments().getInt(ARG_TYPE));
+        Bundle args = getArguments();
+        listType = TraktShowsLink.fromId(args != null ? args.getInt(ARG_TYPE) : -1);
     }
 
     @Override
@@ -210,22 +198,6 @@ public class TraktAddFragment extends AddFragment {
                         traktAddCallbacks);
             }
         });
-    }
-
-    @Override
-    protected int getTabPosition() {
-        switch (listType) {
-            case RECOMMENDED:
-                return SearchActivity.TAB_POSITION_RECOMMENDED;
-            case COLLECTION:
-                return SearchActivity.TAB_POSITION_COLLECTION;
-            case WATCHED:
-                return SearchActivity.TAB_POSITION_WATCHED;
-            case WATCHLIST:
-                return SearchActivity.TAB_POSITION_WATCHLIST;
-            default:
-                return -1;
-        }
     }
 
     private LoaderManager.LoaderCallbacks<TraktAddLoader.Result> traktAddCallbacks

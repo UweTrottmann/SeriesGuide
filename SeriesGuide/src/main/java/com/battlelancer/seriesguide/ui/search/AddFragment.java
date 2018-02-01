@@ -23,8 +23,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
-import com.battlelancer.seriesguide.ui.SearchActivity;
-import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -195,19 +193,6 @@ public abstract class AddFragment extends Fragment {
 
     private void setShowNotAdded(int showTvdbId) {
         adapter.setStateForTvdbId(showTvdbId, SearchResult.STATE_ADD);
-    }
-
-    /**
-     * @return The tab position in the tab view.
-     * @see SearchActivity
-     */
-    protected abstract int getTabPosition();
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventTabClick(TabClickEvent event) {
-        if (event.position == getTabPosition()) {
-            resultsGridView.smoothScrollToPosition(0);
-        }
     }
 
     protected static class AddAdapter extends ArrayAdapter<SearchResult> {
