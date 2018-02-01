@@ -71,11 +71,18 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
         }
 
         private fun getShowsWithNewEpisodes(): Result? {
+            val languageActual = if (language == languageCodeAny) {
+                // TMDB falls back to English if sending 'xx', so set to English beforehand
+                DisplaySettings.LANGUAGE_EN
+            } else {
+                language
+            }
+
             val tmdb = SgApp.getServicesComponent(context).tmdb()
             val call = tmdb.discoverTv()
                     .air_date_lte(dateNow)
                     .air_date_gte(dateOneWeekAgo)
-                    .language(language)
+                    .language(languageActual)
                     .build()
 
             val response = try {
@@ -110,7 +117,7 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
                         tvdbid = externalIds.tvdb_id
                         title = it.name
                         overview = it.overview
-                        language = this@ShowsDiscoverLiveData.language
+                        language = languageActual
                     }
                 }
             }
