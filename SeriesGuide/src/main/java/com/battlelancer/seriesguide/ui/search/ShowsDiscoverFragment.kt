@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.search.AddFragment.OnAddingShowEvent
+import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.tasks.RemoveShowTask
@@ -316,6 +317,13 @@ class ShowsDiscoverFragment : Fragment() {
 
     private fun setShowNotAdded(showTvdbId: Int) {
         adapter.setStateForTvdbId(showTvdbId, SearchResult.STATE_ADD)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onTabClickEvent(event: TabClickEvent) {
+        if (event.position == SearchActivity.TAB_POSITION_SEARCH) {
+            recyclerView.smoothScrollToPosition(0)
+        }
     }
 
 }
