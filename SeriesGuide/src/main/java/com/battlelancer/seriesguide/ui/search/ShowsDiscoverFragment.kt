@@ -100,10 +100,15 @@ class ShowsDiscoverFragment : Fragment() {
         }
 
         val layoutManager = AutoGridLayoutManager(context, R.dimen.showgrid_columnWidth,
-                1, 1).apply {
+                2, 2).apply {
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
-                    return 1
+                    return when (adapter.getItemViewType(position)) {
+                        ShowsDiscoverAdapter.VIEW_TYPE_LINK -> 1
+                        ShowsDiscoverAdapter.VIEW_TYPE_HEADER -> spanCount
+                        ShowsDiscoverAdapter.VIEW_TYPE_SHOW -> 2
+                        else -> 0
+                    }
                 }
             }
         }

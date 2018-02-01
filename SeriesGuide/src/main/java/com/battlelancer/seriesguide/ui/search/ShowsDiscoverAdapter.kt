@@ -19,10 +19,6 @@ class ShowsDiscoverAdapter(
         private val hideMenuWatchlistIfAdded: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val VIEW_TYPE_LINK = R.layout.item_discover_link
-    private val VIEW_TYPE_HEADER = R.layout.item_discover_header
-    private val VIEW_TYPE_SHOW = R.layout.item_addshow
-
     private val searchResults = mutableListOf<SearchResult>()
     private val linksCount = 0
     private var showOnlyResults = false
@@ -185,5 +181,11 @@ class ShowsDiscoverAdapter(
                 onItemClickListener.onMenuWatchlistClick(it, item.getTvdbid())
             }
         }
+    }
+
+    companion object {
+        const val VIEW_TYPE_LINK = R.layout.item_discover_link
+        const val VIEW_TYPE_HEADER = R.layout.item_discover_header
+        const val VIEW_TYPE_SHOW = R.layout.item_addshow
     }
 }
