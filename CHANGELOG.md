@@ -9,6 +9,14 @@ Version 41
 ----------
 *(in development)*
 
+#### 40-beta2
+*(2018-02-02)*
+
+* 🌟 Add show and trakt tabs replaced with discover tab. Displays shows with new episodes (powered
+  by TMDb) and a link to popular shows (powered by trakt).
+* 🔨 Reorder tabs if episode is set watched and episodes are sorted by unwatched first.
+* 📝 Latest translations from crowdin.
+
 #### 40-beta1
 *(2018-01-11)*
 
