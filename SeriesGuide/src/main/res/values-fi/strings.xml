@@ -385,7 +385,7 @@
   <string name="pref_autoupdatesummary">Synkronoi ja päivitä sisältö automaattisesti</string>
   <string name="pref_autobackup">Automaattinen varmuuskopiointi</string>
   <string name="pref_autobackupsummary">Viikoittainen varmuuskopio ohjelmistasi, listoistasi ja elokuvistasi</string>
-  <string name="backup">Varmuuskopiointi/Palautus</string>
+  <string name="backup">Varmuuskopioi/Palauta</string>
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
   <string name="pref_number">Lukumuoto</string>
   <string name="pref_offset">Manuaalinen ajansiirto</string>

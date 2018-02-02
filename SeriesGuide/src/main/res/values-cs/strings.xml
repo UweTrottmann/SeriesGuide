@@ -46,7 +46,7 @@
   <string name="norating">n/a</string>
   <string name="unknown">neznámo</string>
   <string name="offline">Připojte se k síti a zkuste to znovu.</string>
-  <string name="app_not_available">No app available to handle this</string>
+  <string name="app_not_available">Není k dispozici použitelná aplikace</string>
   <string name="people_empty">Nikde nikdo? Zkus to znovu.</string>
   <string name="database_error">Nelze upravovat data.</string>
   <string name="reinstall_info">Zkuste možnost v nastavení, reinstalovat a obnovit</string>
