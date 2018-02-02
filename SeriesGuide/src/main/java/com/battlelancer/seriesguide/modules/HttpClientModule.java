@@ -31,12 +31,17 @@ public class HttpClientModule {
      */
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(Cache cache, SgTheTvdbInterceptor tvdbInterceptor,
-            SgTraktInterceptor traktInterceptor, AllApisAuthenticator authenticator) {
+    OkHttpClient provideOkHttpClient(
+            Cache cache,
+            SgTheTvdbInterceptor tvdbInterceptor,
+            SgTraktInterceptor traktInterceptor,
+            SgTmdbInterceptor tmdbInterceptor,
+            AllApisAuthenticator authenticator
+    ) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
         builder.readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-        builder.addInterceptor(new SgTmdbInterceptor());
+        builder.addInterceptor(tmdbInterceptor);
         builder.addNetworkInterceptor(tvdbInterceptor);
         builder.addNetworkInterceptor(traktInterceptor);
         builder.authenticator(authenticator);

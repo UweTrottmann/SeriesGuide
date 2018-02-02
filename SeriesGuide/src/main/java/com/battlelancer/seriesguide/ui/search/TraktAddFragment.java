@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.search;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
@@ -21,8 +20,6 @@ import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.widgets.EmptyView;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,28 +34,29 @@ import org.greenrobot.eventbus.ThreadMode;
 public class TraktAddFragment extends AddFragment {
 
     /**
-     * Which trakt list should be shown. One of {@link TraktAddFragment.ListType}.
+     * Which trakt list should be shown. One of {@link TraktShowsLink}.
      */
     public final static String ARG_TYPE = "traktListType";
 
-    public final static int TYPE_RECOMMENDED = 0;
-    public final static int TYPE_WATCHED = 1;
-    public final static int TYPE_COLLECTION = 2;
-    public final static int TYPE_WATCHLIST = 3;
+    public static TraktAddFragment newInstance(TraktShowsLink link) {
+        TraktAddFragment f = new TraktAddFragment();
 
-    @IntDef({ TYPE_RECOMMENDED, TYPE_WATCHED, TYPE_COLLECTION, TYPE_WATCHLIST })
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface ListType {
+        Bundle args = new Bundle();
+        args.putInt(TraktAddFragment.ARG_TYPE, link.id);
+        f.setArguments(args);
+
+        return f;
     }
 
     private Unbinder unbinder;
-    private int listType;
+    private TraktShowsLink listType;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        listType = getArguments().getInt(ARG_TYPE);
+        Bundle args = getArguments();
+        listType = TraktShowsLink.fromId(args != null ? args.getInt(ARG_TYPE) : -1);
     }
 
     @Override
@@ -79,11 +77,11 @@ public class TraktAddFragment extends AddFragment {
 
         // setup adapter, enable context menu only for recommendations and watchlist
         adapter = new AddAdapter(getActivity(), new ArrayList<SearchResult>(), itemClickListener,
-                listType == TYPE_RECOMMENDED || listType == TYPE_WATCHLIST,
-                listType == TYPE_RECOMMENDED);
+                listType == TraktShowsLink.RECOMMENDED || listType == TraktShowsLink.WATCHLIST,
+                listType == TraktShowsLink.RECOMMENDED);
 
         // load data
-        getLoaderManager().initLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType, null,
+        getLoaderManager().initLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
                 traktAddCallbacks);
 
         // add menu options
@@ -104,11 +102,11 @@ public class TraktAddFragment extends AddFragment {
             PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
             popupMenu.inflate(R.menu.add_dialog_popup_menu);
 
-            if (listType == TYPE_RECOMMENDED) {
+            if (listType == TraktShowsLink.RECOMMENDED) {
                 popupMenu.getMenu()
                         .findItem(R.id.menu_action_show_watchlist_remove)
                         .setVisible(false);
-            } else if (listType == TYPE_WATCHLIST) {
+            } else if (listType == TraktShowsLink.WATCHLIST) {
                 popupMenu.getMenu().findItem(R.id.menu_action_show_watchlist_add).setVisible(false);
             }
 
@@ -181,10 +179,11 @@ public class TraktAddFragment extends AddFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ShowTools.ShowChangedEvent event) {
-        if (listType == TYPE_WATCHLIST) {
+        if (listType == TraktShowsLink.WATCHLIST) {
             // reload watchlist if a show was removed
-            getLoaderManager().restartLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType, null,
-                    traktAddCallbacks);
+            getLoaderManager()
+                    .restartLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
+                            traktAddCallbacks);
         }
     }
 
@@ -195,26 +194,10 @@ public class TraktAddFragment extends AddFragment {
             public void onClick(View v) {
                 setProgressVisible(true, false);
                 getLoaderManager().restartLoader(
-                        SearchActivity.TRAKT_BASE_LOADER_ID + listType, null,
+                        SearchActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
                         traktAddCallbacks);
             }
         });
-    }
-
-    @Override
-    protected int getTabPosition() {
-        switch (listType) {
-            case TYPE_RECOMMENDED:
-                return SearchActivity.TAB_POSITION_RECOMMENDED;
-            case TYPE_COLLECTION:
-                return SearchActivity.TAB_POSITION_COLLECTION;
-            case TYPE_WATCHED:
-                return SearchActivity.TAB_POSITION_WATCHED;
-            case TYPE_WATCHLIST:
-                return SearchActivity.TAB_POSITION_WATCHLIST;
-            default:
-                return -1;
-        }
     }
 
     private LoaderManager.LoaderCallbacks<TraktAddLoader.Result> traktAddCallbacks

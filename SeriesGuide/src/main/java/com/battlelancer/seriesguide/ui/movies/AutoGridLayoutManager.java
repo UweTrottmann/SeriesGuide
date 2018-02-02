@@ -7,14 +7,19 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.battlelancer.seriesguide.R;
 
-class AutoGridLayoutManager extends GridLayoutManager {
+public class AutoGridLayoutManager extends GridLayoutManager {
 
     private final int columnWidth;
-    private final int minItemSpanSize;
+    private final int itemSpanSize;
     private final int minSpanCount;
     private boolean columnWidthChanged;
 
-    AutoGridLayoutManager(Context context, @DimenRes int itemWidthRes, int minItemSpanSize,
+    /**
+     * @param itemWidthRes Expected width of item to use to calculate span count.
+     * @param itemSpanSize Span size of item to use to calculate span count.
+     * @param minSpanCount Grid will have at least this many spans.
+     */
+    public AutoGridLayoutManager(Context context, @DimenRes int itemWidthRes, int itemSpanSize,
             int minSpanCount) {
         super(context, minSpanCount);
 
@@ -27,10 +32,10 @@ class AutoGridLayoutManager extends GridLayoutManager {
         this.columnWidth = itemWidth + 2 * itemMargin;
         columnWidthChanged = true;
 
-        if (minItemSpanSize < 1) {
+        if (itemSpanSize < 1) {
             throw new IllegalArgumentException("Max item span size should be 1 or bigger.");
         }
-        this.minItemSpanSize = minItemSpanSize;
+        this.itemSpanSize = itemSpanSize;
 
         if (minSpanCount < 1) {
             throw new IllegalArgumentException("Min span count should be 1 or bigger.");
@@ -50,7 +55,7 @@ class AutoGridLayoutManager extends GridLayoutManager {
             } else {
                 totalSpace = height - getPaddingTop() - getPaddingBottom();
             }
-            int spanCount = Math.max(minSpanCount, (totalSpace / columnWidth) * minItemSpanSize);
+            int spanCount = Math.max(minSpanCount, (totalSpace / columnWidth) * itemSpanSize);
             setSpanCount(spanCount);
         }
         super.onLayoutChildren(recycler, state);

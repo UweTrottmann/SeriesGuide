@@ -101,6 +101,47 @@
         <activity
             android:name="com.battlelancer.seriesguide.ui.streams.HistoryActivity"
             android:label="@string/user_stream" />
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.SearchActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateHidden">
+            <!-- Make this activity accessible from global search -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
+            <!-- Integrate with voice search: "OK Google, search for X on SeriesGuide" -->
+            <intent-filter>
+                <action android:name="com.google.android.gms.actions.SEARCH_ACTION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <!-- Receive links to shows -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+
+            <!-- Receive Android Beams of shows -->
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/vnd.com.uwetrottmann.seriesguide" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.search.TraktShowsActivity"
+            android:parentActivityName=".ui.SearchActivity">
+
+            <!-- Parent activity meta-data to support ICS -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.SearchActivity" />
+        </activity>
 
         <!-- Movies -->
         <activity
@@ -181,38 +222,6 @@
         <activity
             android:name="com.battlelancer.seriesguide.ui.stats.StatsActivity"
             android:label="@string/statistics" />
-        <activity
-            android:name="com.battlelancer.seriesguide.ui.SearchActivity"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="stateHidden">
-            <!-- Make this activity accessible from global search -->
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-
-            <!-- Integrate with voice search: "OK Google, search for X on SeriesGuide" -->
-            <intent-filter>
-                <action android:name="com.google.android.gms.actions.SEARCH_ACTION" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            <!-- Receive links to shows -->
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-
-            <!-- Receive Android Beams of shows -->
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="application/vnd.com.uwetrottmann.seriesguide" />
-            </intent-filter>
-        </activity>
         <activity
             android:name="com.battlelancer.seriesguide.traktapi.QuickCheckInActivity"
             android:exported="true"

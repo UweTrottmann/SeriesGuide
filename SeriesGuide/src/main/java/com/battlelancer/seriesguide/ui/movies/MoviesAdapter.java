@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.uwetrottmann.tmdb2.entities.BaseMovie;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final String posterBaseUrl;
     private final DateFormat dateFormatMovieReleaseDate;
     private final ItemClickListener itemClickListener;
-    final List<Movie> movies;
+    final List<BaseMovie> movies;
 
     MoviesAdapter(Context context, ItemClickListener itemClickListener) {
         this.context = context;
@@ -45,7 +46,7 @@ class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.posterBaseUrl = TmdbSettings.getPosterBaseUrl(context);
     }
 
-    void updateMovies(@Nullable List<Movie> newMovies) {
+    void updateMovies(@Nullable List<BaseMovie> newMovies) {
         movies.clear();
         if (newMovies != null) {
             movies.addAll(newMovies);
@@ -64,7 +65,7 @@ class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof MovieViewHolder) {
             MovieViewHolder actualHolder = (MovieViewHolder) holder;
-            Movie movie = getMovie(position);
+            BaseMovie movie = getMovie(position);
             actualHolder.movieTmdbId = movie.id;
             actualHolder.title.setText(movie.title);
             if (movie.release_date != null) {
@@ -92,7 +93,7 @@ class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return movies.size();
     }
 
-    Movie getMovie(int position) {
+    BaseMovie getMovie(int position) {
         return movies.get(position);
     }
 

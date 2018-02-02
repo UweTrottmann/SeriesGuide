@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui.search;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,7 +29,7 @@ import timber.log.Timber;
 
 public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
 
-    static class Result {
+    public static class Result {
         @NonNull
         public List<SearchResult> results;
         public String emptyText;
@@ -42,9 +43,9 @@ public class TvdbAddLoader extends GenericSimpleLoader<TvdbAddLoader.Result> {
         }
     }
 
-    private final Context context;
-    private final String query;
-    private final String language;
+    @SuppressLint("StaticFieldLeak") private final Context context;
+    @Nullable private final String query;
+    @Nullable private final String language;
     @Inject Lazy<TvdbTools> tvdbTools;
     @Inject Lazy<Shows> traktShows;
     @Inject Lazy<Search> traktSearch;
