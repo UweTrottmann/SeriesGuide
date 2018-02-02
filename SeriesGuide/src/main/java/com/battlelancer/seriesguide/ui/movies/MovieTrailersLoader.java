@@ -9,6 +9,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.entities.Videos;
+import com.uwetrottmann.tmdb2.enumerations.VideoType;
 import com.uwetrottmann.tmdb2.services.MoviesService;
 import java.io.IOException;
 import retrofit2.Response;
@@ -65,7 +66,7 @@ class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
 
         // fish out the first YouTube trailer
         for (Videos.Video video : videos.results) {
-            if ("Trailer".equals(video.type) && "YouTube".equals(video.site)
+            if (video.type == VideoType.TRAILER && "YouTube".equals(video.site)
                     && !TextUtils.isEmpty(video.key)) {
                 return video;
             }
