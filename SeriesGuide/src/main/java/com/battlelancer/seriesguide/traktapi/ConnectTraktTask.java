@@ -26,7 +26,7 @@ import retrofit2.Response;
  */
 public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
-    class FinishedEvent {
+    public class FinishedEvent {
         /**
          * One of {@link com.battlelancer.seriesguide.enums.NetworkResult}.
          */

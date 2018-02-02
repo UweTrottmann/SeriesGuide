@@ -10,9 +10,9 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
  * Provides settings used to sort displayed movies in
  * {@link MoviesBaseFragment} subclasses.
  */
-class MoviesDistillationSettings {
+public class MoviesDistillationSettings {
 
-    static class MoviesSortOrderChangedEvent {
+    public static class MoviesSortOrderChangedEvent {
     }
 
     static final String KEY_SORT_ORDER = "com.battlelancer.seriesguide.movies.sort.order";

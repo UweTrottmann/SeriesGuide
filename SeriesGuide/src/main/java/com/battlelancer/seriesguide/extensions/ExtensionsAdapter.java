@@ -23,9 +23,9 @@ import org.greenrobot.eventbus.EventBus;
 /**
  * Creates views for a list of {@link com.battlelancer.seriesguide.extensions.ExtensionManager.Extension}.
  */
-class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> {
+public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> {
 
-    class ExtensionDisableRequestEvent {
+    public class ExtensionDisableRequestEvent {
         public final int position;
 
         ExtensionDisableRequestEvent(int position) {

@@ -37,10 +37,10 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
 
     private static final String STATE_LIST_VISIBLE = "listVisible";
 
-    static class LocalizationChangedEvent {
+    public static class LocalizationChangedEvent {
     }
 
-    static class ItemsLoadedEvent {
+    public static class ItemsLoadedEvent {
         final List<LocalizationAdapter.LocalizationItem> items;
         final int type;
 
