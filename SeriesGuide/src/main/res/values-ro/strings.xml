@@ -193,6 +193,7 @@
   <string name="add_started">%s va apărea în lista de emisiuni în scurt timp.</string>
   <string name="add_error">Nu s-a putut adăuga %s.</string>
   <string name="add_already_exists">%s este deja în lista de emisiuni.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Recomandat</string>
   <string name="watched_shows">Vizionat</string>
   <string name="shows_collection">Colecție</string>

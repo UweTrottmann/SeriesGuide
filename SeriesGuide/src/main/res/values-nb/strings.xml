@@ -189,6 +189,7 @@
   <string name="add_started">%s vil vises i serielisten om kort tid.</string>
   <string name="add_error">Kan ikke legge til %s.</string>
   <string name="add_already_exists">%s er allerede i visningslisten.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Anbefalte</string>
   <string name="watched_shows">Sett</string>
   <string name="shows_collection">Samling</string>

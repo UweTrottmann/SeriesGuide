@@ -189,6 +189,7 @@
   <string name="add_started">%s zal binnenkort in het serie overzicht worden weergegeven.</string>
   <string name="add_error">Kan %s niet toevoegen.</string>
   <string name="add_already_exists">%s staat al in uw lijst.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Aanbevolen</string>
   <string name="watched_shows">Bekeken</string>
   <string name="shows_collection">Collectie</string>

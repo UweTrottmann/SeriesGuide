@@ -185,6 +185,7 @@
   <string name="add_started">%s akan muncul dalam daftar acara anda.</string>
   <string name="add_error">Tidak dapat menambah %s.</string>
   <string name="add_already_exists">%s sudah ada di daftar acara anda.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Disarankan</string>
   <string name="watched_shows">Ditonton</string>
   <string name="shows_collection">Koleksi</string>

@@ -189,6 +189,7 @@
   <string name="add_started">%s erscheint in Kürze in Ihrer Serien-Liste</string>
   <string name="add_error">%s konnte nicht hinzugefügt werden</string>
   <string name="add_already_exists">%s ist bereits in Ihrer Serien-Liste</string>
+  <string name="title_new_episodes">Neue Folgen</string>
   <string name="recommended">Empfehlungen</string>
   <string name="watched_shows">Angesehen</string>
   <string name="shows_collection">Sammlung</string>

@@ -189,6 +189,7 @@
   <string name="add_started">%s தோன்றும் காட்சி பட்டியலில் விரைவில்.</string>
   <string name="add_error">%s சேர்க்க முடியவில்லை.</string>
   <string name="add_already_exists">%s உங்கள் காட்சி பட்டியலில் ஏற்கனவே உள்ளது.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">பரிந்துரைக்கப்பட்டது</string>
   <string name="watched_shows">பார்த்த</string>
   <string name="shows_collection">தொகுப்பு</string>

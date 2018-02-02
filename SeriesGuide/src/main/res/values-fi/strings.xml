@@ -189,6 +189,7 @@
   <string name="add_started">%s ilmestyy pian ohjelmalistaasi.</string>
   <string name="add_error">Ei voitu lisätä ohjelmaa %s.</string>
   <string name="add_already_exists">%s on jo ohjelmalistallasi.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Suositellut</string>
   <string name="watched_shows">Katsottu</string>
   <string name="shows_collection">Kokoelma</string>

@@ -185,6 +185,7 @@
   <string name="add_started">%s將會顯示在你的清單中。</string>
   <string name="add_error">無法新增%s</string>
   <string name="add_already_exists">%s已經在你的清單當中。</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">推薦</string>
   <string name="watched_shows">已看過</string>
   <string name="shows_collection">收藏</string>

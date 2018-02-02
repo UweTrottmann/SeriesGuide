@@ -189,6 +189,7 @@
   <string name="add_started">%s irá aparecer na sua lista de séries brevemente.</string>
   <string name="add_error">Não foi possível adicionar %s.</string>
   <string name="add_already_exists">%s já se encontra na sua lista de séries.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Recomendadas</string>
   <string name="watched_shows">Vistas</string>
   <string name="shows_collection">Coleção</string>

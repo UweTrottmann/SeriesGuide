@@ -189,6 +189,7 @@
   <string name="add_started">%s vil blive vist på din serieliste om lidt.</string>
   <string name="add_error">Kunne ikke tilføje %s.</string>
   <string name="add_already_exists">%s er allerede på din serieliste.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Anbefalet</string>
   <string name="watched_shows">Set</string>
   <string name="shows_collection">Samling</string>

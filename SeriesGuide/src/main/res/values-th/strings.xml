@@ -185,6 +185,7 @@
   <string name="add_started">%s จะปรากฏในรายการซีรีส์ของคุณในไม่ช้า</string>
   <string name="add_error">ไม่สามารถเพิ่ม %s</string>
   <string name="add_already_exists">%s อยู่ในรายการซีรีส์ของคุณอยู่แล้ว</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">แนะนำ</string>
   <string name="watched_shows">ดูแล้ว</string>
   <string name="shows_collection">คลังเก็บ</string>

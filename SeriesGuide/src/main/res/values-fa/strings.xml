@@ -189,6 +189,7 @@
   <string name="add_started">%s به زودی در فهرست تماشایتان ظاهر خواهد شد.</string>
   <string name="add_error">قادر به افزودن %s نمی باشد.</string>
   <string name="add_already_exists">%s هم‌اکنون در فهرست نمایشتان هست.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">توصیه می شود</string>
   <string name="watched_shows">تماشا شده</string>
   <string name="shows_collection">مجموعه</string>

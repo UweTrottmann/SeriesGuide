@@ -189,6 +189,7 @@
   <string name="add_started">%s ќе се појави во вашата листа од серии за кратко.</string>
   <string name="add_error">Неуспешно додавање на %s.</string>
   <string name="add_already_exists">%s веќе се наоѓа во вачата листа од серии.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Препорачани</string>
   <string name="watched_shows">Гледано</string>
   <string name="shows_collection">Колекција</string>

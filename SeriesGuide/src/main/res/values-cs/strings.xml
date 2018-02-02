@@ -193,6 +193,7 @@
   <string name="add_started">%s se brzy objeví ve Vašem seznamu pořadů.</string>
   <string name="add_error">Nelze přidat %s.</string>
   <string name="add_already_exists">%s už je ve Vašem seznamu pořadů.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Doporučené</string>
   <string name="watched_shows">Zhlédnuto</string>
   <string name="shows_collection">Sbírka</string>

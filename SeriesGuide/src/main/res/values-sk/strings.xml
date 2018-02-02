@@ -193,6 +193,7 @@
   <string name="add_started">%s sa čoskoro zobrazí v zozname seriálov.</string>
   <string name="add_error">Nemožno pridať %s.</string>
   <string name="add_already_exists">%s už je vo vašich seriáloch.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Odporúčané</string>
   <string name="watched_shows">Videné</string>
   <string name="shows_collection">Zbierka</string>

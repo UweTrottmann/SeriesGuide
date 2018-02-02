@@ -193,6 +193,7 @@
   <string name="add_started">%s netrukus atsiras jūsų serialų sąraše.</string>
   <string name="add_error">Nepavyko pridėti %s.</string>
   <string name="add_already_exists">%s jau yra sąraše.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Rekomenduojami</string>
   <string name="watched_shows">Matyti</string>
   <string name="shows_collection">Kolekcija</string>

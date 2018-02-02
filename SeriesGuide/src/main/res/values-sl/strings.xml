@@ -197,6 +197,7 @@
   <string name="add_started">%s will appear in your show list shortly</string>
   <string name="add_error">%s ni bilo mogoče dodati.</string>
   <string name="add_already_exists">%s je že na vašem seznamu.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Priporočeno</string>
   <string name="watched_shows">Watched</string>
   <string name="shows_collection">Zbirka</string>

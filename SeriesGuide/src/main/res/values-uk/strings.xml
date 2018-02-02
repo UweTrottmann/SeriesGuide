@@ -193,6 +193,7 @@
   <string name="add_started">%s з\'явиться у вашому списку серіалів  найближчим часом.</string>
   <string name="add_error">Не вдалося додати %s.</string>
   <string name="add_already_exists">%s вже є у вашому списку.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Рекомендовано</string>
   <string name="watched_shows">Переглянуто</string>
   <string name="shows_collection">Колекція</string>
