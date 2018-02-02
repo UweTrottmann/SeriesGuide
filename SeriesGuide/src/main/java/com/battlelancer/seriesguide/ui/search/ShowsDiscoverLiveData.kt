@@ -38,9 +38,10 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
     /**
      * Schedules loading, give two letter ISO 639-1 [language] code or 'xx' meaning any language.
      * Set [forceLoad] to load new set of results even if language has not changed.
+     * Returns if it will load.
      */
-    fun load(query: String, language: String, forceLoad: Boolean) {
-        if (forceLoad || this.query != query || this.language != language || task == null) {
+    fun load(query: String, language: String, forceLoad: Boolean): Boolean {
+        return if (forceLoad || this.query != query || this.language != language || task == null) {
             this.query = query
             this.language = language
 
@@ -48,6 +49,9 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
                 task?.cancel(true)
             }
             task = WorkTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            true
+        } else {
+            false
         }
     }
 

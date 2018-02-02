@@ -85,7 +85,6 @@ class ShowsDiscoverFragment : Fragment() {
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewShowsDiscover,
                 R.id.recyclerViewShowsDiscover)
         swipeRefreshLayout.setOnRefreshListener { loadResults(true) }
-        swipeRefreshLayout.isRefreshing = true
         ViewTools.setSwipeRefreshLayoutColors(activity!!.theme, swipeRefreshLayout)
 
         emptyView.visibility = View.GONE
@@ -186,7 +185,8 @@ class ShowsDiscoverFragment : Fragment() {
     }
 
     private fun loadResults(forceLoad: Boolean = false) {
-        model.data.load(query, languageCode, forceLoad)
+        val willLoad = model.data.load(query, languageCode, forceLoad)
+        if (willLoad) swipeRefreshLayout.isRefreshing = true
     }
 
     private fun handleResultsUpdate(result: ShowsDiscoverLiveData.Result?) {
