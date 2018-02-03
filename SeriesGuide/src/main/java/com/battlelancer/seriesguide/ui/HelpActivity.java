@@ -21,12 +21,12 @@ import java.util.Locale;
  */
 public class HelpActivity extends BaseActivity {
 
+    private static final String SUPPORT_MAIL = "support@seriesgui.de";
+
     public static Intent getFeedbackEmailIntent(Context context) {
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:"));
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[] {
-                SeriesGuidePreferences.SUPPORT_MAIL
-        });
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] {SUPPORT_MAIL});
         // include app version in subject
         intent.putExtra(Intent.EXTRA_SUBJECT,
                 "SeriesGuide " + Utils.getVersion(context) + " Feedback");
@@ -58,11 +58,11 @@ public class HelpActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        /**
-         * Force the text-to-speech accessibility Javascript plug-in service on Android 4.2.2 to
-         * get shutdown, to avoid leaking its context.
-         *
-         * http://stackoverflow.com/a/18798305/1000543
+        /*
+          Force the text-to-speech accessibility Javascript plug-in service on Android 4.2.2 to
+          get shutdown, to avoid leaking its context.
+
+          http://stackoverflow.com/a/18798305/1000543
          */
         if (webview != null) {
             webview.getSettings().setJavaScriptEnabled(false);
