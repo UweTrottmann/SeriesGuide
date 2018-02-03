@@ -11,7 +11,6 @@ import com.battlelancer.seriesguide.ui.movies.TmdbMoviesLoader
 import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader
 import com.battlelancer.seriesguide.ui.search.AddShowTask
 import com.battlelancer.seriesguide.ui.search.TraktAddLoader
-import com.battlelancer.seriesguide.ui.search.TvdbAddLoader
 import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.uwetrottmann.thetvdb.services.TheTvdbEpisodes
 import com.uwetrottmann.tmdb2.Tmdb
@@ -63,5 +62,4 @@ interface ServicesComponent {
     fun inject(traktAddLoader: TraktAddLoader)
     fun inject(traktCommentsLoader: TraktCommentsLoader)
     fun inject(traktRatingsTask: TraktRatingsTask)
-    fun inject(tvdbAddLoader: TvdbAddLoader)
 }
