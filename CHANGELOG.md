@@ -9,6 +9,11 @@ Version 41
 ----------
 *(in development)*
 
+#### 40-beta3
+*(2018-02-03)*
+
+* 🔨 Fix crashes when viewing statistics, opening trakt account info in settings.
+
 #### 40-beta2
 *(2018-02-02)*
 
