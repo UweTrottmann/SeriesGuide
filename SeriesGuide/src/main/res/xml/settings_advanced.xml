@@ -13,12 +13,8 @@
         android:title="@string/analytics" />
 
     <Preference
-        android:key="backup"
-        android:title="Legacy Backup/Restore">
-        <intent
-            android:targetClass="com.battlelancer.seriesguide.ui.BackupDeleteActivity"
-            android:targetPackage="@string/package_name" />
-    </Preference>
+        android:key="com.battlelancer.seriesguide.settings.backuplegacy"
+        android:title="Legacy Backup/Restore" />
 
     <Preference
         android:summary="@string/pref_translatesummary"

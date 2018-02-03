@@ -3,12 +3,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
-        android:key="com.battlelancer.seriesguide.upgrade"
-        android:title="@string/action_upgrade">
-        <intent
-            android:targetClass="com.battlelancer.seriesguide.billing.BillingActivity"
-            android:targetPackage="@string/package_name" />
-    </Preference>
+        android:key="com.battlelancer.seriesguide.settings.upgrade"
+        android:title="@string/action_upgrade" />
 
     <SwitchPreference
         android:defaultValue="True"
@@ -29,38 +25,26 @@
     <PreferenceCategory android:title="@string/prefs_category_sharing">
 
         <Preference
-            android:key="com.battlelancer.seriesguide.cloud"
-            android:title="@string/hexagon">
-            <intent
-                android:targetClass="com.battlelancer.seriesguide.backend.CloudSetupActivity"
-                android:targetPackage="@string/package_name" />
-        </Preference>
+            android:key="com.battlelancer.seriesguide.settings.cloud"
+            android:title="@string/hexagon" />
 
         <Preference
-            android:key="com.battlelancer.seriesguide.trakt.connect"
-            android:title="@string/trakt">
-            <intent
-                android:targetClass="com.battlelancer.seriesguide.ui.ConnectTraktActivity"
-                android:targetPackage="@string/package_name" />
-        </Preference>
+            android:key="com.battlelancer.seriesguide.settings.trakt"
+            android:title="@string/trakt" />
 
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/backup">
 
         <Preference
-            android:key="com.battlelancer.seriesguide.autobackup"
+            android:key="com.battlelancer.seriesguide.settings.autobackup"
             android:summary="@string/pref_autobackupsummary"
             android:title="@string/pref_autobackup" />
 
         <Preference
-            android:key="dataliberation"
+            android:key="com.battlelancer.seriesguide.settings.dataliberation"
             android:summary="@string/backup_summary"
-            android:title="@string/backup">
-            <intent
-                android:targetClass="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity"
-                android:targetPackage="@string/package_name" />
-        </Preference>
+            android:title="@string/backup" />
 
     </PreferenceCategory>
 

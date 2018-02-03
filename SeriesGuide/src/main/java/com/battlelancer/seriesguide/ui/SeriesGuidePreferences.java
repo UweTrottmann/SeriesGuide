@@ -34,18 +34,21 @@ import android.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
+import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.billing.BillingActivity;
+import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TimeOffsetDialogFragment;
@@ -74,16 +77,20 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
     // Preference keys
     private static final String KEY_CLEAR_CACHE = "clearCache";
-
     public static final String KEY_DATABASEIMPORTED = "com.battlelancer.seriesguide.dbimported";
-
-//    public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
-
+    //    public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
-
     private static final String KEY_ABOUT = "aboutPref";
-
 //    public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
+
+    // links
+    private static final String LINK_BASE_KEY = "com.battlelancer.seriesguide.settings.";
+    private static final String LINK_KEY_UPGRADE = LINK_BASE_KEY + "upgrade";
+    private static final String LINK_KEY_CLOUD = LINK_BASE_KEY + "cloud";
+    private static final String LINK_KEY_TRAKT = LINK_BASE_KEY + "trakt";
+    private static final String LINK_KEY_AUTOBACKUP = LINK_BASE_KEY + "autobackup";
+    private static final String LINK_KEY_DATALIBERATION = LINK_BASE_KEY + "dataliberation";
+    private static final String LINK_KEY_BACKUP_LEGACY = LINK_BASE_KEY + "backuplegacy";
 
     public static @StyleRes int THEME = R.style.Theme_SeriesGuide;
 
@@ -212,7 +219,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
         private void updateRootSettings() {
             // unlock all link
-            Preference unlock = findPreference("com.battlelancer.seriesguide.upgrade");
+            Preference unlock = findPreference(LINK_KEY_UPGRADE);
             boolean hasAccessToX = Utils.hasAccessToX(getActivity());
             unlock.setSummary(hasAccessToX ? getString(R.string.upgrade_success) : null);
 
@@ -226,7 +233,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             }
 
             // SeriesGuide Cloud link
-            Preference cloud = findPreference("com.battlelancer.seriesguide.cloud");
+            Preference cloud = findPreference(LINK_KEY_CLOUD);
             if (hasAccessToX && HexagonSettings.isEnabled(getActivity())) {
                 cloud.setSummary(HexagonSettings.getAccountName(getActivity()));
             } else {
@@ -234,7 +241,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             }
 
             // trakt link
-            Preference trakt = findPreference("com.battlelancer.seriesguide.trakt.connect");
+            Preference trakt = findPreference(LINK_KEY_TRAKT);
             if (TraktCredentials.get(getActivity()).hasCredentials()) {
                 trakt.setSummary(TraktCredentials.get(getActivity()).getUsername());
             } else {
@@ -437,10 +444,44 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
                 @NonNull Preference preference) {
             String key = preference.getKey();
-            if (key != null && key.startsWith("screen_")) {
+            if (key == null) {
+                return super.onPreferenceTreeClick(preferenceScreen, preference);
+            }
+
+            // other screens
+            if (key.startsWith("screen_")) {
                 ((SeriesGuidePreferences) getActivity()).switchToSettings(key);
                 return true;
             }
+
+            // links
+            switch (key) {
+                case LINK_KEY_UPGRADE:
+                    startActivity(new Intent(getActivity(), Utils.isAmazonVersion()
+                            ? AmazonBillingActivity.class
+                            : BillingActivity.class));
+                    return true;
+                case LINK_KEY_CLOUD:
+                    startActivity(new Intent(getActivity(), CloudSetupActivity.class));
+                    return true;
+                case LINK_KEY_TRAKT:
+                    startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
+                    return true;
+                case LINK_KEY_AUTOBACKUP:
+                    startActivity(new Intent(getActivity(), DataLiberationActivity.class).putExtra(
+                            DataLiberationActivity.InitBundle.EXTRA_SHOW_AUTOBACKUP, true));
+                    return true;
+                case LINK_KEY_DATALIBERATION:
+                    startActivity(new Intent(getActivity(), DataLiberationActivity.class));
+                    return true;
+                case LINK_KEY_BACKUP_LEGACY:
+                    startActivity(new Intent(getActivity(), BackupDeleteActivity.class));
+                    return true;
+                default:
+                    // fall through
+            }
+
+            // settings
             if (NotificationSettings.KEY_THRESHOLD.equals(key)) {
                 new NotificationThresholdDialogFragment().show(
                         ((AppCompatActivity) getActivity()).getSupportFragmentManager(),
@@ -479,11 +520,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, getActivity().getPackageName());
                     startActivity(intent);
                 }
-                return true;
-            }
-            if (AdvancedSettings.KEY_AUTOBACKUP.equals(key)) {
-                startActivity(new Intent(getActivity(), DataLiberationActivity.class).putExtra(
-                        DataLiberationActivity.InitBundle.EXTRA_SHOW_AUTOBACKUP, true));
                 return true;
             }
             if (DisplaySettings.KEY_SHOWS_TIME_OFFSET.equals(key)) {
