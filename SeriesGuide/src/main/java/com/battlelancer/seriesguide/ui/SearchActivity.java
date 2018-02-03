@@ -104,7 +104,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
     private void setupViews(boolean mayShowKeyboard) {
         ButterKnife.bind(this);
-        clearButton.setVisibility(View.GONE);
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +122,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 boolean isEmptyText = TextUtils.isEmpty(s);
                 triggerLocalSearch(isEmptyText ? "" : s.toString());
-                clearButton.setVisibility(isEmptyText ? View.GONE : View.VISIBLE);
             }
 
             @Override
