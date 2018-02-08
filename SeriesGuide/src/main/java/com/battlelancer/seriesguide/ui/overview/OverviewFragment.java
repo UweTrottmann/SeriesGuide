@@ -38,6 +38,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
@@ -621,7 +622,7 @@ public class OverviewFragment extends Fragment implements
 
             // populate episode details
             populateEpisodeViews(episode);
-            populateEpisodeDescription();
+            populateEpisodeDescriptionAndTvdbButton();
 
             // load full info and ratings, image, actions
             loadEpisodeDetails();
@@ -733,29 +734,25 @@ public class OverviewFragment extends Fragment implements
         }
         ServiceUtils.setUpImdbButton(imdbId, buttonImdb, TAG);
 
-        // TVDb button
-        final int episodeTvdbId = episode.getInt(EpisodeQuery._ID);
-        final int seasonTvdbId = episode.getInt(EpisodeQuery.SEASON_ID);
-        ServiceUtils.setUpTvdbButton(showTvdbId, seasonTvdbId, episodeTvdbId, buttonTvdb, TAG);
-
         // trakt button
-        ServiceUtils.setUpTraktEpisodeButton(buttonTrakt, currentEpisodeTvdbId, TAG);
+        String uri = TraktTools.buildEpisodeUrl(currentEpisodeTvdbId);
+        ViewTools.openUriOnClick(buttonTrakt, uri, TAG, "trakt");
     }
 
     /**
-     * Updates the episode description. Needs both show and episode data loaded.
+     * Updates the episode description and TVDB button. Need both show and episode data loaded.
      */
-    private void populateEpisodeDescription() {
+    private void populateEpisodeDescriptionAndTvdbButton() {
         if (!isShowDataAvailable || !isEpisodeDataAvailable) {
             // no show or episode data available
             return;
         }
         String overview = currentEpisodeCursor.getString(EpisodeQuery.OVERVIEW);
+        String languageCode = showCursor.getString(ShowQuery.SHOW_LANGUAGE);
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
             overview = getString(R.string.no_translation,
-                    LanguageTools.getShowLanguageStringFor(getContext(),
-                            showCursor.getString(ShowQuery.SHOW_LANGUAGE)),
+                    LanguageTools.getShowLanguageStringFor(getContext(), languageCode),
                     getString(R.string.tvdb));
         } else if (DisplaySettings.preventSpoilers(getContext())) {
             overview = getString(R.string.no_spoilers);
@@ -763,6 +760,12 @@ public class OverviewFragment extends Fragment implements
         long lastEditSeconds = currentEpisodeCursor.getLong(EpisodeQuery.LAST_EDITED);
         textDescription.setText(TextTools.textWithTvdbSource(textDescription.getContext(),
                 overview, lastEditSeconds));
+
+        // TVDb button
+        final int episodeTvdbId = currentEpisodeCursor.getInt(EpisodeQuery._ID);
+        final int seasonTvdbId = currentEpisodeCursor.getInt(EpisodeQuery.SEASON_ID);
+        String uri = TvdbLinks.episode(showTvdbId, seasonTvdbId, episodeTvdbId, languageCode);
+        ViewTools.openUriOnClick(buttonTvdb, uri, TAG, "TVDb");
     }
 
     @Override
@@ -894,7 +897,7 @@ public class OverviewFragment extends Fragment implements
         textViewNetworkAndTime.setText(TextTools.dotSeparate(network, time));
 
         // episode description might need show language, so update it here as well
-        populateEpisodeDescription();
+        populateEpisodeDescriptionAndTvdbButton();
     }
 
     private void maybeAddFeedbackView() {

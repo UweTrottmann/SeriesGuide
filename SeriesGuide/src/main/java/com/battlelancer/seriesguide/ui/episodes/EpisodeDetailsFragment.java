@@ -32,31 +32,32 @@ import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
-import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader;
+import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeDetailsTask;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
+import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
+import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.TraktRatingsTask;
+import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
-import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
-import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.traktapi.TraktRatingsTask;
-import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.squareup.picasso.Callback;
@@ -378,16 +379,16 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 TextTools.getEpisodeTitle(getContext(), hideDetails ? null : episodeTitle,
                         episodeNumber));
         String overview = cursor.getString(DetailsQuery.OVERVIEW);
-        long lastEditSeconds = cursor.getLong(DetailsQuery.LAST_EDITED);
+        String languageCode = cursor.getString(DetailsQuery.SHOW_LANGUAGE);
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
             overview = getString(R.string.no_translation,
-                    LanguageTools.getShowLanguageStringFor(getContext(),
-                            cursor.getString(DetailsQuery.SHOW_LANGUAGE)),
+                    LanguageTools.getShowLanguageStringFor(getContext(), languageCode),
                     getString(R.string.tvdb));
         } else if (hideDetails) {
             overview = getString(R.string.no_spoilers);
         }
+        long lastEditSeconds = cursor.getLong(DetailsQuery.LAST_EDITED);
         textViewDescription.setText(
                 TextTools.textWithTvdbSource(textViewDescription.getContext(), overview,
                         lastEditSeconds));
@@ -568,7 +569,10 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         }
 
         // service buttons
-        ServiceUtils.setUpTraktEpisodeButton(traktButton, getEpisodeTvdbId(), TAG);
+        // trakt
+        String traktUri = TraktTools.buildEpisodeUrl(getEpisodeTvdbId());
+        ViewTools.openUriOnClick(traktButton, traktUri, TAG, "trakt");
+
         // IMDb
         String imdbId = cursor.getString(DetailsQuery.IMDBID);
         if (TextUtils.isEmpty(imdbId)) {
@@ -576,10 +580,11 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             imdbId = cursor.getString(DetailsQuery.SHOW_IMDBID);
         }
         ServiceUtils.setUpImdbButton(imdbId, imdbButton, TAG);
+
         // TVDb
         final int seasonTvdbId = cursor.getInt(DetailsQuery.SEASON_ID);
-        ServiceUtils.setUpTvdbButton(showTvdbId, seasonTvdbId, getEpisodeTvdbId(), tvdbButton,
-                TAG);
+        String tvdbUri = TvdbLinks.episode(showTvdbId, seasonTvdbId, getEpisodeTvdbId(), languageCode);
+        ViewTools.openUriOnClick(tvdbButton, tvdbUri, TAG, "TVDb");
         // trakt comments
         commentsButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -715,7 +720,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
     interface DetailsQuery {
 
-        String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[]{
                 Tables.EPISODES + "." + Episodes._ID,
                 Episodes.NUMBER,
                 Episodes.ABSOLUTE_NUMBER,

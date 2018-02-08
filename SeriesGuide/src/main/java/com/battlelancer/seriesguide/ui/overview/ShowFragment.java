@@ -32,6 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
@@ -422,21 +423,22 @@ public class ShowFragment extends Fragment {
 
         // overview
         String overview = showCursor.getString(ShowQuery.OVERVIEW);
-        long lastEditSeconds = showCursor.getLong(ShowQuery.LAST_EDIT_MS);
+        String languageCode = showCursor.getString(ShowQuery.LANGUAGE);
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
             overview = getString(R.string.no_translation,
                     LanguageTools.getShowLanguageStringFor(getContext(),
-                            showCursor.getString(ShowQuery.LANGUAGE)), getString(R.string.tvdb));
+                            languageCode), getString(R.string.tvdb));
         }
+        long lastEditSeconds = showCursor.getLong(ShowQuery.LAST_EDIT_MS);
         textViewOverview.setText(TextTools.textWithTvdbSource(textViewOverview.getContext(),
                 overview, lastEditSeconds));
 
         // language preferred for content
         LanguageTools.LanguageData languageData = LanguageTools.getShowLanguageDataFor(
-                getContext(), showCursor.getString(ShowQuery.LANGUAGE));
+                getContext(), languageCode);
         if (languageData != null) {
-            languageCode = languageData.languageCode;
+            this.languageCode = languageData.languageCode;
             buttonLanguage.setText(languageData.languageString);
         }
 
@@ -471,10 +473,12 @@ public class ShowFragment extends Fragment {
         ServiceUtils.setUpImdbButton(imdbId, buttonImdb, TAG);
 
         // TVDb button
-        ServiceUtils.setUpTvdbButton(getShowTvdbId(), buttonTvdb, TAG);
+        String tvdbUri = TvdbLinks.show(getShowTvdbId(), this.languageCode);
+        ViewTools.openUriOnClick(buttonTvdb, tvdbUri, TAG, "TVDb");
 
         // trakt button
-        ServiceUtils.setUpTraktShowButton(buttonTrakt, getShowTvdbId(), TAG);
+        String uri = TraktTools.buildShowUrl(getShowTvdbId());
+        ViewTools.openUriOnClick(buttonTrakt, uri, TAG, "trakt");
 
         // web search button
         ServiceUtils.setUpWebSearchButton(showTitle, buttonWebSearch, TAG);
