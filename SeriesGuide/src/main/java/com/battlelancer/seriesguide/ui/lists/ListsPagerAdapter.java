@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui.lists;
 
 import android.database.Cursor;
 import android.database.DataSetObserver;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -68,17 +69,17 @@ public class ListsPagerAdapter extends MultiPagerAdapter {
     }
 
     @Override
-    public int getItemPosition(Object object) {
+    public int getItemPosition(@NonNull Object object) {
         return POSITION_NONE;
     }
 
     @Nullable
     public String getListId(int position) {
-        if (cursorLists == null || !dataValid) {
+        if (cursorLists != null && dataValid && cursorLists.moveToPosition(position)) {
+            return cursorLists.getString(ListsQuery.ID);
+        } else {
             return null;
         }
-        cursorLists.moveToPosition(position);
-        return cursorLists.getString(ListsQuery.ID);
     }
 
     private class ListsDataSetObserver extends DataSetObserver {
