@@ -185,7 +185,7 @@
   <string name="add_started">%s 将很快出现在节目单中。</string>
   <string name="add_error">无法将 %s 加入节目单。</string>
   <string name="add_already_exists">%s 已存在于您的节目单中</string>
-  <string name="title_new_episodes">New episodes</string>
+  <string name="title_new_episodes">新的剧集</string>
   <string name="recommended">推荐</string>
   <string name="watched_shows">已观看</string>
   <string name="shows_collection">收藏</string>

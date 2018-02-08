@@ -185,7 +185,7 @@
   <string name="add_started">すぐに %s が番組リストに表示されます。</string>
   <string name="add_error">%s を追加できませんでした。</string>
   <string name="add_already_exists">%s はすでに番組リストにあります。</string>
-  <string name="title_new_episodes">New episodes</string>
+  <string name="title_new_episodes">新しいエピソード</string>
   <string name="recommended">おすすめ</string>
   <string name="watched_shows">視聴済</string>
   <string name="shows_collection">コレクション</string>
