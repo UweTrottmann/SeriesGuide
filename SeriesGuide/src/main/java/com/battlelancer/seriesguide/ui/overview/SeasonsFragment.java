@@ -1,15 +1,15 @@
 package com.battlelancer.seriesguide.ui.overview;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
+import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -34,21 +34,19 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
-import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
-import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
-import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
-import java.lang.ref.WeakReference;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -69,10 +67,10 @@ public class SeasonsFragment extends ListFragment {
     @BindView(R.id.imageViewSeasonsWatchedToggle) ImageView buttonWatchedAll;
     private Unbinder unbinder;
 
+    private SeasonsViewModel model;
     private SeasonsAdapter adapter;
     private boolean watchedAllEpisodes;
     private boolean collectedAllEpisodes;
-    private RemainingUpdateTask remainingUpdateTask;
     private VectorDrawableCompat drawableWatchAll;
     private VectorDrawableCompat drawableCollectAll;
 
@@ -115,6 +113,14 @@ public class SeasonsFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        model = ViewModelProviders.of(this).get(SeasonsViewModel.class);
+        model.getRemainingCountData().observe(this, new Observer<RemainingCountLiveData.Result>() {
+            @Override
+            public void onChanged(@Nullable RemainingCountLiveData.Result result) {
+                handleRemainingCountUpdate(result);
+            }
+        });
+
         // populate list
         adapter = new SeasonsAdapter(getActivity(), popupMenuClickListener);
         setListAdapter(adapter);
@@ -135,7 +141,7 @@ public class SeasonsFragment extends ListFragment {
         super.onStart();
 
         updateUnwatchedCounts();
-        updateRemainingCounter();
+        model.getRemainingCountData().load(getShowId());
 
         EventBus.getDefault().register(this);
     }
@@ -154,9 +160,6 @@ public class SeasonsFragment extends ListFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (remainingUpdateTask != null) {
-            remainingUpdateTask.cancel(true);
-        }
         unbinder.unbind();
     }
 
@@ -210,7 +213,7 @@ public class SeasonsFragment extends ListFragment {
         if (!isAdded()) {
             return; // no longer added to activity
         }
-        updateRemainingCounter();
+        model.getRemainingCountData().load(getShowId());
         if (event.flagJob instanceof SeasonWatchedJob) {
             // If we can narrow it down to just one season...
             SeasonWatchedJob seasonWatchedType = (SeasonWatchedJob) event.flagJob;
@@ -270,52 +273,19 @@ public class SeasonsFragment extends ListFragment {
         getActivity().startService(UnwatchedUpdaterService.buildIntent(getContext(), getShowId()));
     }
 
-    private void updateRemainingCounter() {
-        if (remainingUpdateTask == null
-                || remainingUpdateTask.getStatus() == AsyncTask.Status.FINISHED) {
-            remainingUpdateTask = new RemainingUpdateTask(this);
-            remainingUpdateTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
-                    String.valueOf(getShowId()));
+    private void handleRemainingCountUpdate(@Nullable RemainingCountLiveData.Result result) {
+        if (result == null) {
+            return;
         }
-    }
-
-    private static class RemainingUpdateTask extends AsyncTask<String, Void, int[]> {
-
-        private final WeakReference<SeasonsFragment> seasonsFragment;
-        @SuppressLint("StaticFieldLeak") // using application context
-        private final Context context;
-
-        RemainingUpdateTask(SeasonsFragment seasonsFragment) {
-            this.seasonsFragment = new WeakReference<>(seasonsFragment);
-            this.context = seasonsFragment.getContext().getApplicationContext();
+        int unwatched = result.getUnwatchedEpisodes();
+        if (unwatched <= 0) {
+            textViewRemaining.setText(null); // failed to calculate
+        } else {
+            textViewRemaining.setText(textViewRemaining.getResources()
+                    .getQuantityString(R.plurals.remaining_episodes_plural, unwatched, unwatched));
         }
-
-        @Override
-        protected int[] doInBackground(String... params) {
-            int[] counts = new int[2];
-            counts[0] = DBUtils.getUnwatchedEpisodesOfShow(context, params[0]);
-            counts[1] = DBUtils.getUncollectedEpisodesOfShow(context, params[0]);
-            return counts;
-        }
-
-        @Override
-        protected void onPostExecute(int[] result) {
-            SeasonsFragment seasonsFragment = this.seasonsFragment.get();
-            if (seasonsFragment == null) {
-                return;
-            }
-            if (result[0] <= 0) {
-                seasonsFragment.textViewRemaining.setText(null);
-            } else {
-                int unwatched = result[0];
-                seasonsFragment.textViewRemaining.setText(
-                        seasonsFragment.textViewRemaining.getResources()
-                                .getQuantityString(R.plurals.remaining_episodes_plural,
-                                        unwatched, unwatched));
-            }
-            seasonsFragment.setWatchedToggleState(result[0]);
-            seasonsFragment.setCollectedToggleState(result[1]);
-        }
+        setWatchedToggleState(unwatched);
+        setCollectedToggleState(result.getUncollectedEpisodes());
     }
 
     private void setWatchedToggleState(int unwatchedEpisodes) {
