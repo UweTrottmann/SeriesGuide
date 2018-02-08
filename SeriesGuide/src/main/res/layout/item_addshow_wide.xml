@@ -1,86 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:focusable="true"
     android:foreground="?attr/selectableItemBackground">
 
-    <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardViewAddPoster"
-        android:layout_width="@dimen/show_poster_width_large"
-        android:layout_height="@dimen/show_poster_height_large"
-        android:layout_marginBottom="@dimen/grid_topbottom_padding"
-        android:layout_marginLeft="@dimen/grid_leftright_padding"
-        android:layout_marginTop="@dimen/grid_topbottom_padding"
-        app:cardBackgroundColor="?attr/sgColorBackgroundCard"
-        app:cardPreventCornerOverlap="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <!-- Add FrameLayout parent so we can set a selectable foreground that works on pre-M. -->
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
+
+        <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardViewAddPoster"
+            android:layout_width="@dimen/show_poster_width_large"
+            android:layout_height="@dimen/show_poster_height_large"
+            android:layout_marginBottom="@dimen/grid_topbottom_padding"
+            android:layout_marginLeft="@dimen/grid_leftright_padding"
+            android:layout_marginTop="@dimen/grid_topbottom_padding"
+            app:cardBackgroundColor="?attr/sgColorBackgroundCard"
+            app:cardPreventCornerOverlap="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageViewAddPoster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                tools:src="#F50057" />
+
+        </android.support.v7.widget.CardView>
 
         <ImageView
-            android:id="@+id/imageViewAddPoster"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@null"
+            android:id="@+id/buttonItemAddMore"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/description_menu_overflow"
             android:scaleType="centerInside"
-            tools:src="#F50057" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_more_vert_black_20dp"
+            app:tint="?attr/sgColorIcon"
+            tools:ignore="MissingPrefix" />
 
-    </android.support.v7.widget.CardView>
+        <com.battlelancer.seriesguide.ui.search.AddIndicator
+            android:id="@+id/addIndicatorAddShow"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
-    <ImageView
-        android:id="@+id/buttonItemAddMore"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/description_menu_overflow"
-        android:scaleType="centerInside"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_more_vert_black_20dp"
-        app:tint="?attr/sgColorIcon" />
+        <TextView
+            android:id="@+id/textViewAddTitle"
+            style="@style/Widget.SeriesGuide.TextView.SingleLine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="32dp"
+            android:ellipsize="end"
+            android:textAppearance="@style/TextAppearance.Subhead.Bold"
+            app:layout_constraintLeft_toRightOf="@+id/cardViewAddPoster"
+            app:layout_constraintRight_toLeftOf="@+id/addIndicatorAddShow"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Cosmos: A Spacetime Odyssey" />
 
-    <com.battlelancer.seriesguide.ui.search.AddIndicator
-        android:id="@+id/addIndicatorAddShow"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        <TextView
+            android:id="@+id/textViewAddDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:lines="3"
+            android:textAppearance="@style/TextAppearance.Subhead"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toRightOf="@+id/cardViewAddPoster"
+            app:layout_constraintRight_toLeftOf="@+id/addIndicatorAddShow"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAddTitle"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="Some awesome\nthree-line\ndescription" />
 
-    <TextView
-        android:id="@+id/textViewAddTitle"
-        style="@style/Widget.SeriesGuide.TextView.SingleLine"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
-        android:ellipsize="end"
-        android:textAppearance="@style/TextAppearance.Subhead.Bold"
-        app:layout_constraintLeft_toRightOf="@+id/cardViewAddPoster"
-        app:layout_constraintRight_toLeftOf="@+id/addIndicatorAddShow"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Cosmos: A Spacetime Odyssey" />
+    </android.support.constraint.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/textViewAddDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:ellipsize="end"
-        android:lines="3"
-        android:textAppearance="@style/TextAppearance.Subhead"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toRightOf="@+id/cardViewAddPoster"
-        app:layout_constraintRight_toLeftOf="@+id/addIndicatorAddShow"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAddTitle"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="Some awesome\nthree-line\ndescription" />
-
-</android.support.constraint.ConstraintLayout>
+</FrameLayout>

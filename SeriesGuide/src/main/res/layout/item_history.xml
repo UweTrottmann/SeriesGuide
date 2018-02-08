@@ -7,7 +7,7 @@
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground">
 
-    <!-- Add FrameLayout parent so we can set selectable foreground. -->
+    <!-- Add FrameLayout parent so we can set a selectable foreground that works on pre-M. -->
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
