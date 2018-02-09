@@ -372,7 +372,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     });
 
             // show currently set values for some prefs
-            setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE));
+            setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE_PREFERRED));
+            setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE_FALLBACK));
             updateTimeOffsetSummary(findPreference(DisplaySettings.KEY_SHOWS_TIME_OFFSET));
         }
 
@@ -560,7 +561,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 new BackupManager(pref.getContext()).dataChanged();
 
                 // update pref summary text
-                if (DisplaySettings.KEY_LANGUAGE.equals(key)
+                if (DisplaySettings.KEY_LANGUAGE_PREFERRED.equals(key)
+                        || DisplaySettings.KEY_LANGUAGE_FALLBACK.equals(key)
                         || DisplaySettings.KEY_NUMBERFORMAT.equals(key)
                         || DisplaySettings.KEY_THEME.equals(key)) {
                     setListPreferenceSummary((ListPreference) pref);
@@ -597,7 +599,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 ListWidgetProvider.notifyDataChanged(getActivity());
             }
 
-            if (DisplaySettings.KEY_LANGUAGE.equals(key)) {
+            if (DisplaySettings.KEY_LANGUAGE_PREFERRED.equals(key)
+                    || DisplaySettings.KEY_LANGUAGE_FALLBACK.equals(key)) {
                 // reset last edit date of all episodes so they will get updated
                 new Thread(new Runnable() {
                     public void run() {

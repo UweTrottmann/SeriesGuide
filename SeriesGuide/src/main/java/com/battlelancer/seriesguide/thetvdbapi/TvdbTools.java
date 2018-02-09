@@ -223,7 +223,7 @@ public class TvdbTools {
 
         if (TextUtils.isEmpty(language)) {
             // fall back to preferred language
-            language = DisplaySettings.getContentLanguage(context);
+            language = DisplaySettings.getShowsLanguage(context);
         }
 
         return language;
@@ -381,7 +381,7 @@ public class TvdbTools {
         }
         // if we still have no language, use the users default language
         if (TextUtils.isEmpty(language)) {
-            language = DisplaySettings.getContentLanguage(context);
+            language = DisplaySettings.getShowsLanguage(context);
         }
 
         // get show info from TVDb and trakt

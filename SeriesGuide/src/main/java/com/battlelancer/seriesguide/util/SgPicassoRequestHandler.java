@@ -52,7 +52,7 @@ public class SgPicassoRequestHandler extends RequestHandler {
 
             String language = request.uri.getQueryParameter(QUERY_LANGUAGE);
             if (TextUtils.isEmpty(language)) {
-                language = DisplaySettings.getContentLanguage(context);
+                language = DisplaySettings.getShowsLanguage(context);
             }
 
             TvdbTools tvdbTools = SgApp.getServicesComponent(context).tvdbTools();

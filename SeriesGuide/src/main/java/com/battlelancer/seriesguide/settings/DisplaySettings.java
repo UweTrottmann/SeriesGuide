@@ -19,7 +19,8 @@ public class DisplaySettings {
 
     public static final String KEY_THEME = "com.battlelancer.seriesguide.theme";
 
-    public static final String KEY_LANGUAGE = "language";
+    public static final String KEY_LANGUAGE_PREFERRED = "language";
+    public static final String KEY_LANGUAGE_FALLBACK = "com.battlelancer.seriesguide.languageFallback";
 
     public static final String KEY_MOVIES_LANGUAGE = "com.battlelancer.seriesguide.languagemovies";
 
@@ -89,12 +90,21 @@ public class DisplaySettings {
     }
 
     /**
-     * @return Two letter ISO 639-1 language code of the content language preferred by the user. If
-     * the value does not exist, defaults to English.
+     * Returns two letter ISO 639-1 language code of the show language preferred by the user.
+     * Defaults to 'en'.
      */
-    public static String getContentLanguage(Context context) {
+    public static String getShowsLanguage(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_LANGUAGE, LANGUAGE_EN);
+                .getString(KEY_LANGUAGE_PREFERRED, LANGUAGE_EN);
+    }
+
+    /**
+     * Returns two letter ISO 639-1 language code of the fallback show language preferred by the
+     * user. Defaults to 'en'.
+     */
+    public static String getShowsLanguageFallback(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(KEY_LANGUAGE_FALLBACK, LANGUAGE_EN);
     }
 
     /**
@@ -124,11 +134,11 @@ public class DisplaySettings {
 
     /**
      * @return Two letter ISO 639-1 language code of the language the user prefers when searching or
-     * 'xx' if all languages should be searched. Defaults to {@link #getContentLanguage(Context)}.
+     * 'xx' if all languages should be searched. Defaults to {@link #getShowsLanguage(Context)}.
      */
     public static String getSearchLanguage(Context context) {
         String languageCode = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_LANGUAGE_SEARCH, getContentLanguage(context));
+                .getString(KEY_LANGUAGE_SEARCH, getShowsLanguage(context));
         return TextUtils.isEmpty(languageCode)
                 ? context.getString(R.string.language_code_any)
                 : languageCode;

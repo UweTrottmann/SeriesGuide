@@ -40,7 +40,7 @@ class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
         try {
             if (TextUtils.isEmpty(language)) {
                 // fall back to user preferred language
-                language = DisplaySettings.getContentLanguage(getContext());
+                language = DisplaySettings.getShowsLanguage(getContext());
             }
             TvdbTools tvdbTools = SgApp.getServicesComponent(getContext()).tvdbTools();
             result.show = tvdbTools.getShowDetails(showTvdbId, language);

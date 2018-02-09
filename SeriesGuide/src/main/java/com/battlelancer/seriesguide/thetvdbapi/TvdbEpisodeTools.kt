@@ -50,8 +50,8 @@ class TvdbEpisodeTools constructor(
         val showReleaseTime = TimeTools.getShowReleaseTime(show.release_time)
         val deviceTimeZone = TimeZone.getDefault().id
 
-        val defaultLanguage = DisplaySettings.getContentLanguage(context)
-        val fallbackLanguage: String? = if (defaultLanguage != language) defaultLanguage else null
+        val fallback = DisplaySettings.getShowsLanguageFallback(context)
+        val fallbackLanguage: String? = if (fallback != language) fallback else null
 
         var page: Int? = 0
         while (page != null) {
