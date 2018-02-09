@@ -12,7 +12,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -22,7 +21,6 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
-import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -81,7 +79,6 @@ public abstract class AddFragment extends Fragment {
 
         // basic setup of grid view
         resultsGridView.setEmptyView(emptyView);
-        resultsGridView.setOnItemClickListener(onItemClickListener);
         // enable app bar scrolling out of view only on L or higher
         ViewCompat.setNestedScrollingEnabled(resultsGridView, AndroidUtils.isLollipopOrHigher());
 
@@ -135,27 +132,6 @@ public abstract class AddFragment extends Fragment {
         progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
-    protected AdapterView.OnItemClickListener onItemClickListener
-            = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            SearchResult show = adapter.getItem(position);
-            if (show != null && show.getState() != SearchResult.STATE_ADDING) {
-                if (show.getState() == SearchResult.STATE_ADDED) {
-                    // already in library, open it
-                    startActivity(OverviewActivity.intentShow(getContext(), show.getTvdbid()));
-                } else {
-                    // guard against onClick called after fragment is paged away (multi-touch)
-                    // onSaveInstanceState might already be called
-                    if (isResumed()) {
-                        // display more details in a dialog
-                        AddShowDialogFragment.showAddDialog(show, getFragmentManager());
-                    }
-                }
-            }
-        }
-    };
-
     /**
      * Called if the user triggers adding a single new show through the add dialog. The show is not
      * actually added, yet.
@@ -198,8 +174,8 @@ public abstract class AddFragment extends Fragment {
     protected static class AddAdapter extends ArrayAdapter<SearchResult> {
 
         public interface OnItemClickListener {
+            void onItemClick(SearchResult item);
             void onAddClick(SearchResult item);
-
             void onMenuWatchlistClick(View view, int showTvdbId);
         }
 
@@ -305,6 +281,14 @@ public abstract class AddFragment extends Fragment {
             public ViewHolder(View view,
                     final OnItemClickListener onItemClickListener) {
                 ButterKnife.bind(this, view);
+                view.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (onItemClickListener != null) {
+                            onItemClickListener.onItemClick(item);
+                        }
+                    }
+                });
                 addIndicator.setOnAddClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {

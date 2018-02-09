@@ -16,6 +16,7 @@ import android.widget.PopupMenu;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -90,6 +91,23 @@ public class TraktAddFragment extends AddFragment {
 
     private AddAdapter.OnItemClickListener itemClickListener
             = new AddAdapter.OnItemClickListener() {
+
+        @Override
+        public void onItemClick(SearchResult item) {
+            if (item != null && item.getState() != SearchResult.STATE_ADDING) {
+                if (item.getState() == SearchResult.STATE_ADDED) {
+                    // already in library, open it
+                    startActivity(OverviewActivity.intentShow(getContext(), item.getTvdbid()));
+                } else {
+                    // guard against onClick called after fragment is paged away (multi-touch)
+                    // onSaveInstanceState might already be called
+                    if (isResumed()) {
+                        // display more details in a dialog
+                        AddShowDialogFragment.showAddDialog(item, getFragmentManager());
+                    }
+                }
+            }
+        }
 
         @Override
         public void onAddClick(SearchResult item) {
