@@ -343,6 +343,7 @@
   <string name="pref_seasonsorting">Sortuj sezony wg&#8230;</string>
   <string name="pref_episodesorting">Sortuj odcinki wg&#8230;</string>
   <string name="pref_language">Preferowany język zawartości</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Obrazy tylko przez Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Aby zmniejszyć opłaty za transfer danych, nie pobieraj przy użyciu sieci komórkowej</string>
   <plurals name="days_before_plural">

@@ -335,6 +335,7 @@
   <string name="pref_seasonsorting">மூலம் அடுக்கு சீசன்ஸ்&#8230;</string>
   <string name="pref_episodesorting">மூலம் அடுக்கு episodes&#8230;</string>
   <string name="pref_language">விருப்ப உள்ளடக்க மொழி</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">படிமங்கள் வழியாக Wi-Fi மட்டும்</string>
   <string name="pref_updatewifionlysummary">தரவு கட்டணங்களை குறைக்க, தகவலிறக்க வேண்டாம் மேல் மொபைல் அல்லது metered பிணையங்கள்</string>
   <plurals name="days_before_plural">

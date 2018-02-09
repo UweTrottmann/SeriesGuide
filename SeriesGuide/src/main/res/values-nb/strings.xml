@@ -335,6 +335,7 @@
   <string name="pref_seasonsorting">Sorter sesonger etter&#8230;</string>
   <string name="pref_episodesorting">Sorter episoder etter&#8230;</string>
   <string name="pref_language">Foretrukket språk</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Bilder kun via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">For å redusere datakostnadene, ikke last ned over mobil eller målte nettverk</string>
   <plurals name="days_before_plural">

@@ -351,6 +351,7 @@
   <string name="pref_seasonsorting">Sezono razporedi po&#8230;</string>
   <string name="pref_episodesorting">Epizode razporedi po&#8230;</string>
   <string name="pref_language">Preferred content language</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Slike samo preko Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <plurals name="days_before_plural">

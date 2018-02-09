@@ -335,6 +335,7 @@
   <string name="pref_seasonsorting">Seizoenen sorteren op&#8230;</string>
   <string name="pref_episodesorting">Afleveringen sorteren op&#8230;</string>
   <string name="pref_language">Content taal voorkeur</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Afbeeldingen alleen via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Om dataverbruik te reduceren, niet downloaden over een mobiele verbinding of andere betaald netwerken</string>
   <plurals name="days_before_plural">

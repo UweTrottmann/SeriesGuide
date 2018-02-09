@@ -335,6 +335,7 @@
   <string name="pref_seasonsorting">Сортирай сезоните по&#8230;</string>
   <string name="pref_episodesorting">Сортирай епизодите по&#8230;</string>
   <string name="pref_language">Предпочитан език на съдържанието</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Изображения само при Wi-Fi</string>
   <string name="pref_updatewifionlysummary">За да намалите таксуването за пренос на данни, не теглете през мобилната мрежа</string>
   <plurals name="days_before_plural">

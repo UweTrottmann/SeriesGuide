@@ -327,6 +327,7 @@
   <string name="pref_seasonsorting">Sortir musim berdasarkan&#8230;</string>
   <string name="pref_episodesorting">Sortir musim berdasarkan&#8230;</string>
   <string name="pref_language">Bahasa konten yang diutamakan</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Gambar hanya melalui Wi-fi</string>
   <string name="pref_updatewifionlysummary">Untuk mengurangi biaya operator, jangan unduh melalui jaringan seluler</string>
   <plurals name="days_before_plural">

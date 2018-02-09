@@ -343,6 +343,7 @@
   <string name="pref_seasonsorting">Sortare sezoane după&#8230;</string>
   <string name="pref_episodesorting">Sortare episoade după&#8230;</string>
   <string name="pref_language">Limba preferată</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Imaginile se vor încarca doar prin intermediul Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Pentru a micșora taxele operatorului, nu descărcați folosind rețelele mobile sau rețelele taxate</string>
   <plurals name="days_before_plural">

@@ -335,6 +335,7 @@
   <string name="pref_seasonsorting">Ordenar temporadas por&#8230;</string>
   <string name="pref_episodesorting">Ordenar episódios por&#8230;</string>
   <string name="pref_language">Idioma preferido do conteúdo</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Imagens apenas via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Para reduzir custos de dados, não baixará através de redes móveis ou redes limitadas</string>
   <plurals name="days_before_plural">

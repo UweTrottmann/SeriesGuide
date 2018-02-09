@@ -343,6 +343,7 @@
   <string name="pref_seasonsorting">Poredaj sezone prema&#8230;</string>
   <string name="pref_episodesorting">Poredaj epizode prema&#8230;</string>
   <string name="pref_language">Preferirani jezik sadržaja</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Slike samo putem Wi-Fi mreže</string>
   <string name="pref_updatewifionlysummary">Kako bi smanjili potrošnju podataka, nemojte preuzimati preko mobilnih mreža</string>
   <plurals name="days_before_plural">

@@ -327,6 +327,7 @@
   <string name="pref_seasonsorting">季排序依据&#8230;&#8230;</string>
   <string name="pref_episodesorting">集排序依据&#8230;&#8230;</string>
   <string name="pref_language">内容首选的语言</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">仅通过 Wi-Fi 下载图片</string>
   <string name="pref_updatewifionlysummary">为了减少蜂窝数据流量使用，在移动网络下禁止下载</string>
   <plurals name="days_before_plural">

@@ -335,6 +335,7 @@
   <string name="pref_seasonsorting">چینش فصل‌ها بر اساس&#8230;</string>
   <string name="pref_episodesorting">چینش قسمت‌ها بر اساس&#8230;</string>
   <string name="pref_language">زبان محتوای ترجیحی</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">تصویرها فقط با وای‌فای</string>
   <string name="pref_updatewifionlysummary">به منظور کاهش هزینه‌های داده، از طریق شبکه‌های همراه یا حجمی بارگیری نکنید</string>
   <plurals name="days_before_plural">

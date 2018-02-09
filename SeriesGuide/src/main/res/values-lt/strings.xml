@@ -343,6 +343,7 @@
   <string name="pref_seasonsorting">Rūšiuoti sezonus pagal&#8230;</string>
   <string name="pref_episodesorting">Rūšiuoti serijas pagal&#8230;</string>
   <string name="pref_language">Preferred content language</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Images via Wi-Fi only</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <plurals name="days_before_plural">

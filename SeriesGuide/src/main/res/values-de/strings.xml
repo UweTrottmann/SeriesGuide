@@ -335,6 +335,7 @@
   <string name="pref_seasonsorting">Sortiere Staffeln nach&#8230;</string>
   <string name="pref_episodesorting">Sortiere Folgen nach&#8230;</string>
   <string name="pref_language">Bevorzugte Sprache der Inhalte</string>
+  <string name="pref_language_fallback">Alternative Sprache</string>
   <string name="pref_updatewifionly">Bilder nur über WLAN</string>
   <string name="pref_updatewifionlysummary">Um Gebühren zu vermeiden, nicht über mobile oder kostenpflichtige Funknetze herunterladen</string>
   <plurals name="days_before_plural">

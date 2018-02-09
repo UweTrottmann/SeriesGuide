@@ -335,6 +335,7 @@
   <string name="pref_seasonsorting">Lajittele kaudet&#8230;</string>
   <string name="pref_episodesorting">Lajittele jaksot&#8230;</string>
   <string name="pref_language">Ensisijainen sisällön kieli</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Kuvat vain Wi-Fin kautta</string>
   <string name="pref_updatewifionlysummary">Pienentääksesi datamaksuja, älä lataa mobiiliverkon tai käytön mukaan laskutettavan yhteyden kautta</string>
   <plurals name="days_before_plural">
