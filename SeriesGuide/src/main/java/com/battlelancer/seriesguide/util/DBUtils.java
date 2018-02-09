@@ -1,5 +1,7 @@
 package com.battlelancer.seriesguide.util;
 
+import static com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified;
+
 import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
@@ -15,30 +17,29 @@ import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.adapters.CalendarAdapter;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.enums.EpisodeFlags;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.SeasonTags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.settings.CalendarSettings;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
+import com.battlelancer.seriesguide.ui.shows.CalendarSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.CalendarFragment.CalendarType;
+import com.battlelancer.seriesguide.ui.shows.CalendarFragment;
+import com.battlelancer.seriesguide.ui.shows.CalendarQuery;
+import com.battlelancer.seriesguide.ui.shows.CalendarType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
-
-import static com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified;
 
 public class DBUtils {
 
@@ -56,10 +57,9 @@ public class DBUtils {
     public static final int UNKNOWN_UNWATCHED_COUNT = -1;
     public static final int UNKNOWN_COLLECTED_COUNT = -1;
 
-    private static final int ACTIVITY_DAY_LIMIT = 30;
     private static final int SMALL_BATCH_SIZE = 50;
 
-    private static final String[] PROJECTION_COUNT = new String[] {
+    private static final String[] PROJECTION_COUNT = new String[]{
             BaseColumns._COUNT
     };
 
@@ -150,7 +150,7 @@ public class DBUtils {
         }
 
         // unwatched, aired episodes
-        String[] customCurrentTimeArgs = { String.valueOf(TimeTools.getCurrentTime(context)) };
+        String[] customCurrentTimeArgs = {String.valueOf(TimeTools.getCurrentTime(context))};
         final int count = getCountOf(resolver, uri, UnwatchedQuery.AIRED_SELECTION,
                 customCurrentTimeArgs, -1);
         if (count == -1) {
@@ -202,7 +202,7 @@ public class DBUtils {
         return getCountOf(context.getContentResolver(),
                 Episodes.buildEpisodesOfShowUri(showId),
                 UnwatchedQuery.AIRED_SELECTION_NO_SPECIALS,
-                new String[] {
+                new String[]{
                         String.valueOf(TimeTools.getCurrentTime(context))
                 }, UNKNOWN_UNWATCHED_COUNT);
     }
@@ -222,7 +222,7 @@ public class DBUtils {
                         + " AND " + Episodes.SELECTION_NO_SPECIALS
                         + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
                         + " AND " + Episodes.SELECTION_RELEASED_BEFORE_X,
-                new String[] {
+                new String[]{
                         String.valueOf(TimeTools.getCurrentTime(context))
                 },
                 UNKNOWN_COLLECTED_COUNT);
@@ -244,12 +244,12 @@ public class DBUtils {
     }
 
     /**
-     * Returns episodes that air today or within the next {@link #ACTIVITY_DAY_LIMIT} days. Excludes
-     * shows that are hidden.
+     * Returns episodes that air today or within the next {@link CalendarFragment#ACTIVITY_DAY_LIMIT}
+     * days. Excludes shows that are hidden.
      *
      * <p>Filters by watched episodes or favorite shows if enabled.
      *
-     * @return Cursor using the projection of {@link CalendarAdapter.Query}.
+     * @return Cursor using the projection of {@link CalendarQuery}.
      */
     @Nullable
     public static Cursor upcomingEpisodesQuery(Context context, boolean isOnlyUnwatched) {
@@ -260,96 +260,17 @@ public class DBUtils {
     }
 
     /**
-     * @return Cursor with projection {@link CalendarAdapter.Query}.
-     * @see #buildActivityQuery(Context, String, boolean, boolean, boolean, boolean)
+     * @return Cursor with projection {@link CalendarQuery}.
+     * @see CalendarFragment#buildActivityQuery(Context, String, boolean, boolean, boolean, boolean)
      */
     @Nullable
     public static Cursor activityQuery(Context context, String type, boolean isOnlyCollected,
             boolean isOnlyFavorites, boolean isOnlyUnwatched, boolean isInfinite) {
-        String[][] args = buildActivityQuery(context, type, isOnlyCollected, isOnlyFavorites,
-                isOnlyUnwatched, isInfinite);
+        String[][] args = CalendarFragment
+                .buildActivityQuery(context, type, isOnlyCollected, isOnlyFavorites,
+                        isOnlyUnwatched, isInfinite);
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                CalendarAdapter.Query.PROJECTION, args[0][0], args[1], args[2][0]);
-    }
-
-    /**
-     * Returns an array of size 3. The built query is stored in {@code [0][0]}, the built selection
-     * args in {@code [1]} and the sort order in {@code [2][0]}.
-     *
-     * @param type A {@link CalendarType}, defaults to UPCOMING.
-     * @param isInfinite If false, limits the release time range of returned episodes to {@link
-     * #ACTIVITY_DAY_LIMIT} days from today.
-     */
-    public static String[][] buildActivityQuery(Context context, String type,
-            boolean isOnlyCollected, boolean isOnlyFavorites, boolean isOnlyUnwatched,
-            boolean isInfinite) {
-        // go an hour back in time, so episodes move to recent one hour late
-        long recentThreshold = TimeTools.getCurrentTime(context) - DateUtils.HOUR_IN_MILLIS;
-
-        StringBuilder query;
-        String[] selectionArgs;
-        String sortOrder;
-        long timeThreshold;
-
-        if (CalendarType.RECENT.equals(type)) {
-            query = new StringBuilder(CalendarAdapter.Query.QUERY_RECENT);
-            sortOrder = CalendarAdapter.Query.SORTING_RECENT;
-            if (isInfinite) {
-                // to the past!
-                timeThreshold = Long.MIN_VALUE;
-            } else {
-                // last x days
-                timeThreshold = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS
-                        * ACTIVITY_DAY_LIMIT;
-            }
-        } else {
-            query = new StringBuilder(CalendarAdapter.Query.QUERY_UPCOMING);
-            sortOrder = CalendarAdapter.Query.SORTING_UPCOMING;
-            if (isInfinite) {
-                // to the future!
-                timeThreshold = Long.MAX_VALUE;
-            } else {
-                // coming x days
-                timeThreshold = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS
-                        * ACTIVITY_DAY_LIMIT;
-            }
-        }
-
-        selectionArgs = new String[] {
-                String.valueOf(recentThreshold), String.valueOf(timeThreshold)
-        };
-
-        // append only favorites selection if necessary
-        if (isOnlyFavorites) {
-            query.append(" AND ").append(Shows.SELECTION_FAVORITES);
-        }
-
-        // append no specials selection if necessary
-        boolean isNoSpecials = DisplaySettings.isHidingSpecials(context);
-        if (isNoSpecials) {
-            query.append(" AND ").append(Episodes.SELECTION_NO_SPECIALS);
-        }
-
-        // append unwatched selection if necessary
-        if (isOnlyUnwatched) {
-            query.append(" AND ").append(Episodes.SELECTION_UNWATCHED);
-        }
-
-        // only show collected episodes
-        if (isOnlyCollected) {
-            query.append(" AND ").append(Episodes.SELECTION_COLLECTED);
-        }
-
-        // build result array
-        String[][] results = new String[3][];
-        results[0] = new String[] {
-                query.toString()
-        };
-        results[1] = selectionArgs;
-        results[2] = new String[] {
-                sortOrder
-        };
-        return results;
+                CalendarQuery.PROJECTION, args[0][0], args[1], args[2][0]);
     }
 
     /**
@@ -359,7 +280,7 @@ public class DBUtils {
     public static void markNextEpisode(Context context, int showId, int episodeId) {
         if (episodeId > 0) {
             Cursor episode = context.getContentResolver().query(
-                    Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[] {
+                    Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[]{
                             Episodes.SEASON, Episodes.NUMBER
                     }, null, null, null
             );
@@ -373,7 +294,7 @@ public class DBUtils {
         }
     }
 
-    private static final String[] SHOW_PROJECTION = new String[] {
+    private static final String[] SHOW_PROJECTION = new String[]{
             Shows._ID,
             Shows.POSTER,
             Shows.TITLE
@@ -409,7 +330,7 @@ public class DBUtils {
      */
     public static boolean isShowExists(Context context, int showTvdbId) {
         Cursor testsearch = context.getContentResolver().query(Shows.buildShowUri(showTvdbId),
-                new String[] {
+                new String[]{
                         Shows._ID
                 }, null, null, null
         );
@@ -486,7 +407,7 @@ public class DBUtils {
      */
     public static HashMap<Integer, Long> getEpisodeMapForShow(Context context, int showTvdbId) {
         Cursor episodes = context.getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(showTvdbId), new String[] {
+                Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
                         Episodes._ID, Episodes.LAST_EDITED
                 }, null, null, null
         );
@@ -508,7 +429,7 @@ public class DBUtils {
     public static HashSet<Integer> getSeasonIdsOfShow(Context context, int showTvdbId) {
         Cursor seasons = context.getContentResolver().query(
                 Seasons.buildSeasonsOfShowUri(showTvdbId),
-                new String[] {
+                new String[]{
                         Seasons._ID
                 }, null, null, null
         );
@@ -555,7 +476,7 @@ public class DBUtils {
     }
 
     private interface LastWatchedEpisodeQuery {
-        String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[]{
                 Qualified.SHOWS_ID,
                 Shows.LASTWATCHEDID,
                 Episodes.SEASON,
@@ -571,7 +492,7 @@ public class DBUtils {
     }
 
     private interface NextEpisodesQuery {
-        String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[]{
                 Episodes._ID,
                 Episodes.SEASON,
                 Episodes.NUMBER,
@@ -633,7 +554,7 @@ public class DBUtils {
         final List<String[]> showsLastEpisodes = new ArrayList<>();
         while (shows.moveToNext()) {
             showsLastEpisodes.add(
-                    new String[] {
+                    new String[]{
                             shows.getString(LastWatchedEpisodeQuery.SHOW_TVDB_ID), // 0
                             shows.getString(LastWatchedEpisodeQuery.LAST_EPISODE_TVDB_ID), // 1
                             shows.getString(LastWatchedEpisodeQuery.LAST_EPISODE_SEASON), // 2
@@ -676,12 +597,12 @@ public class DBUtils {
             final String[] selectionArgs;
             if (isNoReleasedEpisodes) {
                 // restrict to episodes with future release date
-                selectionArgs = new String[] {
+                selectionArgs = new String[]{
                         releaseTime, number, season, releaseTime, currentTime
                 };
             } else {
                 // restrict to episodes with any valid air date
-                selectionArgs = new String[] {
+                selectionArgs = new String[]{
                         releaseTime, number, season, releaseTime
                 };
             }

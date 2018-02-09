@@ -193,6 +193,7 @@
   <string name="add_started">%s drīz parādīsies tavā šovu sarakstā.</string>
   <string name="add_error">%s pievienošana bija neveiksmīga.</string>
   <string name="add_already_exists">%s jau ir tavā šovu sarakstā.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Ieteikumi</string>
   <string name="watched_shows">Watched</string>
   <string name="shows_collection">Kolekcija</string>
@@ -342,6 +343,7 @@
   <string name="pref_seasonsorting">Kārtot epizodes pēc&#8230;</string>
   <string name="pref_episodesorting">Kārtot epizodes pēc&#8230;</string>
   <string name="pref_language">Preferred content language</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Bildes tikai caur WiFi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <plurals name="days_before_plural">

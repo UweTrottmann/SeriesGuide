@@ -193,6 +193,7 @@
   <string name="add_started">%s з\'явиться у вашому списку серіалів  найближчим часом.</string>
   <string name="add_error">Не вдалося додати %s.</string>
   <string name="add_already_exists">%s вже є у вашому списку.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Рекомендовано</string>
   <string name="watched_shows">Переглянуто</string>
   <string name="shows_collection">Колекція</string>
@@ -342,6 +343,7 @@
   <string name="pref_seasonsorting">Сортувати сезони за&#8230;</string>
   <string name="pref_episodesorting">Сортувати серії за&#8230;</string>
   <string name="pref_language">Бажана мова контенту</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Зображення лише через Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Не завантажуйте через мобільну мережу для уникнення витрат</string>
   <plurals name="days_before_plural">

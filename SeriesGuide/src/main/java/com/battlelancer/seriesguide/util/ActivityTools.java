@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Activity;
+import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import java.util.ArrayList;
 import java.util.HashSet;
 import timber.log.Timber;

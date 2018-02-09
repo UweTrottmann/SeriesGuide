@@ -5,7 +5,7 @@
     android:layout_marginRight="@dimen/large_padding"
     android:baselineAligned="false"
     android:orientation="horizontal"
-    tools:context=".ui.PersonFragment">
+    tools:context=".ui.people.PersonFragment">
 
     <RelativeLayout
         android:layout_width="0dp"

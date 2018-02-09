@@ -190,6 +190,7 @@
   <string name="add_started">%s kommer snart att visas i din serielista.</string>
   <string name="add_error">Kunde inte lägga till %s.</string>
   <string name="add_already_exists">%s finns redan i din serielista.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Rekommenderade</string>
   <string name="watched_shows">Sedda</string>
   <string name="shows_collection">Samling</string>
@@ -335,6 +336,7 @@
   <string name="pref_seasonsorting">Sortera säsonger efter&#8230;</string>
   <string name="pref_episodesorting">Sortera avsnitt efter&#8230;</string>
   <string name="pref_language">Innehållsspråk som föredras</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Endast bilder via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">För att minska dataavgifter, hämta inte via mobilnät</string>
   <plurals name="days_before_plural">

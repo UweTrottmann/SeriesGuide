@@ -1,5 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+    ext.kotlin_version = '1.2.21'
     ext.versions = [
             'minSdk': 15,
             'compileSdk': 27,
@@ -19,7 +20,7 @@ buildscript {
 
             'androidUtils': '2.3.1', // github.com/UweTrottmann/AndroidUtils/blob/master/RELEASE_NOTES.md
             'thetvdb': '1.5.0', // github.com/UweTrottmann/thetvdb-java/blob/master/CHANGELOG.md
-            'tmdb': '1.7.0', // github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
+            'tmdb': '1.8.2', // github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
             'trakt': '5.7.3', // github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
 
             'truth': '0.36',
@@ -27,8 +28,8 @@ buildscript {
             'threetenABP': '1.0.5', // github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
 
             // version 15xxxyy -> min SDK 15, release xxx, build yy
-            'code': 1502806,
-            'name': '40',
+            'code': 1502903,
+            'name': '41',
     ]
 
     repositories {
@@ -39,8 +40,9 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1' // libraries, SeriesGuide
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
-        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.2' // SeriesGuide
+        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.3' // SeriesGuide
         classpath 'io.fabric.tools:gradle:1.24.4' // SeriesGuide
         classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.10.0' // api
     }
@@ -64,6 +66,6 @@ task clean(type: Delete) {
 
 task wrapper(type: Wrapper) {
     group "build setup"
-    gradleVersion = '4.2.1'
+    gradleVersion = '4.5'
     distributionType = Wrapper.DistributionType.ALL
 }

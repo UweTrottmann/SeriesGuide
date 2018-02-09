@@ -197,6 +197,7 @@
   <string name="add_started">%s יופיע ברשימת התכניות שלך בהקדם.</string>
   <string name="add_error">לא יכול להוסיף %s.</string>
   <string name="add_already_exists">%s כבר נמצא ברשימה שלך.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">מומלץ</string>
   <string name="watched_shows">נצפה</string>
   <string name="shows_collection">אוסף</string>
@@ -350,6 +351,7 @@
   <string name="pref_seasonsorting">מיין עונות לפי</string>
   <string name="pref_episodesorting">מיין פרקים לפי</string>
   <string name="pref_language">שפת תוכן מועדפת</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">תמונות באמצעות Wi-Fi בלבד</string>
   <string name="pref_updatewifionlysummary">כדי לצמצם את חיובי הנתונים, לא להוריד ברשת סלולרי או רשת מבוקרת</string>
   <plurals name="days_before_plural">

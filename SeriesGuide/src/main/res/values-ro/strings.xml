@@ -193,6 +193,7 @@
   <string name="add_started">%s va apărea în lista de emisiuni în scurt timp.</string>
   <string name="add_error">Nu s-a putut adăuga %s.</string>
   <string name="add_already_exists">%s este deja în lista de emisiuni.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Recomandat</string>
   <string name="watched_shows">Vizionat</string>
   <string name="shows_collection">Colecție</string>
@@ -342,6 +343,7 @@
   <string name="pref_seasonsorting">Sortare sezoane după&#8230;</string>
   <string name="pref_episodesorting">Sortare episoade după&#8230;</string>
   <string name="pref_language">Limba preferată</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Imaginile se vor încarca doar prin intermediul Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Pentru a micșora taxele operatorului, nu descărcați folosind rețelele mobile sau rețelele taxate</string>
   <plurals name="days_before_plural">

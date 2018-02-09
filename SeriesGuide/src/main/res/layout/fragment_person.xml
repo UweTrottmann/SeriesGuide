@@ -4,7 +4,7 @@
     android:id="@+id/scrollViewPerson"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.PersonFragment">
+    tools:context=".ui.people.PersonFragment">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/containerPersonHeadshot"

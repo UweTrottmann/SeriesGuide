@@ -25,7 +25,8 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.BackupSettings;
-import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
+import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -79,7 +80,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     private static final int ERROR = -1;
 
     /**
-     * Show status used when exporting data. Compare with {@link com.battlelancer.seriesguide.util.ShowTools.Status}.
+     * Show status used when exporting data. Compare with {@link ShowTools.Status}.
      */
     public interface ShowStatusExport {
         String CONTINUING = "continuing";

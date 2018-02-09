@@ -189,6 +189,7 @@
   <string name="add_started">%s ќе се појави во вашата листа од серии за кратко.</string>
   <string name="add_error">Неуспешно додавање на %s.</string>
   <string name="add_already_exists">%s веќе се наоѓа во вачата листа од серии.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Препорачани</string>
   <string name="watched_shows">Гледано</string>
   <string name="shows_collection">Колекција</string>
@@ -334,6 +335,7 @@
   <string name="pref_seasonsorting">Сортирај сезоните по&#8230;</string>
   <string name="pref_episodesorting">Сортирај по епизоди&#8230;</string>
   <string name="pref_language">Предпрoчитaн јaзик нa сoдржинaтa</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Слики од Wi-Fi само</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <plurals name="days_before_plural">
@@ -437,7 +439,7 @@
   <string name="pref_vibrate">Вибрирање</string>
   <string name="pref_vibratesummary">Исто вибрирај на нотификација на дисплејот</string>
   <string name="pref_notifications_treshold">Кога да потсети</string>
-  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows">Одбери серии</string>
   <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
   <string name="pref_notification_channel_errors">Errors</string>
   <!-- Legacy Widgets -->

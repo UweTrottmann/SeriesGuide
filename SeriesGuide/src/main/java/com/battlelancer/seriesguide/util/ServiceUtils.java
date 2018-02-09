@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,14 +29,6 @@ public final class ServiceUtils {
     private static final String IMDB_APP_TITLE_URI = "imdb:///title/";
 
     public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
-
-    private static final String TVDB_SHOW_URL = "http://thetvdb.com/?tab=series&id=";
-
-    private static final String TVDB_EPISODE_URL = "http://thetvdb.com/?tab=episode&seriesid=";
-
-    private static final String TVDB_EPISODE_URL_SEASON_PARAM = "&seasonid=";
-
-    private static final String TVDB_EPISODE_URL_EPISODE_PARAM = "&id=";
 
     private static final String YOUTUBE_BASE_URL = "http://www.youtube.com/watch?v=";
 
@@ -125,78 +116,6 @@ public final class ServiceUtils {
                 Uri.encode(title));
         intent.setData(Uri.parse(playStoreQuery));
         return intent;
-    }
-
-    /**
-     * Tries to open Google Play to search for the given tv show, episode or movie title.
-     */
-    public static void searchGooglePlay(final String title, final String logTag, Context context) {
-        Intent intent = buildGooglePlayIntent(title, context);
-        Utils.openNewDocument(context, intent, logTag, "Google Play");
-    }
-
-    public static void setUpTraktShowButton(@Nullable View button, final int showTvdbId,
-            @NonNull final String logTag) {
-        if (button != null) {
-            button.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // build url on demand
-                    String uri = TraktTools.buildShowUrl(showTvdbId);
-                    Utils.launchWebsite(v.getContext(), uri, logTag, "trakt");
-                }
-            });
-        }
-    }
-
-    public static void setUpTraktEpisodeButton(@Nullable View button, final int episodeTvdbId,
-            @NonNull final String logTag) {
-        if (button != null) {
-            button.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // build url on demand
-                    String uri = TraktTools.buildEpisodeUrl(episodeTvdbId);
-                    Utils.launchWebsite(v.getContext(), uri, logTag, "trakt");
-                }
-            });
-        }
-    }
-
-    /**
-     * Starts activity with {@link Intent#ACTION_VIEW} to display the given show or episodes
-     * TVDb.com page.<br> If any of the season or episode numbers is below 0, displays the show
-     * page.
-     */
-    public static void setUpTvdbButton(final int showTvdbId, final int seasonTvdbId,
-            final int episodeTvdbId, final View tvdbButton, final String logTag) {
-        if (tvdbButton != null) {
-            tvdbButton.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    String uri;
-                    if (seasonTvdbId < 0 || episodeTvdbId < 0) {
-                        // look just for the show page
-                        uri = TVDB_SHOW_URL + showTvdbId;
-                    } else {
-                        // look for the episode page
-                        uri = TVDB_EPISODE_URL + showTvdbId
-                                + TVDB_EPISODE_URL_SEASON_PARAM + seasonTvdbId
-                                + TVDB_EPISODE_URL_EPISODE_PARAM + episodeTvdbId;
-                    }
-
-                    Utils.launchWebsite(v.getContext(), uri, logTag, "TVDb");
-                }
-            });
-        }
-    }
-
-    /**
-     * Starts activity with {@link Intent#ACTION_VIEW} to display the given shows TVDb.com page.
-     */
-    public static void setUpTvdbButton(final int showTvdbId, View tvdbButton, final String logTag) {
-        setUpTvdbButton(showTvdbId, -1, -1, tvdbButton, logTag);
     }
 
     /**

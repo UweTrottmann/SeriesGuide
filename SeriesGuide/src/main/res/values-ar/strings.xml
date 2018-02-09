@@ -205,6 +205,7 @@
   <string name="add_started">%s سوف تظهر في قائمة العرض الخاص بك قريبا.</string>
   <string name="add_error">تعذر إضافة %s.</string>
   <string name="add_already_exists">%s موجود بالفعل في قائمة العرض الخاصة بك.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">يُنصح به</string>
   <string name="watched_shows">تمت مشاهدتها</string>
   <string name="shows_collection">مجموعة</string>
@@ -366,6 +367,7 @@
   <string name="pref_seasonsorting">ترتيب المواسم حسب&#8230;</string>
   <string name="pref_episodesorting">ترتيب الحلقات حسب&#8230;</string>
   <string name="pref_language">اللغة المفضلة</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>
   <string name="pref_updatewifionlysummary">لتخفيض الكلفة، لا تحمّل عبر شبكات الجوال أو الشبكات الغير مجانية</string>
   <plurals name="days_before_plural">

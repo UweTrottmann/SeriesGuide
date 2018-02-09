@@ -5,6 +5,47 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 41
+----------
+*(2018-02-09)*
+
+* 🌟 Add alternative language setting for shows. Currently only used for episodes. After changing it
+  shows have to be updated for changes to appear.
+* 🌟 New show discover tab replaces add show and trakt tabs. Displays shows with new episodes 
+  (powered by TMDb) and a link to popular shows (powered by trakt).
+* 🔧 TheTVDB show and episode links will open the translation used inside the app. 
+
+#### 41
+*(2018-02-09)*
+
+* 🌟 Add alternative language setting for shows. Use it instead of the preferred content language 
+  setting. After changing it shows have to be updated for changes to appear.
+* 🔧 Opening TheTVDB links will go to the translation shown inside the app. 
+* 🔨 Fix crashes in some conditions when viewing seasons, managing a list.
+* 📝 Latest translations from crowdin.
+
+#### 41-beta3
+*(2018-02-03)*
+
+* 🔨 Fix crashes when viewing statistics, opening trakt account info in settings.
+
+#### 41-beta2
+*(2018-02-02)*
+
+* 🌟 Add show and trakt tabs replaced with discover tab. Displays shows with new episodes (powered
+  by TMDb) and a link to popular shows (powered by trakt).
+* 🔨 Reorder tabs if episode is set watched and episodes are sorted by unwatched first.
+* 📝 Latest translations from crowdin.
+
+#### 41-beta1
+*(2018-01-11)*
+
+* 🔧 If episode titles or overviews are not available in the language selected for a show, fall back
+  to the preferred content language defined in settings.
+* 🔧 Use dots to separate season info text.
+* 📝 Start switching to Kotlin. The app will require a little more storage space.
+* 📝 Latest translations from crowdin.
+
 Version 40
 ----------
 *(2017-12-07)*

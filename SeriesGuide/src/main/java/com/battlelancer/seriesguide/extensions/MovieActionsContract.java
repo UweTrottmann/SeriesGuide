@@ -14,7 +14,7 @@ public interface MovieActionsContract {
 
     /**
      * Implementing fragments should load the latest episode actions with {@link
-     * com.battlelancer.seriesguide.loaders.EpisodeActionsLoader}.
+     * EpisodeActionsLoader}.
      */
     void loadMovieActions();
 

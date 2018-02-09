@@ -189,6 +189,7 @@
   <string name="add_started">%s θα εμφανιστεί στην λίστα με τις σειρές σου σύντομα.</string>
   <string name="add_error">Δεν ήταν δυνατή η προσθήκη της σειράς %s.</string>
   <string name="add_already_exists">%s βρίσκετε ήδη στην λίστα με τις σειρές σου.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Προτεινόμενα</string>
   <string name="watched_shows">Είδατε</string>
   <string name="shows_collection">Συλλογή</string>
@@ -334,6 +335,7 @@
   <string name="pref_seasonsorting">Ταξινόμηση σεζόν κατά&#8230;</string>
   <string name="pref_episodesorting">Ταξινόμηση επεισοδίων κατά&#8230;</string>
   <string name="pref_language">Preferred content language</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Εικόνες μόνο μέσω Wi-Fi</string>
   <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
   <plurals name="days_before_plural">

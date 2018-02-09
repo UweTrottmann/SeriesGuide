@@ -193,6 +193,7 @@
   <string name="add_started">%s će se ubrzo pojaviti na vašem popisu serija.</string>
   <string name="add_error">Neuspješno dodavanje %s.</string>
   <string name="add_already_exists">%s je već u vašoj listi serija.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Preporučeno</string>
   <string name="watched_shows">Pogledano</string>
   <string name="shows_collection">Zbirka</string>
@@ -342,6 +343,7 @@
   <string name="pref_seasonsorting">Poredaj sezone prema&#8230;</string>
   <string name="pref_episodesorting">Poredaj epizode prema&#8230;</string>
   <string name="pref_language">Preferirani jezik sadržaja</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Slike samo putem Wi-Fi mreže</string>
   <string name="pref_updatewifionlysummary">Kako bi smanjili potrošnju podataka, nemojte preuzimati preko mobilnih mreža</string>
   <plurals name="days_before_plural">

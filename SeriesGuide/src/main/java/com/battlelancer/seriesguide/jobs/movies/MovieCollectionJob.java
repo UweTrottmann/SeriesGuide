@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
-import com.battlelancer.seriesguide.util.MovieTools;
+import com.battlelancer.seriesguide.ui.movies.MovieTools;
 
 public class MovieCollectionJob extends MovieJob {
 

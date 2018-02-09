@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,10 +9,11 @@
     android:background="?attr/colorPrimary"
     android:minHeight="?attr/actionBarSize"
     android:theme="?attr/actionBarTheme"
+    app:contentInsetStartWithNavigation="0dp"
     app:popupTheme="?attr/actionBarPopupTheme">
 
     <!-- focusableInTouchMode: prevent auto-focus on search text view. -->
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/containerSearchBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,17 +26,20 @@
             android:hint="@string/search"
             android:minWidth="250dp"
             android:paddingRight="44dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="RtlSymmetry" />
 
         <ImageButton
             android:id="@+id/imageButtonSearchClear"
             android:layout_width="44dp"
             android:layout_height="44dp"
-            android:layout_alignRight="@+id/editTextSearchBar"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/clear"
-            android:src="@drawable/ic_action_cancel" />
+            android:src="@drawable/ic_action_cancel"
+            app:layout_constraintRight_toRightOf="@+id/editTextSearchBar"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.Toolbar>

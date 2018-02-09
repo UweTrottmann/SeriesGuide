@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.modules.ServicesComponent;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.trakt5.TraktV2;

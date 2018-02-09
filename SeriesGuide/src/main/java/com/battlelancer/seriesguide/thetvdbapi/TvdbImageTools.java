@@ -176,6 +176,11 @@ public class TvdbImageTools {
      */
     @Nullable
     private static String buildImageCacheUrl(@NonNull String posterUrlTvdb) {
+        //noinspection ConstantConditions
+        if (BuildConfig.IMAGE_CACHE_URL == null) {
+            return posterUrlTvdb; // no cache
+        }
+
         String mac = encodeImageUrl(BuildConfig.IMAGE_CACHE_SECRET, posterUrlTvdb);
         if (mac != null) {
             return String.format("%s/s%s/%s", BuildConfig.IMAGE_CACHE_URL, mac, posterUrlTvdb);

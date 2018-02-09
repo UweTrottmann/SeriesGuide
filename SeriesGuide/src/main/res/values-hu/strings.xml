@@ -46,7 +46,7 @@
   <string name="norating">n/a</string>
   <string name="unknown">ismeretlen</string>
   <string name="offline">Csatlakozz a hálózathoz és próbáld újra.</string>
-  <string name="app_not_available">No app available to handle this</string>
+  <string name="app_not_available">Nem áll rendelkezésre kezelő alkalmazás</string>
   <string name="people_empty">Nincs senki?! Kattints az újrapróbálkozáshoz.</string>
   <string name="database_error">Nem sikerült az adatbázis módosítása.</string>
   <string name="reinstall_info">Próbálj biztonsági mentést készíteni a Beállításokban, újra telepíteni az alkalmazást és visszaállítani a biztonsági mentést.</string>
@@ -189,6 +189,7 @@
   <string name="add_started">A(z) %s hamarosan megjelenik a sorozatlistában.</string>
   <string name="add_error">Nem lehetett hozzáadni a(z) %s-t.</string>
   <string name="add_already_exists">A(z) %s már a listádon van.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Ajánlott</string>
   <string name="watched_shows">Megnézve</string>
   <string name="shows_collection">Gyűjtemény</string>
@@ -334,6 +335,7 @@
   <string name="pref_seasonsorting">Évadok rendezése</string>
   <string name="pref_episodesorting">Epizódok rendezése</string>
   <string name="pref_language">Tartalom preferált nyelve</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Képek csak Wi-Fi-n keresztül</string>
   <string name="pref_updatewifionlysummary">Az adatforgalmi díjak csökkentése éredekében ne tölts le mobil vagy díjköteles hálózatokról</string>
   <plurals name="days_before_plural">
@@ -394,7 +396,7 @@
   <string name="clear_cache_summary">Az összes tárolt kép törlése az eszközről</string>
   <string name="pref_ganalyticssummary">Névtelen használati statisztikák küldése Google szolgáltatás felé</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Include descriptions, details, ratings</string>
+  <string name="backup_full_dump">Tartalmazza a leírásokat, részleteket, értékeléseket</string>
   <string name="backup_path">Mentési mappa</string>
   <string name="backup_version">Adatbázis verzió</string>
   <string name="backup_failed_file_access">Nem sikerült a mentés. A biztonsági mentés fájl nem található vagy nem hozzáférhető.</string>
@@ -460,7 +462,7 @@
   <string name="onlyx">Csak támogatóknak</string>
   <string name="action_upgrade">Összes beállítás feloldása</string>
   <string name="billing_action_subscribe">Előfizetés</string>
-  <string name="billing_action_pass">X Pass beszerzése</string>
+  <string name="billing_action_pass">Legyen X Passod</string>
   <string name="billing_price_subscribe">%1$s/év, próbálja ki ingyen, bármikor kiléphet a %2$s segítségével</string>
   <string name="billing_price_pass">Egyszeri fizetés</string>
   <string name="upgrade_description">Old fel a összes funkciót, beleértve az értesítéseket, témákat és a több widget lista lehetőséget. Segíts, hogy frissíthessem a programot a jövőben is.</string>

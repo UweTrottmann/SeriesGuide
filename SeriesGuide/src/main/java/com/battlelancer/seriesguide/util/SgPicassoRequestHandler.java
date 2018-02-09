@@ -9,6 +9,7 @@ import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.squareup.picasso.Downloader;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Request;
@@ -51,7 +52,7 @@ public class SgPicassoRequestHandler extends RequestHandler {
 
             String language = request.uri.getQueryParameter(QUERY_LANGUAGE);
             if (TextUtils.isEmpty(language)) {
-                language = DisplaySettings.getContentLanguage(context);
+                language = DisplaySettings.getShowsLanguage(context);
             }
 
             TvdbTools tvdbTools = SgApp.getServicesComponent(context).tvdbTools();

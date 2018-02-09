@@ -189,6 +189,7 @@
   <string name="add_started">%s vil vises i serielisten om kort tid.</string>
   <string name="add_error">Kan ikke legge til %s.</string>
   <string name="add_already_exists">%s er allerede i visningslisten.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Anbefalte</string>
   <string name="watched_shows">Sett</string>
   <string name="shows_collection">Samling</string>
@@ -334,6 +335,7 @@
   <string name="pref_seasonsorting">Sorter sesonger etter&#8230;</string>
   <string name="pref_episodesorting">Sorter episoder etter&#8230;</string>
   <string name="pref_language">Foretrukket språk</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Bilder kun via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">For å redusere datakostnadene, ikke last ned over mobil eller målte nettverk</string>
   <plurals name="days_before_plural">

@@ -46,7 +46,7 @@
   <string name="norating">n/a</string>
   <string name="unknown">neznámo</string>
   <string name="offline">Připojte se k síti a zkuste to znovu.</string>
-  <string name="app_not_available">No app available to handle this</string>
+  <string name="app_not_available">Není k dispozici použitelná aplikace</string>
   <string name="people_empty">Nikde nikdo? Zkus to znovu.</string>
   <string name="database_error">Nelze upravovat data.</string>
   <string name="reinstall_info">Zkuste možnost v nastavení, reinstalovat a obnovit</string>
@@ -193,6 +193,7 @@
   <string name="add_started">%s se brzy objeví ve Vašem seznamu pořadů.</string>
   <string name="add_error">Nelze přidat %s.</string>
   <string name="add_already_exists">%s už je ve Vašem seznamu pořadů.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Doporučené</string>
   <string name="watched_shows">Zhlédnuto</string>
   <string name="shows_collection">Sbírka</string>
@@ -342,6 +343,7 @@
   <string name="pref_seasonsorting">Řadit série dle&#8230;</string>
   <string name="pref_episodesorting">Řadit epizody dle&#8230;</string>
   <string name="pref_language">Preferovaný jazyk obsahu</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Obrázky pouze přes Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Omezí přenos dat, nebude se stahovat před mobilní data nebo omezená připojení</string>
   <plurals name="days_before_plural">

@@ -189,6 +189,7 @@
   <string name="add_started">%s az sonra dizi listenizde görünecek.</string>
   <string name="add_error">%s eklenemedi.</string>
   <string name="add_already_exists">%s zaten dizi listenizde mevcut.</string>
+  <string name="title_new_episodes">Yeni bölümler</string>
   <string name="recommended">Önerilen</string>
   <string name="watched_shows">İzlenmiş</string>
   <string name="shows_collection">Koleksiyon</string>
@@ -334,6 +335,7 @@
   <string name="pref_seasonsorting">Sezonları sırala&#8230;</string>
   <string name="pref_episodesorting">Bölümleri sırala&#8230;</string>
   <string name="pref_language">Tercih edilen içerik dili</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Görüntüler sadece Wi-Fi üzerinden</string>
   <string name="pref_updatewifionlysummary">Veri ücretlerini azaltmak için, mobil ve tarifeli internet bağlantılarından indirme yapma</string>
   <plurals name="days_before_plural">

@@ -18,12 +18,12 @@ public class LanguageTools {
      * Returns the string representation of the given two letter ISO 639-1 language code if it is
      * supported by SeriesGuide ({@link SeriesGuideContract.Shows#LANGUAGE}).
      *
-     * <p>If the given language code is {@code null}, uses {@link DisplaySettings#getContentLanguage(Context)}.
+     * <p>If the given language code is {@code null}, uses {@link DisplaySettings#getShowsLanguage(Context)}.
      */
     public static String getShowLanguageStringFor(Context context, @Nullable String languageCode) {
         if (TextUtils.isEmpty(languageCode)) {
             // fall back to default language
-            languageCode = DisplaySettings.getContentLanguage(context);
+            languageCode = DisplaySettings.getShowsLanguage(context);
         }
 
         return getLanguageStringFor(context, languageCode, R.array.languageCodesShows);
@@ -33,7 +33,7 @@ public class LanguageTools {
      * Returns the string representation of the given two letter ISO 639-1 language code if it is
      * supported by SeriesGuide ({@link SeriesGuideContract.Shows#LANGUAGE}).
      *
-     * <p>If the given language code is {@code null}, uses {@link DisplaySettings#getContentLanguage(Context)}.
+     * <p>If the given language code is {@code null}, uses {@link DisplaySettings#getShowsLanguage(Context)}.
      */
     public static String getMovieLanguageStringFor(Context context, @Nullable String languageCode) {
         if (TextUtils.isEmpty(languageCode)) {
@@ -70,14 +70,14 @@ public class LanguageTools {
      * Returns the string representation and index of the given two letter ISO 639-1 language code
      * if it is supported by SeriesGuide ({@link SeriesGuideContract.Shows#LANGUAGE}).
      *
-     * <p>If the given language code is {@code null}, uses {@link DisplaySettings#getContentLanguage(Context)}.
+     * <p>If the given language code is {@code null}, uses {@link DisplaySettings#getShowsLanguage(Context)}.
      */
     @Nullable
     public static LanguageData getShowLanguageDataFor(Context context,
             @Nullable String languageCode) {
         if (TextUtils.isEmpty(languageCode)) {
             // fall back to default language
-            languageCode = DisplaySettings.getContentLanguage(context);
+            languageCode = DisplaySettings.getShowsLanguage(context);
         }
 
         String[] languageCodes = context.getResources().getStringArray(R.array.languageCodesShows);

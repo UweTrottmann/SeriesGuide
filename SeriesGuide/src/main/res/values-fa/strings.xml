@@ -189,6 +189,7 @@
   <string name="add_started">%s به زودی در فهرست تماشایتان ظاهر خواهد شد.</string>
   <string name="add_error">قادر به افزودن %s نمی باشد.</string>
   <string name="add_already_exists">%s هم‌اکنون در فهرست نمایشتان هست.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">توصیه می شود</string>
   <string name="watched_shows">تماشا شده</string>
   <string name="shows_collection">مجموعه</string>
@@ -334,6 +335,7 @@
   <string name="pref_seasonsorting">چینش فصل‌ها بر اساس&#8230;</string>
   <string name="pref_episodesorting">چینش قسمت‌ها بر اساس&#8230;</string>
   <string name="pref_language">زبان محتوای ترجیحی</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">تصویرها فقط با وای‌فای</string>
   <string name="pref_updatewifionlysummary">به منظور کاهش هزینه‌های داده، از طریق شبکه‌های همراه یا حجمی بارگیری نکنید</string>
   <plurals name="days_before_plural">

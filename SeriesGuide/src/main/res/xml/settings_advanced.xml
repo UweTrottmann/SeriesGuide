@@ -13,19 +13,15 @@
         android:title="@string/analytics" />
 
     <Preference
-        android:key="backup"
-        android:title="Legacy Backup/Restore">
-        <intent
-            android:targetClass="com.battlelancer.seriesguide.ui.BackupDeleteActivity"
-            android:targetPackage="@string/package_name" />
-    </Preference>
+        android:key="com.battlelancer.seriesguide.settings.backuplegacy"
+        android:title="Legacy Backup/Restore" />
 
     <Preference
         android:summary="@string/pref_translatesummary"
         android:title="@string/pref_translate" >
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="http://crowdin.net/project/seriesguide-translations/invite" />
+            android:data="https://crowdin.net/project/seriesguide-translations/invite" />
     </Preference>
 
     <Preference
@@ -41,7 +37,7 @@
         android:title="@string/pref_suggest_features" >
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="http://seriesguide.uservoice.com" />
+            android:data="https://seriesguide.uservoice.com" />
     </Preference>
 
 </PreferenceScreen>

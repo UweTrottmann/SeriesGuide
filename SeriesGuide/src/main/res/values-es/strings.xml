@@ -189,6 +189,7 @@
   <string name="add_started">%s aparecerá en tu lista dentro de poco.</string>
   <string name="add_error">No se pudo añadir %s.</string>
   <string name="add_already_exists">%s ya está en tu lista de visualización.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Recomendado</string>
   <string name="watched_shows">Visto</string>
   <string name="shows_collection">Colección</string>
@@ -335,6 +336,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_seasonsorting">Ordenar temporadas por&#8230;</string>
   <string name="pref_episodesorting">Ordenar episodios por&#8230;</string>
   <string name="pref_language">Lenguaje preferido para el contenido</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Imágenes sólo por Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Para reducir el consumo de datos, no descargar a través de redes móviles</string>
   <plurals name="days_before_plural">

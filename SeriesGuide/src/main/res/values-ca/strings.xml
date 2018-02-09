@@ -189,6 +189,7 @@
   <string name="add_started">De seguida apareixerà %s a la vostra llista de sèries.</string>
   <string name="add_error">No es pot afegir %s.</string>
   <string name="add_already_exists">%s ja és a la vostra llista de sèries.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">Recomanat</string>
   <string name="watched_shows">Vist</string>
   <string name="shows_collection">Coŀlecció</string>
@@ -334,6 +335,7 @@
   <string name="pref_seasonsorting">Ordena les temporades per&#8230;</string>
   <string name="pref_episodesorting">Ordena els capítols per&#8230;</string>
   <string name="pref_language">Idioma preferit del contingut</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Imatges només via xarxa sense fils</string>
   <string name="pref_updatewifionlysummary">Per reduir els càrrecs de dades, no descarregar en xarxes mòbils o comptabilitzades</string>
   <plurals name="days_before_plural">

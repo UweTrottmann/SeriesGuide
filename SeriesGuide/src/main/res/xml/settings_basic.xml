@@ -16,6 +16,13 @@
             android:key="language"
             android:title="@string/pref_language" />
 
+        <ListPreference
+            android:defaultValue="@string/show_default_language"
+            android:entries="@array/languagesShows"
+            android:entryValues="@array/languageCodesShows"
+            android:key="com.battlelancer.seriesguide.languageFallback"
+            android:title="@string/pref_language_fallback" />
+
         <Preference
             android:key="com.battlelancer.seriesguide.timeoffset"
             android:title="@string/pref_offset" />

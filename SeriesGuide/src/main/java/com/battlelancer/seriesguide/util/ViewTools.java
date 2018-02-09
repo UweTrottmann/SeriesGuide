@@ -217,4 +217,16 @@ public class ViewTools {
         DrawableCompat.setTint(wrapped, color);
         item.setIcon(wrapped);
     }
+
+    public static void openUriOnClick(View button, final String uri, final String logTag,
+            final String logItem) {
+        if (button != null) {
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Utils.launchWebsite(v.getContext(), uri, logTag, logItem);
+                }
+            });
+        }
+    }
 }

@@ -6,11 +6,8 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListAdapter;
-import com.battlelancer.seriesguide.adapters.EpisodeHistoryAdapter;
-import com.battlelancer.seriesguide.loaders.TraktEpisodeHistoryLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.ui.HistoryActivity;
-import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
+import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 
 /**

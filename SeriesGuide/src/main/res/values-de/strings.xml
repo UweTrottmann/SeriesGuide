@@ -189,6 +189,7 @@
   <string name="add_started">%s erscheint in Kürze in Ihrer Serien-Liste</string>
   <string name="add_error">%s konnte nicht hinzugefügt werden</string>
   <string name="add_already_exists">%s ist bereits in Ihrer Serien-Liste</string>
+  <string name="title_new_episodes">Neue Folgen</string>
   <string name="recommended">Empfehlungen</string>
   <string name="watched_shows">Angesehen</string>
   <string name="shows_collection">Sammlung</string>
@@ -334,6 +335,7 @@
   <string name="pref_seasonsorting">Sortiere Staffeln nach&#8230;</string>
   <string name="pref_episodesorting">Sortiere Folgen nach&#8230;</string>
   <string name="pref_language">Bevorzugte Sprache der Inhalte</string>
+  <string name="pref_language_fallback">Alternative Sprache</string>
   <string name="pref_updatewifionly">Bilder nur über WLAN</string>
   <string name="pref_updatewifionlysummary">Um Gebühren zu vermeiden, nicht über mobile oder kostenpflichtige Funknetze herunterladen</string>
   <plurals name="days_before_plural">

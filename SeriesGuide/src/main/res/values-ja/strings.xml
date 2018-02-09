@@ -185,6 +185,7 @@
   <string name="add_started">すぐに %s が番組リストに表示されます。</string>
   <string name="add_error">%s を追加できませんでした。</string>
   <string name="add_already_exists">%s はすでに番組リストにあります。</string>
+  <string name="title_new_episodes">新しいエピソード</string>
   <string name="recommended">おすすめ</string>
   <string name="watched_shows">視聴済</string>
   <string name="shows_collection">コレクション</string>
@@ -326,6 +327,7 @@
   <string name="pref_seasonsorting">シーズンを並び替え&#8230;</string>
   <string name="pref_episodesorting">エピソードを並び替え&#8230;</string>
   <string name="pref_language">ご希望のコンテンツ言語</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">画像は Wi-Fi 経由のみ</string>
   <string name="pref_updatewifionlysummary">データ通信料金を減らすため、モバイルまたは従量課金ネットワーク経由でダウンロードしません</string>
   <plurals name="days_before_plural">

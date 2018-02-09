@@ -9,7 +9,6 @@ import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.text.Editable;
@@ -28,10 +27,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
-import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.settings.SearchSettings;
-import com.battlelancer.seriesguide.settings.TraktCredentials;
-import com.battlelancer.seriesguide.ui.dialogs.AddShowDialogFragment;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeDetailsActivity;
+import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
+import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment;
+import com.battlelancer.seriesguide.ui.search.SearchResult;
+import com.battlelancer.seriesguide.ui.search.ShowSearchFragment;
+import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFragment;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -61,39 +64,10 @@ public class SearchActivity extends BaseNavDrawerActivity implements
     public static final int TAB_POSITION_SHOWS = 0;
     public static final int TAB_POSITION_EPISODES = 1;
     public static final int TAB_POSITION_SEARCH = 2;
-    public static final int TAB_POSITION_RECOMMENDED = 3;
-    public static final int TAB_POSITION_WATCHED = 4;
-    public static final int TAB_POSITION_COLLECTION = 5;
-    public static final int TAB_POSITION_WATCHLIST = 6;
 
     public static final int SHOWS_LOADER_ID = 100;
     public static final int EPISODES_LOADER_ID = 101;
-    public static final int SEARCH_LOADER_ID = 102;
     public static final int TRAKT_BASE_LOADER_ID = 200;
-
-    /**
-     * Used by {@link ShowSearchFragment} and {@link EpisodeSearchFragment} to search as the user
-     * types.
-     */
-    public class SearchQueryEvent {
-        public final Bundle args;
-
-        public SearchQueryEvent(Bundle args) {
-            this.args = args;
-        }
-    }
-
-    /**
-     * Used by {@link TvdbAddFragment} to submit a query. Unlike local search it is not type and
-     * search.
-     */
-    public class SearchQuerySubmitEvent {
-        public final String query;
-
-        public SearchQuerySubmitEvent(String query) {
-            this.query = query;
-        }
-    }
 
     @BindView(R.id.containerSearchBar) View searchContainer;
     @BindView(R.id.editTextSearchBar) AutoCompleteTextView searchView;
@@ -130,7 +104,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
     private void setupViews(boolean mayShowKeyboard) {
         ButterKnife.bind(this);
-        clearButton.setVisibility(View.GONE);
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,7 +122,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 boolean isEmptyText = TextUtils.isEmpty(s);
                 triggerLocalSearch(isEmptyText ? "" : s.toString());
-                clearButton.setVisibility(isEmptyText ? View.GONE : View.VISIBLE);
             }
 
             @Override
@@ -173,7 +145,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         // manually retrieve the auto complete view popup background to override the theme
         TypedValue outValue = new TypedValue();
         getTheme().resolveAttribute(android.R.attr.autoCompleteTextViewStyle, outValue, true);
-        int[] attributes = new int[] { android.R.attr.popupBackground };
+        int[] attributes = new int[]{android.R.attr.popupBackground};
         TypedArray a = getTheme().obtainStyledAttributes(outValue.data, attributes);
         if (a.hasValue(0)) {
             searchView.setDropDownBackgroundDrawable(a.getDrawable(0));
@@ -219,14 +191,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
         tabsAdapter.addTab(R.string.shows, ShowSearchFragment.class, null);
         tabsAdapter.addTab(R.string.episodes, EpisodeSearchFragment.class, null);
-        tabsAdapter.addTab(R.string.action_shows_add, TvdbAddFragment.class, null);
-        if (TraktCredentials.get(this).hasCredentials()) {
-            addTraktTab(tabsAdapter, R.string.recommended, TraktAddFragment.TYPE_RECOMMENDED);
-            addTraktTab(tabsAdapter, R.string.watched_shows, TraktAddFragment.TYPE_WATCHED);
-            addTraktTab(tabsAdapter, R.string.shows_collection, TraktAddFragment.TYPE_COLLECTION);
-            addTraktTab(tabsAdapter, R.string.watchlist, TraktAddFragment.TYPE_WATCHLIST);
-        }
-
+        tabsAdapter.addTab(R.string.title_discover, ShowsDiscoverFragment.class, null);
         tabsAdapter.notifyTabsChanged();
 
         // set default tab
@@ -243,13 +208,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             // also show keyboard when showing first tab (added tab)
             ViewTools.showSoftKeyboardOnSearchView(this, searchView);
         }
-    }
-
-    private static void addTraktTab(TabStripAdapter tabsAdapter, @StringRes int titleResId,
-            @TraktAddFragment.ListType int type) {
-        Bundle args = new Bundle();
-        args.putInt(TraktAddFragment.ARG_TYPE, type);
-        tabsAdapter.addTab(titleResId, TraktAddFragment.class, args);
     }
 
     private final ViewPager.OnPageChangeListener pageChangeListener
@@ -464,7 +422,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
     @SuppressWarnings("UnusedParameters")
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(TvdbAddFragment.ClearSearchHistoryEvent event) {
+    public void onEventMainThread(ClearSearchHistoryEvent event) {
         if (searchHistory != null && searchHistoryAdapter != null) {
             searchHistory.clearHistory();
             searchHistoryAdapter.clear();
@@ -479,6 +437,34 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             return findViewById(R.id.coordinatorLayoutSearch);
         } else {
             return super.getSnackbarParentView();
+        }
+    }
+
+    /** Used by {@link ShowsDiscoverFragment} to indicate the search history should be cleared. */
+    public static class ClearSearchHistoryEvent {
+    }
+
+    /**
+     * Used by {@link ShowSearchFragment} and {@link EpisodeSearchFragment} to search as the user
+     * types.
+     */
+    public static class SearchQueryEvent {
+        public final Bundle args;
+
+        public SearchQueryEvent(Bundle args) {
+            this.args = args;
+        }
+    }
+
+    /**
+     * Used by {@link ShowsDiscoverFragment} to submit a query. Unlike local search it is not type
+     * and search.
+     */
+    public static class SearchQuerySubmitEvent {
+        public final String query;
+
+        public SearchQuerySubmitEvent(String query) {
+            this.query = query;
         }
     }
 }

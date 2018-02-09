@@ -193,6 +193,7 @@
   <string name="add_started">%s sa čoskoro zobrazí v zozname seriálov.</string>
   <string name="add_error">Nemožno pridať %s.</string>
   <string name="add_already_exists">%s už je vo vašich seriáloch.</string>
+  <string name="title_new_episodes">Nové epizódy</string>
   <string name="recommended">Odporúčané</string>
   <string name="watched_shows">Videné</string>
   <string name="shows_collection">Zbierka</string>
@@ -342,6 +343,7 @@
   <string name="pref_seasonsorting">Zoradiť série podľa&#8230;</string>
   <string name="pref_episodesorting">Zoradiť epizódy podľa&#8230;</string>
   <string name="pref_language">Preferovaný jazyk obsahu</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">Zobrazovať obrázky výlučne cez Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Pre zníženie spotreby dát, nesťahovať cez mobilné alebo merané siete</string>
   <plurals name="days_before_plural">

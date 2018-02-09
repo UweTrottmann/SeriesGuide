@@ -13,7 +13,7 @@ import com.battlelancer.seriesguide.jobs.FlagJob;
 import com.battlelancer.seriesguide.jobs.SgJobInfo;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.util.EpisodeTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.google.flatbuffers.FlatBufferBuilder;
 

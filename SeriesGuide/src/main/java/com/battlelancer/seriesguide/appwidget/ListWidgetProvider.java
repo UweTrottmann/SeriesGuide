@@ -19,8 +19,8 @@ import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
-import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import timber.log.Timber;
 
 /**

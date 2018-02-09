@@ -185,6 +185,7 @@
   <string name="add_started">%s將會顯示在你的清單中。</string>
   <string name="add_error">無法新增%s</string>
   <string name="add_already_exists">%s已經在你的清單當中。</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">推薦</string>
   <string name="watched_shows">已看過</string>
   <string name="shows_collection">收藏</string>
@@ -326,6 +327,7 @@
   <string name="pref_seasonsorting">以&#8230;排序每一季</string>
   <string name="pref_episodesorting">以&#8230;排序每一集</string>
   <string name="pref_language">偏好的語言</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">只有在使用Wi-Fi時載入圖片</string>
   <string name="pref_updatewifionlysummary">為了減少資料量，不要透過移動或計量網路下載</string>
   <plurals name="days_before_plural">

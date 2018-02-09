@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.cloud.tools.endpoints-framework-client'
 apply plugin: 'io.fabric'
 
@@ -13,16 +15,16 @@ android {
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "TVDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TVDB_API_KEY")}\"")
-        buildConfigField("String", "TMDB_API_KEY", "\"${loadStringPropertyOrPlaceholder("TMDB_API_KEY")}\"")
-        buildConfigField("String", "TRAKT_CLIENT_ID", "\"${loadStringPropertyOrPlaceholder("TRAKT_CLIENT_ID")}\"")
-        buildConfigField("String", "TRAKT_CLIENT_SECRET", "\"${loadStringPropertyOrPlaceholder("TRAKT_CLIENT_SECRET")}\"")
-        buildConfigField("String", "IAP_KEY_A", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_A")}\"")
-        buildConfigField("String", "IAP_KEY_B", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_B")}\"")
-        buildConfigField("String", "IAP_KEY_C", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_C")}\"")
-        buildConfigField("String", "IAP_KEY_D", "\"${loadStringPropertyOrPlaceholder("IAP_KEY_D")}\"")
-        buildConfigField("String", "IMAGE_CACHE_URL", "\"${loadStringPropertyOrPlaceholder("IMAGE_CACHE_URL")}\"")
-        buildConfigField("String", "IMAGE_CACHE_SECRET", "\"${loadStringPropertyOrPlaceholder("IMAGE_CACHE_SECRET")}\"")
+        buildConfigField("String", "TVDB_API_KEY", stringPropertyOrPlaceholder("TVDB_API_KEY"))
+        buildConfigField("String", "TMDB_API_KEY", stringPropertyOrPlaceholder("TMDB_API_KEY"))
+        buildConfigField("String", "TRAKT_CLIENT_ID", stringPropertyOrPlaceholder("TRAKT_CLIENT_ID"))
+        buildConfigField("String", "TRAKT_CLIENT_SECRET", stringPropertyOrPlaceholder("TRAKT_CLIENT_SECRET"))
+        buildConfigField("String", "IAP_KEY_A", stringPropertyOrPlaceholder("IAP_KEY_A"))
+        buildConfigField("String", "IAP_KEY_B", stringPropertyOrPlaceholder("IAP_KEY_B"))
+        buildConfigField("String", "IAP_KEY_C", stringPropertyOrPlaceholder("IAP_KEY_C"))
+        buildConfigField("String", "IAP_KEY_D", stringPropertyOrPlaceholder("IAP_KEY_D"))
+        buildConfigField("String", "IMAGE_CACHE_URL", stringPropertyOrNull("IMAGE_CACHE_URL"))
+        buildConfigField("String", "IMAGE_CACHE_SECRET", stringPropertyOrPlaceholder("IMAGE_CACHE_SECRET"))
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -114,6 +116,8 @@ android {
 }
 
 dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     implementation project(':api')
     implementation project(':libraries:drag-sort-listview')
     implementation project(':libraries:stickygridheaders')
@@ -128,14 +132,14 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:${versions.supportLibrary}"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation "android.arch.lifecycle:extensions:${versions.lifecycle}"
-    annotationProcessor "android.arch.lifecycle:compiler:${versions.lifecycle}"
+    kapt "android.arch.lifecycle:compiler:${versions.lifecycle}"
 
     implementation "com.jakewharton:butterknife:${versions.butterknife}"
-    annotationProcessor "com.jakewharton:butterknife-compiler:${versions.butterknife}"
+    kapt "com.jakewharton:butterknife-compiler:${versions.butterknife}"
     implementation "com.google.dagger:dagger:${versions.dagger}"
-    annotationProcessor "com.google.dagger:dagger-compiler:${versions.dagger}"
+    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
     implementation 'org.greenrobot:eventbus:3.0.0'
-    annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'
+    kapt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
 
     implementation("com.crashlytics.sdk.android:crashlytics:${versions.crashlytics}@aar") {
         transitive = true
@@ -187,8 +191,11 @@ dependencies {
     androidTestImplementation "com.android.support:support-annotations:${versions.supportLibrary}"
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test:rules:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     androidTestImplementation "com.google.truth:truth:${versions.truth}"
-    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${versions.dagger}"
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    androidTestImplementation 'com.google.code.findbugs:jsr305:3.0.2'
+    kaptAndroidTest "com.google.dagger:dagger-compiler:${versions.dagger}"
 
     // Local unit tests
     testImplementation 'junit:junit:4.12'
@@ -207,6 +214,10 @@ endpointsClient {
                      'src/endpoints/shows-v2-rest.discovery']
 }
 
-def loadStringPropertyOrPlaceholder(String name) {
-    return rootProject.hasProperty(name) ? rootProject.property(name) : "MISSING"
+def stringPropertyOrPlaceholder(String name) {
+    return rootProject.hasProperty(name) ? "\"${rootProject.property(name)}\"" : "\"MISSING\""
+}
+
+def stringPropertyOrNull(String name) {
+    return rootProject.hasProperty(name) ? "\"${rootProject.property(name)}\"" : "null"
 }

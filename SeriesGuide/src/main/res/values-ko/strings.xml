@@ -185,6 +185,7 @@
   <string name="add_started">%s는 당신의 쇼 리스트에 곧 나타날 것입니다.</string>
   <string name="add_error">%s를 추가할 수 없음</string>
   <string name="add_already_exists">%s는 이미 리스트에 있습니다.</string>
+  <string name="title_new_episodes">New episodes</string>
   <string name="recommended">추천</string>
   <string name="watched_shows">시청목록</string>
   <string name="shows_collection">컬렉션</string>
@@ -326,6 +327,7 @@
   <string name="pref_seasonsorting">시즌 정렬</string>
   <string name="pref_episodesorting">에피소드 정렬</string>
   <string name="pref_language">선호하는 컨텐츠 언어</string>
+  <string name="pref_language_fallback">Alternative language</string>
   <string name="pref_updatewifionly">와이파이를 이용하여 이미지 다운받기</string>
   <string name="pref_updatewifionlysummary">데이터 과금을 막기 위해 모바일 네트워크를 통해 다운로드하지 않음</string>
   <plurals name="days_before_plural">
