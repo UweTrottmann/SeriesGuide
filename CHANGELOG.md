@@ -59,8 +59,8 @@ Version 40
 * Widget now updating more frequently on Android 8 (Oreo).
 * Add notification channel support on Android 8 (Oreo).
 
-#### 40-beta6
-*(2017-12-01)*
+#### 40
+*(2017-12-07)*
 
 * 🔧 Display placeholder episode title if 'No spoilers' is enabled.
 * 📝 Latest translations from crowdin.
