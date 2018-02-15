@@ -1,19 +1,17 @@
 package com.battlelancer.seriesguide.ui;
 
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
-import android.support.test.espresso.DataInteraction;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -74,13 +72,12 @@ public class ShowsActivityTest {
             e.printStackTrace();
         }
 
-        DataInteraction constraintLayout = onData(anything())
-                .inAdapterView(allOf(withId(android.R.id.list),
+        ViewInteraction recyclerView = onView(
+                allOf(withId(R.id.recyclerViewShowsDiscover),
                         childAtPosition(
-                                withId(R.id.containerAddContent),
-                                0)))
-                .atPosition(0);
-        constraintLayout.perform(click());
+                                withId(R.id.constraintLayoutShowsDiscover),
+                                1)));
+        recyclerView.perform(actionOnItemAtPosition(2, click()));
 
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.buttonPositive), withText("Add show"),
@@ -92,13 +89,12 @@ public class ShowsActivityTest {
                         isDisplayed()));
         appCompatButton.perform(click());
 
-        DataInteraction constraintLayout2 = onData(anything())
-                .inAdapterView(allOf(withId(android.R.id.list),
+        ViewInteraction recyclerView2 = onView(
+                allOf(withId(R.id.recyclerViewShowsDiscover),
                         childAtPosition(
-                                withId(R.id.containerAddContent),
-                                0)))
-                .atPosition(0);
-        constraintLayout2.perform(click());
+                                withId(R.id.constraintLayoutShowsDiscover),
+                                1)));
+        recyclerView2.perform(actionOnItemAtPosition(2, click()));
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
