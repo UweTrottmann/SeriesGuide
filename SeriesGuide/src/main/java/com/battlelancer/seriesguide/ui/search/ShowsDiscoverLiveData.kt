@@ -9,6 +9,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException
+import com.battlelancer.seriesguide.tmdbapi.SgTmdb
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -89,14 +90,17 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
                     .language(languageActual)
                     .build()
 
-            val response = try {
-                call.execute()
+            val action = "get shows w new episodes"
+            val results = try {
+                val response = call.execute()
+                if (response.isSuccessful) {
+                    response.body() ?: return buildResultFailure(R.string.tmdb, false)
+                } else {
+                    SgTmdb.trackFailedRequest(context, action, response)
+                    return buildResultFailure(R.string.tmdb, false)
+                }
             } catch (e: IOException) {
-                return buildResultFailure(R.string.tmdb, false)
-            }
-
-            val results = response.body()
-            if (!response.isSuccessful || results == null) {
+                SgTmdb.trackFailedRequest(context, action, e)
                 return buildResultFailure(R.string.tmdb, false)
             }
 
