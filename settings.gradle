@@ -1,4 +1,4 @@
 include ':api'
 include ':libraries:drag-sort-listview'
 include ':libraries:stickygridheaders'
-include ':SeriesGuide'
+include ':app'
