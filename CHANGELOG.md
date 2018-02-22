@@ -5,6 +5,16 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 42
+----------
+*(in development)*
+
+#### 42-beta1
+*(2018-02-22)*
+
+* 🔨 Fix rare crash when loading data from TMDB fails. 
+* 📝 Latest translations from crowdin.
+
 Version 41
 ----------
 *(2018-02-09)*
