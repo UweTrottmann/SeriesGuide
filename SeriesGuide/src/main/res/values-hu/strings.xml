@@ -189,7 +189,7 @@
   <string name="add_started">A(z) %s hamarosan megjelenik a sorozatlistában.</string>
   <string name="add_error">Nem lehetett hozzáadni a(z) %s-t.</string>
   <string name="add_already_exists">A(z) %s már a listádon van.</string>
-  <string name="title_new_episodes">New episodes</string>
+  <string name="title_new_episodes">Új epizódok</string>
   <string name="recommended">Ajánlott</string>
   <string name="watched_shows">Megnézve</string>
   <string name="shows_collection">Gyűjtemény</string>
@@ -335,7 +335,7 @@
   <string name="pref_seasonsorting">Évadok rendezése</string>
   <string name="pref_episodesorting">Epizódok rendezése</string>
   <string name="pref_language">Tartalom preferált nyelve</string>
-  <string name="pref_language_fallback">Alternative language</string>
+  <string name="pref_language_fallback">Alternatív nyelv</string>
   <string name="pref_updatewifionly">Képek csak Wi-Fi-n keresztül</string>
   <string name="pref_updatewifionlysummary">Az adatforgalmi díjak csökkentése éredekében ne tölts le mobil vagy díjköteles hálózatokról</string>
   <plurals name="days_before_plural">

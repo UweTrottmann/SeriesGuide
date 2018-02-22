@@ -327,7 +327,7 @@
   <string name="pref_seasonsorting">シーズンを並び替え&#8230;</string>
   <string name="pref_episodesorting">エピソードを並び替え&#8230;</string>
   <string name="pref_language">ご希望のコンテンツ言語</string>
-  <string name="pref_language_fallback">Alternative language</string>
+  <string name="pref_language_fallback">別の言語</string>
   <string name="pref_updatewifionly">画像は Wi-Fi 経由のみ</string>
   <string name="pref_updatewifionlysummary">データ通信料金を減らすため、モバイルまたは従量課金ネットワーク経由でダウンロードしません</string>
   <plurals name="days_before_plural">

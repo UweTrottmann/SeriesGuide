@@ -46,7 +46,7 @@
   <string name="norating">n/a</string>
   <string name="unknown">άγνωστο</string>
   <string name="offline">Συνδεθείτε σε ένα δίκτυο και, ξανά προσπαθήστε.</string>
-  <string name="app_not_available">No app available to handle this</string>
+  <string name="app_not_available">Δεν υπάρχει διαθέσιμη εφαρμογή για να το χειριστεί</string>
   <string name="people_empty">Κανείς εδώ;! Πατήστε για να προσπαθήσετε ξανά.</string>
   <string name="database_error">Δεν ήταν δυνατή η τροποποίηση δεδομένων.</string>
   <string name="reinstall_info">Προσπαθήστε να κρατήσετε αντίγραφο ασφαλείας στις Ρυθμίσεις, να εγκαταστήσετε ξανά την εφαρμογή και να κάνετε επαναφορά.</string>
@@ -189,7 +189,7 @@
   <string name="add_started">%s θα εμφανιστεί στην λίστα με τις σειρές σου σύντομα.</string>
   <string name="add_error">Δεν ήταν δυνατή η προσθήκη της σειράς %s.</string>
   <string name="add_already_exists">%s βρίσκετε ήδη στην λίστα με τις σειρές σου.</string>
-  <string name="title_new_episodes">New episodes</string>
+  <string name="title_new_episodes">Νέα επεισόδια</string>
   <string name="recommended">Προτεινόμενα</string>
   <string name="watched_shows">Είδατε</string>
   <string name="shows_collection">Συλλογή</string>
@@ -253,12 +253,12 @@
   <!-- Features -->
   <string name="feature_supported">Υποστηρίζεται</string>
   <string name="feature_not_supported">Δεν υποστηρίζεται</string>
-  <string name="feature_history">Personal and friend history</string>
-  <string name="feature_comments">Post comments</string>
-  <string name="feature_sync">Sync</string>
+  <string name="feature_history">Ιστορικό Προσωπικο και Φίλων</string>
+  <string name="feature_comments">Σχόλια Αναρτήσεων</string>
+  <string name="feature_sync">Συγχρονισμός</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Πειραματική έκδοση!</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+  <string name="hexagon_description">Το SeriesGuide Cloud διατηρεί συγχρονισμένο αντίγραφο to backup των σειρών, ταινιών και λιστών σας</string>
   <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
   <string name="hexagon_signin">Σύνδεση</string>
   <string name="hexagon_signout">Αποσύνδεση</string>
