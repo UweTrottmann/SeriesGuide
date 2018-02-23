@@ -15,6 +15,12 @@ Version 41
   (powered by TMDb) and a link to popular shows (powered by trakt).
 * 🔧 TheTVDB show and episode links will open the translation used inside the app. 
 
+#### 41.1
+*(2018-02-23)*
+
+* 🔨 Fix rare crash when loading data from TMDB fails. 
+* 📝 Latest translations from crowdin.
+
 #### 41
 *(2018-02-09)*
 
@@ -59,8 +65,8 @@ Version 40
 * Widget now updating more frequently on Android 8 (Oreo).
 * Add notification channel support on Android 8 (Oreo).
 
-#### 40-beta6
-*(2017-12-01)*
+#### 40
+*(2017-12-07)*
 
 * 🔧 Display placeholder episode title if 'No spoilers' is enabled.
 * 📝 Latest translations from crowdin.

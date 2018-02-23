@@ -1,3 +1,5 @@
+SeriesGuide – Show & Movie Manager
+
 Keep track of your favorite TV shows and movies.
 
 - Track your watched episodes, keep tabs on new releases and manage your media collection.
@@ -5,13 +7,13 @@ Keep track of your favorite TV shows and movies.
 - No sign-in required, keeps working without an internet connection.
 - DashClock extension.
 - List widget.
-- Plug in extensions or build your own: http://seriesgui.de/api
+- Plug in extensions or build your own: https://seriesgui.de/api
 
 .....
 
 Get the subscription to unlock all features and support SeriesGuide! You will get more list widget options, notifications for new episodes and more. You also support continued fixes and new features.
 
-http://seriesgui.de/whypay
+https://seriesgui.de/whypay
 
 NOTE: Dates and times are limited to the first release in the country of origin.
 
@@ -20,5 +22,7 @@ This product uses the TMDb API but is not endorsed or certified by TMDb. https:/
 This app uses data and images by trakt. https://trakt.tv/terms
 
 Sample shows by Ross Scott, visit him at http://www.accursedfarms.com
+
+SeriesGuide X Pass – Unlock all features
 
 Unlock permanent access to all features of SeriesGuide. Requires both SeriesGuide and X Pass to be installed.
