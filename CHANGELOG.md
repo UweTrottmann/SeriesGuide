@@ -25,6 +25,12 @@ Version 41
   (powered by TMDb) and a link to popular shows (powered by trakt).
 * 🔧 TheTVDB show and episode links will open the translation used inside the app. 
 
+#### 41.1
+*(2018-02-23)*
+
+* 🔨 Fix rare crash when loading data from TMDB fails. 
+* 📝 Latest translations from crowdin.
+
 #### 41
 *(2018-02-09)*
 
