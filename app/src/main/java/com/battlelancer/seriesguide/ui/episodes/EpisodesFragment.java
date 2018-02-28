@@ -6,6 +6,8 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
@@ -41,6 +43,10 @@ public class EpisodesFragment extends ListFragment
     private Constants.EpisodeSorting sortOrder;
     private boolean isDualPane;
     private EpisodesAdapter adapter;
+
+    private int showTvdbId;
+    private int seasonTvdbId;
+    private int seasonNumber;
     private int startingPosition;
     private long lastCheckedItemId;
 
@@ -73,6 +79,21 @@ public class EpisodesFragment extends ListFragment
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        if (args != null) {
+            showTvdbId = args.getInt(InitBundle.SHOW_TVDBID);
+            seasonTvdbId = args.getInt(InitBundle.SEASON_TVDBID);
+            seasonNumber = args.getInt(InitBundle.SEASON_NUMBER);
+            startingPosition = args.getInt(InitBundle.STARTING_POSITION);
+        } else {
+            throw new IllegalArgumentException("Missing arguments");
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_episodes, container, false);
@@ -86,23 +107,22 @@ public class EpisodesFragment extends ListFragment
 
         // listen to changes to the sorting preference
         final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
+                .getDefaultSharedPreferences(requireActivity());
         prefs.registerOnSharedPreferenceChangeListener(onSortOrderChangedListener);
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
-        View pager = getActivity().findViewById(R.id.pagerEpisodes);
+        View pager = requireActivity().findViewById(R.id.pagerEpisodes);
         isDualPane = pager != null && pager.getVisibility() == View.VISIBLE;
 
         if (isDualPane) {
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            startingPosition = getArguments().getInt(InitBundle.STARTING_POSITION);
         } else {
-            startingPosition = -1;
+            startingPosition = -1; // overwrite starting position
         }
         lastCheckedItemId = -1;
 
-        adapter = new EpisodesAdapter(getActivity(), this, this);
+        adapter = new EpisodesAdapter(requireActivity(), this, this);
         setListAdapter(adapter);
 
         getLoaderManager().initLoader(EpisodesActivity.EPISODES_LOADER_ID, null,
@@ -111,35 +131,23 @@ public class EpisodesFragment extends ListFragment
         setHasOptionsMenu(true);
     }
 
-    private int getShowId() {
-        return getArguments().getInt(InitBundle.SHOW_TVDBID);
-    }
-
-    private int getSeasonId() {
-        return getArguments().getInt(InitBundle.SEASON_TVDBID);
-    }
-
-    private int getSeasonNumber() {
-        return getArguments().getInt(InitBundle.SEASON_NUMBER);
-    }
-
     /**
      * Display the episode at the given position in a detail pane or if not available in a new
      * activity.
      */
     private void showDetails(View view, int position) {
         if (isDualPane) {
-            EpisodesActivity activity = (EpisodesActivity) getActivity();
+            EpisodesActivity activity = (EpisodesActivity) requireActivity();
             activity.setCurrentPage(position);
             setItemChecked(position);
         } else {
             int episodeId = (int) getListView().getItemIdAtPosition(position);
 
             Intent intent = new Intent();
-            intent.setClass(getActivity(), EpisodesActivity.class);
+            intent.setClass(requireActivity(), EpisodesActivity.class);
             intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
 
-            Utils.startActivityWithAnimation(getActivity(), intent, view);
+            Utils.startActivityWithAnimation(requireActivity(), intent, view);
         }
     }
 
@@ -155,7 +163,7 @@ public class EpisodesFragment extends ListFragment
 
         // stop listening to sort pref changes
         final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
+                .getDefaultSharedPreferences(requireActivity());
         prefs.unregisterOnSharedPreferenceChangeListener(onSortOrderChangedListener);
     }
 
@@ -203,45 +211,45 @@ public class EpisodesFragment extends ListFragment
                 switch (item.getItemId()) {
                     case R.id.menu_action_episodes_watched: {
                         onFlagEpisodeWatched(episodeTvdbId, episodeNumber, true);
-                        Utils.trackContextMenu(getActivity(), TAG, "Flag watched");
+                        Utils.trackContextMenu(requireContext(), TAG, "Flag watched");
                         return true;
                     }
                     case R.id.menu_action_episodes_not_watched: {
                         onFlagEpisodeWatched(episodeTvdbId, episodeNumber, false);
-                        Utils.trackContextMenu(getActivity(), TAG, "Flag unwatched");
+                        Utils.trackContextMenu(requireContext(), TAG, "Flag unwatched");
                         return true;
                     }
                     case R.id.menu_action_episodes_collection_add: {
                         onFlagEpisodeCollected(episodeTvdbId, episodeNumber, true);
-                        Utils.trackContextMenu(getActivity(), TAG, "Flag collected");
+                        Utils.trackContextMenu(requireContext(), TAG, "Flag collected");
                         return true;
                     }
                     case R.id.menu_action_episodes_collection_remove: {
                         onFlagEpisodeCollected(episodeTvdbId, episodeNumber, false);
-                        Utils.trackContextMenu(getActivity(), TAG, "Flag uncollected");
+                        Utils.trackContextMenu(requireContext(), TAG, "Flag uncollected");
                         return true;
                     }
                     case R.id.menu_action_episodes_skip: {
                         onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, true);
-                        Utils.trackContextMenu(getActivity(), TAG, "Flag skipped");
+                        Utils.trackContextMenu(requireContext(), TAG, "Flag skipped");
                         return true;
                     }
                     case R.id.menu_action_episodes_dont_skip: {
                         onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, false);
-                        Utils.trackContextMenu(getActivity(), TAG, "Flag not skipped");
+                        Utils.trackContextMenu(requireContext(), TAG, "Flag not skipped");
                         return true;
                     }
                     case R.id.menu_action_episodes_watched_previous: {
-                        EpisodeTools.episodeWatchedPrevious(getContext(), getShowId(),
+                        EpisodeTools.episodeWatchedPrevious(requireContext(), showTvdbId,
                                 releaseTimeMs, episodeNumber);
-                        Utils.trackContextMenu(getActivity(), TAG, "Flag previously aired");
+                        Utils.trackContextMenu(requireContext(), TAG, "Flag previously aired");
                         return true;
                     }
                     case R.id.menu_action_episodes_manage_lists: {
                         ManageListsDialogFragment.showListsDialog(episodeTvdbId,
                                 ListItemTypes.EPISODE,
                                 getFragmentManager());
-                        Utils.trackContextMenu(getActivity(), TAG, "Manage lists");
+                        Utils.trackContextMenu(requireContext(), TAG, "Manage lists");
                         return true;
                     }
                 }
@@ -253,33 +261,33 @@ public class EpisodesFragment extends ListFragment
 
     @Override
     public void onFlagEpisodeWatched(int episodeTvdbId, int episode, boolean isWatched) {
-        EpisodeTools.episodeWatched(getContext(), getShowId(), episodeTvdbId,
-                getSeasonNumber(), episode,
+        EpisodeTools.episodeWatched(requireContext(), showTvdbId, episodeTvdbId,
+                seasonNumber, episode,
                 isWatched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
     }
 
     public void onFlagEpisodeSkipped(int episodeTvdbId, int episode, boolean isSkipped) {
-        EpisodeTools.episodeWatched(getContext(), getShowId(), episodeTvdbId,
-                getSeasonNumber(), episode,
+        EpisodeTools.episodeWatched(requireContext(), showTvdbId, episodeTvdbId,
+                seasonNumber, episode,
                 isSkipped ? EpisodeFlags.SKIPPED : EpisodeFlags.UNWATCHED);
     }
 
     public void onFlagEpisodeCollected(int episodeTvdbId, int episode, boolean isCollected) {
-        EpisodeTools.episodeCollected(getContext(), getShowId(), episodeTvdbId,
-                getSeasonNumber(), episode, isCollected);
+        EpisodeTools.episodeCollected(requireContext(), showTvdbId, episodeTvdbId,
+                seasonNumber, episode, isCollected);
     }
 
     private LoaderManager.LoaderCallbacks<Cursor> episodesLoaderCallbacks
             = new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            return new CursorLoader(getActivity(),
-                    Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(getSeasonId())),
+            return new CursorLoader(requireContext(),
+                    Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(seasonTvdbId)),
                     EpisodesAdapter.EpisodesQuery.PROJECTION, null, null, sortOrder.query());
         }
 
         @Override
-        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
             adapter.swapCursor(data);
             // set an initial checked item
             if (startingPosition != -1) {
@@ -294,17 +302,17 @@ public class EpisodesFragment extends ListFragment
         }
 
         @Override
-        public void onLoaderReset(Loader<Cursor> loader) {
+        public void onLoaderReset(@NonNull Loader<Cursor> loader) {
             adapter.swapCursor(null);
         }
     };
 
     private void loadSortOrder() {
-        sortOrder = DisplaySettings.getEpisodeSortOrder(getActivity());
+        sortOrder = DisplaySettings.getEpisodeSortOrder(requireActivity());
     }
 
     private void showSortDialog() {
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = requireFragmentManager();
         SingleChoiceDialogFragment sortDialog = SingleChoiceDialogFragment.newInstance(
                 R.array.epsorting,
                 R.array.epsortingData, sortOrder.index(),
@@ -330,7 +338,7 @@ public class EpisodesFragment extends ListFragment
         getLoaderManager().restartLoader(EpisodesActivity.EPISODES_LOADER_ID, null,
                 episodesLoaderCallbacks);
 
-        Utils.trackCustomEvent(getActivity(), TAG, "Sorting", sortOrder.name());
+        Utils.trackCustomEvent(requireActivity(), TAG, "Sorting", sortOrder.name());
     }
 
     /**
@@ -347,6 +355,6 @@ public class EpisodesFragment extends ListFragment
 
     @Override
     public void onClick(View v) {
-        getActivity().openContextMenu(v);
+        requireActivity().openContextMenu(v);
     }
 }
