@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
@@ -47,6 +48,10 @@ public class EpisodeSearchFragment extends BaseSearchFragment {
 
         adapter = new EpisodeResultsAdapter(getActivity());
         gridView.setAdapter(adapter);
+
+        // load for given query or restore last loader (ignoring args)
+        getLoaderManager().initLoader(SearchActivity.EPISODES_LOADER_ID, loaderArgs,
+                searchLoaderCallbacks);
     }
 
     @Override
@@ -57,9 +62,10 @@ public class EpisodeSearchFragment extends BaseSearchFragment {
         Utils.startActivityWithAnimation(getActivity(), i, view);
     }
 
-    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(SearchActivity.SearchQueryEvent event) {
-        search(event.args);
+        getLoaderManager().restartLoader(SearchActivity.EPISODES_LOADER_ID, event.args,
+                searchLoaderCallbacks);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -69,16 +75,15 @@ public class EpisodeSearchFragment extends BaseSearchFragment {
         }
     }
 
-    private void search(Bundle args) {
-        getLoaderManager().restartLoader(SearchActivity.EPISODES_LOADER_ID, args,
-                searchLoaderCallbacks);
-    }
-
     private LoaderCallbacks<Cursor> searchLoaderCallbacks = new LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            loaderArgs = args;
             String selection = null;
-            final String query = args.getString(SearchManager.QUERY);
+            String query = args.getString(SearchManager.QUERY);
+            if (TextUtils.isEmpty(query)) {
+                query = "";
+            }
             String[] selectionArgs = new String[] {
                     query
             };
@@ -101,12 +106,12 @@ public class EpisodeSearchFragment extends BaseSearchFragment {
         }
 
         @Override
-        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
             adapter.swapCursor(data);
         }
 
         @Override
-        public void onLoaderReset(Loader<Cursor> loader) {
+        public void onLoaderReset(@NonNull Loader<Cursor> loader) {
             adapter.swapCursor(null);
         }
     };
