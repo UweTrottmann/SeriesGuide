@@ -35,7 +35,11 @@ public abstract class SgRoomDatabase extends RoomDatabase {
             // By implementing a Migration class, we're telling Room that it should use the data
             // from version 42 to version 43.
             // If no migration is provided, then the tables will be dropped and recreated.
-            // Since we didn't alter the table, there's nothing else to do here.
+            // Since we didn't alter the tables, there's not much to do here.
+
+            // Room does not support UNIQUE constraints, so use unique indexes instead (probably
+            // faster anyhow)
+            database.execSQL("CREATE UNIQUE INDEX `index_lists_list_id` ON `lists` (`list_id`)");
         }
     };
 
