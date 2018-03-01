@@ -80,7 +80,7 @@ public class Episode {
         values.put(Episodes.IMAGE, image != null ? image : "");
 
         values.put(Episodes.FIRSTAIREDMS, firstAired);
-        values.put(Episodes.COLLECTED, collected);
+        values.put(Episodes.COLLECTED, collected ? 1 : 0);
 
         values.put(Episodes.RATING_GLOBAL, (rating >= 0 && rating <= 10) ? rating : 0);
         values.put(Episodes.RATING_VOTES, rating_votes >= 0 ? rating_votes : 0);

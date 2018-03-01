@@ -369,9 +369,9 @@ public class MovieTools {
     private static boolean addMovieWatchedShell(Context context, int movieTmdbId) {
         ContentValues values = new ContentValues();
         values.put(SeriesGuideContract.Movies.TMDB_ID, movieTmdbId);
-        values.put(SeriesGuideContract.Movies.IN_COLLECTION, false);
-        values.put(SeriesGuideContract.Movies.IN_WATCHLIST, false);
-        values.put(SeriesGuideContract.Movies.WATCHED, true);
+        values.put(SeriesGuideContract.Movies.IN_COLLECTION, 0);
+        values.put(SeriesGuideContract.Movies.IN_WATCHLIST, 0);
+        values.put(SeriesGuideContract.Movies.WATCHED, 1);
 
         Uri insert = context.getContentResolver().insert(SeriesGuideContract.Movies.CONTENT_URI,
                 values);
@@ -382,7 +382,7 @@ public class MovieTools {
     private static boolean updateMovie(Context context, int movieTmdbId, String column,
             boolean value) {
         ContentValues values = new ContentValues();
-        values.put(column, value);
+        values.put(column, value ? 1 : 0);
 
         int rowsUpdated = context.getContentResolver().update(
                 SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), values, null, null);

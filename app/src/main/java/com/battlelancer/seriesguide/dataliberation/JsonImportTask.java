@@ -468,9 +468,9 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         values.put(Movies.RELEASED_UTC_MS, movie.releasedUtcMs);
         values.put(Movies.RUNTIME_MIN, movie.runtimeMin);
         values.put(Movies.POSTER, movie.poster);
-        values.put(Movies.IN_COLLECTION, movie.inCollection);
-        values.put(Movies.IN_WATCHLIST, movie.inWatchlist);
-        values.put(Movies.WATCHED, movie.watched);
+        values.put(Movies.IN_COLLECTION, movie.inCollection ? 1 : 0);
+        values.put(Movies.IN_WATCHLIST, movie.inWatchlist ? 1 : 0);
+        values.put(Movies.WATCHED, movie.watched ? 1 : 0);
         // full dump values
         values.put(Movies.OVERVIEW, movie.overview);
 

@@ -719,7 +719,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             if (favoritesOnly) {
                 // disable notifications for all but favorite shows
                 ContentValues values = new ContentValues();
-                values.put(Shows.NOTIFY, false);
+                values.put(Shows.NOTIFY, 0);
                 db.update(Tables.SHOWS, values, Shows.SELECTION_NOT_FAVORITES, null);
             }
         }
