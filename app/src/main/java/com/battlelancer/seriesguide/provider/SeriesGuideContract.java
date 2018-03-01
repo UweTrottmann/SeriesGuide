@@ -16,7 +16,7 @@ import java.lang.annotation.RetentionPolicy;
 
 public class SeriesGuideContract {
 
-    interface ShowsColumns {
+    public interface ShowsColumns {
 
         /**
          * This column is NOT in this table, it is for reference purposes only.
@@ -276,7 +276,7 @@ public class SeriesGuideContract {
         String UNWATCHED_COUNT = "series_unwatched_count";
     }
 
-    interface SeasonsColumns {
+    public interface SeasonsColumns {
 
         /**
          * This column is NOT in this table, it is for reference purposes only.

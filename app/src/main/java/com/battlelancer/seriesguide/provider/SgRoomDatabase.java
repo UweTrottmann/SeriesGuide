@@ -7,12 +7,16 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import com.battlelancer.seriesguide.model.Episode;
 import com.battlelancer.seriesguide.model.List;
+import com.battlelancer.seriesguide.model.Season;
 import com.battlelancer.seriesguide.model.Show;
 
 @Database(
         entities = {
                 Show.class,
+                Season.class,
+                Episode.class,
                 List.class
         },
         version = SgRoomDatabase.VERSION
