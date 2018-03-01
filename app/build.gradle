@@ -28,7 +28,10 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ eventBusIndex : 'com.battlelancer.seriesguide.SgEventBusIndex' ]
+                arguments = [
+                        "eventBusIndex" : "com.battlelancer.seriesguide.SgEventBusIndex",
+                        "room.schemaLocation": "$projectDir/schemas".toString()
+                ]
             }
         }
     }
