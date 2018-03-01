@@ -6,6 +6,7 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 
 import android.app.SearchManager;
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -137,7 +138,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     /**
      * Added jobs table.
      */
-    private static final int DBVER_42_JOBS = 42;
+    public static final int DBVER_42_JOBS = 42;
 
     public static final int DATABASE_VERSION = DBVER_42_JOBS;
 
@@ -1180,7 +1181,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
      * Drops the current {@link Tables#EPISODES_SEARCH} table and re-creates it with current data
      * from {@link Tables#EPISODES}.
      */
-    public static void rebuildFtsTable(SQLiteDatabase db) {
+    public static void rebuildFtsTable(SupportSQLiteDatabase db) {
         if (!recreateFtsTable(db)) {
             return;
         }
@@ -1195,7 +1196,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     /**
      * Works with FTS4 search table.
      */
-    private static void rebuildFtsTableJellyBean(SQLiteDatabase db) {
+    private static void rebuildFtsTableJellyBean(SupportSQLiteDatabase db) {
         try {
             db.beginTransaction();
             try {
@@ -1214,7 +1215,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     /**
      * Works with FTS3 search table.
      */
-    private static void rebuildFtsTableIcs(SQLiteDatabase db) {
+    private static void rebuildFtsTableIcs(SupportSQLiteDatabase db) {
         try {
             db.beginTransaction();
             try {
@@ -1236,10 +1237,10 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Similar to {@link #rebuildFtsTableIcs(SQLiteDatabase)}. However only inserts the episode
-     * title, not the overviews to conserve space.
+     * Similar to {@link #rebuildFtsTableIcs(SupportSQLiteDatabase)}. However only inserts the
+     * episode title, not the overviews to conserve space.
      */
-    private static void rebuildBasicFtsTableIcs(SQLiteDatabase db) {
+    private static void rebuildBasicFtsTableIcs(SupportSQLiteDatabase db) {
         if (!recreateFtsTable(db)) {
             return;
         }
@@ -1262,7 +1263,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         }
     }
 
-    private static boolean recreateFtsTable(SQLiteDatabase db) {
+    private static boolean recreateFtsTable(SupportSQLiteDatabase db) {
         try {
             db.beginTransaction();
             try {
@@ -1349,7 +1350,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + Episodes.NUMBER + " ASC";
 
     @Nullable
-    public static Cursor search(String selection, String[] selectionArgs, SQLiteDatabase db) {
+    public static Cursor search(SupportSQLiteDatabase db, String selection,
+            String[] selectionArgs) {
         StringBuilder query = new StringBuilder(QUERY_SEARCH_EPISODES);
         if (selection != null) {
             query.append(" WHERE (").append(selection).append(")");
@@ -1365,7 +1367,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         selectionArgs[0] = "\"" + searchTerm + "*\"";
 
         try {
-            return db.rawQuery(query.toString(), selectionArgs);
+            return db.query(query.toString(), selectionArgs);
         } catch (SQLiteException e) {
             Timber.e(e, "search: failed, database error.");
             return null;
@@ -1387,7 +1389,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + "on sid=" + Shows.REF_SHOW_ID + ")";
 
     @Nullable
-    public static Cursor getSuggestions(String searchTerm, SQLiteDatabase db) {
+    public static Cursor getSuggestions(SupportSQLiteDatabase db, String searchTerm) {
         // ensure to strip double quotation marks (would break the MATCH query)
         if (searchTerm != null) {
             searchTerm = searchTerm.replace("\"", "");
@@ -1395,7 +1397,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         try {
             // search for anything starting with the given search term
-            return db.rawQuery(QUERY_SEARCH_SHOWS, new String[]{
+            return db.query(QUERY_SEARCH_SHOWS, new String[]{
                     "\"" + searchTerm + "*\""
             });
         } catch (SQLiteException e) {
