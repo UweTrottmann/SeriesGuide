@@ -4,24 +4,27 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 
-@Entity(tableName = SeriesGuideDatabase.Tables.LISTS,
+@Entity(tableName = Tables.LISTS,
         indices = {@Index(value = Lists.LIST_ID, unique = true)})
 public class List {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = Lists._ID)
-    public int id;
+    public Integer id;
 
     /**
      * Unique string identifier.
      */
     @ColumnInfo(name = Lists.LIST_ID)
+    @NonNull
     public String listId;
 
     @ColumnInfo(name = Lists.NAME)
+    @NonNull
     public String name;
 
     /**
@@ -32,6 +35,6 @@ public class List {
      * </pre>
      */
     @ColumnInfo(name = Lists.ORDER)
-    public int order;
+    public Integer order = 0;
 
 }

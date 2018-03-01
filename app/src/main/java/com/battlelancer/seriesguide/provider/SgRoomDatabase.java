@@ -8,8 +8,15 @@ import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.model.List;
+import com.battlelancer.seriesguide.model.Show;
 
-@Database(entities = {List.class}, version = SgRoomDatabase.VERSION)
+@Database(
+        entities = {
+                Show.class,
+                List.class
+        },
+        version = SgRoomDatabase.VERSION
+)
 public abstract class SgRoomDatabase extends RoomDatabase {
 
     private static final int VERSION_43_ROOM = 43;
