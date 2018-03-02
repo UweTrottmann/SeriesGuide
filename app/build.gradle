@@ -36,6 +36,12 @@ android {
         }
     }
 
+    sourceSets {
+        androidTest {
+            assets.srcDirs += files("$projectDir/schemas".toString())
+        }
+    }
+
     compileOptions {
         encoding = "UTF-8"
         sourceCompatibility JavaVersion.VERSION_1_7
@@ -196,6 +202,7 @@ dependencies {
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     androidTestImplementation 'com.google.code.findbugs:jsr305:3.0.2'
     kaptAndroidTest "com.google.dagger:dagger-compiler:${versions.dagger}"
+    androidTestImplementation "android.arch.persistence.room:testing:1.0.0"
 
     // Local unit tests
     testImplementation 'junit:junit:4.12'

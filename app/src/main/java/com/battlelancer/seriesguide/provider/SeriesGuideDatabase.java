@@ -15,6 +15,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -293,8 +294,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         String LIST_ID = "REFERENCES " + Tables.LISTS + "(" + Lists.LIST_ID + ")";
     }
 
-    private static final String CREATE_SHOWS_TABLE = "CREATE TABLE " + Tables.SHOWS
-            + " ("
+    @VisibleForTesting
+    public static final String CREATE_SHOWS_TABLE = "CREATE TABLE " + Tables.SHOWS + " ("
 
             + BaseColumns._ID + " INTEGER PRIMARY KEY,"
 
@@ -367,8 +368,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ");";
 
-    private static final String CREATE_SEASONS_TABLE = "CREATE TABLE " + Tables.SEASONS
-            + " ("
+    @VisibleForTesting
+    public static final String CREATE_SEASONS_TABLE = "CREATE TABLE " + Tables.SEASONS + " ("
 
             + BaseColumns._ID + " INTEGER PRIMARY KEY,"
 
@@ -388,8 +389,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ");";
 
-    private static final String CREATE_EPISODES_TABLE = "CREATE TABLE " + Tables.EPISODES
-            + " ("
+    @VisibleForTesting
+    public static final String CREATE_EPISODES_TABLE = "CREATE TABLE " + Tables.EPISODES + " ("
 
             + BaseColumns._ID + " INTEGER PRIMARY KEY,"
 
@@ -459,8 +460,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ");";
 
-    private static final String CREATE_LISTS_TABLE = "CREATE TABLE " + Tables.LISTS
-            + " ("
+    @VisibleForTesting
+    public static final String CREATE_LISTS_TABLE = "CREATE TABLE " + Tables.LISTS + " ("
 
             + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
 

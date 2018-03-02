@@ -28,6 +28,8 @@ public abstract class SgRoomDatabase extends RoomDatabase {
 
     private static SgRoomDatabase INSTANCE;
 
+    public abstract ShowHelper showHelper();
+
     private static final Object sLock = new Object();
 
     static final Migration MIGRATION_42_43 = new Migration(
