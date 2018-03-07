@@ -27,11 +27,26 @@ public abstract class SgRoomDatabase extends RoomDatabase {
     private static final int VERSION_43_ROOM = 43;
     public static final int VERSION = VERSION_43_ROOM;
 
-    private static SgRoomDatabase INSTANCE;
+    private static volatile SgRoomDatabase instance;
+
+    public static SgRoomDatabase getInstance(Context context) {
+        SgRoomDatabase result = instance;
+        if (result == null) { // First check (no locking)
+            synchronized (SgRoomDatabase.class) {
+                result = instance;
+                if (result == null) { // Second check (with locking)
+                    result = instance = Room.databaseBuilder(context.getApplicationContext(),
+                            SgRoomDatabase.class, SeriesGuideDatabase.DATABASE_NAME)
+                            .addMigrations(MIGRATION_42_43)
+                            .addCallback(CALLBACK)
+                            .build();
+                }
+            }
+        }
+        return result;
+    }
 
     public abstract ShowHelper showHelper();
-
-    private static final Object sLock = new Object();
 
     static final Callback CALLBACK = new Callback() {
         @Override
@@ -61,17 +76,4 @@ public abstract class SgRoomDatabase extends RoomDatabase {
             database.execSQL("CREATE UNIQUE INDEX `index_lists_list_id` ON `lists` (`list_id`)");
         }
     };
-
-    public static SgRoomDatabase getInstance(Context context) {
-        synchronized (sLock) {
-            if (INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                        SgRoomDatabase.class, SeriesGuideDatabase.DATABASE_NAME)
-                        .addMigrations(MIGRATION_42_43)
-                        .addCallback(CALLBACK)
-                        .build();
-            }
-            return INSTANCE;
-        }
-    }
 }
