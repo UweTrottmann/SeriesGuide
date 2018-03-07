@@ -77,7 +77,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
     // Preference keys
     private static final String KEY_CLEAR_CACHE = "clearCache";
-    public static final String KEY_DATABASEIMPORTED = "com.battlelancer.seriesguide.dbimported";
     //    public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
     private static final String KEY_ABOUT = "aboutPref";
 //    public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";

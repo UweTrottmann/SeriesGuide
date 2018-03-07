@@ -1,31 +1,5 @@
 package com.battlelancer.seriesguide.provider;
 
-import android.annotation.SuppressLint;
-import android.app.SearchManager;
-import android.content.ContentProvider;
-import android.content.ContentProviderOperation;
-import android.content.ContentProviderResult;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.OperationApplicationException;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.UriMatcher;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.provider.BaseColumns;
-import android.support.annotation.NonNull;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.SelectionBuilder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import timber.log.Timber;
-
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Activity;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -35,6 +9,27 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import static com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+
+import android.app.SearchManager;
+import android.content.ContentProvider;
+import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.OperationApplicationException;
+import android.content.UriMatcher;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.net.Uri;
+import android.provider.BaseColumns;
+import android.support.annotation.NonNull;
+import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
+import com.battlelancer.seriesguide.util.SelectionBuilder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import timber.log.Timber;
 
 public class SeriesGuideProvider extends ContentProvider {
 
@@ -101,6 +96,8 @@ public class SeriesGuideProvider extends ContentProvider {
     private static final int JOBS = 1100;
 
     private static final int JOBS_ID = 1101;
+
+    private static final int CLOSE = 1200;
 
     /**
      * Build and return a {@link UriMatcher} that catches all {@link Uri} variations supported by
@@ -182,6 +179,7 @@ public class SeriesGuideProvider extends ContentProvider {
 
         // Ops
         matcher.addURI(authority, SeriesGuideContract.PATH_RENEWFTSTABLE, RENEW_FTSTABLE);
+        matcher.addURI(authority, SeriesGuideContract.PATH_CLOSE, CLOSE);
 
         return matcher;
     }
@@ -210,28 +208,8 @@ public class SeriesGuideProvider extends ContentProvider {
 
         databaseHelper = new SeriesGuideDatabase(context);
 
-        PreferenceManager.getDefaultSharedPreferences(context)
-                .registerOnSharedPreferenceChangeListener(onDatabaseImportedListener);
-
         return true;
     }
-
-    final OnSharedPreferenceChangeListener onDatabaseImportedListener
-            = new OnSharedPreferenceChangeListener() {
-
-        @SuppressLint("CommitPrefEdits")
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_DATABASEIMPORTED)) {
-                if (sharedPreferences
-                        .getBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, false)) {
-                    databaseHelper.close();
-                    sharedPreferences.edit()
-                            .putBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, false)
-                            .commit();
-                }
-            }
-        }
-    };
 
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection,
@@ -239,10 +217,18 @@ public class SeriesGuideProvider extends ContentProvider {
         if (LOGV) {
             Timber.v("query(uri=%s, proj=%s)", uri, Arrays.toString(projection));
         }
+
+        final int match = sUriMatcher.match(uri);
+
+        // support close op for legacy database import tool, will reopen on next op
+        if (match == CLOSE) {
+            databaseHelper.close();
+            return null;
+        }
+
         // always get writable database, might have to be upgraded
         final SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
-        final int match = sUriMatcher.match(uri);
         switch (match) {
             case RENEW_FTSTABLE: {
                 SeriesGuideDatabase.rebuildFtsTable(db);
