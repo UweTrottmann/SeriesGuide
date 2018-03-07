@@ -438,7 +438,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ");";
 
-    private static final String CREATE_SEARCH_TABLE = "CREATE VIRTUAL TABLE "
+    static final String CREATE_SEARCH_TABLE = "CREATE VIRTUAL TABLE "
             + Tables.EPISODES_SEARCH + " USING fts4("
 
             // set episodes table as external content table
@@ -451,7 +451,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + ");";
 
     /** Some Android 4.0 devices do not support FTS4, despite being standard since 3.0. */
-    private static final String CREATE_SEARCH_TABLE_API_ICS = "CREATE VIRTUAL TABLE "
+    static final String CREATE_SEARCH_TABLE_API_ICS = "CREATE VIRTUAL TABLE "
             + Tables.EPISODES_SEARCH + " USING FTS3("
 
             + EpisodeSearchColumns.TITLE + " TEXT,"

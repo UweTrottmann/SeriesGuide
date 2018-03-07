@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.model.Episode;
 import com.battlelancer.seriesguide.model.List;
 import com.battlelancer.seriesguide.model.Season;
 import com.battlelancer.seriesguide.model.Show;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 @Database(
         entities = {
@@ -31,6 +32,18 @@ public abstract class SgRoomDatabase extends RoomDatabase {
     public abstract ShowHelper showHelper();
 
     private static final Object sLock = new Object();
+
+    static final Callback CALLBACK = new Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            // manually create FTS table not supported by Room
+            if (AndroidUtils.isJellyBeanOrHigher()) {
+                db.execSQL(SeriesGuideDatabase.CREATE_SEARCH_TABLE);
+            } else {
+                db.execSQL(SeriesGuideDatabase.CREATE_SEARCH_TABLE_API_ICS);
+            }
+        }
+    };
 
     static final Migration MIGRATION_42_43 = new Migration(
             SeriesGuideDatabase.DBVER_42_JOBS, VERSION_43_ROOM) {
@@ -55,6 +68,7 @@ public abstract class SgRoomDatabase extends RoomDatabase {
                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                         SgRoomDatabase.class, SeriesGuideDatabase.DATABASE_NAME)
                         .addMigrations(MIGRATION_42_43)
+                        .addCallback(CALLBACK)
                         .build();
             }
             return INSTANCE;
