@@ -33,7 +33,7 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.google.android.gms.analytics.HitBuilders;
@@ -68,10 +68,10 @@ public class Utils {
     public static String getVersionString(Context context) {
         if (BuildConfig.DEBUG) {
             return context.getString(R.string.format_version_debug, getVersion(context),
-                    SeriesGuideDatabase.DATABASE_VERSION, BuildConfig.VERSION_CODE);
+                    SgRoomDatabase.VERSION, BuildConfig.VERSION_CODE);
         } else {
             return context.getString(R.string.format_version, getVersion(context),
-                    SeriesGuideDatabase.DATABASE_VERSION);
+                    SgRoomDatabase.VERSION);
         }
     }
 
