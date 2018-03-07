@@ -22,6 +22,7 @@ import android.content.ContentValues;
 import android.content.OperationApplicationException;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
@@ -392,7 +393,7 @@ public class SeriesGuideProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case SHOWS: {
-                long id = db.insert(Tables.SHOWS, CONFLICT_NONE, values);
+                long id = tryInsert(db, Tables.SHOWS, CONFLICT_NONE, values);
                 if (id < 0) {
                     break;
                 }
@@ -402,9 +403,9 @@ public class SeriesGuideProvider extends ContentProvider {
             case SEASONS: {
                 long id;
                 if (bulkInsert) {
-                    id = db.insert(Tables.SEASONS, CONFLICT_REPLACE, values);
+                    id = tryInsert(db, Tables.SEASONS, CONFLICT_REPLACE, values);
                 } else {
-                    id = db.insert(Tables.SEASONS, CONFLICT_NONE, values);
+                    id = tryInsert(db, Tables.SEASONS, CONFLICT_NONE, values);
                 }
                 if (id < 0) {
                     break;
@@ -415,9 +416,9 @@ public class SeriesGuideProvider extends ContentProvider {
             case EPISODES: {
                 long id;
                 if (bulkInsert) {
-                    id = db.insert(Tables.EPISODES, CONFLICT_REPLACE, values);
+                    id = tryInsert(db, Tables.EPISODES, CONFLICT_REPLACE, values);
                 } else {
-                    id = db.insert(Tables.EPISODES, CONFLICT_NONE, values);
+                    id = tryInsert(db, Tables.EPISODES, CONFLICT_NONE, values);
                 }
                 if (id < 0) {
                     break;
@@ -426,7 +427,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case LISTS: {
-                long id = db.insert(Tables.LISTS, CONFLICT_NONE, values);
+                long id = tryInsert(db, Tables.LISTS, CONFLICT_NONE, values);
                 if (id < 0) {
                     break;
                 }
@@ -436,9 +437,9 @@ public class SeriesGuideProvider extends ContentProvider {
             case LIST_ITEMS: {
                 long id;
                 if (bulkInsert) {
-                    id = db.insert(Tables.LIST_ITEMS, CONFLICT_REPLACE, values);
+                    id = tryInsert(db, Tables.LIST_ITEMS, CONFLICT_REPLACE, values);
                 } else {
-                    id = db.insert(Tables.LIST_ITEMS, CONFLICT_NONE, values);
+                    id = tryInsert(db, Tables.LIST_ITEMS, CONFLICT_NONE, values);
                 }
                 if (id < 0) {
                     break;
@@ -449,9 +450,9 @@ public class SeriesGuideProvider extends ContentProvider {
             case MOVIES: {
                 long id;
                 if (bulkInsert) {
-                    id = db.insert(Tables.MOVIES, CONFLICT_REPLACE, values);
+                    id = tryInsert(db, Tables.MOVIES, CONFLICT_REPLACE, values);
                 } else {
-                    id = db.insert(Tables.MOVIES, CONFLICT_NONE, values);
+                    id = tryInsert(db, Tables.MOVIES, CONFLICT_NONE, values);
                 }
                 if (id < 0) {
                     break;
@@ -460,7 +461,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case ACTIVITY: {
-                long id = db.insert(Tables.ACTIVITY, CONFLICT_NONE, values);
+                long id = tryInsert(db, Tables.ACTIVITY, CONFLICT_NONE, values);
                 if (id < 0) {
                     break;
                 }
@@ -468,7 +469,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case JOBS: {
-                long id = db.insert(Tables.JOBS, CONFLICT_NONE, values);
+                long id = tryInsert(db, Tables.JOBS, CONFLICT_NONE, values);
                 if (id < 0) {
                     break;
                 }
@@ -481,6 +482,19 @@ public class SeriesGuideProvider extends ContentProvider {
         }
 
         return notifyUri;
+    }
+
+    /**
+     * Tries insert, always returns -1 on failure.
+     */
+    private long tryInsert(SupportSQLiteDatabase db,
+            String table, int conflictAlgorithm, ContentValues values) {
+        try {
+            return db.insert(table, conflictAlgorithm, values);
+        } catch (SQLException e) {
+            Timber.e(e, "Error inserting %s", values);
+            return -1;
+        }
     }
 
     /**
