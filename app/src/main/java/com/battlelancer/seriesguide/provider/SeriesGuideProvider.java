@@ -15,7 +15,6 @@ import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.OperationApplicationException;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -202,8 +201,6 @@ public class SeriesGuideProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        Context context = getContext();
-
         sUriMatcher = buildUriMatcher();
 
         databaseHelper = new SeriesGuideDatabase(context);
