@@ -189,27 +189,17 @@ public class SeriesGuideProvider extends ContentProvider {
     }
 
     private final ThreadLocal<Boolean> applyingBatch = new ThreadLocal<>();
-    private SupportSQLiteOpenHelper databaseHelper;
     protected SupportSQLiteDatabase database;
 
     @Override
     public void shutdown() {
-        /*
-          If we ever do unit-testing, nice to have this already (no bug-hunt).
-         */
-        if (databaseHelper != null) {
-            databaseHelper.close();
-            databaseHelper = null;
-            database = null;
-        }
+        SgRoomDatabase.getInstance(getContext()).getOpenHelper().close();
+        database = null;
     }
 
     @Override
     public boolean onCreate() {
         sUriMatcher = buildUriMatcher();
-
-        databaseHelper = SgRoomDatabase.getInstance(getContext()).getOpenHelper();
-
         return true;
     }
 
@@ -220,6 +210,8 @@ public class SeriesGuideProvider extends ContentProvider {
             Timber.v("query(uri=%s, proj=%s)", uri, Arrays.toString(projection));
         }
 
+        SupportSQLiteOpenHelper databaseHelper = SgRoomDatabase.getInstance(getContext())
+                .getOpenHelper();
         final int match = sUriMatcher.match(uri);
 
         // support close op for legacy database import tool, will reopen on next op
@@ -329,7 +321,8 @@ public class SeriesGuideProvider extends ContentProvider {
     public Uri insert(@NonNull Uri uri, ContentValues values) {
         Uri newItemUri;
 
-        final SupportSQLiteDatabase db = databaseHelper.getWritableDatabase();
+        final SupportSQLiteDatabase db = SgRoomDatabase.getInstance(getContext())
+                .getOpenHelper().getWritableDatabase();
         if (!applyingBatch()) {
             db.beginTransaction();
             try {
@@ -355,7 +348,8 @@ public class SeriesGuideProvider extends ContentProvider {
         int numValues = values.length;
         boolean notifyChange = false;
 
-        final SupportSQLiteDatabase db = databaseHelper.getWritableDatabase();
+        final SupportSQLiteDatabase db = SgRoomDatabase.getInstance(getContext())
+                .getOpenHelper().getWritableDatabase();
         db.beginTransaction();
         try {
             for (int i = 0; i < numValues; i++) {
@@ -509,7 +503,8 @@ public class SeriesGuideProvider extends ContentProvider {
         int count;
 
         if (!applyingBatch()) {
-            final SupportSQLiteDatabase db = databaseHelper.getWritableDatabase();
+            final SupportSQLiteDatabase db = SgRoomDatabase.getInstance(getContext())
+                    .getOpenHelper().getWritableDatabase();
             db.beginTransaction();
             try {
                 count = buildSelection(uri, sUriMatcher.match(uri))
@@ -520,7 +515,8 @@ public class SeriesGuideProvider extends ContentProvider {
                 db.endTransaction();
             }
         } else {
-            database = databaseHelper.getWritableDatabase();
+            database = SgRoomDatabase.getInstance(getContext())
+                    .getOpenHelper().getWritableDatabase();
             count = buildSelection(uri, sUriMatcher.match(uri))
                     .where(selection, selectionArgs)
                     .update(database, values);
@@ -545,7 +541,8 @@ public class SeriesGuideProvider extends ContentProvider {
         int count;
 
         if (!applyingBatch()) {
-            final SupportSQLiteDatabase db = databaseHelper.getWritableDatabase();
+            final SupportSQLiteDatabase db = SgRoomDatabase.getInstance(getContext())
+                    .getOpenHelper().getWritableDatabase();
             db.beginTransaction();
             try {
                 count = buildSelection(uri, sUriMatcher.match(uri))
@@ -556,7 +553,8 @@ public class SeriesGuideProvider extends ContentProvider {
                 db.endTransaction();
             }
         } else {
-            database = databaseHelper.getWritableDatabase();
+            database = SgRoomDatabase.getInstance(getContext())
+                    .getOpenHelper().getWritableDatabase();
             count = buildSelection(uri, sUriMatcher.match(uri))
                     .where(selection, selectionArgs)
                     .delete(database);
@@ -584,7 +582,7 @@ public class SeriesGuideProvider extends ContentProvider {
             return new ContentProviderResult[0];
         }
 
-        database = databaseHelper.getWritableDatabase();
+        database = SgRoomDatabase.getInstance(getContext()).getOpenHelper().getWritableDatabase();
         database.beginTransaction();
         try {
             applyingBatch.set(true);

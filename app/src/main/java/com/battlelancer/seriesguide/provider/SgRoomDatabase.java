@@ -7,6 +7,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.model.Episode;
 import com.battlelancer.seriesguide.model.List;
 import com.battlelancer.seriesguide.model.Season;
@@ -44,6 +45,18 @@ public abstract class SgRoomDatabase extends RoomDatabase {
             }
         }
         return result;
+    }
+
+    /**
+     * Changes the instance to an in memory database for content provider unit testing.
+     */
+    @VisibleForTesting
+    public static void switchToInMemory(Context context) {
+        instance = Room.inMemoryDatabaseBuilder(context.getApplicationContext(),
+                SgRoomDatabase.class)
+                .addMigrations(MIGRATION_42_43)
+                .addCallback(CALLBACK)
+                .build();
     }
 
     public abstract ShowHelper showHelper();

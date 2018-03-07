@@ -91,6 +91,9 @@ public class Episode {
         values.put(Episodes.LAST_EDITED, lastEdited);
         values.put(Episodes.ABSOLUTE_NUMBER, episodeAbsolute >= 0 ? episodeAbsolute : 0);
 
+        // set default values
+        values.put(Episodes.LAST_UPDATED, 0);
+
         return values;
     }
 }

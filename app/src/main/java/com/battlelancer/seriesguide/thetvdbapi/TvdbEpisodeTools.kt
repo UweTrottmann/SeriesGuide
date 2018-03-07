@@ -196,6 +196,16 @@ class TvdbEpisodeTools constructor(
             values.put(Episodes.FIRSTAIREDMS, releaseDateTime)
             values.put(Episodes.ABSOLUTE_NUMBER, absoluteNumber)
             values.put(Episodes.LAST_EDITED, lastUpdated ?: 0)
+
+            // set default values
+            values.put(Episodes.WATCHED, 0)
+            values.put(Episodes.DIRECTORS, "")
+            values.put(Episodes.GUESTSTARS, "")
+            values.put(Episodes.WRITERS, "")
+            values.put(Episodes.IMAGE, "")
+            values.put(Episodes.COLLECTED, 0)
+            values.put(Episodes.IMDBID, "")
+            values.put(Episodes.LAST_UPDATED, 0)
         }
 
     }

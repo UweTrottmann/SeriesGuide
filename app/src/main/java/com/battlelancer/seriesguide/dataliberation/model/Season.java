@@ -21,6 +21,11 @@ public class Season {
         values.put(Seasons._ID, tvdbId);
         values.put(Shows.REF_SHOW_ID, showTvdbId);
         values.put(Seasons.COMBINED, season >= 0 ? season : 0);
+        // set default values
+        values.put(Seasons.WATCHCOUNT, 0);
+        values.put(Seasons.UNAIREDCOUNT, 0);
+        values.put(Seasons.NOAIRDATECOUNT, 0);
+        values.put(Seasons.TOTALCOUNT, 0);
         return values;
     }
 
