@@ -1,5 +1,7 @@
 package com.battlelancer.seriesguide.dataliberation;
 
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
+
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
@@ -16,7 +18,6 @@ import com.battlelancer.seriesguide.dataliberation.model.ListItem;
 import com.battlelancer.seriesguide.dataliberation.model.Movie;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
@@ -26,6 +27,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.gson.Gson;
@@ -40,8 +42,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
-
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 /**
  * Import a show database from a human-readable JSON file on external storage. By default meta-data
@@ -329,64 +329,23 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             return;
         }
 
-        // Insert the show
-        ContentValues showValues = new ContentValues();
-        showValues.put(Shows._ID, show.tvdb_id);
-        showValues.put(Shows.TITLE, show.title == null ? "" : show.title);
-        showValues.put(Shows.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(show.title));
-        showValues.put(Shows.FAVORITE, show.favorite);
-        showValues.put(Shows.NOTIFY, show.notify == null ? true : show.notify);
-        showValues.put(Shows.HIDDEN, show.hidden);
-        // only add the language, if we support it
+        // reset language if it is not supported
+        boolean languageSupported = false;
         for (int i = 0, size = languageCodes.length; i < size; i++) {
             if (languageCodes[i].equals(show.language)) {
-                showValues.put(Shows.LANGUAGE, show.language);
+                languageSupported = true;
                 break;
             }
         }
-        showValues.put(Shows.RELEASE_TIME, show.release_time);
-        if (show.release_weekday < -1 || show.release_weekday > 7) {
-            show.release_weekday = -1;
+        if (!languageSupported) {
+            show.language = null;
         }
-        showValues.put(Shows.RELEASE_WEEKDAY, show.release_weekday);
-        showValues.put(Shows.RELEASE_TIMEZONE, show.release_timezone);
-        showValues.put(Shows.RELEASE_COUNTRY, show.country);
-        showValues.put(Shows.LASTWATCHEDID, show.last_watched_episode);
-        showValues.put(Shows.LASTWATCHED_MS, show.last_watched_ms);
-        showValues.put(Shows.POSTER, show.poster);
-        showValues.put(Shows.CONTENTRATING, show.content_rating);
-        if (show.runtime < 0) {
-            show.runtime = 0;
-        }
-        showValues.put(Shows.RUNTIME, show.runtime);
-        showValues.put(Shows.NETWORK, show.network);
-        showValues.put(Shows.IMDBID, show.imdb_id);
-        if (show.trakt_id != null && show.trakt_id > 0) {
-            showValues.put(Shows.TRAKT_ID, show.trakt_id);
-        }
-        showValues.put(Shows.FIRST_RELEASE, show.first_aired);
-        if (show.rating_user < 0 || show.rating_user > 10) {
-            show.rating_user = 0;
-        }
-        showValues.put(Shows.RATING_USER, show.rating_user);
-        showValues.put(Shows.STATUS, DataLiberationTools.encodeShowStatus(show.status));
-        // Full dump values
-        showValues.put(Shows.OVERVIEW, show.overview);
-        if (show.rating < 0 || show.rating > 10) {
-            show.rating = 0;
-        }
-        showValues.put(Shows.RATING_GLOBAL, show.rating);
-        if (show.rating_votes < 0) {
-            show.rating_votes = 0;
-        }
-        showValues.put(Shows.RATING_VOTES, show.rating_votes);
-        showValues.put(Shows.GENRES, show.genres);
+        // ensure a show will be updated (last_updated might be far into the future)
         if (show.last_updated > System.currentTimeMillis()) {
             show.last_updated = 0;
         }
-        showValues.put(Shows.LASTUPDATED, show.last_updated);
-        showValues.put(Shows.LASTEDIT, show.last_edited);
 
+        ContentValues showValues = show.toContentValues(context, true);
         context.getContentResolver().insert(Shows.CONTENT_URI, showValues);
 
         if (show.seasons == null || show.seasons.isEmpty()) {
