@@ -40,11 +40,11 @@ public class TvdbSync {
      * Update shows based on the sync type.
      */
     @Nullable
-    public SgSyncAdapter.UpdateResult sync(Context context, Lazy<TvdbTools> tvdbTools,
-            long currentTime) {
+    public SgSyncAdapter.UpdateResult sync(Context context, ContentResolver resolver,
+            Lazy<TvdbTools> tvdbTools, long currentTime) {
         hasUpdatedShows = false;
 
-        int[] showsToUpdate = getShowsToUpdate(context, currentTime);
+        int[] showsToUpdate = getShowsToUpdate(context, resolver, currentTime);
         if (showsToUpdate == null) {
             return null;
         }
@@ -53,7 +53,6 @@ public class TvdbSync {
         SgSyncAdapter.UpdateResult resultCode = SgSyncAdapter.UpdateResult.SUCCESS;
 
         // loop through shows and download latest data from TVDb
-        final ContentResolver resolver = context.getContentResolver();
         int consecutiveTimeouts = 0;
         for (int i = 0; i < showsToUpdate.length; i++) {
             int showTvdbId = showsToUpdate[i];
@@ -95,7 +94,7 @@ public class TvdbSync {
      * Returns an array of show ids to update.
      */
     @Nullable
-    private int[] getShowsToUpdate(Context context, long currentTime) {
+    private int[] getShowsToUpdate(Context context, ContentResolver resolver, long currentTime) {
         switch (syncType) {
             case SINGLE: {
                 int showTvdbId = singleShowTvdbId;
@@ -103,13 +102,13 @@ public class TvdbSync {
                     Timber.e("Syncing...ABORT_INVALID_SHOW_TVDB_ID");
                     return null;
                 }
-                return new int[] { showTvdbId };
+                return new int[]{showTvdbId};
             }
             case FULL: {
                 // get all show IDs for a full update
-                final Cursor showsQuery = context.getContentResolver().query(
+                final Cursor showsQuery = resolver.query(
                         SeriesGuideContract.Shows.CONTENT_URI,
-                        new String[] {
+                        new String[]{
                                 SeriesGuideContract.Shows._ID
                         }, null, null, null
                 );
@@ -128,7 +127,7 @@ public class TvdbSync {
                 return showIds;
             }
             case DELTA:
-                return getShowsToDeltaUpdate(context, currentTime);
+                return getShowsToDeltaUpdate(context, resolver, currentTime);
             default:
                 throw new IllegalArgumentException("Sync type " + syncType + " is not supported.");
         }
@@ -138,10 +137,11 @@ public class TvdbSync {
      * Return list of show TVDb ids that have not been updated for a certain time.
      */
     @Nullable
-    private int[] getShowsToDeltaUpdate(Context context, long currentTime) {
+    private int[] getShowsToDeltaUpdate(Context context, ContentResolver resolver,
+            long currentTime) {
         // get existing show ids
-        final Cursor shows = context.getContentResolver()
-                .query(SeriesGuideContract.Shows.CONTENT_URI, new String[] {
+        final Cursor shows = resolver
+                .query(SeriesGuideContract.Shows.CONTENT_URI, new String[]{
                         SeriesGuideContract.Shows._ID, SeriesGuideContract.Shows.LASTUPDATED,
                         SeriesGuideContract.Shows.RELEASE_WEEKDAY
                 }, null, null, null);
@@ -184,5 +184,4 @@ public class TvdbSync {
     public boolean hasUpdatedShows() {
         return hasUpdatedShows;
     }
-
 }
