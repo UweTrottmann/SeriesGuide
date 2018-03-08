@@ -381,15 +381,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             }
 
             // add the season...
-            ContentValues seasonValues = new ContentValues();
-            seasonValues.put(Seasons._ID, season.tvdbId);
-            seasonValues.put(Shows.REF_SHOW_ID, show.tvdb_id);
-            if (season.season < 0) {
-                season.season = 0;
-            }
-            seasonValues.put(Seasons.COMBINED, season.season);
-
-            seasonBatch.add(seasonValues);
+            seasonBatch.add(season.toContentValues(show.tvdb_id));
 
             // ...and its episodes
             for (Episode episode : season.episodes) {

@@ -8,12 +8,15 @@ import static org.junit.Assert.assertTrue;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.provider.ProviderTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
@@ -30,12 +33,17 @@ import org.junit.runner.RunWith;
 public class ProviderTest {
 
     private static final Show SHOW;
+    private static final Season SEASON;
     private static final Episode EPISODE;
     private static final com.battlelancer.seriesguide.dataliberation.model.Episode EPISODE_I;
 
     static {
         SHOW = new Show();
         SHOW.tvdb_id = 12;
+
+        SEASON = new Season();
+        SEASON.tvdbId = 1234;
+        SEASON.season = 42;
 
         EPISODE = new Episode();
         EPISODE.id = 123456;
@@ -99,8 +107,22 @@ public class ProviderTest {
     @Test
     public void seasonDefaultValues() throws Exception {
         ContentProviderOperation op = DBUtils
-                .buildSeasonOp(12, 1234, 42, true);
+                .buildSeasonOp(SHOW.tvdb_id, SEASON.tvdbId, SEASON.season, true);
+        insertAndAssertSeason(op);
+    }
 
+    @Test
+    public void seasonDefaultValuesImport() throws Exception {
+        ContentValues values = SEASON.toContentValues(SHOW.tvdb_id);
+
+        ContentProviderOperation op = ContentProviderOperation.newInsert(Seasons.CONTENT_URI)
+                .withValues(values).build();
+
+        insertAndAssertSeason(op);
+    }
+
+    private void insertAndAssertSeason(ContentProviderOperation op)
+            throws RemoteException, OperationApplicationException {
         // note how this does not cause a foreign key constraint failure
         ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         batch.add(op);
@@ -111,9 +133,9 @@ public class ProviderTest {
         assertNotNull(query);
         assertTrue(query.moveToFirst());
 
-        assertEquals(1234, query.getInt(query.getColumnIndexOrThrow(Seasons._ID)));
-        assertEquals(12, query.getInt(query.getColumnIndexOrThrow(Shows.REF_SHOW_ID)));
-        assertEquals(42, query.getInt(query.getColumnIndexOrThrow(Seasons.COMBINED)));
+        assertEquals(SEASON.tvdbId, query.getInt(query.getColumnIndexOrThrow(Seasons._ID)));
+        assertEquals(SHOW.tvdb_id, query.getInt(query.getColumnIndexOrThrow(Shows.REF_SHOW_ID)));
+        assertEquals(SEASON.season, query.getInt(query.getColumnIndexOrThrow(Seasons.COMBINED)));
         // getInt returns 0 if NULL, so check explicitly
         assertDefaultValue(query, Seasons.WATCHCOUNT, 0);
         assertDefaultValue(query, Seasons.UNAIREDCOUNT, 0);
