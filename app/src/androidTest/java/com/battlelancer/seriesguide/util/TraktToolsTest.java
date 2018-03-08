@@ -1,16 +1,15 @@
 package com.battlelancer.seriesguide.util;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import com.battlelancer.seriesguide.traktapi.TraktTools;
 import java.util.Locale;
 import org.junit.Test;
 
-import static com.google.common.truth.Truth.assertThat;
-
 public class TraktToolsTest {
 
     /**
-     * Also available as an instrumented unit test as Android uses a different formatter than the
-     * local JVM.
+     * Note: ensure to test on Android as Android uses a different formatter than the local JVM.
      */
     @Test
     public void ratingString() {

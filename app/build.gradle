@@ -33,16 +33,6 @@ android {
         }
     }
 
-    sourceSets {
-        String sharedTestDir = 'src/sharedTest/java'
-        test {
-            java.srcDir sharedTestDir
-        }
-        androidTest {
-            java.srcDir sharedTestDir
-        }
-    }
-
     compileOptions {
         encoding = "UTF-8"
         sourceCompatibility JavaVersion.VERSION_1_7
@@ -202,8 +192,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation "com.android.support:support-annotations:${versions.supportLibrary}"
     testImplementation "com.google.truth:truth:${versions.truth}"
-    // include regular threetenbp to have access to the tz database without init call
-    testImplementation 'org.threeten:threetenbp:1.3.3'
 
 }
 
