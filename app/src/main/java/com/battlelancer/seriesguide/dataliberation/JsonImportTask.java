@@ -27,7 +27,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.gson.Gson;
@@ -399,59 +398,13 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                     continue;
                 }
 
-                ContentValues episodeValues = new ContentValues();
-                episodeValues.put(Episodes._ID, episode.tvdbId);
-                episodeValues.put(Shows.REF_SHOW_ID, show.tvdb_id);
-                episodeValues.put(Seasons.REF_SEASON_ID, season.tvdbId);
-                if (episode.episode < 0) {
-                    episode.episode = 0;
-                }
-                episodeValues.put(Episodes.NUMBER, episode.episode);
-                if (episode.episodeAbsolute < 0) {
-                    episode.episodeAbsolute = 0;
-                }
-                episodeValues.put(Episodes.ABSOLUTE_NUMBER, episode.episodeAbsolute);
-                episodeValues.put(Episodes.SEASON, season.season);
-                episodeValues.put(Episodes.TITLE, episode.title);
-                // watched/skipped represented internally in watched flag
-                if (episode.skipped) {
-                    episodeValues.put(Episodes.WATCHED, EpisodeFlags.SKIPPED);
-                } else {
-                    episodeValues.put(Episodes.WATCHED,
-                            episode.watched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
-                }
-                episodeValues.put(Episodes.COLLECTED, episode.collected);
-                episodeValues.put(Episodes.FIRSTAIREDMS, episode.firstAired);
-                episodeValues.put(Episodes.IMDBID, episode.imdbId);
-                if (episode.rating_user < 0 || episode.rating_user > 10) {
-                    episode.rating_user = 0;
-                }
-                episodeValues.put(Episodes.RATING_USER, episode.rating_user);
-                // Full dump values
-                if (episode.episodeDvd < 0) {
-                    episode.episodeDvd = 0;
-                }
-                episodeValues.put(Episodes.DVDNUMBER, episode.episodeDvd);
-                episodeValues.put(Episodes.OVERVIEW, episode.overview);
-                episodeValues.put(Episodes.IMAGE, episode.image);
-                episodeValues.put(Episodes.WRITERS, episode.writers);
-                episodeValues.put(Episodes.GUESTSTARS, episode.gueststars);
-                episodeValues.put(Episodes.DIRECTORS, episode.directors);
-                if (episode.rating < 0 || episode.rating > 10) {
-                    episode.rating = 0;
-                }
-                episodeValues.put(Episodes.RATING_GLOBAL, episode.rating);
-                if (episode.rating_votes < 0) {
-                    episode.rating_votes = 0;
-                }
-                episodeValues.put(Episodes.RATING_VOTES, episode.rating_votes);
-                episodeValues.put(Episodes.LAST_EDITED, episode.lastEdited);
-
+                ContentValues episodeValues = episode
+                        .toContentValues(show.tvdb_id, season.tvdbId, season.season);
                 episodeBatch.add(episodeValues);
             }
         }
 
-        return new ContentValues[][] {
+        return new ContentValues[][]{
                 seasonBatch.size() == 0 ? null
                         : seasonBatch.toArray(new ContentValues[seasonBatch.size()]),
                 episodeBatch.size() == 0 ? null

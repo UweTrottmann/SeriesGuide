@@ -12,11 +12,15 @@ import android.database.Cursor;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.provider.ProviderTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeTools;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.uwetrottmann.thetvdb.entities.Episode;
 import java.util.ArrayList;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,10 +30,18 @@ import org.junit.runner.RunWith;
 public class ProviderTest {
 
     private static final Show SHOW;
+    private static final Episode EPISODE;
+    private static final com.battlelancer.seriesguide.dataliberation.model.Episode EPISODE_I;
 
     static {
         SHOW = new Show();
         SHOW.tvdb_id = 12;
+
+        EPISODE = new Episode();
+        EPISODE.id = 123456;
+
+        EPISODE_I = new com.battlelancer.seriesguide.dataliberation.model.Episode();
+        EPISODE_I.tvdbId = EPISODE.id;
     }
 
     @Rule
@@ -54,17 +66,18 @@ public class ProviderTest {
         assertTrue(query.moveToFirst());
 
         assertEquals(SHOW.tvdb_id, query.getInt(query.getColumnIndexOrThrow(Shows._ID)));
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(Shows.TITLE)));
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(Shows.OVERVIEW)));
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(Shows.GENRES)));
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(Shows.NETWORK)));
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(Shows.RUNTIME)));
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(Shows.STATUS)));
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(Shows.CONTENTRATING)));
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(Shows.NEXTEPISODE)));
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(Shows.POSTER)));
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(Shows.NEXTTEXT)));
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(Shows.IMDBID)));
+        assertNotNullValue(query, Shows.TITLE);
+        assertNotNullValue(query, Shows.TITLE);
+        assertNotNullValue(query, Shows.OVERVIEW);
+        assertNotNullValue(query, Shows.GENRES);
+        assertNotNullValue(query, Shows.NETWORK);
+        assertNotNullValue(query, Shows.RUNTIME);
+        assertNotNullValue(query, Shows.STATUS);
+        assertNotNullValue(query, Shows.CONTENTRATING);
+        assertNotNullValue(query, Shows.NEXTEPISODE);
+        assertNotNullValue(query, Shows.POSTER);
+        assertNotNullValue(query, Shows.NEXTTEXT);
+        assertNotNullValue(query, Shows.IMDBID);
         // getInt returns 0 if NULL, so check explicitly
         assertDefaultValue(query, Shows.TRAKT_ID, 0);
         assertDefaultValue(query, Shows.FAVORITE, 0);
@@ -74,7 +87,7 @@ public class ProviderTest {
         assertDefaultValue(query, Shows.LASTEDIT, 0);
         assertDefaultValue(query, Shows.LASTWATCHEDID, 0);
         assertDefaultValue(query, Shows.LASTWATCHED_MS, 0);
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(Shows.LANGUAGE)));
+        assertNotNullValue(query, Shows.LANGUAGE);
         assertDefaultValue(query, Shows.UNWATCHED_COUNT, DBUtils.UNKNOWN_UNWATCHED_COUNT);
         assertDefaultValue(query, Shows.NOTIFY, 1);
 
@@ -102,22 +115,67 @@ public class ProviderTest {
         assertEquals(12, query.getInt(query.getColumnIndexOrThrow(Shows.REF_SHOW_ID)));
         assertEquals(42, query.getInt(query.getColumnIndexOrThrow(Seasons.COMBINED)));
         // getInt returns 0 if NULL, so check explicitly
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(Seasons.WATCHCOUNT)));
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(Seasons.UNAIREDCOUNT)));
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(Seasons.NOAIRDATECOUNT)));
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(Seasons.TOTALCOUNT)));
-        assertEquals(0, query.getInt(query.getColumnIndexOrThrow(Seasons.WATCHCOUNT)));
-        assertEquals(0, query.getInt(query.getColumnIndexOrThrow(Seasons.UNAIREDCOUNT)));
-        assertEquals(0, query.getInt(query.getColumnIndexOrThrow(Seasons.NOAIRDATECOUNT)));
-        assertEquals(0, query.getInt(query.getColumnIndexOrThrow(Seasons.TOTALCOUNT)));
+        assertDefaultValue(query, Seasons.WATCHCOUNT, 0);
+        assertDefaultValue(query, Seasons.UNAIREDCOUNT, 0);
+        assertDefaultValue(query, Seasons.NOAIRDATECOUNT, 0);
+        assertDefaultValue(query, Seasons.TOTALCOUNT, 0);
 
         assertEquals(1, query.getCount());
 
         query.close();
     }
 
-    private void assertDefaultValue(Cursor query, String column, int defaultValue) {
+    @Test
+    public void episodeDefaultValues() throws Exception {
+        ContentValues values = new ContentValues();
+        TvdbEpisodeTools.toContentValues(EPISODE, values,
+                EPISODE.id, 1234, SHOW.tvdb_id, 0,
+                Constants.EPISODE_UNKNOWN_RELEASE);
+
+        insertAndAssertEpisode(values);
+    }
+
+    @Test
+    public void episodeDefaultValuesImport() throws Exception {
+        ContentValues values = EPISODE_I.toContentValues(SHOW.tvdb_id, 1234, 0);
+
+        insertAndAssertEpisode(values);
+    }
+
+    private void insertAndAssertEpisode(ContentValues values) throws Exception {
+        ContentProviderOperation op = ContentProviderOperation.newInsert(Episodes.CONTENT_URI)
+                .withValues(values).build();
+
+        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        batch.add(op);
+        providerRule.getResolver().applyBatch(SgApp.CONTENT_AUTHORITY, batch);
+
+        Cursor query = providerRule.getResolver().query(Episodes.CONTENT_URI, null,
+                null, null, null);
+        assertNotNull(query);
+        assertTrue(query.moveToFirst());
+
+        assertNotNullValue(query, Episodes.TITLE);
+        assertDefaultValue(query, Episodes.NUMBER, 0);
+        assertDefaultValue(query, Episodes.WATCHED, 0);
+        assertNotNullValue(query, Episodes.DIRECTORS);
+        assertNotNullValue(query, Episodes.GUESTSTARS);
+        assertNotNullValue(query, Episodes.WRITERS);
+        assertNotNullValue(query, Episodes.IMAGE);
+        assertDefaultValue(query, Episodes.COLLECTED, 0);
+        assertNotNullValue(query, Episodes.IMDBID);
+        assertDefaultValue(query, Episodes.LAST_EDITED, 0);
+        assertDefaultValue(query, Episodes.LAST_UPDATED, 0);
+
+        query.close();
+    }
+
+    private void assertNotNullValue(Cursor query, String column) {
         assertFalse(query.isNull(query.getColumnIndexOrThrow(column)));
+    }
+
+    private void assertDefaultValue(Cursor query, String column, int defaultValue) {
+        assertNotNullValue(query, column);
         assertEquals(defaultValue, query.getInt(query.getColumnIndexOrThrow(column)));
     }
 }
