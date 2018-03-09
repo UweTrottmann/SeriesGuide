@@ -405,19 +405,16 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private void addListToDatabase(List list) {
+        if (TextUtils.isEmpty(list.name)) {
+            return; // required
+        }
         if (TextUtils.isEmpty(list.listId)) {
-            if (TextUtils.isEmpty(list.name)) {
-                return; // can't rebuild list id
-            }
+            // rebuild from name
             list.listId = SeriesGuideContract.Lists.generateListId(list.name);
         }
 
         // Insert the list
-        ContentValues values = new ContentValues();
-        values.put(Lists.LIST_ID, list.listId);
-        values.put(Lists.NAME, list.name);
-        values.put(Lists.ORDER, list.order);
-        context.getContentResolver().insert(Lists.CONTENT_URI, values);
+        context.getContentResolver().insert(Lists.CONTENT_URI, list.toContentValues());
 
         if (list.items == null || list.items.isEmpty()) {
             return;

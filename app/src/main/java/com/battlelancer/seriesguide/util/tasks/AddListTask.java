@@ -1,8 +1,10 @@
 package com.battlelancer.seriesguide.util.tasks;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -56,14 +58,15 @@ public class AddListTask extends BaseActionTask {
         }
 
         // update local state
-        if (!doDatabaseUpdate(listId)) {
+        if (!doDatabaseUpdate(getContext().getContentResolver(), listId)) {
             return ERROR_DATABASE;
         }
 
         return SUCCESS;
     }
 
-    protected String getListId() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    public String getListId() {
         return SeriesGuideContract.Lists.generateListId(listName);
     }
 
@@ -77,11 +80,12 @@ public class AddListTask extends BaseActionTask {
         return lists;
     }
 
-    protected boolean doDatabaseUpdate(String listId) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    public boolean doDatabaseUpdate(ContentResolver contentResolver, String listId) {
         ContentValues values = new ContentValues();
         values.put(SeriesGuideContract.Lists.LIST_ID, listId);
         values.put(SeriesGuideContract.Lists.NAME, listName);
-        getContext().getContentResolver().insert(SeriesGuideContract.Lists.CONTENT_URI, values);
+        contentResolver.insert(SeriesGuideContract.Lists.CONTENT_URI, values);
 
         // notify lists activity
         EventBus.getDefault().post(new ListsActivity.ListsChangedEvent());

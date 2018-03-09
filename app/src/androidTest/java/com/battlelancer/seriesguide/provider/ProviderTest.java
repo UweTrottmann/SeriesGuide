@@ -16,13 +16,16 @@ import android.support.test.rule.provider.ProviderTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.dataliberation.model.List;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeTools;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.tasks.AddListTask;
 import com.uwetrottmann.thetvdb.entities.Episode;
 import java.util.ArrayList;
 import org.junit.Rule;
@@ -37,6 +40,8 @@ public class ProviderTest {
     private static final Episode EPISODE;
     private static final com.battlelancer.seriesguide.dataliberation.model.Episode EPISODE_I;
 
+    private static final List LIST;
+
     static {
         SHOW = new Show();
         SHOW.tvdb_id = 12;
@@ -50,6 +55,10 @@ public class ProviderTest {
 
         EPISODE_I = new com.battlelancer.seriesguide.dataliberation.model.Episode();
         EPISODE_I.tvdbId = EPISODE.id;
+
+        LIST = new List();
+        LIST.name = "Test List";
+        LIST.listId = SeriesGuideContract.Lists.generateListId(LIST.name);
     }
 
     @Rule
@@ -71,6 +80,7 @@ public class ProviderTest {
         Cursor query = providerRule.getResolver().query(Shows.CONTENT_URI, null,
                 null, null, null);
         assertNotNull(query);
+        assertEquals(1, query.getCount());
         assertTrue(query.moveToFirst());
 
         assertEquals(SHOW.tvdb_id, query.getInt(query.getColumnIndexOrThrow(Shows._ID)));
@@ -99,7 +109,6 @@ public class ProviderTest {
         assertDefaultValue(query, Shows.UNWATCHED_COUNT, DBUtils.UNKNOWN_UNWATCHED_COUNT);
         assertDefaultValue(query, Shows.NOTIFY, 1);
 
-        assertEquals(1, query.getCount());
 
         query.close();
     }
@@ -131,6 +140,7 @@ public class ProviderTest {
         Cursor query = providerRule.getResolver().query(Seasons.CONTENT_URI, null,
                 null, null, null);
         assertNotNull(query);
+        assertEquals(1, query.getCount());
         assertTrue(query.moveToFirst());
 
         assertEquals(SEASON.tvdbId, query.getInt(query.getColumnIndexOrThrow(Seasons._ID)));
@@ -141,8 +151,6 @@ public class ProviderTest {
         assertDefaultValue(query, Seasons.UNAIREDCOUNT, 0);
         assertDefaultValue(query, Seasons.NOAIRDATECOUNT, 0);
         assertDefaultValue(query, Seasons.TOTALCOUNT, 0);
-
-        assertEquals(1, query.getCount());
 
         query.close();
     }
@@ -175,6 +183,7 @@ public class ProviderTest {
         Cursor query = providerRule.getResolver().query(Episodes.CONTENT_URI, null,
                 null, null, null);
         assertNotNull(query);
+        assertEquals(1, query.getCount());
         assertTrue(query.moveToFirst());
 
         assertNotNullValue(query, Episodes.TITLE);
@@ -188,6 +197,45 @@ public class ProviderTest {
         assertNotNullValue(query, Episodes.IMDBID);
         assertDefaultValue(query, Episodes.LAST_EDITED, 0);
         assertDefaultValue(query, Episodes.LAST_UPDATED, 0);
+
+        query.close();
+    }
+
+    @Test
+    public void listDefaultValues() throws Exception {
+        AddListTask addListTask = new AddListTask(InstrumentationRegistry.getTargetContext(),
+                LIST.name);
+        addListTask.doDatabaseUpdate(providerRule.getResolver(), addListTask.getListId());
+
+        Cursor query = providerRule.getResolver().query(Lists.CONTENT_URI, null,
+                null, null, null);
+        assertNotNull(query);
+        assertEquals(1, query.getCount());
+        assertTrue(query.moveToFirst());
+
+        assertDefaultValue(query, Lists.ORDER, 0);
+
+        query.close();
+    }
+
+    @Test
+    public void listDefaultValuesImport() throws Exception {
+        ContentValues values = LIST.toContentValues();
+
+        ContentProviderOperation op = ContentProviderOperation.newInsert(Lists.CONTENT_URI)
+                .withValues(values).build();
+
+        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        batch.add(op);
+        providerRule.getResolver().applyBatch(SgApp.CONTENT_AUTHORITY, batch);
+
+        Cursor query = providerRule.getResolver().query(Lists.CONTENT_URI, null,
+                null, null, null);
+        assertNotNull(query);
+        assertEquals(1, query.getCount());
+        assertTrue(query.moveToFirst());
+
+        assertDefaultValue(query, Lists.ORDER, 0);
 
         query.close();
     }
