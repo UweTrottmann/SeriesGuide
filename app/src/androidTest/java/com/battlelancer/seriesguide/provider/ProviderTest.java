@@ -251,9 +251,9 @@ public class ProviderTest {
     public void listDefaultValues() throws Exception {
         AddListTask addListTask = new AddListTask(InstrumentationRegistry.getTargetContext(),
                 LIST.name);
-        addListTask.doDatabaseUpdate(providerRule.getResolver(), addListTask.getListId());
+        addListTask.doDatabaseUpdate(resolver, addListTask.getListId());
 
-        Cursor query = providerRule.getResolver().query(Lists.CONTENT_URI, null,
+        Cursor query = resolver.query(Lists.CONTENT_URI, null,
                 null, null, null);
         assertNotNull(query);
         assertEquals(1, query.getCount());
@@ -273,9 +273,9 @@ public class ProviderTest {
 
         ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         batch.add(op);
-        providerRule.getResolver().applyBatch(SgApp.CONTENT_AUTHORITY, batch);
+        resolver.applyBatch(SgApp.CONTENT_AUTHORITY, batch);
 
-        Cursor query = providerRule.getResolver().query(Lists.CONTENT_URI, null,
+        Cursor query = resolver.query(Lists.CONTENT_URI, null,
                 null, null, null);
         assertNotNull(query);
         assertEquals(1, query.getCount());
@@ -289,27 +289,27 @@ public class ProviderTest {
     @Test
     public void movieDefaultValues() throws Exception {
         ContentValues values = MOVIE.toContentValuesInsert();
-        providerRule.getResolver().insert(Movies.CONTENT_URI, values);
+        resolver.insert(Movies.CONTENT_URI, values);
 
         assertMovie(false);
     }
 
     @Test
     public void movieDefaultValuesWatchedShell() throws Exception {
-        MovieTools.addMovieWatchedShell(providerRule.getResolver(), MOVIE.tmdbMovie().id);
+        MovieTools.addMovieWatchedShell(resolver, MOVIE.tmdbMovie().id);
 
         assertMovie(true);
     }
 
     @Test
     public void movieDefaultValuesImport() throws Exception {
-        providerRule.getResolver().insert(Movies.CONTENT_URI, MOVIE_I.toContentValues());
+        resolver.insert(Movies.CONTENT_URI, MOVIE_I.toContentValues());
 
         assertMovie(false);
     }
 
     private void assertMovie(boolean isWatched) {
-        Cursor query = providerRule.getResolver().query(Movies.CONTENT_URI, null,
+        Cursor query = resolver.query(Movies.CONTENT_URI, null,
                 null, null, null);
         assertNotNull(query);
         assertEquals(1, query.getCount());
