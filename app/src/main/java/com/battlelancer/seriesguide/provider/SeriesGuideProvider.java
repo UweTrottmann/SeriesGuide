@@ -421,7 +421,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case LISTS: {
-                long id = tryInsert(db, Tables.LISTS, CONFLICT_NONE, values);
+                long id = tryInsert(db, Tables.LISTS, CONFLICT_REPLACE, values);
                 if (id < 0) {
                     break;
                 }

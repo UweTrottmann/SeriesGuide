@@ -8,6 +8,9 @@ import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 
+/**
+ * Note: ensure to use CONFLICT_REPLACE when inserting to mimic SQLite UNIQUE x ON CONFLICT REPLACE.
+ */
 @Entity(tableName = Tables.LISTS,
         indices = {@Index(value = Lists.LIST_ID, unique = true)})
 public class List {
