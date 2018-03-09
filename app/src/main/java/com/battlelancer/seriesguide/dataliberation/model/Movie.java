@@ -42,9 +42,9 @@ public class Movie {
         values.put(Movies.RELEASED_UTC_MS, releasedUtcMs);
         values.put(Movies.RUNTIME_MIN, runtimeMin);
         values.put(Movies.POSTER, poster);
-        values.put(Movies.IN_COLLECTION, inCollection);
-        values.put(Movies.IN_WATCHLIST, inWatchlist);
-        values.put(Movies.WATCHED, watched);
+        values.put(Movies.IN_COLLECTION, inCollection ? 1 : 0);
+        values.put(Movies.IN_WATCHLIST, inWatchlist ? 1 : 0);
+        values.put(Movies.WATCHED, watched ? 1 : 0);
         // full dump values
         values.put(Movies.OVERVIEW, overview);
         return values;
