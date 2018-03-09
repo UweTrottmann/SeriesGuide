@@ -21,12 +21,16 @@ import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeTools;
+import com.battlelancer.seriesguide.ui.movies.MovieDetails;
+import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.tasks.AddListTask;
 import com.uwetrottmann.thetvdb.entities.Episode;
+import com.uwetrottmann.tmdb2.entities.Movie;
 import java.util.ArrayList;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,6 +43,8 @@ public class ProviderTest {
     private static final Season SEASON;
     private static final Episode EPISODE;
     private static final com.battlelancer.seriesguide.dataliberation.model.Episode EPISODE_I;
+    private static final MovieDetails MOVIE;
+    private static final com.battlelancer.seriesguide.dataliberation.model.Movie MOVIE_I;
 
     private static final List LIST;
 
@@ -59,6 +65,13 @@ public class ProviderTest {
         LIST = new List();
         LIST.name = "Test List";
         LIST.listId = SeriesGuideContract.Lists.generateListId(LIST.name);
+
+        MOVIE = new MovieDetails();
+        Movie tmdbMovie = new Movie();
+        tmdbMovie.id = 12;
+        MOVIE.tmdbMovie(tmdbMovie);
+
+        MOVIE_I = new com.battlelancer.seriesguide.dataliberation.model.Movie();
     }
 
     @Rule
@@ -236,6 +249,48 @@ public class ProviderTest {
         assertTrue(query.moveToFirst());
 
         assertDefaultValue(query, Lists.ORDER, 0);
+
+        query.close();
+    }
+
+    @Test
+    public void movieDefaultValues() throws Exception {
+        ContentValues values = MOVIE.toContentValuesInsert();
+        providerRule.getResolver().insert(Movies.CONTENT_URI, values);
+
+        assertMovie(false);
+    }
+
+    @Test
+    public void movieDefaultValuesWatchedShell() throws Exception {
+        MovieTools.addMovieWatchedShell(providerRule.getResolver(), MOVIE.tmdbMovie().id);
+
+        assertMovie(true);
+    }
+
+    @Test
+    public void movieDefaultValuesImport() throws Exception {
+        providerRule.getResolver().insert(Movies.CONTENT_URI, MOVIE_I.toContentValues());
+
+        assertMovie(false);
+    }
+
+    private void assertMovie(boolean isWatched) {
+        Cursor query = providerRule.getResolver().query(Movies.CONTENT_URI, null,
+                null, null, null);
+        assertNotNull(query);
+        assertEquals(1, query.getCount());
+        assertTrue(query.moveToFirst());
+
+        assertDefaultValue(query, Movies.RUNTIME_MIN, 0);
+        assertDefaultValue(query, Movies.IN_COLLECTION, 0);
+        assertDefaultValue(query, Movies.IN_WATCHLIST, 0);
+        assertDefaultValue(query, Movies.PLAYS, 0);
+        assertDefaultValue(query, Movies.WATCHED, isWatched ? 1 : 0);
+        assertDefaultValue(query, Movies.RATING_TMDB, 0);
+        assertDefaultValue(query, Movies.RATING_VOTES_TMDB, 0);
+        assertDefaultValue(query, Movies.RATING_TRAKT, 0);
+        assertDefaultValue(query, Movies.RATING_VOTES_TRAKT, 0);
 
         query.close();
     }

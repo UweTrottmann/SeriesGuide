@@ -314,7 +314,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         } else if (type == JsonExportTask.BACKUP_MOVIES) {
             while (reader.hasNext()) {
                 Movie movie = gson.fromJson(reader, Movie.class);
-                addMovieToDatabase(movie);
+                context.getContentResolver().insert(Movies.CONTENT_URI, movie.toContentValues());
             }
         }
 
@@ -454,23 +454,5 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
         ContentValues[] itemsArray = new ContentValues[items.size()];
         context.getContentResolver().bulkInsert(ListItems.CONTENT_URI, items.toArray(itemsArray));
-    }
-
-    private void addMovieToDatabase(Movie movie) {
-        ContentValues values = new ContentValues();
-        values.put(Movies.TMDB_ID, movie.tmdbId);
-        values.put(Movies.IMDB_ID, movie.imdbId);
-        values.put(Movies.TITLE, movie.title);
-        values.put(Movies.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(movie.title));
-        values.put(Movies.RELEASED_UTC_MS, movie.releasedUtcMs);
-        values.put(Movies.RUNTIME_MIN, movie.runtimeMin);
-        values.put(Movies.POSTER, movie.poster);
-        values.put(Movies.IN_COLLECTION, movie.inCollection);
-        values.put(Movies.IN_WATCHLIST, movie.inWatchlist);
-        values.put(Movies.WATCHED, movie.watched);
-        // full dump values
-        values.put(Movies.OVERVIEW, movie.overview);
-
-        context.getContentResolver().insert(Movies.CONTENT_URI, values);
     }
 }
