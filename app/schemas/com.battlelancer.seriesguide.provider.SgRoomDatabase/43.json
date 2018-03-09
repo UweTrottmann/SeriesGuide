@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 43,
-    "identityHash": "3133c9ff08c8b61e34a46cfcab51739e",
+    "identityHash": "79225931b0cddd30dcb5aa700f9b8ed5",
     "entities": [
       {
         "tableName": "series",
@@ -511,11 +511,166 @@
           }
         ],
         "foreignKeys": []
+      },
+      {
+        "tableName": "movies",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `movies_tmdbid` INTEGER NOT NULL, `movies_imdbid` TEXT, `movies_title` TEXT, `movies_title_noarticle` TEXT, `movies_poster` TEXT, `movies_genres` TEXT, `movies_overview` TEXT, `movies_released` INTEGER, `movies_runtime` INTEGER, `movies_trailer` TEXT, `movies_certification` TEXT, `movies_incollection` INTEGER, `movies_inwatchlist` INTEGER, `movies_plays` INTEGER, `movies_watched` INTEGER, `movies_rating_tmdb` REAL, `movies_rating_votes_tmdb` INTEGER, `movies_rating_trakt` INTEGER, `movies_rating_votes_trakt` INTEGER, `movies_rating_user` INTEGER, `movies_last_updated` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tmdbId",
+            "columnName": "movies_tmdbid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imdbId",
+            "columnName": "movies_imdbid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "movies_title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "titleNoArticle",
+            "columnName": "movies_title_noarticle",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "poster",
+            "columnName": "movies_poster",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "genres",
+            "columnName": "movies_genres",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "overview",
+            "columnName": "movies_overview",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "releasedMs",
+            "columnName": "movies_released",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "runtimeMin",
+            "columnName": "movies_runtime",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "trailer",
+            "columnName": "movies_trailer",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "certification",
+            "columnName": "movies_certification",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "inCollection",
+            "columnName": "movies_incollection",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "inWatchlist",
+            "columnName": "movies_inwatchlist",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "plays",
+            "columnName": "movies_plays",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "watched",
+            "columnName": "movies_watched",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ratingTmdb",
+            "columnName": "movies_rating_tmdb",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ratingVotesTmdb",
+            "columnName": "movies_rating_votes_tmdb",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ratingTrakt",
+            "columnName": "movies_rating_trakt",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ratingVotesTrakt",
+            "columnName": "movies_rating_votes_trakt",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ratingUser",
+            "columnName": "movies_rating_user",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastUpdated",
+            "columnName": "movies_last_updated",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_movies_movies_tmdbid",
+            "unique": true,
+            "columnNames": [
+              "movies_tmdbid"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_movies_movies_tmdbid` ON `${TABLE_NAME}` (`movies_tmdbid`)"
+          }
+        ],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"3133c9ff08c8b61e34a46cfcab51739e\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"79225931b0cddd30dcb5aa700f9b8ed5\")"
     ]
   }
 }

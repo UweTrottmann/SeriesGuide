@@ -15,10 +15,11 @@ public class SqliteTestDbOpenHelper extends SQLiteOpenHelper {
         db.execSQL(SeriesGuideDatabase.CREATE_SEASONS_TABLE);
         db.execSQL(SeriesGuideDatabase.CREATE_EPISODES_TABLE);
         db.execSQL(SeriesGuideDatabase.CREATE_LISTS_TABLE);
+        db.execSQL(SeriesGuideDatabase.CREATE_MOVIES_TABLE);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Not testing migration from older versions created using SQLite API
+        // Not testing migration from older versions created using SQLiteOpenHelper API
     }
 
 }

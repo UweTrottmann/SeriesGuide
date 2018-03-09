@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.model.Episode;
 import com.battlelancer.seriesguide.model.List;
+import com.battlelancer.seriesguide.model.Movie;
 import com.battlelancer.seriesguide.model.Season;
 import com.battlelancer.seriesguide.model.Show;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -19,7 +20,8 @@ import com.uwetrottmann.androidutils.AndroidUtils;
                 Show.class,
                 Season.class,
                 Episode.class,
-                List.class
+                List.class,
+                Movie.class
         },
         version = SgRoomDatabase.VERSION
 )
@@ -87,6 +89,8 @@ public abstract class SgRoomDatabase extends RoomDatabase {
             // Room does not support UNIQUE constraints, so use unique indexes instead (probably
             // faster anyhow)
             database.execSQL("CREATE UNIQUE INDEX `index_lists_list_id` ON `lists` (`list_id`)");
+            database.execSQL("CREATE UNIQUE INDEX `index_movies_movies_tmdbid` "
+                    + "ON `movies` (`movies_tmdbid`)");
         }
     };
 }

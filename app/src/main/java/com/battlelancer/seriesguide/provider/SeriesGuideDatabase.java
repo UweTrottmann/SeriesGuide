@@ -492,7 +492,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ");";
 
-    private static final String CREATE_MOVIES_TABLE = "CREATE TABLE " + Tables.MOVIES
+    @VisibleForTesting
+    public static final String CREATE_MOVIES_TABLE = "CREATE TABLE " + Tables.MOVIES
             + " ("
 
             + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"

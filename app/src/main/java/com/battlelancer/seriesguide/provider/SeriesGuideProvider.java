@@ -442,12 +442,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case MOVIES: {
-                long id;
-                if (bulkInsert) {
-                    id = tryInsert(db, Tables.MOVIES, CONFLICT_REPLACE, values);
-                } else {
-                    id = tryInsert(db, Tables.MOVIES, CONFLICT_NONE, values);
-                }
+                long id = tryInsert(db, Tables.MOVIES, CONFLICT_REPLACE, values);
                 if (id < 0) {
                     break;
                 }
