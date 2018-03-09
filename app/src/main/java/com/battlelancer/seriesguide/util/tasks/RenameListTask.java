@@ -1,8 +1,10 @@
 package com.battlelancer.seriesguide.util.tasks;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.ListsActivity;
 import org.greenrobot.eventbus.EventBus;
@@ -27,15 +29,17 @@ public class RenameListTask extends AddListTask {
 
     @Override
     @NonNull
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     public String getListId() {
         return listId;
     }
 
     @Override
-    protected boolean doDatabaseUpdate(String listId) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    public boolean doDatabaseUpdate(ContentResolver contentResolver, String listId) {
         ContentValues values = new ContentValues();
         values.put(SeriesGuideContract.Lists.NAME, listName);
-        int updated = getContext().getContentResolver()
+        int updated = contentResolver
                 .update(SeriesGuideContract.Lists.buildListUri(listId), values, null, null);
         if (updated == 0) {
             return false;
