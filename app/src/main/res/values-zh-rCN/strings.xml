@@ -107,8 +107,8 @@
   <string name="action_collection_remove">移出收藏列表</string>
   <string name="action_collection_added">已添加到收藏列表</string>
   <string name="action_collection_removed">已从收藏列表移除</string>
-  <string name="action_watched">已观看</string>
-  <string name="action_unwatched">未观看</string>
+  <string name="action_watched">标记为已观看</string>
+  <string name="action_unwatched">标记为未观看</string>
   <!-- Shows -->
   <string name="confirm_delete">您要删除 %s 节目吗？</string>
   <string name="delete_error">无法移除此节目</string>
@@ -125,13 +125,13 @@
   <string name="hidden">已隐藏选中的节目</string>
   <string name="unhidden">已取消隐藏选中节目</string>
   <string name="action_shows_add">添加节目</string>
-  <string name="action_shows_filter">筛选条件</string>
+  <string name="action_shows_filter">筛选节目</string>
   <string name="empty_filter">清除筛选条件</string>
   <string name="action_shows_filter_favorites">已被标记为喜爱</string>
   <string name="action_shows_filter_unwatched">仍有未观看剧集</string>
   <string name="action_shows_filter_upcoming">即将播出</string>
   <string name="action_shows_filter_hidden">已被标记为隐藏</string>
-  <string name="action_shows_sort">重新排序</string>
+  <string name="action_shows_sort">排序节目</string>
   <string name="action_shows_sort_title">依据节目名称</string>
   <string name="action_shows_sort_latest_episode">最新一集</string>
   <string name="action_shows_sort_oldest_episode">最早一集</string>
