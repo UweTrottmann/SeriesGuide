@@ -6,7 +6,6 @@ import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.entities.Credits;
 import com.uwetrottmann.tmdb2.services.MoviesService;
-import java.io.IOException;
 import retrofit2.Response;
 
 /**
@@ -31,7 +30,7 @@ public class MovieCreditsLoader extends GenericSimpleLoader<Credits> {
             } else {
                 SgTmdb.trackFailedRequest(getContext(), "get movie credits", response);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTmdb.trackFailedRequest(getContext(), "get movie credits", e);
         }
 

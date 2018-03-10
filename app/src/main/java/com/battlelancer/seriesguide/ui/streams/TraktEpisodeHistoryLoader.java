@@ -4,13 +4,12 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.shows.TraktRecentEpisodeHistoryLoader;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
-import java.io.IOException;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -51,7 +50,7 @@ class TraktEpisodeHistoryLoader extends GenericSimpleLoader<TraktEpisodeHistoryL
                 }
                 SgTrakt.trackFailedRequest(getContext(), getAction(), response);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(getContext(), getAction(), e);
             return AndroidUtils.isNetworkConnected(getContext())
                     ? buildResultFailure() : buildResultFailure(R.string.offline);

@@ -6,11 +6,11 @@ import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.entities.BaseMovie;
@@ -20,7 +20,6 @@ import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.services.Sync;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -88,7 +87,7 @@ public class TraktMovieSync {
                 SgTrakt.trackFailedRequest(context, "get movie collection", response);
                 return false;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(context, "get movie collection", e);
             return false;
         }
@@ -111,7 +110,7 @@ public class TraktMovieSync {
                 SgTrakt.trackFailedRequest(context, "get movie watchlist", response);
                 return false;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(context, "get movie watchlist", e);
             return false;
         }
@@ -273,7 +272,7 @@ public class TraktMovieSync {
                     response = traktSync.addItemsToWatchlist(items).execute();
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(context, action, e);
             return false;
         }
@@ -342,7 +341,7 @@ public class TraktMovieSync {
                 SgTrakt.trackFailedRequest(context, "get watched movies", response);
                 return false;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(context, "get watched movies", e);
             return false;
         }

@@ -19,7 +19,6 @@ import com.uwetrottmann.tmdb2.enumerations.ReleaseType;
 import com.uwetrottmann.tmdb2.services.MoviesService;
 import com.uwetrottmann.tmdb2.services.SearchService;
 import dagger.Lazy;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -131,7 +130,7 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
                 SgTmdb.trackFailedRequest(getContext(), action, response);
                 return buildErrorResult();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTmdb.trackFailedRequest(getContext(), action, e);
             // only check for connection here to allow hitting the response cache
             return AndroidUtils.isNetworkConnected(getContext())

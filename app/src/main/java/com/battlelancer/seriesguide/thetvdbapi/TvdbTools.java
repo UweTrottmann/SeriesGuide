@@ -19,7 +19,6 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -27,9 +26,10 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.sync.TraktEpisodeSync;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.ui.search.SearchResult;
+import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.LanguageTools;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.thetvdb.entities.Series;
@@ -237,7 +237,7 @@ public class TvdbTools {
             response = tvdbSearch.get()
                     .series(query, null, null, language)
                     .execute();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new TvdbException("searchSeries: " + e.getMessage(), e);
         }
 
@@ -560,7 +560,7 @@ public class TvdbTools {
         retrofit2.Response<SeriesResponse> response;
         try {
             response = tvdbSeries.get().series(showTvdbId, language).execute();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new TvdbException("getSeries: " + e.getMessage(), e);
         }
 
@@ -575,7 +575,7 @@ public class TvdbTools {
             return tvdbSeries.get()
                     .imagesQuery(showTvdbId, "poster", null, null, language)
                     .execute();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new TvdbException("getSeriesPosters: " + e.getMessage(), e);
         }
     }

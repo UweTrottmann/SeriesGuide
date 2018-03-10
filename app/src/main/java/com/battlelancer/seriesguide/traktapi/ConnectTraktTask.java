@@ -133,7 +133,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
                     return TraktResult.AUTH_ERROR;
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(context, "get user settings", e);
             return AndroidUtils.isNetworkConnected(context)
                     ? TraktResult.API_ERROR : TraktResult.OFFLINE;
