@@ -7,9 +7,9 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
@@ -17,7 +17,6 @@ import com.uwetrottmann.trakt5.entities.RatedMovie;
 import com.uwetrottmann.trakt5.entities.RatedShow;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import com.uwetrottmann.trakt5.services.Sync;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.threeten.bp.OffsetDateTime;
@@ -71,7 +70,7 @@ public class TraktRatingsSync {
                 SgTrakt.trackFailedRequest(context, "get show ratings", response);
                 return false;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(context, "get show ratings", e);
             return false;
         }
@@ -167,7 +166,7 @@ public class TraktRatingsSync {
                 SgTrakt.trackFailedRequest(context, "get episode ratings", response);
                 return false;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(context, "get episode ratings", e);
             return false;
         }
@@ -262,7 +261,7 @@ public class TraktRatingsSync {
                 SgTrakt.trackFailedRequest(context, "get movie ratings", response);
                 return false;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(context, "get movie ratings", e);
             return false;
         }

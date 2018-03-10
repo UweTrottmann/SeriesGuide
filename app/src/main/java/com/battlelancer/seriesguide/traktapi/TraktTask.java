@@ -24,7 +24,6 @@ import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
 import com.uwetrottmann.trakt5.services.Checkin;
 import com.uwetrottmann.trakt5.services.Comments;
-import java.io.IOException;
 import org.greenrobot.eventbus.EventBus;
 import org.threeten.bp.OffsetDateTime;
 
@@ -296,7 +295,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                     SgTrakt.trackFailedRequest(context, "check-in", response);
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(context, "check-in", e);
         }
 
@@ -328,7 +327,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                     SgTrakt.trackFailedRequest(context, "post comment", response);
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(context, "post comment", e);
         }
 

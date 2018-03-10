@@ -11,7 +11,6 @@ import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.entities.Videos;
 import com.uwetrottmann.tmdb2.enumerations.VideoType;
 import com.uwetrottmann.tmdb2.services.MoviesService;
-import java.io.IOException;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -52,7 +51,7 @@ class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
             } else {
                 SgTmdb.trackFailedRequest(getContext(), action, response);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTmdb.trackFailedRequest(getContext(), action, e);
         }
         return null;

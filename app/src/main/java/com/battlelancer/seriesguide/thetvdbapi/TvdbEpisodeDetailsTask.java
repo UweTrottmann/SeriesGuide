@@ -12,7 +12,6 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.thetvdb.entities.Episode;
 import com.uwetrottmann.thetvdb.entities.EpisodeResponse;
 import com.uwetrottmann.thetvdb.services.TheTvdbEpisodes;
-import java.io.IOException;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -99,7 +98,7 @@ public class TvdbEpisodeDetailsTask extends AsyncTask<Void, Void, Void> {
             }
             Timber.e("%s %s Getting full episode details failed. (id=%s,lang=%s)",
                     response.code(), response.message(), episodeTvdbId, language);
-        } catch (IOException ignored) {
+        } catch (Exception ignored) {
             Timber.e(ignored, "Getting full episode details failed (id=%s,lang=%s)",
                     episodeTvdbId, language);
         }

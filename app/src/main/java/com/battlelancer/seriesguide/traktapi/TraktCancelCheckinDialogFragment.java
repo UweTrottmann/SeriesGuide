@@ -16,7 +16,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.traktapi.TraktTask.InitBundle;
 import com.uwetrottmann.trakt5.services.Checkin;
-import java.io.IOException;
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -77,7 +76,7 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
                                 }
                                 SgTrakt.trackFailedRequest(context, "delete check-in", response);
                             }
-                        } catch (IOException e) {
+                        } catch (Exception e) {
                             SgTrakt.trackFailedRequest(context, "delete check-in", e);
                         }
 

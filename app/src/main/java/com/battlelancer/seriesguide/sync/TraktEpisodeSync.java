@@ -7,15 +7,15 @@ import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.traktapi.TraktSettings;
+import com.battlelancer.seriesguide.traktapi.TraktTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.uwetrottmann.trakt5.entities.BaseSeason;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.ShowIds;
@@ -25,7 +25,6 @@ import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.SyncSeason;
 import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.services.Sync;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -89,7 +88,7 @@ public class TraktEpisodeSync {
                     }
                     SgTrakt.trackFailedRequest(context, "get watched shows", response);
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 SgTrakt.trackFailedRequest(context, "get watched shows", e);
             }
 
@@ -143,7 +142,7 @@ public class TraktEpisodeSync {
                     }
                     SgTrakt.trackFailedRequest(context, "get collected shows", response);
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 SgTrakt.trackFailedRequest(context, "get collected shows", e);
             }
 
@@ -456,7 +455,7 @@ public class TraktEpisodeSync {
                 }
                 SgTrakt.trackFailedRequest(context, "add episodes to " + flag.name, response);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(context, "add episodes to " + flag.name, e);
         }
 

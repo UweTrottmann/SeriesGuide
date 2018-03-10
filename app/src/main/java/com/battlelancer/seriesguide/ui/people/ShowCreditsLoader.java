@@ -11,7 +11,6 @@ import com.uwetrottmann.tmdb2.enumerations.ExternalSource;
 import com.uwetrottmann.tmdb2.services.FindService;
 import com.uwetrottmann.tmdb2.services.TvService;
 import dagger.Lazy;
-import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
 import retrofit2.Response;
@@ -58,7 +57,7 @@ public class ShowCreditsLoader extends GenericSimpleLoader<Credits> {
             } else {
                 SgTmdb.trackFailedRequest(getContext(), "get show credits", response);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTmdb.trackFailedRequest(getContext(), "get show credits", e);
         }
 
@@ -81,7 +80,7 @@ public class ShowCreditsLoader extends GenericSimpleLoader<Credits> {
             } else {
                 SgTmdb.trackFailedRequest(getContext(), "find tvdb show", response);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTmdb.trackFailedRequest(getContext(), "find tvdb show", e);
         }
 

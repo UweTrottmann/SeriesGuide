@@ -13,7 +13,6 @@ import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.thetvdb.entities.EpisodesResponse
 import com.uwetrottmann.thetvdb.services.TheTvdbSeries
 import dagger.Lazy
-import java.io.IOException
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.HashSet
@@ -172,7 +171,7 @@ class TvdbEpisodeTools constructor(
         val response: retrofit2.Response<EpisodesResponse>
         try {
             response = tvdbSeries.get().episodes(showTvdbId, page, language).execute()
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             throw TvdbException("getEpisodes: " + e.message, e)
         }
 
