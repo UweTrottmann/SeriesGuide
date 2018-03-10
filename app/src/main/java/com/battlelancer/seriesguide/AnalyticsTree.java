@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteException;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
@@ -27,20 +26,30 @@ public class AnalyticsTree extends Timber.DebugTree {
 
     @Override
     protected void log(int priority, String tag, @Nullable String message, Throwable t) {
+        // drop empty messages
+        if (message == null) {
+            return;
+        }
+        // drop debug and verbose logs
+        if (priority == Log.DEBUG || priority == Log.VERBOSE) {
+            return;
+        }
+
         if (priority == Log.ERROR) {
             // remove any stack trace attached by Timber
-            if (message != null) {
-                int newLine = message.indexOf('\n');
-                if (newLine > 0) {
-                    message = message.substring(0, newLine);
-                }
+            int newLine = message.indexOf('\n');
+            if (newLine > 0) {
+                message = message.substring(0, newLine);
             }
 
             // special treatment for some exceptions
+            if (t instanceof UnknownHostException /* mostly devices loosing connection */) {
+                return; // do not track
+            }
+            if (t instanceof TvdbTraktException) {
+                return; // already tracked as trakt error
+            }
             if (t instanceof TvdbException) {
-                if (t instanceof TvdbTraktException) {
-                    return; // already tracked as trakt error
-                }
                 TvdbException e = (TvdbException) t;
                 Throwable cause = e.getCause();
                 if (cause != null && cause instanceof UnknownHostException) {
@@ -50,17 +59,7 @@ public class AnalyticsTree extends Timber.DebugTree {
                         CATEGORY_THETVDB_ERROR,
                         tag + ": " + message,
                         e.getMessage());
-                return;
             }
-        }
-
-        // drop empty messages
-        if (message == null) {
-            return;
-        }
-        // drop debug and verbose logs
-        if (priority == Log.DEBUG || priority == Log.VERBOSE) {
-            return;
         }
 
         // transform priority into string
@@ -82,7 +81,9 @@ public class AnalyticsTree extends Timber.DebugTree {
 
         // track some non-fatal exceptions with crashlytics
         if (priority == Log.ERROR) {
-            if (t instanceof SQLiteException) {
+            // SQLite exceptions
+            // Retrofit Call exceptions (IOException, RuntimeException)
+            if (t instanceof Exception) {
                 Crashlytics.logException(t);
             }
         }
