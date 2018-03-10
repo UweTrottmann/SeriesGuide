@@ -9,6 +9,12 @@ Version 42
 ----------
 *(in development)*
 
+#### 42-beta2
+*(2018-03-10)*
+
+* 🔨 Do not crash when parsing server responses fails.
+* 📝 Latest translations from crowdin.
+
 #### 42-beta1
 *(2018-02-22)*
 
