@@ -167,10 +167,10 @@ class TvdbEpisodeTools constructor(
         try {
             response = tvdbSeries.get().episodes(showTvdbId, page, language).execute()
         } catch (e: Exception) {
-            throw TvdbException("getEpisodes: " + e.message, e)
+            throw TvdbException("getEpisodes", e)
         }
 
-        ensureSuccessfulResponse(response.raw(), "getEpisodes: ")
+        ensureSuccessfulResponse(response.raw(), "getEpisodes")
 
         return response.body()!!
     }

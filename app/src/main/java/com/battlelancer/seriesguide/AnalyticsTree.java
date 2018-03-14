@@ -54,13 +54,18 @@ public class AnalyticsTree extends Timber.DebugTree {
             if (t instanceof TvdbException) {
                 TvdbException e = (TvdbException) t;
                 Throwable cause = e.getCause();
-                if (cause != null && cause instanceof UnknownHostException) {
-                    return; // do not track
+                if (cause != null) {
+                    if (cause instanceof UnknownHostException) {
+                        return; // do not track
+                    }
+                    Utils.trackCustomEvent(context, CATEGORY_THETVDB_ERROR,
+                            tag + ": " + message,
+                            e.getMessage() + ": " + cause.getClass().getSimpleName());
+                } else {
+                    Utils.trackCustomEvent(context, CATEGORY_THETVDB_ERROR,
+                            tag + ": " + message,
+                            e.getMessage());
                 }
-                Utils.trackCustomEvent(context,
-                        CATEGORY_THETVDB_ERROR,
-                        tag + ": " + message,
-                        e.getMessage());
             }
         }
 
