@@ -1,12 +1,14 @@
 package com.battlelancer.seriesguide;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteException;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTraktException;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
+import com.google.gson.JsonParseException;
 import java.net.UnknownHostException;
 import timber.log.Timber;
 
@@ -81,9 +83,8 @@ public class AnalyticsTree extends Timber.DebugTree {
 
         // track some non-fatal exceptions with crashlytics
         if (priority == Log.ERROR) {
-            // SQLite exceptions
-            // Retrofit Call exceptions (IOException, RuntimeException)
-            if (t instanceof Exception) {
+            if (t instanceof SQLiteException /* Content provider */
+                    || t instanceof JsonParseException /* Retrofit */) {
                 Crashlytics.logException(t);
             }
         }
