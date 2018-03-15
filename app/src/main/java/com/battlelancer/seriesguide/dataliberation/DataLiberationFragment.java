@@ -162,6 +162,7 @@ public class DataLiberationFragment extends Fragment implements
         // selecting custom backup files is only supported on KitKat and up
         // as we use Storage Access Framework in this case
         if (AndroidUtils.isKitKatOrHigher()) {
+            buttonExport.setVisibility(View.GONE); // back up runs immediately upon file creation
             buttonShowsExportFile.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
