@@ -118,6 +118,13 @@ public class MovieDetails {
         values.put(Movies.TMDB_ID, tmdbMovie.id);
         values.put(Movies.IN_COLLECTION, DBUtils.convertBooleanToInt(inCollection));
         values.put(Movies.IN_WATCHLIST, DBUtils.convertBooleanToInt(inWatchlist));
+        // set default values
+        values.put(Movies.PLAYS, 0);
+        values.put(Movies.WATCHED, 0);
+        values.put(Movies.RATING_TMDB, 0);
+        values.put(Movies.RATING_VOTES_TMDB, 0);
+        values.put(Movies.RATING_TRAKT, 0);
+        values.put(Movies.RATING_VOTES_TRAKT, 0);
         return values;
     }
 }

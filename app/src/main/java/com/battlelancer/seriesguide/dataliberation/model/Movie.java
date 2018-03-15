@@ -47,6 +47,12 @@ public class Movie {
         values.put(Movies.WATCHED, watched ? 1 : 0);
         // full dump values
         values.put(Movies.OVERVIEW, overview);
+        // set default values
+        values.put(Movies.PLAYS, 0);
+        values.put(Movies.RATING_TMDB, 0);
+        values.put(Movies.RATING_VOTES_TMDB, 0);
+        values.put(Movies.RATING_TRAKT, 0);
+        values.put(Movies.RATING_VOTES_TRAKT, 0);
         return values;
     }
 

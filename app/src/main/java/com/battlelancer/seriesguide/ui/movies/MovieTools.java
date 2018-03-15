@@ -349,6 +349,13 @@ public class MovieTools {
         values.put(SeriesGuideContract.Movies.IN_COLLECTION, 0);
         values.put(SeriesGuideContract.Movies.IN_WATCHLIST, 0);
         values.put(SeriesGuideContract.Movies.WATCHED, 1);
+        // set default values
+        values.put(SeriesGuideContract.Movies.RUNTIME_MIN, 0);
+        values.put(SeriesGuideContract.Movies.PLAYS, 0);
+        values.put(SeriesGuideContract.Movies.RATING_TMDB, 0);
+        values.put(SeriesGuideContract.Movies.RATING_VOTES_TMDB, 0);
+        values.put(SeriesGuideContract.Movies.RATING_TRAKT, 0);
+        values.put(SeriesGuideContract.Movies.RATING_VOTES_TRAKT, 0);
 
         Uri insert = resolver.insert(SeriesGuideContract.Movies.CONTENT_URI, values);
         return insert != null;
