@@ -74,6 +74,9 @@ public abstract class SgRoomDatabase extends RoomDatabase {
             } else {
                 db.execSQL(SeriesGuideDatabase.CREATE_SEARCH_TABLE_API_ICS);
             }
+            // TODO ut: convert to DAOs and remove
+            db.execSQL(SeriesGuideDatabase.CREATE_ACTIVITY_TABLE);
+            db.execSQL(SeriesGuideDatabase.CREATE_JOBS_TABLE);
         }
     };
 
