@@ -9,7 +9,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.model.Episode;
-import com.battlelancer.seriesguide.model.List;
+import com.battlelancer.seriesguide.model.SgList;
 import com.battlelancer.seriesguide.model.Movie;
 import com.battlelancer.seriesguide.model.Season;
 import com.battlelancer.seriesguide.model.Show;
@@ -20,7 +20,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
                 Show.class,
                 Season.class,
                 Episode.class,
-                List.class,
+                SgList.class,
                 Movie.class
         },
         version = SgRoomDatabase.VERSION

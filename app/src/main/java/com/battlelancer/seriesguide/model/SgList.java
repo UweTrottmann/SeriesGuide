@@ -13,7 +13,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
  */
 @Entity(tableName = Tables.LISTS,
         indices = {@Index(value = Lists.LIST_ID, unique = true)})
-public class List {
+public class SgList {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = Lists._ID)
