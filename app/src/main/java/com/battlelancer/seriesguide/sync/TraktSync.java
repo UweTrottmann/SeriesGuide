@@ -5,15 +5,14 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.LastActivityMore;
 import com.uwetrottmann.trakt5.services.Sync;
-import java.io.IOException;
 import java.util.HashSet;
 import retrofit2.Response;
 import timber.log.Timber;
@@ -184,7 +183,7 @@ public class TraktSync {
                 return null;
             }
             SgTrakt.trackFailedRequest(context, "get last activity", response);
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(context, "get last activity", e);
         }
         return null;

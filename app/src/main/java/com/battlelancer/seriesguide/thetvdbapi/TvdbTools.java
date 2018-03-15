@@ -19,7 +19,6 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -27,9 +26,10 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.sync.TraktEpisodeSync;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.ui.search.SearchResult;
+import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.LanguageTools;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.thetvdb.entities.Series;
@@ -237,15 +237,15 @@ public class TvdbTools {
             response = tvdbSearch.get()
                     .series(query, null, null, language)
                     .execute();
-        } catch (IOException e) {
-            throw new TvdbException("searchSeries: " + e.getMessage(), e);
+        } catch (Exception e) {
+            throw new TvdbException("searchSeries", e);
         }
 
         if (response.code() == 404) {
             return null; // API returns 404 if there are no search results
         }
 
-        ensureSuccessfulResponse(response.raw(), "searchSeries: ");
+        ensureSuccessfulResponse(response.raw(), "searchSeries");
 
         List<Series> tvdbResults = response.body().data;
         if (tvdbResults == null || tvdbResults.size() == 0) {
@@ -315,7 +315,7 @@ public class TvdbTools {
         try {
             url = TVDB_API_GETSERIES + URLEncoder.encode(query, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            throw new TvdbDataException("searchShow: " + e.getMessage(), e);
+            throw new TvdbDataException("searchShow", e);
         }
         // ...and set language filter
         if (language == null) {
@@ -324,7 +324,7 @@ public class TvdbTools {
             url += TVDB_PARAM_LANGUAGE + language;
         }
 
-        downloadAndParse(root.getContentHandler(), url, false, "searchShow: ");
+        downloadAndParse(root.getContentHandler(), url, false, "searchShow");
 
         return series;
     }
@@ -345,7 +345,7 @@ public class TvdbTools {
         try {
             DBUtils.applyInSmallBatches(context, batch);
         } catch (OperationApplicationException e) {
-            throw new TvdbDataException("getEpisodesAndUpdateDatabase: " + e.getMessage(), e);
+            throw new TvdbDataException("getEpisodesAndUpdateDatabase", e);
         }
 
         // insert all new episodes in bulk
@@ -371,7 +371,7 @@ public class TvdbTools {
                 }
             } catch (IOException e) {
                 HexagonTools.trackFailedRequest(context, "get show details", e);
-                throw new TvdbCloudException("getShowDetailsWithHexagon: " + e.getMessage(), e);
+                throw new TvdbCloudException("getShowDetailsWithHexagon", e);
             }
         }
 
@@ -560,11 +560,11 @@ public class TvdbTools {
         retrofit2.Response<SeriesResponse> response;
         try {
             response = tvdbSeries.get().series(showTvdbId, language).execute();
-        } catch (IOException e) {
-            throw new TvdbException("getSeries: " + e.getMessage(), e);
+        } catch (Exception e) {
+            throw new TvdbException("getSeries", e);
         }
 
-        ensureSuccessfulResponse(response.raw(), "getSeries: ");
+        ensureSuccessfulResponse(response.raw(), "getSeries");
 
         return response.body().data;
     }
@@ -575,8 +575,8 @@ public class TvdbTools {
             return tvdbSeries.get()
                     .imagesQuery(showTvdbId, "poster", null, null, language)
                     .execute();
-        } catch (IOException e) {
-            throw new TvdbException("getSeriesPosters: " + e.getMessage(), e);
+        } catch (Exception e) {
+            throw new TvdbException("getSeriesPosters", e);
         }
     }
 
@@ -611,7 +611,7 @@ public class TvdbTools {
         try {
             response = okHttpClient.get().newCall(request).execute();
         } catch (IOException e) {
-            throw new TvdbException(logTag + e.getMessage(), e);
+            throw new TvdbException(logTag, e);
         }
 
         ensureSuccessfulResponse(response, logTag);
@@ -640,7 +640,7 @@ public class TvdbTools {
                 }
             }
         } catch (SAXException | IOException | AssertionError e) {
-            throw new TvdbDataException(logTag + e.getMessage(), e);
+            throw new TvdbDataException(logTag, e);
         }
     }
 
@@ -648,13 +648,13 @@ public class TvdbTools {
         if (response.code() == 404) {
             // special case: item does not exist (any longer)
             throw new TvdbException(
-                    logTag + response.code() + " " + response.message(),
+                    logTag + ": " + response.code() + " " + response.message(),
                     true
             );
         } else if (!response.isSuccessful()) {
             // other non-2xx response
             throw new TvdbException(
-                    logTag + response.code() + " " + response.message()
+                    logTag + ": " + response.code() + " " + response.message()
             );
         }
     }

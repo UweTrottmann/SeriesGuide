@@ -6,7 +6,6 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.TraktError;
-import java.io.IOException;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -100,7 +99,7 @@ public class SgTrakt extends TraktV2 {
             } else {
                 trackFailedRequest(context, action, response);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             trackFailedRequest(context, action, e);
         }
         return null;
@@ -120,7 +119,7 @@ public class SgTrakt extends TraktV2 {
                     trackFailedRequest(context, action, response);
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             trackFailedRequest(context, action, e);
         }
         return null;

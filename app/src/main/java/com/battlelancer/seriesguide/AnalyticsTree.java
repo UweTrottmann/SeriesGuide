@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTraktException;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.Crashlytics;
+import com.google.gson.JsonParseException;
 import java.net.UnknownHostException;
 import timber.log.Timber;
 
@@ -27,33 +28,6 @@ public class AnalyticsTree extends Timber.DebugTree {
 
     @Override
     protected void log(int priority, String tag, @Nullable String message, Throwable t) {
-        if (priority == Log.ERROR) {
-            // remove any stack trace attached by Timber
-            if (message != null) {
-                int newLine = message.indexOf('\n');
-                if (newLine > 0) {
-                    message = message.substring(0, newLine);
-                }
-            }
-
-            // special treatment for some exceptions
-            if (t instanceof TvdbException) {
-                if (t instanceof TvdbTraktException) {
-                    return; // already tracked as trakt error
-                }
-                TvdbException e = (TvdbException) t;
-                Throwable cause = e.getCause();
-                if (cause != null && cause instanceof UnknownHostException) {
-                    return; // do not track
-                }
-                Utils.trackCustomEvent(context,
-                        CATEGORY_THETVDB_ERROR,
-                        tag + ": " + message,
-                        e.getMessage());
-                return;
-            }
-        }
-
         // drop empty messages
         if (message == null) {
             return;
@@ -61,6 +35,38 @@ public class AnalyticsTree extends Timber.DebugTree {
         // drop debug and verbose logs
         if (priority == Log.DEBUG || priority == Log.VERBOSE) {
             return;
+        }
+
+        if (priority == Log.ERROR) {
+            // remove any stack trace attached by Timber
+            int newLine = message.indexOf('\n');
+            if (newLine > 0) {
+                message = message.substring(0, newLine);
+            }
+
+            // special treatment for some exceptions
+            if (t instanceof UnknownHostException /* mostly devices loosing connection */) {
+                return; // do not track
+            }
+            if (t instanceof TvdbTraktException) {
+                return; // already tracked as trakt error
+            }
+            if (t instanceof TvdbException) {
+                TvdbException e = (TvdbException) t;
+                Throwable cause = e.getCause();
+                if (cause != null) {
+                    if (cause instanceof UnknownHostException) {
+                        return; // do not track
+                    }
+                    Utils.trackCustomEvent(context, CATEGORY_THETVDB_ERROR,
+                            tag + ": " + message,
+                            e.getMessage() + ": " + cause.getClass().getSimpleName());
+                } else {
+                    Utils.trackCustomEvent(context, CATEGORY_THETVDB_ERROR,
+                            tag + ": " + message,
+                            e.getMessage());
+                }
+            }
         }
 
         // transform priority into string
@@ -82,7 +88,8 @@ public class AnalyticsTree extends Timber.DebugTree {
 
         // track some non-fatal exceptions with crashlytics
         if (priority == Log.ERROR) {
-            if (t instanceof SQLiteException) {
+            if (t instanceof SQLiteException /* Content provider */
+                    || t instanceof JsonParseException /* Retrofit */) {
                 Crashlytics.logException(t);
             }
         }

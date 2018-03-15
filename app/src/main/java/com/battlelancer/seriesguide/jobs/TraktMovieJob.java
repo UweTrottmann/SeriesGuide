@@ -6,9 +6,9 @@ import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.modules.ServicesComponent;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.MovieIds;
 import com.uwetrottmann.trakt5.entities.SyncErrors;
@@ -16,7 +16,6 @@ import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.services.Sync;
-import java.io.IOException;
 import org.threeten.bp.Instant;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.ZoneOffset;
@@ -117,7 +116,7 @@ public class TraktMovieJob extends BaseNetworkEpisodeJob {
                     return NetworkJob.ERROR_TRAKT_CLIENT;
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(context, errorLabel, e);
             return NetworkJob.ERROR_CONNECTION;
         }

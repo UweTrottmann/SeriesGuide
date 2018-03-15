@@ -3,15 +3,14 @@ package com.battlelancer.seriesguide.util.tasks;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.services.Sync;
-import java.io.IOException;
 import org.greenrobot.eventbus.EventBus;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -53,7 +52,7 @@ public abstract class BaseShowActionTask extends BaseActionTask {
                     SgTrakt.trackFailedRequest(getContext(), getTraktAction(), response);
                     return ERROR_TRAKT_API;
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 SgTrakt.trackFailedRequest(getContext(), getTraktAction(), e);
                 return ERROR_TRAKT_API;
             }
