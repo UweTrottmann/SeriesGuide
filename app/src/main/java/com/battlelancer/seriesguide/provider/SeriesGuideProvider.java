@@ -430,11 +430,7 @@ public class SeriesGuideProvider extends ContentProvider {
             }
             case LIST_ITEMS: {
                 long id;
-                if (bulkInsert) {
-                    id = tryInsert(db, Tables.LIST_ITEMS, CONFLICT_REPLACE, values);
-                } else {
-                    id = tryInsert(db, Tables.LIST_ITEMS, CONFLICT_NONE, values);
-                }
+                id = tryInsert(db, Tables.LIST_ITEMS, CONFLICT_REPLACE, values);
                 if (id < 0) {
                     break;
                 }

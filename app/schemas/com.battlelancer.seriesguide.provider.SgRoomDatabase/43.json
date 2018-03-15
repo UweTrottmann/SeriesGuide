@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 43,
-    "identityHash": "79225931b0cddd30dcb5aa700f9b8ed5",
+    "identityHash": "eb3e2140b5b04f61fb0cf30ace450fae",
     "entities": [
       {
         "tableName": "series",
@@ -513,6 +513,71 @@
         "foreignKeys": []
       },
       {
+        "tableName": "listitems",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `list_item_id` TEXT NOT NULL, `item_ref_id` TEXT NOT NULL, `item_type` INTEGER NOT NULL, `list_id` TEXT, FOREIGN KEY(`list_id`) REFERENCES `lists`(`list_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "listItemId",
+            "columnName": "list_item_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemRefId",
+            "columnName": "item_ref_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "item_type",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "listId",
+            "columnName": "list_id",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_listitems_list_item_id",
+            "unique": true,
+            "columnNames": [
+              "list_item_id"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_listitems_list_item_id` ON `${TABLE_NAME}` (`list_item_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "lists",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "list_id"
+            ],
+            "referencedColumns": [
+              "list_id"
+            ]
+          }
+        ]
+      },
+      {
         "tableName": "movies",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `movies_tmdbid` INTEGER NOT NULL, `movies_imdbid` TEXT, `movies_title` TEXT, `movies_title_noarticle` TEXT, `movies_poster` TEXT, `movies_genres` TEXT, `movies_overview` TEXT, `movies_released` INTEGER, `movies_runtime` INTEGER, `movies_trailer` TEXT, `movies_certification` TEXT, `movies_incollection` INTEGER, `movies_inwatchlist` INTEGER, `movies_plays` INTEGER, `movies_watched` INTEGER, `movies_rating_tmdb` REAL, `movies_rating_votes_tmdb` INTEGER, `movies_rating_trakt` INTEGER, `movies_rating_votes_trakt` INTEGER, `movies_rating_user` INTEGER, `movies_last_updated` INTEGER)",
         "fields": [
@@ -670,7 +735,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"79225931b0cddd30dcb5aa700f9b8ed5\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"eb3e2140b5b04f61fb0cf30ace450fae\")"
     ]
   }
 }

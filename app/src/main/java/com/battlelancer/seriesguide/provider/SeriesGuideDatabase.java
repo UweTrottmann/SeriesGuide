@@ -438,7 +438,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ");";
 
-    static final String CREATE_SEARCH_TABLE = "CREATE VIRTUAL TABLE "
+    @VisibleForTesting
+    public static final String CREATE_SEARCH_TABLE = "CREATE VIRTUAL TABLE "
             + Tables.EPISODES_SEARCH + " USING fts4("
 
             // set episodes table as external content table
@@ -475,7 +476,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ");";
 
-    private static final String CREATE_LIST_ITEMS_TABLE = "CREATE TABLE " + Tables.LIST_ITEMS
+    @VisibleForTesting
+    public static final String CREATE_LIST_ITEMS_TABLE = "CREATE TABLE " + Tables.LIST_ITEMS
             + " ("
 
             + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"

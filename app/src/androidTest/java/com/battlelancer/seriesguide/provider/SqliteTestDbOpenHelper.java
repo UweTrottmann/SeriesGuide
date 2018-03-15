@@ -15,6 +15,7 @@ public class SqliteTestDbOpenHelper extends SQLiteOpenHelper {
         db.execSQL(SeriesGuideDatabase.CREATE_SEASONS_TABLE);
         db.execSQL(SeriesGuideDatabase.CREATE_EPISODES_TABLE);
         db.execSQL(SeriesGuideDatabase.CREATE_LISTS_TABLE);
+        db.execSQL(SeriesGuideDatabase.CREATE_LIST_ITEMS_TABLE);
         db.execSQL(SeriesGuideDatabase.CREATE_MOVIES_TABLE);
     }
 
