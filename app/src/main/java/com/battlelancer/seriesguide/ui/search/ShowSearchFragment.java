@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
@@ -18,11 +19,11 @@ import android.widget.AdapterView;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.ListsActivity;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.shows.ShowMenuItemClickListener;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -43,8 +44,8 @@ public class ShowSearchFragment extends BaseSearchFragment {
         adapter = new ShowResultsAdapter(getActivity(), onItemClickListener);
         gridView.setAdapter(adapter);
 
-        // initially display shows with recently released episodes
-        getLoaderManager().initLoader(SearchActivity.SHOWS_LOADER_ID, new Bundle(),
+        // load for given query or restore last loader (ignoring args)
+        getLoaderManager().initLoader(SearchActivity.SHOWS_LOADER_ID, loaderArgs,
                 searchLoaderCallbacks);
     }
 
@@ -56,9 +57,10 @@ public class ShowSearchFragment extends BaseSearchFragment {
                         view.getHeight()).toBundle());
     }
 
-    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(SearchActivity.SearchQueryEvent event) {
-        search(event.args);
+        getLoaderManager().restartLoader(SearchActivity.SHOWS_LOADER_ID, event.args,
+                searchLoaderCallbacks);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -68,15 +70,11 @@ public class ShowSearchFragment extends BaseSearchFragment {
         }
     }
 
-    public void search(Bundle args) {
-        getLoaderManager().restartLoader(SearchActivity.SHOWS_LOADER_ID, args,
-                searchLoaderCallbacks);
-    }
-
     private LoaderManager.LoaderCallbacks<Cursor>
             searchLoaderCallbacks = new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            loaderArgs = args;
             String query = args.getString(SearchManager.QUERY);
             if (TextUtils.isEmpty(query)) {
                 // empty query selects shows with next episodes before this point in time
@@ -87,7 +85,7 @@ public class ShowSearchFragment extends BaseSearchFragment {
                         SeriesGuideContract.Shows.NEXTEPISODE + "!='' AND "
                                 + SeriesGuideContract.Shows.HIDDEN + "=0 AND "
                                 + SeriesGuideContract.Shows.NEXTAIRDATEMS + "<?",
-                        new String[] { customTimeInOneHour },
+                        new String[]{customTimeInOneHour},
                         SeriesGuideContract.Shows.SORT_LATEST_EPISODE);
             } else {
                 Uri uri = SeriesGuideContract.Shows.CONTENT_URI_FILTER.buildUpon()
@@ -99,12 +97,12 @@ public class ShowSearchFragment extends BaseSearchFragment {
         }
 
         @Override
-        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
             adapter.swapCursor(data);
         }
 
         @Override
-        public void onLoaderReset(Loader<Cursor> loader) {
+        public void onLoaderReset(@NonNull Loader<Cursor> loader) {
             adapter.swapCursor(null);
         }
     };

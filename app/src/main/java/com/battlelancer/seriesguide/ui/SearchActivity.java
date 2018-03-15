@@ -112,23 +112,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             }
         });
 
-        searchView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean isEmptyText = TextUtils.isEmpty(s);
-                triggerLocalSearch(isEmptyText ? "" : s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         searchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -295,9 +278,9 @@ public class SearchActivity extends BaseNavDrawerActivity implements
                 }
             }
 
-            // setting the query automatically triggers a search
             String query = launchIntent.getStringExtra(SearchManager.QUERY);
             searchView.setText(query);
+            triggerLocalSearch(query);
         } else if (Intent.ACTION_VIEW.equals(action)) {
             Uri data = intent.getData();
             if (data == null) {
@@ -343,6 +326,8 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             // no id, populate the search field instead
             viewPager.setCurrentItem(TAB_POSITION_SEARCH);
             searchView.setText(sharedText);
+            triggerTvdbSearch();
+            triggerLocalSearch(sharedText);
         }
     }
 
@@ -360,7 +345,38 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         return showTvdbId;
     }
 
-    private void triggerLocalSearch(String query) {
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // set after view states are restored to avoid triggering
+        searchView.addTextChangedListener(textWatcher);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        searchView.removeTextChangedListener(textWatcher);
+    }
+
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            triggerLocalSearch(s);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    };
+
+    private void triggerLocalSearch(@Nullable CharSequence queryRaw) {
+        String query = TextUtils.isEmpty(queryRaw) ? "" : queryRaw.toString();
+
         Bundle args = new Bundle();
         args.putString(SearchManager.QUERY, query);
 
@@ -380,7 +396,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             searchView.dismissDropDown();
             // extract and post query
             String query = searchView.getText().toString().trim();
-            EventBus.getDefault().post(new SearchQuerySubmitEvent(query));
+            EventBus.getDefault().postSticky(new SearchQuerySubmitEvent(query));
             // update history
             if (query.length() > 0) {
                 if (searchHistory.saveRecentSearch(query)) {
@@ -395,14 +411,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         Intent i = new Intent(this, EpisodesActivity.class);
         i.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, Integer.valueOf(episodeTvdbId));
         startActivity(i);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        // clear any previous search
-        EventBus.getDefault().removeStickyEvent(SearchQueryEvent.class);
     }
 
     @Override
