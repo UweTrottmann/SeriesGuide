@@ -14,6 +14,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 
@@ -32,7 +33,15 @@ public abstract class BaseSearchFragment extends Fragment
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
+            // restore last query
             loaderArgs = savedInstanceState.getBundle(STATE_LOADER_ARGS);
+        } else {
+            // use initial query (if any)
+            SearchActivity.SearchQueryEvent queryEvent = EventBus.getDefault()
+                    .getStickyEvent(SearchActivity.SearchQueryEvent.class);
+            if (queryEvent != null) {
+                loaderArgs = queryEvent.args;
+            }
         }
         if (loaderArgs == null) {
             loaderArgs = new Bundle();

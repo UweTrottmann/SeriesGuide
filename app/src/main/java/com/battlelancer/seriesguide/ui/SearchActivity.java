@@ -326,6 +326,8 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             // no id, populate the search field instead
             viewPager.setCurrentItem(TAB_POSITION_SEARCH);
             searchView.setText(sharedText);
+            triggerTvdbSearch();
+            triggerLocalSearch(sharedText);
         }
     }
 
@@ -386,7 +388,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             }
         }
 
-        EventBus.getDefault().post(new SearchQueryEvent(args));
+        EventBus.getDefault().postSticky(new SearchQueryEvent(args));
     }
 
     private void triggerTvdbSearch() {
@@ -394,7 +396,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             searchView.dismissDropDown();
             // extract and post query
             String query = searchView.getText().toString().trim();
-            EventBus.getDefault().post(new SearchQuerySubmitEvent(query));
+            EventBus.getDefault().postSticky(new SearchQuerySubmitEvent(query));
             // update history
             if (query.length() > 0) {
                 if (searchHistory.saveRecentSearch(query)) {
