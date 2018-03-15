@@ -424,6 +424,14 @@ public class SearchActivity extends BaseNavDrawerActivity implements
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // remove any stored initial queries so they are not used when re-creating
+        EventBus.getDefault().removeStickyEvent(SearchQueryEvent.class);
+        EventBus.getDefault().removeStickyEvent(SearchQuerySubmitEvent.class);
+    }
+
+    @Override
     public void onAddShow(SearchResult show) {
         TaskManager.getInstance().performAddTask(this, show);
     }
