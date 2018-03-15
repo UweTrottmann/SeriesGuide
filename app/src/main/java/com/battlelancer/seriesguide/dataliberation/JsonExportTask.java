@@ -1,5 +1,8 @@
 package com.battlelancer.seriesguide.dataliberation;
 
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -43,8 +46,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
-
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 /**
  * Export the show database to a human-readable JSON file on external storage. By default meta-data
@@ -94,10 +95,11 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         String EPISODE = "episode";
     }
 
-    private Context context;
+    @SuppressLint("StaticFieldLeak") private Context context;
     private OnTaskProgressListener progressListener;
     private boolean isFullDump;
     private boolean isAutoBackupMode;
+    @Nullable private final Integer type;
     private boolean isUseDefaultFolders;
     @Nullable private String errorCause;
 
@@ -115,11 +117,12 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
      * @param isAutoBackupMode Whether to run an auto backup, also shows no result toasts.
      */
     public JsonExportTask(Context context, OnTaskProgressListener progressListener,
-            boolean isFullDump, boolean isAutoBackupMode) {
+            boolean isFullDump, boolean isAutoBackupMode, @Nullable Integer type) {
         this.context = context.getApplicationContext();
         this.progressListener = progressListener;
         this.isFullDump = isFullDump;
         this.isAutoBackupMode = isAutoBackupMode;
+        this.type = type;
         // use Storage Access Framework on KitKat and up to select custom backup files,
         // on older versions use default folders
         // also auto backup by default uses default folders
@@ -148,25 +151,32 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             return ERROR;
         }
 
-        int result = exportData(exportPath, BACKUP_SHOWS);
-        if (result != SUCCESS) {
-            return result;
-        }
-        if (isCancelled()) {
-            return ERROR;
-        }
-
-        result = exportData(exportPath, BACKUP_LISTS);
-        if (result != SUCCESS) {
-            return result;
-        }
-        if (isCancelled()) {
-            return ERROR;
+        int result;
+        if (type == null || type == BACKUP_SHOWS) {
+            result = exportData(exportPath, BACKUP_SHOWS);
+            if (result != SUCCESS) {
+                return result;
+            }
+            if (isCancelled()) {
+                return ERROR;
+            }
         }
 
-        result = exportData(exportPath, BACKUP_MOVIES);
-        if (result != SUCCESS) {
-            return result;
+        if (type == null || type == BACKUP_LISTS) {
+            result = exportData(exportPath, BACKUP_LISTS);
+            if (result != SUCCESS) {
+                return result;
+            }
+            if (isCancelled()) {
+                return ERROR;
+            }
+        }
+
+        if (type == null || type == BACKUP_MOVIES) {
+            result = exportData(exportPath, BACKUP_MOVIES);
+            if (result != SUCCESS) {
+                return result;
+            }
         }
         // no need to return early here if canceled, we are almost done anyhow
 
