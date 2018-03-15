@@ -546,7 +546,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ");";
 
-    private static final String CREATE_ACTIVITY_TABLE = "CREATE TABLE " + Tables.ACTIVITY
+    @VisibleForTesting
+    public static final String CREATE_ACTIVITY_TABLE = "CREATE TABLE " + Tables.ACTIVITY
             + " ("
             + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + ActivityColumns.EPISODE_TVDB_ID + " TEXT NOT NULL,"
@@ -555,7 +556,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + "UNIQUE (" + ActivityColumns.EPISODE_TVDB_ID + ") ON CONFLICT REPLACE"
             + ");";
 
-    private static final String CREATE_JOBS_TABLE = "CREATE TABLE " + Tables.JOBS
+    @VisibleForTesting
+    public static final String CREATE_JOBS_TABLE = "CREATE TABLE " + Tables.JOBS
             + " ("
             + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + JobsColumns.CREATED_MS + " INTEGER,"

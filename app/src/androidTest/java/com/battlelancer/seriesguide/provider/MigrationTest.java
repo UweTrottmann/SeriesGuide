@@ -33,13 +33,13 @@ public class MigrationTest {
 
     // Helper for creating Room databases and migrations
     @Rule
-    public MigrationTestHelper mMigrationTestHelper =
+    public MigrationTestHelper migrationTestHelper =
             new MigrationTestHelper(InstrumentationRegistry.getInstrumentation(),
                     SgRoomDatabase.class.getCanonicalName(),
                     new FrameworkSQLiteOpenHelperFactory());
 
     // Helper for creating SQLite database in version 42
-    private SqliteTestDbOpenHelper mSqliteTestDbHelper;
+    private SqliteTestDbOpenHelper sqliteTestDbHelper;
 
     @Before
     public void setUp() throws Exception {
@@ -47,25 +47,25 @@ public class MigrationTest {
         InstrumentationRegistry.getTargetContext().deleteDatabase(TEST_DB_NAME);
 
         // create the database with version 42 using SQLite API
-        mSqliteTestDbHelper = new SqliteTestDbOpenHelper(InstrumentationRegistry.getTargetContext(),
+        sqliteTestDbHelper = new SqliteTestDbOpenHelper(InstrumentationRegistry.getTargetContext(),
                 TEST_DB_NAME);
     }
 
     @After
     public void tearDown() {
         // close the database to minimize issues when deleting it in setUp()
-        mSqliteTestDbHelper.close();
+        sqliteTestDbHelper.close();
     }
 
     @Test
     public void migrationFrom42To43_containsCorrectData() throws IOException {
         // Create the database with the initial version 42 schema and insert a show
-        SqliteDatabaseTestHelper.insertShow(SHOW, mSqliteTestDbHelper);
+        SqliteDatabaseTestHelper.insertShow(SHOW, sqliteTestDbHelper);
 
         // Re-open the database with version 43 and
         // provide MIGRATION_42_43 as the migration process.
-        mMigrationTestHelper.runMigrationsAndValidate(TEST_DB_NAME, 43,
-                true, MIGRATION_42_43);
+        migrationTestHelper.runMigrationsAndValidate(TEST_DB_NAME, 43,
+                false /* adding FTS table ourselves */, MIGRATION_42_43);
 
         // MigrationTestHelper automatically verifies the schema changes, but not the data validity
         // Validate that the data was migrated properly.
@@ -82,7 +82,7 @@ public class MigrationTest {
                 .addMigrations(MIGRATION_42_43)
                 .build();
         // close the database and release any stream resources when the test finishes
-        mMigrationTestHelper.closeWhenFinished(database);
+        migrationTestHelper.closeWhenFinished(database);
         return database;
     }
 }
