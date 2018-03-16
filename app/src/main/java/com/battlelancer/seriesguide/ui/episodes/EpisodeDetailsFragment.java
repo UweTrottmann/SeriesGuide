@@ -88,12 +88,14 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     protected int episodeFlag;
     protected boolean collected;
     protected int showTvdbId;
+    private int seasonTvdbId;
     protected int seasonNumber;
     protected int episodeNumber;
     private String episodeTitle;
     private String showTitle;
     private int showRunTime;
     private long episodeReleaseTime;
+    private String languageCode;
 
     @BindView(R.id.containerEpisode) View containerEpisode;
     @BindView(R.id.containerRatings) View containerRatings;
@@ -379,7 +381,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 TextTools.getEpisodeTitle(getContext(), hideDetails ? null : episodeTitle,
                         episodeNumber));
         String overview = cursor.getString(DetailsQuery.OVERVIEW);
-        String languageCode = cursor.getString(DetailsQuery.SHOW_LANGUAGE);
+        languageCode = cursor.getString(DetailsQuery.SHOW_LANGUAGE);
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
             overview = getString(R.string.no_translation,
@@ -582,8 +584,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         ServiceUtils.setUpImdbButton(imdbId, imdbButton, TAG);
 
         // TVDb
-        final int seasonTvdbId = cursor.getInt(DetailsQuery.SEASON_ID);
-        String tvdbUri = TvdbLinks.episode(showTvdbId, seasonTvdbId, getEpisodeTvdbId(), languageCode);
+        seasonTvdbId = cursor.getInt(DetailsQuery.SEASON_ID);
+        String tvdbUri = TvdbLinks.episode(showTvdbId, seasonTvdbId, getEpisodeTvdbId(),
+                languageCode);
         ViewTools.openUriOnClick(tvdbButton, tvdbUri, TAG, "TVDb");
         // trakt comments
         commentsButton.setOnClickListener(new OnClickListener() {
@@ -630,8 +633,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         if (episodeTitle == null || showTitle == null) {
             return;
         }
-        ShareUtils.shareEpisode(getActivity(), getEpisodeTvdbId(), seasonNumber, episodeNumber,
-                showTitle, episodeTitle);
+        ShareUtils.shareEpisode(getActivity(), showTvdbId, seasonTvdbId, getEpisodeTvdbId(),
+                seasonNumber, episodeNumber, showTitle, episodeTitle, languageCode);
         Utils.trackAction(getActivity(), TAG, "Share");
     }
 

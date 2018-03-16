@@ -634,7 +634,7 @@ public class ShowFragment extends Fragment {
 
     private void shareShow() {
         if (showCursor != null) {
-            ShareUtils.shareShow(getActivity(), getShowTvdbId(), showTitle);
+            ShareUtils.shareShow(getActivity(), getShowTvdbId(), showTitle, languageCode);
             Utils.trackAction(getActivity(), TAG, "Share");
         }
     }
