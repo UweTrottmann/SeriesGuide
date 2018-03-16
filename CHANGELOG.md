@@ -9,6 +9,13 @@ Version 42
 ----------
 *(in development)*
 
+#### 42-beta3
+*(2018-03-16)*
+
+* 🔧 Run backup immediately after selecting file (Android 4.4 and up).
+* 🔨 When sharing text to SeriesGuide, run search immediately.
+* 📝 Latest translations from crowdin.
+
 #### 42-beta2
 *(2018-03-10)*
 
