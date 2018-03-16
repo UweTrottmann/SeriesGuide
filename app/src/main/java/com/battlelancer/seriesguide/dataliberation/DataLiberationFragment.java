@@ -166,7 +166,6 @@ public class DataLiberationFragment extends Fragment implements
             buttonShowsExportFile.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    type = JsonExportTask.BACKUP_SHOWS;
                     DataLiberationTools.selectExportFile(DataLiberationFragment.this,
                             JsonExportTask.EXPORT_JSON_FILE_SHOWS,
                             REQUEST_CODE_SHOWS_EXPORT_URI);
@@ -182,7 +181,6 @@ public class DataLiberationFragment extends Fragment implements
             buttonListsExportFile.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    type = JsonExportTask.BACKUP_LISTS;
                     DataLiberationTools.selectExportFile(DataLiberationFragment.this,
                             JsonExportTask.EXPORT_JSON_FILE_LISTS,
                             REQUEST_CODE_LISTS_EXPORT_URI);
@@ -198,7 +196,6 @@ public class DataLiberationFragment extends Fragment implements
             buttonMoviesExportFile.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    type = JsonExportTask.BACKUP_MOVIES;
                     DataLiberationTools.selectExportFile(DataLiberationFragment.this,
                             JsonExportTask.EXPORT_JSON_FILE_MOVIES,
                             REQUEST_CODE_MOVIES_EXPORT_URI);
@@ -323,7 +320,7 @@ public class DataLiberationFragment extends Fragment implements
         if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             // don't have it? request it, do task if granted
-            requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     requestCode);
             return;
         }
@@ -390,18 +387,21 @@ public class DataLiberationFragment extends Fragment implements
 
             if (requestCode == REQUEST_CODE_SHOWS_EXPORT_URI) {
                 BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_SHOWS_EXPORT_URI, uri);
+                type = JsonExportTask.BACKUP_SHOWS;
                 tryDataLiberationAction(REQUEST_CODE_EXPORT);
-            } else if (requestCode == REQUEST_CODE_SHOWS_IMPORT_URI) {
-                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_SHOWS_IMPORT_URI, uri);
             } else if (requestCode == REQUEST_CODE_LISTS_EXPORT_URI) {
                 BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_LISTS_EXPORT_URI, uri);
+                type = JsonExportTask.BACKUP_LISTS;
                 tryDataLiberationAction(REQUEST_CODE_EXPORT);
-            } else if (requestCode == REQUEST_CODE_LISTS_IMPORT_URI) {
-                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_LISTS_IMPORT_URI, uri);
             } else if (requestCode == REQUEST_CODE_MOVIES_EXPORT_URI) {
                 BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_MOVIES_EXPORT_URI,
                         uri);
+                type = JsonExportTask.BACKUP_MOVIES;
                 tryDataLiberationAction(REQUEST_CODE_EXPORT);
+            } else if (requestCode == REQUEST_CODE_SHOWS_IMPORT_URI) {
+                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_SHOWS_IMPORT_URI, uri);
+            } else if (requestCode == REQUEST_CODE_LISTS_IMPORT_URI) {
+                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_LISTS_IMPORT_URI, uri);
             } else {
                 BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_MOVIES_IMPORT_URI,
                         uri);
