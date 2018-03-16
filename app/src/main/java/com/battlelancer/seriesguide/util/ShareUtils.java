@@ -13,7 +13,6 @@ import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
-import com.battlelancer.seriesguide.traktapi.TraktTools;
 
 /**
  * Contains helpers to share a show, episode (share intent, calendar event) or movie.
@@ -38,7 +37,7 @@ public class ShareUtils {
     }
 
     public static void shareMovie(Activity activity, int movieTmdbId, String movieTitle) {
-        String message = movieTitle + " " + TraktTools.buildMovieUrl(movieTmdbId);
+        String message = movieTitle + " " + TmdbTools.buildMovieUrl(movieTmdbId);
         startShareIntentChooser(activity, message, R.string.share_movie);
     }
 
