@@ -9,6 +9,16 @@ Version 42
 ----------
 *(in development)*
 
+#### 42-beta4
+*(2018-03-22)*
+
+* 🔧 Sharing: Use localized TheTVDB URL for shows and episodes. Use TMDB URL for movies (language is
+  detected by website).
+* 🔨 Calendar: correctly display "in x weeks" if daylight saving time is about to come in effect.
+* 🔨 Support "America/Punta_Arenas" time zone.
+* 🔨 Android 8: Fix occasional crash when calculating season unwatched count.
+* 📝 Latest translations from crowdin.
+
 #### 42-beta3
 *(2018-03-16)*
 
