@@ -9,6 +9,11 @@ Version 42
 ----------
 *(in development)*
 
+#### 42-beta5
+*(2018-03-22)*
+
+* 🔨 Do not crash when logging.
+
 #### 42-beta4
 *(2018-03-22)*
 
