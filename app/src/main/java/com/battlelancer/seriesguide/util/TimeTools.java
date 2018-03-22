@@ -29,6 +29,7 @@ import org.threeten.bp.ZoneOffset;
 import org.threeten.bp.ZonedDateTime;
 import org.threeten.bp.format.DateTimeParseException;
 import org.threeten.bp.temporal.ChronoField;
+import org.threeten.bp.temporal.ChronoUnit;
 import timber.log.Timber;
 
 /**
@@ -502,29 +503,20 @@ public class TimeTools {
         SimpleDateFormat localDayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
         StringBuilder dayAndTime = new StringBuilder(localDayFormat.format(dateThen));
 
-        // get week day of then
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(dateThen);
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        ZonedDateTime then = ZonedDateTime.ofInstant(
+                Instant.ofEpochMilli(dateThen.getTime()), ZoneId.systemDefault());
 
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        // set to same time used for calendar headers
-        calendar.set(Calendar.HOUR_OF_DAY, 1);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        long timeThen = dateThen.getTime();
-        long timeToday = calendar.getTimeInMillis();
-        if (timeThen >= timeToday + DateUtils.WEEK_IN_MILLIS
-                || timeThen <= timeToday - DateUtils.WEEK_IN_MILLIS) {
-            // move to same week day, but in this week
-            calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
-            long timeDayOfWeekThisWeek = calendar.getTimeInMillis();
+        // append 'in x wk.' if date is not within a week, for example if today is Thursday:
+        // - append for previous Thursday and earlier,
+        // - and for next Thursday and later
+        long weekDiff = LocalDate.now().until(then.toLocalDate(), ChronoUnit.WEEKS);
+        if (weekDiff != 0) {
+            Instant now = Instant.now();
+            Instant inWeeks = now.plus(weekDiff * 7, ChronoUnit.DAYS);
 
             dayAndTime.append(" ");
             dayAndTime.append(DateUtils
-                    .getRelativeTimeSpanString(timeThen, timeDayOfWeekThisWeek,
+                    .getRelativeTimeSpanString(inWeeks.toEpochMilli(), now.toEpochMilli(),
                             DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
         }
 
