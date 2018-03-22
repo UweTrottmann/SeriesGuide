@@ -259,7 +259,7 @@ public class TimeTools {
         return new Date(dateTime.toInstant().toEpochMilli());
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting
     @NonNull
     public static ZonedDateTime getShowReleaseDateTime(@NonNull LocalTime time, int weekDay,
             @NonNull ZoneId timeZone, @Nullable String country, @Nullable String network,
@@ -345,7 +345,7 @@ public class TimeTools {
                 .format(new Date(instant.toEpochMilli()));
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting
     public static ZonedDateTime applyUnitedStatesCorrections(@Nullable String country,
             @NonNull String localTimeZone, @NonNull ZonedDateTime dateTime) {
         // assumed base time zone for US shows by trakt is America/New_York
