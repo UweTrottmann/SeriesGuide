@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.core.CrashlyticsCore
 import com.google.android.gms.analytics.GoogleAnalytics
 import com.jakewharton.picasso.OkHttp3Downloader
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -168,7 +168,8 @@ class SgApp : Application() {
             // crash and error reporting
             Timber.plant(AnalyticsTree(this))
             if (!Fabric.isInitialized()) {
-                Fabric.with(this, Crashlytics())
+                // use core kit only, Crashlytics kit also adds Answers and Beta kit
+                Fabric.with(this, CrashlyticsCore())
             }
         }
 
