@@ -217,8 +217,8 @@ public class SeasonsFragment extends ListFragment {
         if (event.flagJob instanceof SeasonWatchedJob) {
             // If we can narrow it down to just one season...
             SeasonWatchedJob seasonWatchedType = (SeasonWatchedJob) event.flagJob;
-            getActivity().startService(UnwatchedUpdaterService.buildIntent(getContext(),
-                    getShowId(), seasonWatchedType.getSeasonTvdbId()));
+            UnwatchedUpdaterService.enqueue(getContext(), getShowId(),
+                    seasonWatchedType.getSeasonTvdbId());
         } else {
             updateUnwatchedCounts();
         }
@@ -270,7 +270,7 @@ public class SeasonsFragment extends ListFragment {
      * notifies provider causing the loader to reload.
      */
     private void updateUnwatchedCounts() {
-        getActivity().startService(UnwatchedUpdaterService.buildIntent(getContext(), getShowId()));
+        UnwatchedUpdaterService.enqueue(getContext(), getShowId());
     }
 
     private void handleRemainingCountUpdate(@Nullable RemainingCountLiveData.Result result) {

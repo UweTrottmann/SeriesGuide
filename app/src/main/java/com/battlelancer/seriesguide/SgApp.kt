@@ -53,6 +53,8 @@ class SgApp : Application() {
         val JOB_ID_EXTENSION_YOUTUBE = 1005
         @JvmField
         val JOB_ID_EXTENSION_ACTIONS_SERVICE = 1006
+        @JvmField
+        val JOB_ID_UNWATCHED_UPDATER_SERVICE = 1007
 
         @JvmField
         val NOTIFICATION_EPISODE_ID = 1

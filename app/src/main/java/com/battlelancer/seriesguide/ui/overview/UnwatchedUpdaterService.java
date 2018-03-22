@@ -1,46 +1,42 @@
 package com.battlelancer.seriesguide.ui.overview;
 
-import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.JobIntentService;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.DBUtils;
 import timber.log.Timber;
 
 /**
- * Updates episode counts for a specific season or all seasons of a show. Is an {@link
- * IntentService} so only one runs at a time.
+ * Updates episode counts for a specific season or all seasons of a show. Is a {@link
+ * JobIntentService} so only one runs at a time. Not using an IntentService as it ran into
+ * O background restrictions on some devices (even though it was started during onStart).
  */
-public class UnwatchedUpdaterService extends IntentService {
+public class UnwatchedUpdaterService extends JobIntentService {
 
     public static final String EXTRA_SHOW_TVDB_ID = "showTvdbId";
     public static final String EXTRA_OPTIONAL_SEASON_TVDB_ID = "seasonTvdbId";
 
-    static Intent buildIntent(Context context, int showTvdbId) {
-        return buildIntent(context, showTvdbId, null);
+    static void enqueue(Context context, int showTvdbId) {
+        enqueue(context, showTvdbId, null);
     }
 
-    static Intent buildIntent(Context context, int showTvdbId, @Nullable Integer seasonTvdbId) {
-        Intent intent = new Intent(context, UnwatchedUpdaterService.class);
-        intent.putExtra(EXTRA_SHOW_TVDB_ID, showTvdbId);
+    static void enqueue(Context context, int showTvdbId, @Nullable Integer seasonTvdbId) {
+        Intent work = new Intent(context, UnwatchedUpdaterService.class);
+        work.putExtra(EXTRA_SHOW_TVDB_ID, showTvdbId);
         if (seasonTvdbId != null) {
-            intent.putExtra(EXTRA_OPTIONAL_SEASON_TVDB_ID, seasonTvdbId);
+            work.putExtra(EXTRA_OPTIONAL_SEASON_TVDB_ID, seasonTvdbId);
         }
-        return intent;
-    }
-
-    public UnwatchedUpdaterService() {
-        super("UnwatchedUpdaterService");
+        enqueueWork(context.getApplicationContext(), UnwatchedUpdaterService.class,
+                SgApp.JOB_ID_UNWATCHED_UPDATER_SERVICE, work);
     }
 
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-        if (intent == null) {
-            Timber.e("Not running: intent is null.");
-            return;
-        }
+    protected void onHandleWork(@NonNull Intent intent) {
         int showTvdbId = intent.getIntExtra(EXTRA_SHOW_TVDB_ID, -1);
         if (showTvdbId < 0) {
             Timber.e("Not running: no showTvdbId.");
