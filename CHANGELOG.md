@@ -53,6 +53,14 @@ Version 41
   (powered by TMDb) and a link to popular shows (powered by trakt).
 * 🔧 TheTVDB show and episode links will open the translation used inside the app. 
 
+#### 41.2
+*(2018-03-23)*
+
+* 🔨 Calendar: display correct week in header if day is during daylight saving time.
+* 🔨 Support "America/Punta_Arenas" time zone.
+* 🔨 Do not crash when parsing server responses fails.
+* 📝 Latest translations from crowdin.
+
 #### 41.1
 *(2018-02-23)*
 
