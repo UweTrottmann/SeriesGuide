@@ -15,9 +15,9 @@ import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -30,7 +30,6 @@ import com.uwetrottmann.trakt5.enums.Type;
 import com.uwetrottmann.trakt5.services.Movies;
 import com.uwetrottmann.trakt5.services.Search;
 import dagger.Lazy;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -425,7 +424,7 @@ public class MovieTools {
             } else {
                 SgTrakt.trackFailedRequest(context, "movie trakt id lookup", response);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(context, "movie trakt id lookup", e);
         }
         return null;
@@ -521,7 +520,7 @@ public class MovieTools {
                 return response.body();
             }
             SgTrakt.trackFailedRequest(context, "get movie rating", response);
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(context, "get movie rating", e);
         }
         return null;
@@ -569,7 +568,7 @@ public class MovieTools {
             } else {
                 SgTmdb.trackFailedRequest(context, action, response);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTmdb.trackFailedRequest(context, action, e);
         }
         return null;

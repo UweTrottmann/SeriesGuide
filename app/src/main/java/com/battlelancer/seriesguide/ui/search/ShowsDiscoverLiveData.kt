@@ -17,7 +17,6 @@ import com.uwetrottmann.tmdb2.entities.TmdbDate
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.enums.Extended
 import timber.log.Timber
-import java.io.IOException
 import java.util.Calendar
 import java.util.Date
 import java.util.LinkedList
@@ -99,7 +98,7 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
                     SgTmdb.trackFailedRequest(context, action, response)
                     return buildResultFailure(R.string.tmdb, false)
                 }
-            } catch (e: IOException) {
+            } catch (e: Exception) {
                 SgTmdb.trackFailedRequest(context, action, e)
                 return buildResultFailure(R.string.tmdb, false)
             }
@@ -112,7 +111,7 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
 
                 val idResponse = try {
                     tvService.externalIds(it.id, null).execute()
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     null
                 }
 

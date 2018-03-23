@@ -147,7 +147,7 @@ dependencies {
     implementation 'com.google.flatbuffers:flatbuffers-java:1.8.0'
     implementation 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     implementation "com.google.code.gson:gson:${versions.gson}"
-    implementation "com.jakewharton.threetenabp:threetenabp:${versions.threetenABP}"
+    implementation "com.uwetrottmann.threetenabp:threetenabp:${versions.threetenABP}"
     implementation "com.jakewharton.timber:timber:${versions.timber}"
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.4'
 

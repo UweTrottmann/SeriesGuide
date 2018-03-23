@@ -6,7 +6,6 @@ import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.entities.Person;
 import com.uwetrottmann.tmdb2.services.PeopleService;
-import java.io.IOException;
 import retrofit2.Response;
 
 /**
@@ -32,7 +31,7 @@ class PersonLoader extends GenericSimpleLoader<Person> {
             } else {
                 SgTmdb.trackFailedRequest(getContext(), "get person summary", response);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTmdb.trackFailedRequest(getContext(), "get person summary", e);
         }
 

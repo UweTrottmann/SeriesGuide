@@ -18,7 +18,6 @@ import com.uwetrottmann.trakt5.services.Episodes;
 import com.uwetrottmann.trakt5.services.Movies;
 import com.uwetrottmann.trakt5.services.Shows;
 import dagger.Lazy;
-import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
 import retrofit2.Response;
@@ -73,7 +72,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
                         SgTrakt.trackFailedRequest(getContext(), "get movie comments",
                                 response);
                     }
-                } catch (IOException e) {
+                } catch (Exception e) {
                     SgTrakt.trackFailedRequest(getContext(), "get movie comments", e);
                 }
             }
@@ -117,7 +116,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
                     } else {
                         SgTrakt.trackFailedRequest(getContext(), "get episode comments", response);
                     }
-                } catch (IOException e) {
+                } catch (Exception e) {
                     SgTrakt.trackFailedRequest(getContext(), "get episode comments", e);
                 }
                 return buildResultFailureWithOfflineCheck();
@@ -142,7 +141,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
             } else {
                 SgTrakt.trackFailedRequest(getContext(), "get show comments", response);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(getContext(), "get show comments", e);
         }
         return buildResultFailureWithOfflineCheck();

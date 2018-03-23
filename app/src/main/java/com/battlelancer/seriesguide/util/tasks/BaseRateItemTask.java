@@ -5,14 +5,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.uwetrottmann.trakt5.entities.SyncErrors;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.services.Sync;
-import java.io.IOException;
 import retrofit2.Response;
 
 public abstract class BaseRateItemTask extends BaseActionTask {
@@ -50,7 +49,7 @@ public abstract class BaseRateItemTask extends BaseActionTask {
                     SgTrakt.trackFailedRequest(getContext(), getTraktAction(), response);
                     return ERROR_TRAKT_API;
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 SgTrakt.trackFailedRequest(getContext(), "rate movie", e);
                 return ERROR_TRAKT_API;
             }

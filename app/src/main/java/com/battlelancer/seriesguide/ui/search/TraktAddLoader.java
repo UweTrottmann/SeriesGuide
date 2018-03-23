@@ -19,7 +19,6 @@ import com.uwetrottmann.trakt5.services.Recommendations;
 import com.uwetrottmann.trakt5.services.Shows;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -112,7 +111,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                     return buildResultGenericFailure();
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTrakt.trackFailedRequest(getContext(), action, e);
             // only check for network here to allow hitting the response cache
             return AndroidUtils.isNetworkConnected(getContext())

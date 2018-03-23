@@ -7,7 +7,6 @@ import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.uwetrottmann.tmdb2.entities.Configuration;
 import com.uwetrottmann.tmdb2.services.ConfigurationService;
-import java.io.IOException;
 import retrofit2.Response;
 
 public class TmdbSync {
@@ -39,7 +38,7 @@ public class TmdbSync {
             } else {
                 SgTmdb.trackFailedRequest(context, "get config", response);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             SgTmdb.trackFailedRequest(context, "get config", e);
         }
         return false;
