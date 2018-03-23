@@ -99,8 +99,6 @@ android {
             // en_XA (LTR) and ar_XB (RTL) to test UI adjusting to unusual glyphs and long strings
             // keep disabled unless needed, slows down build
             pseudoLocalesEnabled false
-            // disable fabric build ID generation for debug builds
-            ext.enableCrashlytics = false
         }
     }
 }

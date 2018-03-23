@@ -159,22 +159,11 @@ class SgApp : Application() {
     }
 
     private fun initializeLogging() {
-        if (BuildConfig.DEBUG) {
-            // debug drawer logging
-            val lumberYard = LumberYard.getInstance(this)
-            lumberYard.cleanUp()
-            Timber.plant(lumberYard.tree())
-            // detailed logcat logging
-            Timber.plant(Timber.DebugTree())
-        } else {
-            // crash and error reporting
-            Timber.plant(AnalyticsTree(this))
-            if (!Fabric.isInitialized()) {
-                // use core kit only, Crashlytics kit also adds Answers and Beta kit
-                Fabric.with(this, CrashlyticsCore())
-            }
+        // set up reporting tools first
+        if (!Fabric.isInitialized()) {
+            // use core kit only, Crashlytics kit also adds Answers and Beta kit
+            Fabric.with(this, CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
         }
-
         // Ensure GA opt-out
         GoogleAnalytics.getInstance(this).appOptOut = AppSettings.isGaAppOptOut(this)
         if (BuildConfig.DEBUG) {
@@ -182,6 +171,17 @@ class SgApp : Application() {
         }
         // Initialize tracker
         Analytics.getTracker(this)
+
+        if (BuildConfig.DEBUG) {
+            // debug drawer logging
+            val lumberYard = LumberYard.getInstance(this)
+            lumberYard.cleanUp()
+            Timber.plant(lumberYard.tree())
+            // detailed logcat logging
+            Timber.plant(Timber.DebugTree())
+        }
+        // crash and error reporting
+        Timber.plant(AnalyticsTree(this))
     }
 
     private fun initializeEventBus() {
