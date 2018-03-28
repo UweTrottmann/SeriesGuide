@@ -50,7 +50,7 @@
   <string name="people_empty">No hi ha ningú? Toqueu per intentar-ho novament.</string>
   <string name="database_error">No s\'han pogut modificar les dades.</string>
   <string name="reinstall_info">Intenta fer un backup en el panell de Configuraciò, torneu a instal·lar i restaurar.</string>
-  <string name="api_error_generic">No es possible contactar amb %s. Proveu-ho més tard.</string>
+  <string name="api_error_generic">No és possible contactar amb %s. Proveu-ho més tard.</string>
   <string name="api_failed">Ha fallat: %s</string>
   <!-- Sharing -->
   <string name="share">Comparteix</string>
@@ -88,7 +88,7 @@
   <string name="show_isnotalive">Finalitzat</string>
   <string name="no_translation">No hi ha cap descripció traduïda al %1$s disponible a %2$s.</string>
   <string name="no_translation_title">No traduït</string>
-  <string name="no_spoilers">Alguns detalls estan amagats per evitar spoilers. Per desactivar aquesta opció aneu a a Configuració.</string>
+  <string name="no_spoilers">Alguns detalls estan amagats per evitar spoilers. Per desactivar aquesta opció aneu a Configuració.</string>
   <string name="format_source">Font: %s</string>
   <string name="format_last_edited">Darrera actualització: %s</string>
   <!-- Date and Time -->
@@ -121,7 +121,7 @@
   <string name="unfavorited">S\'ha esborrat de preferits</string>
   <string name="action_episode_notifications_on">Activa notificacions d\'episodis</string>
   <string name="action_episode_notifications_off">Desactiva notificacions d\'episodis</string>
-  <string name="context_hide">Oculta</string>
+  <string name="context_hide">Amaga</string>
   <string name="context_unhide">Mostra</string>
   <string name="hidden">Sèrie oculta</string>
   <string name="unhidden">Sèrie visible</string>
@@ -142,7 +142,7 @@
   <string name="context_updateshow">Actualitza</string>
   <string name="context_marknext">Següent episodi vist</string>
   <!-- History -->
-  <string name="user_stream">historic</string>
+  <string name="user_stream">Històric</string>
   <string name="recently_watched">Vist Recentment</string>
   <string name="friends_recently">Els teus amics de Trakt</string>
   <string name="now_empty">Res a veure. Mira alguna sèrie!</string>
@@ -171,7 +171,7 @@
   </plurals>
   <plurals name="not_released_episodes_plural">
     <item quantity="one">%d pendent d\'emissió</item>
-    <item quantity="other">%d pendent d\'emissió</item>
+    <item quantity="other">%d pendents d\'emissió</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
     <item quantity="one">%d restant</item>
@@ -180,7 +180,7 @@
   <!-- Add show -->
   <string name="checkin_searchhint">Escriviu el nom d\'una sèrie</string>
   <string name="add_empty">Aquí no hi ha series.</string>
-  <string name="no_results">Cap resultat, proveu paraules completes.</string>
+  <string name="no_results">Cap resultat, proveu paraules senceres.</string>
   <string name="action_try_any_language">Prova qualsevol idioma</string>
   <string name="action_try_again">Torneu-ho a intentar</string>
   <string name="tvdb_error_does_not_exist">La sèrie no existeix (encara) a TheTVDB. Torna-ho a intentar més tard.</string>
@@ -324,7 +324,7 @@
   <string name="prefs_category_sharing">Serveis</string>
   <string name="prefs_category_advanced">Avançat</string>
   <string name="prefs_category_about">Quant a</string>
-  <string name="pref_onlyfuture">Amaga episodi emesos</string>
+  <string name="pref_onlyfuture">Amaga episodis emesos</string>
   <string name="pref_onlyfuturesummary">No mostris cap episodi que ja s\'hagi emès</string>
   <string name="pref_onlyseasoneps">Amaga episodis especials</string>
   <string name="pref_onlyseasonepssummary">Els episodis especials desapareixeran d\'arreu, excepte de la llista de temporades</string>
@@ -414,11 +414,11 @@
   <string name="import_button">Restaura</string>
   <string name="backup_question">Això sobreescriurà la còpia de seguretat actual que hi ha a la carpeta de còpies de seguretat!</string>
   <string name="import_question">La llista de sèries actuals es perdrà! Assegureu-vos que disposeu d\'una còpia de seguretat a la carpeta de còpies de seguretat.</string>
-  <string name="import_warning">Entenc que les meves sèries, llistes i pel·lícules actuals seràn reemplaçats!</string>
+  <string name="import_warning">Entenc que les meves sèries, llistes i pel·lícules actuals seran reemplaçades</string>
   <string name="last_auto_backup">Darrera còpia de seguretat automàtica: %s</string>
   <string name="restore_auto_backup">Restaura la còpia de seguretat automàtica</string>
-  <string name="dataliberation_permission_missing">Per fer còpies de seguretat o restaurar, permet accés als teus arxius.</string>
-  <string name="autobackup_permission_missing">Per utilitzar la còpia de seguretat automàtica, permet accés als teus arxius.</string>
+  <string name="dataliberation_permission_missing">Per fer còpies de seguretat o restaurar, permet l\'accés als teus arxius.</string>
+  <string name="autobackup_permission_missing">Per utilitzar la còpia de seguretat automàtica, permet l\'accés als teus arxius.</string>
   <string name="autobackup_files_missing">Per utilitzar la còpia de seguretat automàtica, selecciona arxius de còpia de seguretat vàlids.</string>
   <string name="no_file_selected">Cap arxiu seleccionat</string>
   <string name="action_select_file">Seleccionar arxiu</string>
@@ -447,7 +447,7 @@
   <!-- List Widget -->
   <string name="hide_watched">Amaga els episodis vistos</string>
   <string name="pref_widget_opacity">Fons del widget</string>
-  <string name="pref_widget_type">TIpus de wiget</string>
+  <string name="pref_widget_type">Tipus de widget</string>
   <!-- Widget background options -->
   <string name="widget_background_transparent">Transparent</string>
   <string name="widget_background_25">25%</string>
@@ -465,7 +465,7 @@
   <string name="billing_action_pass">Obtenir un «X Pass»</string>
   <string name="billing_price_subscribe">%1$s/any, prova de forma gratuïta, cancel·la en qualsevol moment mitjançant %2$s</string>
   <string name="billing_price_pass">compra única</string>
-  <string name="upgrade_description">Desbloqueja totes les opcions, incloent notificacions, temes i més opcions de llista de widget. Ajuda\'m a fer futures actualitzacions.</string>
+  <string name="upgrade_description">Desbloqueja totes les opcions, incloent\'hi notificacions, temes i més opcions de llista de widget. Ajuda\'m a fer futures actualitzacions.</string>
   <string name="upgrade_success">Gràcies per donar support a SeriesGuide! Tens accés a totes les opcions.</string>
   <string name="billing_learn_more">Per què pagar? Vegeu més informació.</string>
   <string name="subscription_expired">La subscripció ha caducat</string>
@@ -492,7 +492,7 @@
   <!-- People -->
   <string name="person_biography">Biografia</string>
   <!-- Feedback -->
-  <string name="feedback_question_enjoy">Estàs gaudint de SeriesGuide?</string>
+  <string name="feedback_question_enjoy">Estas gaudint de SeriesGuide?</string>
   <string name="feedback_action_yes">Si!</string>
   <string name="feedback_action_notreally">No ben bé</string>
   <string name="feedback_question_rate_google">Valorar a Google Play?</string>
