@@ -7,7 +7,17 @@ All dates are in the European Central timezone.
 
 Version 42
 ----------
-*(in development)*
+*(2018-03-28)*
+
+* 🔧 Run backup immediately after selecting file (Android 4.4 and up).
+* 🔧 Sharing: Use TheTVDB link for shows and episodes, use TMDB link for movies.
+* 🔨 Calendar: display correct date in headers on Android 5.1 and older.
+* 🔨 Android 8: Fix occasional crash when calculating season unwatched count.
+
+#### 42
+*(2018-03-28)*
+
+* 🔨 Calendar: display correct date in headers on Android 5.1 and older.
 
 #### 42-beta5
 *(2018-03-22)*
