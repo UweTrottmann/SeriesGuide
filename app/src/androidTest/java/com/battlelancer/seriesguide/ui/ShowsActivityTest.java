@@ -12,6 +12,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -19,9 +21,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,6 +45,16 @@ public class ShowsActivityTest {
     @Rule
     public ActivityTestRule<ShowsActivity> mActivityTestRule = new ActivityTestRule<>(
             ShowsActivity.class);
+
+    @Before
+    public void setUp() throws Exception {
+        // delete the database and close the database helper inside the provider
+        // to ensure a clean state for the add show test
+        Context context = InstrumentationRegistry.getTargetContext();
+        context.deleteDatabase(SeriesGuideDatabase.DATABASE_NAME);
+        context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI_CLOSE,
+                null, null, null, null);
+    }
 
     @Test
     public void testAddShowAndSetWatchedThenReturn() {

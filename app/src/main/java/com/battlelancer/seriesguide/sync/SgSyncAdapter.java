@@ -112,7 +112,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         // from here on we need more sophisticated abort handling, so keep track of errors
         SyncProgress progress = new SyncProgress();
         progress.publish(SyncProgress.Step.TVDB);
-        UpdateResult resultCode = tvdbSync.sync(getContext(), tvdbTools, currentTime);
+        UpdateResult resultCode = tvdbSync.sync(getContext(), getContext().getContentResolver(),
+                tvdbTools, currentTime);
         if (resultCode == null || resultCode == UpdateResult.INCOMPLETE) {
             progress.recordError();
         }

@@ -1,11 +1,13 @@
 package com.battlelancer.seriesguide.ui.movies;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.jobs.FlagJobAsyncTask;
@@ -197,7 +199,7 @@ public class MovieTools {
         }
         if (!movieInDatabase && flag) {
             // Only add, never remove shells. Next trakt watched movie sync will take care of that.
-            return addMovieWatchedShell(context, movieTmdbId);
+            return addMovieWatchedShell(context.getContentResolver(), movieTmdbId);
         } else {
             return updateMovie(context, movieTmdbId, SeriesGuideContract.Movies.WATCHED, flag);
         }
@@ -207,31 +209,10 @@ public class MovieTools {
         ContentValues[] valuesArray = new ContentValues[movies.size()];
         int index = 0;
         for (MovieDetails movie : movies) {
-            valuesArray[index] = buildMovieContentValues(movie);
+            valuesArray[index] = movie.toContentValuesInsert();
             index++;
         }
         return valuesArray;
-    }
-
-    private static ContentValues buildMovieContentValues(MovieDetails details) {
-        ContentValues values = buildBasicMovieContentValuesWithId(details);
-
-        values.put(SeriesGuideContract.Movies.IN_COLLECTION,
-                DBUtils.convertBooleanToInt(details.isInCollection()));
-        values.put(SeriesGuideContract.Movies.IN_WATCHLIST,
-                DBUtils.convertBooleanToInt(details.isInWatchlist()));
-
-        return values;
-    }
-
-    /**
-     * Extracts basic properties, except in_watchlist and in_collection from trakt. Also includes
-     * the TMDb id and watched state as value.
-     */
-    private static ContentValues buildBasicMovieContentValuesWithId(MovieDetails details) {
-        ContentValues values = buildBasicMovieContentValues(details);
-        values.put(SeriesGuideContract.Movies.TMDB_ID, details.tmdbMovie().id);
-        return values;
     }
 
     /**
@@ -345,13 +326,9 @@ public class MovieTools {
         }
 
         // build values
-        ContentValues values = buildBasicMovieContentValuesWithId(details);
-
-        // set flags
-        values.put(SeriesGuideContract.Movies.IN_COLLECTION,
-                DBUtils.convertBooleanToInt(listToAddTo == Lists.COLLECTION));
-        values.put(SeriesGuideContract.Movies.IN_WATCHLIST,
-                DBUtils.convertBooleanToInt(listToAddTo == Lists.WATCHLIST));
+        details.setInCollection(listToAddTo == Lists.COLLECTION);
+        details.setInWatchlist(listToAddTo == Lists.WATCHLIST);
+        ContentValues values = details.toContentValuesInsert();
 
         // add to database
         context.getContentResolver().insert(SeriesGuideContract.Movies.CONTENT_URI, values);
@@ -365,16 +342,15 @@ public class MovieTools {
     /**
      * Inserts a movie shell into the database only holding TMDB id, list and watched states.
      */
-    private static boolean addMovieWatchedShell(Context context, int movieTmdbId) {
+    @VisibleForTesting
+    public static boolean addMovieWatchedShell(ContentResolver resolver, int movieTmdbId) {
         ContentValues values = new ContentValues();
         values.put(SeriesGuideContract.Movies.TMDB_ID, movieTmdbId);
         values.put(SeriesGuideContract.Movies.IN_COLLECTION, false);
         values.put(SeriesGuideContract.Movies.IN_WATCHLIST, false);
         values.put(SeriesGuideContract.Movies.WATCHED, true);
 
-        Uri insert = context.getContentResolver().insert(SeriesGuideContract.Movies.CONTENT_URI,
-                values);
-
+        Uri insert = resolver.insert(SeriesGuideContract.Movies.CONTENT_URI, values);
         return insert != null;
     }
 

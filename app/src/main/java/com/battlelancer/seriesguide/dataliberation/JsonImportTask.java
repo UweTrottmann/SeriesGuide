@@ -1,5 +1,7 @@
 package com.battlelancer.seriesguide.dataliberation;
 
+import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
+
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
@@ -16,7 +18,6 @@ import com.battlelancer.seriesguide.dataliberation.model.ListItem;
 import com.battlelancer.seriesguide.dataliberation.model.Movie;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
@@ -40,8 +41,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
-
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 /**
  * Import a show database from a human-readable JSON file on external storage. By default meta-data
@@ -315,7 +314,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         } else if (type == JsonExportTask.BACKUP_MOVIES) {
             while (reader.hasNext()) {
                 Movie movie = gson.fromJson(reader, Movie.class);
-                addMovieToDatabase(movie);
+                context.getContentResolver().insert(Movies.CONTENT_URI, movie.toContentValues());
             }
         }
 
@@ -329,64 +328,23 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             return;
         }
 
-        // Insert the show
-        ContentValues showValues = new ContentValues();
-        showValues.put(Shows._ID, show.tvdb_id);
-        showValues.put(Shows.TITLE, show.title == null ? "" : show.title);
-        showValues.put(Shows.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(show.title));
-        showValues.put(Shows.FAVORITE, show.favorite);
-        showValues.put(Shows.NOTIFY, show.notify == null ? true : show.notify);
-        showValues.put(Shows.HIDDEN, show.hidden);
-        // only add the language, if we support it
+        // reset language if it is not supported
+        boolean languageSupported = false;
         for (int i = 0, size = languageCodes.length; i < size; i++) {
             if (languageCodes[i].equals(show.language)) {
-                showValues.put(Shows.LANGUAGE, show.language);
+                languageSupported = true;
                 break;
             }
         }
-        showValues.put(Shows.RELEASE_TIME, show.release_time);
-        if (show.release_weekday < -1 || show.release_weekday > 7) {
-            show.release_weekday = -1;
+        if (!languageSupported) {
+            show.language = null;
         }
-        showValues.put(Shows.RELEASE_WEEKDAY, show.release_weekday);
-        showValues.put(Shows.RELEASE_TIMEZONE, show.release_timezone);
-        showValues.put(Shows.RELEASE_COUNTRY, show.country);
-        showValues.put(Shows.LASTWATCHEDID, show.last_watched_episode);
-        showValues.put(Shows.LASTWATCHED_MS, show.last_watched_ms);
-        showValues.put(Shows.POSTER, show.poster);
-        showValues.put(Shows.CONTENTRATING, show.content_rating);
-        if (show.runtime < 0) {
-            show.runtime = 0;
-        }
-        showValues.put(Shows.RUNTIME, show.runtime);
-        showValues.put(Shows.NETWORK, show.network);
-        showValues.put(Shows.IMDBID, show.imdb_id);
-        if (show.trakt_id != null && show.trakt_id > 0) {
-            showValues.put(Shows.TRAKT_ID, show.trakt_id);
-        }
-        showValues.put(Shows.FIRST_RELEASE, show.first_aired);
-        if (show.rating_user < 0 || show.rating_user > 10) {
-            show.rating_user = 0;
-        }
-        showValues.put(Shows.RATING_USER, show.rating_user);
-        showValues.put(Shows.STATUS, DataLiberationTools.encodeShowStatus(show.status));
-        // Full dump values
-        showValues.put(Shows.OVERVIEW, show.overview);
-        if (show.rating < 0 || show.rating > 10) {
-            show.rating = 0;
-        }
-        showValues.put(Shows.RATING_GLOBAL, show.rating);
-        if (show.rating_votes < 0) {
-            show.rating_votes = 0;
-        }
-        showValues.put(Shows.RATING_VOTES, show.rating_votes);
-        showValues.put(Shows.GENRES, show.genres);
+        // ensure a show will be updated (last_updated might be far into the future)
         if (show.last_updated > System.currentTimeMillis()) {
             show.last_updated = 0;
         }
-        showValues.put(Shows.LASTUPDATED, show.last_updated);
-        showValues.put(Shows.LASTEDIT, show.last_edited);
 
+        ContentValues showValues = show.toContentValues(context, true);
         context.getContentResolver().insert(Shows.CONTENT_URI, showValues);
 
         if (show.seasons == null || show.seasons.isEmpty()) {
@@ -423,15 +381,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             }
 
             // add the season...
-            ContentValues seasonValues = new ContentValues();
-            seasonValues.put(Seasons._ID, season.tvdbId);
-            seasonValues.put(Shows.REF_SHOW_ID, show.tvdb_id);
-            if (season.season < 0) {
-                season.season = 0;
-            }
-            seasonValues.put(Seasons.COMBINED, season.season);
-
-            seasonBatch.add(seasonValues);
+            seasonBatch.add(season.toContentValues(show.tvdb_id));
 
             // ...and its episodes
             for (Episode episode : season.episodes) {
@@ -440,59 +390,13 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                     continue;
                 }
 
-                ContentValues episodeValues = new ContentValues();
-                episodeValues.put(Episodes._ID, episode.tvdbId);
-                episodeValues.put(Shows.REF_SHOW_ID, show.tvdb_id);
-                episodeValues.put(Seasons.REF_SEASON_ID, season.tvdbId);
-                if (episode.episode < 0) {
-                    episode.episode = 0;
-                }
-                episodeValues.put(Episodes.NUMBER, episode.episode);
-                if (episode.episodeAbsolute < 0) {
-                    episode.episodeAbsolute = 0;
-                }
-                episodeValues.put(Episodes.ABSOLUTE_NUMBER, episode.episodeAbsolute);
-                episodeValues.put(Episodes.SEASON, season.season);
-                episodeValues.put(Episodes.TITLE, episode.title);
-                // watched/skipped represented internally in watched flag
-                if (episode.skipped) {
-                    episodeValues.put(Episodes.WATCHED, EpisodeFlags.SKIPPED);
-                } else {
-                    episodeValues.put(Episodes.WATCHED,
-                            episode.watched ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
-                }
-                episodeValues.put(Episodes.COLLECTED, episode.collected);
-                episodeValues.put(Episodes.FIRSTAIREDMS, episode.firstAired);
-                episodeValues.put(Episodes.IMDBID, episode.imdbId);
-                if (episode.rating_user < 0 || episode.rating_user > 10) {
-                    episode.rating_user = 0;
-                }
-                episodeValues.put(Episodes.RATING_USER, episode.rating_user);
-                // Full dump values
-                if (episode.episodeDvd < 0) {
-                    episode.episodeDvd = 0;
-                }
-                episodeValues.put(Episodes.DVDNUMBER, episode.episodeDvd);
-                episodeValues.put(Episodes.OVERVIEW, episode.overview);
-                episodeValues.put(Episodes.IMAGE, episode.image);
-                episodeValues.put(Episodes.WRITERS, episode.writers);
-                episodeValues.put(Episodes.GUESTSTARS, episode.gueststars);
-                episodeValues.put(Episodes.DIRECTORS, episode.directors);
-                if (episode.rating < 0 || episode.rating > 10) {
-                    episode.rating = 0;
-                }
-                episodeValues.put(Episodes.RATING_GLOBAL, episode.rating);
-                if (episode.rating_votes < 0) {
-                    episode.rating_votes = 0;
-                }
-                episodeValues.put(Episodes.RATING_VOTES, episode.rating_votes);
-                episodeValues.put(Episodes.LAST_EDITED, episode.lastEdited);
-
+                ContentValues episodeValues = episode
+                        .toContentValues(show.tvdb_id, season.tvdbId, season.season);
                 episodeBatch.add(episodeValues);
             }
         }
 
-        return new ContentValues[][] {
+        return new ContentValues[][]{
                 seasonBatch.size() == 0 ? null
                         : seasonBatch.toArray(new ContentValues[seasonBatch.size()]),
                 episodeBatch.size() == 0 ? null
@@ -501,19 +405,16 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private void addListToDatabase(List list) {
+        if (TextUtils.isEmpty(list.name)) {
+            return; // required
+        }
         if (TextUtils.isEmpty(list.listId)) {
-            if (TextUtils.isEmpty(list.name)) {
-                return; // can't rebuild list id
-            }
+            // rebuild from name
             list.listId = SeriesGuideContract.Lists.generateListId(list.name);
         }
 
         // Insert the list
-        ContentValues values = new ContentValues();
-        values.put(Lists.LIST_ID, list.listId);
-        values.put(Lists.NAME, list.name);
-        values.put(Lists.ORDER, list.order);
-        context.getContentResolver().insert(Lists.CONTENT_URI, values);
+        context.getContentResolver().insert(Lists.CONTENT_URI, list.toContentValues());
 
         if (list.items == null || list.items.isEmpty()) {
             return;
@@ -553,23 +454,5 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
         ContentValues[] itemsArray = new ContentValues[items.size()];
         context.getContentResolver().bulkInsert(ListItems.CONTENT_URI, items.toArray(itemsArray));
-    }
-
-    private void addMovieToDatabase(Movie movie) {
-        ContentValues values = new ContentValues();
-        values.put(Movies.TMDB_ID, movie.tmdbId);
-        values.put(Movies.IMDB_ID, movie.imdbId);
-        values.put(Movies.TITLE, movie.title);
-        values.put(Movies.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(movie.title));
-        values.put(Movies.RELEASED_UTC_MS, movie.releasedUtcMs);
-        values.put(Movies.RUNTIME_MIN, movie.runtimeMin);
-        values.put(Movies.POSTER, movie.poster);
-        values.put(Movies.IN_COLLECTION, movie.inCollection);
-        values.put(Movies.IN_WATCHLIST, movie.inWatchlist);
-        values.put(Movies.WATCHED, movie.watched);
-        // full dump values
-        values.put(Movies.OVERVIEW, movie.overview);
-
-        context.getContentResolver().insert(Movies.CONTENT_URI, values);
     }
 }

@@ -562,6 +562,8 @@ public class SeriesGuideContract {
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://"
             + SgApp.CONTENT_AUTHORITY);
 
+    public static final String PATH_CLOSE = "close";
+
     public static final String PATH_SHOWS = "shows";
 
     public static final String PATH_SEASONS = "seasons";
@@ -633,6 +635,13 @@ public class SeriesGuideContract {
         public static final Uri CONTENT_URI_FILTER = CONTENT_URI.buildUpon()
                 .appendPath(PATH_FILTER)
                 .build();
+
+        /**
+         * If "queried" closes and re-opens the database.
+         * See {@link SeriesGuideProvider#CLOSE}.
+         */
+        public static final Uri CONTENT_URI_CLOSE = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_CLOSE).build();
 
         /**
          * Use if multiple items get returned

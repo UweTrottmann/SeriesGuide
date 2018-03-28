@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.core.CrashlyticsCore
 import com.google.android.gms.analytics.GoogleAnalytics
 import com.jakewharton.picasso.OkHttp3Downloader
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -53,6 +53,8 @@ class SgApp : Application() {
         val JOB_ID_EXTENSION_YOUTUBE = 1005
         @JvmField
         val JOB_ID_EXTENSION_ACTIONS_SERVICE = 1006
+        @JvmField
+        val JOB_ID_UNWATCHED_UPDATER_SERVICE = 1007
 
         @JvmField
         val NOTIFICATION_EPISODE_ID = 1
@@ -157,21 +159,11 @@ class SgApp : Application() {
     }
 
     private fun initializeLogging() {
-        if (BuildConfig.DEBUG) {
-            // debug drawer logging
-            val lumberYard = LumberYard.getInstance(this)
-            lumberYard.cleanUp()
-            Timber.plant(lumberYard.tree())
-            // detailed logcat logging
-            Timber.plant(Timber.DebugTree())
-        } else {
-            // crash and error reporting
-            Timber.plant(AnalyticsTree(this))
-            if (!Fabric.isInitialized()) {
-                Fabric.with(this, Crashlytics())
-            }
+        // set up reporting tools first
+        if (!Fabric.isInitialized()) {
+            // use core kit only, Crashlytics kit also adds Answers and Beta kit
+            Fabric.with(this, CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
         }
-
         // Ensure GA opt-out
         GoogleAnalytics.getInstance(this).appOptOut = AppSettings.isGaAppOptOut(this)
         if (BuildConfig.DEBUG) {
@@ -179,6 +171,17 @@ class SgApp : Application() {
         }
         // Initialize tracker
         Analytics.getTracker(this)
+
+        if (BuildConfig.DEBUG) {
+            // debug drawer logging
+            val lumberYard = LumberYard.getInstance(this)
+            lumberYard.cleanUp()
+            Timber.plant(lumberYard.tree())
+            // detailed logcat logging
+            Timber.plant(Timber.DebugTree())
+        }
+        // crash and error reporting
+        Timber.plant(AnalyticsTree(this))
     }
 
     private fun initializeEventBus() {

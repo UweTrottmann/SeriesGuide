@@ -6,10 +6,12 @@ import android.content.Context
 import android.text.format.DateUtils
 import com.battlelancer.seriesguide.dataliberation.model.Show
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools.ensureSuccessfulResponse
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.TimeTools
+import com.uwetrottmann.thetvdb.entities.Episode
 import com.uwetrottmann.thetvdb.entities.EpisodesResponse
 import com.uwetrottmann.thetvdb.services.TheTvdbSeries
 import dagger.Lazy
@@ -108,21 +110,11 @@ class TvdbEpisodeTools constructor(
                     }
                 }
 
-                // extract values
-                values.put(SeriesGuideContract.Episodes._ID, episodeId)
-                values.put(SeriesGuideContract.Seasons.REF_SEASON_ID, seasonId)
-                values.put(SeriesGuideContract.Shows.REF_SHOW_ID, showTvdbId)
-
-                values.put(SeriesGuideContract.Episodes.NUMBER, episode.airedEpisodeNumber)
-                values.put(SeriesGuideContract.Episodes.ABSOLUTE_NUMBER, episode.absoluteNumber)
-                values.put(SeriesGuideContract.Episodes.SEASON, seasonNumber)
-                values.put(SeriesGuideContract.Episodes.DVDNUMBER, episode.dvdEpisodeNumber)
-
+                // calculate release time
                 val releaseDateTime = TimeTools.parseEpisodeReleaseDate(context, showTimeZone,
                         episode.firstAired, showReleaseTime, show.country, show.network,
                         deviceTimeZone)
-                values.put(SeriesGuideContract.Episodes.FIRSTAIREDMS, releaseDateTime)
-
+                // if name or overview are empty use fallback
                 val hasName = !episode.episodeName.isNullOrEmpty()
                 val hasOverview = !episode.overview.isNullOrEmpty()
                 val fallbackEpisode = if (!hasName || !hasOverview) {
@@ -130,11 +122,15 @@ class TvdbEpisodeTools constructor(
                 } else {
                     null
                 }
-                values.put(SeriesGuideContract.Episodes.TITLE,
-                        if (hasName) episode.episodeName else fallbackEpisode?.episodeName ?: "")
-                values.put(SeriesGuideContract.Episodes.OVERVIEW,
-                        if (hasOverview) episode.overview else fallbackEpisode?.overview)
-                values.put(SeriesGuideContract.Episodes.LAST_EDITED, episode.lastUpdated)
+                if (!hasName) {
+                    episode.episodeName = fallbackEpisode?.episodeName
+                }
+                if (!hasOverview) {
+                    episode.overview = fallbackEpisode?.overview
+                }
+
+                episode.toContentValues(values, episodeId, seasonId, showTvdbId,
+                        seasonNumber, releaseDateTime)
 
                 if (insert) {
                     // episode does not exist, yet: insert
@@ -151,8 +147,7 @@ class TvdbEpisodeTools constructor(
 
         // add delete ops for leftover episodeIds in our db
         removableEpisodeIds.keys.mapTo(batch) {
-            ContentProviderOperation.newDelete(
-                    SeriesGuideContract.Episodes.buildEpisodeUri(it)).build()
+            ContentProviderOperation.newDelete(Episodes.buildEpisodeUri(it)).build()
         }
 
         // add delete ops for leftover seasonIds in our db
@@ -172,12 +167,36 @@ class TvdbEpisodeTools constructor(
         try {
             response = tvdbSeries.get().episodes(showTvdbId, page, language).execute()
         } catch (e: Exception) {
-            throw TvdbException("getEpisodes: " + e.message, e)
+            throw TvdbException("getEpisodes", e)
         }
 
-        ensureSuccessfulResponse(response.raw(), "getEpisodes: ")
+        ensureSuccessfulResponse(response.raw(), "getEpisodes")
 
         return response.body()!!
+    }
+
+
+    companion object {
+
+        @JvmStatic
+        fun Episode.toContentValues(values: ContentValues,
+                episodeTvdbId: Int, seasonTvdbId: Int, showTvdbId: Int,
+                seasonNumber: Int, releaseDateTime: Long) {
+            values.put(Episodes._ID, episodeTvdbId)
+            values.put(Episodes.TITLE, episodeName ?: "")
+            values.put(Episodes.OVERVIEW, overview)
+            values.put(Episodes.NUMBER, airedEpisodeNumber ?: 0)
+            values.put(Episodes.SEASON, seasonNumber)
+            values.put(Episodes.DVDNUMBER, dvdEpisodeNumber)
+
+            values.put(SeriesGuideContract.Seasons.REF_SEASON_ID, seasonTvdbId)
+            values.put(SeriesGuideContract.Shows.REF_SHOW_ID, showTvdbId)
+
+            values.put(Episodes.FIRSTAIREDMS, releaseDateTime)
+            values.put(Episodes.ABSOLUTE_NUMBER, absoluteNumber)
+            values.put(Episodes.LAST_EDITED, lastUpdated ?: 0)
+        }
+
     }
 
 }

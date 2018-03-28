@@ -20,19 +20,18 @@ import android.text.TextUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.enums.SeasonTags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
-import com.battlelancer.seriesguide.ui.shows.CalendarSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.shows.CalendarFragment;
 import com.battlelancer.seriesguide.ui.shows.CalendarQuery;
+import com.battlelancer.seriesguide.ui.shows.CalendarSettings;
 import com.battlelancer.seriesguide.ui.shows.CalendarType;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -349,49 +348,15 @@ public class DBUtils {
      * <p> If the show is new, sets some default values and the (TheTVDB) id.
      */
     public static ContentProviderOperation buildShowOp(Context context, Show show, boolean isNew) {
-        ContentValues values = new ContentValues();
+        // last updated now
+        show.last_updated = System.currentTimeMillis();
 
-        // values for new and existing shows
-        // if in any case the title is empty, show a place holder
-        values.put(Shows.TITLE,
-                TextUtils.isEmpty(show.title) ? context.getString(R.string.no_translation_title)
-                        : show.title);
-        values.put(Shows.TITLE_NOARTICLE, trimLeadingArticle(show.title));
-        values.put(Shows.OVERVIEW, show.overview);
-        values.put(Shows.POSTER, show.poster);
-        values.put(Shows.CONTENTRATING, show.content_rating);
-        values.put(Shows.STATUS, DataLiberationTools.encodeShowStatus(show.status));
-        values.put(Shows.RUNTIME, show.runtime);
-        values.put(Shows.RATING_GLOBAL, show.rating);
-        values.put(Shows.NETWORK, show.network);
-        values.put(Shows.GENRES, show.genres);
-        values.put(Shows.FIRST_RELEASE, show.first_aired);
-        values.put(Shows.RELEASE_TIME, show.release_time);
-        values.put(Shows.RELEASE_WEEKDAY, show.release_weekday);
-        values.put(Shows.RELEASE_TIMEZONE, show.release_timezone);
-        values.put(Shows.RELEASE_COUNTRY, show.country);
-        values.put(Shows.IMDBID, show.imdb_id);
-        values.put(Shows.TRAKT_ID, show.trakt_id);
-        values.put(Shows.LASTUPDATED, System.currentTimeMillis());
-        values.put(Shows.LASTEDIT, show.last_edited);
+        ContentValues values = show.toContentValues(context, isNew);
 
         if (isNew) {
-            // set TheTVDB id
-            values.put(Shows._ID, show.tvdb_id);
-            values.put(Shows.LANGUAGE, show.language);
-            // set user values
-            values.put(Shows.FAVORITE, show.favorite);
-            values.put(Shows.NOTIFY, show.notify == null ? true : show.notify);
-            values.put(Shows.HIDDEN, show.hidden);
-            // set default values
-            values.put(Shows.RATING_VOTES, 0);
-            values.put(Shows.RATING_USER, 0);
-            values.put(Shows.HEXAGON_MERGE_COMPLETE, 1);
-            values.put(Shows.NEXTEPISODE, "");
-            values.put(Shows.NEXTTEXT, "");
-            values.put(Shows.NEXTAIRDATEMS, UNKNOWN_NEXT_RELEASE_DATE);
-            values.put(Shows.LASTWATCHEDID, 0);
-            return ContentProviderOperation.newInsert(Shows.CONTENT_URI).withValues(values).build();
+            return ContentProviderOperation
+                    .newInsert(Shows.CONTENT_URI)
+                    .withValues(values).build();
         } else {
             return ContentProviderOperation
                     .newUpdate(Shows.buildShowUri(String.valueOf(show.tvdb_id)))

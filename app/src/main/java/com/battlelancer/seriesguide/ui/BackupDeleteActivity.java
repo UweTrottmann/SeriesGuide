@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -32,7 +31,8 @@ import timber.log.Timber;
 
 /**
  * <b>DEPRECATED.</b> Just keeping this around for legacy users. Copying the database file for
- * backup is dangerous and error prone.
+ * backup is dangerous because if the database is accessed while copied the app will crash or behave
+ * unreliably.
  *
  * <p>Also the tasks in this class reference the activity, which in itself is badly designed (they
  * should be static).
@@ -201,16 +201,17 @@ public class BackupDeleteActivity extends BaseActivity {
                 return null;
             }
 
-            File dbFile = getApplication().getDatabasePath(SeriesGuideDatabase.DATABASE_NAME);
+            // query special URI to close the current database
+            getContentResolver().query(Shows.CONTENT_URI_CLOSE, null, null,
+                    null, null);
 
+            File dbFile = getApplication().getDatabasePath(SeriesGuideDatabase.DATABASE_NAME);
             getApplication().deleteDatabase(SeriesGuideDatabase.DATABASE_NAME);
 
             try {
                 dbFile.createNewFile();
                 AndroidUtils.copyFile(dbBackupFile, dbFile);
 
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
-                        .putBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, true).apply();
                 getContentResolver().notifyChange(Shows.CONTENT_URI, null);
 
                 // wait a little for the new db to settle in

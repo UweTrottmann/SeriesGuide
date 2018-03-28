@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = '1.2.21'
+    ext.kotlin_version = '1.2.30'
     ext.versions = [
             'minSdk': 15,
             'compileSdk': 27,
@@ -12,10 +12,10 @@ buildscript {
             'playServices': '11.4.0', // developers.google.com/android/guides/releases
 
             'butterknife': '8.8.1', // github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
-            'crashlytics': '2.6.8', // docs.fabric.io/android/changelog.html
+            'crashlytics': '2.9.1', // docs.fabric.io/android/changelog.html
             'dagger': '2.13', // github.com/google/dagger/releases
             'gson': '2.8.2', // github.com/google/gson/blob/master/CHANGELOG.md
-            'okhttp': '3.9.1', // github.com/square/okhttp/blob/master/CHANGELOG.md
+            'okhttp': '3.10.0', // github.com/square/okhttp/blob/master/CHANGELOG.md
             'timber': '4.6.1', // github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 
             'androidUtils': '2.3.1', // github.com/UweTrottmann/AndroidUtils/blob/master/RELEASE_NOTES.md
@@ -27,8 +27,8 @@ buildscript {
             'threetenABP': '1.0.6', // github.com/UweTrottmann/ThreeTenABP/blob/master/CHANGELOG.md
 
             // version 15xxxyy -> min SDK 15, release xxx, build yy
-            'code': 1502905,
-            'name': '41.2',
+            'code': 1503005,
+            'name': '42',
     ]
 
     repositories {
@@ -42,7 +42,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.3' // SeriesGuide
-        classpath 'io.fabric.tools:gradle:1.25.1' // SeriesGuide
+        classpath 'io.fabric.tools:gradle:1.25.2' // SeriesGuide
         classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.10.0' // api
     }
 }

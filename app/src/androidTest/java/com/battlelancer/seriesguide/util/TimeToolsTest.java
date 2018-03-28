@@ -1,5 +1,8 @@
 package com.battlelancer.seriesguide.util;
 
+import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth.assertWithMessage;
+
 import java.util.Date;
 import org.junit.Test;
 import org.threeten.bp.Clock;
@@ -11,9 +14,9 @@ import org.threeten.bp.LocalTime;
 import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZonedDateTime;
 
-import static com.google.common.truth.Truth.assertThat;
-import static com.google.common.truth.Truth.assertWithMessage;
-
+/**
+ * Note: ensure to test on Android as local JVM handles time and dates differently.
+ */
 public class TimeToolsTest {
 
     public static final String AMERICA_NEW_YORK = "America/New_York";
