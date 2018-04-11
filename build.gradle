@@ -48,6 +48,20 @@ buildscript {
 
 apply plugin: 'com.github.ben-manes.versions'
 
+// reject preview releases for dependencyUpdates task
+dependencyUpdates.resolutionStrategy = {
+    componentSelection { rules ->
+        rules.all { ComponentSelection selection ->
+            boolean rejected = ['alpha', 'beta', 'rc'].any { qualifier ->
+                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+            }
+            if (rejected) {
+                selection.reject('Preview release')
+            }
+        }
+    }
+}
+
 allprojects {
     repositories {
         jcenter()
