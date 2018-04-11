@@ -22,7 +22,7 @@ buildscript {
             'tmdb': '1.8.3', // github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
             'trakt': '5.7.3', // github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
 
-            'truth': '0.39',
+            'truth': '0.40', // github.com/google/truth/releases
             'threetenABP': '1.0.6', // github.com/UweTrottmann/ThreeTenABP/blob/master/CHANGELOG.md
 
             // version 15xxxyy -> min SDK 15, release xxx, build yy
