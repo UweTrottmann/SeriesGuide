@@ -91,7 +91,7 @@ class ShowsDiscoverFragment : Fragment() {
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewShowsDiscover,
                 R.id.recyclerViewShowsDiscover)
         swipeRefreshLayout.setOnRefreshListener { loadResults(true) }
-        ViewTools.setSwipeRefreshLayoutColors(activity!!.theme, swipeRefreshLayout)
+        ViewTools.setSwipeRefreshLayoutColors(requireActivity().theme, swipeRefreshLayout)
 
         emptyView.visibility = View.GONE
         emptyView.setButtonClickListener {
@@ -125,7 +125,7 @@ class ShowsDiscoverFragment : Fragment() {
             this.layoutManager = layoutManager
         }
 
-        adapter = ShowsDiscoverAdapter(context!!, itemClickListener,
+        adapter = ShowsDiscoverAdapter(requireContext(), itemClickListener,
                 TraktCredentials.get(context).hasCredentials(), true)
         recyclerView.adapter = adapter
     }
@@ -133,7 +133,7 @@ class ShowsDiscoverFragment : Fragment() {
     private val itemClickListener = object : ShowsDiscoverAdapter.OnItemClickListener {
         override fun onLinkClick(anchor: View, link: TraktShowsLink) {
             Utils.startActivityWithAnimation(activity,
-                    TraktShowsActivity.intent(context!!, link),
+                    TraktShowsActivity.intent(requireContext(), link),
                     anchor)
         }
 
