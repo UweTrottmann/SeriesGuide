@@ -6,7 +6,7 @@ buildscript {
             'compileSdk': 27,
             'targetSdk': 26,
 
-            'supportLibrary': '27.0.2', // developer.android.com/topic/libraries/support-library/revisions.html
+            'supportLibrary': '27.1.1', // developer.android.com/topic/libraries/support-library/revisions.html
             'lifecycle': '1.1.0', // developer.android.com/topic/libraries/architecture/release-notes.html
             'playServices': '11.4.0', // developers.google.com/android/guides/releases
 
