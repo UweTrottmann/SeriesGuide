@@ -668,6 +668,8 @@ public class SeriesGuideContract {
         public static final String SELECTION_NOTIFY = Shows.NOTIFY + "=1";
         public static final String SELECTION_WITH_RELEASED_NEXT_EPISODE = Shows.NEXTAIRDATEMS + "!="
                 + DBUtils.UNKNOWN_NEXT_RELEASE_DATE;
+        public static final String SELECTION_WITH_NEXT_NOT_HIDDEN = Shows.NEXTEPISODE + "!='' AND "
+                + Shows.HIDDEN + "=0 AND " + Shows.NEXTAIRDATEMS + "<?";
 
         public static final String SELECTION_NO_HIDDEN = Shows.HIDDEN + "=0";
 
