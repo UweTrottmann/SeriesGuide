@@ -417,15 +417,17 @@ public class OverviewFragment extends Fragment implements
     }
 
     private void shareEpisode() {
-        if (!isEpisodeDataAvailable) {
+        if (!isShowDataAvailable || !isEpisodeDataAvailable) {
             return;
         }
+        int seasonTvdbId = currentEpisodeCursor.getInt(EpisodeQuery.SEASON_ID);
         int seasonNumber = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
         int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
         String episodeTitle = currentEpisodeCursor.getString(EpisodeQuery.TITLE);
+        String languageCode = showCursor.getString(ShowQuery.SHOW_LANGUAGE);
 
-        ShareUtils.shareEpisode(getActivity(), currentEpisodeTvdbId, seasonNumber, episodeNumber,
-                showTitle, episodeTitle);
+        ShareUtils.shareEpisode(getActivity(), showTvdbId, seasonTvdbId, currentEpisodeTvdbId,
+                seasonNumber, episodeNumber, showTitle, episodeTitle, languageCode);
 
         Utils.trackAction(getActivity(), TAG, "Share");
     }

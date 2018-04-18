@@ -48,7 +48,7 @@ public class TmdbTools {
         Utils.launchWebsite(context, url, logTag, "TMDb");
     }
 
-    private static String buildMovieUrl(int movieTmdbId) {
+    public static String buildMovieUrl(int movieTmdbId) {
         return BASE_URL + PATH_MOVIES + movieTmdbId;
     }
 

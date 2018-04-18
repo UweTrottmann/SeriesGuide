@@ -87,7 +87,7 @@ public class TaskManager {
     public synchronized void tryBackupTask(Context context) {
         if (!isAddTaskRunning()
                 && (backupTask == null || backupTask.getStatus() == AsyncTask.Status.FINISHED)) {
-            backupTask = new JsonExportTask(context, null, false, true);
+            backupTask = new JsonExportTask(context, null, false, true, null);
             backupTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }

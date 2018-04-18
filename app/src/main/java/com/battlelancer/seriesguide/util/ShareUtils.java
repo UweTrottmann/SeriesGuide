@@ -5,38 +5,39 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.CalendarContract;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.traktapi.TraktTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 
 /**
- * Contains various ways to share something about an episode (android share intent, trakt, calendar
- * event, ...).
- *
- * @author Uwe Trottmann
+ * Contains helpers to share a show, episode (share intent, calendar event) or movie.
  */
 public class ShareUtils {
 
     protected static final String TAG = "ShareUtils";
 
-    public static void shareEpisode(Activity activity, int episodeTvdbId, int seasonNumber,
-            int episodeNumber, String showTitle, String episodeTitle) {
+    public static void shareEpisode(Activity activity, int showTvdbId, int seasonTvdbId,
+            int episodeTvdbId, int seasonNumber, int episodeNumber,
+            String showTitle, String episodeTitle, @Nullable String languageCode) {
         String message = showTitle + " - " + TextTools.getNextEpisodeString(activity, seasonNumber,
-                episodeNumber, episodeTitle) + " " + TraktTools.buildEpisodeUrl(episodeTvdbId);
+                episodeNumber, episodeTitle) + " "
+                + TvdbLinks.episode(showTvdbId, seasonTvdbId, episodeTvdbId, languageCode);
         startShareIntentChooser(activity, message, R.string.share_episode);
     }
 
-    public static void shareShow(Activity activity, int showTvdbId, String showTitle) {
-        String message = showTitle + " " + TraktTools.buildShowUrl(showTvdbId);
+    public static void shareShow(Activity activity, int showTvdbId, String showTitle,
+            @Nullable String languageCode) {
+        String message = showTitle + " " + TvdbLinks.show(showTvdbId, languageCode);
         startShareIntentChooser(activity, message, R.string.share_show);
     }
 
     public static void shareMovie(Activity activity, int movieTmdbId, String movieTitle) {
-        String message = movieTitle + " " + TraktTools.buildMovieUrl(movieTmdbId);
+        String message = movieTitle + " " + TmdbTools.buildMovieUrl(movieTmdbId);
         startShareIntentChooser(activity, message, R.string.share_movie);
     }
 

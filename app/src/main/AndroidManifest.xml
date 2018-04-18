@@ -5,10 +5,12 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Analytics (non-Google Play devices) -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- Analytics (non-Google Play devices) -->
+    <uses-permission
+        android:name="android.permission.WAKE_LOCK"
+        tools:remove="android:maxSdkVersion" />
     <!-- Notification service -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -240,7 +242,9 @@
         <activity android:name="com.battlelancer.seriesguide.ui.people.PersonActivity" />
 
         <!-- Unwatched counter update service -->
-        <service android:name="com.battlelancer.seriesguide.ui.overview.UnwatchedUpdaterService" />
+        <service
+            android:name="com.battlelancer.seriesguide.ui.overview.UnwatchedUpdaterService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <!-- Notification service -->
         <receiver android:name="com.battlelancer.seriesguide.service.NotificationActionReceiver" />

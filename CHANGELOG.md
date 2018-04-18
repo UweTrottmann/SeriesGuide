@@ -7,7 +7,39 @@ All dates are in the European Central timezone.
 
 Version 42
 ----------
-*(in development)*
+*(2018-03-28)*
+
+* 🔧 Run backup immediately after selecting file (Android 4.4 and up).
+* 🔧 Sharing: Use TheTVDB link for shows and episodes, use TMDB link for movies.
+* 🔨 Calendar: display correct date in headers on Android 5.1 and older.
+* 🔨 Android 8: Fix occasional crash when calculating season unwatched count.
+
+#### 42
+*(2018-03-28)*
+
+* 🔨 Calendar: display correct date in headers on Android 5.1 and older.
+
+#### 42-beta5
+*(2018-03-22)*
+
+* 🔨 Do not crash when logging.
+
+#### 42-beta4
+*(2018-03-22)*
+
+* 🔧 Sharing: Use localized TheTVDB URL for shows and episodes. Use TMDB URL for movies (language is
+  detected by website).
+* 🔨 Calendar: correctly display "in x weeks" if daylight saving time is about to come in effect.
+* 🔨 Support "America/Punta_Arenas" time zone.
+* 🔨 Android 8: Fix occasional crash when calculating season unwatched count.
+* 📝 Latest translations from crowdin.
+
+#### 42-beta3
+*(2018-03-16)*
+
+* 🔧 Run backup immediately after selecting file (Android 4.4 and up).
+* 🔨 When sharing text to SeriesGuide, run search immediately.
+* 📝 Latest translations from crowdin.
 
 #### 42-beta2
 *(2018-03-10)*
@@ -30,6 +62,14 @@ Version 41
 * 🌟 New show discover tab replaces add show and trakt tabs. Displays shows with new episodes 
   (powered by TMDb) and a link to popular shows (powered by trakt).
 * 🔧 TheTVDB show and episode links will open the translation used inside the app. 
+
+#### 41.2
+*(2018-03-23)*
+
+* 🔨 Calendar: display correct week in header if day is during daylight saving time.
+* 🔨 Support "America/Punta_Arenas" time zone.
+* 🔨 Do not crash when parsing server responses fails.
+* 📝 Latest translations from crowdin.
 
 #### 41.1
 *(2018-02-23)*

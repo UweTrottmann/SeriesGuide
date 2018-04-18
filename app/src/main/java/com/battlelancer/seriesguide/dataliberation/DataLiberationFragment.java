@@ -103,6 +103,7 @@ public class DataLiberationFragment extends Fragment implements
     @BindView(R.id.progressBarDataLib) ProgressBar progressBar;
     @BindView(R.id.checkBoxDataLibFullDump) CheckBox checkBoxFullDump;
 
+    @Nullable private Integer type;
     private AsyncTask<Void, Integer, Integer> dataLibTask;
     private Unbinder unbinder;
 
@@ -129,6 +130,7 @@ public class DataLiberationFragment extends Fragment implements
         buttonExport.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                type = null;
                 tryDataLiberationAction(REQUEST_CODE_EXPORT);
             }
         });
@@ -160,6 +162,7 @@ public class DataLiberationFragment extends Fragment implements
         // selecting custom backup files is only supported on KitKat and up
         // as we use Storage Access Framework in this case
         if (AndroidUtils.isKitKatOrHigher()) {
+            buttonExport.setVisibility(View.GONE); // back up runs immediately upon file creation
             buttonShowsExportFile.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -317,7 +320,7 @@ public class DataLiberationFragment extends Fragment implements
         if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             // don't have it? request it, do task if granted
-            requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     requestCode);
             return;
         }
@@ -346,7 +349,7 @@ public class DataLiberationFragment extends Fragment implements
             setProgressLock(true);
 
             dataLibTask = new JsonExportTask(getContext(), DataLiberationFragment.this,
-                    checkBoxFullDump.isChecked(), false);
+                    checkBoxFullDump.isChecked(), false, type);
             dataLibTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else if (requestCode == REQUEST_CODE_IMPORT) {
             setProgressLock(true);
@@ -384,15 +387,21 @@ public class DataLiberationFragment extends Fragment implements
 
             if (requestCode == REQUEST_CODE_SHOWS_EXPORT_URI) {
                 BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_SHOWS_EXPORT_URI, uri);
-            } else if (requestCode == REQUEST_CODE_SHOWS_IMPORT_URI) {
-                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_SHOWS_IMPORT_URI, uri);
+                type = JsonExportTask.BACKUP_SHOWS;
+                tryDataLiberationAction(REQUEST_CODE_EXPORT);
             } else if (requestCode == REQUEST_CODE_LISTS_EXPORT_URI) {
                 BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_LISTS_EXPORT_URI, uri);
-            } else if (requestCode == REQUEST_CODE_LISTS_IMPORT_URI) {
-                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_LISTS_IMPORT_URI, uri);
+                type = JsonExportTask.BACKUP_LISTS;
+                tryDataLiberationAction(REQUEST_CODE_EXPORT);
             } else if (requestCode == REQUEST_CODE_MOVIES_EXPORT_URI) {
                 BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_MOVIES_EXPORT_URI,
                         uri);
+                type = JsonExportTask.BACKUP_MOVIES;
+                tryDataLiberationAction(REQUEST_CODE_EXPORT);
+            } else if (requestCode == REQUEST_CODE_SHOWS_IMPORT_URI) {
+                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_SHOWS_IMPORT_URI, uri);
+            } else if (requestCode == REQUEST_CODE_LISTS_IMPORT_URI) {
+                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_LISTS_IMPORT_URI, uri);
             } else {
                 BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_MOVIES_IMPORT_URI,
                         uri);

@@ -7,7 +7,7 @@ import android.util.Log;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTraktException;
 import com.battlelancer.seriesguide.util.Utils;
-import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.gson.JsonParseException;
 import java.net.UnknownHostException;
 import timber.log.Timber;
@@ -84,13 +84,13 @@ public class AnalyticsTree extends Timber.DebugTree {
         }
 
         // finally log to crashlytics
-        Crashlytics.log(level + "/" + tag + ": " + message);
+        CrashlyticsCore.getInstance().log(level + "/" + tag + ": " + message);
 
         // track some non-fatal exceptions with crashlytics
         if (priority == Log.ERROR) {
             if (t instanceof SQLiteException /* Content provider */
                     || t instanceof JsonParseException /* Retrofit */) {
-                Crashlytics.logException(t);
+                CrashlyticsCore.getInstance().logException(t);
             }
         }
     }

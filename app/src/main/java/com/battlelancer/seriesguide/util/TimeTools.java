@@ -29,6 +29,7 @@ import org.threeten.bp.ZoneOffset;
 import org.threeten.bp.ZonedDateTime;
 import org.threeten.bp.format.DateTimeParseException;
 import org.threeten.bp.temporal.ChronoField;
+import org.threeten.bp.temporal.ChronoUnit;
 import timber.log.Timber;
 
 /**
@@ -258,7 +259,7 @@ public class TimeTools {
         return new Date(dateTime.toInstant().toEpochMilli());
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting
     @NonNull
     public static ZonedDateTime getShowReleaseDateTime(@NonNull LocalTime time, int weekDay,
             @NonNull ZoneId timeZone, @Nullable String country, @Nullable String network,
@@ -344,7 +345,7 @@ public class TimeTools {
                 .format(new Date(instant.toEpochMilli()));
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting
     public static ZonedDateTime applyUnitedStatesCorrections(@Nullable String country,
             @NonNull String localTimeZone, @NonNull ZonedDateTime dateTime) {
         // assumed base time zone for US shows by trakt is America/New_York
@@ -492,39 +493,34 @@ public class TimeTools {
      * Formats to day and relative week in relation to the current system time (e.g. "Mon in 3
      * weeks") as defined by the devices locale. If the time is within the next or previous 6 days,
      * just returns the day. If the time is today, returns local variant of 'Released today'.
+     *
+     * Note: on Android L_MR1 and below, shows date instead as 'in x weeks' is not supported.
      */
-    public static String formatToLocalDayAndRelativeWeek(Context context, Date dateThen) {
-        if (DateUtils.isToday(dateThen.getTime())) {
+    public static String formatToLocalDayAndRelativeWeek(Context context, Date thenDate) {
+        if (DateUtils.isToday(thenDate.getTime())) {
             return context.getString(R.string.released_today);
         }
 
         // day abbreviation, e.g. "Mon"
         SimpleDateFormat localDayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
-        StringBuilder dayAndTime = new StringBuilder(localDayFormat.format(dateThen));
+        StringBuilder dayAndTime = new StringBuilder(localDayFormat.format(thenDate));
 
-        // get week day of then
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(dateThen);
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        Instant then = Instant.ofEpochMilli(thenDate.getTime());
+        ZonedDateTime thenZoned = ZonedDateTime.ofInstant(then, ZoneId.systemDefault());
 
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        // set to same time used for calendar headers
-        calendar.set(Calendar.HOUR_OF_DAY, 1);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        long timeThen = dateThen.getTime();
-        long timeToday = calendar.getTimeInMillis();
-        if (timeThen >= timeToday + DateUtils.WEEK_IN_MILLIS
-                || timeThen <= timeToday - DateUtils.WEEK_IN_MILLIS) {
-            // move to same week day, but in this week
-            calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
-            long timeDayOfWeekThisWeek = calendar.getTimeInMillis();
+        // append 'in x wk.' if date is not within a week, for example if today is Thursday:
+        // - append for previous Thursday and earlier,
+        // - and for next Thursday and later
+        long weekDiff = LocalDate.now().until(thenZoned.toLocalDate(), ChronoUnit.WEEKS);
+        if (weekDiff != 0) {
+            // use weekDiff to calc "now" for relative time string to be daylight saving safe
+            // Android L_MR1 and below do not support 'in x wks.', display date instead
+            // so make sure that time is the actual time
+            Instant now = then.minus(weekDiff * 7, ChronoUnit.DAYS);
 
             dayAndTime.append(" ");
             dayAndTime.append(DateUtils
-                    .getRelativeTimeSpanString(timeThen, timeDayOfWeekThisWeek,
+                    .getRelativeTimeSpanString(then.toEpochMilli(), now.toEpochMilli(),
                             DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
         }
 
