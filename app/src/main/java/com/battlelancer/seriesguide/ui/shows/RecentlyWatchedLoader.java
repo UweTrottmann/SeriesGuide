@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Activity;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -25,20 +24,21 @@ class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>
 
     @Override
     public List<NowAdapter.NowItem> loadInBackground() {
-        long timeDayAgo = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS;
-
-        // get activity of the last 24 hours with the latest one first
+        // get all activity with the latest one first
         Cursor query = getContext().getContentResolver()
                 .query(Activity.CONTENT_URI,
                         new String[] { Activity.TIMESTAMP_MS, Activity.EPISODE_TVDB_ID },
-                        Activity.TIMESTAMP_MS + ">" + timeDayAgo, null,
-                        Activity.SORT_LATEST);
+                        null, null, Activity.SORT_LATEST);
         if (query == null) {
             return null;
         }
 
         List<NowAdapter.NowItem> items = new ArrayList<>();
         while (query.moveToNext()) {
+            if (items.size() == 50) {
+                break; // take at most 50 items
+            }
+
             long timestamp = query.getLong(0);
             int episodeTvdbId = query.getInt(1);
 
