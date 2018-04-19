@@ -302,7 +302,9 @@ public class HexagonListsSync {
             lists.add(list);
 
             if (lists.size() == LISTS_MAX_BATCH_SIZE || listsQuery.isLast()) {
-                if (!doUploadSomeLists(listsWrapper)) {
+                if (doUploadSomeLists(listsWrapper)) {
+                    lists.clear();
+                } else {
                     return false; // part upload failed, next sync will try again
                 }
             }
