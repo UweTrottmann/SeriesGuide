@@ -59,6 +59,9 @@ public class PeopleListHelper {
             Timber.d("populateCast: container reference gone, aborting");
             return false;
         }
+        if (credits.id == null) {
+            return false; // missing required values
+        }
 
         peopleContainer.removeAllViews();
 
@@ -106,6 +109,9 @@ public class PeopleListHelper {
             // nothing we can do, view is already gone
             Timber.d("populateCrew: container reference gone, aborting");
             return false;
+        }
+        if (credits.id == null) {
+            return false; // missing required values
         }
 
         peopleContainer.removeAllViews();
