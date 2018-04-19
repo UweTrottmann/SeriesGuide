@@ -14,6 +14,11 @@ Version 42
 * 🔨 Calendar: display correct date in headers on Android 5.1 and older.
 * 🔨 Android 8: Fix occasional crash when calculating season unwatched count.
 
+#### 42.1
+*(2018-04-19)*
+
+* 🔨 Do not crash when viewing show and cast or crew members have no id.
+
 #### 42
 *(2018-03-28)*
 
