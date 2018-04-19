@@ -279,7 +279,6 @@ public class HexagonListsSync {
 
         while (listsQuery.moveToNext()) {
             SgList list = new SgList();
-            lists.add(list);
             // add list properties
             String listId = listsQuery.getString(ListsTools.Query.LIST_ID);
             String listName = listsQuery.getString(ListsTools.Query.NAME);
@@ -299,6 +298,8 @@ public class HexagonListsSync {
             } else {
                 Timber.d("uploadAll: no items to upload for list %s.", listId);
             }
+
+            lists.add(list);
 
             if (lists.size() == LISTS_MAX_BATCH_SIZE || listsQuery.isLast()) {
                 if (!doUploadSomeLists(listsWrapper)) {
