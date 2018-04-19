@@ -27,8 +27,8 @@ buildscript {
             'threetenABP': '1.0.6', // github.com/UweTrottmann/ThreeTenABP/blob/master/CHANGELOG.md
 
             // version 15xxxyy -> min SDK 15, release xxx, build yy
-            'code': 1503006,
-            'name': '42.1',
+            'code': 1503007,
+            'name': '42.2',
     ]
 
     repositories {
