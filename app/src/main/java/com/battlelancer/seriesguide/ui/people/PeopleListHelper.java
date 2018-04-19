@@ -24,27 +24,27 @@ import timber.log.Timber;
  */
 public class PeopleListHelper {
 
-    public static void populateShowCast(Activity activity,
+    public static boolean populateShowCast(Activity activity,
             ViewGroup peopleContainer, Credits credits, String logCategory) {
-        populateCast(activity, peopleContainer, credits, PeopleActivity.MediaType.SHOW,
+        return populateCast(activity, peopleContainer, credits, PeopleActivity.MediaType.SHOW,
                 logCategory);
     }
 
-    public static void populateShowCrew(Activity activity,
+    public static boolean populateShowCrew(Activity activity,
             ViewGroup peopleContainer, Credits credits, String logCategory) {
-        populateCrew(activity, peopleContainer, credits, PeopleActivity.MediaType.SHOW,
+        return populateCrew(activity, peopleContainer, credits, PeopleActivity.MediaType.SHOW,
                 logCategory);
     }
 
-    public static void populateMovieCast(Activity activity,
+    public static boolean populateMovieCast(Activity activity,
             ViewGroup peopleContainer, Credits credits, String logCategory) {
-        populateCast(activity, peopleContainer, credits, PeopleActivity.MediaType.MOVIE,
+        return populateCast(activity, peopleContainer, credits, PeopleActivity.MediaType.MOVIE,
                 logCategory);
     }
 
-    public static void populateMovieCrew(Activity activity,
+    public static boolean populateMovieCrew(Activity activity,
             ViewGroup peopleContainer, Credits credits, String logCategory) {
-        populateCrew(activity, peopleContainer, credits, PeopleActivity.MediaType.MOVIE,
+        return populateCrew(activity, peopleContainer, credits, PeopleActivity.MediaType.MOVIE,
                 logCategory);
     }
 
@@ -52,12 +52,12 @@ public class PeopleListHelper {
      * Add views for at most three cast members to the given {@link android.view.ViewGroup} and a
      * "Show all" link if there are more.
      */
-    private static void populateCast(Activity activity, ViewGroup peopleContainer, Credits credits,
-            PeopleActivity.MediaType mediaType, String logCategory) {
+    private static boolean populateCast(Activity activity, ViewGroup peopleContainer,
+            Credits credits, PeopleActivity.MediaType mediaType, String logCategory) {
         if (peopleContainer == null) {
             // nothing we can do, view is already gone
             Timber.d("populateCast: container reference gone, aborting");
-            return;
+            return false;
         }
 
         peopleContainer.removeAllViews();
@@ -65,8 +65,14 @@ public class PeopleListHelper {
         // show at most 3 cast members
         LayoutInflater inflater = LayoutInflater.from(peopleContainer.getContext());
         List<CastMember> cast = credits.cast;
-        for (int i = 0; i < Math.min(3, cast.size()); i++) {
-            CastMember castMember = cast.get(i);
+        int added = 0;
+        for (CastMember castMember : cast) {
+            if (added == 3) {
+                break; // not more than 3
+            }
+            if (castMember.id == null) {
+                continue; // missing required values
+            }
 
             View personView = createPersonView(activity, inflater, peopleContainer, castMember.name,
                     castMember.character, castMember.profile_path);
@@ -76,6 +82,7 @@ public class PeopleListHelper {
             );
 
             peopleContainer.addView(personView);
+            added++;
         }
 
         if (cast.size() > 3) {
@@ -84,18 +91,21 @@ public class PeopleListHelper {
                             PeopleActivity.PeopleType.CAST, logCategory)
             );
         }
+
+        return added > 0;
     }
 
     /**
      * Add views for at most three crew members to the given {@link android.view.ViewGroup} and a
      * "Show all" link if there are more.
      */
-    private static void populateCrew(Activity activity, ViewGroup peopleContainer, Credits credits,
+    private static boolean populateCrew(Activity activity, ViewGroup peopleContainer,
+            Credits credits,
             PeopleActivity.MediaType mediaType, String logCategory) {
         if (peopleContainer == null) {
             // nothing we can do, view is already gone
             Timber.d("populateCrew: container reference gone, aborting");
-            return;
+            return false;
         }
 
         peopleContainer.removeAllViews();
@@ -103,17 +113,24 @@ public class PeopleListHelper {
         // show at most 3 crew members
         LayoutInflater inflater = LayoutInflater.from(peopleContainer.getContext());
         List<CrewMember> crew = credits.crew;
-        for (int i = 0; i < Math.min(3, crew.size()); i++) {
-            CrewMember castMember = crew.get(i);
+        int added = 0;
+        for (CrewMember crewMember : crew) {
+            if (added == 3) {
+                break; // not more than 3
+            }
+            if (crewMember.id == null) {
+                continue; // missing required values
+            }
 
-            View personView = createPersonView(activity, inflater, peopleContainer, castMember.name,
-                    castMember.job, castMember.profile_path);
+            View personView = createPersonView(activity, inflater, peopleContainer, crewMember.name,
+                    crewMember.job, crewMember.profile_path);
             personView.setOnClickListener(
                     new OnPersonClickListener(activity, mediaType, credits.id,
-                            PeopleActivity.PeopleType.CREW, castMember.id, logCategory)
+                            PeopleActivity.PeopleType.CREW, crewMember.id, logCategory)
             );
 
             peopleContainer.addView(personView);
+            added++;
         }
 
         if (crew.size() > 3) {
@@ -122,6 +139,8 @@ public class PeopleListHelper {
                             PeopleActivity.PeopleType.CREW, logCategory)
             );
         }
+
+        return added > 0;
     }
 
     private static View createPersonView(Context context, LayoutInflater inflater,

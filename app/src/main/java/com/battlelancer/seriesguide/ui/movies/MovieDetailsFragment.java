@@ -588,19 +588,19 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
 
         // cast members
-        if (credits.cast == null || credits.cast.size() == 0) {
-            setCastVisibility(false);
-        } else {
+        if (credits.cast != null && credits.cast.size() != 0
+                && PeopleListHelper.populateMovieCast(getActivity(), containerCast, credits, TAG)) {
             setCastVisibility(true);
-            PeopleListHelper.populateMovieCast(getActivity(), containerCast, credits, TAG);
+        } else {
+            setCastVisibility(false);
         }
 
         // crew members
-        if (credits.crew == null || credits.crew.size() == 0) {
-            setCrewVisibility(false);
-        } else {
+        if (credits.crew != null && credits.crew.size() != 0
+                && PeopleListHelper.populateMovieCrew(getActivity(), containerCrew, credits, TAG)) {
             setCrewVisibility(true);
-            PeopleListHelper.populateMovieCrew(getActivity(), containerCrew, credits, TAG);
+        } else {
+            setCrewVisibility(false);
         }
     }
 
