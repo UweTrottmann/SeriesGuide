@@ -37,7 +37,7 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.1' // libraries, SeriesGuide
+        classpath 'com.android.tools.build:gradle:3.1.2' // libraries, SeriesGuide
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.3' // SeriesGuide
