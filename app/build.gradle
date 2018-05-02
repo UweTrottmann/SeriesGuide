@@ -117,7 +117,7 @@ dependencies {
     implementation "com.android.support:design:${versions.supportLibrary}"
     implementation "com.android.support:palette-v7:${versions.supportLibrary}"
     implementation "com.android.support:recyclerview-v7:${versions.supportLibrary}"
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation "android.arch.lifecycle:extensions:${versions.lifecycle}"
     kapt "android.arch.lifecycle:compiler:${versions.lifecycle}"
 
