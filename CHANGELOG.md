@@ -5,6 +5,16 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 43
+----------
+*(in development)*
+
+#### 43-beta1
+*(TBD)*
+
+* 🔧 Episode history (if not connected to trakt): display up to 50 items instead of the last 24 hours.
+* 📝 Latest translations from crowdin. Added Galician.
+
 Version 42
 ----------
 *(2018-03-28)*
