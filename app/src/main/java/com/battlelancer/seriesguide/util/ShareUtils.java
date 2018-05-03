@@ -21,12 +21,12 @@ public class ShareUtils {
 
     protected static final String TAG = "ShareUtils";
 
-    public static void shareEpisode(Activity activity, int showTvdbId, int episodeTvdbId,
-            int seasonNumber, int episodeNumber,
+    public static void shareEpisode(Activity activity, int showTvdbId, int seasonTvdbId,
+            int episodeTvdbId, int seasonNumber, int episodeNumber,
             String showTitle, String episodeTitle, @Nullable String languageCode) {
         String message = showTitle + " - " + TextTools.getNextEpisodeString(activity, seasonNumber,
                 episodeNumber, episodeTitle) + " "
-                + TvdbLinks.episode(showTvdbId, episodeTvdbId, languageCode);
+                + TvdbLinks.episode(showTvdbId, seasonTvdbId, episodeTvdbId, languageCode);
         startShareIntentChooser(activity, message, R.string.share_episode);
     }
 
