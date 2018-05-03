@@ -4,6 +4,9 @@ This is a [GitHub Pages](https://help.github.com/categories/github-pages-basics/
 
 Note the special instructions for [GitHub Pages](https://jekyllrb.com/docs/github-pages/).
 
+https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll
+
+
 ```
 # update gems
 bundle update
