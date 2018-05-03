@@ -70,8 +70,9 @@
   <string name="refresh">Обновить</string>
   <plurals name="replies_plural">
     <item quantity="one">%d ответ</item>
-    <item quantity="few">%d ответа(ов)</item>
-    <item quantity="other">%d ответа(ов)</item>
+    <item quantity="few">%d ответа</item>
+    <item quantity="many">%d ответов</item>
+    <item quantity="other">%d ответов</item>
   </plurals>
   <!-- Metadata -->
   <string name="episode_number_disk">DVD</string>
@@ -169,16 +170,19 @@
   <plurals name="other_episodes_plural">
     <item quantity="one">%d другой эпизод</item>
     <item quantity="few">%d других эпизода</item>
+    <item quantity="many">%d других эпизодов</item>
     <item quantity="other">%d других эпизодов</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
     <item quantity="one">%d будет выпущен</item>
     <item quantity="few">%d будет выпущено</item>
+    <item quantity="many">%d будет выпущено</item>
     <item quantity="other">%d будет выпущено</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
-    <item quantity="one">%d остался</item>
+    <item quantity="one">%d осталось</item>
     <item quantity="few">%d осталось</item>
+    <item quantity="many">%d осталось</item>
     <item quantity="other">%d осталось</item>
   </plurals>
   <!-- Add show -->
@@ -193,7 +197,7 @@
   <string name="add_started">%s скоро появится в вашем списке.</string>
   <string name="add_error">Не удалось добавить %s.</string>
   <string name="add_already_exists">%s уже есть в вашем списке.</string>
-  <string name="title_new_episodes">New episodes</string>
+  <string name="title_new_episodes">Новые эпизоды</string>
   <string name="recommended">Рекомендуемые</string>
   <string name="watched_shows">Просмотрено</string>
   <string name="shows_collection">Коллекция</string>
@@ -245,16 +249,19 @@
   <plurals name="days_plural">
     <item quantity="one">%d день</item>
     <item quantity="few">%d дня</item>
+    <item quantity="many">%d дней</item>
     <item quantity="other">%d дней</item>
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d час</item>
     <item quantity="few">%d часа</item>
+    <item quantity="many">%d часов</item>
     <item quantity="other">%d часов</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d минута</item>
     <item quantity="few">%d минуты</item>
+    <item quantity="many">%d минут</item>
     <item quantity="other">%d минут</item>
   </plurals>
   <!-- Features -->
@@ -316,6 +323,7 @@
   <plurals name="votes">
     <item quantity="one">%d голос</item>
     <item quantity="few">%d голоса</item>
+    <item quantity="many">%d голосов</item>
     <item quantity="other">%d голосов</item>
   </plurals>
   <!-- Check Ins -->
@@ -343,22 +351,25 @@
   <string name="pref_seasonsorting">Сортировка сезонов по&#8230;</string>
   <string name="pref_episodesorting">Сортировка эпизодов по&#8230;</string>
   <string name="pref_language">Предпочтительный язык контента</string>
-  <string name="pref_language_fallback">Alternative language</string>
+  <string name="pref_language_fallback">Альтернативный язык</string>
   <string name="pref_updatewifionly">Картинки только через Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Чтобы сократить расходы на передачу данных, не скачивать через мобильные сети</string>
   <plurals name="days_before_plural">
     <item quantity="one">за %d дн. до</item>
     <item quantity="few">за %d дн. до</item>
-    <item quantity="other">%d дней до</item>
+    <item quantity="many">за %d дней до</item>
+    <item quantity="other">за %d дней до</item>
   </plurals>
   <plurals name="hours_before_plural">
     <item quantity="one">за %d ч. до</item>
     <item quantity="few">за %d ч. до</item>
+    <item quantity="many">за %d ч. до</item>
     <item quantity="other">за %d ч. до</item>
   </plurals>
   <plurals name="minutes_before_plural">
     <item quantity="one">за %d мин. до</item>
     <item quantity="few">за %d мин. до</item>
+    <item quantity="many">за %d мин. до</item>
     <item quantity="other">за %d мин. до</item>
   </plurals>
   <!-- About screen -->

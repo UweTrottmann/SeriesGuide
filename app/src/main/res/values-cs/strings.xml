@@ -71,6 +71,7 @@
   <plurals name="replies_plural">
     <item quantity="one">%d odpověď</item>
     <item quantity="few">%d odpovědi</item>
+    <item quantity="many">%d replies</item>
     <item quantity="other">%d odpovědi</item>
   </plurals>
   <!-- Metadata -->
@@ -169,16 +170,19 @@
   <plurals name="other_episodes_plural">
     <item quantity="one">%d další epizoda</item>
     <item quantity="few">%d další epizody</item>
+    <item quantity="many">%d other episodes</item>
     <item quantity="other">%d dalších epizod</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
     <item quantity="one">%d neodvysílaná</item>
     <item quantity="few">%d neodvysílané</item>
+    <item quantity="many">%d to be released</item>
     <item quantity="other">%d neodvysílaných</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
     <item quantity="one">%d zbývající</item>
     <item quantity="few">%d zbývající</item>
+    <item quantity="many">%d remaining</item>
     <item quantity="other">%d zbývajících</item>
   </plurals>
   <!-- Add show -->
@@ -193,7 +197,7 @@
   <string name="add_started">%s se brzy objeví ve Vašem seznamu pořadů.</string>
   <string name="add_error">Nelze přidat %s.</string>
   <string name="add_already_exists">%s už je ve Vašem seznamu pořadů.</string>
-  <string name="title_new_episodes">New episodes</string>
+  <string name="title_new_episodes">Nové epizody</string>
   <string name="recommended">Doporučené</string>
   <string name="watched_shows">Zhlédnuto</string>
   <string name="shows_collection">Sbírka</string>
@@ -245,16 +249,19 @@
   <plurals name="days_plural">
     <item quantity="one">%d den</item>
     <item quantity="few">%d den</item>
+    <item quantity="many">%d days</item>
     <item quantity="other">%d dní</item>
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d hodina</item>
     <item quantity="few">%d hodina</item>
+    <item quantity="many">%d hours</item>
     <item quantity="other">%d hodin</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d minuta</item>
     <item quantity="few">%d minut</item>
+    <item quantity="many">%d minutes</item>
     <item quantity="other">%d minut</item>
   </plurals>
   <!-- Features -->
@@ -316,6 +323,7 @@
   <plurals name="votes">
     <item quantity="one">%d hlas</item>
     <item quantity="few">%d hlasů</item>
+    <item quantity="many">%d votes</item>
     <item quantity="other">%d hlasů</item>
   </plurals>
   <!-- Check Ins -->
@@ -343,22 +351,25 @@
   <string name="pref_seasonsorting">Řadit série dle&#8230;</string>
   <string name="pref_episodesorting">Řadit epizody dle&#8230;</string>
   <string name="pref_language">Preferovaný jazyk obsahu</string>
-  <string name="pref_language_fallback">Alternative language</string>
+  <string name="pref_language_fallback">Alternativní jazyk</string>
   <string name="pref_updatewifionly">Obrázky pouze přes Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Omezí přenos dat, nebude se stahovat před mobilní data nebo omezená připojení</string>
   <plurals name="days_before_plural">
     <item quantity="one">%d den předem</item>
     <item quantity="few">%d dny předem</item>
+    <item quantity="many">%d days before</item>
     <item quantity="other">%d dní předem</item>
   </plurals>
   <plurals name="hours_before_plural">
     <item quantity="one">%d hodina předem</item>
     <item quantity="few">%d hodiny předem</item>
+    <item quantity="many">%d hours before</item>
     <item quantity="other">%d hodin předem</item>
   </plurals>
   <plurals name="minutes_before_plural">
     <item quantity="one">%d minuta předem</item>
     <item quantity="few">%d minuty předem</item>
+    <item quantity="many">%d minutes before</item>
     <item quantity="other">%d minut předem</item>
   </plurals>
   <!-- About screen -->
@@ -407,7 +418,7 @@
   <string name="clear_cache_summary">Odstranit všechny stažené obrázky ze zařízení</string>
   <string name="pref_ganalyticssummary">Odeslat anonymní statistiky službě Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Include descriptions, details, ratings</string>
+  <string name="backup_full_dump">Zahrnout popisy, detaily, hodnocení</string>
   <string name="backup_path">Složka se zálohou</string>
   <string name="backup_version">Verze databáze</string>
   <string name="backup_failed_file_access">Nelze zálohovat. Záložní soubor nebyl nalezen nebo není přístupný.</string>
@@ -452,7 +463,7 @@
   <string name="pref_notifications_treshold">Čas upozornění</string>
   <string name="pref_notifications_select_shows">Vybrat pořad</string>
   <string name="pref_notifications_select_shows_summary">Seriály, pro které byly povoleny upozornění (%d)</string>
-  <string name="pref_notification_channel_errors">Errors</string>
+  <string name="pref_notification_channel_errors">Chyby</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (malý)</string>
   <!-- List Widget -->

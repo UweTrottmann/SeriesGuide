@@ -20,7 +20,7 @@
   <string name="season_number">Сезона %d</string>
   <string name="seasons">Сезони</string>
   <string name="specialseason">Специјални епизоди</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">Оцени</string>
   <!-- Descriptions -->
   <string name="description_overview">Преглед</string>
   <string name="description_poster">Прикажи постер</string>
@@ -34,9 +34,9 @@
   <string name="web_search">Веб пребарување</string>
   <string name="add_to_homescreen">Shortcut</string>
   <string name="action_open">Отвори</string>
-  <string name="sync_manually">Sync manually</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
-  <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="sync_manually">Синхронизирај мануелно</string>
+  <string name="sync_and_update">Синхронизирај &amp; Обнови</string>
+  <string name="sync_and_download_all">Синхронизирај &amp; Преземи сѐ</string>
   <!-- Search -->
   <string name="clear_search_history">Избриши историја на пребарување</string>
   <string name="search_hint">Пребарај епизоди</string>
@@ -46,7 +46,7 @@
   <string name="norating">Непознато</string>
   <string name="unknown">Непознато</string>
   <string name="offline">Поврзи се на интернет, после пробај повторно.</string>
-  <string name="app_not_available">No app available to handle this</string>
+  <string name="app_not_available">Нема апликација што може да го поддржи ова</string>
   <string name="people_empty">Никој не е тука? Пробајте повторно.</string>
   <string name="database_error">Не е возможно да ги променити податоците.</string>
   <string name="reinstall_info">Try to backup in Settings, re-install and restore</string>
