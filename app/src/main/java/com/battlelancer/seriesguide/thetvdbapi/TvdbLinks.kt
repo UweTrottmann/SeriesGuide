@@ -30,22 +30,21 @@ class TvdbLinks {
                 "ko" to 32
         )
 
+        // TODO ut: remove once sure that linking to translation will no longer be possible
         private fun getLanguageId(languageCode: String?): Int {
             return languageCodeToId[languageCode] ?: 7 // fall back to 'en'
         }
 
         @JvmStatic
         fun show(showTvdbId: Int, languageCode: String?): String {
-            val languageId = getLanguageId(languageCode)
-            return "https://thetvdb.com/?tab=series&id=$showTvdbId&lid=$languageId"
+//            val languageId = getLanguageId(languageCode)
+            return "https://www.thetvdb.com/series/$showTvdbId"
         }
 
         @JvmStatic
-        fun episode(showTvdbId: Int, seasonTvdbId: Int, episodeTvdbId: Int,
-                languageCode: String?): String {
-            val languageId = getLanguageId(languageCode)
-            return "https://thetvdb.com/?tab=episode" +
-                    "&seriesid=$showTvdbId&seasonid=$seasonTvdbId&id=$episodeTvdbId&lid=$languageId"
+        fun episode(showTvdbId: Int, episodeTvdbId: Int, languageCode: String?): String {
+//            val languageId = getLanguageId(languageCode)
+            return "https://www.thetvdb.com/series/$showTvdbId/episodes/$episodeTvdbId"
         }
     }
 

@@ -38,39 +38,38 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
-import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader;
+import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeDetailsTask;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
+import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
+import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.TraktRatingsTask;
+import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.HelpActivity;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
-import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
-import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
-import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
-import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
-import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
+import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.traktapi.TraktRatingsTask;
-import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.FeedbackView;
@@ -420,13 +419,12 @@ public class OverviewFragment extends Fragment implements
         if (!isShowDataAvailable || !isEpisodeDataAvailable) {
             return;
         }
-        int seasonTvdbId = currentEpisodeCursor.getInt(EpisodeQuery.SEASON_ID);
         int seasonNumber = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
         int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
         String episodeTitle = currentEpisodeCursor.getString(EpisodeQuery.TITLE);
         String languageCode = showCursor.getString(ShowQuery.SHOW_LANGUAGE);
 
-        ShareUtils.shareEpisode(getActivity(), showTvdbId, seasonTvdbId, currentEpisodeTvdbId,
+        ShareUtils.shareEpisode(getActivity(), showTvdbId, currentEpisodeTvdbId,
                 seasonNumber, episodeNumber, showTitle, episodeTitle, languageCode);
 
         Utils.trackAction(getActivity(), TAG, "Share");
@@ -455,24 +453,23 @@ public class OverviewFragment extends Fragment implements
     interface EpisodeQuery {
 
         String[] PROJECTION = new String[] {
-                Episodes._ID,
+                Episodes._ID, // 0
                 Episodes.NUMBER,
                 Episodes.ABSOLUTE_NUMBER,
                 Episodes.DVDNUMBER,
-                Episodes.SEASON,
-                Seasons.REF_SEASON_ID,
+                Episodes.SEASON, // 4
                 Episodes.IMDBID,
                 Episodes.TITLE,
                 Episodes.OVERVIEW,
-                Episodes.FIRSTAIREDMS,
+                Episodes.FIRSTAIREDMS, // 8
                 Episodes.GUESTSTARS,
                 Episodes.RATING_GLOBAL,
                 Episodes.RATING_VOTES,
-                Episodes.RATING_USER,
+                Episodes.RATING_USER, // 12
                 Episodes.WATCHED,
                 Episodes.COLLECTED,
                 Episodes.IMAGE,
-                Episodes.LAST_EDITED,
+                Episodes.LAST_EDITED, // 16
                 Episodes.LAST_UPDATED
         };
 
@@ -481,20 +478,19 @@ public class OverviewFragment extends Fragment implements
         int ABSOLUTE_NUMBER = 2;
         int DVD_NUMBER = 3;
         int SEASON = 4;
-        int SEASON_ID = 5;
-        int IMDBID = 6;
-        int TITLE = 7;
-        int OVERVIEW = 8;
-        int FIRST_RELEASE_MS = 9;
-        int GUESTSTARS = 10;
-        int RATING_GLOBAL = 11;
-        int RATING_VOTES = 12;
-        int RATING_USER = 13;
-        int WATCHED = 14;
-        int COLLECTED = 15;
-        int IMAGE = 16;
-        int LAST_EDITED = 17;
-        int LAST_UPDATED = 18;
+        int IMDBID = 5;
+        int TITLE = 6;
+        int OVERVIEW = 7;
+        int FIRST_RELEASE_MS = 8;
+        int GUESTSTARS = 9;
+        int RATING_GLOBAL = 10;
+        int RATING_VOTES = 11;
+        int RATING_USER = 12;
+        int WATCHED = 13;
+        int COLLECTED = 14;
+        int IMAGE = 15;
+        int LAST_EDITED = 16;
+        int LAST_UPDATED = 17;
     }
 
     interface ShowQuery {
@@ -765,8 +761,7 @@ public class OverviewFragment extends Fragment implements
 
         // TVDb button
         final int episodeTvdbId = currentEpisodeCursor.getInt(EpisodeQuery._ID);
-        final int seasonTvdbId = currentEpisodeCursor.getInt(EpisodeQuery.SEASON_ID);
-        String uri = TvdbLinks.episode(showTvdbId, seasonTvdbId, episodeTvdbId, languageCode);
+        String uri = TvdbLinks.episode(showTvdbId, episodeTvdbId, languageCode);
         ViewTools.openUriOnClick(buttonTvdb, uri, TAG, "TVDb");
     }
 

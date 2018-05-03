@@ -37,7 +37,6 @@ import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -90,7 +89,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private boolean isInMultipane;
     private int episodeTvdbId;
     private int showTvdbId;
-    private int seasonTvdbId;
     private int seasonNumber;
     private int episodeNumber;
     private int episodeFlag;
@@ -579,9 +577,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         ServiceUtils.setUpImdbButton(imdbId, imdbButton, TAG);
 
         // TVDb
-        seasonTvdbId = cursor.getInt(DetailsQuery.SEASON_ID);
-        String tvdbUri = TvdbLinks
-                .episode(showTvdbId, seasonTvdbId, episodeTvdbId, languageCode);
+        String tvdbUri = TvdbLinks.episode(showTvdbId, episodeTvdbId, languageCode);
         ViewTools.openUriOnClick(tvdbButton, tvdbUri, TAG, "TVDb");
         // trakt comments
         commentsButton.setOnClickListener(new OnClickListener() {
@@ -626,7 +622,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         if (episodeTitle == null || showTitle == null) {
             return;
         }
-        ShareUtils.shareEpisode(requireActivity(), showTvdbId, seasonTvdbId, episodeTvdbId,
+        ShareUtils.shareEpisode(requireActivity(), showTvdbId, episodeTvdbId,
                 seasonNumber, episodeNumber, showTitle, episodeTitle, languageCode);
         Utils.trackAction(requireContext(), TAG, "Share");
     }
@@ -718,59 +714,57 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     interface DetailsQuery {
 
         String[] PROJECTION = new String[]{
-                Tables.EPISODES + "." + Episodes._ID,
+                Tables.EPISODES + "." + Episodes._ID, // 0
                 Episodes.NUMBER,
                 Episodes.ABSOLUTE_NUMBER,
                 Episodes.DVDNUMBER,
-                Seasons.REF_SEASON_ID,
-                Episodes.SEASON,
+                Episodes.SEASON, // 4
                 Episodes.IMDBID,
                 Episodes.TITLE,
                 Episodes.OVERVIEW,
-                Episodes.FIRSTAIREDMS,
+                Episodes.FIRSTAIREDMS, // 8
                 Episodes.DIRECTORS,
                 Episodes.GUESTSTARS,
                 Episodes.WRITERS,
-                Episodes.IMAGE,
+                Episodes.IMAGE, // 12
                 Tables.EPISODES + "." + Episodes.RATING_GLOBAL,
                 Episodes.RATING_VOTES,
                 Episodes.RATING_USER,
-                Episodes.WATCHED,
+                Episodes.WATCHED, // 16
                 Episodes.COLLECTED,
                 Episodes.LAST_EDITED,
                 Episodes.LAST_UPDATED,
-                Shows.REF_SHOW_ID,
+                Shows.REF_SHOW_ID, // 20
                 Shows.IMDBID,
                 Shows.TITLE,
                 Shows.RUNTIME,
-                Shows.LANGUAGE
+                Shows.LANGUAGE // 24
         };
 
         int _ID = 0;
         int NUMBER = 1;
         int NUMBER_ABSOLUTE = 2;
         int NUMBER_DVD = 3;
-        int SEASON_ID = 4;
-        int SEASON = 5;
-        int IMDBID = 6;
-        int TITLE = 7;
-        int OVERVIEW = 8;
-        int FIRST_RELEASE_MS = 9;
-        int DIRECTORS = 10;
-        int GUESTSTARS = 11;
-        int WRITERS = 12;
-        int IMAGE = 13;
-        int RATING_GLOBAL = 14;
-        int RATING_VOTES = 15;
-        int RATING_USER = 16;
-        int WATCHED = 17;
-        int COLLECTED = 18;
-        int LAST_EDITED = 19;
-        int LAST_UPDATED = 20;
-        int SHOW_ID = 21;
-        int SHOW_IMDBID = 22;
-        int SHOW_TITLE = 23;
-        int SHOW_RUNTIME = 24;
-        int SHOW_LANGUAGE = 25;
+        int SEASON = 4;
+        int IMDBID = 5;
+        int TITLE = 6;
+        int OVERVIEW = 7;
+        int FIRST_RELEASE_MS = 8;
+        int DIRECTORS = 9;
+        int GUESTSTARS = 10;
+        int WRITERS = 11;
+        int IMAGE = 12;
+        int RATING_GLOBAL = 13;
+        int RATING_VOTES = 14;
+        int RATING_USER = 15;
+        int WATCHED = 16;
+        int COLLECTED = 17;
+        int LAST_EDITED = 18;
+        int LAST_UPDATED = 19;
+        int SHOW_ID = 20;
+        int SHOW_IMDBID = 21;
+        int SHOW_TITLE = 22;
+        int SHOW_RUNTIME = 23;
+        int SHOW_LANGUAGE = 24;
     }
 }
