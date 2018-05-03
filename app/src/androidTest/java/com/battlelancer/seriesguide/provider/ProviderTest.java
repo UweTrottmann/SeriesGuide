@@ -32,12 +32,15 @@ import com.battlelancer.seriesguide.util.tasks.AddListTask;
 import com.uwetrottmann.thetvdb.entities.Episode;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.util.ArrayList;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 public class ProviderTest {
+
+    private static final String PREFIX = "test.";
 
     private static final Show SHOW;
     private static final Season SEASON;
@@ -76,7 +79,15 @@ public class ProviderTest {
 
     @Rule
     public ProviderTestRule providerRule = new ProviderTestRule.Builder(SeriesGuideProvider.class,
-            SgApp.CONTENT_AUTHORITY).build();
+            SgApp.CONTENT_AUTHORITY)
+            .setPrefix(PREFIX)
+            .build();
+
+    @Before
+    public void setUp() throws Exception {
+        InstrumentationRegistry.getTargetContext()
+                .deleteDatabase(PREFIX + SeriesGuideDatabase.DATABASE_NAME);
+    }
 
     @Test
     public void showDefaultValues() throws Exception {
@@ -121,7 +132,6 @@ public class ProviderTest {
         assertNotNullValue(query, Shows.LANGUAGE);
         assertDefaultValue(query, Shows.UNWATCHED_COUNT, DBUtils.UNKNOWN_UNWATCHED_COUNT);
         assertDefaultValue(query, Shows.NOTIFY, 1);
-
 
         query.close();
     }
