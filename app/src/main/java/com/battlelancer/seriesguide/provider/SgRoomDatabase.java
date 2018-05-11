@@ -12,9 +12,9 @@ import com.battlelancer.seriesguide.model.SgActivity;
 import com.battlelancer.seriesguide.model.SgEpisode;
 import com.battlelancer.seriesguide.model.SgJob;
 import com.battlelancer.seriesguide.model.SgList;
+import com.battlelancer.seriesguide.model.SgListItem;
 import com.battlelancer.seriesguide.model.SgMovie;
 import com.battlelancer.seriesguide.model.SgSeason;
-import com.battlelancer.seriesguide.model.SgListItem;
 import com.battlelancer.seriesguide.model.SgShow;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -46,7 +46,13 @@ public abstract class SgRoomDatabase extends RoomDatabase {
                 if (result == null) { // Second check (with locking)
                     result = instance = Room.databaseBuilder(context.getApplicationContext(),
                             SgRoomDatabase.class, SeriesGuideDatabase.DATABASE_NAME)
-                            .addMigrations(MIGRATION_42_43)
+                            .addMigrations(
+                                    MIGRATION_42_43,
+                                    MIGRATION_41_43,
+                                    MIGRATION_40_43,
+                                    MIGRATION_39_43,
+                                    MIGRATION_38_43
+                            )
                             .addCallback(CALLBACK)
                             .build();
                 }
@@ -114,6 +120,44 @@ public abstract class SgRoomDatabase extends RoomDatabase {
                     + "ON `episodes` (`series_id`)");
             database.execSQL("CREATE  INDEX `index_listitems_list_id` "
                     + "ON `listitems` (`list_id`)");
+        }
+    };
+
+    // can not update pre-Room versions incrementally, always need to update to first Room version
+    // so only provide upgrade support from version 38 (used in SG 26 from end 2015)
+    private static final Migration MIGRATION_41_43 = new Migration(
+            SeriesGuideDatabase.DBVER_41_EPISODE_LAST_UPDATED, VERSION_43_ROOM) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            SeriesGuideDatabase.upgradeToFortyTwo(database);
+            MIGRATION_42_43.migrate(database);
+        }
+    };
+
+    private static final Migration MIGRATION_40_43 = new Migration(
+            SeriesGuideDatabase.DBVER_40_NOTIFY_PER_SHOW, VERSION_43_ROOM) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            SeriesGuideDatabase.upgradeToFortyOne(database);
+            MIGRATION_41_43.migrate(database);
+        }
+    };
+
+    private static final Migration MIGRATION_39_43 = new Migration(
+            SeriesGuideDatabase.DBVER_39_SHOW_LAST_WATCHED, VERSION_43_ROOM) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            SeriesGuideDatabase.upgradeToForty(database);
+            MIGRATION_40_43.migrate(database);
+        }
+    };
+
+    private static final Migration MIGRATION_38_43 = new Migration(
+            SeriesGuideDatabase.DBVER_38_SHOW_TRAKT_ID, VERSION_43_ROOM) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            SeriesGuideDatabase.upgradeToThirtyNine(database);
+            MIGRATION_39_43.migrate(database);
         }
     };
 }
