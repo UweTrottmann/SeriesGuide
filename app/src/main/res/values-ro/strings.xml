@@ -46,12 +46,12 @@
   <string name="norating">n/a</string>
   <string name="unknown">necunoscut</string>
   <string name="offline">Conectați-vă la o rețea, apoi încercați din nou.</string>
-  <string name="app_not_available">No app available to handle this</string>
+  <string name="app_not_available">Nu exista aplicatii instalate pentru a utiliza aceasta actiune</string>
   <string name="people_empty">Nimeni aici?! Apăsați să încercați din nou.</string>
   <string name="database_error">Datele nu pot fi modificate.</string>
   <string name="reinstall_info">Încercați sa creați o copie de rezerva în Setări, reinstalati și restaurati.</string>
   <string name="api_error_generic">Nu s-a putut comunica cu %s. Încercați mai tarziu.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">Eroare: %s</string>
   <!-- Sharing -->
   <string name="share">Distribuie</string>
   <string name="share_show">Distribuie emisiunea</string>
@@ -78,7 +78,7 @@
   <string name="episode_firstaired">Data de lansare</string>
   <string name="episode_firstaired_unknown">Data de lansare necunoscută</string>
   <string name="episode_dvdnumber">Episod DVD</string>
-  <string name="original_release">Release original</string>
+  <string name="original_release">Lansare original</string>
   <string name="show_genres">Genuri</string>
   <string name="show_contentrating">Punctajul conţinutului</string>
   <string name="show_release_times">Ora de lansare</string>
@@ -90,8 +90,8 @@
   <string name="no_translation">Nu există nici o traducere în %1$s disponibilă pe %2$s.</string>
   <string name="no_translation_title">Ne tradus</string>
   <string name="no_spoilers">Unele detalii sunt ascunse pentru a evita spoilere. Pentru a nu folosi aceasta protecție mergeți în Setări.</string>
-  <string name="format_source">Source: %s</string>
-  <string name="format_last_edited">Last edited: %s</string>
+  <string name="format_source">Sursa: %s</string>
+  <string name="format_last_edited">Ultima editare: %s</string>
   <!-- Date and Time -->
   <string name="today">astăzi</string>
   <string name="now">acum</string>
@@ -193,11 +193,11 @@
   <string name="add_started">%s va apărea în lista de emisiuni în scurt timp.</string>
   <string name="add_error">Nu s-a putut adăuga %s.</string>
   <string name="add_already_exists">%s este deja în lista de emisiuni.</string>
-  <string name="title_new_episodes">New episodes</string>
+  <string name="title_new_episodes">Episoade noi</string>
   <string name="recommended">Recomandat</string>
   <string name="watched_shows">Vizionat</string>
   <string name="shows_collection">Colecție</string>
-  <string name="watchlist">Watchlist</string>
+  <string name="watchlist">Listă vizionate</string>
   <!-- Lists -->
   <string name="first_list">Prima listă</string>
   <string name="list_add">Adăugați listă</string>
@@ -217,7 +217,7 @@
   <string name="title_disc_releases">Lansări pe disc</string>
   <string name="movies_in_theatres">În cinematografe</string>
   <string name="movies_collection">Colecție</string>
-  <string name="movies_watchlist">Watchlist</string>
+  <string name="movies_watchlist">Listă vizionate</string>
   <string name="watchlist_add">Adaugă în watchlist</string>
   <string name="watchlist_remove">Elimina din watchlist</string>
   <string name="watchlist_added">Adăugat în watchlist</string>
@@ -261,7 +261,7 @@
   <string name="feature_supported">Suportate</string>
   <string name="feature_not_supported">Fără suport</string>
   <string name="feature_history">Istoricul personal și al prietenilor</string>
-  <string name="feature_comments">Post comments</string>
+  <string name="feature_comments">Postează comentarii</string>
   <string name="feature_sync">Sincronizare</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Experimental</string>
@@ -343,7 +343,7 @@
   <string name="pref_seasonsorting">Sortare sezoane după&#8230;</string>
   <string name="pref_episodesorting">Sortare episoade după&#8230;</string>
   <string name="pref_language">Limba preferată</string>
-  <string name="pref_language_fallback">Alternative language</string>
+  <string name="pref_language_fallback">Limba alternativa</string>
   <string name="pref_updatewifionly">Imaginile se vor încarca doar prin intermediul Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Pentru a micșora taxele operatorului, nu descărcați folosind rețelele mobile sau rețelele taxate</string>
   <plurals name="days_before_plural">
@@ -363,7 +363,7 @@
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Această aplicație folosește date și imagini ale TVDB sub licența CC BY-NC 4.0.</string>
-  <string name="licence_themoviedb">Acest produs utilizează API-ul TMDb, dar nu este aprobat sau certificat de TMDb.</string>
+  <string name="licence_themoviedb">Acest produs utilizează API-ul TMDb, dar nu este aprobat sau certificată de TMDb.</string>
   <string name="licence_trakt">Această aplicație foloseste date şi imagini ale trakt.</string>
   <string name="about_open_source">SeriesGuide este dezvoltat folosind software open source.</string>
   <string name="licences_and_credits">Licențe și credite</string>
@@ -407,7 +407,7 @@
   <string name="clear_cache_summary">Șterge toate imaginile din cache de pe acest dispozitiv</string>
   <string name="pref_ganalyticssummary">Trimite statistici anonime către serviciul Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Include descriptions, details, ratings</string>
+  <string name="backup_full_dump">Include descrieri, detalii, note</string>
   <string name="backup_path">Fișier de arhive</string>
   <string name="backup_version">Versiunea bazei de date</string>
   <string name="backup_failed_file_access">Backup-ul nu poate fi efectuat. Un fișier de backup nu poate fi localizat sau accesat.</string>
@@ -452,7 +452,7 @@
   <string name="pref_notifications_treshold">Când să fiți notificat</string>
   <string name="pref_notifications_select_shows">Seriale selecte</string>
   <string name="pref_notifications_select_shows_summary">Seriale cu notificări pornite (%d)</string>
-  <string name="pref_notification_channel_errors">Errors</string>
+  <string name="pref_notification_channel_errors">Erori</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (mic)</string>
   <!-- List Widget -->
@@ -474,7 +474,7 @@
   <string name="action_upgrade">Deblocați toate opțiunile</string>
   <string name="billing_action_subscribe">Abonează-te</string>
   <string name="billing_action_pass">Obțineți abonamentul X</string>
-  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+  <string name="billing_price_subscribe">%1$s/ an, testează gratuit, anuleaza oricand prin%2$s</string>
   <string name="billing_price_pass">plată unică</string>
   <string name="upgrade_description">Deblocați toate opțiunile, inclusiv notificări, teme si mai multe opțiuni widget-uri liste. Ajută-mă să fac actualizări viitoare.</string>
   <string name="upgrade_success">Mulțumim pentru suportul SeriesGuide! Ai access la toate opțiunile.</string>

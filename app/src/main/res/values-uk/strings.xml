@@ -46,7 +46,7 @@
   <string name="norating">Немає даних</string>
   <string name="unknown">Невідомо</string>
   <string name="offline">Перевірте підключення до мережі та повторіть спробу.</string>
-  <string name="app_not_available">No app available to handle this</string>
+  <string name="app_not_available">Немає доступних програм, щоб впоратися з цим</string>
   <string name="people_empty">Не відображаються імена?! Натисніть щоб спробувати ще раз.</string>
   <string name="database_error">Не вдалося змінити дані.</string>
   <string name="reinstall_info">Спробуйте зберегти копію в Налаштування, повторна інсталяція та відновлення.</string>
@@ -71,6 +71,7 @@
   <plurals name="replies_plural">
     <item quantity="one">%d відповідь</item>
     <item quantity="few">%d відповіді</item>
+    <item quantity="many">%d replies</item>
     <item quantity="other">%d відповідей</item>
   </plurals>
   <!-- Metadata -->
@@ -169,16 +170,19 @@
   <plurals name="other_episodes_plural">
     <item quantity="one">%d епізод не переглянуто</item>
     <item quantity="few">%d епізоди не переглянуто</item>
+    <item quantity="many">%d other episodes</item>
     <item quantity="other">%d епізодів не переглянуто</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
     <item quantity="one">%d буде випущений</item>
     <item quantity="few">%d буде випущено</item>
+    <item quantity="many">%d to be released</item>
     <item quantity="other">%d буде випущено</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
     <item quantity="one">Залишився %d епізод</item>
     <item quantity="few">Залишилось %d епізоди</item>
+    <item quantity="many">%d remaining</item>
     <item quantity="other">Залишилось %d епізодів</item>
   </plurals>
   <!-- Add show -->
@@ -245,16 +249,19 @@
   <plurals name="days_plural">
     <item quantity="one">%d день</item>
     <item quantity="few">%d дні</item>
+    <item quantity="many">%d days</item>
     <item quantity="other">%d днів</item>
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d година</item>
     <item quantity="few">%d години</item>
+    <item quantity="many">%d hours</item>
     <item quantity="other">%d годин</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d хвилина</item>
     <item quantity="few">%d хвилини</item>
+    <item quantity="many">%d minutes</item>
     <item quantity="other">%d хвилин</item>
   </plurals>
   <!-- Features -->
@@ -316,6 +323,7 @@
   <plurals name="votes">
     <item quantity="one">%d голос</item>
     <item quantity="few">%d голоси</item>
+    <item quantity="many">%d votes</item>
     <item quantity="other">%d голосів</item>
   </plurals>
   <!-- Check Ins -->
@@ -349,16 +357,19 @@
   <plurals name="days_before_plural">
     <item quantity="one">%d день до</item>
     <item quantity="few">%d дні до</item>
+    <item quantity="many">%d days before</item>
     <item quantity="other">%d днів до</item>
   </plurals>
   <plurals name="hours_before_plural">
     <item quantity="one">%d година до</item>
     <item quantity="few">%d години до</item>
+    <item quantity="many">%d hours before</item>
     <item quantity="other">%d годин до</item>
   </plurals>
   <plurals name="minutes_before_plural">
     <item quantity="one">%d хвилина до</item>
     <item quantity="few">%d хвилина до</item>
+    <item quantity="many">%d minutes before</item>
     <item quantity="other">За %d хвилин</item>
   </plurals>
   <!-- About screen -->

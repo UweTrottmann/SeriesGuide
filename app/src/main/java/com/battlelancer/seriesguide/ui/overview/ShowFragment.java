@@ -32,27 +32,27 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
-import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
+import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.TraktRatingsTask;
+import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
-import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
-import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper;
+import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader;
+import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShortcutUtils;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.traktapi.TraktRatingsTask;
-import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.androidutils.CheatSheet;
@@ -250,7 +250,7 @@ public class ShowFragment extends Fragment {
 
     interface ShowQuery {
 
-        String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[]{
                 Shows._ID,
                 Shows.TITLE,
                 Shows.STATUS,
@@ -549,18 +549,18 @@ public class ShowFragment extends Fragment {
             return;
         }
 
-        if (credits.cast == null || credits.cast.size() == 0) {
-            setCastVisibility(false);
-        } else {
+        if (credits.cast != null && credits.cast.size() != 0
+                && PeopleListHelper.populateShowCast(getActivity(), castContainer, credits, TAG)) {
             setCastVisibility(true);
-            PeopleListHelper.populateShowCast(getActivity(), castContainer, credits, TAG);
+        } else {
+            setCastVisibility(false);
         }
 
-        if (credits.crew == null || credits.crew.size() == 0) {
-            setCrewVisibility(false);
-        } else {
+        if (credits.crew != null && credits.crew.size() != 0
+                && PeopleListHelper.populateShowCrew(getActivity(), crewContainer, credits, TAG)) {
             setCrewVisibility(true);
-            PeopleListHelper.populateShowCrew(getActivity(), crewContainer, credits, TAG);
+        } else {
+            setCrewVisibility(false);
         }
     }
 

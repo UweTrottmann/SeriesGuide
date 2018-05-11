@@ -40,6 +40,8 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class ProviderTest {
 
+    private static final String PREFIX = "test.";
+
     private static final Show SHOW;
     private static final Season SEASON;
     private static final Episode EPISODE;
@@ -135,7 +137,6 @@ public class ProviderTest {
         assertNotNullValue(query, Shows.LANGUAGE);
         assertDefaultValue(query, Shows.UNWATCHED_COUNT, DBUtils.UNKNOWN_UNWATCHED_COUNT);
         assertDefaultValue(query, Shows.NOTIFY, 1);
-
 
         query.close();
     }

@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.modules.TestServicesComponent;
 import com.battlelancer.seriesguide.modules.TestTmdbModule;
 import com.battlelancer.seriesguide.modules.TestTraktModule;
 import com.battlelancer.seriesguide.modules.TestTvdbModule;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.provider.SeriesGuideProvider;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import dagger.Lazy;
@@ -28,14 +29,21 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class TvdbSyncTest {
 
+    private static final String PREFIX = "test.";
+
     @Rule
     public ProviderTestRule providerRule = new ProviderTestRule.Builder(SeriesGuideProvider.class,
-            SgApp.CONTENT_AUTHORITY).build();
+            SgApp.CONTENT_AUTHORITY)
+            .setPrefix(PREFIX)
+            .build();
 
     @Inject Lazy<TvdbTools> tvdbToolsLazy;
 
     @Before
     public void setUp() {
+        InstrumentationRegistry.getTargetContext()
+                .deleteDatabase(PREFIX + SeriesGuideDatabase.DATABASE_NAME);
+
         TestServicesComponent component = DaggerTestServicesComponent.builder()
                 .appModule(new AppModule(InstrumentationRegistry.getContext()))
                 .httpClientModule(new TestHttpClientModule())

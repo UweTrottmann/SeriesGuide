@@ -20,7 +20,7 @@
   <string name="season_number">Sæson %d</string>
   <string name="seasons">Sæsoner</string>
   <string name="specialseason">Særlige episoder</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">Bedømmelser</string>
   <!-- Descriptions -->
   <string name="description_overview">Oversigt</string>
   <string name="description_poster">Vis plakat</string>
@@ -46,12 +46,12 @@
   <string name="norating">ikke tilgængelig</string>
   <string name="unknown">ukendt</string>
   <string name="offline">Forbind til et netværk, og prøv igen.</string>
-  <string name="app_not_available">No app available to handle this</string>
+  <string name="app_not_available">Ingen app tilgængelig til at håndtere dette</string>
   <string name="people_empty">Ingen her?! Tryk for at prøve igen.</string>
   <string name="database_error">Kunne ikke ændre data.</string>
   <string name="reinstall_info">Prøv fra Indstillinger at oprette en sikkerhedskopi, geninstallere og gendanne.</string>
   <string name="api_error_generic">Kunne ikke tale med %s. Forsøg venligst igen senere.</string>
-  <string name="api_failed">Failed: %s</string>
+  <string name="api_failed">Mislykkedes: %s</string>
   <!-- Sharing -->
   <string name="share">Del</string>
   <string name="share_show">Del serie</string>
@@ -89,8 +89,8 @@
   <string name="no_translation">Der er ingen beskrivelse oversat til %1$s tilgængelig på %2$s.</string>
   <string name="no_translation_title">Ikke oversat</string>
   <string name="no_spoilers">Visse detaljer er skjult for at undgå spoilers. Du kan slå dette fra under Indstillinger.</string>
-  <string name="format_source">Source: %s</string>
-  <string name="format_last_edited">Last edited: %s</string>
+  <string name="format_source">Kilde: %s</string>
+  <string name="format_last_edited">Senest ændret: %s</string>
   <!-- Date and Time -->
   <string name="today">i dag</string>
   <string name="now">nu</string>
@@ -189,7 +189,7 @@
   <string name="add_started">%s vil blive vist på din serieliste om lidt.</string>
   <string name="add_error">Kunne ikke tilføje %s.</string>
   <string name="add_already_exists">%s er allerede på din serieliste.</string>
-  <string name="title_new_episodes">New episodes</string>
+  <string name="title_new_episodes">Nye episoder</string>
   <string name="recommended">Anbefalet</string>
   <string name="watched_shows">Set</string>
   <string name="shows_collection">Samling</string>
@@ -251,15 +251,15 @@
     <item quantity="other">%d minutter</item>
   </plurals>
   <!-- Features -->
-  <string name="feature_supported">Supported</string>
-  <string name="feature_not_supported">Not supported</string>
-  <string name="feature_history">Personal and friend history</string>
-  <string name="feature_comments">Post comments</string>
-  <string name="feature_sync">Sync</string>
+  <string name="feature_supported">Understøttet</string>
+  <string name="feature_not_supported">Ikke understøttet</string>
+  <string name="feature_history">Personlig historik og vennehistorik</string>
+  <string name="feature_comments">Tilføj kommentar</string>
+  <string name="feature_sync">Synkroniser</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Eksperimentel!</string>
-  <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
+  <string name="hexagon_description">SeriesGuide Cloud hjælper med at sikkerhedskopiere dine serier, lister og film</string>
+  <string name="hexagon_warning_trakt">Mens du er logget ind på SeriesGuide Cloud, vil nogle trakt funktioner ikke være tilgængelige</string>
   <string name="hexagon_signin">Log ind</string>
   <string name="hexagon_signout">Log ud</string>
   <string name="hexagon_setup_incomplete">Opsætning af SeriesGuide Cloud blev ikke fuldført.</string>
@@ -335,7 +335,7 @@
   <string name="pref_seasonsorting">Sortér sæsoner efter&#8230;</string>
   <string name="pref_episodesorting">Sortér episoder efter&#8230;</string>
   <string name="pref_language">Foretrukket indholdssprog</string>
-  <string name="pref_language_fallback">Alternative language</string>
+  <string name="pref_language_fallback">Alternativt sprog</string>
   <string name="pref_updatewifionly">Download kun billeder via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Download ikke billeder via mobil- eller forbrugsgebyrbelagte netværk for at reducere gebyrer</string>
   <plurals name="days_before_plural">
@@ -352,7 +352,7 @@
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Denne app benytter data og billeder fra TheTVDB licenseret under CC BY-NC 4.0.</string>
-  <string name="licence_themoviedb">Dette produkt benytter TMDb API\'en, men er ikke godkendt, eller certificeret, af TMDb.</string>
+  <string name="licence_themoviedb">Dette produkt benytter TMDb API\'en, men er ikke godkendt eller certificeret af TMDb.</string>
   <string name="licence_trakt">Denne app benytter data og billeder fra trakt.</string>
   <string name="about_open_source">SeriesGuide er udviklet ved hjælp af open source-software.</string>
   <string name="licences_and_credits">Licenser og tilkendegivelser</string>
@@ -396,7 +396,7 @@
   <string name="clear_cache_summary">Fjern alle gemte billeder fra din enhed</string>
   <string name="pref_ganalyticssummary">Send anonym brugsstatistik til en Google-tjeneste</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Include descriptions, details, ratings</string>
+  <string name="backup_full_dump">Inkluder beskrivelser, detaljer og bedømmelser</string>
   <string name="backup_path">Sikkerhedskopieringsmappe</string>
   <string name="backup_version">Database-version</string>
   <string name="backup_failed_file_access">Kan ikke sikkerhedskopiere. En sikkerhedskopieringsfil kan ikke findes eller tilgås.</string>
@@ -441,7 +441,7 @@
   <string name="pref_notifications_treshold">Meddelelsesfrekvens</string>
   <string name="pref_notifications_select_shows">Vælg serier</string>
   <string name="pref_notifications_select_shows_summary">Serier med episodemeddelelser slået til (%d)</string>
-  <string name="pref_notification_channel_errors">Errors</string>
+  <string name="pref_notification_channel_errors">Fejl</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (lille)</string>
   <!-- List Widget -->
@@ -463,7 +463,7 @@
   <string name="action_upgrade">Oplås alle funktioner</string>
   <string name="billing_action_subscribe">Abonnér</string>
   <string name="billing_action_pass">Få X Pass</string>
-  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+  <string name="billing_price_subscribe">%1$s/år, prøv gratis, afmeld når som helst via %2$s</string>
   <string name="billing_price_pass">engangskøb</string>
   <string name="upgrade_description">Oplås alle funktioner, herunder meddelelser, temaer og flere widget-indstillinger. Hjælp os med at udvikle fremtidige opdateringer.</string>
   <string name="upgrade_success">Tak for din støtte til SeriesGuide! Du har nu adgang til alle funktioner.</string>

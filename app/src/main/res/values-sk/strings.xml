@@ -71,6 +71,7 @@
   <plurals name="replies_plural">
     <item quantity="one">%d odpoveď</item>
     <item quantity="few">%d odpovede</item>
+    <item quantity="many">%d replies</item>
     <item quantity="other">%d odpovedí</item>
   </plurals>
   <!-- Metadata -->
@@ -169,16 +170,19 @@
   <plurals name="other_episodes_plural">
     <item quantity="one">%d ďalšia epizóda</item>
     <item quantity="few">%d ďalšie epizódy</item>
+    <item quantity="many">%d other episodes</item>
     <item quantity="other">%d ďalších epizód</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
     <item quantity="one">%d neodvysielaná</item>
     <item quantity="few">%d neodvysielané</item>
+    <item quantity="many">%d to be released</item>
     <item quantity="other">%d neodvysielaných</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
     <item quantity="one">Zostáva %d</item>
     <item quantity="few">Zostávajú %d</item>
+    <item quantity="many">%d remaining</item>
     <item quantity="other">Zostáva %d</item>
   </plurals>
   <!-- Add show -->
@@ -245,16 +249,19 @@
   <plurals name="days_plural">
     <item quantity="one">%d deň</item>
     <item quantity="few">%d dni</item>
+    <item quantity="many">%d days</item>
     <item quantity="other">%d dní</item>
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d hodina</item>
     <item quantity="few">%d hodiny</item>
+    <item quantity="many">%d hours</item>
     <item quantity="other">%d hodín</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d minúta</item>
     <item quantity="few">%d minúty</item>
+    <item quantity="many">%d minutes</item>
     <item quantity="other">%d minút</item>
   </plurals>
   <!-- Features -->
@@ -316,6 +323,7 @@
   <plurals name="votes">
     <item quantity="one">%d hlas</item>
     <item quantity="few">%d hlasy</item>
+    <item quantity="many">%d votes</item>
     <item quantity="other">%d hlasov</item>
   </plurals>
   <!-- Check Ins -->
@@ -349,16 +357,19 @@
   <plurals name="days_before_plural">
     <item quantity="one">%d deň pred</item>
     <item quantity="few">%d dni pred</item>
+    <item quantity="many">%d days before</item>
     <item quantity="other">%d dní pred</item>
   </plurals>
   <plurals name="hours_before_plural">
     <item quantity="one">%d hodinu pred</item>
     <item quantity="few">%d hodiny pred</item>
+    <item quantity="many">%d hours before</item>
     <item quantity="other">%d hodín pred</item>
   </plurals>
   <plurals name="minutes_before_plural">
     <item quantity="one">%d minútu pred</item>
     <item quantity="few">%d minúty pred</item>
+    <item quantity="many">%d minutes before</item>
     <item quantity="other">%d minút pred</item>
   </plurals>
   <!-- About screen -->

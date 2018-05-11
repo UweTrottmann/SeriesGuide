@@ -5,6 +5,16 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 43
+----------
+*(in development)*
+
+#### 43-beta1
+*(TBD)*
+
+* 🔧 Episode history (if not connected to trakt): display up to 50 items instead of the last 24 hours.
+* 📝 Latest translations from crowdin. Added Galician.
+
 Version 42
 ----------
 *(2018-03-28)*
@@ -13,6 +23,16 @@ Version 42
 * 🔧 Sharing: Use TheTVDB link for shows and episodes, use TMDB link for movies.
 * 🔨 Calendar: display correct date in headers on Android 5.1 and older.
 * 🔨 Android 8: Fix occasional crash when calculating season unwatched count.
+
+#### 42.2
+*(2018-04-19)*
+
+* 🔨 Correctly upload lists to Cloud even if one is broken.
+
+#### 42.1
+*(2018-04-19)*
+
+* 🔨 Do not crash when viewing show and cast or crew members have no id.
 
 #### 42
 *(2018-03-28)*
