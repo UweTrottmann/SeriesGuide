@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 43,
-    "identityHash": "eb3e2140b5b04f61fb0cf30ace450fae",
+    "identityHash": "177d175b56cfc0af9d43b77e8c2ffd67",
     "entities": [
       {
         "tableName": "series",
@@ -731,11 +731,105 @@
           }
         ],
         "foreignKeys": []
+      },
+      {
+        "tableName": "activity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `activity_episode` TEXT NOT NULL, `activity_show` TEXT NOT NULL, `activity_time` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "episodeTvdbId",
+            "columnName": "activity_episode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "showTvdbId",
+            "columnName": "activity_show",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timestampMs",
+            "columnName": "activity_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_activity_activity_episode",
+            "unique": true,
+            "columnNames": [
+              "activity_episode"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_activity_activity_episode` ON `${TABLE_NAME}` (`activity_episode`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "jobs",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `job_created_at` INTEGER, `job_type` INTEGER, `job_extras` BLOB)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdMs",
+            "columnName": "job_created_at",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "job_type",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "extras",
+            "columnName": "job_extras",
+            "affinity": "BLOB",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_jobs_job_created_at",
+            "unique": true,
+            "columnNames": [
+              "job_created_at"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_jobs_job_created_at` ON `${TABLE_NAME}` (`job_created_at`)"
+          }
+        ],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"eb3e2140b5b04f61fb0cf30ace450fae\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"177d175b56cfc0af9d43b77e8c2ffd67\")"
     ]
   }
 }

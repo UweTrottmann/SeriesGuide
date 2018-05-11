@@ -446,7 +446,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case ACTIVITY: {
-                long id = tryInsert(db, Tables.ACTIVITY, CONFLICT_NONE, values);
+                long id = tryInsert(db, Tables.ACTIVITY, CONFLICT_REPLACE, values);
                 if (id < 0) {
                     break;
                 }
@@ -454,7 +454,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case JOBS: {
-                long id = tryInsert(db, Tables.JOBS, CONFLICT_NONE, values);
+                long id = tryInsert(db, Tables.JOBS, CONFLICT_REPLACE, values);
                 if (id < 0) {
                     break;
                 }

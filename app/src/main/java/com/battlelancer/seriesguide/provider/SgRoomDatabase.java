@@ -8,7 +8,9 @@ import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
+import com.battlelancer.seriesguide.model.SgActivity;
 import com.battlelancer.seriesguide.model.SgEpisode;
+import com.battlelancer.seriesguide.model.SgJob;
 import com.battlelancer.seriesguide.model.SgList;
 import com.battlelancer.seriesguide.model.SgMovie;
 import com.battlelancer.seriesguide.model.SgSeason;
@@ -23,7 +25,9 @@ import com.uwetrottmann.androidutils.AndroidUtils;
                 SgEpisode.class,
                 SgList.class,
                 SgListItem.class,
-                SgMovie.class
+                SgMovie.class,
+                SgActivity.class,
+                SgJob.class
         },
         version = SgRoomDatabase.VERSION
 )
@@ -74,9 +78,6 @@ public abstract class SgRoomDatabase extends RoomDatabase {
             } else {
                 db.execSQL(SeriesGuideDatabase.CREATE_SEARCH_TABLE_API_ICS);
             }
-            // TODO ut: convert to DAOs and remove
-            db.execSQL(SeriesGuideDatabase.CREATE_ACTIVITY_TABLE);
-            db.execSQL(SeriesGuideDatabase.CREATE_JOBS_TABLE);
         }
     };
 
@@ -99,6 +100,10 @@ public abstract class SgRoomDatabase extends RoomDatabase {
                     + "ON `listitems` (`list_item_id`)");
             database.execSQL("CREATE UNIQUE INDEX `index_movies_movies_tmdbid` "
                     + "ON `movies` (`movies_tmdbid`)");
+            database.execSQL("CREATE UNIQUE INDEX `index_activity_activity_episode` "
+                    + "ON `activity` (`activity_episode`)");
+            database.execSQL("CREATE UNIQUE INDEX `index_jobs_job_created_at` "
+                    + "ON `jobs` (`job_created_at`)");
         }
     };
 }
