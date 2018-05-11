@@ -104,6 +104,16 @@ public abstract class SgRoomDatabase extends RoomDatabase {
                     + "ON `activity` (`activity_episode`)");
             database.execSQL("CREATE UNIQUE INDEX `index_jobs_job_created_at` "
                     + "ON `jobs` (`job_created_at`)");
+
+            // Room suggests adding indices for foreign key columns, so add them
+            database.execSQL("CREATE  INDEX `index_seasons_series_id` "
+                    + "ON `seasons` (`series_id`)");
+            database.execSQL("CREATE  INDEX `index_episodes_season_id` "
+                    + "ON `episodes` (`season_id`)");
+            database.execSQL("CREATE  INDEX `index_episodes_series_id` "
+                    + "ON `episodes` (`series_id`)");
+            database.execSQL("CREATE  INDEX `index_listitems_list_id` "
+                    + "ON `listitems` (`list_id`)");
         }
     };
 }

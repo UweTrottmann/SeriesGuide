@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 43,
-    "identityHash": "177d175b56cfc0af9d43b77e8c2ffd67",
+    "identityHash": "f247204db3900ee329ff1def9ed93612",
     "entities": [
       {
         "tableName": "series",
@@ -281,7 +281,16 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_seasons_series_id",
+            "unique": false,
+            "columnNames": [
+              "series_id"
+            ],
+            "createSql": "CREATE  INDEX `index_seasons_series_id` ON `${TABLE_NAME}` (`series_id`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "series",
@@ -439,7 +448,24 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_episodes_season_id",
+            "unique": false,
+            "columnNames": [
+              "season_id"
+            ],
+            "createSql": "CREATE  INDEX `index_episodes_season_id` ON `${TABLE_NAME}` (`season_id`)"
+          },
+          {
+            "name": "index_episodes_series_id",
+            "unique": false,
+            "columnNames": [
+              "series_id"
+            ],
+            "createSql": "CREATE  INDEX `index_episodes_series_id` ON `${TABLE_NAME}` (`series_id`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "seasons",
@@ -561,6 +587,14 @@
               "list_item_id"
             ],
             "createSql": "CREATE UNIQUE INDEX `index_listitems_list_item_id` ON `${TABLE_NAME}` (`list_item_id`)"
+          },
+          {
+            "name": "index_listitems_list_id",
+            "unique": false,
+            "columnNames": [
+              "list_id"
+            ],
+            "createSql": "CREATE  INDEX `index_listitems_list_id` ON `${TABLE_NAME}` (`list_id`)"
           }
         ],
         "foreignKeys": [
@@ -829,7 +863,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"177d175b56cfc0af9d43b77e8c2ffd67\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f247204db3900ee329ff1def9ed93612\")"
     ]
   }
 }

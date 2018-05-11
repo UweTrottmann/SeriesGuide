@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -12,7 +13,8 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 @Entity(
         tableName = Tables.SEASONS,
         foreignKeys = @ForeignKey(entity = SgShow.class,
-                parentColumns = Shows._ID, childColumns = ShowsColumns.REF_SHOW_ID)
+                parentColumns = Shows._ID, childColumns = ShowsColumns.REF_SHOW_ID),
+        indices = {@Index(ShowsColumns.REF_SHOW_ID)}
 )
 public class SgSeason {
 
@@ -40,5 +42,4 @@ public class SgSeason {
 
     @ColumnInfo(name = Seasons.TOTALCOUNT)
     public Integer totalCount = 0;
-
 }

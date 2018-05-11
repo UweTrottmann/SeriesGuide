@@ -16,7 +16,10 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 @Entity(tableName = Tables.LIST_ITEMS,
         foreignKeys = @ForeignKey(entity = SgList.class,
                 parentColumns = Lists.LIST_ID, childColumns = Lists.LIST_ID),
-        indices = @Index(value = ListItems.LIST_ITEM_ID, unique = true)
+        indices = {
+                @Index(value = ListItems.LIST_ITEM_ID, unique = true),
+                @Index(Lists.LIST_ID)
+        }
 )
 public class SgListItem {
 
