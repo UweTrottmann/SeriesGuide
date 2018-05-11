@@ -40,8 +40,6 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class ProviderTest {
 
-    private static final String PREFIX = "test.";
-
     private static final Show SHOW;
     private static final Season SEASON;
     private static final Episode EPISODE;
