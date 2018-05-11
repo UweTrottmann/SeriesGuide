@@ -88,7 +88,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
     private static final String LINK_KEY_TRAKT = LINK_BASE_KEY + "trakt";
     private static final String LINK_KEY_AUTOBACKUP = LINK_BASE_KEY + "autobackup";
     private static final String LINK_KEY_DATALIBERATION = LINK_BASE_KEY + "dataliberation";
-    private static final String LINK_KEY_BACKUP_LEGACY = LINK_BASE_KEY + "backuplegacy";
 
     public static @StyleRes int THEME = R.style.Theme_SeriesGuide;
 
@@ -472,9 +471,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     return true;
                 case LINK_KEY_DATALIBERATION:
                     startActivity(new Intent(getActivity(), DataLiberationActivity.class));
-                    return true;
-                case LINK_KEY_BACKUP_LEGACY:
-                    startActivity(new Intent(getActivity(), BackupDeleteActivity.class));
                     return true;
                 default:
                     // fall through

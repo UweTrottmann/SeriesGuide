@@ -191,9 +191,6 @@
 
         <!-- Import and Export -->
         <activity
-            android:name="com.battlelancer.seriesguide.ui.BackupDeleteActivity"
-            android:label="@string/backup" />
-        <activity
             android:name="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity"
             android:label="@string/backup" />
 

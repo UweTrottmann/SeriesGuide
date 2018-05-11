@@ -13,10 +13,6 @@
         android:title="@string/analytics" />
 
     <Preference
-        android:key="com.battlelancer.seriesguide.settings.backuplegacy"
-        android:title="Legacy Backup/Restore" />
-
-    <Preference
         android:summary="@string/pref_translatesummary"
         android:title="@string/pref_translate" >
         <intent
