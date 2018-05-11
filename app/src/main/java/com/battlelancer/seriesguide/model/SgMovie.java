@@ -14,7 +14,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
         tableName = Tables.MOVIES,
         indices = {@Index(value = Movies.TMDB_ID, unique = true)}
 )
-public class Movie {
+public class SgMovie {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = Movies._ID)

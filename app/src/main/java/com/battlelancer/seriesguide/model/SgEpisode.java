@@ -15,13 +15,13 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 @Entity(
         tableName = Tables.EPISODES,
         foreignKeys = {
-                @ForeignKey(entity = Season.class,
+                @ForeignKey(entity = SgSeason.class,
                         parentColumns = Seasons._ID, childColumns = SeasonsColumns.REF_SEASON_ID),
-                @ForeignKey(entity = Show.class,
+                @ForeignKey(entity = SgShow.class,
                         parentColumns = Shows._ID, childColumns = ShowsColumns.REF_SHOW_ID)
         }
 )
-public class Episode {
+public class SgEpisode {
 
     @PrimaryKey
     @ColumnInfo(name = Episodes._ID)

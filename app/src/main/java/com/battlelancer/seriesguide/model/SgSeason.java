@@ -11,10 +11,10 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 
 @Entity(
         tableName = Tables.SEASONS,
-        foreignKeys = @ForeignKey(entity = Show.class,
+        foreignKeys = @ForeignKey(entity = SgShow.class,
                 parentColumns = Shows._ID, childColumns = ShowsColumns.REF_SHOW_ID)
 )
-public class Season {
+public class SgSeason {
 
     @PrimaryKey
     @ColumnInfo(name = Seasons._ID)

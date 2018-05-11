@@ -8,7 +8,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.testing.MigrationTestHelper;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-import com.battlelancer.seriesguide.model.Show;
+import com.battlelancer.seriesguide.model.SgShow;
 import java.io.IOException;
 import org.junit.After;
 import org.junit.Before;
@@ -21,7 +21,7 @@ public class MigrationTest {
 
     private static final String TEST_DB_NAME = "test-db";
 
-    private static final Show SHOW = new Show();
+    private static final SgShow SHOW = new SgShow();
 
     static {
         SHOW.tvdbId = 21;
@@ -69,7 +69,7 @@ public class MigrationTest {
 
         // MigrationTestHelper automatically verifies the schema changes, but not the data validity
         // Validate that the data was migrated properly.
-        Show dbShow = getMigratedRoomDatabase().showHelper().getShow();
+        SgShow dbShow = getMigratedRoomDatabase().showHelper().getShow();
         assertEquals(SHOW.tvdbId, dbShow.tvdbId);
         assertEquals(SHOW.title, dbShow.title);
         assertEquals(SHOW.titleNoArticle, dbShow.titleNoArticle);

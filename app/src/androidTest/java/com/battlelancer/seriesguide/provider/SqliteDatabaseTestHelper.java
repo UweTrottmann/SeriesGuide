@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.provider;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
-import com.battlelancer.seriesguide.model.Show;
+import com.battlelancer.seriesguide.model.SgShow;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 
@@ -11,7 +11,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
  */
 public class SqliteDatabaseTestHelper {
 
-    public static void insertShow(Show show, SqliteTestDbOpenHelper helper) {
+    public static void insertShow(SgShow show, SqliteTestDbOpenHelper helper) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Shows._ID, show.tvdbId);

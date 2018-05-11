@@ -9,7 +9,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.DBUtils;
 
 @Entity(tableName = Tables.SHOWS)
-public class Show {
+public class SgShow {
 
     @PrimaryKey
     @ColumnInfo(name = Shows._ID)

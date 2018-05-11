@@ -8,22 +8,22 @@ import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
-import com.battlelancer.seriesguide.model.Episode;
+import com.battlelancer.seriesguide.model.SgEpisode;
 import com.battlelancer.seriesguide.model.SgList;
-import com.battlelancer.seriesguide.model.Movie;
-import com.battlelancer.seriesguide.model.Season;
+import com.battlelancer.seriesguide.model.SgMovie;
+import com.battlelancer.seriesguide.model.SgSeason;
 import com.battlelancer.seriesguide.model.SgListItem;
-import com.battlelancer.seriesguide.model.Show;
+import com.battlelancer.seriesguide.model.SgShow;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 @Database(
         entities = {
-                Show.class,
-                Season.class,
-                Episode.class,
+                SgShow.class,
+                SgSeason.class,
+                SgEpisode.class,
                 SgList.class,
                 SgListItem.class,
-                Movie.class
+                SgMovie.class
         },
         version = SgRoomDatabase.VERSION
 )
