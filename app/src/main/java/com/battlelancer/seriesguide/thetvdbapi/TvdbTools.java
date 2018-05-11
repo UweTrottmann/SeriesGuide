@@ -67,7 +67,7 @@ import timber.log.Timber;
  */
 public class TvdbTools {
 
-    private static final String TVDB_API_URL = "http://thetvdb.com/api/";
+    private static final String TVDB_API_URL = "https://www.thetvdb.com/api/";
     private static final String TVDB_API_GETSERIES = TVDB_API_URL + "GetSeries.php?seriesname=";
     private static final String TVDB_PARAM_LANGUAGE = "&language=";
     private static final String[] LANGUAGE_QUERY_PROJECTION = new String[]{Shows.LANGUAGE};
