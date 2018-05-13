@@ -12,7 +12,7 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:padding="10dp"
-        android:textAppearance="@style/TextAppearance.Body.Secondary"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState"
         android:visibility="gone" />
 
     <GridView

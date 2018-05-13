@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textAppearance="@style/TextAppearance.Body.Secondary"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState"
                 tools:text="@string/now_empty" />
 
         </ScrollView>

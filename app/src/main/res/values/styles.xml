@@ -127,6 +127,8 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="TextAppearance.SeriesGuide.EmptyState" parent="TextAppearance.Title.Dim" />
+
     <!-- Widget styles -->
     <style name="Widget" />
 
