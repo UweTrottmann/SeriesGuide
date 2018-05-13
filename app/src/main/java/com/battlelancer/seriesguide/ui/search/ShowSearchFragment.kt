@@ -9,7 +9,9 @@ import android.support.v4.app.LoaderManager
 import android.support.v4.content.CursorLoader
 import android.support.v4.content.Loader
 import android.text.format.DateUtils
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.PopupMenu
 import com.battlelancer.seriesguide.R
@@ -22,6 +24,7 @@ import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter
 import com.battlelancer.seriesguide.ui.shows.ShowMenuItemClickListener
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TimeTools
+import com.battlelancer.seriesguide.widgets.EmptyView
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -31,9 +34,29 @@ import org.greenrobot.eventbus.ThreadMode
 class ShowSearchFragment : BaseSearchFragment() {
 
     private lateinit var adapter: ShowResultsAdapter
+    private lateinit var searchTriggerListener: SearchTriggerListener
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_show_search, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        (emptyView as EmptyView).setButtonClickListener {
+            searchTriggerListener.switchToDiscoverAndSearch()
+        }
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        if (activity is SearchTriggerListener) {
+            searchTriggerListener = activity as SearchTriggerListener
+        } else {
+            throw IllegalArgumentException("Activity does not implement SearchTriggerListener")
+        }
 
         adapter = ShowResultsAdapter(activity, onItemClickListener).also {
             gridView.adapter = it
