@@ -110,6 +110,7 @@ class ShowSearchFragment : BaseSearchFragment() {
 
         override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor) {
             adapter.swapCursor(data)
+            updateEmptyState(data)
         }
 
         override fun onLoaderReset(loader: Loader<Cursor>) {

@@ -272,7 +272,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             // searching episodes within a show?
             Bundle appData = launchIntent.getBundleExtra(SearchManager.APP_DATA);
             if (appData != null) {
-                String showTitle = appData.getString(EpisodeSearchFragment.InitBundle.SHOW_TITLE);
+                String showTitle = appData.getString(EpisodeSearchFragment.ARG_SHOW_TITLE);
                 if (!TextUtils.isEmpty(showTitle)) {
                     // change title + switch to episodes tab if show restriction was submitted
                     viewPager.setCurrentItem(TAB_POSITION_EPISODES);

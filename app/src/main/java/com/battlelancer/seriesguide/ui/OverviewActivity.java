@@ -284,7 +284,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         Show show = DBUtils.getShow(this, showTvdbId);
         if (show != null) {
             Bundle appSearchData = new Bundle();
-            appSearchData.putString(EpisodeSearchFragment.InitBundle.SHOW_TITLE, show.title);
+            appSearchData.putString(EpisodeSearchFragment.ARG_SHOW_TITLE, show.title);
 
             Intent intent = new Intent(this, SearchActivity.class);
             intent.putExtra(SearchManager.APP_DATA, appSearchData);
