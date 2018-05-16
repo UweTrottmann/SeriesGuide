@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.model.SgShow;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import timber.log.Timber;
 
 @Database(
         entities = {
@@ -93,6 +94,7 @@ public abstract class SgRoomDatabase extends RoomDatabase {
             SeriesGuideDatabase.DBVER_42_JOBS, VERSION_43_ROOM) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
+            Timber.d("Migrating database from 42 to 43");
             // Room uses an own database hash to uniquely identify the database
             // Since version 42 does not use Room, it doesn't have the database hash associated.
             // By implementing a Migration class, we're telling Room that it should use the data
@@ -139,6 +141,7 @@ public abstract class SgRoomDatabase extends RoomDatabase {
             SeriesGuideDatabase.DBVER_41_EPISODE_LAST_UPDATED, VERSION_43_ROOM) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
+            Timber.d("Migrating database from 41 to 43");
             SeriesGuideDatabase.upgradeToFortyTwo(database);
             MIGRATION_42_43.migrate(database);
         }
@@ -148,6 +151,7 @@ public abstract class SgRoomDatabase extends RoomDatabase {
             SeriesGuideDatabase.DBVER_40_NOTIFY_PER_SHOW, VERSION_43_ROOM) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
+            Timber.d("Migrating database from 40 to 43");
             SeriesGuideDatabase.upgradeToFortyOne(database);
             MIGRATION_41_43.migrate(database);
         }
@@ -157,6 +161,7 @@ public abstract class SgRoomDatabase extends RoomDatabase {
             SeriesGuideDatabase.DBVER_39_SHOW_LAST_WATCHED, VERSION_43_ROOM) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
+            Timber.d("Migrating database from 39 to 43");
             SeriesGuideDatabase.upgradeToForty(database);
             MIGRATION_40_43.migrate(database);
         }
@@ -166,6 +171,7 @@ public abstract class SgRoomDatabase extends RoomDatabase {
             SeriesGuideDatabase.DBVER_38_SHOW_TRAKT_ID, VERSION_43_ROOM) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
+            Timber.d("Migrating database from 38 to 43");
             SeriesGuideDatabase.upgradeToThirtyNine(database);
             MIGRATION_39_43.migrate(database);
         }
