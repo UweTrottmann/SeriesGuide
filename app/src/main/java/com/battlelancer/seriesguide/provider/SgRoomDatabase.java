@@ -16,6 +16,8 @@ import com.battlelancer.seriesguide.model.SgListItem;
 import com.battlelancer.seriesguide.model.SgMovie;
 import com.battlelancer.seriesguide.model.SgSeason;
 import com.battlelancer.seriesguide.model.SgShow;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 @Database(
@@ -97,6 +99,14 @@ public abstract class SgRoomDatabase extends RoomDatabase {
             // from version 42 to version 43.
             // If no migration is provided, then the tables will be dropped and recreated.
             // Since we didn't alter the tables, there's not much to do here.
+
+            // We dropped the actors column on new installations for v38
+            // but installations before that still have it
+            // so make it required again to avoid having to copy the table
+            if (SeriesGuideDatabase.isTableColumnMissing(database, Tables.SHOWS, Shows.ACTORS)) {
+                database.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                        + Shows.ACTORS + " TEXT DEFAULT '';");
+            }
 
             // Room does not support UNIQUE constraints, so use unique indexes instead (probably
             // faster anyhow)

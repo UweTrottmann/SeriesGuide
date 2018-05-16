@@ -1301,7 +1301,7 @@ public class SeriesGuideDatabase {
     /**
      * Checks whether the given column exists in the given table of the given database.
      */
-    private static boolean isTableColumnMissing(@NonNull SupportSQLiteDatabase db, String table,
+    static boolean isTableColumnMissing(@NonNull SupportSQLiteDatabase db, String table,
             String column) {
         Cursor cursor = db.query(SQLiteQueryBuilder
                 .buildQueryString(false, table, null, null,

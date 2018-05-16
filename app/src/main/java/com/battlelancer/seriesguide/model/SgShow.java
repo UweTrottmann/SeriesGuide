@@ -32,6 +32,12 @@ public class SgShow {
     public String overview = "";
 
     /**
+     * Currently unused as cast information is now fetched from TMDB.
+     */
+    @ColumnInfo(name = Shows.ACTORS)
+    public String actors = "";
+
+    /**
      * Local release time. Encoded as integer (hhmm).
      *
      * <pre>

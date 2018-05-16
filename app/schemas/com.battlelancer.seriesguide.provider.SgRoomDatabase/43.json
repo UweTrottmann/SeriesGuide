@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 43,
-    "identityHash": "f247204db3900ee329ff1def9ed93612",
+    "identityHash": "96c2b72bd3af8b21f0e2ce007ec04a5e",
     "entities": [
       {
         "tableName": "series",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER, `seriestitle` TEXT NOT NULL, `series_title_noarticle` TEXT, `overview` TEXT, `airstime` INTEGER, `airsdayofweek` INTEGER, `series_airtime` TEXT, `series_timezone` TEXT, `firstaired` TEXT, `genres` TEXT, `network` TEXT, `rating` REAL, `series_rating_votes` INTEGER, `series_rating_user` INTEGER, `runtime` TEXT, `status` TEXT, `contentrating` TEXT, `next` TEXT, `poster` TEXT, `series_nextairdate` INTEGER, `nexttext` TEXT, `imdbid` TEXT, `series_trakt_id` INTEGER, `series_favorite` INTEGER, `series_nextairdatetext` TEXT, `series_syncenabled` INTEGER, `series_hidden` INTEGER, `series_lastupdate` INTEGER, `series_lastedit` INTEGER, `series_lastwatchedid` INTEGER, `series_lastwatched_ms` INTEGER, `series_language` TEXT, `series_unwatched_count` INTEGER, `series_notify` INTEGER, PRIMARY KEY(`_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER, `seriestitle` TEXT NOT NULL, `series_title_noarticle` TEXT, `overview` TEXT, `actors` TEXT, `airstime` INTEGER, `airsdayofweek` INTEGER, `series_airtime` TEXT, `series_timezone` TEXT, `firstaired` TEXT, `genres` TEXT, `network` TEXT, `rating` REAL, `series_rating_votes` INTEGER, `series_rating_user` INTEGER, `runtime` TEXT, `status` TEXT, `contentrating` TEXT, `next` TEXT, `poster` TEXT, `series_nextairdate` INTEGER, `nexttext` TEXT, `imdbid` TEXT, `series_trakt_id` INTEGER, `series_favorite` INTEGER, `series_nextairdatetext` TEXT, `series_syncenabled` INTEGER, `series_hidden` INTEGER, `series_lastupdate` INTEGER, `series_lastedit` INTEGER, `series_lastwatchedid` INTEGER, `series_lastwatched_ms` INTEGER, `series_language` TEXT, `series_unwatched_count` INTEGER, `series_notify` INTEGER, PRIMARY KEY(`_id`))",
         "fields": [
           {
             "fieldPath": "tvdbId",
@@ -29,6 +29,12 @@
           {
             "fieldPath": "overview",
             "columnName": "overview",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "actors",
+            "columnName": "actors",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -863,7 +869,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f247204db3900ee329ff1def9ed93612\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"96c2b72bd3af8b21f0e2ce007ec04a5e\")"
     ]
   }
 }

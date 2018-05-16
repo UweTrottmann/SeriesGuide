@@ -133,7 +133,7 @@ public class SeriesGuideContract {
         String RELEASE_COUNTRY = "series_airtime";
 
         /**
-         * @deprecated Cast information is fetched from TMDB.
+         * Currently unused as cast information is now fetched from TMDB.
          */
         String ACTORS = "actors";
 
