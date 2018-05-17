@@ -187,6 +187,35 @@ public class DBUtils {
     }
 
     /**
+     * Returns how many episodes of a season are left to watch (only aired and not watched, exclusive
+     * episodes with no air date, includes specials).
+     *
+     * @return {@link #UNKNOWN_UNWATCHED_COUNT} if the number is unknown or failed to be determined.
+     *
+     * This should match the results of {@link #updateUnwatchedCount}.
+     */
+    public static int getUnwatchedEpisodesOfSeason(@NonNull Context context, int seasonTvdbId) {
+        return getCountOf(context.getContentResolver(),
+                Episodes.buildEpisodesOfSeasonUri(seasonTvdbId),
+                UnwatchedQuery.AIRED_SELECTION,
+                new String[]{String.valueOf(TimeTools.getCurrentTime(context))},
+                UNKNOWN_UNWATCHED_COUNT);
+    }
+
+    /**
+     * Returns how many episodes of a season are left to collect.
+     *
+     * @return {@link #UNKNOWN_COLLECTED_COUNT} if the number is unknown or failed to be determined.
+     */
+    public static int getUncollectedEpisodesOfSeason(@NonNull Context context, int seasonTvdbId) {
+        return getCountOf(context.getContentResolver(),
+                Episodes.buildEpisodesOfSeasonUri(seasonTvdbId),
+                Episodes.SELECTION_NOT_COLLECTED,
+                null,
+                UNKNOWN_COLLECTED_COUNT);
+    }
+
+    /**
      * Returns how many episodes of a show are left to watch (only aired and not watched, exclusive
      * episodes with no air date and without specials).
      *

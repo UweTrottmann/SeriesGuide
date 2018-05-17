@@ -1,19 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/keyline_minus_16">
+    android:paddingLeft="@dimen/keyline_minus_16"
+    tools:ignore="RtlSymmetry">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutEpisodesToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground"
+        android:elevation="2dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="lollipop">
+
+        <ImageView
+            android:id="@+id/imageViewEpisodesWatchedToggle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="12dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@null"
+            android:focusable="true"
+            android:padding="@dimen/padding_button"
+            tools:src="@drawable/ic_watch_all_black_24dp"
+            tools:tint="?attr/sgColorIcon" />
+
+        <ImageView
+            android:id="@+id/imageViewEpisodesCollectedToggle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@null"
+            android:focusable="true"
+            android:padding="@dimen/padding_button"
+            app:layout_constraintStart_toEndOf="@id/imageViewEpisodesWatchedToggle"
+            tools:src="@drawable/ic_collect_all_black_24dp"
+            tools:tint="?attr/sgColorIcon" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutEpisodesToolbar"
+        tools:text="Empty Text" />
 
     <ListView
         android:id="@+android:id/list"
         style="@style/DefaultPadding.List"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutEpisodesToolbar"
+        tools:listitem="@layout/item_episode" />
 
-    <TextView
-        android:id="@android:id/empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>
