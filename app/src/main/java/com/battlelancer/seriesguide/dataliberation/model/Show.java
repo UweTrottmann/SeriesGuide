@@ -67,6 +67,7 @@ public class Show {
                 ? context.getString(R.string.no_translation_title) : title);
         values.put(Shows.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(title));
         values.put(Shows.OVERVIEW, overview != null ? overview : "");
+        values.put(Shows.ACTORS, "");
         values.put(Shows.POSTER, poster != null ? poster : "");
         values.put(Shows.CONTENTRATING, content_rating != null ? content_rating : "");
         values.put(Shows.STATUS, DataLiberationTools.encodeShowStatus(status));
@@ -88,9 +89,9 @@ public class Show {
             values.put(Shows._ID, tvdb_id);
             values.put(Shows.LANGUAGE, language != null ? language : DisplaySettings.LANGUAGE_EN);
 
-            values.put(Shows.FAVORITE, favorite);
-            values.put(Shows.NOTIFY, notify != null ? notify : true);
-            values.put(Shows.HIDDEN, hidden);
+            values.put(Shows.FAVORITE, favorite ? 1 : 0);
+            values.put(Shows.NOTIFY, notify != null ? (notify ? 1 : 0) : 1);
+            values.put(Shows.HIDDEN, hidden ? 1 : 0);
 
             values.put(Shows.RATING_VOTES, rating_votes >= 0 ? rating_votes : 0);
             values.put(Shows.RATING_USER, (rating_user >= 0 && rating_user <= 10)

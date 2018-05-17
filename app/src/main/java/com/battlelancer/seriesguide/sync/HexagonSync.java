@@ -110,7 +110,7 @@ public class HexagonSync {
             if (success) {
                 // set merge as completed
                 ContentValues values = new ContentValues();
-                values.put(SeriesGuideContract.Shows.HEXAGON_MERGE_COMPLETE, true);
+                values.put(SeriesGuideContract.Shows.HEXAGON_MERGE_COMPLETE, 1);
                 context.getContentResolver()
                         .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values,
                                 null, null);

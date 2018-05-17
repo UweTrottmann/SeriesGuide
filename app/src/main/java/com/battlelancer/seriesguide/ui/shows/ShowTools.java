@@ -178,7 +178,7 @@ public class ShowTools {
 
         // save to local database
         ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Shows.FAVORITE, isFavorite);
+        values.put(SeriesGuideContract.Shows.FAVORITE, isFavorite ? 1 : 0);
         context.getContentResolver().update(
                 SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
 
@@ -212,7 +212,7 @@ public class ShowTools {
 
         // save to local database
         ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Shows.HIDDEN, isHidden);
+        values.put(SeriesGuideContract.Shows.HIDDEN, isHidden ? 1 : 0);
         context.getContentResolver().update(
                 SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
 
@@ -286,7 +286,7 @@ public class ShowTools {
 
         // save to local database
         ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Shows.NOTIFY, notify);
+        values.put(SeriesGuideContract.Shows.NOTIFY, notify ? 1 : 0);
         context.getContentResolver().update(
                 SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
 

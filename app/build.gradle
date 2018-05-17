@@ -27,8 +27,17 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ eventBusIndex : 'com.battlelancer.seriesguide.SgEventBusIndex' ]
+                arguments = [
+                        "eventBusIndex" : "com.battlelancer.seriesguide.SgEventBusIndex",
+                        "room.schemaLocation": "$projectDir/schemas".toString()
+                ]
             }
+        }
+    }
+
+    sourceSets {
+        androidTest {
+            assets.srcDirs += files("$projectDir/schemas".toString())
         }
     }
 
@@ -118,8 +127,14 @@ dependencies {
     implementation "com.android.support:palette-v7:${versions.supportLibrary}"
     implementation "com.android.support:recyclerview-v7:${versions.supportLibrary}"
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+
+    // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:${versions.lifecycle}"
     kapt "android.arch.lifecycle:compiler:${versions.lifecycle}"
+
+    // Room
+    implementation "android.arch.persistence.room:runtime:${versions.room}"
+    kapt "android.arch.persistence.room:compiler:${versions.room}"
 
     implementation "com.jakewharton:butterknife:${versions.butterknife}"
     kapt "com.jakewharton:butterknife-compiler:${versions.butterknife}"
@@ -184,6 +199,7 @@ dependencies {
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     androidTestImplementation 'com.google.code.findbugs:jsr305:3.0.2'
     kaptAndroidTest "com.google.dagger:dagger-compiler:${versions.dagger}"
+    androidTestImplementation "android.arch.persistence.room:testing:${versions.room}"
 
     // Local unit tests
     testImplementation 'junit:junit:4.12'

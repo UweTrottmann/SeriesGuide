@@ -85,6 +85,8 @@ public class AddListTask extends BaseActionTask {
         ContentValues values = new ContentValues();
         values.put(SeriesGuideContract.Lists.LIST_ID, listId);
         values.put(SeriesGuideContract.Lists.NAME, listName);
+        // default value
+        values.put(SeriesGuideContract.Lists.ORDER, 0);
         contentResolver.insert(SeriesGuideContract.Lists.CONTENT_URI, values);
 
         // notify lists activity

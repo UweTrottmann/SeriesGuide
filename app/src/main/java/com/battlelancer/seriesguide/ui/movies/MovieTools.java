@@ -346,9 +346,16 @@ public class MovieTools {
     public static boolean addMovieWatchedShell(ContentResolver resolver, int movieTmdbId) {
         ContentValues values = new ContentValues();
         values.put(SeriesGuideContract.Movies.TMDB_ID, movieTmdbId);
-        values.put(SeriesGuideContract.Movies.IN_COLLECTION, false);
-        values.put(SeriesGuideContract.Movies.IN_WATCHLIST, false);
-        values.put(SeriesGuideContract.Movies.WATCHED, true);
+        values.put(SeriesGuideContract.Movies.IN_COLLECTION, 0);
+        values.put(SeriesGuideContract.Movies.IN_WATCHLIST, 0);
+        values.put(SeriesGuideContract.Movies.WATCHED, 1);
+        // set default values
+        values.put(SeriesGuideContract.Movies.RUNTIME_MIN, 0);
+        values.put(SeriesGuideContract.Movies.PLAYS, 0);
+        values.put(SeriesGuideContract.Movies.RATING_TMDB, 0);
+        values.put(SeriesGuideContract.Movies.RATING_VOTES_TMDB, 0);
+        values.put(SeriesGuideContract.Movies.RATING_TRAKT, 0);
+        values.put(SeriesGuideContract.Movies.RATING_VOTES_TRAKT, 0);
 
         Uri insert = resolver.insert(SeriesGuideContract.Movies.CONTENT_URI, values);
         return insert != null;
@@ -357,7 +364,7 @@ public class MovieTools {
     private static boolean updateMovie(Context context, int movieTmdbId, String column,
             boolean value) {
         ContentValues values = new ContentValues();
-        values.put(column, value);
+        values.put(column, value ? 1 : 0);
 
         int rowsUpdated = context.getContentResolver().update(
                 SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), values, null, null);

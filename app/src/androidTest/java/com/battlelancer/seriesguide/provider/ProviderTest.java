@@ -6,13 +6,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.rule.provider.ProviderTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SgApp;
@@ -32,15 +32,13 @@ import com.battlelancer.seriesguide.util.tasks.AddListTask;
 import com.uwetrottmann.thetvdb.entities.Episode;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.util.ArrayList;
+import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 public class ProviderTest {
-
-    private static final String PREFIX = "test.";
 
     private static final Show SHOW;
     private static final Season SEASON;
@@ -77,16 +75,21 @@ public class ProviderTest {
         MOVIE_I = new com.battlelancer.seriesguide.dataliberation.model.Movie();
     }
 
-    @Rule
-    public ProviderTestRule providerRule = new ProviderTestRule.Builder(SeriesGuideProvider.class,
-            SgApp.CONTENT_AUTHORITY)
-            .setPrefix(PREFIX)
-            .build();
+    private ContentResolver resolver;
 
     @Before
-    public void setUp() throws Exception {
-        InstrumentationRegistry.getTargetContext()
-                .deleteDatabase(PREFIX + SeriesGuideDatabase.DATABASE_NAME);
+    public void switchToInMemoryDb() {
+        // ProviderTestRule does not work with Room
+        // so instead blatantly replace the instance with one that uses an in-memory database
+        // and use the real ContentResolver
+        Context context = InstrumentationRegistry.getTargetContext();
+        SgRoomDatabase.switchToInMemory(context);
+        resolver = context.getContentResolver();
+    }
+
+    @After
+    public void closeDb() {
+        SgRoomDatabase.getInstance(InstrumentationRegistry.getTargetContext()).close();
     }
 
     @Test
@@ -99,9 +102,9 @@ public class ProviderTest {
 
         ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         batch.add(op);
-        providerRule.getResolver().applyBatch(SgApp.CONTENT_AUTHORITY, batch);
+        resolver.applyBatch(SgApp.CONTENT_AUTHORITY, batch);
 
-        Cursor query = providerRule.getResolver().query(Shows.CONTENT_URI, null,
+        Cursor query = resolver.query(Shows.CONTENT_URI, null,
                 null, null, null);
         assertNotNull(query);
         assertEquals(1, query.getCount());
@@ -111,6 +114,7 @@ public class ProviderTest {
         assertNotNullValue(query, Shows.TITLE);
         assertNotNullValue(query, Shows.TITLE);
         assertNotNullValue(query, Shows.OVERVIEW);
+        assertNotNullValue(query, Shows.ACTORS);
         assertNotNullValue(query, Shows.GENRES);
         assertNotNullValue(query, Shows.NETWORK);
         assertNotNullValue(query, Shows.RUNTIME);
@@ -153,14 +157,21 @@ public class ProviderTest {
         insertAndAssertSeason(op);
     }
 
-    private void insertAndAssertSeason(ContentProviderOperation op)
+    private void insertAndAssertSeason(ContentProviderOperation seasonOp)
             throws RemoteException, OperationApplicationException {
-        // note how this does not cause a foreign key constraint failure
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        batch.add(op);
-        providerRule.getResolver().applyBatch(SgApp.CONTENT_AUTHORITY, batch);
+        // with Room insert actually checks constraints, so add a matching show first
+        Context context = InstrumentationRegistry.getTargetContext();
 
-        Cursor query = providerRule.getResolver().query(Seasons.CONTENT_URI, null,
+        ContentValues values = SHOW.toContentValues(context, true);
+        ContentProviderOperation showOp = ContentProviderOperation.newInsert(Shows.CONTENT_URI)
+                .withValues(values).build();
+
+        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        batch.add(showOp);
+        batch.add(seasonOp);
+        resolver.applyBatch(SgApp.CONTENT_AUTHORITY, batch);
+
+        Cursor query = resolver.query(Seasons.CONTENT_URI, null,
                 null, null, null);
         assertNotNull(query);
         assertEquals(1, query.getCount());
@@ -195,15 +206,27 @@ public class ProviderTest {
         insertAndAssertEpisode(values);
     }
 
-    private void insertAndAssertEpisode(ContentValues values) throws Exception {
-        ContentProviderOperation op = ContentProviderOperation.newInsert(Episodes.CONTENT_URI)
-                .withValues(values).build();
+    private void insertAndAssertEpisode(ContentValues episodeValues) throws Exception {
+        // with Room insert actually checks constraints, so add a matching show and season first
+        Context context = InstrumentationRegistry.getTargetContext();
+
+        ContentValues showValues = SHOW.toContentValues(context, true);
+        ContentProviderOperation showOp = ContentProviderOperation.newInsert(Shows.CONTENT_URI)
+                .withValues(showValues).build();
+
+        ContentProviderOperation seasonOp = DBUtils
+                .buildSeasonOp(SHOW.tvdb_id, SEASON.tvdbId, SEASON.season, true);
+
+        ContentProviderOperation episodeOp = ContentProviderOperation
+                .newInsert(Episodes.CONTENT_URI).withValues(episodeValues).build();
 
         ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        batch.add(op);
-        providerRule.getResolver().applyBatch(SgApp.CONTENT_AUTHORITY, batch);
+        batch.add(showOp);
+        batch.add(seasonOp);
+        batch.add(episodeOp);
+        resolver.applyBatch(SgApp.CONTENT_AUTHORITY, batch);
 
-        Cursor query = providerRule.getResolver().query(Episodes.CONTENT_URI, null,
+        Cursor query = resolver.query(Episodes.CONTENT_URI, null,
                 null, null, null);
         assertNotNull(query);
         assertEquals(1, query.getCount());
@@ -228,9 +251,9 @@ public class ProviderTest {
     public void listDefaultValues() throws Exception {
         AddListTask addListTask = new AddListTask(InstrumentationRegistry.getTargetContext(),
                 LIST.name);
-        addListTask.doDatabaseUpdate(providerRule.getResolver(), addListTask.getListId());
+        addListTask.doDatabaseUpdate(resolver, addListTask.getListId());
 
-        Cursor query = providerRule.getResolver().query(Lists.CONTENT_URI, null,
+        Cursor query = resolver.query(Lists.CONTENT_URI, null,
                 null, null, null);
         assertNotNull(query);
         assertEquals(1, query.getCount());
@@ -250,9 +273,9 @@ public class ProviderTest {
 
         ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         batch.add(op);
-        providerRule.getResolver().applyBatch(SgApp.CONTENT_AUTHORITY, batch);
+        resolver.applyBatch(SgApp.CONTENT_AUTHORITY, batch);
 
-        Cursor query = providerRule.getResolver().query(Lists.CONTENT_URI, null,
+        Cursor query = resolver.query(Lists.CONTENT_URI, null,
                 null, null, null);
         assertNotNull(query);
         assertEquals(1, query.getCount());
@@ -266,27 +289,27 @@ public class ProviderTest {
     @Test
     public void movieDefaultValues() throws Exception {
         ContentValues values = MOVIE.toContentValuesInsert();
-        providerRule.getResolver().insert(Movies.CONTENT_URI, values);
+        resolver.insert(Movies.CONTENT_URI, values);
 
         assertMovie(false);
     }
 
     @Test
     public void movieDefaultValuesWatchedShell() throws Exception {
-        MovieTools.addMovieWatchedShell(providerRule.getResolver(), MOVIE.tmdbMovie().id);
+        MovieTools.addMovieWatchedShell(resolver, MOVIE.tmdbMovie().id);
 
         assertMovie(true);
     }
 
     @Test
     public void movieDefaultValuesImport() throws Exception {
-        providerRule.getResolver().insert(Movies.CONTENT_URI, MOVIE_I.toContentValues());
+        resolver.insert(Movies.CONTENT_URI, MOVIE_I.toContentValues());
 
         assertMovie(false);
     }
 
     private void assertMovie(boolean isWatched) {
-        Cursor query = providerRule.getResolver().query(Movies.CONTENT_URI, null,
+        Cursor query = resolver.query(Movies.CONTENT_URI, null,
                 null, null, null);
         assertNotNull(query);
         assertEquals(1, query.getCount());

@@ -16,7 +16,7 @@ import java.lang.annotation.RetentionPolicy;
 
 public class SeriesGuideContract {
 
-    interface ShowsColumns {
+    public interface ShowsColumns {
 
         /**
          * This column is NOT in this table, it is for reference purposes only.
@@ -133,7 +133,7 @@ public class SeriesGuideContract {
         String RELEASE_COUNTRY = "series_airtime";
 
         /**
-         * @deprecated Cast information is fetched from TMDB.
+         * Currently unused as cast information is now fetched from TMDB.
          */
         String ACTORS = "actors";
 
@@ -276,7 +276,7 @@ public class SeriesGuideContract {
         String UNWATCHED_COUNT = "series_unwatched_count";
     }
 
-    interface SeasonsColumns {
+    public interface SeasonsColumns {
 
         /**
          * This column is NOT in this table, it is for reference purposes only.

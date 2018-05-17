@@ -121,7 +121,7 @@ public class HexagonEpisodeSync {
                 }
                 if (episode.getIsInCollection() != null) {
                     values.put(SeriesGuideContract.Episodes.COLLECTED,
-                            episode.getIsInCollection());
+                            episode.getIsInCollection() ? 1 : 0);
                 }
 
                 ContentProviderOperation op = ContentProviderOperation
@@ -236,8 +236,7 @@ public class HexagonEpisodeSync {
                 }
                 if (episode.getIsInCollection() != null
                         && episode.getIsInCollection()) {
-                    values.put(SeriesGuideContract.Episodes.COLLECTED,
-                            episode.getIsInCollection());
+                    values.put(SeriesGuideContract.Episodes.COLLECTED, 1);
                 }
 
                 if (values.size() == 0) {

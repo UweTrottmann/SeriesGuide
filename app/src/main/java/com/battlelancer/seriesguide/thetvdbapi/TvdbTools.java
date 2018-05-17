@@ -162,7 +162,7 @@ public class TvdbTools {
                 // failed to download episode flags
                 // flag show as needing an episode merge
                 ContentValues values = new ContentValues();
-                values.put(Shows.HEXAGON_MERGE_COMPLETE, false);
+                values.put(Shows.HEXAGON_MERGE_COMPLETE, 0);
                 context.getContentResolver()
                         .update(Shows.buildShowUri(showTvdbId), values, null, null);
             }
