@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Build;
+import android.provider.BaseColumns;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.TextViewCompat;
 import android.view.LayoutInflater;
@@ -17,7 +18,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ui.overview.SeasonsFragment.SeasonsQuery;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -148,5 +149,26 @@ class SeasonsAdapter extends CursorAdapter {
         public ViewHolder(View itemView) {
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public interface SeasonsQuery {
+
+        String[] PROJECTION = {
+                BaseColumns._ID,
+                Seasons.COMBINED,
+                Seasons.WATCHCOUNT,
+                Seasons.UNAIREDCOUNT,
+                Seasons.NOAIRDATECOUNT,
+                Seasons.TOTALCOUNT,
+                Seasons.TAGS
+        };
+
+        int _ID = 0;
+        int COMBINED = 1;
+        int WATCHCOUNT = 2;
+        int UNAIREDCOUNT = 3;
+        int NOAIRDATECOUNT = 4;
+        int TOTALCOUNT = 5;
+        int TAGS = 6;
     }
 }

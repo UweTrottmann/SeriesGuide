@@ -181,7 +181,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
                 .getExtras());
 
         Bundle argsSeason = new Bundle();
-        argsSeason.putInt(SeasonsFragment.InitBundle.SHOW_TVDBID, showTvdbId);
+        argsSeason.putInt(SeasonsFragment.ARG_SHOW_TVDBID, showTvdbId);
         tabsAdapter.addTab(R.string.seasons, SeasonsFragment.class, argsSeason);
         tabsAdapter.notifyTabsChanged();
 
