@@ -38,6 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
@@ -45,25 +46,27 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.extensions.MovieActionsContract;
+import com.battlelancer.seriesguide.justwatch.JustWatchConfigureDialog;
+import com.battlelancer.seriesguide.justwatch.JustWatchSearch;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.MovieCheckInDialogFragment;
+import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
-import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
 import com.battlelancer.seriesguide.ui.people.MovieCreditsLoader;
-import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper;
+import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.TmdbTools;
-import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -110,6 +113,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     @BindView(R.id.containerMovieButtons) View containerMovieButtons;
     @BindView(R.id.dividerMovieButtons) View dividerMovieButtons;
     @BindView(R.id.buttonMovieCheckIn) Button buttonMovieCheckIn;
+    @BindView(R.id.buttonMovieJustWatch) Button buttonMovieJustWatch;
     @BindView(R.id.buttonMovieWatched) Button buttonMovieWatched;
     @BindView(R.id.buttonMovieCollected) Button buttonMovieCollected;
     @BindView(R.id.buttonMovieWatchlisted) Button buttonMovieWatchlisted;
@@ -140,8 +144,10 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
     private int tmdbId;
     private MovieDetails movieDetails = new MovieDetails();
+    private String movieTitle;
     private Videos.Video trailer;
     @Nullable private String languageCode;
+
     private Handler handler = new Handler();
     private AsyncTask<Bitmap, Void, Palette> paletteAsyncTask;
 
@@ -163,6 +169,10 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         ViewTools.setVectorIconTop(theme, buttonMovieWatchlisted,
                 R.drawable.ic_list_add_white_24dp);
         ViewTools.setVectorIconLeft(theme, buttonMovieCheckIn, R.drawable.ic_checkin_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonMovieJustWatch,
+                R.drawable.ic_play_arrow_black_24dp);
+        CheatSheet.setup(buttonMovieCheckIn);
+        CheatSheet.setup(buttonMovieJustWatch);
 
         // language button
         buttonMovieLanguage.setVisibility(View.GONE);
@@ -358,6 +368,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         final boolean isWatched = movieDetails.isWatched();
         final int rating = movieDetails.getUserRating();
 
+        movieTitle = tmdbMovie.title;
         textViewMovieTitle.setText(tmdbMovie.title);
         getActivity().setTitle(tmdbMovie.title);
         textViewMovieDescription.setText(
@@ -375,26 +386,15 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 getString(R.string.runtime_minutes, String.valueOf(tmdbMovie.runtime)));
         textViewMovieDate.setText(releaseAndRuntime.toString());
 
-        // check-in button
-        final String title = tmdbMovie.title;
-        buttonMovieCheckIn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // display a check-in dialog
-                MovieCheckInDialogFragment f = MovieCheckInDialogFragment
-                        .newInstance(tmdbId, title);
-                f.show(getFragmentManager(), "checkin-dialog");
-                Utils.trackAction(getActivity(), TAG, "Check-In");
-            }
-        });
-        CheatSheet.setup(buttonMovieCheckIn);
-
         // hide check-in if not connected to trakt or hexagon is enabled
         boolean isConnectedToTrakt = TraktCredentials.get(getActivity()).hasCredentials();
         boolean displayCheckIn = isConnectedToTrakt && !HexagonSettings.isEnabled(getActivity());
         buttonMovieCheckIn.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
-        dividerMovieButtons.setVisibility(
-                displayCheckIn ? View.VISIBLE : View.GONE);
+        // hide JustWatch if turned off
+        boolean displayJustWatch = !JustWatchSearch.isTurnedOff(requireContext());
+        buttonMovieJustWatch.setVisibility(displayJustWatch ? View.VISIBLE : View.GONE);
+        dividerMovieButtons.setVisibility(displayCheckIn || displayJustWatch
+                        ? View.VISIBLE : View.GONE);
 
         // watched button (only supported when connected to trakt)
         Resources.Theme theme = getActivity().getTheme();
@@ -533,7 +533,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
-                i.putExtras(TraktCommentsActivity.createInitBundleMovie(title, tmdbId));
+                i.putExtras(TraktCommentsActivity.createInitBundleMovie(movieTitle, tmdbId));
                 Utils.startActivityWithAnimation(getActivity(), i, v);
                 Utils.trackAction(v.getContext(), TAG, "Comments");
             }
@@ -604,6 +604,37 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
     }
 
+    @OnClick(R.id.buttonMovieCheckIn)
+    void onButtonCheckInClick() {
+        if (TextUtils.isEmpty(movieTitle)) {
+            return;
+        }
+        MovieCheckInDialogFragment.newInstance(tmdbId, movieTitle)
+                .show(requireFragmentManager(), "checkin-dialog");
+        Utils.trackAction(getActivity(), TAG, "Check-In");
+    }
+
+    @OnClick(R.id.buttonMovieJustWatch)
+    void onButtonJustWatchClick() {
+        if (TextUtils.isEmpty(movieTitle)) {
+            return;
+        }
+        if (JustWatchSearch.isNotConfigured(requireContext())) {
+            new JustWatchConfigureDialog().show(requireFragmentManager(), "justWatchDialog");
+        } else {
+            JustWatchSearch.searchForMovie(requireContext(), movieTitle, TAG);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onJustWatchConfigured(JustWatchConfigureDialog.JustWatchConfiguredEvent event) {
+        if (event.getTurnedOff()) {
+            buttonMovieJustWatch.setVisibility(View.GONE);
+        } else {
+            onButtonJustWatchClick();
+        }
+    }
+
     @Override
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ExtensionManager.MovieActionReceivedEvent event) {
@@ -637,6 +668,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         buttonMovieWatched.setEnabled(enabled);
         buttonMovieCollected.setEnabled(enabled);
         buttonMovieWatchlisted.setEnabled(enabled);
+        buttonMovieJustWatch.setEnabled(enabled);
     }
 
     private void displayLanguageSettings() {

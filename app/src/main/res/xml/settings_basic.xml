@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <CheckBoxPreference
         android:defaultValue="False"
         android:key="com.battlelancer.seriesguide.trakt.quickcheckin"
         android:summary="@string/pref_quick_checkin_summary"
         android:title="@string/pref_quick_checkin" />
+
+    <Preference
+        android:key="com.battlelancer.seriesguide.justwatch"
+        android:title="@string/action_just_watch"
+        tools:summary="@string/action_turn_off" />
 
     <PreferenceCategory android:title="@string/shows">
 

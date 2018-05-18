@@ -40,6 +40,7 @@
     <string name="sync_manually">Sync manually</string>
     <string name="sync_and_update">Sync &amp; Update</string>
     <string name="sync_and_download_all">Sync &amp; Download all</string>
+    <string name="action_turn_off">Turn off</string>
 
     <!-- Search -->
     <string name="clear_search_history">Clear search history</string>

@@ -38,39 +38,41 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
-import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader;
+import com.battlelancer.seriesguide.extensions.ExtensionManager;
+import com.battlelancer.seriesguide.justwatch.JustWatchConfigureDialog;
+import com.battlelancer.seriesguide.justwatch.JustWatchSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeDetailsTask;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
+import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
+import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
+import com.battlelancer.seriesguide.traktapi.TraktRatingsTask;
+import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.HelpActivity;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
-import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
-import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
-import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
-import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
-import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
+import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.traktapi.TraktRatingsTask;
-import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.FeedbackView;
@@ -113,6 +115,7 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.containerRatings) View containerRatings;
     @BindView(R.id.dividerEpisodeButtons) View dividerEpisodeButtons;
     @BindView(R.id.buttonEpisodeCheckin) Button buttonCheckin;
+    @BindView(R.id.buttonEpisodeJustWatch) Button buttonJustWatch;
     @BindView(R.id.buttonEpisodeWatched) Button buttonWatch;
     @BindView(R.id.buttonEpisodeCollected) Button buttonCollect;
     @BindView(R.id.buttonEpisodeSkip) Button buttonSkip;
@@ -176,6 +179,7 @@ public class OverviewFragment extends Fragment implements
 
         // episode buttons
         CheatSheet.setup(buttonCheckin);
+        CheatSheet.setup(buttonJustWatch);
         CheatSheet.setup(buttonWatch);
         CheatSheet.setup(buttonSkip);
         Resources.Theme theme = getActivity().getTheme();
@@ -183,6 +187,7 @@ public class OverviewFragment extends Fragment implements
         ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
         ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
         ViewTools.setVectorIconLeft(theme, buttonCheckin, R.drawable.ic_checkin_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonJustWatch, R.drawable.ic_play_arrow_black_24dp);
 
         // ratings
         CheatSheet.setup(containerRatings, R.string.action_rate);
@@ -351,6 +356,24 @@ public class OverviewFragment extends Fragment implements
         if (f != null && isResumed()) {
             f.show(getFragmentManager(), "checkin-dialog");
             Utils.trackAction(getActivity(), TAG, "Check-In");
+        }
+    }
+
+    @OnClick(R.id.buttonEpisodeJustWatch)
+    void onButtonJustWatchClick() {
+        if (JustWatchSearch.isNotConfigured(requireContext())) {
+            new JustWatchConfigureDialog().show(requireFragmentManager(), "justWatchDialog");
+        } else {
+            JustWatchSearch.searchForShow(requireContext(), showTitle, TAG);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onJustWatchConfigured(JustWatchConfigureDialog.JustWatchConfiguredEvent event) {
+        if (event.getTurnedOff()) {
+            buttonJustWatch.setVisibility(View.GONE);
+        } else {
+            onButtonJustWatchClick();
         }
     }
 
@@ -604,6 +627,7 @@ public class OverviewFragment extends Fragment implements
         buttonCollect.setEnabled(enabled);
         buttonSkip.setEnabled(enabled);
         buttonCheckin.setEnabled(enabled);
+        buttonJustWatch.setEnabled(enabled);
     }
 
     private void setupEpisodeViews(Cursor episode) {
@@ -620,7 +644,11 @@ public class OverviewFragment extends Fragment implements
             boolean displayCheckIn = isConnectedToTrakt
                     && !HexagonSettings.isEnabled(getActivity());
             buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
-            dividerEpisodeButtons.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
+            // hide JustWatch if turned off
+            boolean displayJustWatch = !JustWatchSearch.isTurnedOff(requireContext());
+            buttonJustWatch.setVisibility(displayJustWatch ? View.VISIBLE : View.GONE);
+            dividerEpisodeButtons.setVisibility(displayCheckIn || displayJustWatch
+                    ? View.VISIBLE : View.GONE);
 
             // populate episode details
             populateEpisodeViews(episode);
