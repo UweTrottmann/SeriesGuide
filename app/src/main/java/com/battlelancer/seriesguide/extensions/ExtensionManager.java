@@ -1,5 +1,8 @@
 package com.battlelancer.seriesguide.extensions;
 
+import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_EPISODE;
+import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_MOVIE;
+
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,7 +14,6 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.LocaleList;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -25,7 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -33,9 +34,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import timber.log.Timber;
-
-import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_EPISODE;
-import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_MOVIE;
 
 public class ExtensionManager {
 
@@ -154,29 +152,9 @@ public class ExtensionManager {
      */
     public void setDefaultEnabledExtensions(Context context) {
         List<ComponentName> defaultExtensions = new ArrayList<>();
-        if (hasGermanLocale(context)) {
-            // vodster.de is in German
-            defaultExtensions.add(new ComponentName(context, VodsterExtensionReceiver.class));
-        }
         defaultExtensions.add(new ComponentName(context, WebSearchExtensionReceiver.class));
         defaultExtensions.add(new ComponentName(context, YouTubeExtensionReceiver.class));
         setEnabledExtensions(context, defaultExtensions);
-    }
-
-    private boolean hasGermanLocale(Context context) {
-        String german = Locale.GERMAN.getLanguage();
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            LocaleList locales = context.getResources().getConfiguration().getLocales();
-            for (int i = 0; i < locales.size(); i++) {
-                if (german.equals(locales.get(i).getLanguage())) {
-                    return true;
-                }
-            }
-            return false;
-        } else {
-            //noinspection deprecation
-            return german.equals(context.getResources().getConfiguration().locale.getLanguage());
-        }
     }
 
     /**
