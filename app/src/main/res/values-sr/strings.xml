@@ -37,6 +37,7 @@
   <string name="sync_manually">Sync manually</string>
   <string name="sync_and_update">Sync &amp; Update</string>
   <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Обриши историју претраге</string>
   <string name="search_hint">Тражи епизоде</string>
@@ -185,6 +186,7 @@
   <string name="checkin_searchhint">Унеси име серије</string>
   <string name="add_empty">Овде нема серија.</string>
   <string name="no_results">Нема резултата, покушајте са целим речима.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Покушајте било који језик</string>
   <string name="action_try_again">Поушајте поново</string>
   <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
@@ -408,23 +410,15 @@
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include descriptions, details, ratings</string>
-  <string name="backup_path">Фасцикла за архивирање</string>
-  <string name="backup_version">Верзија базе података</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">Архивирање базе података&#8230;</string>
   <string name="backup_success">Архивирање успешно.</string>
   <string name="backup_failed">Архивирање неуспешно.</string>
-  <string name="import_inprogress">Обнављање архивиране базе података&#8230;</string>
   <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">Не постоји читљива датотека за повраћај података.</string>
-  <string name="import_failed_noread">Архивска датотека је оштећена.</string>
-  <string name="dbupgradefailed">Архивирана ставка је, или стара или празна. Опаска: Архиве прво увезите у верзију 1.9.x. а затим у верзију 2.0.</string>
   <string name="import_success">Архивирање успешно враћено.</string>
   <string name="import_failed">Враћање архиве неуспешно.</string>
   <string name="backup_button">Архивирај</string>
   <string name="import_button">Поврати архивирану ставку</string>
-  <string name="backup_question">Ово ће уписати преко већ архивиране датотеке!</string>
-  <string name="import_question">Тренутна листа серија ће бити изгубљена! Постарајте се да је ово већ архивирано у архивској фасцикли.</string>
   <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
   <string name="last_auto_backup">Задње аутоматско архивирање: %s</string>
   <string name="restore_auto_backup">Поврати податке</string>

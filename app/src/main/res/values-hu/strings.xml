@@ -37,6 +37,7 @@
   <string name="sync_manually">Manuális szinkronizálás</string>
   <string name="sync_and_update">Szinkronizálás &amp; Frissítés</string>
   <string name="sync_and_download_all">Szinkronizálás &amp; Összes letöltése</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Keresési előzmények törlése</string>
   <string name="search_hint">Epizódok keresése</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">Írj be egy sorozat címet</string>
   <string name="add_empty">Nincsenek sorozatok.</string>
   <string name="no_results">Nincs találat, próbálkozz teljes szavakkal.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Keresés bármely nyelven</string>
   <string name="action_try_again">Próbáld újra</string>
   <string name="tvdb_error_does_not_exist">A sorozat (még) nem létezik a TheTVDB adatbázisban. Próbálkozzon később.</string>
@@ -397,23 +399,15 @@
   <string name="pref_ganalyticssummary">Névtelen használati statisztikák küldése Google szolgáltatás felé</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Tartalmazza a leírásokat, részleteket, értékeléseket</string>
-  <string name="backup_path">Mentési mappa</string>
-  <string name="backup_version">Adatbázis verzió</string>
   <string name="backup_failed_file_access">Nem sikerült a mentés. A biztonsági mentés fájl nem található vagy nem hozzáférhető.</string>
-  <string name="backup_inprogress">Adatbázis mentése&#8230;</string>
   <string name="backup_success">A mentés sikerült.</string>
   <string name="backup_failed">A biztonsági mentés nem sikerült.</string>
-  <string name="import_inprogress">Adatbázis visszaállítása&#8230;</string>
   <string name="import_failed_nosd">Nem lehet visszaállítani. A mentési mappa nem elérhető.</string>
   <string name="import_failed_nofile">Nincs beolvasható biztonsági mentés.</string>
-  <string name="import_failed_noread">A mentett adatbázis nem olvasható.</string>
-  <string name="dbupgradefailed">A mentés esetleg túl régi vagy üres. A 2.0 verzió előtti mentéseket az 1.9.x verziójú programba kell importálni, majd menteni.</string>
   <string name="import_success">Adatok visszaállítása sikerült.</string>
   <string name="import_failed">Adatok visszaállítása nem sikerült.</string>
   <string name="backup_button">Biztonsági Mentés</string>
   <string name="import_button">Visszaállítás</string>
-  <string name="backup_question">Ez felülírja a jelenlegi biztonsági másolatot!</string>
-  <string name="import_question">A jelenlegi sorozatlista törlődik. Győződj meg róla, hogy van biztonsági másolatod a mentési mappában!</string>
   <string name="import_warning">Megértettem, hogy az aktuális sorozataim, listáim és filmjeim lecserélésre kerülnek!</string>
   <string name="last_auto_backup">Utolsó automata mentés: %s</string>
   <string name="restore_auto_backup">Automatikus mentés visszaállítása</string>

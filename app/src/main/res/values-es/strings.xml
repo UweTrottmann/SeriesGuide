@@ -37,6 +37,7 @@
   <string name="sync_manually">Sincronizar manualmente</string>
   <string name="sync_and_update">Sincronizar &amp; Actualizar</string>
   <string name="sync_and_download_all">Sincronizar &amp; Descargar todo</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Limpiar historial de búsqueda</string>
   <string name="search_hint">Buscar episodios</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">Escriba el nombre de la serie</string>
   <string name="add_empty">No hay series.</string>
   <string name="no_results">No hay resultados, pruebe con palabras completas.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Proponer cualquier idioma</string>
   <string name="action_try_again">Intentar de nuevo</string>
   <string name="tvdb_error_does_not_exist">El show no existe (aún) en TheTVDB. Intenta más tarde.</string>
@@ -398,23 +400,15 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="pref_ganalyticssummary">Enviar estadísticas de uso anónimas a un servicio de Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include descriptions, details, ratings</string>
-  <string name="backup_path">Carpeta de respaldo</string>
-  <string name="backup_version">Versión de la base de datos</string>
   <string name="backup_failed_file_access">No se puede hacer copia de seguridad. El archivo de copia de seguridad no se encuentra o es inaccesible.</string>
-  <string name="backup_inprogress">Guardando copia de seguridad de la base de datos&#8230;</string>
   <string name="backup_success">Copia de seguridad correcta.</string>
   <string name="backup_failed">Falló la copia de seguridad.</string>
-  <string name="import_inprogress">Restaurando base de datos&#8230;</string>
   <string name="import_failed_nosd">No se puede restaurar la copia de seguridad. La carpeta de la copia de seguridad no está disponible.</string>
   <string name="import_failed_nofile">No hay ningún archivo de copia de seguridad legible.</string>
-  <string name="import_failed_noread">El archivo de copia de seguridad no es legible.</string>
-  <string name="dbupgradefailed">La copia de seguridad puede ser demasiado viejo o estar vacía. Nota: Importar primero pre-2.0 backups en una versión 1.9.</string>
   <string name="import_success">Copia de seguridad restaurada correctamente.</string>
   <string name="import_failed">No se pudo restaurar la copia de seguridad.</string>
   <string name="backup_button">Respaldo</string>
   <string name="import_button">Restaurar</string>
-  <string name="backup_question">¡Esta acción sobrescribirá el archivo de copia de seguridad actual en la carpeta de copia de seguridad!</string>
-  <string name="import_question">¡La lista actual de series se perderá! Asegúrese de que el archivo de copia de seguridad está dentro de la carpeta de copia de seguridad.</string>
   <string name="import_warning">Entiendo que mis series, listas y películas actuales serán reemplazadas!</string>
   <string name="last_auto_backup">Última copia de seguridad automática: %s</string>
   <string name="restore_auto_backup">Restaurar la copia de seguridad automática</string>

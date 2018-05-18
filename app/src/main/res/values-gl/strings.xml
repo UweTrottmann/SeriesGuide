@@ -37,6 +37,7 @@
   <string name="sync_manually">Sincronizar manualmente</string>
   <string name="sync_and_update">Sincronizar &amp; Atualizar</string>
   <string name="sync_and_download_all">Sincronizar &amp; Baixar todo</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="search_hint">Procurar episodios</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">Escribe o nome da serie</string>
   <string name="add_empty">Non hai series</string>
   <string name="no_results">No results, try complete words</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Try any language</string>
   <string name="action_try_again">Try again</string>
   <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
@@ -397,23 +399,15 @@
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include descriptions, details, ratings</string>
-  <string name="backup_path">Backup folder</string>
-  <string name="backup_version">Database version</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">Backing up database&#8230;</string>
   <string name="backup_success">Backup successful</string>
   <string name="backup_failed">Backup failed</string>
-  <string name="import_inprogress">Restoring database&#8230;</string>
   <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">There is no readable backup file</string>
-  <string name="import_failed_noread">The backup file is not readable</string>
-  <string name="dbupgradefailed">Your backup may be too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
   <string name="import_success">Backup successfully restored</string>
   <string name="import_failed">Restoring the backup failed</string>
   <string name="backup_button">Create backup</string>
   <string name="import_button">Restore backup</string>
-  <string name="backup_question">This will overwrite the current backup file in the backup folder!</string>
-  <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
   <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
   <string name="last_auto_backup">Last Auto Backup: %s</string>
   <string name="restore_auto_backup">Restore Auto Backup</string>

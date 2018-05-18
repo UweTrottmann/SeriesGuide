@@ -37,6 +37,7 @@
   <string name="sync_manually">கைமுறையாக ஒத்திசை</string>
   <string name="sync_and_update">ஒத்திசை &amp; புதுப்பி</string>
   <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">தேடல் வரலாற்றை நீக்கு</string>
   <string name="search_hint">தேடல் episodes</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">ஒரு காட்சி பெயர் தட்டச்சு செய்யவும்</string>
   <string name="add_empty">எந்த காட்சிகள் இங்கே உள்ளன.</string>
   <string name="no_results">முழு சொற்களை முடிவுகள், முயற்சிக்கவும்.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">எந்த மொழி முயற்சிக்கவும்</string>
   <string name="action_try_again">மீண்டும் முயற்சி</string>
   <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
@@ -397,23 +399,15 @@
   <string name="pref_ganalyticssummary">Google சேவைக்கு பெயரிலா பயன்பாட்டு புள்ளிவிவரம் அனுப்பு</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include descriptions, details, ratings</string>
-  <string name="backup_path">மறுபிரதி கோப்புறை</string>
-  <string name="backup_version">தகவல்தள பதிப்பிற்கு</string>
   <string name="backup_failed_file_access">மறுபிரதி எடு முடியாது. மறுபிரதி கோப்பு அல்ல கண்டறியப்பட்ட அல்லது இயலும் அணுக.</string>
-  <string name="backup_inprogress">தரவுதள இடையான&#8230;</string>
   <string name="backup_success">மறுபிரதி வெற்றிகரமாக.</string>
   <string name="backup_failed">மறுபிரதி செயலிழந்தது.</string>
-  <string name="import_inprogress">தரவுதள மீட்டெடுக்கிறது&#8230;</string>
   <string name="import_failed_nosd">மறுபிரதி மீட்டெடுக்க முடியாது. மறுபிரதி கோப்புறை கிடைக்கப்பெறவில்லை.</string>
   <string name="import_failed_nofile">எந்த படிக்கக்கூடியதாக மறுபிரதி கோப்பு உள்ளது.</string>
-  <string name="import_failed_noread">மறுபிரதி கோப்பை படிக்கக்கூடியதாக அல்ல.</string>
-  <string name="dbupgradefailed">உங்கள் மறுபிரதி மிக பழைய அல்லது காலி இருக்கலாம். குறிப்பு: இறக்குமதி முன்னோடி-2.0 மறுபிரதிகள் ஒரு 1.9.x பதிப்பில் முதலில்.</string>
   <string name="import_success">மறுபிரதி வெற்றிகரமாக மீட்டெடுக்கப்பட்டது.</string>
   <string name="import_failed">மறுபிரதி மீட்டெடுத்தல் செயலிழந்தது.</string>
   <string name="backup_button">மறுபிரதி உருவாக்கு</string>
   <string name="import_button">மீட்டெடுக்க மறுபிரதி</string>
-  <string name="backup_question">நடப்பு மறுபிரதி கோப்பு மறுபிரதி கோப்புறையில் மேலெழுதும்!</string>
-  <string name="import_question">நடப்பு காட்சி பட்டியலில் இழக்க நேரிடும்! மறுபிரதி கோப்பு மறுபிரதி கோப்புறைக்கு உள்ளே உள்ளது என்பதை உறுதி செய்யவும்.</string>
   <string name="import_warning">நான் எனது தற்போதைய காட்சிகள் புரிந்துகொள்ள, பட்டியல்கள் மற்றும் படங்கள் மாற்றப்படும்!</string>
   <string name="last_auto_backup">கடைசி தானியங்கு மறுபிரதி: %s</string>
   <string name="restore_auto_backup">தானியங்கு மறுபிரதி மீட்டெடு</string>

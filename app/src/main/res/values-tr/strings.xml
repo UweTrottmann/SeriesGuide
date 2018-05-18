@@ -37,6 +37,7 @@
   <string name="sync_manually">Manuel senkronizasyon</string>
   <string name="sync_and_update">Senkronize Et &amp; Güncelle</string>
   <string name="sync_and_download_all">Senkronize Et &amp; Tümünü İndir</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Arama geçmişini temizle</string>
   <string name="search_hint">Bölüm ara</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">Bir dizi adı yazın</string>
   <string name="add_empty">Burada dizi yok.</string>
   <string name="no_results">Sonuç bulunamadı, tam sözcüklerle deneyin.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Herhangi bir dil deneyin</string>
   <string name="action_try_again">Yeniden deneyin</string>
   <string name="tvdb_error_does_not_exist">TheTVDB üzerinde bu dizi/film (şimdilik) bulunamadı. Daha sonra tekrar deneyin.</string>
@@ -397,23 +399,15 @@
   <string name="pref_ganalyticssummary">Kullanım istatistiklerini Google Servislerine anonim olarak gönder</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Açıklamalar, ayrıntılar ve değerlendirmeler dahil</string>
-  <string name="backup_path">Yedekleme klasörü</string>
-  <string name="backup_version">Veritabanı versiyonu</string>
   <string name="backup_failed_file_access">Yedekleme başarısız. Bir yedek dosyası bulunamadı ya da dosyaya erişilemedi.</string>
-  <string name="backup_inprogress">Veritabanı yedekleniyor&#8230;</string>
   <string name="backup_success">Yedekleme başarılı.</string>
   <string name="backup_failed">Yedekleme başarısız oldu.</string>
-  <string name="import_inprogress">Veri tabanı geri yükleniyor&#8230;</string>
   <string name="import_failed_nosd">Geri yüklenemiyor. Yedek klasörüne erişilemiyor.</string>
   <string name="import_failed_nofile">Okunabilir yedekleme dosyası bulunamadı.</string>
-  <string name="import_failed_noread">Yedek dosyası okunamaz.</string>
-  <string name="dbupgradefailed">Yedek çok eski veya boş olabilir. Not: 2.0 öncesi yedekleri, önce 1.9.x sürümüyle içeri alın.</string>
   <string name="import_success">Yedek başarıyla geri yüklendi.</string>
   <string name="import_failed">Yedek geri yükleme başarısız oldu.</string>
   <string name="backup_button">Yedekle</string>
   <string name="import_button">Geri Yükle</string>
-  <string name="backup_question">Bu, aktif yedekleme klasöründeki yedek dosyasının üzerine yazacak!</string>
-  <string name="import_question">Geçerli dizi listesi silinecektir! Yedek dosyasının yedekleme klasörünün içinde olduğundan emin olun.</string>
   <string name="import_warning">Mevcut şovlarımın, listelerimin ve filmlerimin silineceğini anlıyorum!</string>
   <string name="last_auto_backup">Son Otomatik Yedekleme: %s</string>
   <string name="restore_auto_backup">Otomatik Yedeklemeden Geri Yükle</string>

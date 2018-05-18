@@ -37,6 +37,7 @@
   <string name="sync_manually">Synchronizuj ručně</string>
   <string name="sync_and_update">Synchronizuj &amp; Aktualizuj</string>
   <string name="sync_and_download_all">Synchronizuj &amp; Stáhni vše</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Vymazat historii vyhledávání</string>
   <string name="search_hint">Hledat v epizodách</string>
@@ -189,6 +190,7 @@
   <string name="checkin_searchhint">Napište název seriálu</string>
   <string name="add_empty">Nejsou zde žádné seriály.</string>
   <string name="no_results">Bez výsledku, zkuste celá slova.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Zkuste jiný jazyk</string>
   <string name="action_try_again">Zkusit znovu</string>
   <string name="tvdb_error_does_not_exist">Tento seriál neexistuje (zatím) na TheTVDB. Zkuste prosím později.</string>
@@ -419,23 +421,15 @@
   <string name="pref_ganalyticssummary">Odeslat anonymní statistiky službě Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Zahrnout popisy, detaily, hodnocení</string>
-  <string name="backup_path">Složka se zálohou</string>
-  <string name="backup_version">Verze databáze</string>
   <string name="backup_failed_file_access">Nelze zálohovat. Záložní soubor nebyl nalezen nebo není přístupný.</string>
-  <string name="backup_inprogress">Zálohuji databázi&#8230;</string>
   <string name="backup_success">Zálohování bylo úspěšné.</string>
   <string name="backup_failed">Zálohování selhalo.</string>
-  <string name="import_inprogress">Obnovuji databázi&#8230;</string>
   <string name="import_failed_nosd">Nelze obnovit zálohu. Záložní složka není k dispozici.</string>
   <string name="import_failed_nofile">Žádný čitelný soubor se zálohou nenalezen.</string>
-  <string name="import_failed_noread">Soubor zálohy není čitelný.</string>
-  <string name="dbupgradefailed">Vaše záloha je buď příliš stará nebo prázdná. Poznámka: Zálohy verze nižší než 2.0 obnovujte nejdříve ve verzi 1.9.X.</string>
   <string name="import_success">Obnovení ze zálohy bylo úspěšné.</string>
   <string name="import_failed">Obnovení ze zálohy selhalo.</string>
   <string name="backup_button">Zálohovat</string>
   <string name="import_button">Obnovit</string>
-  <string name="backup_question">To ale přepíše stávající zálohu v adresáři záloh!</string>
-  <string name="import_question">Stávající seznam pořadů bude ztracen! Ujistěte se, že máte zálohu databáze.</string>
   <string name="import_warning">Beru na vědomí, že mé aktuální seriály, seznamy a filmy budou přemazány!</string>
   <string name="last_auto_backup">Poslední automatická záloha: %s</string>
   <string name="restore_auto_backup">Obnovení automatické zálohy</string>

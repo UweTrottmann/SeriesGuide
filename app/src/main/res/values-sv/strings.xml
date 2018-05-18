@@ -38,6 +38,7 @@
   <string name="sync_manually">Synkronisera manuellt</string>
   <string name="sync_and_update">Synkronisera &amp; Uppdatera</string>
   <string name="sync_and_download_all">Synkronisera &amp; Ladda ner alla</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Rensa sökhistorik</string>
   <string name="search_hint">Sök avsnitt</string>
@@ -182,6 +183,7 @@
   <string name="checkin_searchhint">Skriv ett serienamn</string>
   <string name="add_empty">Det finns inga serier här.</string>
   <string name="no_results">Inga resultat, försök med hela ord.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Testa alla språk</string>
   <string name="action_try_again">Försök igen</string>
   <string name="tvdb_error_does_not_exist">Serien finns inte (ännu) på TheTVDB. Försök igen senare.</string>
@@ -398,23 +400,15 @@
   <string name="pref_ganalyticssummary">Skicka anonym användardata till Googles tjänster</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inkludera beskrivningar, detaljer, betyg</string>
-  <string name="backup_path">Mapp för säkerhetskopia</string>
-  <string name="backup_version">Databasversion</string>
   <string name="backup_failed_file_access">Kan inte säkerhetskopiera. En fil för säkerhetskopiering kan inte hittas eller öppnas.</string>
-  <string name="backup_inprogress">Säkerhetskopierar databas&#8230;</string>
   <string name="backup_success">Säkerhetskopieringen lyckades.</string>
   <string name="backup_failed">Säkerhetskopieringen misslyckades.</string>
-  <string name="import_inprogress">Återställer databasen&#8230;</string>
   <string name="import_failed_nosd">Kan inte återställa säkerhetskopian. Mappen är inte tillgänglig.</string>
   <string name="import_failed_nofile">Det finns ingen läsbar backupfil.</string>
-  <string name="import_failed_noread">Säkerhetskopian är oläslig.</string>
-  <string name="dbupgradefailed">Din säkerhetskopia kan vara för gammal eller tom. Obs: Importera säkerhetskopior äldre än version 2.0 i en 1.9.x-version först.</string>
   <string name="import_success">Säkerhetskopian återställdes.</string>
   <string name="import_failed">Återställning av säkerhetskopian misslyckades.</string>
   <string name="backup_button">Säkerhetskopiera</string>
   <string name="import_button">Återställ säkerhetskopia</string>
-  <string name="backup_question">Det här skriver över den nuvarande säkerhetskopian i mappen!</string>
-  <string name="import_question">Den nuvarande serielistan försvinner! Se till så att säkerhetskopian finns i mappen för säkerhetskopior.</string>
   <string name="import_warning">Jag förstår att mina nuvarande serier, listor och filmer kommer ersättas!</string>
   <string name="last_auto_backup">Senaste automatiska säkerhetskopia: %s</string>
   <string name="restore_auto_backup">Återställ automatisk säkerhetskopia</string>

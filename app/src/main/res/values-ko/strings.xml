@@ -37,6 +37,7 @@
   <string name="sync_manually">Sync manually</string>
   <string name="sync_and_update">Sync &amp; Update</string>
   <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">검색기록 지우기</string>
   <string name="search_hint">에피소드 검색</string>
@@ -177,6 +178,7 @@
   <string name="checkin_searchhint">쇼 이름을 입력하세요</string>
   <string name="add_empty">쇼 정보가 없습니다.</string>
   <string name="no_results">결과 없음, 완전한 단어를 입력하세요.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">모든 언어로 시도</string>
   <string name="action_try_again">재시도</string>
   <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
@@ -386,23 +388,15 @@
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include descriptions, details, ratings</string>
-  <string name="backup_path">백업폴더</string>
-  <string name="backup_version">데이터베이스 버전</string>
   <string name="backup_failed_file_access">백업 실패. 백업 파일이 없거나 접근할 수 없습니다.</string>
-  <string name="backup_inprogress">데이터베이스 백업 중&#8230;</string>
   <string name="backup_success">성공적으로 백업하였습니다.</string>
   <string name="backup_failed">백업에 실패하였습니다.</string>
-  <string name="import_inprogress">데이터베이스 복원 중&#8230;</string>
   <string name="import_failed_nosd">복원 실패. 백업 폴더가 존재하지 않습니다.</string>
   <string name="import_failed_nofile">읽을 수 있는 백업 파일이 없습니다.</string>
-  <string name="import_failed_noread">백업 파일을 읽을 수 없습니다.</string>
-  <string name="dbupgradefailed">백업이 너무 오래되었거나 비어있습니다. 주의: 2.0 버전 이전의 백업은 1.9.X 버전의 앱을 설치하여 임포트하세요.</string>
   <string name="import_success">백업을 성공적으로 복원하였습니다.</string>
   <string name="import_failed">백업을 복원하지 못했습니다.</string>
   <string name="backup_button">백업</string>
   <string name="import_button">복원</string>
-  <string name="backup_question">이 백업 폴더에 현재 백업 파일을 덮어쓰게 됩니다!</string>
-  <string name="import_question">현재의 쇼 목록 손실 될 것입니다! 백업 폴더 안에 백업 파일이 있는지 확인하세요.</string>
   <string name="import_warning">현재 앱에 저장한 쇼 목록이 삭제될 수 있습니다!</string>
   <string name="last_auto_backup">최근 자동 백업: %s</string>
   <string name="restore_auto_backup">자동 백업 복원</string>

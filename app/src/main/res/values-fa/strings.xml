@@ -37,6 +37,7 @@
   <string name="sync_manually">هم‌گام سازی دستی</string>
   <string name="sync_and_update">هم‌گام سازی و به‌روز رسانی</string>
   <string name="sync_and_download_all">هم‌گام سازی و بارگیری همه</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
   <string name="search_hint">جست‌وجوی قسمت‌ها</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">نام یک اثر نمایشی را بنویسید</string>
   <string name="add_empty">این‌جا هیچ سریالی نیست.</string>
   <string name="no_results">هیچ نتیجه ای پیدا نشد، کلمات را بصورت کامل امتحان کنید.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">هر زبانی را امتحان کنید</string>
   <string name="action_try_again">دوباره امتحان کنید</string>
   <string name="tvdb_error_does_not_exist">اثر نمایشی (هنوز) در TheTVDB وجود ندارد. بعداً دوباره سعی کنید.</string>
@@ -397,23 +399,15 @@
   <string name="pref_ganalyticssummary">ارسال آمار استفاده به سرویس گوگل بصورت ناشناس</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include descriptions, details, ratings</string>
-  <string name="backup_path">پوشهٔ پشتیبان‌گیری</string>
-  <string name="backup_version">نسخه پایگاه داده</string>
   <string name="backup_failed_file_access">نمی‌توان پشتیبان گرفت. پروندهٔ پشتیبانی نمی‌تواند پیدا یا دیده شود.</string>
-  <string name="backup_inprogress">در حال پشتیان گرفتن از پایگاه داده&#8230;</string>
   <string name="backup_success">پشتیبان گیری انجام شد.</string>
   <string name="backup_failed">پشتیبان گیری شکست خورد.</string>
-  <string name="import_inprogress">در حال بازگردانی پایگاه داده&#8230;</string>
   <string name="import_failed_nosd">نمی‌توان پشتیبان را بازگرداند. پوشهٔ پشتیبان گیری در دسترس نیست.</string>
   <string name="import_failed_nofile">هیچ پروندهٔ قابل خواندن پشتیبانی وجود ندارد.</string>
-  <string name="import_failed_noread">پروندهٔ پشتیبان قابل خواندن نیست.</string>
-  <string name="dbupgradefailed">پشتیبانتان ممکن است بسیار قدیمی یا خالی باشد. نکته: پشتیبان‌های پیش از ۲.۰ را ابتدا در یک نگارش ۱.۹ وارد کنید.</string>
   <string name="import_success">پشتیبان با موفّقیت بازگردانی شد.</string>
   <string name="import_failed">بازگردانی پشتیبان شکست خورد.</string>
   <string name="backup_button">ایجاد پشتیبان</string>
   <string name="import_button">بازگردانی پشتیبان</string>
-  <string name="backup_question">این کار پرونده‌های پشتیبان جاری در پوشهٔ پشتیبان گیری را پایمال خواهد کرد!</string>
-  <string name="import_question">فهرست نمایش جاری از دست خواهد رفت! مطمئن شوید پروندهٔ پشتیبان داخل پوشهٔ پشتیبان گیری است.</string>
   <string name="import_warning">فهمیدم که نمایش‌ها، فهرست‌ها و فیلم‌های جاریم تعویض خواهند شد!</string>
   <string name="last_auto_backup">آخرین پشتیبان خودکار: %s</string>
   <string name="restore_auto_backup">بازگردانی پشتیبان خودکار</string>

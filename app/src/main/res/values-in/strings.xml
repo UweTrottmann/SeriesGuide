@@ -37,6 +37,7 @@
   <string name="sync_manually">Sync Manual</string>
   <string name="sync_and_update">Sync &amp; Perbarui</string>
   <string name="sync_and_download_all">Sync &amp; unduh semua</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Bersihkan riwayat pencarian</string>
   <string name="search_hint">Cari episode</string>
@@ -177,6 +178,7 @@
   <string name="checkin_searchhint">Ketik nama acara</string>
   <string name="add_empty">Tidak ada acara disini.</string>
   <string name="no_results">Tidak ada hasil, coba kata-kata lengkap.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Coba bahasa apa saja</string>
   <string name="action_try_again">Coba lagi</string>
   <string name="tvdb_error_does_not_exist">Acara tidak (belum) ada di TheTVDB. Coba lagi nanti.</string>
@@ -386,23 +388,15 @@
   <string name="pref_ganalyticssummary">Kirim statistik penggunaan anonim ke layanan Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Termasuk deskripsi, rincian, peringkat</string>
-  <string name="backup_path">Folder cadangan</string>
-  <string name="backup_version">Versi database</string>
   <string name="backup_failed_file_access">Tidak dapat mencadangkan. File cadangan tidak dapat ditemukan atau diakses.</string>
-  <string name="backup_inprogress">Mencadangkan database&#8230;</string>
   <string name="backup_success">Pencadangan Berhasil.</string>
   <string name="backup_failed">Pencadangan Gagal.</string>
-  <string name="import_inprogress">Memulihkan database&#8230;</string>
   <string name="import_failed_nosd">Tidak dapat memulihkan cadangan. Folder cadangan tidak tersedia.</string>
   <string name="import_failed_nofile">Tidak ada file cadangan yang dapat dibaca.</string>
-  <string name="import_failed_noread">File cadangan tidak dapat dibaca.</string>
-  <string name="dbupgradefailed">Cadangan Anda mungkin terlalu lama atau kosong. Catatan: Impor cadangan pra-2.0 di versi 1.9.x terlebih dahulu.</string>
   <string name="import_success">Cadangan berhasil dipulihkan.</string>
   <string name="import_failed">Memulihkan cadangan gagal.</string>
   <string name="backup_button">Buat cadangan</string>
   <string name="import_button">Pulihkan cadangan</string>
-  <string name="backup_question">Ini akan menimpa file cadangan saat ini dalam folder cadangan!</string>
-  <string name="import_question">Daftar acara saat ini akan hilang! Pastikan file cadangan ada di dalam backup folder.</string>
   <string name="import_warning">Saya mengerti acara, daftar dan film saya saat ini akan diganti!</string>
   <string name="last_auto_backup">Pencadangan Otomatis Terakhir: %s</string>
   <string name="restore_auto_backup">Pulihkan Cadangan Otomatis</string>

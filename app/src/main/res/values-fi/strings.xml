@@ -37,6 +37,7 @@
   <string name="sync_manually">Synkronoi manuaalisesti</string>
   <string name="sync_and_update">Synkronoi ja päivitä</string>
   <string name="sync_and_download_all">Synkronoi ja lataa kaikki</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Tyhjennä hakuhistoria</string>
   <string name="search_hint">Hae jaksoja</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">Ohjelman nimi</string>
   <string name="add_empty">Ei ole yhtään ohjelmaa näytettävänä.</string>
   <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Kokeile mitä tahansa kieltä</string>
   <string name="action_try_again">Yritä uudelleen</string>
   <string name="tvdb_error_does_not_exist">Ohjelma ei ole (vielä) TheTVDB:ssä. Yritä myöhemmin uudelleen.</string>
@@ -397,23 +399,15 @@
   <string name="pref_ganalyticssummary">Lähetä anonyymia käyttötilastoja Googlen palveluun</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Sisällyttä kuvaukset, tiedot, arvosanat</string>
-  <string name="backup_path">Varmuuskopiokansio</string>
-  <string name="backup_version">Tietokannan versio</string>
   <string name="backup_failed_file_access">Ei voida varmuuskopioida. Varmuuskopiota ei löydy tai sitä ei voida käyttää.</string>
-  <string name="backup_inprogress">Varmuuskopioidaan tietokantaa&#8230;</string>
   <string name="backup_success">Varmuuskopiointi onnistui.</string>
   <string name="backup_failed">Varmuuskopiointi epäonnistui.</string>
-  <string name="import_inprogress">Palautetaan tietokantaa&#8230;</string>
   <string name="import_failed_nosd">Varmuuskopiota ei voi palauttaa. Varmuuskopiointikansiota ei löydy.</string>
   <string name="import_failed_nofile">Ei ole luettavaa varmuuskopiotiedostoa.</string>
-  <string name="import_failed_noread">Varmuuskopiotiedostoa ei voi lukea.</string>
-  <string name="dbupgradefailed">Varmuuskopiosi saattaa olla liian vanha tai tyhjä. Huom: Tuo 2.0 versiota edeltävät varmuuskopiot ensin versioon 1.9.x.</string>
   <string name="import_success">Varmuuskopio palautettu onnistuneesti.</string>
   <string name="import_failed">Varmuuskopion palauttaminen epäonnistui.</string>
   <string name="backup_button">Varmuuskopioi</string>
   <string name="import_button">Palauta</string>
-  <string name="backup_question">Tämä korvaa nykyisen varmuuskopion varmuuskopiokansiossa!</string>
-  <string name="import_question">Nykyinen ohjelmalista menetetään! Varmista, että varmuuskopiotiedosto on varmuuskopiokansiossa.</string>
   <string name="import_warning">Ymmärrän, että nykyiset ohjelmani, listani ja elokuvani korvataan!</string>
   <string name="last_auto_backup">Viimeisin automaattinen varmuuskopiointi: %s</string>
   <string name="restore_auto_backup">Palauta automaattinen varmuuskopio</string>

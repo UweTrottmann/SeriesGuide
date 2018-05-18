@@ -37,6 +37,7 @@
   <string name="sync_manually">Синхронизирај мануелно</string>
   <string name="sync_and_update">Синхронизирај &amp; Обнови</string>
   <string name="sync_and_download_all">Синхронизирај &amp; Преземи сѐ</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Избриши историја на пребарување</string>
   <string name="search_hint">Пребарај епизоди</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">Внеси име серија</string>
   <string name="add_empty">Овде нема серија.</string>
   <string name="no_results">Нема резултати, обидете се со целосни зборови.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Прoбaј билo кoј јaзик</string>
   <string name="action_try_again">Прoбaј пoвтoрнo</string>
   <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
@@ -397,23 +399,15 @@
   <string name="pref_ganalyticssummary">Пратете анонимни статистики за користење на Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include descriptions, details, ratings</string>
-  <string name="backup_path">Фолдер за архивирање</string>
-  <string name="backup_version">Верзија на базата на податоци</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">Сочување на базата со податоци&#8230;</string>
   <string name="backup_success">Backup заврши успешно.</string>
   <string name="backup_failed">Архивирањето не беше успешно.</string>
-  <string name="import_inprogress">Обнова на базата со податоци&#8230;</string>
   <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">Не постои backup фајл кој може да се прочита.</string>
-  <string name="import_failed_noread">Backup фајлот неможе да се прочита.</string>
-  <string name="dbupgradefailed">Вашата backup верзија може да е премногу стара или празна. Забелешка:: Import pre-2.0 backups in a 1.9.x version first.</string>
   <string name="import_success">Backup успешно обновен.</string>
   <string name="import_failed">Враќањето на backup не успеа.</string>
   <string name="backup_button">Архивирај</string>
   <string name="import_button">Restore backup</string>
-  <string name="backup_question">Ова ќе ја пребрише моменталната backup датотеката во backup фолдерот!</string>
-  <string name="import_question">Тековната листа на серии ќе бидат изгубени! Бидете сигурни дека backup датотеката е внатре во фолдерот на backup.</string>
   <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
   <string name="last_auto_backup">Последен автоматски Backup: %s</string>
   <string name="restore_auto_backup">Обнови автоматски Backup</string>

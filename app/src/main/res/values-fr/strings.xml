@@ -37,6 +37,7 @@
   <string name="sync_manually">Synchroniser manuellement</string>
   <string name="sync_and_update">Synchroniser &amp; Mettre à jour</string>
   <string name="sync_and_download_all">Synchroniser &amp; Télécharger tout</string>
+  <string name="action_turn_off">Désactiver</string>
   <!-- Search -->
   <string name="clear_search_history">Effacer l\'historique de recherche</string>
   <string name="search_hint">Recherche d\'épisodes</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">Entrez un nom de série</string>
   <string name="add_empty">Il n\'y a aucune série ici.</string>
   <string name="no_results">Pas de résultats, reformulez votre requête.</string>
+  <string name="empty_show_search">Pas trouvé dans votre liste de séries</string>
   <string name="action_try_any_language">Essayer n\'importe quelle langue</string>
   <string name="action_try_again">Réessayer</string>
   <string name="tvdb_error_does_not_exist">La série n’existe pas (encore) sur TheTVDB. Réessayez plus tard.</string>
@@ -397,23 +399,15 @@
   <string name="pref_ganalyticssummary">Envoyer des statistiques d’utilisation anonymes à un service Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inclure les descriptions, informations, notes</string>
-  <string name="backup_path">Dossier de sauvegarde</string>
-  <string name="backup_version">Version de la base de données</string>
   <string name="backup_failed_file_access">Impossible de sauvegarder. Un fichier de sauvegarde ne peut pas être trouvé ou consulté.</string>
-  <string name="backup_inprogress">Sauvegarde de la base de données&#8230;</string>
   <string name="backup_success">Sauvegarde réussie.</string>
   <string name="backup_failed">Sauvegarde échouée.</string>
-  <string name="import_inprogress">Restauration de la base de données&#8230;</string>
   <string name="import_failed_nosd">Restauration impossible. Le répertoire de sauvegarde est indisponible.</string>
   <string name="import_failed_nofile">Il n\'y a aucun fichier de sauvegarde lisible.</string>
-  <string name="import_failed_noread">La sauvegarde est illisible.</string>
-  <string name="dbupgradefailed">Votre sauvegarde peut être trop vieille ou vide. Note : Importer des sauvegardes de pre-2.0 dans une version 1.9.x tout d\'abord.</string>
   <string name="import_success">Restauration réussie.</string>
   <string name="import_failed">Restauration échouée.</string>
   <string name="backup_button">Sauvegarder</string>
   <string name="import_button">Restaurer</string>
-  <string name="backup_question">Ceci va écraser les fichiers de sauvegarde déjà présent dans le répertoire!</string>
-  <string name="import_question">La liste de séries actuelles sera perdue! Assurez-vous que le fichier de sauvegarde est bien dans le répertoire.</string>
   <string name="import_warning">Je comprends que mes séries, listes et films actuels seront remplacés !</string>
   <string name="last_auto_backup">Dernière sauvegarde auto : %s</string>
   <string name="restore_auto_backup">Restaurer la sauvegarde automatique</string>

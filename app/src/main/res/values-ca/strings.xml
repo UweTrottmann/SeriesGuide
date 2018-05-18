@@ -37,6 +37,7 @@
   <string name="sync_manually">Sincronitza manualment</string>
   <string name="sync_and_update">Sincronització i actualització</string>
   <string name="sync_and_download_all">Sincronitza i descarrega tot</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Esborra l\'historial</string>
   <string name="search_hint">Cerca episodis</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">Escriviu el nom d\'una sèrie</string>
   <string name="add_empty">Aquí no hi ha series.</string>
   <string name="no_results">Cap resultat, proveu paraules senceres.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Prova qualsevol idioma</string>
   <string name="action_try_again">Torneu-ho a intentar</string>
   <string name="tvdb_error_does_not_exist">La sèrie no existeix (encara) a TheTVDB. Torna-ho a intentar més tard.</string>
@@ -397,23 +399,15 @@
   <string name="pref_ganalyticssummary">Enviar estadístiques d\'ús anònimes un servei de Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Incloure descripcions, detalls, valoracions</string>
-  <string name="backup_path">Carpeta de còpies de seguretat</string>
-  <string name="backup_version">Versió de la base de dades</string>
   <string name="backup_failed_file_access">No es pot fer còpia de seguretat. No es pot trobar o accedir un arxiu de còpia de seguretat.</string>
-  <string name="backup_inprogress">S\'està fent una còpia de seguretat de la base de dades&#8230;</string>
   <string name="backup_success">S\'ha realitzat la còpia de seguretat.</string>
   <string name="backup_failed">Ha fallat la còpia de seguretat.</string>
-  <string name="import_inprogress">S\'està restaurant la base de dades&#8230;</string>
   <string name="import_failed_nosd">No es pot restaurar la còpia de seguretat. La carpeta de còpia de seguretat no està disponible.</string>
   <string name="import_failed_nofile">No hi ha cap còpia de seguretat que es pugui llegir.</string>
-  <string name="import_failed_noread">El fitxer amb la còpia de seguretat no té permisos de lectura.</string>
-  <string name="dbupgradefailed">La còpia de seguretat és massa vella o està buida. Nota: importeu a una versió 1.9.x, en primer lloc, les còpies de seguretat anteriors a la versió 2.0.</string>
   <string name="import_success">La còpia de seguretat s\'ha restaurat correctament.</string>
   <string name="import_failed">La còpia de seguretat no s\'ha pogut restaurar.</string>
   <string name="backup_button">Crea còpia de seg.</string>
   <string name="import_button">Restaura</string>
-  <string name="backup_question">Això sobreescriurà la còpia de seguretat actual que hi ha a la carpeta de còpies de seguretat!</string>
-  <string name="import_question">La llista de sèries actuals es perdrà! Assegureu-vos que disposeu d\'una còpia de seguretat a la carpeta de còpies de seguretat.</string>
   <string name="import_warning">Entenc que les meves sèries, llistes i pel·lícules actuals seran reemplaçades</string>
   <string name="last_auto_backup">Darrera còpia de seguretat automàtica: %s</string>
   <string name="restore_auto_backup">Restaura la còpia de seguretat automàtica</string>

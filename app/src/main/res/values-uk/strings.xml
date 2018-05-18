@@ -37,6 +37,7 @@
   <string name="sync_manually">Синхронізація вручну</string>
   <string name="sync_and_update">Синхронізація та Оновлення</string>
   <string name="sync_and_download_all">Синхронізація; Завантажити все</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Очистити історію пошуку</string>
   <string name="search_hint">Пошук серій</string>
@@ -189,6 +190,7 @@
   <string name="checkin_searchhint">Напишіть назву серіалу</string>
   <string name="add_empty">Тут немає жодного серіалу.</string>
   <string name="no_results">Немає результатів, спробуйте завершити слова.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Виберіть будь-яку мову</string>
   <string name="action_try_again">Спробувати ще раз</string>
   <string name="tvdb_error_does_not_exist">Це шоу відсутнє (покищо) на TheTVDB. Спробуйте пізніше.</string>
@@ -419,23 +421,15 @@
   <string name="pref_ganalyticssummary">Відправляти анонімну статистику використання служб Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include descriptions, details, ratings</string>
-  <string name="backup_path">Папка Бекапа</string>
-  <string name="backup_version">Версія бази даних</string>
   <string name="backup_failed_file_access">Не можливо створити резервну копію. Файл бекапу не знайдено або немає доступу.</string>
-  <string name="backup_inprogress">Резервне копіювання бази даних&#8230;</string>
   <string name="backup_success">Резервне копіювання пройшло успішно.</string>
   <string name="backup_failed">Не вдалося виконати резервне копіювання.</string>
-  <string name="import_inprogress">Відновлення бази даних&#8230;</string>
   <string name="import_failed_nosd">Не можливо відновити резервну копію. Папка Бекапу недоступна.</string>
   <string name="import_failed_nofile">Відсутній читабельний файл Бекапу.</string>
-  <string name="import_failed_noread">Файл резервної копії не можна прочитати.</string>
-  <string name="dbupgradefailed">Ваш Бекап може бути занадто старий або пустий. Примітка: Спочатку імпортуйте резервні копії перед-2.0  у 1.9.x версію.</string>
   <string name="import_success">Резервна копія успішно відновлена.</string>
   <string name="import_failed">Не вдалося виконати відновлення з резервної копії.</string>
   <string name="backup_button">Бекап</string>
   <string name="import_button">Відновити</string>
-  <string name="backup_question">Це призведе до перезаписування поточного файлу резервної копії в папці Бекапу!</string>
-  <string name="import_question">Поточний список серіалів буде втрачено! Переконайтеся, що файл резервної копії знаходиться всередині папки Бекапу.</string>
   <string name="import_warning">Я розумію, що мої поточні серіали, списки та фільми будуть замінені!</string>
   <string name="last_auto_backup">Останній авто Бекап: %s</string>
   <string name="restore_auto_backup">Відновити з авто Бекапу</string>

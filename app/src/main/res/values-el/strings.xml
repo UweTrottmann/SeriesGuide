@@ -37,6 +37,7 @@
   <string name="sync_manually">Χειροκίνητος συγχρονισμός</string>
   <string name="sync_and_update">Συγχρονισμός &amp; Ενημέρωση</string>
   <string name="sync_and_download_all">Συγχρονισμός &amp; Λήψη όλων</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
   <string name="search_hint">Αναζήτηση επεισοδίων</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">Πληκτρολογήστε το όνομα μιας σειράς</string>
   <string name="add_empty">Δεν υπάρχουν σειρές εδώ.</string>
   <string name="no_results">Κανένα αποτέλεσμα, δοκιμάστε ολόκληρες λέξεις.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Δοκιμάστε οποιαδήποτε γλώσσα</string>
   <string name="action_try_again">Δοκιμάσετε πάλι</string>
   <string name="tvdb_error_does_not_exist">Η σειρά δεν υπάρχει (ακόμη) στο TheTVDB. Δοκιμάστε ξανά αργότερα.</string>
@@ -397,23 +399,15 @@
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include descriptions, details, ratings</string>
-  <string name="backup_path">Φάκελος αντιγράφων ασφαλείας</string>
-  <string name="backup_version">Έκδοση βάσης δεδομένων</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">Δημιουργία αντιγράφων ασφαλείας βάσης δεδομένων&#8230;</string>
   <string name="backup_success">Επιτυχής δημιουργία αντιγράφου ασφαλείας.</string>
   <string name="backup_failed">Απέτυχε η δημιουργία αντιγράφου ασφαλείας.</string>
-  <string name="import_inprogress">Επαναφορά βάσης δεδομένων&#8230;</string>
   <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">Δεν υπάρχει κανένα αναγνώσιμο αρχείο αντιγράφου ασφαλείας.</string>
-  <string name="import_failed_noread">Το αντίγραφο ασφαλείας δεν είναι αναγνώσιμο.</string>
-  <string name="dbupgradefailed">Το αντίγραφο ασφαλείας σας μπορεί να είναι πολύ παλιό ή κενό. Σημείωση: εισάγετε αντίγραφα ασφαλείας αρχαιότερα της έκδοσης 2.0 σε μια έκδοση 1.9.x πρώτα.</string>
   <string name="import_success">Επιτυχής επαναφορά αντιγράφου ασφαλείας.</string>
   <string name="import_failed">Αποτυχία επαναφοράς του αντιγράφου ασφαλείας.</string>
   <string name="backup_button">Δημιουργία αντιγράφων ασφαλείας</string>
   <string name="import_button">Επαναφορά</string>
-  <string name="backup_question">Θα αντικατασταθεί το υπάρχον αρχείο αντιγράφου ασφαλείας στο φάκελο!</string>
-  <string name="import_question">Η τρέχουσα λίστα σειρών θα χαθεί! Βεβαιωθείτε ότι το αρχείο αντίγραφου ασφαλείας βρίσκεται μέσα στον φάκελο αντιγράφων ασφαλείας.</string>
   <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
   <string name="last_auto_backup">Τελευταίο αυτόματο αντίγραφο ασφαλείας: %s</string>
   <string name="restore_auto_backup">Επαναφορά αντιγράφου ασφαλείας στο αυτόματο</string>

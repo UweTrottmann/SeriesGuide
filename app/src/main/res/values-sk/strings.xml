@@ -37,6 +37,7 @@
   <string name="sync_manually">Synchronizovať ručne</string>
   <string name="sync_and_update">Synchronizovať a aktualizovať</string>
   <string name="sync_and_download_all">Synchronizovať a stiahnuť všetko</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Vymazať históriu vyhľadávania</string>
   <string name="search_hint">Hľadať epizódy</string>
@@ -189,6 +190,7 @@
   <string name="checkin_searchhint">Napíšte názov seriálu</string>
   <string name="add_empty">Nie sú tu žiadne seriály.</string>
   <string name="no_results">Žiadne výsledky, skúste celé slová.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Skúsiť ľubovoľný jazyk</string>
   <string name="action_try_again">Skúsiť znova</string>
   <string name="tvdb_error_does_not_exist">Seriál (momentálne) nie je dostupný na TheTVDB. Skúste to znova neskôr.</string>
@@ -419,23 +421,15 @@
   <string name="pref_ganalyticssummary">Posielať anonymné štatistiky o používaní do služby Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Zahrnúť popisy, podrobnosti, hodnotenia</string>
-  <string name="backup_path">Priečinok zálohy</string>
-  <string name="backup_version">Verzia databázy</string>
   <string name="backup_failed_file_access">Nie je možné zálohovať. Záložný súbor nie je možné nájsť alebo k nemu nie je prístup.</string>
-  <string name="backup_inprogress">Zálohovanie databázy&#8230;</string>
   <string name="backup_success">Zálohovanie úspešné.</string>
   <string name="backup_failed">Zálohovanie zlyhalo.</string>
-  <string name="import_inprogress">Obnovovanie databázy&#8230;</string>
   <string name="import_failed_nosd">Nie je možné obnoviť zálohu. Priečinok zálohy nie je dostupný.</string>
   <string name="import_failed_nofile">Nie je čitateľný záložný súbor.</string>
-  <string name="import_failed_noread">Záloha sa nedá načítať.</string>
-  <string name="dbupgradefailed">Vaša záloha je príliš stará alebo prázdna. Poznámka: Zálohu verzie nižšej ako 2.0 obnovte najskôr vo verzii 1.9.x.</string>
   <string name="import_success">Obnova zo zálohy úspešná.</string>
   <string name="import_failed">Obnova zo zálohy zlyhala.</string>
   <string name="backup_button">Zálohovať</string>
   <string name="import_button">Obnoviť</string>
-  <string name="backup_question">Prepíše aktuálnu zálohu v priečinku novou!</string>
-  <string name="import_question">Aktuálny zoznam seriálov bude vymazaný! Uistite sa, že máte vytvorenú zálohu.</string>
   <string name="import_warning">Rozumiem, moje aktuálne seriály, zoznamy a filmy budú nahradené zálohou!</string>
   <string name="last_auto_backup">Posledná automatická záloha: %s</string>
   <string name="restore_auto_backup">Obnoviť automatickú zálohu</string>

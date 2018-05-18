@@ -37,6 +37,7 @@
   <string name="sync_manually">Sincronizar manualmente</string>
   <string name="sync_and_update">Sincronizar e atualizar</string>
   <string name="sync_and_download_all">Sincronizar e baixar dados</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="search_hint">Pesquisar episódios</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">Digite o nome da série</string>
   <string name="add_empty">Nenhuma série aqui.</string>
   <string name="no_results">Sem resultados, tente palavras completas.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Tentar qualquer idioma</string>
   <string name="action_try_again">Tentar novamente</string>
   <string name="tvdb_error_does_not_exist">A série não existe (ainda) no TheTVDB. Tente mais tarde.</string>
@@ -397,23 +399,15 @@
   <string name="pref_ganalyticssummary">Enviar estatísticas anônimas de uso para um serviço do Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Incluir descrições, detalhes, avaliações</string>
-  <string name="backup_path">Pasta de backup</string>
-  <string name="backup_version">Versão do banco de dados</string>
   <string name="backup_failed_file_access">Não foi possível fazer o backup. Um arquivo de backup não foi encontrado ou não pode ser acessado.</string>
-  <string name="backup_inprogress">Fazendo backup do banco de dados&#8230;</string>
   <string name="backup_success">Backup bem-sucedido.</string>
   <string name="backup_failed">Backup falhou.</string>
-  <string name="import_inprogress">Restaurando banco de dados&#8230;</string>
   <string name="import_failed_nosd">Não foi possível restaurar o backup. A pasta de backup não está disponível.</string>
   <string name="import_failed_nofile">Não há arquivo de backup legível.</string>
-  <string name="import_failed_noread">O arquivo backup não pode ser lido.</string>
-  <string name="dbupgradefailed">Seu backup pode ser muito velho ou vazio. Nota: Importe backups pré-2.0 em uma versão 1.9.x antes.</string>
   <string name="import_success">Backup restaurado com sucesso.</string>
   <string name="import_failed">Falha ao restaurar backup.</string>
   <string name="backup_button">Backup</string>
   <string name="import_button">Restaurar</string>
-  <string name="backup_question">Isso substituirá o arquivo de backup atual na pasta de backup!</string>
-  <string name="import_question">A lista atual de séries será perdida! Esteja certo que o arquivo backup está dentro da pasta de backup.</string>
   <string name="import_warning">Eu compreendo que minhas séries atuais, listas e filmes serão substituídos!</string>
   <string name="last_auto_backup">Último backup automático: %s</string>
   <string name="restore_auto_backup">Restaurar backup automático</string>

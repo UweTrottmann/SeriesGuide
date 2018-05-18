@@ -37,6 +37,7 @@
   <string name="sync_manually">قم بالمزامنة يدويا</string>
   <string name="sync_and_update">المزامنة والتحديث</string>
   <string name="sync_and_download_all">المزامنة وتحميل كل البيانات</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">إزالة تاريخ البحث</string>
   <string name="search_hint">البحث عن الحلقات</string>
@@ -197,6 +198,7 @@
   <string name="checkin_searchhint">إبحث عن إسم المسلسل</string>
   <string name="add_empty">لا توجد مسلسلات هنا.</string>
   <string name="no_results">.لا نتائج, جرّب كلمات كاملة</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">حاول بأي لغة</string>
   <string name="action_try_again">حاول مرة أخرى</string>
   <string name="tvdb_error_does_not_exist">هذا المسلسل غير موجود (حتى الآن) على TheTVDB. الرجاء المحاولة لاحقا.</string>
@@ -441,23 +443,15 @@
   <string name="pref_ganalyticssummary">سيتم إرسال إحصاءات مجهولة الهوية لخدمة جوجل</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">يتضمن الأوصاف، و التفاصيل، و التقييمات</string>
-  <string name="backup_path">مجلد النسخ الإحتياطي</string>
-  <string name="backup_version">إصدار قاعدة البيانات</string>
   <string name="backup_failed_file_access">لايمكن عمل نسخ إحتياطي، ملف النسخة الإحتياطي لايمكن إجاده أو لا يمكن الوصل إليه.</string>
-  <string name="backup_inprogress">جار عمل نسخ إحتياطي لقاعدة البيانات&#8230;</string>
   <string name="backup_success">لقد نجحت عملية النسخ الإحتياطي.</string>
   <string name="backup_failed">فشل النسخ الاحتياطي.</string>
-  <string name="import_inprogress">استعادة قاعدة البيانات&#8230;</string>
   <string name="import_failed_nosd">لايمكن إستعادة النسخ الإحتياطي، مجلد النسخ الإحتياطي غير متوفر.</string>
   <string name="import_failed_nofile">لا يوجد ملف نسخ إحتياطي للقراءة.</string>
-  <string name="import_failed_noread">.ملف النسخ الاحتياطي غير قابل للقراءة</string>
-  <string name="dbupgradefailed">قد تكون النسخة الاحتياطية قديمة جداً أو فارغة. ملاحظة: قم باستعادة ما قبل النسخة2.0 في النسخة 1.9.0 أولاً</string>
   <string name="import_success">تم إستعادة النسخ الإحتياطي بنجاح.</string>
   <string name="import_failed">فشل في إستعادة النسخ الإحتياطي.</string>
   <string name="backup_button">نسخ احتياطي</string>
   <string name="import_button">استعادة</string>
-  <string name="backup_question">سوف يتم الكتابة فوق ملف النسخ الإحتياطي الحالي الموجود في مجلد النسخ الإحتياطي!</string>
-  <string name="import_question">سيتم فقدان قائمة المعرض الحالي! تأكد من أن ملف النسخة الاحتياطية داخل مجلد النسخ الاحتياطي.</string>
   <string name="import_warning">أنا أفهم أن المسلسلات الحالية، القوائم والأفلام سوف تستبدل!</string>
   <string name="last_auto_backup">آخر عملية نسخ تلقائية: %s</string>
   <string name="restore_auto_backup">استعادة النسخ الاحتياطي التلقائي</string>

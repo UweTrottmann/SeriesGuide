@@ -37,6 +37,7 @@
   <string name="sync_manually">手動で同期</string>
   <string name="sync_and_update">同期と更新</string>
   <string name="sync_and_download_all">すべて同期とダウンロード</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">検索履歴をクリア</string>
   <string name="search_hint">エピソードを検索</string>
@@ -177,6 +178,7 @@
   <string name="checkin_searchhint">番組名を入力</string>
   <string name="add_empty">番組はありません。</string>
   <string name="no_results">結果はありません。完全な単語で試してください。</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">任意の言語を試してください</string>
   <string name="action_try_again">もう一度やり直してください</string>
   <string name="tvdb_error_does_not_exist">番組は (まだ) TheTVDB に存在しません。後でもう一度試してください。</string>
@@ -386,23 +388,15 @@
   <string name="pref_ganalyticssummary">匿名の使用状況に関する統計情報をGoogle サービスに送信します</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">説明、詳細、評価を含める</string>
-  <string name="backup_path">バックアップ フォルダー</string>
-  <string name="backup_version">データベースのバージョン</string>
   <string name="backup_failed_file_access">バックアップできません。バックアップ ファイルが見つからないか、アクセスできません。</string>
-  <string name="backup_inprogress">データベースをバックアップしています&#8230;</string>
   <string name="backup_success">正常にバックアップされました。</string>
   <string name="backup_failed">バックアップに失敗しました。</string>
-  <string name="import_inprogress">データベースを復元しています&#8230;</string>
   <string name="import_failed_nosd">バックアップを復元できません。バックアップ フォルダーが利用できません。</string>
   <string name="import_failed_nofile">読み取り可能なバックアップ ファイルがありません。</string>
-  <string name="import_failed_noread">バックアップ ファイルが読み取り可能ではありません。</string>
-  <string name="dbupgradefailed">バックアップが古すぎるか、空です。注: 2.0 以前のバックアップは、最初に 1.9.x バージョンでインポートしてください。</string>
   <string name="import_success">バックアップが正常に復元されました。</string>
   <string name="import_failed">バックアップの復元に失敗しました。</string>
   <string name="backup_button">バックアップを作成</string>
   <string name="import_button">バックアップを復元</string>
-  <string name="backup_question">バックアップ フォルダー内の、現在のバックアップ ファイルが上書きされます!</string>
-  <string name="import_question">現在の番組リストは失われます! バックアップ ファイルが、バックアップ フォルダー内にあることを確認してください。</string>
   <string name="import_warning">私は、現在の番組、リスト、映画が置き換えられることを理解しました!</string>
   <string name="last_auto_backup">最終の自動バックアップ: %s</string>
   <string name="restore_auto_backup">自動バックアップを復元</string>

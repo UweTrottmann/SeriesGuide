@@ -37,6 +37,7 @@
   <string name="sync_manually">Sync manually</string>
   <string name="sync_and_update">Sync &amp; Update</string>
   <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Dzēst meklēšanas vēsturi</string>
   <string name="search_hint">Meklēt epizodēs</string>
@@ -185,6 +186,7 @@
   <string name="checkin_searchhint">Ierakstiet seriāla nosaukumu</string>
   <string name="add_empty">Šeit nepastāv nekādu veidu šovi.</string>
   <string name="no_results">Nav rezultātu, mēģiniet ar veseliem vārdiem.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Try any language</string>
   <string name="action_try_again">Mēģināt vēlreiz</string>
   <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
@@ -408,23 +410,15 @@
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include descriptions, details, ratings</string>
-  <string name="backup_path">Dublējuma mape</string>
-  <string name="backup_version">Datu bāzes versija</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">Notiek datu bāzes dublēšana&#8230;</string>
   <string name="backup_success">Dublēšana izdevās.</string>
   <string name="backup_failed">Dublēšana neizdevās.</string>
-  <string name="import_inprogress">Atjauno datu bāzi&#8230;</string>
   <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">Nav lasāma dublējuma faila.</string>
-  <string name="import_failed_noread">Dublējuma fails nav lasāms.</string>
-  <string name="dbupgradefailed">Jūsu dublējums var būt tukšs vai pārāk vecs. Piezīme: Importējiet dublējumus no versijām pirms 2.0 vispirms aplikācijas 1.9.x versijā.</string>
   <string name="import_success">Izdevās atjaunošana no dublējuma.</string>
   <string name="import_failed">Neizdevās atjaunošana no dublējuma.</string>
   <string name="backup_button">Dublēt</string>
   <string name="import_button">Atjaunot</string>
-  <string name="backup_question">Tādējādi tiks pārrakstīts mapes pašreizējais dublējums!</string>
-  <string name="import_question">Pašreizējais seriālu saraksts pazudīs! Pārliecinieties, ka dublējuma fails atrodas dublējuma mapē.</string>
   <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
   <string name="last_auto_backup">Pēdējais automātiskais dublējums: %s</string>
   <string name="restore_auto_backup">Atjaunot no automātiskā dublējuma</string>

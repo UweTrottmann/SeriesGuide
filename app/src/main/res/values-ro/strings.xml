@@ -37,6 +37,7 @@
   <string name="sync_manually">Sincronizare manuala</string>
   <string name="sync_and_update">Sincronizare &amp; innoita</string>
   <string name="sync_and_download_all">Sincronizare &amp; Descărcă tot</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Ștergere istoric căutare</string>
   <string name="search_hint">Căutaţi episoade</string>
@@ -185,6 +186,7 @@
   <string name="checkin_searchhint">Scrieți un nume de emisiune</string>
   <string name="add_empty">Nu există emisiuni aici.</string>
   <string name="no_results">Nici un rezultat, încercaţi folosind cuvinte întregi.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Încearcă orice limbă</string>
   <string name="action_try_again">Încearcă din nou</string>
   <string name="tvdb_error_does_not_exist">Acest serial nu există (încă) pe TheTVDB. Încercați mai târziu.</string>
@@ -408,23 +410,15 @@
   <string name="pref_ganalyticssummary">Trimite statistici anonime către serviciul Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include descrieri, detalii, note</string>
-  <string name="backup_path">Fișier de arhive</string>
-  <string name="backup_version">Versiunea bazei de date</string>
   <string name="backup_failed_file_access">Backup-ul nu poate fi efectuat. Un fișier de backup nu poate fi localizat sau accesat.</string>
-  <string name="backup_inprogress">Baza de date se arhivează&#8230;</string>
   <string name="backup_success">Arhivare reușită.</string>
   <string name="backup_failed">Arhivare eșuată.</string>
-  <string name="import_inprogress">Restaurarea bazei de date&#8230;</string>
   <string name="import_failed_nosd">Nu se poate restaura arhiva. Fișierul de arhivare nu este disponibil.</string>
   <string name="import_failed_nofile">Nu există o arhivă care să poată fi citită.</string>
-  <string name="import_failed_noread">Arhiva nu poate fi citită.</string>
-  <string name="dbupgradefailed">Arhiva poate fi prea veche sau goală. Notă: Prima data importati o arhivă înainte de 2.0 într-o versiune 1.9.x.</string>
   <string name="import_success">Arhiva a fost restaurată cu succes.</string>
   <string name="import_failed">Restaurarea arhivei a eșuat.</string>
   <string name="backup_button">Arhivare</string>
   <string name="import_button">Restaurează</string>
-  <string name="backup_question">Acest lucru va suprascrie fişierul arhivă curent în folderul arhivă!</string>
-  <string name="import_question">Lista recentă de emisiuni va fi pierdută! Asigurați-vă că arhiva se află in fișierul arhivă.</string>
   <string name="import_warning">Sunt de acord ca serialele, listele și filmele să fie înlocuite!</string>
   <string name="last_auto_backup">Ultimul backup automat: %s</string>
   <string name="restore_auto_backup">Restaurare arhivă automat</string>

@@ -37,6 +37,7 @@
   <string name="sync_manually">Sincronizar manualmente</string>
   <string name="sync_and_update">Sincronizar &amp; Atualizar</string>
   <string name="sync_and_download_all">Sincronizar &amp; Retransferir</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="search_hint">Procurar episódios</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">Título da série</string>
   <string name="add_empty">Não existe nenhuma série.</string>
   <string name="no_results">Nenhum resultado, tenta palavras completas.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Tentar em qualquer idioma</string>
   <string name="action_try_again">Tentar novamente</string>
   <string name="tvdb_error_does_not_exist">A série (ainda) não existe no TheTVDB. Tenta mais tarde.</string>
@@ -397,23 +399,15 @@
   <string name="pref_ganalyticssummary">Enviar estatísticas de uso anónimas para um serviço da Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include descriptions, details, ratings</string>
-  <string name="backup_path">Pasta para as cópias de segurança</string>
-  <string name="backup_version">Versão da Base de Dados</string>
   <string name="backup_failed_file_access">Cópia de segurança interrompida. Uma cópia de segurança não pôde ser encontrada ou acedida.</string>
-  <string name="backup_inprogress">A efetuar cópia de segurança da base de dados&#8230;</string>
   <string name="backup_success">Cópia de segurança bem sucedida.</string>
   <string name="backup_failed">A cópia de segurança não foi efectuada com sucesso.</string>
-  <string name="import_inprogress">A restaurar a base de dados&#8230;</string>
   <string name="import_failed_nosd">Não é possível restaurar a cópia de segurança. A pasta das cópias de segurança não se encontra disponível.</string>
   <string name="import_failed_nofile">Não existe nenhuma cópia de segurança que possa ser lida.</string>
-  <string name="import_failed_noread">O ficheiro da cópia de segurança não é legível.</string>
-  <string name="dbupgradefailed">A cópia de segurança pode ser muito antiga ou estar corrupta. Nota: Importa primeiro as cópias de segurança das versões pre-2.0 numa 1.9.x.</string>
   <string name="import_success">Cópia de segurança restaurada com sucesso.</string>
   <string name="import_failed">Falha ao restaurar a cópia de segurança.</string>
   <string name="backup_button">Criar cópia de segurança</string>
   <string name="import_button">Restaurar cópia de segurança</string>
-  <string name="backup_question">Isso irá substituir a cópia de segurança atual que se encontra na pasta das cópias de segurança!</string>
-  <string name="import_question">A lista atual de séries será perdida! Certifica-te que a cópia de segurança se encontra na pasta das cópias de segurança.</string>
   <string name="import_warning">Estou ciente que as minhas listas, séries e filmes serão substituídos!</string>
   <string name="last_auto_backup">Última Cópia de Segurança Automática: %s</string>
   <string name="restore_auto_backup">Restaurar Cópia de Segurança Automática</string>

@@ -37,6 +37,7 @@
   <string name="sync_manually">Synkroniser manuelt</string>
   <string name="sync_and_update">Synkronisering og oppdatering</string>
   <string name="sync_and_download_all">Synkroniser og last ned alle</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Tøm søkelogg</string>
   <string name="search_hint">Søk episoder</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">Skriv inn et serienavn</string>
   <string name="add_empty">Det er ingen serier her.</string>
   <string name="no_results">Ingen treff, prøv hele ord.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Prøv alle språk</string>
   <string name="action_try_again">Prøv igjen</string>
   <string name="tvdb_error_does_not_exist">Serien finnes ikke (enda) på TheTVDB. Prøv igjen senere.</string>
@@ -397,23 +399,15 @@
   <string name="pref_ganalyticssummary">Sende anonym brukerstatistikk til en Google-tjeneste</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inkluderer beskrivelser, detaljer og vurderinger</string>
-  <string name="backup_path">Sikkerhetskopimappe</string>
-  <string name="backup_version">Databaseversjon</string>
   <string name="backup_failed_file_access">Sikkerhetskopiering mislyktes. Klarte ikke finne eller åpne filen.</string>
-  <string name="backup_inprogress">Sikkerhetskopierer databasen&#8230;</string>
   <string name="backup_success">Sikkerhetskopiering vellykket.</string>
   <string name="backup_failed">Sikkerhetskopiering mislyktes.</string>
-  <string name="import_inprogress">Gjenoppretter databasen&#8230;</string>
   <string name="import_failed_nosd">Klarte ikke gjenopprette sikkerhetskopien. Sikkerhetskopimappen er ikke tilgjengelig.</string>
   <string name="import_failed_nofile">Fant ingen lesbar sikkerhetskopifil.</string>
-  <string name="import_failed_noread">Sikkerhetskopien er ikke lesbar.</string>
-  <string name="dbupgradefailed">Sikkerhetskopien kan være for gammel eller tom. Merk: Importere før-2.0 sikkerhetskopier i en 1.9.x versjon først.</string>
   <string name="import_success">Sikkerhetskopien ble gjenopprettet.</string>
   <string name="import_failed">Gjenoppretting av sikkerhetskopien mislyktes.</string>
   <string name="backup_button">Opprett sikkerhetskopi</string>
   <string name="import_button">Gjenopprett</string>
-  <string name="backup_question">Dette vil overskrive gjeldende sikkerhetskopi i mappen for sikkerhetskopier.</string>
-  <string name="import_question">Serielisten din vil gå tapt. Sjekk at sikkerhetskopien er i sikkerhetskopimappen.</string>
   <string name="import_warning">Jeg forstår at mine valgte serier, lister og filmer vil bli erstattet.</string>
   <string name="last_auto_backup">Siste automatiske sikkerhetskopiering: %s</string>
   <string name="restore_auto_backup">Gjenopprett fra automatisk sikkerhetskopiering</string>

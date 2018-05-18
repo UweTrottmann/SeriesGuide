@@ -37,6 +37,7 @@
   <string name="sync_manually">手動同步</string>
   <string name="sync_and_update">同步 &amp; 和更新</string>
   <string name="sync_and_download_all">同步&amp; 及下載</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">清除搜尋記錄</string>
   <string name="search_hint">搜尋集數</string>
@@ -177,6 +178,7 @@
   <string name="checkin_searchhint">輸入節目名稱</string>
   <string name="add_empty">無此節目</string>
   <string name="no_results">查無結果，請嘗試完整單字。</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">嘗試其他種語言</string>
   <string name="action_try_again">再試一次</string>
   <string name="tvdb_error_does_not_exist">TheTVDB 上不存在。稍後再試。</string>
@@ -386,23 +388,15 @@
   <string name="pref_ganalyticssummary">向Google服務寄送匿名的使用資料統計</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include descriptions, details, ratings</string>
-  <string name="backup_path">備份資料夾</string>
-  <string name="backup_version">資料庫版本</string>
   <string name="backup_failed_file_access">無法備份。找不到或無法存取備份檔案。</string>
-  <string name="backup_inprogress">備份資料庫&#8230;</string>
   <string name="backup_success">備份成功。</string>
   <string name="backup_failed">備份失敗。</string>
-  <string name="import_inprogress">正在還原資料庫&#8230;</string>
   <string name="import_failed_nosd">無法還原備份。備份資料夾無法使用。</string>
   <string name="import_failed_nofile">沒有可讀的備份檔案。</string>
-  <string name="import_failed_noread">無法讀取備份檔。</string>
-  <string name="dbupgradefailed">您的備份可能太舊或者是空檔。注意：首先在1.9.x版本導入pre-2.0備份檔。</string>
   <string name="import_success">已成功還原備份。</string>
   <string name="import_failed">還原備份檔失敗。</string>
   <string name="backup_button">備份</string>
   <string name="import_button">還原</string>
-  <string name="backup_question">這將覆蓋目前在備份夾中的備份檔!</string>
-  <string name="import_question">目前的影集清單將被清空!請確認備份檔已存在備份夾中。</string>
   <string name="import_warning">我明白我目前的節目，及其他清單和電影將會被取代 ！</string>
   <string name="last_auto_backup">剩餘自動備份︰ %s</string>
   <string name="restore_auto_backup">還原自動備份</string>

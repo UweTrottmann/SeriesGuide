@@ -37,6 +37,7 @@
   <string name="sync_manually">Синхронизировать вручную</string>
   <string name="sync_and_update">Синхронизировать и обновить</string>
   <string name="sync_and_download_all">Синхронизировать и обновить всё</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Очистить историю поиска</string>
   <string name="search_hint">Поиск эпизодов</string>
@@ -189,6 +190,7 @@
   <string name="checkin_searchhint">Введите название сериала</string>
   <string name="add_empty">Здесь нет сериалов.</string>
   <string name="no_results">Результатов нет, попробуйте полное название.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Попробовать любой язык</string>
   <string name="action_try_again">Повторить попытку</string>
   <string name="tvdb_error_does_not_exist">Сериала не существует (пока) на TheTVDB. Попробуйте позже.</string>
@@ -419,23 +421,15 @@
   <string name="pref_ganalyticssummary">Отправлять анонимную статистику использования в сервис Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Вкл. описания, детали, рейтинги</string>
-  <string name="backup_path">Папка резервного копирования</string>
-  <string name="backup_version">Версия базы данных</string>
   <string name="backup_failed_file_access">Не могу произвести резервное копирование. Файл резервной копии не может быть найден или к нему нет доступа.</string>
-  <string name="backup_inprogress">Резервное копирование базы данных&#8230;</string>
   <string name="backup_success">Резервное копирование прошло успешно.</string>
   <string name="backup_failed">Не удалось выполнить резервное копирование.</string>
-  <string name="import_inprogress">Восстановление базы данных&#8230;</string>
   <string name="import_failed_nosd">Не удается восстановить резервную копию. Папка резервного копирования не доступна.</string>
   <string name="import_failed_nofile">Существует не читаемый файл резервной копии.</string>
-  <string name="import_failed_noread">Невозможно прочитать файл резервной копии.</string>
-  <string name="dbupgradefailed">Резервная копия слишком старая или пустая. Примечание: Сначала импортируйте pre-2.0 резервные копии в 1.9.x версии.</string>
   <string name="import_success">Резервное копирование успешно восстановлено.</string>
   <string name="import_failed">Восстановление резервной копии не удалось.</string>
   <string name="backup_button">Резервное копирование</string>
   <string name="import_button">Восстановление</string>
-  <string name="backup_question">Текущий файл резервной копии будет перезаписан!</string>
-  <string name="import_question">Текущий список сериалов будет утерян! Убедитесь, что резервная копия находится в папке резервного копирования.</string>
   <string name="import_warning">Я понимаю, что мои текущие сериалы, списки и фильмы будут заменены!</string>
   <string name="last_auto_backup">Последнее автоматическое резервное копирование: %s</string>
   <string name="restore_auto_backup">Восстановить автоматическую резервную копию</string>

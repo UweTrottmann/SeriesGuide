@@ -37,6 +37,7 @@
   <string name="sync_manually">Manuell synchronisieren</string>
   <string name="sync_and_update">Synch. &amp; Aktualisieren</string>
   <string name="sync_and_download_all">Synch. &amp; Alles herunterladen</string>
+  <string name="action_turn_off">Deaktivieren</string>
   <!-- Search -->
   <string name="clear_search_history">Suchverlauf löschen</string>
   <string name="search_hint">Suche Folgen</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">Serientitel eingeben</string>
   <string name="add_empty">Keine Serien gefunden</string>
   <string name="no_results">Keine Ergebnisse, versuchen Sie ganze Wörter</string>
+  <string name="empty_show_search">Nicht in Ihrer Serien-Liste gefunden</string>
   <string name="action_try_any_language">In allen Sprachen versuchen</string>
   <string name="action_try_again">Erneut versuchen</string>
   <string name="tvdb_error_does_not_exist">Die Serie existiert (noch) nicht auf TheTVDB. Versuchen Sie es später erneut.</string>
@@ -397,23 +399,15 @@
   <string name="pref_ganalyticssummary">Anonyme Nutzungs-Statistiken an einen Google-Dienst senden</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Beschreibungen, Details, Bewertungen einschließen</string>
-  <string name="backup_path">Sicherungsordner</string>
-  <string name="backup_version">Datenbankversion</string>
   <string name="backup_failed_file_access">Kann nicht sichern. Eine Sicherungs-Datei konnte nicht gefunden oder beschrieben werden.</string>
-  <string name="backup_inprogress">Sichern der Datenbank&#8230;</string>
   <string name="backup_success">Sicherung erfolgreich</string>
   <string name="backup_failed">Sicherung fehlgeschlagen</string>
-  <string name="import_inprogress">Wiederherstellen der Datenbank&#8230;</string>
   <string name="import_failed_nosd">Wiederherstellen fehlgeschlagen. Der Backup-Ordner ist nicht verfügbar.</string>
   <string name="import_failed_nofile">Keine lesbare Sicherungs-Datei vorhanden</string>
-  <string name="import_failed_noread">Die Sicherungsdatei ist nicht lesbar</string>
-  <string name="dbupgradefailed">Die Sicherung ist möglicherweise zu alt oder leer. Hinweis: Importieren Sie Vor-2.0 Sicherungen zuerst in einer 1.9.x Version.</string>
   <string name="import_success">Sicherung erfolgreich wiederhergestellt</string>
   <string name="import_failed">Fehler beim Wiederherstellen der Sicherung</string>
   <string name="backup_button">Sicherung erstellen</string>
   <string name="import_button">Sicherung wiederherstellen</string>
-  <string name="backup_question">Die aktuelle Sicherungs-Datei im Sicherungs-Ordner wird überschrieben!</string>
-  <string name="import_question">Die aktuelle Serien-Liste geht verloren! Stellen Sie sicher, dass die Sicherungs-Datei im Sicherungs-Ordner liegt.</string>
   <string name="import_warning">Ihre aktuellen Serien, Listen oder Filme werden durch die Sicherung ersetzt</string>
   <string name="last_auto_backup">Letzte Auto-Sicherung: %s</string>
   <string name="restore_auto_backup">Auto-Sicherung wiederherstellen</string>

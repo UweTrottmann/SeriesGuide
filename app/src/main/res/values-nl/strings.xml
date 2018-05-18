@@ -37,6 +37,7 @@
   <string name="sync_manually">Handmatig synchroniseren</string>
   <string name="sync_and_update">Synchroniseer &amp; Update</string>
   <string name="sync_and_download_all">Synchroniseer &amp; Download alles</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
   <string name="search_hint">Afleveringen zoeken</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">Voer de naam van een serie in</string>
   <string name="add_empty">Er zijn geen series hier.</string>
   <string name="no_results">Geen resultaten, probeer complete woorden.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Probeer elke taal</string>
   <string name="action_try_again">Probeer nogmaals</string>
   <string name="tvdb_error_does_not_exist">Show bestaat (nog) niet op TheTVDB. Probeer later opnieuw.</string>
@@ -397,23 +399,15 @@
   <string name="pref_ganalyticssummary">Anonieme gebruiksstatistieken verzenden naar een Google-dienst</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Neem beschrijvingen, details en ratings op</string>
-  <string name="backup_path">Back-upmap</string>
-  <string name="backup_version">Database-versie</string>
   <string name="backup_failed_file_access">Kan geen backup maken. Een backup bestand kon niet gevonden of geopend worden.</string>
-  <string name="backup_inprogress">Gegevensbestand back-uppen&#8230;</string>
   <string name="backup_success">Maken back-up succesvol.</string>
   <string name="backup_failed">Maken back-up mislukt.</string>
-  <string name="import_inprogress">Gegevensbestand herstellen&#8230;</string>
   <string name="import_failed_nosd">Back-up herstellen niet mogelijk. De back-up map is niet beschikbaar.</string>
   <string name="import_failed_nofile">Er is geen leesbaar back-upbestand.</string>
-  <string name="import_failed_noread">Het back-up bestand is niet leesbaar.</string>
-  <string name="dbupgradefailed">Deze back-up kan te oud zijn of niet bestaan. Opmerking: Back-ups van voor versie 2.0 eerst in een 1.9.x versie importeren.</string>
   <string name="import_success">Back-up met succes hersteld.</string>
   <string name="import_failed">Herstellen van de back-up mislukt.</string>
   <string name="backup_button">Back-up</string>
   <string name="import_button">Herstellen</string>
-  <string name="backup_question">Dit overschrijft het huidige back-up bestand in de back-up map!</string>
-  <string name="import_question">De huidige serieslijst zal verloren gaan! Zorg ervoor dat het back-up bestand in de back-up map aanwezig is.</string>
   <string name="import_warning">Ik begrijp dat mijn huidige series, lijsten en films worden vervangen!</string>
   <string name="last_auto_backup">Laatste auto back-up: %s</string>
   <string name="restore_auto_backup">Auto back-up terugzetten</string>

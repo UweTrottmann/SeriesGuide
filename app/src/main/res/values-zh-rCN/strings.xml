@@ -37,6 +37,7 @@
   <string name="sync_manually">手动同步</string>
   <string name="sync_and_update">同步并更新</string>
   <string name="sync_and_download_all">同步并下载全部</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">清空搜索历史</string>
   <string name="search_hint">搜索剧集</string>
@@ -177,6 +178,7 @@
   <string name="checkin_searchhint">输入节目名称</string>
   <string name="add_empty">尚未添加任何节目</string>
   <string name="no_results">请键入完整的原始剧目名称\n暂时不提供译名或内容摘要搜索</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">尝试使用其它语言搜索</string>
   <string name="action_try_again">重试</string>
   <string name="tvdb_error_does_not_exist">此节目在 TheTVDB 上（尚）不存在。请稍后再试。</string>
@@ -386,23 +388,15 @@
   <string name="pref_ganalyticssummary">向 Google 服务发送匿名使用情况统计信息</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">包括说明、详细信息、评级</string>
-  <string name="backup_path">备份/还原数据库的路径</string>
-  <string name="backup_version">数据库版本</string>
   <string name="backup_failed_file_access">备份失败：不能访问备份文件。</string>
-  <string name="backup_inprogress">正在写入文件&#8230;&#8230;</string>
   <string name="backup_success">备份成功。</string>
   <string name="backup_failed">备份失败。</string>
-  <string name="import_inprogress">正在还原数据库&#8230;&#8230;</string>
   <string name="import_failed_nosd">无法还原备份，备份文件夹不可用。</string>
   <string name="import_failed_nofile">没有找到有效备份文件。</string>
-  <string name="import_failed_noread">无法读取备份文件。</string>
-  <string name="dbupgradefailed">您的备份文件过旧或空白，请先在 1.9.x 版本中还原更旧版本的备份。</string>
   <string name="import_success">备份已成功还原。</string>
   <string name="import_failed">备份还原失败。</string>
   <string name="backup_button">备份</string>
   <string name="import_button">还原</string>
-  <string name="backup_question">这将覆盖备份文件夹中现存的备份文件！</string>
-  <string name="import_question">现有的应用程序数据将丢失！请确认有效备份文件已保存在指定路径。</string>
   <string name="import_warning">我已了解当前所有剧集、列表和电影数据将被替换。</string>
   <string name="last_auto_backup">上次自动备份时间：%s</string>
   <string name="restore_auto_backup">从自动备份恢复</string>

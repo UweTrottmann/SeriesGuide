@@ -37,6 +37,7 @@
   <string name="sync_manually">Synchronizuj ręcznie</string>
   <string name="sync_and_update">Synchronizuj i aktualizuj</string>
   <string name="sync_and_download_all">Synchronizuj i pobierz wszystko</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
   <string name="search_hint">Szukaj odcinków</string>
@@ -189,6 +190,7 @@
   <string name="checkin_searchhint">Wpisz nazwę serialu</string>
   <string name="add_empty">Brak seriali.</string>
   <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Szukaj w innych językach</string>
   <string name="action_try_again">Spróbuj ponownie</string>
   <string name="tvdb_error_does_not_exist">Serial nie istnieje (jeszcze) w TVDB. Spróbuj ponownie później.</string>
@@ -419,23 +421,15 @@
   <string name="pref_ganalyticssummary">Wysyła anonimowe statystyki użytkowania do usług Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Uwzględnij opisy, szczegóły, oceny</string>
-  <string name="backup_path">Folder kopii zapasowej</string>
-  <string name="backup_version">Wersja bazy danych</string>
   <string name="backup_failed_file_access">Nie można utworzyć kopii zapasowej. Nie można odnaleźć lub uzyskać dostępu do pliku kopii.</string>
-  <string name="backup_inprogress">Tworzenie kopii bazy&#8230;</string>
   <string name="backup_success">Archiwizacja zakończona.</string>
   <string name="backup_failed">Archiwizacja nieudana.</string>
-  <string name="import_inprogress">Przywracanie bazy&#8230;</string>
   <string name="import_failed_nosd">Nie można przywrócić kopii zapasowej. Folder kopii nie jest dostępny.</string>
   <string name="import_failed_nofile">Brak odczytywalnego pliku archiwum.</string>
-  <string name="import_failed_noread">Plik archiwum jest nieodczytywalny.</string>
-  <string name="dbupgradefailed">Kopia zapasowa jest za stara lub pusta. Uwaga: najpierw zaimportuj archiwa wersji przed 2.0 w wersji 1.9.x.</string>
   <string name="import_success">Zakończono przywracanie.</string>
   <string name="import_failed">Przywracanie nie powiodło się.</string>
   <string name="backup_button">Kontynuuj</string>
   <string name="import_button">Przywróć</string>
-  <string name="backup_question">Spowoduje to zastąpienie bieżącego pliku kopii zapasowej w folderze kopii zapasowej!</string>
-  <string name="import_question">Bieżąca lista seriali zostanie utracona! Upewnij się, że plik kopii zapasowej jest we wskazanym folderze.</string>
   <string name="import_warning">Rozumiem, że moje seriale, listy i filmy zostaną zastąpione!</string>
   <string name="last_auto_backup">Ostatnia kopia zapasowa: %s</string>
   <string name="restore_auto_backup">Przywróć kopię zapasową</string>

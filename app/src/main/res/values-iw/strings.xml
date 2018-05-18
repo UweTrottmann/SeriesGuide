@@ -37,6 +37,7 @@
   <string name="sync_manually">סנכרון ידני</string>
   <string name="sync_and_update">סנכרון &amp; עדכון</string>
   <string name="sync_and_download_all">סנכרון &amp; הורד הכל</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">נקה את היסטוריית החיפוש</string>
   <string name="search_hint">חפש פרקים</string>
@@ -189,6 +190,7 @@
   <string name="checkin_searchhint">הקלד שם סדרה</string>
   <string name="add_empty">אין סדרות כאן.</string>
   <string name="no_results">אין תוצאות, נסה ביטויים שלמים.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">נסה בכל שפה</string>
   <string name="action_try_again">נסה שוב</string>
   <string name="tvdb_error_does_not_exist">הסדרה אינה קיימת (עדיין) ב-TheTVDB. נסה שוב מאוחר יותר.</string>
@@ -419,23 +421,15 @@
   <string name="pref_ganalyticssummary">שלח סטטיסטיקת שימוש אנונימית לשירות גוגל</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">כוללים תיאורים, פרטים, דירוגים</string>
-  <string name="backup_path">תיקיית גיבוי</string>
-  <string name="backup_version">גרסת מסד נתונים</string>
   <string name="backup_failed_file_access">לא ניתן לגבות. קובץ גיבוי לא נמצא או נגיש.</string>
-  <string name="backup_inprogress">מגבה מסד נתונים</string>
   <string name="backup_success">הגיבוי הושלם בהצלחה.</string>
   <string name="backup_failed">הגיבוי נכשל.</string>
-  <string name="import_inprogress">משחזר מסד נתונים</string>
   <string name="import_failed_nosd">אין אפשרות לשחזר. תיקיית הגיבויים אינה זמינה.</string>
   <string name="import_failed_nofile">אין קובץ גיבוי הניתן לקריאה.</string>
-  <string name="import_failed_noread">קובץ הגיבוי אינו קריא.</string>
-  <string name="dbupgradefailed">ייתכן והגיבוי שלך ישן מדי או ריק. הערה: יבא גיבויי פרה-2.0 בגרסה 1.9.x לפני כן.</string>
   <string name="import_success">הגיבוי שוחזר בהצלחה</string>
   <string name="import_failed">שחזור הגיבוי נכשל</string>
   <string name="backup_button">גיבוי</string>
   <string name="import_button">שחזר</string>
-  <string name="backup_question">פעולה זו תחליף את קובץ הגיבוי הנוכחי בתיקיית הגיבוי!</string>
-  <string name="import_question">רשימת הסדרות הנוכחית שלך תאבד! ודא כי קובץ הגיבוי בתוך תיקיית הגיבויים.</string>
   <string name="import_warning">אני מבין שהסדרות, רשימות והסרטים הנוכחיים שלי יוחלפו!</string>
   <string name="last_auto_backup">גיבוי אוטומטי אחרון: %s</string>
   <string name="restore_auto_backup">שחזור גיבוי אוטומטי</string>

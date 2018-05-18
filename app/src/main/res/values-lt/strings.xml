@@ -37,6 +37,7 @@
   <string name="sync_manually">Sinchronizuoti rankiniu būdu</string>
   <string name="sync_and_update">Sync &amp; Update</string>
   <string name="sync_and_download_all">Sync &amp; Download all</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Išvalyti paieškos istoriją</string>
   <string name="search_hint">Ieškoti serijų</string>
@@ -71,6 +72,7 @@
   <plurals name="replies_plural">
     <item quantity="one">%d atsakymas</item>
     <item quantity="few">%d atsakymai</item>
+    <item quantity="many">%d replies</item>
     <item quantity="other">%d atsakymų</item>
   </plurals>
   <!-- Metadata -->
@@ -169,22 +171,26 @@
   <plurals name="other_episodes_plural">
     <item quantity="one">%d other episode</item>
     <item quantity="few">%d other episodes</item>
+    <item quantity="many">%d other episodes</item>
     <item quantity="other">%d other episodes</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
     <item quantity="one">%d to be released</item>
     <item quantity="few">%d to be released</item>
+    <item quantity="many">%d to be released</item>
     <item quantity="other">%d to be released</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
     <item quantity="one">%d remaining</item>
     <item quantity="few">%d remaining</item>
+    <item quantity="many">%d remaining</item>
     <item quantity="other">%d remaining</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Įveskite pavadinimą</string>
   <string name="add_empty">Nėra serialų.</string>
   <string name="no_results">Rezultatų nėra, pabandykite įvesti pilnus žodžius.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Try any language</string>
   <string name="action_try_again">Bandykite dar kartą</string>
   <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
@@ -245,16 +251,19 @@
   <plurals name="days_plural">
     <item quantity="one">%d day</item>
     <item quantity="few">%d days</item>
+    <item quantity="many">%d days</item>
     <item quantity="other">%d days</item>
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d hour</item>
     <item quantity="few">%d hours</item>
+    <item quantity="many">%d hours</item>
     <item quantity="other">%d hours</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d minute</item>
     <item quantity="few">%d minutes</item>
+    <item quantity="many">%d minutes</item>
     <item quantity="other">%d minutes</item>
   </plurals>
   <!-- Features -->
@@ -316,6 +325,7 @@
   <plurals name="votes">
     <item quantity="one">%d vote</item>
     <item quantity="few">%d votes</item>
+    <item quantity="many">%d votes</item>
     <item quantity="other">%d votes</item>
   </plurals>
   <!-- Check Ins -->
@@ -349,16 +359,19 @@
   <plurals name="days_before_plural">
     <item quantity="one">%d day before</item>
     <item quantity="few">%d days before</item>
+    <item quantity="many">%d days before</item>
     <item quantity="other">%d days before</item>
   </plurals>
   <plurals name="hours_before_plural">
     <item quantity="one">%d hour before</item>
     <item quantity="few">%d hours before</item>
+    <item quantity="many">%d hours before</item>
     <item quantity="other">%d hours before</item>
   </plurals>
   <plurals name="minutes_before_plural">
     <item quantity="one">%d minute before</item>
     <item quantity="few">%d minutes before</item>
+    <item quantity="many">%d minutes before</item>
     <item quantity="other">%d minutes before</item>
   </plurals>
   <!-- About screen -->
@@ -408,23 +421,15 @@
   <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Include descriptions, details, ratings</string>
-  <string name="backup_path">Backup folder</string>
-  <string name="backup_version">Database version</string>
   <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-  <string name="backup_inprogress">Backing up database&#8230;</string>
   <string name="backup_success">Backup successful</string>
   <string name="backup_failed">Nepavyko padaryti atsarginės kopijos.</string>
-  <string name="import_inprogress">Atkurti duomenų bazę&#8230;</string>
   <string name="import_failed_nosd">Negalima atkurti atsarginės kopijos. Nėra atsarginių kopijų aplanko.</string>
   <string name="import_failed_nofile">Atsarginis failas nepasiekiamas.</string>
-  <string name="import_failed_noread">The backup file is not readable</string>
-  <string name="dbupgradefailed">Your backup may be too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
   <string name="import_success">Backup successfully restored</string>
   <string name="import_failed">Restoring the backup failed</string>
   <string name="backup_button">Create backup</string>
   <string name="import_button">Restore backup</string>
-  <string name="backup_question">This will overwrite the current backup file in the backup folder!</string>
-  <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
   <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
   <string name="last_auto_backup">Last Auto Backup: %s</string>
   <string name="restore_auto_backup">Restore Auto Backup</string>

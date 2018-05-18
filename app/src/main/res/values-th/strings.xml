@@ -37,6 +37,7 @@
   <string name="sync_manually">ซิงค์ด้วยตนเอง</string>
   <string name="sync_and_update">ซิงค์ &amp; อัปเดต</string>
   <string name="sync_and_download_all">ซิงค์ &amp; ดาวน์โหลดทั้งหมด</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">ล้างประวัติการค้นหา</string>
   <string name="search_hint">ค้นหาตอน</string>
@@ -177,6 +178,7 @@
   <string name="checkin_searchhint">พิมพ์ชื่อซีรีส์</string>
   <string name="add_empty">ไม่มีซีรีส์ที่นี่</string>
   <string name="no_results">ไม่พบผลลัพธ์ ลองคำที่สมบูรณ์</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">ลองภาษาใดก็ได้</string>
   <string name="action_try_again">ลองอีกครั้ง</string>
   <string name="tvdb_error_does_not_exist">รายการนี้(ยัง)ไม่มีบน TheTVDB ลองอีกครั้งในภายหลัง</string>
@@ -386,23 +388,15 @@
   <string name="pref_ganalyticssummary">ส่งสถิติการใช้งานแบบไม่ระบุชื่อกับบริการของ Google</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">รวมคำอธิบาย, รายละเอียด, คะแนน</string>
-  <string name="backup_path">โฟลเดอร์สำรองข้อมูล</string>
-  <string name="backup_version">เวอร์ชันฐานข้อมูล</string>
   <string name="backup_failed_file_access">ไม่สามารถสำรองข้อมูล ไม่พบหรือไม่สามารถเข้าถึงไฟล์สำรอง</string>
-  <string name="backup_inprogress">กำลังสำรองฐานข้อมูล&#8230;</string>
   <string name="backup_success">สำรองข้อมูลเรียบร้อยแล้ว</string>
   <string name="backup_failed">สำรองข้อมูลล้มเหลว</string>
-  <string name="import_inprogress">กำลังกู้คืนฐานข้อมูล&#8230;</string>
   <string name="import_failed_nosd">ไม่สามารถกู้คืนการสำรองข้อมูล โฟลเดอร์สำรองข้อมูลไม่สามารถใช้งานได้</string>
   <string name="import_failed_nofile">ไม่มีไฟล์สำรองที่อ่านได้</string>
-  <string name="import_failed_noread">ไม่สามารถอ่านไฟล์สำรองได้</string>
-  <string name="dbupgradefailed">ไฟล์สำรองของคุณอาจเก่าเกินไปหรือว่างเปล่า หมายเหตุ: นำเข้าไฟล์สำรองเวอร์ชันก่อน 2.0 ในเวอร์ชัน 1.9 ก่อน</string>
   <string name="import_success">กู้คืนการสำรองข้อมูลเรียบร้อยแล้ว</string>
   <string name="import_failed">กู้คืนการสำรองข้อมูลล้มเหลว</string>
   <string name="backup_button">สร้างข้อมูลสำรอง</string>
   <string name="import_button">กู้คืนการสำรองข้อมูล</string>
-  <string name="backup_question">นี่จะเป็นการเขียนทับไฟล์สำรองปัจจุบันในโฟลเดอร์สำรองข้อมูล!</string>
-  <string name="import_question">รายการซีรีส์ปัจจุบันจะหายไป! ตรวจสอบให้แน่ใจว่าไฟล์สำรองนั้นอยู่ในโฟลเดอร์สำรองข้อมูล</string>
   <string name="import_warning">ฉันเข้าใจว่าซีรีส์, รายการ และภาพยนตร์ปัจจุบันของฉันจะถูกแทนที่!</string>
   <string name="last_auto_backup">สำรองข้อมูลอัตโนมัติล่าสุด: %s</string>
   <string name="restore_auto_backup">กู้คืนการสำรองข้อมูลอัตโนมัติ</string>

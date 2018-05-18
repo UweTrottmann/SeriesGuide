@@ -37,6 +37,7 @@
   <string name="sync_manually">Ručno sinkroniziraj</string>
   <string name="sync_and_update">Sinkroniziranje i ažuriranje</string>
   <string name="sync_and_download_all">Sinkroniziraj i sve preuzmi</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Očisti povijest pretraživanja</string>
   <string name="search_hint">Pretraži epizode</string>
@@ -185,6 +186,7 @@
   <string name="checkin_searchhint">Upiši naziv serije</string>
   <string name="add_empty">Ovdje ne postoje serije.</string>
   <string name="no_results">Nema rezultata, pokušajte cijele riječi.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Pokušajte bilo koji jezik</string>
   <string name="action_try_again">Pokušaj ponovno</string>
   <string name="tvdb_error_does_not_exist">Serija (još) ne postoji na TheTVDB. Pokušajte ponovno kasnije.</string>
@@ -408,23 +410,15 @@
   <string name="pref_ganalyticssummary">Pošalji anonimne statistike korištenja na Google usluge</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Uključi opise, detalje i ocjene</string>
-  <string name="backup_path">Mapa sigurnosne kopije</string>
-  <string name="backup_version">Verzija baze podataka</string>
   <string name="backup_failed_file_access">Nije moguće stvoriti sigur. kopiju. Datoteka sigur. kopije nije pronađena ili je nedostupna.</string>
-  <string name="backup_inprogress">Izrada sigurnosne kopije baze podataka&#8230;</string>
   <string name="backup_success">Sigurnosna kopija uspjela.</string>
   <string name="backup_failed">Sigurnosna kopija nije uspjela.</string>
-  <string name="import_inprogress">Obnavljam bazu podataka&#8230;</string>
   <string name="import_failed_nosd">Nije moguće vratiti sigur. kopiju. Mapa sigurnosne kopije nije dostupna.</string>
   <string name="import_failed_nofile">Nema učitljive sigurnosne kopije.</string>
-  <string name="import_failed_noread">Sigurnosna kopija ne može biti učitana.</string>
-  <string name="dbupgradefailed">Tvoja sigurnosna kopija može biti zastarjela ili prazna. Napomena: Prvo nadogradi verziju 1.9x sa sigurnosom kopijom iz verzije programa verzije manje od 2.0.</string>
   <string name="import_success">Sigurnosna kopija uspješno vraćena.</string>
   <string name="import_failed">Vraćanje sigurnosne kopije nije uspjelo.</string>
   <string name="backup_button">Stvori sigurnosnu kopiju</string>
   <string name="import_button">Obnovi</string>
-  <string name="backup_question">Ovo će presnimiti trenutačnu sigurnosnu kopiju u mapi sigurnosne kopije!</string>
-  <string name="import_question">Trenutačni popis serija će nestati! Provjerite da li je datoteka sigurnosne kopije u mapi sigurnosne kopije.</string>
   <string name="import_warning">Razumijem da će moje trenutačne serije i popisi biti zamijenjeni!</string>
   <string name="last_auto_backup">Posljednja automatska Sigurnosna kopija: %s</string>
   <string name="restore_auto_backup">Vrati automatsku sigurnosnu kopiju</string>

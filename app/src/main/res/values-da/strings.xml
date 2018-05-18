@@ -37,6 +37,7 @@
   <string name="sync_manually">Synkronisér manuelt</string>
   <string name="sync_and_update">Synkronisér og opdatér</string>
   <string name="sync_and_download_all">Synkronisér og opdatér alle</string>
+  <string name="action_turn_off">Turn off</string>
   <!-- Search -->
   <string name="clear_search_history">Ryd søgehistorik</string>
   <string name="search_hint">Søg episoder</string>
@@ -181,6 +182,7 @@
   <string name="checkin_searchhint">Angiv et serienavn</string>
   <string name="add_empty">Der er ingen serier her.</string>
   <string name="no_results">Ingen resultater. Angiv fuldstændige ord.</string>
+  <string name="empty_show_search">Not found in your show list</string>
   <string name="action_try_any_language">Prøv ethvert sprog</string>
   <string name="action_try_again">Prøv igen</string>
   <string name="tvdb_error_does_not_exist">Serien findes ikke på TheTVDB (endnu). Prøv igen senere.</string>
@@ -397,23 +399,15 @@
   <string name="pref_ganalyticssummary">Send anonym brugsstatistik til en Google-tjeneste</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Inkluder beskrivelser, detaljer og bedømmelser</string>
-  <string name="backup_path">Sikkerhedskopieringsmappe</string>
-  <string name="backup_version">Database-version</string>
   <string name="backup_failed_file_access">Kan ikke sikkerhedskopiere. En sikkerhedskopieringsfil kan ikke findes eller tilgås.</string>
-  <string name="backup_inprogress">Sikkerhedskopierer database&#8230;</string>
   <string name="backup_success">Sikkerhedskopieret.</string>
   <string name="backup_failed">Sikkerhedskopiering mislykkedes.</string>
-  <string name="import_inprogress">Gendanner databasen</string>
   <string name="import_failed_nosd">Kan ikke gendanne sikkerhedskopi. Sikkerhedskopieringsmappen er utilgængelig.</string>
   <string name="import_failed_nofile">Der er ingen læsbar sikkerhedskopieringsfil.</string>
-  <string name="import_failed_noread">Sikkerhedskopieringsfilen er ulæsbar.</string>
-  <string name="dbupgradefailed">Din sikkerhedskopi kan være for gammel eller tom. Bemærk: Importér sikkerhedskopier fra før version 2.0 i version 1.9.x først.</string>
   <string name="import_success">Sikkerhedskopi gendannet.</string>
   <string name="import_failed">Gendannelse af sikkerhedskopi mislykkedes.</string>
   <string name="backup_button">Opret sikkerhedskopi</string>
   <string name="import_button">Gendan sikkerhedskopi</string>
-  <string name="backup_question">Dette vil overskrive den nuværende sikkerhedskopieringsfil i sikkerhedskopieringsmappen!</string>
-  <string name="import_question">Den nuværende serieliste vil gå tabt! Tjek venligst at sikkerhedskopieringsfilen er placeret i sikkerhedskopieringsmappen.</string>
   <string name="import_warning">Jeg forstår, at mine nuværende serier, lister og film vil blive erstattet!</string>
   <string name="last_auto_backup">Seneste auto-sikkerhedskopiering: %s</string>
   <string name="restore_auto_backup">Gendan auto-sikkerhedskopi</string>
