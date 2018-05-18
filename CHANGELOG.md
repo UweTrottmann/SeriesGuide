@@ -10,10 +10,17 @@ Version 43
 *(in development)*
 
 #### 43-beta1
-*(TBD)*
+*(2018-05-18)*
 
+* 🌟 Add JustWatch button to quickly perform search of where to stream or purchase.
+* 🔧 Add button bar to set a whole season watched or add it to your collection.
+* 🔧 When searching suggest to add show if it is not found in show list.
+* 🔧 Migrate database to Room. Remove the legacy backup tool as it will no longer work.
 * 🔧 Episode history (if not connected to trakt): display up to 50 items instead of the last 24 hours.
-* 📝 Latest translations from crowdin. Added Galician.
+* 🔧 Bigger empty state text, more visible buttons.
+* 🔧 Change TheTVDB image URLs. All show posters will be downloaded again.
+* 🔧 Add explanation for trakt feature symbols.
+* 📝 Latest translations from crowdin. Add Galician.
 
 Version 42
 ----------
