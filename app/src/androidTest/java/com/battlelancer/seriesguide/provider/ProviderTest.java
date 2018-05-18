@@ -194,7 +194,7 @@ public class ProviderTest {
         ContentValues values = new ContentValues();
         TvdbEpisodeTools.toContentValues(EPISODE, values,
                 EPISODE.id, 1234, SHOW.tvdb_id, 0,
-                Constants.EPISODE_UNKNOWN_RELEASE);
+                Constants.EPISODE_UNKNOWN_RELEASE, true);
 
         insertAndAssertEpisode(values);
     }

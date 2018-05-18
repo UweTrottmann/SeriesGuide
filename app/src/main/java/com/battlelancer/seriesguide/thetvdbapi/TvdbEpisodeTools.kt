@@ -130,7 +130,7 @@ class TvdbEpisodeTools constructor(
                 }
 
                 episode.toContentValues(values, episodeId, seasonId, showTvdbId,
-                        seasonNumber, releaseDateTime)
+                        seasonNumber, releaseDateTime, insert)
 
                 if (insert) {
                     // episode does not exist, yet: insert
@@ -181,7 +181,7 @@ class TvdbEpisodeTools constructor(
         @JvmStatic
         fun Episode.toContentValues(values: ContentValues,
                 episodeTvdbId: Int, seasonTvdbId: Int, showTvdbId: Int,
-                seasonNumber: Int, releaseDateTime: Long) {
+                seasonNumber: Int, releaseDateTime: Long, forInsert: Boolean) {
             values.put(Episodes._ID, episodeTvdbId)
             values.put(Episodes.TITLE, episodeName ?: "")
             values.put(Episodes.OVERVIEW, overview)
@@ -196,15 +196,17 @@ class TvdbEpisodeTools constructor(
             values.put(Episodes.ABSOLUTE_NUMBER, absoluteNumber)
             values.put(Episodes.LAST_EDITED, lastUpdated ?: 0)
 
-            // set default values
-            values.put(Episodes.WATCHED, 0)
-            values.put(Episodes.DIRECTORS, "")
-            values.put(Episodes.GUESTSTARS, "")
-            values.put(Episodes.WRITERS, "")
-            values.put(Episodes.IMAGE, "")
-            values.put(Episodes.COLLECTED, 0)
-            values.put(Episodes.IMDBID, "")
-            values.put(Episodes.LAST_UPDATED, 0)
+            if (forInsert) {
+                // set default values
+                values.put(Episodes.WATCHED, 0)
+                values.put(Episodes.DIRECTORS, "")
+                values.put(Episodes.GUESTSTARS, "")
+                values.put(Episodes.WRITERS, "")
+                values.put(Episodes.IMAGE, "")
+                values.put(Episodes.COLLECTED, 0)
+                values.put(Episodes.IMDBID, "")
+                values.put(Episodes.LAST_UPDATED, 0)
+            }
         }
 
     }
