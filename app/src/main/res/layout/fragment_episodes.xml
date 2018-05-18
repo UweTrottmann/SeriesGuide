@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/keyline_minus_16"
     tools:ignore="RtlSymmetry">
 
     <LinearLayout
         android:id="@+id/linearLayoutEpisodesToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/keyline_minus_16"
         android:background="?android:attr/windowBackground"
         android:elevation="2dp"
         android:orientation="horizontal"
@@ -49,6 +49,7 @@
         android:id="@android:id/empty"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/keyline_minus_16"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -62,6 +63,7 @@
         style="@style/DefaultPadding.List"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/keyline_minus_16"
         android:paddingTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
