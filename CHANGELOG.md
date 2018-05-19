@@ -9,6 +9,12 @@ Version 43
 ----------
 *(in development)*
 
+#### 43-beta2
+*(2018-05-19)*
+
+* 🔨 Fix Room migration issues.
+* 📝 Latest translations from crowdin.
+
 #### 43-beta1
 *(2018-05-18)*
 
