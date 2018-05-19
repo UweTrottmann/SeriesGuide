@@ -9,7 +9,7 @@ buildscript {
             'supportLibrary': '27.1.1', // developer.android.com/topic/libraries/support-library/revisions.html
             'lifecycle': '1.1.0', // developer.android.com/topic/libraries/architecture/release-notes.html
             'playServices': '11.4.0', // developers.google.com/android/guides/releases
-            'room': '1.1.0', // https://developer.android.com/jetpack/docs/release-notes
+            'room': '1.1.1-rc1', // https://developer.android.com/jetpack/docs/release-notes
 
             'butterknife': '8.8.1', // github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
             'crashlytics': '2.9.2', // docs.fabric.io/android/changelog.html
