@@ -37,8 +37,8 @@ abstract class SgRoomDatabase : RoomDatabase() {
     companion object {
 
         private const val VERSION_43_ROOM = 43
-        private const val VERSION_44_ROOM_COPY = 44
-        const val VERSION = VERSION_44_ROOM_COPY
+        private const val VERSION_44_RECREATE_SERIES_EPISODES = 44
+        const val VERSION = VERSION_44_RECREATE_SERIES_EPISODES
 
         @Volatile
         private var instance: SgRoomDatabase? = null
@@ -59,6 +59,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
                     val newInstance = Room.databaseBuilder(context.applicationContext,
                             SgRoomDatabase::class.java, SeriesGuideDatabase.DATABASE_NAME)
                             .addMigrations(
+                                    MIGRATION_42_44,
                                     MIGRATION_43_44,
                                     MIGRATION_42_43,
                                     MIGRATION_41_43,
@@ -99,13 +100,47 @@ abstract class SgRoomDatabase : RoomDatabase() {
             }
         }
 
+        /**
+         * Quick path from pre-Room, skips actors column check.
+         */
         @JvmField
-        val MIGRATION_43_44: Migration = object : Migration(VERSION_43_ROOM, VERSION_44_ROOM_COPY) {
+        val MIGRATION_42_44: Migration = object : Migration(
+                SeriesGuideDatabase.DBVER_42_JOBS, VERSION_44_RECREATE_SERIES_EPISODES) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                // show and episode tables have columns left over or with different types
-                // from old versions where this did not matter
-                // but for Room we have to copy all data into new tables
-                // so migration validation succeeds
+                Timber.d("Migrating database from 42 to 44")
+                MIGRATION_43_44.migrate(database)
+
+                // Room does not support UNIQUE constraints, so use unique indexes instead (probably
+                // faster anyhow)
+                database.execSQL("CREATE UNIQUE INDEX `index_lists_list_id` "
+                        + "ON `lists` (`list_id`)")
+                database.execSQL("CREATE UNIQUE INDEX `index_listitems_list_item_id` "
+                        + "ON `listitems` (`list_item_id`)")
+                database.execSQL("CREATE UNIQUE INDEX `index_movies_movies_tmdbid` "
+                        + "ON `movies` (`movies_tmdbid`)")
+                database.execSQL("CREATE UNIQUE INDEX `index_activity_activity_episode` "
+                        + "ON `activity` (`activity_episode`)")
+                database.execSQL("CREATE UNIQUE INDEX `index_jobs_job_created_at` "
+                        + "ON `jobs` (`job_created_at`)")
+
+                // Room suggests adding indices for foreign key columns, so add them
+                // Skip those for episodes table, created by 43->44 migration
+                database.execSQL("CREATE  INDEX `index_seasons_series_id` "
+                        + "ON `seasons` (`series_id`)")
+                database.execSQL("CREATE  INDEX `index_listitems_list_id` "
+                        + "ON `listitems` (`list_id`)")
+            }
+        }
+
+        /**
+         * Recreates series and episodes tables to pass migration validation which failed due to
+         * left over columns and columns that have changed types from pre-Room.
+         */
+        @JvmField
+        val MIGRATION_43_44: Migration = object : Migration(
+                VERSION_43_ROOM, VERSION_44_RECREATE_SERIES_EPISODES) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Timber.d("Migrating database from 43 to 44")
 
                 // Create the new table
                 database.execSQL(
@@ -134,7 +169,8 @@ abstract class SgRoomDatabase : RoomDatabase() {
                 database.execSQL("DROP TABLE episodes")
                 // Change the table name to the correct one
                 database.execSQL("ALTER TABLE episodes_new RENAME TO episodes")
-                // Re-create indexes
+
+                // Re-create episodes table indexes
                 database.execSQL("CREATE  INDEX `index_episodes_season_id` "
                         + "ON `episodes` (`season_id`)")
                 database.execSQL("CREATE  INDEX `index_episodes_series_id` "
@@ -142,6 +178,9 @@ abstract class SgRoomDatabase : RoomDatabase() {
             }
         }
 
+        /**
+         * Migrates from pre-Room to Room.
+         */
         @JvmField
         val MIGRATION_42_43: Migration = object : Migration(
                 SeriesGuideDatabase.DBVER_42_JOBS, VERSION_43_ROOM) {
@@ -188,6 +227,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
 
         // can not update pre-Room versions incrementally, always need to update to first Room version
         // so only provide upgrade support from version 38 (used in SG 26 from end 2015)
+
         private val MIGRATION_41_43 = object : Migration(
                 SeriesGuideDatabase.DBVER_41_EPISODE_LAST_UPDATED, VERSION_43_ROOM) {
             override fun migrate(database: SupportSQLiteDatabase) {
