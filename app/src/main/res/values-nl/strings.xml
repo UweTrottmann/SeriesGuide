@@ -37,7 +37,7 @@
   <string name="sync_manually">Handmatig synchroniseren</string>
   <string name="sync_and_update">Synchroniseer &amp; Update</string>
   <string name="sync_and_download_all">Synchroniseer &amp; Download alles</string>
-  <string name="action_turn_off">Turn off</string>
+  <string name="action_turn_off">Uitschakelen</string>
   <!-- Search -->
   <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
   <string name="search_hint">Afleveringen zoeken</string>
@@ -182,7 +182,7 @@
   <string name="checkin_searchhint">Voer de naam van een serie in</string>
   <string name="add_empty">Er zijn geen series hier.</string>
   <string name="no_results">Geen resultaten, probeer complete woorden.</string>
-  <string name="empty_show_search">Not found in your show list</string>
+  <string name="empty_show_search">Niet gevonden in uw serielijst</string>
   <string name="action_try_any_language">Probeer elke taal</string>
   <string name="action_try_again">Probeer nogmaals</string>
   <string name="tvdb_error_does_not_exist">Show bestaat (nog) niet op TheTVDB. Probeer later opnieuw.</string>
@@ -191,7 +191,7 @@
   <string name="add_started">%s zal binnenkort in het serie overzicht worden weergegeven.</string>
   <string name="add_error">Kan %s niet toevoegen.</string>
   <string name="add_already_exists">%s staat al in uw lijst.</string>
-  <string name="title_new_episodes">New episodes</string>
+  <string name="title_new_episodes">Nieuwe afleveringen</string>
   <string name="recommended">Aanbevolen</string>
   <string name="watched_shows">Bekeken</string>
   <string name="shows_collection">Collectie</string>
@@ -337,7 +337,7 @@
   <string name="pref_seasonsorting">Seizoenen sorteren op&#8230;</string>
   <string name="pref_episodesorting">Afleveringen sorteren op&#8230;</string>
   <string name="pref_language">Content taal voorkeur</string>
-  <string name="pref_language_fallback">Alternative language</string>
+  <string name="pref_language_fallback">Alternatieve taal</string>
   <string name="pref_updatewifionly">Afbeeldingen alleen via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Om dataverbruik te reduceren, niet downloaden over een mobiele verbinding of andere betaald netwerken</string>
   <plurals name="days_before_plural">
