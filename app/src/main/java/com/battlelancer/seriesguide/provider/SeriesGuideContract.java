@@ -132,11 +132,6 @@ public class SeriesGuideContract {
          */
         String RELEASE_COUNTRY = "series_airtime";
 
-        /**
-         * Currently unused as cast information is now fetched from TMDB.
-         */
-        String ACTORS = "actors";
-
         String IMDBID = "imdbid";
 
         /**

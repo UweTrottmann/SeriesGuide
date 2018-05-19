@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.provider;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
@@ -13,36 +14,33 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeTools;
 import com.uwetrottmann.thetvdb.entities.Episode;
 
 /**
- * Helper class for working with the SQLiteDatabase using SQLite APIs (before Room).
+ * Helper class for working with the SupportSQLiteDatabase using SQLite APIs (using Room).
  */
-public class SqliteDatabaseTestHelper {
+public class RoomDatabaseTestHelper {
 
-    public static void insertShow(Show show, SQLiteDatabase db) {
+    public static void insertShow(Show show, SupportSQLiteDatabase db) {
         ContentValues values = show.toContentValues(InstrumentationRegistry.getTargetContext(),
                 true);
 
-        db.insertWithOnConflict(Tables.SHOWS, null, values,
-                SQLiteDatabase.CONFLICT_REPLACE);
+        db.insert(Tables.SHOWS, SQLiteDatabase.CONFLICT_REPLACE, values);
     }
 
-    public static void insertSeason(SgSeason season, SQLiteDatabase db) {
+    public static void insertSeason(SgSeason season, SupportSQLiteDatabase db) {
         ContentValues values = new ContentValues();
         values.put(Seasons._ID, season.tvdbId);
         values.put(Shows.REF_SHOW_ID, season.showTvdbId);
         values.put(Seasons.COMBINED, season.number);
 
-        db.insertWithOnConflict(Tables.SEASONS, null, values,
-                SQLiteDatabase.CONFLICT_REPLACE);
+        db.insert(Tables.SEASONS, SQLiteDatabase.CONFLICT_REPLACE, values);
     }
 
     public static void insertEpisode(Episode episode, int showTvdbId, int seasonTvdbId,
-            int seasonNumber, SQLiteDatabase db) {
+            int seasonNumber, SupportSQLiteDatabase db) {
         ContentValues values = new ContentValues();
         TvdbEpisodeTools.toContentValues(episode, values,
                 episode.id, seasonTvdbId, showTvdbId, seasonNumber,
                 Constants.EPISODE_UNKNOWN_RELEASE, true);
 
-        db.insertWithOnConflict(Tables.EPISODES, null, values,
-                SQLiteDatabase.CONFLICT_REPLACE);
+        db.insert(Tables.EPISODES, SQLiteDatabase.CONFLICT_REPLACE, values);
     }
 }

@@ -30,7 +30,7 @@ public class SgEpisode {
 
     @PrimaryKey
     @ColumnInfo(name = Episodes._ID)
-    public Integer tvdbId;
+    public int tvdbId;
 
     @NonNull
     @ColumnInfo(name = Episodes.TITLE)
@@ -39,19 +39,19 @@ public class SgEpisode {
     public String overview;
 
     @ColumnInfo(name = Episodes.NUMBER)
-    public Integer number = 0;
+    public int number = 0;
     @ColumnInfo(name = Episodes.SEASON)
-    public Integer season = 0;
+    public int season = 0;
     @ColumnInfo(name = Episodes.DVDNUMBER)
     public Double dvdNumber;
 
     @ColumnInfo(name = SeasonsColumns.REF_SEASON_ID)
-    public String seasonTvdbId;
+    public int seasonTvdbId;
     @ColumnInfo(name = ShowsColumns.REF_SHOW_ID)
-    public String showTvdbId;
+    public int showTvdbId;
 
     @ColumnInfo(name = Episodes.WATCHED)
-    public Integer watched = 0;
+    public int watched = 0;
 
     @ColumnInfo(name = Episodes.DIRECTORS)
     public String directors = "";
@@ -63,10 +63,10 @@ public class SgEpisode {
     public String image = "";
 
     @ColumnInfo(name = Episodes.FIRSTAIREDMS)
-    public Long firstReleasedMs = -1L;
+    public long firstReleasedMs = -1L;
 
     @ColumnInfo(name = Episodes.COLLECTED)
-    public Boolean collected = false;
+    public boolean collected = false;
 
     @ColumnInfo(name = Episodes.RATING_GLOBAL)
     public Double ratingGlobal;
@@ -79,11 +79,11 @@ public class SgEpisode {
     public String imdbId = "";
 
     @ColumnInfo(name = Episodes.LAST_EDITED)
-    public Long lastEditedSec = 0L;
+    public long lastEditedSec = 0L;
 
     @ColumnInfo(name = Episodes.ABSOLUTE_NUMBER)
     public Integer absoluteNumber;
 
     @ColumnInfo(name = Episodes.LAST_UPDATED)
-    public Long lastUpdatedSec = 0L;
+    public long lastUpdatedSec = 0L;
 }

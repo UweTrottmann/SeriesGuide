@@ -114,7 +114,6 @@ public class ProviderTest {
         assertNotNullValue(query, Shows.TITLE);
         assertNotNullValue(query, Shows.TITLE);
         assertNotNullValue(query, Shows.OVERVIEW);
-        assertNotNullValue(query, Shows.ACTORS);
         assertNotNullValue(query, Shows.GENRES);
         assertNotNullValue(query, Shows.NETWORK);
         assertNotNullValue(query, Shows.RUNTIME);

@@ -13,14 +13,14 @@ public class SgShow {
 
     @PrimaryKey
     @ColumnInfo(name = Shows._ID)
-    public Integer tvdbId;
+    public int tvdbId;
 
     /**
      * Ensure this is NOT null (enforced through database constraint).
      */
     @ColumnInfo(name = Shows.TITLE)
     @NonNull
-    public String title;
+    public String title = "";
 
     /**
      * The title without any articles (e.g. 'the' or 'an'). Added with db version 33.
@@ -30,12 +30,6 @@ public class SgShow {
 
     @ColumnInfo(name = Shows.OVERVIEW)
     public String overview = "";
-
-    /**
-     * Currently unused as cast information is now fetched from TMDB.
-     */
-    @ColumnInfo(name = Shows.ACTORS)
-    public String actors = "";
 
     /**
      * Local release time. Encoded as integer (hhmm).
@@ -101,34 +95,31 @@ public class SgShow {
     public Integer traktId = 0;
 
     @ColumnInfo(name = Shows.FAVORITE)
-    public Boolean favorite = false;
-
-    @ColumnInfo(name = Shows.NEXTAIRDATETEXT)
-    public String nextAirdateText = "";
+    public boolean favorite = false;
 
     @ColumnInfo(name = Shows.HEXAGON_MERGE_COMPLETE)
-    public Boolean hexagonMergeComplete = true;
+    public boolean hexagonMergeComplete = true;
 
     @ColumnInfo(name = Shows.HIDDEN)
-    public Boolean hidden = false;
+    public boolean hidden = false;
 
     @ColumnInfo(name = Shows.LASTUPDATED)
-    public Long lastUpdatedMs = 0L;
+    public long lastUpdatedMs = 0L;
     @ColumnInfo(name = Shows.LASTEDIT)
-    public Long lastEditedSec = 0L;
+    public long lastEditedSec = 0L;
 
     @ColumnInfo(name = Shows.LASTWATCHEDID)
-    public Integer lastWatchedEpisodeId = 0;
+    public int lastWatchedEpisodeId = 0;
     @ColumnInfo(name = Shows.LASTWATCHED_MS)
-    public Long lastWatchedMs = 0L;
+    public long lastWatchedMs = 0L;
 
     @ColumnInfo(name = Shows.LANGUAGE)
     public String language = "";
 
     @ColumnInfo(name = Shows.UNWATCHED_COUNT)
-    public Integer unwatchedCount = DBUtils.UNKNOWN_UNWATCHED_COUNT;
+    public int unwatchedCount = DBUtils.UNKNOWN_UNWATCHED_COUNT;
 
     @ColumnInfo(name = Shows.NOTIFY)
-    public Boolean notify = true;
+    public boolean notify = true;
 
 }

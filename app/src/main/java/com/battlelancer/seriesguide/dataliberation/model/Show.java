@@ -67,7 +67,6 @@ public class Show {
                 ? context.getString(R.string.no_translation_title) : title);
         values.put(Shows.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(title));
         values.put(Shows.OVERVIEW, overview != null ? overview : "");
-        values.put(Shows.ACTORS, "");
         values.put(Shows.POSTER, poster != null ? poster : "");
         values.put(Shows.CONTENTRATING, content_rating != null ? content_rating : "");
         values.put(Shows.STATUS, DataLiberationTools.encodeShowStatus(status));
