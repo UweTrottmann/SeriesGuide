@@ -54,19 +54,20 @@ public class RemoveListTask extends BaseActionTask {
     }
 
     private boolean doDatabaseUpdate() {
-        // delete the list
-        int deleted = getContext().getContentResolver()
-                .delete(SeriesGuideContract.Lists.buildListUri(listId), null, null);
-        if (deleted == 0) {
-            return false;
-        }
-        // delete all items of the list
+        // delete all items of the list before list to avoid violating foreign key constraints
         getContext().getContentResolver()
                 .delete(SeriesGuideContract.ListItems.CONTENT_URI,
                         SeriesGuideContract.ListItems.SELECTION_LIST, new String[] {
                                 listId
                         });
         // count of deleted items is not returned, so do not check
+
+        // delete the list
+        int deleted = getContext().getContentResolver()
+                .delete(SeriesGuideContract.Lists.buildListUri(listId), null, null);
+        if (deleted == 0) {
+            return false;
+        }
 
         // notify lists activity
         EventBus.getDefault().post(new ListsActivity.ListsChangedEvent());
