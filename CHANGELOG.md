@@ -9,6 +9,12 @@ Version 43
 ----------
 *(in development)*
 
+#### 43-beta3
+*(2018-05-25)*
+
+* 🔨 Restoring shows and lists, removing a list works again.
+* 📝 Latest translations from crowdin.
+
 #### 43-beta2
 *(2018-05-19)*
 
