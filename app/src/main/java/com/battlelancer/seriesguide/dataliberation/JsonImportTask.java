@@ -3,8 +3,10 @@ package com.battlelancer.seriesguide.dataliberation;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 import android.annotation.SuppressLint;
+import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.OperationApplicationException;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
@@ -201,7 +203,9 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                 return ERROR_FILE_ACCESS;
             }
 
-            clearExistingData(type);
+            if (!clearExistingData(type)) {
+                return ERROR;
+            }
 
             // Access JSON from backup file and try to import data
             FileInputStream in = new FileInputStream(pfd.getFileDescriptor());
@@ -243,7 +247,9 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                 return ERROR_FILE_ACCESS;
             }
 
-            clearExistingData(type);
+            if (!clearExistingData(type)) {
+                return ERROR;
+            }
 
             // Access JSON from backup file and try to import data
             try {
@@ -282,17 +288,32 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         return null;
     }
 
-    private void clearExistingData(@JsonExportTask.BackupType int type) {
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private boolean clearExistingData(@JsonExportTask.BackupType int type) {
+        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         if (type == JsonExportTask.BACKUP_SHOWS) {
-            context.getContentResolver().delete(Shows.CONTENT_URI, null, null);
-            context.getContentResolver().delete(Seasons.CONTENT_URI, null, null);
-            context.getContentResolver().delete(Episodes.CONTENT_URI, null, null);
+            // delete episodes before seasons + shows to prevent violating foreign key constraints
+            batch.add(ContentProviderOperation.newDelete(Episodes.CONTENT_URI).build());
+            // delete seasons before shows to prevent violating foreign key constraints
+            batch.add(ContentProviderOperation.newDelete(Seasons.CONTENT_URI).build());
+            batch.add(ContentProviderOperation.newDelete(Shows.CONTENT_URI).build());
         } else if (type == JsonExportTask.BACKUP_LISTS) {
-            context.getContentResolver().delete(Lists.CONTENT_URI, null, null);
-            context.getContentResolver().delete(ListItems.CONTENT_URI, null, null);
+            // delete list items before lists to prevent violating foreign key constraints
+            batch.add(ContentProviderOperation.newDelete(ListItems.CONTENT_URI).build());
+            batch.add(ContentProviderOperation.newDelete(Lists.CONTENT_URI).build());
         } else if (type == JsonExportTask.BACKUP_MOVIES) {
-            context.getContentResolver().delete(Movies.CONTENT_URI, null, null);
+            batch.add(ContentProviderOperation.newDelete(Movies.CONTENT_URI).build());
         }
+
+        try {
+            DBUtils.applyInSmallBatches(context, batch);
+        } catch (OperationApplicationException e) {
+            errorCause = e.getMessage();
+            Timber.e(e, "clearExistingData");
+            return false;
+        }
+
+        return true;
     }
 
     private void importFromJson(@JsonExportTask.BackupType int type, FileInputStream in)
