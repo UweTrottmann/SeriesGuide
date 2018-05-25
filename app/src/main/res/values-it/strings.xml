@@ -37,7 +37,7 @@
   <string name="sync_manually">Sincronizza manualmente</string>
   <string name="sync_and_update">Sincronizza e Aggiorna</string>
   <string name="sync_and_download_all">Sincronizza e Scarica tutto</string>
-  <string name="action_turn_off">Turn off</string>
+  <string name="action_turn_off">Disattiva</string>
   <!-- Search -->
   <string name="clear_search_history">Cancella la cronologia di ricerca</string>
   <string name="search_hint">Cerca episodi</string>
@@ -182,7 +182,7 @@
   <string name="checkin_searchhint">Digitare il nome della serie</string>
   <string name="add_empty">Non ci sono serie qui.</string>
   <string name="no_results">Nessun risultato, prova parole complete.</string>
-  <string name="empty_show_search">Not found in your show list</string>
+  <string name="empty_show_search">Non presente nella lista delle tue serie</string>
   <string name="action_try_any_language">Prova in altre lingue</string>
   <string name="action_try_again">Riprova</string>
   <string name="tvdb_error_does_not_exist">La serie non esiste (ancora) su TheTVDB. Riprova più tardi.</string>

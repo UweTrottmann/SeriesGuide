@@ -37,7 +37,7 @@
   <string name="sync_manually">手动同步</string>
   <string name="sync_and_update">同步并更新</string>
   <string name="sync_and_download_all">同步并下载全部</string>
-  <string name="action_turn_off">Turn off</string>
+  <string name="action_turn_off">关闭</string>
   <!-- Search -->
   <string name="clear_search_history">清空搜索历史</string>
   <string name="search_hint">搜索剧集</string>
@@ -178,7 +178,7 @@
   <string name="checkin_searchhint">输入节目名称</string>
   <string name="add_empty">尚未添加任何节目</string>
   <string name="no_results">请键入完整的原始剧目名称\n暂时不提供译名或内容摘要搜索</string>
-  <string name="empty_show_search">Not found in your show list</string>
+  <string name="empty_show_search">在您的节目列表中找不到</string>
   <string name="action_try_any_language">尝试使用其它语言搜索</string>
   <string name="action_try_again">重试</string>
   <string name="tvdb_error_does_not_exist">此节目在 TheTVDB 上（尚）不存在。请稍后再试。</string>
