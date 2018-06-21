@@ -536,6 +536,9 @@ public class SeriesGuideContract {
         /** See {@link ShowsColumns#RATING_USER}. */
         String RATING_USER = "movies_rating_user";
 
+        /**
+         * Time in milliseconds a movie was last updated.
+         */
         String LAST_UPDATED = "movies_last_updated";
     }
 

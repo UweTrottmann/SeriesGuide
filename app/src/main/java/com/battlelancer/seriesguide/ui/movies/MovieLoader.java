@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.movies;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import com.battlelancer.seriesguide.SgApp;
@@ -28,10 +27,10 @@ class MovieLoader extends GenericSimpleLoader<MovieDetails> {
     public MovieDetails loadInBackground() {
         // try loading from trakt and tmdb, this might return a cached response
         MovieTools movieTools = SgApp.getServicesComponent(getContext()).movieTools();
-        MovieDetails details = movieTools.getMovieDetails(tmdbId);
+        MovieDetails details = movieTools.getMovieDetails(tmdbId, true);
 
         // update local database
-        updateLocalMovie(getContext(), details, tmdbId);
+        movieTools.updateMovie(details, tmdbId);
 
         // fill in details from local database
         Cursor movieQuery = getContext().getContentResolver()
@@ -82,18 +81,6 @@ class MovieLoader extends GenericSimpleLoader<MovieDetails> {
         movieQuery.close();
 
         return details;
-    }
-
-    private static void updateLocalMovie(Context context,
-            MovieDetails details, int tmdbId) {
-        ContentValues values = MovieTools.buildBasicMovieContentValues(details);
-        if (values.size() == 0) {
-            // nothing to update, downloading probably failed :(
-            return;
-        }
-
-        // if movie does not exist in database, will do nothing
-        context.getContentResolver().update(Movies.buildMovieUri(tmdbId), values, null, null);
     }
 
     private interface MovieQuery {

@@ -128,9 +128,15 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getContext());
 
-            // get latest TMDb configuration
             progress.publish(SyncProgress.Step.TMDB);
-            if (!new TmdbSync(getContext(), tmdbConfigService.get()).updateConfiguration(prefs)) {
+            TmdbSync tmdbSync = new TmdbSync(getContext(), tmdbConfigService.get(),
+                    SgApp.getServicesComponent(getContext()).movieTools());
+            // get latest TMDb configuration
+            if (!tmdbSync.updateConfiguration(prefs)) {
+                progress.recordError();
+            }
+            // update data of to be released movies
+            if (!tmdbSync.updateMovies()) {
                 progress.recordError();
             }
             Timber.d("Syncing: TMDB...DONE");

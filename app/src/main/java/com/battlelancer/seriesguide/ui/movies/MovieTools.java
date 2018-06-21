@@ -262,7 +262,7 @@ public class MovieTools {
         HashSet<Integer> localMoviesIds = new HashSet<>();
 
         Cursor movies = context.getContentResolver().query(SeriesGuideContract.Movies.CONTENT_URI,
-                new String[] { SeriesGuideContract.Movies.TMDB_ID },
+                new String[]{SeriesGuideContract.Movies.TMDB_ID},
                 null, null, null);
         if (movies == null) {
             return null;
@@ -286,7 +286,7 @@ public class MovieTools {
     private static Boolean isMovieInList(Context context, int movieTmdbId, Lists list) {
         Cursor movie = context.getContentResolver()
                 .query(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId),
-                        new String[] { list.databaseColumn }, null, null, null);
+                        new String[]{list.databaseColumn}, null, null, null);
         if (movie == null) {
             return null;
         }
@@ -303,8 +303,8 @@ public class MovieTools {
 
     private static Boolean isMovieInDatabase(Context context, int movieTmdbId) {
         Cursor movie = context.getContentResolver()
-                .query(SeriesGuideContract.Movies.CONTENT_URI, new String[] {
-                                SeriesGuideContract.Movies._ID },
+                .query(SeriesGuideContract.Movies.CONTENT_URI, new String[]{
+                                SeriesGuideContract.Movies._ID},
                         SeriesGuideContract.Movies.TMDB_ID + "=" + movieTmdbId, null, null);
         if (movie == null) {
             return null;
@@ -319,7 +319,7 @@ public class MovieTools {
 
     private boolean addMovie(int movieTmdbId, Lists listToAddTo) {
         // get movie info
-        MovieDetails details = getMovieDetails(movieTmdbId);
+        MovieDetails details = getMovieDetails(movieTmdbId, false);
         if (details.tmdbMovie() == null) {
             // abort if minimal data failed to load
             return false;
@@ -370,6 +370,19 @@ public class MovieTools {
                 SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), values, null, null);
 
         return rowsUpdated > 0;
+    }
+
+    public void updateMovie(MovieDetails details, int tmdbId) {
+        ContentValues values = buildBasicMovieContentValues(details);
+        if (values.size() == 0) {
+            return; // nothing to update, downloading probably failed :(
+        }
+
+        values.put(SeriesGuideContract.Movies.LAST_UPDATED, System.currentTimeMillis());
+
+        // if movie does not exist in database, will do nothing
+        context.getContentResolver().update(SeriesGuideContract.Movies.buildMovieUri(tmdbId),
+                values, null, null);
     }
 
     /**
@@ -441,7 +454,7 @@ public class MovieTools {
             }
 
             // download movie data
-            MovieDetails movieDetails = getMovieDetails(languageCode, tmdbId);
+            MovieDetails movieDetails = getMovieDetails(languageCode, tmdbId, false);
             if (movieDetails.tmdbMovie() == null) {
                 // skip if minimal values failed to load
                 Timber.d("addMovies: downloaded movie %s incomplete, skipping", tmdbId);
@@ -469,23 +482,29 @@ public class MovieTools {
     }
 
     /**
-     * Download movie data from trakt and TMDb using the {@link DisplaySettings#getMoviesLanguage(Context)}.
+     * Download movie data from TMDB (and trakt) using the {@link DisplaySettings#getMoviesLanguage(Context)}.
+     *
+     * @param getTraktRating Rating from TMDB is always fetched. Fetching trakt rating involves
+     * looking up the trakt id first, so skip if not necessary.
      */
-    public MovieDetails getMovieDetails(int movieTmdbId) {
+    public MovieDetails getMovieDetails(int movieTmdbId, boolean getTraktRating) {
         String languageCode = DisplaySettings.getMoviesLanguage(context);
-        return getMovieDetails(languageCode, movieTmdbId);
+        return getMovieDetails(languageCode, movieTmdbId, getTraktRating);
     }
 
     /**
      * Download movie data from trakt and TMDb.
      */
-    private MovieDetails getMovieDetails(String languageCode, int movieTmdbId) {
+    private MovieDetails getMovieDetails(String languageCode, int movieTmdbId,
+            boolean getTraktRating) {
         MovieDetails details = new MovieDetails();
 
         // load ratings from trakt
-        Integer movieTraktId = lookupTraktId(movieTmdbId);
-        if (movieTraktId != null) {
-            details.traktRatings(loadRatingsFromTrakt(movieTraktId));
+        if (getTraktRating) {
+            Integer movieTraktId = lookupTraktId(movieTmdbId);
+            if (movieTraktId != null) {
+                details.traktRatings(loadRatingsFromTrakt(movieTraktId));
+            }
         }
 
         // load summary from tmdb
