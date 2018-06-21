@@ -20,7 +20,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.entities.Movie;
@@ -216,44 +215,6 @@ public class MovieTools {
     }
 
     /**
-     * Extracts ratings from trakt, all other properties from TMDb data.
-     *
-     * <p> If either movie data is null, will still extract the properties of others.
-     */
-    public static ContentValues buildBasicMovieContentValues(MovieDetails details) {
-        ContentValues values = new ContentValues();
-
-        // data from trakt
-        if (details.traktRatings() != null) {
-            values.put(SeriesGuideContract.Movies.RATING_TRAKT,
-                    details.traktRatings().rating);
-            values.put(SeriesGuideContract.Movies.RATING_VOTES_TRAKT,
-                    details.traktRatings().votes);
-        }
-
-        // data from TMDb
-        if (details.tmdbMovie() != null) {
-            values.put(SeriesGuideContract.Movies.IMDB_ID, details.tmdbMovie().imdb_id);
-            values.put(SeriesGuideContract.Movies.TITLE, details.tmdbMovie().title);
-            values.put(SeriesGuideContract.Movies.TITLE_NOARTICLE,
-                    DBUtils.trimLeadingArticle(details.tmdbMovie().title));
-            values.put(SeriesGuideContract.Movies.OVERVIEW, details.tmdbMovie().overview);
-            values.put(SeriesGuideContract.Movies.POSTER, details.tmdbMovie().poster_path);
-            values.put(SeriesGuideContract.Movies.RUNTIME_MIN, details.tmdbMovie().runtime);
-            values.put(SeriesGuideContract.Movies.RATING_TMDB, details.tmdbMovie().vote_average);
-            values.put(SeriesGuideContract.Movies.RATING_VOTES_TMDB,
-                    details.tmdbMovie().vote_count);
-            // if there is no release date, store Long.MAX as it is likely in the future
-            // also helps correctly sorting movies by release date
-            Date releaseDate = details.tmdbMovie().release_date;
-            values.put(SeriesGuideContract.Movies.RELEASED_UTC_MS,
-                    releaseDate == null ? Long.MAX_VALUE : releaseDate.getTime());
-        }
-
-        return values;
-    }
-
-    /**
      * Returns a set of the TMDb ids of all movies in the local database.
      *
      * @return null if there was an error, empty list if there are no movies.
@@ -373,7 +334,7 @@ public class MovieTools {
     }
 
     public void updateMovie(MovieDetails details, int tmdbId) {
-        ContentValues values = buildBasicMovieContentValues(details);
+        ContentValues values = details.toContentValuesUpdate();
         if (values.size() == 0) {
             return; // nothing to update, downloading probably failed :(
         }
