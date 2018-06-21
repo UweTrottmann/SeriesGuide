@@ -21,7 +21,7 @@ public class HttpClientModule {
     private static final int CONNECT_TIMEOUT_MILLIS = 15 * 1000; // 15s
     private static final int READ_TIMEOUT_MILLIS = 20 * 1000; // 20s
 
-    private static final String API_CACHE = "api-cache";
+    static final String API_CACHE = "api-cache";
     private static final int MIN_DISK_API_CACHE_SIZE = 2 * 1024 * 1024; // 2MB
     private static final int MAX_DISK_API_CACHE_SIZE = 20 * 1024 * 1024; // 20MB
 
@@ -56,7 +56,7 @@ public class HttpClientModule {
         return new Cache(cacheDir, calculateApiDiskCacheSize(cacheDir));
     }
 
-    private static File createApiCacheDir(Context context, String directoryName) {
+    static File createApiCacheDir(Context context, String directoryName) {
         File cache = new File(context.getCacheDir(), directoryName);
         if (!cache.exists()) {
             cache.mkdirs();
@@ -64,7 +64,7 @@ public class HttpClientModule {
         return cache;
     }
 
-    private static long calculateApiDiskCacheSize(File dir) {
+    static long calculateApiDiskCacheSize(File dir) {
         long size = MIN_DISK_API_CACHE_SIZE;
 
         try {

@@ -34,6 +34,8 @@ abstract class SgRoomDatabase : RoomDatabase() {
 
     abstract fun episodeHelper(): EpisodeHelper
 
+    abstract fun movieHelper(): MovieHelper
+
     companion object {
 
         private const val VERSION_43_ROOM = 43

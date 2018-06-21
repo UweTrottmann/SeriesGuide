@@ -130,7 +130,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
             progress.publish(SyncProgress.Step.TMDB);
             TmdbSync tmdbSync = new TmdbSync(getContext(), tmdbConfigService.get(),
-                    SgApp.getServicesComponent(getContext()).movieTools());
+                    movieTools.get());
             // get latest TMDb configuration
             if (!tmdbSync.updateConfiguration(prefs)) {
                 progress.recordError();

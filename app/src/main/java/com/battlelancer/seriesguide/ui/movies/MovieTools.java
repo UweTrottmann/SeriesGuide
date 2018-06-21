@@ -317,6 +317,7 @@ public class MovieTools {
         values.put(SeriesGuideContract.Movies.RATING_VOTES_TMDB, 0);
         values.put(SeriesGuideContract.Movies.RATING_TRAKT, 0);
         values.put(SeriesGuideContract.Movies.RATING_VOTES_TRAKT, 0);
+        values.put(SeriesGuideContract.Movies.LAST_UPDATED, 0);
 
         Uri insert = resolver.insert(SeriesGuideContract.Movies.CONTENT_URI, values);
         return insert != null;

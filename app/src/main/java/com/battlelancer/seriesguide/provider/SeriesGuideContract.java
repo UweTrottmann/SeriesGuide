@@ -485,6 +485,10 @@ public class SeriesGuideContract {
 
         String OVERVIEW = "movies_overview";
 
+        /**
+         * Release date in milliseconds. Store Long.MAX if unknown, as it is likely in the future
+         * (also helps correctly sorting movies by release date).
+         */
         String RELEASED_UTC_MS = "movies_released";
 
         String RUNTIME_MIN = "movies_runtime";
@@ -537,7 +541,7 @@ public class SeriesGuideContract {
         String RATING_USER = "movies_rating_user";
 
         /**
-         * Time in milliseconds a movie was last updated.
+         * Time in milliseconds a movie was last updated. Warning: may be null as only recently in use.
          */
         String LAST_UPDATED = "movies_last_updated";
     }
