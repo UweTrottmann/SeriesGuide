@@ -125,6 +125,7 @@ public class MovieDetails {
         values.put(Movies.RATING_VOTES_TMDB, 0);
         values.put(Movies.RATING_TRAKT, 0);
         values.put(Movies.RATING_VOTES_TRAKT, 0);
+        values.put(Movies.LAST_UPDATED, System.currentTimeMillis());
         return values;
     }
 }

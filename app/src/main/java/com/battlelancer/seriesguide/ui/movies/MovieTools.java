@@ -20,7 +20,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.entities.Movie;
@@ -216,44 +215,6 @@ public class MovieTools {
     }
 
     /**
-     * Extracts ratings from trakt, all other properties from TMDb data.
-     *
-     * <p> If either movie data is null, will still extract the properties of others.
-     */
-    public static ContentValues buildBasicMovieContentValues(MovieDetails details) {
-        ContentValues values = new ContentValues();
-
-        // data from trakt
-        if (details.traktRatings() != null) {
-            values.put(SeriesGuideContract.Movies.RATING_TRAKT,
-                    details.traktRatings().rating);
-            values.put(SeriesGuideContract.Movies.RATING_VOTES_TRAKT,
-                    details.traktRatings().votes);
-        }
-
-        // data from TMDb
-        if (details.tmdbMovie() != null) {
-            values.put(SeriesGuideContract.Movies.IMDB_ID, details.tmdbMovie().imdb_id);
-            values.put(SeriesGuideContract.Movies.TITLE, details.tmdbMovie().title);
-            values.put(SeriesGuideContract.Movies.TITLE_NOARTICLE,
-                    DBUtils.trimLeadingArticle(details.tmdbMovie().title));
-            values.put(SeriesGuideContract.Movies.OVERVIEW, details.tmdbMovie().overview);
-            values.put(SeriesGuideContract.Movies.POSTER, details.tmdbMovie().poster_path);
-            values.put(SeriesGuideContract.Movies.RUNTIME_MIN, details.tmdbMovie().runtime);
-            values.put(SeriesGuideContract.Movies.RATING_TMDB, details.tmdbMovie().vote_average);
-            values.put(SeriesGuideContract.Movies.RATING_VOTES_TMDB,
-                    details.tmdbMovie().vote_count);
-            // if there is no release date, store Long.MAX as it is likely in the future
-            // also helps correctly sorting movies by release date
-            Date releaseDate = details.tmdbMovie().release_date;
-            values.put(SeriesGuideContract.Movies.RELEASED_UTC_MS,
-                    releaseDate == null ? Long.MAX_VALUE : releaseDate.getTime());
-        }
-
-        return values;
-    }
-
-    /**
      * Returns a set of the TMDb ids of all movies in the local database.
      *
      * @return null if there was an error, empty list if there are no movies.
@@ -262,7 +223,7 @@ public class MovieTools {
         HashSet<Integer> localMoviesIds = new HashSet<>();
 
         Cursor movies = context.getContentResolver().query(SeriesGuideContract.Movies.CONTENT_URI,
-                new String[] { SeriesGuideContract.Movies.TMDB_ID },
+                new String[]{SeriesGuideContract.Movies.TMDB_ID},
                 null, null, null);
         if (movies == null) {
             return null;
@@ -286,7 +247,7 @@ public class MovieTools {
     private static Boolean isMovieInList(Context context, int movieTmdbId, Lists list) {
         Cursor movie = context.getContentResolver()
                 .query(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId),
-                        new String[] { list.databaseColumn }, null, null, null);
+                        new String[]{list.databaseColumn}, null, null, null);
         if (movie == null) {
             return null;
         }
@@ -303,8 +264,8 @@ public class MovieTools {
 
     private static Boolean isMovieInDatabase(Context context, int movieTmdbId) {
         Cursor movie = context.getContentResolver()
-                .query(SeriesGuideContract.Movies.CONTENT_URI, new String[] {
-                                SeriesGuideContract.Movies._ID },
+                .query(SeriesGuideContract.Movies.CONTENT_URI, new String[]{
+                                SeriesGuideContract.Movies._ID},
                         SeriesGuideContract.Movies.TMDB_ID + "=" + movieTmdbId, null, null);
         if (movie == null) {
             return null;
@@ -319,7 +280,7 @@ public class MovieTools {
 
     private boolean addMovie(int movieTmdbId, Lists listToAddTo) {
         // get movie info
-        MovieDetails details = getMovieDetails(movieTmdbId);
+        MovieDetails details = getMovieDetails(movieTmdbId, false);
         if (details.tmdbMovie() == null) {
             // abort if minimal data failed to load
             return false;
@@ -356,6 +317,7 @@ public class MovieTools {
         values.put(SeriesGuideContract.Movies.RATING_VOTES_TMDB, 0);
         values.put(SeriesGuideContract.Movies.RATING_TRAKT, 0);
         values.put(SeriesGuideContract.Movies.RATING_VOTES_TRAKT, 0);
+        values.put(SeriesGuideContract.Movies.LAST_UPDATED, 0);
 
         Uri insert = resolver.insert(SeriesGuideContract.Movies.CONTENT_URI, values);
         return insert != null;
@@ -370,6 +332,19 @@ public class MovieTools {
                 SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), values, null, null);
 
         return rowsUpdated > 0;
+    }
+
+    public void updateMovie(MovieDetails details, int tmdbId) {
+        ContentValues values = details.toContentValuesUpdate();
+        if (values.size() == 0) {
+            return; // nothing to update, downloading probably failed :(
+        }
+
+        values.put(SeriesGuideContract.Movies.LAST_UPDATED, System.currentTimeMillis());
+
+        // if movie does not exist in database, will do nothing
+        context.getContentResolver().update(SeriesGuideContract.Movies.buildMovieUri(tmdbId),
+                values, null, null);
     }
 
     /**
@@ -441,7 +416,7 @@ public class MovieTools {
             }
 
             // download movie data
-            MovieDetails movieDetails = getMovieDetails(languageCode, tmdbId);
+            MovieDetails movieDetails = getMovieDetails(languageCode, tmdbId, false);
             if (movieDetails.tmdbMovie() == null) {
                 // skip if minimal values failed to load
                 Timber.d("addMovies: downloaded movie %s incomplete, skipping", tmdbId);
@@ -469,23 +444,29 @@ public class MovieTools {
     }
 
     /**
-     * Download movie data from trakt and TMDb using the {@link DisplaySettings#getMoviesLanguage(Context)}.
+     * Download movie data from TMDB (and trakt) using the {@link DisplaySettings#getMoviesLanguage(Context)}.
+     *
+     * @param getTraktRating Rating from TMDB is always fetched. Fetching trakt rating involves
+     * looking up the trakt id first, so skip if not necessary.
      */
-    public MovieDetails getMovieDetails(int movieTmdbId) {
+    public MovieDetails getMovieDetails(int movieTmdbId, boolean getTraktRating) {
         String languageCode = DisplaySettings.getMoviesLanguage(context);
-        return getMovieDetails(languageCode, movieTmdbId);
+        return getMovieDetails(languageCode, movieTmdbId, getTraktRating);
     }
 
     /**
      * Download movie data from trakt and TMDb.
      */
-    private MovieDetails getMovieDetails(String languageCode, int movieTmdbId) {
+    private MovieDetails getMovieDetails(String languageCode, int movieTmdbId,
+            boolean getTraktRating) {
         MovieDetails details = new MovieDetails();
 
         // load ratings from trakt
-        Integer movieTraktId = lookupTraktId(movieTmdbId);
-        if (movieTraktId != null) {
-            details.traktRatings(loadRatingsFromTrakt(movieTraktId));
+        if (getTraktRating) {
+            Integer movieTraktId = lookupTraktId(movieTmdbId);
+            if (movieTraktId != null) {
+                details.traktRatings(loadRatingsFromTrakt(movieTraktId));
+            }
         }
 
         // load summary from tmdb

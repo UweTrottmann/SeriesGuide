@@ -38,7 +38,7 @@ public class SgMovie {
     @ColumnInfo(name = Movies.OVERVIEW)
     public String overview;
     @ColumnInfo(name = Movies.RELEASED_UTC_MS)
-    public Integer releasedMs;
+    public Long releasedMs;
     @ColumnInfo(name = Movies.RUNTIME_MIN)
     public Integer runtimeMin = 0;
     @ColumnInfo(name = Movies.TRAILER)
