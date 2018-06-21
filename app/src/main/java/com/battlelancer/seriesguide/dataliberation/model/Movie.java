@@ -32,6 +32,9 @@ public class Movie {
     public boolean inWatchlist;
 
     public boolean watched;
+
+    @SerializedName("last_updated_ms")
+    public long lastUpdatedMs;
     
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
@@ -45,6 +48,7 @@ public class Movie {
         values.put(Movies.IN_COLLECTION, inCollection ? 1 : 0);
         values.put(Movies.IN_WATCHLIST, inWatchlist ? 1 : 0);
         values.put(Movies.WATCHED, watched ? 1 : 0);
+        values.put(Movies.LAST_UPDATED, lastUpdatedMs);
         // full dump values
         values.put(Movies.OVERVIEW, overview);
         // set default values
