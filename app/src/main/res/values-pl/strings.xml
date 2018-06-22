@@ -37,7 +37,7 @@
   <string name="sync_manually">Synchronizuj ręcznie</string>
   <string name="sync_and_update">Synchronizuj i aktualizuj</string>
   <string name="sync_and_download_all">Synchronizuj i pobierz wszystko</string>
-  <string name="action_turn_off">Turn off</string>
+  <string name="action_turn_off">Wyłącz</string>
   <!-- Search -->
   <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
   <string name="search_hint">Szukaj odcinków</string>
@@ -72,7 +72,7 @@
   <plurals name="replies_plural">
     <item quantity="one">%d odpowiedź</item>
     <item quantity="few">%d odpowiedzi</item>
-    <item quantity="many">%d replies</item>
+    <item quantity="many">%d odpowiedzi</item>
     <item quantity="other">%d odpowiedzi</item>
   </plurals>
   <!-- Metadata -->
@@ -171,26 +171,26 @@
   <plurals name="other_episodes_plural">
     <item quantity="one">%d inny odcinek</item>
     <item quantity="few">%d inne odcinki</item>
-    <item quantity="many">%d other episodes</item>
+    <item quantity="many">%d innych odcinków</item>
     <item quantity="other">%d innych odcinków</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
     <item quantity="one">%d niewyemitowany</item>
     <item quantity="few">%d niewyemitowane</item>
-    <item quantity="many">%d to be released</item>
+    <item quantity="many">%d niewyemitowanych</item>
     <item quantity="other">%d niewyemitowanych</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
     <item quantity="one">%d pozostały</item>
     <item quantity="few">%d pozostałe</item>
-    <item quantity="many">%d remaining</item>
+    <item quantity="many">%d pozostałych</item>
     <item quantity="other">%d pozostałych</item>
   </plurals>
   <!-- Add show -->
   <string name="checkin_searchhint">Wpisz nazwę serialu</string>
   <string name="add_empty">Brak seriali.</string>
   <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
-  <string name="empty_show_search">Not found in your show list</string>
+  <string name="empty_show_search">Nie znaleziono na liście seriali</string>
   <string name="action_try_any_language">Szukaj w innych językach</string>
   <string name="action_try_again">Spróbuj ponownie</string>
   <string name="tvdb_error_does_not_exist">Serial nie istnieje (jeszcze) w TVDB. Spróbuj ponownie później.</string>
@@ -251,19 +251,19 @@
   <plurals name="days_plural">
     <item quantity="one">%d dzień</item>
     <item quantity="few">%d dni</item>
-    <item quantity="many">%d days</item>
+    <item quantity="many">%d dni</item>
     <item quantity="other">%d dni</item>
   </plurals>
   <plurals name="hours_plural">
     <item quantity="one">%d godzina</item>
     <item quantity="few">%d godziny</item>
-    <item quantity="many">%d hours</item>
+    <item quantity="many">%d godzin</item>
     <item quantity="other">%d godzin</item>
   </plurals>
   <plurals name="minutes_plural">
     <item quantity="one">%d minuta</item>
     <item quantity="few">%d minuty</item>
-    <item quantity="many">%d minutes</item>
+    <item quantity="many">%d minut</item>
     <item quantity="other">%d minut</item>
   </plurals>
   <!-- Features -->
@@ -325,7 +325,7 @@
   <plurals name="votes">
     <item quantity="one">%d głos</item>
     <item quantity="few">%d głosy</item>
-    <item quantity="many">%d votes</item>
+    <item quantity="many">%d głosów</item>
     <item quantity="other">%d głosów</item>
   </plurals>
   <!-- Check Ins -->
@@ -359,19 +359,19 @@
   <plurals name="days_before_plural">
     <item quantity="one">%d dzień przed</item>
     <item quantity="few">%d dni przed</item>
-    <item quantity="many">%d days before</item>
+    <item quantity="many">%d dni przed</item>
     <item quantity="other">%d dni przed</item>
   </plurals>
   <plurals name="hours_before_plural">
     <item quantity="one">%d godzinę przed</item>
     <item quantity="few">%d godziny przed</item>
-    <item quantity="many">%d hours before</item>
+    <item quantity="many">%d godzin przed</item>
     <item quantity="other">%d godzin przed</item>
   </plurals>
   <plurals name="minutes_before_plural">
     <item quantity="one">%d minutę przed</item>
     <item quantity="few">%d minuty przed</item>
-    <item quantity="many">%d minutes before</item>
+    <item quantity="many">%d minut przed</item>
     <item quantity="other">%d minut przed</item>
   </plurals>
   <!-- About screen -->

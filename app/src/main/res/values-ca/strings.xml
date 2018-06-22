@@ -37,7 +37,7 @@
   <string name="sync_manually">Sincronitza manualment</string>
   <string name="sync_and_update">Sincronització i actualització</string>
   <string name="sync_and_download_all">Sincronitza i descarrega tot</string>
-  <string name="action_turn_off">Turn off</string>
+  <string name="action_turn_off">Apagar</string>
   <!-- Search -->
   <string name="clear_search_history">Esborra l\'historial</string>
   <string name="search_hint">Cerca episodis</string>
@@ -182,7 +182,7 @@
   <string name="checkin_searchhint">Escriviu el nom d\'una sèrie</string>
   <string name="add_empty">Aquí no hi ha series.</string>
   <string name="no_results">Cap resultat, proveu paraules senceres.</string>
-  <string name="empty_show_search">Not found in your show list</string>
+  <string name="empty_show_search">No es troba a la llista</string>
   <string name="action_try_any_language">Prova qualsevol idioma</string>
   <string name="action_try_again">Torneu-ho a intentar</string>
   <string name="tvdb_error_does_not_exist">La sèrie no existeix (encara) a TheTVDB. Torna-ho a intentar més tard.</string>

@@ -37,7 +37,7 @@
   <string name="sync_manually">Χειροκίνητος συγχρονισμός</string>
   <string name="sync_and_update">Συγχρονισμός &amp; Ενημέρωση</string>
   <string name="sync_and_download_all">Συγχρονισμός &amp; Λήψη όλων</string>
-  <string name="action_turn_off">Turn off</string>
+  <string name="action_turn_off">Απενεργοποίηση</string>
   <!-- Search -->
   <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
   <string name="search_hint">Αναζήτηση επεισοδίων</string>
@@ -387,7 +387,7 @@
   <!-- Other advanced settings -->
   <string name="pref_other">Άλλα</string>
   <string name="pref_autoupdatesummary">Automatically sync and update content</string>
-  <string name="pref_autobackup">Auto Backup</string>
+  <string name="pref_autobackup">Αυτόματο αντίγραφο ασφαλείας</string>
   <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
   <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
   <string name="backup_summary">Δημιουργία αντιγράφου ασφαλείας ή επαναφορά των σειρών</string>
@@ -488,10 +488,10 @@
   <!-- Feedback -->
   <string name="feedback_question_enjoy">Απολαμβάνετε το SeriesGuide;</string>
   <string name="feedback_action_yes">Ναι!</string>
-  <string name="feedback_action_notreally">Not really</string>
-  <string name="feedback_question_rate_google">Rate it on Google Play?</string>
+  <string name="feedback_action_notreally">Όχι ιδιεταιρα</string>
+  <string name="feedback_question_rate_google">Βαθμολογήστε μας στο Google Play</string>
   <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
   <string name="feedback_question_feedback">Tell me how to improve it?</string>
-  <string name="feedback_action_ok">OK, sure</string>
-  <string name="feedback_action_nothanks">No, thanks</string>
+  <string name="feedback_action_ok">Εντάξει</string>
+  <string name="feedback_action_nothanks">Όχι, ευχαριστώ</string>
 </resources>

@@ -37,7 +37,7 @@
   <string name="sync_manually">Synkronoi manuaalisesti</string>
   <string name="sync_and_update">Synkronoi ja päivitä</string>
   <string name="sync_and_download_all">Synkronoi ja lataa kaikki</string>
-  <string name="action_turn_off">Turn off</string>
+  <string name="action_turn_off">Poista käytöstä</string>
   <!-- Search -->
   <string name="clear_search_history">Tyhjennä hakuhistoria</string>
   <string name="search_hint">Hae jaksoja</string>
@@ -182,7 +182,7 @@
   <string name="checkin_searchhint">Ohjelman nimi</string>
   <string name="add_empty">Ei ole yhtään ohjelmaa näytettävänä.</string>
   <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
-  <string name="empty_show_search">Not found in your show list</string>
+  <string name="empty_show_search">Ei löytynyt ohjelmalistasta</string>
   <string name="action_try_any_language">Kokeile mitä tahansa kieltä</string>
   <string name="action_try_again">Yritä uudelleen</string>
   <string name="tvdb_error_does_not_exist">Ohjelma ei ole (vielä) TheTVDB:ssä. Yritä myöhemmin uudelleen.</string>

@@ -31,26 +31,26 @@
   <string name="discard">تجاهل</string>
   <string name="save_selection">حفظ التحديد</string>
   <string name="action_display_all">عرض الكل</string>
-  <string name="web_search">البحث في الويب</string>
+  <string name="web_search">البحث في المواقع</string>
   <string name="add_to_homescreen">اختصار</string>
   <string name="action_open">افتح</string>
   <string name="sync_manually">قم بالمزامنة يدويا</string>
   <string name="sync_and_update">المزامنة والتحديث</string>
   <string name="sync_and_download_all">المزامنة وتحميل كل البيانات</string>
-  <string name="action_turn_off">Turn off</string>
+  <string name="action_turn_off">إغلاق</string>
   <!-- Search -->
   <string name="clear_search_history">إزالة تاريخ البحث</string>
   <string name="search_hint">البحث عن الحلقات</string>
   <string name="any_language">أي لغة</string>
   <!-- Status messages -->
-  <string name="updated">تم التحديث إلى الإصدار الأخير.</string>
+  <string name="updated">تم التحديث إلى الإصدار الأخير</string>
   <string name="norating">لا يوجد</string>
   <string name="unknown">غير معروف</string>
-  <string name="offline">اتصل بشبكة، ثم حاول مرة أخرى.</string>
+  <string name="offline">اتصل بالشبكة، ثم حاول مرة أخرى</string>
   <string name="app_not_available">ليس هناك تطبيق متاح للتعامل مع هذا</string>
   <string name="people_empty">لا أحد هنا ؟! قم باللمس من أجل المحاولة مرة أخرى.</string>
   <string name="database_error">لا يمكن تعديل البيانات.</string>
-  <string name="reinstall_info">حاول أخد نسخة احتياطية، اعادة تثبيت البرنامج ومن ثم استعادة البيانات.</string>
+  <string name="reinstall_info">حاول أخد نسخة احتياطية، اعادة تثبيت البرنامج ومن ثم استعادة البيانات</string>
   <string name="api_error_generic">لا يمكن الاتصال ب %s. الرجاء المحاولة لاحقا.</string>
   <string name="api_failed">فشل: %s</string>
   <!-- Sharing -->
@@ -67,10 +67,10 @@
   <string name="shout_invalid">إن تعليقك مخالف للقواعد!</string>
   <string name="action_post">انشر</string>
   <string name="isspoiler">تنبيه حرق!</string>
-  <string name="no_shouts">كم أول من يعلّق!</string>
+  <string name="no_shouts">كن أول من يعلّق!</string>
   <string name="refresh">تحديث</string>
   <plurals name="replies_plural">
-    <item quantity="one">%d ردود</item>
+    <item quantity="one">رد %d</item>
     <item quantity="zero">رد %d</item>
     <item quantity="two">%d ردود</item>
     <item quantity="few">%d ردود</item>
@@ -198,7 +198,7 @@
   <string name="checkin_searchhint">إبحث عن إسم المسلسل</string>
   <string name="add_empty">لا توجد مسلسلات هنا.</string>
   <string name="no_results">.لا نتائج, جرّب كلمات كاملة</string>
-  <string name="empty_show_search">Not found in your show list</string>
+  <string name="empty_show_search">غير متوفر في قائمة العرض الخاصة بك</string>
   <string name="action_try_any_language">حاول بأي لغة</string>
   <string name="action_try_again">حاول مرة أخرى</string>
   <string name="tvdb_error_does_not_exist">هذا المسلسل غير موجود (حتى الآن) على TheTVDB. الرجاء المحاولة لاحقا.</string>
@@ -207,7 +207,7 @@
   <string name="add_started">%s سوف تظهر في قائمة العرض الخاص بك قريبا.</string>
   <string name="add_error">تعذر إضافة %s.</string>
   <string name="add_already_exists">%s موجود بالفعل في قائمة العرض الخاصة بك.</string>
-  <string name="title_new_episodes">New episodes</string>
+  <string name="title_new_episodes">حلقات جديدة</string>
   <string name="recommended">يُنصح به</string>
   <string name="watched_shows">تمت مشاهدتها</string>
   <string name="shows_collection">مجموعة</string>
@@ -369,7 +369,7 @@
   <string name="pref_seasonsorting">ترتيب المواسم حسب&#8230;</string>
   <string name="pref_episodesorting">ترتيب الحلقات حسب&#8230;</string>
   <string name="pref_language">اللغة المفضلة</string>
-  <string name="pref_language_fallback">Alternative language</string>
+  <string name="pref_language_fallback">اللغة البديلة</string>
   <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>
   <string name="pref_updatewifionlysummary">لتخفيض الكلفة، لا تحمّل عبر شبكات الجوال أو الشبكات الغير مجانية</string>
   <plurals name="days_before_plural">
