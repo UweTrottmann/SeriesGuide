@@ -162,7 +162,8 @@ abstract class SgRoomDatabase : RoomDatabase() {
                 database.execSQL(
                         "CREATE TABLE episodes_new (`_id` INTEGER NOT NULL, `episodetitle` TEXT NOT NULL, `episodedescription` TEXT, `episodenumber` INTEGER NOT NULL, `season` INTEGER NOT NULL, `dvdnumber` REAL, `season_id` INTEGER NOT NULL, `series_id` INTEGER NOT NULL, `watched` INTEGER NOT NULL, `directors` TEXT, `gueststars` TEXT, `writers` TEXT, `episodeimage` TEXT, `episode_firstairedms` INTEGER NOT NULL, `episode_collected` INTEGER NOT NULL, `rating` REAL, `episode_rating_votes` INTEGER, `episode_rating_user` INTEGER, `episode_imdbid` TEXT, `episode_lastedit` INTEGER NOT NULL, `absolute_number` INTEGER, `episode_lastupdate` INTEGER NOT NULL, PRIMARY KEY(`_id`), FOREIGN KEY(`season_id`) REFERENCES `seasons`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`series_id`) REFERENCES `series`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )")
                 // Copy the data
-                database.execSQL("INSERT INTO episodes_new (" +
+                // ignore (skip) rows with constraint violations
+                database.execSQL("INSERT OR IGNORE INTO episodes_new (" +
                         "_id, episodetitle, episodedescription, episodenumber, season, dvdnumber, season_id, series_id, watched, directors, gueststars, writers, episodeimage, episode_firstairedms, episode_collected, rating, episode_rating_votes, episode_rating_user, episode_imdbid, episode_lastedit, absolute_number, episode_lastupdate" +
                         ") SELECT " +
                         "_id, episodetitle, episodedescription, episodenumber, season, dvdnumber, season_id, series_id, watched, directors, gueststars, writers, episodeimage, episode_firstairedms, episode_collected, rating, episode_rating_votes, episode_rating_user, episode_imdbid, episode_lastedit, absolute_number, episode_lastupdate"
