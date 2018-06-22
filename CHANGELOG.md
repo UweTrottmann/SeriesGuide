@@ -9,6 +9,13 @@ Version 43
 ----------
 *(in development)*
 
+#### 43-beta4
+*(2018-06-22)*
+
+* 🔧 Basic movie details are updated regularly (recent movies weekly, older movies every half year).
+* 🔨 Do not crash when migrating episodes with invalid data, skip them instead.
+* 📝 Latest translations from crowdin.
+
 #### 43-beta3
 *(2018-05-25)*
 
