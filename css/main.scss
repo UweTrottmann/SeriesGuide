@@ -9,6 +9,9 @@
 $brand-primary: #6545a0 !default;
 $brand-primary-light: #D1C4E9 !default;
 
+//** Point at which the navbar becomes uncollapsed.
+$grid-float-breakpoint:     992px !default;
+
 //=== Inverted navbar
 // Reset inverted navbar basics
 $navbar-inverse-color:                      $brand-primary-light !default;
