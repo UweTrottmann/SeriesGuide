@@ -6,29 +6,12 @@
 // Overriden Bootstrap settings
 // check _sass/bootstrap/_variables.scss for default values
 
-$brand-primary: #6545a0 !default;
-$brand-primary-light: #D1C4E9 !default;
-
-//** Point at which the navbar becomes uncollapsed.
-$grid-float-breakpoint:     992px !default;
-
-//=== Inverted navbar
-// Reset inverted navbar basics
-$navbar-inverse-color:                      $brand-primary-light !default;
-$navbar-inverse-bg:                         $brand-primary !default;
-$navbar-inverse-border:                     transparent !default;
+$primary: #6545a0 !default;
+$primary-light: #D1C4E9 !default;
 
 // Inverted navbar links
-$navbar-inverse-link-color:                 #fff !default;
-$navbar-inverse-link-hover-color:           $navbar-inverse-color !default;
-
-// Inverted navbar brand label
-$navbar-inverse-brand-hover-color:          $navbar-inverse-link-hover-color !default;
-
-// Inverted navbar toggle
-$navbar-inverse-toggle-hover-bg:            #333 !default;
-$navbar-inverse-toggle-icon-bar-bg:         #fff !default;
-$navbar-inverse-toggle-border-color:        transparent !default;
+$navbar-dark-color:                 #fff !default;
+$navbar-dark-hover-color:           $primary-light !default;
 
 // text
 $font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !default;
