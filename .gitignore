@@ -9,3 +9,6 @@ Thumbs.db
 
 # bower
 bower_components
+
+# bundler
+/vendor/bundle
