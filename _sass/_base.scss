@@ -40,6 +40,15 @@ a:focus {
   outline: 1px dashed;
 }
 
+/* fix anchor scroll offset */
+span.anchor {
+  margin-top: -54px; /* height of nav, in this case 54px */
+  display: block;
+  height: 54px; /* height of nav, in this case 54px */
+  visibility: hidden;
+  position: relative;
+}
+
 .link-button {
 font-weight:300;
 color:#333;
