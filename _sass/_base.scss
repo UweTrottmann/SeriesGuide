@@ -1,20 +1,10 @@
-$brand-primary: #6545a0 !default;
 
 body {
-background: #fff;
-color:#333;
-font-size: 14px;
 padding-top: 4.5rem;
 }
 
 h1, h2 {
-font-weight: 300;
-color:$brand-primary;
-}
-
-h3, h4, h5, h6 {
-font-weight: 300;
-color:#333;
+color:$primary;
 }
 
 li {
@@ -26,14 +16,7 @@ line-height: 24px;
 }
 
 a {
-color:$brand-primary;
-text-decoration:none;
-line-height:inherit;
-font-weight:bold;
-}
-
-a:hover {
-text-decoration:underline;
+font-weight:$font-weight-bold;
 }
 
 a:focus {
@@ -49,33 +32,17 @@ span.anchor {
   position: relative;
 }
 
-.link-button {
-font-weight:300;
-color:#333;
-font-size:2em;
-}
-
-.button-description {
-margin-top:5px;
-}
-
-.btn-link {
-  color:$brand-primary;
-  font-weight:400;
-}
-
 .navbar {
   box-shadow: 0 2px 5px rgba(0,0,0,.16);
 }
 
 .navbar-nav > li > a {
-font-size: 1.1em;
-font-weight:400;
+font-weight:$font-weight-normal;
 }
 
 .toc > li > a {
-color:#333;
-font-weight:400;
+color:#212529;
+font-weight:$font-weight-normal;
 }
 
 .img-hero {
@@ -94,20 +61,6 @@ height:25px;
 height:80px;
 }
 
-.well {
-background:#111111;
-color: #ffffff;
-}
-
-.well a {
-color: #ffffff;
-}
-
-.share-button {
-float: left;
-margin-left: 2px;
-}
-
 .app-logo {
   height:128px;
   width:128px;
@@ -118,34 +71,9 @@ margin-left: 2px;
   width:32px;
 }
 
-#app-description {
-  margin-top:0;
-}
-
-#poweredby-ul {
-margin-bottom:0px;
-}
-
-#poweredby-ul li {
-margin-top:10px;
-margin-bottom: 0px;
-}
-
 #footer {
 margin-top:80px;
 margin-bottom:50px;
-}
-
-.credits {
-color:#666666;
-}
-
-.credits a {
-color:#666666;
-}
-
-p.right {
-float:right;
 }
 
 p.title {
