@@ -14,7 +14,7 @@ title: Help
       <a class="list-group-item list-group-item-action" href="#upgrade">Unlock all features</a>
       <a class="list-group-item list-group-item-action" href="#buttons">Check in, set watched, add to collection and skip episodes</a>
       <a class="list-group-item list-group-item-action" href="#remove">Remove a show</a>
-      <a class="list-group-item list-group-item-action" href="#hide">Restore a hidden show</a>
+      <a class="list-group-item list-group-item-action" href="#hide">Make a hidden show visible again</a>
       <a class="list-group-item list-group-item-action" href="#update">Manually update shows</a>
       <a class="list-group-item list-group-item-action" href="#backup">Backup or restore your data using files</a>
       <a class="list-group-item list-group-item-action" href="#autobackup">Restore your data from an Auto-Backup</a>
@@ -70,7 +70,7 @@ title: Help
           <li><b>Add to collection</b> if you purchased (DVD, Blu-Ray) or downloaded this.</li>
           <li><b>Skip</b> if you don't want to watch this right now. (Only for episodes, not synced with trakt)</li>
       </ul>
-      <p><span class="badge badge-info">Note</span> On Android you can touch and hold most symbol-only buttons to show a brief description of what they do.</p>
+      <p><span class="badge badge-info">Note</span> On Android you can tap and hold most symbol-only buttons to show a brief description of what they do.</p>
     </section>
 
     <span class="anchor" id="remove"></span>
@@ -78,23 +78,22 @@ title: Help
       <h3>Remove a show</h3>
       <p>To remove a show:</p>
       <ol>
-        <li>From the show list, touch <strong>More options</strong> <span class="fas fa-ellipsis-v" aria-hidden="true"></span> of a show.</li>
-        <li>Touch <strong>Remove</strong>.</li>
+        <li>From the show list, tap <strong>More options</strong> <span class="fas fa-ellipsis-v" aria-hidden="true"></span> of a show.</li>
+        <li>Tap <strong>Remove</strong>.</li>
       </ol>
       <img class="mb-2" src="images/show-menu.png" width="350" height="268">
     </section>
 
     <span class="anchor" id="hide"></span>
     <section class="mt-2">
-      <h3>Restore a hidden show</h3>
-      <p>To restore a hidden show:</p>
+      <h3>Make a hidden show visible again</h3>
       <ol>
-        <li>From the show list, touch the funnel-shaped icon <strong>Filter shows</strong>.</li>
-        <li>Touch <strong>Remove all filters</strong>.</li>
-        <li>Touch the funnel-shaped icon <strong>Filter shows</strong> again, then touch <strong>Hidden</strong>.</li>
-        <li>Touch <strong>More options</strong> <span class="fas fa-ellipsis-v" aria-hidden="true"></span> of a show, then touch <strong>Un-Hide</strong>.</li>
-        <li>Touch the funnel-shaped icon <strong>Filter shows</strong> again, then touch <strong>Remove all filters</strong>.</li>
+        <li>From the show list, tap the triangle-shaped <strong>filter shows</strong> button.</li>
+        <li>Make sure that only <strong>Hidden</strong> is enabled.</li>
+        <li>Tap <strong>More options</strong> <span class="fas fa-ellipsis-v" aria-hidden="true"></span> of the show.</li>
+        <li>Tap <strong>Do not hide</strong>.</li>
       </ol>
+      <p><span class="badge badge-info">Note</span> After tapping the filter button use <strong>Remove all filters</strong> to restore the default shows list view.</p>
     </section>
 
     <span class="anchor" id="update"></span>
@@ -103,14 +102,14 @@ title: Help
       <p><span class="badge badge-info">Note</span> By default, show and episode data is updated regularly.</em></p>
       <p>Update a single show:</p>
       <ol>
-        <li>From the show list, touch <strong>More options</strong> <span class="fas fa-ellipsis-v" aria-hidden="true"></span> of a show.</li>
+        <li>From the show list, tap <strong>More options</strong> <span class="fas fa-ellipsis-v" aria-hidden="true"></span> of a show.</li>
         <li>Select <strong>Update</strong>.</li>
       </ol>
       <p>Update all shows:</p>
       <ol>
-        <li>From the show list, touch <strong>More options</strong> <span class="fas fa-ellipsis-v" aria-hidden="true"></span>.</li>
-        <li>Touch <strong>Sync manually</strong>.</li>
-        <li>Touch <strong>Sync &amp; Update</strong>.</li>
+        <li>From the show list, tap <strong>More options</strong> <span class="fas fa-ellipsis-v" aria-hidden="true"></span>.</li>
+        <li>Tap <strong>Sync manually</strong>.</li>
+        <li>Tap <strong>Sync &amp; Update</strong>.</li>
       </ol>
       <p><span class="badge badge-info">Note</span> <em>You can force a re-download of all shows using <strong>Sync &amp; Download all</strong>.</em></p>
     </section>
@@ -118,28 +117,45 @@ title: Help
     <span class="anchor" id="backup"></span>  
     <section class="mt-2">
       <h3>Backup or restore your data using files</h3>
-      <p>To backup or restore your shows, lists and movies:</p>
+      <p><strong>To backup your shows, lists and movies:</strong></p>
       <ol>
-        <li>From the show list, tap <strong>Open navigation drawer</strong> <span class="fas fa-bars" aria-hidden="true"></span>.</li>
-        <li>Touch <strong>Settings</strong> > <strong>Backup/Restore</strong>.</li>
-        <li>Follow the instructions.</p></li>
+        <li>From the show list, tap <strong>Open navigation drawer</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <strong>Settings</strong>.</li>
+        <li>Tap <strong>Backup/Restore</strong>.</li>
+        <li>Look for the <strong>Create backup</strong> section.</li>
+        <li>Tap <strong>Select file</strong> for either shows, lists or movies to create a backup.</li>
       </ol>
-      <p>On Android 4.4 (KitKat) and up you can choose where the backup files should be stored or which ones to restore from. You might have to enable <strong>Show internal storage</strong> to see all files on your device.</p>
-      <p>On older versions, the backup tool will create a <strong>SeriesGuide</strong> folder inside your devices <strong>Download</strong> folder (accessible with a <a href="https://play.google.com/store/search?q=file+manager&amp;c=apps">file manager</a>; the exact path is displayed by the backup tool). There it will store your backup inside of JSON files.</p>
-      <p>To restore your backup <strong>on another device</strong>, copy the <strong>SeriesGuide</strong> folder into the <strong>Download</strong> folder of that device (for example email yourself the files or plug your device into a computer). Then use the restore tool in SeriesGuide.</p>
-      <p><span class="badge badge-info">Tip</span> Some users save their backup files to cloud storage. For example Dropbox, Google Drive or OneDrive.</p>
+      <p><span class="badge badge-info">Note</span> On Android 4.3 and older you can not choose the backup file location. Instead SeriesGuide will store the backup files in the <em>Download</em> folder on your device.</p>
+      <p><strong>To restore your shows, lists and movies:</strong></p>
+      <ol>
+        <li>From the show list, tap <strong>Open navigation drawer</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <strong>Settings</strong>.</li>
+        <li>Tap <strong>Backup/Restore</strong>.</li>
+        <li>Look for the <strong>Restore backup</strong> section.</li>
+        <li>Tap <strong>Select file</strong> for each type of data you want to restore and select the matching backup file.</li>
+        <li>Tick the check box next to each type you want to restore.</li>
+        <li>Tap <strong>Restore backup</strong>.</li>
+      </ol>
+      <p>To restore your backup <strong>on another device</strong>, first transfer the created files to it. For example send yourself an email with the files attached, plug your device into a computer to access its storage or save the files to online storage.</p>
+      <p><span class="badge badge-info">Note</span> You can use a <a href="https://play.google.com/store/search?q=file+manager&amp;c=apps">file manager</a> app to view or copy the backup files.</p>
     </section>
 
     <span class="anchor" id="autobackup"></span>
     <section class="mt-2">
-      <h3>Restore your data from an Auto-Backup</h3>
-      <p>SeriesGuide creates <strong>weekly automatic backups to the "Download/SeriesGuide/AutoBackup"</strong> folder on your device (use a <a href="https://play.google.com/store/search?q=file+manager&amp;c=apps">file manager</a> to view it). You can turn this off or choose custom backup files (Android 4.4 and up) in settings.</p>
-      <p>To restore an Auto-Backup:</p>
+      <h3>Restore your data from an Auto Backup</h3>
+      <p><strong>To restore an Auto Backup:</strong></p>
       <ol>
-        <li>From the show list, tap <strong>Open navigation drawer</strong> <span class="fas fa-bars" aria-hidden="true"></span>.</li>
-        <li>Touch <strong>Settings</strong> > <strong>Auto Backup</strong>.</li>
-        <li>Look for the <strong>Restore Auto-Backup</strong> button to restore the last auto-backup.</li>
+        <li>From the show list, tap <strong>Open navigation drawer</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <strong>Settings</strong>.</li>
+        <li>Tap <strong>Auto Backup</strong>.</li>
+        <li>Tap the <strong>Restore Auto Backup</strong> button. If it is disabled, there is no backup available to restore from.</li>
       </ol>
+      <p><strong>To turn on and configure Auto Backup:</strong></p>
+      <ol>
+        <li>From the show list, tap <strong>Open navigation drawer</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <strong>Settings</strong>.</li>
+        <li>Tap <strong>Auto Backup</strong>.</li>
+        <li>Turn on Auto Backup.</li>
+        <li>Follow the onscreen instructions.</li>
+      </ol>
+      <p>Auto Backup will create a file-based <strong>weekly automatic backup</strong> of your shows, lists and movies.</p>
+      <p><span class="badge badge-info">Note</span> By default the Auto Backup files are saved to the <em>Download/SeriesGuide/AutoBackup</em> folder on your device (use a <a href="https://play.google.com/store/search?q=file+manager&amp;c=apps">file manager</a> to view it). On Android 4.4 and newer you can also specify a custom location for the backup files. Just disable the <strong>Use default backup files</strong> option, then select your preferred files.</p>
     </section>
 
     <span class="anchor" id="sync"></span>
@@ -174,9 +190,8 @@ title: Help
       <br/>
       <p>To connect to either service:</p>
       <ol>
-        <li>Tap <strong>Open navigation drawer</strong> <span class="fas fa-bars" aria-hidden="true"></span>.</li>
-        <li>Tap <strong>Settings</strong>.</li>
-        <li>In the <strong>Services</strong> section tap the service you want to connect to.</li>
+        <li>Tap <strong>Open navigation drawer</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <strong>Settings</strong>.</li>
+        <li>Tap either <strong>SeriesGuide Cloud</strong> or <strong>trakt</strong>.</li>
         <li>Tap the sign in or connect button and follow the instructions.</li>
       </ol>
       <p><span class="badge badge-info">Note</span> You can be <strong>connected to SeriesGuide Cloud and trakt</strong> at the same time. Setting watched and collected, commenting, rating and more will still be sent to trakt. However, <strong>check-in and sync with trakt will be disabled</strong>. Changes on the trakt website or other apps connected to trakt will not download.</p>
@@ -364,11 +379,9 @@ title: Help
       <h3>After changing the time zone, times are incorrect</h3>
       <p>Please stop SeriesGuide and restart it:</p>
       <ol>
-        <li>Open the Settings app from the app drawer.</li>
-        <li>Touch on <strong>Apps</strong>.</li>
-        <li>Find SeriesGuide in the list of downloaded apps and tap on it.</li>
-        <li>Touch <strong>Force stop</strong>.</li>
-        <li>From your launcher, start SeriesGuide again.</li>
+        <li>Tap the switch app button on your device.</li>
+        <li>Swipe SeriesGuide away or tap the X button.</li>
+        <li>Launch the SeriesGuide app again.</li>
       </ol>
       <p>If that won't help, try to <a href="#update">update all shows</a>.</p>
     </section>
@@ -380,12 +393,12 @@ title: Help
     <section class="mt-2">
       <h3>Connect to trakt</h3>
       <ol>
-        <li>From the show list, tap <strong>Open navigation drawer</strong> <span class="fas fa-bars" aria-hidden="true"></span>.</li>
-        <li>Touch <strong>Settings</strong>.</li>
-        <li>Touch <strong>trakt</strong> and follow the given instructions.</p></li>
+        <li>Tap <strong>Open navigation drawer</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <strong>Settings</strong>.</li>
+        <li>Tap <strong>trakt</strong>.</li>
+        <li>Tap <strong>Connect</strong> and follow the onscreen instructions.</li>
       </ol>
       <p><span class="badge badge-info">Troubleshooting</span> If you can't connect (white screen, error message), trakt may currently be unreachable (check <a href="http://status.trakt.tv">status.trakt.tv</a>, <a href="https://twitter.com/trakt">@trakt</a> and <a href="https://twitter.com/seriesguide">@SeriesGuide</a> for status updates). Please try again later.</p>
-      <p>Try to turn off any proxy or VPN (for example for ad blocking). Try to clear the SeriesGuide cache (in Android Settings, in <strong>Apps</strong> find SeriesGuide, then touch <strong>Clear Cache</strong>).</p>
+      <p>Try to turn off any proxy or VPN (for example for ad blocking). Try to clear the SeriesGuide cache (in Android Settings, in <strong>Apps</strong> find SeriesGuide, then tap <strong>Clear Cache</strong>).</p>
       <p>When using a privacy tool (for example a Xposed module), make sure SeriesGuide has access to the Android account system. It needs an account to store your trakt credentials and sync.</p>
       <p>If your issue persists, please <a href="#contact">contact me</a> about what is going wrong (send a screenshot if possible).</p>
     </section>
@@ -394,11 +407,10 @@ title: Help
     <section class="mt-2">
       <h3>Add shows from your trakt library</h3>
       <ol>
-        <li>From the show list, touch <img src="images/image_button_add_show.png" width="24" height="24" title="Add show" alt="Add show" />.</li>
-        <li>Swipe to the <strong>Watched</strong> or <strong>Collection</strong> tab.</li>
-        <li>Touch on the + next to a show to add it to SeriesGuide.</li>
+        <li>From the shows list, tap the add button <img src="images/image_button_add_show.png" width="24" height="24" title="Add show" alt="Add show" />.</li>
+        <li>Tap the <strong>Watched</strong> or <strong>Collection</strong> button.</li>
+        <li>Tap the plus button next to a show or use the add all button at the top.</li>
       </ol>
-      <p><span class="badge badge-info">Info</span> SeriesGuide will sync which episodes are already watched and collected from trakt after adding a show.</p>
     </section>
 
     <span class="anchor" id="whatissynced"></span>
