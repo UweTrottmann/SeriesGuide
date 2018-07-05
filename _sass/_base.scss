@@ -7,10 +7,6 @@ h1, h2 {
 color:$primary;
 }
 
-li {
-line-height: 24px;
-}
-
 dt {
 line-height: 24px;
 }
@@ -40,7 +36,7 @@ span.anchor {
 font-weight:$font-weight-normal;
 }
 
-.toc > li > a {
+.list-group-item {
 color:#212529;
 font-weight:$font-weight-normal;
 }
