@@ -4,7 +4,7 @@
   {% include head.html %}
 
 <body>
-  <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-primary" role="navigation">
+  <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-primary" role="navigation">
     <div class="container justify-content-start">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -19,16 +19,27 @@
   			  <li class="nav-item">
             <a class="nav-link" href="/help">Help</a>
           </li>
-  			  <li class="nav-item">
+  			  <li class="nav-item d-sm-none d-lg-block">
             <a class="nav-link" href="/privacy">Privacy</a>
           </li>
-  			  <li class="nav-item">
+  			  <li class="nav-item d-sm-none d-lg-block">
             <a class="nav-link" href="/api">Extensions API</a>
   			  <li>
-            <a class="nav-link" href="https://seriesguide.uservoice.com">Send Feedback <span class="fas fa-external-link-alt"></span></a
+            <a class="nav-link d-sm-none d-lg-block" href="https://seriesguide.uservoice.com">Send Feedback <span class="fas fa-external-link-alt"></span></a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item d-sm-none d-md-block">
             <a class="nav-link" href="https://github.com/UweTrottmann/SeriesGuide">GitHub <span class="fas fa-external-link-alt"></span></a>
+          </li>
+          <li class="nav-item dropdown d-none d-sm-block d-lg-none">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              More
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="nav-link" href="/privacy">Privacy</a>
+              <a class="nav-link" href="/api">Extensions API</a>
+              <a class="nav-link" href="https://seriesguide.uservoice.com">Send Feedback <span class="fas fa-external-link-alt"></span></a>
+              <a class="nav-link d-md-none" href="https://github.com/UweTrottmann/SeriesGuide">GitHub <span class="fas fa-external-link-alt"></span></a>
+            </div>
           </li>
   			</ul>
       </div>

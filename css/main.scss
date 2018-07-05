@@ -9,7 +9,8 @@
 $primary: #6545a0 !default;
 $primary-light: #D1C4E9 !default;
 
-$link-color:                  #6545a0 !default;
+$link-color:                        $primary !default;
+$dropdown-bg:                       $primary !default;
 
 // Inverted navbar links
 $navbar-dark-color:                 #fff !default;
