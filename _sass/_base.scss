@@ -71,13 +71,21 @@ height:80px;
   width:32px;
 }
 
-#footer {
-margin-top:80px;
-margin-bottom:50px;
+.credits {
+color:#666666;
+}
+
+.credits a {
+color:#666666;
 }
 
 p.title {
 font-weight: bold;
 margin-top: 20px;
 margin-bottom: 5px;
+}
+
+#footer {
+margin-top:80px;
+margin-bottom:50px;
 }
