@@ -2,61 +2,50 @@
 layout: default
 ---
 
-<div class="spacer"></div>
+<div class="row pb-3 pb-sm-0">
+  <div class="col-sm-6 col-md-5 pb-3 pb-sm-0"> 
+    <div id="opener" class="text-center text-sm-left">
+      <img src="images/app-logo.png" class="app-logo" alt="SeriesGuide logo" />
+      <h2 id="app-description">SeriesGuide helps you keep track of your favorite TV shows and movies.</h2>
+    </div> 
 
-<div class="row">
-  <div class="col-sm-6 col-md-5">    
-    <img src="images/app-logo.png" class="app-logo center-block visible-xs" alt="SeriesGuide logo" />
-    <img src="images/app-logo.png" class="app-logo hidden-xs" alt="SeriesGuide logo" />
-    <h2 id="app-description" class="text-center visible-xs">SeriesGuide helps you keep track of your favorite TV shows and movies.</h2>
-    <h2 id="app-description" class="hidden-xs">SeriesGuide helps you keep track of your favorite TV shows and movies.</h2>
-
-    <div class="spacer"></div>
-
-    <div id="download-buttons">
+    <div id="download-buttons" class="text-center text-sm-left mt-5">
       <a href="https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide"><img alt="Get it on Google Play&trade;" src="images/google-play-link.png" width="200" height="60" /></a>
       <a href="/amazon">
-        <img alt="Available at Amazon" src="images/amazon-apps-link.png" width="175" height="60" />
+        <img class="mt-0 mt-sm-1 mt-xl-0" alt="Available at Amazon" src="images/amazon-apps-link.png" width="175" height="60" />
       </a>
-      <p>free, no ads</p>
-      <br/>
-      <a href="whypay" class="btn btn-primary btn-lg">Subscribe to support</a>
-      <p class="button-description">get notifications, theme options and <a href="whypay">more</a></p> 
+      <p class="mt-1">free, no ads</p>
+
+      <a href="whypay" class="btn btn-primary btn-lg mt-3">Subscribe to support</a>
+      <p class="mt-1">get notifications, theme options and <a href="whypay">more</a></p> 
     </div><!-- download-buttons -->
   </div>
 
-  <div class="smallspacer visible-xs"></div>
-
   <div class="col-sm-6 col-md-7">
-    <img src="images/hero.png" class="img-responsive img-hero center-block" alt="show list screenshot"/>
+    <img src="images/hero.png" class="img-fluid d-block mx-auto mt-sm-3 img-hero" alt="show list screenshot"/>
   </div>
 </div>
 
-<div class="smallspacer visible-xs"></div>
-
 <h4>Alternative downloads</h4>
-<div class="row">
+<div class="row pb-3">
   <div class="col-md-12">
-    <a class="btn btn-default btn-sm" href="https://github.com/UweTrottmann/SeriesGuide/releases" >Latest Google Play version</a>
-    <a class="btn btn-default btn-sm" href="https://github.com/UweTrottmann/SeriesGuide/wiki/Legacy-versions" >Legacy version (Android 3, 2.3)</a>
-    <a class="btn btn-default btn-sm" href="https://github.com/UweTrottmann/SeriesGuide/wiki/Beta">Beta Program</a>
+    <a class="btn btn-outline-dark btn-sm mb-1" href="https://github.com/UweTrottmann/SeriesGuide/releases" >Latest Google Play version</a>
+    <a class="btn btn-outline-dark btn-sm mb-1" href="https://github.com/UweTrottmann/SeriesGuide/wiki/Legacy-versions" >Legacy version (Android 3, 2.3)</a>
+    <a class="btn btn-outline-dark btn-sm mb-1" href="https://github.com/UweTrottmann/SeriesGuide/wiki/Beta">Beta Program</a>
   </div>
 </div>
 
 <h4>Follow for SeriesGuide news</h4>
 <div class="row">
   <div class="col-md-12">
-    <a class="btn btn-default btn-sm" href="https://twitter.com/SeriesGuide">Twitter</a>
-    <a class="btn btn-default btn-sm" href="http://plus.google.com/112462818579768957964">Google+</a>
-    <a class="btn btn-default btn-sm" href="https://www.facebook.com/SeriesGuide">Facebook</a>
+    <a class="btn btn-outline-dark btn-sm mb-1" href="https://twitter.com/SeriesGuide">Twitter</a>
+    <a class="btn btn-outline-dark btn-sm mb-1" href="http://plus.google.com/112462818579768957964">Google+</a>
+    <a class="btn btn-outline-dark btn-sm mb-1" href="https://www.facebook.com/SeriesGuide">Facebook</a>
     <p><br/><small>Show images from <a href="https://www.thetvdb.com/">TheTVDB.com</a> licensed under <a href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>. Example shows by <a href="http://www.accursedfarms.com/">Ross Scott</a>, <a href="https://www.bbc.co.uk/bbcone">BBC One</a> and <a href="http://www.syfy.com/">SyFy</a>.</small></p>
   </div>
 </div>
 
-<div class="spacer"></div>
-
-<div class="row">
-
+<div class="row mt-5">
   <div class="col-sm-6 col-md-3">
     <h2>Find shows to track</h2>
     <p>SeriesGuide suggests currently trending shows (powered by <a href="https://trakt.tv">trakt</a>) and is backed by the huge TV show catalog of <a href="https://www.thetvdb.com">TheTVDb</a>.</p>
@@ -64,32 +53,31 @@ layout: default
     <p>You can also create a movie watchlist and build a movie collection (syncable with trakt).</p>
   </div>
   
-  <div class="col-sm-6 col-md-3">
-    <img src="images/add-shows.png" class="img-responsive center-block" alt="add show screenshot" />
+  <div class="col-sm-6 col-md-3 mt-3 mt-sm-0">
+    <img src="images/add-shows.png" class="img-fluid d-block mx-auto img-hero" alt="add show screenshot" />
   </div>
   
-  <div class="col-sm-6 col-md-3">
+  <div class="col-sm-6 col-md-3 mt-5 mt-md-0">
     <h2>Check In and Share</h2>
     <p><a href="/help#checkins">Check in</a> what you are watching on <a href="https://trakt.tv">trakt</a>.</p><p>Or hit the share button to post an awesome episode to any Android app, including Google+, Facebook and Twitter.</p>
   </div>
   
-  <div class="col-sm-6 col-md-3">
-    <img src="images/checkin.png" class="img-responsive center-block" alt="check-in dialog screenshot" />
+  <div class="col-sm-6 col-md-3 mt-3 mt-sm-5 mt-md-0">
+    <img src="images/checkin.png" class="img-fluid d-block mx-auto img-hero" alt="check-in dialog screenshot" />
   </div>
-  
 </div>
 
-<div class="spacer visible-md visible-lg"></div>
-
-<div class="row">
+<div class="row mt-5">
   <div class="col-sm-6 col-md-3">
     <h2>See your progress</h2>
     <p>Visual indicators make it easy to spot unseen episodes and the statistics tool lets you see how you are doing.</p>
   </div>
-  <div class="col-sm-6 col-md-3">
-    <img src="images/progress.png" class="img-responsive center-block" alt="season list screenshot" />
+
+  <div class="col-sm-6 col-md-3 mt-3 mt-sm-0">
+    <img src="images/progress.png" class="img-fluid d-block mx-auto img-hero" alt="season list screenshot" />
   </div>
-  <div class="col-sm-6 col-md-3">
+
+  <div class="col-sm-6 col-md-3 mt-5 mt-md-0">
     <h2>And more</h2>
     <p>You also get</p>
     <ul>
@@ -105,7 +93,8 @@ layout: default
     <p>and much more.</p>
     <p>*<a href="whypay">pay to unlock</a></p>
   </div>
-  <div class="col-sm-6 col-md-3">
-    <img src="images/light-theme.png" class="img-responsive center-block" alt="light theme screenshot" />
+
+  <div class="col-sm-6 col-md-3 mt-3 mt-sm-5 mt-md-0">
+    <img src="images/light-theme.png" class="img-fluid d-block mx-auto img-hero" alt="light theme screenshot" />
   </div>
 </div>

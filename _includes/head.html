@@ -1,7 +1,7 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- Bootstrap: The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
   <title>{% if page.title %}{{ page.title | escape }} | {{ site.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
@@ -12,6 +12,9 @@
   <link rel="shortcut icon" href="/favicon.ico"/>
 
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+  <!-- Font Awesome: only solid, self-hosted -->
+  <script defer src="{{ "/javascripts/fontawesome/solid.js" | prepend: site.baseurl }}"></script>
+  <script defer src="{{ "/javascripts/fontawesome/fontawesome.js" | prepend: site.baseurl }}"></script>
 
   <!-- Google+ author tag -->
   <link href="https://plus.google.com/112462818579768957964" rel="publisher" />

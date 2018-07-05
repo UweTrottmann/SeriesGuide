@@ -1,19 +1,10 @@
-$brand-primary: #6545a0 !default;
 
 body {
-background: #fff;
-color:#333;
-font-size: 14px;
+padding-top: 4.5rem;
 }
 
 h1, h2 {
-font-weight: 300;
-color:$brand-primary;
-}
-
-h3, h4, h5, h6 {
-font-weight: 300;
-color:#333;
+color:$primary;
 }
 
 li {
@@ -25,33 +16,20 @@ line-height: 24px;
 }
 
 a {
-color:$brand-primary;
-text-decoration:none;
-line-height:inherit;
-font-weight:bold;
-}
-
-a:hover {
-text-decoration:underline;
+font-weight:$font-weight-bold;
 }
 
 a:focus {
   outline: 1px dashed;
 }
 
-.link-button {
-font-weight:300;
-color:#333;
-font-size:2em;
-}
-
-.button-description {
-margin-top:5px;
-}
-
-.btn-link {
-  color:$brand-primary;
-  font-weight:400;
+/* fix anchor scroll offset */
+span.anchor {
+  margin-top: -54px; /* height of nav, in this case 54px */
+  display: block;
+  height: 54px; /* height of nav, in this case 54px */
+  visibility: hidden;
+  position: relative;
 }
 
 .navbar {
@@ -59,43 +37,16 @@ margin-top:5px;
 }
 
 .navbar-nav > li > a {
-font-size: 1.1em;
-font-weight:400;
+font-weight:$font-weight-normal;
 }
 
 .toc > li > a {
-color:#333;
-font-weight:400;
+color:#212529;
+font-weight:$font-weight-normal;
 }
 
 .img-hero {
   max-height:600px;
-}
-
-.spacer {
-height:50px;
-}
-
-.smallspacer {
-height:25px;
-}
-
-.largespacer {
-height:80px;
-}
-
-.well {
-background:#111111;
-color: #ffffff;
-}
-
-.well a {
-color: #ffffff;
-}
-
-.share-button {
-float: left;
-margin-left: 2px;
 }
 
 .app-logo {
@@ -108,28 +59,6 @@ margin-left: 2px;
   width:32px;
 }
 
-#app-description {
-  margin-top:0;
-}
-
-#content {
-margin-top:60px;
-}
-
-#poweredby-ul {
-margin-bottom:0px;
-}
-
-#poweredby-ul li {
-margin-top:10px;
-margin-bottom: 0px;
-}
-
-#footer {
-margin-top:80px;
-margin-bottom:50px;
-}
-
 .credits {
 color:#666666;
 }
@@ -138,12 +67,13 @@ color:#666666;
 color:#666666;
 }
 
-p.right {
-float:right;
-}
-
 p.title {
 font-weight: bold;
 margin-top: 20px;
 margin-bottom: 5px;
+}
+
+#footer {
+margin-top:80px;
+margin-bottom:50px;
 }
