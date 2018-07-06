@@ -37,7 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewFirstRunTitle"
             android:layout_marginTop="@dimen/large_padding"
-            android:foreground="?attr/selectableItemBackground"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
             android:gravity="center_vertical"
             android:minHeight="?android:attr/listPreferredItemHeight"
             android:paddingLeft="@dimen/large_padding"
@@ -124,10 +125,12 @@
             android:layout_below="@+id/dividerFirstRun"
             android:layout_marginLeft="@dimen/large_padding"
             android:layout_marginRight="@dimen/large_padding"
-            android:autoLink="web"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
             android:paddingBottom="@dimen/default_padding"
             android:paddingTop="@dimen/default_padding"
-            android:text="@string/url_privacy" />
+            android:text="@string/url_privacy"
+            android:textAppearance="@style/TextAppearance.Body.Green" />
 
     </RelativeLayout>
 
