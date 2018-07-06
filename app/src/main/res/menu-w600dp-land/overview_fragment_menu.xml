@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_overview_share"
+        android:icon="@drawable/ic_share_white_24dp"
+        android:orderInCategory="1"
+        android:title="@string/share_episode"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_overview_calendar"
+        android:orderInCategory="2"
+        android:title="@string/addtocalendar"
+        app:showAsAction="never" />
+
+</menu>
