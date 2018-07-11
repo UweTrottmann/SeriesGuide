@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
     <issue id="ValidFragment" severity="ignore" />
+    <!-- Detection broken for long -> Date https://github.com/JakeWharton/timber/issues/216 -->
+    <issue id="TimberArgTypes" severity="warning" />
 </lint>
