@@ -177,6 +177,7 @@
                                 android:maxLines="1"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.Caption.Dim"
+                                tools:ignore="EllipsizeMaxLines"
                                 tools:text="Season 3 Episode 3 (51)" />
 
                         </RelativeLayout>
