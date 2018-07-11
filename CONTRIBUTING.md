@@ -34,7 +34,7 @@ To get started:
 
 1. Import the `SeriesGuide` folder as a new project in Android Studio.
 2. Select the `pureDebug` build variant (defined in `app/build.gradle`). 
-   [Learn about product flavors](https://developer.android.com/studio/build/build-variants.html#product-flavors)).
+   [Learn about product flavors](https://developer.android.com/studio/build/build-variants.html#product-flavors).
 
 ### Debug
 
