@@ -19,7 +19,7 @@
         android:textAppearance="@style/TextAppearance.Subhead"
         tools:text="@string/season_number" />
 
-    <ImageView
+    <android.support.v7.widget.AppCompatImageView
         android:id="@+id/imageViewContextMenu"
         android:layout_width="48dp"
         android:layout_height="48dp"

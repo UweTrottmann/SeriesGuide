@@ -22,7 +22,7 @@
             android:contentDescription="@null"
             tools:src="@mipmap/ic_app" />
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/imageViewItemExtensionSettings"
             android:layout_width="48dp"
             android:layout_height="48dp"
