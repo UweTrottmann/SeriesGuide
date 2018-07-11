@@ -30,6 +30,7 @@ buildscript {
             'code': 1503103,
             'name': '43-beta4',
     ]
+    ext.isCiBuild = System.getenv('CI') == 'true'
 
     repositories {
         jcenter()
