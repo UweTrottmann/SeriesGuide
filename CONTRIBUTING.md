@@ -12,11 +12,12 @@ patches or translations the following applies:
 
 #### Would you like to contribute code?
 
-1. [Fork SeriesGuide](https://github.com/UweTrottmann/SeriesGuide/fork). See further setup instructions below.
-2. Create a new branch ([using GitHub](https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/)
-   or the command `git checkout -b descriptive-branch-name dev`) and make
-   [great commits + messages](http://robots.thoughtbot.com/post/48933156625/5-useful-tips-for-a-better-commit-message).
-3. [Start a pull request](https://github.com/UweTrottmann/SeriesGuide/compare). Reference [existing issues](https://github.com/UweTrottmann/SeriesGuide/issues) when possible.
+1. [Fork SeriesGuide](https://github.com/UweTrottmann/SeriesGuide/fork) and clone your fork.
+2. See the notes about [building](#building) the app below.
+3. Create a new branch ([using GitHub](https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/)
+   or the command `git checkout -b descriptive-branch-name dev`).
+4. Make [great commits](http://robots.thoughtbot.com/post/48933156625/5-useful-tips-for-a-better-commit-message).
+5. [Start a pull request](https://github.com/UweTrottmann/SeriesGuide/compare) and reference [issues](https://github.com/UweTrottmann/SeriesGuide/issues) if needed.
 
 #### No code!
 * You can [get help](https://seriesgui.de/help).
@@ -26,20 +27,16 @@ patches or translations the following applies:
 
 ## Building
 
-This project is built with Gradle and uses the 
-[Android Gradle plugin](https://developer.android.com/studio/build/index.html). To get started:
-
-1. Clone this repository, for example using `git clone https://github.com/UweTrottmann/SeriesGuide.git`.
-
 - `dev` is the main development and [test release](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) branch.
 - `master` has always the latest [stable version](https://seriesgui.de).
 
-2. In Android Studio import the `SeriesGuide` folder as a new project.
+To get started:
+
+1. Import the `SeriesGuide` folder as a new project in Android Studio.
+2. Select the `pureDebug` build variant (defined in `app/build.gradle`). 
+   [Learn about product flavors](https://developer.android.com/studio/build/build-variants.html#product-flavors)).
 
 ### Debug
-
-Select the `pureDebug` build variant (defined in `app/build.gradle`). 
-[Learn about product flavors](https://developer.android.com/studio/build/build-variants.html#product-flavors)).
 
 Debug builds should just work.
 
