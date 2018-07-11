@@ -14,16 +14,16 @@ android {
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "TVDB_API_KEY", stringPropertyOrPlaceholder("TVDB_API_KEY"))
-        buildConfigField("String", "TMDB_API_KEY", stringPropertyOrPlaceholder("TMDB_API_KEY"))
-        buildConfigField("String", "TRAKT_CLIENT_ID", stringPropertyOrPlaceholder("TRAKT_CLIENT_ID"))
-        buildConfigField("String", "TRAKT_CLIENT_SECRET", stringPropertyOrPlaceholder("TRAKT_CLIENT_SECRET"))
-        buildConfigField("String", "IAP_KEY_A", stringPropertyOrPlaceholder("IAP_KEY_A"))
-        buildConfigField("String", "IAP_KEY_B", stringPropertyOrPlaceholder("IAP_KEY_B"))
-        buildConfigField("String", "IAP_KEY_C", stringPropertyOrPlaceholder("IAP_KEY_C"))
-        buildConfigField("String", "IAP_KEY_D", stringPropertyOrPlaceholder("IAP_KEY_D"))
-        buildConfigField("String", "IMAGE_CACHE_URL", stringPropertyOrNull("IMAGE_CACHE_URL"))
-        buildConfigField("String", "IMAGE_CACHE_SECRET", stringPropertyOrPlaceholder("IMAGE_CACHE_SECRET"))
+        buildConfigField("String", "TVDB_API_KEY", propertyOrEmpty("TVDB_API_KEY"))
+        buildConfigField("String", "TMDB_API_KEY", propertyOrEmpty("TMDB_API_KEY"))
+        buildConfigField("String", "TRAKT_CLIENT_ID", propertyOrEmpty("TRAKT_CLIENT_ID"))
+        buildConfigField("String", "TRAKT_CLIENT_SECRET", propertyOrEmpty("TRAKT_CLIENT_SECRET"))
+        buildConfigField("String", "IAP_KEY_A", propertyOrEmpty("IAP_KEY_A"))
+        buildConfigField("String", "IAP_KEY_B", propertyOrEmpty("IAP_KEY_B"))
+        buildConfigField("String", "IAP_KEY_C", propertyOrEmpty("IAP_KEY_C"))
+        buildConfigField("String", "IAP_KEY_D", propertyOrEmpty("IAP_KEY_D"))
+        buildConfigField("String", "IMAGE_CACHE_URL", propertyOrNull("IMAGE_CACHE_URL"))
+        buildConfigField("String", "IMAGE_CACHE_SECRET", propertyOrEmpty("IMAGE_CACHE_SECRET"))
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -216,10 +216,10 @@ endpointsClient {
                      'src/endpoints/shows-v2-rest.discovery']
 }
 
-def stringPropertyOrPlaceholder(String name) {
-    return rootProject.hasProperty(name) ? "\"${rootProject.property(name)}\"" : "\"MISSING\""
+def propertyOrEmpty(String name) {
+    return rootProject.hasProperty(name) ? "\"${rootProject.property(name)}\"" : "\"\""
 }
 
-def stringPropertyOrNull(String name) {
+def propertyOrNull(String name) {
     return rootProject.hasProperty(name) ? "\"${rootProject.property(name)}\"" : "null"
 }
