@@ -101,6 +101,10 @@ android {
             }
         }
         debug {
+            if (!rootProject.file('app/fabric.properties').exists()) {
+                ext.enableCrashlytics = false
+            }
+
             multiDexEnabled true
             // disable shrinking to use incremental dex in builds
             minifyEnabled false
