@@ -47,7 +47,7 @@
         tools:tint="?attr/sgColorIcon" />
 
     <!-- 20dp dense icon, though 48dp touch target -->
-    <ImageView
+    <android.support.v7.widget.AppCompatImageView
         android:id="@+id/imageViewShowsContextMenu"
         android:layout_width="48dp"
         android:layout_height="48dp"

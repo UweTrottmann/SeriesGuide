@@ -26,7 +26,9 @@ public class SimpleFloatViewManager implements DragSortListView.FloatViewManager
     public View onCreateFloatView(int position) {
         // short vibrate to signal drag has started
         Vibrator v = (Vibrator) listView.getContext().getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(10);
+        if (v != null) {
+            v.vibrate(10);
+        }
 
         // grab a new view for the item from the adapter
         return listView.getAdapter().getView(position, null, listView);

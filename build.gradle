@@ -30,6 +30,7 @@ buildscript {
             'code': 1503103,
             'name': '43-beta4',
     ]
+    ext.isCiBuild = System.getenv('CI') == 'true'
 
     repositories {
         jcenter()
@@ -80,5 +81,6 @@ task clean(type: Delete) {
 task wrapper(type: Wrapper) {
     group "build setup"
     gradleVersion = '4.5'
+    //noinspection UnnecessaryQualifiedReference
     distributionType = Wrapper.DistributionType.ALL
 }

@@ -53,7 +53,7 @@
         android:textAppearance="@style/TextAppearance.Caption.Dim"
         tools:text="13.11.2013" />
 
-    <ImageView
+    <android.support.v7.widget.AppCompatImageView
         android:id="@+id/imageViewMovieItemContextMenu"
         android:layout_width="56dp"
         android:layout_height="56dp"
