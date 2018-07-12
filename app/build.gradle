@@ -47,6 +47,12 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
 
+    lintOptions {
+        // for CI server (reports are not public)
+        textReport true
+        textOutput 'stdout'
+    }
+
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
