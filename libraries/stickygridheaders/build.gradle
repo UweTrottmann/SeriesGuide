@@ -9,4 +9,10 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    lintOptions {
+        // for CI server (reports are not public)
+        textReport true
+        textOutput 'stdout'
+    }
 }
