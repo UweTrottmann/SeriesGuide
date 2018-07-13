@@ -15,6 +15,12 @@
 
     <PreferenceCategory android:title="@string/shows">
 
+        <CheckBoxPreference
+            android:defaultValue="False"
+            android:key="com.battlelancer.seriesguide.PREVENT_SPOILERS"
+            android:summary="@string/pref_nospoilers_summary"
+            android:title="@string/pref_nospoilers" />
+
         <ListPreference
             android:defaultValue="@string/show_default_language"
             android:entries="@array/languagesShows"
@@ -28,10 +34,6 @@
             android:entryValues="@array/languageCodesShows"
             android:key="com.battlelancer.seriesguide.languageFallback"
             android:title="@string/pref_language_fallback" />
-
-        <Preference
-            android:key="com.battlelancer.seriesguide.timeoffset"
-            android:title="@string/pref_offset" />
 
         <CheckBoxPreference
             android:defaultValue="False"
@@ -51,11 +53,9 @@
             android:summary="@string/pref_exactdates_summary"
             android:title="@string/pref_exactdates" />
 
-        <CheckBoxPreference
-            android:defaultValue="False"
-            android:key="com.battlelancer.seriesguide.PREVENT_SPOILERS"
-            android:summary="@string/pref_nospoilers_summary"
-            android:title="@string/pref_nospoilers" />
+        <Preference
+            android:key="com.battlelancer.seriesguide.timeoffset"
+            android:title="@string/pref_offset" />
 
     </PreferenceCategory>
 
