@@ -18,7 +18,6 @@
     <dimen name="text_size_caption_sg">12sp</dimen>
 
     <!-- Legacy widget -->
-    <dimen name="widget_margin">5dp</dimen>
     <dimen name="widget_paddingRight">3dp</dimen>
     <dimen name="widget_paddingLeft">8dp</dimen>
     <dimen name="widget_poster_width">25dp</dimen>
