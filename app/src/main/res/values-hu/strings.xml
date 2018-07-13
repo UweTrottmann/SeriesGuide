@@ -37,7 +37,7 @@
   <string name="sync_manually">Manuális szinkronizálás</string>
   <string name="sync_and_update">Szinkronizálás &amp; Frissítés</string>
   <string name="sync_and_download_all">Szinkronizálás &amp; Összes letöltése</string>
-  <string name="action_turn_off">Turn off</string>
+  <string name="action_turn_off">Kikapcsol</string>
   <!-- Search -->
   <string name="clear_search_history">Keresési előzmények törlése</string>
   <string name="search_hint">Epizódok keresése</string>
@@ -182,7 +182,7 @@
   <string name="checkin_searchhint">Írj be egy sorozat címet</string>
   <string name="add_empty">Nincsenek sorozatok.</string>
   <string name="no_results">Nincs találat, próbálkozz teljes szavakkal.</string>
-  <string name="empty_show_search">Not found in your show list</string>
+  <string name="empty_show_search">Nem található a sorozat listádban</string>
   <string name="action_try_any_language">Keresés bármely nyelven</string>
   <string name="action_try_again">Próbáld újra</string>
   <string name="tvdb_error_does_not_exist">A sorozat (még) nem létezik a TheTVDB adatbázisban. Próbálkozzon később.</string>

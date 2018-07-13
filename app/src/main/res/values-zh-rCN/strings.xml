@@ -183,8 +183,8 @@
   <string name="action_try_again">重试</string>
   <string name="tvdb_error_does_not_exist">此节目在 TheTVDB 上（尚）不存在。请稍后再试。</string>
   <string name="add_all">全部添加</string>
-  <string name="add_multiple">已选项将很快出现在节目单中。</string>
-  <string name="add_started">%s 将很快出现在节目单中。</string>
+  <string name="add_multiple">已选项将很快出现在节目单中</string>
+  <string name="add_started">%s 将很快出现在节目单中</string>
   <string name="add_error">无法将 %s 加入节目单。</string>
   <string name="add_already_exists">%s 已存在于您的节目单中</string>
   <string name="title_new_episodes">新的剧集</string>
