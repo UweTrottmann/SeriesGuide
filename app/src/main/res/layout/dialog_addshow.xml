@@ -14,9 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
-            android:descendantFocusability="beforeDescendants"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:minWidth="@dimen/dialog_min_width"
             android:paddingBottom="@dimen/large_padding">
 
@@ -26,10 +23,13 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true" />
 
+            <!-- match parent width so selectable background looks nicer -->
             <RelativeLayout
                 android:id="@+id/containerShowInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:focusable="true">
 
                 <ImageView
                     android:id="@+id/imageViewAddPoster"
@@ -48,7 +48,6 @@
                     android:layout_toRightOf="@id/imageViewAddPoster"
                     android:paddingTop="@dimen/default_padding"
                     android:textAppearance="@style/TextAppearance.Title"
-                    android:textIsSelectable="true"
                     tools:text="@string/action_shows_add" />
 
                 <TextView
@@ -61,7 +60,6 @@
                     android:layout_toRightOf="@id/imageViewAddPoster"
                     android:paddingBottom="@dimen/default_padding"
                     android:textAppearance="@style/TextAppearance.Body"
-                    android:textIsSelectable="true"
                     tools:text="2014 / Continuing" />
 
                 <TextView
@@ -74,7 +72,6 @@
                     android:layout_marginRight="@dimen/large_padding"
                     android:layout_toRightOf="@+id/imageViewAddPoster"
                     android:textAppearance="@style/TextAppearance.Body"
-                    android:textIsSelectable="true"
                     tools:text="Mon 07:00 PM on Showtime\n60 min" />
 
             </RelativeLayout>
@@ -88,9 +85,10 @@
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
                 android:layout_marginTop="@dimen/large_padding"
+                android:background="?attr/selectableItemBackground"
+                android:focusable="true"
                 android:maxWidth="@dimen/max_width_text_size_body"
                 android:textAppearance="@style/TextAppearance.Body"
-                android:textIsSelectable="true"
                 tools:text="@string/description_overview" />
 
             <TextView
@@ -113,6 +111,8 @@
                 android:layout_below="@+id/textViewAddGenresLabel"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
+                android:background="?attr/selectableItemBackground"
+                android:focusable="true"
                 android:textAppearance="@style/TextAppearance.Body"
                 tools:text="Comedy, Drama" />
 

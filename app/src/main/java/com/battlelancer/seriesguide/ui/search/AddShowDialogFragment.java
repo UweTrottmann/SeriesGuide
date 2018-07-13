@@ -28,12 +28,13 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
+import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.util.ClipboardTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.Date;
@@ -99,6 +100,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         String SEARCH_RESULT = "search_result";
     }
 
+    @BindView(R.id.containerShowInfo) ViewGroup containerShowInfo;
     @BindView(R.id.textViewAddTitle) TextView title;
     @BindView(R.id.textViewAddShowMeta) TextView showmeta;
     @BindView(R.id.textViewAddDescription) TextView overview;
@@ -175,6 +177,21 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         buttonPositive.setVisibility(View.GONE);
 
         ButterKnife.apply(labelViews, VISIBLE, false);
+
+        // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
+        containerShowInfo.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // just copy text from views instead of re-building
+                StringBuilder summaryBuilder = new StringBuilder();
+                summaryBuilder.append(title.getText()).append("\n");
+                summaryBuilder.append(releasedTextView.getText()).append("\n");
+                summaryBuilder.append(showmeta.getText());
+                return ClipboardTools.copyTextToClipboard(v.getContext(), summaryBuilder);
+            }
+        });
+        ClipboardTools.copyTextToClipboardOnLongClick(overview);
+        ClipboardTools.copyTextToClipboardOnLongClick(genres);
 
         return v;
     }
