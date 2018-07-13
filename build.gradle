@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = '1.2.41' // https://github.com/JetBrains/kotlin/releases
+    ext.kotlin_version = '1.2.51' // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
     ext.versions = [
             'minSdk': 15,
             'compileSdk': 27,
