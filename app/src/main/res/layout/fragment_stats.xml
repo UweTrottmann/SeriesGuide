@@ -23,10 +23,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/emptyViewStats"
             android:layout_centerHorizontal="true"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
             android:gravity="center"
             android:text="@string/norating"
             android:textAppearance="@style/TextAppearance.Display3"
-            android:textIsSelectable="true"
             tools:text="42" />
 
         <TextView
@@ -54,8 +55,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/progressBarStatsShowsWithNext"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
             android:textAppearance="@style/TextAppearance.Caption"
-            android:textIsSelectable="true"
             tools:text="29 WITH NEXT EPISODES" />
 
         <ProgressBar
@@ -72,8 +74,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/progressBarStatsShowsContinuing"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
             android:textAppearance="@style/TextAppearance.Caption"
-            android:textIsSelectable="true"
             tools:text="10 CONTINUING" />
 
         <TextView
@@ -83,10 +86,11 @@
             android:layout_below="@+id/textViewStatsShowsContinuing"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
             android:gravity="center"
             android:text="@string/norating"
             android:textAppearance="@style/TextAppearance.Display3"
-            android:textIsSelectable="true"
             tools:text="5260" />
 
         <TextView
@@ -114,8 +118,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/progressBarStatsEpisodesWatched"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
             android:textAppearance="@style/TextAppearance.Caption"
-            android:textIsSelectable="true"
             tools:text="1803 WATCHED" />
 
         <TextView
@@ -125,12 +130,13 @@
             android:layout_below="@+id/textViewStatsEpisodesWatched"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/large_padding"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:text="@string/norating"
             android:textAppearance="@style/TextAppearance.Headline"
             android:textColor="?android:attr/textColorSecondary"
-            android:textIsSelectable="true"
             tools:ignore="UnusedAttribute"
             tools:text="61 days 13 hours 29 minutes" />
 
@@ -148,9 +154,9 @@
             android:id="@+id/progressBarStatsEpisodesRuntime"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginTop="@dimen/inline_padding"
             android:layout_below="@id/labelStatsEpisodesRuntime"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/inline_padding" />
 
         <TextView
             android:id="@+id/textViewStatsMovies"
@@ -159,10 +165,11 @@
             android:layout_below="@+id/labelStatsEpisodesRuntime"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
             android:gravity="center"
             android:text="@string/norating"
             android:textAppearance="@style/TextAppearance.Display3"
-            android:textIsSelectable="true"
             tools:text="250" />
 
         <TextView
@@ -190,8 +197,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/progressBarStatsMoviesWatchlist"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
             android:textAppearance="@style/TextAppearance.Caption"
-            android:textIsSelectable="true"
             tools:text="1803 WATCHLIST" />
 
         <TextView
@@ -201,12 +209,13 @@
             android:layout_below="@+id/textViewStatsMoviesWatchlist"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/large_padding"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:text="@string/norating"
             android:textAppearance="@style/TextAppearance.Headline"
             android:textColor="?android:attr/textColorSecondary"
-            android:textIsSelectable="true"
             tools:ignore="UnusedAttribute"
             tools:text="61 days 13 hours 29 minutes" />
 
