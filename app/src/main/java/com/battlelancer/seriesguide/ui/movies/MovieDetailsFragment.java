@@ -61,6 +61,7 @@ import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
 import com.battlelancer.seriesguide.ui.people.MovieCreditsLoader;
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper;
+import com.battlelancer.seriesguide.util.ClipboardTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -194,6 +195,12 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         // cast and crew
         setCastVisibility(false);
         setCrewVisibility(false);
+
+        // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewMovieTitle);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewMovieDate);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewMovieDescription);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewMovieGenres);
 
         return view;
     }
