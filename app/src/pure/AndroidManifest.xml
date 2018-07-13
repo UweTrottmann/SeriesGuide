@@ -5,7 +5,7 @@
     <!-- Google Play in-app billing -->
     <uses-permission android:name="com.android.vending.BILLING" />
 
-    <application>
+    <application tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <!-- Android Backup key for com.battlelancer.seriesguide application ID -->
         <meta-data
