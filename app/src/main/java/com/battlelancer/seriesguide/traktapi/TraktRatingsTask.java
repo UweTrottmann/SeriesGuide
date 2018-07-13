@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.traktapi;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -24,7 +25,7 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
     private final static android.support.v4.util.LruCache<Long, Long> sCache
             = new android.support.v4.util.LruCache<>(HARD_CACHE_CAPACITY);
 
-    private final Context context;
+    @SuppressLint("StaticFieldLeak") private final Context context;
     private final int showTvdbId;
     private final int episodeTvdbId;
     private final int season;
@@ -46,7 +47,7 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
      */
     public TraktRatingsTask(Context context, int showTvdbId, int episodeTvdbId, int season,
             int episode) {
-        this.context = context;
+        this.context = context.getApplicationContext();
         this.showTvdbId = showTvdbId;
         this.episodeTvdbId = episodeTvdbId;
         this.season = season;

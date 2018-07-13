@@ -40,68 +40,23 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Context context = getActivity().getApplicationContext();
         final Bundle args = getArguments();
+        if (args == null) {
+            throw new IllegalArgumentException("Missing args");
+        }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
 
-        builder.setMessage(context.getString(R.string.traktcheckin_inprogress,
-                waitTimeMinutes < 0 ? context.getString(R.string.not_available)
+        builder.setMessage(getString(R.string.traktcheckin_inprogress,
+                waitTimeMinutes < 0 ? getString(R.string.not_available)
                         : DateUtils.formatElapsedTime(waitTimeMinutes)));
 
         builder.setPositiveButton(R.string.traktcheckin_cancel, new OnClickListener() {
 
             @Override
-            @SuppressLint("CommitTransaction")
             public void onClick(DialogInterface dialog, int which) {
                 AsyncTask<String, Void, String> cancelCheckinTask
-                        = new AsyncTask<String, Void, String>() {
-
-                    @Override
-                    protected String doInBackground(String... params) {
-                        // check for credentials
-                        if (!TraktCredentials.get(context).hasCredentials()) {
-                            return context.getString(R.string.trakt_error_credentials);
-                        }
-
-                        Checkin checkin = SgApp.getServicesComponent(getContext()).traktCheckin();
-                        try {
-                            retrofit2.Response<Void> response = checkin.deleteActiveCheckin()
-                                    .execute();
-                            if (response.isSuccessful()) {
-                                return null;
-                            } else {
-                                if (SgTrakt.isUnauthorized(context, response)) {
-                                    return context.getString(R.string.trakt_error_credentials);
-                                }
-                                SgTrakt.trackFailedRequest(context, "delete check-in", response);
-                            }
-                        } catch (Exception e) {
-                            SgTrakt.trackFailedRequest(context, "delete check-in", e);
-                        }
-
-                        return context.getString(R.string.api_error_generic,
-                                context.getString(R.string.trakt));
-                    }
-
-                    @Override
-                    protected void onPostExecute(String message) {
-                        if (message == null) {
-                            // all good
-                            Toast.makeText(context, R.string.checkin_canceled_success_trakt,
-                                    Toast.LENGTH_SHORT).show();
-
-                            // relaunch the trakt task which called us to
-                            // try the check in again
-                            new TraktTask(context, args).executeOnExecutor(
-                                    AsyncTask.THREAD_POOL_EXECUTOR);
-                        } else {
-                            // well, something went wrong
-                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                };
-
+                        = new CancelCheckInTask(requireContext(), args);
                 cancelCheckinTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
@@ -115,5 +70,60 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
         });
 
         return builder.create();
+    }
+
+    private static class CancelCheckInTask extends AsyncTask<String, Void, String> {
+
+        @SuppressLint("StaticFieldLeak") private final Context context;
+        private final Bundle traktTaskArgs;
+
+        CancelCheckInTask(@NonNull Context context, @NonNull Bundle traktTaskArgs) {
+            this.context = context.getApplicationContext();
+            this.traktTaskArgs = traktTaskArgs;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            // check for credentials
+            if (!TraktCredentials.get(context).hasCredentials()) {
+                return context.getString(R.string.trakt_error_credentials);
+            }
+
+            Checkin checkin = SgApp.getServicesComponent(context).traktCheckin();
+            try {
+                retrofit2.Response<Void> response = checkin.deleteActiveCheckin()
+                        .execute();
+                if (response.isSuccessful()) {
+                    return null;
+                } else {
+                    if (SgTrakt.isUnauthorized(context, response)) {
+                        return context.getString(R.string.trakt_error_credentials);
+                    }
+                    SgTrakt.trackFailedRequest(context, "delete check-in", response);
+                }
+            } catch (Exception e) {
+                SgTrakt.trackFailedRequest(context, "delete check-in", e);
+            }
+
+            return context.getString(R.string.api_error_generic,
+                    context.getString(R.string.trakt));
+        }
+
+        @Override
+        protected void onPostExecute(String message) {
+            if (message == null) {
+                // all good
+                Toast.makeText(context, R.string.checkin_canceled_success_trakt,
+                        Toast.LENGTH_SHORT).show();
+
+                // relaunch the trakt task which called us to
+                // try the check in again
+                new TraktTask(context, traktTaskArgs)
+                        .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                // well, something went wrong
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

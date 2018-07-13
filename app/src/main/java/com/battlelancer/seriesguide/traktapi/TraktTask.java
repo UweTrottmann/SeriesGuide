@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.traktapi;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -127,7 +128,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
         }
     }
 
-    private final Context context;
+    @SuppressLint("StaticFieldLeak") private final Context context;
     private Bundle args;
     private TraktAction action;
 

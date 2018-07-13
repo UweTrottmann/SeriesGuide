@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.thetvdbapi;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -35,7 +36,7 @@ public class TvdbEpisodeDetailsTask extends AsyncTask<Void, Void, Void> {
         }
     }
 
-    private final Context context;
+    @SuppressLint("StaticFieldLeak") private final Context context;
     private final int showTvdbId;
     private final int episodeTvdbId;
     private final long lastEdited;
