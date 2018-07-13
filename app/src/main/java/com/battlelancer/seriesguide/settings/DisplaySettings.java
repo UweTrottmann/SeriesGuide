@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -61,21 +60,6 @@ public class DisplaySettings {
 
     public static final String KEY_PREVENT_SPOILERS =
             "com.battlelancer.seriesguide.PREVENT_SPOILERS";
-
-    /**
-     * Returns true for xlarge, xlarge-land or sw720dp screens.
-     */
-    public static boolean isVeryLargeScreen(Context context) {
-        return context.getResources().getBoolean(R.bool.isLargeTablet);
-    }
-
-    /**
-     * Returns true if this is a large screen.
-     */
-    public static boolean isLargeScreen(Context context) {
-        return (context.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE;
-    }
 
     /**
      * Returns true for all screens with dpi higher than {@link DisplayMetrics#DENSITY_HIGH}.

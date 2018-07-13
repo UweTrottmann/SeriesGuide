@@ -12,9 +12,11 @@ import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.Utils;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import org.greenrobot.eventbus.EventBus;
@@ -70,6 +72,7 @@ public class FirstRunView extends FrameLayout {
         Button buttonAddShow = findViewById(R.id.buttonFirstRunAddShow);
         Button buttonSignIn = findViewById(R.id.buttonFirstRunSignIn);
         Button buttonRestoreBackup = findViewById(R.id.buttonFirstRunRestore);
+        TextView textViewPrivacyPolicy = findViewById(R.id.textViewFirstRunPrivacyLink);
         ImageButton buttonDismiss = findViewById(R.id.buttonFirstRunDismiss);
 
         noSpoilerView.setOnClickListener(new OnClickListener() {
@@ -113,6 +116,13 @@ public class FirstRunView extends FrameLayout {
             public void onClick(View v) {
                 setFirstRunDismissed();
                 EventBus.getDefault().post(new ButtonEvent(FirstRunView.this, ButtonType.DISMISS));
+            }
+        });
+        textViewPrivacyPolicy.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Utils.launchWebsite(context, context.getString(R.string.url_privacy));
             }
         });
     }
