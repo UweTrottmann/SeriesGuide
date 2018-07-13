@@ -53,6 +53,7 @@
   <string name="reinstall_info">Tenta facer unha copia de seguridade nos Axustes, reinstalar e restarurar</string>
   <string name="api_error_generic">Non se puido conectar con %s. Tenta máis tarde.</string>
   <string name="api_failed">Fallou: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Partillar</string>
   <string name="share_show">Partillar serie</string>

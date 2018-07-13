@@ -53,6 +53,7 @@
   <string name="reinstall_info">Tente fazer o backup nas configurações, reinstalar e restaurar o backup.</string>
   <string name="api_error_generic">Não foi possível conectar-se com %s. Tente mais tarde.</string>
   <string name="api_failed">Falhou: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Compartilhar</string>
   <string name="share_show">Compartilhar série</string>

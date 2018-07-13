@@ -53,6 +53,7 @@
   <string name="reinstall_info">Προσπαθήστε να κρατήσετε αντίγραφο ασφαλείας στις Ρυθμίσεις, να εγκαταστήσετε ξανά την εφαρμογή και να κάνετε επαναφορά.</string>
   <string name="api_error_generic">Δεν είναι δυνατή η επικοινωνία με το %s. Ξαναδοκιμάστε αργότερα.</string>
   <string name="api_failed">Αποτυχία: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Μοίρασε</string>
   <string name="share_show">Κοινοποίηση σειράς</string>

@@ -53,6 +53,7 @@
   <string name="reinstall_info">Încercați sa creați o copie de rezerva în Setări, reinstalati și restaurati.</string>
   <string name="api_error_generic">Nu s-a putut comunica cu %s. Încercați mai tarziu.</string>
   <string name="api_failed">Eroare: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Distribuie</string>
   <string name="share_show">Distribuie emisiunea</string>

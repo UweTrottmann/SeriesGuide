@@ -53,6 +53,7 @@
   <string name="reinstall_info">请尝试在设置中进行备份，然后重新安装本程序并恢复备份。</string>
   <string name="api_error_generic">无法连接到 %s。请稍后再试。</string>
   <string name="api_failed">失败：%s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">分享</string>
   <string name="share_show">分享此节目</string>

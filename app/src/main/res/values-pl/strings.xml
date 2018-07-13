@@ -53,6 +53,7 @@
   <string name="reinstall_info">Spróbuj zrobić kopię zapasową w ustawieniach, przeinstalować program i przywrócić ustawienia.</string>
   <string name="api_error_generic">Nie można połączyć z %s. Spróbuj ponownie później.</string>
   <string name="api_failed">Błąd: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Udostępnij</string>
   <string name="share_show">Współdziel serial</string>

@@ -53,6 +53,7 @@
   <string name="reinstall_info">Essayez de sauvegarde les paramètres, puis réinstallez et restaurez.</string>
   <string name="api_error_generic">Impossible de communiquer avec %s. Réessayez ultérieurement.</string>
   <string name="api_failed">Échec : %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Partager</string>
   <string name="share_show">Partager la série</string>

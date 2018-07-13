@@ -53,6 +53,7 @@
   <string name="reinstall_info">נסה לגבות את ההגדרות, להתקין מחדש, ולשחזר.</string>
   <string name="api_error_generic">לא יכולה לדבר עם %s. נסה שוב מאוחר יותר.</string>
   <string name="api_failed">נכשל: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">שתף</string>
   <string name="share_show">שתף סדרה</string>

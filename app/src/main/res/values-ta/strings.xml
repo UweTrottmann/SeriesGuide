@@ -53,6 +53,7 @@
   <string name="reinstall_info">Try to backup in Settings, re-install and restore</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <string name="api_failed">Failed: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">பகிர்</string>
   <string name="share_show">பங்கு காண்பி</string>

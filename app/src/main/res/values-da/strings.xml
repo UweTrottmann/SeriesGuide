@@ -53,6 +53,7 @@
   <string name="reinstall_info">Prøv fra Indstillinger at oprette en sikkerhedskopi, geninstallere og gendanne.</string>
   <string name="api_error_generic">Kunne ikke tale med %s. Forsøg venligst igen senere.</string>
   <string name="api_failed">Mislykkedes: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Del</string>
   <string name="share_show">Del serie</string>

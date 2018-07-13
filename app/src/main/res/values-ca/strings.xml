@@ -53,6 +53,7 @@
   <string name="reinstall_info">Intenta fer un backup en el panell de Configuraciò, torneu a instal·lar i restaurar.</string>
   <string name="api_error_generic">No és possible contactar amb %s. Proveu-ho més tard.</string>
   <string name="api_failed">Ha fallat: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Comparteix</string>
   <string name="share_show">Comparteix la serie</string>

@@ -53,6 +53,7 @@
   <string name="reinstall_info">Yritä varmuuskopioida asetuksista, asenna uudelleen ja palauta.</string>
   <string name="api_error_generic">Kommunikointi %sin kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
   <string name="api_failed">Epäonnistui: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Jaa</string>
   <string name="share_show">Jaa ohjelma</string>

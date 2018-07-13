@@ -53,6 +53,7 @@
   <string name="reinstall_info">Tenta fazer uma cópia de segurança nas Configurações, reinstalar e restaurar.</string>
   <string name="api_error_generic">Houve uma falha ao comunicar com o %s. Tenta mais tarde.</string>
   <string name="api_failed">Falhou: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Partilhar</string>
   <string name="share_show">Partilhar série</string>

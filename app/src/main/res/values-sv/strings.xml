@@ -54,6 +54,7 @@
   <string name="reinstall_info">Försök att säkerhetskopiera i inställningar, installera om och återställ.</string>
   <string name="api_error_generic">Kunde inte kommunicera med %s. Försök igen senare.</string>
   <string name="api_failed">Misslyckades: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Dela</string>
   <string name="share_show">Dela serie</string>
