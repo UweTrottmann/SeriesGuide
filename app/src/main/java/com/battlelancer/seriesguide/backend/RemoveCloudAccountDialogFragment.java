@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.backend;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -60,11 +61,11 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
 
     public static class RemoveHexagonAccountTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final Context context;
+        @SuppressLint("StaticFieldLeak") private final Context context;
         private final HexagonTools hexagonTools;
 
         public RemoveHexagonAccountTask(Context context) {
-            this.context = context;
+            this.context = context.getApplicationContext();
             this.hexagonTools = SgApp.getServicesComponent(context).hexagonTools();
         }
 

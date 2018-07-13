@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui.shows;
 
+import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
@@ -316,7 +317,7 @@ public class ShowTools {
 
     public static class ShowsUploadTask extends AsyncTask<Void, Void, Void> {
 
-        private final Context context;
+        @SuppressLint("StaticFieldLeak") private final Context context;
         private final Show show;
         @Inject HexagonTools hexagonTools;
 
