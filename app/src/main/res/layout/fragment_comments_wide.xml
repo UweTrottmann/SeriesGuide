@@ -65,6 +65,7 @@
             android:layout_height="wrap_content"
             android:gravity="top"
             android:hint="@string/shout_hint"
+            android:inputType="textMultiLine"
             android:maxLength="2000"
             android:maxLines="9"
             android:minLines="3"
