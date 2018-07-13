@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Set focus to work around textIsSelectable auto-scroll -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/containerEpisode"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:descendantFocusability="beforeDescendants"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:showIn="@layout/fragment_episode">
 
@@ -21,8 +17,10 @@
         android:layout_marginLeft="@dimen/large_padding"
         android:layout_marginRight="@dimen/large_padding"
         android:layout_marginTop="12dp"
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true"
+        android:nextFocusDown="@+id/textViewEpisodeReleaseTime"
         android:textAppearance="@style/TextAppearance.Title"
-        android:textIsSelectable="true"
         tools:text="Episode Title Of Episode" />
 
     <!-- Text appearance set in code. -->
@@ -32,8 +30,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/large_padding"
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true"
+        android:nextFocusDown="@+id/containerEpisodeImage"
+        android:nextFocusUp="@+id/textViewEpisodeTitle"
         android:textAppearance="@style/TextAppearance.Caption"
-        android:textIsSelectable="true"
         tools:text="OCT 15, 2013 (TUE) · 52" />
 
     <android.support.constraint.ConstraintLayout
@@ -46,6 +47,8 @@
         android:background="?attr/sgColorBackgroundDim"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
+        android:nextFocusDown="@+id/buttonEpisodeWatched"
+        android:nextFocusUp="@+id/textViewEpisodeReleaseTime"
         tools:ignore="Overdraw">
 
         <ImageView
@@ -78,8 +81,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/large_padding"
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true"
         android:textAppearance="@style/TextAppearance.Body"
-        android:textIsSelectable="true"
         tools:text="This is a sample description of what happens in this episode. A lot." />
 
     <View
@@ -111,8 +115,9 @@
         style="@style/Block.FlowText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true"
         android:textAppearance="@style/TextAppearance.Body"
-        android:textIsSelectable="true"
         tools:text="Daniel Craig, Jaimie Alexander, Kiefer Sutherland, Stephanie Leonidas" />
 
     <TextView
@@ -128,8 +133,9 @@
         style="@style/Block.FlowText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true"
         android:textAppearance="@style/TextAppearance.Body"
-        android:textIsSelectable="true"
         tools:text="Daniel Craig" />
 
     <TextView
@@ -145,8 +151,9 @@
         style="@style/Block.FlowText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true"
         android:textAppearance="@style/TextAppearance.Body"
-        android:textIsSelectable="true"
         tools:text="Daniel Craig, Jaimie Alexander" />
 
     <TextView
@@ -162,8 +169,9 @@
         style="@style/Block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true"
         android:textAppearance="@style/TextAppearance.Body"
-        android:textIsSelectable="true"
         tools:text="42.0" />
 
     <TextView
@@ -179,8 +187,9 @@
         style="@style/Block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true"
         android:textAppearance="@style/TextAppearance.Body"
-        android:textIsSelectable="true"
         tools:text="2014/07/25 CEST (Fri)" />
 
     <View

@@ -76,6 +76,7 @@
         android:contentDescription="@string/checkin"
         android:drawablePadding="8dp"
         android:gravity="center_vertical|start"
+        android:nextFocusUp="@+id/buttonEpisodeWatched"
         android:text="@string/checkin"
         tools:drawableLeft="@drawable/ic_checkin_black_24dp"
         tools:drawableTint="?attr/sgColorIcon" />
