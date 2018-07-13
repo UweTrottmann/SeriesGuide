@@ -9,6 +9,16 @@ Version 43
 ----------
 *(in development)*
 
+#### 43-beta5
+*(2018-07-13)*
+
+* 🔧 Tap and hold copies text to the clipboard instead of selecting it, works with keyboard/remote.
+* 🔧 Improve selection of various items using a keyboard or remote.
+* 🔨 List widget should no longer stop refreshing on Huawei EMUI 8.0 devices.
+* 🔨 Show wide overview and people layout based on screen width instead of smallest edge size.
+* 🔨 Cloud: display error message if Google Play Services are not installed in every case.
+* 📝 Latest translations from crowdin.
+
 #### 43-beta4
 *(2018-06-22)*
 
