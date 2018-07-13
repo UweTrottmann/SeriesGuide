@@ -47,6 +47,7 @@ import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper;
 import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.util.ClipboardTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -195,6 +196,13 @@ public class ShowFragment extends Fragment {
 
         setCastVisibility(false);
         setCrewVisibility(false);
+
+        // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewOverview);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewGenres);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewContentRating);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewReleaseCountry);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewFirstRelease);
 
         return v;
     }
