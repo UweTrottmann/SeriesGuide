@@ -23,14 +23,10 @@
         android:nestedScrollingEnabled="true"
         tools:ignore="UnusedAttribute">
 
-        <!-- Set focus to work around textIsSelectable auto-scroll -->
         <LinearLayout
             android:id="@+id/overview_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:descendantFocusability="beforeDescendants"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:orientation="vertical"
             android:paddingTop="@dimen/default_padding">
 
@@ -64,8 +60,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/showStatus"
+                        android:background="?attr/selectableItemBackground"
+                        android:focusable="true"
                         android:textAppearance="@style/TextAppearance.Body"
-                        android:textIsSelectable="true"
                         tools:text="Tue 5:00 AM on CBS" />
                 </RelativeLayout>
 
@@ -114,6 +111,7 @@
                         android:layout_marginRight="@dimen/large_padding"
                         android:layout_marginTop="@dimen/default_padding"
                         android:foreground="?attr/selectableItemBackground"
+                        android:nextFocusDown="@+id/buttonEpisodeWatched"
                         app:cardBackgroundColor="?attr/sgColorBackgroundCard"
                         app:cardPreventCornerOverlap="false">
 
@@ -206,8 +204,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/large_padding"
+                            android:background="?attr/selectableItemBackground"
+                            android:focusable="true"
                             android:textAppearance="@style/TextAppearance.Body"
-                            android:textIsSelectable="true"
                             tools:text="This is a sample description of what happens in this episode. A lot." />
 
                         <View
@@ -239,8 +238,9 @@
                             style="@style/Block.FlowText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.Body"
-                            android:textIsSelectable="true" />
+                            android:background="?attr/selectableItemBackground"
+                            android:focusable="true"
+                            android:textAppearance="@style/TextAppearance.Body" />
 
                         <TextView
                             android:id="@+id/labelDvd"
@@ -255,6 +255,8 @@
                             style="@style/Block"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:focusable="true"
                             android:textAppearance="@style/TextAppearance.Body" />
 
                         <View
