@@ -37,7 +37,7 @@
   <string name="sync_manually">手動で同期</string>
   <string name="sync_and_update">同期と更新</string>
   <string name="sync_and_download_all">すべて同期とダウンロード</string>
-  <string name="action_turn_off">Turn off</string>
+  <string name="action_turn_off">オフにする</string>
   <!-- Search -->
   <string name="clear_search_history">検索履歴をクリア</string>
   <string name="search_hint">エピソードを検索</string>
@@ -178,7 +178,7 @@
   <string name="checkin_searchhint">番組名を入力</string>
   <string name="add_empty">番組はありません。</string>
   <string name="no_results">結果はありません。完全な単語で試してください。</string>
-  <string name="empty_show_search">Not found in your show list</string>
+  <string name="empty_show_search">番組リストで見つかりません</string>
   <string name="action_try_any_language">任意の言語を試してください</string>
   <string name="action_try_again">もう一度やり直してください</string>
   <string name="tvdb_error_does_not_exist">番組は (まだ) TheTVDB に存在しません。後でもう一度試してください。</string>
