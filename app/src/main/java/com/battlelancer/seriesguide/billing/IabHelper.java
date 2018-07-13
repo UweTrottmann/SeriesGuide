@@ -909,14 +909,14 @@ public class IabHelper {
     }
 
     static void logError(String msg) {
-        Timber.e("In-app billing error: " + msg);
+        Timber.e("In-app billing error: %s", msg);
     }
 
     static void logError(Throwable e, String msg) {
-        Timber.e(e, "In-app billing error: " + msg);
+        Timber.e(e, "In-app billing error: %s", msg);
     }
 
     static void logWarn(String msg) {
-        Timber.w("In-app billing warning: " + msg);
+        Timber.w("In-app billing warning: %s", msg);
     }
 }
