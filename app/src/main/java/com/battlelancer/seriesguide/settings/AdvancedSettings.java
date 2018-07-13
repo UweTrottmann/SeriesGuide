@@ -1,7 +1,6 @@
 
 package com.battlelancer.seriesguide.settings;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -25,7 +24,6 @@ public class AdvancedSettings {
                 true);
     }
 
-    @SuppressLint("CommitPrefEdits")
     public static long getLastAutoBackupTime(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -34,7 +32,7 @@ public class AdvancedSettings {
             // use now as default value, so a re-install won't overwrite the old
             // auto-backup right away
             time = System.currentTimeMillis();
-            prefs.edit().putLong(KEY_LASTBACKUP, time).commit();
+            prefs.edit().putLong(KEY_LASTBACKUP, time).apply();
         }
 
         return time;
@@ -53,7 +51,7 @@ public class AdvancedSettings {
      */
     public static void setSupporterState(Context context, boolean isSubscribedToX) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(
-                KEY_LAST_SUPPORTER_STATE, isSubscribedToX).commit();
+                KEY_LAST_SUPPORTER_STATE, isSubscribedToX).apply();
     }
 
     /**
