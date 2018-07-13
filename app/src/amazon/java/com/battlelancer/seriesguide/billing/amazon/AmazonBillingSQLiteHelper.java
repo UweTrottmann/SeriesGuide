@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.billing.amazon;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+import timber.log.Timber;
 
 /**
  * SQLiteHelper holding purchase records.
@@ -54,8 +54,7 @@ public class AmazonBillingSQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
-        Log.w(AmazonBillingSQLiteHelper.class.getName(),
-                "Upgrading database from version " + oldVersion + " to " + newVersion);
+        Timber.w("Upgrading database from version " + oldVersion + " to " + newVersion);
         // do nothing
     }
 }

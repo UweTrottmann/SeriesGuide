@@ -21,9 +21,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
+import timber.log.Timber;
 
 /**
  * Helper class for Custom Tabs. This is a modified copy from the <a
@@ -130,7 +130,7 @@ public class CustomTabsHelper {
                 return true;
             }
         } catch (RuntimeException e) {
-            Log.e(TAG, "Runtime exception while getting specialized handlers");
+            Timber.e(e, "Runtime exception while getting specialized handlers");
         }
         return false;
     }

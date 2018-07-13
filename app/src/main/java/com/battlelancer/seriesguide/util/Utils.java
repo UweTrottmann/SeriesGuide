@@ -290,6 +290,7 @@ public class Utils {
      *
      * @return Whether the {@link Intent} could be handled.
      */
+    @SuppressLint("LogNotTimber")
     public static boolean tryStartActivity(Context context, Intent intent, boolean displayError) {
         boolean handled = false;
 
