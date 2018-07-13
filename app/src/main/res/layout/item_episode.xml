@@ -6,9 +6,11 @@
     android:layout_height="wrap_content"
     android:background="?android:attr/activatedBackgroundIndicator">
 
+    <!-- Parent required for activated indicator -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
 
         <com.battlelancer.seriesguide.widgets.WatchedBox
             android:id="@+id/watchedBoxEpisode"
