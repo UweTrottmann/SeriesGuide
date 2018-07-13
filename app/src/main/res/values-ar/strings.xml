@@ -53,6 +53,7 @@
   <string name="reinstall_info">حاول أخد نسخة احتياطية، اعادة تثبيت البرنامج ومن ثم استعادة البيانات</string>
   <string name="api_error_generic">لا يمكن الاتصال ب %s. الرجاء المحاولة لاحقا.</string>
   <string name="api_failed">فشل: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">مشاركة</string>
   <string name="share_show">مشاركة المسلسل</string>

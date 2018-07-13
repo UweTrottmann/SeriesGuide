@@ -53,6 +53,7 @@
   <string name="reinstall_info">Ayarlardan yedeklemeyi deneyin. Uygulamayı yediden yükleyip, veri tabanınızı geri yükleyin.</string>
   <string name="api_error_generic">%s ile iletişim kurulamadı. Daha sonra tekrar deneyin.</string>
   <string name="api_failed">%s başarısız oldu</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Paylaş</string>
   <string name="share_show">Diziyi paylaş</string>

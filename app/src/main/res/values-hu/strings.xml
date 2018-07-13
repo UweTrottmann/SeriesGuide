@@ -53,6 +53,7 @@
   <string name="reinstall_info">Próbálj biztonsági mentést készíteni a Beállításokban, újra telepíteni az alkalmazást és visszaállítani a biztonsági mentést.</string>
   <string name="api_error_generic">Nincs kapcsolat ezzel: %s. Próbáld újra később.</string>
   <string name="api_failed">Meghiúsult: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Megosztás</string>
   <string name="share_show">Műsor megosztása</string>

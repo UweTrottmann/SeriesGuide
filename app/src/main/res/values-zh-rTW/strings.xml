@@ -53,6 +53,7 @@
   <string name="reinstall_info">嘗試在設置中備份，然後重新安裝應用並恢復備份。</string>
   <string name="api_error_generic">無法移除節目%s。請稍後再試。</string>
   <string name="api_failed">Failed: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">分享</string>
   <string name="share_show">分享節目</string>

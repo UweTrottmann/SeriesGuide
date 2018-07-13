@@ -53,6 +53,7 @@
   <string name="reinstall_info">Coba cadangkan di pengaturan, pasang ulang dan pulihkan.</string>
   <string name="api_error_generic">Tidak dapat bicara ke %s. Coba lagi nanti.</string>
   <string name="api_failed">Gagal: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Bagikan</string>
   <string name="share_show">Bagikan acara</string>

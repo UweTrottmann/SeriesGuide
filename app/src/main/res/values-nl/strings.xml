@@ -53,6 +53,7 @@
   <string name="reinstall_info">Maak een backup, installeer opnieuw en herstel.</string>
   <string name="api_error_generic">Kon niet praten met %s. Probeer later opnieuw</string>
   <string name="api_failed">Mislukt: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Delen</string>
   <string name="share_show">Serie delen</string>

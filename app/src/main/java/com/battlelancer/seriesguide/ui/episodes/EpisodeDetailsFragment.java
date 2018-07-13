@@ -57,6 +57,7 @@ import com.battlelancer.seriesguide.ui.FullscreenImageActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
+import com.battlelancer.seriesguide.util.ClipboardTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -191,6 +192,16 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         ViewTools.setVectorIconLeft(theme, imdbButton, R.drawable.ic_link_black_24dp);
         ViewTools.setVectorIconLeft(theme, tvdbButton, R.drawable.ic_link_black_24dp);
         ViewTools.setVectorIconLeft(theme, traktButton, R.drawable.ic_link_black_24dp);
+
+        // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewTitle);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewReleaseTime);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewDescription);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewGuestStars);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewDirectors);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewWriters);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewDvd);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewReleaseDate);
 
         return v;
     }
@@ -528,6 +539,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         boolean isConnectedToTrakt = TraktCredentials.get(requireContext()).hasCredentials();
         boolean displayCheckIn = isConnectedToTrakt && !HexagonSettings.isEnabled(requireContext());
         buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
+        buttonJustWatch
+                .setNextFocusUpId(displayCheckIn ? R.id.buttonCheckIn : R.id.buttonEpisodeWatched);
         // hide JustWatch if turned off
         boolean displayJustWatch = !JustWatchSearch.isTurnedOff(requireContext());
         buttonJustWatch.setVisibility(displayJustWatch ? View.VISIBLE : View.GONE);

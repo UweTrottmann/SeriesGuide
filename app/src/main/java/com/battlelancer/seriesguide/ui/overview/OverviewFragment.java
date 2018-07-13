@@ -67,6 +67,7 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.util.ClipboardTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -200,6 +201,11 @@ public class OverviewFragment extends Fragment implements
         ViewTools.setVectorIconLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp);
         ViewTools.setVectorIconLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp);
         ViewTools.setVectorIconLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp);
+
+        // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
+        ClipboardTools.copyTextToClipboardOnLongClick(textDescription);
+        ClipboardTools.copyTextToClipboardOnLongClick(textGuestStars);
+        ClipboardTools.copyTextToClipboardOnLongClick(textDvdNumber);
 
         return v;
     }
@@ -644,6 +650,8 @@ public class OverviewFragment extends Fragment implements
             boolean displayCheckIn = isConnectedToTrakt
                     && !HexagonSettings.isEnabled(getActivity());
             buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
+            buttonJustWatch.setNextFocusUpId(
+                    displayCheckIn ? R.id.buttonCheckIn : R.id.buttonEpisodeWatched);
             // hide JustWatch if turned off
             boolean displayJustWatch = !JustWatchSearch.isTurnedOff(requireContext());
             buttonJustWatch.setVisibility(displayJustWatch ? View.VISIBLE : View.GONE);
@@ -925,6 +933,8 @@ public class OverviewFragment extends Fragment implements
         }
         TextView textViewNetworkAndTime = getView().findViewById(R.id.showmeta);
         textViewNetworkAndTime.setText(TextTools.dotSeparate(network, time));
+        // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewNetworkAndTime);
 
         // episode description might need show language, so update it here as well
         populateEpisodeDescriptionAndTvdbButton();

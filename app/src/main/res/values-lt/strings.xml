@@ -53,6 +53,7 @@
   <string name="reinstall_info">Pabandykite sukurti atsarginę kopiją parametrų, iš naujo įdiegti ir atkurti.</string>
   <string name="api_error_generic">Could not talk to %s. Try again later.</string>
   <string name="api_failed">Failed: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Dalintis</string>
   <string name="share_show">Dalintis serialu</string>

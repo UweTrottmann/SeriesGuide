@@ -53,6 +53,7 @@
   <string name="reinstall_info">設定で、バックアップ、再インストール、復元を試してください。</string>
   <string name="api_error_generic">%s に通信できませんでした。後でもう一度やり直してください。</string>
   <string name="api_failed">失敗しました: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">共有</string>
   <string name="share_show">番組を共有</string>

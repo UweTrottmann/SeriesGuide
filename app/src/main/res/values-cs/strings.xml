@@ -53,6 +53,7 @@
   <string name="reinstall_info">Zkuste možnost v nastavení, reinstalovat a obnovit</string>
   <string name="api_error_generic">Nemohl kontaktovat %s. Zkuste prosím později.</string>
   <string name="api_failed">Failed: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Sdílet</string>
   <string name="share_show">Sdílet seriál</string>

@@ -53,6 +53,7 @@
   <string name="reinstall_info">Попробуйте сделать бэкап в настройках, переустановите приложение и восстановите данные.</string>
   <string name="api_error_generic">Не могу связаться с %s. Попробуйте позже.</string>
   <string name="api_failed">Не удалось: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Отправить</string>
   <string name="share_show">Поделиться сериалом</string>

@@ -53,6 +53,7 @@
   <string name="reinstall_info">Versuchen Sie ein Backup in den Einstellungen, dann Neu-Installation und Wiederherstellung</string>
   <string name="api_error_generic">Konnte %s nicht erreichen. Versuchen Sie es später erneut.</string>
   <string name="api_failed">Gescheitert: %s</string>
+  <string name="copy_to_clipboard">In Zwischenablage kopiert</string>
   <!-- Sharing -->
   <string name="share">Teilen</string>
   <string name="share_show">Serie teilen</string>

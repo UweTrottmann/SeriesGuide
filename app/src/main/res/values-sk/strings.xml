@@ -53,6 +53,7 @@
   <string name="reinstall_info">Skúste zálohovať cez nastavenia, preinštalovať a obnoviť.</string>
   <string name="api_error_generic">Nemožno komunikovať s %s. Skúste to znova neskôr.</string>
   <string name="api_failed">Zlyhanie: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Zdieľať</string>
   <string name="share_show">Zdieľať seriál</string>
