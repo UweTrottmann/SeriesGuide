@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.ClipboardTools;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import java.text.NumberFormat;
@@ -83,6 +84,17 @@ public class StatsFragment extends Fragment {
         textViewMoviesWatchlist.setVisibility(View.INVISIBLE);
         progressBarMoviesWatchlist.setVisibility(View.INVISIBLE);
         textViewMoviesWatchlistRuntime.setVisibility(View.INVISIBLE);
+
+        // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewShows);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewShowsWithNextEpisode);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewShowsContinuing);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewEpisodes);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewEpisodesWatched);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewEpisodesRuntime);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewMovies);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewMoviesWatchlist);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewMoviesWatchlistRuntime);
 
         return v;
     }
