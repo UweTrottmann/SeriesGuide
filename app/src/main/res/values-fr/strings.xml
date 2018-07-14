@@ -32,7 +32,7 @@
   <string name="save_selection">Enregistrer</string>
   <string name="action_display_all">Afficher tout</string>
   <string name="web_search">Recherche Web</string>
-  <string name="add_to_homescreen">Raccourci</string>
+  <string name="add_to_homescreen">Ajouter à l\'écran d\'accueil</string>
   <string name="action_open">Ouvrir</string>
   <string name="sync_manually">Synchroniser manuellement</string>
   <string name="sync_and_update">Synchroniser &amp; Mettre à jour</string>
@@ -53,7 +53,7 @@
   <string name="reinstall_info">Essayez de sauvegarde les paramètres, puis réinstallez et restaurez.</string>
   <string name="api_error_generic">Impossible de communiquer avec %s. Réessayez ultérieurement.</string>
   <string name="api_failed">Échec : %s</string>
-  <string name="copy_to_clipboard">Copied to clipboard</string>
+  <string name="copy_to_clipboard">Copié dans le presse-papiers</string>
   <!-- Sharing -->
   <string name="share">Partager</string>
   <string name="share_show">Partager la série</string>
