@@ -48,6 +48,8 @@ public class ListWidgetProvider extends AppWidgetProvider {
 
     private static final int DIP_THRESHOLD_COMPACT_LAYOUT = 80;
 
+    private static final boolean USE_NONCE_WORKAROUND =
+            Build.VERSION.SDK_INT == Build.VERSION_CODES.O && "Huawei".equals(Build.MANUFACTURER);
     private final static Random random = new Random();
 
     /**
@@ -135,9 +137,13 @@ public class ListWidgetProvider extends AppWidgetProvider {
         Huawei EMUI 8.0 devices seem to have broken caching for widgets with collections.
         This leads to the widget not updating after a while. Adding a changing Intent when updating
         the widget seems to fix the issue as the remote adapter appears to change every time.
+        This causes increased battery usage as the widget redraws even if no data has changed,
+        so only enable this on Huawei devices running Android 8.0 (EMUI 8.0).
         https://github.com/UweTrottmann/SeriesGuide/issues/549
          */
-        intent.putExtra("nonce", random.nextInt());
+        if (USE_NONCE_WORKAROUND) {
+            intent.putExtra("nonce", random.nextInt());
+        }
         // When intents are compared, the extras are ignored, so we need to
         // embed the extras into the data so that the extras will not be
         // ignored.
