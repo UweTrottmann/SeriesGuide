@@ -32,7 +32,7 @@
   <string name="save_selection">Salvar seleção</string>
   <string name="action_display_all">Mostrar tudo</string>
   <string name="web_search">Pesquisa na Web</string>
-  <string name="add_to_homescreen">Atalho</string>
+  <string name="add_to_homescreen">Adicionar à tela inicial</string>
   <string name="action_open">Abrir</string>
   <string name="sync_manually">Sincronizar manualmente</string>
   <string name="sync_and_update">Sincronizar e atualizar</string>
@@ -53,7 +53,7 @@
   <string name="reinstall_info">Tente fazer o backup nas configurações, reinstalar e restaurar o backup.</string>
   <string name="api_error_generic">Não foi possível conectar-se com %s. Tente mais tarde.</string>
   <string name="api_failed">Falhou: %s</string>
-  <string name="copy_to_clipboard">Copied to clipboard</string>
+  <string name="copy_to_clipboard">Copiado para uma área de transferência</string>
   <!-- Sharing -->
   <string name="share">Compartilhar</string>
   <string name="share_show">Compartilhar série</string>

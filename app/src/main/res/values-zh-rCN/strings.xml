@@ -32,7 +32,7 @@
   <string name="save_selection">保存已选项</string>
   <string name="action_display_all">显示全部</string>
   <string name="web_search">网页搜索</string>
-  <string name="add_to_homescreen">置于桌面</string>
+  <string name="add_to_homescreen">添加到主屏幕</string>
   <string name="action_open">打开</string>
   <string name="sync_manually">手动同步</string>
   <string name="sync_and_update">同步并更新</string>
@@ -53,7 +53,7 @@
   <string name="reinstall_info">请尝试在设置中进行备份，然后重新安装本程序并恢复备份。</string>
   <string name="api_error_generic">无法连接到 %s。请稍后再试。</string>
   <string name="api_failed">失败：%s</string>
-  <string name="copy_to_clipboard">Copied to clipboard</string>
+  <string name="copy_to_clipboard">已复制到剪贴板</string>
   <!-- Sharing -->
   <string name="share">分享</string>
   <string name="share_show">分享此节目</string>
