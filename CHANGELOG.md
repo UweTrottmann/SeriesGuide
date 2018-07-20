@@ -7,7 +7,21 @@ All dates are in the European Central timezone.
 
 Version 43
 ----------
-*(in development)*
+*(2018-07-20)*
+
+* 🌟 Add JustWatch button to quickly perform search of where to stream or purchase.
+* 🔧 Migrate database to Room. Remove the legacy backup tool as it will no longer work.
+* 🔧 Basic movie details are updated regularly (recent movies weekly, older movies every half year).
+* 🔧 Improvements when using a keyboard or remote.
+* 🔨 List widget should no longer stop refreshing on Huawei EMUI 8.0 devices.
+
+#### 43
+*(2018-07-20)*
+
+* 🔧 Change 'Shortcut' button to the more descriptive 'Add to home screen'.
+* 🔨 When cleaning up seasons, remove their episodes first.
+* 🔨 Cloud sync: when cleaning up lists, remove their items first.
+* 📝 Latest translations from crowdin.
 
 #### 43-beta5
 *(2018-07-13)*
