@@ -153,9 +153,17 @@ class TvdbEpisodeTools constructor(
         // add delete ops for leftover seasonIds in our db
         localSeasonIds
                 .filterNot { seasonsToAddOrUpdate.contains(it) }
-                .mapTo(batch) {
-                    ContentProviderOperation.newDelete(
-                            SeriesGuideContract.Seasons.buildSeasonUri(it)).build()
+                .forEach {
+                    with(batch) {
+                        // delete episodes still associated with this season to avoid foreign key violations
+                        // this is safe because episodes that changed to another season should
+                        // have got update ops added (see above) to the batch before these ops
+                        add(ContentProviderOperation.newDelete(
+                                Episodes.buildEpisodesOfSeasonUri(it)).build())
+                        // delete season
+                        add(ContentProviderOperation.newDelete(
+                                SeriesGuideContract.Seasons.buildSeasonUri(it)).build())
+                    }
                 }
 
         return newEpisodesValues
