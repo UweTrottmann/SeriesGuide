@@ -21,6 +21,7 @@
 
 package com.mobeta.android.dslv;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
@@ -2730,6 +2731,7 @@ public class DragSortListView extends ListView {
             // Debug.stopMethodTracing();
         }
 
+        @SuppressLint("NewApi")
         @Override
         public void run() {
             if (mAbort) {
@@ -2805,6 +2807,11 @@ public class DragSortListView extends ListView {
             // always do scroll
             mBlockLayoutRequests = true;
 
+            /*
+            Because this method has moved up from ListView to AbsListView since API level 21,
+            lint thinks it requires API level 21. Can be safely ignored.
+            https://issuetracker.google.com/issues/37045361
+             */
             setSelectionFromTop(movePos, top - padTop);
             DragSortListView.this.layoutChildren();
             invalidate();

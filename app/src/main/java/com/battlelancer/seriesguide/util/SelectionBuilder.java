@@ -1,8 +1,12 @@
 package com.battlelancer.seriesguide.util;
 
+import static android.database.sqlite.SQLiteDatabase.CONFLICT_NONE;
+
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.provider.SeriesGuideProvider;
 import java.util.ArrayList;
@@ -118,41 +122,44 @@ public class SelectionBuilder {
     /**
      * Execute query using the current internal state as {@code WHERE} clause.
      */
-    public Cursor query(SQLiteDatabase db, String[] columns, String orderBy) {
+    public Cursor query(SupportSQLiteDatabase db, String[] columns, String orderBy) {
         return query(db, columns, null, null, orderBy, null);
     }
 
     /**
      * Execute query using the current internal state as {@code WHERE} clause.
      */
-    public Cursor query(SQLiteDatabase db, String[] columns, String groupBy, String having,
+    public Cursor query(SupportSQLiteDatabase db, String[] columns, String groupBy, String having,
             String orderBy, String limit) {
         assertTable();
         if (columns != null)
             mapColumns(columns);
         if (SeriesGuideProvider.LOGV)
             Timber.v("query(columns=" + Arrays.toString(columns) + ") " + this);
-        return db.query(table, columns, getSelection(), getSelectionArgs(), groupBy, having,
-                orderBy, limit);
+
+        String query = SQLiteQueryBuilder.buildQueryString(
+                false, table, columns, getSelection(), groupBy, having, orderBy, limit);
+
+        return db.query(query, getSelectionArgs());
     }
 
     /**
      * Execute update using the current internal state as {@code WHERE} clause.
      */
-    public int update(SQLiteDatabase db, ContentValues values) {
+    public int update(SupportSQLiteDatabase db, ContentValues values) {
         assertTable();
         if (SeriesGuideProvider.LOGV)
-            Timber.v("update() " + this);
-        return db.update(table, values, getSelection(), getSelectionArgs());
+            Timber.v("update() %s", this);
+        return db.update(table, CONFLICT_NONE, values, getSelection(), getSelectionArgs());
     }
 
     /**
      * Execute delete using the current internal state as {@code WHERE} clause.
      */
-    public int delete(SQLiteDatabase db) {
+    public int delete(SupportSQLiteDatabase db) {
         assertTable();
         if (SeriesGuideProvider.LOGV)
-            Timber.v("delete() " + this);
+            Timber.v("delete() %s", this);
         return db.delete(table, getSelection(), getSelectionArgs());
     }
 }

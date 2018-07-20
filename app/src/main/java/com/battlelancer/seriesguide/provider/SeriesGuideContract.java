@@ -16,7 +16,7 @@ import java.lang.annotation.RetentionPolicy;
 
 public class SeriesGuideContract {
 
-    interface ShowsColumns {
+    public interface ShowsColumns {
 
         /**
          * This column is NOT in this table, it is for reference purposes only.
@@ -131,11 +131,6 @@ public class SeriesGuideContract {
          * <p> Previous use: Was added in db version 21 to store the air time in pure text.
          */
         String RELEASE_COUNTRY = "series_airtime";
-
-        /**
-         * @deprecated Cast information is fetched from TMDB.
-         */
-        String ACTORS = "actors";
 
         String IMDBID = "imdbid";
 
@@ -276,7 +271,7 @@ public class SeriesGuideContract {
         String UNWATCHED_COUNT = "series_unwatched_count";
     }
 
-    interface SeasonsColumns {
+    public interface SeasonsColumns {
 
         /**
          * This column is NOT in this table, it is for reference purposes only.
@@ -490,6 +485,10 @@ public class SeriesGuideContract {
 
         String OVERVIEW = "movies_overview";
 
+        /**
+         * Release date in milliseconds. Store Long.MAX if unknown, as it is likely in the future
+         * (also helps correctly sorting movies by release date).
+         */
         String RELEASED_UTC_MS = "movies_released";
 
         String RUNTIME_MIN = "movies_runtime";
@@ -541,6 +540,9 @@ public class SeriesGuideContract {
         /** See {@link ShowsColumns#RATING_USER}. */
         String RATING_USER = "movies_rating_user";
 
+        /**
+         * Time in milliseconds a movie was last updated. Warning: may be null as only recently in use.
+         */
         String LAST_UPDATED = "movies_last_updated";
     }
 
@@ -668,6 +670,8 @@ public class SeriesGuideContract {
         public static final String SELECTION_NOTIFY = Shows.NOTIFY + "=1";
         public static final String SELECTION_WITH_RELEASED_NEXT_EPISODE = Shows.NEXTAIRDATEMS + "!="
                 + DBUtils.UNKNOWN_NEXT_RELEASE_DATE;
+        public static final String SELECTION_WITH_NEXT_NOT_HIDDEN = Shows.NEXTEPISODE + "!='' AND "
+                + Shows.HIDDEN + "=0 AND " + Shows.NEXTAIRDATEMS + "<?";
 
         public static final String SELECTION_NO_HIDDEN = Shows.HIDDEN + "=0";
 

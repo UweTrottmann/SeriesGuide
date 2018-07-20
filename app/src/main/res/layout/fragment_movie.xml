@@ -21,13 +21,10 @@
         android:clipToPadding="false"
         android:paddingTop="?attr/actionBarSize">
 
-        <!-- Make container focusable to prevent ScrollView from scrolling to selectable TextViews. -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
-            android:descendantFocusability="beforeDescendants"
-            android:focusableInTouchMode="true"
             android:paddingBottom="@dimen/default_padding"
             android:paddingTop="@dimen/default_padding"
             tools:ignore="RtlHardcoded">
@@ -66,8 +63,9 @@
                     android:layout_marginRight="@dimen/large_padding"
                     android:layout_marginTop="@dimen/default_padding"
                     android:layout_toRightOf="@id/frameLayoutMoviePoster"
+                    android:background="?attr/selectableItemBackground"
+                    android:focusable="true"
                     android:textAppearance="@style/TextAppearance.Title"
-                    android:textIsSelectable="true"
                     tools:text="Awesome Movie Title" />
 
                 <TextView
@@ -79,8 +77,9 @@
                     android:layout_marginLeft="@dimen/default_padding"
                     android:layout_marginRight="@dimen/large_padding"
                     android:layout_toRightOf="@id/frameLayoutMoviePoster"
+                    android:background="?attr/selectableItemBackground"
+                    android:focusable="true"
                     android:textAppearance="@style/TextAppearance.Caption"
-                    android:textIsSelectable="true"
                     tools:text="20 Oct 2013" />
 
             </RelativeLayout>
@@ -119,8 +118,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/buttonMovieLanguage"
+                android:background="?attr/selectableItemBackground"
+                android:focusable="true"
                 android:textAppearance="@style/TextAppearance.Body"
-                android:textIsSelectable="true"
                 tools:text="Description for a super awesome movie..." />
 
             <View
@@ -167,8 +167,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewMovieGenresLabel"
                 android:layout_marginBottom="@dimen/large_padding"
+                android:background="?attr/selectableItemBackground"
+                android:focusable="true"
                 android:textAppearance="@style/TextAppearance.Body"
-                android:textIsSelectable="true"
                 tools:text="Action, Comedy, Drama" />
 
             <LinearLayout

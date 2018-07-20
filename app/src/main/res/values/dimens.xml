@@ -4,7 +4,6 @@
     <dimen name="inline_padding">4dp</dimen>
     <dimen name="default_padding">8dp</dimen>
     <dimen name="large_padding">16dp</dimen>
-    <dimen name="item_padding">2dp</dimen>
     <dimen name="larger_padding">24dp</dimen>
     <dimen name="padding_button">12dp</dimen>
 
@@ -19,7 +18,6 @@
     <dimen name="text_size_caption_sg">12sp</dimen>
 
     <!-- Legacy widget -->
-    <dimen name="widget_margin">5dp</dimen>
     <dimen name="widget_paddingRight">3dp</dimen>
     <dimen name="widget_paddingLeft">8dp</dimen>
     <dimen name="widget_poster_width">25dp</dimen>

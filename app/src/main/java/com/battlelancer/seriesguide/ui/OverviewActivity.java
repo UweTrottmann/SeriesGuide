@@ -181,7 +181,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
                 .getExtras());
 
         Bundle argsSeason = new Bundle();
-        argsSeason.putInt(SeasonsFragment.InitBundle.SHOW_TVDBID, showTvdbId);
+        argsSeason.putInt(SeasonsFragment.ARG_SHOW_TVDBID, showTvdbId);
         tabsAdapter.addTab(R.string.seasons, SeasonsFragment.class, argsSeason);
         tabsAdapter.notifyTabsChanged();
 
@@ -284,7 +284,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         Show show = DBUtils.getShow(this, showTvdbId);
         if (show != null) {
             Bundle appSearchData = new Bundle();
-            appSearchData.putString(EpisodeSearchFragment.InitBundle.SHOW_TITLE, show.title);
+            appSearchData.putString(EpisodeSearchFragment.ARG_SHOW_TITLE, show.title);
 
             Intent intent = new Intent(this, SearchActivity.class);
             intent.putExtra(SearchManager.APP_DATA, appSearchData);

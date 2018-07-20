@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.text.Editable;
@@ -42,7 +43,7 @@ public class TimeOffsetDialogFragment extends AppCompatDialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_time_offset, container, false);
         unbinder = ButterKnife.bind(this, view);
@@ -57,6 +58,7 @@ public class TimeOffsetDialogFragment extends AppCompatDialogFragment {
         });
 
         textViewRange.setText(getString(R.string.format_time_offset_range, -24, 24));
+        editTextValue.setHint(getString(R.string.format_time_offset_range, -24, 24));
 
         editTextValue.addTextChangedListener(textWatcher);
 

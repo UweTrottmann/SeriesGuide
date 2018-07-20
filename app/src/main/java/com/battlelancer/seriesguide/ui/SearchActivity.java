@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
+import com.battlelancer.seriesguide.ui.search.SearchTriggerListener;
 import com.battlelancer.seriesguide.ui.search.ShowSearchFragment;
 import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFragment;
 import com.battlelancer.seriesguide.util.SearchHistory;
@@ -54,7 +55,7 @@ import org.greenrobot.eventbus.ThreadMode;
  * directly to an {@link EpisodeDetailsActivity}.
  */
 public class SearchActivity extends BaseNavDrawerActivity implements
-        AddShowDialogFragment.OnAddShowListener {
+        AddShowDialogFragment.OnAddShowListener, SearchTriggerListener {
 
     /**
      * Which tab to select upon launch.
@@ -271,7 +272,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             // searching episodes within a show?
             Bundle appData = launchIntent.getBundleExtra(SearchManager.APP_DATA);
             if (appData != null) {
-                String showTitle = appData.getString(EpisodeSearchFragment.InitBundle.SHOW_TITLE);
+                String showTitle = appData.getString(EpisodeSearchFragment.ARG_SHOW_TITLE);
                 if (!TextUtils.isEmpty(showTitle)) {
                     // change title + switch to episodes tab if show restriction was submitted
                     viewPager.setCurrentItem(TAB_POSITION_EPISODES);
@@ -454,6 +455,12 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         } else {
             return super.getSnackbarParentView();
         }
+    }
+
+    @Override
+    public void switchToDiscoverAndSearch() {
+        viewPager.setCurrentItem(TAB_POSITION_SEARCH);
+        triggerTvdbSearch();
     }
 
     /** Used by {@link ShowsDiscoverFragment} to indicate the search history should be cleared. */

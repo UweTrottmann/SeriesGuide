@@ -22,10 +22,10 @@ import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.sync.SyncProgress;
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SyncStatusView;
 import com.google.android.gms.auth.api.Auth;
@@ -113,6 +113,7 @@ public class CloudSetupFragment extends Fragment {
         hexagonTools = SgApp.getServicesComponent(getContext()).hexagonTools();
         googleApiClient = new GoogleApiClient.Builder(getContext())
                 .enableAutoManage(getActivity(), onGoogleConnectionFailedListener)
+                .addOnConnectionFailedListener(onGoogleConnectionFailedListener)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, HexagonTools.getGoogleSignInOptions())
                 .build();
     }

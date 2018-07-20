@@ -121,11 +121,11 @@ public class HexagonMovieSync {
                         ContentValues values = new ContentValues();
                         if (movie.getIsInCollection() != null) {
                             values.put(SeriesGuideContract.Movies.IN_COLLECTION,
-                                    movie.getIsInCollection());
+                                    movie.getIsInCollection() ? 1 : 0);
                         }
                         if (movie.getIsInWatchlist() != null) {
                             values.put(SeriesGuideContract.Movies.IN_WATCHLIST,
-                                    movie.getIsInWatchlist());
+                                    movie.getIsInWatchlist() ? 1 : 0);
                         }
                         batch.add(ContentProviderOperation.newUpdate(
                                 SeriesGuideContract.Movies.buildMovieUri(movie.getTmdbId()))

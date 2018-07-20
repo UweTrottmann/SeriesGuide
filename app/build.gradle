@@ -6,7 +6,6 @@ apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
 
     defaultConfig {
         minSdkVersion versions.minSdk
@@ -15,21 +14,30 @@ android {
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "TVDB_API_KEY", stringPropertyOrPlaceholder("TVDB_API_KEY"))
-        buildConfigField("String", "TMDB_API_KEY", stringPropertyOrPlaceholder("TMDB_API_KEY"))
-        buildConfigField("String", "TRAKT_CLIENT_ID", stringPropertyOrPlaceholder("TRAKT_CLIENT_ID"))
-        buildConfigField("String", "TRAKT_CLIENT_SECRET", stringPropertyOrPlaceholder("TRAKT_CLIENT_SECRET"))
-        buildConfigField("String", "IAP_KEY_A", stringPropertyOrPlaceholder("IAP_KEY_A"))
-        buildConfigField("String", "IAP_KEY_B", stringPropertyOrPlaceholder("IAP_KEY_B"))
-        buildConfigField("String", "IAP_KEY_C", stringPropertyOrPlaceholder("IAP_KEY_C"))
-        buildConfigField("String", "IAP_KEY_D", stringPropertyOrPlaceholder("IAP_KEY_D"))
-        buildConfigField("String", "IMAGE_CACHE_URL", stringPropertyOrNull("IMAGE_CACHE_URL"))
-        buildConfigField("String", "IMAGE_CACHE_SECRET", stringPropertyOrPlaceholder("IMAGE_CACHE_SECRET"))
+        buildConfigField("String", "TVDB_API_KEY", propertyOrEmpty("TVDB_API_KEY"))
+        buildConfigField("String", "TMDB_API_KEY", propertyOrEmpty("TMDB_API_KEY"))
+        buildConfigField("String", "TRAKT_CLIENT_ID", propertyOrEmpty("TRAKT_CLIENT_ID"))
+        buildConfigField("String", "TRAKT_CLIENT_SECRET", propertyOrEmpty("TRAKT_CLIENT_SECRET"))
+        buildConfigField("String", "IAP_KEY_A", propertyOrEmpty("IAP_KEY_A"))
+        buildConfigField("String", "IAP_KEY_B", propertyOrEmpty("IAP_KEY_B"))
+        buildConfigField("String", "IAP_KEY_C", propertyOrEmpty("IAP_KEY_C"))
+        buildConfigField("String", "IAP_KEY_D", propertyOrEmpty("IAP_KEY_D"))
+        buildConfigField("String", "IMAGE_CACHE_URL", propertyOrNull("IMAGE_CACHE_URL"))
+        buildConfigField("String", "IMAGE_CACHE_SECRET", propertyOrEmpty("IMAGE_CACHE_SECRET"))
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ eventBusIndex : 'com.battlelancer.seriesguide.SgEventBusIndex' ]
+                arguments = [
+                        "eventBusIndex" : "com.battlelancer.seriesguide.SgEventBusIndex",
+                        "room.schemaLocation": "$projectDir/schemas".toString()
+                ]
             }
+        }
+    }
+
+    sourceSets {
+        androidTest {
+            assets.srcDirs += files("$projectDir/schemas".toString())
         }
     }
 
@@ -37,6 +45,12 @@ android {
         encoding = "UTF-8"
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    lintOptions {
+        // for CI server (reports are not public)
+        textReport true
+        textOutput 'stdout'
     }
 
     packagingOptions {
@@ -84,6 +98,10 @@ android {
 
     buildTypes {
         release {
+            if (isCiBuild) {
+                ext.enableCrashlytics = false
+            }
+
             multiDexEnabled false
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -93,6 +111,10 @@ android {
             }
         }
         debug {
+            if (!rootProject.file('app/fabric.properties').exists()) {
+                ext.enableCrashlytics = false
+            }
+
             multiDexEnabled true
             // disable shrinking to use incremental dex in builds
             minifyEnabled false
@@ -118,9 +140,15 @@ dependencies {
     implementation "com.android.support:design:${versions.supportLibrary}"
     implementation "com.android.support:palette-v7:${versions.supportLibrary}"
     implementation "com.android.support:recyclerview-v7:${versions.supportLibrary}"
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+
+    // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:${versions.lifecycle}"
     kapt "android.arch.lifecycle:compiler:${versions.lifecycle}"
+
+    // Room
+    implementation "android.arch.persistence.room:runtime:${versions.room}"
+    kapt "android.arch.persistence.room:compiler:${versions.room}"
 
     implementation "com.jakewharton:butterknife:${versions.butterknife}"
     kapt "com.jakewharton:butterknife-compiler:${versions.butterknife}"
@@ -177,14 +205,15 @@ dependencies {
 
     // Instrumented unit tests
     androidTestImplementation "com.android.support:support-annotations:${versions.supportLibrary}"
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test:rules:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
     androidTestImplementation "com.google.truth:truth:${versions.truth}"
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     androidTestImplementation 'com.google.code.findbugs:jsr305:3.0.2'
     kaptAndroidTest "com.google.dagger:dagger-compiler:${versions.dagger}"
+    androidTestImplementation "android.arch.persistence.room:testing:${versions.room}"
 
     // Local unit tests
     testImplementation 'junit:junit:4.12'
@@ -201,10 +230,10 @@ endpointsClient {
                      'src/endpoints/shows-v2-rest.discovery']
 }
 
-def stringPropertyOrPlaceholder(String name) {
-    return rootProject.hasProperty(name) ? "\"${rootProject.property(name)}\"" : "\"MISSING\""
+def propertyOrEmpty(String name) {
+    return rootProject.hasProperty(name) ? "\"${rootProject.property(name)}\"" : "\"\""
 }
 
-def stringPropertyOrNull(String name) {
+def propertyOrNull(String name) {
     return rootProject.hasProperty(name) ? "\"${rootProject.property(name)}\"" : "null"
 }

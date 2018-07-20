@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/larger_padding"
             android:layout_marginRight="@dimen/larger_padding"
+            android:hint="@string/format_time_offset_range"
             android:inputType="numberSigned"
             tools:text="+2" />
 

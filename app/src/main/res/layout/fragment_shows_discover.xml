@@ -24,7 +24,7 @@
                 android:id="@+id/emptyViewShowsDiscover"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:paddingTop="@dimen/larger_padding"
                 app:emptyViewButtonText="@string/action_try_again"
                 app:emptyViewMessage="@string/no_results" />
 

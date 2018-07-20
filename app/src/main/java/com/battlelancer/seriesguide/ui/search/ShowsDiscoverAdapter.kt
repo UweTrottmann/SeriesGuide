@@ -106,7 +106,7 @@ class ShowsDiscoverAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is LinkViewHolder -> {
                 holder.link = links[position]

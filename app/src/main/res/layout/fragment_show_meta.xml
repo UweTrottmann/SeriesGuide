@@ -16,8 +16,9 @@
         style="@style/Block.FlowText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true"
         android:textAppearance="@style/TextAppearance.Body"
-        android:textIsSelectable="true"
         tools:text="A multi-line description of this show. Which is rather lenghty." />
 
     <View
@@ -55,8 +56,9 @@
         style="@style/Block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Body"
-        android:textIsSelectable="true" />
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true"
+        android:textAppearance="@style/TextAppearance.Body" />
 
     <TextView
         style="@style/Block.WithTopMargin"
@@ -70,8 +72,9 @@
         style="@style/Block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Body"
-        android:textIsSelectable="true" />
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true"
+        android:textAppearance="@style/TextAppearance.Body" />
 
     <TextView
         style="@style/Block.WithTopMargin"
@@ -85,8 +88,9 @@
         style="@style/Block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Body"
-        android:textIsSelectable="true" />
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true"
+        android:textAppearance="@style/TextAppearance.Body" />
 
     <TextView
         style="@style/Block.WithTopMargin"
@@ -100,7 +104,8 @@
         style="@style/Block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Body"
-        android:textIsSelectable="true" />
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true"
+        android:textAppearance="@style/TextAppearance.Body" />
 
 </merge>

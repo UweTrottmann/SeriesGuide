@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <application>
+    <application tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <!-- Amazon In-App Purchasing -->
         <activity android:name="com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity"/>
@@ -10,7 +11,8 @@
             <intent-filter>
                 <action
                     android:name="com.amazon.inapp.purchasing.NOTIFY"
-                    android:permission="com.amazon.inapp.purchasing.Permission.NOTIFY" />
+                    android:permission="com.amazon.inapp.purchasing.Permission.NOTIFY"
+                    tools:ignore="InvalidPermission" />
             </intent-filter>
         </receiver>
 

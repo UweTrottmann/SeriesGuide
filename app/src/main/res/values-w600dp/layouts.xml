@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Screens with more than 600dp of available width. This would
+      include 7" devices in portrait. -->
+
+    <item name="activity_people" type="layout">@layout/activity_people_twopane</item>
+
+</resources>

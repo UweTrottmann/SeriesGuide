@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<resources>
-
-    <item type="layout" name="activity_people">@layout/activity_people_twopane</item>
-
-</resources>

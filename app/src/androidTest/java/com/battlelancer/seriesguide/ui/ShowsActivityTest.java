@@ -68,7 +68,7 @@ public class ShowsActivityTest {
         }
 
         ViewInteraction floatingActionButton = onView(
-                allOf(withId(R.id.buttonShowsAdd), withContentDescription("Add show"),
+                allOf(withId(R.id.buttonShowsAdd), withContentDescription(R.string.action_shows_add),
                         childAtPosition(
                                 allOf(withId(R.id.rootLayoutShows),
                                         childAtPosition(
@@ -95,7 +95,7 @@ public class ShowsActivityTest {
         recyclerView.perform(actionOnItemAtPosition(2, click()));
 
         ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.buttonPositive), withText("Add show"),
+                allOf(withId(R.id.buttonPositive), withText(R.string.action_shows_add),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.LinearLayout")),
@@ -121,8 +121,8 @@ public class ShowsActivityTest {
         }
 
         ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.buttonEpisodeWatched), withText("Set watched"),
-                        withContentDescription("Set watched"),
+                allOf(withId(R.id.buttonEpisodeWatched), withText(R.string.action_watched),
+                        withContentDescription(R.string.action_watched),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.buttonbar),

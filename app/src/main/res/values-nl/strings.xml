@@ -37,6 +37,7 @@
   <string name="sync_manually">Handmatig synchroniseren</string>
   <string name="sync_and_update">Synchroniseer &amp; Update</string>
   <string name="sync_and_download_all">Synchroniseer &amp; Download alles</string>
+  <string name="action_turn_off">Uitschakelen</string>
   <!-- Search -->
   <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
   <string name="search_hint">Afleveringen zoeken</string>
@@ -52,6 +53,7 @@
   <string name="reinstall_info">Maak een backup, installeer opnieuw en herstel.</string>
   <string name="api_error_generic">Kon niet praten met %s. Probeer later opnieuw</string>
   <string name="api_failed">Mislukt: %s</string>
+  <string name="copy_to_clipboard">Copied to clipboard</string>
   <!-- Sharing -->
   <string name="share">Delen</string>
   <string name="share_show">Serie delen</string>
@@ -181,6 +183,7 @@
   <string name="checkin_searchhint">Voer de naam van een serie in</string>
   <string name="add_empty">Er zijn geen series hier.</string>
   <string name="no_results">Geen resultaten, probeer complete woorden.</string>
+  <string name="empty_show_search">Niet gevonden in uw serielijst</string>
   <string name="action_try_any_language">Probeer elke taal</string>
   <string name="action_try_again">Probeer nogmaals</string>
   <string name="tvdb_error_does_not_exist">Show bestaat (nog) niet op TheTVDB. Probeer later opnieuw.</string>
@@ -189,7 +192,7 @@
   <string name="add_started">%s zal binnenkort in het serie overzicht worden weergegeven.</string>
   <string name="add_error">Kan %s niet toevoegen.</string>
   <string name="add_already_exists">%s staat al in uw lijst.</string>
-  <string name="title_new_episodes">New episodes</string>
+  <string name="title_new_episodes">Nieuwe afleveringen</string>
   <string name="recommended">Aanbevolen</string>
   <string name="watched_shows">Bekeken</string>
   <string name="shows_collection">Collectie</string>
@@ -335,7 +338,7 @@
   <string name="pref_seasonsorting">Seizoenen sorteren op&#8230;</string>
   <string name="pref_episodesorting">Afleveringen sorteren op&#8230;</string>
   <string name="pref_language">Content taal voorkeur</string>
-  <string name="pref_language_fallback">Alternative language</string>
+  <string name="pref_language_fallback">Alternatieve taal</string>
   <string name="pref_updatewifionly">Afbeeldingen alleen via Wi-Fi</string>
   <string name="pref_updatewifionlysummary">Om dataverbruik te reduceren, niet downloaden over een mobiele verbinding of andere betaald netwerken</string>
   <plurals name="days_before_plural">
@@ -397,23 +400,15 @@
   <string name="pref_ganalyticssummary">Anonieme gebruiksstatistieken verzenden naar een Google-dienst</string>
   <!-- Backup and Restore -->
   <string name="backup_full_dump">Neem beschrijvingen, details en ratings op</string>
-  <string name="backup_path">Back-upmap</string>
-  <string name="backup_version">Database-versie</string>
   <string name="backup_failed_file_access">Kan geen backup maken. Een backup bestand kon niet gevonden of geopend worden.</string>
-  <string name="backup_inprogress">Gegevensbestand back-uppen&#8230;</string>
   <string name="backup_success">Maken back-up succesvol.</string>
   <string name="backup_failed">Maken back-up mislukt.</string>
-  <string name="import_inprogress">Gegevensbestand herstellen&#8230;</string>
   <string name="import_failed_nosd">Back-up herstellen niet mogelijk. De back-up map is niet beschikbaar.</string>
   <string name="import_failed_nofile">Er is geen leesbaar back-upbestand.</string>
-  <string name="import_failed_noread">Het back-up bestand is niet leesbaar.</string>
-  <string name="dbupgradefailed">Deze back-up kan te oud zijn of niet bestaan. Opmerking: Back-ups van voor versie 2.0 eerst in een 1.9.x versie importeren.</string>
   <string name="import_success">Back-up met succes hersteld.</string>
   <string name="import_failed">Herstellen van de back-up mislukt.</string>
   <string name="backup_button">Back-up</string>
   <string name="import_button">Herstellen</string>
-  <string name="backup_question">Dit overschrijft het huidige back-up bestand in de back-up map!</string>
-  <string name="import_question">De huidige serieslijst zal verloren gaan! Zorg ervoor dat het back-up bestand in de back-up map aanwezig is.</string>
   <string name="import_warning">Ik begrijp dat mijn huidige series, lijsten en films worden vervangen!</string>
   <string name="last_auto_backup">Laatste auto back-up: %s</string>
   <string name="restore_auto_backup">Auto back-up terugzetten</string>

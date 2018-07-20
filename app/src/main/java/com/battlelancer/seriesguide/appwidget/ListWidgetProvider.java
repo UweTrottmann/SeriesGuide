@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
+import java.util.Random;
 import timber.log.Timber;
 
 /**
@@ -46,6 +47,10 @@ public class ListWidgetProvider extends AppWidgetProvider {
     private static final long REPETITION_INTERVAL = 5 * DateUtils.MINUTE_IN_MILLIS;
 
     private static final int DIP_THRESHOLD_COMPACT_LAYOUT = 80;
+
+    private static final boolean USE_NONCE_WORKAROUND =
+            Build.VERSION.SDK_INT == Build.VERSION_CODES.O && "Huawei".equals(Build.MANUFACTURER);
+    private final static Random random = new Random();
 
     /**
      * Send broadcast to update lists of all list widgets.
@@ -128,6 +133,17 @@ public class ListWidgetProvider extends AppWidgetProvider {
         // setup intent pointing to RemoteViewsService providing the views for the collection
         Intent intent = new Intent(context, ListWidgetService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        /*
+        Huawei EMUI 8.0 devices seem to have broken caching for widgets with collections.
+        This leads to the widget not updating after a while. Adding a changing Intent when updating
+        the widget seems to fix the issue as the remote adapter appears to change every time.
+        This causes increased battery usage as the widget redraws even if no data has changed,
+        so only enable this on Huawei devices running Android 8.0 (EMUI 8.0).
+        https://github.com/UweTrottmann/SeriesGuide/issues/549
+         */
+        if (USE_NONCE_WORKAROUND) {
+            intent.putExtra("nonce", random.nextInt());
+        }
         // When intents are compared, the extras are ignored, so we need to
         // embed the extras into the data so that the extras will not be
         // ignored.
@@ -241,5 +257,4 @@ public class ListWidgetProvider extends AppWidgetProvider {
         intent.setAction(ACTION_DATA_CHANGED);
         return intent;
     }
-
 }

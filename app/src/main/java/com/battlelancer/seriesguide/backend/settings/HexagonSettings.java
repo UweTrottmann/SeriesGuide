@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.backend.settings;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -103,7 +102,7 @@ public class HexagonSettings {
     public static boolean resetSyncState(Context context) {
         // set all shows as not merged with Hexagon
         ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Shows.HEXAGON_MERGE_COMPLETE, false);
+        values.put(SeriesGuideContract.Shows.HEXAGON_MERGE_COMPLETE, 0);
         context.getContentResolver()
                 .update(SeriesGuideContract.Shows.CONTENT_URI, values, null, null);
 

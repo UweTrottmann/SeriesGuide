@@ -5,6 +5,66 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 43
+----------
+*(2018-07-20)*
+
+* 🌟 Add JustWatch button to quickly perform search of where to stream or purchase.
+* 🔧 Migrate database to Room. Remove the legacy backup tool as it will no longer work.
+* 🔧 Basic movie details are updated regularly (recent movies weekly, older movies every half year).
+* 🔧 Improvements when using a keyboard or remote.
+* 🔨 List widget should no longer stop refreshing on Huawei EMUI 8.0 devices.
+
+#### 43
+*(2018-07-20)*
+
+* 🔧 Change 'Shortcut' button to the more descriptive 'Add to home screen'.
+* 🔨 When cleaning up seasons, remove their episodes first.
+* 🔨 Cloud sync: when cleaning up lists, remove their items first.
+* 📝 Latest translations from crowdin.
+
+#### 43-beta5
+*(2018-07-13)*
+
+* 🔧 Tap and hold copies text to the clipboard instead of selecting it, works with keyboard/remote.
+* 🔧 Improve selection of various items using a keyboard or remote.
+* 🔨 List widget should no longer stop refreshing on Huawei EMUI 8.0 devices.
+* 🔨 Show wide overview and people layout based on screen width instead of smallest edge size.
+* 🔨 Cloud: display error message if Google Play Services are not installed in every case.
+* 📝 Latest translations from crowdin.
+
+#### 43-beta4
+*(2018-06-22)*
+
+* 🔧 Basic movie details are updated regularly (recent movies weekly, older movies every half year).
+* 🔨 Do not crash when migrating episodes with invalid data, skip them instead.
+* 📝 Latest translations from crowdin.
+
+#### 43-beta3
+*(2018-05-25)*
+
+* 🔨 Restoring shows and lists, removing a list works again.
+* 📝 Latest translations from crowdin.
+
+#### 43-beta2
+*(2018-05-19)*
+
+* 🔨 Fix Room migration issues.
+* 📝 Latest translations from crowdin.
+
+#### 43-beta1
+*(2018-05-18)*
+
+* 🌟 Add JustWatch button to quickly perform search of where to stream or purchase.
+* 🔧 Add button bar to set a whole season watched or add it to your collection.
+* 🔧 When searching suggest to add show if it is not found in show list.
+* 🔧 Migrate database to Room. Remove the legacy backup tool as it will no longer work.
+* 🔧 Episode history (if not connected to trakt): display up to 50 items instead of the last 24 hours.
+* 🔧 Bigger empty state text, more visible buttons.
+* 🔧 Change TheTVDB image URLs. All show posters will be downloaded again.
+* 🔧 Add explanation for trakt feature symbols.
+* 📝 Latest translations from crowdin. Add Galician.
+
 Version 42
 ----------
 *(2018-03-28)*

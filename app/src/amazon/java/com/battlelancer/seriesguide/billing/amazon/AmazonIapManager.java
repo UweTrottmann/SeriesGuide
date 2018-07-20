@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.billing.amazon;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -58,7 +59,7 @@ public class AmazonIapManager {
         }
     }
 
-    private static AmazonIapManager amazonIapManager;
+    @SuppressLint("StaticFieldLeak") private static AmazonIapManager amazonIapManager;
 
     /**
      * Sets up Amazon IAP.

@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui.search;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -95,7 +96,7 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
     private static final int RESULT_TRAKT_API_ERROR = 9;
     private static final int RESULT_TRAKT_AUTH_ERROR = 10;
 
-    private final Context context;
+    @SuppressLint("StaticFieldLeak") private final Context context;
     private final LinkedList<SearchResult> addQueue = new LinkedList<>();
 
     @Inject HexagonTools hexagonTools;

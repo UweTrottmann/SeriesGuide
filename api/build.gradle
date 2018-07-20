@@ -20,16 +20,23 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
+    lintOptions {
+        // for CI server (reports are not public)
+        textReport true
+        textOutput 'stdout'
+    }
 }
 
 dependencies {
     implementation "com.android.support:support-compat:${versions.supportLibrary}"
 }
 
-// load properties file
+// load local.properties file
 Properties props = new Properties()
-props.load(new FileInputStream(file("../local.properties")))
-def localSdkDir = props["sdk.dir"]
+if(rootProject.file('local.properties').exists()) {
+    props.load(new FileInputStream(file("../local.properties")))
+}
 
 task generateJavadoc(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
@@ -39,7 +46,7 @@ task generateJavadoc(type: Javadoc) {
 
     options.locale = "en"
     options.windowTitle = "SeriesGuide API"
-    options.linksOffline("http://developer.android.com/reference", "${localSdkDir}/docs/reference")
+    options.linksOffline("http://developer.android.com/reference", "${props["sdk.dir"]}/docs/reference")
     options.noDeprecated = true
     options.noHelp = true
     options.noIndex = true
@@ -79,11 +86,15 @@ uploadArchives {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
+                if (hasProperty('ossrhUsername') && hasProperty('ossrhPassword')) {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
             }
 
             snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
+                if (hasProperty('ossrhUsername') && hasProperty('ossrhPassword')) {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
             }
 
             pom.project {

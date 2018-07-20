@@ -3,6 +3,12 @@ https://github.com/bauerca/drag-sort-listview
 A subclass of the Android ListView component that enables drag
 and drop re-ordering of list items.
 
+## Permissions
+
+This library adds the `android.permission.VIBRATE` permission to trigger a vibration when an item is dragged.
+
+## Copyright
+
 Copyright 2012 Carl Bauer
 
 Licensed under the Apache License, Version 2.0 (the "License");

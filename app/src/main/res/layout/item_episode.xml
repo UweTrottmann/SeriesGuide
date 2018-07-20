@@ -6,9 +6,11 @@
     android:layout_height="wrap_content"
     android:background="?android:attr/activatedBackgroundIndicator">
 
+    <!-- Parent required for activated indicator -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
 
         <com.battlelancer.seriesguide.widgets.WatchedBox
             android:id="@+id/watchedBoxEpisode"
@@ -81,7 +83,7 @@
             android:contentDescription="@string/action_collection_added"
             app:srcCompat="@drawable/ic_collected_24dp" />
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/imageViewContextMenu"
             android:layout_width="48dp"
             android:layout_height="48dp"

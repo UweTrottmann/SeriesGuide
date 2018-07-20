@@ -1,5 +1,7 @@
 package com.battlelancer.seriesguide.provider;
 
+import static android.database.sqlite.SQLiteDatabase.CONFLICT_NONE;
+import static android.database.sqlite.SQLiteDatabase.CONFLICT_REPLACE;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Activity;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -11,14 +13,16 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import static com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 
 import android.app.SearchManager;
+import android.arch.persistence.db.SupportSQLiteDatabase;
+import android.arch.persistence.db.SupportSQLiteOpenHelper;
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.OperationApplicationException;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
@@ -185,29 +189,17 @@ public class SeriesGuideProvider extends ContentProvider {
     }
 
     private final ThreadLocal<Boolean> applyingBatch = new ThreadLocal<>();
-    private SeriesGuideDatabase databaseHelper;
-    protected SQLiteDatabase database;
+    protected SupportSQLiteDatabase database;
 
     @Override
     public void shutdown() {
-        /*
-          If we ever do unit-testing, nice to have this already (no bug-hunt).
-         */
-        if (databaseHelper != null) {
-            databaseHelper.close();
-            databaseHelper = null;
-            database = null;
-        }
+        SgRoomDatabase.getInstance(getContext()).getOpenHelper().close();
+        database = null;
     }
 
     @Override
     public boolean onCreate() {
-        Context context = getContext();
-
         sUriMatcher = buildUriMatcher();
-
-        databaseHelper = new SeriesGuideDatabase(context);
-
         return true;
     }
 
@@ -218,6 +210,8 @@ public class SeriesGuideProvider extends ContentProvider {
             Timber.v("query(uri=%s, proj=%s)", uri, Arrays.toString(projection));
         }
 
+        SupportSQLiteOpenHelper databaseHelper = SgRoomDatabase.getInstance(getContext())
+                .getOpenHelper();
         final int match = sUriMatcher.match(uri);
 
         // support close op for legacy database import tool, will reopen on next op
@@ -227,7 +221,7 @@ public class SeriesGuideProvider extends ContentProvider {
         }
 
         // always get writable database, might have to be upgraded
-        final SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        final SupportSQLiteDatabase db = databaseHelper.getWritableDatabase();
 
         switch (match) {
             case RENEW_FTSTABLE: {
@@ -239,14 +233,14 @@ public class SeriesGuideProvider extends ContentProvider {
                     throw new IllegalArgumentException(
                             "selectionArgs must be provided for the Uri: " + uri);
                 }
-                return SeriesGuideDatabase.search(selection, selectionArgs, db);
+                return SeriesGuideDatabase.search(db, selection, selectionArgs);
             }
             case SEARCH_SUGGEST: {
                 if (selectionArgs == null) {
                     throw new IllegalArgumentException(
                             "selectionArgs must be provided for the Uri: " + uri);
                 }
-                return SeriesGuideDatabase.getSuggestions(selectionArgs[0], db);
+                return SeriesGuideDatabase.getSuggestions(db, selectionArgs[0]);
             }
             default: {
                 // Most cases are handled with simple SelectionBuilder
@@ -327,7 +321,8 @@ public class SeriesGuideProvider extends ContentProvider {
     public Uri insert(@NonNull Uri uri, ContentValues values) {
         Uri newItemUri;
 
-        final SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        final SupportSQLiteDatabase db = SgRoomDatabase.getInstance(getContext())
+                .getOpenHelper().getWritableDatabase();
         if (!applyingBatch()) {
             db.beginTransaction();
             try {
@@ -353,7 +348,8 @@ public class SeriesGuideProvider extends ContentProvider {
         int numValues = values.length;
         boolean notifyChange = false;
 
-        final SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        final SupportSQLiteDatabase db = SgRoomDatabase.getInstance(getContext())
+                .getOpenHelper().getWritableDatabase();
         db.beginTransaction();
         try {
             for (int i = 0; i < numValues; i++) {
@@ -381,7 +377,7 @@ public class SeriesGuideProvider extends ContentProvider {
      * backup files may contain duplicates. Handle them by making the last insert win (ON CONFLICT
      * REPLACE) for bulk inserts.
      */
-    private Uri insertInTransaction(SQLiteDatabase db, Uri uri, ContentValues values,
+    private Uri insertInTransaction(SupportSQLiteDatabase db, Uri uri, ContentValues values,
             boolean bulkInsert) {
         if (LOGV) {
             Timber.v("insert(uri=%s, values=%s)", uri, values.toString());
@@ -391,7 +387,7 @@ public class SeriesGuideProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case SHOWS: {
-                long id = db.insert(Tables.SHOWS, null, values);
+                long id = tryInsert(db, Tables.SHOWS, CONFLICT_NONE, values);
                 if (id < 0) {
                     break;
                 }
@@ -401,9 +397,9 @@ public class SeriesGuideProvider extends ContentProvider {
             case SEASONS: {
                 long id;
                 if (bulkInsert) {
-                    id = db.replace(Tables.SEASONS, null, values);
+                    id = tryInsert(db, Tables.SEASONS, CONFLICT_REPLACE, values);
                 } else {
-                    id = db.insert(Tables.SEASONS, null, values);
+                    id = tryInsert(db, Tables.SEASONS, CONFLICT_NONE, values);
                 }
                 if (id < 0) {
                     break;
@@ -414,9 +410,9 @@ public class SeriesGuideProvider extends ContentProvider {
             case EPISODES: {
                 long id;
                 if (bulkInsert) {
-                    id = db.replace(Tables.EPISODES, null, values);
+                    id = tryInsert(db, Tables.EPISODES, CONFLICT_REPLACE, values);
                 } else {
-                    id = db.insert(Tables.EPISODES, null, values);
+                    id = tryInsert(db, Tables.EPISODES, CONFLICT_NONE, values);
                 }
                 if (id < 0) {
                     break;
@@ -425,7 +421,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case LISTS: {
-                long id = db.insert(Tables.LISTS, null, values);
+                long id = tryInsert(db, Tables.LISTS, CONFLICT_REPLACE, values);
                 if (id < 0) {
                     break;
                 }
@@ -434,11 +430,7 @@ public class SeriesGuideProvider extends ContentProvider {
             }
             case LIST_ITEMS: {
                 long id;
-                if (bulkInsert) {
-                    id = db.replace(Tables.LIST_ITEMS, null, values);
-                } else {
-                    id = db.insert(Tables.LIST_ITEMS, null, values);
-                }
+                id = tryInsert(db, Tables.LIST_ITEMS, CONFLICT_REPLACE, values);
                 if (id < 0) {
                     break;
                 }
@@ -446,12 +438,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case MOVIES: {
-                long id;
-                if (bulkInsert) {
-                    id = db.replace(Tables.MOVIES, null, values);
-                } else {
-                    id = db.insert(Tables.MOVIES, null, values);
-                }
+                long id = tryInsert(db, Tables.MOVIES, CONFLICT_REPLACE, values);
                 if (id < 0) {
                     break;
                 }
@@ -459,7 +446,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case ACTIVITY: {
-                long id = db.insert(Tables.ACTIVITY, null, values);
+                long id = tryInsert(db, Tables.ACTIVITY, CONFLICT_REPLACE, values);
                 if (id < 0) {
                     break;
                 }
@@ -467,7 +454,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 break;
             }
             case JOBS: {
-                long id = db.insert(Tables.JOBS, null, values);
+                long id = tryInsert(db, Tables.JOBS, CONFLICT_REPLACE, values);
                 if (id < 0) {
                     break;
                 }
@@ -483,6 +470,19 @@ public class SeriesGuideProvider extends ContentProvider {
     }
 
     /**
+     * Tries insert, always returns -1 on failure.
+     */
+    private long tryInsert(SupportSQLiteDatabase db,
+            String table, int conflictAlgorithm, ContentValues values) {
+        try {
+            return db.insert(table, conflictAlgorithm, values);
+        } catch (SQLException e) {
+            Timber.e(e, "Error inserting %s", values);
+            return -1;
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -494,7 +494,8 @@ public class SeriesGuideProvider extends ContentProvider {
         int count;
 
         if (!applyingBatch()) {
-            final SQLiteDatabase db = databaseHelper.getWritableDatabase();
+            final SupportSQLiteDatabase db = SgRoomDatabase.getInstance(getContext())
+                    .getOpenHelper().getWritableDatabase();
             db.beginTransaction();
             try {
                 count = buildSelection(uri, sUriMatcher.match(uri))
@@ -505,7 +506,8 @@ public class SeriesGuideProvider extends ContentProvider {
                 db.endTransaction();
             }
         } else {
-            database = databaseHelper.getWritableDatabase();
+            database = SgRoomDatabase.getInstance(getContext())
+                    .getOpenHelper().getWritableDatabase();
             count = buildSelection(uri, sUriMatcher.match(uri))
                     .where(selection, selectionArgs)
                     .update(database, values);
@@ -530,7 +532,8 @@ public class SeriesGuideProvider extends ContentProvider {
         int count;
 
         if (!applyingBatch()) {
-            final SQLiteDatabase db = databaseHelper.getWritableDatabase();
+            final SupportSQLiteDatabase db = SgRoomDatabase.getInstance(getContext())
+                    .getOpenHelper().getWritableDatabase();
             db.beginTransaction();
             try {
                 count = buildSelection(uri, sUriMatcher.match(uri))
@@ -541,7 +544,8 @@ public class SeriesGuideProvider extends ContentProvider {
                 db.endTransaction();
             }
         } else {
-            database = databaseHelper.getWritableDatabase();
+            database = SgRoomDatabase.getInstance(getContext())
+                    .getOpenHelper().getWritableDatabase();
             count = buildSelection(uri, sUriMatcher.match(uri))
                     .where(selection, selectionArgs)
                     .delete(database);
@@ -569,7 +573,7 @@ public class SeriesGuideProvider extends ContentProvider {
             return new ContentProviderResult[0];
         }
 
-        database = databaseHelper.getWritableDatabase();
+        database = SgRoomDatabase.getInstance(getContext()).getOpenHelper().getWritableDatabase();
         database.beginTransaction();
         try {
             applyingBatch.set(true);

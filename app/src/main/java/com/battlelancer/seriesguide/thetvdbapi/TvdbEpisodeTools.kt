@@ -130,7 +130,7 @@ class TvdbEpisodeTools constructor(
                 }
 
                 episode.toContentValues(values, episodeId, seasonId, showTvdbId,
-                        seasonNumber, releaseDateTime)
+                        seasonNumber, releaseDateTime, insert)
 
                 if (insert) {
                     // episode does not exist, yet: insert
@@ -153,9 +153,17 @@ class TvdbEpisodeTools constructor(
         // add delete ops for leftover seasonIds in our db
         localSeasonIds
                 .filterNot { seasonsToAddOrUpdate.contains(it) }
-                .mapTo(batch) {
-                    ContentProviderOperation.newDelete(
-                            SeriesGuideContract.Seasons.buildSeasonUri(it)).build()
+                .forEach {
+                    with(batch) {
+                        // delete episodes still associated with this season to avoid foreign key violations
+                        // this is safe because episodes that changed to another season should
+                        // have got update ops added (see above) to the batch before these ops
+                        add(ContentProviderOperation.newDelete(
+                                Episodes.buildEpisodesOfSeasonUri(it)).build())
+                        // delete season
+                        add(ContentProviderOperation.newDelete(
+                                SeriesGuideContract.Seasons.buildSeasonUri(it)).build())
+                    }
                 }
 
         return newEpisodesValues
@@ -181,7 +189,7 @@ class TvdbEpisodeTools constructor(
         @JvmStatic
         fun Episode.toContentValues(values: ContentValues,
                 episodeTvdbId: Int, seasonTvdbId: Int, showTvdbId: Int,
-                seasonNumber: Int, releaseDateTime: Long) {
+                seasonNumber: Int, releaseDateTime: Long, forInsert: Boolean) {
             values.put(Episodes._ID, episodeTvdbId)
             values.put(Episodes.TITLE, episodeName ?: "")
             values.put(Episodes.OVERVIEW, overview)
@@ -195,6 +203,18 @@ class TvdbEpisodeTools constructor(
             values.put(Episodes.FIRSTAIREDMS, releaseDateTime)
             values.put(Episodes.ABSOLUTE_NUMBER, absoluteNumber)
             values.put(Episodes.LAST_EDITED, lastUpdated ?: 0)
+
+            if (forInsert) {
+                // set default values
+                values.put(Episodes.WATCHED, 0)
+                values.put(Episodes.DIRECTORS, "")
+                values.put(Episodes.GUESTSTARS, "")
+                values.put(Episodes.WRITERS, "")
+                values.put(Episodes.IMAGE, "")
+                values.put(Episodes.COLLECTED, 0)
+                values.put(Episodes.IMDBID, "")
+                values.put(Episodes.LAST_UPDATED, 0)
+            }
         }
 
     }

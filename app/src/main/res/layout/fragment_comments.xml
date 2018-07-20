@@ -29,7 +29,7 @@
                     android:gravity="center"
                     android:padding="@dimen/large_padding"
                     android:text="@string/no_shouts"
-                    android:textAppearance="@style/TextAppearance.Body.Secondary" />
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState" />
 
             </ScrollView>
 
@@ -66,6 +66,7 @@
             android:layout_marginBottom="@dimen/default_padding"
             android:gravity="top"
             android:hint="@string/shout_hint"
+            android:inputType="textMultiLine"
             android:maxLength="2000"
             android:maxLines="3"
             android:nextFocusUp="@+id/listViewShouts" />

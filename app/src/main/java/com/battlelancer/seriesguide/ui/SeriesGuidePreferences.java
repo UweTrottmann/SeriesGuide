@@ -39,6 +39,8 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
+import com.battlelancer.seriesguide.justwatch.JustWatchConfigureDialog;
+import com.battlelancer.seriesguide.justwatch.JustWatchSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.service.NotificationService;
@@ -88,7 +90,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
     private static final String LINK_KEY_TRAKT = LINK_BASE_KEY + "trakt";
     private static final String LINK_KEY_AUTOBACKUP = LINK_BASE_KEY + "autobackup";
     private static final String LINK_KEY_DATALIBERATION = LINK_BASE_KEY + "dataliberation";
-    private static final String LINK_KEY_BACKUP_LEGACY = LINK_BASE_KEY + "backuplegacy";
 
     public static @StyleRes int THEME = R.style.Theme_SeriesGuide;
 
@@ -371,6 +372,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     });
 
             // show currently set values for some prefs
+            updateJustWatchSummary(findPreference(JustWatchSearch.KEY_SETTING_COUNTRY));
             setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE_PREFERRED));
             setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE_FALLBACK));
             updateTimeOffsetSummary(findPreference(DisplaySettings.KEY_SHOWS_TIME_OFFSET));
@@ -473,9 +475,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 case LINK_KEY_DATALIBERATION:
                     startActivity(new Intent(getActivity(), DataLiberationActivity.class));
                     return true;
-                case LINK_KEY_BACKUP_LEGACY:
-                    startActivity(new Intent(getActivity(), BackupDeleteActivity.class));
-                    return true;
                 default:
                     // fall through
             }
@@ -519,6 +518,12 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, getActivity().getPackageName());
                     startActivity(intent);
                 }
+                return true;
+            }
+            if (JustWatchSearch.KEY_SETTING_COUNTRY.equals(key)) {
+                new JustWatchConfigureDialog().show(
+                        ((AppCompatActivity) getActivity()).getSupportFragmentManager(),
+                        "justwatch-country");
                 return true;
             }
             if (DisplaySettings.KEY_SHOWS_TIME_OFFSET.equals(key)) {
@@ -580,6 +585,9 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     if (vibrator != null) {
                         vibrator.vibrate(NotificationService.VIBRATION_PATTERN, -1);
                     }
+                }
+                if (JustWatchSearch.KEY_SETTING_COUNTRY.equals(key)) {
+                    updateJustWatchSummary(pref);
                 }
             }
 
@@ -645,6 +653,17 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     SeriesGuideContract.Shows.SELECTION_NOTIFY, null, 0);
             selectionPref.setSummary(getString(R.string.pref_notifications_select_shows_summary,
                     countOfShowsNotifyOn));
+        }
+
+        private void updateJustWatchSummary(Preference pref) {
+            String countryOrEmptyOrNull = JustWatchSearch.getCountryOrEmptyOrNull(getActivity());
+            if (countryOrEmptyOrNull == null) {
+                pref.setSummary(null);
+            } else if (countryOrEmptyOrNull.length() == 0) {
+                pref.setSummary(R.string.action_turn_off);
+            } else {
+                pref.setSummary(JustWatchSearch.getCountryDisplayName(countryOrEmptyOrNull));
+            }
         }
 
         private void updateTimeOffsetSummary(Preference offsetListPref) {

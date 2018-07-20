@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:targetApi="n_mr1">
     <!-- NOTE: this file has sadly to be duplicated across application IDs,
      as using a resource for targetPackage does not work -->
 

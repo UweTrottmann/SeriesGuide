@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -13,7 +14,7 @@ import timber.log.Timber;
  */
 public class LatestEpisodeUpdateTask extends AsyncTask<Integer, Void, Void> {
 
-    private final Context context;
+    @SuppressLint("StaticFieldLeak") private final Context context;
 
     public LatestEpisodeUpdateTask(Context context) {
         this.context = context.getApplicationContext();
@@ -36,7 +37,7 @@ public class LatestEpisodeUpdateTask extends AsyncTask<Integer, Void, Void> {
     public static void updateLatestEpisodeFor(Context context, int showTvdbId) {
         if (showTvdbId > 0) {
             // update single show
-            Timber.d("Updating next episode for show " + showTvdbId);
+            Timber.d("Updating next episode for show %s", showTvdbId);
             DBUtils.updateLatestEpisode(context, showTvdbId);
         } else {
             // update all shows

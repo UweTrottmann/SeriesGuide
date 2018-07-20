@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.traktapi;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -31,7 +32,7 @@ public class TraktCredentials {
     private static final String KEY_USERNAME = "com.battlelancer.seriesguide.traktuser";
     private static final String KEY_DISPLAYNAME = "com.battlelancer.seriesguide.traktuser.name";
 
-    private static TraktCredentials _instance;
+    @SuppressLint("StaticFieldLeak") private static TraktCredentials _instance;
 
     private Context context;
     private boolean hasCredentials;

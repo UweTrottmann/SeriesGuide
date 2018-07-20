@@ -25,7 +25,7 @@ public class UpdateSettings {
         );
     }
 
-    @SuppressLint("CommitPrefEdits")
+    @SuppressLint("ApplySharedPref")
     public static long getLastAutoUpdateTime(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -34,6 +34,7 @@ public class UpdateSettings {
             // use now as default value, so auto-update will not run on first
             // launch
             time = System.currentTimeMillis();
+            // need to commit as used from SyncAdapter
             prefs.edit().putLong(KEY_LASTUPDATE, time).commit();
         }
 

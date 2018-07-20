@@ -1,12 +1,10 @@
 
 package com.battlelancer.seriesguide.settings;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.BuildConfig;
@@ -31,7 +29,6 @@ public class AppSettings {
      * Returns the version code of the previously installed version. Is the current version on fresh
      * installs.
      */
-    @SuppressLint("CommitPrefEdits")
     public static int getLastVersionCode(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -39,7 +36,7 @@ public class AppSettings {
         if (lastVersionCode == -1) {
             // set current version as default value
             lastVersionCode = BuildConfig.VERSION_CODE;
-            prefs.edit().putInt(KEY_VERSION, lastVersionCode).commit();
+            prefs.edit().putInt(KEY_VERSION, lastVersionCode).apply();
         }
 
         return lastVersionCode;

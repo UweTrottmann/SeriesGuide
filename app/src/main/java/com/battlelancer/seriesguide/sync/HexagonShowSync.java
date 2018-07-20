@@ -175,19 +175,19 @@ public class HexagonShowSync {
         if (show.getIsFavorite() != null) {
             // when merging, favorite shows, but never unfavorite them
             if (!mergeValues || show.getIsFavorite()) {
-                values.put(SeriesGuideContract.Shows.FAVORITE, show.getIsFavorite());
+                values.put(SeriesGuideContract.Shows.FAVORITE, show.getIsFavorite() ? 1 : 0);
             }
         }
         if (show.getNotify() != null) {
             // when merging, enable notifications, but never disable them
             if (!mergeValues || show.getNotify()) {
-                values.put(SeriesGuideContract.Shows.NOTIFY, show.getNotify());
+                values.put(SeriesGuideContract.Shows.NOTIFY, show.getNotify() ? 1 : 0);
             }
         }
         if (show.getIsHidden() != null) {
             // when merging, un-hide shows, but never hide them
             if (!mergeValues || !show.getIsHidden()) {
-                values.put(SeriesGuideContract.Shows.HIDDEN, show.getIsHidden());
+                values.put(SeriesGuideContract.Shows.HIDDEN, show.getIsHidden() ? 1 : 0);
             }
         }
         if (!TextUtils.isEmpty(show.getLanguage())) {

@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.modules;
 
-import android.content.Context;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.services.Checkin;
 import com.uwetrottmann.trakt5.services.Comments;
@@ -11,7 +10,6 @@ import com.uwetrottmann.trakt5.services.Search;
 import com.uwetrottmann.trakt5.services.Shows;
 import com.uwetrottmann.trakt5.services.Sync;
 import com.uwetrottmann.trakt5.services.Users;
-import okhttp3.OkHttpClient;
 
 public class TestTraktModule extends TraktModule {
 
@@ -57,11 +55,6 @@ public class TestTraktModule extends TraktModule {
 
     @Override
     Users provideUsers(TraktV2 trakt) {
-        return null;
-    }
-
-    @Override
-    TraktV2 provideTrakt(@ApplicationContext Context context, OkHttpClient okHttpClient) {
         return null;
     }
 }

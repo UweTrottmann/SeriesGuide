@@ -9,11 +9,11 @@
         android:id="@+id/textViewSearchEmpty"
         android:layout_width="@dimen/empty_view_width"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/larger_padding"
         android:gravity="center"
-        android:padding="@dimen/default_padding"
         android:text="@string/no_results"
-        android:textAppearance="@style/TextAppearance.Body.Secondary" />
+        android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState" />
 
     <GridView
         android:id="@+id/gridViewSearch"
