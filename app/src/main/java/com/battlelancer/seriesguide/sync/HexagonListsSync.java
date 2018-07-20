@@ -9,8 +9,8 @@ import android.text.TextUtils;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.ui.lists.ListsTools;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
@@ -248,6 +248,14 @@ public class HexagonListsSync {
         if (localListIds.size() > 0) {
             ArrayList<ContentProviderOperation> batch = new ArrayList<>();
             for (String listId : localListIds) {
+                // note: this matches what RemoveListTask does
+                // delete all list items before the list to avoid violating foreign key constraints
+                batch.add(ContentProviderOperation
+                        .newDelete(SeriesGuideContract.ListItems.CONTENT_URI)
+                        .withSelection(SeriesGuideContract.ListItems.SELECTION_LIST,
+                                new String[]{listId})
+                        .build());
+                // delete list
                 batch.add(ContentProviderOperation
                         .newDelete(SeriesGuideContract.Lists.buildListUri(listId))
                         .build());
@@ -327,5 +335,4 @@ public class HexagonListsSync {
         }
         return true;
     }
-
 }
