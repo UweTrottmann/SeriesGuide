@@ -69,14 +69,14 @@ class ShowsDiscoverFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (savedInstanceState != null) {
+        query = if (savedInstanceState != null) {
             // restore last query
-            query = savedInstanceState.getString(KEY_QUERY)
+            savedInstanceState.getString(KEY_QUERY) ?: ""
         } else {
             // use initial query (if any)
             val queryEvent = EventBus.getDefault().getStickyEvent(
                     SearchActivity.SearchQuerySubmitEvent::class.java)
-            query = queryEvent?.query ?: ""
+            queryEvent?.query ?: ""
         }
     }
 

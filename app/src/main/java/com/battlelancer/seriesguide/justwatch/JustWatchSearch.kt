@@ -87,7 +87,7 @@ object JustWatchSearch {
 
     private fun getCountrySearchUrl(context: Context): String {
         val country = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_SETTING_COUNTRY, null)
+                .getString(KEY_SETTING_COUNTRY, null) ?: ""
         val searchPath = countryToUrl[country] ?: "search"
         return "https://www.justwatch.com/$country/$searchPath?q="
     }
