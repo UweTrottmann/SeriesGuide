@@ -154,8 +154,8 @@ dependencies {
     kapt "com.jakewharton:butterknife-compiler:${versions.butterknife}"
     implementation "com.google.dagger:dagger:${versions.dagger}"
     kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
-    implementation 'org.greenrobot:eventbus:3.0.0'
-    kapt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    kapt 'org.greenrobot:eventbus-annotation-processor:3.1.1'
 
     implementation("com.crashlytics.sdk.android:crashlytics:${versions.crashlytics}@aar") {
         transitive = true
