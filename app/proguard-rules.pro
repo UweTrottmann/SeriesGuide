@@ -72,14 +72,16 @@
 -dontwarn com.squareup.picasso.OkHttpDownloader
 
 # Retrofit 2.X
-# Platform calls Class.forName on types which do not exist on Android to determine platform.
--dontnote retrofit2.Platform
-# Platform used when running on Java 8 VMs. Will not be used at runtime.
--dontwarn retrofit2.Platform$Java8
 # Retain generic type information for use by reflection by converters and adapters.
 -keepattributes Signature
-# Retain declared checked exceptions for use by a Proxy instance.
--keepattributes Exceptions
+# Retain service method parameters when optimizing.
+-keepclassmembers,allowshrinking,allowobfuscation interface * {
+    @retrofit2.http.* <methods>;
+}
+# Ignore annotation used for build tooling.
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+# Ignore JSR 305 annotations for embedding nullability information.
+-dontwarn javax.annotation.**
 
 # Apache HTTP was removed as of Android M
 -dontwarn org.apache.http.**
