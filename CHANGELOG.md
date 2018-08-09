@@ -12,7 +12,10 @@ Version 44
 #### 44-beta1
 *(2018-08-09)*
 
-* 🔧 Fix database migration for users that have used the legacy backup tool.
+* 🔧 Fix database migration for users that have used the legacy backup tool. Note that upgrading 
+     from a very old database (database version 37 or older) still remains not supported. Try to 
+     update SeriesGuide to version 42.2 first. You can get the APK at 
+     https://github.com/UweTrottmann/SeriesGuide/releases/tag/v42.2
 * 🔧 Full episode details (notably image path) are again loaded when adding or updating a show and 
      no longer on-demand when viewing an episode. This results in less network calls while browsing 
      episodes.
