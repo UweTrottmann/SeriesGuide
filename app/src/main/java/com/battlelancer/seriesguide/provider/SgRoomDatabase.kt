@@ -40,7 +40,8 @@ abstract class SgRoomDatabase : RoomDatabase() {
 
         private const val VERSION_43_ROOM = 43
         private const val VERSION_44_RECREATE_SERIES_EPISODES = 44
-        const val VERSION = VERSION_44_RECREATE_SERIES_EPISODES
+        private const val VERSION_45_RECREATE_SEASONS = 45
+        const val VERSION = VERSION_45_RECREATE_SEASONS
 
         @Volatile
         private var instance: SgRoomDatabase? = null
@@ -61,6 +62,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
                     val newInstance = Room.databaseBuilder(context.applicationContext,
                             SgRoomDatabase::class.java, SeriesGuideDatabase.DATABASE_NAME)
                             .addMigrations(
+                                    MIGRATION_44_45,
                                     MIGRATION_42_44,
                                     MIGRATION_43_44,
                                     MIGRATION_42_43,
@@ -99,6 +101,37 @@ abstract class SgRoomDatabase : RoomDatabase() {
                 } else {
                     db.execSQL(SeriesGuideDatabase.CREATE_SEARCH_TABLE_API_ICS)
                 }
+            }
+        }
+
+        /**
+         * Recreates seasons table to pass migration validation which failed due to
+         * columns with unexpected types likely due to using legacy backup tool.
+         */
+        @JvmField
+        val MIGRATION_44_45: Migration = object : Migration(
+                VERSION_44_RECREATE_SERIES_EPISODES, VERSION_45_RECREATE_SEASONS) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Timber.d("Migrating database from 44 to 45")
+
+                // Create the new table
+                database.execSQL(
+                        "CREATE TABLE `seasons_new` (`_id` INTEGER, `combinednr` INTEGER, `series_id` TEXT, `watchcount` INTEGER, `willaircount` INTEGER, `noairdatecount` INTEGER, `seasonposter` TEXT, `season_totalcount` INTEGER, PRIMARY KEY(`_id`), FOREIGN KEY(`series_id`) REFERENCES `series`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )")
+                // Copy the data
+                // ignore (skip) rows with constraint violations
+                database.execSQL("INSERT OR IGNORE INTO seasons_new (" +
+                        "_id, combinednr, series_id, watchcount, willaircount, noairdatecount, seasonposter, season_totalcount" +
+                        ") SELECT " +
+                        "_id, combinednr, series_id, watchcount, willaircount, noairdatecount, seasonposter, season_totalcount"
+                        + " FROM seasons")
+                // Remove the old table
+                database.execSQL("DROP TABLE seasons")
+                // Change the table name to the correct one
+                database.execSQL("ALTER TABLE seasons_new RENAME TO seasons")
+
+                // Re-create seasons table index
+                database.execSQL("CREATE  INDEX `index_seasons_series_id` "
+                        + "ON `seasons` (`series_id`)")
             }
         }
 
