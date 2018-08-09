@@ -10,13 +10,13 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools.ensureSuccessfulResponse
 import com.battlelancer.seriesguide.util.DBUtils
+import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.thetvdb.entities.Episode
 import com.uwetrottmann.thetvdb.entities.EpisodesResponse
 import com.uwetrottmann.thetvdb.services.TheTvdbSeries
 import dagger.Lazy
 import java.util.ArrayList
-import java.util.HashMap
 import java.util.HashSet
 import java.util.TimeZone
 
@@ -38,9 +38,9 @@ class TvdbEpisodeTools constructor(
         val showTvdbId = show.tvdb_id
         val newEpisodesValues = ArrayList<ContentValues>()
 
-        val localEpisodeIds = DBUtils.getEpisodeMapForShow(context, showTvdbId)
+        val lastUpdatedByEpisodeId = DBUtils.getLastUpdatedByEpisodeId(context, showTvdbId)
         // just copy episodes list, then remove valid ones
-        val removableEpisodeIds = HashMap(localEpisodeIds)
+        val removableEpisodeIds = HashSet(lastUpdatedByEpisodeId.keys)
 
         val localSeasonIds = DBUtils.getSeasonIdsOfShow(context, showTvdbId)
         // store updated seasons to avoid duplicate ops
@@ -93,20 +93,20 @@ class TvdbEpisodeTools constructor(
                 removableEpisodeIds.remove(episodeId)
 
                 var insert = true
-                if (localEpisodeIds.containsKey(episodeId)) {
+                if (lastUpdatedByEpisodeId.containsKey(episodeId)) {
                     /*
                      * Update uses provider ops which take a long time. Only
                      * update if episode was edited on TVDb or is not older than
                      * a month (ensures show air time changes get stored).
                      */
-                    val lastEditEpoch = localEpisodeIds[episodeId]
-                    val lastEditEpochNew = episode.lastUpdated
-                    if (lastEditEpoch != null && lastEditEpochNew != null
-                            && (lastEditEpoch < lastEditEpochNew || dateLastMonthEpoch < lastEditEpoch)) {
-                        // update episode
-                        insert = false
+                    val lastUpdatedEpoch = lastUpdatedByEpisodeId[episodeId]
+                    val lastTvdbEditEpoch = episode.lastUpdated
+                    if (lastUpdatedEpoch != null && lastTvdbEditEpoch != null
+                            && (lastUpdatedEpoch < lastTvdbEditEpoch
+                                    || dateLastMonthEpoch < lastUpdatedEpoch)) {
+                        insert = false // update episode
                     } else {
-                        continue // too old to update, skip
+                        continue // not edited or too old to update, skip
                     }
                 }
 
@@ -146,7 +146,7 @@ class TvdbEpisodeTools constructor(
         }
 
         // add delete ops for leftover episodeIds in our db
-        removableEpisodeIds.keys.mapTo(batch) {
+        removableEpisodeIds.mapTo(batch) {
             ContentProviderOperation.newDelete(Episodes.buildEpisodeUri(it)).build()
         }
 
@@ -197,23 +197,26 @@ class TvdbEpisodeTools constructor(
             values.put(Episodes.SEASON, seasonNumber)
             values.put(Episodes.DVDNUMBER, dvdEpisodeNumber)
 
+            values.put(Episodes.DIRECTORS, TextTools.mendTvdbStrings(directors))
+            values.put(Episodes.GUESTSTARS, TextTools.mendTvdbStrings(guestStars))
+            values.put(Episodes.WRITERS, TextTools.mendTvdbStrings(writers))
+            values.put(Episodes.IMAGE, filename ?: "")
+            values.put(Episodes.IMDBID, imdbId ?: "")
+
             values.put(SeriesGuideContract.Seasons.REF_SEASON_ID, seasonTvdbId)
             values.put(SeriesGuideContract.Shows.REF_SHOW_ID, showTvdbId)
 
             values.put(Episodes.FIRSTAIREDMS, releaseDateTime)
             values.put(Episodes.ABSOLUTE_NUMBER, absoluteNumber)
             values.put(Episodes.LAST_EDITED, lastUpdated ?: 0)
+            // TVDB again provides full details when getting series,
+            // so immediately set to LAST_EDITED value (though value is ignored for now)
+            values.put(Episodes.LAST_UPDATED, lastUpdated ?: 0)
 
             if (forInsert) {
                 // set default values
                 values.put(Episodes.WATCHED, 0)
-                values.put(Episodes.DIRECTORS, "")
-                values.put(Episodes.GUESTSTARS, "")
-                values.put(Episodes.WRITERS, "")
-                values.put(Episodes.IMAGE, "")
                 values.put(Episodes.COLLECTED, 0)
-                values.put(Episodes.IMDBID, "")
-                values.put(Episodes.LAST_UPDATED, 0)
             }
         }
 

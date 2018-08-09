@@ -44,7 +44,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeDetailsTask;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
@@ -88,7 +87,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
 
     private Handler handler = new Handler();
-    private TvdbEpisodeDetailsTask detailsTask;
     private TraktRatingsTask ratingsTask;
 
     private boolean isInMultipane;
@@ -253,10 +251,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (detailsTask != null) {
-            detailsTask.cancel(true);
-            detailsTask = null;
-        }
         if (ratingsTask != null) {
             ratingsTask.cancel(true);
             ratingsTask = null;
@@ -642,18 +636,10 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         containerEpisode.setVisibility(View.VISIBLE);
 
-        loadDetails(cursor);
+        loadDetails();
     }
 
-    private void loadDetails(Cursor cursor) {
-        // get full info if episode was edited on TVDb
-        if (detailsTask == null || detailsTask.getStatus() == AsyncTask.Status.FINISHED) {
-            long lastEdited = cursor.getLong(DetailsQuery.LAST_EDITED);
-            long lastUpdated = cursor.getLong(DetailsQuery.LAST_UPDATED);
-            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(requireContext(), showTvdbId,
-                    episodeTvdbId, lastEdited, lastUpdated);
-        }
-
+    private void loadDetails() {
         // update trakt ratings
         if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {
             ratingsTask = new TraktRatingsTask(requireContext(), showTvdbId, episodeTvdbId,
@@ -783,7 +769,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 Episodes.WATCHED,
                 Episodes.COLLECTED,
                 Episodes.LAST_EDITED,
-                Episodes.LAST_UPDATED,
                 Shows.REF_SHOW_ID,
                 Shows.IMDBID,
                 Shows.TITLE,
@@ -811,11 +796,10 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         int WATCHED = 17;
         int COLLECTED = 18;
         int LAST_EDITED = 19;
-        int LAST_UPDATED = 20;
-        int SHOW_ID = 21;
-        int SHOW_IMDBID = 22;
-        int SHOW_TITLE = 23;
-        int SHOW_RUNTIME = 24;
-        int SHOW_LANGUAGE = 25;
+        int SHOW_ID = 20;
+        int SHOW_IMDBID = 21;
+        int SHOW_TITLE = 22;
+        int SHOW_RUNTIME = 23;
+        int SHOW_LANGUAGE = 24;
     }
 }
