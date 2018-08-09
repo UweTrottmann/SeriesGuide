@@ -32,12 +32,12 @@
   <string name="save_selection">Pohrani odabrano</string>
   <string name="action_display_all">Prikaži sve</string>
   <string name="web_search">Pretraži web</string>
-  <string name="add_to_homescreen">Prečac</string>
+  <string name="add_to_homescreen">Dodaj na početni zaslon</string>
   <string name="action_open">Otvori</string>
   <string name="sync_manually">Ručno sinkroniziraj</string>
   <string name="sync_and_update">Sinkroniziranje i ažuriranje</string>
   <string name="sync_and_download_all">Sinkroniziraj i sve preuzmi</string>
-  <string name="action_turn_off">Turn off</string>
+  <string name="action_turn_off">Isključi</string>
   <!-- Search -->
   <string name="clear_search_history">Očisti povijest pretraživanja</string>
   <string name="search_hint">Pretraži epizode</string>
@@ -53,7 +53,7 @@
   <string name="reinstall_info">Pokušajte sigurnosno kopirati postavke, ponovno instalirajte i vratite sig. kopiju.</string>
   <string name="api_error_generic">%s nedostupan. Pokušajte kasnije.</string>
   <string name="api_failed">Nije uspjelo: %s</string>
-  <string name="copy_to_clipboard">Copied to clipboard</string>
+  <string name="copy_to_clipboard">Kopirano u međuspremnik</string>
   <!-- Sharing -->
   <string name="share">Podijeli</string>
   <string name="share_show">Podijeli seriju</string>
@@ -187,7 +187,7 @@
   <string name="checkin_searchhint">Upiši naziv serije</string>
   <string name="add_empty">Ovdje ne postoje serije.</string>
   <string name="no_results">Nema rezultata, pokušajte cijele riječi.</string>
-  <string name="empty_show_search">Not found in your show list</string>
+  <string name="empty_show_search">Nije pronađeno u vašem popisu serija</string>
   <string name="action_try_any_language">Pokušajte bilo koji jezik</string>
   <string name="action_try_again">Pokušaj ponovno</string>
   <string name="tvdb_error_does_not_exist">Serija (još) ne postoji na TheTVDB. Pokušajte ponovno kasnije.</string>
@@ -196,7 +196,7 @@
   <string name="add_started">%s će se ubrzo pojaviti na vašem popisu serija.</string>
   <string name="add_error">Neuspješno dodavanje %s.</string>
   <string name="add_already_exists">%s je već u vašoj listi serija.</string>
-  <string name="title_new_episodes">New episodes</string>
+  <string name="title_new_episodes">Nove epizode</string>
   <string name="recommended">Preporučeno</string>
   <string name="watched_shows">Pogledano</string>
   <string name="shows_collection">Zbirka</string>
@@ -346,7 +346,7 @@
   <string name="pref_seasonsorting">Poredaj sezone prema&#8230;</string>
   <string name="pref_episodesorting">Poredaj epizode prema&#8230;</string>
   <string name="pref_language">Preferirani jezik sadržaja</string>
-  <string name="pref_language_fallback">Alternative language</string>
+  <string name="pref_language_fallback">Alternativni jezik</string>
   <string name="pref_updatewifionly">Slike samo putem Wi-Fi mreže</string>
   <string name="pref_updatewifionlysummary">Kako bi smanjili potrošnju podataka, nemojte preuzimati preko mobilnih mreža</string>
   <plurals name="days_before_plural">
