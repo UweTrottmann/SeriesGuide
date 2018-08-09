@@ -46,5 +46,6 @@ public final class SgJobInfo extends Table {
     return o;
   }
   public static void finishSgJobInfoBuffer(FlatBufferBuilder builder, int offset) { builder.finish(offset); }
+  public static void finishSizePrefixedSgJobInfoBuffer(FlatBufferBuilder builder, int offset) { builder.finishSizePrefixed(offset); }
 }
 
