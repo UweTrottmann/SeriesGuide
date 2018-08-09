@@ -5,6 +5,19 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 44
+----------
+*(in development)*
+
+#### 44-beta1
+*(2018-08-09)*
+
+* 🔧 Fix database migration for users that have used the legacy backup tool.
+* 🔧 Full episode details (notably image path) are again loaded when adding or updating a show and 
+     no longer on-demand when viewing an episode. This results in less network calls while browsing 
+     episodes.
+* 📝 Latest translations from crowdin. Added Cebuano (ceb) and Filipino (fil) (both incomplete).
+
 Version 43
 ----------
 *(2018-07-20)*
