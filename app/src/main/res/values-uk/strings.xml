@@ -32,7 +32,7 @@
   <string name="save_selection">Зберегти вибране</string>
   <string name="action_display_all">Показати все</string>
   <string name="web_search">Веб пошук</string>
-  <string name="add_to_homescreen">Ярлик</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string name="action_open">Відкрити</string>
   <string name="sync_manually">Синхронізація вручну</string>
   <string name="sync_and_update">Синхронізація та Оновлення</string>

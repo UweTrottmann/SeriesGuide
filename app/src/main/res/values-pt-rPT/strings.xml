@@ -32,7 +32,7 @@
   <string name="save_selection">Guardar opções selecionadas</string>
   <string name="action_display_all">Mostrar tudo</string>
   <string name="web_search">Pesquisa na Internet</string>
-  <string name="add_to_homescreen">Atalho</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string name="action_open">Abrir</string>
   <string name="sync_manually">Sincronizar manualmente</string>
   <string name="sync_and_update">Sincronizar &amp; Atualizar</string>

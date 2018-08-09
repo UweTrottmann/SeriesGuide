@@ -32,7 +32,7 @@
   <string name="save_selection">தேர்வு சேமி</string>
   <string name="action_display_all">எல்லாம் காண்பி</string>
   <string name="web_search">வலை தேடல்</string>
-  <string name="add_to_homescreen">எளியவழி</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string name="action_open">திற</string>
   <string name="sync_manually">கைமுறையாக ஒத்திசை</string>
   <string name="sync_and_update">ஒத்திசை &amp; புதுப்பி</string>

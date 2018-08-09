@@ -32,7 +32,7 @@
   <string name="save_selection">儲存所選項目</string>
   <string name="action_display_all">顯示全部</string>
   <string name="web_search">網頁搜尋</string>
-  <string name="add_to_homescreen">快速鍵</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string name="action_open">開啟</string>
   <string name="sync_manually">手動同步</string>
   <string name="sync_and_update">同步 &amp; 和更新</string>

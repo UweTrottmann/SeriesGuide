@@ -32,7 +32,7 @@
   <string name="save_selection">Kijelöltek mentése</string>
   <string name="action_display_all">Összes megjelenítése</string>
   <string name="web_search">Internetes keresés</string>
-  <string name="add_to_homescreen">Parancsikon</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string name="action_open">Megnyit</string>
   <string name="sync_manually">Manuális szinkronizálás</string>
   <string name="sync_and_update">Szinkronizálás &amp; Frissítés</string>

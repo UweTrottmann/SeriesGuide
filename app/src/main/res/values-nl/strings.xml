@@ -32,7 +32,7 @@
   <string name="save_selection">Selectie bewaren</string>
   <string name="action_display_all">Toon alles</string>
   <string name="web_search">Zoeken op het web</string>
-  <string name="add_to_homescreen">Snelkoppeling</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string name="action_open">Open</string>
   <string name="sync_manually">Handmatig synchroniseren</string>
   <string name="sync_and_update">Synchroniseer &amp; Update</string>
