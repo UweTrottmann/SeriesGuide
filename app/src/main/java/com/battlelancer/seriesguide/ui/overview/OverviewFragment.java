@@ -50,7 +50,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeDetailsTask;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
@@ -137,7 +136,6 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.buttonEpisodeComments) Button buttonComments;
 
     private Handler handler = new Handler();
-    private TvdbEpisodeDetailsTask detailsTask;
     private TraktRatingsTask ratingsTask;
     private Unbinder unbinder;
 
@@ -265,10 +263,6 @@ public class OverviewFragment extends Fragment implements
         super.onDestroy();
         if (handler != null) {
             handler.removeCallbacks(episodeActionsRunnable);
-        }
-        if (detailsTask != null) {
-            detailsTask.cancel(true);
-            detailsTask = null;
         }
         if (ratingsTask != null) {
             ratingsTask.cancel(true);
@@ -502,7 +496,6 @@ public class OverviewFragment extends Fragment implements
                 Episodes.COLLECTED,
                 Episodes.IMAGE,
                 Episodes.LAST_EDITED,
-                Episodes.LAST_UPDATED
         };
 
         int _ID = 0;
@@ -523,7 +516,6 @@ public class OverviewFragment extends Fragment implements
         int COLLECTED = 15;
         int IMAGE = 16;
         int LAST_EDITED = 17;
-        int LAST_UPDATED = 18;
     }
 
     interface ShowQuery {
@@ -865,13 +857,6 @@ public class OverviewFragment extends Fragment implements
     private void loadEpisodeDetails() {
         if (!isEpisodeDataAvailable) {
             return;
-        }
-
-        if (detailsTask == null || detailsTask.getStatus() == AsyncTask.Status.FINISHED) {
-            long lastEdited = currentEpisodeCursor.getLong(EpisodeQuery.LAST_EDITED);
-            long lastUpdated = currentEpisodeCursor.getLong(EpisodeQuery.LAST_UPDATED);
-            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(getContext(), showTvdbId,
-                    currentEpisodeTvdbId, lastEdited, lastUpdated);
         }
 
         if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {
