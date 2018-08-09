@@ -64,7 +64,7 @@ public class TvdbEpisodeDetailsTask extends AsyncTask<Void, Void, Void> {
             return null;
         }
 
-        Episode.FullEpisode episode = getEpisode(language);
+        Episode episode = getEpisode(language);
         if (episode == null) {
             return null; // failed to get episode from TVDB
         }
@@ -89,7 +89,7 @@ public class TvdbEpisodeDetailsTask extends AsyncTask<Void, Void, Void> {
     }
 
     @Nullable
-    private Episode.FullEpisode getEpisode(String language) {
+    private Episode getEpisode(String language) {
         TheTvdbEpisodes tvdbEpisodes = SgApp.getServicesComponent(context).tvdbEpisodes();
         try {
             Response<EpisodeResponse> response = tvdbEpisodes.get(episodeTvdbId, language)
@@ -99,8 +99,8 @@ public class TvdbEpisodeDetailsTask extends AsyncTask<Void, Void, Void> {
             }
             Timber.e("%s %s Getting full episode details failed. (id=%s,lang=%s)",
                     response.code(), response.message(), episodeTvdbId, language);
-        } catch (Exception ignored) {
-            Timber.e(ignored, "Getting full episode details failed (id=%s,lang=%s)",
+        } catch (Exception e) {
+            Timber.e(e, "Getting full episode details failed (id=%s,lang=%s)",
                     episodeTvdbId, language);
         }
 
