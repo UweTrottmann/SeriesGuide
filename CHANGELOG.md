@@ -15,6 +15,14 @@ Version 43
 * 🔧 Improvements when using a keyboard or remote.
 * 🔨 List widget should no longer stop refreshing on Huawei EMUI 8.0 devices.
 
+#### 43.1
+*(2018-08-16)*
+
+* 🔨 Fix database migration if the legacy backup tool was used.
+* 📝 Upgrading from a very old database (v37 or older) still unsupported. Update SeriesGuide to 
+  version 42.2 first. Get the APK at https://github.com/UweTrottmann/SeriesGuide/releases/tag/v42.2
+* 📝 Latest translations from crowdin.
+
 #### 43
 *(2018-07-20)*
 
