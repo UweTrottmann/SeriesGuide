@@ -32,12 +32,12 @@
   <string name="save_selection">Simpan bagian</string>
   <string name="action_display_all">Tunjukan semua</string>
   <string name="web_search">Pencarian Web</string>
-  <string name="add_to_homescreen">Pintasan</string>
+  <string name="add_to_homescreen">Tambahkan ke beranda</string>
   <string name="action_open">Buka</string>
   <string name="sync_manually">Sync Manual</string>
   <string name="sync_and_update">Sync &amp; Perbarui</string>
   <string name="sync_and_download_all">Sync &amp; unduh semua</string>
-  <string name="action_turn_off">Turn off</string>
+  <string name="action_turn_off">Matikan</string>
   <!-- Search -->
   <string name="clear_search_history">Bersihkan riwayat pencarian</string>
   <string name="search_hint">Cari episode</string>
@@ -53,7 +53,7 @@
   <string name="reinstall_info">Coba cadangkan di pengaturan, pasang ulang dan pulihkan.</string>
   <string name="api_error_generic">Tidak dapat bicara ke %s. Coba lagi nanti.</string>
   <string name="api_failed">Gagal: %s</string>
-  <string name="copy_to_clipboard">Copied to clipboard</string>
+  <string name="copy_to_clipboard">Disalin ke clipboard</string>
   <!-- Sharing -->
   <string name="share">Bagikan</string>
   <string name="share_show">Bagikan acara</string>
@@ -179,7 +179,7 @@
   <string name="checkin_searchhint">Ketik nama acara</string>
   <string name="add_empty">Tidak ada acara disini.</string>
   <string name="no_results">Tidak ada hasil, coba kata-kata lengkap.</string>
-  <string name="empty_show_search">Not found in your show list</string>
+  <string name="empty_show_search">Tidak ditemukan di daftar acara anda</string>
   <string name="action_try_any_language">Coba bahasa apa saja</string>
   <string name="action_try_again">Coba lagi</string>
   <string name="tvdb_error_does_not_exist">Acara tidak (belum) ada di TheTVDB. Coba lagi nanti.</string>

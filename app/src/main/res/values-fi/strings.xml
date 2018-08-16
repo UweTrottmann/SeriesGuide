@@ -32,7 +32,7 @@
   <string name="save_selection">Tallenna valinta</string>
   <string name="action_display_all">Näytä kaikki</string>
   <string name="web_search">Verkkohaku</string>
-  <string name="add_to_homescreen">Pikakuvake</string>
+  <string name="add_to_homescreen">Lisää aloitusnäyttöön</string>
   <string name="action_open">Avaa</string>
   <string name="sync_manually">Synkronoi manuaalisesti</string>
   <string name="sync_and_update">Synkronoi ja päivitä</string>
@@ -53,7 +53,7 @@
   <string name="reinstall_info">Yritä varmuuskopioida asetuksista, asenna uudelleen ja palauta.</string>
   <string name="api_error_generic">Kommunikointi %sin kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
   <string name="api_failed">Epäonnistui: %s</string>
-  <string name="copy_to_clipboard">Copied to clipboard</string>
+  <string name="copy_to_clipboard">Kopioitu leikepöydälle</string>
   <!-- Sharing -->
   <string name="share">Jaa</string>
   <string name="share_show">Jaa ohjelma</string>
@@ -154,7 +154,7 @@
   <!-- Calendar -->
   <string name="upcoming">Tulevat</string>
   <string name="recent">Viimeisimmät</string>
-  <string name="released_today">Lähetetään tänään</string>
+  <string name="released_today">Tulossa tänään</string>
   <string name="noupcoming">Ei tulevia jaksoja.</string>
   <string name="norecent">Ei viimeaikaisia jaksoja.</string>
   <string name="calendar_settings">Kalenteriasetukset</string>
@@ -172,8 +172,8 @@
     <item quantity="other">%d muuta jaksoa</item>
   </plurals>
   <plurals name="not_released_episodes_plural">
-    <item quantity="one">%d lähetettävänä</item>
-    <item quantity="other">%d lähetettävänä</item>
+    <item quantity="one">%d tulossa</item>
+    <item quantity="other">%d tulossa</item>
   </plurals>
   <plurals name="remaining_episodes_plural">
     <item quantity="one">%d jäljellä</item>
