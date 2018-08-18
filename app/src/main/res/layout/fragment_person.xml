@@ -64,7 +64,7 @@
             android:layout_marginRight="@dimen/keyline"
             android:layout_marginTop="8dp"
             android:text="@string/person_biography"
-            android:textAppearance="@style/TextAppearance.Subhead"
+            android:textAppearance="@style/TextAppearance.Title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewPersonHeadshot" />
@@ -77,7 +77,7 @@
             android:layout_marginLeft="@dimen/keyline"
             android:layout_marginRight="@dimen/keyline"
             android:layout_marginTop="8dp"
-            android:textAppearance="@style/TextAppearance.Body"
+            android:textAppearance="?attr/sgTextAppearanceBody1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewPersonBiographyHeader"

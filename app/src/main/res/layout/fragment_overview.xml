@@ -206,7 +206,7 @@
                             android:layout_marginBottom="@dimen/large_padding"
                             android:background="?attr/selectableItemBackground"
                             android:focusable="true"
-                            android:textAppearance="@style/TextAppearance.Body"
+                            android:textAppearance="?attr/sgTextAppearanceBody1"
                             tools:text="This is a sample description of what happens in this episode. A lot." />
 
                         <View
