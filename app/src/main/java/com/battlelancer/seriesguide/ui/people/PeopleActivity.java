@@ -1,9 +1,7 @@
 package com.battlelancer.seriesguide.ui.people;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -14,11 +12,12 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.Shadows;
-import com.battlelancer.seriesguide.util.Utils;
 
 public class PeopleActivity extends BaseActivity implements PeopleFragment.OnShowPersonListener {
 
-    @Nullable @BindView(R.id.viewPeopleShadowStart) View shadowPeoplePane;
+    @Nullable
+    @BindView(R.id.viewPeopleShadowStart)
+    View shadowPeoplePane;
     @BindView(R.id.containerPeople) View containerPeople;
 
     private boolean isTwoPane;
@@ -84,7 +83,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
             int personTmdbId = getIntent().getIntExtra(PersonFragment.InitBundle.PERSON_TMDB_ID,
                     -1);
             if (personTmdbId != -1) {
-                showPerson(null, personTmdbId);
+                showPerson(personTmdbId);
 
                 // if this is not a dual pane layout, remove ourselves from back stack
                 if (!isTwoPane) {
@@ -104,19 +103,6 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.containerPeople, f, "people-list")
                     .commit();
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                postponeEnterTransition();
-                containerPeople.post(new Runnable() {
-                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-                    @Override
-                    public void run() {
-                        // allow the people adapter to repopulate during the next layout pass
-                        // before starting the transition animation
-                        startPostponedEnterTransition();
-                    }
-                });
-            }
         }
     }
 
@@ -146,7 +132,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
     }
 
     @Override
-    public void showPerson(@Nullable View view, int tmdbId) {
+    public void showPerson(int tmdbId) {
         if (isTwoPane) {
             // show inline
             PersonFragment f = PersonFragment.newInstance(tmdbId);
@@ -157,13 +143,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
             // start new activity
             Intent i = new Intent(this, PersonActivity.class);
             i.putExtra(PersonFragment.InitBundle.PERSON_TMDB_ID, tmdbId);
-
-            if (view != null) {
-                Utils.startActivityWithTransition(this, i, view,
-                        R.string.transitionNamePersonImage);
-            } else {
-                startActivity(i);
-            }
+            startActivity(i);
         }
     }
 }

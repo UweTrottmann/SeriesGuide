@@ -19,7 +19,6 @@
             android:contentDescription="@null"
             android:scaleType="centerCrop"
             android:src="@color/protection_dark"
-            android:transitionName="@string/transitionNamePersonImage"
             tools:targetApi="lollipop" />
 
         <TextView

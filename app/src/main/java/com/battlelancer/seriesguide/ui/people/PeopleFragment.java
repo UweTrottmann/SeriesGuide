@@ -42,12 +42,12 @@ public class PeopleFragment extends Fragment {
     private int activatedPosition = ListView.INVALID_POSITION;
 
     interface OnShowPersonListener {
-        void showPerson(View view, int tmdbId);
+        void showPerson(int tmdbId);
     }
 
     private static OnShowPersonListener sDummyListener = new OnShowPersonListener() {
         @Override
-        public void showPerson(View view, int tmdbId) {
+        public void showPerson(int tmdbId) {
         }
     };
 
@@ -121,8 +121,7 @@ public class PeopleFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PeopleListHelper.Person person = adapter.getItem(position);
-                PeopleAdapter.ViewHolder viewHolder = (PeopleAdapter.ViewHolder) view.getTag();
-                onShowPersonListener.showPerson(viewHolder.headshot, person.tmdbId);
+                onShowPersonListener.showPerson(person.tmdbId);
             }
         });
 
