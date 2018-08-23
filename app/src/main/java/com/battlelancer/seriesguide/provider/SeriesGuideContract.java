@@ -197,11 +197,6 @@ public class SeriesGuideContract {
         String NEXTTEXT = "nexttext";
 
         /**
-         * @deprecated Use {@link #NEXTAIRDATEMS} instead. Not added on new installs.
-         */
-        String NEXTAIRDATE = "nextairdate";
-
-        /**
          * Next episode release time instant. See {@link Episodes#FIRSTAIREDMS}.
          *
          * <pre>
