@@ -314,8 +314,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     private Cursor getDataCursor(@BackupType int type) {
         if (type == BACKUP_SHOWS) {
             return context.getContentResolver().query(
-                    Shows.CONTENT_URI,
-                    isFullDump ? ShowsQuery.PROJECTION_FULL : ShowsQuery.PROJECTION,
+                    Shows.CONTENT_URI, ShowsQuery.PROJECTION_FULL,
                     null, null, Shows.SORT_TITLE);
         }
         if (type == BACKUP_LISTS) {
@@ -383,6 +382,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
             Show show = new Show();
             show.tvdb_id = shows.getInt(ShowsQuery.ID);
+            show.tvdb_slug = shows.getString(ShowsQuery.SLUG);
             show.title = shows.getString(ShowsQuery.TITLE);
             show.favorite = shows.getInt(ShowsQuery.FAVORITE) == 1;
             show.notify = shows.getInt(ShowsQuery.NOTIFY) == 1;
@@ -427,7 +427,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         show.seasons = new ArrayList<>();
         final Cursor seasonsCursor = context.getContentResolver().query(
                 Seasons.buildSeasonsOfShowUri(String.valueOf(show.tvdb_id)),
-                new String[] {
+                new String[]{
                         Seasons._ID,
                         Seasons.COMBINED
                 }, null, null, null
@@ -525,7 +525,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         final Cursor listItems = context.getContentResolver().query(
                 ListItems.CONTENT_URI, ListItemsQuery.PROJECTION,
                 ListItemsQuery.SELECTION,
-                new String[] {
+                new String[]{
                         list.listId
                 }, null
         );
@@ -595,30 +595,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     public interface ShowsQuery {
-        String[] PROJECTION = new String[] {
-                Shows._ID,
-                Shows.TITLE,
-                Shows.FAVORITE,
-                Shows.NOTIFY,
-                Shows.HIDDEN,
-                Shows.RELEASE_TIME,
-                Shows.RELEASE_WEEKDAY,
-                Shows.RELEASE_TIMEZONE,
-                Shows.RELEASE_COUNTRY,
-                Shows.LASTWATCHEDID,
-                Shows.LASTWATCHED_MS,
-                Shows.POSTER,
-                Shows.CONTENTRATING,
-                Shows.STATUS,
-                Shows.RUNTIME,
-                Shows.NETWORK,
-                Shows.IMDBID,
-                Shows.TRAKT_ID,
-                Shows.FIRST_RELEASE,
-                Shows.RATING_USER,
-                Shows.LANGUAGE
-        };
-        String[] PROJECTION_FULL = new String[] {
+        String[] PROJECTION_FULL = new String[]{
                 Shows._ID,
                 Shows.TITLE,
                 Shows.FAVORITE,
@@ -645,7 +622,8 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows.RATING_VOTES,
                 Shows.GENRES,
                 Shows.LASTUPDATED,
-                Shows.LASTEDIT
+                Shows.LASTEDIT,
+                Shows.SLUG
         };
 
         int ID = 0;
@@ -669,17 +647,17 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int FIRSTAIRED = 18;
         int RATING_USER = 19;
         int LANGUAGE = 20;
-        // Full dump only
         int OVERVIEW = 21;
         int RATING_GLOBAL = 22;
         int RATING_VOTES = 23;
         int GENRES = 24;
         int LAST_UPDATED = 25;
         int LAST_EDITED = 26;
+        int SLUG = 27;
     }
 
     public interface EpisodesQuery {
-        String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[]{
                 Episodes._ID,
                 Episodes.NUMBER,
                 Episodes.ABSOLUTE_NUMBER,
@@ -691,7 +669,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Episodes.DVDNUMBER,
                 Episodes.RATING_USER
         };
-        String[] PROJECTION_FULL = new String[] {
+        String[] PROJECTION_FULL = new String[]{
                 Episodes._ID,
                 Episodes.NUMBER,
                 Episodes.ABSOLUTE_NUMBER,
@@ -737,7 +715,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     public interface ListsQuery {
-        String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[]{
                 SeriesGuideContract.Lists.LIST_ID,
                 SeriesGuideContract.Lists.NAME,
                 SeriesGuideContract.Lists.ORDER
@@ -749,7 +727,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     public interface ListItemsQuery {
-        String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[]{
                 ListItems.LIST_ITEM_ID, SeriesGuideContract.Lists.LIST_ID, ListItems.ITEM_REF_ID,
                 ListItems.TYPE
         };
@@ -763,7 +741,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     public interface MoviesQuery {
-        String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[]{
                 Movies._ID,
                 Movies.TMDB_ID,
                 Movies.IMDB_ID,
