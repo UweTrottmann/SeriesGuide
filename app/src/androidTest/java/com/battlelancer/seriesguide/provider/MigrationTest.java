@@ -113,7 +113,7 @@ public class MigrationTest {
     public void migrationFrom43To44_containsCorrectData() throws IOException {
         // First version that uses Room, so can use migration test helper
         SupportSQLiteDatabase db = migrationTestHelper.createDatabase(TEST_DB_NAME, 43);
-        RoomDatabaseTestHelper.insertShow(SHOW, db);
+        RoomDatabaseTestHelper.insertShow(SHOW, db, 43);
         RoomDatabaseTestHelper.insertSeason(SEASON, db);
         RoomDatabaseTestHelper
                 .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);
@@ -125,7 +125,7 @@ public class MigrationTest {
     @Test
     public void migrationFrom44To45_containsCorrectData() throws IOException {
         SupportSQLiteDatabase db = migrationTestHelper.createDatabase(TEST_DB_NAME, 44);
-        RoomDatabaseTestHelper.insertShow(SHOW, db);
+        RoomDatabaseTestHelper.insertShow(SHOW, db, 44);
         RoomDatabaseTestHelper.insertSeason(SEASON, db);
         RoomDatabaseTestHelper
                 .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);
@@ -137,7 +137,7 @@ public class MigrationTest {
     @Test
     public void migrationFrom45To46_containsCorrectData() throws IOException {
         SupportSQLiteDatabase db = migrationTestHelper.createDatabase(TEST_DB_NAME, 45);
-        RoomDatabaseTestHelper.insertShow(SHOW, db);
+        RoomDatabaseTestHelper.insertShow(SHOW, db, 45);
         RoomDatabaseTestHelper.insertSeason(SEASON, db);
         RoomDatabaseTestHelper
                 .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);

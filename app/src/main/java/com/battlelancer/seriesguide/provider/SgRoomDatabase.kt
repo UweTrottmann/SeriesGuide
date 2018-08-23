@@ -41,7 +41,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
         private const val VERSION_43_ROOM = 43
         private const val VERSION_44_RECREATE_SERIES_EPISODES = 44
         private const val VERSION_45_RECREATE_SEASONS = 45
-        private const val VERSION_46_SERIES_SLUG = 46
+        const val VERSION_46_SERIES_SLUG = 46
         const val VERSION = VERSION_46_SERIES_SLUG
 
         @Volatile

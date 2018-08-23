@@ -21,6 +21,9 @@ public class SqliteDatabaseTestHelper {
         ContentValues values = show.toContentValues(InstrumentationRegistry.getTargetContext(),
                 true);
 
+        // remove columns added after version 42
+        values.remove(Shows.SLUG);
+
         db.insertWithOnConflict(Tables.SHOWS, null, values,
                 SQLiteDatabase.CONFLICT_REPLACE);
     }

@@ -18,9 +18,14 @@ import com.uwetrottmann.thetvdb.entities.Episode;
  */
 public class RoomDatabaseTestHelper {
 
-    public static void insertShow(Show show, SupportSQLiteDatabase db) {
+    public static void insertShow(Show show, SupportSQLiteDatabase db, int version) {
         ContentValues values = show.toContentValues(InstrumentationRegistry.getTargetContext(),
                 true);
+
+        // remove columns added in newer versions
+        if (version < SgRoomDatabase.VERSION_46_SERIES_SLUG) {
+            values.remove(Shows.SLUG);
+        }
 
         db.insert(Tables.SHOWS, SQLiteDatabase.CONFLICT_REPLACE, values);
     }
