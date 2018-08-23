@@ -127,6 +127,7 @@ public class ShowFragment extends Fragment {
     private Cursor showCursor;
     private ShowTools showTools;
     private TraktRatingsTask traktTask;
+    @Nullable private String showSlug;
     private String showTitle;
     private String posterPath;
     @Nullable private String languageCode;
@@ -281,7 +282,8 @@ public class ShowFragment extends Fragment {
                 Shows.LASTEDIT,
                 Shows.LANGUAGE,
                 Shows.NOTIFY,
-                Shows.HIDDEN
+                Shows.HIDDEN,
+                Shows.SLUG
         };
 
         int TITLE = 1;
@@ -306,6 +308,7 @@ public class ShowFragment extends Fragment {
         int LANGUAGE = 20;
         int NOTIFY = 21;
         int HIDDEN = 22;
+        int SLUG = 23;
     }
 
     private LoaderCallbacks<Cursor> showLoaderCallbacks = new LoaderCallbacks<Cursor>() {
@@ -336,6 +339,8 @@ public class ShowFragment extends Fragment {
         if (showCursor == null) {
             return;
         }
+
+        showSlug = showCursor.getString(ShowQuery.SLUG);
 
         // title
         showTitle = showCursor.getString(ShowQuery.TITLE);
@@ -481,7 +486,7 @@ public class ShowFragment extends Fragment {
         ServiceUtils.setUpImdbButton(imdbId, buttonImdb, TAG);
 
         // TVDb button
-        String tvdbUri = TvdbLinks.show(getShowTvdbId(), this.languageCode);
+        String tvdbUri = TvdbLinks.show(showSlug, getShowTvdbId());
         ViewTools.openUriOnClick(buttonTvdb, tvdbUri, TAG, "TVDb");
 
         // trakt button
@@ -642,7 +647,7 @@ public class ShowFragment extends Fragment {
 
     private void shareShow() {
         if (showCursor != null) {
-            ShareUtils.shareShow(getActivity(), getShowTvdbId(), showTitle, languageCode);
+            ShareUtils.shareShow(getActivity(), showSlug, getShowTvdbId(), showTitle);
             Utils.trackAction(getActivity(), TAG, "Share");
         }
     }

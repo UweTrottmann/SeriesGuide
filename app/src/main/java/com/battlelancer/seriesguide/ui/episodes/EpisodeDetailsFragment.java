@@ -92,6 +92,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private boolean isInMultipane;
     private int episodeTvdbId;
     private int showTvdbId;
+    @Nullable private String showTvdbSlug;
     private int seasonTvdbId;
     private int seasonNumber;
     private int episodeNumber;
@@ -101,7 +102,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private String showTitle;
     private int showRunTime;
     private long episodeReleaseTime;
-    private String languageCode;
 
     @BindView(R.id.containerEpisode) View containerEpisode;
     @BindView(R.id.containerRatings) View containerRatings;
@@ -395,6 +395,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         }
 
         showTvdbId = cursor.getInt(DetailsQuery.SHOW_ID);
+        showTvdbSlug = cursor.getString(DetailsQuery.SHOW_SLUG);
         seasonNumber = cursor.getInt(DetailsQuery.SEASON);
         episodeNumber = cursor.getInt(DetailsQuery.NUMBER);
         showRunTime = cursor.getInt(DetailsQuery.SHOW_RUNTIME);
@@ -410,9 +411,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 TextTools.getEpisodeTitle(requireContext(), hideDetails ? null : episodeTitle,
                         episodeNumber));
         String overview = cursor.getString(DetailsQuery.OVERVIEW);
-        languageCode = cursor.getString(DetailsQuery.SHOW_LANGUAGE);
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
+            String languageCode = cursor.getString(DetailsQuery.SHOW_LANGUAGE);
             overview = getString(R.string.no_translation,
                     LanguageTools.getShowLanguageStringFor(getContext(), languageCode),
                     getString(R.string.tvdb));
@@ -619,8 +620,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // TVDb
         seasonTvdbId = cursor.getInt(DetailsQuery.SEASON_ID);
-        String tvdbUri = TvdbLinks
-                .episode(showTvdbId, seasonTvdbId, episodeTvdbId, languageCode);
+        String tvdbUri = TvdbLinks.episode(showTvdbSlug, showTvdbId, seasonTvdbId, episodeTvdbId);
         ViewTools.openUriOnClick(tvdbButton, tvdbUri, TAG, "TVDb");
         // trakt comments
         commentsButton.setOnClickListener(new OnClickListener() {
@@ -657,8 +657,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         if (episodeTitle == null || showTitle == null) {
             return;
         }
-        ShareUtils.shareEpisode(requireActivity(), showTvdbId, seasonTvdbId, episodeTvdbId,
-                seasonNumber, episodeNumber, showTitle, episodeTitle, languageCode);
+        ShareUtils.shareEpisode(requireActivity(), showTvdbSlug, showTvdbId, seasonTvdbId,
+                episodeTvdbId, seasonNumber, episodeNumber, showTitle, episodeTitle);
         Utils.trackAction(requireContext(), TAG, "Share");
     }
 
@@ -773,7 +773,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 Shows.IMDBID,
                 Shows.TITLE,
                 Shows.RUNTIME,
-                Shows.LANGUAGE
+                Shows.LANGUAGE,
+                Shows.SLUG
         };
 
         int _ID = 0;
@@ -801,5 +802,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         int SHOW_TITLE = 22;
         int SHOW_RUNTIME = 23;
         int SHOW_LANGUAGE = 24;
+        int SHOW_SLUG = 25;
     }
 }

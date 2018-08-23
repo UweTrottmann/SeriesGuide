@@ -447,10 +447,10 @@ public class OverviewFragment extends Fragment implements
         int seasonNumber = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
         int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
         String episodeTitle = currentEpisodeCursor.getString(EpisodeQuery.TITLE);
-        String languageCode = showCursor.getString(ShowQuery.SHOW_LANGUAGE);
+        String showTvdbSlug = showCursor.getString(ShowQuery.SHOW_SLUG);
 
-        ShareUtils.shareEpisode(getActivity(), showTvdbId, seasonTvdbId, currentEpisodeTvdbId,
-                seasonNumber, episodeNumber, showTitle, episodeTitle, languageCode);
+        ShareUtils.shareEpisode(getActivity(), showTvdbSlug, showTvdbId, seasonTvdbId,
+                currentEpisodeTvdbId, seasonNumber, episodeNumber, showTitle, episodeTitle);
 
         Utils.trackAction(getActivity(), TAG, "Share");
     }
@@ -533,7 +533,8 @@ public class OverviewFragment extends Fragment implements
                 Shows.IMDBID,
                 Shows.RUNTIME,
                 Shows.FAVORITE,
-                Shows.LANGUAGE
+                Shows.LANGUAGE,
+                Shows.SLUG
         };
 
         int SHOW_TITLE = 1;
@@ -548,6 +549,7 @@ public class OverviewFragment extends Fragment implements
         int SHOW_RUNTIME = 10;
         int SHOW_FAVORITE = 11;
         int SHOW_LANGUAGE = 12;
+        int SHOW_SLUG = 13;
     }
 
     @Override
@@ -794,7 +796,8 @@ public class OverviewFragment extends Fragment implements
         // TVDb button
         final int episodeTvdbId = currentEpisodeCursor.getInt(EpisodeQuery._ID);
         final int seasonTvdbId = currentEpisodeCursor.getInt(EpisodeQuery.SEASON_ID);
-        String uri = TvdbLinks.episode(showTvdbId, seasonTvdbId, episodeTvdbId, languageCode);
+        String showTvdbSlug = showCursor.getString(ShowQuery.SHOW_SLUG);
+        String uri = TvdbLinks.episode(showTvdbSlug, showTvdbId, seasonTvdbId, episodeTvdbId);
         ViewTools.openUriOnClick(buttonTvdb, uri, TAG, "TVDb");
     }
 
