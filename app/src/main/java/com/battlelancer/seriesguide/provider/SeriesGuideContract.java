@@ -24,6 +24,12 @@ public class SeriesGuideContract {
         String REF_SHOW_ID = "series_id";
 
         /**
+         * TheTVDB slug for this show to build URLs. Always a string, but may be a number string if
+         * no slug is set (still safe to build URL with). May be null or empty.
+         */
+        String SLUG = "series_slug";
+
+        /**
          * Ensure this is NOT null (enforced through database constraint).
          */
         String TITLE = "seriestitle";

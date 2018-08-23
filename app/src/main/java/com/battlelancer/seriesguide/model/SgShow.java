@@ -15,6 +15,9 @@ public class SgShow {
     @ColumnInfo(name = Shows._ID)
     public int tvdbId;
 
+    @ColumnInfo(name = Shows.SLUG)
+    public String slug = "";
+
     /**
      * Ensure this is NOT null (enforced through database constraint).
      */

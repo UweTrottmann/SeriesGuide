@@ -41,7 +41,8 @@ abstract class SgRoomDatabase : RoomDatabase() {
         private const val VERSION_43_ROOM = 43
         private const val VERSION_44_RECREATE_SERIES_EPISODES = 44
         private const val VERSION_45_RECREATE_SEASONS = 45
-        const val VERSION = VERSION_45_RECREATE_SEASONS
+        private const val VERSION_46_SERIES_SLUG = 46
+        const val VERSION = VERSION_46_SERIES_SLUG
 
         @Volatile
         private var instance: SgRoomDatabase? = null
@@ -62,6 +63,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
                     val newInstance = Room.databaseBuilder(context.applicationContext,
                             SgRoomDatabase::class.java, SeriesGuideDatabase.DATABASE_NAME)
                             .addMigrations(
+                                    MIGRATION_45_46,
                                     MIGRATION_44_45,
                                     MIGRATION_42_44,
                                     MIGRATION_43_44,
@@ -101,6 +103,16 @@ abstract class SgRoomDatabase : RoomDatabase() {
                 } else {
                     db.execSQL(SeriesGuideDatabase.CREATE_SEARCH_TABLE_API_ICS)
                 }
+            }
+        }
+
+        @JvmField
+        val MIGRATION_45_46: Migration = object :
+                Migration(VERSION_45_RECREATE_SEASONS, VERSION_46_SERIES_SLUG) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Timber.d("Migrating database from 45 to 46")
+
+                database.execSQL("ALTER TABLE series ADD COLUMN series_slug TEXT;")
             }
         }
 
