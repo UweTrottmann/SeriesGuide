@@ -503,6 +503,7 @@ public class TvdbTools {
 
         Show result = new Show();
         result.tvdb_id = showTvdbId;
+        result.tvdb_slug = series.slug;
         // actors are unused, are fetched from tmdb
         result.title = series.seriesName != null ? series.seriesName.trim() : null;
         result.network = series.network;
