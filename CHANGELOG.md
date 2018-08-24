@@ -9,16 +9,27 @@ Version 44
 ----------
 *(in development)*
 
+#### 44-beta2
+*(2018-08-24)*
+
+* 🔧 Use and share new TVDB links for shows and episodes. Only works after a show is updated.
+* 🔧 Tap and hold to copy TVDB, IMDB and trakt links for shows and episodes.
+* 🔧 Add button to manage subscriptions (Play Store only).
+* 🔧 Experiment with larger text for descriptions.
+* 🔧 Move person actions inline, improve error messages.
+* 🔧 Distinct icon for add to home screen button.
+* 🔨 Drop person image animation, was broken and slow.
+* 📝 Latest translations from crowdin.
+
 #### 44-beta1
 *(2018-08-09)*
 
-* 🔧 Fix database migration for users that have used the legacy backup tool. Note that upgrading 
-     from a very old database (database version 37 or older) still remains not supported. Try to 
-     update SeriesGuide to version 42.2 first. You can get the APK at 
-     https://github.com/UweTrottmann/SeriesGuide/releases/tag/v42.2
+* 🔨 Fix database migration for users that have used the legacy backup tool. Note that upgrading 
+  from SeriesGuide 25 (2015) or older still remains not supported. Update to version 42.2 first. 
+  Get the APK at https://github.com/UweTrottmann/SeriesGuide/releases/tag/v42.2
 * 🔧 Full episode details (notably image path) are again loaded when adding or updating a show and 
-     no longer on-demand when viewing an episode. This results in less network calls while browsing 
-     episodes.
+  no longer on-demand when viewing an episode. This results in less network calls while browsing 
+  episodes.
 * 📝 Latest translations from crowdin. Added Cebuano (ceb) and Filipino (fil) (both incomplete).
 
 Version 43
