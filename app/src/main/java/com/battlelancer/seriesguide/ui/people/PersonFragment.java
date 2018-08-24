@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui.people;
 
+import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,23 +10,25 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnLongClick;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.ClipboardTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TmdbTools;
+import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.entities.Person;
 
@@ -41,6 +44,8 @@ public class PersonFragment extends Fragment {
     @BindView(R.id.imageViewPersonHeadshot) ImageView imageViewHeadshot;
     @BindView(R.id.textViewPersonName) TextView textViewName;
     @BindView(R.id.textViewPersonBiography) TextView textViewBiography;
+    @BindView(R.id.buttonPersonTmdbLink) Button buttonTmdbLink;
+    @BindView(R.id.buttonPersonWebSearch) Button buttonWebSearch;
 
     private Person person;
     private Unbinder unbinder;
@@ -69,6 +74,10 @@ public class PersonFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_person, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 
+        Resources.Theme theme = requireActivity().getTheme();
+        ViewTools.setVectorIconLeft(theme, buttonTmdbLink, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonWebSearch, R.drawable.ic_search_white_24dp);
+
         return rootView;
     }
 
@@ -78,8 +87,6 @@ public class PersonFragment extends Fragment {
 
         getLoaderManager().initLoader(PeopleActivity.PERSON_LOADER_ID, null,
                 personLoaderCallbacks);
-
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -89,25 +96,27 @@ public class PersonFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    @OnClick(R.id.buttonPersonTmdbLink)
+    public void onClickButtonTmdbLink() {
         if (person != null) {
-            inflater.inflate(R.menu.person_menu, menu);
+            TmdbTools.openTmdbPerson(getActivity(), person.id, TAG);
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.menu_action_person_tmdb) {
-            TmdbTools.openTmdbPerson(getActivity(), person.id, TAG);
-            return true;
+    @OnLongClick(R.id.buttonPersonTmdbLink)
+    public boolean onLongClickButtonTmdbLink(View view) {
+        if (person == null) {
+            return false;
         }
-        if (itemId == R.id.menu_action_person_web_search) {
+        ClipboardTools.copyTextToClipboard(view.getContext(), TmdbTools.buildPersonUrl(person.id));
+        return true;
+    }
+
+    @OnClick(R.id.buttonPersonWebSearch)
+    public void onClickButtonWebSearch() {
+        if (person != null) {
             ServiceUtils.performWebSearch(getActivity(), person.name, TAG);
-            return true;
         }
-        return super.onOptionsItemSelected(item);
     }
 
     private void populatePersonViews(Person person) {
