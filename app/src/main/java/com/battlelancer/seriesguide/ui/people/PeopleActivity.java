@@ -80,8 +80,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
 
         if (savedInstanceState == null) {
             // check if we should directly show a person
-            int personTmdbId = getIntent().getIntExtra(PersonFragment.InitBundle.PERSON_TMDB_ID,
-                    -1);
+            int personTmdbId = getIntent().getIntExtra(PersonFragment.ARG_PERSON_TMDB_ID, -1);
             if (personTmdbId != -1) {
                 showPerson(personTmdbId);
 
@@ -142,7 +141,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
         } else {
             // start new activity
             Intent i = new Intent(this, PersonActivity.class);
-            i.putExtra(PersonFragment.InitBundle.PERSON_TMDB_ID, tmdbId);
+            i.putExtra(PersonFragment.ARG_PERSON_TMDB_ID, tmdbId);
             startActivity(i);
         }
     }
