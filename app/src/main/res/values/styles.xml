@@ -26,7 +26,7 @@
     </style>
 
     <style name="TextAppearance.Display1.White">
-        <item name="android:textColor">@color/black_11</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="TextAppearance.Headline">
