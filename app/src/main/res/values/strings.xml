@@ -521,6 +521,7 @@
     <string name="onlyx">Only for supporters</string>
     <string name="action_upgrade">Unlock all features</string>
     <string name="billing_action_subscribe">Subscribe</string>
+    <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
     <string name="billing_action_pass">Get X Pass</string>
     <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
     <string name="billing_price_pass">one-time purchase</string>

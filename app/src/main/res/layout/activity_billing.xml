@@ -79,10 +79,20 @@
                     tools:text="1.99 €/year, try for free, cancel any time through Google Play" />
 
                 <Button
-                    android:id="@+id/buttonBillingGetPass"
+                    android:id="@+id/buttonBillingManageSubscription"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textViewBillingPriceSubscription"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:text="@string/billing_action_manage_subscriptions" />
+
+                <Button
+                    android:id="@+id/buttonBillingGetPass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/buttonBillingManageSubscription"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/large_padding"
                     android:enabled="false"
