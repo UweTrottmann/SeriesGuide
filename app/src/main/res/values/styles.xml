@@ -134,6 +134,11 @@
         <item name="android:letterSpacing" tools:targetApi="lollipop">0.03125</item>
     </style>
 
+    <style name="TextAppearance.SeriesGuide.Body2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing" tools:targetApi="lollipop">0.0178571429</item>
+    </style>
+
     <style name="TextAppearance.SeriesGuide.EmptyState" parent="TextAppearance.Title.Dim" />
 
     <!-- Widget styles -->
