@@ -187,7 +187,7 @@ public class ShowFragment extends Fragment {
         });
 
         // shortcut button
-        ViewTools.setVectorIconLeft(theme, buttonShortcut, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonShortcut, R.drawable.ic_add_to_home_screen_black_24dp);
         buttonShortcut.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
