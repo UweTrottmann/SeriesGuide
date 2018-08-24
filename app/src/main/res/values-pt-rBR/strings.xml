@@ -457,6 +457,7 @@
   <string name="onlyx">Só para quem desbloqueou o app</string>
   <string name="action_upgrade">Desbloqueie todos os recursos</string>
   <string name="billing_action_subscribe">Inscrever</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">Adquira o X Pass</string>
   <string name="billing_price_subscribe">%1$s/ano, teste gratuitamente, cancele a qualquer momento até %2$s</string>
   <string name="billing_price_pass">compra única</string>

@@ -458,6 +458,7 @@
   <string name="onlyx">Endast för supporters</string>
   <string name="action_upgrade">Lås upp alla funktioner</string>
   <string name="billing_action_subscribe">Prenumerera</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">Skaffa X Pass</string>
   <string name="billing_price_subscribe">%1$s/år, prova gratis, avbryt när som helst genom %2$s</string>
   <string name="billing_price_pass">engångsköp</string>

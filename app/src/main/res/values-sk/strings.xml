@@ -479,6 +479,7 @@
   <string name="onlyx">Len pre podporovateľov</string>
   <string name="action_upgrade">Odomknúť všetky funkcie</string>
   <string name="billing_action_subscribe">Predplatiť</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">Získať X Pass</string>
   <string name="billing_price_subscribe">%1$s/ročne, vyskúšajte zadarmo, zrušte kedykoľvek prostredníctvom %2$s</string>
   <string name="billing_price_pass">jednorázová platba</string>

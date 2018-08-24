@@ -457,6 +457,7 @@
   <string name="onlyx">Само за подржувачите</string>
   <string name="action_upgrade">Отклучи ги сите нови функционалност</string>
   <string name="billing_action_subscribe">Претплати се</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">Купи X Pass</string>
   <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">еднократно купување</string>

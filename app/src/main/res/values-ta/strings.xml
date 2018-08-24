@@ -457,6 +457,7 @@
   <string name="onlyx">ஆதரவாளர்கள்-மட்டுமே</string>
   <string name="action_upgrade">அனைத்து அம்சங்களும் பூட்டவிழ்</string>
   <string name="billing_action_subscribe">சந்தாதராகு</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">பெறு X கடவுச்</string>
   <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">-முறை வாங்குதல்</string>

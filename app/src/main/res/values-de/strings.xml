@@ -457,6 +457,7 @@
   <string name="onlyx">Nur für Unterstützer</string>
   <string name="action_upgrade">Alle Funktionen freischalten</string>
   <string name="billing_action_subscribe">Abonnieren</string>
+  <string name="billing_action_manage_subscriptions">Abos verwalten</string>
   <string name="billing_action_pass">X Pass holen</string>
   <string name="billing_price_subscribe">%1$s/Jahr, kostenlos testen, bei %2$s jederzeit kündbar</string>
   <string name="billing_price_pass">einmaliger Kauf</string>

@@ -457,6 +457,7 @@
   <string name="onlyx">Bare for tilhengere</string>
   <string name="action_upgrade">Lås opp alle funksjoner</string>
   <string name="billing_action_subscribe">Abonner</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">Få X pass</string>
   <string name="billing_price_subscribe">%1$s/år, prøv gratis, avbryt når som helst gjennom %2$s</string>
   <string name="billing_price_pass">engangskjøp</string>

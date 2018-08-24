@@ -457,6 +457,7 @@
   <string name="onlyx">Uniquement pour les supporters</string>
   <string name="action_upgrade">Déverrouiller toutes les fonctionnalités</string>
   <string name="billing_action_subscribe">Souscrire</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">Obtenir X Pass</string>
   <string name="billing_price_subscribe">%1$s/an, faites l’essai gratuitement, annulez à tout moment via %2$s</string>
   <string name="billing_price_pass">Achat à vie</string>
