@@ -767,8 +767,9 @@ public class OverviewFragment extends Fragment implements
         ServiceUtils.setUpImdbButton(imdbId, buttonImdb, TAG);
 
         // trakt button
-        String uri = TraktTools.buildEpisodeUrl(currentEpisodeTvdbId);
-        ViewTools.openUriOnClick(buttonTrakt, uri, TAG, "trakt");
+        String traktLink = TraktTools.buildEpisodeUrl(currentEpisodeTvdbId);
+        ViewTools.openUriOnClick(buttonTrakt, traktLink, TAG, "trakt");
+        ClipboardTools.copyTextToClipboardOnLongClick(buttonTrakt, traktLink);
     }
 
     /**
@@ -797,8 +798,9 @@ public class OverviewFragment extends Fragment implements
         final int episodeTvdbId = currentEpisodeCursor.getInt(EpisodeQuery._ID);
         final int seasonTvdbId = currentEpisodeCursor.getInt(EpisodeQuery.SEASON_ID);
         String showTvdbSlug = showCursor.getString(ShowQuery.SHOW_SLUG);
-        String uri = TvdbLinks.episode(showTvdbSlug, showTvdbId, seasonTvdbId, episodeTvdbId);
-        ViewTools.openUriOnClick(buttonTvdb, uri, TAG, "TVDb");
+        String tvdbLink = TvdbLinks.episode(showTvdbSlug, showTvdbId, seasonTvdbId, episodeTvdbId);
+        ViewTools.openUriOnClick(buttonTvdb, tvdbLink, TAG, "TVDb");
+        ClipboardTools.copyTextToClipboardOnLongClick(buttonTvdb, tvdbLink);
     }
 
     @Override

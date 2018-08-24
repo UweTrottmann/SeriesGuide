@@ -66,18 +66,20 @@ public final class ServiceUtils {
      * web page. If the IMDb id is empty, disables the button.
      */
     public static void setUpImdbButton(final String imdbId, View imdbButton, final String logTag) {
-        if (imdbButton != null) {
-            if (!TextUtils.isEmpty(imdbId)) {
-                imdbButton.setEnabled(true);
-                imdbButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openImdb(imdbId, logTag, v.getContext());
-                    }
-                });
-            } else {
-                imdbButton.setEnabled(false);
-            }
+        if (imdbButton == null) {
+            return;
+        }
+        if (TextUtils.isEmpty(imdbId)) {
+            imdbButton.setEnabled(false);
+        } else {
+            imdbButton.setEnabled(true);
+            imdbButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openImdb(imdbId, logTag, v.getContext());
+                }
+            });
+            ClipboardTools.copyTextToClipboardOnLongClick(imdbButton, imdbLink(imdbId));
         }
     }
 
@@ -102,8 +104,12 @@ public final class ServiceUtils {
             Utils.trackAction(context, logTag, "IMDb");
         } else {
             // on failure, try launching the web page
-            Utils.launchWebsite(context, IMDB_TITLE_URL + imdbId, logTag, "IMDb");
+            Utils.launchWebsite(context, imdbLink(imdbId), logTag, "IMDb");
         }
+    }
+
+    public static String imdbLink(@NonNull String imdbId) {
+        return IMDB_TITLE_URL + imdbId;
     }
 
     /**

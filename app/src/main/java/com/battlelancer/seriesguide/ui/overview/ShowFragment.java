@@ -486,12 +486,14 @@ public class ShowFragment extends Fragment {
         ServiceUtils.setUpImdbButton(imdbId, buttonImdb, TAG);
 
         // TVDb button
-        String tvdbUri = TvdbLinks.show(showSlug, getShowTvdbId());
-        ViewTools.openUriOnClick(buttonTvdb, tvdbUri, TAG, "TVDb");
+        String tvdbLink = TvdbLinks.show(showSlug, getShowTvdbId());
+        ViewTools.openUriOnClick(buttonTvdb, tvdbLink, TAG, "TVDb");
+        ClipboardTools.copyTextToClipboardOnLongClick(buttonTvdb, tvdbLink);
 
         // trakt button
-        String uri = TraktTools.buildShowUrl(getShowTvdbId());
-        ViewTools.openUriOnClick(buttonTrakt, uri, TAG, "trakt");
+        String traktLink = TraktTools.buildShowUrl(getShowTvdbId());
+        ViewTools.openUriOnClick(buttonTrakt, traktLink, TAG, "trakt");
+        ClipboardTools.copyTextToClipboardOnLongClick(buttonTrakt, traktLink);
 
         // web search button
         ServiceUtils.setUpWebSearchButton(showTitle, buttonWebSearch, TAG);

@@ -607,8 +607,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // service buttons
         // trakt
-        String traktUri = TraktTools.buildEpisodeUrl(episodeTvdbId);
-        ViewTools.openUriOnClick(traktButton, traktUri, TAG, "trakt");
+        String traktLink = TraktTools.buildEpisodeUrl(episodeTvdbId);
+        ViewTools.openUriOnClick(traktButton, traktLink, TAG, "trakt");
+        ClipboardTools.copyTextToClipboardOnLongClick(traktButton, traktLink);
 
         // IMDb
         String imdbId = cursor.getString(DetailsQuery.IMDBID);
@@ -620,8 +621,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // TVDb
         seasonTvdbId = cursor.getInt(DetailsQuery.SEASON_ID);
-        String tvdbUri = TvdbLinks.episode(showTvdbSlug, showTvdbId, seasonTvdbId, episodeTvdbId);
-        ViewTools.openUriOnClick(tvdbButton, tvdbUri, TAG, "TVDb");
+        String tvdbLink = TvdbLinks.episode(showTvdbSlug, showTvdbId, seasonTvdbId, episodeTvdbId);
+        ViewTools.openUriOnClick(tvdbButton, tvdbLink, TAG, "TVDb");
+        ClipboardTools.copyTextToClipboardOnLongClick(tvdbButton, tvdbLink);
         // trakt comments
         commentsButton.setOnClickListener(new OnClickListener() {
             @Override
