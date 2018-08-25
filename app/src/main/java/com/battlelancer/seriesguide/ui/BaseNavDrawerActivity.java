@@ -150,11 +150,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         } else {
             textViewHeaderUserTrakt.setText(R.string.connect_trakt);
         }
-
-        // if user is already a supporter, hide unlock action
-        MenuItem menuItem = navigationView.getMenu().findItem(R.id.navigation_sub_item_unlock);
-        menuItem.setEnabled(!Utils.hasAccessToX(this));
-        menuItem.setVisible(!Utils.hasAccessToX(this));
     }
 
     /**
