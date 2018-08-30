@@ -151,13 +151,13 @@ class PersonFragment : Fragment() {
         progressBar.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
-    private val personLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Person> {
-        override fun onCreateLoader(id: Int, args: Bundle?): Loader<Person> {
+    private val personLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Person?> {
+        override fun onCreateLoader(id: Int, args: Bundle?): Loader<Person?> {
             setProgressVisibility(true)
-            return PersonLoader(context, personTmdbId)
+            return PersonLoader(requireContext(), personTmdbId)
         }
 
-        override fun onLoadFinished(loader: Loader<Person>, data: Person) {
+        override fun onLoadFinished(loader: Loader<Person?>, data: Person?) {
             if (!isAdded) {
                 return
             }
@@ -165,7 +165,7 @@ class PersonFragment : Fragment() {
             populatePersonViews(data)
         }
 
-        override fun onLoaderReset(loader: Loader<Person>) {
+        override fun onLoaderReset(loader: Loader<Person?>) {
             // do nothing, preferring stale data over no data
         }
     }
