@@ -42,8 +42,8 @@ import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
-import com.battlelancer.seriesguide.justwatch.JustWatchConfigureDialog;
-import com.battlelancer.seriesguide.justwatch.JustWatchSearch;
+import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
+import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
@@ -115,7 +115,7 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.containerRatings) View containerRatings;
     @BindView(R.id.dividerEpisodeButtons) View dividerEpisodeButtons;
     @BindView(R.id.buttonEpisodeCheckin) Button buttonCheckin;
-    @BindView(R.id.buttonEpisodeJustWatch) Button buttonJustWatch;
+    @BindView(R.id.buttonEpisodeStreamingSearch) Button buttonStreamingSearch;
     @BindView(R.id.buttonEpisodeWatched) Button buttonWatch;
     @BindView(R.id.buttonEpisodeCollected) Button buttonCollect;
     @BindView(R.id.buttonEpisodeSkip) Button buttonSkip;
@@ -178,7 +178,7 @@ public class OverviewFragment extends Fragment implements
 
         // episode buttons
         CheatSheet.setup(buttonCheckin);
-        CheatSheet.setup(buttonJustWatch);
+        CheatSheet.setup(buttonStreamingSearch);
         CheatSheet.setup(buttonWatch);
         CheatSheet.setup(buttonSkip);
         Resources.Theme theme = getActivity().getTheme();
@@ -186,7 +186,7 @@ public class OverviewFragment extends Fragment implements
         ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
         ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
         ViewTools.setVectorIconLeft(theme, buttonCheckin, R.drawable.ic_checkin_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonJustWatch, R.drawable.ic_play_arrow_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonStreamingSearch, R.drawable.ic_play_arrow_black_24dp);
 
         // ratings
         CheatSheet.setup(containerRatings, R.string.action_rate);
@@ -359,21 +359,21 @@ public class OverviewFragment extends Fragment implements
         }
     }
 
-    @OnClick(R.id.buttonEpisodeJustWatch)
-    void onButtonJustWatchClick() {
-        if (JustWatchSearch.isNotConfigured(requireContext())) {
-            new JustWatchConfigureDialog().show(requireFragmentManager(), "justWatchDialog");
+    @OnClick(R.id.buttonEpisodeStreamingSearch)
+    void onButtonStreamingSearchClick() {
+        if (StreamingSearch.isNotConfigured(requireContext())) {
+            new StreamingSearchConfigureDialog().show(requireFragmentManager(), "streamingSearchDialog");
         } else {
-            JustWatchSearch.searchForShow(requireContext(), showTitle, TAG);
+            StreamingSearch.searchForShow(requireContext(), showTitle, TAG);
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onJustWatchConfigured(JustWatchConfigureDialog.JustWatchConfiguredEvent event) {
+    public void onStreamingSearchConfigured(StreamingSearchConfigureDialog.StreamingSearchConfiguredEvent event) {
         if (event.getTurnedOff()) {
-            buttonJustWatch.setVisibility(View.GONE);
+            buttonStreamingSearch.setVisibility(View.GONE);
         } else {
-            onButtonJustWatchClick();
+            onButtonStreamingSearchClick();
         }
     }
 
@@ -627,7 +627,7 @@ public class OverviewFragment extends Fragment implements
         buttonCollect.setEnabled(enabled);
         buttonSkip.setEnabled(enabled);
         buttonCheckin.setEnabled(enabled);
-        buttonJustWatch.setEnabled(enabled);
+        buttonStreamingSearch.setEnabled(enabled);
     }
 
     private void setupEpisodeViews(Cursor episode) {
@@ -644,12 +644,12 @@ public class OverviewFragment extends Fragment implements
             boolean displayCheckIn = isConnectedToTrakt
                     && !HexagonSettings.isEnabled(getActivity());
             buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
-            buttonJustWatch.setNextFocusUpId(
+            buttonStreamingSearch.setNextFocusUpId(
                     displayCheckIn ? R.id.buttonCheckIn : R.id.buttonEpisodeWatched);
-            // hide JustWatch if turned off
-            boolean displayJustWatch = !JustWatchSearch.isTurnedOff(requireContext());
-            buttonJustWatch.setVisibility(displayJustWatch ? View.VISIBLE : View.GONE);
-            dividerEpisodeButtons.setVisibility(displayCheckIn || displayJustWatch
+            // hide streaming search if turned off
+            boolean displayStreamingSearch = !StreamingSearch.isTurnedOff(requireContext());
+            buttonStreamingSearch.setVisibility(displayStreamingSearch ? View.VISIBLE : View.GONE);
+            dividerEpisodeButtons.setVisibility(displayCheckIn || displayStreamingSearch
                     ? View.VISIBLE : View.GONE);
 
             // populate episode details

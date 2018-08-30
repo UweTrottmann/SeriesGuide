@@ -39,8 +39,8 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
-import com.battlelancer.seriesguide.justwatch.JustWatchConfigureDialog;
-import com.battlelancer.seriesguide.justwatch.JustWatchSearch;
+import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
+import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.service.NotificationService;
@@ -372,7 +372,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     });
 
             // show currently set values for some prefs
-            updateJustWatchSummary(findPreference(JustWatchSearch.KEY_SETTING_COUNTRY));
+            updateStreamSearchServiceSummary(findPreference(StreamingSearch.KEY_SETTING_SERVICE));
             setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE_PREFERRED));
             setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE_FALLBACK));
             updateTimeOffsetSummary(findPreference(DisplaySettings.KEY_SHOWS_TIME_OFFSET));
@@ -520,10 +520,10 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 }
                 return true;
             }
-            if (JustWatchSearch.KEY_SETTING_COUNTRY.equals(key)) {
-                new JustWatchConfigureDialog().show(
+            if (StreamingSearch.KEY_SETTING_SERVICE.equals(key)) {
+                new StreamingSearchConfigureDialog().show(
                         ((AppCompatActivity) getActivity()).getSupportFragmentManager(),
-                        "justwatch-country");
+                        "streaming-service");
                 return true;
             }
             if (DisplaySettings.KEY_SHOWS_TIME_OFFSET.equals(key)) {
@@ -586,8 +586,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                         vibrator.vibrate(NotificationService.VIBRATION_PATTERN, -1);
                     }
                 }
-                if (JustWatchSearch.KEY_SETTING_COUNTRY.equals(key)) {
-                    updateJustWatchSummary(pref);
+                if (StreamingSearch.KEY_SETTING_SERVICE.equals(key)) {
+                    updateStreamSearchServiceSummary(pref);
                 }
             }
 
@@ -655,14 +655,14 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     countOfShowsNotifyOn));
         }
 
-        private void updateJustWatchSummary(Preference pref) {
-            String countryOrEmptyOrNull = JustWatchSearch.getCountryOrEmptyOrNull(getActivity());
-            if (countryOrEmptyOrNull == null) {
+        private void updateStreamSearchServiceSummary(Preference pref) {
+            String serviceOrEmptyOrNull = StreamingSearch.getServiceOrEmptyOrNull(getActivity());
+            if (serviceOrEmptyOrNull == null) {
                 pref.setSummary(null);
-            } else if (countryOrEmptyOrNull.length() == 0) {
+            } else if (serviceOrEmptyOrNull.length() == 0) {
                 pref.setSummary(R.string.action_turn_off);
             } else {
-                pref.setSummary(JustWatchSearch.getCountryDisplayName(countryOrEmptyOrNull));
+                pref.setSummary(StreamingSearch.getServiceDisplayName(serviceOrEmptyOrNull));
             }
         }
 

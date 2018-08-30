@@ -82,16 +82,16 @@
         tools:drawableTint="?attr/sgColorIcon" />
 
     <Button
-        android:id="@+id/buttonEpisodeJustWatch"
+        android:id="@+id/buttonEpisodeStreamingSearch"
         style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/padding_button"
         android:layout_marginRight="@dimen/padding_button"
-        android:contentDescription="@string/action_just_watch"
+        android:contentDescription="@string/action_stream"
         android:drawablePadding="8dp"
         android:gravity="center_vertical|start"
-        android:text="@string/action_just_watch"
+        android:text="@string/action_stream"
         tools:drawableLeft="@drawable/ic_play_arrow_black_24dp"
         tools:drawableTint="?attr/sgColorIcon" />
 

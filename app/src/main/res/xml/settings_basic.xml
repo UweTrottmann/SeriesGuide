@@ -10,7 +10,7 @@
 
     <Preference
         android:key="com.battlelancer.seriesguide.justwatch"
-        android:title="@string/action_just_watch"
+        android:title="@string/action_stream"
         tools:summary="@string/action_turn_off" />
 
     <PreferenceCategory android:title="@string/shows">
