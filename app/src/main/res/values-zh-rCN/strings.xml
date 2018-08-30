@@ -446,7 +446,7 @@
   <string name="onlyx">仅限完整版</string>
   <string name="action_upgrade">解锁高级功能</string>
   <string name="billing_action_subscribe">订阅</string>
-  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+  <string name="billing_action_manage_subscriptions">管理订阅</string>
   <string name="billing_action_pass">购买 SeriesGuide X</string>
   <string name="billing_price_subscribe">%1$s 每年，免费试用，通过 %2$s 随时取消订阅</string>
   <string name="billing_price_pass">一次性支付</string>

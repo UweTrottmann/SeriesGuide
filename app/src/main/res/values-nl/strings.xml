@@ -32,7 +32,7 @@
   <string name="save_selection">Selectie bewaren</string>
   <string name="action_display_all">Toon alles</string>
   <string name="web_search">Zoeken op het web</string>
-  <string name="add_to_homescreen">Add to Home screen</string>
+  <string name="add_to_homescreen">Toevoegen aan Start</string>
   <string name="action_open">Open</string>
   <string name="sync_manually">Handmatig synchroniseren</string>
   <string name="sync_and_update">Synchroniseer &amp; Update</string>
@@ -53,7 +53,7 @@
   <string name="reinstall_info">Maak een backup, installeer opnieuw en herstel.</string>
   <string name="api_error_generic">Kon niet praten met %s. Probeer later opnieuw</string>
   <string name="api_failed">Mislukt: %s</string>
-  <string name="copy_to_clipboard">Copied to clipboard</string>
+  <string name="copy_to_clipboard">Gekopieerd naar klembord</string>
   <!-- Sharing -->
   <string name="share">Delen</string>
   <string name="share_show">Serie delen</string>
@@ -457,7 +457,7 @@
   <string name="onlyx">Alleen voor leden</string>
   <string name="action_upgrade">Open alle restricties</string>
   <string name="billing_action_subscribe">Abonneren</string>
-  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+  <string name="billing_action_manage_subscriptions">Abonnementen beheren</string>
   <string name="billing_action_pass">Neem X-pas</string>
   <string name="billing_price_subscribe">%1$s/jaar, probeer gratis, annuleer op elk moment via %2$s</string>
   <string name="billing_price_pass">eenmalige aankoop</string>
