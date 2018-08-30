@@ -38,6 +38,7 @@
   <string name="sync_and_update">Синхронизировать и обновить</string>
   <string name="sync_and_download_all">Синхронизировать и обновить всё</string>
   <string name="action_turn_off">Turn off</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">Очистить историю поиска</string>
   <string name="search_hint">Поиск эпизодов</string>

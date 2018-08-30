@@ -38,6 +38,7 @@
   <string name="sync_and_update">المزامنة والتحديث</string>
   <string name="sync_and_download_all">المزامنة وتحميل كل البيانات</string>
   <string name="action_turn_off">إغلاق</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">إزالة تاريخ البحث</string>
   <string name="search_hint">البحث عن الحلقات</string>

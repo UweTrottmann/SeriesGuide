@@ -38,6 +38,7 @@
   <string name="sync_and_update">Synchronizuj &amp; Aktualizuj</string>
   <string name="sync_and_download_all">Synchronizuj &amp; Stáhni vše</string>
   <string name="action_turn_off">Turn off</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">Vymazat historii vyhledávání</string>
   <string name="search_hint">Hledat v epizodách</string>

@@ -38,6 +38,7 @@
   <string name="sync_and_update">סנכרון &amp; עדכון</string>
   <string name="sync_and_download_all">סנכרון &amp; הורד הכל</string>
   <string name="action_turn_off">Turn off</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">נקה את היסטוריית החיפוש</string>
   <string name="search_hint">חפש פרקים</string>

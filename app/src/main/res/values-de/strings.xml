@@ -38,6 +38,7 @@
   <string name="sync_and_update">Synch. &amp; Aktualisieren</string>
   <string name="sync_and_download_all">Synch. &amp; Alles herunterladen</string>
   <string name="action_turn_off">Deaktivieren</string>
+  <string name="action_stream">Streamen oder kaufen</string>
   <!-- Search -->
   <string name="clear_search_history">Suchverlauf löschen</string>
   <string name="search_hint">Suche Folgen</string>

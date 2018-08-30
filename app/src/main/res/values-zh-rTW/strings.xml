@@ -38,6 +38,7 @@
   <string name="sync_and_update">同步 &amp; 和更新</string>
   <string name="sync_and_download_all">同步&amp; 及下載</string>
   <string name="action_turn_off">Turn off</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">清除搜尋記錄</string>
   <string name="search_hint">搜尋集數</string>

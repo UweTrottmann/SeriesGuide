@@ -38,6 +38,7 @@
   <string name="sync_and_update">Szinkronizálás &amp; Frissítés</string>
   <string name="sync_and_download_all">Szinkronizálás &amp; Összes letöltése</string>
   <string name="action_turn_off">Kikapcsol</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">Keresési előzmények törlése</string>
   <string name="search_hint">Epizódok keresése</string>

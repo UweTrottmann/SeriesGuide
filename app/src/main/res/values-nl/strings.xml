@@ -38,6 +38,7 @@
   <string name="sync_and_update">Synchroniseer &amp; Update</string>
   <string name="sync_and_download_all">Synchroniseer &amp; Download alles</string>
   <string name="action_turn_off">Uitschakelen</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
   <string name="search_hint">Afleveringen zoeken</string>

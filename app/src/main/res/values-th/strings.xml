@@ -38,6 +38,7 @@
   <string name="sync_and_update">ซิงค์ &amp; อัปเดต</string>
   <string name="sync_and_download_all">ซิงค์ &amp; ดาวน์โหลดทั้งหมด</string>
   <string name="action_turn_off">Turn off</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">ล้างประวัติการค้นหา</string>
   <string name="search_hint">ค้นหาตอน</string>
