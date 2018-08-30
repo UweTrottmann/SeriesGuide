@@ -38,6 +38,7 @@
   <string name="sync_and_update">동기화하고 업데이트</string>
   <string name="sync_and_download_all">동기화하고 모두 다운로드</string>
   <string name="action_turn_off">끄기</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">검색 기록 삭제</string>
   <string name="search_hint">에피소드 검색</string>

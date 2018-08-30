@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.justwatch
+package com.battlelancer.seriesguide.streaming
 
 import android.content.Context
 import android.net.Uri
@@ -6,13 +6,14 @@ import android.preference.PreferenceManager
 import com.battlelancer.seriesguide.util.Utils
 import java.util.Locale
 
-object JustWatchSearch {
+object StreamingSearch {
 
-    /** if null = not configured, if has country = enabled, if is empty = disabled */
-    const val KEY_SETTING_COUNTRY = "com.battlelancer.seriesguide.justwatch"
+    /** if null = not configured, if has value = enabled, if is empty = disabled */
+    const val KEY_SETTING_SERVICE = "com.battlelancer.seriesguide.justwatch"
 
-    val countryToUrl = mapOf(
+    val serviceToUrl = mapOf(
             "us" to "search",
+            "reelgood-us" to "",
             "ca" to "search",
             "mx" to "buscar",
             "br" to "busca",
@@ -49,30 +50,53 @@ object JustWatchSearch {
     @JvmStatic
     fun isTurnedOff(context: Context): Boolean {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_SETTING_COUNTRY, null)?.isEmpty() == true
+                .getString(KEY_SETTING_SERVICE, null)?.isEmpty() == true
     }
 
     @JvmStatic
     fun isNotConfigured(context: Context): Boolean {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_SETTING_COUNTRY, null) == null
+                .getString(KEY_SETTING_SERVICE, null) == null
     }
 
     @JvmStatic
-    fun getCountryOrEmptyOrNull(context: Context): String? {
+    fun getServiceOrEmptyOrNull(context: Context): String? {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_SETTING_COUNTRY, null)
+                .getString(KEY_SETTING_SERVICE, null)
     }
 
     @JvmStatic
-    fun getCountryDisplayName(country: String): String {
-        return Locale("", country).displayCountry
+    fun getServiceDisplayName(service: String): String {
+        return if (service == "reelgood-us") {
+            "Reelgood ${Locale("", "us").displayCountry}"
+        } else {
+            "JustWatch ${Locale("", service).displayCountry}"
+        }
     }
 
-    fun setCountryOrEmpty(context: Context, countryOrEmpty: String) {
+    fun setServiceOrEmpty(context: Context, countryOrEmpty: String) {
         PreferenceManager.getDefaultSharedPreferences(context).edit()
-                .putString(KEY_SETTING_COUNTRY, countryOrEmpty)
+                .putString(KEY_SETTING_SERVICE, countryOrEmpty)
                 .apply()
+    }
+
+    private fun getServiceSearchUrl(context: Context, type: String): String {
+        val service = PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(KEY_SETTING_SERVICE, null) ?: ""
+        return if (service == "reelgood-us") {
+            "https://reelgood.com/search?q="
+        } else {
+            val searchPath = serviceToUrl[service] ?: "search"
+            "https://www.justwatch.com/$service/$searchPath?content_type=$type&q="
+        }
+    }
+
+    private fun buildAndLaunch(context: Context, title: String, justWatchType: String,
+            logTag: String) {
+        val titleEncoded = Uri.encode(title)
+        val searchUrl = getServiceSearchUrl(context, justWatchType)
+        val url = "$searchUrl$titleEncoded"
+        Utils.launchWebsite(context, url, logTag, "Stream or purchase")
     }
 
     @JvmStatic
@@ -83,20 +107,6 @@ object JustWatchSearch {
     @JvmStatic
     fun searchForMovie(context: Context, movieTitle: String, logTag: String) {
         buildAndLaunch(context, movieTitle, "movie", logTag)
-    }
-
-    private fun getCountrySearchUrl(context: Context): String {
-        val country = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_SETTING_COUNTRY, null) ?: ""
-        val searchPath = countryToUrl[country] ?: "search"
-        return "https://www.justwatch.com/$country/$searchPath?q="
-    }
-
-    private fun buildAndLaunch(context: Context, title: String, type: String, logTag: String) {
-        val titleEncoded = Uri.encode(title)
-        val searchUrl = getCountrySearchUrl(context)
-        val url = "$searchUrl$titleEncoded&content_type=$type"
-        Utils.launchWebsite(context, url, logTag, "JustWatch")
     }
 
 }

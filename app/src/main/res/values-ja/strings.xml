@@ -38,6 +38,7 @@
   <string name="sync_and_update">同期と更新</string>
   <string name="sync_and_download_all">すべて同期とダウンロード</string>
   <string name="action_turn_off">オフにする</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">検索履歴をクリア</string>
   <string name="search_hint">エピソードを検索</string>

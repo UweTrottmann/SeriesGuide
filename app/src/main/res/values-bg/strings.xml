@@ -38,6 +38,7 @@
   <string name="sync_and_update">Синхронизиране &amp; актуализация</string>
   <string name="sync_and_download_all">Синхронизиране &amp; Изтегли всички</string>
   <string name="action_turn_off">Turn off</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">Изчисти историята на търсене</string>
   <string name="search_hint">Търсене на епизоди</string>
