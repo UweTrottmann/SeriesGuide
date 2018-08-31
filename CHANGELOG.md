@@ -9,6 +9,14 @@ Version 44
 ----------
 *(in development)*
 
+#### 44-beta3
+*(2018-08-30)*
+
+* 🔧 Rename "JustWatch" button to "Stream or purchase", add Reelgood (US only) as an option.
+* 🔧 Always show quick-link to "Unlock all features" screen in navigation drawer.
+* 🔨 Fix crash when loading person fails.
+* 📝 Latest translations from crowdin.
+
 #### 44-beta2
 *(2018-08-24)*
 
