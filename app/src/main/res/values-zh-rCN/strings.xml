@@ -38,7 +38,7 @@
   <string name="sync_and_update">同步并更新</string>
   <string name="sync_and_download_all">同步并下载全部</string>
   <string name="action_turn_off">关闭</string>
-  <string name="action_stream">Stream or purchase</string>
+  <string name="action_stream">流媒体播放或购买</string>
   <!-- Search -->
   <string name="clear_search_history">清空搜索历史</string>
   <string name="search_hint">搜索剧集</string>
