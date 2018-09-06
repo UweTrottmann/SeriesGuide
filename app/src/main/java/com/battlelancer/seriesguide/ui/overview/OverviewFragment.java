@@ -33,6 +33,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -178,7 +179,6 @@ public class OverviewFragment extends Fragment implements
 
         // episode buttons
         CheatSheet.setup(buttonCheckin);
-        CheatSheet.setup(buttonStreamingSearch);
         CheatSheet.setup(buttonWatch);
         CheatSheet.setup(buttonSkip);
         Resources.Theme theme = getActivity().getTheme();
@@ -362,10 +362,20 @@ public class OverviewFragment extends Fragment implements
     @OnClick(R.id.buttonEpisodeStreamingSearch)
     void onButtonStreamingSearchClick() {
         if (StreamingSearch.isNotConfigured(requireContext())) {
-            new StreamingSearchConfigureDialog().show(requireFragmentManager(), "streamingSearchDialog");
+            showStreamingSearchConfigDialog();
         } else {
             StreamingSearch.searchForShow(requireContext(), showTitle, TAG);
         }
+    }
+
+    @OnLongClick(R.id.buttonEpisodeStreamingSearch)
+    boolean onButtonStreamingSearchLongClick() {
+        showStreamingSearchConfigDialog();
+        return true;
+    }
+
+    private void showStreamingSearchConfigDialog() {
+        StreamingSearchConfigureDialog.show(requireFragmentManager());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

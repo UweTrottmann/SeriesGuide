@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.streaming
 
 import android.app.Dialog
 import android.os.Bundle
+import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatDialogFragment
 import com.battlelancer.seriesguide.R
@@ -44,6 +45,13 @@ class StreamingSearchConfigureDialog : AppCompatDialogFragment() {
                     EventBus.getDefault().post(StreamingSearchConfiguredEvent(position == 0))
                     dismiss()
                 }.create()
+    }
+
+    companion object {
+        @JvmStatic
+        fun show(fragmentManager: FragmentManager) {
+            StreamingSearchConfigureDialog().show(fragmentManager, "streamingSearchDialog");
+        }
     }
 
 }

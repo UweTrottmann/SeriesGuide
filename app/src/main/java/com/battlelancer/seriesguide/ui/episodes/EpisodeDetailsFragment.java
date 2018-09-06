@@ -28,6 +28,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
@@ -181,7 +182,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
         ViewTools.setVectorIconLeft(theme, buttonCheckin, R.drawable.ic_checkin_black_24dp);
         ViewTools.setVectorIconLeft(theme, buttonStreamingSearch, R.drawable.ic_play_arrow_black_24dp);
-        CheatSheet.setup(buttonStreamingSearch);
 
         // comments button
         ViewTools.setVectorIconLeft(theme, commentsButton, R.drawable.ic_forum_black_24dp);
@@ -322,10 +322,20 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             return;
         }
         if (StreamingSearch.isNotConfigured(requireContext())) {
-            new StreamingSearchConfigureDialog().show(requireFragmentManager(), "streamingSearchDialog");
+            showStreamingSearchConfigDialog();
         } else {
             StreamingSearch.searchForShow(requireContext(), showTitle, TAG);
         }
+    }
+
+    @OnLongClick(R.id.buttonEpisodeStreamingSearch)
+    boolean onButtonStreamingSearchLongClick() {
+        showStreamingSearchConfigDialog();
+        return true;
+    }
+
+    private void showStreamingSearchConfigDialog() {
+        StreamingSearchConfigureDialog.show(requireFragmentManager());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

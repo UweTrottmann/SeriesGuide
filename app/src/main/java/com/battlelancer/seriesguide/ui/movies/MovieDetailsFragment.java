@@ -39,6 +39,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
@@ -173,7 +174,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         ViewTools.setVectorIconLeft(theme, buttonMovieStreamingSearch,
                 R.drawable.ic_play_arrow_black_24dp);
         CheatSheet.setup(buttonMovieCheckIn);
-        CheatSheet.setup(buttonMovieStreamingSearch);
 
         // language button
         buttonMovieLanguage.setVisibility(View.GONE);
@@ -627,10 +627,20 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             return;
         }
         if (StreamingSearch.isNotConfigured(requireContext())) {
-            new StreamingSearchConfigureDialog().show(requireFragmentManager(), "streamingSearchDialog");
+            showStreamingSearchConfigDialog();
         } else {
             StreamingSearch.searchForMovie(requireContext(), movieTitle, TAG);
         }
+    }
+
+    @OnLongClick(R.id.buttonMovieStreamingSearch)
+    boolean onButtonStreamingSearchLongClick() {
+        showStreamingSearchConfigDialog();
+        return true;
+    }
+
+    private void showStreamingSearchConfigDialog() {
+        StreamingSearchConfigureDialog.show(requireFragmentManager());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
