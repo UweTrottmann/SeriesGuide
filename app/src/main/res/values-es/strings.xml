@@ -38,7 +38,7 @@
   <string name="sync_and_update">Sincronizar &amp; Actualizar</string>
   <string name="sync_and_download_all">Sincronizar &amp; Descargar todo</string>
   <string name="action_turn_off">Desactivar</string>
-  <string name="action_stream">Stream or purchase</string>
+  <string name="action_stream">Ver en línea o comprar</string>
   <!-- Search -->
   <string name="clear_search_history">Limpiar historial de búsqueda</string>
   <string name="search_hint">Buscar episodios</string>
@@ -459,7 +459,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <string name="onlyx">Solo para seguidores</string>
   <string name="action_upgrade">Desbloquea todas las funciones</string>
   <string name="billing_action_subscribe">Suscríbete</string>
-  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+  <string name="billing_action_manage_subscriptions">Gestionar suscripciones</string>
   <string name="billing_action_pass">Obtener X Pass</string>
   <string name="billing_price_subscribe">%1$s/año, prueba gratuita, cancela en cualquier momento mediante %2$s</string>
   <string name="billing_price_pass">Compra por única vez</string>
