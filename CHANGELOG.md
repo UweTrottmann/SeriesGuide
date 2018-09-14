@@ -7,7 +7,19 @@ All dates are in the European Central timezone.
 
 Version 44
 ----------
-*(in development)*
+*(2018-09-14)*
+
+* Rename "JustWatch" button to "Stream or purchase", add Reelgood (US only) as an option.
+* Tap and hold to change stream search provider.
+* Tap and hold to copy various links to clipboard.
+* Full episode details loaded when adding or updating a show instead of on-demand.
+
+#### 44
+*(2018-09-14)*
+
+* 🔧 Tap and hold to change stream search provider.
+* 🔧 Revert experiment with larger text for most descriptions.
+* 📝 Latest translations from crowdin.
 
 #### 44-beta3
 *(2018-08-30)*
