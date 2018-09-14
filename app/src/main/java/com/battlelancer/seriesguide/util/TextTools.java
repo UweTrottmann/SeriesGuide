@@ -197,7 +197,7 @@ public class TextTools {
         }
         int sourceStartIndex = builder.length();
         builder.append(source);
-        builder.setSpan(new TextAppearanceSpan(context, R.style.TextAppearance_SeriesGuide_Body2),
+        builder.setSpan(new TextAppearanceSpan(context, R.style.TextAppearance_SeriesGuide_Body2_Italics),
                 sourceStartIndex, builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         );
         return builder;

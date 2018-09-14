@@ -11,6 +11,7 @@
 
     <!-- Text Appearances -->
     <attr name="sgTextAppearanceBody1" format="reference" />
+    <attr name="sgTextAppearanceBody2" format="reference" />
 
     <!-- Other colors -->
     <attr name="sgColorBackgroundCard" format="reference|color" />

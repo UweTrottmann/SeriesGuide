@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:focusable="true"
-        android:textAppearance="?attr/sgTextAppearanceBody1"
+        android:textAppearance="?attr/sgTextAppearanceBody2"
         tools:text="A multi-line description of this show. Which is rather lenghty." />
 
     <View
