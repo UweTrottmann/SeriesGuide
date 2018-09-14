@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
@@ -18,6 +19,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
@@ -47,6 +49,9 @@ public class BillingActivity extends BaseActivity {
     private static final int RC_REQUEST = 21;
 
     private static final String SOME_STRING = "SURPTk9UQ0FSRUlGWU9VUElSQVRFVEhJUw==";
+    private static final String PLAY_MANAGE_SUBS_ALL = "https://play.google.com/store/account/subscriptions";
+    private static final String PLAY_MANAGE_SUBS_ONE =
+            PLAY_MANAGE_SUBS_ALL + "?package=" + BuildConfig.APPLICATION_ID + "&sku=";
 
     private View progressScreen;
     private View contentContainer;
@@ -57,12 +62,15 @@ public class BillingActivity extends BaseActivity {
 
     private IabHelper billingHelper;
     private String subPrice;
+    private String manageSubscriptionUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_billing);
         setupActionBar();
+
+        manageSubscriptionUrl = PLAY_MANAGE_SUBS_ALL;
 
         setupViews();
     }
@@ -85,6 +93,13 @@ public class BillingActivity extends BaseActivity {
             }
         });
         textViewSubscriptionPrice = findViewById(R.id.textViewBillingPriceSubscription);
+        Button buttonManageSubs = findViewById(R.id.buttonBillingManageSubscription);
+        buttonManageSubs.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.launchWebsite(v.getContext(), manageSubscriptionUrl);
+            }
+        });
 
         buttonPass = findViewById(R.id.buttonBillingGetPass);
         buttonPass.setOnClickListener(new OnClickListener() {
@@ -211,10 +226,34 @@ public class BillingActivity extends BaseActivity {
                 subPrice = skuDetails.getPrice();
             }
 
+            if (hasUpgrade) {
+                String subscriptionSkuOrNull = latestSubscriptionSkuOrNull(inventory);
+                if (subscriptionSkuOrNull != null) {
+                    manageSubscriptionUrl = PLAY_MANAGE_SUBS_ONE + subscriptionSkuOrNull;
+                }
+            }
+
             updateViewStates(hasUpgrade);
             setWaitMode(false);
         }
     };
+
+    @Nullable
+    public static String latestSubscriptionSkuOrNull(@NonNull Inventory inventory) {
+        if (inventory.getPurchase(SKU_X_SUB_2017_08) != null) {
+            return SKU_X_SUB_2017_08;
+        }
+        if (inventory.getPurchase(SKU_X_SUB_2016_05) != null) {
+            return SKU_X_SUB_2016_05;
+        }
+        if (inventory.getPurchase(SKU_X_SUB_2014_02) != null) {
+            return SKU_X_SUB_2014_02;
+        }
+        if (inventory.getPurchase(SKU_X_SUB_LEGACY) != null) {
+            return SKU_X_SUB_LEGACY;
+        }
+        return null;
+    }
 
     /**
      * Checks if the user is subscribed to X features or has the deprecated X upgrade (so he gets
@@ -234,18 +273,9 @@ public class BillingActivity extends BaseActivity {
         boolean hasXUpgrade = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
 
         // Does the user have an active unlock all subscription?
-        Purchase subscriptionPurchase = inventory.getPurchase(SKU_X_SUB_2017_08);
-        if (subscriptionPurchase == null) {
-            subscriptionPurchase = inventory.getPurchase(SKU_X_SUB_2016_05);
-        }
-        if (subscriptionPurchase == null) {
-            subscriptionPurchase = inventory.getPurchase(SKU_X_SUB_2014_02);
-        }
-        if (subscriptionPurchase == null) {
-            subscriptionPurchase = inventory.getPurchase(SKU_X_SUB_LEGACY);
-        }
-        boolean isSubscribedToX = subscriptionPurchase != null
-                && verifyDeveloperPayload(subscriptionPurchase);
+        String subscriptionSkuOrNull = latestSubscriptionSkuOrNull(inventory);
+        boolean isSubscribedToX = subscriptionSkuOrNull != null
+                && verifyDeveloperPayload(inventory.getPurchase(subscriptionSkuOrNull));
 
         if (hasXUpgrade) {
             Timber.d("User has X SUBSCRIPTION for life.");

@@ -53,6 +53,8 @@
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
+        <item name="sgTextAppearanceBody1">@style/TextAppearance.SeriesGuide.Body1</item>
+        <item name="sgTextAppearanceBody2">@style/TextAppearance.SeriesGuide.Body2</item>
 
         <!-- Colors -->
         <item name="sgTextColorGreen">@color/teal_500</item>
@@ -116,6 +118,10 @@
 
         <!-- System widgets -->
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
+
+        <!-- Text -->
+        <item name="sgTextAppearanceBody1">@style/TextAppearance.SeriesGuide.Body1</item>
+        <item name="sgTextAppearanceBody2">@style/TextAppearance.SeriesGuide.Body2</item>
 
         <!-- Colors -->
         <item name="sgTextColorGreen">@color/teal_500</item>
@@ -190,6 +196,8 @@
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
+        <item name="sgTextAppearanceBody1">@style/TextAppearance.SeriesGuide.Body1</item>
+        <item name="sgTextAppearanceBody2">@style/TextAppearance.SeriesGuide.Body2</item>
 
         <!-- Colors -->
         <item name="sgTextColorGreen">@color/teal_500</item>

@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.people;
 
 import android.content.Context;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,11 +61,6 @@ class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
                 .centerCrop()
                 .error(R.color.protection_dark)
                 .into(viewHolder.headshot);
-
-        // set unique transition names
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            viewHolder.headshot.setTransitionName("peopleAdapterPoster_" + person.tmdbId);
-        }
 
         return convertView;
     }

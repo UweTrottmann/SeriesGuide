@@ -25,7 +25,7 @@ public class PersonActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             PersonFragment f = PersonFragment.newInstance(
-                    getIntent().getIntExtra(PersonFragment.InitBundle.PERSON_TMDB_ID, 0));
+                    getIntent().getIntExtra(PersonFragment.ARG_PERSON_TMDB_ID, 0));
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.containerPerson, f)
                     .commit();

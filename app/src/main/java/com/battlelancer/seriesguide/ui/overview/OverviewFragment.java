@@ -33,6 +33,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -42,15 +43,14 @@ import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
-import com.battlelancer.seriesguide.justwatch.JustWatchConfigureDialog;
-import com.battlelancer.seriesguide.justwatch.JustWatchSearch;
+import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
+import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeDetailsTask;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
@@ -116,7 +116,7 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.containerRatings) View containerRatings;
     @BindView(R.id.dividerEpisodeButtons) View dividerEpisodeButtons;
     @BindView(R.id.buttonEpisodeCheckin) Button buttonCheckin;
-    @BindView(R.id.buttonEpisodeJustWatch) Button buttonJustWatch;
+    @BindView(R.id.buttonEpisodeStreamingSearch) Button buttonStreamingSearch;
     @BindView(R.id.buttonEpisodeWatched) Button buttonWatch;
     @BindView(R.id.buttonEpisodeCollected) Button buttonCollect;
     @BindView(R.id.buttonEpisodeSkip) Button buttonSkip;
@@ -137,7 +137,6 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.buttonEpisodeComments) Button buttonComments;
 
     private Handler handler = new Handler();
-    private TvdbEpisodeDetailsTask detailsTask;
     private TraktRatingsTask ratingsTask;
     private Unbinder unbinder;
 
@@ -180,7 +179,6 @@ public class OverviewFragment extends Fragment implements
 
         // episode buttons
         CheatSheet.setup(buttonCheckin);
-        CheatSheet.setup(buttonJustWatch);
         CheatSheet.setup(buttonWatch);
         CheatSheet.setup(buttonSkip);
         Resources.Theme theme = getActivity().getTheme();
@@ -188,7 +186,7 @@ public class OverviewFragment extends Fragment implements
         ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
         ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
         ViewTools.setVectorIconLeft(theme, buttonCheckin, R.drawable.ic_checkin_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonJustWatch, R.drawable.ic_play_arrow_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonStreamingSearch, R.drawable.ic_play_arrow_black_24dp);
 
         // ratings
         CheatSheet.setup(containerRatings, R.string.action_rate);
@@ -265,10 +263,6 @@ public class OverviewFragment extends Fragment implements
         super.onDestroy();
         if (handler != null) {
             handler.removeCallbacks(episodeActionsRunnable);
-        }
-        if (detailsTask != null) {
-            detailsTask.cancel(true);
-            detailsTask = null;
         }
         if (ratingsTask != null) {
             ratingsTask.cancel(true);
@@ -365,21 +359,31 @@ public class OverviewFragment extends Fragment implements
         }
     }
 
-    @OnClick(R.id.buttonEpisodeJustWatch)
-    void onButtonJustWatchClick() {
-        if (JustWatchSearch.isNotConfigured(requireContext())) {
-            new JustWatchConfigureDialog().show(requireFragmentManager(), "justWatchDialog");
+    @OnClick(R.id.buttonEpisodeStreamingSearch)
+    void onButtonStreamingSearchClick() {
+        if (StreamingSearch.isNotConfigured(requireContext())) {
+            showStreamingSearchConfigDialog();
         } else {
-            JustWatchSearch.searchForShow(requireContext(), showTitle, TAG);
+            StreamingSearch.searchForShow(requireContext(), showTitle, TAG);
         }
     }
 
+    @OnLongClick(R.id.buttonEpisodeStreamingSearch)
+    boolean onButtonStreamingSearchLongClick() {
+        showStreamingSearchConfigDialog();
+        return true;
+    }
+
+    private void showStreamingSearchConfigDialog() {
+        StreamingSearchConfigureDialog.show(requireFragmentManager());
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onJustWatchConfigured(JustWatchConfigureDialog.JustWatchConfiguredEvent event) {
+    public void onStreamingSearchConfigured(StreamingSearchConfigureDialog.StreamingSearchConfiguredEvent event) {
         if (event.getTurnedOff()) {
-            buttonJustWatch.setVisibility(View.GONE);
+            buttonStreamingSearch.setVisibility(View.GONE);
         } else {
-            onButtonJustWatchClick();
+            onButtonStreamingSearchClick();
         }
     }
 
@@ -453,10 +457,10 @@ public class OverviewFragment extends Fragment implements
         int seasonNumber = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
         int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
         String episodeTitle = currentEpisodeCursor.getString(EpisodeQuery.TITLE);
-        String languageCode = showCursor.getString(ShowQuery.SHOW_LANGUAGE);
+        String showTvdbSlug = showCursor.getString(ShowQuery.SHOW_SLUG);
 
-        ShareUtils.shareEpisode(getActivity(), showTvdbId, seasonTvdbId, currentEpisodeTvdbId,
-                seasonNumber, episodeNumber, showTitle, episodeTitle, languageCode);
+        ShareUtils.shareEpisode(getActivity(), showTvdbSlug, showTvdbId, seasonTvdbId,
+                currentEpisodeTvdbId, seasonNumber, episodeNumber, showTitle, episodeTitle);
 
         Utils.trackAction(getActivity(), TAG, "Share");
     }
@@ -502,7 +506,6 @@ public class OverviewFragment extends Fragment implements
                 Episodes.COLLECTED,
                 Episodes.IMAGE,
                 Episodes.LAST_EDITED,
-                Episodes.LAST_UPDATED
         };
 
         int _ID = 0;
@@ -523,7 +526,6 @@ public class OverviewFragment extends Fragment implements
         int COLLECTED = 15;
         int IMAGE = 16;
         int LAST_EDITED = 17;
-        int LAST_UPDATED = 18;
     }
 
     interface ShowQuery {
@@ -541,7 +543,8 @@ public class OverviewFragment extends Fragment implements
                 Shows.IMDBID,
                 Shows.RUNTIME,
                 Shows.FAVORITE,
-                Shows.LANGUAGE
+                Shows.LANGUAGE,
+                Shows.SLUG
         };
 
         int SHOW_TITLE = 1;
@@ -556,6 +559,7 @@ public class OverviewFragment extends Fragment implements
         int SHOW_RUNTIME = 10;
         int SHOW_FAVORITE = 11;
         int SHOW_LANGUAGE = 12;
+        int SHOW_SLUG = 13;
     }
 
     @Override
@@ -633,7 +637,7 @@ public class OverviewFragment extends Fragment implements
         buttonCollect.setEnabled(enabled);
         buttonSkip.setEnabled(enabled);
         buttonCheckin.setEnabled(enabled);
-        buttonJustWatch.setEnabled(enabled);
+        buttonStreamingSearch.setEnabled(enabled);
     }
 
     private void setupEpisodeViews(Cursor episode) {
@@ -650,12 +654,12 @@ public class OverviewFragment extends Fragment implements
             boolean displayCheckIn = isConnectedToTrakt
                     && !HexagonSettings.isEnabled(getActivity());
             buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
-            buttonJustWatch.setNextFocusUpId(
+            buttonStreamingSearch.setNextFocusUpId(
                     displayCheckIn ? R.id.buttonCheckIn : R.id.buttonEpisodeWatched);
-            // hide JustWatch if turned off
-            boolean displayJustWatch = !JustWatchSearch.isTurnedOff(requireContext());
-            buttonJustWatch.setVisibility(displayJustWatch ? View.VISIBLE : View.GONE);
-            dividerEpisodeButtons.setVisibility(displayCheckIn || displayJustWatch
+            // hide streaming search if turned off
+            boolean displayStreamingSearch = !StreamingSearch.isTurnedOff(requireContext());
+            buttonStreamingSearch.setVisibility(displayStreamingSearch ? View.VISIBLE : View.GONE);
+            dividerEpisodeButtons.setVisibility(displayCheckIn || displayStreamingSearch
                     ? View.VISIBLE : View.GONE);
 
             // populate episode details
@@ -773,8 +777,9 @@ public class OverviewFragment extends Fragment implements
         ServiceUtils.setUpImdbButton(imdbId, buttonImdb, TAG);
 
         // trakt button
-        String uri = TraktTools.buildEpisodeUrl(currentEpisodeTvdbId);
-        ViewTools.openUriOnClick(buttonTrakt, uri, TAG, "trakt");
+        String traktLink = TraktTools.buildEpisodeUrl(currentEpisodeTvdbId);
+        ViewTools.openUriOnClick(buttonTrakt, traktLink, TAG, "trakt");
+        ClipboardTools.copyTextToClipboardOnLongClick(buttonTrakt, traktLink);
     }
 
     /**
@@ -802,8 +807,10 @@ public class OverviewFragment extends Fragment implements
         // TVDb button
         final int episodeTvdbId = currentEpisodeCursor.getInt(EpisodeQuery._ID);
         final int seasonTvdbId = currentEpisodeCursor.getInt(EpisodeQuery.SEASON_ID);
-        String uri = TvdbLinks.episode(showTvdbId, seasonTvdbId, episodeTvdbId, languageCode);
-        ViewTools.openUriOnClick(buttonTvdb, uri, TAG, "TVDb");
+        String showTvdbSlug = showCursor.getString(ShowQuery.SHOW_SLUG);
+        String tvdbLink = TvdbLinks.episode(showTvdbSlug, showTvdbId, seasonTvdbId, episodeTvdbId);
+        ViewTools.openUriOnClick(buttonTvdb, tvdbLink, TAG, "TVDb");
+        ClipboardTools.copyTextToClipboardOnLongClick(buttonTvdb, tvdbLink);
     }
 
     @Override
@@ -865,13 +872,6 @@ public class OverviewFragment extends Fragment implements
     private void loadEpisodeDetails() {
         if (!isEpisodeDataAvailable) {
             return;
-        }
-
-        if (detailsTask == null || detailsTask.getStatus() == AsyncTask.Status.FINISHED) {
-            long lastEdited = currentEpisodeCursor.getLong(EpisodeQuery.LAST_EDITED);
-            long lastUpdated = currentEpisodeCursor.getLong(EpisodeQuery.LAST_UPDATED);
-            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(getContext(), showTvdbId,
-                    currentEpisodeTvdbId, lastEdited, lastUpdated);
         }
 
         if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {

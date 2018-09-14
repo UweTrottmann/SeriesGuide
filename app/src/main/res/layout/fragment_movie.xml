@@ -120,7 +120,7 @@
                 android:layout_below="@+id/buttonMovieLanguage"
                 android:background="?attr/selectableItemBackground"
                 android:focusable="true"
-                android:textAppearance="@style/TextAppearance.Body"
+                android:textAppearance="?attr/sgTextAppearanceBody2"
                 tools:text="Description for a super awesome movie..." />
 
             <View

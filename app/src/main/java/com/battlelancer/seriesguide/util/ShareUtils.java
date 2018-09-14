@@ -21,18 +21,18 @@ public class ShareUtils {
 
     protected static final String TAG = "ShareUtils";
 
-    public static void shareEpisode(Activity activity, int showTvdbId, int seasonTvdbId,
-            int episodeTvdbId, int seasonNumber, int episodeNumber,
-            String showTitle, String episodeTitle, @Nullable String languageCode) {
+    public static void shareEpisode(Activity activity, @Nullable String showTvdbSlug,
+            int showTvdbId, int seasonTvdbId, int episodeTvdbId, int seasonNumber,
+            int episodeNumber, String showTitle, String episodeTitle) {
         String message = showTitle + " - " + TextTools.getNextEpisodeString(activity, seasonNumber,
                 episodeNumber, episodeTitle) + " "
-                + TvdbLinks.episode(showTvdbId, seasonTvdbId, episodeTvdbId, languageCode);
+                + TvdbLinks.episode(showTvdbSlug, showTvdbId, seasonTvdbId, episodeTvdbId);
         startShareIntentChooser(activity, message, R.string.share_episode);
     }
 
-    public static void shareShow(Activity activity, int showTvdbId, String showTitle,
-            @Nullable String languageCode) {
-        String message = showTitle + " " + TvdbLinks.show(showTvdbId, languageCode);
+    public static void shareShow(Activity activity, @Nullable String showTvdbSlug, int showTvdbId,
+            String showTitle) {
+        String message = showTitle + " " + TvdbLinks.show(showTvdbSlug, showTvdbId);
         startShareIntentChooser(activity, message, R.string.share_show);
     }
 

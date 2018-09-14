@@ -69,14 +69,14 @@ class ShowsDiscoverFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (savedInstanceState != null) {
+        query = if (savedInstanceState != null) {
             // restore last query
-            query = savedInstanceState.getString(KEY_QUERY)
+            savedInstanceState.getString(KEY_QUERY) ?: ""
         } else {
             // use initial query (if any)
             val queryEvent = EventBus.getDefault().getStickyEvent(
                     SearchActivity.SearchQuerySubmitEvent::class.java)
-            query = queryEvent?.query ?: ""
+            queryEvent?.query ?: ""
         }
     }
 
@@ -264,16 +264,6 @@ class ShowsDiscoverFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
-        // when switching tabs while still showing refresh animation, old content remains stuck
-        // so force clear the drawing cache and animation: http://stackoverflow.com/a/27073879
-        if (swipeRefreshLayout.isRefreshing) {
-            swipeRefreshLayout.apply {
-                isRefreshing = false
-                destroyDrawingCache()
-                clearAnimation()
-            }
-        }
 
         unbinder.unbind()
     }

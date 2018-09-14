@@ -32,12 +32,13 @@
   <string name="save_selection">選択した内容を保存</string>
   <string name="action_display_all">すべて表示</string>
   <string name="web_search">ウェブ検索</string>
-  <string name="add_to_homescreen">ショートカット</string>
+  <string name="add_to_homescreen">ホーム画面に追加</string>
   <string name="action_open">開く</string>
   <string name="sync_manually">手動で同期</string>
   <string name="sync_and_update">同期と更新</string>
   <string name="sync_and_download_all">すべて同期とダウンロード</string>
   <string name="action_turn_off">オフにする</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">検索履歴をクリア</string>
   <string name="search_hint">エピソードを検索</string>
@@ -53,7 +54,7 @@
   <string name="reinstall_info">設定で、バックアップ、再インストール、復元を試してください。</string>
   <string name="api_error_generic">%s に通信できませんでした。後でもう一度やり直してください。</string>
   <string name="api_failed">失敗しました: %s</string>
-  <string name="copy_to_clipboard">Copied to clipboard</string>
+  <string name="copy_to_clipboard">クリップボードにコピーしました</string>
   <!-- Sharing -->
   <string name="share">共有</string>
   <string name="share_show">番組を共有</string>
@@ -446,6 +447,7 @@
   <string name="onlyx">サポーターに対してのみ</string>
   <string name="action_upgrade">すべての機能のロックを解除</string>
   <string name="billing_action_subscribe">登録する</string>
+  <string name="billing_action_manage_subscriptions">サブスクリプションを管理する</string>
   <string name="billing_action_pass">X Pass を入手</string>
   <string name="billing_price_subscribe">%1$s/年、無料でお試しください、%2$s からいつでもキャンセルできます</string>
   <string name="billing_price_pass">一回限りの支払</string>

@@ -32,12 +32,13 @@
   <string name="save_selection">Gem markering</string>
   <string name="action_display_all">Vis alle</string>
   <string name="web_search">Websøgning</string>
-  <string name="add_to_homescreen">Genvej</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string name="action_open">Åbn</string>
   <string name="sync_manually">Synkronisér manuelt</string>
   <string name="sync_and_update">Synkronisér og opdatér</string>
   <string name="sync_and_download_all">Synkronisér og opdatér alle</string>
   <string name="action_turn_off">Turn off</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">Ryd søgehistorik</string>
   <string name="search_hint">Søg episoder</string>
@@ -457,6 +458,7 @@
   <string name="onlyx">Kun for brugere, som har doneret</string>
   <string name="action_upgrade">Oplås alle funktioner</string>
   <string name="billing_action_subscribe">Abonnér</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">Få X Pass</string>
   <string name="billing_price_subscribe">%1$s/år, prøv gratis, afmeld når som helst via %2$s</string>
   <string name="billing_price_pass">engangskøb</string>

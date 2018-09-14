@@ -216,7 +216,7 @@ public class PeopleListHelper {
             i.putExtra(PeopleActivity.InitBundle.MEDIA_TYPE, mediaType.toString());
             if (personTmdbId != -1) {
                 // showing a specific person
-                i.putExtra(PersonFragment.InitBundle.PERSON_TMDB_ID, personTmdbId);
+                i.putExtra(PersonFragment.ARG_PERSON_TMDB_ID, personTmdbId);
             }
             Utils.startActivityWithAnimation(activity, i, v);
             Utils.trackAction(v.getContext(), logCategory, "Cast or crew");

@@ -32,12 +32,13 @@
   <string name="save_selection">Desa la selecció</string>
   <string name="action_display_all">Mostra-ho tot</string>
   <string name="web_search">Cerca web</string>
-  <string name="add_to_homescreen">Drecera</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string name="action_open">Obre</string>
   <string name="sync_manually">Sincronitza manualment</string>
   <string name="sync_and_update">Sincronització i actualització</string>
   <string name="sync_and_download_all">Sincronitza i descarrega tot</string>
   <string name="action_turn_off">Apagar</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">Esborra l\'historial</string>
   <string name="search_hint">Cerca episodis</string>
@@ -457,6 +458,7 @@
   <string name="onlyx">Només per a patrocinadors</string>
   <string name="action_upgrade">Desbloquejar totes les opcions</string>
   <string name="billing_action_subscribe">Vull subscriure\'m</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">Obtenir un «X Pass»</string>
   <string name="billing_price_subscribe">%1$s/any, prova de forma gratuïta, cancel·la en qualsevol moment mitjançant %2$s</string>
   <string name="billing_price_pass">compra única</string>

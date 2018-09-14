@@ -38,6 +38,7 @@
   <string name="sync_and_update">Sincronizza e Aggiorna</string>
   <string name="sync_and_download_all">Sincronizza e Scarica tutto</string>
   <string name="action_turn_off">Disattiva</string>
+  <string name="action_stream">Streaming o acquisto</string>
   <!-- Search -->
   <string name="clear_search_history">Cancella la cronologia di ricerca</string>
   <string name="search_hint">Cerca episodi</string>
@@ -457,6 +458,7 @@
   <string name="onlyx">Solo per i sostenitori</string>
   <string name="action_upgrade">Sblocca tutte le funzionalità</string>
   <string name="billing_action_subscribe">Abbonati</string>
+  <string name="billing_action_manage_subscriptions">Gestisci abbonamenti</string>
   <string name="billing_action_pass">Ottieni X Pass</string>
   <string name="billing_price_subscribe">%1$s/anno, prova gratuita, annulla in qualsiasi momento tramite %2$s</string>
   <string name="billing_price_pass">paga una sola volta</string>

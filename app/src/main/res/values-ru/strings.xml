@@ -32,12 +32,13 @@
   <string name="save_selection">Сохранить выбор</string>
   <string name="action_display_all">Показать все</string>
   <string name="web_search">Веб-поиск</string>
-  <string name="add_to_homescreen">Ярлык</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string name="action_open">Открыть</string>
   <string name="sync_manually">Синхронизировать вручную</string>
   <string name="sync_and_update">Синхронизировать и обновить</string>
   <string name="sync_and_download_all">Синхронизировать и обновить всё</string>
   <string name="action_turn_off">Turn off</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">Очистить историю поиска</string>
   <string name="search_hint">Поиск эпизодов</string>
@@ -479,6 +480,7 @@
   <string name="onlyx">Только для пожертвовавших</string>
   <string name="action_upgrade">Разблокировать все возможности</string>
   <string name="billing_action_subscribe">Подписка</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">Получить X Pass</string>
   <string name="billing_price_subscribe">%1$s/год, попробуйте бесплатно, можно отменить в любой момент до %2$s</string>
   <string name="billing_price_pass">Единоразовая покупка</string>

@@ -3,7 +3,9 @@ package com.battlelancer.seriesguide.provider;
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_42_43;
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_43_44;
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_44_45;
+import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_45_46;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.db.framework.FrameworkSQLiteOpenHelperFactory;
@@ -82,7 +84,7 @@ public class MigrationTest {
         // provide MIGRATION_42_43 as the migration process.
         migrationTestHelper.runMigrationsAndValidate(TEST_DB_NAME, 43,
                 false /* adding FTS table ourselves */, MIGRATION_42_43);
-        assertTestData();
+        assertTestData(getMigratedRoomDatabase());
     }
 
     @Test
@@ -94,7 +96,7 @@ public class MigrationTest {
 
         // MigrationTestHelper automatically verifies the schema changes, but not the data validity
         // Validate that the data was migrated properly.
-        assertTestData();
+        assertTestData(getMigratedRoomDatabase());
     }
 
     private void insertTestDataSqlite() {
@@ -111,32 +113,45 @@ public class MigrationTest {
     public void migrationFrom43To44_containsCorrectData() throws IOException {
         // First version that uses Room, so can use migration test helper
         SupportSQLiteDatabase db = migrationTestHelper.createDatabase(TEST_DB_NAME, 43);
-        RoomDatabaseTestHelper.insertShow(SHOW, db);
+        RoomDatabaseTestHelper.insertShow(SHOW, db, 43);
         RoomDatabaseTestHelper.insertSeason(SEASON, db);
         RoomDatabaseTestHelper
                 .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);
         db.close();
 
-        assertTestData();
+        assertTestData(getMigratedRoomDatabase());
     }
 
     @Test
     public void migrationFrom44To45_containsCorrectData() throws IOException {
         SupportSQLiteDatabase db = migrationTestHelper.createDatabase(TEST_DB_NAME, 44);
-        RoomDatabaseTestHelper.insertShow(SHOW, db);
+        RoomDatabaseTestHelper.insertShow(SHOW, db, 44);
         RoomDatabaseTestHelper.insertSeason(SEASON, db);
         RoomDatabaseTestHelper
                 .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);
         db.close();
 
-        assertTestData();
+        assertTestData(getMigratedRoomDatabase());
     }
 
-    private void assertTestData() {
+    @Test
+    public void migrationFrom45To46_containsCorrectData() throws IOException {
+        SupportSQLiteDatabase db = migrationTestHelper.createDatabase(TEST_DB_NAME, 45);
+        RoomDatabaseTestHelper.insertShow(SHOW, db, 45);
+        RoomDatabaseTestHelper.insertSeason(SEASON, db);
+        RoomDatabaseTestHelper
+                .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);
+        db.close();
+
+        SgRoomDatabase database = getMigratedRoomDatabase();
+        assertTestData(database);
+        SgShow dbShow = database.showHelper().getShow();
+        assertNull(dbShow.slug);
+    }
+
+    private void assertTestData(SgRoomDatabase database) {
         // MigrationTestHelper automatically verifies the schema changes, but not the data validity
         // Validate that the data was migrated properly.
-        SgRoomDatabase database = getMigratedRoomDatabase();
-
         SgShow dbShow = database.showHelper().getShow();
         assertEquals(SHOW.tvdb_id, dbShow.tvdbId);
         assertEquals(SHOW.title, dbShow.title);
@@ -159,7 +174,12 @@ public class MigrationTest {
     private SgRoomDatabase getMigratedRoomDatabase() {
         SgRoomDatabase database = Room.databaseBuilder(InstrumentationRegistry.getTargetContext(),
                 SgRoomDatabase.class, TEST_DB_NAME)
-                .addMigrations(MIGRATION_42_43, MIGRATION_43_44, MIGRATION_44_45)
+                .addMigrations(
+                        MIGRATION_42_43,
+                        MIGRATION_43_44,
+                        MIGRATION_44_45,
+                        MIGRATION_45_46
+                )
                 .build();
         // close the database and release any stream resources when the test finishes
         migrationTestHelper.closeWhenFinished(database);

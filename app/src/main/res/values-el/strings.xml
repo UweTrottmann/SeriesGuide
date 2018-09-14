@@ -32,12 +32,13 @@
   <string name="save_selection">Αποθήκευση επιλογής</string>
   <string name="action_display_all">Εμφάνιση όλων</string>
   <string name="web_search">Αναζήτηση στον ιστό</string>
-  <string name="add_to_homescreen">Συντόμευση</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string name="action_open">Άνοιγμα</string>
   <string name="sync_manually">Χειροκίνητος συγχρονισμός</string>
   <string name="sync_and_update">Συγχρονισμός &amp; Ενημέρωση</string>
   <string name="sync_and_download_all">Συγχρονισμός &amp; Λήψη όλων</string>
   <string name="action_turn_off">Απενεργοποίηση</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
   <string name="search_hint">Αναζήτηση επεισοδίων</string>
@@ -457,6 +458,7 @@
   <string name="onlyx">Μόνο για υποστηρικτές</string>
   <string name="action_upgrade">Ξεκλειδώσετε όλα τα χαρακτηριστικά</string>
   <string name="billing_action_subscribe">Παρακολούθηση</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">Αποκτήστε το X Pass</string>
   <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">εφάπαξ αγοράς</string>

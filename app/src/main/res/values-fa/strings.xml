@@ -32,12 +32,13 @@
   <string name="save_selection">ذخیرهٔ گزینش</string>
   <string name="action_display_all">نمایش همه</string>
   <string name="web_search">جست‌وجوی وب</string>
-  <string name="add_to_homescreen">میان‌بر</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string name="action_open">گشودن</string>
   <string name="sync_manually">هم‌گام سازی دستی</string>
   <string name="sync_and_update">هم‌گام سازی و به‌روز رسانی</string>
   <string name="sync_and_download_all">هم‌گام سازی و بارگیری همه</string>
   <string name="action_turn_off">Turn off</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
   <string name="search_hint">جست‌وجوی قسمت‌ها</string>
@@ -457,6 +458,7 @@
   <string name="onlyx">فقط برای حامیان</string>
   <string name="action_upgrade">باز کردن تمام ویژگی‌ها</string>
   <string name="billing_action_subscribe">اشتراک</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">گرفتن X Pass</string>
   <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">خرید یک باره</string>

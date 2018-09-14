@@ -32,12 +32,13 @@
   <string name="save_selection">Сачувај изабрано</string>
   <string name="action_display_all">Прикажи све</string>
   <string name="web_search">Веб претрага</string>
-  <string name="add_to_homescreen">Пречица</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string name="action_open">Отворено</string>
   <string name="sync_manually">Sync manually</string>
   <string name="sync_and_update">Sync &amp; Update</string>
   <string name="sync_and_download_all">Sync &amp; Download all</string>
   <string name="action_turn_off">Turn off</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">Обриши историју претраге</string>
   <string name="search_hint">Тражи епизоде</string>
@@ -468,6 +469,7 @@
   <string name="onlyx">Само за кориснике који су подржали развитак апликације</string>
   <string name="action_upgrade">Откључај све опције</string>
   <string name="billing_action_subscribe">Претплати се</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">Купи X Pass</string>
   <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">доживотна куповина</string>

@@ -32,12 +32,13 @@
   <string name="save_selection">Shrani izbiro</string>
   <string name="action_display_all">Pokaži vse</string>
   <string name="web_search">Spletno iskanje</string>
-  <string name="add_to_homescreen">Bližnjica</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string name="action_open">Odpri</string>
   <string name="sync_manually">Sync manually</string>
   <string name="sync_and_update">Sync &amp; Update</string>
   <string name="sync_and_download_all">Sync &amp; Download all</string>
   <string name="action_turn_off">Turn off</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">Izbriši zgodovino iskanja</string>
   <string name="search_hint">Iskanje epizode</string>
@@ -479,6 +480,7 @@
   <string name="onlyx">Only for supporters</string>
   <string name="action_upgrade">Unlock all features</string>
   <string name="billing_action_subscribe">Naroči se</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">Get X Pass</string>
   <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">enkratni nakup</string>

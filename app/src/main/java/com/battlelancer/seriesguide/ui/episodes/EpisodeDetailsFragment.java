@@ -28,6 +28,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
@@ -36,15 +37,14 @@ import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
-import com.battlelancer.seriesguide.justwatch.JustWatchConfigureDialog;
-import com.battlelancer.seriesguide.justwatch.JustWatchSearch;
+import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
+import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeDetailsTask;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
@@ -88,12 +88,12 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
 
     private Handler handler = new Handler();
-    private TvdbEpisodeDetailsTask detailsTask;
     private TraktRatingsTask ratingsTask;
 
     private boolean isInMultipane;
     private int episodeTvdbId;
     private int showTvdbId;
+    @Nullable private String showTvdbSlug;
     private int seasonTvdbId;
     private int seasonNumber;
     private int episodeNumber;
@@ -103,7 +103,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private String showTitle;
     private int showRunTime;
     private long episodeReleaseTime;
-    private String languageCode;
 
     @BindView(R.id.containerEpisode) View containerEpisode;
     @BindView(R.id.containerRatings) View containerRatings;
@@ -129,7 +128,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
     @BindView(R.id.dividerEpisodeButtons) View dividerEpisodeButtons;
     @BindView(R.id.buttonEpisodeCheckin) Button buttonCheckin;
-    @BindView(R.id.buttonEpisodeJustWatch) Button buttonJustWatch;
+    @BindView(R.id.buttonEpisodeStreamingSearch) Button buttonStreamingSearch;
     @BindView(R.id.buttonEpisodeWatched) Button buttonWatch;
     @BindView(R.id.buttonEpisodeCollected) Button buttonCollect;
     @BindView(R.id.buttonEpisodeSkip) Button buttonSkip;
@@ -182,8 +181,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
         ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
         ViewTools.setVectorIconLeft(theme, buttonCheckin, R.drawable.ic_checkin_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonJustWatch, R.drawable.ic_play_arrow_black_24dp);
-        CheatSheet.setup(buttonJustWatch);
+        ViewTools.setVectorIconLeft(theme, buttonStreamingSearch, R.drawable.ic_play_arrow_black_24dp);
 
         // comments button
         ViewTools.setVectorIconLeft(theme, commentsButton, R.drawable.ic_forum_black_24dp);
@@ -253,10 +251,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (detailsTask != null) {
-            detailsTask.cancel(true);
-            detailsTask = null;
-        }
         if (ratingsTask != null) {
             ratingsTask.cancel(true);
             ratingsTask = null;
@@ -322,24 +316,34 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 seasonNumber, episodeNumber, collected);
     }
 
-    @OnClick(R.id.buttonEpisodeJustWatch)
-    void onButtonJustWatchClick() {
+    @OnClick(R.id.buttonEpisodeStreamingSearch)
+    void onButtonStreamingSearchClick() {
         if (showTitle == null) {
             return;
         }
-        if (JustWatchSearch.isNotConfigured(requireContext())) {
-            new JustWatchConfigureDialog().show(requireFragmentManager(), "justWatchDialog");
+        if (StreamingSearch.isNotConfigured(requireContext())) {
+            showStreamingSearchConfigDialog();
         } else {
-            JustWatchSearch.searchForShow(requireContext(), showTitle, TAG);
+            StreamingSearch.searchForShow(requireContext(), showTitle, TAG);
         }
     }
 
+    @OnLongClick(R.id.buttonEpisodeStreamingSearch)
+    boolean onButtonStreamingSearchLongClick() {
+        showStreamingSearchConfigDialog();
+        return true;
+    }
+
+    private void showStreamingSearchConfigDialog() {
+        StreamingSearchConfigureDialog.show(requireFragmentManager());
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onJustWatchConfigured(JustWatchConfigureDialog.JustWatchConfiguredEvent event) {
+    public void onStreamingSearchConfigured(StreamingSearchConfigureDialog.StreamingSearchConfiguredEvent event) {
         if (event.getTurnedOff()) {
-            buttonJustWatch.setVisibility(View.GONE);
+            buttonStreamingSearch.setVisibility(View.GONE);
         } else {
-            onButtonJustWatchClick();
+            onButtonStreamingSearchClick();
         }
     }
 
@@ -366,7 +370,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         buttonCollect.setEnabled(enabled);
         buttonSkip.setEnabled(enabled);
         buttonCheckin.setEnabled(enabled);
-        buttonJustWatch.setEnabled(enabled);
+        buttonStreamingSearch.setEnabled(enabled);
     }
 
     private LoaderManager.LoaderCallbacks<Cursor> episodeLoaderCallbacks
@@ -401,6 +405,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         }
 
         showTvdbId = cursor.getInt(DetailsQuery.SHOW_ID);
+        showTvdbSlug = cursor.getString(DetailsQuery.SHOW_SLUG);
         seasonNumber = cursor.getInt(DetailsQuery.SEASON);
         episodeNumber = cursor.getInt(DetailsQuery.NUMBER);
         showRunTime = cursor.getInt(DetailsQuery.SHOW_RUNTIME);
@@ -416,9 +421,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 TextTools.getEpisodeTitle(requireContext(), hideDetails ? null : episodeTitle,
                         episodeNumber));
         String overview = cursor.getString(DetailsQuery.OVERVIEW);
-        languageCode = cursor.getString(DetailsQuery.SHOW_LANGUAGE);
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
+            String languageCode = cursor.getString(DetailsQuery.SHOW_LANGUAGE);
             overview = getString(R.string.no_translation,
                     LanguageTools.getShowLanguageStringFor(getContext(), languageCode),
                     getString(R.string.tvdb));
@@ -539,12 +544,12 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         boolean isConnectedToTrakt = TraktCredentials.get(requireContext()).hasCredentials();
         boolean displayCheckIn = isConnectedToTrakt && !HexagonSettings.isEnabled(requireContext());
         buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
-        buttonJustWatch
+        buttonStreamingSearch
                 .setNextFocusUpId(displayCheckIn ? R.id.buttonCheckIn : R.id.buttonEpisodeWatched);
-        // hide JustWatch if turned off
-        boolean displayJustWatch = !JustWatchSearch.isTurnedOff(requireContext());
-        buttonJustWatch.setVisibility(displayJustWatch ? View.VISIBLE : View.GONE);
-        dividerEpisodeButtons.setVisibility(displayCheckIn || displayJustWatch
+        // hide streaming search if turned off
+        boolean displayStreamingSearch = !StreamingSearch.isTurnedOff(requireContext());
+        buttonStreamingSearch.setVisibility(displayStreamingSearch ? View.VISIBLE : View.GONE);
+        dividerEpisodeButtons.setVisibility(displayCheckIn || displayStreamingSearch
                 ? View.VISIBLE : View.GONE);
 
         // watched button
@@ -612,8 +617,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // service buttons
         // trakt
-        String traktUri = TraktTools.buildEpisodeUrl(episodeTvdbId);
-        ViewTools.openUriOnClick(traktButton, traktUri, TAG, "trakt");
+        String traktLink = TraktTools.buildEpisodeUrl(episodeTvdbId);
+        ViewTools.openUriOnClick(traktButton, traktLink, TAG, "trakt");
+        ClipboardTools.copyTextToClipboardOnLongClick(traktButton, traktLink);
 
         // IMDb
         String imdbId = cursor.getString(DetailsQuery.IMDBID);
@@ -625,9 +631,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // TVDb
         seasonTvdbId = cursor.getInt(DetailsQuery.SEASON_ID);
-        String tvdbUri = TvdbLinks
-                .episode(showTvdbId, seasonTvdbId, episodeTvdbId, languageCode);
-        ViewTools.openUriOnClick(tvdbButton, tvdbUri, TAG, "TVDb");
+        String tvdbLink = TvdbLinks.episode(showTvdbSlug, showTvdbId, seasonTvdbId, episodeTvdbId);
+        ViewTools.openUriOnClick(tvdbButton, tvdbLink, TAG, "TVDb");
+        ClipboardTools.copyTextToClipboardOnLongClick(tvdbButton, tvdbLink);
         // trakt comments
         commentsButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -642,18 +648,10 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         containerEpisode.setVisibility(View.VISIBLE);
 
-        loadDetails(cursor);
+        loadDetails();
     }
 
-    private void loadDetails(Cursor cursor) {
-        // get full info if episode was edited on TVDb
-        if (detailsTask == null || detailsTask.getStatus() == AsyncTask.Status.FINISHED) {
-            long lastEdited = cursor.getLong(DetailsQuery.LAST_EDITED);
-            long lastUpdated = cursor.getLong(DetailsQuery.LAST_UPDATED);
-            detailsTask = TvdbEpisodeDetailsTask.runIfOutdated(requireContext(), showTvdbId,
-                    episodeTvdbId, lastEdited, lastUpdated);
-        }
-
+    private void loadDetails() {
         // update trakt ratings
         if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {
             ratingsTask = new TraktRatingsTask(requireContext(), showTvdbId, episodeTvdbId,
@@ -671,8 +669,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         if (episodeTitle == null || showTitle == null) {
             return;
         }
-        ShareUtils.shareEpisode(requireActivity(), showTvdbId, seasonTvdbId, episodeTvdbId,
-                seasonNumber, episodeNumber, showTitle, episodeTitle, languageCode);
+        ShareUtils.shareEpisode(requireActivity(), showTvdbSlug, showTvdbId, seasonTvdbId,
+                episodeTvdbId, seasonNumber, episodeNumber, showTitle, episodeTitle);
         Utils.trackAction(requireContext(), TAG, "Share");
     }
 
@@ -783,12 +781,12 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 Episodes.WATCHED,
                 Episodes.COLLECTED,
                 Episodes.LAST_EDITED,
-                Episodes.LAST_UPDATED,
                 Shows.REF_SHOW_ID,
                 Shows.IMDBID,
                 Shows.TITLE,
                 Shows.RUNTIME,
-                Shows.LANGUAGE
+                Shows.LANGUAGE,
+                Shows.SLUG
         };
 
         int _ID = 0;
@@ -811,11 +809,11 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         int WATCHED = 17;
         int COLLECTED = 18;
         int LAST_EDITED = 19;
-        int LAST_UPDATED = 20;
-        int SHOW_ID = 21;
-        int SHOW_IMDBID = 22;
-        int SHOW_TITLE = 23;
-        int SHOW_RUNTIME = 24;
-        int SHOW_LANGUAGE = 25;
+        int SHOW_ID = 20;
+        int SHOW_IMDBID = 21;
+        int SHOW_TITLE = 22;
+        int SHOW_RUNTIME = 23;
+        int SHOW_LANGUAGE = 24;
+        int SHOW_SLUG = 25;
     }
 }

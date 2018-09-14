@@ -32,12 +32,13 @@
   <string name="save_selection">儲存所選項目</string>
   <string name="action_display_all">顯示全部</string>
   <string name="web_search">網頁搜尋</string>
-  <string name="add_to_homescreen">快速鍵</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string name="action_open">開啟</string>
   <string name="sync_manually">手動同步</string>
   <string name="sync_and_update">同步 &amp; 和更新</string>
   <string name="sync_and_download_all">同步&amp; 及下載</string>
   <string name="action_turn_off">Turn off</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">清除搜尋記錄</string>
   <string name="search_hint">搜尋集數</string>
@@ -446,6 +447,7 @@
   <string name="onlyx">僅供贊助者</string>
   <string name="action_upgrade">解鎖所有功能</string>
   <string name="billing_action_subscribe">訂閱</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">取得 X Pass</string>
   <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">一次購買</string>

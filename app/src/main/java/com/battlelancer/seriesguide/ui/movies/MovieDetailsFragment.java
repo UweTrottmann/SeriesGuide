@@ -39,6 +39,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
@@ -46,8 +47,8 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.extensions.MovieActionsContract;
-import com.battlelancer.seriesguide.justwatch.JustWatchConfigureDialog;
-import com.battlelancer.seriesguide.justwatch.JustWatchSearch;
+import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
+import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.traktapi.MovieCheckInDialogFragment;
@@ -114,7 +115,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     @BindView(R.id.containerMovieButtons) View containerMovieButtons;
     @BindView(R.id.dividerMovieButtons) View dividerMovieButtons;
     @BindView(R.id.buttonMovieCheckIn) Button buttonMovieCheckIn;
-    @BindView(R.id.buttonMovieJustWatch) Button buttonMovieJustWatch;
+    @BindView(R.id.buttonMovieStreamingSearch) Button buttonMovieStreamingSearch;
     @BindView(R.id.buttonMovieWatched) Button buttonMovieWatched;
     @BindView(R.id.buttonMovieCollected) Button buttonMovieCollected;
     @BindView(R.id.buttonMovieWatchlisted) Button buttonMovieWatchlisted;
@@ -170,10 +171,9 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         ViewTools.setVectorIconTop(theme, buttonMovieWatchlisted,
                 R.drawable.ic_list_add_white_24dp);
         ViewTools.setVectorIconLeft(theme, buttonMovieCheckIn, R.drawable.ic_checkin_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonMovieJustWatch,
+        ViewTools.setVectorIconLeft(theme, buttonMovieStreamingSearch,
                 R.drawable.ic_play_arrow_black_24dp);
         CheatSheet.setup(buttonMovieCheckIn);
-        CheatSheet.setup(buttonMovieJustWatch);
 
         // language button
         buttonMovieLanguage.setVisibility(View.GONE);
@@ -397,10 +397,10 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         boolean isConnectedToTrakt = TraktCredentials.get(getActivity()).hasCredentials();
         boolean displayCheckIn = isConnectedToTrakt && !HexagonSettings.isEnabled(getActivity());
         buttonMovieCheckIn.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
-        // hide JustWatch if turned off
-        boolean displayJustWatch = !JustWatchSearch.isTurnedOff(requireContext());
-        buttonMovieJustWatch.setVisibility(displayJustWatch ? View.VISIBLE : View.GONE);
-        dividerMovieButtons.setVisibility(displayCheckIn || displayJustWatch
+        // hide streaming search if turned off
+        boolean displayStreamingSearch = !StreamingSearch.isTurnedOff(requireContext());
+        buttonMovieStreamingSearch.setVisibility(displayStreamingSearch ? View.VISIBLE : View.GONE);
+        dividerMovieButtons.setVisibility(displayCheckIn || displayStreamingSearch
                         ? View.VISIBLE : View.GONE);
 
         // watched button (only supported when connected to trakt)
@@ -621,24 +621,34 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         Utils.trackAction(getActivity(), TAG, "Check-In");
     }
 
-    @OnClick(R.id.buttonMovieJustWatch)
-    void onButtonJustWatchClick() {
+    @OnClick(R.id.buttonMovieStreamingSearch)
+    void onButtonStreamingSearchClick() {
         if (TextUtils.isEmpty(movieTitle)) {
             return;
         }
-        if (JustWatchSearch.isNotConfigured(requireContext())) {
-            new JustWatchConfigureDialog().show(requireFragmentManager(), "justWatchDialog");
+        if (StreamingSearch.isNotConfigured(requireContext())) {
+            showStreamingSearchConfigDialog();
         } else {
-            JustWatchSearch.searchForMovie(requireContext(), movieTitle, TAG);
+            StreamingSearch.searchForMovie(requireContext(), movieTitle, TAG);
         }
     }
 
+    @OnLongClick(R.id.buttonMovieStreamingSearch)
+    boolean onButtonStreamingSearchLongClick() {
+        showStreamingSearchConfigDialog();
+        return true;
+    }
+
+    private void showStreamingSearchConfigDialog() {
+        StreamingSearchConfigureDialog.show(requireFragmentManager());
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onJustWatchConfigured(JustWatchConfigureDialog.JustWatchConfiguredEvent event) {
+    public void onStreamingSearchConfigured(StreamingSearchConfigureDialog.StreamingSearchConfiguredEvent event) {
         if (event.getTurnedOff()) {
-            buttonMovieJustWatch.setVisibility(View.GONE);
+            buttonMovieStreamingSearch.setVisibility(View.GONE);
         } else {
-            onButtonJustWatchClick();
+            onButtonStreamingSearchClick();
         }
     }
 
@@ -675,7 +685,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         buttonMovieWatched.setEnabled(enabled);
         buttonMovieCollected.setEnabled(enabled);
         buttonMovieWatchlisted.setEnabled(enabled);
-        buttonMovieJustWatch.setEnabled(enabled);
+        buttonMovieStreamingSearch.setEnabled(enabled);
     }
 
     private void displayLanguageSettings() {

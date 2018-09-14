@@ -5,6 +5,53 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 44
+----------
+*(2018-09-14)*
+
+* Rename "JustWatch" button to "Stream or purchase", add Reelgood (US only) as an option.
+* Tap and hold to change stream search provider.
+* Tap and hold to copy various links to clipboard.
+* Full episode details loaded when adding or updating a show instead of on-demand.
+
+#### 44
+*(2018-09-14)*
+
+* 🔧 Tap and hold to change stream search provider.
+* 🔧 Revert experiment with larger text for most descriptions.
+* 📝 Latest translations from crowdin.
+
+#### 44-beta3
+*(2018-08-30)*
+
+* 🔧 Rename "JustWatch" button to "Stream or purchase", add Reelgood (US only) as an option.
+* 🔧 Always show quick-link to "Unlock all features" screen in navigation drawer.
+* 🔨 Fix crash when loading person fails.
+* 📝 Latest translations from crowdin.
+
+#### 44-beta2
+*(2018-08-24)*
+
+* 🔧 Use and share new TVDB links for shows and episodes. Only works after a show is updated.
+* 🔧 Tap and hold to copy TVDB, IMDB and trakt links for shows and episodes.
+* 🔧 Add button to manage subscriptions (Play Store only).
+* 🔧 Experiment with larger text for descriptions.
+* 🔧 Move person actions inline, improve error messages.
+* 🔧 Distinct icon for add to home screen button.
+* 🔨 Drop person image animation, was broken and slow.
+* 📝 Latest translations from crowdin.
+
+#### 44-beta1
+*(2018-08-09)*
+
+* 🔨 Fix database migration for users that have used the legacy backup tool. Note that upgrading 
+  from SeriesGuide 25 (2015) or older still remains not supported. Update to version 42.2 first. 
+  Get the APK at https://github.com/UweTrottmann/SeriesGuide/releases/tag/v42.2
+* 🔧 Full episode details (notably image path) are again loaded when adding or updating a show and 
+  no longer on-demand when viewing an episode. This results in less network calls while browsing 
+  episodes.
+* 📝 Latest translations from crowdin. Added Cebuano (ceb) and Filipino (fil) (both incomplete).
+
 Version 43
 ----------
 *(2018-07-20)*

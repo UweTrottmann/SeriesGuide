@@ -32,12 +32,13 @@
   <string name="save_selection">Uložit výběr</string>
   <string name="action_display_all">Zobrazit vše</string>
   <string name="web_search">Webové vyhledávání</string>
-  <string name="add_to_homescreen">Odkaz</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string name="action_open">Otevřít</string>
   <string name="sync_manually">Synchronizuj ručně</string>
   <string name="sync_and_update">Synchronizuj &amp; Aktualizuj</string>
   <string name="sync_and_download_all">Synchronizuj &amp; Stáhni vše</string>
   <string name="action_turn_off">Turn off</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">Vymazat historii vyhledávání</string>
   <string name="search_hint">Hledat v epizodách</string>
@@ -479,6 +480,7 @@
   <string name="onlyx">Pouze pro dárce</string>
   <string name="action_upgrade">Odemknout všechny funkce</string>
   <string name="billing_action_subscribe">Odebírat</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">Získejte X Pass</string>
   <string name="billing_price_subscribe">%1$s na rok, vyzkoušejte zdarma, zrušit to můžete kdykoli prostřednictvím %2$s</string>
   <string name="billing_price_pass">jednorázový nákup</string>

@@ -394,15 +394,17 @@ public class DBUtils {
     }
 
     /**
-     * Returns the episode IDs and their last edit time for a given show as a efficiently searchable
-     * HashMap.
+     * Returns the episode IDs and their last updated time for a given show as a efficiently
+     * searchable HashMap. Using instead of last edited time, which might be wrong when for example
+     * restoring from a backup.
      *
      * @return HashMap containing the shows existing episodes
      */
-    public static HashMap<Integer, Long> getEpisodeMapForShow(Context context, int showTvdbId) {
+    public static HashMap<Integer, Long> getLastUpdatedByEpisodeId(Context context,
+            int showTvdbId) {
         Cursor episodes = context.getContentResolver().query(
                 Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
-                        Episodes._ID, Episodes.LAST_EDITED
+                        Episodes._ID, Episodes.LAST_UPDATED
                 }, null, null, null
         );
         @SuppressLint("UseSparseArrays") HashMap<Integer, Long> episodeMap = new HashMap<>();

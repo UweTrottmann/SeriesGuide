@@ -32,12 +32,13 @@
   <string name="save_selection">Salvar seleción</string>
   <string name="action_display_all">Amosar todo</string>
   <string name="web_search">Pesquisa na web</string>
-  <string name="add_to_homescreen">Atallo</string>
+  <string name="add_to_homescreen">Add to Home screen</string>
   <string name="action_open">Abrir</string>
   <string name="sync_manually">Sincronizar manualmente</string>
   <string name="sync_and_update">Sincronizar &amp; Atualizar</string>
   <string name="sync_and_download_all">Sincronizar &amp; Baixar todo</string>
   <string name="action_turn_off">Turn off</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">Limpar histórico de pesquisa</string>
   <string name="search_hint">Procurar episodios</string>
@@ -457,6 +458,7 @@
   <string name="onlyx">Only for supporters</string>
   <string name="action_upgrade">Unlock all features</string>
   <string name="billing_action_subscribe">Subscribe</string>
+  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
   <string name="billing_action_pass">Get X Pass</string>
   <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
   <string name="billing_price_pass">one-time purchase</string>

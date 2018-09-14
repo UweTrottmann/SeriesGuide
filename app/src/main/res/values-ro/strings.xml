@@ -32,12 +32,13 @@
   <string name="save_selection">Salvează selecția</string>
   <string name="action_display_all">Arată tot</string>
   <string name="web_search">Căutare pe web</string>
-  <string name="add_to_homescreen">Scurtătură</string>
+  <string name="add_to_homescreen">Adăugați pe ecranul de principal</string>
   <string name="action_open">Deschide</string>
   <string name="sync_manually">Sincronizare manuala</string>
   <string name="sync_and_update">Sincronizare &amp; innoita</string>
   <string name="sync_and_download_all">Sincronizare &amp; Descărcă tot</string>
-  <string name="action_turn_off">Turn off</string>
+  <string name="action_turn_off">Dezactivați</string>
+  <string name="action_stream">Stream sau cumpăra</string>
   <!-- Search -->
   <string name="clear_search_history">Ștergere istoric căutare</string>
   <string name="search_hint">Căutaţi episoade</string>
@@ -53,7 +54,7 @@
   <string name="reinstall_info">Încercați sa creați o copie de rezerva în Setări, reinstalati și restaurati.</string>
   <string name="api_error_generic">Nu s-a putut comunica cu %s. Încercați mai tarziu.</string>
   <string name="api_failed">Eroare: %s</string>
-  <string name="copy_to_clipboard">Copied to clipboard</string>
+  <string name="copy_to_clipboard">Copiat în clipboard</string>
   <!-- Sharing -->
   <string name="share">Distribuie</string>
   <string name="share_show">Distribuie emisiunea</string>
@@ -187,7 +188,7 @@
   <string name="checkin_searchhint">Scrieți un nume de emisiune</string>
   <string name="add_empty">Nu există emisiuni aici.</string>
   <string name="no_results">Nici un rezultat, încercaţi folosind cuvinte întregi.</string>
-  <string name="empty_show_search">Not found in your show list</string>
+  <string name="empty_show_search">Nu a fost găsit in lista de dumneavoastră de showuri</string>
   <string name="action_try_any_language">Încearcă orice limbă</string>
   <string name="action_try_again">Încearcă din nou</string>
   <string name="tvdb_error_does_not_exist">Acest serial nu există (încă) pe TheTVDB. Încercați mai târziu.</string>
@@ -468,6 +469,7 @@
   <string name="onlyx">Numai pentru suporteri</string>
   <string name="action_upgrade">Deblocați toate opțiunile</string>
   <string name="billing_action_subscribe">Abonează-te</string>
+  <string name="billing_action_manage_subscriptions">Gestionaţi abonamentele</string>
   <string name="billing_action_pass">Obțineți abonamentul X</string>
   <string name="billing_price_subscribe">%1$s/ an, testează gratuit, anuleaza oricand prin%2$s</string>
   <string name="billing_price_pass">plată unică</string>

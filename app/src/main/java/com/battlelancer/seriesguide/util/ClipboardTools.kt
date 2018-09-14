@@ -30,3 +30,7 @@ fun TextView.copyTextToClipboardOnLongClick() {
     // globally shared click listener instance
     setOnLongClickListener(onLongClickListener)
 }
+
+fun View.copyTextToClipboardOnLongClick(text: CharSequence) {
+    setOnLongClickListener { v -> copyTextToClipboard(v.context, text) }
+}

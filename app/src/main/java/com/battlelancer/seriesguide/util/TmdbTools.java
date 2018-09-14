@@ -52,7 +52,7 @@ public class TmdbTools {
         return BASE_URL + PATH_MOVIES + movieTmdbId;
     }
 
-    private static String buildPersonUrl(int personTmdbId) {
+    public static String buildPersonUrl(int personTmdbId) {
         return BASE_URL + PATH_PERSON + personTmdbId;
     }
 

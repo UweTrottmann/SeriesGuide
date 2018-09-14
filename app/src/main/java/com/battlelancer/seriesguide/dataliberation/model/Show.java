@@ -18,6 +18,7 @@ import java.util.List;
 public class Show {
 
     public int tvdb_id;
+    public String tvdb_slug;
     public String imdb_id;
     public Integer trakt_id;
 
@@ -62,6 +63,7 @@ public class Show {
 
         ContentValues values = new ContentValues();
         // values for new and existing shows
+        values.put(Shows.SLUG, tvdb_slug);
         // if in any case the title is empty, show a place holder
         values.put(Shows.TITLE, TextUtils.isEmpty(title) 
                 ? context.getString(R.string.no_translation_title) : title);
