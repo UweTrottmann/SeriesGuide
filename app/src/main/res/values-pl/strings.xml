@@ -38,7 +38,7 @@
   <string name="sync_and_update">Synchronizuj i aktualizuj</string>
   <string name="sync_and_download_all">Synchronizuj i pobierz wszystko</string>
   <string name="action_turn_off">Wyłącz</string>
-  <string name="action_stream">Gdzie kupić?</string>
+  <string name="action_stream">Stream or purchase</string>
   <!-- Search -->
   <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
   <string name="search_hint">Szukaj odcinków</string>

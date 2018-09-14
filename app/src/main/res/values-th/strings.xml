@@ -32,13 +32,13 @@
   <string name="save_selection">บันทึกที่เลือก</string>
   <string name="action_display_all">แสดงทั้งหมด</string>
   <string name="web_search">ค้นเว็บ</string>
-  <string name="add_to_homescreen">Add to Home screen</string>
+  <string name="add_to_homescreen">เพิ่มไปยังหน้าจอหลัก</string>
   <string name="action_open">เปิด</string>
   <string name="sync_manually">ซิงค์ด้วยตนเอง</string>
   <string name="sync_and_update">ซิงค์ &amp; อัปเดต</string>
   <string name="sync_and_download_all">ซิงค์ &amp; ดาวน์โหลดทั้งหมด</string>
-  <string name="action_turn_off">Turn off</string>
-  <string name="action_stream">Stream or purchase</string>
+  <string name="action_turn_off">ปิด</string>
+  <string name="action_stream">สตรีมหรือซื้อ</string>
   <!-- Search -->
   <string name="clear_search_history">ล้างประวัติการค้นหา</string>
   <string name="search_hint">ค้นหาตอน</string>
@@ -54,7 +54,7 @@
   <string name="reinstall_info">ลองสำรองข้อมูลในการตั้งค่า, ติดตั้งแอปใหม่ และเรียกคืนข้อมูล</string>
   <string name="api_error_generic">ไม่สามารถติดต่อกับ %s ลองอีกครั้งในภายหลัง</string>
   <string name="api_failed">ล้มเหลว: %s</string>
-  <string name="copy_to_clipboard">Copied to clipboard</string>
+  <string name="copy_to_clipboard">คัดลอกไปยังคลิปบอร์ดแล้ว</string>
   <!-- Sharing -->
   <string name="share">แบ่งปัน</string>
   <string name="share_show">แบ่งปันซีรีส์</string>
@@ -180,7 +180,7 @@
   <string name="checkin_searchhint">พิมพ์ชื่อซีรีส์</string>
   <string name="add_empty">ไม่มีซีรีส์ที่นี่</string>
   <string name="no_results">ไม่พบผลลัพธ์ ลองคำที่สมบูรณ์</string>
-  <string name="empty_show_search">Not found in your show list</string>
+  <string name="empty_show_search">ไม่พบอยู่ในรายการซีรีส์ของคุณ</string>
   <string name="action_try_any_language">ลองภาษาใดก็ได้</string>
   <string name="action_try_again">ลองอีกครั้ง</string>
   <string name="tvdb_error_does_not_exist">รายการนี้(ยัง)ไม่มีบน TheTVDB ลองอีกครั้งในภายหลัง</string>
@@ -189,7 +189,7 @@
   <string name="add_started">%s จะปรากฏในรายการซีรีส์ของคุณในไม่ช้า</string>
   <string name="add_error">ไม่สามารถเพิ่ม %s</string>
   <string name="add_already_exists">%s อยู่ในรายการซีรีส์ของคุณอยู่แล้ว</string>
-  <string name="title_new_episodes">New episodes</string>
+  <string name="title_new_episodes">ตอนใหม่</string>
   <string name="recommended">แนะนำ</string>
   <string name="watched_shows">ดูแล้ว</string>
   <string name="shows_collection">คลังเก็บ</string>
@@ -331,7 +331,7 @@
   <string name="pref_seasonsorting">เรียงซีซั่นโดย&#8230;</string>
   <string name="pref_episodesorting">เรียงตอนโดย&#8230;</string>
   <string name="pref_language">ภาษาของเนื้อหาที่ต้องการ</string>
-  <string name="pref_language_fallback">Alternative language</string>
+  <string name="pref_language_fallback">ภาษารอง</string>
   <string name="pref_updatewifionly">รูปภาพผ่านไวไฟเท่านั้น</string>
   <string name="pref_updatewifionlysummary">เพื่อใช้ข้อมูลน้อยลง ไม่ต้องดาวน์โหลดผ่านเครือข่ายมือถือ</string>
   <plurals name="days_before_plural">
@@ -447,7 +447,7 @@
   <string name="onlyx">เฉพาะผู้สนับสนุน</string>
   <string name="action_upgrade">ปลดล็อกคุณสมบัติทั้งหมด</string>
   <string name="billing_action_subscribe">สมัครสมาชิก</string>
-  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+  <string name="billing_action_manage_subscriptions">จัดการการสมัครสมาชิก​</string>
   <string name="billing_action_pass">รับ X Pass</string>
   <string name="billing_price_subscribe">%1$s/ปี, ลองใช้ฟรี, ยกเลิกได้ทุกเวลาผ่าน %2$s</string>
   <string name="billing_price_pass">จ่ายครั้งเดียว</string>

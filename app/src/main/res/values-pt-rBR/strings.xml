@@ -456,7 +456,7 @@
   <string name="dashclock_pref_upcoming_threshold">Mostrar próximos episódios&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">Só para quem desbloqueou o app</string>
-  <string name="action_upgrade">Premium</string>
+  <string name="action_upgrade">Desbloqueie todos os recursos</string>
   <string name="billing_action_subscribe">Inscrever</string>
   <string name="billing_action_manage_subscriptions">Gerenciar inscrições</string>
   <string name="billing_action_pass">Adquira o X Pass</string>
