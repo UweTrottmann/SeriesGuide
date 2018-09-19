@@ -118,6 +118,19 @@ public class DisplaySettings {
                 : languageCode;
     }
 
+    /**
+     * @return Two letter ISO 639-1 language code of the language the user prefers when searching or
+     * {@link #getShowsLanguageFallback(Context)} if all languages is selected. Defaults to
+     * {@link #getShowsLanguageFallback(Context)}.
+     */
+    public static String getSearchLanguageOrFallbackIfAny(Context context) {
+        String languageCode = PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(KEY_LANGUAGE_SEARCH, null);
+        return TextUtils.isEmpty(languageCode)
+                ? getShowsLanguageFallback(context)
+                : languageCode;
+    }
+
     public static String getNumberFormat(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(KEY_NUMBERFORMAT, NUMBERFORMAT_DEFAULT);
