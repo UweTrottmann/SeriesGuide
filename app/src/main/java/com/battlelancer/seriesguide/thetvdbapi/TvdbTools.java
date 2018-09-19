@@ -208,7 +208,10 @@ public class TvdbTools {
         getEpisodesAndUpdateDatabase(batch, show, show.language);
     }
 
-    public static String getShowLanguage(Context context, int showTvdbId) {
+    /**
+     * @return {@code null} if the query failed, should try again later.
+     */
+    private static String getShowLanguage(Context context, int showTvdbId) {
         Cursor languageQuery = context.getContentResolver()
                 .query(Shows.buildShowUri(showTvdbId), LANGUAGE_QUERY_PROJECTION, null, null, null);
         if (languageQuery == null) {
@@ -221,9 +224,11 @@ public class TvdbTools {
         }
         languageQuery.close();
 
+        // handle legacy records
         if (TextUtils.isEmpty(language)) {
-            // use fall back language
-            language = DisplaySettings.getShowsLanguageFallback(context);
+            // default to 'en' for consistent behavior across devices
+            // and to encourage users to set language
+            language = DisplaySettings.LANGUAGE_EN;
         }
 
         return language;
@@ -379,9 +384,11 @@ public class TvdbTools {
         if (language == null && hexagonShow != null) {
             language = hexagonShow.getLanguage();
         }
-        // if we still have no language, use the users fall back language
-        if (TextUtils.isEmpty(language)) {
-            language = DisplaySettings.getShowsLanguageFallback(context);
+        // handle legacy records without language
+        if (language == null || language.length() == 0) {
+            // default to 'en' to ensure consistency across devices,
+            // and to encourage users to set a language
+            language = DisplaySettings.LANGUAGE_EN;
         }
 
         // get show info from TVDb and trakt
