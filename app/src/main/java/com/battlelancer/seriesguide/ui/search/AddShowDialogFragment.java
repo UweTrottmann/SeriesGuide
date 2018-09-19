@@ -12,6 +12,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,23 +24,30 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.ClipboardTools;
+import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
 import java.util.Date;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * A {@link DialogFragment} allowing the user to decide whether to add a show to SeriesGuide.
@@ -55,7 +63,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
      * Display a {@link AddShowDialogFragment} for the given show. The language of the show should
      * be set.
      */
-    public static void showAddDialog(SearchResult show, FragmentManager fm) {
+    public static void showAddDialog(Context context, FragmentManager fm, SearchResult show) {
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction. We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
@@ -67,7 +75,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = AddShowDialogFragment.newInstance(show);
+        DialogFragment newFragment = AddShowDialogFragment.newInstance(context, show);
         newFragment.show(ft, TAG);
     }
 
@@ -77,13 +85,18 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
      * <p> Use if there is no actual search result, but just a TheTVDB id available. Uses the search
      * or fall back language.
      */
-    public static void showAddDialog(int showTvdbId, FragmentManager fm) {
+    public static void showAddDialog(Context context, FragmentManager fm, int showTvdbId) {
         SearchResult fakeResult = new SearchResult();
         fakeResult.setTvdbid(showTvdbId);
-        showAddDialog(fakeResult, fm);
+        showAddDialog(context, fm, fakeResult);
     }
 
-    private static AddShowDialogFragment newInstance(SearchResult show) {
+    private static AddShowDialogFragment newInstance(Context context, SearchResult show) {
+        if (TextUtils.isEmpty(show.getLanguage())) {
+            // use search or fall back language
+            show.setLanguage(DisplaySettings.getSearchLanguageOrFallbackIfAny(context));
+        }
+
         AddShowDialogFragment f = new AddShowDialogFragment();
         Bundle args = new Bundle();
         args.putParcelable(InitBundle.SEARCH_RESULT, show);
@@ -103,6 +116,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
     @BindView(R.id.containerShowInfo) ViewGroup containerShowInfo;
     @BindView(R.id.textViewAddTitle) TextView title;
     @BindView(R.id.textViewAddShowMeta) TextView showmeta;
+    @BindView(R.id.buttonAddLanguage) Button buttonLanguage;
     @BindView(R.id.textViewAddDescription) TextView overview;
     @BindView(R.id.textViewAddRatingValue) TextView rating;
     @BindView(R.id.textViewAddRatingRange) TextView ratingRange;
@@ -164,6 +178,9 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         final View v = inflater.inflate(R.layout.dialog_addshow, container, false);
         unbinder = ButterKnife.bind(this, v);
 
+        ViewTools.setVectorIconLeft(getActivity().getTheme(), buttonLanguage,
+                R.drawable.ic_language_white_24dp);
+        CheatSheet.setup(buttonLanguage, R.string.pref_language);
         ratingRange.setText(getString(R.string.format_rating_range, 10));
 
         // buttons
@@ -175,8 +192,6 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
             }
         });
         buttonPositive.setVisibility(View.GONE);
-
-        ButterKnife.apply(labelViews, VISIBLE, false);
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         containerShowInfo.setOnLongClickListener(new View.OnLongClickListener() {
@@ -211,10 +226,43 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.buttonAddLanguage)
+    public void onClickButtonLanguage() {
+        DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
+                R.array.languageCodesShows, displayedShow.getLanguage());
+        dialog.show(getFragmentManager(), "dialog-language");
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
+        showProgressBar(true);
+        overview.setVisibility(View.INVISIBLE);
+
+        displayedShow.setLanguage(event.selectedLanguageCode);
+        // reload show details
+        Bundle args = new Bundle();
+        args.putInt(KEY_SHOW_TVDBID, displayedShow.getTvdbid());
+        args.putString(KEY_SHOW_LANGUAGE, displayedShow.getLanguage());
+        getLoaderManager().restartLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args,
+                showLoaderCallbacks);
     }
 
     private LoaderManager.LoaderCallbacks<TvdbShowLoader.Result> showLoaderCallbacks
@@ -233,6 +281,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
                 return;
             }
             showProgressBar(false);
+            overview.setVisibility(View.VISIBLE);
             populateShowViews(data);
         }
 
@@ -286,6 +335,9 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
 
         // store title for add task
         displayedShow.setTitle(show.title);
+
+        buttonLanguage.setText(
+                LanguageTools.getShowLanguageStringFor(getContext(), displayedShow.getLanguage()));
 
         // title, overview
         title.setText(show.title);

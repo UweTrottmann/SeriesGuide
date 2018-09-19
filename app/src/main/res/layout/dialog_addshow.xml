@@ -76,15 +76,25 @@
 
             </RelativeLayout>
 
+            <Button
+                android:id="@+id/buttonAddLanguage"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/containerShowInfo"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_padding"
+                tools:text="Deutsch" />
+
             <TextView
                 android:id="@+id/textViewAddDescription"
                 style="@style/Block.FlowText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/containerShowInfo"
+                android:layout_below="@+id/buttonAddLanguage"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
-                android:layout_marginTop="@dimen/large_padding"
                 android:background="?attr/selectableItemBackground"
                 android:focusable="true"
                 android:maxWidth="@dimen/max_width_text_size_body"

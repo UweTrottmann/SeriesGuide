@@ -147,7 +147,7 @@ class ShowsDiscoverFragment : Fragment() {
                     // onSaveInstanceState might already be called
                     if (isResumed) {
                         // display more details in a dialog
-                        AddShowDialogFragment.showAddDialog(item, fragmentManager)
+                        AddShowDialogFragment.showAddDialog(context, fragmentManager, item)
                     }
                 }
             }

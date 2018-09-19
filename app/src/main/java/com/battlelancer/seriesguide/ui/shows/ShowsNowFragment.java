@@ -30,10 +30,10 @@ import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
-import com.battlelancer.seriesguide.ui.streams.HistoryActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
+import com.battlelancer.seriesguide.ui.streams.HistoryActivity;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
@@ -361,7 +361,8 @@ public class ShowsNowFragment extends Fragment {
                 showDetails(view, item.episodeTvdbId);
             } else if (item.showTvdbId != null) {
                 // episode missing: show likely not in database, suggest adding it
-                AddShowDialogFragment.showAddDialog(item.showTvdbId, getFragmentManager());
+                AddShowDialogFragment
+                        .showAddDialog(getContext(), getFragmentManager(), item.showTvdbId);
             }
             query.close();
         }

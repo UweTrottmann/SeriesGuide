@@ -1,11 +1,9 @@
 package com.battlelancer.seriesguide.ui.search;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
+import android.support.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -24,9 +22,9 @@ class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
     }
 
     private final int showTvdbId;
-    private String language;
+    @NonNull private String language;
 
-    TvdbShowLoader(Context context, int showTvdbId, @Nullable String language) {
+    TvdbShowLoader(Context context, int showTvdbId, @NonNull String language) {
         super(context);
         this.showTvdbId = showTvdbId;
         this.language = language;
@@ -38,10 +36,6 @@ class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
 
         result.isAdded = DBUtils.isShowExists(getContext(), showTvdbId);
         try {
-            if (TextUtils.isEmpty(language)) {
-                // use search or fall back language
-                language = DisplaySettings.getSearchLanguageOrFallbackIfAny(getContext());
-            }
             TvdbTools tvdbTools = SgApp.getServicesComponent(getContext()).tvdbTools();
             result.show = tvdbTools.getShowDetails(showTvdbId, language);
         } catch (TvdbException e) {
