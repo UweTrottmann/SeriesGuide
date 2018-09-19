@@ -45,7 +45,10 @@ class ShowsDiscoverAdapter(
 
     fun setStateForTvdbId(showTvdbId: Int, state: Int) {
         // multiple items may have the same TVDB id
-        val matching = searchResults.filter { it.tvdbid == showTvdbId }.onEach { it.state = state }
+        val matching = searchResults.asSequence()
+                .filter { it.tvdbid == showTvdbId }
+                .onEach { it.state = state }
+                .toList()
         if (matching.isNotEmpty()) {
             notifyDataSetChanged()
         }
@@ -53,8 +56,10 @@ class ShowsDiscoverAdapter(
 
     fun setAllPendingNotAdded() {
         val matching = searchResults
+                .asSequence()
                 .filter { it.state == SearchResult.STATE_ADDING }
                 .onEach { it.state = SearchResult.STATE_ADD }
+                .toList()
         if (matching.isNotEmpty()) {
             notifyDataSetChanged()
         }
