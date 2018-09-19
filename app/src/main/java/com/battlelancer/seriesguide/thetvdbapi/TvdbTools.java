@@ -230,7 +230,7 @@ public class TvdbTools {
     }
 
     @Nullable
-    public List<SearchResult> searchSeries(@NonNull String query, @Nullable final String language)
+    public List<SearchResult> searchSeries(@NonNull String query, @NonNull final String language)
             throws TvdbException {
         retrofit2.Response<SeriesResultsResponse> response;
         try {
