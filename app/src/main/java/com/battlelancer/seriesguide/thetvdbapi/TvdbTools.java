@@ -222,8 +222,8 @@ public class TvdbTools {
         languageQuery.close();
 
         if (TextUtils.isEmpty(language)) {
-            // fall back to preferred language
-            language = DisplaySettings.getShowsLanguage(context);
+            // use fall back language
+            language = DisplaySettings.getShowsLanguageFallback(context);
         }
 
         return language;
@@ -379,9 +379,9 @@ public class TvdbTools {
         if (language == null && hexagonShow != null) {
             language = hexagonShow.getLanguage();
         }
-        // if we still have no language, use the users default language
+        // if we still have no language, use the users fall back language
         if (TextUtils.isEmpty(language)) {
-            language = DisplaySettings.getShowsLanguage(context);
+            language = DisplaySettings.getShowsLanguageFallback(context);
         }
 
         // get show info from TVDb and trakt

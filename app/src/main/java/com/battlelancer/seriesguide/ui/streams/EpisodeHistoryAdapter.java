@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui.streams;
 import android.content.Context;
 import android.support.v4.util.SparseArrayCompat;
 import android.text.format.DateUtils;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -37,7 +38,7 @@ class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
         if (localShowPosters != null && showTvdbId != null) {
             // prefer poster of already added show, fall back to first uploaded poster
             posterUrl = TvdbImageTools.smallSizeOrResolveUrl(localShowPosters.get(showTvdbId),
-                    showTvdbId);
+                    showTvdbId, DisplaySettings.LANGUAGE_EN);
         } else {
             posterUrl = null;
         }

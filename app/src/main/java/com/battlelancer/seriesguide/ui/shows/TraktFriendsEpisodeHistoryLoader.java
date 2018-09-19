@@ -93,7 +93,7 @@ class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapt
             if (showTvdbId != null && localShows != null) {
                 // prefer poster of already added show, fall back to first uploaded poster
                 posterUrl = TvdbImageTools.smallSizeOrResolveUrl(localShows.get(showTvdbId),
-                        showTvdbId);
+                        showTvdbId, DisplaySettings.LANGUAGE_EN);
             } else {
                 posterUrl = null;
             }
