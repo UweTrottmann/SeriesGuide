@@ -611,6 +611,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 // reset last edit date of all episodes so they will get updated
                 new Thread(new Runnable() {
                     public void run() {
+                        android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+
                         ContentValues values = new ContentValues();
                         values.put(Episodes.LAST_EDITED, 0);
                         getActivity().getContentResolver()
