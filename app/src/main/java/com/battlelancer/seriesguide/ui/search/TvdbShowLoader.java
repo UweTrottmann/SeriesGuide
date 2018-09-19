@@ -39,8 +39,8 @@ class TvdbShowLoader extends GenericSimpleLoader<TvdbShowLoader.Result> {
         result.isAdded = DBUtils.isShowExists(getContext(), showTvdbId);
         try {
             if (TextUtils.isEmpty(language)) {
-                // use fall back language
-                language = DisplaySettings.getShowsLanguageFallback(getContext());
+                // use search or fall back language
+                language = DisplaySettings.getSearchLanguageOrFallbackIfAny(getContext());
             }
             TvdbTools tvdbTools = SgApp.getServicesComponent(getContext()).tvdbTools();
             result.show = tvdbTools.getShowDetails(showTvdbId, language);

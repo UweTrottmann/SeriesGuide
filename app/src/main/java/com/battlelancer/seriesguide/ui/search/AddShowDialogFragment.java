@@ -52,8 +52,8 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
     private static final String KEY_SHOW_LANGUAGE = "show_language";
 
     /**
-     * Display a {@link AddShowDialogFragment} for the given
-     * show.
+     * Display a {@link AddShowDialogFragment} for the given show. The language of the show should
+     * be set.
      */
     public static void showAddDialog(SearchResult show, FragmentManager fm) {
         // DialogFragment.show() will take care of adding the fragment
@@ -72,10 +72,10 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
     }
 
     /**
-     * Display a {@link AddShowDialogFragment} for the given
-     * show.
+     * Display a {@link AddShowDialogFragment} for the given show.
      *
-     * <p> Use if there is no actual search result, but just a TheTVDB id available.
+     * <p> Use if there is no actual search result, but just a TheTVDB id available. Uses the search
+     * or fall back language.
      */
     public static void showAddDialog(int showTvdbId, FragmentManager fm) {
         SearchResult fakeResult = new SearchResult();
