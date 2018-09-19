@@ -76,9 +76,9 @@ public class TvdbImageTools {
     public static String smallSizeOrResolveUrl(@Nullable String imagePath, int showTvdbId,
             @Nullable String language) {
         if (TextUtils.isEmpty(imagePath)) {
-            String url = "showtvdb://" + showTvdbId;
+            String url = SgPicassoRequestHandler.SCHEME_SHOW_TVDB + "://" + showTvdbId;
             if (!TextUtils.isEmpty(language)) {
-                url += "?language=" + language;
+                url += "?" + SgPicassoRequestHandler.QUERY_LANGUAGE + "=" + language;
             }
             return url;
         }
