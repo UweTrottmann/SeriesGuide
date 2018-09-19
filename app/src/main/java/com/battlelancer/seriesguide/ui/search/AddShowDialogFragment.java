@@ -247,12 +247,17 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
     @OnClick(R.id.buttonAddLanguage)
     public void onClickButtonLanguage() {
         DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
-                R.array.languageCodesShows, displayedShow.getLanguage());
-        dialog.show(getFragmentManager(), "dialog-language");
+                R.array.languageCodesShows, displayedShow.getLanguage()
+        );
+        dialog.show(getFragmentManager(), LanguageChoiceDialogFragment.TAG_ADD_DIALOG);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
+        if (!LanguageChoiceDialogFragment.TAG_ADD_DIALOG.equals(event.tag)) {
+            return;
+        }
+
         showProgressBar(true);
         overview.setVisibility(View.INVISIBLE);
 

@@ -19,11 +19,16 @@ import timber.log.Timber;
  */
 public class LanguageChoiceDialogFragment extends AppCompatDialogFragment {
 
+    public static final String TAG_ADD_DIALOG = "languageDialogAdd";
+    public static final String TAG_DISCOVER = "languageDialogDiscover";
+
     public static class LanguageChangedEvent {
         @NonNull public final String selectedLanguageCode;
+        @Nullable public final String tag;
 
-        public LanguageChangedEvent(@NonNull String selectedLanguageCode) {
+        public LanguageChangedEvent(@NonNull String selectedLanguageCode, @Nullable String tag) {
             this.selectedLanguageCode = selectedLanguageCode;
+            this.tag = tag;
         }
     }
 
@@ -99,7 +104,7 @@ public class LanguageChoiceDialogFragment extends AppCompatDialogFragment {
         }
 
         EventBus.getDefault()
-                .post(new LanguageChangedEvent(languageCodes[selectedLanguagePosition]));
+                .post(new LanguageChangedEvent(languageCodes[selectedLanguagePosition], getTag()));
         dismiss();
     }
 }
