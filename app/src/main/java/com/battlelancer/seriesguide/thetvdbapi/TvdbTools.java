@@ -415,8 +415,7 @@ public class TvdbTools {
      * information from trakt.
      *
      * @param language A TVDb language code (ISO 639-1 two-letter format, see <a
-     * href="http://www.thetvdb.com/wiki/index.php/API:languages.xml">TVDb wiki</a>). If not
-     * supplied, TVDb falls back to English.
+     * href="http://www.thetvdb.com/wiki/index.php/API:languages.xml">TVDb wiki</a>).
      * @throws TvdbException If a request fails or a response appears to be corrupted.
      */
     @NonNull
@@ -492,10 +491,10 @@ public class TvdbTools {
     }
 
     /**
-     * Get a show from TVDb. Tries to fetch in the desired language, but will fall back to the
-     * default entry if no translation exists. The returned entity will still have its <b>language
-     * property set to the desired language</b>, which might not be the language of the actual
-     * content.
+     * Get a show from TVDb. Tries to fetch in the desired language, but will use
+     * {@link DisplaySettings#getShowsLanguageFallback(Context)} if no translation or poster in that
+     * language exists. The returned entity will still have its <b>language property set to the
+     * desired language</b>, which might not be the language of the actual content.
      */
     @NonNull
     private Show downloadAndParseShow(int showTvdbId, @NonNull String desiredLanguage)
@@ -504,8 +503,8 @@ public class TvdbTools {
         // title is null if no translation exists
         boolean noTranslation = TextUtils.isEmpty(series.seriesName);
         if (noTranslation) {
-            // try to fetch default entry
-            series = getSeries(showTvdbId, null);
+            // try to fetch using fall back language
+            series = getSeries(showTvdbId, DisplaySettings.getShowsLanguageFallback(context));
         }
 
         Show result = new Show();
@@ -552,8 +551,9 @@ public class TvdbTools {
         retrofit2.Response<SeriesImageQueryResultResponse> posterResponse;
         posterResponse = getSeriesPosters(showTvdbId, desiredLanguage);
         if (posterResponse.code() == 404) {
-            // no posters for this language, fall back to default
-            posterResponse = getSeriesPosters(showTvdbId, null);
+            // no posters for this language, try fall back language
+            posterResponse = getSeriesPosters(showTvdbId,
+                    DisplaySettings.getShowsLanguageFallback(context));
         }
 
         if (posterResponse.isSuccessful()) {
