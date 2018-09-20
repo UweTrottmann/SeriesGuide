@@ -751,8 +751,7 @@ public class StickyGridHeadersGridView extends GridView implements OnScrollListe
         List<Integer> headerPositions = new ArrayList<>();
         int vi = 0;
         for (int i = getFirstVisiblePosition(); i <= getLastVisiblePosition();) {
-            long id = getItemIdAtPosition(i);
-            if (id == StickyGridHeadersBaseAdapterWrapper.ID_HEADER) {
+            if (mAdapter.isHeaderAtPosition(i)) {
                 headerPositions.add(vi);
             }
             i += mNumMeasuredColumns;
