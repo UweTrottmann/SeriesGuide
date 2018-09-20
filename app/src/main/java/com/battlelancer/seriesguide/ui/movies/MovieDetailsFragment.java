@@ -706,7 +706,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
 
         PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
-                .putString(DisplaySettings.KEY_MOVIES_LANGUAGE, event.selectedLanguageCode)
+                .putString(DisplaySettings.KEY_MOVIES_LANGUAGE, event.getSelectedLanguageCode())
                 .apply();
 
         // reload movie details and trailers (but not cast/crew info which is not language dependent)

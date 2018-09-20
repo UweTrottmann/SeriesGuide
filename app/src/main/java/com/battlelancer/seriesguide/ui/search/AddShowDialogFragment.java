@@ -254,14 +254,14 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
-        if (!LanguageChoiceDialogFragment.TAG_ADD_DIALOG.equals(event.tag)) {
+        if (!LanguageChoiceDialogFragment.TAG_ADD_DIALOG.equals(event.getTag())) {
             return;
         }
 
         showProgressBar(true);
         overview.setVisibility(View.INVISIBLE);
 
-        displayedShow.setLanguage(event.selectedLanguageCode);
+        displayedShow.setLanguage(event.getSelectedLanguageCode());
         // reload show details
         Bundle args = new Bundle();
         args.putInt(KEY_SHOW_TVDBID, displayedShow.getTvdbid());

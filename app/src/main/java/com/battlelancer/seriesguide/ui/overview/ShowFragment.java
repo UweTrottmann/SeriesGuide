@@ -627,7 +627,7 @@ public class ShowFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
-        changeShowLanguage(event.selectedLanguageCode);
+        changeShowLanguage(event.getSelectedLanguageCode());
     }
 
     private void createShortcut() {
