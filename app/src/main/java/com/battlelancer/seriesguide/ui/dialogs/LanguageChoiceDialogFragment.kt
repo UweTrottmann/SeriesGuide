@@ -3,10 +3,12 @@ package com.battlelancer.seriesguide.ui.dialogs
 import android.app.Dialog
 import android.os.Bundle
 import android.support.annotation.ArrayRes
+import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatDialogFragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment.LanguageChangedEvent
+import com.battlelancer.seriesguide.util.safeShow
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import java.util.Locale
@@ -79,18 +81,18 @@ class LanguageChoiceDialogFragment : AppCompatDialogFragment() {
         private const val ARG_SELECTED_LANGUAGE_CODE = "selectedLanguageCode"
 
         /**
-         * @param selectedLanguageCode two letter ISO 639-1 language code or 'xx' meaning any language,
-         * if null selects first item of languageCodes.
+         * @param selectedLanguageCode two letter ISO 639-1 language code or 'xx' meaning any
+         * language, if null selects first item of languageCodes.
          */
         @JvmStatic
-        fun newInstance(@ArrayRes languageCodes: Int,
-                selectedLanguageCode: String?): LanguageChoiceDialogFragment {
-            return LanguageChoiceDialogFragment().apply {
+        fun show(fragmentManager: FragmentManager, @ArrayRes languageCodes: Int,
+                selectedLanguageCode: String?, tag: String) {
+            LanguageChoiceDialogFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_ARRAY_LANGUAGE_CODES, languageCodes)
                     putString(ARG_SELECTED_LANGUAGE_CODE, selectedLanguageCode)
                 }
-            }
+            }.safeShow(fragmentManager, tag)
         }
     }
 }

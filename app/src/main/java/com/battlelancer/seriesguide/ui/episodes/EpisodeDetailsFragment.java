@@ -529,11 +529,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         buttonCheckin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // display a check-in dialog
-                CheckInDialogFragment f = CheckInDialogFragment.newInstance(requireActivity(),
-                        episodeTvdbId);
-                if (f != null && isResumed()) {
-                    f.show(requireFragmentManager(), "checkin-dialog");
+                if (CheckInDialogFragment.show(getContext(), getFragmentManager(), episodeTvdbId)) {
                     Utils.trackAction(requireContext(), TAG, "Check-In");
                 }
             }
@@ -661,8 +657,10 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     }
 
     private void rateEpisode() {
-        RateDialogFragment.displayRateDialog(requireContext(), getFragmentManager(), episodeTvdbId);
-        Utils.trackAction(requireContext(), TAG, "Rate (trakt)");
+        if (RateDialogFragment.newInstanceEpisode(episodeTvdbId)
+                .safeShow(getContext(), getFragmentManager())) {
+            Utils.trackAction(requireContext(), TAG, "Rate (trakt)");
+        }
     }
 
     private void shareEpisode() {

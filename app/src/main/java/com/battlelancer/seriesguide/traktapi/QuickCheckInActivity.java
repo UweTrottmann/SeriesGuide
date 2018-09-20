@@ -9,11 +9,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 /**
- * Blank activity, just used to quickly check into a show/episode on GetGlue/trakt.
+ * Blank activity, just used to quickly check into a show/episode.
  */
 public class QuickCheckInActivity extends FragmentActivity {
-
-    @SuppressWarnings("FieldCanBeLocal") private CheckInDialogFragment checkInDialogFragment;
 
     public interface InitBundle {
 
@@ -32,13 +30,10 @@ public class QuickCheckInActivity extends FragmentActivity {
             return;
         }
 
-        checkInDialogFragment = CheckInDialogFragment.newInstance(this, episodeTvdbId);
-        if (checkInDialogFragment == null) {
-            finish();
-            return;
-        }
         // show check-in dialog
-        checkInDialogFragment.show(getSupportFragmentManager(), "checkin-dialog");
+        if (!CheckInDialogFragment.show(this, getSupportFragmentManager(), episodeTvdbId)) {
+            finish();
+        }
     }
 
     @Override

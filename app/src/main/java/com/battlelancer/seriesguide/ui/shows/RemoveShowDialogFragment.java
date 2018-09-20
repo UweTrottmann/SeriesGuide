@@ -19,6 +19,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.util.DialogTools;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -37,18 +39,20 @@ public class RemoveShowDialogFragment extends AppCompatDialogFragment {
     }
 
     /**
-     * Dialog to confirm the removal of a show from the database.
-     *
-     * @param showTvdbId The TVDb id of the show to remove.
+     * If no current sync is active and it is safe shows the dialog.
      */
-    public static void show(FragmentManager fm, int showTvdbId) {
+    public static boolean show(Context context, FragmentManager fragmentManager, int showTvdbId) {
+        if (SgSyncAdapter.isSyncActive(context, true)) {
+            return false;
+        }
+
         RemoveShowDialogFragment f = new RemoveShowDialogFragment();
 
         Bundle args = new Bundle();
         args.putInt(KEY_SHOW_TVDB_ID, showTvdbId);
         f.setArguments(args);
 
-        f.show(fm, "dialog-remove-show");
+        return DialogTools.safeShow(f, fragmentManager, "removeShowDialog");
     }
 
     @BindView(R.id.progressBarRemove) View progressBar;

@@ -25,6 +25,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -39,8 +40,6 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
-import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
-import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.service.NotificationService;
@@ -48,6 +47,8 @@ import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
+import com.battlelancer.seriesguide.streaming.StreamingSearch;
+import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
@@ -55,6 +56,7 @@ import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragme
 import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TimeOffsetDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.DialogTools;
 import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -373,7 +375,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
             // show currently set values for some prefs
             updateStreamSearchServiceSummary(findPreference(StreamingSearch.KEY_SETTING_SERVICE));
-            setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE_FALLBACK));
+            setListPreferenceSummary(
+                    (ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE_FALLBACK));
             updateTimeOffsetSummary(findPreference(DisplaySettings.KEY_SHOWS_TIME_OFFSET));
         }
 
@@ -479,16 +482,26 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             }
 
             // settings
+            FragmentManager supportFragmentManager = ((AppCompatActivity) getActivity())
+                    .getSupportFragmentManager();
             if (NotificationSettings.KEY_THRESHOLD.equals(key)) {
-                new NotificationThresholdDialogFragment().show(
-                        ((AppCompatActivity) getActivity()).getSupportFragmentManager(),
-                        "notification-threshold");
+                DialogTools.safeShow(new NotificationThresholdDialogFragment(),
+                        supportFragmentManager, "notification-threshold");
                 return true;
             }
             if (NotificationSettings.KEY_SELECTION.equals(key)) {
-                new NotificationSelectionDialogFragment().show(
-                        ((AppCompatActivity) getActivity()).getSupportFragmentManager(),
-                        "notification-selection");
+                DialogTools.safeShow(new NotificationSelectionDialogFragment(),
+                                supportFragmentManager, "notification-selection");
+                return true;
+            }
+            if (StreamingSearch.KEY_SETTING_SERVICE.equals(key)) {
+                DialogTools.safeShow(new StreamingSearchConfigureDialog(),
+                        supportFragmentManager, "streaming-service");
+                return true;
+            }
+            if (DisplaySettings.KEY_SHOWS_TIME_OFFSET.equals(key)) {
+                DialogTools.safeShow(new TimeOffsetDialogFragment(),
+                        supportFragmentManager, "time-offset");
                 return true;
             }
             if (NotificationSettings.KEY_RINGTONE.equals(key)) {
@@ -517,18 +530,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, getActivity().getPackageName());
                     startActivity(intent);
                 }
-                return true;
-            }
-            if (StreamingSearch.KEY_SETTING_SERVICE.equals(key)) {
-                new StreamingSearchConfigureDialog().show(
-                        ((AppCompatActivity) getActivity()).getSupportFragmentManager(),
-                        "streaming-service");
-                return true;
-            }
-            if (DisplaySettings.KEY_SHOWS_TIME_OFFSET.equals(key)) {
-                new TimeOffsetDialogFragment().show(
-                        ((AppCompatActivity) getActivity()).getSupportFragmentManager(),
-                        "time-offset");
                 return true;
             }
             if (KEY_ABOUT.equals(key)) {
@@ -608,7 +609,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 // reset last edit date of all episodes so they will get updated
                 new Thread(new Runnable() {
                     public void run() {
-                        android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+                        android.os.Process
+                                .setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
 
                         ContentValues values = new ContentValues();
                         values.put(Episodes.LAST_EDITED, 0);

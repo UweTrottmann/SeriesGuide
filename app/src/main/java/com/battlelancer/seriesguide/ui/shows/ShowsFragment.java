@@ -350,13 +350,13 @@ public class ShowsFragment extends Fragment implements
                 }
             }
 
-            SingleChoiceDialogFragment upcomingRangeDialog = SingleChoiceDialogFragment.newInstance(
+            SingleChoiceDialogFragment.show(getFragmentManager(),
                     R.array.upcominglimit,
                     R.array.upcominglimitData,
                     selectedIndex,
                     AdvancedSettings.KEY_UPCOMING_LIMIT,
-                    R.string.pref_upcominglimit);
-            upcomingRangeDialog.show(getFragmentManager(), "upcomingRangeDialog");
+                    R.string.pref_upcominglimit,
+                    "upcomingRangeDialog");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_title) {
             sortOrderId = ShowsSortOrder.TITLE_ID;

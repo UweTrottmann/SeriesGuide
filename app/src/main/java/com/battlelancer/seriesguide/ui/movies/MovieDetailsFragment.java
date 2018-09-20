@@ -12,7 +12,6 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
@@ -47,10 +46,10 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.extensions.MovieActionsContract;
-import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
-import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
+import com.battlelancer.seriesguide.streaming.StreamingSearch;
+import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
 import com.battlelancer.seriesguide.traktapi.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
@@ -127,8 +126,9 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     @BindView(R.id.textViewRatingsTraktUserLabel) TextView textViewRatingsTraktUserLabel;
     @BindView(R.id.textViewRatingsTraktUser) TextView textViewRatingsTraktUser;
     @BindView(R.id.contentContainerMovie) NestedScrollView contentContainerMovie;
-    @Nullable @BindView(R.id.contentContainerMovieRight) NestedScrollView
-            contentContainerMovieRight;
+    @Nullable
+    @BindView(R.id.contentContainerMovieRight)
+    NestedScrollView contentContainerMovieRight;
     @BindView(R.id.frameLayoutMoviePoster) FrameLayout frameLayoutMoviePoster;
     @BindView(R.id.imageViewMoviePoster) ImageView imageViewMoviePoster;
     @BindView(R.id.textViewMovieTitle) TextView textViewMovieTitle;
@@ -401,7 +401,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         boolean displayStreamingSearch = !StreamingSearch.isTurnedOff(requireContext());
         buttonMovieStreamingSearch.setVisibility(displayStreamingSearch ? View.VISIBLE : View.GONE);
         dividerMovieButtons.setVisibility(displayCheckIn || displayStreamingSearch
-                        ? View.VISIBLE : View.GONE);
+                ? View.VISIBLE : View.GONE);
 
         // watched button (only supported when connected to trakt)
         Resources.Theme theme = getActivity().getTheme();
@@ -616,9 +616,9 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         if (TextUtils.isEmpty(movieTitle)) {
             return;
         }
-        MovieCheckInDialogFragment.newInstance(tmdbId, movieTitle)
-                .show(requireFragmentManager(), "checkin-dialog");
-        Utils.trackAction(getActivity(), TAG, "Check-In");
+        if (MovieCheckInDialogFragment.show(getFragmentManager(), tmdbId, movieTitle)) {
+            Utils.trackAction(getActivity(), TAG, "Check-In");
+        }
     }
 
     @OnClick(R.id.buttonMovieStreamingSearch)
@@ -644,7 +644,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onStreamingSearchConfigured(StreamingSearchConfigureDialog.StreamingSearchConfiguredEvent event) {
+    public void onStreamingSearchConfigured(
+            StreamingSearchConfigureDialog.StreamingSearchConfiguredEvent event) {
         if (event.getTurnedOff()) {
             buttonMovieStreamingSearch.setVisibility(View.GONE);
         } else {
@@ -689,13 +690,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     }
 
     private void displayLanguageSettings() {
-        // guard against onClick called after fragment is up navigated (multi-touch)
-        // onSaveInstanceState might already be called
-        if (isResumed()) {
-            DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
-                    R.array.languageCodesMovies, languageCode);
-            dialog.show(getFragmentManager(), "dialog-language");
-        }
+        LanguageChoiceDialogFragment.show(getFragmentManager(),
+                R.array.languageCodesMovies, languageCode, "movieLanguageDialog");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -760,9 +756,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     }
 
     private void rateMovie() {
-        if (TraktCredentials.ensureCredentials(getActivity())) {
-            RateDialogFragment newFragment = RateDialogFragment.newInstanceMovie(tmdbId);
-            newFragment.show(getFragmentManager(), "ratedialog");
+        if (RateDialogFragment.newInstanceMovie(tmdbId)
+                .safeShow(getContext(), getFragmentManager())) {
             Utils.trackAction(getActivity(), TAG, "Rate (trakt)");
         }
     }

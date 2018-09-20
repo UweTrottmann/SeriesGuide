@@ -16,6 +16,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.DialogTools;
 import com.battlelancer.seriesguide.util.tasks.BaseRateItemTask;
 import com.battlelancer.seriesguide.util.tasks.RateEpisodeTask;
 import com.battlelancer.seriesguide.util.tasks.RateMovieTask;
@@ -26,20 +27,9 @@ import java.util.List;
 /**
  * Displays a 10 value rating scale. If a rating is clicked it will be stored to the database and
  * sent to trakt (if the user is connected).
+ * Should show dialog using {@link #safeShow(Context, FragmentManager)}.
  */
 public class RateDialogFragment extends AppCompatDialogFragment {
-
-    /**
-     * Display a {@link RateDialogFragment} to rate an episode.
-     */
-    public static void displayRateDialog(Context context, FragmentManager fragmentManager,
-            int episodeTvdbId) {
-        if (!TraktCredentials.ensureCredentials(context)) {
-            return;
-        }
-        RateDialogFragment newFragment = newInstanceEpisode(episodeTvdbId);
-        newFragment.show(fragmentManager, "ratedialog");
-    }
 
     private interface InitBundle {
         String ITEM_TYPE = "item-type";
@@ -105,6 +95,16 @@ public class RateDialogFragment extends AppCompatDialogFragment {
             R.id.rating10
     }) List<Button> ratingButtons;
     private Unbinder unbinder;
+
+    /**
+     * Checks and asks for missing trakt credentials. Otherwise if they are valid shows the dialog.
+     */
+    public boolean safeShow(Context context, FragmentManager fragmentManager) {
+        if (!TraktCredentials.ensureCredentials(context)) {
+            return false;
+        }
+        return DialogTools.safeShow(this, fragmentManager, "rateDialog");
+    }
 
     @NonNull
     @Override

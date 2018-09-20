@@ -28,6 +28,7 @@ import com.battlelancer.seriesguide.ui.lists.ListManageDialogFragment;
 import com.battlelancer.seriesguide.ui.lists.ListsPagerAdapter;
 import com.battlelancer.seriesguide.ui.lists.ListsReorderDialogFragment;
 import com.battlelancer.seriesguide.ui.lists.ListsTools;
+import com.battlelancer.seriesguide.util.DialogTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
@@ -180,7 +181,8 @@ public class ListsActivity extends BaseTopActivity {
             return true;
         }
         if (itemId == R.id.menu_action_lists_reorder) {
-            ListsReorderDialogFragment.show(getSupportFragmentManager());
+            DialogTools.safeShow(new ListsReorderDialogFragment(), getSupportFragmentManager(),
+                    "listsReorderDialog");
             return true;
         }
         return super.onOptionsItemSelected(item);

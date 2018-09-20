@@ -234,15 +234,9 @@ class ShowsDiscoverFragment : Fragment() {
     }
 
     private fun displayLanguageSettings() {
-        // guard against onClick called after fragment is up navigated (multi-touch)
-        // onSaveInstanceState might already be called
-        if (isResumed) {
-            fragmentManager?.let {
-                val dialogFragment = LanguageChoiceDialogFragment.newInstance(
-                        R.array.languageCodesShowsWithAny, languageCode)
-                dialogFragment.show(fragmentManager, LanguageChoiceDialogFragment.TAG_DISCOVER)
-            }
-        }
+        LanguageChoiceDialogFragment.show(fragmentManager!!,
+                R.array.languageCodesShowsWithAny, languageCode,
+                LanguageChoiceDialogFragment.TAG_DISCOVER)
     }
 
     override fun onStart() {

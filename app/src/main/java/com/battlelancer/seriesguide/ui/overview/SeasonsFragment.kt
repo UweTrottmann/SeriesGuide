@@ -335,11 +335,11 @@ class SeasonsFragment : ListFragment() {
 
     private fun showSortDialog() {
         val sortOrder = DisplaySettings.getSeasonSortOrder(activity)
-        val sortDialog = SingleChoiceDialogFragment.newInstance(
+        SingleChoiceDialogFragment.show(fragmentManager,
                 R.array.sesorting,
                 R.array.sesortingData, sortOrder.index(),
-                DisplaySettings.KEY_SEASON_SORT_ORDER, R.string.pref_seasonsorting)
-        sortDialog.show(fragmentManager, "fragment_sort")
+                DisplaySettings.KEY_SEASON_SORT_ORDER, R.string.pref_seasonsorting,
+                "seasonSortOrderDialog")
     }
 
     private val onSortOrderChangedListener = OnSharedPreferenceChangeListener { _, key ->

@@ -24,12 +24,11 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.ui.overview.OverviewFragment;
 import com.battlelancer.seriesguide.ui.overview.SeasonsFragment;
 import com.battlelancer.seriesguide.ui.overview.ShowFragment;
 import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment;
+import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;
@@ -264,9 +263,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             return true;
         }
         if (itemId == R.id.menu_overview_remove_show) {
-            if (!SgSyncAdapter.isSyncActive(this, true)) {
-                RemoveShowDialogFragment.show(getSupportFragmentManager(), showTvdbId);
-            }
+            RemoveShowDialogFragment.show(this, getSupportFragmentManager(), showTvdbId);
             return true;
         }
         return super.onOptionsItemSelected(item);

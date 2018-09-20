@@ -6,8 +6,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
+import com.battlelancer.seriesguide.util.DialogTools;
 
 /**
  * A dialog displaying a list of options to choose from, saving the selected option to the given
@@ -15,9 +17,9 @@ import android.support.v7.app.AppCompatDialogFragment;
  */
 public class SingleChoiceDialogFragment extends AppCompatDialogFragment {
 
-    public static SingleChoiceDialogFragment newInstance(int itemArrayResource,
-            int itemDataArrayResource, int selectedItemIndex, String preferenceKey,
-            int dialogTitleResource) {
+    public static void show(FragmentManager fragmentManager,
+            int itemArrayResource, int itemDataArrayResource, int selectedItemIndex,
+            String preferenceKey, int dialogTitleResource, String tag) {
         SingleChoiceDialogFragment f = new SingleChoiceDialogFragment();
 
         Bundle args = new Bundle();
@@ -28,7 +30,7 @@ public class SingleChoiceDialogFragment extends AppCompatDialogFragment {
         args.putInt("dialogtitle", dialogTitleResource);
         f.setArguments(args);
 
-        return f;
+        DialogTools.safeShow(f, fragmentManager, tag);
     }
 
     @NonNull

@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.util.DialogTools;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,8 +52,8 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
     }
 
     static void show(FragmentManager fragmentManager) {
-        MovieLocalizationDialogFragment dialog = new MovieLocalizationDialogFragment();
-        dialog.show(fragmentManager, "dialog-language");
+        DialogTools.safeShow(new MovieLocalizationDialogFragment(), fragmentManager,
+                "movieLanguageDialog");
     }
 
     private Unbinder unbinder;

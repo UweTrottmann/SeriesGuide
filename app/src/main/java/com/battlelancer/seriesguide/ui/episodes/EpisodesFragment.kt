@@ -310,11 +310,11 @@ class EpisodesFragment : ListFragment(), OnClickListener, OnFlagEpisodeListener,
     }
 
     private fun showSortDialog() {
-        val sortDialog = SingleChoiceDialogFragment.newInstance(
+        SingleChoiceDialogFragment.show(fragmentManager,
                 R.array.epsorting,
                 R.array.epsortingData, sortOrder.index(),
-                DisplaySettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting)
-        sortDialog.show(requireFragmentManager(), "fragment_sort")
+                DisplaySettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting,
+                "episodeSortOrderDialog")
     }
 
     private val onSortOrderChangedListener = OnSharedPreferenceChangeListener { _, key ->

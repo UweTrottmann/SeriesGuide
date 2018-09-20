@@ -246,10 +246,10 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
 
     @OnClick(R.id.buttonAddLanguage)
     public void onClickButtonLanguage() {
-        DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
-                R.array.languageCodesShows, displayedShow.getLanguage()
+        LanguageChoiceDialogFragment.show(getFragmentManager(),
+                R.array.languageCodesShows, displayedShow.getLanguage(),
+                LanguageChoiceDialogFragment.TAG_ADD_DIALOG
         );
-        dialog.show(getFragmentManager(), LanguageChoiceDialogFragment.TAG_ADD_DIALOG);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -339,10 +339,7 @@ public class CalendarFragment extends Fragment
     }
 
     private void checkInEpisode(int episodeTvdbId) {
-        CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(), episodeTvdbId);
-        if (f != null && isResumed()) {
-            f.show(getFragmentManager(), "checkin-dialog");
-        }
+        CheckInDialogFragment.show(getContext(), getFragmentManager(), episodeTvdbId);
     }
 
     private void updateEpisodeCollectionState(int showTvdbId, int episodeTvdbId, int seasonNumber,
