@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
@@ -52,14 +51,14 @@ public class SgPicassoRequestHandler extends RequestHandler {
 
             String language = request.uri.getQueryParameter(QUERY_LANGUAGE);
             if (TextUtils.isEmpty(language)) {
-                language = DisplaySettings.getShowsLanguage(context);
+                language = null;
             }
 
             TvdbTools tvdbTools = SgApp.getServicesComponent(context).tvdbTools();
             try {
                 retrofit2.Response<SeriesImageQueryResultResponse> posterResponse
                         = tvdbTools.getSeriesPosters(showTvdbId, language);
-                if (posterResponse.code() == 404) {
+                if (language != null && posterResponse.code() == 404) {
                     // no posters for this language, fall back to default
                     posterResponse = tvdbTools.getSeriesPosters(showTvdbId, null);
                 }

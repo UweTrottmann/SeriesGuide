@@ -8,6 +8,7 @@ import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -123,7 +124,8 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
             return buildResultSuccess(new LinkedList<SearchResult>());
         }
 
-        return buildResultSuccess(parseTraktShowsToSearchResults(getContext(), shows));
+        return buildResultSuccess(parseTraktShowsToSearchResults(getContext(), shows,
+                DisplaySettings.getSearchLanguageOrFallbackIfAny(getContext())));
     }
 
     private void extractShows(List<BaseShow> watchedShows, List<Show> shows) {
@@ -148,11 +150,6 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
 
     private Result buildResultFailure(@StringRes int errorResId) {
         return new Result(new LinkedList<SearchResult>(), getContext(), errorResId);
-    }
-
-    private static List<SearchResult> parseTraktShowsToSearchResults(Context context,
-            @NonNull List<Show> traktShows) {
-        return parseTraktShowsToSearchResults(context, traktShows, null);
     }
 
     /**

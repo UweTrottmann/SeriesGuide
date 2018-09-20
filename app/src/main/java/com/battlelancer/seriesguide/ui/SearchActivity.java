@@ -256,7 +256,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         }
 
         // display add dialog
-        AddShowDialogFragment.showAddDialog(showTvdbId, getSupportFragmentManager());
+        AddShowDialogFragment.showAddDialog(this, getSupportFragmentManager(), showTvdbId);
         Utils.trackCustomEvent(this, "Beam", "Success", null);
     }
 
@@ -322,7 +322,7 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
         if (showTvdbId > 0) {
             // found an id, display the add dialog
-            AddShowDialogFragment.showAddDialog(showTvdbId, getSupportFragmentManager());
+            AddShowDialogFragment.showAddDialog(this, getSupportFragmentManager(), showTvdbId);
         } else {
             // no id, populate the search field instead
             viewPager.setCurrentItem(TAB_POSITION_SEARCH);

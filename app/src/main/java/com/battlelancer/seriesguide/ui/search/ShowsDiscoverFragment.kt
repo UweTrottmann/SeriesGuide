@@ -147,7 +147,7 @@ class ShowsDiscoverFragment : Fragment() {
                     // onSaveInstanceState might already be called
                     if (isResumed) {
                         // display more details in a dialog
-                        AddShowDialogFragment.showAddDialog(item, fragmentManager)
+                        AddShowDialogFragment.showAddDialog(context, fragmentManager, item)
                     }
                 }
             }
@@ -240,7 +240,7 @@ class ShowsDiscoverFragment : Fragment() {
             fragmentManager?.let {
                 val dialogFragment = LanguageChoiceDialogFragment.newInstance(
                         R.array.languageCodesShowsWithAny, languageCode)
-                dialogFragment.show(fragmentManager, "dialog-language")
+                dialogFragment.show(fragmentManager, LanguageChoiceDialogFragment.TAG_DISCOVER)
             }
         }
     }
@@ -270,6 +270,9 @@ class ShowsDiscoverFragment : Fragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: LanguageChoiceDialogFragment.LanguageChangedEvent) {
+        if (LanguageChoiceDialogFragment.TAG_DISCOVER != event.tag) {
+            return
+        }
         changeLanguage(event.selectedLanguageCode)
         loadResults()
     }

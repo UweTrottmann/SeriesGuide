@@ -56,17 +56,6 @@ public class TvdbImageTools {
     }
 
     /**
-     * @see #smallSizeOrResolveUrl(String, int, String)
-     */
-    @Nullable
-    public static String smallSizeOrResolveUrl(@Nullable String imagePath, int showTvdbId) {
-        if (TextUtils.isEmpty(imagePath)) {
-            return SgPicassoRequestHandler.SCHEME_SHOW_TVDB + "://" + showTvdbId;
-        }
-        return smallSizeUrl(imagePath);
-    }
-
-    /**
      * Builds a full url for a TVDb show poster using the given image path.
      *
      * @param imagePath If empty, will return an URL that will be resolved to the highest rated

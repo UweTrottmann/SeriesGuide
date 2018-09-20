@@ -103,7 +103,8 @@ public class TraktAddFragment extends AddFragment {
                     // onSaveInstanceState might already be called
                     if (isResumed()) {
                         // display more details in a dialog
-                        AddShowDialogFragment.showAddDialog(item, getFragmentManager());
+                        AddShowDialogFragment
+                                .showAddDialog(getContext(), getFragmentManager(), item);
                     }
                 }
             }

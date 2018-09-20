@@ -208,7 +208,10 @@ public class TvdbTools {
         getEpisodesAndUpdateDatabase(batch, show, show.language);
     }
 
-    public static String getShowLanguage(Context context, int showTvdbId) {
+    /**
+     * @return {@code null} if the query failed, should try again later.
+     */
+    private static String getShowLanguage(Context context, int showTvdbId) {
         Cursor languageQuery = context.getContentResolver()
                 .query(Shows.buildShowUri(showTvdbId), LANGUAGE_QUERY_PROJECTION, null, null, null);
         if (languageQuery == null) {
@@ -221,9 +224,11 @@ public class TvdbTools {
         }
         languageQuery.close();
 
+        // handle legacy records
         if (TextUtils.isEmpty(language)) {
-            // fall back to preferred language
-            language = DisplaySettings.getShowsLanguage(context);
+            // default to 'en' for consistent behavior across devices
+            // and to encourage users to set language
+            language = DisplaySettings.LANGUAGE_EN;
         }
 
         return language;
@@ -379,9 +384,11 @@ public class TvdbTools {
         if (language == null && hexagonShow != null) {
             language = hexagonShow.getLanguage();
         }
-        // if we still have no language, use the users default language
-        if (TextUtils.isEmpty(language)) {
-            language = DisplaySettings.getShowsLanguage(context);
+        // handle legacy records without language
+        if (language == null || language.length() == 0) {
+            // default to 'en' to ensure consistency across devices,
+            // and to encourage users to set a language
+            language = DisplaySettings.LANGUAGE_EN;
         }
 
         // get show info from TVDb and trakt
@@ -408,8 +415,7 @@ public class TvdbTools {
      * information from trakt.
      *
      * @param language A TVDb language code (ISO 639-1 two-letter format, see <a
-     * href="http://www.thetvdb.com/wiki/index.php/API:languages.xml">TVDb wiki</a>). If not
-     * supplied, TVDb falls back to English.
+     * href="http://www.thetvdb.com/wiki/index.php/API:languages.xml">TVDb wiki</a>).
      * @throws TvdbException If a request fails or a response appears to be corrupted.
      */
     @NonNull
@@ -485,10 +491,10 @@ public class TvdbTools {
     }
 
     /**
-     * Get a show from TVDb. Tries to fetch in the desired language, but will fall back to the
-     * default entry if no translation exists. The returned entity will still have its <b>language
-     * property set to the desired language</b>, which might not be the language of the actual
-     * content.
+     * Get a show from TVDb. Tries to fetch in the desired language, but will use
+     * {@link DisplaySettings#getShowsLanguageFallback(Context)} if no translation or poster in that
+     * language exists. The returned entity will still have its <b>language property set to the
+     * desired language</b>, which might not be the language of the actual content.
      */
     @NonNull
     private Show downloadAndParseShow(int showTvdbId, @NonNull String desiredLanguage)
@@ -497,8 +503,8 @@ public class TvdbTools {
         // title is null if no translation exists
         boolean noTranslation = TextUtils.isEmpty(series.seriesName);
         if (noTranslation) {
-            // try to fetch default entry
-            series = getSeries(showTvdbId, null);
+            // try to fetch using fall back language
+            series = getSeries(showTvdbId, DisplaySettings.getShowsLanguageFallback(context));
         }
 
         Show result = new Show();
@@ -545,8 +551,9 @@ public class TvdbTools {
         retrofit2.Response<SeriesImageQueryResultResponse> posterResponse;
         posterResponse = getSeriesPosters(showTvdbId, desiredLanguage);
         if (posterResponse.code() == 404) {
-            // no posters for this language, fall back to default
-            posterResponse = getSeriesPosters(showTvdbId, null);
+            // no posters for this language, try fall back language
+            posterResponse = getSeriesPosters(showTvdbId,
+                    DisplaySettings.getShowsLanguageFallback(context));
         }
 
         if (posterResponse.isSuccessful()) {
