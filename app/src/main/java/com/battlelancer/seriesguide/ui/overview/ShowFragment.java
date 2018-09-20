@@ -249,8 +249,8 @@ public class ShowFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_show_manage_lists) {
-            ManageListsDialogFragment.showListsDialog(getShowTvdbId(), ListItemTypes.SHOW,
-                    getFragmentManager());
+            ManageListsDialogFragment
+                    .show(getFragmentManager(), getShowTvdbId(), ListItemTypes.SHOW);
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -377,7 +377,7 @@ class SeasonsFragment : ListFragment() {
     private val popupMenuClickListener = SeasonsAdapter.PopupMenuClickListener { v, seasonTvdbId, seasonNumber ->
         PopupMenu(v.context, v).apply {
             inflate(R.menu.seasons_popup_menu)
-            setOnMenuItemClickListener({ item ->
+            setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.menu_action_seasons_watched_all -> {
                         onFlagSeasonWatched(seasonTvdbId.toLong(), seasonNumber, true)
@@ -408,14 +408,15 @@ class SeasonsFragment : ListFragment() {
                         true
                     }
                     R.id.menu_action_seasons_manage_lists -> {
-                        ManageListsDialogFragment.showListsDialog(seasonTvdbId,
-                                ListItemTypes.SEASON, fragmentManager)
-                        Utils.trackContextMenu(activity, TAG, "Manage lists")
+                        if (ManageListsDialogFragment.show(fragmentManager,
+                                seasonTvdbId, ListItemTypes.SEASON)) {
+                            Utils.trackContextMenu(activity, TAG, "Manage lists")
+                        }
                         true
                     }
                     else -> false
                 }
-            })
+            }
         }.show()
     }
 

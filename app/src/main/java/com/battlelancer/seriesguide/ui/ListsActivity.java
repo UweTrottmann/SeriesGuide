@@ -143,7 +143,7 @@ public class ListsActivity extends BaseTopActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_lists_add) {
-            AddListDialogFragment.showAddListDialog(getSupportFragmentManager());
+            AddListDialogFragment.show(getSupportFragmentManager());
             Utils.trackAction(this, TAG, "Add list");
             return true;
         }

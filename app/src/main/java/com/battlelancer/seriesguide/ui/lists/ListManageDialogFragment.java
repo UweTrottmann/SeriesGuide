@@ -4,7 +4,6 @@ package com.battlelancer.seriesguide.ui.lists;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,12 +19,14 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import com.battlelancer.seriesguide.util.DialogTools;
 
 /**
  * Dialog to rename or remove a list.
  */
 public class ListManageDialogFragment extends AppCompatDialogFragment {
 
+    private static final String TAG = "listmanagedialog";
     private static final String ARG_LIST_ID = "listId";
 
     private static ListManageDialogFragment newInstance(String listId) {
@@ -42,19 +43,13 @@ public class ListManageDialogFragment extends AppCompatDialogFragment {
      * Display a dialog which allows to edit the title of this list or remove it.
      */
     public static void show(String listId, FragmentManager fm) {
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction. We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
+        // replace any currently showing list dialog (do not add it to the back stack)
         FragmentTransaction ft = fm.beginTransaction();
-        Fragment prev = fm.findFragmentByTag("listmanagedialog");
+        Fragment prev = fm.findFragmentByTag(TAG);
         if (prev != null) {
             ft.remove(prev);
         }
-        ft.addToBackStack(null);
-
-        // Create and show the dialog.
-        DialogFragment newFragment = ListManageDialogFragment.newInstance(listId);
-        newFragment.show(ft, "listmanagedialog");
+        DialogTools.safeShow(ListManageDialogFragment.newInstance(listId), fm, ft, TAG);
     }
 
     @BindView(R.id.textInputLayoutListManageListName) TextInputLayout textInputLayoutName;

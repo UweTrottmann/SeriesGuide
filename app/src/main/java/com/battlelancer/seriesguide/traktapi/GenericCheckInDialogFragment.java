@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -168,10 +167,8 @@ public abstract class GenericCheckInDialogFragment extends AppCompatDialogFragme
     @Subscribe
     public void onEvent(TraktTask.TraktCheckInBlockedEvent event) {
         // launch a check-in override dialog
-        TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
-                .newInstance(event.traktTaskArgs, event.waitMinutes);
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        newFragment.show(ft, "cancel-checkin-dialog");
+        TraktCancelCheckinDialogFragment
+                .show(getFragmentManager(), event.traktTaskArgs, event.waitMinutes);
     }
 
     private void checkIn() {

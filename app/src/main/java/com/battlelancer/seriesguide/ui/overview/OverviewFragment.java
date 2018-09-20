@@ -305,11 +305,11 @@ public class OverviewFragment extends Fragment implements
             return true;
         } else if (itemId == R.id.menu_overview_manage_lists) {
             if (isEpisodeDataAvailable) {
-                ManageListsDialogFragment.showListsDialog(
-                        currentEpisodeCursor.getInt(EpisodeQuery._ID),
-                        ListItemTypes.EPISODE, getFragmentManager());
+                if (ManageListsDialogFragment.show(getFragmentManager(),
+                        currentEpisodeCursor.getInt(EpisodeQuery._ID), ListItemTypes.EPISODE)) {
+                    Utils.trackAction(getActivity(), TAG, "Manage lists");
+                }
             }
-            Utils.trackAction(getActivity(), TAG, "Manage lists");
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -362,7 +362,7 @@ public class ShowsNowFragment extends Fragment {
             } else if (item.showTvdbId != null) {
                 // episode missing: show likely not in database, suggest adding it
                 AddShowDialogFragment
-                        .showAddDialog(getContext(), getFragmentManager(), item.showTvdbId);
+                        .show(getContext(), getFragmentManager(), item.showTvdbId);
             }
             query.close();
         }

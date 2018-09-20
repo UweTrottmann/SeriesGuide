@@ -224,9 +224,9 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_action_lists_manage: {
-                    ManageListsDialogFragment.showListsDialog(itemTvdbId, itemType,
-                            fragmentManager);
-                    Utils.trackContextMenu(context, TAG, "Manage lists");
+                    if (ManageListsDialogFragment.show(fragmentManager, itemTvdbId, itemType)) {
+                        Utils.trackContextMenu(context, TAG, "Manage lists");
+                    }
                     return true;
                 }
                 case R.id.menu_action_lists_remove: {

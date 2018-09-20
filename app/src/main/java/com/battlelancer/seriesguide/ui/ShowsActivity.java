@@ -147,7 +147,7 @@ public class ShowsActivity extends BaseTopActivity implements
                 // no such episode, offer to add show
                 int showTvdbId = intent.getIntExtra(Intents.EXTRA_SHOW_TVDBID, 0);
                 if (showTvdbId > 0) {
-                    AddShowDialogFragment.showAddDialog(this, getSupportFragmentManager(),
+                    AddShowDialogFragment.show(this, getSupportFragmentManager(),
                             showTvdbId);
                 }
             }
@@ -163,7 +163,7 @@ public class ShowsActivity extends BaseTopActivity implements
                 viewIntent = OverviewActivity.intentShow(this, showTvdbId);
             } else {
                 // no such show, offer to add it
-                AddShowDialogFragment.showAddDialog(this, getSupportFragmentManager(),
+                AddShowDialogFragment.show(this, getSupportFragmentManager(),
                         showTvdbId);
             }
         }

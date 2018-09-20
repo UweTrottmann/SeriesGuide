@@ -69,7 +69,7 @@ public class UserEpisodeStreamFragment extends StreamFragment {
                 showDetails(view, episodeQuery.getInt(0));
             } else {
                 // offer to add the show if it's not in the show database yet
-                AddShowDialogFragment.showAddDialog(getContext(), getFragmentManager(),
+                AddShowDialogFragment.show(getContext(), getFragmentManager(),
                         item.show.ids.tvdb);
             }
 

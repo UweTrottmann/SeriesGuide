@@ -99,13 +99,8 @@ public class TraktAddFragment extends AddFragment {
                     // already in library, open it
                     startActivity(OverviewActivity.intentShow(getContext(), item.getTvdbid()));
                 } else {
-                    // guard against onClick called after fragment is paged away (multi-touch)
-                    // onSaveInstanceState might already be called
-                    if (isResumed()) {
-                        // display more details in a dialog
-                        AddShowDialogFragment
-                                .showAddDialog(getContext(), getFragmentManager(), item);
-                    }
+                    // display more details in a dialog
+                    AddShowDialogFragment.show(getContext(), getFragmentManager(), item);
                 }
             }
         }

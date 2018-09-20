@@ -237,7 +237,7 @@ class EpisodesFragment : ListFragment(), OnClickListener, OnFlagEpisodeListener,
                 findItem(R.id.menu_action_episodes_skip).isVisible = !isWatched && !isSkipped
                 findItem(R.id.menu_action_episodes_dont_skip).isVisible = isSkipped
             }
-            setOnMenuItemClickListener({ item ->
+            setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.menu_action_episodes_watched -> {
                         onFlagEpisodeWatched(episodeTvdbId, episodeNumber, true)
@@ -276,14 +276,15 @@ class EpisodesFragment : ListFragment(), OnClickListener, OnFlagEpisodeListener,
                         true
                     }
                     R.id.menu_action_episodes_manage_lists -> {
-                        ManageListsDialogFragment.showListsDialog(episodeTvdbId,
-                                ListItemTypes.EPISODE, fragmentManager)
-                        Utils.trackContextMenu(requireContext(), TAG, "Manage lists")
+                        if (ManageListsDialogFragment.show(fragmentManager,
+                                        episodeTvdbId, ListItemTypes.EPISODE)) {
+                            Utils.trackContextMenu(requireContext(), TAG, "Manage lists")
+                        }
                         true
                     }
                     else -> false
                 }
-            })
+            }
             show()
         }
     }

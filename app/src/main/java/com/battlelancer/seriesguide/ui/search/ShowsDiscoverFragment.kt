@@ -143,12 +143,8 @@ class ShowsDiscoverFragment : Fragment() {
                     // already in library, open it
                     startActivity(OverviewActivity.intentShow(context, item.tvdbid))
                 } else {
-                    // guard against onClick called after fragment is paged away (multi-touch)
-                    // onSaveInstanceState might already be called
-                    if (isResumed) {
-                        // display more details in a dialog
-                        AddShowDialogFragment.showAddDialog(context, fragmentManager, item)
-                    }
+                    // display more details in a dialog
+                    AddShowDialogFragment.show(context, fragmentManager, item)
                 }
             }
         }

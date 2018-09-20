@@ -37,6 +37,7 @@ import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.ClipboardTools;
+import com.battlelancer.seriesguide.util.DialogTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -63,20 +64,14 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
      * Display a {@link AddShowDialogFragment} for the given show. The language of the show should
      * be set.
      */
-    public static void showAddDialog(Context context, FragmentManager fm, SearchResult show) {
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction. We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
+    public static void show(Context context, FragmentManager fm, SearchResult show) {
+        // replace any currently showing add dialog (do not add it to the back stack)
         FragmentTransaction ft = fm.beginTransaction();
         Fragment prev = fm.findFragmentByTag(TAG);
         if (prev != null) {
             ft.remove(prev);
         }
-        ft.addToBackStack(null);
-
-        // Create and show the dialog.
-        DialogFragment newFragment = AddShowDialogFragment.newInstance(context, show);
-        newFragment.show(ft, TAG);
+        DialogTools.safeShow(AddShowDialogFragment.newInstance(context, show), fm, ft, TAG);
     }
 
     /**
@@ -85,10 +80,10 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
      * <p> Use if there is no actual search result, but just a TheTVDB id available. Uses the search
      * or fall back language.
      */
-    public static void showAddDialog(Context context, FragmentManager fm, int showTvdbId) {
+    public static void show(Context context, FragmentManager fm, int showTvdbId) {
         SearchResult fakeResult = new SearchResult();
         fakeResult.setTvdbid(showTvdbId);
-        showAddDialog(context, fm, fakeResult);
+        show(context, fm, fakeResult);
     }
 
     private static AddShowDialogFragment newInstance(Context context, SearchResult show) {
