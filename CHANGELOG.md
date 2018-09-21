@@ -5,6 +5,24 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 45
+----------
+*(in development)*
+
+#### 45-beta1
+*(2018-09-21)*
+
+* 🔧 Change the language a show will be added in from add dialog.
+* 🔧 Remove 'Preferred content language' setting. Shows that never had a language set will default 
+  to English instead.
+* 🔧 Shows added from discover sub-sections (popular, recommended, watched, collection and watchlist) 
+  skipping the add dialog are added in the language search is set to (or alternative language if set
+  to any language).
+* 🔧 If a show title is not translated get show title and description in the fall back language. 
+  This mirrors existing behavior for episodes.
+* 🔨 Potential fixes for crashes with dialogs, in calendar view and during background processing.
+* 📝 Latest translations from crowdin.
+
 Version 44
 ----------
 *(2018-09-14)*
