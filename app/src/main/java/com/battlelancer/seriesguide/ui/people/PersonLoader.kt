@@ -17,7 +17,7 @@ internal class PersonLoader(context: Context, private val tmdbId: Int) :
         val peopleService = SgApp.getServicesComponent(context).peopleService()
         val response: Response<Person?>
         try {
-            response = peopleService.summary(tmdbId).execute()
+            response = peopleService.summary(tmdbId, "en-US").execute()
             if (response.isSuccessful) {
                 return response.body()
             } else {
