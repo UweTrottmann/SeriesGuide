@@ -1,27 +1,5 @@
 package com.battlelancer.seriesguide.api;
 
-import android.annotation.SuppressLint;
-import android.app.job.JobService;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.app.JobIntentService;
-import android.text.TextUtils;
-import android.util.Log;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.ACTION_SUBSCRIBE;
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.ACTION_UPDATE;
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_ENTITY_IDENTIFIER;
@@ -35,6 +13,29 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTIO
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_MOVIE;
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA_ACTION;
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA_ACTION_TYPE;
+
+import android.annotation.SuppressLint;
+import android.app.job.JobService;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v4.app.JobIntentService;
+import android.support.v4.app.SafeJobIntentService;
+import android.text.TextUtils;
+import android.util.Log;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 /**
  * Base class for a SeriesGuide extension. Extensions are a way for other apps to
@@ -167,7 +168,7 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA
  * <p> Based on code from <a href="https://github.com/romannurik/muzei">Muzei</a>, an awesome Live
  * Wallpaper by Roman Nurik.
  */
-public abstract class SeriesGuideExtension extends JobIntentService {
+public abstract class SeriesGuideExtension extends SafeJobIntentService {
 
     private static final String TAG = "SeriesGuideExtension";
 
