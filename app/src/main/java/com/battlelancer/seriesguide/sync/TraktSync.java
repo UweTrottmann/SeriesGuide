@@ -33,12 +33,14 @@ public class TraktSync {
     }
 
     public SgSyncAdapter.UpdateResult sync(HashSet<Integer> localShows, long currentTime) {
+        progress.publish(SyncProgress.Step.TRAKT);
         if (!TraktCredentials.get(context).hasCredentials()) {
+            progress.recordError();
             Timber.d("performTraktSync: no auth, skip");
             return SgSyncAdapter.UpdateResult.SUCCESS;
         }
-
         if (!AndroidUtils.isNetworkConnected(context)) {
+            progress.recordError();
             return SgSyncAdapter.UpdateResult.INCOMPLETE;
         }
 
@@ -46,11 +48,8 @@ public class TraktSync {
         LastActivities lastActivity = getLastActivity();
         if (lastActivity == null) {
             // trakt is likely offline or busy, try later
+            progress.recordError();
             Timber.e("performTraktSync: last activity download failed");
-            return SgSyncAdapter.UpdateResult.INCOMPLETE;
-        }
-
-        if (!AndroidUtils.isNetworkConnected(context)) {
             return SgSyncAdapter.UpdateResult.INCOMPLETE;
         }
 
@@ -61,53 +60,57 @@ public class TraktSync {
             // EPISODES
             // download and upload episode watched and collected flags
             progress.publish(SyncProgress.Step.TRAKT_EPISODES);
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                progress.recordError();
+                return SgSyncAdapter.UpdateResult.INCOMPLETE;
+            }
             if (!syncEpisodes(localShows, lastActivity.episodes, currentTime)) {
                 progress.recordError();
                 return SgSyncAdapter.UpdateResult.INCOMPLETE;
             }
 
+            // download ratings
+            progress.publish(SyncProgress.Step.TRAKT_RATINGS);
             if (!AndroidUtils.isNetworkConnected(context)) {
+                progress.recordError();
                 return SgSyncAdapter.UpdateResult.INCOMPLETE;
             }
-
-            // download ratings
             if (!ratingsSync.downloadForEpisodes(lastActivity.episodes.rated_at)) {
                 progress.recordError();
                 return SgSyncAdapter.UpdateResult.INCOMPLETE;
             }
 
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                return SgSyncAdapter.UpdateResult.INCOMPLETE;
-            }
-
             // SHOWS
             // download ratings
-            progress.publish(SyncProgress.Step.TRAKT_RATINGS);
-            if (!ratingsSync.downloadForShows(lastActivity.shows.rated_at)) {
+            if (!AndroidUtils.isNetworkConnected(context)) {
                 progress.recordError();
                 return SgSyncAdapter.UpdateResult.INCOMPLETE;
             }
-
-            if (!AndroidUtils.isNetworkConnected(context)) {
+            if (!ratingsSync.downloadForShows(lastActivity.shows.rated_at)) {
+                progress.recordError();
                 return SgSyncAdapter.UpdateResult.INCOMPLETE;
             }
         }
 
         // MOVIES
+        progress.publish(SyncProgress.Step.TRAKT_MOVIES);
         TraktMovieSync movieSync = new TraktMovieSync(context, movieTools, traktSync);
 
         // sync watchlist and collection with trakt
-        progress.publish(SyncProgress.Step.TRAKT_MOVIES);
+        if (!AndroidUtils.isNetworkConnected(context)) {
+            progress.recordError();
+            return SgSyncAdapter.UpdateResult.INCOMPLETE;
+        }
         if (!movieSync.syncLists(lastActivity.movies)) {
             progress.recordError();
             return SgSyncAdapter.UpdateResult.INCOMPLETE;
         }
 
+        // download watched movies
         if (!AndroidUtils.isNetworkConnected(context)) {
+            progress.recordError();
             return SgSyncAdapter.UpdateResult.INCOMPLETE;
         }
-
-        // download watched movies
         if (!movieSync.downloadWatched(lastActivity.movies.watched_at)) {
             progress.recordError();
             return SgSyncAdapter.UpdateResult.INCOMPLETE;
@@ -116,12 +119,12 @@ public class TraktSync {
         // clean up any useless movies (not watched or not in any list)
         MovieTools.deleteUnusedMovies(context);
 
-        if (!AndroidUtils.isNetworkConnected(context)) {
-            return SgSyncAdapter.UpdateResult.INCOMPLETE;
-        }
-
         // download movie ratings
         progress.publish(SyncProgress.Step.TRAKT_RATINGS);
+        if (!AndroidUtils.isNetworkConnected(context)) {
+            progress.recordError();
+            return SgSyncAdapter.UpdateResult.INCOMPLETE;
+        }
         if (!ratingsSync.downloadForMovies(lastActivity.movies.rated_at)) {
             progress.recordError();
             return SgSyncAdapter.UpdateResult.INCOMPLETE;
