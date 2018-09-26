@@ -144,7 +144,6 @@ dependencies {
 
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:${versions.lifecycle}"
-    kapt "android.arch.lifecycle:compiler:${versions.lifecycle}"
 
     // Room
     implementation "android.arch.persistence.room:runtime:${versions.room}"
