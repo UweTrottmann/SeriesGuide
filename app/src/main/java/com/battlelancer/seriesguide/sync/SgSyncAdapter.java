@@ -162,7 +162,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     Timber.d("Syncing: trakt...DONE");
                 }
                 // don't overwrite failure
-                if (resultSync == UpdateResult.SUCCESS) {
+                if (resultCode == UpdateResult.SUCCESS) {
                     resultCode = resultSync;
                 }
 
