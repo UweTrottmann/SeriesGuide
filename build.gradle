@@ -6,7 +6,7 @@ buildscript {
             'compileSdk': 28,
             'targetSdk': 26,
 
-            'supportLibrary': '27.1.1', // developer.android.com/topic/libraries/support-library/revisions.html
+            'supportLibrary': '28.0.0', // developer.android.com/topic/libraries/support-library/revisions.html
             'lifecycle': '1.1.1', // developer.android.com/topic/libraries/architecture/release-notes.html
             'playServices': '11.4.0', // developers.google.com/android/guides/releases
             'room': '1.1.1', // https://developer.android.com/jetpack/docs/release-notes
