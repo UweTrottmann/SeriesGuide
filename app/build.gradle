@@ -188,8 +188,8 @@ dependencies {
     implementation 'io.palaima.debugdrawer:debugdrawer-timber:0.7.0'
 
     // Google Play Services
-    implementation "com.google.android.gms:play-services-analytics:${versions.playServices}"
-    implementation "com.google.android.gms:play-services-auth:${versions.playServices}"
+    implementation "com.google.android.gms:play-services-analytics:16.0.3"
+    implementation "com.google.android.gms:play-services-auth:16.0.0"
 
     // App Engine
     // https://github.com/google/google-api-java-client/commits/dev
