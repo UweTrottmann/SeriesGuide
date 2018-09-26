@@ -77,3 +77,8 @@ task clean(type: Delete) {
     group "build"
     delete rootProject.buildDir
 }
+
+wrapper {
+    //noinspection UnnecessaryQualifiedReference
+    distributionType = Wrapper.DistributionType.ALL
+}
