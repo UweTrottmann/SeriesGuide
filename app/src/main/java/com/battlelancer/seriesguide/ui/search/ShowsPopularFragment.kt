@@ -12,10 +12,13 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.EmptyView
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout
+import org.greenrobot.eventbus.EventBus
 
 class ShowsPopularFragment : Fragment() {
 
@@ -54,7 +57,7 @@ class ShowsPopularFragment : Fragment() {
             layoutManager = AutoGridLayoutManager(context, R.dimen.showgrid_columnWidth, 1, 1)
         }
 
-        adapter = ShowsPopularAdapter()
+        adapter = ShowsPopularAdapter(itemClickListener)
         recyclerView.adapter = adapter
     }
 
@@ -82,6 +85,29 @@ class ShowsPopularFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         unbinder.unbind()
+    }
+
+    private val itemClickListener = object : AddFragment.AddAdapter.OnItemClickListener {
+        override fun onItemClick(item: SearchResult?) {
+            if (item != null && item.state != SearchResult.STATE_ADDING) {
+                if (item.state == SearchResult.STATE_ADDED) {
+                    // already in library, open it
+                    startActivity(OverviewActivity.intentShow(context, item.tvdbid))
+                } else {
+                    // display more details in a dialog
+                    AddShowDialogFragment.show(context, fragmentManager!!, item)
+                }
+            }
+        }
+
+        override fun onAddClick(item: SearchResult) {
+            EventBus.getDefault().post(AddFragment.OnAddingShowEvent(item.tvdbid))
+            TaskManager.getInstance().performAddTask(context, item)
+        }
+
+        override fun onMenuWatchlistClick(view: View?, showTvdbId: Int) {
+            // unused
+        }
     }
 
 }

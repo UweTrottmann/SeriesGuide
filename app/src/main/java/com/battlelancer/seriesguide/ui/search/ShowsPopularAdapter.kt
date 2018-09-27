@@ -5,11 +5,11 @@ import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 
-class ShowsPopularAdapter() :
+class ShowsPopularAdapter(val onItemClickListener: AddFragment.AddAdapter.OnItemClickListener) :
         PagedListAdapter<SearchResult, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ShowsPopularViewHolder.create(parent)
+        return ShowsPopularViewHolder.create(parent, onItemClickListener)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
