@@ -144,6 +144,8 @@ dependencies {
 
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:${versions.lifecycle}"
+    // Paging
+    implementation "android.arch.paging:runtime:1.0.1"
 
     // Room
     implementation "android.arch.persistence.room:runtime:${versions.room}"
