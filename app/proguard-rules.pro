@@ -51,8 +51,9 @@
 -dontwarn sun.misc.Unsafe
 
 # Google API client
-# warnings due to removed old Guava version used in test classes
+# warnings due to Guava classes used in tests and ErrorProne annotations
 -dontwarn com.google.api.client.googleapis.testing.**
+-dontwarn com.google.errorprone.annotations.**
 
 # OkHttp 3
 # JSR 305 annotations are for embedding nullability information.
