@@ -3,7 +3,9 @@ package com.battlelancer.seriesguide.ui.search
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -18,8 +20,6 @@ import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.tasks.RemoveShowTask
-import com.battlelancer.seriesguide.widgets.EmptyView
-import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -30,13 +30,12 @@ import org.greenrobot.eventbus.ThreadMode
 class ShowsPopularFragment : Fragment() {
 
     @BindView(R.id.swipeRefreshLayoutShowsPopular)
-    lateinit var swipeRefreshLayout: EmptyViewSwipeRefreshLayout
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     @BindView(R.id.recyclerViewShowsPopular)
     lateinit var recyclerView: RecyclerView
 
-    @BindView(R.id.emptyViewShowsPopular)
-    lateinit var emptyView: EmptyView
+    private lateinit var snackbar: Snackbar
 
     private lateinit var unbinder: Unbinder
     private lateinit var model: ShowsPopularViewModel
@@ -52,12 +51,11 @@ class ShowsPopularFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         swipeRefreshLayout.apply {
             ViewTools.setSwipeRefreshLayoutColors(activity!!.theme, this)
-            setSwipeableChildren(R.id.scrollViewShowsPopular, R.id.recyclerViewShowsPopular)
             setOnRefreshListener { model.refresh() }
         }
 
-        emptyView.visibility = View.GONE
-        emptyView.setButtonClickListener { model.refresh() }
+        snackbar = Snackbar.make(swipeRefreshLayout, "", Snackbar.LENGTH_INDEFINITE)
+        snackbar.setAction(R.string.action_try_again) { model.refresh() }
 
         recyclerView.apply {
             setHasFixedSize(true)
@@ -79,12 +77,10 @@ class ShowsPopularFragment : Fragment() {
         model.networkState.observe(this, Observer {
             swipeRefreshLayout.isRefreshing = it == NetworkState.LOADING
             if (it?.status == Status.ERROR) {
-                emptyView.setMessage(it.message)
-                emptyView.visibility = View.VISIBLE
-                recyclerView.visibility = View.GONE
+                snackbar.setText(it.message!!)
+                if (!snackbar.isShownOrQueued) snackbar.show()
             } else {
-                emptyView.visibility = View.GONE
-                recyclerView.visibility = View.VISIBLE
+                if (snackbar.isShownOrQueued) snackbar.dismiss()
             }
         })
     }
