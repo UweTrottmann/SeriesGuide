@@ -42,8 +42,6 @@ import timber.log.Timber;
  */
 public class ExtensionsConfigurationFragment extends Fragment {
 
-    public static final int EXTENSION_LIMIT_FREE = 10;
-
     private static final String TAG = "Extension Configuration";
 
     @BindView(R.id.listViewExtensionsConfiguration) DragSortListView listView;
@@ -201,12 +199,6 @@ public class ExtensionsConfigurationFragment extends Fragment {
 
                 @Override
                 public void onAddExtensionClick(View anchor) {
-                    // non-supporters only can add a few extensions
-                    if (adapter.getCount() - 1 == EXTENSION_LIMIT_FREE
-                            && !Utils.hasAccessToX(getActivity())) {
-                        Utils.advertiseSubscription(getActivity());
-                        return;
-                    }
                     showAddExtensionPopupMenu(anchor);
                     Utils.trackAction(getActivity(), TAG, "Add extension");
                 }

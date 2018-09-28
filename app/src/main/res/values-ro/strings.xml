@@ -486,7 +486,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">Personalizează extensile</string>
   <string name="action_extensions_add">Adaugă extensie</string>
-  <string name="action_extensions_limit">Cumpărați X pentru a adăuga mai multe extensii</string>
   <string name="action_extensions_search">Optineți mai multe extensii</string>
   <string name="action_extension_remove">Ștergeți</string>
   <string name="extension_amazon">Căutare pe Amazon</string>

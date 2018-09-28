@@ -486,7 +486,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">Personalizēt papildinājumus</string>
   <string name="action_extensions_add">Pievienot papildinājumus</string>
-  <string name="action_extensions_limit">Iegūsti X lai iegūtu vairāk papildinājumus</string>
   <string name="action_extensions_search">Iegūsti vairāk papildinājumus</string>
   <string name="action_extension_remove">Noņemt</string>
   <string name="extension_amazon">Amazon meklēšana</string>

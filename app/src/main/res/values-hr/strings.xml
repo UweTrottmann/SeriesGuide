@@ -486,7 +486,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">Prilagodi proširenja</string>
   <string name="action_extensions_add">Dodavanje proširenja</string>
-  <string name="action_extensions_limit">Nabavite X za dodavanje više proširenja</string>
   <string name="action_extensions_search">Nabavi više proširenja</string>
   <string name="action_extension_remove">Izbriši</string>
   <string name="extension_amazon">Amazon pretraživanje</string>

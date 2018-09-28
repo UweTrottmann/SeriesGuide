@@ -475,7 +475,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">Прилагоди екстензија</string>
   <string name="action_extensions_add">Додај екстензија</string>
-  <string name="action_extensions_limit">Get Х за да додадете повеќе екстензии</string>
   <string name="action_extensions_search">Земи повеќе екстензии</string>
   <string name="action_extension_remove">Избриши</string>
   <string name="extension_amazon">Amazon search</string>

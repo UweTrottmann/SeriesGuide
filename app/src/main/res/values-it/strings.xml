@@ -475,7 +475,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">Personalizza le estensioni</string>
   <string name="action_extensions_add">Aggiungi estensione</string>
-  <string name="action_extensions_limit">Acquista X per ottenere più estensioni</string>
   <string name="action_extensions_search">Ottieni più estensioni</string>
   <string name="action_extension_remove">Rimuovi</string>
   <string name="extension_amazon">Ricerca su Amazon</string>

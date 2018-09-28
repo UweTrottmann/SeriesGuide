@@ -464,7 +464,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">ปรับแต่งส่วนเสริม</string>
   <string name="action_extensions_add">เพิ่มส่วนเสริม</string>
-  <string name="action_extensions_limit">รับ X เพื่อเพิ่มส่วนเสริมมากขึ้น</string>
   <string name="action_extensions_search">รับส่วนเสริมเพิ่มเติม</string>
   <string name="action_extension_remove">ลบ</string>
   <string name="extension_amazon">ค้นหาใน Amazon</string>

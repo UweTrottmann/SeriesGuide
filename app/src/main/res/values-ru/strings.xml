@@ -497,7 +497,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">Настроить расширения</string>
   <string name="action_extensions_add">Добавить расширение</string>
-  <string name="action_extensions_limit">Получите X, чтобы добавить больше расширений</string>
   <string name="action_extensions_search">Получить больше расширений</string>
   <string name="action_extension_remove">Удалить</string>
   <string name="extension_amazon">Поиск Amazon</string>

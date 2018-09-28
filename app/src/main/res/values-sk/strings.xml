@@ -497,7 +497,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">Upraviť rozšírenia</string>
   <string name="action_extensions_add">Pridať rozšírenie</string>
-  <string name="action_extensions_limit">Získajte X pre ďalšie rozšírenia</string>
   <string name="action_extensions_search">Získať viac rozšírení</string>
   <string name="action_extension_remove">Odstrániť</string>
   <string name="extension_amazon">Hľadať na Amazon</string>

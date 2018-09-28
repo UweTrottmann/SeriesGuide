@@ -475,7 +475,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">Personalizar extensões</string>
   <string name="action_extensions_add">Adicionar extensão</string>
-  <string name="action_extensions_limit">Desbloqueie o X para adicionar mais extensões</string>
   <string name="action_extensions_search">Obtenha mais extensões</string>
   <string name="action_extension_remove">Remover</string>
   <string name="extension_amazon">Pesquisar na Amazon</string>

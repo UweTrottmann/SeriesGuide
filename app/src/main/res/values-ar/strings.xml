@@ -519,7 +519,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">تخصيص الإضافات</string>
   <string name="action_extensions_add">إضافة ملحق</string>
-  <string name="action_extensions_limit">أحصل على النسخة المدفوعة لإضافة المزيد من الملحقات</string>
   <string name="action_extensions_search">المزيد من الإضافات</string>
   <string name="action_extension_remove">إزالة</string>
   <string name="extension_amazon">البحث في أمازون</string>

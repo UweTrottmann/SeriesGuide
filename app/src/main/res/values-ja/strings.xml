@@ -464,7 +464,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">拡張機能をカスタマイズ</string>
   <string name="action_extensions_add">拡張機能を追加</string>
-  <string name="action_extensions_limit">X を入手して、さらに拡張機能を追加</string>
   <string name="action_extensions_search">さらに拡張機能を入手</string>
   <string name="action_extension_remove">削除</string>
   <string name="extension_amazon">Amazon 検索</string>

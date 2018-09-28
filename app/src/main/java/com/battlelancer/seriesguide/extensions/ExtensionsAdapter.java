@@ -14,7 +14,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.extensions.ExtensionManager.Extension;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 
 /**
@@ -69,16 +68,9 @@ public class ExtensionsAdapter extends ArrayAdapter<Extension> {
                 convertView = LayoutInflater.from(parent.getContext())
                         .inflate(LAYOUT_ADD, parent, false);
             }
-            // warn non-supporters that they only can add a few extensions
-            boolean isAtLimit =
-                    getCount() - 1 == ExtensionsConfigurationFragment.EXTENSION_LIMIT_FREE
-                            && !Utils.hasAccessToX(getContext());
             TextView textViewAdd = convertView.findViewById(R.id.textViewItemExtensionAddLabel);
             ViewTools.setVectorIconLeft(getContext().getTheme(), textViewAdd,
                     R.drawable.ic_add_white_24dp);
-            textViewAdd.setVisibility(isAtLimit ? View.GONE : View.VISIBLE);
-            convertView.findViewById(R.id.textViewItemExtensionAddLimit)
-                    .setVisibility(isAtLimit ? View.VISIBLE : View.GONE);
             convertView
                     .setOnClickListener(v -> onItemClickListener.onAddExtensionClick(textViewAdd));
             return convertView;

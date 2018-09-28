@@ -475,7 +475,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">Персонализиране на разширения</string>
   <string name="action_extensions_add">Добави разширение</string>
-  <string name="action_extensions_limit">Вземете X, за да добавите още разширения</string>
   <string name="action_extensions_search">Вземи още разширения</string>
   <string name="action_extension_remove">Премахване</string>
   <string name="extension_amazon">Търсене в Amazon</string>

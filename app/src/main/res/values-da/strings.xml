@@ -475,7 +475,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">Tilpas udvidelser</string>
   <string name="action_extensions_add">Tilføj udvidelse</string>
-  <string name="action_extensions_limit">Få X for at tilføje flere udvidelser</string>
   <string name="action_extensions_search">Hent flere udvidelser</string>
   <string name="action_extension_remove">Fjern</string>
   <string name="extension_amazon">Amazon-søgning</string>

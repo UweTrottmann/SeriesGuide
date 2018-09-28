@@ -476,7 +476,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
   <!-- Extensions -->
   <string name="action_extensions_configure">Personalizar extensiones</string>
   <string name="action_extensions_add">Agregar extensión</string>
-  <string name="action_extensions_limit">Obtén X para agregar más extensiones</string>
   <string name="action_extensions_search">Obtén más extensiones</string>
   <string name="action_extension_remove">Eliminar</string>
   <string name="extension_amazon">Búsqueda en Amazon</string>

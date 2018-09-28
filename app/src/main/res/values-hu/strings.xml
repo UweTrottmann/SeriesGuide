@@ -475,7 +475,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">Kiegészítők testreszabása</string>
   <string name="action_extensions_add">Kiegészítő hozzáadása</string>
-  <string name="action_extensions_limit">X beszerzése a további bővítményekhez</string>
   <string name="action_extensions_search">További bővítmények</string>
   <string name="action_extension_remove">Törlés</string>
   <string name="extension_amazon">Keresés az Amazonon</string>

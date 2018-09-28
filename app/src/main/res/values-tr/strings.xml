@@ -475,7 +475,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">Eklentileri özelleştir</string>
   <string name="action_extensions_add">Eklenti ekle</string>
-  <string name="action_extensions_limit">Daha fazla eklenti için X\'i edinin</string>
   <string name="action_extensions_search">Daha fazla eklenti edin</string>
   <string name="action_extension_remove">Kaldır</string>
   <string name="extension_amazon">Amazon araması</string>
