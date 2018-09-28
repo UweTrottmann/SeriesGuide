@@ -10,13 +10,13 @@ import com.battlelancer.seriesguide.SgApp
 
 class ShowsPopularViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val dataSourceLiveData: LiveData<TraktPopularDataSource>
+    private val dataSourceLiveData: LiveData<ShowsPopularDataSource>
     val items: LiveData<PagedList<SearchResult>>
     val networkState: LiveData<NetworkState>
 
     init {
         val traktShows = SgApp.getServicesComponent(application).trakt().shows()
-        val sourceFactory = TraktPopularDataSourceFactory(application, traktShows)
+        val sourceFactory = ShowsPopularDataSourceFactory(application, traktShows)
 
         dataSourceLiveData = sourceFactory.dataSourceLiveData
 

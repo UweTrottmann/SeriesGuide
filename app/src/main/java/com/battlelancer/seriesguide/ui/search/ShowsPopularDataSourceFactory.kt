@@ -5,15 +5,15 @@ import android.arch.paging.DataSource
 import android.content.Context
 import com.uwetrottmann.trakt5.services.Shows
 
-class TraktPopularDataSourceFactory(
+class ShowsPopularDataSourceFactory(
         val context: Context,
         val traktShows: Shows
 ) : DataSource.Factory<Int, SearchResult>() {
 
-    val dataSourceLiveData = MutableLiveData<TraktPopularDataSource>()
+    val dataSourceLiveData = MutableLiveData<ShowsPopularDataSource>()
 
     override fun create(): DataSource<Int, SearchResult> {
-        val source = TraktPopularDataSource(context, traktShows)
+        val source = ShowsPopularDataSource(context, traktShows)
         dataSourceLiveData.postValue(source)
         return source
     }

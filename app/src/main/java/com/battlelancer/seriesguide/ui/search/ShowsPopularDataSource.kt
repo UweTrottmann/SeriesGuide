@@ -12,7 +12,7 @@ import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.services.Shows
 
-class TraktPopularDataSource(
+class ShowsPopularDataSource(
         private val context: Context,
         private val traktShows: Shows
 ) : PageKeyedDataSource<Int, SearchResult>() {
