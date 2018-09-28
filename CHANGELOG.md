@@ -9,6 +9,16 @@ Version 45
 ----------
 *(in development)*
 
+#### 45-beta2
+*(2018-09-28)*
+
+* 🔧 Popular shows is now an (almost) endless list.
+* 🔧 Display sync status (and error) for initial trakt sync step.
+* 🔨 Fix memory leak when downloading movie info and TMDb asks to try again later.
+* 🔨 Correctly back-off if syncing with trakt or Cloud failed.
+* 🔨 Allow removing extensions with a remote (menu buttons were not selectable).
+* 📝 Latest translations from crowdin.
+
 #### 45-beta1
 *(2018-09-21)*
 
