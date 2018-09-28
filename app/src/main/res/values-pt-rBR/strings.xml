@@ -91,7 +91,7 @@
   <string name="show_isnotalive">Finalizada</string>
   <string name="no_translation">Não há descrição traduzida para %1$s disponível em %2$s.</string>
   <string name="no_translation_title">Não traduzido</string>
-  <string name="no_spoilers">Alguns detalhes estão ocultos para evitar spoilers. Para desativar vá até as configurações.</string>
+  <string name="no_spoilers">Alguns detalhes estão ocultos para evitar spoilers. Para desativar, vá até as configurações.</string>
   <string name="format_source">Fonte: %s</string>
   <string name="format_last_edited">Editado pela última vez: %s</string>
   <!-- Date and Time -->
@@ -139,7 +139,7 @@
   <string name="action_shows_sort_title">Título</string>
   <string name="action_shows_sort_latest_episode">Último episódio</string>
   <string name="action_shows_sort_oldest_episode">Episódio mais antigo</string>
-  <string name="action_shows_sort_last_watched">Último visto</string>
+  <string name="action_shows_sort_last_watched">Último assistido</string>
   <string name="action_shows_sort_remaining">Episódios restantes</string>
   <string name="action_shows_sort_favorites">Favoritos primeiro</string>
   <string name="context_updateshow">Atualizar</string>
@@ -160,7 +160,7 @@
   <string name="norecent">Não há episódios recentes.</string>
   <string name="calendar_settings">Configurações do calendário</string>
   <string name="only_favorites">Somente séries favoritas</string>
-  <string name="calendar_only_collected">Apenas episódios coletados</string>
+  <string name="calendar_only_collected">Somente episódios coletados</string>
   <string name="pref_infinite_scrolling">Calendário infinito</string>
   <!-- Updating -->
   <string name="update_scheduled">Atualizando&#8230;</string>
@@ -181,7 +181,7 @@
     <item quantity="other">%d restantes</item>
   </plurals>
   <!-- Add show -->
-  <string name="checkin_searchhint">Digite o nome da série</string>
+  <string name="checkin_searchhint">Digite o título da série</string>
   <string name="add_empty">Nenhuma série aqui.</string>
   <string name="no_results">Sem resultados, tente palavras completas.</string>
   <string name="empty_show_search">Não encontrado em sua lista de séries</string>
@@ -241,7 +241,7 @@
   <string name="episodes_watched">%s assistidos</string>
   <string name="runtime_all_episodes">tempo de execução dos episódios assistidos</string>
   <string name="movies_on_watchlist">%s na lista de filmes a assistir</string>
-  <string name="runtime_movies_watchlist">Tempo de execução dos filmes na lista</string>
+  <string name="runtime_movies_watchlist">tempo de execução dos filmes a assistir</string>
   <plurals name="days_plural">
     <item quantity="one">%d dia</item>
     <item quantity="other">%d dias</item>
@@ -269,9 +269,9 @@
   <string name="hexagon_setup_incomplete">Não foi possível configurar o SeriesGuide Cloud.</string>
   <string name="hexagon_setup_fail_auth">Falha na verificação da conta do Google.</string>
   <string name="hexagon_remove_account">Remover conta</string>
-  <string name="hexagon_remove_account_success">Conta obliterada.</string>
+  <string name="hexagon_remove_account_success">Conta removida</string>
   <string name="hexagon_remove_account_failure">Não foi possível remover a conta.</string>
-  <string name="hexagon_remove_account_confirmation">Remover sua conta irá deletar todos as séries e filmes do SeriesGuide Cloud. Não se esqueça de removê-la de outros dispositivos conectados.</string>
+  <string name="hexagon_remove_account_confirmation">Remover sua conta irá deletar todas as séries, listas e filmes do SeriesGuide Cloud</string>
   <string name="hexagon_api_queued">Enviando ao SeriesGuide Cloud.</string>
   <string name="hexagon_signed_out">Desconectado do SeriesGuide Cloud.</string>
   <string name="hexagon_google_play_missing">Para usar o SeriesGuide Cloud, é necessário o Google Play Services.</string>
@@ -456,7 +456,7 @@
   <string name="dashclock_pref_upcoming_threshold">Mostrar próximos episódios&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">Só para quem desbloqueou o app</string>
-  <string name="action_upgrade">Desbloqueie todos os recursos</string>
+  <string name="action_upgrade">Desbloquear recursos</string>
   <string name="billing_action_subscribe">Inscrever</string>
   <string name="billing_action_manage_subscriptions">Gerenciar inscrições</string>
   <string name="billing_action_pass">Adquira o X Pass</string>
@@ -466,10 +466,10 @@
   <string name="upgrade_success">Obrigado por apoiar SeriesGuide! Você agora tem acesso a todos os recursos.</string>
   <string name="billing_learn_more">Por que pagar? Saiba Mais.</string>
   <string name="subscription_expired">Assinatura expirada</string>
-  <string name="subscription_expired_details">Sua assinatura das funcionalidades X expirou.</string>
+  <string name="subscription_expired_details">Sua assinatura do SeriesGuide expirou</string>
   <!-- Amazon In-App Billing -->
   <string name="subscription_not_signed_in">Entre com sua conta da Amazon!</string>
-  <string name="subscription_unavailable">A descrição não está disponível no momento.</string>
+  <string name="subscription_unavailable">A inscrição não está disponível no momento</string>
   <string name="subscription_failed">Compra não concluída.</string>
   <string name="pass_unavailable">X Pass não está disponível no momento.</string>
   <!-- Extensions -->
@@ -481,19 +481,19 @@
   <string name="extension_amazon">Pesquisar na Amazon</string>
   <string name="description_extension_amazon">Pesquisar na Amazon local</string>
   <string name="pref_amazon_domain">Site da Amazon</string>
-  <string name="extension_google_play">Pesquisar na Google Play</string>
-  <string name="description_extension_google_play">Pesquisar na Google Play Store</string>
+  <string name="extension_google_play">Pesquisar no Google Play</string>
+  <string name="description_extension_google_play">Pesquisar no Google Play Store</string>
   <string name="extension_youtube">Pesquisar no YouTube</string>
-  <string name="description_extension_youtube">Pesquisar no YouTube por vídeos</string>
-  <string name="description_extension_web_search">Pesquisar por sites e imagens</string>
+  <string name="description_extension_youtube">Pesquisar vídeos no YouTube</string>
+  <string name="description_extension_web_search">Pesquisar sites e imagens</string>
   <!-- People -->
   <string name="person_biography">Biografia</string>
   <!-- Feedback -->
   <string name="feedback_question_enjoy">Está gostando do SeriesGuide?</string>
   <string name="feedback_action_yes">Sim!</string>
-  <string name="feedback_action_notreally">Não realmente</string>
-  <string name="feedback_question_rate_google">Avaliá-lo no Google Play?</string>
-  <string name="feedback_question_rate_amazon">Avaliá-lo no Amazon?</string>
+  <string name="feedback_action_notreally">Não</string>
+  <string name="feedback_question_rate_google">Avaliar no Google Play?</string>
+  <string name="feedback_question_rate_amazon">Avaliar na Amazon?</string>
   <string name="feedback_question_feedback">Diga-me como melhorá-lo?</string>
   <string name="feedback_action_ok">OK, claro</string>
   <string name="feedback_action_nothanks">Não, obrigado</string>

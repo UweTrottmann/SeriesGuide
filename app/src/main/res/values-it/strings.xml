@@ -59,7 +59,7 @@
   <string name="share">Condividi</string>
   <string name="share_show">Condividi la serie</string>
   <string name="share_episode">Condividi episodio</string>
-  <string name="share_movie">Condividi il film</string>
+  <string name="share_movie">Condivi film</string>
   <string name="addtocalendar">Aggiungi al calendario</string>
   <string name="addtocalendar_failed">Impossibile creare un evento nel calendario.</string>
   <string name="links">Collegamenti</string>
@@ -207,7 +207,7 @@
   <string name="list_item_manage">Gestisci liste</string>
   <string name="list_item_remove">Rimuovi da lista</string>
   <string name="list_empty">Puoi aggiungere a questa lista serie, stagioni o episodi.</string>
-  <string name="action_lists_sort">Ordina le liste</string>
+  <string name="action_lists_sort">Ordina liste</string>
   <string name="action_lists_reorder">Riordina le liste</string>
   <string name="error_name_already_exists">Una lista con questo nome esiste già</string>
   <!-- Movies -->
@@ -230,9 +230,9 @@
   <string name="movie_crew">Squadra</string>
   <string name="action_movies_sort">Ordina film</string>
   <string name="action_movies_sort_title">Titolo</string>
-  <string name="action_movies_sort_release">Data di uscita</string>
+  <string name="action_movies_sort_release">Data rilascio</string>
   <!-- Statistics -->
-  <string name="statistics_failed">Impossibile calcolare le statistiche.</string>
+  <string name="statistics_failed">Impossibile calcolare le statistiche</string>
   <string name="statistics_shows">Serie TV</string>
   <string name="statistics_episodes">Episodi</string>
   <string name="statistics_movies">Film</string>
@@ -258,7 +258,7 @@
   <string name="feature_supported">Supportato</string>
   <string name="feature_not_supported">Non supportato</string>
   <string name="feature_history">Cronologia personale e degli amici</string>
-  <string name="feature_comments">Invia commenti</string>
+  <string name="feature_comments">Pubblica commento</string>
   <string name="feature_sync">Sincronizza</string>
   <!-- Hexagon -->
   <string name="hexagon_warning">Sperimentale</string>
@@ -434,7 +434,7 @@
   <string name="pref_ringtone">Suoneria</string>
   <string name="pref_vibrate">Vibrazione</string>
   <string name="pref_vibratesummary">Vibra alla visualizzazione di una notifica</string>
-  <string name="pref_notifications_treshold">Orario notifica</string>
+  <string name="pref_notifications_treshold">Quando notificare</string>
   <string name="pref_notifications_select_shows">Seleziona serie</string>
   <string name="pref_notifications_select_shows_summary">Serie con notifiche abilitate (%d)</string>
   <string name="pref_notification_channel_errors">Errori</string>
@@ -456,7 +456,7 @@
   <string name="dashclock_pref_upcoming_threshold">Mostra episodio entro&#8230;</string>
   <!-- Google In-App Billing -->
   <string name="onlyx">Solo per i sostenitori</string>
-  <string name="action_upgrade">Sblocca tutte le funzionalità</string>
+  <string name="action_upgrade">Sblocca tutte le funzioni</string>
   <string name="billing_action_subscribe">Abbonati</string>
   <string name="billing_action_manage_subscriptions">Gestisci abbonamenti</string>
   <string name="billing_action_pass">Ottieni X Pass</string>
@@ -468,13 +468,13 @@
   <string name="subscription_expired">Abbonamento scaduto</string>
   <string name="subscription_expired_details">Il tuo abbonamento alle funzioni X è scaduto.</string>
   <!-- Amazon In-App Billing -->
-  <string name="subscription_not_signed_in">Accedi al tuo account di Amazon!</string>
-  <string name="subscription_unavailable">La sottoscrizione non è al momento disponibile.</string>
-  <string name="subscription_failed">Acquisto non completato.</string>
-  <string name="pass_unavailable">X Pass non è al momento disponibile.</string>
+  <string name="subscription_not_signed_in">Accedi al tuo account Amazon</string>
+  <string name="subscription_unavailable">La sottoscrizione non è al momento disponibile</string>
+  <string name="subscription_failed">Acquisto non completato</string>
+  <string name="pass_unavailable">X Pass non è al momento disponibile</string>
   <!-- Extensions -->
   <string name="action_extensions_configure">Personalizza le estensioni</string>
-  <string name="action_extensions_add">Aggiungi un\'estensione</string>
+  <string name="action_extensions_add">Aggiungi estensione</string>
   <string name="action_extensions_limit">Acquista X per ottenere più estensioni</string>
   <string name="action_extensions_search">Ottieni più estensioni</string>
   <string name="action_extension_remove">Rimuovi</string>
@@ -492,8 +492,8 @@
   <string name="feedback_question_enjoy">Ti stai divertendo con SeriesGuide?</string>
   <string name="feedback_action_yes">Si!</string>
   <string name="feedback_action_notreally">Non proprio</string>
-  <string name="feedback_question_rate_google">Vuoi valutarlo su Google Play?</string>
-  <string name="feedback_question_rate_amazon">Vuoi valutarlo su Amazon?</string>
+  <string name="feedback_question_rate_google">Vuoi votarlo su Google Play?</string>
+  <string name="feedback_question_rate_amazon">Vuoi votarlo su Amazon?</string>
   <string name="feedback_question_feedback">Vuoi dirmi come migliorarlo?</string>
   <string name="feedback_action_ok">OK, sicuro</string>
   <string name="feedback_action_nothanks">No, grazie</string>
