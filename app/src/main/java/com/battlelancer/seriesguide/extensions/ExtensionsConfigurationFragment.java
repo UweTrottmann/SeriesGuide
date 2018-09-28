@@ -70,6 +70,8 @@ public class ExtensionsConfigurationFragment extends Fragment {
             enabledNames.add(to, extension);
             saveExtensions();
         });
+        // allow focusing menu buttons with a remote/d-pad
+        listView.setItemsCanFocus(true);
 
         return v;
     }
