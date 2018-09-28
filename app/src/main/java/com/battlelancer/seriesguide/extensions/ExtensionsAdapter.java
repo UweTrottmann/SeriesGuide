@@ -1,36 +1,31 @@
 package com.battlelancer.seriesguide.extensions;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.api.SeriesGuideExtension;
+import com.battlelancer.seriesguide.extensions.ExtensionManager.Extension;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
-import org.greenrobot.eventbus.EventBus;
 
 /**
- * Creates views for a list of {@link com.battlelancer.seriesguide.extensions.ExtensionManager.Extension}.
+ * Creates views for a list of {@link Extension}.
  */
-public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> {
+public class ExtensionsAdapter extends ArrayAdapter<Extension> {
 
-    public class ExtensionDisableRequestEvent {
-        public final int position;
+    public interface OnItemClickListener {
+        void onExtensionMenuButtonClick(View anchor, Extension extension, int position);
 
-        ExtensionDisableRequestEvent(int position) {
-            this.position = position;
-        }
+        void onAddExtensionClick(View anchor);
     }
 
     private static final int LAYOUT_EXTENSION = R.layout.item_extension;
@@ -39,12 +34,12 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
     private static final int VIEW_TYPE_EXTENSION = 0;
     private static final int VIEW_TYPE_ADD = 1;
 
-    private final LayoutInflater layoutInflater;
+    private final OnItemClickListener onItemClickListener;
     private final VectorDrawableCompat iconExtension;
 
-    ExtensionsAdapter(Context context) {
+    ExtensionsAdapter(Context context, OnItemClickListener onItemClickListener) {
         super(context, 0);
-        layoutInflater = LayoutInflater.from(context);
+        this.onItemClickListener = onItemClickListener;
         iconExtension = ViewTools.vectorIconActive(context,
                 context.getTheme(), R.drawable.ic_extension_black_24dp);
     }
@@ -71,7 +66,8 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
     public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
         if (getItemViewType(position) == VIEW_TYPE_ADD) {
             if (convertView == null) {
-                convertView = layoutInflater.inflate(LAYOUT_ADD, parent, false);
+                convertView = LayoutInflater.from(parent.getContext())
+                        .inflate(LAYOUT_ADD, parent, false);
             }
             // warn non-supporters that they only can add a few extensions
             boolean isAtLimit =
@@ -83,86 +79,27 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
             textViewAdd.setVisibility(isAtLimit ? View.GONE : View.VISIBLE);
             convertView.findViewById(R.id.textViewItemExtensionAddLimit)
                     .setVisibility(isAtLimit ? View.VISIBLE : View.GONE);
+            convertView
+                    .setOnClickListener(v -> onItemClickListener.onAddExtensionClick(textViewAdd));
             return convertView;
         }
 
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = layoutInflater.inflate(LAYOUT_EXTENSION, parent, false);
-            viewHolder = new ViewHolder(convertView);
+            convertView = LayoutInflater.from(parent.getContext())
+                    .inflate(LAYOUT_EXTENSION, parent, false);
+            viewHolder = new ViewHolder(convertView, onItemClickListener);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        final ExtensionManager.Extension extension = getItem(position);
-        if (extension == null) {
-            return convertView;
+        final Extension extension = getItem(position);
+        if (extension != null) {
+            viewHolder.bindTo(extension, iconExtension, position);
         }
-
-        viewHolder.description.setText(extension.description);
-
-        // title
-        viewHolder.title.setText(extension.label);
-
-        // icon
-        if (extension.icon != null) {
-            viewHolder.icon.setImageDrawable(extension.icon);
-        } else {
-            viewHolder.icon.setImageDrawable(iconExtension);
-        }
-
-        // overflow menu
-        viewHolder.settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-                popupMenu.getMenuInflater().inflate(R.menu.extension_menu, popupMenu.getMenu());
-                if (extension.settingsActivity == null) {
-                    MenuItem item = popupMenu.getMenu()
-                            .findItem(R.id.menu_action_extension_settings);
-                    item.setVisible(false);
-                    item.setEnabled(false);
-                }
-                popupMenu.setOnMenuItemClickListener(new OverflowItemClickListener(position));
-                popupMenu.show();
-            }
-        });
 
         return convertView;
-    }
-
-    private class OverflowItemClickListener implements PopupMenu.OnMenuItemClickListener {
-
-        private final int position;
-
-        public OverflowItemClickListener(int position) {
-            this.position = position;
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.menu_action_extension_settings:
-                    ExtensionManager.Extension extension = getItem(position);
-                    // launch settings activity
-                    if (extension != null) {
-                        Utils.tryStartActivity(getContext(), new Intent()
-                                        .setComponent(extension.settingsActivity)
-                                        .putExtra(SeriesGuideExtension.EXTRA_FROM_SERIESGUIDE_SETTINGS,
-                                                true),
-                                true
-                        );
-                    }
-                    ExtensionManager.get().clearActionsCache();
-                    return true;
-                case R.id.menu_action_extension_disable:
-                    EventBus.getDefault()
-                            .post(new ExtensionDisableRequestEvent(position));
-                    return true;
-            }
-            return false;
-        }
     }
 
     static class ViewHolder {
@@ -170,9 +107,26 @@ public class ExtensionsAdapter extends ArrayAdapter<ExtensionManager.Extension> 
         @BindView(R.id.textViewItemExtensionTitle) TextView title;
         @BindView(R.id.textViewItemExtensionDescription) TextView description;
         @BindView(R.id.imageViewItemExtensionSettings) ImageView settings;
+        @Nullable private Extension extension;
+        int position;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, OnItemClickListener onItemClickListener) {
             ButterKnife.bind(this, view);
+            settings.setOnClickListener(v -> onItemClickListener
+                    .onExtensionMenuButtonClick(settings, extension, position));
+        }
+
+        void bindTo(Extension extension, VectorDrawableCompat iconExtension, int position) {
+            this.extension = extension;
+            this.position = position;
+
+            title.setText(extension.label);
+            description.setText(extension.description);
+            if (extension.icon != null) {
+                icon.setImageDrawable(extension.icon);
+            } else {
+                icon.setImageDrawable(iconExtension);
+            }
         }
     }
 }
