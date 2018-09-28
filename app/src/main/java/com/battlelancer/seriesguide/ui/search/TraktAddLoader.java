@@ -13,17 +13,13 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.enums.Extended;
-import com.uwetrottmann.trakt5.services.Recommendations;
-import com.uwetrottmann.trakt5.services.Shows;
-import com.uwetrottmann.trakt5.services.Sync;
-import dagger.Lazy;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import javax.inject.Inject;
 import retrofit2.Response;
 
 /**
@@ -46,15 +42,13 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         }
     }
 
-    @Inject Lazy<Recommendations> traktRecommendations;
-    @Inject Lazy<Sync> traktSync;
-    @Inject Lazy<Shows> traktShows;
+    private final TraktV2 trakt;
     private final TraktShowsLink type;
 
     TraktAddLoader(Context context, TraktShowsLink type) {
         super(context);
         this.type = type;
-        SgApp.getServicesComponent(context).inject(this);
+        this.trakt = SgApp.getServicesComponent(context).trakt();
     }
 
     @Override
@@ -62,20 +56,9 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         List<Show> shows = new LinkedList<>();
         String action = null;
         try {
-            if (type == TraktShowsLink.POPULAR) {
-                action = "load popular shows";
-                Response<List<Show>> response = traktShows.get()
-                        .popular(null, 25, Extended.FULL)
-                        .execute();
-                if (response.isSuccessful()) {
-                    shows = response.body();
-                } else {
-                    SgTrakt.trackFailedRequest(getContext(), action, response);
-                    return buildResultGenericFailure();
-                }
-            } else if (type == TraktShowsLink.RECOMMENDED) {
+            if (type == TraktShowsLink.RECOMMENDED) {
                 action = "load recommended shows";
-                Response<List<Show>> response = traktRecommendations.get()
+                Response<List<Show>> response = trakt.recommendations()
                         .shows(Extended.FULL)
                         .execute();
                 if (response.isSuccessful()) {
@@ -92,17 +75,18 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                 Response<List<BaseShow>> response;
                 if (type == TraktShowsLink.WATCHED) {
                     action = "load watched shows";
-                    response = traktSync.get().watchedShows(Extended.NOSEASONS).execute();
+                    response = trakt.sync().watchedShows(Extended.NOSEASONS).execute();
                 } else if (type == TraktShowsLink.COLLECTION) {
                     action = "load show collection";
-                    response = traktSync.get().collectionShows(null).execute();
+                    response = trakt.sync().collectionShows(null).execute();
                 } else if (type == TraktShowsLink.WATCHLIST) {
                     action = "load show watchlist";
-                    response = traktSync.get().watchlistShows(Extended.FULL).execute();
+                    response = trakt.sync().watchlistShows(Extended.FULL).execute();
                 } else {
                     throw new IllegalArgumentException("Unknown type " + type);
                 }
                 if (response.isSuccessful()) {
+                    //noinspection ConstantConditions successful response bodies are never null
                     extractShows(response.body(), shows);
                 } else {
                     if (SgTrakt.isUnauthorized(getContext(), response)) {
@@ -121,7 +105,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
 
         // return empty list right away if there are no results
         if (shows == null || shows.size() == 0) {
-            return buildResultSuccess(new LinkedList<SearchResult>());
+            return buildResultSuccess(new LinkedList<>());
         }
 
         return buildResultSuccess(parseTraktShowsToSearchResults(getContext(), shows,
@@ -143,13 +127,13 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
     }
 
     private Result buildResultGenericFailure() {
-        return new Result(new LinkedList<SearchResult>(),
+        return new Result(new LinkedList<>(),
                 getContext().getString(R.string.api_error_generic,
                         getContext().getString(R.string.trakt)));
     }
 
     private Result buildResultFailure(@StringRes int errorResId) {
-        return new Result(new LinkedList<SearchResult>(), getContext(), errorResId);
+        return new Result(new LinkedList<>(), getContext(), errorResId);
     }
 
     /**

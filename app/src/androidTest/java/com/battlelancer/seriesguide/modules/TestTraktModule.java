@@ -5,7 +5,6 @@ import com.uwetrottmann.trakt5.services.Checkin;
 import com.uwetrottmann.trakt5.services.Comments;
 import com.uwetrottmann.trakt5.services.Episodes;
 import com.uwetrottmann.trakt5.services.Movies;
-import com.uwetrottmann.trakt5.services.Recommendations;
 import com.uwetrottmann.trakt5.services.Search;
 import com.uwetrottmann.trakt5.services.Shows;
 import com.uwetrottmann.trakt5.services.Sync;
@@ -35,11 +34,6 @@ public class TestTraktModule extends TraktModule {
 
     @Override
     Shows provideShows(TraktV2 trakt) {
-        return null;
-    }
-
-    @Override
-    Recommendations provideRecommendations(TraktV2 trakt) {
         return null;
     }
 
