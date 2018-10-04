@@ -321,18 +321,17 @@ public class SeriesGuideProvider extends ContentProvider {
     public Uri insert(@NonNull Uri uri, ContentValues values) {
         Uri newItemUri;
 
-        final SupportSQLiteDatabase db = SgRoomDatabase.getInstance(getContext())
-                .getOpenHelper().getWritableDatabase();
+        SgRoomDatabase room = SgRoomDatabase.getInstance(getContext());
         if (!applyingBatch()) {
-            db.beginTransaction();
+            room.beginTransaction();
             try {
-                newItemUri = insertInTransaction(db, uri, values, false);
-                db.setTransactionSuccessful();
+                newItemUri = insertInTransaction(room, uri, values, false);
+                room.setTransactionSuccessful();
             } finally {
-                db.endTransaction();
+                room.endTransaction();
             }
         } else {
-            newItemUri = insertInTransaction(db, uri, values, false);
+            newItemUri = insertInTransaction(room, uri, values, false);
         }
 
         if (newItemUri != null) {
@@ -348,24 +347,23 @@ public class SeriesGuideProvider extends ContentProvider {
         int numValues = values.length;
         boolean notifyChange = false;
 
-        final SupportSQLiteDatabase db = SgRoomDatabase.getInstance(getContext())
-                .getOpenHelper().getWritableDatabase();
-        db.beginTransaction();
+        SgRoomDatabase room = SgRoomDatabase.getInstance(getContext());
+        room.beginTransaction();
         try {
             for (int i = 0; i < numValues; i++) {
-                Uri result = insertInTransaction(db, uri, values[i], true);
+                Uri result = insertInTransaction(room, uri, values[i], true);
                 if (result != null) {
                     notifyChange = true;
                 }
-                db.yieldIfContendedSafely();
+                // do not yield as a pre-caution to not break Room invalidation tracker
+                // db.yieldIfContendedSafely();
             }
-            db.setTransactionSuccessful();
+            room.setTransactionSuccessful();
         } finally {
-            db.endTransaction();
+            room.endTransaction();
         }
 
         if (notifyChange) {
-            //noinspection ConstantConditions
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
@@ -377,13 +375,14 @@ public class SeriesGuideProvider extends ContentProvider {
      * backup files may contain duplicates. Handle them by making the last insert win (ON CONFLICT
      * REPLACE) for bulk inserts.
      */
-    private Uri insertInTransaction(SupportSQLiteDatabase db, Uri uri, ContentValues values,
+    private Uri insertInTransaction(SgRoomDatabase room, Uri uri, ContentValues values,
             boolean bulkInsert) {
         if (LOGV) {
             Timber.v("insert(uri=%s, values=%s)", uri, values.toString());
         }
         Uri notifyUri = null;
 
+        final SupportSQLiteDatabase db = room.getOpenHelper().getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case SHOWS: {
@@ -493,28 +492,25 @@ public class SeriesGuideProvider extends ContentProvider {
         }
         int count;
 
+        SgRoomDatabase room = SgRoomDatabase.getInstance(getContext());
         if (!applyingBatch()) {
-            final SupportSQLiteDatabase db = SgRoomDatabase.getInstance(getContext())
-                    .getOpenHelper().getWritableDatabase();
-            db.beginTransaction();
+            room.beginTransaction();
             try {
                 count = buildSelection(uri, sUriMatcher.match(uri))
                         .where(selection, selectionArgs)
-                        .update(db, values);
-                db.setTransactionSuccessful();
+                        .update(room.getOpenHelper().getWritableDatabase(), values);
+                room.setTransactionSuccessful();
             } finally {
-                db.endTransaction();
+                room.endTransaction();
             }
         } else {
-            database = SgRoomDatabase.getInstance(getContext())
-                    .getOpenHelper().getWritableDatabase();
+            database = room.getOpenHelper().getWritableDatabase();
             count = buildSelection(uri, sUriMatcher.match(uri))
                     .where(selection, selectionArgs)
                     .update(database, values);
         }
 
         if (count > 0) {
-            //noinspection ConstantConditions
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
@@ -531,28 +527,25 @@ public class SeriesGuideProvider extends ContentProvider {
         }
         int count;
 
+        SgRoomDatabase room = SgRoomDatabase.getInstance(getContext());
         if (!applyingBatch()) {
-            final SupportSQLiteDatabase db = SgRoomDatabase.getInstance(getContext())
-                    .getOpenHelper().getWritableDatabase();
-            db.beginTransaction();
+            room.beginTransaction();
             try {
                 count = buildSelection(uri, sUriMatcher.match(uri))
                         .where(selection, selectionArgs)
-                        .delete(db);
-                db.setTransactionSuccessful();
+                        .delete(room.getOpenHelper().getWritableDatabase());
+                room.setTransactionSuccessful();
             } finally {
-                db.endTransaction();
+                room.endTransaction();
             }
         } else {
-            database = SgRoomDatabase.getInstance(getContext())
-                    .getOpenHelper().getWritableDatabase();
+            database = room.getOpenHelper().getWritableDatabase();
             count = buildSelection(uri, sUriMatcher.match(uri))
                     .where(selection, selectionArgs)
                     .delete(database);
         }
 
         if (count > 0) {
-            //noinspection ConstantConditions
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
@@ -573,23 +566,25 @@ public class SeriesGuideProvider extends ContentProvider {
             return new ContentProviderResult[0];
         }
 
-        database = SgRoomDatabase.getInstance(getContext()).getOpenHelper().getWritableDatabase();
-        database.beginTransaction();
+        SgRoomDatabase room = SgRoomDatabase.getInstance(getContext());
+        database = room.getOpenHelper().getWritableDatabase();
+        room.beginTransaction();
         try {
             applyingBatch.set(true);
             final ContentProviderResult[] results = new ContentProviderResult[numOperations];
             for (int i = 0; i < numOperations; i++) {
                 final ContentProviderOperation operation = operations.get(i);
-                if (i > 0 && operation.isYieldAllowed()) {
-                    database.yieldIfContendedSafely();
-                }
+                // do not yield as a pre-caution to not break Room invalidation tracker
+//                if (i > 0 && operation.isYieldAllowed()) {
+//                    database.yieldIfContendedSafely();
+//                }
                 results[i] = operation.apply(this, results, i);
             }
-            database.setTransactionSuccessful();
+            room.setTransactionSuccessful();
             return results;
         } finally {
             applyingBatch.set(false);
-            database.endTransaction();
+            room.endTransaction();
         }
     }
 

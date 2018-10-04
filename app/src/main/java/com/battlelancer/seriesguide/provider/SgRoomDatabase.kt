@@ -74,6 +74,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
                                     MIGRATION_38_43
                             )
                             .addCallback(CALLBACK)
+                            .allowMainThreadQueries()
                             .build()
                     instance = newInstance
                     newInstance
