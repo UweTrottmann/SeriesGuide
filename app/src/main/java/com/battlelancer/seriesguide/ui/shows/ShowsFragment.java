@@ -131,6 +131,7 @@ public class ShowsFragment extends Fragment implements OnClickListener {
             boolean isEmpty = showItems == null || showItems.isEmpty();
             updateEmptyView(isEmpty);
         });
+        updateShowsQuery();
 
         // setup grid view
         // enable app bar scrolling out of view only on L or higher
@@ -196,8 +197,6 @@ public class ShowsFragment extends Fragment implements OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-
-        updateShowsQuery();
 
         // keep unwatched and upcoming shows from becoming stale
         schedulePeriodicDataRefresh(true);
