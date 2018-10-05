@@ -13,7 +13,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 
 class ShowsViewHolder(
     itemView: View,
-    onItemClickListener: ShowsRecyclerAdapter.OnItemClickListener,
+    onItemClickListener: ShowsAdapter.OnItemClickListener,
     private val drawableStar: VectorDrawableCompat,
     private val drawableStarZero: VectorDrawableCompat
 ) : RecyclerView.ViewHolder(itemView) {
@@ -27,7 +27,7 @@ class ShowsViewHolder(
     private val favorited: ImageView = itemView.findViewById(R.id.favoritedLabel)
     private val contextMenu: ImageView = itemView.findViewById(R.id.imageViewShowsContextMenu)
 
-    var showItem: ShowsRecyclerAdapter.ShowItem? = null
+    var showItem: ShowsAdapter.ShowItem? = null
 
     init {
         // item
@@ -50,7 +50,7 @@ class ShowsViewHolder(
         }
     }
 
-    fun bind(show: ShowsRecyclerAdapter.ShowItem, context: Context) {
+    fun bind(show: ShowsAdapter.ShowItem, context: Context) {
         showItem = show
 
         name.text = show.name
@@ -74,7 +74,7 @@ class ShowsViewHolder(
 
         fun create(
             parent: ViewGroup,
-            onItemClickListener: ShowsRecyclerAdapter.OnItemClickListener,
+            onItemClickListener: ShowsAdapter.OnItemClickListener,
             drawableStar: VectorDrawableCompat,
             drawableStarZero: VectorDrawableCompat
         ): ShowsViewHolder {

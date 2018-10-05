@@ -16,12 +16,12 @@ import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.ViewTools
 
-class ShowsRecyclerAdapter(
+class ShowsAdapter(
     private val context: Context,
     drawableTheme: Resources.Theme,
     private val onItemClickListener: OnItemClickListener
 ) :
-    ListAdapter<ShowsRecyclerAdapter.ShowItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+    ListAdapter<ShowsAdapter.ShowItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     private val drawableStar: VectorDrawableCompat = ViewTools.vectorIconActive(
         context, drawableTheme,

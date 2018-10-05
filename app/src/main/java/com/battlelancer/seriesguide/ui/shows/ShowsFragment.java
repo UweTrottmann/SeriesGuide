@@ -62,7 +62,7 @@ public class ShowsFragment extends Fragment implements OnClickListener {
     private boolean isFilterUpcoming;
     private boolean isFilterHidden;
 
-    private ShowsRecyclerAdapter adapter;
+    private ShowsAdapter adapter;
     private RecyclerView recyclerView;
     private Button emptyView;
     private Button emptyViewFilter;
@@ -122,8 +122,7 @@ public class ShowsFragment extends Fragment implements OnClickListener {
         getSortAndFilterSettings();
 
         // prepare view adapter
-        adapter = new ShowsRecyclerAdapter(getContext(), getActivity().getTheme(),
-                onItemClickListener);
+        adapter = new ShowsAdapter(getContext(), getActivity().getTheme(), onItemClickListener);
         recyclerView.setAdapter(adapter);
 
         model = ViewModelProviders.of(this).get(ShowsViewModel.class);
@@ -490,8 +489,8 @@ public class ShowsFragment extends Fragment implements OnClickListener {
                 SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
     }
 
-    private ShowsRecyclerAdapter.OnItemClickListener onItemClickListener
-            = new ShowsRecyclerAdapter.OnItemClickListener() {
+    private ShowsAdapter.OnItemClickListener onItemClickListener
+            = new ShowsAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(@NotNull View anchor, int showTvdbId) {
             // display overview for this show
@@ -505,8 +504,7 @@ public class ShowsFragment extends Fragment implements OnClickListener {
         }
 
         @Override
-        public void onItemMenuClick(@NotNull View view,
-                @NotNull ShowsRecyclerAdapter.ShowItem show) {
+        public void onItemMenuClick(@NotNull View view, @NotNull ShowsAdapter.ShowItem show) {
             PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
             popupMenu.inflate(R.menu.shows_popup_menu);
 

@@ -20,7 +20,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val queryString = MutableLiveData<String>()
     private val sgShowsLiveData: LiveData<List<SgShow>>
-    val showItemsLiveData = MediatorLiveData<List<ShowsRecyclerAdapter.ShowItem>>()
+    val showItemsLiveData = MediatorLiveData<List<ShowsAdapter.ShowItem>>()
 
     init {
         sgShowsLiveData = Transformations.switchMap(queryString) { queryString ->
@@ -32,7 +32,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
             // calculate actually displayed values on a background thread
             AsyncTask.THREAD_POOL_EXECUTOR.execute {
                 val mapped = sgShows?.map {
-                    ShowsRecyclerAdapter.ShowItem.map(it, getApplication())
+                    ShowsAdapter.ShowItem.map(it, getApplication())
                 }
                 showItemsLiveData.postValue(mapped)
             }
