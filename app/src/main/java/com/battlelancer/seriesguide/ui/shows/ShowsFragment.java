@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -143,8 +144,8 @@ public class ShowsFragment extends Fragment implements OnClickListener {
 //        }
 
         // hide floating action button when scrolling shows
-//        FloatingActionButton buttonAddShow = getActivity().findViewById(R.id.buttonShowsAdd);
-//        gridView.setOnScrollListener(new FabAbsListViewScrollDetector(buttonAddShow));
+        FloatingActionButton buttonAddShow = getActivity().findViewById(R.id.buttonShowsAdd);
+        recyclerView.addOnScrollListener(new FabRecyclerViewScrollDetector(buttonAddShow));
 
         // listen for some settings changes
         PreferenceManager
