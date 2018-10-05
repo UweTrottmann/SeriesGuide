@@ -3,18 +3,13 @@ package com.battlelancer.seriesguide.ui.shows
 import android.content.Context
 import android.support.graphics.drawable.VectorDrawableCompat
 import android.support.v7.widget.RecyclerView
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.model.SgShow
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
-import com.battlelancer.seriesguide.util.TextTools
-import com.battlelancer.seriesguide.util.TimeTools
 
 class ShowsViewHolder(
     itemView: View,
@@ -32,100 +27,47 @@ class ShowsViewHolder(
     private val favorited: ImageView = itemView.findViewById(R.id.favoritedLabel)
     private val contextMenu: ImageView = itemView.findViewById(R.id.imageViewShowsContextMenu)
 
-    var showTvdbId: Int = 0
-    var episodeTvdbId: Int = 0
-    var isFavorited: Boolean = false
-    var isHidden: Boolean = false
+    var showItem: ShowsRecyclerAdapter.ShowItem? = null
 
     init {
         // item
-        itemView.setOnClickListener {
-            onItemClickListener.onItemClick(it, showTvdbId)
+        itemView.setOnClickListener { view ->
+            showItem?.let {
+                onItemClickListener.onItemClick(view, it.showTvdbId)
+            }
         }
         // favorite star
-        favorited.setOnClickListener {
-            onItemClickListener.onItemFavoriteClick(showTvdbId, !isFavorited)
+        favorited.setOnClickListener { _ ->
+            showItem?.let {
+                onItemClickListener.onItemFavoriteClick(it.showTvdbId, !it.isFavorite)
+            }
         }
         // context menu
         contextMenu.setOnClickListener { v ->
-            onItemClickListener.onItemMenuClick(v, this)
+            showItem?.let {
+                onItemClickListener.onItemMenuClick(v, it)
+            }
         }
     }
 
-    fun bind(context: Context, show: SgShow) {
-        showTvdbId = show.tvdbId
-        isFavorited = show.favorite
+    fun bind(show: ShowsRecyclerAdapter.ShowItem, context: Context) {
+        showItem = show
 
-        name.text = show.title
+        name.text = show.name
+        timeAndNetwork.text = show.timeAndNetwork
+        episode.text = show.episode
+        episodeTime.text = show.episodeTime
 
-        setFavoriteState()
-        setRemainingCount(show.unwatchedCount)
+        remainingCount.text = show.remainingCount
+        remainingCount.visibility = if (show.remainingCount != null) View.VISIBLE else View.GONE
 
-        val weekDay = show.releaseWeekDay
-        val time = show.releaseTime
-        val timeZone = show.releaseTimeZone
-        val country = show.releaseCountry
-        val network = show.network
-        val releaseTimeShow = if (time != -1) {
-            TimeTools.getShowReleaseDateTime(context, time, weekDay, timeZone, country, network)
-        } else {
-            null
-        }
-
-        // next episode info
-        val fieldValue = show.nextText
-        if (TextUtils.isEmpty(fieldValue)) {
-            // display show status if there is no next episode
-            episodeTime.text = ShowTools.getStatus(context, show.status?.toInt() ?: -1)
-            episode.text = ""
-        } else {
-            episode.text = fieldValue
-
-            val releaseTimeEpisode = TimeTools.applyUserOffset(context, show.nextAirdateMs)
-            val displayExactDate = DisplaySettings.isDisplayExactDate(context)
-            val dateTime = if (displayExactDate) {
-                TimeTools.formatToLocalDateShort(context, releaseTimeEpisode)
-            } else {
-                TimeTools.formatToLocalRelativeTime(context, releaseTimeEpisode)
-            }
-            if (TimeTools.isSameWeekDay(releaseTimeEpisode, releaseTimeShow, weekDay)) {
-                // just display date
-                episodeTime.text = dateTime
-            } else {
-                // display date and explicitly day
-                episodeTime.text = context.getString(
-                    R.string.format_date_and_day,
-                    dateTime, TimeTools.formatToLocalDay(releaseTimeEpisode)
-                )
-            }
-        }
-
-        // network, day and time
-        timeAndNetwork.text = TextTools.networkAndTime(context, releaseTimeShow, weekDay, network)
+        val isFavorite = showItem!!.isFavorite
+        favorited.setImageDrawable(if (isFavorite) drawableStar else drawableStarZero)
+        favorited.contentDescription =
+                context.getString(if (isFavorite) R.string.context_unfavorite else R.string.context_favorite)
 
         // set poster
-        TvdbImageTools.loadShowPosterResizeCrop(poster.context, poster, show.poster)
-
-        // context menu
-        episodeTvdbId = show.nextEpisode?.toInt() ?: 0
-        isHidden = show.hidden
-    }
-
-    private fun setFavoriteState() {
-        favorited.setImageDrawable(if (isFavorited) drawableStar else drawableStarZero)
-        favorited.contentDescription = favorited.context
-            .getString(if (isFavorited) R.string.context_unfavorite else R.string.context_favorite)
-    }
-
-    private fun setRemainingCount(unwatched: Int) {
-        if (unwatched > 0) {
-            remainingCount.text = remainingCount.resources
-                .getQuantityString(R.plurals.remaining_episodes_plural, unwatched, unwatched)
-            remainingCount.visibility = View.VISIBLE
-        } else {
-            remainingCount.text = null
-            remainingCount.visibility = View.GONE
-        }
+        TvdbImageTools.loadShowPosterResizeCrop(context, poster, show.posterPath)
     }
 
     companion object {

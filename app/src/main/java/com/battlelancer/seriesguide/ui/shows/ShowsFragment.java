@@ -126,9 +126,9 @@ public class ShowsFragment extends Fragment implements OnClickListener {
         recyclerView.setAdapter(adapter);
 
         model = ViewModelProviders.of(this).get(ShowsViewModel.class);
-        model.getShows().observe(this, sgShows -> {
-            adapter.submitList(sgShows);
-            boolean isEmpty = sgShows == null || sgShows.isEmpty();
+        model.getShowItemsLiveData().observe(this, showItems -> {
+            adapter.submitList(showItems);
+            boolean isEmpty = showItems == null || showItems.isEmpty();
             updateEmptyView(isEmpty);
         });
 
@@ -505,22 +505,21 @@ public class ShowsFragment extends Fragment implements OnClickListener {
         }
 
         @Override
-        public void onItemMenuClick(@NotNull View view, @NotNull ShowsViewHolder viewHolder) {
+        public void onItemMenuClick(@NotNull View view,
+                @NotNull ShowsRecyclerAdapter.ShowItem show) {
             PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
             popupMenu.inflate(R.menu.shows_popup_menu);
 
             // show/hide some menu items depending on show properties
             Menu menu = popupMenu.getMenu();
-            menu.findItem(R.id.menu_action_shows_favorites_add)
-                    .setVisible(!viewHolder.isFavorited());
-            menu.findItem(R.id.menu_action_shows_favorites_remove)
-                    .setVisible(viewHolder.isFavorited());
-            menu.findItem(R.id.menu_action_shows_hide).setVisible(!viewHolder.isHidden());
-            menu.findItem(R.id.menu_action_shows_unhide).setVisible(viewHolder.isHidden());
+            menu.findItem(R.id.menu_action_shows_favorites_add).setVisible(!show.isFavorite());
+            menu.findItem(R.id.menu_action_shows_favorites_remove).setVisible(show.isFavorite());
+            menu.findItem(R.id.menu_action_shows_hide).setVisible(!show.isHidden());
+            menu.findItem(R.id.menu_action_shows_unhide).setVisible(show.isHidden());
 
             popupMenu.setOnMenuItemClickListener(
                     new ShowMenuItemClickListener(getContext(), getFragmentManager(),
-                            viewHolder.getShowTvdbId(), viewHolder.getEpisodeTvdbId(), TAG));
+                            show.getShowTvdbId(), show.getEpisodeTvdbId(), TAG));
             popupMenu.show();
         }
 

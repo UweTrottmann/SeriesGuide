@@ -3,9 +3,11 @@ package com.battlelancer.seriesguide.ui.shows
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import android.arch.persistence.db.SimpleSQLiteQuery
+import android.os.AsyncTask
 import android.text.format.DateUtils
 import com.battlelancer.seriesguide.model.SgShow
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
@@ -17,14 +19,23 @@ import com.battlelancer.seriesguide.util.TimeTools
 class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val queryString = MutableLiveData<String>()
-    val shows: LiveData<List<SgShow>>
+    private val sgShowsLiveData: LiveData<List<SgShow>>
+    val showItemsLiveData = MediatorLiveData<List<ShowsRecyclerAdapter.ShowItem>>()
 
     init {
-        shows = Transformations.switchMap(
-            queryString
-        ) { queryString ->
+        sgShowsLiveData = Transformations.switchMap(queryString) { queryString ->
             SgRoomDatabase.getInstance(getApplication()).showHelper()
                 .queryShows(SimpleSQLiteQuery(queryString, null))
+        }
+
+        showItemsLiveData.addSource(sgShowsLiveData) { sgShows ->
+            // calculate actually displayed values on a background thread
+            AsyncTask.THREAD_POOL_EXECUTOR.execute {
+                val mapped = sgShows?.map {
+                    ShowsRecyclerAdapter.ShowItem.map(it, getApplication())
+                }
+                showItemsLiveData.postValue(mapped)
+            }
         }
     }
 
