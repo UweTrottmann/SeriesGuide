@@ -13,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -110,8 +111,19 @@ public class ShowsFragment extends Fragment implements OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new AutoGridLayoutManager(getContext(),
-                R.dimen.showgrid_columnWidth, 1, 1));
+        AutoGridLayoutManager layoutManager = new AutoGridLayoutManager(getContext(),
+                R.dimen.showgrid_columnWidth, 1, 1);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (adapter.getItemViewType(position) == ShowsAdapter.VIEW_TYPE_FIRST_RUN) {
+                    return layoutManager.getSpanCount();
+                } else {
+                    return 1;
+                }
+            }
+        });
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     @Override
@@ -123,6 +135,9 @@ public class ShowsFragment extends Fragment implements OnClickListener {
 
         // prepare view adapter
         adapter = new ShowsAdapter(getContext(), getActivity().getTheme(), onItemClickListener);
+        if (!FirstRunView.hasSeenFirstRunFragment(getContext())) {
+            adapter.setDisplayFirstRunHeader(true);
+        }
         recyclerView.setAdapter(adapter);
 
         model = ViewModelProviders.of(this).get(ShowsViewModel.class);
@@ -132,15 +147,6 @@ public class ShowsFragment extends Fragment implements OnClickListener {
             updateEmptyView(isEmpty);
         });
         updateShowsQuery();
-
-        // setup grid view
-        // enable app bar scrolling out of view only on L or higher
-//        ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
-//        if (!FirstRunView.hasSeenFirstRunFragment(getContext())) {
-//            FirstRunView headerView = (FirstRunView) getActivity().getLayoutInflater()
-//                    .inflate(R.layout.item_first_run, gridView, false);
-//            gridView.addHeaderView(headerView);
-//        }
 
         // hide floating action button when scrolling shows
         FloatingActionButton buttonAddShow = getActivity().findViewById(R.id.buttonShowsAdd);
@@ -439,10 +445,9 @@ public class ShowsFragment extends Fragment implements OnClickListener {
                 break;
             }
             case FirstRunView.ButtonType.DISMISS: {
-//                if (gridView != null) {
-//                    gridView.removeHeaderView(event.firstRunView);
-//                    Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Dismiss");
-//                }
+                adapter.setDisplayFirstRunHeader(false);
+                model.reRunQuery();
+                Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Dismiss");
                 break;
             }
         }

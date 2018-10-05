@@ -40,19 +40,51 @@ class ShowsAdapter(
         fun onItemFavoriteClick(showTvdbId: Int, isFavorite: Boolean)
     }
 
+    var displayFirstRunHeader: Boolean = false
+
+    override fun submitList(list: MutableList<ShowItem>?) {
+        if (displayFirstRunHeader) {
+            val modifiedList = list ?: mutableListOf()
+            modifiedList.add(0, ShowItem.header())
+            super.submitList(modifiedList)
+        } else {
+            super.submitList(list)
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (getItem(position).isHeader) {
+            VIEW_TYPE_FIRST_RUN
+        } else {
+            VIEW_TYPE_SHOW_ITEM
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ShowsViewHolder.create(parent, onItemClickListener, drawableStar, drawableStarZero)
+        return when (viewType) {
+            VIEW_TYPE_FIRST_RUN -> FirstRunViewHolder.create(parent)
+            VIEW_TYPE_SHOW_ITEM -> ShowsViewHolder.create(
+                parent,
+                onItemClickListener,
+                drawableStar,
+                drawableStarZero
+            )
+            else -> throw IllegalArgumentException("Unknown view type $viewType")
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is ShowsViewHolder) {
-            holder.bind(getItem(position), context)
-        } else {
-            throw IllegalArgumentException("Unknown view holder type")
+        when (holder) {
+            is FirstRunViewHolder -> return // do nothing
+            is ShowsViewHolder -> holder.bind(getItem(position), context)
+            else -> throw IllegalArgumentException("Unknown view holder type")
         }
     }
 
     companion object {
+        const val VIEW_TYPE_FIRST_RUN = 1
+        const val VIEW_TYPE_SHOW_ITEM = 2
+
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ShowItem>() {
             override fun areItemsTheSame(old: ShowItem, new: ShowItem): Boolean =
                 old.showTvdbId == new.showTvdbId
@@ -73,10 +105,27 @@ class ShowsAdapter(
         val episode: String,
         val episodeTime: String?,
         val remainingCount: String?,
-        val posterPath: String?
+        val posterPath: String?,
+        val isHeader: Boolean
     ) {
 
         companion object {
+            fun header(): ShowItem {
+                return ShowItem(
+                    0,
+                    0,
+                    false,
+                    false,
+                    "",
+                    "",
+                    "",
+                    null,
+                    null,
+                    null,
+                    true
+                )
+            }
+
             fun map(sgShow: SgShow, context: Context): ShowItem {
                 val episodeTvdbId = sgShow.nextEpisode?.toIntOrNull() ?: 0
 
@@ -156,7 +205,8 @@ class ShowsAdapter(
                     episode,
                     episodeTime,
                     remainingCount,
-                    sgShow.poster
+                    sgShow.poster,
+                    false
                 )
             }
         }
