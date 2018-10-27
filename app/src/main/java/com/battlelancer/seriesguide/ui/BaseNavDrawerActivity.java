@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.NavigationView;
@@ -189,12 +188,9 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         navigationView.setItemBackgroundResource(Utils.resolveAttributeToResourceId(getTheme(),
                 R.attr.sgActivatedItemBackgroundDrawer));
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                        onNavItemClick(menuItem.getItemId());
-                        return false;
-                    }
+                menuItem -> {
+                    onNavItemClick(menuItem.getItemId());
+                    return false;
                 });
 
         if (BuildConfig.DEBUG) {
@@ -205,42 +201,22 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
             ButtonAction buttonClearTraktRefreshToken = new ButtonAction(
                     "Clear trakt refresh token",
-                    new ButtonAction.Listener() {
-                        @Override
-                        public void onClick() {
-                            TraktOAuthSettings.storeRefreshData(getApplicationContext(),
-                                    "", 3600 /* 1 hour */);
-                        }
-                    });
+                    () -> TraktOAuthSettings.storeRefreshData(getApplicationContext(),
+                            "", 3600 /* 1 hour */));
 
             ButtonAction buttonInvalidateTraktAccessToken = new ButtonAction(
                     "Invalidate trakt access token",
-                    new ButtonAction.Listener() {
-                        @Override
-                        public void onClick() {
-                            TraktCredentials.get(getApplicationContext())
-                                    .storeAccessToken("invalid-token");
-                        }
-                    });
+                    () -> TraktCredentials.get(getApplicationContext())
+                            .storeAccessToken("invalid-token"));
 
             ButtonAction buttonInvalidateTraktRefreshToken = new ButtonAction(
                     "Invalidate trakt refresh token",
-                    new ButtonAction.Listener() {
-                        @Override
-                        public void onClick() {
-                            TraktOAuthSettings.storeRefreshData(getApplicationContext(),
-                                    "invalid-token", 3600 /* 1 hour */);
-                        }
-                    });
+                    () -> TraktOAuthSettings.storeRefreshData(getApplicationContext(),
+                            "invalid-token", 3600 /* 1 hour */));
 
             ButtonAction buttonTriggerJobProcessor = new ButtonAction(
                     "Schedule job processing",
-                    new ButtonAction.Listener() {
-                        @Override
-                        public void onClick() {
-                            SgSyncAdapter.requestSyncJobsImmediate(getApplicationContext());
-                        }
-                    }
+                    () -> SgSyncAdapter.requestSyncJobsImmediate(getApplicationContext())
             );
 
             debugView.modules(
@@ -347,12 +323,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         // already displaying correct screen
         if (launchIntent != null) {
             final Intent finalLaunchIntent = launchIntent;
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    goToNavDrawerItem(finalLaunchIntent);
-                }
-            }, NAVDRAWER_CLOSE_DELAY);
+            handler.postDelayed(() -> goToNavDrawerItem(finalLaunchIntent), NAVDRAWER_CLOSE_DELAY);
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -445,14 +416,11 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         }
     }
 
-    private View.OnClickListener accountClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (v.getId() == R.id.containerDrawerAccountCloud) {
-                onNavItemClick(NAV_ITEM_ACCOUNT_CLOUD_ID);
-            } else if (v.getId() == R.id.containerDrawerAccountTrakt) {
-                onNavItemClick(NAV_ITEM_ACCOUNT_TRAKT_ID);
-            }
+    private View.OnClickListener accountClickListener = v -> {
+        if (v.getId() == R.id.containerDrawerAccountCloud) {
+            onNavItemClick(NAV_ITEM_ACCOUNT_CLOUD_ID);
+        } else if (v.getId() == R.id.containerDrawerAccountTrakt) {
+            onNavItemClick(NAV_ITEM_ACCOUNT_TRAKT_ID);
         }
     };
 }
