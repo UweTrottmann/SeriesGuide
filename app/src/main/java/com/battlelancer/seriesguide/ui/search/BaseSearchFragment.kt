@@ -5,10 +5,7 @@ import android.database.Cursor
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewCompat
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.GridView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -17,7 +14,7 @@ import com.battlelancer.seriesguide.ui.SearchActivity
 import com.uwetrottmann.androidutils.AndroidUtils
 import org.greenrobot.eventbus.EventBus
 
-abstract class BaseSearchFragment : Fragment(), AdapterView.OnItemClickListener {
+abstract class BaseSearchFragment : Fragment() {
 
     @BindView(R.id.textViewSearchEmpty)
     lateinit var emptyView: View
@@ -45,11 +42,6 @@ abstract class BaseSearchFragment : Fragment(), AdapterView.OnItemClickListener 
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_search, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -57,7 +49,6 @@ abstract class BaseSearchFragment : Fragment(), AdapterView.OnItemClickListener 
 
         // enable app bar scrolling out of view only on L or higher
         ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher())
-        gridView.onItemClickListener = this
 
         emptyView.visibility = View.GONE
     }

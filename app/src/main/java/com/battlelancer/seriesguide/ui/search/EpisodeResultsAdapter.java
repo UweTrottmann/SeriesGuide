@@ -26,8 +26,11 @@ import com.battlelancer.seriesguide.util.ViewTools;
  */
 class EpisodeResultsAdapter extends CursorAdapter {
 
-    EpisodeResultsAdapter(Context context) {
+    private final OnItemClickListener onItemClickListener;
+
+    EpisodeResultsAdapter(Context context, OnItemClickListener onItemClickListener) {
         super(context, null, 0);
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -35,7 +38,7 @@ class EpisodeResultsAdapter extends CursorAdapter {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_search_result, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view, onItemClickListener);
         view.setTag(viewHolder);
 
         return view;
@@ -44,6 +47,8 @@ class EpisodeResultsAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
+
+        viewHolder.episodeTvdbId = mCursor.getInt(EpisodeSearchQuery._ID);
 
         viewHolder.showTitle.setText(mCursor.getString(EpisodeSearchQuery.SHOW_TITLE));
         Resources.Theme theme = mContext.getTheme();
@@ -73,6 +78,10 @@ class EpisodeResultsAdapter extends CursorAdapter {
                 TvdbImageTools.smallSizeUrl(cursor.getString(EpisodeSearchQuery.SHOW_POSTER)));
     }
 
+    interface OnItemClickListener {
+        void onItemClick(View anchor, int episodeTvdbId);
+    }
+
     static class ViewHolder {
 
         @BindView(R.id.textViewSearchShow) TextView showTitle;
@@ -81,8 +90,12 @@ class EpisodeResultsAdapter extends CursorAdapter {
         @BindView(R.id.imageViewSearchWatched) ImageView watchedStatus;
         @BindView(R.id.imageViewSearchPoster) ImageView poster;
 
-        public ViewHolder(View itemView) {
+        int episodeTvdbId;
+
+        public ViewHolder(View itemView, OnItemClickListener onItemClickListener) {
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(
+                    view -> onItemClickListener.onItemClick(view, episodeTvdbId));
         }
     }
 }

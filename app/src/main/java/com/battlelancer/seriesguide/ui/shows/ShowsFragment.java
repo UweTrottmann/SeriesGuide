@@ -1,21 +1,20 @@
 package com.battlelancer.seriesguide.ui.shows;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,37 +23,34 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings.ShowsSortOrder;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
+import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager;
+import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings.ShowsSortOrder;
 import com.battlelancer.seriesguide.util.TabClickEvent;
-import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Displays the list of shows in a users local library with sorting and filtering abilities. The
  * main view of the app.
  */
-public class ShowsFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener, OnClickListener {
+public class ShowsFragment extends Fragment implements OnClickListener {
 
     private static final String TAG = "Shows";
     private static final String TAG_FIRST_RUN = "First Run";
@@ -68,11 +64,12 @@ public class ShowsFragment extends Fragment implements
     private boolean isFilterHidden;
 
     private ShowsAdapter adapter;
-    private HeaderGridView gridView;
+    private RecyclerView recyclerView;
     private Button emptyView;
     private Button emptyViewFilter;
 
     private Handler handler;
+    private ShowsViewModel model;
 
     public static ShowsFragment newInstance() {
         return new ShowsFragment();
@@ -83,42 +80,50 @@ public class ShowsFragment extends Fragment implements
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_shows, container, false);
 
-        gridView = v.findViewById(android.R.id.list);
+        recyclerView = v.findViewById(R.id.recyclerViewShows);
         emptyView = v.findViewById(R.id.emptyViewShows);
         ViewTools.setVectorIconTop(getActivity().getTheme(), emptyView,
                 R.drawable.ic_add_white_24dp);
-        emptyView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityAddShows();
-            }
-        });
+        emptyView.setOnClickListener(view -> startActivityAddShows());
         emptyViewFilter = v.findViewById(R.id.emptyViewShowsFilter);
         ViewTools.setVectorIconTop(getActivity().getTheme(), emptyViewFilter,
                 R.drawable.ic_filter_white_24dp);
-        emptyViewFilter.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isFilterFavorites = isFilterUnwatched = isFilterUpcoming = isFilterHidden
-                        = false;
+        emptyViewFilter.setOnClickListener(view -> {
+            isFilterFavorites = isFilterUnwatched = isFilterUpcoming = isFilterHidden = false;
 
-                // already start loading, do not need to wait on saving prefs
-                getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null,
-                        ShowsFragment.this);
+            // already start loading, do not need to wait on saving prefs
+            updateShowsQuery();
 
-                PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                        .putBoolean(ShowsDistillationSettings.KEY_FILTER_FAVORITES, false)
-                        .putBoolean(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, false)
-                        .putBoolean(ShowsDistillationSettings.KEY_FILTER_UPCOMING, false)
-                        .putBoolean(ShowsDistillationSettings.KEY_FILTER_HIDDEN, false)
-                        .apply();
+            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                    .putBoolean(ShowsDistillationSettings.KEY_FILTER_FAVORITES, false)
+                    .putBoolean(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, false)
+                    .putBoolean(ShowsDistillationSettings.KEY_FILTER_UPCOMING, false)
+                    .putBoolean(ShowsDistillationSettings.KEY_FILTER_HIDDEN, false)
+                    .apply();
 
-                // refresh filter menu check box states
-                getActivity().invalidateOptionsMenu();
-            }
+            // refresh filter menu check box states
+            getActivity().invalidateOptionsMenu();
         });
 
         return v;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        recyclerView.setHasFixedSize(true);
+        AutoGridLayoutManager layoutManager = new AutoGridLayoutManager(getContext(),
+                R.dimen.showgrid_columnWidth, 1, 1);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (adapter.getItemViewType(position) == ShowsAdapter.VIEW_TYPE_FIRST_RUN) {
+                    return layoutManager.getSpanCount();
+                } else {
+                    return 1;
+                }
+            }
+        });
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     @Override
@@ -129,22 +134,23 @@ public class ShowsFragment extends Fragment implements
         getSortAndFilterSettings();
 
         // prepare view adapter
-        adapter = new ShowsAdapter(getActivity(), onShowMenuClickListener);
-
-        // setup grid view
-        // enable app bar scrolling out of view only on L or higher
-        ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
+        adapter = new ShowsAdapter(getContext(), getActivity().getTheme(), onItemClickListener);
         if (!FirstRunView.hasSeenFirstRunFragment(getContext())) {
-            FirstRunView headerView = (FirstRunView) getActivity().getLayoutInflater()
-                    .inflate(R.layout.item_first_run, gridView, false);
-            gridView.addHeaderView(headerView);
+            adapter.setDisplayFirstRunHeader(true);
         }
-        gridView.setAdapter(adapter);
-        gridView.setOnItemClickListener(this);
+        recyclerView.setAdapter(adapter);
+
+        model = ViewModelProviders.of(this).get(ShowsViewModel.class);
+        model.getShowItemsLiveData().observe(this, showItems -> {
+            adapter.submitList(showItems);
+            boolean isEmpty = showItems == null || showItems.isEmpty();
+            updateEmptyView(isEmpty);
+        });
+        updateShowsQuery();
 
         // hide floating action button when scrolling shows
         FloatingActionButton buttonAddShow = getActivity().findViewById(R.id.buttonShowsAdd);
-        gridView.setOnScrollListener(new FabAbsListViewScrollDetector(buttonAddShow));
+        recyclerView.addOnScrollListener(new FabRecyclerViewScrollDetector(buttonAddShow));
 
         // listen for some settings changes
         PreferenceManager
@@ -152,6 +158,12 @@ public class ShowsFragment extends Fragment implements
                 .registerOnSharedPreferenceChangeListener(onPreferenceChangeListener);
 
         setHasOptionsMenu(true);
+    }
+
+    private void updateShowsQuery() {
+        model.updateQuery(isFilterFavorites, isFilterUnwatched, isFilterUpcoming, isFilterHidden,
+                ShowsDistillationSettings.getSortQuery(sortOrderId, isSortFavoritesFirst,
+                        isSortIgnoreArticles));
     }
 
     private void getSortAndFilterSettings() {
@@ -165,26 +177,19 @@ public class ShowsFragment extends Fragment implements
         isSortIgnoreArticles = DisplaySettings.isSortOrderIgnoringArticles(getActivity());
     }
 
-    private void updateEmptyView() {
-        if (getView() == null) {
-            return;
-        }
-
-        View oldEmptyView = gridView.getEmptyView();
-
-        View emptyView;
-        if (isFilterFavorites || isFilterUnwatched || isFilterUpcoming || isFilterHidden) {
-            emptyView = emptyViewFilter;
+    private void updateEmptyView(boolean isEmpty) {
+        recyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        if (isEmpty) {
+            if (isFilterFavorites || isFilterUnwatched || isFilterUpcoming || isFilterHidden) {
+                emptyViewFilter.setVisibility(View.VISIBLE);
+                emptyView.setVisibility(View.GONE);
+            } else {
+                emptyView.setVisibility(View.VISIBLE);
+                emptyViewFilter.setVisibility(View.GONE);
+            }
         } else {
-            emptyView = this.emptyView;
-        }
-
-        if (oldEmptyView != null) {
-            oldEmptyView.setVisibility(View.GONE);
-        }
-
-        if (emptyView != null) {
-            gridView.setEmptyView(emptyView);
+            emptyView.setVisibility(View.GONE);
+            emptyViewFilter.setVisibility(View.GONE);
         }
     }
 
@@ -199,16 +204,8 @@ public class ShowsFragment extends Fragment implements
     public void onResume() {
         super.onResume();
 
-        boolean isLoaderExists = getLoaderManager().getLoader(ShowsActivity.SHOWS_LOADER_ID)
-                != null;
-        // create new loader or re-attach
-        // call is necessary to keep scroll position on config change
-        getLoaderManager().initLoader(ShowsActivity.SHOWS_LOADER_ID, null, this);
-        if (isLoaderExists) {
-            // if re-attached to existing loader, restart it to
-            // keep unwatched and upcoming shows from becoming stale
-            getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null, this);
-        }
+        // keep unwatched and upcoming shows from becoming stale
+        schedulePeriodicDataRefresh(true);
     }
 
     @Override
@@ -322,7 +319,7 @@ public class ShowsFragment extends Fragment implements
             isFilterHidden = false;
 
             // already start loading, do not need to wait on saving prefs
-            getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null, this);
+            updateShowsQuery();
 
             // update menu item state, then save at last
             PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
@@ -406,7 +403,7 @@ public class ShowsFragment extends Fragment implements
 
     private void changeSortOrFilter(String key, boolean state) {
         // already start loading, do not need to wait on saving prefs
-        getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null, this);
+        updateShowsQuery();
 
         // save new setting
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
@@ -418,7 +415,7 @@ public class ShowsFragment extends Fragment implements
 
     private void changeSort() {
         // already start loading, do not need to wait on saving prefs
-        getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null, this);
+        updateShowsQuery();
 
         // save new sort order to preferences
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
@@ -448,10 +445,9 @@ public class ShowsFragment extends Fragment implements
                 break;
             }
             case FirstRunView.ButtonType.DISMISS: {
-                if (gridView != null) {
-                    gridView.removeHeaderView(event.firstRunView);
-                    Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Dismiss");
-                }
+                adapter.setDisplayFirstRunHeader(false);
+                model.reRunQuery();
+                Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Dismiss");
                 break;
             }
         }
@@ -460,109 +456,13 @@ public class ShowsFragment extends Fragment implements
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventTabClick(TabClickEvent event) {
         if (event.position == ShowsActivity.InitBundle.INDEX_TAB_SHOWS) {
-            gridView.smoothScrollToPosition(0);
+            recyclerView.smoothScrollToPosition(0);
         }
     }
 
     @Override
     public void onClick(View v) {
         getActivity().openContextMenu(v);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // display overview for this show
-        Intent intent = OverviewActivity.intentShow(getContext(), (int) id);
-        ActivityCompat.startActivity(getActivity(), intent,
-                ActivityOptionsCompat
-                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
-                        .toBundle()
-        );
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        StringBuilder selection = new StringBuilder();
-
-        // create temporary copies
-        final boolean isFilterFavorites = this.isFilterFavorites;
-        final boolean isFilterUnwatched = this.isFilterUnwatched;
-        final boolean isFilterUpcoming = this.isFilterUpcoming;
-        final boolean isFilterHidden = this.isFilterHidden;
-
-        // restrict to favorites?
-        if (isFilterFavorites) {
-            selection.append(Shows.FAVORITE).append("=1");
-        }
-
-        final long timeInAnHour = TimeTools.getCurrentTime(getContext()) + DateUtils.HOUR_IN_MILLIS;
-
-        // restrict to shows with a next episode?
-        if (isFilterUnwatched) {
-            if (selection.length() != 0) {
-                selection.append(" AND ");
-            }
-            selection.append(Shows.SELECTION_WITH_RELEASED_NEXT_EPISODE);
-
-            // exclude shows with upcoming next episode
-            if (!isFilterUpcoming) {
-                selection.append(" AND ")
-                        .append(Shows.NEXTAIRDATEMS).append("<=")
-                        .append(timeInAnHour);
-            }
-        }
-        // restrict to shows with an upcoming (yet to air) next episode?
-        if (isFilterUpcoming) {
-            if (selection.length() != 0) {
-                selection.append(" AND ");
-            }
-            // Display shows upcoming within <limit> days + 1 hour
-            int upcomingLimitInDays = AdvancedSettings.getUpcomingLimitInDays(getActivity());
-            long latestAirtime = timeInAnHour
-                    + upcomingLimitInDays * DateUtils.DAY_IN_MILLIS;
-
-            selection.append(Shows.NEXTAIRDATEMS).append("<=").append(latestAirtime);
-
-            // exclude shows with no upcoming next episode if not filtered for unwatched, too
-            if (!isFilterUnwatched) {
-                selection.append(" AND ")
-                        .append(Shows.NEXTAIRDATEMS).append(">=")
-                        .append(timeInAnHour);
-            }
-        }
-
-        // special: if hidden filter is disabled, exclude hidden shows
-        if (selection.length() != 0) {
-            selection.append(" AND ");
-        }
-        selection.append(Shows.HIDDEN).append(isFilterHidden ? "=1" : "=0");
-
-        // keep unwatched and upcoming shows from becoming stale
-        schedulePeriodicDataRefresh(true);
-
-        return new CursorLoader(getActivity(), Shows.CONTENT_URI, ShowsAdapter.Query.PROJECTION,
-                selection.toString(), null,
-                ShowsDistillationSettings.getSortQuery(sortOrderId, isSortFavoritesFirst,
-                        isSortIgnoreArticles)
-        );
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        // Swap the new cursor in. (The framework will take care of closing the
-        // old cursor once we return.)
-        adapter.swapCursor(data);
-
-        // prepare an updated empty view
-        updateEmptyView();
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> arg0) {
-        // This is called when the last Cursor provided to onLoadFinished()
-        // above is about to be closed. We need to make sure we are no
-        // longer using it.
-        adapter.swapCursor(null);
     }
 
     /**
@@ -585,10 +485,7 @@ public class ShowsFragment extends Fragment implements
     private Runnable dataRefreshRunnable = new Runnable() {
         @Override
         public void run() {
-            if (isAdded()) {
-                getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null,
-                        ShowsFragment.this);
-            }
+            model.reRunQuery();
         }
     };
 
@@ -597,46 +494,51 @@ public class ShowsFragment extends Fragment implements
                 SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
     }
 
-    private BaseShowsAdapter.OnItemClickListener onShowMenuClickListener
-            = new BaseShowsAdapter.OnItemClickListener() {
+    private ShowsAdapter.OnItemClickListener onItemClickListener
+            = new ShowsAdapter.OnItemClickListener() {
         @Override
-        public void onClick(View view, BaseShowsAdapter.ShowViewHolder viewHolder) {
+        public void onItemClick(@NotNull View anchor, int showTvdbId) {
+            // display overview for this show
+            Intent intent = OverviewActivity.intentShow(getContext(), showTvdbId);
+            ActivityCompat.startActivity(getContext(), intent,
+                    ActivityOptionsCompat
+                            .makeScaleUpAnimation(anchor, 0, 0, anchor.getWidth(),
+                                    anchor.getHeight())
+                            .toBundle()
+            );
+        }
+
+        @Override
+        public void onItemMenuClick(@NotNull View view, @NotNull ShowsAdapter.ShowItem show) {
             PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
             popupMenu.inflate(R.menu.shows_popup_menu);
 
             // show/hide some menu items depending on show properties
             Menu menu = popupMenu.getMenu();
-            menu.findItem(R.id.menu_action_shows_favorites_add)
-                    .setVisible(!viewHolder.isFavorited);
-            menu.findItem(R.id.menu_action_shows_favorites_remove)
-                    .setVisible(viewHolder.isFavorited);
-            menu.findItem(R.id.menu_action_shows_hide).setVisible(!viewHolder.isHidden);
-            menu.findItem(R.id.menu_action_shows_unhide).setVisible(viewHolder.isHidden);
+            menu.findItem(R.id.menu_action_shows_favorites_add).setVisible(!show.isFavorite());
+            menu.findItem(R.id.menu_action_shows_favorites_remove).setVisible(show.isFavorite());
+            menu.findItem(R.id.menu_action_shows_hide).setVisible(!show.isHidden());
+            menu.findItem(R.id.menu_action_shows_unhide).setVisible(show.isHidden());
 
             popupMenu.setOnMenuItemClickListener(
                     new ShowMenuItemClickListener(getContext(), getFragmentManager(),
-                            viewHolder.showTvdbId, viewHolder.episodeTvdbId, TAG));
+                            show.getShowTvdbId(), show.getEpisodeTvdbId(), TAG));
             popupMenu.show();
         }
 
         @Override
-        public void onFavoriteClick(int showTvdbId, boolean isFavorite) {
+        public void onItemFavoriteClick(int showTvdbId, boolean isFavorite) {
             SgApp.getServicesComponent(getContext()).showTools()
                     .storeIsFavorite(showTvdbId, isFavorite);
         }
     };
 
     private final OnSharedPreferenceChangeListener onPreferenceChangeListener
-            = new OnSharedPreferenceChangeListener() {
-
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (key.equals(AdvancedSettings.KEY_UPCOMING_LIMIT)) {
-                getLoaderManager().restartLoader(ShowsActivity.SHOWS_LOADER_ID, null,
-                        ShowsFragment.this);
-                // refresh all list widgets
-                ListWidgetProvider.notifyDataChanged(getContext());
-            }
+            = (sharedPreferences, key) -> {
+        if (key.equals(AdvancedSettings.KEY_UPCOMING_LIMIT)) {
+            updateShowsQuery();
+            // refresh all list widgets
+            ListWidgetProvider.notifyDataChanged(getContext());
         }
     };
 }

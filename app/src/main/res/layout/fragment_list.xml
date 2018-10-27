@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@android:id/empty"
+        android:id="@+id/emptyViewList"
         android:layout_width="@dimen/empty_view_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -18,11 +18,12 @@
         tools:drawableTop="@drawable/ic_list_white_24dp" />
 
     <GridView
-        android:id="@+android:id/list"
+        android:id="@+id/gridViewList"
         style="@style/Widget.SeriesGuide.Grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:columnWidth="@dimen/showgrid_columnWidth"
+        android:listSelector="@color/transparent"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
         tools:listitem="@layout/item_show" />

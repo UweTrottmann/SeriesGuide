@@ -15,18 +15,16 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.ui.OverviewActivity;
-import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -37,7 +35,7 @@ import org.greenrobot.eventbus.ThreadMode;
 /**
  * Displays one user created list which includes a mixture of shows, seasons and episodes.
  */
-public class ListsFragment extends Fragment implements OnItemClickListener, View.OnClickListener {
+public class ListsFragment extends Fragment implements View.OnClickListener {
 
     /** LoaderManager is created unique to fragment, so use same id for all of them */
     private static final int LOADER_ID = 1;
@@ -65,7 +63,7 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
-        emptyView = view.findViewById(android.R.id.empty);
+        emptyView = view.findViewById(R.id.emptyViewList);
         ViewTools.setVectorIconTop(emptyView.getContext().getTheme(), emptyView,
                 R.drawable.ic_list_white_24dp);
         return view;
@@ -82,11 +80,10 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
         }
 
         // setup grid view
-        GridView gridView = getView().findViewById(android.R.id.list);
+        GridView gridView = getView().findViewById(R.id.gridViewList);
         // enable app bar scrolling out of view only on L or higher
         ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
         gridView.setAdapter(adapter);
-        gridView.setOnItemClickListener(this);
         gridView.setEmptyView(emptyView);
 
         getLoaderManager().initLoader(LOADER_ID, getArguments(), loaderCallbacks);
@@ -109,40 +106,6 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
     @Override
     public void onClick(View v) {
         getActivity().openContextMenu(v);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        final Cursor listItem = (Cursor) adapter.getItem(position);
-        int itemType = listItem.getInt(ListItemsAdapter.Query.ITEM_TYPE);
-        String itemRefId = listItem.getString(ListItemsAdapter.Query.ITEM_REF_ID);
-
-        Intent intent = null;
-        switch (itemType) {
-            case 1: {
-                // display show overview
-                intent = OverviewActivity.intentShow(getActivity(), Integer.valueOf(itemRefId));
-                break;
-            }
-            case 2: {
-                // display episodes of season
-                intent = new Intent(getActivity(), EpisodesActivity.class);
-                intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID,
-                        Integer.valueOf(itemRefId));
-                break;
-            }
-            case 3: {
-                // display episode details
-                intent = new Intent(getActivity(), EpisodesActivity.class);
-                intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
-                        Integer.valueOf(itemRefId));
-                break;
-            }
-        }
-
-        if (intent != null) {
-            Utils.startActivityWithAnimation(getActivity(), intent, view);
-        }
     }
 
     @SuppressWarnings("UnusedParameters")
@@ -182,7 +145,39 @@ public class ListsFragment extends Fragment implements OnItemClickListener, View
     private ListItemsAdapter.OnItemClickListener onItemClickListener
             = new ListItemsAdapter.OnItemClickListener() {
         @Override
-        public void onClick(View view, BaseShowsAdapter.ShowViewHolder viewHolder) {
+        public void onItemClick(View anchor, BaseShowsAdapter.ShowViewHolder showViewHolder) {
+            ListItemsAdapter.ListItemViewHolder viewHolder = (ListItemsAdapter.ListItemViewHolder) showViewHolder;
+            int itemType = viewHolder.itemType;
+            int itemTvdbId = viewHolder.itemTvdbId;
+
+            Intent intent = null;
+            switch (itemType) {
+                case 1: {
+                    // display show overview
+                    intent = OverviewActivity.intentShow(getActivity(), itemTvdbId);
+                    break;
+                }
+                case 2: {
+                    // display episodes of season
+                    intent = new Intent(getActivity(), EpisodesActivity.class);
+                    intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, itemTvdbId);
+                    break;
+                }
+                case 3: {
+                    // display episode details
+                    intent = new Intent(getActivity(), EpisodesActivity.class);
+                    intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, itemTvdbId);
+                    break;
+                }
+            }
+
+            if (intent != null) {
+                Utils.startActivityWithAnimation(getActivity(), intent, anchor);
+            }
+        }
+
+        @Override
+        public void onMenuClick(View view, BaseShowsAdapter.ShowViewHolder viewHolder) {
             if (viewHolder instanceof ListItemsAdapter.ListItemViewHolder) {
                 ListItemsAdapter.ListItemViewHolder viewHolderActual
                         = (ListItemsAdapter.ListItemViewHolder) viewHolder;

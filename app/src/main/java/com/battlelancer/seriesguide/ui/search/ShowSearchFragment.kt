@@ -12,7 +12,6 @@ import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.PopupMenu
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
@@ -67,14 +66,6 @@ class ShowSearchFragment : BaseSearchFragment() {
                 searchLoaderCallbacks)
     }
 
-    override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-        OverviewActivity.intentShow(context, id.toInt()).let {
-            ActivityCompat.startActivity(requireActivity(), it,
-                    ActivityOptionsCompat.makeScaleUpAnimation(view, 0, 0,
-                            view.width, view.height).toBundle())
-        }
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: SearchActivity.SearchQueryEvent) {
         loaderManager.restartLoader(SearchActivity.SHOWS_LOADER_ID, event.args,
@@ -119,7 +110,15 @@ class ShowSearchFragment : BaseSearchFragment() {
     }
 
     private val onItemClickListener = object : BaseShowsAdapter.OnItemClickListener {
-        override fun onClick(view: View, viewHolder: BaseShowsAdapter.ShowViewHolder) {
+        override fun onItemClick(anchor: View, showViewHolder: BaseShowsAdapter.ShowViewHolder) {
+            OverviewActivity.intentShow(context, showViewHolder.showTvdbId).let {
+                ActivityCompat.startActivity(requireActivity(), it,
+                    ActivityOptionsCompat.makeScaleUpAnimation(anchor, 0, 0,
+                        anchor.width, anchor.height).toBundle())
+            }
+        }
+
+        override fun onMenuClick(view: View, viewHolder: BaseShowsAdapter.ShowViewHolder) {
             PopupMenu(view.context, view).apply {
                 inflate(R.menu.shows_popup_menu)
                 menu.apply {
