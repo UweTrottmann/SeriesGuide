@@ -15,9 +15,6 @@
 # Ignore notes about reflection use in support library
 -dontnote android.support.**
 
-# Do not shrink any of this apps code (unused code should be deleted instead)
--keep class com.battlelancer.** { *; }
-
 # Cloud Endpoints libraries
 # Needed to keep generic types and @Key annotations accessed via reflection
 -keepattributes Signature,RuntimeVisibleAnnotations,AnnotationDefault
