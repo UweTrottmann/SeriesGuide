@@ -21,7 +21,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupMenu;
@@ -50,7 +49,7 @@ import org.jetbrains.annotations.NotNull;
  * Displays the list of shows in a users local library with sorting and filtering abilities. The
  * main view of the app.
  */
-public class ShowsFragment extends Fragment implements OnClickListener {
+public class ShowsFragment extends Fragment {
 
     private static final String TAG = "Shows";
     private static final String TAG_FIRST_RUN = "First Run";
@@ -458,11 +457,6 @@ public class ShowsFragment extends Fragment implements OnClickListener {
         if (event.position == ShowsActivity.InitBundle.INDEX_TAB_SHOWS) {
             recyclerView.smoothScrollToPosition(0);
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-        getActivity().openContextMenu(v);
     }
 
     /**

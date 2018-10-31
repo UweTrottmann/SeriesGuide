@@ -35,7 +35,7 @@ import org.greenrobot.eventbus.ThreadMode;
 /**
  * Displays one user created list which includes a mixture of shows, seasons and episodes.
  */
-public class ListsFragment extends Fragment implements View.OnClickListener {
+public class ListsFragment extends Fragment {
 
     /** LoaderManager is created unique to fragment, so use same id for all of them */
     private static final int LOADER_ID = 1;
@@ -101,11 +101,6 @@ public class ListsFragment extends Fragment implements View.OnClickListener {
         super.onStop();
 
         EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        getActivity().openContextMenu(v);
     }
 
     @SuppressWarnings("UnusedParameters")

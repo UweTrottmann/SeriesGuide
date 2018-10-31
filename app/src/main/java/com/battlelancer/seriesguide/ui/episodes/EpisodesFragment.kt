@@ -17,7 +17,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ListView
@@ -39,8 +38,8 @@ import com.battlelancer.seriesguide.util.ViewTools
 /**
  * Displays a list of episodes of a season.
  */
-class EpisodesFragment : ListFragment(), OnClickListener, OnFlagEpisodeListener,
-        EpisodesAdapter.PopupMenuClickListener {
+class EpisodesFragment : ListFragment(), OnFlagEpisodeListener,
+    EpisodesAdapter.PopupMenuClickListener {
 
     private lateinit var sortOrder: Constants.EpisodeSorting
     private var isDualPane: Boolean = false
@@ -344,10 +343,6 @@ class EpisodesFragment : ListFragment(), OnClickListener, OnFlagEpisodeListener,
                 smoothScrollToPosition(position)
             }
         }
-    }
-
-    override fun onClick(v: View) {
-        requireActivity().openContextMenu(v)
     }
 
     private fun setWatchedToggleState(unwatchedEpisodes: Int) {
