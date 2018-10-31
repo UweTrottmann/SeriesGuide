@@ -33,10 +33,10 @@ buildscript {
     ext.isCiBuild = System.getenv('CI') == 'true'
 
     repositories {
-        jcenter()
         google()
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1' // libraries, SeriesGuide
@@ -66,10 +66,10 @@ dependencyUpdates.resolutionStrategy = {
 
 allprojects {
     repositories {
-        jcenter()
         google()
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
+        jcenter()
     }
 }
 
