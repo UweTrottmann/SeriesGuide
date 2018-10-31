@@ -66,6 +66,8 @@ shows and movies you'll enjoy!
 Licensed under the Apache License, Version 2.0
 ----------------------------------------------
 
+Material Design Icons (https://material.io/tools/icons)
+
 Android Support Libraries (https://developer.android.com/topic/libraries/support-library/index.html)
 Copyright 2013 The Android Open Source Project
 
@@ -223,10 +225,3 @@ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
 LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
-Material Design Icons (https://github.com/google/material-design-icons)
------------------------------------------------------------------------
-
-All icons are released under an Attribution-ShareAlike 4.0 International
-(http://creativecommons.org/licenses/by-sa/4.0/) license.
