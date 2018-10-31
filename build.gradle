@@ -21,7 +21,7 @@ buildscript {
             'androidUtils': '2.3.1', // github.com/UweTrottmann/AndroidUtils/blob/master/RELEASE_NOTES.md
             'thetvdb': '1.6.1', // github.com/UweTrottmann/thetvdb-java/blob/master/CHANGELOG.md
             'tmdb': '1.10.1', // github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
-            'trakt': '5.10.0', // github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
+            'trakt': '5.10.2', // github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
 
             'truth': '0.42', // github.com/google/truth/releases
             'threetenABP': '1.1.1', // github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
