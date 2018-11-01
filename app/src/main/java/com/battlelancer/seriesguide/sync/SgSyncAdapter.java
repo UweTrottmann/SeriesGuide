@@ -16,15 +16,16 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
-import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
+import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.services.ConfigurationService;
@@ -141,7 +142,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
             Timber.d("Syncing: TMDB...DONE");
 
-            // sync with Hexagon or trakt
+            // sync with hexagon and trakt
             @SuppressLint("UseSparseArrays") final HashMap<Integer, SearchResult> newShows
                     = new HashMap<>();
             final HashSet<Integer> existingShows = ShowTools.getShowTvdbIdsAsSet(getContext());
@@ -149,21 +150,33 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             if (existingShows == null) {
                 resultCode = UpdateResult.INCOMPLETE;
             } else {
-                UpdateResult resultSync;
-                if (HexagonSettings.isEnabled(getContext())) {
-                    // sync with hexagon...
-                    resultSync = new HexagonSync(getContext(), hexagonTools.get(), movieTools.get(),
-                            progress).sync(existingShows, newShows);
+                // sync with hexagon
+                boolean isHexagonEnabled = HexagonSettings.isEnabled(getContext());
+                if (isHexagonEnabled) {
+                    UpdateResult resultHexagonSync = new HexagonSync(getContext(),
+                            hexagonTools.get(), movieTools.get(), progress)
+                            .sync(existingShows, newShows);
+                    // don't overwrite failure
+                    if (resultCode == UpdateResult.SUCCESS) {
+                        resultCode = resultHexagonSync;
+                    }
                     Timber.d("Syncing: Hexagon...DONE");
                 } else {
-                    // ...OR sync with trakt
-                    resultSync = new TraktSync(getContext(), movieTools.get(),
-                            traktSync.get(), progress).sync(existingShows, currentTime);
-                    Timber.d("Syncing: trakt...DONE");
+                    Timber.d("Syncing: Hexagon...SKIP");
                 }
-                // don't overwrite failure
-                if (resultCode == UpdateResult.SUCCESS) {
-                    resultCode = resultSync;
+
+                // sync with trakt (only watched movies + ratings if hexagon is enabled)
+                if (TraktCredentials.get(getContext()).hasCredentials()) {
+                    UpdateResult resultTraktSync = new TraktSync(getContext(), movieTools.get(),
+                            traktSync.get(), progress)
+                            .sync(existingShows, currentTime, isHexagonEnabled);
+                    // don't overwrite failure
+                    if (resultCode == UpdateResult.SUCCESS) {
+                        resultCode = resultTraktSync;
+                    }
+                    Timber.d("Syncing: trakt...DONE");
+                } else {
+                    Timber.d("Syncing: trakt...SKIP");
                 }
 
                 // make sure other loaders (activity, overview, details) are notified of changes
