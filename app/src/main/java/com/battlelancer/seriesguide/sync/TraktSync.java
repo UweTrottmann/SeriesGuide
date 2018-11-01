@@ -38,18 +38,12 @@ public class TraktSync {
      */
     public SgSyncAdapter.UpdateResult sync(HashSet<Integer> localShows, long currentTime,
             boolean onlyRatingsAndWatchedMovies) {
+        // get last activity timestamps
         progress.publish(SyncProgress.Step.TRAKT);
-        if (!TraktCredentials.get(context).hasCredentials()) {
-            progress.recordError();
-            Timber.d("performTraktSync: no auth, skip");
-            return SgSyncAdapter.UpdateResult.SUCCESS;
-        }
         if (!AndroidUtils.isNetworkConnected(context)) {
             progress.recordError();
             return SgSyncAdapter.UpdateResult.INCOMPLETE;
         }
-
-        // get last activity timestamps
         LastActivities lastActivity = getLastActivity();
         if (lastActivity == null) {
             // trakt is likely offline or busy, try later
