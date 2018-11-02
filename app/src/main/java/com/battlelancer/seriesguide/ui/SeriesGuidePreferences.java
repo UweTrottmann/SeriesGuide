@@ -528,7 +528,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_CHANNEL_ID, SgApp.NOTIFICATION_CHANNEL_EPISODES);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, getActivity().getPackageName());
-                    startActivity(intent);
+                    // at least NVIDIA Shield (8.0.0) can not handle this, so guard
+                    Utils.tryStartActivity(getActivity(), intent, true);
                 }
                 return true;
             }
