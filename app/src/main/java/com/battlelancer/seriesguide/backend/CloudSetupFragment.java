@@ -140,7 +140,9 @@ public class CloudSetupFragment extends Fragment {
                 pendingResult.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                     @Override
                     public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
-                        handleSignInResult(googleSignInResult);
+                        if (isAdded()) {
+                            handleSignInResult(googleSignInResult);
+                        }
                     }
                 });
             }
@@ -244,6 +246,10 @@ public class CloudSetupFragment extends Fragment {
                 new ResultCallback<Status>() {
                     @Override
                     public void onResult(@NonNull Status status) {
+                        if (!CloudSetupFragment.this.isAdded()) {
+                            return;
+                        }
+
                         setProgressVisible(false);
 
                         if (status.isSuccess()) {
