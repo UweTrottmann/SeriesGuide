@@ -34,8 +34,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -82,21 +80,15 @@ public class CloudSetupFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_cloud_setup, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-        textViewWarning.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // link to trakt account activity which has details about disabled features
-                startActivity(new Intent(getContext(), ConnectTraktActivity.class));
-            }
+        textViewWarning.setOnClickListener(view -> {
+            // link to trakt account activity which has details about disabled features
+            startActivity(new Intent(getContext(), ConnectTraktActivity.class));
         });
 
-        buttonRemoveAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (DialogTools.safeShow(new RemoveCloudAccountDialogFragment(),
-                        getFragmentManager(), "remove-cloud-account")) {
-                    setProgressVisible(true);
-                }
+        buttonRemoveAccount.setOnClickListener(view -> {
+            if (DialogTools.safeShow(new RemoveCloudAccountDialogFragment(),
+                    getFragmentManager(), "remove-cloud-account")) {
+                setProgressVisible(true);
             }
         });
 
@@ -137,12 +129,9 @@ public class CloudSetupFragment extends Fragment {
                 // this asynchronous branch will attempt to sign in the user silently.  Cross-device
                 // single sign-on will occur in this branch.
                 Timber.d("Trying async sign-in");
-                pendingResult.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                    @Override
-                    public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
-                        if (isAdded()) {
-                            handleSignInResult(googleSignInResult);
-                        }
+                pendingResult.setResultCallback(googleSignInResult -> {
+                    if (isAdded()) {
+                        handleSignInResult(googleSignInResult);
                     }
                 });
             }
@@ -242,26 +231,22 @@ public class CloudSetupFragment extends Fragment {
 
     private void signOut() {
         setProgressVisible(true);
-        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(@NonNull Status status) {
-                        if (!CloudSetupFragment.this.isAdded()) {
-                            return;
-                        }
+        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(status -> {
+            if (!CloudSetupFragment.this.isAdded()) {
+                return;
+            }
 
-                        setProgressVisible(false);
+            setProgressVisible(false);
 
-                        if (status.isSuccess()) {
-                            Timber.i("Signed out of Google.");
-                            signInAccount = null;
-                            hexagonTools.setDisabled();
-                            updateViews();
-                        } else {
-                            hexagonTools.trackSignInFailure("sign-out", status);
-                        }
-                    }
-                });
+            if (status.isSuccess()) {
+                Timber.i("Signed out of Google.");
+                signInAccount = null;
+                hexagonTools.setDisabled();
+                updateViews();
+            } else {
+                hexagonTools.trackSignInFailure("sign-out", status);
+            }
+        });
     }
 
     private void updateViews() {
@@ -277,12 +262,7 @@ public class CloudSetupFragment extends Fragment {
 
             // enable sign-out
             buttonAction.setText(R.string.hexagon_signout);
-            buttonAction.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    signOut();
-                }
-            });
+            buttonAction.setOnClickListener(v -> signOut());
             // enable account removal
             buttonRemoveAccount.setVisibility(View.VISIBLE);
         } else {
@@ -297,15 +277,12 @@ public class CloudSetupFragment extends Fragment {
 
             // enable sign-in
             buttonAction.setText(R.string.hexagon_signin);
-            buttonAction.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // restrict access to supporters
-                    if (Utils.hasAccessToX(getActivity())) {
-                        startHexagonSetup();
-                    } else {
-                        Utils.advertiseSubscription(getActivity());
-                    }
+            buttonAction.setOnClickListener(v -> {
+                // restrict access to supporters
+                if (Utils.hasAccessToX(getActivity())) {
+                    startHexagonSetup();
+                } else {
+                    Utils.advertiseSubscription(getActivity());
                 }
             });
             // disable account removal
@@ -351,9 +328,9 @@ public class CloudSetupFragment extends Fragment {
 
     private static class HexagonSetupTask extends AsyncTask<String, Void, Integer> {
 
-        public static final int SUCCESS_SYNC_REQUIRED = 1;
-        public static final int FAILURE = -1;
-        public static final int FAILURE_AUTH = -2;
+        static final int SUCCESS_SYNC_REQUIRED = 1;
+        static final int FAILURE = -1;
+        static final int FAILURE_AUTH = -2;
 
         public interface OnSetupFinishedListener {
 
@@ -369,7 +346,7 @@ public class CloudSetupFragment extends Fragment {
          * in the local database as well as on hexagon, will download and merge data first, then
          * upload.
          */
-        public HexagonSetupTask(HexagonTools hexagonTools,
+        HexagonSetupTask(HexagonTools hexagonTools,
                 @NonNull GoogleSignInAccount signInAccount, OnSetupFinishedListener listener) {
             this.hexagonTools = hexagonTools;
             this.signInAccount = signInAccount;
@@ -404,39 +381,36 @@ public class CloudSetupFragment extends Fragment {
     }
 
     private HexagonSetupTask.OnSetupFinishedListener onHexagonSetupFinishedListener
-            = new HexagonSetupTask.OnSetupFinishedListener() {
-        @Override
-        public void onSetupFinished(int resultCode) {
-            switch (resultCode) {
-                case HexagonSetupTask.SUCCESS_SYNC_REQUIRED: {
-                    // schedule full sync
-                    Timber.d("Setting up Hexagon...SUCCESS_SYNC_REQUIRED");
-                    SgSyncAdapter.requestSyncFullImmediate(getActivity(), false);
-                    HexagonSettings.setSetupCompleted(getActivity());
-                    break;
-                }
-                case HexagonSetupTask.FAILURE_AUTH: {
-                    // show setup incomplete message + error toast
-                    if (getView() != null) {
-                        Snackbar.make(getView(), R.string.hexagon_setup_fail_auth,
-                                Snackbar.LENGTH_LONG).show();
-                    }
-                    Timber.d("Setting up Hexagon...FAILURE_AUTH");
-                    break;
-                }
-                case HexagonSetupTask.FAILURE: {
-                    // show setup incomplete message
-                    Timber.d("Setting up Hexagon...FAILURE");
-                    break;
-                }
+            = resultCode -> {
+        switch (resultCode) {
+            case HexagonSetupTask.SUCCESS_SYNC_REQUIRED: {
+                // schedule full sync
+                Timber.d("Setting up Hexagon...SUCCESS_SYNC_REQUIRED");
+                SgSyncAdapter.requestSyncFullImmediate(getActivity(), false);
+                HexagonSettings.setSetupCompleted(getActivity());
+                break;
             }
-
-            if (getView() == null) {
-                return;
+            case HexagonSetupTask.FAILURE_AUTH: {
+                // show setup incomplete message + error toast
+                if (getView() != null) {
+                    Snackbar.make(getView(), R.string.hexagon_setup_fail_auth,
+                            Snackbar.LENGTH_LONG).show();
+                }
+                Timber.d("Setting up Hexagon...FAILURE_AUTH");
+                break;
             }
-            setProgressVisible(false); // allow new task
-            updateViews();
+            case HexagonSetupTask.FAILURE: {
+                // show setup incomplete message
+                Timber.d("Setting up Hexagon...FAILURE");
+                break;
+            }
         }
+
+        if (getView() == null) {
+            return;
+        }
+        setProgressVisible(false); // allow new task
+        updateViews();
     };
 
     private GoogleApiClient.OnConnectionFailedListener onGoogleConnectionFailedListener
