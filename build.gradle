@@ -26,8 +26,8 @@ buildscript {
             'threetenABP': '1.1.1', // github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
 
             // version 15xxxyy -> min SDK 15, release xxx, build yy
-            'code': 1503301,
-            'name': '45-beta2',
+            'code': 1503302,
+            'name': '45-beta3',
     ]
     ext.isCiBuild = System.getenv('CI') == 'true'
 

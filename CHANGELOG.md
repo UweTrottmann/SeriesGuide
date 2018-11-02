@@ -10,6 +10,17 @@ Version 45
 *(in development)*
 
 #### 45-beta2
+*(2018-11-02)*
+
+* 🔧 Speedier scrolling and animations for show list.
+* 🔧 Support direct upgrade from SeriesGuide version 21 (previously: 26) or newer.
+* 🔧 If Cloud and trakt are connected, also sync ratings and watched movies from trakt.
+* 🔨 If Cloud and trakt are connected, do not remove watched flag from movies when syncing.
+* 🔧 Use outline icons where appropriate to fit with new platform design.
+* 🔨 Fix disappearing info message when setting movie watched that was on the watchlist.
+* 🔨 Prevent crash on Cloud setup screen.
+
+#### 45-beta2
 *(2018-09-28)*
 
 * 🔧 Popular shows is now an (almost) endless list.
