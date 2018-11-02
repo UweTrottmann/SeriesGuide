@@ -541,8 +541,7 @@ public class SeriesGuideDatabase {
 
             + ");";
 
-    @VisibleForTesting
-    public static final String CREATE_ACTIVITY_TABLE = "CREATE TABLE " + Tables.ACTIVITY
+    private static final String ACTIVITY_TABLE = Tables.ACTIVITY
             + " ("
             + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + ActivityColumns.EPISODE_TVDB_ID + " TEXT NOT NULL,"
@@ -550,6 +549,8 @@ public class SeriesGuideDatabase {
             + ActivityColumns.TIMESTAMP_MS + " INTEGER NOT NULL,"
             + "UNIQUE (" + ActivityColumns.EPISODE_TVDB_ID + ") ON CONFLICT REPLACE"
             + ");";
+    @VisibleForTesting
+    public static final String CREATE_ACTIVITY_TABLE = "CREATE TABLE " + ACTIVITY_TABLE;
 
     private static final String JOBS_TABLE = Tables.JOBS
             + " ("
@@ -616,47 +617,45 @@ public class SeriesGuideDatabase {
         }
     }
 
-// Upgrading from versions older than 38 is no longer supported. Keeping upgrade code for reference.
+    /**
+     * See {@link #DBVER_38_SHOW_TRAKT_ID}.
+     */
+    static void upgradeToThirtyEight(@NonNull SupportSQLiteDatabase db) {
+        if (isTableColumnMissing(db, Tables.SHOWS, Shows.TRAKT_ID)) {
+            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                    + Shows.TRAKT_ID + " INTEGER DEFAULT 0;");
+        }
+    }
 
-//    /**
-//     * See {@link #DBVER_38_SHOW_TRAKT_ID}.
-//     */
-//    private static void upgradeToThirtyEight(SQLiteDatabase db) {
-//        if (isTableColumnMissing(db, Tables.SHOWS, Shows.TRAKT_ID)) {
-//            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
-//                    + Shows.TRAKT_ID + " INTEGER DEFAULT 0;");
-//        }
-//    }
-//
-//    /**
-//     * See {@link #DBVER_37_LANGUAGE_PER_SERIES}.
-//     */
-//    private static void upgradeToThirtySeven(SQLiteDatabase db) {
-//        if (isTableColumnMissing(db, Tables.SHOWS, Shows.LANGUAGE)) {
-//            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
-//                    + Shows.LANGUAGE + " TEXT DEFAULT '';");
-//        }
-//    }
-//
-//    /**
-//     * See {@link #DBVER_36_ORDERABLE_LISTS}.
-//     */
-//    private static void upgradeToThirtySix(SQLiteDatabase db) {
-//        if (isTableColumnMissing(db, Tables.LISTS, Lists.ORDER)) {
-//            db.execSQL("ALTER TABLE " + Tables.LISTS + " ADD COLUMN "
-//                    + Lists.ORDER + " INTEGER DEFAULT 0;");
-//        }
-//    }
-//
-//    /**
-//     * See {@link #DBVER_35_ACTIVITY_TABLE}.
-//     */
-//    private static void upgradeToThirtyFive(SQLiteDatabase db) {
-//        if (!isTableExisting(db, Tables.ACTIVITY)) {
-//            db.execSQL(CREATE_ACTIVITY_TABLE);
-//        }
-//    }
-//
+    /**
+     * See {@link #DBVER_37_LANGUAGE_PER_SERIES}.
+     */
+    static void upgradeToThirtySeven(@NonNull SupportSQLiteDatabase db) {
+        if (isTableColumnMissing(db, Tables.SHOWS, Shows.LANGUAGE)) {
+            db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
+                    + Shows.LANGUAGE + " TEXT DEFAULT '';");
+        }
+    }
+
+    /**
+     * See {@link #DBVER_36_ORDERABLE_LISTS}.
+     */
+    static void upgradeToThirtySix(@NonNull SupportSQLiteDatabase db) {
+        if (isTableColumnMissing(db, Tables.LISTS, Lists.ORDER)) {
+            db.execSQL("ALTER TABLE " + Tables.LISTS + " ADD COLUMN "
+                    + Lists.ORDER + " INTEGER DEFAULT 0;");
+        }
+    }
+
+    /**
+     * See {@link #DBVER_35_ACTIVITY_TABLE}.
+     */
+    static void upgradeToThirtyFive(@NonNull SupportSQLiteDatabase db) {
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + ACTIVITY_TABLE);
+    }
+
+    // Upgrading from versions older than 34 is no longer supported. Keeping upgrade code for reference.
+
 //    /**
 //     * See {@link #DBVER_34_TRAKT_V2}.
 //     */
