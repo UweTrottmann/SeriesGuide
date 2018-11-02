@@ -32,13 +32,13 @@
   <string name="save_selection">Lagre valg</string>
   <string name="action_display_all">Vis alle</string>
   <string name="web_search">Nettsøk</string>
-  <string name="add_to_homescreen">Add to Home screen</string>
+  <string name="add_to_homescreen">Legg til på hjem-skjermen</string>
   <string name="action_open">Åpne</string>
   <string name="sync_manually">Synkroniser manuelt</string>
   <string name="sync_and_update">Synkronisering og oppdatering</string>
   <string name="sync_and_download_all">Synkroniser og last ned alle</string>
-  <string name="action_turn_off">Turn off</string>
-  <string name="action_stream">Stream or purchase</string>
+  <string name="action_turn_off">Slå av</string>
+  <string name="action_stream">Strøm eller kjøp</string>
   <!-- Search -->
   <string name="clear_search_history">Tøm søkelogg</string>
   <string name="search_hint">Søk episoder</string>
@@ -54,7 +54,7 @@
   <string name="reinstall_info">Forsøk å sikkerhetskopiere under innstillinger, installer på nytt og gjenopprett</string>
   <string name="api_error_generic">Klarte ikke å koble til %s. Prøv igjen senere.</string>
   <string name="api_failed">Mislyktes: %s</string>
-  <string name="copy_to_clipboard">Copied to clipboard</string>
+  <string name="copy_to_clipboard">Kopiert til utklippstavlen</string>
   <!-- Sharing -->
   <string name="share">Del</string>
   <string name="share_show">Del serie</string>
@@ -184,7 +184,7 @@
   <string name="checkin_searchhint">Skriv inn et serienavn</string>
   <string name="add_empty">Det er ingen serier her.</string>
   <string name="no_results">Ingen treff, prøv hele ord.</string>
-  <string name="empty_show_search">Not found in your show list</string>
+  <string name="empty_show_search">Ikke funnet i listen over tv-serier</string>
   <string name="action_try_any_language">Prøv alle språk</string>
   <string name="action_try_again">Prøv igjen</string>
   <string name="tvdb_error_does_not_exist">Serien finnes ikke (enda) på TheTVDB. Prøv igjen senere.</string>
@@ -458,7 +458,7 @@
   <string name="onlyx">Bare for tilhengere</string>
   <string name="action_upgrade">Lås opp alle funksjoner</string>
   <string name="billing_action_subscribe">Abonner</string>
-  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+  <string name="billing_action_manage_subscriptions">Behandle abonnement</string>
   <string name="billing_action_pass">Få X pass</string>
   <string name="billing_price_subscribe">%1$s/år, prøv gratis, avbryt når som helst gjennom %2$s</string>
   <string name="billing_price_pass">engangskjøp</string>

@@ -344,7 +344,7 @@
     <item quantity="other">%d 分钟前</item>
   </plurals>
   <!-- About screen -->
-  <string name="licence_tvdb">此应用程序使用 TheTVDB 在线数据库获取其它用户和剧集的信息，这些数据的使用和传播遵守 CC BY-NC 4.0。</string>
+  <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">此应用程序使用了 TMDb 应用程序接口，但与 TMDb 并无关联，且没有获得 TMDb 认证。</string>
   <string name="licence_trakt">此应用程序使用了来自 trakt 的数据和图片。</string>
   <string name="about_open_source">SeriesGuide 是采用开放源码软件编写的。</string>

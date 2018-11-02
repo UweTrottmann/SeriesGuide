@@ -32,13 +32,13 @@
   <string name="save_selection">Αποθήκευση επιλογής</string>
   <string name="action_display_all">Εμφάνιση όλων</string>
   <string name="web_search">Αναζήτηση στον ιστό</string>
-  <string name="add_to_homescreen">Add to Home screen</string>
+  <string name="add_to_homescreen">Προσθήκη στην Αρχική οθόνη</string>
   <string name="action_open">Άνοιγμα</string>
   <string name="sync_manually">Χειροκίνητος συγχρονισμός</string>
   <string name="sync_and_update">Συγχρονισμός &amp; Ενημέρωση</string>
   <string name="sync_and_download_all">Συγχρονισμός &amp; Λήψη όλων</string>
   <string name="action_turn_off">Απενεργοποίηση</string>
-  <string name="action_stream">Stream or purchase</string>
+  <string name="action_stream">Stream ή αγορά</string>
   <!-- Search -->
   <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
   <string name="search_hint">Αναζήτηση επεισοδίων</string>
@@ -54,7 +54,7 @@
   <string name="reinstall_info">Προσπαθήστε να κρατήσετε αντίγραφο ασφαλείας στις Ρυθμίσεις, να εγκαταστήσετε ξανά την εφαρμογή και να κάνετε επαναφορά.</string>
   <string name="api_error_generic">Δεν είναι δυνατή η επικοινωνία με το %s. Ξαναδοκιμάστε αργότερα.</string>
   <string name="api_failed">Αποτυχία: %s</string>
-  <string name="copy_to_clipboard">Copied to clipboard</string>
+  <string name="copy_to_clipboard">Αντιγράφηκε στο πρόχειρο</string>
   <!-- Sharing -->
   <string name="share">Μοίρασε</string>
   <string name="share_show">Κοινοποίηση σειράς</string>
@@ -111,7 +111,7 @@
   <string name="action_collection_remove">Κατάργηση από τη συλλογή</string>
   <string name="action_collection_added">Προστέθηκε στη συλλογή</string>
   <string name="action_collection_removed">Καταργήθηκε από τη συλλογή</string>
-  <string name="action_watched">Έχει παρακολουθηθεί </string>
+  <string name="action_watched">Έχει παρακολουθηθεί</string>
   <string name="action_unwatched">Δεν παρακολούθησα</string>
   <!-- Shows -->
   <string name="confirm_delete">Θέλετε πράγματι να αφαιρέσετε %s?</string>
@@ -126,7 +126,7 @@
   <string name="action_episode_notifications_off">Απενεργοποίηση ειδοποιήσεων επεισοδίων</string>
   <string name="context_hide">Απόκρυψη</string>
   <string name="context_unhide">Εμφάνιση</string>
-  <string name="hidden">Κρυφή σειρα </string>
+  <string name="hidden">Κρυφή σειρα</string>
   <string name="unhidden">μη-κρυφή σειρά</string>
   <string name="action_shows_add">Προσθήκη Σειράς</string>
   <string name="action_shows_filter">Φίλτρο</string>
@@ -184,7 +184,7 @@
   <string name="checkin_searchhint">Πληκτρολογήστε το όνομα μιας σειράς</string>
   <string name="add_empty">Δεν υπάρχουν σειρές εδώ.</string>
   <string name="no_results">Κανένα αποτέλεσμα, δοκιμάστε ολόκληρες λέξεις.</string>
-  <string name="empty_show_search">Not found in your show list</string>
+  <string name="empty_show_search">Δεν βρέθηκε στη λίστα σειρών σας</string>
   <string name="action_try_any_language">Δοκιμάστε οποιαδήποτε γλώσσα</string>
   <string name="action_try_again">Δοκιμάσετε πάλι</string>
   <string name="tvdb_error_does_not_exist">Η σειρά δεν υπάρχει (ακόμη) στο TheTVDB. Δοκιμάστε ξανά αργότερα.</string>
@@ -263,7 +263,7 @@
   <!-- Hexagon -->
   <string name="hexagon_warning">Πειραματική έκδοση!</string>
   <string name="hexagon_description">Το SeriesGuide Cloud διατηρεί συγχρονισμένο αντίγραφο to backup των σειρών, ταινιών και λιστών σας</string>
-  <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
+  <string name="hexagon_warning_trakt">Ενώ είστε συνδεμένοι με το SeriesGuide Cloud κάποιες δυνατότητες του trakt δεν είναι διαθέσιμες</string>
   <string name="hexagon_signin">Σύνδεση</string>
   <string name="hexagon_signout">Αποσύνδεση</string>
   <string name="hexagon_setup_incomplete">Η ρύθμιση του SeriesGuide cloud δεν ολοκληρώθηκε.</string>
@@ -338,28 +338,28 @@
   <string name="pref_nospoilers_summary">Απόκρυψη πληροφοριών μέχρι να παρακολουθήσετε το επεισόδιο</string>
   <string name="pref_seasonsorting">Ταξινόμηση σεζόν κατά&#8230;</string>
   <string name="pref_episodesorting">Ταξινόμηση επεισοδίων κατά&#8230;</string>
-  <string name="pref_language">Preferred content language</string>
-  <string name="pref_language_fallback">Alternative language</string>
+  <string name="pref_language">Προτιμώμενη γλώσσα περιεχομένου</string>
+  <string name="pref_language_fallback">Εναλλακτική γλώσσα</string>
   <string name="pref_updatewifionly">Εικόνες μόνο μέσω Wi-Fi</string>
-  <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+  <string name="pref_updatewifionlysummary">Για μείωση των χρεώσεων, όχι μέσω δικτύων κινητής ή δικτύων με ογκοχρέωση</string>
   <plurals name="days_before_plural">
-    <item quantity="one">%d day before</item>
-    <item quantity="other">%d days before</item>
+    <item quantity="one">%d ημέρα πριν</item>
+    <item quantity="other">%d ημέρα πριν</item>
   </plurals>
   <plurals name="hours_before_plural">
-    <item quantity="one">%d hour before</item>
-    <item quantity="other">%d hours before</item>
+    <item quantity="one">%d ώρα πριν</item>
+    <item quantity="other">%d ώρα πριν</item>
   </plurals>
   <plurals name="minutes_before_plural">
-    <item quantity="one">%d minute before</item>
-    <item quantity="other">%d minutes before</item>
+    <item quantity="one">%d λεπτό πριν</item>
+    <item quantity="other">%d λεπτό πριν</item>
   </plurals>
   <!-- About screen -->
   <string name="licence_tvdb">Η εφαρμογή αυτή χρησιμοποιεί δεδομένα και εικόνες από το TheTVDB με εξουσιοδότηση βάσει CC BY-NC 4.0.</string>
   <string name="licence_themoviedb">Αυτό το προϊόν χρησιμοποιεί το API του TMDb, αλλά δεν είναι ούτε εγκεκριμένο ούτε πιστοποιημένο από το TMDb.</string>
   <string name="licence_trakt">Αυτή η εφαρμογή χρησιμοποιεί δεδομένα και εικόνες από το trakt.</string>
-  <string name="about_open_source">SeriesGuide is built using open source software.</string>
-  <string name="licences_and_credits">Licences and credits</string>
+  <string name="about_open_source">Το SeriesGuide έχει φτιαχτεί με τη χρήση λογισμικού ανοιχτού κώδικα.</string>
+  <string name="licences_and_credits">Άδειες και ευχαριστίες</string>
   <!-- Sort -->
   <string name="sort">Ταξινόμηση κατά</string>
   <string name="action_sort_ignore_articles">Αγνόησε τα άρθρα</string>
@@ -372,7 +372,7 @@
   <string name="sort_order_latest_first_dvd">Το πιο πρόσφατο, πρώτο (DVD)</string>
   <string name="sort_order_oldest_first_dvd">Το παλαιότερο πρώτα (DVD)</string>
   <!-- Upcoming thresholds -->
-  <string name="pref_upcominglimit">Upcoming range</string>
+  <string name="pref_upcominglimit">Επερχόμενο εύρος</string>
   <string name="upcoming_upto_now">τώρα</string>
   <string name="upcoming_upto_one_day">1 ημέρα</string>
   <string name="upcoming_upto_three_days">3 ημέρες</string>
@@ -388,9 +388,9 @@
   <string name="pref_theme">Θέμα</string>
   <!-- Other advanced settings -->
   <string name="pref_other">Άλλα</string>
-  <string name="pref_autoupdatesummary">Automatically sync and update content</string>
+  <string name="pref_autoupdatesummary">Αυτόματος συγχρονισμός και ενημέρωση περιεχομένου</string>
   <string name="pref_autobackup">Αυτόματο αντίγραφο ασφαλείας</string>
-  <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
+  <string name="pref_autobackupsummary">Εβδομαδιαίο αντίγραφο ασφαλείας των σειρών, λιστών και ταινιών σας</string>
   <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
   <string name="backup_summary">Δημιουργία αντιγράφου ασφαλείας ή επαναφορά των σειρών</string>
   <string name="pref_number">Μορφή των αριθμών</string>
@@ -398,27 +398,27 @@
   <string name="pref_offsetsummary">Μετατόπιση ωρών προβολής κατα %d ώρες</string>
   <string name="clear_cache">Καθαρισμός προσωρινής μνήμης εικόνων</string>
   <string name="clear_cache_summary">Αφαιρέστε όλες τις προσωρινά αποθηκευμένες εικόνες από τη συσκευή σας</string>
-  <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
+  <string name="pref_ganalyticssummary">Αποστολή ανώνυμων στατιστικών χρήσης σε μία υπηρεσία της Google</string>
   <!-- Backup and Restore -->
-  <string name="backup_full_dump">Include descriptions, details, ratings</string>
-  <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+  <string name="backup_full_dump">Να περιλαμβάνονται περιγραφές, λεπτομέρειες και αξιολογήσεις</string>
+  <string name="backup_failed_file_access">Αδυναμία λήψης αντιγράφου ασφαλείας. Δεν μπορεί να βρεθεί ή να προσπελαστεί ένα αρχείο αντιγράφου ασφαλείας.</string>
   <string name="backup_success">Επιτυχής δημιουργία αντιγράφου ασφαλείας.</string>
   <string name="backup_failed">Απέτυχε η δημιουργία αντιγράφου ασφαλείας.</string>
-  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
+  <string name="import_failed_nosd">Αδυναμία επαναφοράς αντιγράφου ασφαλείας. Ο φάκελος αντιγράφων ασφαλείας δεν είναι διαθέσιμος.</string>
   <string name="import_failed_nofile">Δεν υπάρχει κανένα αναγνώσιμο αρχείο αντιγράφου ασφαλείας.</string>
   <string name="import_success">Επιτυχής επαναφορά αντιγράφου ασφαλείας.</string>
   <string name="import_failed">Αποτυχία επαναφοράς του αντιγράφου ασφαλείας.</string>
   <string name="backup_button">Δημιουργία αντιγράφων ασφαλείας</string>
   <string name="import_button">Επαναφορά</string>
-  <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
+  <string name="import_warning">Οι τρέχουσες σειρές, λίστες και ταινίες θα αντικατασταθούν από το αντίγραφο ασφαλείας</string>
   <string name="last_auto_backup">Τελευταίο αυτόματο αντίγραφο ασφαλείας: %s</string>
   <string name="restore_auto_backup">Επαναφορά αντιγράφου ασφαλείας στο αυτόματο</string>
-  <string name="dataliberation_permission_missing">To backup or restore, allow access to your files</string>
-  <string name="autobackup_permission_missing">To use auto backup, allow access to your files</string>
-  <string name="autobackup_files_missing">To use auto backup, select valid backup files</string>
-  <string name="no_file_selected">No file selected</string>
-  <string name="action_select_file">Select file</string>
-  <string name="backup_use_default_files">Use default backup files</string>
+  <string name="dataliberation_permission_missing">Για λήψη ή επαναφορά αντιγράφων ασφαλείας, επιτρέψτε πρόσβαση στα αρχεία σας</string>
+  <string name="autobackup_permission_missing">Για τη χρήση της αυτόματης λήψης αντιγράφων ασφαλείας, επιτρέψτε πρόσβαση στα αρχεία σας</string>
+  <string name="autobackup_files_missing">Για τη χρήση της αυτόματης λήψης αντιγράφων ασφαλείας, επιλέξτε έγκυρα αρχεία αντιγράφων ασφαλείας</string>
+  <string name="no_file_selected">Δεν επιλέχθηκε αρχείο</string>
+  <string name="action_select_file">Επιλογή αρχείου</string>
+  <string name="backup_use_default_files">Χρησιμοποιήστε τα προεπιλεγμένα αρχεία αντιγράφων ασφαλείας</string>
   <!-- Welcome dialog -->
   <string name="get_started">Ξεκινήστε</string>
   <string name="welcome_setuplanguage">Επιλέξτε γλώσσα</string>
@@ -435,9 +435,9 @@
   <string name="pref_vibrate">Δόνηση</string>
   <string name="pref_vibratesummary">Δόνηση και κατά την εμφάνιση ειδοποίησης</string>
   <string name="pref_notifications_treshold">Πότε να ειδοποιήστε</string>
-  <string name="pref_notifications_select_shows">Select shows</string>
+  <string name="pref_notifications_select_shows">Επιλογή σειρών</string>
   <string name="pref_notifications_select_shows_summary">Σειρές που έχουν ενεργές ειδοποιήσεις (%d)</string>
-  <string name="pref_notification_channel_errors">Errors</string>
+  <string name="pref_notification_channel_errors">Σφάλματα</string>
   <!-- Legacy Widgets -->
   <string name="smallwidget">SeriesGuide (μικρό)</string>
   <!-- List Widget -->
@@ -458,9 +458,9 @@
   <string name="onlyx">Μόνο για υποστηρικτές</string>
   <string name="action_upgrade">Ξεκλειδώσετε όλα τα χαρακτηριστικά</string>
   <string name="billing_action_subscribe">Παρακολούθηση</string>
-  <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+  <string name="billing_action_manage_subscriptions">Διαχείριση συνδρομών</string>
   <string name="billing_action_pass">Αποκτήστε το X Pass</string>
-  <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+  <string name="billing_price_subscribe">%1$s/χρόνο, δοκιμάστε δωρεάν, ακυρώστε οποιαδήποτε στιγμή μέσω του %2$s</string>
   <string name="billing_price_pass">εφάπαξ αγοράς</string>
   <string name="upgrade_description">Ξεκλειδώσετε όλα τα χαρακτηριστικά συμπεριλαμβανομένων των κοινοποιήσεων, θεμάτων και περισσότερες επιλογές widget λιστών. Βοήθησε με να κάνω μελλοντικές ενημερώσεις.</string>
   <string name="upgrade_success">Ευχαριστούμε για την υποστήριξη του SeriesGuide! Έχετε πρόσβαση σε όλα τα χαρακτηριστικά.</string>
@@ -492,8 +492,8 @@
   <string name="feedback_action_yes">Ναι!</string>
   <string name="feedback_action_notreally">Όχι ιδιεταιρα</string>
   <string name="feedback_question_rate_google">Βαθμολογήστε μας στο Google Play</string>
-  <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-  <string name="feedback_question_feedback">Tell me how to improve it?</string>
+  <string name="feedback_question_rate_amazon">Αξιολόγηση στο Amazon;</string>
+  <string name="feedback_question_feedback">Θα μου πείτε πώς να το βελτιώσω;</string>
   <string name="feedback_action_ok">Εντάξει</string>
   <string name="feedback_action_nothanks">Όχι, ευχαριστώ</string>
 </resources>

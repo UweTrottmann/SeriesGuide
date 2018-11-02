@@ -20,7 +20,7 @@
   <string name="season_number">Sezona %d</string>
   <string name="seasons">Sezone</string>
   <string name="specialseason">Posebne epizode</string>
-  <string name="ratings">Ratings</string>
+  <string name="ratings">Ocene</string>
   <!-- Descriptions -->
   <string name="description_overview">Pregled</string>
   <string name="description_poster">Prikaži poster</string>
@@ -32,10 +32,10 @@
   <string name="save_selection">Shrani izbiro</string>
   <string name="action_display_all">Pokaži vse</string>
   <string name="web_search">Spletno iskanje</string>
-  <string name="add_to_homescreen">Add to Home screen</string>
+  <string name="add_to_homescreen">Dodaj na začetni zaslon</string>
   <string name="action_open">Odpri</string>
-  <string name="sync_manually">Sync manually</string>
-  <string name="sync_and_update">Sync &amp; Update</string>
+  <string name="sync_manually">Ročna sinhronizacija</string>
+  <string name="sync_and_update">Sinhronizacija in posodobitev</string>
   <string name="sync_and_download_all">Sync &amp; Download all</string>
   <string name="action_turn_off">Turn off</string>
   <string name="action_stream">Stream or purchase</string>
