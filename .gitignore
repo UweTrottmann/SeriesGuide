@@ -4,7 +4,6 @@
 *.keystore
 
 # Local configuration files (sdk path, etc)
-gradle.properties
 keystore.properties
 local.properties
 
