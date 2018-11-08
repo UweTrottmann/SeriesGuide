@@ -49,7 +49,7 @@ import com.battlelancer.seriesguide.util.ClipboardTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
-import com.battlelancer.seriesguide.util.ShortcutUtils;
+import com.battlelancer.seriesguide.util.ShortcutLiveData;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -634,7 +634,15 @@ public class ShowFragment extends Fragment {
         }
 
         // create the shortcut
-        ShortcutUtils.createShortcut(getContext(), showTitle, posterPath, getShowTvdbId());
+        ShortcutLiveData shortcutLiveData = new ShortcutLiveData(getContext(), showTitle,
+                posterPath, getShowTvdbId());
+        shortcutLiveData.observe(this, readyEvent -> {
+            if (readyEvent != null) {
+                readyEvent.createShortcutIfNotHandled();
+            }
+            shortcutLiveData.removeObservers(this);
+        });
+        shortcutLiveData.prepareShortcut();
 
         // Analytics
         Utils.trackAction(getActivity(), TAG, "Add to Homescreen");
