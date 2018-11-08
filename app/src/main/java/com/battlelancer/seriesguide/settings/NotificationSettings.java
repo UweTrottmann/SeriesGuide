@@ -2,6 +2,7 @@
 package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -123,9 +124,27 @@ public class NotificationSettings {
                 .getLong(KEY_LAST_NOTIFIED, 0);
     }
 
+    /**
+     * @return Empty (!) string if silent, otherwise ringtone URI.
+     */
+    @NonNull
     public static String getNotificationsRingtone(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_RINGTONE, Settings.System.DEFAULT_NOTIFICATION_URI.toString());
+        String ringtoneUri = PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(KEY_RINGTONE, null);
+        if (ringtoneUri == null) {
+            ringtoneUri = Settings.System.DEFAULT_NOTIFICATION_URI.toString();
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // Xiaomi devices incorrectly allowed file:// uris
+            // protect against FileUriExposedException
+            if (ringtoneUri.length() > 0 /* not silent */ && !ringtoneUri.startsWith("content")) {
+                ringtoneUri = Settings.System.DEFAULT_NOTIFICATION_URI.toString();
+                PreferenceManager.getDefaultSharedPreferences(context).edit()
+                        .putString(KEY_RINGTONE, ringtoneUri)
+                        .apply();
+            }
+        }
+        return ringtoneUri;
     }
 
     public static boolean isNotificationVibrating(Context context) {

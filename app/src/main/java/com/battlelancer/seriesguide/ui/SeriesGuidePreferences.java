@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.CheckBoxPreference;
@@ -514,7 +515,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI,
                         Settings.System.DEFAULT_NOTIFICATION_URI);
 
-                // restore selected sound or silent (null)
+                // restore selected sound or silent (empty string)
                 String existingValue = NotificationSettings.getNotificationsRingtone(getActivity());
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI,
                         TextUtils.isEmpty(existingValue) ? null : Uri.parse(existingValue));
@@ -547,11 +548,20 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             if (REQUEST_CODE_RINGTONE == requestCode) {
                 if (data != null) {
-                    Uri ringtone = data.getParcelableExtra(
+                    Uri ringtoneUri = data.getParcelableExtra(
                             RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        // Xiaomi devices incorrectly return file:// uris on N
+                        // protect against FileUriExposedException
+                        if (ringtoneUri != null /* not silent */
+                                && !"content".equals(ringtoneUri.getScheme())) {
+                            ringtoneUri = Settings.System.DEFAULT_NOTIFICATION_URI;
+                        }
+                    }
+                    // map silent (null) to empty string
                     PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                             .putString(NotificationSettings.KEY_RINGTONE,
-                                    ringtone == null ? "" : ringtone.toString())
+                                    ringtoneUri == null ? "" : ringtoneUri.toString())
                             .apply();
                 }
                 return;
