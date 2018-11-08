@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -35,6 +34,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.util.DialogTools;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +46,8 @@ import java.util.List;
 public class ManageListsDialogFragment extends AppCompatDialogFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
 
+    public static final String TAG = "listsdialog";
+
     private static ManageListsDialogFragment newInstance(int itemTvdbId,
             @SeriesGuideContract.ListItemTypes int itemType) {
         ManageListsDialogFragment f = new ManageListsDialogFragment();
@@ -54,6 +56,23 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
         args.putInt(InitBundle.INT_ITEM_TYPE, itemType);
         f.setArguments(args);
         return f;
+    }
+
+    /**
+     * Display a dialog which asks if the user wants to add the given show to one or more lists.
+     *  @param itemTvdbId TVDb id of the item to add
+     * @param itemType type of the item to add (show, season or episode)
+     */
+    public static boolean show(FragmentManager fm, int itemTvdbId,
+            @SeriesGuideContract.ListItemTypes int itemType) {
+        // replace any currently showing list dialog (do not add it to the back stack)
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment prev = fm.findFragmentByTag(TAG);
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        return DialogTools
+                .safeShow(ManageListsDialogFragment.newInstance(itemTvdbId, itemType), fm, ft, TAG);
     }
 
     public interface InitBundle {
@@ -150,21 +169,21 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
             case 1:
                 // show
                 uri = Shows.buildShowUri(itemTvdbId);
-                projection = new String[] {
+                projection = new String[]{
                         Shows._ID, Shows.TITLE
                 };
                 break;
             case 2:
                 // season
                 uri = Seasons.buildSeasonUri(itemTvdbId);
-                projection = new String[] {
+                projection = new String[]{
                         Seasons._ID, Seasons.COMBINED
                 };
                 break;
             case 3:
                 // episode
                 uri = Episodes.buildEpisodeUri(itemTvdbId);
-                projection = new String[] {
+                projection = new String[]{
                         Episodes._ID, Episodes.TITLE
                 };
                 break;
@@ -270,7 +289,7 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
 
     interface ListsQuery {
 
-        String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[]{
                 Tables.LISTS + "." + Lists._ID, Tables.LISTS + "." + Lists.LIST_ID, Lists.NAME,
                 ListItems.LIST_ITEM_ID
         };
@@ -280,32 +299,5 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
         int NAME = 2;
 
         int LIST_ITEM_ID = 3;
-    }
-
-    /**
-     * Display a dialog which asks if the user wants to add the given show to one or more lists.
-     *
-     * @param itemTvdbId TVDb id of the item to add
-     * @param itemType type of the item to add (show, season or episode)
-     */
-    public static void showListsDialog(int itemTvdbId,
-            @SeriesGuideContract.ListItemTypes int itemType, FragmentManager fm) {
-        if (fm == null) {
-            return;
-        }
-
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction. We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment prev = fm.findFragmentByTag("listsdialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-
-        // Create and show the dialog.
-        DialogFragment newFragment = ManageListsDialogFragment.newInstance(itemTvdbId, itemType);
-        newFragment.show(ft, "listsdialog");
     }
 }

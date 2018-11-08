@@ -14,16 +14,16 @@ android {
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "TVDB_API_KEY", propertyOrEmpty("TVDB_API_KEY"))
-        buildConfigField("String", "TMDB_API_KEY", propertyOrEmpty("TMDB_API_KEY"))
-        buildConfigField("String", "TRAKT_CLIENT_ID", propertyOrEmpty("TRAKT_CLIENT_ID"))
-        buildConfigField("String", "TRAKT_CLIENT_SECRET", propertyOrEmpty("TRAKT_CLIENT_SECRET"))
-        buildConfigField("String", "IAP_KEY_A", propertyOrEmpty("IAP_KEY_A"))
-        buildConfigField("String", "IAP_KEY_B", propertyOrEmpty("IAP_KEY_B"))
-        buildConfigField("String", "IAP_KEY_C", propertyOrEmpty("IAP_KEY_C"))
-        buildConfigField("String", "IAP_KEY_D", propertyOrEmpty("IAP_KEY_D"))
-        buildConfigField("String", "IMAGE_CACHE_URL", propertyOrNull("IMAGE_CACHE_URL"))
-        buildConfigField("String", "IMAGE_CACHE_SECRET", propertyOrEmpty("IMAGE_CACHE_SECRET"))
+        buildConfigField("String", "TVDB_API_KEY", propertyOrEmpty("SG_TVDB_API_KEY"))
+        buildConfigField("String", "TMDB_API_KEY", propertyOrEmpty("SG_TMDB_API_KEY"))
+        buildConfigField("String", "TRAKT_CLIENT_ID", propertyOrEmpty("SG_TRAKT_CLIENT_ID"))
+        buildConfigField("String", "TRAKT_CLIENT_SECRET", propertyOrEmpty("SG_TRAKT_CLIENT_SECRET"))
+        buildConfigField("String", "IAP_KEY_A", propertyOrEmpty("SG_IAP_KEY_A"))
+        buildConfigField("String", "IAP_KEY_B", propertyOrEmpty("SG_IAP_KEY_B"))
+        buildConfigField("String", "IAP_KEY_C", propertyOrEmpty("SG_IAP_KEY_C"))
+        buildConfigField("String", "IAP_KEY_D", propertyOrEmpty("SG_IAP_KEY_D"))
+        buildConfigField("String", "IMAGE_CACHE_URL", propertyOrNull("SG_IMAGE_CACHE_URL"))
+        buildConfigField("String", "IMAGE_CACHE_SECRET", propertyOrEmpty("SG_IMAGE_CACHE_SECRET"))
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -43,8 +43,8 @@ android {
 
     compileOptions {
         encoding = "UTF-8"
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     lintOptions {
@@ -54,12 +54,7 @@ android {
     }
 
     packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'LICENSE.txt'
+        exclude '/play-services-*.properties'
     }
 
     flavorDimensions "flavor"
@@ -71,8 +66,8 @@ android {
             versionName versions.name
 
             manifestPlaceholders = [
-                    androidBackupKey: rootProject.hasProperty("FREE.ANDROID_BACKUP_KEY")
-                            ? rootProject.property("FREE.ANDROID_BACKUP_KEY") : "MISSING"
+                    androidBackupKey: rootProject.hasProperty("SG_ANDROID_BACKUP_KEY")
+                            ? rootProject.property("SG_ANDROID_BACKUP_KEY") : "MISSING"
             ]
         }
         amazon {
@@ -144,7 +139,8 @@ dependencies {
 
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:${versions.lifecycle}"
-    kapt "android.arch.lifecycle:compiler:${versions.lifecycle}"
+    // Paging
+    implementation "android.arch.paging:runtime:1.0.1"
 
     // Room
     implementation "android.arch.persistence.room:runtime:${versions.room}"
@@ -189,15 +185,15 @@ dependencies {
     implementation 'io.palaima.debugdrawer:debugdrawer-timber:0.7.0'
 
     // Google Play Services
-    implementation "com.google.android.gms:play-services-analytics:${versions.playServices}"
-    implementation "com.google.android.gms:play-services-auth:${versions.playServices}"
+    implementation "com.google.android.gms:play-services-analytics:16.0.3"
+    implementation "com.google.android.gms:play-services-auth:16.0.0"
 
     // App Engine
-    // https://github.com/google/google-api-java-client/commits/dev
-    implementation('com.google.api-client:google-api-client-android:1.23.0') {
+    // https://github.com/googleapis/google-api-java-client/releases
+    implementation('com.google.api-client:google-api-client-android:1.25.0') {
         exclude group: 'com.google.android.google-play-services' // including latest ourselves
         exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
-        exclude group: 'com.google.guava', module: 'guava-jdk5' // out of date, conflict with dagger
+        exclude group: 'com.google.guava', module: 'guava' // conflict with dagger
     }
 
     // Amazon flavor specific

@@ -15,12 +15,4 @@
         tools:drawableLeft="@drawable/ic_add_white_24dp"
         tools:drawableTint="?attr/sgColorIcon" />
 
-    <TextView
-        android:id="@+id/textViewItemExtensionAddLimit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/action_extensions_limit"
-        android:textAppearance="@style/TextAppearance.Body.Highlight.Accent" />
-
 </FrameLayout>

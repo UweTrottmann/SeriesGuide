@@ -497,7 +497,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">התאמת תוספים</string>
   <string name="action_extensions_add">הוספת תוסף</string>
-  <string name="action_extensions_limit">הירשם ל-X בכדי להוסיף הרחבות נוספות</string>
   <string name="action_extensions_search">חפש תוספים נוספים</string>
   <string name="action_extension_remove">הסר</string>
   <string name="extension_amazon">חפש באמזון</string>

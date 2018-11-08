@@ -1,22 +1,22 @@
 package com.battlelancer.seriesguide.extensions;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.JobIntentService;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.api.Action;
-
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.EXTRA_TOKEN;
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_EPISODE;
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA_ACTION;
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA_ACTION_TYPE;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.SafeJobIntentService;
+import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.api.Action;
+
 /**
  * Processes actions published by enabled extensions.
  */
-public class ExtensionActionService extends JobIntentService {
+public class ExtensionActionService extends SafeJobIntentService {
 
     public static void enqueue(Context context, Intent actionIntent) {
         enqueueWork(context, ExtensionActionService.class, SgApp.JOB_ID_EXTENSION_ACTIONS_SERVICE,

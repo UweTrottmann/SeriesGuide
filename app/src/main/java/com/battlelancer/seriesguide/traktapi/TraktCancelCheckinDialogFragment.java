@@ -8,6 +8,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.text.format.DateUtils;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.traktapi.TraktTask.InitBundle;
+import com.battlelancer.seriesguide.util.DialogTools;
 import com.uwetrottmann.trakt5.services.Checkin;
 import org.greenrobot.eventbus.EventBus;
 
@@ -29,12 +31,11 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
     /**
      * @param waitInMinutes The time to wait. If negative, will show as no time available.
      */
-    static TraktCancelCheckinDialogFragment newInstance(Bundle traktTaskData,
-            int waitInMinutes) {
+    static void show(FragmentManager fragmentManager, Bundle traktTaskData, int waitInMinutes) {
         TraktCancelCheckinDialogFragment f = new TraktCancelCheckinDialogFragment();
         f.setArguments(traktTaskData);
         f.waitTimeMinutes = waitInMinutes;
-        return f;
+        DialogTools.safeShow(f, fragmentManager, "cancel-checkin-dialog");
     }
 
     @NonNull

@@ -486,7 +486,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">Подеси додатке</string>
   <string name="action_extensions_add">Додај додатак</string>
-  <string name="action_extensions_limit">Претплати се на Х да додаш нове додатке</string>
   <string name="action_extensions_search">Набави још додатака</string>
   <string name="action_extension_remove">Уклони</string>
   <string name="extension_amazon">Претрага на Amazon-у</string>

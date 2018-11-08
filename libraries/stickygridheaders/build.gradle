@@ -9,6 +9,12 @@ android {
         versionName "1.0"
     }
 
+    compileOptions {
+        encoding = "UTF-8"
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     lintOptions {
         // for CI server (reports are not public)
         textReport true

@@ -7,8 +7,10 @@ import android.os.Bundle
 import android.support.v4.app.LoaderManager.LoaderCallbacks
 import android.support.v4.content.CursorLoader
 import android.support.v4.content.Loader
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.AdapterView
+import android.view.ViewGroup
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
@@ -26,6 +28,11 @@ class EpisodeSearchFragment : BaseSearchFragment() {
 
     private lateinit var adapter: EpisodeResultsAdapter
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_search, container, false)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // list items do not have right hand-side buttons, list may be long: enable fast scrolling
@@ -38,19 +45,13 @@ class EpisodeSearchFragment : BaseSearchFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        adapter = EpisodeResultsAdapter(activity).also {
+        adapter = EpisodeResultsAdapter(activity, onItemClickListener).also {
             gridView.adapter = it
         }
 
         // load for given query or restore last loader (ignoring args)
         loaderManager.initLoader(SearchActivity.EPISODES_LOADER_ID, loaderArgs,
                 searchLoaderCallbacks)
-    }
-
-    override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-        Intent(activity, EpisodesActivity::class.java)
-                .putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, id.toInt())
-                .also { Utils.startActivityWithAnimation(activity, it, view) }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -101,6 +102,13 @@ class EpisodeSearchFragment : BaseSearchFragment() {
             adapter.swapCursor(null)
         }
     }
+
+    private val onItemClickListener =
+        EpisodeResultsAdapter.OnItemClickListener { anchor, episodeTvdbId ->
+            Intent(activity, EpisodesActivity::class.java)
+                .putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeTvdbId)
+                .also { Utils.startActivityWithAnimation(activity, it, anchor) }
+        }
 
     companion object {
         const val ARG_SHOW_TITLE = "title"

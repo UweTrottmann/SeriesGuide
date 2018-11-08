@@ -11,8 +11,8 @@ import android.text.TextUtils;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
@@ -109,28 +109,20 @@ public class HexagonMovieSync {
             ArrayList<ContentProviderOperation> batch = new ArrayList<>();
             for (com.uwetrottmann.seriesguide.backend.movies.model.Movie movie : movies) {
                 if (localMovies.contains(movie.getTmdbId())) {
-                    // movie is in database
-                    if (movie.getIsInCollection() != null && movie.getIsInWatchlist() != null
-                            && !movie.getIsInCollection() && !movie.getIsInWatchlist()) {
-                        // if neither in watchlist or collection: remove movie
-                        batch.add(ContentProviderOperation.newDelete(
-                                SeriesGuideContract.Movies.buildMovieUri(movie.getTmdbId()))
-                                .build());
-                    } else {
-                        // update movie properties
-                        ContentValues values = new ContentValues();
-                        if (movie.getIsInCollection() != null) {
-                            values.put(SeriesGuideContract.Movies.IN_COLLECTION,
-                                    movie.getIsInCollection() ? 1 : 0);
-                        }
-                        if (movie.getIsInWatchlist() != null) {
-                            values.put(SeriesGuideContract.Movies.IN_WATCHLIST,
-                                    movie.getIsInWatchlist() ? 1 : 0);
-                        }
-                        batch.add(ContentProviderOperation.newUpdate(
-                                SeriesGuideContract.Movies.buildMovieUri(movie.getTmdbId()))
-                                .withValues(values).build());
+                    // movie is in database, update collection and watchlist flags
+                    // note: never remove a movie, as it may store a trakt-only watched flag
+                    ContentValues values = new ContentValues();
+                    if (movie.getIsInCollection() != null) {
+                        values.put(SeriesGuideContract.Movies.IN_COLLECTION,
+                                movie.getIsInCollection() ? 1 : 0);
                     }
+                    if (movie.getIsInWatchlist() != null) {
+                        values.put(SeriesGuideContract.Movies.IN_WATCHLIST,
+                                movie.getIsInWatchlist() ? 1 : 0);
+                    }
+                    batch.add(ContentProviderOperation.newUpdate(
+                            SeriesGuideContract.Movies.buildMovieUri(movie.getTmdbId()))
+                            .withValues(values).build());
                 } else {
                     // schedule movie to be added
                     if (movie.getIsInCollection() != null && movie.getIsInCollection()) {

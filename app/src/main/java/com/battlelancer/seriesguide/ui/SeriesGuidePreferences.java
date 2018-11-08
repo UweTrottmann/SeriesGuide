@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.CheckBoxPreference;
@@ -25,6 +26,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -39,8 +41,6 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
-import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
-import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.service.NotificationService;
@@ -48,6 +48,8 @@ import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
+import com.battlelancer.seriesguide.streaming.StreamingSearch;
+import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
@@ -55,6 +57,7 @@ import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragme
 import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TimeOffsetDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.DialogTools;
 import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -373,8 +376,8 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
             // show currently set values for some prefs
             updateStreamSearchServiceSummary(findPreference(StreamingSearch.KEY_SETTING_SERVICE));
-            setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE_PREFERRED));
-            setListPreferenceSummary((ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE_FALLBACK));
+            setListPreferenceSummary(
+                    (ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE_FALLBACK));
             updateTimeOffsetSummary(findPreference(DisplaySettings.KEY_SHOWS_TIME_OFFSET));
         }
 
@@ -480,16 +483,26 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             }
 
             // settings
+            FragmentManager supportFragmentManager = ((AppCompatActivity) getActivity())
+                    .getSupportFragmentManager();
             if (NotificationSettings.KEY_THRESHOLD.equals(key)) {
-                new NotificationThresholdDialogFragment().show(
-                        ((AppCompatActivity) getActivity()).getSupportFragmentManager(),
-                        "notification-threshold");
+                DialogTools.safeShow(new NotificationThresholdDialogFragment(),
+                        supportFragmentManager, "notification-threshold");
                 return true;
             }
             if (NotificationSettings.KEY_SELECTION.equals(key)) {
-                new NotificationSelectionDialogFragment().show(
-                        ((AppCompatActivity) getActivity()).getSupportFragmentManager(),
-                        "notification-selection");
+                DialogTools.safeShow(new NotificationSelectionDialogFragment(),
+                                supportFragmentManager, "notification-selection");
+                return true;
+            }
+            if (StreamingSearch.KEY_SETTING_SERVICE.equals(key)) {
+                DialogTools.safeShow(new StreamingSearchConfigureDialog(),
+                        supportFragmentManager, "streaming-service");
+                return true;
+            }
+            if (DisplaySettings.KEY_SHOWS_TIME_OFFSET.equals(key)) {
+                DialogTools.safeShow(new TimeOffsetDialogFragment(),
+                        supportFragmentManager, "time-offset");
                 return true;
             }
             if (NotificationSettings.KEY_RINGTONE.equals(key)) {
@@ -502,7 +515,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI,
                         Settings.System.DEFAULT_NOTIFICATION_URI);
 
-                // restore selected sound or silent (null)
+                // restore selected sound or silent (empty string)
                 String existingValue = NotificationSettings.getNotificationsRingtone(getActivity());
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI,
                         TextUtils.isEmpty(existingValue) ? null : Uri.parse(existingValue));
@@ -516,20 +529,9 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                     Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_CHANNEL_ID, SgApp.NOTIFICATION_CHANNEL_EPISODES);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, getActivity().getPackageName());
-                    startActivity(intent);
+                    // at least NVIDIA Shield (8.0.0) can not handle this, so guard
+                    Utils.tryStartActivity(getActivity(), intent, true);
                 }
-                return true;
-            }
-            if (StreamingSearch.KEY_SETTING_SERVICE.equals(key)) {
-                new StreamingSearchConfigureDialog().show(
-                        ((AppCompatActivity) getActivity()).getSupportFragmentManager(),
-                        "streaming-service");
-                return true;
-            }
-            if (DisplaySettings.KEY_SHOWS_TIME_OFFSET.equals(key)) {
-                new TimeOffsetDialogFragment().show(
-                        ((AppCompatActivity) getActivity()).getSupportFragmentManager(),
-                        "time-offset");
                 return true;
             }
             if (KEY_ABOUT.equals(key)) {
@@ -546,11 +548,20 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             if (REQUEST_CODE_RINGTONE == requestCode) {
                 if (data != null) {
-                    Uri ringtone = data.getParcelableExtra(
+                    Uri ringtoneUri = data.getParcelableExtra(
                             RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        // Xiaomi devices incorrectly return file:// uris on N
+                        // protect against FileUriExposedException
+                        if (ringtoneUri != null /* not silent */
+                                && !"content".equals(ringtoneUri.getScheme())) {
+                            ringtoneUri = Settings.System.DEFAULT_NOTIFICATION_URI;
+                        }
+                    }
+                    // map silent (null) to empty string
                     PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                             .putString(NotificationSettings.KEY_RINGTONE,
-                                    ringtone == null ? "" : ringtone.toString())
+                                    ringtoneUri == null ? "" : ringtoneUri.toString())
                             .apply();
                 }
                 return;
@@ -565,8 +576,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 new BackupManager(pref.getContext()).dataChanged();
 
                 // update pref summary text
-                if (DisplaySettings.KEY_LANGUAGE_PREFERRED.equals(key)
-                        || DisplaySettings.KEY_LANGUAGE_FALLBACK.equals(key)
+                if (DisplaySettings.KEY_LANGUAGE_FALLBACK.equals(key)
                         || DisplaySettings.KEY_NUMBERFORMAT.equals(key)
                         || DisplaySettings.KEY_THEME.equals(key)) {
                     setListPreferenceSummary((ListPreference) pref);
@@ -606,11 +616,13 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 ListWidgetProvider.notifyDataChanged(getActivity());
             }
 
-            if (DisplaySettings.KEY_LANGUAGE_PREFERRED.equals(key)
-                    || DisplaySettings.KEY_LANGUAGE_FALLBACK.equals(key)) {
+            if (DisplaySettings.KEY_LANGUAGE_FALLBACK.equals(key)) {
                 // reset last edit date of all episodes so they will get updated
                 new Thread(new Runnable() {
                     public void run() {
+                        android.os.Process
+                                .setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+
                         ContentValues values = new ContentValues();
                         values.put(Episodes.LAST_EDITED, 0);
                         getActivity().getContentResolver()

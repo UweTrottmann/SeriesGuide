@@ -184,6 +184,7 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
             )
             return if (searchResults != null) {
                 val shows = searchResults
+                        .asSequence()
                         .filter {
                             // skip shows without required TVDB id
                             it.show != null && it.show.ids != null && it.show.ids.tvdb != null

@@ -155,6 +155,15 @@ public class StickyGridHeadersBaseAdapterWrapper extends BaseAdapter {
         return mDelegate.getItemId(adapterPosition.mPosition);
     }
 
+    /**
+     * Determines if the given position is a header without accessing the underlying Cursor data.
+     * So this is safe to use during drawing.
+     */
+    boolean isHeaderAtPosition(int position) {
+        Position adapterPosition = translatePosition(position);
+        return adapterPosition.mPosition == POSITION_HEADER;
+    }
+
     @Override
     public int getItemViewType(int position) {
         Position adapterPosition = translatePosition(position);

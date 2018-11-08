@@ -171,7 +171,7 @@ public abstract class AddFragment extends Fragment {
         adapter.setStateForTvdbId(showTvdbId, SearchResult.STATE_ADD);
     }
 
-    protected static class AddAdapter extends ArrayAdapter<SearchResult> {
+    public static class AddAdapter extends ArrayAdapter<SearchResult> {
 
         public interface OnItemClickListener {
             void onItemClick(SearchResult item);

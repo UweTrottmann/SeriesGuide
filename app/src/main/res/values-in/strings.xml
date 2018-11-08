@@ -464,7 +464,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">Sesuaikan ekstensi</string>
   <string name="action_extensions_add">Tambah ekstensi</string>
-  <string name="action_extensions_limit">Dapatkan X untuk menambahkan ekstensi lainnya</string>
   <string name="action_extensions_search">Dapatkan ekstensi lainnya</string>
   <string name="action_extension_remove">Hapus</string>
   <string name="extension_amazon">Pencarian amazon</string>

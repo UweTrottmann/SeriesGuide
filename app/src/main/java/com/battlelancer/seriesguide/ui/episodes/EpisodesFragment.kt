@@ -17,7 +17,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ListView
@@ -39,8 +38,8 @@ import com.battlelancer.seriesguide.util.ViewTools
 /**
  * Displays a list of episodes of a season.
  */
-class EpisodesFragment : ListFragment(), OnClickListener, OnFlagEpisodeListener,
-        EpisodesAdapter.PopupMenuClickListener {
+class EpisodesFragment : ListFragment(), OnFlagEpisodeListener,
+    EpisodesAdapter.PopupMenuClickListener {
 
     private lateinit var sortOrder: Constants.EpisodeSorting
     private var isDualPane: Boolean = false
@@ -237,7 +236,7 @@ class EpisodesFragment : ListFragment(), OnClickListener, OnFlagEpisodeListener,
                 findItem(R.id.menu_action_episodes_skip).isVisible = !isWatched && !isSkipped
                 findItem(R.id.menu_action_episodes_dont_skip).isVisible = isSkipped
             }
-            setOnMenuItemClickListener({ item ->
+            setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.menu_action_episodes_watched -> {
                         onFlagEpisodeWatched(episodeTvdbId, episodeNumber, true)
@@ -276,14 +275,15 @@ class EpisodesFragment : ListFragment(), OnClickListener, OnFlagEpisodeListener,
                         true
                     }
                     R.id.menu_action_episodes_manage_lists -> {
-                        ManageListsDialogFragment.showListsDialog(episodeTvdbId,
-                                ListItemTypes.EPISODE, fragmentManager)
-                        Utils.trackContextMenu(requireContext(), TAG, "Manage lists")
+                        if (ManageListsDialogFragment.show(fragmentManager,
+                                        episodeTvdbId, ListItemTypes.EPISODE)) {
+                            Utils.trackContextMenu(requireContext(), TAG, "Manage lists")
+                        }
                         true
                     }
                     else -> false
                 }
-            })
+            }
             show()
         }
     }
@@ -310,11 +310,11 @@ class EpisodesFragment : ListFragment(), OnClickListener, OnFlagEpisodeListener,
     }
 
     private fun showSortDialog() {
-        val sortDialog = SingleChoiceDialogFragment.newInstance(
+        SingleChoiceDialogFragment.show(fragmentManager,
                 R.array.epsorting,
                 R.array.epsortingData, sortOrder.index(),
-                DisplaySettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting)
-        sortDialog.show(requireFragmentManager(), "fragment_sort")
+                DisplaySettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting,
+                "episodeSortOrderDialog")
     }
 
     private val onSortOrderChangedListener = OnSharedPreferenceChangeListener { _, key ->
@@ -343,10 +343,6 @@ class EpisodesFragment : ListFragment(), OnClickListener, OnFlagEpisodeListener,
                 smoothScrollToPosition(position)
             }
         }
-    }
-
-    override fun onClick(v: View) {
-        requireActivity().openContextMenu(v)
     }
 
     private fun setWatchedToggleState(unwatchedEpisodes: Int) {

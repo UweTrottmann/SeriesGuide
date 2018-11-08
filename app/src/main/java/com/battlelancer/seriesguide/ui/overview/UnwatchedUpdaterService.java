@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.JobIntentService;
+import android.support.v4.app.SafeJobIntentService;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -16,7 +17,7 @@ import timber.log.Timber;
  * JobIntentService} so only one runs at a time. Not using an IntentService as it ran into
  * O background restrictions on some devices (even though it was started during onStart).
  */
-public class UnwatchedUpdaterService extends JobIntentService {
+public class UnwatchedUpdaterService extends SafeJobIntentService {
 
     public static final String EXTRA_SHOW_TVDB_ID = "showTvdbId";
     public static final String EXTRA_OPTIONAL_SEASON_TVDB_ID = "seasonTvdbId";

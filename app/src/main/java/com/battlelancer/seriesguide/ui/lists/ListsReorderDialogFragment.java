@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.ui.lists;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatDialogFragment;
@@ -27,11 +26,6 @@ import java.util.List;
  * keyboard friendly (same as extension configuration screen).
  */
 public class ListsReorderDialogFragment extends AppCompatDialogFragment {
-
-    public static void show(FragmentManager fragmentManager) {
-        ListsReorderDialogFragment f = new ListsReorderDialogFragment();
-        f.show(fragmentManager, "lists-reorder-dialog");
-    }
 
     @BindView(R.id.listViewListsReorder) DragSortListView dragSortListView;
     @BindView(R.id.buttonNegative) Button buttonNegative;

@@ -18,6 +18,7 @@ public class SyncProgress {
         HEXAGON_SHOWS(R.string.hexagon, R.string.shows),
         HEXAGON_MOVIES(R.string.hexagon, R.string.movies),
         HEXAGON_LISTS(R.string.hexagon, R.string.lists),
+        TRAKT(R.string.trakt, 0),
         TRAKT_EPISODES(R.string.trakt, R.string.episodes),
         TRAKT_RATINGS(R.string.trakt, R.string.ratings),
         TRAKT_MOVIES(R.string.trakt, R.string.movies);

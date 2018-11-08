@@ -15,9 +15,6 @@
 # Ignore notes about reflection use in support library
 -dontnote android.support.**
 
-# Do not shrink any of this apps code (unused code should be deleted instead)
--keep class com.battlelancer.** { *; }
-
 # Cloud Endpoints libraries
 # Needed to keep generic types and @Key annotations accessed via reflection
 -keepattributes Signature,RuntimeVisibleAnnotations,AnnotationDefault
@@ -51,8 +48,9 @@
 -dontwarn sun.misc.Unsafe
 
 # Google API client
-# warnings due to removed old Guava version used in test classes
+# warnings due to Guava classes used in tests and ErrorProne annotations
 -dontwarn com.google.api.client.googleapis.testing.**
+-dontwarn com.google.errorprone.annotations.**
 
 # OkHttp 3
 # JSR 305 annotations are for embedding nullability information.

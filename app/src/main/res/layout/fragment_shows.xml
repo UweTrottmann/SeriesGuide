@@ -12,8 +12,8 @@
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:paddingBottom="70dp"
         android:paddingTop="70dp"
+        android:paddingBottom="70dp"
         android:text="@string/action_shows_add"
         android:visibility="gone"
         tools:drawableTint="?attr/sgColorIcon"
@@ -26,23 +26,23 @@
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:paddingBottom="70dp"
         android:paddingTop="70dp"
+        android:paddingBottom="70dp"
         android:text="@string/empty_filter"
         android:visibility="gone"
         tools:drawableTint="?attr/sgColorIcon"
         tools:drawableTop="@drawable/ic_filter_white_24dp" />
 
     <!-- Add large bottom padding to make room for FAB if scrolled to bottom. -->
-    <com.battlelancer.seriesguide.ui.shows.HeaderGridView
-        android:id="@+android:id/list"
-        style="@style/Widget.SeriesGuide.Grid"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewShows"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="@dimen/showgrid_columnWidth"
-        android:numColumns="auto_fit"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
         android:paddingBottom="88dp"
-        android:stretchMode="columnWidth"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical"
         tools:listitem="@layout/item_show" />
 
 </FrameLayout>

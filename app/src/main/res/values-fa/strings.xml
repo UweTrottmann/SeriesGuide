@@ -475,7 +475,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">سفارشی سازی افزونه‌ها</string>
   <string name="action_extensions_add">افزودن افزونه‌ها</string>
-  <string name="action_extensions_limit">برای افزودن افزونه‌های بیش‌تر X را بگیرید</string>
   <string name="action_extensions_search">گرفتن افزونه‌های بیش‌تر</string>
   <string name="action_extension_remove">حدف</string>
   <string name="extension_amazon">جست‌وجوی آمازون</string>

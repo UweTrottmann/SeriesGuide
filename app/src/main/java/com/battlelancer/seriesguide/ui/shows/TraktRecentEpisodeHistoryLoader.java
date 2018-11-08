@@ -9,6 +9,7 @@ import android.support.v4.util.SparseArrayCompat;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
@@ -117,7 +118,7 @@ public class TraktRecentEpisodeHistoryLoader
             if (showTvdbId != null && localShows != null) {
                 // prefer poster of already added show, fall back to first uploaded poster
                 posterUrl = TvdbImageTools.smallSizeOrResolveUrl(localShows.get(showTvdbId),
-                        showTvdbId);
+                        showTvdbId, DisplaySettings.LANGUAGE_EN);
             } else {
                 posterUrl = null;
             }

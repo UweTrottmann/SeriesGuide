@@ -71,9 +71,14 @@ abstract class SgRoomDatabase : RoomDatabase() {
                                     MIGRATION_41_43,
                                     MIGRATION_40_43,
                                     MIGRATION_39_43,
-                                    MIGRATION_38_43
+                                    MIGRATION_38_43,
+                                    MIGRATION_37_43,
+                                    MIGRATION_36_43,
+                                    MIGRATION_35_43,
+                                    MIGRATION_34_43
                             )
                             .addCallback(CALLBACK)
+                            .allowMainThreadQueries()
                             .build()
                     instance = newInstance
                     newInstance
@@ -274,7 +279,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
         }
 
         // can not update pre-Room versions incrementally, always need to update to first Room version
-        // so only provide upgrade support from version 38 (used in SG 26 from end 2015)
+        // so only provide upgrade support from version 34 (used in SG 21 from January 2015)
 
         private val MIGRATION_41_43 = object : Migration(
                 SeriesGuideDatabase.DBVER_41_EPISODE_LAST_UPDATED, VERSION_43_ROOM) {
@@ -309,6 +314,42 @@ abstract class SgRoomDatabase : RoomDatabase() {
                 Timber.d("Migrating database from 38 to 43")
                 SeriesGuideDatabase.upgradeToThirtyNine(database)
                 MIGRATION_39_43.migrate(database)
+            }
+        }
+
+        private val MIGRATION_37_43 = object : Migration(
+            SeriesGuideDatabase.DBVER_37_LANGUAGE_PER_SERIES, VERSION_43_ROOM) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Timber.d("Migrating database from 37 to 43")
+                SeriesGuideDatabase.upgradeToThirtyEight(database)
+                MIGRATION_38_43.migrate(database)
+            }
+        }
+
+        private val MIGRATION_36_43 = object : Migration(
+            SeriesGuideDatabase.DBVER_36_ORDERABLE_LISTS, VERSION_43_ROOM) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Timber.d("Migrating database from 36 to 43")
+                SeriesGuideDatabase.upgradeToThirtySeven(database)
+                MIGRATION_37_43.migrate(database)
+            }
+        }
+
+        private val MIGRATION_35_43 = object : Migration(
+            SeriesGuideDatabase.DBVER_35_ACTIVITY_TABLE, VERSION_43_ROOM) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Timber.d("Migrating database from 35 to 43")
+                SeriesGuideDatabase.upgradeToThirtySix(database)
+                MIGRATION_36_43.migrate(database)
+            }
+        }
+
+        private val MIGRATION_34_43 = object : Migration(
+            SeriesGuideDatabase.DBVER_34_TRAKT_V2, VERSION_43_ROOM) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Timber.d("Migrating database from 34 to 43")
+                SeriesGuideDatabase.upgradeToThirtyFive(database)
+                MIGRATION_35_43.migrate(database)
             }
         }
     }

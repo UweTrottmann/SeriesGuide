@@ -37,14 +37,14 @@ import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
-import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
-import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.streaming.StreamingSearch;
+import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
@@ -181,7 +181,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
         ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
         ViewTools.setVectorIconLeft(theme, buttonCheckin, R.drawable.ic_checkin_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonStreamingSearch, R.drawable.ic_play_arrow_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonStreamingSearch,
+                R.drawable.ic_play_arrow_black_24dp);
 
         // comments button
         ViewTools.setVectorIconLeft(theme, commentsButton, R.drawable.ic_forum_black_24dp);
@@ -274,9 +275,10 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             shareEpisode();
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
-            ManageListsDialogFragment.showListsDialog(episodeTvdbId, ListItemTypes.EPISODE,
-                    getFragmentManager());
-            Utils.trackAction(requireActivity(), TAG, "Manage lists");
+            if (ManageListsDialogFragment
+                    .show(getFragmentManager(), episodeTvdbId, ListItemTypes.EPISODE)) {
+                Utils.trackAction(requireActivity(), TAG, "Manage lists");
+            }
             return true;
         } else if (itemId == R.id.menu_action_episode_calendar) {
             ShareUtils.suggestCalendarEvent(requireActivity(), showTitle,
@@ -339,7 +341,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onStreamingSearchConfigured(StreamingSearchConfigureDialog.StreamingSearchConfiguredEvent event) {
+    public void onStreamingSearchConfigured(
+            StreamingSearchConfigureDialog.StreamingSearchConfiguredEvent event) {
         if (event.getTurnedOff()) {
             buttonStreamingSearch.setVisibility(View.GONE);
         } else {
@@ -529,11 +532,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         buttonCheckin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // display a check-in dialog
-                CheckInDialogFragment f = CheckInDialogFragment.newInstance(requireActivity(),
-                        episodeTvdbId);
-                if (f != null && isResumed()) {
-                    f.show(requireFragmentManager(), "checkin-dialog");
+                if (CheckInDialogFragment.show(getContext(), getFragmentManager(), episodeTvdbId)) {
                     Utils.trackAction(requireContext(), TAG, "Check-In");
                 }
             }
@@ -661,8 +660,10 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     }
 
     private void rateEpisode() {
-        RateDialogFragment.displayRateDialog(requireContext(), getFragmentManager(), episodeTvdbId);
-        Utils.trackAction(requireContext(), TAG, "Rate (trakt)");
+        if (RateDialogFragment.newInstanceEpisode(episodeTvdbId)
+                .safeShow(getContext(), getFragmentManager())) {
+            Utils.trackAction(requireContext(), TAG, "Rate (trakt)");
+        }
     }
 
     private void shareEpisode() {

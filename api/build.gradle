@@ -17,8 +17,8 @@ android {
 
     compileOptions {
         encoding = "UTF-8"
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     lintOptions {
@@ -86,14 +86,14 @@ uploadArchives {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                if (hasProperty('ossrhUsername') && hasProperty('ossrhPassword')) {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                if (hasProperty('SONATYPE_NEXUS_USERNAME') && hasProperty('SONATYPE_NEXUS_PASSWORD')) {
+                    authentication(userName: SONATYPE_NEXUS_USERNAME, password: SONATYPE_NEXUS_PASSWORD)
                 }
             }
 
             snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                if (hasProperty('ossrhUsername') && hasProperty('ossrhPassword')) {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                if (hasProperty('SONATYPE_NEXUS_USERNAME') && hasProperty('SONATYPE_NEXUS_PASSWORD')) {
+                    authentication(userName: SONATYPE_NEXUS_USERNAME, password: SONATYPE_NEXUS_PASSWORD)
                 }
             }
 

@@ -44,27 +44,27 @@ Debug builds should just work.
 To add shows or movies you need to create API keys for 
 [TheTVDB](https://www.thetvdb.com/member/api), [TMDB](https://www.themoviedb.org/settings/api) 
 and OAuth credentials for [trakt](https://trakt.tv/oauth/applications). 
-Place them in `gradle.properties` in the root directory (where `settings.gradle` is):
+Place them in `gradle.properties` in your systems `.gradle` directory:
 
 ```
-TVDB_API_KEY=<your api key>
-TMDB_API_KEY=<your api key>
-TRAKT_CLIENT_ID=<your trakt client id>
-TRAKT_CLIENT_SECRET=<your trakt client secret>
+SG_TVDB_API_KEY=<your api key>
+SG_TMDB_API_KEY=<your api key>
+SG_TRAKT_CLIENT_ID=<your trakt client id>
+SG_TRAKT_CLIENT_SECRET=<your trakt client secret>
 ```
 
 ### Release
 To release some additional `gradle.properties` values might be necessary:
 ```
 # Play Store in-app billing public key
-IAP_KEY_A=<keypart>
-IAP_KEY_B=<keypart>
-IAP_KEY_C=<keypart>
-IAP_KEY_D=<keypart>
+SG_IAP_KEY_A=<keypart>
+SG_IAP_KEY_B=<keypart>
+SG_IAP_KEY_C=<keypart>
+SG_IAP_KEY_D=<keypart>
 
 # Credentials to publish the API jar
-ossrhUsername=<your sonatype username>
-ossrhPassword=<your sonatype password>
+SONATYPE_NEXUS_USERNAME=<your sonatype username>
+SONATYPE_NEXUS_PASSWORD=<your sonatype password>
 ```
 
 #### Crashlytics

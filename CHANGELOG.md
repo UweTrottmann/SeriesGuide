@@ -5,6 +5,59 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 45
+----------
+*(2018-11-08)*
+
+* Discover: tap a show, then the globe icon to change the language a show is added in.
+* Settings: the fallback language for shows (English by default) is used to get show info not 
+  available in the desired language.
+* Discover: almost endless list of popular shows.
+* trakt: sync ratings and watched movies even if Cloud is connected.
+* Small icon tweaks to fit in with the latest version of Android.
+
+#### 45
+*(2018-11-08)*
+
+* 🔨 Fix crash on Xiaomi devices when using illegal links to notification sounds.
+* 🔨 Fix crash when adding show to home screen and leaving app.
+
+#### 45-beta3
+*(2018-11-02)*
+
+* 🔧 Speedier scrolling and animations for show list.
+* 🔧 Support direct upgrade from SeriesGuide version 21 (previously: 26) or newer.
+* 🔧 If Cloud and trakt are connected, also sync ratings and watched movies from trakt.
+* 🔨 If Cloud and trakt are connected, do not remove watched flag from movies when syncing.
+* 🔧 Use outline icons where appropriate to fit with new platform design.
+* 🔨 Fix disappearing info message when setting movie watched that was on the watchlist.
+* 🔨 Prevent crash on Cloud setup screen.
+* 📝 Latest translations from crowdin.
+
+#### 45-beta2
+*(2018-09-28)*
+
+* 🔧 Popular shows is now an (almost) endless list.
+* 🔧 Display sync status (and error) for initial trakt sync step.
+* 🔨 Fix memory leak when downloading movie info and TMDb asks to try again later.
+* 🔨 Correctly back-off if syncing with trakt or Cloud failed.
+* 🔨 Allow removing extensions with a remote (menu buttons were not selectable).
+* 📝 Latest translations from crowdin.
+
+#### 45-beta1
+*(2018-09-21)*
+
+* 🔧 Change the language a show will be added in from add dialog.
+* 🔧 Remove 'Preferred content language' setting. Shows that never had a language set will default 
+  to English instead.
+* 🔧 Shows added from discover sub-sections (popular, recommended, watched, collection and watchlist) 
+  skipping the add dialog are added in the language search is set to (or alternative language if set
+  to any language).
+* 🔧 If a show title is not translated get show title and description in the fall back language. 
+  This mirrors existing behavior for episodes.
+* 🔨 Potential fixes for crashes with dialogs, in calendar view and during background processing.
+* 📝 Latest translations from crowdin.
+
 Version 44
 ----------
 *(2018-09-14)*

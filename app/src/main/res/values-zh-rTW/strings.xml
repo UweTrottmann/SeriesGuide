@@ -464,7 +464,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">客製化擴充套件</string>
   <string name="action_extensions_add">新增擴充套件</string>
-  <string name="action_extensions_limit">獲取 X 以新增更多的擴充套件。</string>
   <string name="action_extensions_search">取得更多擴充套件</string>
   <string name="action_extension_remove">移除</string>
   <string name="extension_amazon">Amazon搜索</string>

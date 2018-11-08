@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
@@ -20,7 +21,9 @@ import com.battlelancer.seriesguide.util.ViewTools;
 public abstract class BaseShowsAdapter extends CursorAdapter {
 
     public interface OnItemClickListener {
-        void onClick(View view, ShowViewHolder viewHolder);
+        void onItemClick(View anchor, ShowViewHolder viewHolder);
+
+        void onMenuClick(View view, ShowViewHolder viewHolder);
 
         void onFavoriteClick(int showTvdbId, boolean isFavorite);
     }
@@ -83,9 +86,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         public boolean isFavorited;
         public boolean isHidden;
 
-        private OnItemClickListener clickListener;
-
-        public ShowViewHolder(View v, OnItemClickListener onItemClickListener) {
+        public ShowViewHolder(View v, @NonNull OnItemClickListener onItemClickListener) {
             name = v.findViewById(R.id.seriesname);
             timeAndNetwork = v.findViewById(R.id.textViewShowsTimeAndNetwork);
             episode = v.findViewById(R.id.TextViewShowListNextEpisode);
@@ -94,26 +95,15 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
             poster = v.findViewById(R.id.showposter);
             favorited = v.findViewById(R.id.favoritedLabel);
             contextMenu = v.findViewById(R.id.imageViewShowsContextMenu);
-            clickListener = onItemClickListener;
 
+            // item
+            v.setOnClickListener(view -> onItemClickListener.onItemClick(view, this));
             // favorite star
-            favorited.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (clickListener != null) {
-                        clickListener.onFavoriteClick(showTvdbId, !isFavorited);
-                    }
-                }
-            });
+            favorited.setOnClickListener(
+                    view -> onItemClickListener.onFavoriteClick(showTvdbId, !isFavorited));
             // context menu
-            contextMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (clickListener != null) {
-                        clickListener.onClick(v, ShowViewHolder.this);
-                    }
-                }
-            });
+            contextMenu.setOnClickListener(
+                    view -> onItemClickListener.onMenuClick(view, ShowViewHolder.this));
         }
     }
 }

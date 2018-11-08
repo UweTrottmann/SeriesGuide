@@ -18,14 +18,13 @@ public class DisplaySettings {
 
     public static final String KEY_THEME = "com.battlelancer.seriesguide.theme";
 
+    @Deprecated // language is stored per show or defined by place of usage
     public static final String KEY_LANGUAGE_PREFERRED = "language";
     public static final String KEY_LANGUAGE_FALLBACK = "com.battlelancer.seriesguide.languageFallback";
+    public static final String KEY_LANGUAGE_SEARCH = "com.battlelancer.seriesguide.languagesearch";
 
     public static final String KEY_MOVIES_LANGUAGE = "com.battlelancer.seriesguide.languagemovies";
-
     public static final String KEY_MOVIES_REGION = "com.battlelancer.seriesguide.regionmovies";
-
-    public static final String KEY_LANGUAGE_SEARCH = "com.battlelancer.seriesguide.languagesearch";
 
     public static final String KEY_NUMBERFORMAT = "numberformat";
 
@@ -74,15 +73,6 @@ public class DisplaySettings {
     }
 
     /**
-     * Returns two letter ISO 639-1 language code of the show language preferred by the user.
-     * Defaults to 'en'.
-     */
-    public static String getShowsLanguage(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_LANGUAGE_PREFERRED, LANGUAGE_EN);
-    }
-
-    /**
      * Returns two letter ISO 639-1 language code of the fallback show language preferred by the
      * user. Defaults to 'en'.
      */
@@ -118,13 +108,26 @@ public class DisplaySettings {
 
     /**
      * @return Two letter ISO 639-1 language code of the language the user prefers when searching or
-     * 'xx' if all languages should be searched. Defaults to {@link #getShowsLanguage(Context)}.
+     * 'xx' if all languages should be searched. Defaults to all languages.
      */
     public static String getSearchLanguage(Context context) {
         String languageCode = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_LANGUAGE_SEARCH, getShowsLanguage(context));
+                .getString(KEY_LANGUAGE_SEARCH, context.getString(R.string.language_code_any));
         return TextUtils.isEmpty(languageCode)
                 ? context.getString(R.string.language_code_any)
+                : languageCode;
+    }
+
+    /**
+     * @return Two letter ISO 639-1 language code of the language the user prefers when searching or
+     * {@link #getShowsLanguageFallback(Context)} if all languages is selected. Defaults to
+     * {@link #getShowsLanguageFallback(Context)}.
+     */
+    public static String getSearchLanguageOrFallbackIfAny(Context context) {
+        String languageCode = PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(KEY_LANGUAGE_SEARCH, null);
+        return TextUtils.isEmpty(languageCode)
+                ? getShowsLanguageFallback(context)
                 : languageCode;
     }
 

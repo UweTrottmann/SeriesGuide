@@ -43,14 +43,14 @@ import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
-import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
-import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.streaming.StreamingSearch;
+import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
@@ -98,8 +98,12 @@ public class OverviewFragment extends Fragment implements
     private static final String ARG_EPISODE_TVDB_ID = "episodeTvdbId";
 
     @BindView(R.id.containerOverviewShow) View containerShow;
-    @Nullable @BindView(R.id.viewStubOverviewFeedback) ViewStub feedbackViewStub;
-    @Nullable @BindView(R.id.feedbackViewOverview) FeedbackView feedbackView;
+    @Nullable
+    @BindView(R.id.viewStubOverviewFeedback)
+    ViewStub feedbackViewStub;
+    @Nullable
+    @BindView(R.id.feedbackViewOverview)
+    FeedbackView feedbackView;
     @BindView(R.id.imageButtonFavorite) ImageButton buttonFavorite;
     @BindView(R.id.containerOverviewEpisode) View containerEpisode;
     @BindView(R.id.containerEpisodeActions) LinearLayout containerActions;
@@ -186,7 +190,8 @@ public class OverviewFragment extends Fragment implements
         ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
         ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
         ViewTools.setVectorIconLeft(theme, buttonCheckin, R.drawable.ic_checkin_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonStreamingSearch, R.drawable.ic_play_arrow_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonStreamingSearch,
+                R.drawable.ic_play_arrow_black_24dp);
 
         // ratings
         CheatSheet.setup(containerRatings, R.string.action_rate);
@@ -300,11 +305,11 @@ public class OverviewFragment extends Fragment implements
             return true;
         } else if (itemId == R.id.menu_overview_manage_lists) {
             if (isEpisodeDataAvailable) {
-                ManageListsDialogFragment.showListsDialog(
-                        currentEpisodeCursor.getInt(EpisodeQuery._ID),
-                        ListItemTypes.EPISODE, getFragmentManager());
+                if (ManageListsDialogFragment.show(getFragmentManager(),
+                        currentEpisodeCursor.getInt(EpisodeQuery._ID), ListItemTypes.EPISODE)) {
+                    Utils.trackAction(getActivity(), TAG, "Manage lists");
+                }
             }
-            Utils.trackAction(getActivity(), TAG, "Manage lists");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -350,11 +355,7 @@ public class OverviewFragment extends Fragment implements
         }
         int episodeTvdbId = currentEpisodeCursor.getInt(EpisodeQuery._ID);
         // check in
-        CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
-                episodeTvdbId);
-        // don't commit fragment change after onPause
-        if (f != null && isResumed()) {
-            f.show(getFragmentManager(), "checkin-dialog");
+        if (CheckInDialogFragment.show(getActivity(), getFragmentManager(), episodeTvdbId)) {
             Utils.trackAction(getActivity(), TAG, "Check-In");
         }
     }
@@ -379,7 +380,8 @@ public class OverviewFragment extends Fragment implements
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onStreamingSearchConfigured(StreamingSearchConfigureDialog.StreamingSearchConfiguredEvent event) {
+    public void onStreamingSearchConfigured(
+            StreamingSearchConfigureDialog.StreamingSearchConfiguredEvent event) {
         if (event.getTurnedOff()) {
             buttonStreamingSearch.setVisibility(View.GONE);
         } else {
@@ -429,11 +431,10 @@ public class OverviewFragment extends Fragment implements
         if (currentEpisodeTvdbId == 0) {
             return;
         }
-
-        RateDialogFragment.displayRateDialog(getActivity(), getFragmentManager(),
-                currentEpisodeTvdbId);
-
-        Utils.trackAction(getActivity(), TAG, "Rate (trakt)");
+        if (RateDialogFragment.newInstanceEpisode(currentEpisodeTvdbId)
+                .safeShow(getContext(), getFragmentManager())) {
+            Utils.trackAction(getActivity(), TAG, "Rate (trakt)");
+        }
     }
 
     @OnClick(R.id.buttonEpisodeComments)
@@ -487,7 +488,7 @@ public class OverviewFragment extends Fragment implements
 
     interface EpisodeQuery {
 
-        String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[]{
                 Episodes._ID,
                 Episodes.NUMBER,
                 Episodes.ABSOLUTE_NUMBER,
@@ -530,7 +531,7 @@ public class OverviewFragment extends Fragment implements
 
     interface ShowQuery {
 
-        String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[]{
                 Shows._ID,
                 Shows.TITLE,
                 Shows.STATUS,

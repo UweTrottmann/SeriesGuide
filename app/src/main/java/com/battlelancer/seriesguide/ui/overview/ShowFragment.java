@@ -10,7 +10,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
@@ -36,7 +35,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktRatingsTask;
 import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity;
@@ -51,7 +49,7 @@ import com.battlelancer.seriesguide.util.ClipboardTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
-import com.battlelancer.seriesguide.util.ShortcutUtils;
+import com.battlelancer.seriesguide.util.ShortcutLiveData;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -187,7 +185,8 @@ public class ShowFragment extends Fragment {
         });
 
         // shortcut button
-        ViewTools.setVectorIconLeft(theme, buttonShortcut, R.drawable.ic_add_to_home_screen_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonShortcut,
+                R.drawable.ic_add_to_home_screen_black_24dp);
         buttonShortcut.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -250,8 +249,8 @@ public class ShowFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_show_manage_lists) {
-            ManageListsDialogFragment.showListsDialog(getShowTvdbId(), ListItemTypes.SHOW,
-                    getFragmentManager());
+            ManageListsDialogFragment
+                    .show(getFragmentManager(), getShowTvdbId(), ListItemTypes.SHOW);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -594,9 +593,8 @@ public class ShowFragment extends Fragment {
     }
 
     private void rateShow() {
-        if (TraktCredentials.ensureCredentials(getActivity())) {
-            RateDialogFragment rateDialog = RateDialogFragment.newInstanceShow(getShowTvdbId());
-            rateDialog.show(getFragmentManager(), "ratedialog");
+        if (RateDialogFragment.newInstanceShow(getShowTvdbId()).safeShow(getContext(),
+                getFragmentManager())) {
             Utils.trackAction(getActivity(), TAG, "Rate (trakt)");
         }
     }
@@ -609,13 +607,8 @@ public class ShowFragment extends Fragment {
     }
 
     private void displayLanguageSettings() {
-        // guard against onClick called after fragment is up navigated (multi-touch)
-        // onSaveInstanceState might already be called
-        if (isResumed()) {
-            DialogFragment dialog = LanguageChoiceDialogFragment.newInstance(
-                    R.array.languageCodesShows, languageCode);
-            dialog.show(getFragmentManager(), "dialog-language");
-        }
+        LanguageChoiceDialogFragment.show(getFragmentManager(),
+                R.array.languageCodesShows, languageCode, "showLanguageDialog");
     }
 
     private void changeShowLanguage(@NonNull String languageCode) {
@@ -627,7 +620,7 @@ public class ShowFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(LanguageChoiceDialogFragment.LanguageChangedEvent event) {
-        changeShowLanguage(event.selectedLanguageCode);
+        changeShowLanguage(event.getSelectedLanguageCode());
     }
 
     private void createShortcut() {
@@ -641,7 +634,15 @@ public class ShowFragment extends Fragment {
         }
 
         // create the shortcut
-        ShortcutUtils.createShortcut(getContext(), showTitle, posterPath, getShowTvdbId());
+        ShortcutLiveData shortcutLiveData = new ShortcutLiveData(getContext(), showTitle,
+                posterPath, getShowTvdbId());
+        shortcutLiveData.observe(this, readyEvent -> {
+            if (readyEvent != null) {
+                readyEvent.createShortcutIfNotHandled();
+            }
+            shortcutLiveData.removeObservers(this);
+        });
+        shortcutLiveData.prepareShortcut();
 
         // Analytics
         Utils.trackAction(getActivity(), TAG, "Add to Homescreen");

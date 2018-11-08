@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatDialogFragment
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.util.safeShow
 import org.greenrobot.eventbus.EventBus
 
 class StreamingSearchConfigureDialog : AppCompatDialogFragment() {
@@ -50,7 +51,7 @@ class StreamingSearchConfigureDialog : AppCompatDialogFragment() {
     companion object {
         @JvmStatic
         fun show(fragmentManager: FragmentManager) {
-            StreamingSearchConfigureDialog().show(fragmentManager, "streamingSearchDialog");
+            StreamingSearchConfigureDialog().safeShow(fragmentManager, "streamingSearchDialog")
         }
     }
 

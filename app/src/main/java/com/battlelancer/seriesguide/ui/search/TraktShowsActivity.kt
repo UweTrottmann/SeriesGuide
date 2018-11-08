@@ -19,7 +19,10 @@ class TraktShowsActivity : BaseNavDrawerActivity(), AddShowDialogFragment.OnAddS
         setupActionBar(link)
 
         if (savedInstanceState == null) {
-            val fragment = TraktAddFragment.newInstance(link)
+            val fragment = when (link) {
+                TraktShowsLink.POPULAR -> ShowsPopularFragment()
+                else -> TraktAddFragment.newInstance(link)
+            }
             supportFragmentManager
                     .beginTransaction()
                     .add(R.id.containerTraktShowsFragment, fragment)
@@ -41,7 +44,7 @@ class TraktShowsActivity : BaseNavDrawerActivity(), AddShowDialogFragment.OnAddS
         const val EXTRA_LINK = "LINK"
 
         @JvmStatic
-        fun intent(context: Context, link: TraktShowsLink): Intent{
+        fun intent(context: Context, link: TraktShowsLink): Intent {
             return Intent(context, TraktShowsActivity::class.java).putExtra(EXTRA_LINK, link.id)
         }
     }

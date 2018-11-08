@@ -63,10 +63,10 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
                 return true;
             }
             case R.id.menu_action_shows_manage_lists: {
-                ManageListsDialogFragment.showListsDialog(showTvdbId,
-                        SeriesGuideContract.ListItemTypes.SHOW,
-                        fragmentManager);
-                Utils.trackContextMenu(context, logTag, "Manage lists");
+                if (ManageListsDialogFragment.show(fragmentManager, showTvdbId,
+                        SeriesGuideContract.ListItemTypes.SHOW)) {
+                    Utils.trackContextMenu(context, logTag, "Manage lists");
+                }
                 return true;
             }
             case R.id.menu_action_shows_update: {
@@ -75,10 +75,9 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
                 return true;
             }
             case R.id.menu_action_shows_remove: {
-                if (!SgSyncAdapter.isSyncActive(context, true)) {
-                    RemoveShowDialogFragment.show(fragmentManager, showTvdbId);
+                if (RemoveShowDialogFragment.show(context, fragmentManager, showTvdbId)) {
+                    Utils.trackContextMenu(context, logTag, "Delete show");
                 }
-                Utils.trackContextMenu(context, logTag, "Delete show");
                 return true;
             }
             default:

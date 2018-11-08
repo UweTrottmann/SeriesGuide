@@ -475,7 +475,6 @@
   <!-- Extensions -->
   <string name="action_extensions_configure">Extensies aanpassen</string>
   <string name="action_extensions_add">Extensie toevoegen</string>
-  <string name="action_extensions_limit">Neem X om meer extensies toe te voegen</string>
   <string name="action_extensions_search">Vind meer extensies</string>
   <string name="action_extension_remove">Verwijderen</string>
   <string name="extension_amazon">Zoeken op Amazon</string>

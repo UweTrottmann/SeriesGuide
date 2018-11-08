@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -25,6 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import com.battlelancer.seriesguide.util.DialogTools;
 import java.util.HashSet;
 
 /**
@@ -32,8 +32,19 @@ import java.util.HashSet;
  */
 public class AddListDialogFragment extends AppCompatDialogFragment {
 
-    public static AddListDialogFragment newInstance() {
-        return new AddListDialogFragment();
+    private static final String TAG = "addlistdialog";
+
+    /**
+     * Display a dialog which allows to edit the title of this list or remove it.
+     */
+    public static void show(FragmentManager fm) {
+        // replace any currently showing list dialog (do not add it to the back stack)
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment prev = fm.findFragmentByTag(TAG);
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        DialogTools.safeShow(new AddListDialogFragment(), fm, ft, TAG);
     }
 
     @BindView(R.id.textInputLayoutListManageListName) TextInputLayout textInputLayoutName;
@@ -97,25 +108,6 @@ public class AddListDialogFragment extends AppCompatDialogFragment {
         super.onDestroyView();
 
         unbinder.unbind();
-    }
-
-    /**
-     * Display a dialog which allows to edit the title of this list or remove it.
-     */
-    public static void showAddListDialog(FragmentManager fm) {
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction. We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment prev = fm.findFragmentByTag("addlistdialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-
-        // Create and show the dialog.
-        DialogFragment newFragment = AddListDialogFragment.newInstance();
-        newFragment.show(ft, "addlistdialog");
     }
 
     /**

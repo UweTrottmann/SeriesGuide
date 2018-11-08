@@ -143,12 +143,8 @@ class ShowsDiscoverFragment : Fragment() {
                     // already in library, open it
                     startActivity(OverviewActivity.intentShow(context, item.tvdbid))
                 } else {
-                    // guard against onClick called after fragment is paged away (multi-touch)
-                    // onSaveInstanceState might already be called
-                    if (isResumed) {
-                        // display more details in a dialog
-                        AddShowDialogFragment.showAddDialog(item, fragmentManager)
-                    }
+                    // display more details in a dialog
+                    AddShowDialogFragment.show(context, fragmentManager, item)
                 }
             }
         }
@@ -234,15 +230,9 @@ class ShowsDiscoverFragment : Fragment() {
     }
 
     private fun displayLanguageSettings() {
-        // guard against onClick called after fragment is up navigated (multi-touch)
-        // onSaveInstanceState might already be called
-        if (isResumed) {
-            fragmentManager?.let {
-                val dialogFragment = LanguageChoiceDialogFragment.newInstance(
-                        R.array.languageCodesShowsWithAny, languageCode)
-                dialogFragment.show(fragmentManager, "dialog-language")
-            }
-        }
+        LanguageChoiceDialogFragment.show(fragmentManager!!,
+                R.array.languageCodesShowsWithAny, languageCode,
+                LanguageChoiceDialogFragment.TAG_DISCOVER)
     }
 
     override fun onStart() {
@@ -270,6 +260,9 @@ class ShowsDiscoverFragment : Fragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: LanguageChoiceDialogFragment.LanguageChangedEvent) {
+        if (LanguageChoiceDialogFragment.TAG_DISCOVER != event.tag) {
+            return
+        }
         changeLanguage(event.selectedLanguageCode)
         loadResults()
     }
