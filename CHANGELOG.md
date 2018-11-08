@@ -7,9 +7,22 @@ All dates are in the European Central timezone.
 
 Version 45
 ----------
-*(in development)*
+*(2018-11-08)*
 
-#### 45-beta2
+* Discover: tap a show, then the globe icon to change the language a show is added in.
+* Settings: the fallback language for shows (English by default) is used to get show info not 
+  available in the desired language.
+* Discover: almost endless list of popular shows.
+* trakt: sync ratings and watched movies even if Cloud is connected.
+* Small icon tweaks to fit in with the latest version of Android.
+
+#### 45
+*(2018-11-08)*
+
+* 🔨 Fix crash on Xiaomi devices when using illegal links to notification sounds.
+* 🔨 Fix crash when adding show to home screen and leaving app.
+
+#### 45-beta3
 *(2018-11-02)*
 
 * 🔧 Speedier scrolling and animations for show list.
@@ -19,6 +32,7 @@ Version 45
 * 🔧 Use outline icons where appropriate to fit with new platform design.
 * 🔨 Fix disappearing info message when setting movie watched that was on the watchlist.
 * 🔨 Prevent crash on Cloud setup screen.
+* 📝 Latest translations from crowdin.
 
 #### 45-beta2
 *(2018-09-28)*
