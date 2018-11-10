@@ -30,6 +30,9 @@
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
+        <!-- Explicitly add windowActionBar as some devices crash due to it missing -->
+        <item name="windowActionBar">false</item>
+
         <!--   your app's branding color (for the app bar) -->
         <item name="colorPrimary">@color/accent_primary</item>
         <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
@@ -103,6 +106,9 @@
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
+        <!-- Explicitly add windowActionBar as some devices crash due to it missing -->
+        <item name="windowActionBar">false</item>
+
         <!--   your app's branding color (for the app bar) -->
         <item name="colorPrimary">@android:color/black</item>
         <!--   theme UI controls like checkboxes and text fields -->
@@ -167,6 +173,9 @@
     <style name="Theme.SeriesGuide.Light" parent="Theme.BaseSeriesGuide.Light">
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+
+        <!-- Explicitly add windowActionBar as some devices crash due to it missing -->
+        <item name="windowActionBar">false</item>
 
         <!--   your app's branding color (for the app bar) -->
         <item name="colorPrimary">@color/accent_primary</item>
