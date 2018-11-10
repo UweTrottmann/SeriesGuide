@@ -127,6 +127,7 @@ public class DisplaySettings {
         String languageCode = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(KEY_LANGUAGE_SEARCH, null);
         return TextUtils.isEmpty(languageCode)
+                || context.getString(R.string.language_code_any).equals(languageCode)
                 ? getShowsLanguageFallback(context)
                 : languageCode;
     }
