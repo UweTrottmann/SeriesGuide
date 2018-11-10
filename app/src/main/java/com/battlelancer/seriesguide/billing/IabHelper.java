@@ -649,6 +649,9 @@ public class IabHelper {
         flagStartAsync("refresh inventory");
         (new Thread(new Runnable() {
             public void run() {
+                // keep own references as IabHelper might be disposed in different thread
+                Context context = IabHelper.this.context;
+                IInAppBillingService billingService = IabHelper.this.billingService;
                 if (context == null || billingService == null) {
                     flagEndAsync();
                     warnQueryInventorySkipped(listener);
