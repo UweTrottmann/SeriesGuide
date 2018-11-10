@@ -16,6 +16,14 @@ Version 45
 * trakt: sync ratings and watched movies even if Cloud is connected.
 * Small icon tweaks to fit in with the latest version of Android.
 
+#### 45.1
+*(2018-11-10)*
+
+* 🔨 Discover: correctly use fallback language if search language set to any.
+* 🔨 Fix crash when querying purchases.
+* 🔨 Potential crash fix for devices using broken theme engines.
+* 📝 Latest translations from crowdin.
+
 #### 45
 *(2018-11-08)*
 
