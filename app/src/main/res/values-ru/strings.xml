@@ -32,13 +32,13 @@
     <string name="save_selection">Сохранить выбор</string>
     <string name="action_display_all">Показать все</string>
     <string name="web_search">Веб-поиск</string>
-    <string name="add_to_homescreen">Add to Home screen</string>
+    <string name="add_to_homescreen">Добавить на главный экран</string>
     <string name="action_open">Открыть</string>
     <string name="sync_manually">Синхронизировать вручную</string>
     <string name="sync_and_update">Синхронизировать и обновить</string>
     <string name="sync_and_download_all">Синхронизировать и обновить всё</string>
-    <string name="action_turn_off">Turn off</string>
-    <string name="action_stream">Stream or purchase</string>
+    <string name="action_turn_off">Отключить</string>
+    <string name="action_stream">Стриминг или покупка</string>
     <!-- Search -->
     <string name="clear_search_history">Очистить историю поиска</string>
     <string name="search_hint">Поиск эпизодов</string>
@@ -54,7 +54,7 @@
     <string name="reinstall_info">Попробуйте сделать бэкап в настройках, переустановите приложение и восстановите данные.</string>
     <string name="api_error_generic">Не могу связаться с %s. Попробуйте позже.</string>
     <string name="api_failed">Не удалось: %s</string>
-    <string name="copy_to_clipboard">Copied to clipboard</string>
+    <string name="copy_to_clipboard">Скопировано в буфер обмена</string>
     <!-- Sharing -->
     <string name="share">Отправить</string>
     <string name="share_show">Поделиться сериалом</string>
@@ -192,7 +192,7 @@
     <string name="checkin_searchhint">Введите название сериала</string>
     <string name="add_empty">Здесь нет сериалов.</string>
     <string name="no_results">Результатов нет, попробуйте полное название.</string>
-    <string name="empty_show_search">Not found in your show list</string>
+    <string name="empty_show_search">Не найдено в вашем списке</string>
     <string name="action_try_any_language">Попробовать любой язык</string>
     <string name="action_try_again">Повторить попытку</string>
     <string name="tvdb_error_does_not_exist">Сериала не существует (пока) на TheTVDB. Попробуйте позже.</string>
@@ -480,7 +480,7 @@
     <string name="onlyx">Только для пожертвовавших</string>
     <string name="action_upgrade">Разблокировать все возможности</string>
     <string name="billing_action_subscribe">Подписка</string>
-    <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+    <string name="billing_action_manage_subscriptions">Управление подписками</string>
     <string name="billing_action_pass">Получить X Pass</string>
     <string name="billing_price_subscribe">%1$s/год, попробуйте бесплатно, можно отменить в любой момент до %2$s</string>
     <string name="billing_price_pass">Единоразовая покупка</string>
