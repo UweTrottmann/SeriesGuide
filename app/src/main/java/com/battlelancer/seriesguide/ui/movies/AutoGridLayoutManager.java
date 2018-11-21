@@ -2,9 +2,9 @@ package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.annotation.DimenRes;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.DimenRes;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.battlelancer.seriesguide.R;
 
 public class AutoGridLayoutManager extends GridLayoutManager {

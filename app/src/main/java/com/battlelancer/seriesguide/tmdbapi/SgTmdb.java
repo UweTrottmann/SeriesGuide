@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.tmdbapi;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.tmdb2.Tmdb;
 import okhttp3.OkHttpClient;

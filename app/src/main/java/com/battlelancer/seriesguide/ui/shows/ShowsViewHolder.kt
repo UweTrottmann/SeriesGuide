@@ -1,13 +1,13 @@
 package com.battlelancer.seriesguide.ui.shows
 
 import android.content.Context
-import android.support.graphics.drawable.VectorDrawableCompat
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 

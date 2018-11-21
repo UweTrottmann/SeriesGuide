@@ -1,8 +1,8 @@
 package com.battlelancer.seriesguide.traktapi;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NotificationManagerCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.fragment.app.FragmentActivity;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.service.NotificationService;
 import org.greenrobot.eventbus.EventBus;

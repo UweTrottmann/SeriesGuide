@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sgToolbar"
     style="@style/Widget.SeriesGuide.ActionBar"
@@ -15,4 +15,4 @@
         android:layout_width="32dp"
         android:layout_height="32dp" />
 
-</android.support.v7.widget.Toolbar>
+</androidx.appcompat.widget.Toolbar>

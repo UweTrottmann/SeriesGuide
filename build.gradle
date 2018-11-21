@@ -6,9 +6,11 @@ buildscript {
             'compileSdk': 28,
             'targetSdk': 26,
 
-            'supportLibrary': '28.0.0', // developer.android.com/topic/libraries/support-library/revisions.html
-            'lifecycle': '1.1.1', // developer.android.com/topic/libraries/architecture/release-notes.html
-            'room': '1.1.1', // https://developer.android.com/jetpack/docs/release-notes
+            // https://developer.android.com/jetpack/docs/release-notes
+            'annotation': '1.0.0',
+            'lifecycle': '2.0.0',
+            'paging': '2.0.0',
+            'room': '2.0.0',
 
             'butterknife': '8.8.1', // github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
             'crashlytics': '2.9.5', // docs.fabric.io/android/changelog.html

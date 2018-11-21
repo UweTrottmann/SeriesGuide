@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     tools:showIn="@layout/item_movie">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerMoviePoster"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="#F50057" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Force constant item height (set exact lines here) to avoid grid items overlapping. -->
     <TextView
@@ -53,7 +53,7 @@
         android:textAppearance="@style/TextAppearance.Caption.Dim"
         tools:text="13.11.2013" />
 
-    <android.support.v7.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageViewMovieItemContextMenu"
         android:layout_width="56dp"
         android:layout_height="56dp"

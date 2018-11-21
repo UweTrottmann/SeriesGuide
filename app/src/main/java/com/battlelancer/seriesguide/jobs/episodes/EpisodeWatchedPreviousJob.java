@@ -2,11 +2,11 @@ package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 
 public class EpisodeWatchedPreviousJob extends BaseEpisodesJob {
 

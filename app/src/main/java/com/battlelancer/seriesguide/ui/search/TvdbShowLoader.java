@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.ui.search;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;

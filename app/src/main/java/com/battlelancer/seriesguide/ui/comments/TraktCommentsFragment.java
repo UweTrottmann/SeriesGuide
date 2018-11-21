@@ -2,12 +2,6 @@ package com.battlelancer.seriesguide.ui.comments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.Loader;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -25,6 +19,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
+import androidx.loader.app.LoaderManager.LoaderCallbacks;
+import androidx.loader.content.Loader;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -287,7 +287,7 @@ public class TraktCommentsFragment extends Fragment {
     }
 
     /**
-     * Show or hide the progress bar of the {@link android.support.v4.widget.SwipeRefreshLayout}
+     * Show or hide the progress bar of the {@link SwipeRefreshLayout}
      * wrapping the comments list.
      */
     protected void showProgressBar(boolean isShowing) {

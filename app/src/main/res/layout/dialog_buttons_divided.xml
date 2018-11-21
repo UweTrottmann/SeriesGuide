@@ -9,7 +9,7 @@
         android:contentDescription="@null"
         android:src="?attr/sgColorDivider" />
 
-    <android.support.v7.widget.ButtonBarLayout
+    <androidx.appcompat.widget.ButtonBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/inline_padding"
@@ -18,7 +18,7 @@
         android:paddingTop="@dimen/inline_padding"
         app:allowStacking="true">
 
-        <android.support.v4.widget.Space
+        <androidx.legacy.widget.Space
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
@@ -37,6 +37,6 @@
             android:layout_height="wrap_content"
             tools:text="Button Positive" />
 
-    </android.support.v7.widget.ButtonBarLayout>
+    </androidx.appcompat.widget.ButtonBarLayout>
 
 </merge>

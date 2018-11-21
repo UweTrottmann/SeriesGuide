@@ -4,9 +4,9 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
 
 /**

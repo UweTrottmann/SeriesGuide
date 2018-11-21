@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings;
 

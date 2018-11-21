@@ -1,6 +1,6 @@
 package com.battlelancer.seriesguide.thetvdbapi;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.uwetrottmann.thetvdb.TheTvdb;
 import com.uwetrottmann.thetvdb.TheTvdbInterceptor;
 import dagger.Lazy;

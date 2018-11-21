@@ -1,9 +1,9 @@
 package com.battlelancer.seriesguide.widgets;
 
 import android.content.Context;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;

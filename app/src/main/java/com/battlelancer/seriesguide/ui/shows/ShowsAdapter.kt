@@ -2,13 +2,13 @@ package com.battlelancer.seriesguide.ui.shows
 
 import android.content.Context
 import android.content.res.Resources
-import android.support.graphics.drawable.VectorDrawableCompat
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.model.SgShow
 import com.battlelancer.seriesguide.settings.DisplaySettings

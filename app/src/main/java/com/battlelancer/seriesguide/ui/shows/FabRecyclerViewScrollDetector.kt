@@ -1,8 +1,8 @@
 package com.battlelancer.seriesguide.ui.shows
 
-import android.support.design.widget.FloatingActionButton
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /**
  * Hides the floating action button when scrolling down, shows it when scrolling up. If the view can

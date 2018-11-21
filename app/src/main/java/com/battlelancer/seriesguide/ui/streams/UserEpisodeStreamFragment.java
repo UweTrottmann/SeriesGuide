@@ -2,10 +2,10 @@ package com.battlelancer.seriesguide.ui.streams;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListAdapter;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;

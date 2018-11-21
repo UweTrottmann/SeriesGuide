@@ -1,8 +1,8 @@
 package com.battlelancer.seriesguide.ui.streams;
 
 import android.content.Context;
-import android.support.v4.util.SparseArrayCompat;
 import android.text.format.DateUtils;
+import androidx.collection.SparseArrayCompat;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;

@@ -2,8 +2,8 @@ package com.battlelancer.seriesguide.adapters;
 
 import android.database.Cursor;
 import android.database.DataSetObserver;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<VH> {

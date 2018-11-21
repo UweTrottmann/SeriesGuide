@@ -5,12 +5,12 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.CalendarContract;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.app.ShareCompat;
-import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.text.format.DateUtils;
 import android.widget.Toast;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.core.app.ShareCompat;
+import androidx.core.app.ShareCompat.IntentBuilder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 

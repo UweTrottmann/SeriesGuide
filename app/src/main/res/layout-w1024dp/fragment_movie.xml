@@ -23,7 +23,7 @@
             android:layout_gravity="center" />
 
         <!-- Padding is adjusted in code based on translucent status bar. -->
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/contentContainerMovie"
             android:layout_width="740dp"
             android:layout_height="match_parent"
@@ -211,10 +211,10 @@
 
             </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <!-- Padding is adjusted in code based on translucent status bar. -->
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/contentContainerMovieRight"
             android:layout_width="230dp"
             android:layout_height="match_parent"
@@ -236,7 +236,7 @@
 
             </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </FrameLayout>
 

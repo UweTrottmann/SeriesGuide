@@ -2,8 +2,8 @@ package com.battlelancer.seriesguide.util.tasks;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.uwetrottmann.trakt5.entities.MovieIds;

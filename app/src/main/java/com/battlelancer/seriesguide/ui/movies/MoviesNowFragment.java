@@ -2,14 +2,6 @@ package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,15 +11,23 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ui.shows.NowAdapter;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.ui.streams.HistoryActivity;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.ui.shows.NowAdapter;
+import com.battlelancer.seriesguide.ui.streams.HistoryActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
@@ -235,7 +235,7 @@ public class MoviesNowFragment extends Fragment {
     }
 
     /**
-     * Show or hide the progress bar of the {@link android.support.v4.widget.SwipeRefreshLayout}
+     * Show or hide the progress bar of the {@link SwipeRefreshLayout}
      * wrapping view.
      */
     private void showProgressBar(boolean show) {

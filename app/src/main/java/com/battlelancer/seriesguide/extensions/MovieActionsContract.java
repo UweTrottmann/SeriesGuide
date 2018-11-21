@@ -1,5 +1,7 @@
 package com.battlelancer.seriesguide.extensions;
 
+import androidx.fragment.app.Fragment;
+
 /**
  * If a fragment wants to display a list of {@linkplain com.battlelancer.seriesguide.api.Action}s
  * for movies, it should follow these guidelines.
@@ -24,7 +26,7 @@ public interface MovieActionsContract {
      * delayed by {@link #ACTION_LOADER_DELAY_MILLIS}). If this is called again before the delay
      * expires, the delay should be reset.
      *
-     * <p>Call this in for example {@link android.support.v4.app.Fragment#onResume()}.
+     * <p>Call this in for example {@link Fragment#onResume()}.
      */
     void loadMovieActionsDelayed();
 

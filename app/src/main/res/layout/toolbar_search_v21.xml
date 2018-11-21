@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sgToolbar"
@@ -16,7 +16,7 @@
     pre-L, so only add scroll flags on L+. -->
 
     <!-- focusableInTouchMode: prevent auto-focus on search text view. -->
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerSearchBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,6 +43,6 @@
             app:layout_constraintRight_toRightOf="@+id/editTextSearchBar"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</android.support.v7.widget.Toolbar>
+</androidx.appcompat.widget.Toolbar>

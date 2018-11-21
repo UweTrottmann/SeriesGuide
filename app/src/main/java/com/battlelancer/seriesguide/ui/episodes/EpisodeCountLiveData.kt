@@ -1,9 +1,9 @@
 package com.battlelancer.seriesguide.ui.episodes
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.LiveData
 import android.content.Context
 import android.os.AsyncTask
+import androidx.lifecycle.LiveData
 import com.battlelancer.seriesguide.util.DBUtils
 
 class EpisodeCountLiveData(val context: Context) : LiveData<EpisodeCountLiveData.Result>() {

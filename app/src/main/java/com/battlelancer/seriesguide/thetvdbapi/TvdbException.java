@@ -1,6 +1,6 @@
 package com.battlelancer.seriesguide.thetvdbapi;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * Thrown when a {@link TvdbTools} operation fails.

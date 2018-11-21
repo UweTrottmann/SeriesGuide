@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,14 +23,14 @@
             android:textAppearance="@style/TextAppearance.Menu"
             tools:text="Are you enjoying SeriesGuide?" />
 
-        <android.support.v7.widget.ButtonBarLayout
+        <androidx.appcompat.widget.ButtonBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/inline_padding"
             android:paddingRight="@dimen/inline_padding"
             app:allowStacking="true">
 
-            <android.support.v4.widget.Space
+            <androidx.legacy.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1" />
@@ -49,8 +49,8 @@
                 android:layout_height="wrap_content"
                 tools:text="Yes!" />
 
-        </android.support.v7.widget.ButtonBarLayout>
+        </androidx.appcompat.widget.ButtonBarLayout>
 
     </LinearLayout>
 
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

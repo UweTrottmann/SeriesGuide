@@ -33,7 +33,7 @@
                 android:layout_toRightOf="@+id/buttonCheckInPasteTitle"
                 android:text="@string/clear" />
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayoutCheckIn"
                 android:layout_below="@id/buttonCheckInPasteTitle"
                 android:layout_marginLeft="@dimen/larger_padding"
@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/checkin_hint"
@@ -50,7 +50,7 @@
                     android:lines="3"
                     android:maxLength="100"/>
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
         </RelativeLayout>
 
