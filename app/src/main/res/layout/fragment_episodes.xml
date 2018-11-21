@@ -59,7 +59,7 @@
         tools:text="Empty Text" />
 
     <ListView
-        android:id="@+android:id/list"
+        android:id="@+id/listViewEpisodes"
         style="@style/DefaultPadding.List"
         android:layout_width="0dp"
         android:layout_height="0dp"

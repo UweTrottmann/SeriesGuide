@@ -8,7 +8,7 @@ import android.database.Cursor
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.graphics.drawable.VectorDrawableCompat
-import android.support.v4.app.ListFragment
+import android.support.v4.app.Fragment
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.CursorLoader
 import android.support.v4.content.Loader
@@ -18,6 +18,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.PopupMenu
@@ -38,8 +39,7 @@ import com.battlelancer.seriesguide.util.ViewTools
 /**
  * Displays a list of episodes of a season.
  */
-class EpisodesFragment : ListFragment(), OnFlagEpisodeListener,
-    EpisodesAdapter.PopupMenuClickListener {
+class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.PopupMenuClickListener {
 
     private lateinit var sortOrder: Constants.EpisodeSorting
     private var isDualPane: Boolean = false
@@ -54,6 +54,8 @@ class EpisodesFragment : ListFragment(), OnFlagEpisodeListener,
     private var watchedAllEpisodes: Boolean = false
     private var collectedAllEpisodes: Boolean = false
 
+    @BindView(R.id.listViewEpisodes)
+    lateinit var listViewEpisodes: ListView
     @BindView(R.id.imageViewEpisodesCollectedToggle)
     lateinit var buttonCollectedAll: ImageView
     @BindView(R.id.imageViewEpisodesWatchedToggle)
@@ -115,6 +117,8 @@ class EpisodesFragment : ListFragment(), OnFlagEpisodeListener,
             buttonCollectedAll.setImageDrawable(it)
         }
 
+        listViewEpisodes.onItemClickListener = listOnItemClickListener
+
         return view
     }
 
@@ -140,14 +144,14 @@ class EpisodesFragment : ListFragment(), OnFlagEpisodeListener,
         isDualPane = pager != null && pager.visibility == View.VISIBLE
 
         if (isDualPane) {
-            listView.choiceMode = ListView.CHOICE_MODE_SINGLE
+            listViewEpisodes.choiceMode = ListView.CHOICE_MODE_SINGLE
         } else {
             startingPosition = -1 // overwrite starting position
         }
         lastCheckedItemId = -1
 
         adapter = EpisodesAdapter(requireActivity(), this, this)
-        listAdapter = adapter
+        listViewEpisodes.adapter = adapter
 
         loaderManager.initLoader(EpisodesActivity.EPISODES_LOADER_ID, null,
                 episodesLoaderCallbacks)
@@ -173,7 +177,7 @@ class EpisodesFragment : ListFragment(), OnFlagEpisodeListener,
             activity.setCurrentPage(position)
             setItemChecked(position)
         } else {
-            val episodeId = listView.getItemIdAtPosition(position).toInt()
+            val episodeId = listViewEpisodes.getItemIdAtPosition(position).toInt()
 
             val intent = Intent().apply {
                 setClass(requireActivity(), EpisodesActivity::class.java)
@@ -183,6 +187,9 @@ class EpisodesFragment : ListFragment(), OnFlagEpisodeListener,
             Utils.startActivityWithAnimation(requireActivity(), intent, view)
         }
     }
+
+    private val listOnItemClickListener =
+        AdapterView.OnItemClickListener { _, view, position, _ -> showDetails(view, position) }
 
     override fun onResume() {
         super.onResume()
@@ -216,10 +223,6 @@ class EpisodesFragment : ListFragment(), OnFlagEpisodeListener,
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onListItemClick(l: ListView?, view: View?, position: Int, id: Long) {
-        showDetails(view, position)
     }
 
     override fun onPopupMenuClick(v: View, episodeTvdbId: Int, episodeNumber: Int,
@@ -326,7 +329,8 @@ class EpisodesFragment : ListFragment(), OnFlagEpisodeListener,
     private fun onSortOrderChanged() {
         loadSortOrder()
 
-        lastCheckedItemId = listView.getItemIdAtPosition(listView.checkedItemPosition)
+        lastCheckedItemId =
+                listViewEpisodes.getItemIdAtPosition(listViewEpisodes.checkedItemPosition)
         loaderManager.restartLoader(EpisodesActivity.EPISODES_LOADER_ID, null,
                 episodesLoaderCallbacks)
 
@@ -337,7 +341,7 @@ class EpisodesFragment : ListFragment(), OnFlagEpisodeListener,
      * Highlight the given episode in the list.
      */
     fun setItemChecked(position: Int) {
-        with(listView) {
+        with(listViewEpisodes) {
             setItemChecked(position, true)
             if (position <= firstVisiblePosition || position >= lastVisiblePosition) {
                 smoothScrollToPosition(position)
@@ -367,21 +371,21 @@ class EpisodesFragment : ListFragment(), OnFlagEpisodeListener,
                 menu.add(0, CONTEXT_WATCHED_ALL, 0, R.string.mark_all)
             }
             menu.add(0, CONTEXT_WATCHED_NONE, 0, R.string.unmark_all)
-            setOnMenuItemClickListener({ item ->
+            setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     CONTEXT_WATCHED_ALL -> {
                         EpisodeTools.seasonWatched(context, showTvdbId, seasonTvdbId, seasonNumber,
-                                EpisodeFlags.WATCHED)
+                            EpisodeFlags.WATCHED)
                         true
                     }
                     CONTEXT_WATCHED_NONE -> {
                         EpisodeTools.seasonWatched(context, showTvdbId, seasonTvdbId, seasonNumber,
-                                EpisodeFlags.UNWATCHED)
+                            EpisodeFlags.UNWATCHED)
                         true
                     }
                     else -> false
                 }
-            })
+            }
         }.show()
     }
 
@@ -407,21 +411,21 @@ class EpisodesFragment : ListFragment(), OnFlagEpisodeListener,
                 menu.add(0, CONTEXT_COLLECTED_ALL, 0, R.string.collect_all)
             }
             menu.add(0, CONTEXT_COLLECTED_NONE, 0, R.string.uncollect_all)
-            setOnMenuItemClickListener({ item ->
+            setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     CONTEXT_COLLECTED_ALL -> {
                         EpisodeTools.seasonCollected(context, showTvdbId, seasonTvdbId,
-                                seasonNumber, true)
+                            seasonNumber, true)
                         true
                     }
                     CONTEXT_COLLECTED_NONE -> {
                         EpisodeTools.seasonCollected(context, showTvdbId, seasonTvdbId,
-                                seasonNumber, false)
+                            seasonNumber, false)
                         true
                     }
                     else -> false
                 }
-            })
+            }
         }.show()
     }
 

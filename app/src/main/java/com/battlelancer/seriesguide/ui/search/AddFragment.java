@@ -52,7 +52,7 @@ public abstract class AddFragment extends Fragment {
 
     @BindView(R.id.containerAddContent) View contentContainer;
     @BindView(R.id.progressBarAdd) View progressBar;
-    @BindView(android.R.id.list) GridView resultsGridView;
+    @BindView(R.id.gridViewAdd) GridView resultsGridView;
     @BindView(R.id.emptyViewAdd) EmptyView emptyView;
 
     protected List<SearchResult> searchResults;

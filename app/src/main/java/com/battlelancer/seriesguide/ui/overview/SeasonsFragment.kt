@@ -10,7 +10,7 @@ import android.preference.PreferenceManager
 import android.support.graphics.drawable.VectorDrawableCompat
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.app.ListFragment
+import android.support.v4.app.Fragment
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.CursorLoader
 import android.support.v4.content.Loader
@@ -20,6 +20,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.PopupMenu
@@ -48,8 +49,10 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * Displays a list of seasons of one show.
  */
-class SeasonsFragment : ListFragment() {
+class SeasonsFragment : Fragment() {
 
+    @BindView(R.id.listViewSeasons)
+    lateinit var listViewSeasons: ListView
     @BindView(R.id.textViewSeasonsRemaining)
     lateinit var textViewRemaining: TextView
     @BindView(R.id.imageViewSeasonsCollectedToggle)
@@ -89,6 +92,8 @@ class SeasonsFragment : ListFragment() {
             buttonCollectedAll.setImageDrawable(it)
         }
 
+        listViewSeasons.onItemClickListener = listOnItemClickListener
+
         return view
     }
 
@@ -102,7 +107,7 @@ class SeasonsFragment : ListFragment() {
 
         // populate list
         adapter = SeasonsAdapter(activity, popupMenuClickListener).also {
-            listAdapter = it
+            listViewSeasons.adapter = it
         }
         // now let's get a loader or reconnect to existing one
         loaderManager.initLoader(OverviewActivity.SEASONS_LOADER_ID, null,
@@ -151,23 +156,23 @@ class SeasonsFragment : ListFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val itemId = item?.itemId
-        if (itemId == R.id.menu_sesortby) {
+        return if (itemId == R.id.menu_sesortby) {
             showSortDialog()
-            return true
+            true
         } else {
-            return super.onOptionsItemSelected(item)
+            super.onOptionsItemSelected(item)
         }
     }
 
-    override fun onListItemClick(l: ListView?, view: View?, position: Int, id: Long) {
+    private val listOnItemClickListener = AdapterView.OnItemClickListener { _, view, _, id ->
         view?.let {
             val intent = Intent(activity, EpisodesActivity::class.java).apply {
                 putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, id.toInt())
             }
             ActivityCompat.startActivity(requireActivity(), intent,
-                    ActivityOptionsCompat
-                            .makeScaleUpAnimation(view, 0, 0, view.width, view.height)
-                            .toBundle())
+                ActivityOptionsCompat
+                    .makeScaleUpAnimation(view, 0, 0, view.width, view.height)
+                    .toBundle())
         }
     }
 
@@ -272,7 +277,7 @@ class SeasonsFragment : ListFragment() {
                 menu.add(0, CONTEXT_WATCHED_SHOW_ALL_ID, 0, R.string.mark_all)
             }
             menu.add(0, CONTEXT_WATCHED_SHOW_NONE_ID, 0, R.string.unmark_all)
-            setOnMenuItemClickListener({ item ->
+            setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     CONTEXT_WATCHED_SHOW_ALL_ID -> {
                         onFlagShowWatched(true)
@@ -281,13 +286,12 @@ class SeasonsFragment : ListFragment() {
                     }
                     CONTEXT_WATCHED_SHOW_NONE_ID -> {
                         onFlagShowWatched(false)
-                        Utils.trackAction(activity, TAG,
-                                "Flag all unwatched (inline)")
+                        Utils.trackAction(activity, TAG, "Flag all unwatched (inline)")
                         true
                     }
                     else -> false
                 }
-            })
+            }
         }.show()
     }
 
@@ -313,23 +317,21 @@ class SeasonsFragment : ListFragment() {
                 menu.add(0, CONTEXT_COLLECTED_SHOW_ALL_ID, 0, R.string.collect_all)
             }
             menu.add(0, CONTEXT_COLLECTED_SHOW_NONE_ID, 0, R.string.uncollect_all)
-            setOnMenuItemClickListener({ item ->
+            setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     CONTEXT_COLLECTED_SHOW_ALL_ID -> {
                         onFlagShowCollected(true)
-                        Utils.trackAction(activity, TAG,
-                                "Flag all collected (inline)")
+                        Utils.trackAction(activity, TAG, "Flag all collected (inline)")
                         true
                     }
                     CONTEXT_COLLECTED_SHOW_NONE_ID -> {
                         onFlagShowCollected(false)
-                        Utils.trackAction(activity, TAG,
-                                "Flag all uncollected (inline)")
+                        Utils.trackAction(activity, TAG, "Flag all uncollected (inline)")
                         true
                     }
                     else -> false
                 }
-            })
+            }
         }.show()
     }
 
