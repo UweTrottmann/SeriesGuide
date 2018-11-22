@@ -27,7 +27,7 @@ buildscript {
 
             // version 15xxxyy -> min SDK 15, release xxx, build yy
             'code': 1503304,
-            'name': '45.1',
+            'name': '46-dev',
     ]
     ext.isCiBuild = System.getenv('CI') == 'true'
 
