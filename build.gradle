@@ -29,6 +29,14 @@ buildscript {
             'code': 1503304,
             'name': '46-dev',
     ]
+    // load some properties that should not be part of version control
+    if (file('secret.properties').exists()) {
+        def properties = new Properties()
+        properties.load(new FileInputStream(file("secret.properties")))
+        properties.each { property ->
+            project.ext.set(property.key, property.value)
+        }
+    }
     ext.isCiBuild = System.getenv('CI') == 'true'
 
     repositories {

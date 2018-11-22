@@ -44,7 +44,7 @@ Debug builds should just work.
 To add shows or movies you need to create API keys for 
 [TheTVDB](https://www.thetvdb.com/member/api), [TMDB](https://www.themoviedb.org/settings/api) 
 and OAuth credentials for [trakt](https://trakt.tv/oauth/applications). 
-Place them in `gradle.properties` in your systems `.gradle` directory:
+Place them in `secret.properties` in the project directory (where `settings.gradle` is):
 
 ```
 SG_TVDB_API_KEY=<your api key>
@@ -54,7 +54,7 @@ SG_TRAKT_CLIENT_SECRET=<your trakt client secret>
 ```
 
 ### Release
-To release some additional `gradle.properties` values might be necessary:
+To release some additional `secret.properties` values might be necessary:
 ```
 # Play Store in-app billing public key
 SG_IAP_KEY_A=<keypart>

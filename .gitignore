@@ -6,6 +6,7 @@
 # Local configuration files (sdk path, etc)
 keystore.properties
 local.properties
+secret.properties
 
 ### Crashlytics
 fabric.properties
