@@ -1,6 +1,6 @@
 package com.battlelancer.seriesguide.tmdbapi;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.uwetrottmann.tmdb2.Tmdb;
 import com.uwetrottmann.tmdb2.TmdbInterceptor;
 import dagger.Lazy;

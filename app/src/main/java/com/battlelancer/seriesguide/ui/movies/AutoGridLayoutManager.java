@@ -2,9 +2,9 @@ package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.annotation.DimenRes;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.DimenRes;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.battlelancer.seriesguide.R;
 
 public class AutoGridLayoutManager extends GridLayoutManager {
@@ -50,7 +50,7 @@ public class AutoGridLayoutManager extends GridLayoutManager {
         if (columnWidthChanged && width > 0 && height > 0) {
             columnWidthChanged = false;
             int totalSpace;
-            if (getOrientation() == VERTICAL) {
+            if (getOrientation() == RecyclerView.VERTICAL) {
                 totalSpace = width - getPaddingRight() - getPaddingLeft();
             } else {
                 totalSpace = height - getPaddingTop() - getPaddingBottom();

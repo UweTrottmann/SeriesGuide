@@ -1,10 +1,10 @@
 package com.battlelancer.seriesguide.ui.search
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.LiveData
 import android.content.Context
 import android.os.AsyncTask
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
+import androidx.lifecycle.LiveData
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.settings.DisplaySettings
@@ -17,9 +17,7 @@ import com.uwetrottmann.tmdb2.entities.TmdbDate
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.enums.Extended
 import timber.log.Timber
-import java.util.Calendar
-import java.util.Date
-import java.util.LinkedList
+import java.util.*
 
 class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveData.Result>() {
 

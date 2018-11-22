@@ -1,16 +1,17 @@
 package com.battlelancer.seriesguide.util;
 
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -116,6 +117,7 @@ public final class ServiceUtils {
      * Returns a view {@link android.content.Intent} for a search of Google Play's movies category
      * (includes TV shows).
      */
+    @SuppressLint("StringFormatInvalid")
     public static Intent buildGooglePlayIntent(String title, Context context) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         String playStoreQuery = String.format(context.getString(R.string.url_movies_search),

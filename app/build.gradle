@@ -12,7 +12,7 @@ android {
         targetSdkVersion versions.targetSdk
 
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "TVDB_API_KEY", propertyOrEmpty("SG_TVDB_API_KEY"))
         buildConfigField("String", "TMDB_API_KEY", propertyOrEmpty("SG_TMDB_API_KEY"))
@@ -127,24 +127,24 @@ dependencies {
     implementation project(':libraries:drag-sort-listview')
     implementation project(':libraries:stickygridheaders')
 
-    implementation "com.android.support:support-v4:${versions.supportLibrary}"
-    implementation "com.android.support:support-annotations:${versions.supportLibrary}"
-    implementation "com.android.support:appcompat-v7:${versions.supportLibrary}"
-    implementation "com.android.support:cardview-v7:${versions.supportLibrary}"
-    implementation "com.android.support:customtabs:${versions.supportLibrary}"
-    implementation "com.android.support:design:${versions.supportLibrary}"
-    implementation "com.android.support:palette-v7:${versions.supportLibrary}"
-    implementation "com.android.support:recyclerview-v7:${versions.supportLibrary}"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.annotation:annotation:${versions.annotation}"
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.browser:browser:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.palette:palette:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     // ViewModel and LiveData
-    implementation "android.arch.lifecycle:extensions:${versions.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
     // Paging
-    implementation "android.arch.paging:runtime:1.0.1"
+    implementation "androidx.paging:paging-runtime:${versions.paging}"
 
     // Room
-    implementation "android.arch.persistence.room:runtime:${versions.room}"
-    kapt "android.arch.persistence.room:compiler:${versions.room}"
+    implementation "androidx.room:room-runtime:${versions.room}"
+    kapt "androidx.room:room-compiler:${versions.room}"
 
     implementation "com.jakewharton:butterknife:${versions.butterknife}"
     kapt "com.jakewharton:butterknife-compiler:${versions.butterknife}"
@@ -200,20 +200,21 @@ dependencies {
     amazonImplementation files('libs/amazon/in-app-purchasing-2.0.76.jar')
 
     // Instrumented unit tests
-    androidTestImplementation "com.android.support:support-annotations:${versions.supportLibrary}"
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test:rules:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
+    // https://developer.android.com/training/testing/release-notes
+    androidTestImplementation "androidx.annotation:annotation:${versions.annotation}"
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test:rules:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0'
     androidTestImplementation "com.google.truth:truth:${versions.truth}"
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     androidTestImplementation 'com.google.code.findbugs:jsr305:3.0.2'
     kaptAndroidTest "com.google.dagger:dagger-compiler:${versions.dagger}"
-    androidTestImplementation "android.arch.persistence.room:testing:${versions.room}"
+    androidTestImplementation "androidx.room:room-testing:${versions.room}"
 
     // Local unit tests
     testImplementation 'junit:junit:4.12'
-    testImplementation "com.android.support:support-annotations:${versions.supportLibrary}"
+    testImplementation "androidx.annotation:annotation:${versions.annotation}"
     testImplementation "com.google.truth:truth:${versions.truth}"
 
 }

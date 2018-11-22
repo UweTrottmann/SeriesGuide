@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.people.PersonFragment">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerPersonHeadshot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -108,6 +108,6 @@
             tools:drawableLeft="@drawable/ic_search_white_24dp"
             tools:drawableTint="?attr/sgColorIcon" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

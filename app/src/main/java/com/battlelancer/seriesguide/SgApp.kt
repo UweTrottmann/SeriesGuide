@@ -8,7 +8,7 @@ import android.os.Build
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 import com.battlelancer.seriesguide.extensions.ExtensionManager
 import com.battlelancer.seriesguide.modules.AppModule
 import com.battlelancer.seriesguide.modules.DaggerServicesComponent
@@ -32,7 +32,7 @@ import io.palaima.debugdrawer.timber.data.LumberYard
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.EventBusException
 import timber.log.Timber
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Initializes logging and services.

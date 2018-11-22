@@ -2,9 +2,9 @@
 
 package com.battlelancer.seriesguide.util
 
-import android.support.v4.app.DialogFragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 
 /**
  * If [FragmentManager.isStateSaved] returns `false`, otherwise shows the dialog and returns `true`.

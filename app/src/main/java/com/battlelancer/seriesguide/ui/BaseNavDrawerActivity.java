@@ -7,18 +7,17 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.IdRes;
-import android.support.annotation.Nullable;
-import android.support.customtabs.CustomTabsIntent;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import androidx.annotation.IdRes;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
@@ -34,6 +33,9 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktOAuthSettings;
 import com.battlelancer.seriesguide.ui.stats.StatsActivity;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import io.palaima.debugdrawer.actions.ActionsModule;
 import io.palaima.debugdrawer.actions.ButtonAction;
 import io.palaima.debugdrawer.commons.DeviceModule;
@@ -395,7 +397,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
     /**
      * Return a view to pass to {@link Snackbar#make(View, CharSequence, int) Snackbar.make},
-     * ideally a {@link android.support.design.widget.CoordinatorLayout CoordinatorLayout}.
+     * ideally a {@link CoordinatorLayout CoordinatorLayout}.
      */
     protected View getSnackbarParentView() {
         return findViewById(android.R.id.content);
@@ -408,7 +410,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                         event.getStatusMessage(this), Snackbar.LENGTH_INDEFINITE);
             } else {
                 snackbarProgress.setText(event.getStatusMessage(this));
-                snackbarProgress.setDuration(Snackbar.LENGTH_INDEFINITE);
+                snackbarProgress.setDuration(BaseTransientBottomBar.LENGTH_INDEFINITE);
             }
             snackbarProgress.show();
         } else if (snackbarProgress != null) {

@@ -1,14 +1,14 @@
 package com.battlelancer.seriesguide.ui.streams;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+import androidx.appcompat.app.ActionBar;
+import androidx.fragment.app.Fragment;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
+import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.util.TaskManager;
 import timber.log.Timber;
 

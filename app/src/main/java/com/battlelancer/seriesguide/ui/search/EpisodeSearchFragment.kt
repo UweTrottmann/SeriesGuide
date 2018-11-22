@@ -4,12 +4,12 @@ import android.app.SearchManager
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
-import android.support.v4.app.LoaderManager.LoaderCallbacks
-import android.support.v4.content.CursorLoader
-import android.support.v4.content.Loader
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.loader.app.LoaderManager.LoaderCallbacks
+import androidx.loader.content.CursorLoader
+import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows

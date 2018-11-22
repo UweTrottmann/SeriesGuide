@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.ui.episodes
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
+import androidx.lifecycle.AndroidViewModel
 
 class EpisodesViewModel(application: Application) : AndroidViewModel(application) {
 

@@ -3,10 +3,10 @@ package com.battlelancer.seriesguide.ui.search
 import android.app.SearchManager
 import android.database.Cursor
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewCompat
 import android.view.View
 import android.widget.GridView
+import androidx.core.view.ViewCompat
+import androidx.fragment.app.Fragment
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R

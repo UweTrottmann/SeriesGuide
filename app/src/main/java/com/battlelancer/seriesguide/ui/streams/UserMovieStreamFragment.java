@@ -2,12 +2,12 @@ package com.battlelancer.seriesguide.ui.streams;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListAdapter;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 import com.battlelancer.seriesguide.ui.movies.MovieDetailsActivity;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 

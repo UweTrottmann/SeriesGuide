@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.util.tasks;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.annotation.CallSuper;
+import androidx.annotation.CallSuper;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;

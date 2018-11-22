@@ -1,9 +1,9 @@
 package com.battlelancer.seriesguide.ui.search
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.paging.PageKeyedDataSource
 import android.content.Context
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.PageKeyedDataSource
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.traktapi.SgTrakt

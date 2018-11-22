@@ -2,8 +2,8 @@ package com.battlelancer.seriesguide;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteException;
-import android.support.annotation.Nullable;
 import android.util.Log;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTraktException;
 import com.battlelancer.seriesguide.util.Utils;

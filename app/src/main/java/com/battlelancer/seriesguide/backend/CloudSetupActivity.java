@@ -1,8 +1,8 @@
 package com.battlelancer.seriesguide.backend;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+import androidx.appcompat.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 

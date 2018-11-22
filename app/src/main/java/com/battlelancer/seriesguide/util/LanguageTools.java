@@ -1,9 +1,9 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
-import android.support.annotation.ArrayRes;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import androidx.annotation.ArrayRes;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;

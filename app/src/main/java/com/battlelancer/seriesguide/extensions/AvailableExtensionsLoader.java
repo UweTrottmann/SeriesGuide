@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.extensions;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import java.util.List;
 

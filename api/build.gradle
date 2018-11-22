@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    implementation "com.android.support:support-compat:${versions.supportLibrary}"
+    implementation 'androidx.core:core:1.0.1'
 }
 
 // load local.properties file

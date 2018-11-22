@@ -1,9 +1,9 @@
 package com.battlelancer.seriesguide.ui.overview
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.LiveData
 import android.content.Context
 import android.os.AsyncTask
+import androidx.lifecycle.LiveData
 import com.battlelancer.seriesguide.util.DBUtils
 
 class RemainingCountLiveData(val context: Context) : LiveData<RemainingCountLiveData.Result>() {

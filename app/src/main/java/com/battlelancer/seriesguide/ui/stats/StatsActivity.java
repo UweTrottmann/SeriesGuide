@@ -1,8 +1,8 @@
 package com.battlelancer.seriesguide.ui.stats;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
+import androidx.appcompat.app.ActionBar;
+import androidx.fragment.app.FragmentTransaction;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseTopActivity;
 

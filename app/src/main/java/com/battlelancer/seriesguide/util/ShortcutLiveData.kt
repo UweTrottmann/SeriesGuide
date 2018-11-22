@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.util
 
 import android.annotation.SuppressLint
 import android.app.PendingIntent
-import android.arch.lifecycle.LiveData
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ShortcutInfo
@@ -16,6 +15,7 @@ import android.graphics.Shader
 import android.graphics.drawable.Icon
 import android.os.AsyncTask
 import android.os.Build
+import androidx.lifecycle.LiveData
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.ui.OverviewActivity

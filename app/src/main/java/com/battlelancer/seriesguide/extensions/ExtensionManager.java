@@ -14,10 +14,11 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.collection.LruCache;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.api.Episode;
 import com.battlelancer.seriesguide.api.Movie;
@@ -43,12 +44,12 @@ public class ExtensionManager {
     private static final int HARD_CACHE_CAPACITY = 5;
 
     // Cashes received actions for the last few displayed episodes.
-    private final static android.support.v4.util.LruCache<Integer, Map<ComponentName, Action>>
-            sEpisodeActionsCache = new android.support.v4.util.LruCache<>(HARD_CACHE_CAPACITY);
+    private final static LruCache<Integer, Map<ComponentName, Action>>
+            sEpisodeActionsCache = new LruCache<>(HARD_CACHE_CAPACITY);
 
     // Cashes received actions for the last few displayed movies.
-    private final static android.support.v4.util.LruCache<Integer, Map<ComponentName, Action>>
-            sMovieActionsCache = new android.support.v4.util.LruCache<>(HARD_CACHE_CAPACITY);
+    private final static LruCache<Integer, Map<ComponentName, Action>>
+            sMovieActionsCache = new LruCache<>(HARD_CACHE_CAPACITY);
 
     /**
      * {@link com.battlelancer.seriesguide.extensions.ExtensionManager} has received new {@link

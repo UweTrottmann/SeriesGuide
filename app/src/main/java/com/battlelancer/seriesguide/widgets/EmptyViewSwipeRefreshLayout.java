@@ -1,12 +1,12 @@
 package com.battlelancer.seriesguide.widgets;
 
 import android.content.Context;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.view.View;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 /**
- * A {@link android.support.v4.widget.SwipeRefreshLayout} which only checks the (scrollable!) views
+ * A {@link SwipeRefreshLayout} which only checks the (scrollable!) views
  * set through {@link #setSwipeableChildren(int...)} if they can scroll up to determine whether to
  * trigger the refresh gesture.
  */

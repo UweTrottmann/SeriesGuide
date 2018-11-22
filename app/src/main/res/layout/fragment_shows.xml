@@ -34,7 +34,7 @@
         tools:drawableTop="@drawable/ic_filter_white_24dp" />
 
     <!-- Add large bottom padding to make room for FAB if scrolled to bottom. -->
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewShows"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

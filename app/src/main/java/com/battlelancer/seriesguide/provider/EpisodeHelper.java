@@ -2,8 +2,8 @@ package com.battlelancer.seriesguide.provider;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables.EPISODES;
 
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Query;
+import androidx.room.Dao;
+import androidx.room.Query;
 import com.battlelancer.seriesguide.model.SgEpisode;
 
 /**

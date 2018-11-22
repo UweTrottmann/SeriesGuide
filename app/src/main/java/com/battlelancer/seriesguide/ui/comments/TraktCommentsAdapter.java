@@ -2,8 +2,6 @@
 package com.battlelancer.seriesguide.ui.comments;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.widget.TextViewCompat;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.core.widget.TextViewCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.trakt5.entities.Comment;

@@ -8,13 +8,13 @@
     android:foreground="?attr/selectableItemBackground">
 
     <!-- Add FrameLayout parent so we can set a selectable foreground that works on pre-M. -->
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="UselessParent">
 
         <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cardViewAddPoster"
             android:layout_width="@dimen/show_poster_width_small"
             android:layout_height="@dimen/show_poster_height_small"
@@ -35,7 +35,7 @@
                 android:scaleType="centerInside"
                 tools:src="#F50057" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
         <ImageView
             android:id="@+id/buttonItemAddMore"
@@ -93,6 +93,6 @@
             app:layout_constraintVertical_bias="0.0"
             tools:text="Some awesome\nthree-line\ndescription" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

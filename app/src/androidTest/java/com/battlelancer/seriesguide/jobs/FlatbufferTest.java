@@ -1,12 +1,12 @@
 package com.battlelancer.seriesguide.jobs;
 
-import android.support.test.runner.AndroidJUnit4;
+import static com.google.common.truth.Truth.assertThat;
+
+import androidx.test.runner.AndroidJUnit4;
 import com.google.flatbuffers.FlatBufferBuilder;
 import java.nio.ByteBuffer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 public class FlatbufferTest {

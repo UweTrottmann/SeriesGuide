@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:paddingBottom="@dimen/inline_padding">
 
-    <android.support.v4.widget.Space
+    <Space
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1" />

@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.service;
 
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import java.util.ArrayDeque;
 import java.util.concurrent.Executor;
 
