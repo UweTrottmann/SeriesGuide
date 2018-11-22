@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.traktapi.TraktOAuthSettings;
 import com.battlelancer.seriesguide.ui.stats.StatsActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import io.palaima.debugdrawer.actions.ActionsModule;
 import io.palaima.debugdrawer.actions.ButtonAction;
@@ -409,7 +410,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                         event.getStatusMessage(this), Snackbar.LENGTH_INDEFINITE);
             } else {
                 snackbarProgress.setText(event.getStatusMessage(this));
-                snackbarProgress.setDuration(Snackbar.LENGTH_INDEFINITE);
+                snackbarProgress.setDuration(BaseTransientBottomBar.LENGTH_INDEFINITE);
             }
             snackbarProgress.show();
         } else if (snackbarProgress != null) {

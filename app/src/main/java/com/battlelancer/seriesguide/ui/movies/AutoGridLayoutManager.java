@@ -50,7 +50,7 @@ public class AutoGridLayoutManager extends GridLayoutManager {
         if (columnWidthChanged && width > 0 && height > 0) {
             columnWidthChanged = false;
             int totalSpace;
-            if (getOrientation() == VERTICAL) {
+            if (getOrientation() == RecyclerView.VERTICAL) {
                 totalSpace = width - getPaddingRight() - getPaddingLeft();
             } else {
                 totalSpace = height - getPaddingTop() - getPaddingBottom();
