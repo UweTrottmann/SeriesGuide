@@ -13,7 +13,7 @@ buildscript {
             'room': '2.0.0',
 
             'butterknife': '9.0.0-rc1', // github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
-            'crashlytics': '2.9.5', // docs.fabric.io/android/changelog.html
+            'crashlytics': '2.9.6', // docs.fabric.io/android/changelog.html
             'dagger': '2.19', // github.com/google/dagger/releases
             'gson': '2.8.5', // github.com/google/gson/blob/master/CHANGELOG.md
             'okhttp': '3.11.0', // github.com/square/okhttp/blob/master/CHANGELOG.md
