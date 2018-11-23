@@ -185,15 +185,16 @@ dependencies {
     implementation 'io.palaima.debugdrawer:debugdrawer-timber:0.7.0'
 
     // Google Play Services
-    implementation "com.google.android.gms:play-services-analytics:16.0.3"
-    implementation "com.google.android.gms:play-services-auth:16.0.0"
+    implementation "com.google.android.gms:play-services-analytics:16.0.5"
+    implementation "com.google.android.gms:play-services-auth:16.0.1"
 
     // App Engine
     // https://github.com/googleapis/google-api-java-client/releases
-    implementation('com.google.api-client:google-api-client-android:1.25.0') {
+    implementation 'com.google.guava:guava:25.1-android'
+    implementation('com.google.api-client:google-api-client-android:1.27.0') {
         exclude group: 'com.google.android.google-play-services' // including latest ourselves
         exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
-        exclude group: 'com.google.guava', module: 'guava' // conflict with dagger
+        exclude group: 'com.google.guava', module: 'guava' // including Android version instead
     }
 
     // Amazon flavor specific
