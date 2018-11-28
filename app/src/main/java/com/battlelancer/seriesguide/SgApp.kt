@@ -41,81 +41,59 @@ class SgApp : Application() {
 
     companion object {
 
-        @JvmField
-        val JOB_ID_EXTENSION_AMAZON = 1001
-        @JvmField
-        val JOB_ID_EXTENSION_GOOGLE_PLAY = 1002
-        @JvmField
-        val JOB_ID_EXTENSION_VODSTER = 1003
-        @JvmField
-        val JOB_ID_EXTENSION_WEBSEARCH = 1004
-        @JvmField
-        val JOB_ID_EXTENSION_YOUTUBE = 1005
-        @JvmField
-        val JOB_ID_EXTENSION_ACTIONS_SERVICE = 1006
-        @JvmField
-        val JOB_ID_UNWATCHED_UPDATER_SERVICE = 1007
+        const val JOB_ID_EXTENSION_AMAZON = 1001
+        const val JOB_ID_EXTENSION_GOOGLE_PLAY = 1002
+        const val JOB_ID_EXTENSION_VODSTER = 1003
+        const val JOB_ID_EXTENSION_WEBSEARCH = 1004
+        const val JOB_ID_EXTENSION_YOUTUBE = 1005
+        const val JOB_ID_EXTENSION_ACTIONS_SERVICE = 1006
+        const val JOB_ID_UNWATCHED_UPDATER_SERVICE = 1007
 
-        @JvmField
-        val NOTIFICATION_EPISODE_ID = 1
-        @JvmField
-        val NOTIFICATION_SUBSCRIPTION_ID = 2
-        @JvmField
-        val NOTIFICATION_TRAKT_AUTH_ID = 3
-        @JvmField
-        val NOTIFICATION_JOB_ID = 4
+        const val NOTIFICATION_EPISODE_ID = 1
+        const val NOTIFICATION_SUBSCRIPTION_ID = 2
+        const val NOTIFICATION_TRAKT_AUTH_ID = 3
+        const val NOTIFICATION_JOB_ID = 4
 
-        @JvmField
-        val NOTIFICATION_CHANNEL_EPISODES = "episodes"
-        @JvmField
-        val NOTIFICATION_CHANNEL_ERRORS = "errors"
+        const val NOTIFICATION_CHANNEL_EPISODES = "episodes"
+        const val NOTIFICATION_CHANNEL_ERRORS = "errors"
 
         /**
          * Time calculation has changed, all episodes need re-calculation.
          */
-        @JvmField
-        val RELEASE_VERSION_12_BETA5 = 218
+        const val RELEASE_VERSION_12_BETA5 = 218
         /**
          * Requires legacy cache clearing due to switch to Picasso for posters.
          */
-        @JvmField
-        val RELEASE_VERSION_16_BETA1 = 15010
+        const val RELEASE_VERSION_16_BETA1 = 15010
         /**
          * Requires trakt watched movie (re-)download.
          */
-        @JvmField
-        val RELEASE_VERSION_23_BETA4 = 15113
+        const val RELEASE_VERSION_23_BETA4 = 15113
         /**
          * Requires full show update due to switch to locally stored trakt ids.
          */
-        @JvmField
-        val RELEASE_VERSION_26_BETA3 = 15142
+        const val RELEASE_VERSION_26_BETA3 = 15142
         /**
          * Populate shows last watched field from activity table.
          */
-        @JvmField
-        val RELEASE_VERSION_34_BETA4 = 15223
+        const val RELEASE_VERSION_34_BETA4 = 15223
         /**
          * Switched to Google Sign-In: notify existing Cloud users to sign in again.
          */
-        @JvmField
-        val RELEASE_VERSION_36_BETA2 = 15241
+        const val RELEASE_VERSION_36_BETA2 = 15241
         /**
          * Extensions API v2, old extensions no longer work.
          */
-        @JvmField
-        val RELEASE_VERSION_40_BETA4 = 1502803
+        const val RELEASE_VERSION_40_BETA4 = 1502803
         /**
          * ListWidgetProvider alarm intent is now explicit.
          */
-        @JvmField
-        val RELEASE_VERSION_40_BETA6 = 1502805
+        const val RELEASE_VERSION_40_BETA6 = 1502805
 
         /**
          * The content authority used to identify the SeriesGuide [android.content.ContentProvider].
          */
-        @JvmField
-        val CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider"
+        const val CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider"
 
         private var servicesComponent: ServicesComponent? = null
 
