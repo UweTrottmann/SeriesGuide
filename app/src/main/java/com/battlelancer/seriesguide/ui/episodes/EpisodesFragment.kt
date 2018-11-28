@@ -153,8 +153,8 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
         adapter = EpisodesAdapter(requireActivity(), this, this)
         listViewEpisodes.adapter = adapter
 
-        loaderManager.initLoader(EpisodesActivity.EPISODES_LOADER_ID, null,
-                episodesLoaderCallbacks)
+        LoaderManager.getInstance(this)
+            .initLoader(EpisodesActivity.EPISODES_LOADER_ID, null, episodesLoaderCallbacks)
 
         setHasOptionsMenu(true)
     }
@@ -331,8 +331,8 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
 
         lastCheckedItemId =
                 listViewEpisodes.getItemIdAtPosition(listViewEpisodes.checkedItemPosition)
-        loaderManager.restartLoader(EpisodesActivity.EPISODES_LOADER_ID, null,
-                episodesLoaderCallbacks)
+        LoaderManager.getInstance(this)
+            .restartLoader(EpisodesActivity.EPISODES_LOADER_ID, null, episodesLoaderCallbacks)
 
         Utils.trackCustomEvent(requireActivity(), TAG, "Sorting", sortOrder.name)
     }

@@ -86,7 +86,7 @@ public class ListsFragment extends Fragment {
         gridView.setAdapter(adapter);
         gridView.setEmptyView(emptyView);
 
-        getLoaderManager().initLoader(LOADER_ID, getArguments(), loaderCallbacks);
+        LoaderManager.getInstance(this).initLoader(LOADER_ID, getArguments(), loaderCallbacks);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class ListsFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ListsDistillationSettings.ListsSortOrderChangedEvent event) {
         // sort order has changed, reload lists
-        getLoaderManager().restartLoader(LOADER_ID, getArguments(), loaderCallbacks);
+        LoaderManager.getInstance(this).restartLoader(LOADER_ID, getArguments(), loaderCallbacks);
     }
 
     private LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks

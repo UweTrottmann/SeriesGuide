@@ -23,6 +23,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -211,8 +212,9 @@ public class ShowFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getLoaderManager().initLoader(OverviewActivity.SHOW_LOADER_ID, null, showLoaderCallbacks);
-        getLoaderManager().initLoader(OverviewActivity.SHOW_CREDITS_LOADER_ID, null,
+        LoaderManager loaderManager = LoaderManager.getInstance(this);
+        loaderManager.initLoader(OverviewActivity.SHOW_LOADER_ID, null, showLoaderCallbacks);
+        loaderManager.initLoader(OverviewActivity.SHOW_CREDITS_LOADER_ID, null,
                 creditsLoaderCallbacks);
 
         setHasOptionsMenu(true);

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.loader.app.LoaderManager
 import androidx.loader.app.LoaderManager.LoaderCallbacks
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
@@ -50,14 +51,14 @@ class EpisodeSearchFragment : BaseSearchFragment() {
         }
 
         // load for given query or restore last loader (ignoring args)
-        loaderManager.initLoader(SearchActivity.EPISODES_LOADER_ID, loaderArgs,
-                searchLoaderCallbacks)
+        LoaderManager.getInstance(this)
+            .initLoader(SearchActivity.EPISODES_LOADER_ID, loaderArgs, searchLoaderCallbacks)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: SearchActivity.SearchQueryEvent) {
-        loaderManager.restartLoader(SearchActivity.EPISODES_LOADER_ID, event.args,
-                searchLoaderCallbacks)
+        LoaderManager.getInstance(this)
+            .restartLoader(SearchActivity.EPISODES_LOADER_ID, event.args, searchLoaderCallbacks)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

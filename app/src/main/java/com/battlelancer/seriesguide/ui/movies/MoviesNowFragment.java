@@ -141,9 +141,10 @@ public class MoviesNowFragment extends Fragment {
             isLoadingRecentlyWatched = true;
             isLoadingFriends = true;
             showProgressBar(true);
-            getLoaderManager().initLoader(MoviesActivity.NOW_TRAKT_USER_LOADER_ID, null,
+            LoaderManager loaderManager = LoaderManager.getInstance(this);
+            loaderManager.initLoader(MoviesActivity.NOW_TRAKT_USER_LOADER_ID, null,
                     recentlyTraktCallbacks);
-            getLoaderManager().initLoader(MoviesActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
+            loaderManager.initLoader(MoviesActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
                     traktFriendsHistoryCallbacks);
         }
 
@@ -201,10 +202,11 @@ public class MoviesNowFragment extends Fragment {
         // so properly clean up old loaders so they won't interfere
         if (TraktCredentials.get(getActivity()).hasCredentials()) {
             isLoadingRecentlyWatched = true;
-            getLoaderManager().restartLoader(MoviesActivity.NOW_TRAKT_USER_LOADER_ID, null,
+            LoaderManager loaderManager = LoaderManager.getInstance(this);
+            loaderManager.restartLoader(MoviesActivity.NOW_TRAKT_USER_LOADER_ID, null,
                     recentlyTraktCallbacks);
             isLoadingFriends = true;
-            getLoaderManager().restartLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
+            loaderManager.restartLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
                     traktFriendsHistoryCallbacks);
         } else {
             // destroy trakt loaders and remove any shown error message
@@ -215,8 +217,9 @@ public class MoviesNowFragment extends Fragment {
     }
 
     private void destroyLoaderIfExists(int loaderId) {
-        if (getLoaderManager().getLoader(loaderId) != null) {
-            getLoaderManager().destroyLoader(loaderId);
+        LoaderManager loaderManager = LoaderManager.getInstance(this);
+        if (loaderManager.getLoader(loaderId) != null) {
+            loaderManager.destroyLoader(loaderId);
         }
     }
 

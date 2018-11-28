@@ -110,8 +110,8 @@ class SeasonsFragment : Fragment() {
             listViewSeasons.adapter = it
         }
         // now let's get a loader or reconnect to existing one
-        loaderManager.initLoader(OverviewActivity.SEASONS_LOADER_ID, null,
-                seasonsLoaderCallbacks)
+        LoaderManager.getInstance(this)
+            .initLoader(OverviewActivity.SEASONS_LOADER_ID, null, seasonsLoaderCallbacks)
 
         // listen to changes to the sorting preference
         PreferenceManager.getDefaultSharedPreferences(activity).apply {
@@ -347,7 +347,8 @@ class SeasonsFragment : Fragment() {
     private val onSortOrderChangedListener = OnSharedPreferenceChangeListener { _, key ->
         if (DisplaySettings.KEY_SEASON_SORT_ORDER == key) {
             // reload seasons in new order
-            loaderManager.restartLoader(OverviewActivity.SEASONS_LOADER_ID, null,
+            LoaderManager.getInstance(this)
+                .restartLoader(OverviewActivity.SEASONS_LOADER_ID, null,
                     seasonsLoaderCallbacks)
         }
     }

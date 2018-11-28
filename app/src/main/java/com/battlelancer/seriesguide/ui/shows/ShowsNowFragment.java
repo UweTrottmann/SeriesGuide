@@ -145,9 +145,10 @@ public class ShowsNowFragment extends Fragment {
             isLoadingRecentlyWatched = true;
             isLoadingFriends = true;
             showProgressBar(true);
-            getLoaderManager().initLoader(ShowsActivity.NOW_TRAKT_USER_LOADER_ID, null,
+            LoaderManager loaderManager = LoaderManager.getInstance(this);
+            loaderManager.initLoader(ShowsActivity.NOW_TRAKT_USER_LOADER_ID, null,
                     recentlyTraktCallbacks);
-            getLoaderManager().initLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
+            loaderManager.initLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
                     traktFriendsHistoryCallbacks);
         }
 
@@ -177,10 +178,11 @@ public class ShowsNowFragment extends Fragment {
      */
     private <D> void initAndMaybeRestartLoader(int loaderId,
             LoaderManager.LoaderCallbacks<D> callbacks) {
-        boolean isLoaderExists = getLoaderManager().getLoader(loaderId) != null;
-        getLoaderManager().initLoader(loaderId, null, callbacks);
+        LoaderManager loaderManager = LoaderManager.getInstance(this);
+        boolean isLoaderExists = loaderManager.getLoader(loaderId) != null;
+        loaderManager.initLoader(loaderId, null, callbacks);
         if (isLoaderExists) {
-            getLoaderManager().restartLoader(loaderId, null, callbacks);
+            loaderManager.restartLoader(loaderId, null, callbacks);
         }
     }
 
@@ -228,13 +230,14 @@ public class ShowsNowFragment extends Fragment {
         // user might get disconnected during our life-time,
         // so properly clean up old loaders so they won't interfere
         isLoadingRecentlyWatched = true;
+        LoaderManager loaderManager = LoaderManager.getInstance(this);
         if (TraktCredentials.get(getActivity()).hasCredentials()) {
             destroyLoaderIfExists(ShowsActivity.NOW_RECENTLY_LOADER_ID);
 
-            getLoaderManager().restartLoader(ShowsActivity.NOW_TRAKT_USER_LOADER_ID, null,
+            loaderManager.restartLoader(ShowsActivity.NOW_TRAKT_USER_LOADER_ID, null,
                     recentlyTraktCallbacks);
             isLoadingFriends = true;
-            getLoaderManager().restartLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
+            loaderManager.restartLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
                     traktFriendsHistoryCallbacks);
         } else {
             // destroy trakt loaders and remove any shown error message
@@ -242,14 +245,15 @@ public class ShowsNowFragment extends Fragment {
             destroyLoaderIfExists(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID);
             showError(null);
 
-            getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
+            loaderManager.restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
                     recentlyLocalCallbacks);
         }
     }
 
     private void destroyLoaderIfExists(int loaderId) {
-        if (getLoaderManager().getLoader(loaderId) != null) {
-            getLoaderManager().destroyLoader(loaderId);
+        LoaderManager loaderManager = LoaderManager.getInstance(this);
+        if (loaderManager.getLoader(loaderId) != null) {
+            loaderManager.destroyLoader(loaderId);
         }
     }
 
@@ -315,8 +319,9 @@ public class ShowsNowFragment extends Fragment {
         if (event.flagJob instanceof EpisodeWatchedJob
                 && !TraktCredentials.get(getActivity()).hasCredentials()) {
             isLoadingRecentlyWatched = true;
-            getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
-                    recentlyLocalCallbacks);
+            LoaderManager.getInstance(this)
+                    .restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
+                            recentlyLocalCallbacks);
         }
     }
 

@@ -27,14 +27,15 @@ public class UserEpisodeStreamFragment extends StreamFragment {
 
     @Override
     protected void initializeStream() {
-        getLoaderManager().initLoader(HistoryActivity.EPISODES_LOADER_ID, null,
-                activityLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .initLoader(HistoryActivity.EPISODES_LOADER_ID, null, activityLoaderCallbacks);
     }
 
     @Override
     protected void refreshStream() {
-        getLoaderManager().restartLoader(HistoryActivity.EPISODES_LOADER_ID, null,
-                activityLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(HistoryActivity.EPISODES_LOADER_ID, null,
+                        activityLoaderCallbacks);
     }
 
     private EpisodeHistoryAdapter.OnItemClickListener itemClickListener

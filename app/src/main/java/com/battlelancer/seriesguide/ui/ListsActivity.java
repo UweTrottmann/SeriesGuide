@@ -62,7 +62,8 @@ public class ListsActivity extends BaseTopActivity {
         setupViews(savedInstanceState);
         setupSyncProgressBar(R.id.progressBarTabs);
 
-        getSupportLoaderManager().initLoader(LISTS_LOADER_ID, null, listsLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .initLoader(LISTS_LOADER_ID, null, listsLoaderCallbacks);
     }
 
     private void setupViews(Bundle savedInstanceState) {
@@ -198,7 +199,8 @@ public class ListsActivity extends BaseTopActivity {
     @SuppressWarnings("UnusedParameters")
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ListsChangedEvent event) {
-        getSupportLoaderManager().restartLoader(LISTS_LOADER_ID, null, listsLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(LISTS_LOADER_ID, null, listsLoaderCallbacks);
     }
 
     private void changeSortOrder(int sortOrderId) {

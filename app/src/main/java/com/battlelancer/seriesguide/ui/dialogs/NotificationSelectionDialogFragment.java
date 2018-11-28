@@ -58,7 +58,8 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getLoaderManager().initLoader(LOADER_ID_SELECTION, null, showsLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .initLoader(LOADER_ID_SELECTION, null, showsLoaderCallbacks);
     }
 
     @Override

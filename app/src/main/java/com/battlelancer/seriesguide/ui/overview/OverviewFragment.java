@@ -225,8 +225,9 @@ public class OverviewFragment extends Fragment implements
         // do not display show info header in multi pane layout
         containerShow.setVisibility(multiPane ? View.GONE : View.VISIBLE);
 
-        getLoaderManager().initLoader(OverviewActivity.OVERVIEW_SHOW_LOADER_ID, null, this);
-        getLoaderManager().initLoader(OverviewActivity.OVERVIEW_EPISODE_LOADER_ID, null, this);
+        LoaderManager loaderManager = LoaderManager.getInstance(this);
+        loaderManager.initLoader(OverviewActivity.OVERVIEW_SHOW_LOADER_ID, null, this);
+        loaderManager.initLoader(OverviewActivity.OVERVIEW_EPISODE_LOADER_ID, null, this);
 
         setHasOptionsMenu(true);
     }
@@ -822,8 +823,9 @@ public class OverviewFragment extends Fragment implements
         }
         Bundle args = new Bundle();
         args.putInt(ARG_EPISODE_TVDB_ID, currentEpisodeTvdbId);
-        getLoaderManager().restartLoader(OverviewActivity.OVERVIEW_ACTIONS_LOADER_ID, args,
-                episodeActionsLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(OverviewActivity.OVERVIEW_ACTIONS_LOADER_ID, args,
+                        episodeActionsLoaderCallbacks);
     }
 
     Runnable episodeActionsRunnable = new Runnable() {

@@ -28,13 +28,13 @@ public class UserMovieStreamFragment extends StreamFragment {
 
     @Override
     protected void initializeStream() {
-        getLoaderManager().initLoader(HistoryActivity.MOVIES_LOADER_ID, null,
+        LoaderManager.getInstance(this).initLoader(HistoryActivity.MOVIES_LOADER_ID, null,
                 activityLoaderCallbacks);
     }
 
     @Override
     protected void refreshStream() {
-        getLoaderManager().restartLoader(HistoryActivity.MOVIES_LOADER_ID, null,
+        LoaderManager.getInstance(this).restartLoader(HistoryActivity.MOVIES_LOADER_ID, null,
                 activityLoaderCallbacks);
     }
 

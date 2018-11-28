@@ -99,7 +99,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         setupViews();
 
         // start loading data
-        getSupportLoaderManager().restartLoader(LOADER_EPISODE_ID, null, basicInfoLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(LOADER_EPISODE_ID, null, basicInfoLoaderCallbacks);
     }
 
     @Override
@@ -254,7 +255,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         setTitle(getString(R.string.episodes) + " " + showTitle + " "
                 + SeasonTools.getSeasonString(this, season.season));
 
-        getSupportLoaderManager().restartLoader(LOADER_SEASON_ID, null, seasonLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(LOADER_SEASON_ID, null, seasonLoaderCallbacks);
     }
 
     private LoaderManager.LoaderCallbacks<SeasonEpisodesLoader.Result> seasonLoaderCallbacks
@@ -266,13 +268,13 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         }
 
         @Override
-        public void onLoadFinished(Loader<SeasonEpisodesLoader.Result> loader,
+        public void onLoadFinished(@NonNull Loader<SeasonEpisodesLoader.Result> loader,
                 SeasonEpisodesLoader.Result data) {
             populateSeason(data);
         }
 
         @Override
-        public void onLoaderReset(Loader<SeasonEpisodesLoader.Result> loader) {
+        public void onLoaderReset(@NonNull Loader<SeasonEpisodesLoader.Result> loader) {
             // do nothing, keep existing data
         }
     };

@@ -152,8 +152,9 @@ public class CalendarFragment extends Fragment
           CursorLoader holds on to a cursor with old data. See
           https://github.com/UweTrottmann/SeriesGuide/issues/257.
          */
-        boolean isLoaderExists = getLoaderManager().getLoader(getLoaderId()) != null;
-        getLoaderManager().initLoader(getLoaderId(), null, calendarLoaderCallbacks);
+        LoaderManager loaderManager = LoaderManager.getInstance(this);
+        boolean isLoaderExists = loaderManager.getLoader(getLoaderId()) != null;
+        loaderManager.initLoader(getLoaderId(), null, calendarLoaderCallbacks);
         if (isLoaderExists) {
             requery();
         }
@@ -416,7 +417,8 @@ public class CalendarFragment extends Fragment
     }
 
     private void requery() {
-        getLoaderManager().restartLoader(getLoaderId(), null, calendarLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(getLoaderId(), null, calendarLoaderCallbacks);
     }
 
     private void schedulePeriodicDataRefresh(boolean enableRefresh) {
@@ -433,7 +435,8 @@ public class CalendarFragment extends Fragment
         @Override
         public void run() {
             if (isAdded()) {
-                getLoaderManager().restartLoader(getLoaderId(), null, calendarLoaderCallbacks);
+                LoaderManager.getInstance(CalendarFragment.this)
+                        .restartLoader(getLoaderId(), null, calendarLoaderCallbacks);
             }
         }
     };

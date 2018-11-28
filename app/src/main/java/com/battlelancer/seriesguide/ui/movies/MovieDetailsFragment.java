@@ -219,11 +219,12 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         Bundle args = new Bundle();
         args.putInt(InitBundle.TMDB_ID, tmdbId);
-        getLoaderManager().initLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args,
+        LoaderManager loaderManager = LoaderManager.getInstance(this);
+        loaderManager.initLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args,
                 movieLoaderCallbacks);
-        getLoaderManager().initLoader(MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args,
+        loaderManager.initLoader(MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args,
                 trailerLoaderCallbacks);
-        getLoaderManager().initLoader(MovieDetailsActivity.LOADER_ID_MOVIE_CREDITS, args,
+        loaderManager.initLoader(MovieDetailsActivity.LOADER_ID_MOVIE_CREDITS, args,
                 creditsLoaderCallbacks);
 
         setHasOptionsMenu(true);
@@ -709,8 +710,9 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         restartMovieLoader();
         Bundle args = new Bundle();
         args.putInt(InitBundle.TMDB_ID, tmdbId);
-        getLoaderManager().restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args,
-                trailerLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args,
+                        trailerLoaderCallbacks);
     }
 
     @Override
@@ -775,8 +777,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     private void restartMovieLoader() {
         Bundle args = new Bundle();
         args.putInt(InitBundle.TMDB_ID, tmdbId);
-        getLoaderManager().restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args,
-                movieLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args, movieLoaderCallbacks);
     }
 
     private LoaderManager.LoaderCallbacks<MovieDetails> movieLoaderCallbacks
@@ -788,7 +790,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
 
         @Override
-        public void onLoadFinished(Loader<MovieDetails> movieLoader, MovieDetails movieDetails) {
+        public void onLoadFinished(@NonNull Loader<MovieDetails> movieLoader,
+                MovieDetails movieDetails) {
             if (!isAdded()) {
                 return;
             }
@@ -813,7 +816,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
 
         @Override
-        public void onLoaderReset(Loader<MovieDetails> movieLoader) {
+        public void onLoaderReset(@NonNull Loader<MovieDetails> movieLoader) {
             // nothing to do
         }
     };
@@ -826,7 +829,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
 
         @Override
-        public void onLoadFinished(Loader<Videos.Video> trailersLoader, Videos.Video trailer) {
+        public void onLoadFinished(@NonNull Loader<Videos.Video> trailersLoader,
+                Videos.Video trailer) {
             if (!isAdded()) {
                 return;
             }
@@ -837,7 +841,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
 
         @Override
-        public void onLoaderReset(Loader<Videos.Video> trailersLoader) {
+        public void onLoaderReset(@NonNull Loader<Videos.Video> trailersLoader) {
             // do nothing
         }
     };
@@ -850,7 +854,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
 
         @Override
-        public void onLoadFinished(Loader<Credits> creditsLoader, Credits credits) {
+        public void onLoadFinished(@NonNull Loader<Credits> creditsLoader, Credits credits) {
             if (!isAdded()) {
                 return;
             }
@@ -858,7 +862,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         }
 
         @Override
-        public void onLoaderReset(Loader<Credits> creditsLoader) {
+        public void onLoaderReset(@NonNull Loader<Credits> creditsLoader) {
             // do nothing
         }
     };

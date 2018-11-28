@@ -216,8 +216,8 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         Bundle args = new Bundle();
         args.putInt(KEY_SHOW_TVDBID, displayedShow.getTvdbid());
         args.putString(KEY_SHOW_LANGUAGE, displayedShow.getLanguage());
-        getLoaderManager().initLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args,
-                showLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .initLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args, showLoaderCallbacks);
     }
 
     @Override
@@ -261,8 +261,8 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         Bundle args = new Bundle();
         args.putInt(KEY_SHOW_TVDBID, displayedShow.getTvdbid());
         args.putString(KEY_SHOW_LANGUAGE, displayedShow.getLanguage());
-        getLoaderManager().restartLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args,
-                showLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args, showLoaderCallbacks);
     }
 
     private LoaderManager.LoaderCallbacks<TvdbShowLoader.Result> showLoaderCallbacks

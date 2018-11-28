@@ -82,8 +82,9 @@ public class TraktAddFragment extends AddFragment {
                 listType == TraktShowsLink.RECOMMENDED);
 
         // load data
-        getLoaderManager().initLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
-                traktAddCallbacks);
+        LoaderManager.getInstance(this)
+                .initLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
+                        traktAddCallbacks);
 
         // add menu options
         setHasOptionsMenu(true);
@@ -195,7 +196,7 @@ public class TraktAddFragment extends AddFragment {
     public void onEventMainThread(ShowTools.ShowChangedEvent event) {
         if (listType == TraktShowsLink.WATCHLIST) {
             // reload watchlist if a show was removed
-            getLoaderManager()
+            LoaderManager.getInstance(this)
                     .restartLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
                             traktAddCallbacks);
         }
@@ -207,9 +208,9 @@ public class TraktAddFragment extends AddFragment {
             @Override
             public void onClick(View v) {
                 setProgressVisible(true, false);
-                getLoaderManager().restartLoader(
-                        SearchActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
-                        traktAddCallbacks);
+                LoaderManager.getInstance(TraktAddFragment.this)
+                        .restartLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
+                                traktAddCallbacks);
             }
         });
     }

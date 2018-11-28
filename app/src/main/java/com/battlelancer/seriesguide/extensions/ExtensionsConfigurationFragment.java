@@ -88,8 +88,9 @@ public class ExtensionsConfigurationFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
-                loaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
+                        loaderCallbacks);
     }
 
     @Override
@@ -298,8 +299,9 @@ public class ExtensionsConfigurationFragment extends Fragment {
 
     private void saveExtensions() {
         ExtensionManager.get().setEnabledExtensions(getContext(), enabledNames);
-        getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID,
-                null, loaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
+                        loaderCallbacks);
     }
 
     private Comparator<ExtensionManager.Extension> alphabeticalComparator

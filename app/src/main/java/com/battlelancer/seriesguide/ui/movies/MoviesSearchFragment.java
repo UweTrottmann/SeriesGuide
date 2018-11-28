@@ -16,6 +16,7 @@ import android.widget.PopupMenu;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
@@ -118,8 +119,9 @@ public class MoviesSearchFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         swipeRefreshLayout.setRefreshing(true);
-        getLoaderManager().initLoader(MoviesActivity.SEARCH_LOADER_ID, buildLoaderArgs(null),
-                searchLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .initLoader(MoviesActivity.SEARCH_LOADER_ID, buildLoaderArgs(null),
+                        searchLoaderCallbacks);
     }
 
     @Override
@@ -141,8 +143,9 @@ public class MoviesSearchFragment extends Fragment {
         if (!swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(true);
         }
-        getLoaderManager().restartLoader(MoviesActivity.SEARCH_LOADER_ID, buildLoaderArgs(query),
-                searchLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(MoviesActivity.SEARCH_LOADER_ID, buildLoaderArgs(query),
+                        searchLoaderCallbacks);
     }
 
     private LoaderCallbacks<TmdbMoviesLoader.Result> searchLoaderCallbacks

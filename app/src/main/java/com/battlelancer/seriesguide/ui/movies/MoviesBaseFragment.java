@@ -73,7 +73,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
         adapter = new MoviesCursorAdapter(getContext(), this, getLoaderId());
         gridView.setAdapter(adapter);
 
-        getLoaderManager().initLoader(getLoaderId(), null, this);
+        LoaderManager.getInstance(this).initLoader(getLoaderId(), null, this);
 
         setHasOptionsMenu(true);
     }
@@ -153,7 +153,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
     @SuppressWarnings("UnusedParameters")
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(MoviesSortOrderChangedEvent event) {
-        getLoaderManager().restartLoader(getLoaderId(), null, this);
+        LoaderManager.getInstance(this).restartLoader(getLoaderId(), null, this);
     }
 
     /**

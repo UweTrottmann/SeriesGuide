@@ -73,8 +73,8 @@ class PersonFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        loaderManager.initLoader(PeopleActivity.PERSON_LOADER_ID, null,
-                personLoaderCallbacks)
+        LoaderManager.getInstance(this)
+            .initLoader(PeopleActivity.PERSON_LOADER_ID, null, personLoaderCallbacks)
     }
 
     override fun onDestroyView() {

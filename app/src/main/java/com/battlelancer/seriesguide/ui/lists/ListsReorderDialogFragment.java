@@ -80,8 +80,8 @@ public class ListsReorderDialogFragment extends AppCompatDialogFragment {
         adapter = new ListsAdapter(getActivity());
         dragSortListView.setAdapter(adapter);
 
-        getLoaderManager().initLoader(ListsActivity.LISTS_REORDER_LOADER_ID, null,
-                listsLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .initLoader(ListsActivity.LISTS_REORDER_LOADER_ID, null, listsLoaderCallbacks);
     }
 
     @Override

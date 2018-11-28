@@ -209,8 +209,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getLoaderManager().initLoader(EpisodesActivity.EPISODE_LOADER_ID, null,
-                episodeLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .initLoader(EpisodesActivity.EPISODE_LOADER_ID, null, episodeLoaderCallbacks);
 
         setHasOptionsMenu(true);
     }
@@ -742,8 +742,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     public void loadEpisodeActions() {
         Bundle args = new Bundle();
         args.putInt(KEY_EPISODE_TVDB_ID, episodeTvdbId);
-        getLoaderManager().restartLoader(EpisodesActivity.ACTIONS_LOADER_ID, args,
-                actionsLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(EpisodesActivity.ACTIONS_LOADER_ID, args, actionsLoaderCallbacks);
     }
 
     Runnable actionsRunnable = new Runnable() {

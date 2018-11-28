@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
+import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.Loader;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -165,8 +166,9 @@ public class TraktCommentsFragment extends Fragment {
         list.setAdapter(adapter);
 
         // load data
-        getLoaderManager().initLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
-                commentsLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .initLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
+                        commentsLoaderCallbacks);
 
         // enable menu
         setHasOptionsMenu(true);
@@ -275,8 +277,9 @@ public class TraktCommentsFragment extends Fragment {
     }
 
     private void refreshComments() {
-        getLoaderManager().restartLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
-                commentsLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
+                        commentsLoaderCallbacks);
     }
 
     /**

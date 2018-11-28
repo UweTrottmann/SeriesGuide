@@ -113,8 +113,8 @@ class PeopleFragment : Fragment() {
 
         emptyView.setButtonClickListener { refresh() }
 
-        loaderManager.initLoader(PeopleActivity.PEOPLE_LOADER_ID, null,
-                creditsLoaderCallbacks)
+        LoaderManager.getInstance(this)
+            .initLoader(PeopleActivity.PEOPLE_LOADER_ID, null, creditsLoaderCallbacks)
     }
 
     override fun onDetach() {
@@ -132,8 +132,8 @@ class PeopleFragment : Fragment() {
     }
 
     private fun refresh() {
-        loaderManager.restartLoader(PeopleActivity.PEOPLE_LOADER_ID, null,
-                creditsLoaderCallbacks)
+        LoaderManager.getInstance(this)
+            .restartLoader(PeopleActivity.PEOPLE_LOADER_ID, null, creditsLoaderCallbacks)
     }
 
     /**

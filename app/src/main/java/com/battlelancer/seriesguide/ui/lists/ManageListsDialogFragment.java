@@ -210,7 +210,7 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
         adapter = new ListsAdapter(getActivity());
         listView.setAdapter(adapter);
 
-        getLoaderManager().initLoader(0, getArguments(), this);
+        LoaderManager.getInstance(this).initLoader(0, getArguments(), this);
     }
 
     @Override

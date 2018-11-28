@@ -62,14 +62,14 @@ class ShowSearchFragment : BaseSearchFragment() {
         }
 
         // load for given query or restore last loader (ignoring args)
-        loaderManager.initLoader(SearchActivity.SHOWS_LOADER_ID, loaderArgs,
-                searchLoaderCallbacks)
+        LoaderManager.getInstance(this)
+            .initLoader(SearchActivity.SHOWS_LOADER_ID, loaderArgs, searchLoaderCallbacks)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: SearchActivity.SearchQueryEvent) {
-        loaderManager.restartLoader(SearchActivity.SHOWS_LOADER_ID, event.args,
-                searchLoaderCallbacks)
+        LoaderManager.getInstance(this)
+            .restartLoader(SearchActivity.SHOWS_LOADER_ID, event.args, searchLoaderCallbacks)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

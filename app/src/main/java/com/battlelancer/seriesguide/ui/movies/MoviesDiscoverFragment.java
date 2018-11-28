@@ -88,7 +88,7 @@ public class MoviesDiscoverFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getLoaderManager().initLoader(0, null, nowPlayingLoaderCallbacks);
+        LoaderManager.getInstance(this).initLoader(0, null, nowPlayingLoaderCallbacks);
     }
 
     @Override
@@ -129,7 +129,7 @@ public class MoviesDiscoverFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventLanguageChanged(
             MovieLocalizationDialogFragment.LocalizationChangedEvent event) {
-        getLoaderManager().restartLoader(0, null, nowPlayingLoaderCallbacks);
+        LoaderManager.getInstance(this).restartLoader(0, null, nowPlayingLoaderCallbacks);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -182,7 +182,8 @@ public class MoviesDiscoverFragment extends Fragment {
             = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            getLoaderManager().restartLoader(0, null, nowPlayingLoaderCallbacks);
+            LoaderManager.getInstance(MoviesDiscoverFragment.this)
+                    .restartLoader(0, null, nowPlayingLoaderCallbacks);
         }
     };
 }
