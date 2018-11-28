@@ -218,7 +218,7 @@ public class TraktCredentials {
     public synchronized boolean refreshAccessToken(TraktV2 trakt) {
         // do we even have a refresh token?
         String oldRefreshToken = TraktOAuthSettings.getRefreshToken(context);
-        if (TextUtils.isEmpty(oldRefreshToken)) {
+        if (oldRefreshToken == null || oldRefreshToken.length() == 0) {
             Timber.d("refreshAccessToken: no refresh token, give up.");
             return false;
         }
@@ -228,9 +228,9 @@ public class TraktCredentials {
         String refreshToken = null;
         long expiresIn = -1;
         try {
-            Response<AccessToken> response = trakt.refreshAccessToken();
-            if (response.isSuccessful()) {
-                AccessToken token = response.body();
+            Response<AccessToken> response = trakt.refreshAccessToken(oldRefreshToken);
+            AccessToken token = response.body();
+            if (response.isSuccessful() && token != null) {
                 accessToken = token.access_token;
                 refreshToken = token.refresh_token;
                 expiresIn = token.expires_in;
