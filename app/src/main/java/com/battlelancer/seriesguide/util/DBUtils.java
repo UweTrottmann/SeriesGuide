@@ -111,6 +111,7 @@ public class DBUtils {
     /**
      * Triggers the rebuilding of the episode search table.
      */
+    @SuppressLint("Recycle") // Cursor is null
     public static void rebuildFtsTable(Context context) {
         Timber.d("Query to renew FTS table");
         context.getContentResolver()
