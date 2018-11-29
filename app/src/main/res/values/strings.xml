@@ -505,6 +505,7 @@
     <string name="hide_watched">Hide watched episodes</string>
     <string name="pref_widget_opacity">Widget background</string>
     <string name="pref_widget_type">Widget type</string>
+    <string name="pref_large_font">Use large font</string>
 
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>

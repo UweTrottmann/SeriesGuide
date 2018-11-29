@@ -99,6 +99,11 @@ public class ListWidgetPreferenceFragment extends PreferenceFragment {
                 R.string.pref_infinite_scrolling,
                 false
         );
+        CheckBoxPreference isLargeFontPref = checkBoxPref(
+                WidgetSettings.KEY_PREFIX_WIDGET_IS_LARGE_FONT + appWidgetId,
+                R.string.pref_large_font,
+                false
+        );
 
         // use the settings file specific to widgets
         getPreferenceManager().setSharedPreferencesName(WidgetSettings.SETTINGS_FILE);
@@ -119,6 +124,7 @@ public class ListWidgetPreferenceFragment extends PreferenceFragment {
         preferenceScreen.addPreference(appearanceCategory);
         appearanceCategory.addPreference(themePref);
         appearanceCategory.addPreference(backgroundPref);
+        appearanceCategory.addPreference(isLargeFontPref);
 
         setPreferenceScreen(preferenceScreen);
 

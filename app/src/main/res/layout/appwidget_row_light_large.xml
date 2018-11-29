@@ -5,19 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:baselineAligned="false"
-    android:minHeight="48dp"
+    android:minHeight="52dp"
     android:orientation="horizontal"
     android:paddingBottom="@dimen/widget_padding_inline"
     android:paddingLeft="@dimen/widget_padding_default"
     android:paddingRight="@dimen/widget_padding_default"
     android:paddingTop="@dimen/widget_padding_inline"
-    tools:background="@android:color/holo_red_dark"
+    tools:background="@android:color/holo_orange_light"
     tools:ignore="UnusedAttribute,RtlHardcoded">
+
+    <!-- Text container height is 42dp/45dp(w720dp) (includes 2dp top margin) -->
+    <!-- Image should extend 2dp beyond bottom of text container -->
 
     <ImageView
         android:id="@+id/widgetPoster"
-        android:layout_width="@dimen/widget_item_width"
-        android:layout_height="@dimen/widget_item_height"
+        android:layout_width="@dimen/widget_item_width_large"
+        android:layout_height="@dimen/widget_item_height_large"
         android:contentDescription="@null"
         android:scaleType="centerInside"
         android:src="@drawable/ic_image_missing"
@@ -41,8 +44,8 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.Body.Bold"
-            android:textColor="@color/white"
-            android:textSize="@dimen/widget_text_size"
+            android:textColor="@color/black_87"
+            android:textSize="@dimen/widget_text_size_large"
             tools:ignore="RtlSymmetry"
             tools:text="Star Trek: Discovery" />
 
@@ -57,8 +60,8 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.Body"
-            android:textColor="@color/white"
-            android:textSize="@dimen/widget_text_size"
+            android:textColor="@color/black_87"
+            android:textSize="@dimen/widget_text_size_large"
             tools:ignore="RtlSymmetry"
             tools:text="2x13 If The Time Ever Comes" />
 
@@ -72,8 +75,8 @@
             android:ellipsize="start"
             android:fontFamily="sans-serif-condensed"
             android:maxWidth="180dp"
-            android:textColor="@color/white_70"
-            android:textSize="@dimen/widget_text_size"
+            android:textColor="@color/black_54"
+            android:textSize="@dimen/widget_text_size_large"
             tools:text="Showtime Network · 08:00 PM" />
 
         <TextView
@@ -84,8 +87,8 @@
             android:layout_below="@+id/widgetNetwork"
             android:fontFamily="sans-serif-condensed"
             android:maxLines="1"
-            android:textColor="@color/white_70"
-            android:textSize="@dimen/widget_text_size"
+            android:textColor="@color/black_54"
+            android:textSize="@dimen/widget_text_size_large"
             tools:text="Mon yesterday" />
 
     </RelativeLayout>
