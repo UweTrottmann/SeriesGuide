@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.sax.Element;
-import android.sax.EndElementListener;
-import android.sax.EndTextElementListener;
 import android.sax.RootElement;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -285,35 +283,20 @@ public class TvdbTools {
         RootElement root = new RootElement("Data");
         Element item = root.getChild("Series");
         // set handlers for elements we want to react to
-        item.setEndElementListener(new EndElementListener() {
-            public void end() {
-                // only take results in the selected language
-                if (language == null || language.equals(currentShow.getLanguage())) {
-                    series.add(currentShow.copy());
-                }
+        item.setEndElementListener(() -> {
+            // only take results in the selected language
+            if (language == null || language.equals(currentShow.getLanguage())) {
+                series.add(currentShow.copy());
             }
         });
-        item.getChild("id").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.setTvdbid(Integer.valueOf(body));
-            }
-        });
-        item.getChild("language").setEndTextElementListener(new EndTextElementListener() {
-            @Override
-            public void end(String body) {
-                currentShow.setLanguage(body.trim());
-            }
-        });
-        item.getChild("SeriesName").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.setTitle(body.trim());
-            }
-        });
-        item.getChild("Overview").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.setOverview(body.trim());
-            }
-        });
+        item.getChild("id").setEndTextElementListener(
+                body -> currentShow.setTvdbid(Integer.valueOf(body)));
+        item.getChild("language").setEndTextElementListener(
+                body -> currentShow.setLanguage(body.trim()));
+        item.getChild("SeriesName").setEndTextElementListener(
+                body -> currentShow.setTitle(body.trim()));
+        item.getChild("Overview").setEndTextElementListener(
+                body -> currentShow.setOverview(body.trim()));
 
         // build search URL: encode query...
         String url;

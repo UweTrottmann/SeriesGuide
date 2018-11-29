@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -140,8 +139,8 @@ public class ShowFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_show, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        View view = inflater.inflate(R.layout.fragment_show, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
         // favorite + notifications + visibility button
         CheatSheet.setup(buttonFavorite);
@@ -151,21 +150,11 @@ public class ShowFragment extends Fragment {
         // language button
         Resources.Theme theme = getActivity().getTheme();
         ViewTools.setVectorIconLeft(theme, buttonLanguage, R.drawable.ic_language_white_24dp);
-        buttonLanguage.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayLanguageSettings();
-            }
-        });
+        buttonLanguage.setOnClickListener(v -> displayLanguageSettings());
         CheatSheet.setup(buttonLanguage, R.string.pref_language);
 
         // rate button
-        buttonRate.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rateShow();
-            }
-        });
+        buttonRate.setOnClickListener(v -> rateShow());
         CheatSheet.setup(buttonRate, R.string.action_rate);
         textViewRatingRange.setText(getString(R.string.format_rating_range, 10));
 
@@ -178,22 +167,12 @@ public class ShowFragment extends Fragment {
 
         // share button
         ViewTools.setVectorIconLeft(theme, buttonShare, R.drawable.ic_share_white_24dp);
-        buttonShare.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareShow();
-            }
-        });
+        buttonShare.setOnClickListener(v -> shareShow());
 
         // shortcut button
         ViewTools.setVectorIconLeft(theme, buttonShortcut,
                 R.drawable.ic_add_to_home_screen_black_24dp);
-        buttonShortcut.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createShortcut();
-            }
-        });
+        buttonShortcut.setOnClickListener(v -> createShortcut());
 
         setCastVisibility(false);
         setCrewVisibility(false);
@@ -205,7 +184,7 @@ public class ShowFragment extends Fragment {
         ClipboardTools.copyTextToClipboardOnLongClick(textViewReleaseCountry);
         ClipboardTools.copyTextToClipboardOnLongClick(textViewFirstRelease);
 
-        return v;
+        return view;
     }
 
     @Override
@@ -385,13 +364,10 @@ public class ShowFragment extends Fragment {
         buttonFavorite.setText(labelFavorite);
         buttonFavorite.setContentDescription(labelFavorite);
         buttonFavorite.setEnabled(true);
-        buttonFavorite.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // disable until action is complete
-                v.setEnabled(false);
-                showTools.storeIsFavorite(getShowTvdbId(), !isFavorite);
-            }
+        buttonFavorite.setOnClickListener(v -> {
+            // disable until action is complete
+            v.setEnabled(false);
+            showTools.storeIsFavorite(getShowTvdbId(), !isFavorite);
         });
 
         // notifications button
@@ -403,17 +379,14 @@ public class ShowFragment extends Fragment {
                 ? R.drawable.ic_notifications_active_black_24dp
                 : R.drawable.ic_notifications_off_black_24dp);
         buttonNotify.setEnabled(true);
-        buttonNotify.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!Utils.hasAccessToX(getActivity())) {
-                    Utils.advertiseSubscription(getActivity());
-                    return;
-                }
-                // disable until action is complete
-                v.setEnabled(false);
-                showTools.storeNotify(getShowTvdbId(), !notify);
+        buttonNotify.setOnClickListener(v -> {
+            if (!Utils.hasAccessToX(getActivity())) {
+                Utils.advertiseSubscription(getActivity());
+                return;
             }
+            // disable until action is complete
+            v.setEnabled(false);
+            showTools.storeNotify(getShowTvdbId(), !notify);
         });
 
         // hidden button
@@ -426,13 +399,10 @@ public class ShowFragment extends Fragment {
                         ? R.drawable.ic_visibility_off_black_24dp
                         : R.drawable.ic_visibility_black_24dp);
         buttonHidden.setEnabled(true);
-        buttonHidden.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // disable until action is complete
-                v.setEnabled(false);
-                showTools.storeIsHidden(getShowTvdbId(), !isHidden);
-            }
+        buttonHidden.setOnClickListener(v -> {
+            // disable until action is complete
+            v.setEnabled(false);
+            showTools.storeIsHidden(getShowTvdbId(), !isHidden);
         });
 
         // overview
@@ -500,15 +470,12 @@ public class ShowFragment extends Fragment {
         ServiceUtils.setUpWebSearchButton(showTitle, buttonWebSearch, TAG);
 
         // shout button
-        buttonComments.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
-                i.putExtras(TraktCommentsActivity.createInitBundleShow(showTitle,
-                        getShowTvdbId()));
-                Utils.startActivityWithAnimation(getActivity(), i, v);
-                Utils.trackAction(v.getContext(), TAG, "Comments");
-            }
+        buttonComments.setOnClickListener(v -> {
+            Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
+            i.putExtras(TraktCommentsActivity.createInitBundleShow(showTitle,
+                    getShowTvdbId()));
+            Utils.startActivityWithAnimation(getActivity(), i, v);
+            Utils.trackAction(v.getContext(), TAG, "Comments");
         });
 
         // poster, full screen poster button
@@ -520,16 +487,13 @@ public class ShowFragment extends Fragment {
             // poster and fullscreen button
             TvdbImageTools.loadShowPoster(getActivity(), imageViewPoster, posterPath);
             containerPoster.setFocusable(true);
-            containerPoster.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
-                    intent.putExtra(FullscreenImageActivity.EXTRA_PREVIEW_IMAGE,
-                            TvdbImageTools.smallSizeUrl(posterPath));
-                    intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE,
-                            TvdbImageTools.fullSizeUrl(posterPath));
-                    Utils.startActivityWithAnimation(getActivity(), intent, v);
-                }
+            containerPoster.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
+                intent.putExtra(FullscreenImageActivity.EXTRA_PREVIEW_IMAGE,
+                        TvdbImageTools.smallSizeUrl(posterPath));
+                intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE,
+                        TvdbImageTools.fullSizeUrl(posterPath));
+                Utils.startActivityWithAnimation(getActivity(), intent, v);
             });
 
             // poster background

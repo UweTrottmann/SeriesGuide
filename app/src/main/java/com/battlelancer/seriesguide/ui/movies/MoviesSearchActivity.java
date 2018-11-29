@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui.movies;
 
-import android.annotation.TargetApi;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
@@ -70,15 +69,9 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 postponeEnterTransition();
-                containerMoviesSearchFragment.post(new Runnable() {
-                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-                    @Override
-                    public void run() {
-                        // allow the adapter to repopulate during the next layout pass
-                        // before starting the transition animation
-                        startPostponedEnterTransition();
-                    }
-                });
+                // allow the adapter to repopulate during the next layout pass
+                // before starting the transition animation
+                containerMoviesSearchFragment.post(this::startPostponedEnterTransition);
             }
         }
     }
@@ -128,12 +121,9 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
         searchView.dismissDropDown();
 
         // setup clear button
-        clearButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchView.setText(null);
-                searchView.requestFocus();
-            }
+        clearButton.setOnClickListener(v -> {
+            searchView.setText(null);
+            searchView.requestFocus();
         });
     }
 
@@ -225,24 +215,15 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
     };
 
     private AdapterView.OnItemClickListener searchViewItemClickListener
-            = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            search();
-        }
-    };
+            = (parent, view, position, id) -> search();
 
-    private TextView.OnEditorActionListener searchViewActionListener
-            = new TextView.OnEditorActionListener() {
-        @Override
-        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH
-                    || (event != null && event.getAction() == KeyEvent.ACTION_DOWN
-                    && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                search();
-                return true;
-            }
-            return false;
+    private TextView.OnEditorActionListener searchViewActionListener = (v, actionId, event) -> {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH
+                || (event != null && event.getAction() == KeyEvent.ACTION_DOWN
+                && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+            search();
+            return true;
         }
+        return false;
     };
 }

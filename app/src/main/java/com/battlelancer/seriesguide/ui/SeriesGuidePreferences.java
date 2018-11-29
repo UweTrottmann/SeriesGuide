@@ -17,7 +17,6 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
@@ -155,14 +154,10 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         ft.commit();
     }
 
-    private static OnPreferenceChangeListener sNoOpChangeListener
-            = new OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Utils.advertiseSubscription(preference.getContext());
-            // prevent value from getting saved
-            return false;
-        }
+    private static OnPreferenceChangeListener sNoOpChangeListener = (preference, newValue) -> {
+        Utils.advertiseSubscription(preference.getContext());
+        // prevent value from getting saved
+        return false;
     };
 
     /**
@@ -253,21 +248,18 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             // Theme switcher
             Preference themePref = findPreference(DisplaySettings.KEY_THEME);
             if (hasAccessToX) {
-                themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-                    @Override
-                    public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        if (DisplaySettings.KEY_THEME.equals(preference.getKey())) {
-                            ThemeUtils.updateTheme((String) newValue);
-                            Shadows.getInstance().resetShadowColor();
+                themePref.setOnPreferenceChangeListener((preference, newValue) -> {
+                    if (DisplaySettings.KEY_THEME.equals(preference.getKey())) {
+                        ThemeUtils.updateTheme((String) newValue);
+                        Shadows.getInstance().resetShadowColor();
 
-                            // restart to apply new theme, go back to this settings screen
-                            TaskStackBuilder.create(getActivity())
-                                    .addNextIntent(new Intent(getActivity(), ShowsActivity.class))
-                                    .addNextIntent(getActivity().getIntent())
-                                    .startActivities();
-                        }
-                        return true;
+                        // restart to apply new theme, go back to this settings screen
+                        TaskStackBuilder.create(getActivity())
+                                .addNextIntent(new Intent(getActivity(), ShowsActivity.class))
+                                .addNextIntent(getActivity().getIntent())
+                                .startActivities();
                     }
+                    return true;
                 });
                 setListPreferenceSummary((ListPreference) themePref);
             } else {
@@ -296,25 +288,22 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
             // allow supporters to enable notifications
             if (Utils.hasAccessToX(getActivity())) {
-                enabledPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-                    @Override
-                    public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        boolean isChecked = (boolean) newValue;
-                        Utils.trackCustomEvent(getActivity(), TAG, "Notifications",
-                                isChecked ? "Enable" : "Disable");
+                enabledPref.setOnPreferenceChangeListener((preference, newValue) -> {
+                    boolean isChecked = (boolean) newValue;
+                    Utils.trackCustomEvent(getActivity(), TAG, "Notifications",
+                            isChecked ? "Enable" : "Disable");
 
-                        thresholdPref.setEnabled(isChecked);
-                        selectionPref.setEnabled(isChecked);
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                            channelsPref.setEnabled(isChecked);
-                        } else {
-                            vibratePref.setEnabled(isChecked);
-                            ringtonePref.setEnabled(isChecked);
-                        }
-
-                        NotificationService.trigger(getActivity());
-                        return true;
+                    thresholdPref.setEnabled(isChecked);
+                    selectionPref.setEnabled(isChecked);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        channelsPref.setEnabled(isChecked);
+                    } else {
+                        vibratePref.setEnabled(isChecked);
+                        ringtonePref.setEnabled(isChecked);
                     }
+
+                    NotificationService.trigger(getActivity());
+                    return true;
                 });
                 // disable advanced notification settings if notifications are disabled
                 boolean isNotificationsEnabled = NotificationSettings.isNotificationsEnabled(
@@ -352,26 +341,20 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         private void setupBasicSettings() {
             // No aired episodes
             findPreference(DisplaySettings.KEY_NO_RELEASED_EPISODES).setOnPreferenceClickListener(
-                    new OnPreferenceClickListener() {
-
-                        public boolean onPreferenceClick(Preference preference) {
-                            boolean isChecked = ((CheckBoxPreference) preference).isChecked();
-                            Utils.trackCustomEvent(getActivity(), TAG, "OnlyFutureEpisodes",
-                                    isChecked ? "Enable" : "Disable");
-                            return false;
-                        }
+                    preference -> {
+                        boolean isChecked = ((CheckBoxPreference) preference).isChecked();
+                        Utils.trackCustomEvent(getActivity(), TAG, "OnlyFutureEpisodes",
+                                isChecked ? "Enable" : "Disable");
+                        return false;
                     });
 
             // No special episodes
             findPreference(DisplaySettings.KEY_HIDE_SPECIALS).setOnPreferenceClickListener(
-                    new OnPreferenceClickListener() {
-
-                        public boolean onPreferenceClick(Preference preference) {
-                            boolean isChecked = ((CheckBoxPreference) preference).isChecked();
-                            Utils.trackCustomEvent(getActivity(), TAG, "OnlySeasonEpisodes",
-                                    isChecked ? "Enable" : "Disable");
-                            return false;
-                        }
+                    preference -> {
+                        boolean isChecked = ((CheckBoxPreference) preference).isChecked();
+                        Utils.trackCustomEvent(getActivity(), TAG, "OnlySeasonEpisodes",
+                                isChecked ? "Enable" : "Disable");
+                        return false;
                     });
 
             // show currently set values for some prefs
@@ -384,36 +367,30 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         private void setupAdvancedSettings() {
             // Clear image cache
             findPreference(KEY_CLEAR_CACHE)
-                    .setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-                        public boolean onPreferenceClick(Preference preference) {
-                            // try to open app info where user can clear app cache folders
-                            Intent intent = new Intent(
-                                    android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                            intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
-                            if (!Utils.tryStartActivity(getActivity(), intent, false)) {
-                                // try to open all apps view if detail view not available
-                                intent = new Intent(
-                                        android.provider.Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
-                                Utils.tryStartActivity(getActivity(), intent, true);
-                            }
-
-                            return true;
+                    .setOnPreferenceClickListener(preference -> {
+                        // try to open app info where user can clear app cache folders
+                        Intent intent = new Intent(
+                                Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
+                        if (!Utils.tryStartActivity(getActivity(), intent, false)) {
+                            // try to open all apps view if detail view not available
+                            intent = new Intent(
+                                    Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
+                            Utils.tryStartActivity(getActivity(), intent, true);
                         }
+
+                        return true;
                     });
 
             // GA opt-out
             findPreference(AppSettings.KEY_GOOGLEANALYTICS).setOnPreferenceChangeListener(
-                    new OnPreferenceChangeListener() {
-                        @Override
-                        public boolean onPreferenceChange(Preference preference, Object newValue) {
-                            if (preference.getKey().equals(AppSettings.KEY_GOOGLEANALYTICS)) {
-                                boolean isEnabled = (Boolean) newValue;
-                                GoogleAnalytics.getInstance(getActivity()).setAppOptOut(isEnabled);
-                                return true;
-                            }
-                            return false;
+                    (preference, newValue) -> {
+                        if (preference.getKey().equals(AppSettings.KEY_GOOGLEANALYTICS)) {
+                            boolean isEnabled = (Boolean) newValue;
+                            GoogleAnalytics.getInstance(getActivity()).setAppOptOut(isEnabled);
+                            return true;
                         }
+                        return false;
                     });
         }
 
@@ -618,16 +595,14 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
             if (DisplaySettings.KEY_LANGUAGE_FALLBACK.equals(key)) {
                 // reset last edit date of all episodes so they will get updated
-                new Thread(new Runnable() {
-                    public void run() {
-                        android.os.Process
-                                .setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+                new Thread(() -> {
+                    android.os.Process
+                            .setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
 
-                        ContentValues values = new ContentValues();
-                        values.put(Episodes.LAST_EDITED, 0);
-                        getActivity().getContentResolver()
-                                .update(Episodes.CONTENT_URI, values, null, null);
-                    }
+                    ContentValues values = new ContentValues();
+                    values.put(Episodes.LAST_EDITED, 0);
+                    getActivity().getContentResolver()
+                            .update(Episodes.CONTENT_URI, values, null, null);
                 }).start();
             }
 

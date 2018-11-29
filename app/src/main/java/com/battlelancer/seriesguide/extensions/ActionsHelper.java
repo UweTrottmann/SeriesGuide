@@ -1,12 +1,10 @@
 package com.battlelancer.seriesguide.extensions;
 
-import android.annotation.TargetApi;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Build;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
@@ -63,12 +61,8 @@ public class ActionsHelper {
                         //noinspection deprecation
                         viewIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                     }
-                    actionView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Utils.tryStartActivity(v.getContext(), viewIntent, true);
-                        }
-                    });
+                    actionView.setOnClickListener(
+                            v -> Utils.tryStartActivity(v.getContext(), viewIntent, true));
                 }
 
                 actionsContainer.addView(actionView);
@@ -79,21 +73,17 @@ public class ActionsHelper {
         TextView configureView = (TextView) layoutInflater.inflate(R.layout.item_action_add,
                 actionsContainer, false);
         configureView.setText(R.string.action_extensions_configure);
-        configureView.setOnClickListener(new View.OnClickListener() {
-            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ExtensionsConfigurationActivity.class);
-                if (AndroidUtils.isJellyBeanOrHigher()) {
-                    v.getContext()
-                            .startActivity(intent,
-                                    ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(),
-                                            v.getHeight()).toBundle());
-                } else {
-                    v.getContext().startActivity(intent);
-                }
-                Utils.trackAction(v.getContext(), logCategory, "Manage extensions");
+        configureView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), ExtensionsConfigurationActivity.class);
+            if (AndroidUtils.isJellyBeanOrHigher()) {
+                v.getContext()
+                        .startActivity(intent,
+                                ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(),
+                                        v.getHeight()).toBundle());
+            } else {
+                v.getContext().startActivity(intent);
             }
+            Utils.trackAction(v.getContext(), logCategory, "Manage extensions");
         });
         actionsContainer.addView(configureView);
     }

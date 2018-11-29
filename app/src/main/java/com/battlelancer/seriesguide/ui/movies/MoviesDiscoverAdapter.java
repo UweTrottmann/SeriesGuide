@@ -132,12 +132,9 @@ class MoviesDiscoverAdapter extends MoviesAdapter {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (itemClickListener != null) {
-                        itemClickListener.onClickLink(link, LinkViewHolder.this.itemView);
-                    }
+            itemView.setOnClickListener(v -> {
+                if (itemClickListener != null) {
+                    itemClickListener.onClickLink(link, LinkViewHolder.this.itemView);
                 }
             });
         }

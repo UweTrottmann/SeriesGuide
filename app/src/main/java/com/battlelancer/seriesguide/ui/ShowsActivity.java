@@ -189,22 +189,16 @@ public class ShowsActivity extends BaseTopActivity implements
     private void setupViews() {
         // setup floating action button for adding shows
         FloatingActionButton buttonAddShow = findViewById(R.id.buttonShowsAdd);
-        buttonAddShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ShowsActivity.this, SearchActivity.class).putExtra(
-                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
-            }
-        });
+        buttonAddShow.setOnClickListener(
+                v -> startActivity(new Intent(ShowsActivity.this, SearchActivity.class)
+                        .putExtra(SearchActivity.EXTRA_DEFAULT_TAB,
+                                SearchActivity.TAB_POSITION_SEARCH)));
 
         viewPager = findViewById(R.id.viewPagerTabs);
         SlidingTabLayout tabs = findViewById(R.id.tabLayoutTabs);
-        tabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
-            @Override
-            public void onTabClick(int position) {
-                if (viewPager.getCurrentItem() == position) {
-                    EventBus.getDefault().post(new TabClickEvent(position));
-                }
+        tabs.setOnTabClickListener(position -> {
+            if (viewPager.getCurrentItem() == position) {
+                EventBus.getDefault().post(new TabClickEvent(position));
             }
         });
         tabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(), this, viewPager,

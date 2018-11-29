@@ -179,11 +179,6 @@ public class MoviesDiscoverFragment extends Fragment {
     };
 
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener
-            = new SwipeRefreshLayout.OnRefreshListener() {
-        @Override
-        public void onRefresh() {
-            LoaderManager.getInstance(MoviesDiscoverFragment.this)
+            = () -> LoaderManager.getInstance(MoviesDiscoverFragment.this)
                     .restartLoader(0, null, nowPlayingLoaderCallbacks);
-        }
-    };
 }

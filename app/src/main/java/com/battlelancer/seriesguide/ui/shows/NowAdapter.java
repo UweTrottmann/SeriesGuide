@@ -48,13 +48,10 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public HistoryViewHolder(View itemView, final ItemClickListener listener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION && listener != null) {
-                        listener.onItemClick(v, position);
-                    }
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && listener != null) {
+                    listener.onItemClick(v, position);
                 }
             });
         }
@@ -67,13 +64,10 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(itemView);
             title = itemView.findViewById(R.id.textViewNowMoreText);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION && listener != null) {
-                        listener.onItemClick(v, position);
-                    }
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && listener != null) {
+                    listener.onItemClick(v, position);
                 }
             });
         }

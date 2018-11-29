@@ -176,35 +176,29 @@ public class IabHelper {
      * or any error.
      */
     public void startSetupAndQueryInventory() {
-        startSetup(new OnIabSetupFinishedListener() {
-            @Override
-            public void onIabSetupFinished(IabResult result) {
-                if (!result.isSuccess()) {
+        startSetup(setupResult -> {
+            if (!setupResult.isSuccess()) {
+                // do not care about failure, will try again next time
+                dispose();
+                return;
+            }
+
+            // only query for owned items, we do not care about sku details
+            Timber.d("onIabSetupFinished: Successful. Querying inventory.");
+            queryInventoryAsync(false, null, (queryResult, inv) -> {
+                if (queryResult.isFailure()) {
                     // do not care about failure, will try again next time
                     dispose();
                     return;
                 }
 
-                // only query for owned items, we do not care about sku details
-                Timber.d("onIabSetupFinished: Successful. Querying inventory.");
-                queryInventoryAsync(false, null, new QueryInventoryFinishedListener() {
-                    @Override
-                    public void onQueryInventoryFinished(IabResult result, Inventory inv) {
-                        if (result.isFailure()) {
-                            // do not care about failure, will try again next time
-                            dispose();
-                            return;
-                        }
-
-                        if (context == null) {
-                            return;
-                        }
-                        Timber.d("onQueryInventoryFinished: Successful. Updating inventory.");
-                        BillingActivity.checkForSubscription(context, inv);
-                        dispose();
-                    }
-                });
-            }
+                if (context == null) {
+                    return;
+                }
+                Timber.d("onQueryInventoryFinished: Successful. Updating inventory.");
+                BillingActivity.checkForSubscription(context, inv);
+                dispose();
+            });
         });
     }
 
@@ -647,39 +641,33 @@ public class IabHelper {
 
         final Handler handler = new Handler();
         flagStartAsync("refresh inventory");
-        (new Thread(new Runnable() {
-            public void run() {
-                // keep own references as IabHelper might be disposed in different thread
-                Context context = IabHelper.this.context;
-                IInAppBillingService billingService = IabHelper.this.billingService;
-                if (context == null || billingService == null) {
-                    flagEndAsync();
-                    warnQueryInventorySkipped(listener);
-                    return;
-                }
-
-                IabResult result = new IabResult(BILLING_RESPONSE_RESULT_OK,
-                        "Inventory refresh successful.");
-                Inventory inv = null;
-                try {
-                    inv = queryInventory(billingService, context.getPackageName(), signatureBase64,
-                            subscriptionsSupported, querySkuDetails, moreSkus);
-                } catch (IabException e) {
-                    Timber.e(e, "queryInventoryAsync: failed.");
-                    result = e.getResult();
-                }
-
+        (new Thread(() -> {
+            // keep own references as IabHelper might be disposed in different thread
+            Context context = IabHelper.this.context;
+            IInAppBillingService billingService = IabHelper.this.billingService;
+            if (context == null || billingService == null) {
                 flagEndAsync();
+                warnQueryInventorySkipped(listener);
+                return;
+            }
 
-                final IabResult result_f = result;
-                final Inventory inv_f = inv;
-                if (listener != null) {
-                    handler.post(new Runnable() {
-                        public void run() {
-                            listener.onQueryInventoryFinished(result_f, inv_f);
-                        }
-                    });
-                }
+            IabResult result = new IabResult(BILLING_RESPONSE_RESULT_OK,
+                    "Inventory refresh successful.");
+            Inventory inv = null;
+            try {
+                inv = queryInventory(billingService, context.getPackageName(), signatureBase64,
+                        subscriptionsSupported, querySkuDetails, moreSkus);
+            } catch (IabException e) {
+                Timber.e(e, "queryInventoryAsync: failed.");
+                result = e.getResult();
+            }
+
+            flagEndAsync();
+
+            final IabResult result_f = result;
+            final Inventory inv_f = inv;
+            if (listener != null) {
+                handler.post(() -> listener.onQueryInventoryFinished(result_f, inv_f));
             }
         })).start();
     }

@@ -12,9 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,16 +58,11 @@ public class StatsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_stats, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        View view = inflater.inflate(R.layout.fragment_stats, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
         errorView.setVisibility(View.GONE);
-        errorView.setButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadStats();
-            }
-        });
+        errorView.setButtonClickListener(v -> loadStats());
 
         // set some views invisible so they can be animated in once stats are computed
         textViewShowsWithNextEpisode.setVisibility(View.INVISIBLE);
@@ -96,7 +89,7 @@ public class StatsFragment extends Fragment {
         ClipboardTools.copyTextToClipboardOnLongClick(textViewMoviesWatchlist);
         ClipboardTools.copyTextToClipboardOnLongClick(textViewMoviesWatchlistRuntime);
 
-        return v;
+        return view;
     }
 
     @Override
@@ -105,12 +98,7 @@ public class StatsFragment extends Fragment {
         setHasOptionsMenu(true);
 
         model = ViewModelProviders.of(this).get(StatsViewModel.class);
-        model.getStatsData().observe(this, new Observer<StatsLiveData.StatsUpdateEvent>() {
-            @Override
-            public void onChanged(@Nullable StatsLiveData.StatsUpdateEvent statsUpdateEvent) {
-                handleStatsUpdate(statsUpdateEvent);
-            }
-        });
+        model.getStatsData().observe(this, this::handleStatsUpdate);
         loadStats();
     }
 

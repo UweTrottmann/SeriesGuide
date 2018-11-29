@@ -50,12 +50,7 @@ public class TimeOffsetDialogFragment extends AppCompatDialogFragment {
 
         buttonNegative.setVisibility(View.GONE);
         buttonPositive.setText(android.R.string.ok);
-        buttonPositive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveAndDismiss();
-            }
-        });
+        buttonPositive.setOnClickListener(v -> saveAndDismiss());
 
         textViewRange.setText(getString(R.string.format_time_offset_range, -24, 24));
         editTextValue.setHint(getString(R.string.format_time_offset_range, -24, 24));

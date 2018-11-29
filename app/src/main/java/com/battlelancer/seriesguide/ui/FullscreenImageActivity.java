@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import androidx.appcompat.app.ActionBar;
 import com.battlelancer.seriesguide.R;
@@ -15,7 +14,6 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import uk.co.senab.photoview.PhotoView;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * Displays an image URL full screen in a zoomable view. If a preview image URL is provided, it is
@@ -94,12 +92,7 @@ public class FullscreenImageActivity extends BaseActivity {
                 SystemUiHider.FLAG_FULLSCREEN);
         systemUiHider.setup();
 
-        photoView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
-            @Override
-            public void onViewTap(View view, float x, float y) {
-                systemUiHider.toggle();
-            }
-        });
+        photoView.setOnViewTapListener((view, x, y) -> systemUiHider.toggle());
     }
 
     private void loadLargeImage(boolean hasPreviewImage) {

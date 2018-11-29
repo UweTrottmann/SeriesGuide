@@ -364,15 +364,12 @@ public class StickyGridHeadersGridView extends GridView implements OnScrollListe
                                 if (mTouchModeReset != null) {
                                     removeCallbacks(mTouchModeReset);
                                 }
-                                mTouchModeReset = new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mTouchMode = TOUCH_MODE_REST;
-                                        header.setPressed(false);
-                                        setPressed(false);
-                                        if (!mDataChanged) {
-                                            performHeaderClick.run();
-                                        }
+                                mTouchModeReset = () -> {
+                                    mTouchMode = TOUCH_MODE_REST;
+                                    header.setPressed(false);
+                                    setPressed(false);
+                                    if (!mDataChanged) {
+                                        performHeaderClick.run();
                                     }
                                 };
                                 postDelayed(mTouchModeReset,

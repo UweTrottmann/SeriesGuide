@@ -301,37 +301,34 @@ public class CalendarFragment extends Fragment
         final int episodeTvdbId = episode.getInt(CalendarQuery._ID);
         final int seasonNumber = episode.getInt(CalendarQuery.SEASON);
         final int episodeNumber = episode.getInt(CalendarQuery.NUMBER);
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case CONTEXT_CHECKIN_ID: {
-                        checkInEpisode((int) id);
-                        return true;
-                    }
-                    case CONTEXT_FLAG_WATCHED_ID: {
-                        updateEpisodeWatchedState(showTvdbId, episodeTvdbId, seasonNumber,
-                                episodeNumber, true);
-                        return true;
-                    }
-                    case CONTEXT_FLAG_UNWATCHED_ID: {
-                        updateEpisodeWatchedState(showTvdbId, episodeTvdbId, seasonNumber,
-                                episodeNumber, false);
-                        return true;
-                    }
-                    case CONTEXT_COLLECTION_ADD_ID: {
-                        updateEpisodeCollectionState(showTvdbId, episodeTvdbId, seasonNumber,
-                                episodeNumber, true);
-                        return true;
-                    }
-                    case CONTEXT_COLLECTION_REMOVE_ID: {
-                        updateEpisodeCollectionState(showTvdbId, episodeTvdbId, seasonNumber,
-                                episodeNumber, false);
-                        return true;
-                    }
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case CONTEXT_CHECKIN_ID: {
+                    checkInEpisode((int) id);
+                    return true;
                 }
-                return false;
+                case CONTEXT_FLAG_WATCHED_ID: {
+                    updateEpisodeWatchedState(showTvdbId, episodeTvdbId, seasonNumber,
+                            episodeNumber, true);
+                    return true;
+                }
+                case CONTEXT_FLAG_UNWATCHED_ID: {
+                    updateEpisodeWatchedState(showTvdbId, episodeTvdbId, seasonNumber,
+                            episodeNumber, false);
+                    return true;
+                }
+                case CONTEXT_COLLECTION_ADD_ID: {
+                    updateEpisodeCollectionState(showTvdbId, episodeTvdbId, seasonNumber,
+                            episodeNumber, true);
+                    return true;
+                }
+                case CONTEXT_COLLECTION_REMOVE_ID: {
+                    updateEpisodeCollectionState(showTvdbId, episodeTvdbId, seasonNumber,
+                            episodeNumber, false);
+                    return true;
+                }
             }
+            return false;
         });
 
         popupMenu.show();

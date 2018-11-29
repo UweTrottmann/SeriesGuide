@@ -92,12 +92,9 @@ class MoviesCursorAdapter extends CursorAdapter {
 
         // context menu
         final int movieTmdbId = cursor.getInt(MoviesQuery.TMDB_ID);
-        holder.contextMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (popupMenuClickListener != null) {
-                    popupMenuClickListener.onPopupMenuClick(v, movieTmdbId);
-                }
+        holder.contextMenu.setOnClickListener(v -> {
+            if (popupMenuClickListener != null) {
+                popupMenuClickListener.onPopupMenuClick(v, movieTmdbId);
             }
         });
 

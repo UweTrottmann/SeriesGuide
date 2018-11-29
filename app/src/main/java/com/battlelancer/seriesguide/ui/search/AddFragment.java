@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -281,28 +280,19 @@ public abstract class AddFragment extends Fragment {
             public ViewHolder(View view,
                     final OnItemClickListener onItemClickListener) {
                 ButterKnife.bind(this, view);
-                view.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (onItemClickListener != null) {
-                            onItemClickListener.onItemClick(item);
-                        }
+                view.setOnClickListener(v -> {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(item);
                     }
                 });
-                addIndicator.setOnAddClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (onItemClickListener != null) {
-                            onItemClickListener.onAddClick(item);
-                        }
+                addIndicator.setOnAddClickListener(v -> {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onAddClick(item);
                     }
                 });
-                buttonContextMenu.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (onItemClickListener != null) {
-                            onItemClickListener.onMenuWatchlistClick(v, item.getTvdbid());
-                        }
+                buttonContextMenu.setOnClickListener(v -> {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onMenuWatchlistClick(v, item.getTvdbid());
                     }
                 });
             }

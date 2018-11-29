@@ -23,7 +23,6 @@ import com.battlelancer.seriesguide.util.DialogTools;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import org.greenrobot.eventbus.EventBus;
@@ -75,12 +74,7 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
         unbinder = ButterKnife.bind(this, view);
 
         buttonOk.setText(android.R.string.ok);
-        buttonOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        buttonOk.setOnClickListener(v -> dismiss());
 
         adapter = new LocalizationAdapter(onItemClickListener);
         recyclerView.setAdapter(adapter);
@@ -88,69 +82,43 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
 
         updateButtonText();
 
-        buttonLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setListVisible(true);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String[] languageCodes = getContext().getResources()
-                                .getStringArray(R.array.languageCodesMovies);
-                        List<LocalizationAdapter.LocalizationItem> items = new ArrayList<>(
-                                languageCodes.length);
-                        for (String languageCode : languageCodes) {
-                            // example: "en-US"
-                            String languageDisplayName = new Locale(languageCode.substring(0, 2),
-                                    "").getDisplayName();
-                            items.add(new LocalizationAdapter.LocalizationItem(languageCode,
-                                    languageDisplayName));
-                        }
-                        final Collator collator = Collator.getInstance();
-                        Collections.sort(items,
-                                new Comparator<LocalizationAdapter.LocalizationItem>() {
-                                    @Override
-                                    public int compare(LocalizationAdapter.LocalizationItem left,
-                                            LocalizationAdapter.LocalizationItem right) {
-                                        return collator.compare(left.displayText,
-                                                right.displayText);
-                                    }
-                                });
-                        EventBus.getDefault().postSticky(new ItemsLoadedEvent(items, 0));
-                    }
-                }).run();
-            }
+        buttonLanguage.setOnClickListener(v -> {
+            setListVisible(true);
+            new Thread(() -> {
+                String[] languageCodes = getContext().getResources()
+                        .getStringArray(R.array.languageCodesMovies);
+                List<LocalizationAdapter.LocalizationItem> items = new ArrayList<>(
+                        languageCodes.length);
+                for (String languageCode : languageCodes) {
+                    // example: "en-US"
+                    String languageDisplayName = new Locale(languageCode.substring(0, 2),
+                            "").getDisplayName();
+                    items.add(new LocalizationAdapter.LocalizationItem(languageCode,
+                            languageDisplayName));
+                }
+                final Collator collator = Collator.getInstance();
+                Collections.sort(items,
+                        (left, right) -> collator.compare(left.displayText, right.displayText));
+                EventBus.getDefault().postSticky(new ItemsLoadedEvent(items, 0));
+            }).run();
         });
-        buttonRegion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setListVisible(true);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String[] regionCodes = Locale.getISOCountries();
-                        List<LocalizationAdapter.LocalizationItem> items = new ArrayList<>(
-                                regionCodes.length);
-                        for (String regionCode : regionCodes) {
-                            // example: "en-US"
-                            String displayCountry = new Locale("", regionCode).getDisplayCountry();
-                            items.add(new LocalizationAdapter.LocalizationItem(regionCode,
-                                    displayCountry));
-                        }
-                        final Collator collator = Collator.getInstance();
-                        Collections.sort(items,
-                                new Comparator<LocalizationAdapter.LocalizationItem>() {
-                                    @Override
-                                    public int compare(LocalizationAdapter.LocalizationItem left,
-                                            LocalizationAdapter.LocalizationItem right) {
-                                        return collator.compare(left.displayText,
-                                                right.displayText);
-                                    }
-                                });
-                        EventBus.getDefault().postSticky(new ItemsLoadedEvent(items, 1));
-                    }
-                }).run();
-            }
+        buttonRegion.setOnClickListener(v -> {
+            setListVisible(true);
+            new Thread(() -> {
+                String[] regionCodes = Locale.getISOCountries();
+                List<LocalizationAdapter.LocalizationItem> items = new ArrayList<>(
+                        regionCodes.length);
+                for (String regionCode : regionCodes) {
+                    // example: "en-US"
+                    String displayCountry = new Locale("", regionCode).getDisplayCountry();
+                    items.add(new LocalizationAdapter.LocalizationItem(regionCode,
+                            displayCountry));
+                }
+                final Collator collator = Collator.getInstance();
+                Collections.sort(items,
+                        (left, right) -> collator.compare(left.displayText, right.displayText));
+                EventBus.getDefault().postSticky(new ItemsLoadedEvent(items, 1));
+            }).run();
         });
 
         return view;
@@ -305,12 +273,7 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
             public ViewHolder(View itemView, final OnItemClickListener onItemClickListener) {
                 super(itemView);
                 ButterKnife.bind(this, itemView);
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onItemClickListener.onItemClick(code);
-                    }
-                });
+                itemView.setOnClickListener(v -> onItemClickListener.onItemClick(code));
             }
         }
     }

@@ -4,9 +4,6 @@ import android.content.Context;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.api.client.googleapis.services.AbstractGoogleClient;
-import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
-import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
-import java.io.IOException;
 
 /**
  * Common utilities for working with Cloud Endpoints.
@@ -65,12 +62,9 @@ public class CloudEndpointUtils {
         // only enable GZip when connecting to remote server
         final boolean enableGZip = builder.getRootUrl().startsWith("https:");
 
-        builder.setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-            public void initialize(AbstractGoogleClientRequest<?> request)
-                    throws IOException {
-                if (!enableGZip) {
-                    request.setDisableGZipContent(true);
-                }
+        builder.setGoogleClientRequestInitializer(request -> {
+            if (!enableGZip) {
+                request.setDisableGZipContent(true);
             }
         });
 

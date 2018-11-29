@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
@@ -74,12 +73,7 @@ public final class ServiceUtils {
             imdbButton.setEnabled(false);
         } else {
             imdbButton.setEnabled(true);
-            imdbButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openImdb(imdbId, logTag, v.getContext());
-                }
-            });
+            imdbButton.setOnClickListener(v -> openImdb(imdbId, logTag, v.getContext()));
             ClipboardTools.copyTextToClipboardOnLongClick(imdbButton, imdbLink(imdbId));
         }
     }
@@ -200,11 +194,6 @@ public final class ServiceUtils {
             return;
         }
 
-        button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                performWebSearch(v.getContext(), query, logTag);
-            }
-        });
+        button.setOnClickListener(v -> performWebSearch(v.getContext(), query, logTag));
     }
 }

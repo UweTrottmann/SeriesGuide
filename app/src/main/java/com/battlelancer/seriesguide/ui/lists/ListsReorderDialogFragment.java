@@ -37,8 +37,8 @@ public class ListsReorderDialogFragment extends AppCompatDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.dialog_lists_reorder, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        View view = inflater.inflate(R.layout.dialog_lists_reorder, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
         DragSortController controller = new DragSortController(dragSortListView,
                 R.id.dragGripViewItemList, DragSortController.ON_DOWN,
@@ -46,31 +46,18 @@ public class ListsReorderDialogFragment extends AppCompatDialogFragment {
         controller.setRemoveEnabled(false);
         dragSortListView.setFloatViewManager(controller);
         dragSortListView.setOnTouchListener(controller);
-        dragSortListView.setDropListener(new DragSortListView.DropListener() {
-            @Override
-            public void drop(int from, int to) {
-                reorderList(from, to);
-            }
-        });
+        dragSortListView.setDropListener(this::reorderList);
 
         buttonNegative.setText(R.string.discard);
-        buttonNegative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        buttonNegative.setOnClickListener(v -> dismiss());
 
         buttonPositive.setText(android.R.string.ok);
-        buttonPositive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveListsOrder();
-                dismiss();
-            }
+        buttonPositive.setOnClickListener(v -> {
+            saveListsOrder();
+            dismiss();
         });
 
-        return v;
+        return view;
     }
 
     @Override

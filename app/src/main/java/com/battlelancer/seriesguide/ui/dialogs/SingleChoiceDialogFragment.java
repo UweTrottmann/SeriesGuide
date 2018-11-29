@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -42,17 +41,15 @@ public class SingleChoiceDialogFragment extends AppCompatDialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setTitle(getString(getArguments().getInt("dialogtitle")))
                 .setSingleChoiceItems(items, getArguments().getInt("selected"),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int item) {
-                                final SharedPreferences.Editor editor = PreferenceManager
-                                        .getDefaultSharedPreferences(getActivity()).edit();
-                                editor.putString(
-                                        getArguments().getString("prefkey"),
-                                        (getResources().getStringArray(getArguments().getInt(
-                                                "itemdata")))[item]);
-                                editor.apply();
-                                dismiss();
-                            }
+                        (dialog, item) -> {
+                            final SharedPreferences.Editor editor = PreferenceManager
+                                    .getDefaultSharedPreferences(getActivity()).edit();
+                            editor.putString(
+                                    getArguments().getString("prefkey"),
+                                    (getResources().getStringArray(getArguments().getInt(
+                                            "itemdata")))[item]);
+                            editor.apply();
+                            dismiss();
                         }).create();
     }
 }

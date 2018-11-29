@@ -828,12 +828,7 @@ public class OverviewFragment extends Fragment implements
                         episodeActionsLoaderCallbacks);
     }
 
-    Runnable episodeActionsRunnable = new Runnable() {
-        @Override
-        public void run() {
-            loadEpisodeActions();
-        }
-    };
+    Runnable episodeActionsRunnable = this::loadEpisodeActions;
 
     @Override
     public void loadEpisodeActionsDelayed() {

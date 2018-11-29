@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.episodes;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.graphics.drawable.GradientDrawable;
@@ -381,12 +380,9 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     };
 
     private OnSharedPreferenceChangeListener onSortOrderChangedListener
-            = new OnSharedPreferenceChangeListener() {
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (DisplaySettings.KEY_EPISODE_SORT_ORDER.equals(key)) {
-                reorderAndUpdateTabs();
-            }
+            = (sharedPreferences, key) -> {
+        if (DisplaySettings.KEY_EPISODE_SORT_ORDER.equals(key)) {
+            reorderAndUpdateTabs();
         }
     };
 

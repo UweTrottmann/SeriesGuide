@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -86,42 +85,25 @@ public class BillingActivity extends BaseActivity {
 
     private void setupViews() {
         buttonSubscribe = findViewById(R.id.buttonBillingGetSubscription);
-        buttonSubscribe.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSubscribeToXButtonClicked();
-            }
-        });
+        buttonSubscribe.setOnClickListener(v -> onSubscribeToXButtonClicked());
         textViewSubscriptionPrice = findViewById(R.id.textViewBillingPriceSubscription);
         Button buttonManageSubs = findViewById(R.id.buttonBillingManageSubscription);
-        buttonManageSubs.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.launchWebsite(v.getContext(), manageSubscriptionUrl);
-            }
-        });
+        buttonManageSubs.setOnClickListener(
+                v -> Utils.launchWebsite(v.getContext(), manageSubscriptionUrl));
 
         buttonPass = findViewById(R.id.buttonBillingGetPass);
-        buttonPass.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.launchWebsite(BillingActivity.this, getString(R.string.url_x_pass), TAG,
-                        "X Pass");
-            }
-        });
+        buttonPass.setOnClickListener(
+                v -> Utils.launchWebsite(BillingActivity.this, getString(R.string.url_x_pass),
+                        TAG, "X Pass"));
 
         textViewHasUpgrade = findViewById(R.id.textViewBillingExisting);
 
         progressScreen = findViewById(R.id.progressBarBilling);
         contentContainer = findViewById(R.id.containerBilling);
 
-        findViewById(R.id.textViewBillingMoreInfo).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.launchWebsite(BillingActivity.this, getString(R.string.url_whypay), TAG,
-                        "WhyPayWebsite");
-            }
-        });
+        findViewById(R.id.textViewBillingMoreInfo).setOnClickListener(
+                v -> Utils.launchWebsite(BillingActivity.this, getString(R.string.url_whypay),
+                        TAG, "WhyPayWebsite"));
     }
 
     @Override

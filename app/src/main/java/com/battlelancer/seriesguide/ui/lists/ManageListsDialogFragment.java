@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -99,48 +98,40 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
         // buttons
         Button dontAddButton = layout.findViewById(R.id.buttonNegative);
         dontAddButton.setText(android.R.string.cancel);
-        dontAddButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        dontAddButton.setOnClickListener(v -> dismiss());
         Button addButton = layout.findViewById(R.id.buttonPositive);
         addButton.setText(android.R.string.ok);
-        addButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // add item to selected lists, remove from previously selected lists
-                SparseBooleanArray checkedLists = adapter.getCheckedPositions();
-                List<String> addToTheseLists = new ArrayList<>();
-                List<String> removeFromTheseLists = new ArrayList<>();
-                for (int position = 0; position < adapter.getCount(); position++) {
-                    final Cursor listEntry = (Cursor) adapter.getItem(position);
+        addButton.setOnClickListener(v -> {
+            // add item to selected lists, remove from previously selected lists
+            SparseBooleanArray checkedLists = adapter.getCheckedPositions();
+            List<String> addToTheseLists = new ArrayList<>();
+            List<String> removeFromTheseLists = new ArrayList<>();
+            for (int position = 0; position < adapter.getCount(); position++) {
+                final Cursor listEntry = (Cursor) adapter.getItem(position);
 
-                    boolean wasListChecked = !TextUtils.isEmpty(listEntry
-                            .getString(ListsQuery.LIST_ITEM_ID));
-                    boolean isListChecked = checkedLists.get(position);
+                boolean wasListChecked = !TextUtils.isEmpty(listEntry
+                        .getString(ListsQuery.LIST_ITEM_ID));
+                boolean isListChecked = checkedLists.get(position);
 
-                    String listId = listEntry.getString(ListsQuery.LIST_ID);
-                    if (TextUtils.isEmpty(listId)) {
-                        continue; // skip, no id
-                    }
-                    if (wasListChecked && !isListChecked) {
-                        // remove from list
-                        removeFromTheseLists.add(listId);
-                    } else if (!wasListChecked && isListChecked) {
-                        // add to list
-                        addToTheseLists.add(listId);
-                    }
+                String listId = listEntry.getString(ListsQuery.LIST_ID);
+                if (TextUtils.isEmpty(listId)) {
+                    continue; // skip, no id
                 }
-
-                int itemTvdbId = getArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
-                int itemType = getArguments().getInt(InitBundle.INT_ITEM_TYPE);
-                ListsTools.changeListsOfItem(getContext(), itemTvdbId, itemType,
-                        addToTheseLists, removeFromTheseLists);
-
-                dismiss();
+                if (wasListChecked && !isListChecked) {
+                    // remove from list
+                    removeFromTheseLists.add(listId);
+                } else if (!wasListChecked && isListChecked) {
+                    // add to list
+                    addToTheseLists.add(listId);
+                }
             }
+
+            int itemTvdbId = getArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
+            int itemType = getArguments().getInt(InitBundle.INT_ITEM_TYPE);
+            ListsTools.changeListsOfItem(getContext(), itemTvdbId, itemType,
+                    addToTheseLists, removeFromTheseLists);
+
+            dismiss();
         });
 
         // lists list

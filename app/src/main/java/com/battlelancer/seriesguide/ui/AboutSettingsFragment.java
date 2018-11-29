@@ -64,12 +64,7 @@ public class AboutSettingsFragment extends Fragment {
         unbinder.unbind();
     }
 
-    private View.OnClickListener urlButtonClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onWebsiteButtonClick(v.getId());
-        }
-    };
+    private View.OnClickListener urlButtonClickListener = v -> onWebsiteButtonClick(v.getId());
 
     private void onWebsiteButtonClick(@IdRes int viewId) {
         if (viewId == R.id.buttonAboutWebsite) {

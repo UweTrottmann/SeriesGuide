@@ -94,19 +94,9 @@ public abstract class BaseOAuthActivity extends BaseActivity {
 
         // setup buttons (can be used if browser launch fails or user comes back without code)
         Button buttonBrowser = findViewById(R.id.buttonOauthBrowser);
-        buttonBrowser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchBrowser();
-            }
-        });
+        buttonBrowser.setOnClickListener(v -> launchBrowser());
         Button buttonWebView = findViewById(R.id.buttonOauthWebView);
-        buttonWebView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activateWebView();
-            }
-        });
+        buttonWebView.setOnClickListener(v -> activateWebView());
 
         activateFallbackButtons();
         setMessage(null);

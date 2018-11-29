@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -127,12 +126,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
     }) List<View> labelViews;
 
     static final ButterKnife.Setter<View, Boolean> VISIBLE
-            = new ButterKnife.Setter<View, Boolean>() {
-        @Override
-        public void set(@NonNull View view, Boolean value, int index) {
-            view.setVisibility(value ? View.VISIBLE : View.INVISIBLE);
-        }
-    };
+            = (view, value, index) -> view.setVisibility(value ? View.VISIBLE : View.INVISIBLE);
 
     @BindView(R.id.buttonPositive) Button buttonPositive;
     @BindView(R.id.buttonNegative) Button buttonNegative;
@@ -180,25 +174,17 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
 
         // buttons
         buttonNegative.setText(R.string.dismiss);
-        buttonNegative.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        buttonNegative.setOnClickListener(view -> dismiss());
         buttonPositive.setVisibility(View.GONE);
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
-        containerShowInfo.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                // just copy text from views instead of re-building
-                StringBuilder summaryBuilder = new StringBuilder();
-                summaryBuilder.append(title.getText()).append("\n");
-                summaryBuilder.append(releasedTextView.getText()).append("\n");
-                summaryBuilder.append(showmeta.getText());
-                return ClipboardTools.copyTextToClipboard(v.getContext(), summaryBuilder);
-            }
+        containerShowInfo.setOnLongClickListener(view -> {
+            // just copy text from views instead of re-building
+            StringBuilder summaryBuilder = new StringBuilder();
+            summaryBuilder.append(title.getText()).append("\n");
+            summaryBuilder.append(releasedTextView.getText()).append("\n");
+            summaryBuilder.append(showmeta.getText());
+            return ClipboardTools.copyTextToClipboard(view.getContext(), summaryBuilder);
         });
         ClipboardTools.copyTextToClipboardOnLongClick(overview);
         ClipboardTools.copyTextToClipboardOnLongClick(genres);
@@ -309,26 +295,20 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         if (result.isAdded) {
             // already added, offer to open show instead
             buttonPositive.setText(R.string.action_open);
-            buttonPositive.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(OverviewActivity.intentShow(getContext(),
-                            displayedShow.getTvdbid()));
-                    dismiss();
-                }
+            buttonPositive.setOnClickListener(v -> {
+                startActivity(OverviewActivity.intentShow(getContext(),
+                        displayedShow.getTvdbid()));
+                dismiss();
             });
         } else {
             // not added, offer to add
             buttonPositive.setText(R.string.action_shows_add);
-            buttonPositive.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    EventBus.getDefault()
-                            .post(new AddFragment.OnAddingShowEvent(displayedShow.getTvdbid()));
+            buttonPositive.setOnClickListener(v -> {
+                EventBus.getDefault()
+                        .post(new AddFragment.OnAddingShowEvent(displayedShow.getTvdbid()));
 
-                    addShowListener.onAddShow(displayedShow);
-                    dismiss();
-                }
+                addShowListener.onAddShow(displayedShow);
+                dismiss();
             });
         }
         buttonPositive.setVisibility(View.VISIBLE);

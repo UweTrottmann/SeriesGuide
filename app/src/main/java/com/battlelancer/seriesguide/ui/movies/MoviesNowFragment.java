@@ -59,16 +59,11 @@ public class MoviesNowFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_now, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        View view = inflater.inflate(R.layout.fragment_now, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewNow, R.id.recyclerViewNow);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshStream();
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(this::refreshStream);
         swipeRefreshLayout.setProgressViewOffset(false,
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_start_margin),
@@ -79,12 +74,7 @@ public class MoviesNowFragment extends Fragment {
 
         showError(null);
         snackbarButton.setText(R.string.refresh);
-        snackbarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refreshStream();
-            }
-        });
+        snackbarButton.setOnClickListener(v -> refreshStream());
 
         // recycler view layout manager
         final int spanCount = getResources().getInteger(R.integer.grid_column_count);
@@ -107,7 +97,7 @@ public class MoviesNowFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        return v;
+        return view;
     }
 
     @Override

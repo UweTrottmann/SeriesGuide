@@ -195,15 +195,12 @@ public class ViewTools {
     }
 
     public static void showSoftKeyboardOnSearchView(final Context context, final View searchView) {
-        searchView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (searchView.requestFocus()) {
-                    InputMethodManager imm = (InputMethodManager)
-                            context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm != null) {
-                        imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
-                    }
+        searchView.postDelayed(() -> {
+            if (searchView.requestFocus()) {
+                InputMethodManager imm = (InputMethodManager)
+                        context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
                 }
             }
         }, 200); // have to add a little delay (http://stackoverflow.com/a/27540921/1000543)
@@ -221,12 +218,8 @@ public class ViewTools {
     public static void openUriOnClick(View button, final String uri, final String logTag,
             final String logItem) {
         if (button != null) {
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Utils.launchWebsite(v.getContext(), uri, logTag, logItem);
-                }
-            });
+            button.setOnClickListener(
+                    v -> Utils.launchWebsite(v.getContext(), uri, logTag, logItem));
         }
     }
 }

@@ -104,12 +104,8 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
     };
 
     private SelectionAdapter.OnItemClickListener onItemClickListener
-            = new SelectionAdapter.OnItemClickListener() {
-        @Override
-        public void onItemClick(int showTvdbId, boolean notify) {
-            SgApp.getServicesComponent(getContext()).showTools().storeNotify(showTvdbId, notify);
-        }
-    };
+            = (showTvdbId, notify) -> SgApp.getServicesComponent(getContext()).showTools()
+            .storeNotify(showTvdbId, notify);
 
     public static class SelectionAdapter extends
             CursorRecyclerViewAdapter<RecyclerView.ViewHolder> {
@@ -150,12 +146,8 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
             public ViewHolder(View itemView, final OnItemClickListener onItemClickListener) {
                 super(itemView);
                 ButterKnife.bind(this, itemView);
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onItemClickListener.onItemClick(showTvdbId, switchCompat.isChecked());
-                    }
-                });
+                itemView.setOnClickListener(
+                        v -> onItemClickListener.onItemClick(showTvdbId, switchCompat.isChecked()));
             }
         }
     }

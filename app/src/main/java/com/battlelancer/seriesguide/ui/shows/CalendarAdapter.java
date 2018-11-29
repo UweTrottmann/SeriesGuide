@@ -262,12 +262,10 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
             timestamp = v.findViewById(R.id.textViewActivityTimestamp);
             poster = v.findViewById(R.id.imageViewActivityPoster);
 
-            watchedBox.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    if (itemClickListener != null) {
-                        itemClickListener.onWatchedBoxClick(position,
-                                EpisodeTools.isWatched(watchedBox.getEpisodeFlag()));
-                    }
+            watchedBox.setOnClickListener(view -> {
+                if (itemClickListener != null) {
+                    itemClickListener.onWatchedBoxClick(position,
+                            EpisodeTools.isWatched(watchedBox.getEpisodeFlag()));
                 }
             });
             CheatSheet.setup(watchedBox);

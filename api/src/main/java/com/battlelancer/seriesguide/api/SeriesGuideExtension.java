@@ -525,11 +525,6 @@ public abstract class SeriesGuideExtension extends SafeJobIntentService {
         Log.e(TAG,
                 "Update not published because subscriber no longer exists, id=" + name);
         // post to Handler to avoid concurrent modification of subscribers
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                handleSubscribe(subscriber, null);
-            }
-        });
+        handler.post(() -> handleSubscribe(subscriber, null));
     }
 }

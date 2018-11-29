@@ -53,12 +53,7 @@ public abstract class StreamFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         contentContainer.setSwipeableChildren(R.id.scrollViewStream, R.id.gridViewStream);
-        contentContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshStreamWithNetworkCheck();
-            }
-        });
+        contentContainer.setOnRefreshListener(this::refreshStreamWithNetworkCheck);
         contentContainer.setProgressViewOffset(false, getResources().getDimensionPixelSize(
                 R.dimen.swipe_refresh_progress_bar_start_margin),
                 getResources().getDimensionPixelSize(

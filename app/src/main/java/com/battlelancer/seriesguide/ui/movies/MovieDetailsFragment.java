@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -180,12 +179,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         ViewTools.setVectorIconLeft(theme, buttonMovieLanguage,
                 R.drawable.ic_language_white_24dp);
         CheatSheet.setup(buttonMovieLanguage, R.string.pref_language);
-        buttonMovieLanguage.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayLanguageSettings();
-            }
-        });
+        buttonMovieLanguage.setOnClickListener(v -> displayLanguageSettings());
 
         // comments button
         buttonMovieComments.setVisibility(View.GONE);
@@ -418,16 +412,13 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 ViewTools.setVectorIconTop(theme, buttonMovieWatched,
                         R.drawable.ic_watch_black_24dp);
             }
-            buttonMovieWatched.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (isWatched) {
-                        MovieTools.unwatchedMovie(getContext(), tmdbId);
-                        Utils.trackAction(getActivity(), TAG, "Unwatched movie");
-                    } else {
-                        MovieTools.watchedMovie(getContext(), tmdbId);
-                        Utils.trackAction(getActivity(), TAG, "Watched movie");
-                    }
+            buttonMovieWatched.setOnClickListener(v -> {
+                if (isWatched) {
+                    MovieTools.unwatchedMovie(getContext(), tmdbId);
+                    Utils.trackAction(getActivity(), TAG, "Unwatched movie");
+                } else {
+                    MovieTools.watchedMovie(getContext(), tmdbId);
+                    Utils.trackAction(getActivity(), TAG, "Watched movie");
                 }
             });
             buttonMovieWatched.setVisibility(View.VISIBLE);
@@ -447,16 +438,13 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 : R.string.action_collection_add);
         CheatSheet.setup(buttonMovieCollected, inCollection ? R.string.action_collection_remove
                 : R.string.action_collection_add);
-        buttonMovieCollected.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (inCollection) {
-                    MovieTools.removeFromCollection(getContext(), tmdbId);
-                    Utils.trackAction(getActivity(), TAG, "Uncollected movie");
-                } else {
-                    MovieTools.addToCollection(getContext(), tmdbId);
-                    Utils.trackAction(getActivity(), TAG, "Collected movie");
-                }
+        buttonMovieCollected.setOnClickListener(v -> {
+            if (inCollection) {
+                MovieTools.removeFromCollection(getContext(), tmdbId);
+                Utils.trackAction(getActivity(), TAG, "Uncollected movie");
+            } else {
+                MovieTools.addToCollection(getContext(), tmdbId);
+                Utils.trackAction(getActivity(), TAG, "Collected movie");
             }
         });
 
@@ -472,16 +460,13 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 inWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
         CheatSheet.setup(buttonMovieWatchlisted,
                 inWatchlist ? R.string.watchlist_remove : R.string.watchlist_add);
-        buttonMovieWatchlisted.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (inWatchlist) {
-                    MovieTools.removeFromWatchlist(getContext(), tmdbId);
-                    Utils.trackAction(getActivity(), TAG, "Unwatchlist movie");
-                } else {
-                    MovieTools.addToWatchlist(getContext(), tmdbId);
-                    Utils.trackAction(getActivity(), TAG, "Watchlist movie");
-                }
+        buttonMovieWatchlisted.setOnClickListener(v -> {
+            if (inWatchlist) {
+                MovieTools.removeFromWatchlist(getContext(), tmdbId);
+                Utils.trackAction(getActivity(), TAG, "Unwatchlist movie");
+            } else {
+                MovieTools.addToWatchlist(getContext(), tmdbId);
+                Utils.trackAction(getActivity(), TAG, "Watchlist movie");
             }
         });
 
@@ -520,12 +505,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
             textViewRatingsTraktUser.setVisibility(View.VISIBLE);
             textViewRatingsTraktUser.setText(
                     TraktTools.buildUserRatingString(getActivity(), rating));
-            containerRatings.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    rateMovie();
-                }
-            });
+            containerRatings.setOnClickListener(v -> rateMovie());
             CheatSheet.setup(containerRatings, R.string.action_rate);
         }
         containerRatings.setVisibility(View.VISIBLE);
@@ -536,15 +516,11 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 TmdbTools.buildGenresString(tmdbMovie.genres));
 
         // trakt comments link
-        buttonMovieComments.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
-                i.putExtras(TraktCommentsActivity.createInitBundleMovie(movieTitle, tmdbId));
-                Utils.startActivityWithAnimation(getActivity(), i, v);
-                Utils.trackAction(v.getContext(), TAG, "Comments");
-            }
+        buttonMovieComments.setOnClickListener(v -> {
+            Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
+            i.putExtras(TraktCommentsActivity.createInitBundleMovie(movieTitle, tmdbId));
+            Utils.startActivityWithAnimation(getActivity(), i, v);
+            Utils.trackAction(v.getContext(), TAG, "Comments");
         });
         buttonMovieComments.setVisibility(View.VISIBLE);
 
@@ -562,9 +538,8 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                             Bitmap bitmap = ((BitmapDrawable) imageViewMoviePoster
                                     .getDrawable()).getBitmap();
                             paletteAsyncTask = Palette.from(bitmap)
-                                    .generate(new Palette.PaletteAsyncListener() {
-                                        @Override
-                                        public void onGenerated(@NonNull Palette palette) {
+                                    .generate(palette -> {
+                                        if (palette != null) {
                                             int color = palette.getVibrantColor(Color.WHITE);
                                             color = ColorUtils.setAlphaComponent(color, 50);
                                             rootLayoutMovie.setBackgroundColor(color);
@@ -574,16 +549,13 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                     });
             // click listener for high resolution poster
             frameLayoutMoviePoster.setFocusable(true);
-            frameLayoutMoviePoster.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String largeImageUrl = TmdbSettings.getImageBaseUrl(getActivity())
-                            + TmdbSettings.POSTER_SIZE_SPEC_ORIGINAL + tmdbMovie.poster_path;
-                    Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
-                    intent.putExtra(FullscreenImageActivity.EXTRA_PREVIEW_IMAGE, smallImageUrl);
-                    intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE, largeImageUrl);
-                    Utils.startActivityWithAnimation(getActivity(), intent, view);
-                }
+            frameLayoutMoviePoster.setOnClickListener(view -> {
+                String largeImageUrl = TmdbSettings.getImageBaseUrl(getActivity())
+                        + TmdbSettings.POSTER_SIZE_SPEC_ORIGINAL + tmdbMovie.poster_path;
+                Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
+                intent.putExtra(FullscreenImageActivity.EXTRA_PREVIEW_IMAGE, smallImageUrl);
+                intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE, largeImageUrl);
+                Utils.startActivityWithAnimation(getActivity(), intent, view);
             });
         }
     }
@@ -741,14 +713,11 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 getActivity().getTheme(), containerMovieActions, actions, TAG);
     }
 
-    Runnable movieActionsRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if (!isAdded()) {
-                return; // we need an activity for this, abort.
-            }
-            loadMovieActions();
+    Runnable movieActionsRunnable = () -> {
+        if (!isAdded()) {
+            return; // we need an activity for this, abort.
         }
+        loadMovieActions();
     };
 
     @Override

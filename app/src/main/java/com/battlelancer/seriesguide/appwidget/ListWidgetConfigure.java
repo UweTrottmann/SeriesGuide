@@ -68,12 +68,8 @@ public class ListWidgetConfigure extends AppCompatActivity {
         appWidgetManager.updateAppWidget(appWidgetId, views);
         // note: broken for API 25 Google stock launcher, work around by delaying notify.
         // https://code.google.com/p/android/issues/detail?id=228575
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view);
-            }
-        };
+        Runnable runnable =
+                () -> appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view);
         new Handler().postDelayed(runnable, 300);
 
         setWidgetResult(RESULT_OK);

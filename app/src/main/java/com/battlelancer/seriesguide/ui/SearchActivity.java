@@ -16,10 +16,8 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.viewpager.widget.ViewPager;
@@ -105,25 +103,19 @@ public class SearchActivity extends BaseNavDrawerActivity implements
 
     private void setupViews(boolean mayShowKeyboard) {
         ButterKnife.bind(this);
-        clearButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchView.setText(null);
-                searchView.requestFocus();
-            }
+        clearButton.setOnClickListener(v -> {
+            searchView.setText(null);
+            searchView.requestFocus();
         });
 
-        searchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH
-                        || (event != null && event.getAction() == KeyEvent.ACTION_DOWN
-                        && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    triggerTvdbSearch();
-                    return true;
-                }
-                return false;
+        searchView.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH
+                    || (event != null && event.getAction() == KeyEvent.ACTION_DOWN
+                    && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                triggerTvdbSearch();
+                return true;
             }
+            return false;
         });
 
         // manually retrieve the auto complete view popup background to override the theme
@@ -143,18 +135,8 @@ public class SearchActivity extends BaseNavDrawerActivity implements
                         ? R.layout.item_dropdown_light : R.layout.item_dropdown,
                 searchHistory.getSearchHistory());
         searchView.setThreshold(1);
-        searchView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((AutoCompleteTextView) v).showDropDown();
-            }
-        });
-        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                triggerTvdbSearch();
-            }
-        });
+        searchView.setOnClickListener(v -> ((AutoCompleteTextView) v).showDropDown());
+        searchView.setOnItemClickListener((parent, view, position, id) -> triggerTvdbSearch());
         // set in code as XML is overridden
         searchView.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         searchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
@@ -164,12 +146,9 @@ public class SearchActivity extends BaseNavDrawerActivity implements
         TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this,
                 viewPager, tabs);
         tabs.setOnPageChangeListener(pageChangeListener);
-        tabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
-            @Override
-            public void onTabClick(int position) {
-                if (viewPager.getCurrentItem() == position) {
-                    EventBus.getDefault().post(new TabClickEvent(position));
-                }
+        tabs.setOnTabClickListener(position -> {
+            if (viewPager.getCurrentItem() == position) {
+                EventBus.getDefault().post(new TabClickEvent(position));
             }
         });
 

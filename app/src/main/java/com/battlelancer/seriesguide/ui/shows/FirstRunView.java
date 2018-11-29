@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
@@ -75,55 +74,32 @@ public class FirstRunView extends FrameLayout {
         TextView textViewPrivacyPolicy = findViewById(R.id.textViewFirstRunPrivacyLink);
         ImageButton buttonDismiss = findViewById(R.id.buttonFirstRunDismiss);
 
-        noSpoilerView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // new state is inversion of current state
-                boolean noSpoilers = !noSpoilerCheckBox.isChecked();
-                // save
-                PreferenceManager.getDefaultSharedPreferences(v.getContext()).edit()
-                        .putBoolean(DisplaySettings.KEY_PREVENT_SPOILERS, noSpoilers)
-                        .apply();
-                // update next episode strings right away
-                TaskManager.getInstance().tryNextEpisodeUpdateTask(v.getContext());
-                // show
-                noSpoilerCheckBox.setChecked(noSpoilers);
-            }
+        noSpoilerView.setOnClickListener(v -> {
+            // new state is inversion of current state
+            boolean noSpoilers = !noSpoilerCheckBox.isChecked();
+            // save
+            PreferenceManager.getDefaultSharedPreferences(v.getContext()).edit()
+                    .putBoolean(DisplaySettings.KEY_PREVENT_SPOILERS, noSpoilers)
+                    .apply();
+            // update next episode strings right away
+            TaskManager.getInstance().tryNextEpisodeUpdateTask(v.getContext());
+            // show
+            noSpoilerCheckBox.setChecked(noSpoilers);
         });
         noSpoilerCheckBox.setChecked(DisplaySettings.preventSpoilers(getContext()));
-        buttonAddShow.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault().post(new ButtonEvent(FirstRunView.this, ButtonType.ADD_SHOW));
-            }
+        buttonAddShow.setOnClickListener(v -> EventBus.getDefault()
+                .post(new ButtonEvent(FirstRunView.this, ButtonType.ADD_SHOW)));
+        buttonSignIn.setOnClickListener(v -> EventBus.getDefault()
+                .post(new ButtonEvent(FirstRunView.this, ButtonType.SIGN_IN)));
+        buttonRestoreBackup.setOnClickListener(v -> EventBus.getDefault()
+                .post(new ButtonEvent(FirstRunView.this, ButtonType.RESTORE_BACKUP)));
+        buttonDismiss.setOnClickListener(v -> {
+            setFirstRunDismissed();
+            EventBus.getDefault().post(new ButtonEvent(FirstRunView.this, ButtonType.DISMISS));
         });
-        buttonSignIn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault()
-                        .post(new ButtonEvent(FirstRunView.this, ButtonType.SIGN_IN));
-            }
-        });
-        buttonRestoreBackup.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault()
-                        .post(new ButtonEvent(FirstRunView.this, ButtonType.RESTORE_BACKUP));
-            }
-        });
-        buttonDismiss.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setFirstRunDismissed();
-                EventBus.getDefault().post(new ButtonEvent(FirstRunView.this, ButtonType.DISMISS));
-            }
-        });
-        textViewPrivacyPolicy.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = v.getContext();
-                Utils.launchWebsite(context, context.getString(R.string.url_privacy));
-            }
+        textViewPrivacyPolicy.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Utils.launchWebsite(context, context.getString(R.string.url_privacy));
         });
     }
 

@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -497,12 +496,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 .getString(DetailsQuery.WRITERS)));
 
         // ratings
-        containerRatings.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rateEpisode();
-            }
-        });
+        containerRatings.setOnClickListener(v -> rateEpisode());
         CheatSheet.setup(containerRatings, R.string.action_rate);
 
         // trakt rating
@@ -517,24 +511,18 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // episode image
         final String imagePath = cursor.getString(DetailsQuery.IMAGE);
-        containerImage.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(requireActivity(), FullscreenImageActivity.class);
-                intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE,
-                        TvdbImageTools.fullSizeUrl(imagePath));
-                Utils.startActivityWithAnimation(requireActivity(), intent, v);
-            }
+        containerImage.setOnClickListener(v -> {
+            Intent intent = new Intent(requireActivity(), FullscreenImageActivity.class);
+            intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE,
+                    TvdbImageTools.fullSizeUrl(imagePath));
+            Utils.startActivityWithAnimation(requireActivity(), intent, v);
         });
         loadImage(imagePath, hideDetails);
 
         // check in button
-        buttonCheckin.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (CheckInDialogFragment.show(getContext(), getFragmentManager(), episodeTvdbId)) {
-                    Utils.trackAction(requireContext(), TAG, "Check-In");
-                }
+        buttonCheckin.setOnClickListener(v -> {
+            if (CheckInDialogFragment.show(getContext(), getFragmentManager(), episodeTvdbId)) {
+                Utils.trackAction(requireContext(), TAG, "Check-In");
             }
         });
         CheatSheet.setup(buttonCheckin);
@@ -559,12 +547,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         } else {
             ViewTools.setVectorIconTop(theme, buttonWatch, R.drawable.ic_watch_black_24dp);
         }
-        buttonWatch.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onToggleWatched();
-                Utils.trackAction(requireContext(), TAG, "Toggle watched");
-            }
+        buttonWatch.setOnClickListener(v -> {
+            onToggleWatched();
+            Utils.trackAction(requireContext(), TAG, "Toggle watched");
         });
         buttonWatch.setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
         CheatSheet.setup(buttonWatch, isWatched ? R.string.action_unwatched
@@ -577,12 +562,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         } else {
             ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
         }
-        buttonCollect.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onToggleCollected();
-                Utils.trackAction(requireContext(), TAG, "Toggle collected");
-            }
+        buttonCollect.setOnClickListener(v -> {
+            onToggleCollected();
+            Utils.trackAction(requireContext(), TAG, "Toggle collected");
         });
         buttonCollect.setText(collected
                 ? R.string.action_collection_remove : R.string.action_collection_add);
@@ -602,12 +584,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             } else {
                 ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
             }
-            buttonSkip.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onToggleSkipped();
-                    Utils.trackAction(requireContext(), TAG, "Toggle skipped");
-                }
+            buttonSkip.setOnClickListener(v -> {
+                onToggleSkipped();
+                Utils.trackAction(requireContext(), TAG, "Toggle skipped");
             });
             buttonSkip.setText(isSkipped ? R.string.action_dont_skip : R.string.action_skip);
             CheatSheet.setup(buttonSkip,
@@ -634,15 +613,12 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         ViewTools.openUriOnClick(tvdbButton, tvdbLink, TAG, "TVDb");
         ClipboardTools.copyTextToClipboardOnLongClick(tvdbButton, tvdbLink);
         // trakt comments
-        commentsButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(requireActivity(), TraktCommentsActivity.class);
-                intent.putExtras(TraktCommentsActivity.createInitBundleEpisode(episodeTitle,
-                        episodeTvdbId));
-                Utils.startActivityWithAnimation(requireActivity(), intent, v);
-                Utils.trackAction(v.getContext(), TAG, "Comments");
-            }
+        commentsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(requireActivity(), TraktCommentsActivity.class);
+            intent.putExtras(TraktCommentsActivity.createInitBundleEpisode(episodeTitle,
+                    episodeTvdbId));
+            Utils.startActivityWithAnimation(requireActivity(), intent, v);
+            Utils.trackAction(v.getContext(), TAG, "Comments");
         });
 
         containerEpisode.setVisibility(View.VISIBLE);
@@ -746,12 +722,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 .restartLoader(EpisodesActivity.ACTIONS_LOADER_ID, args, actionsLoaderCallbacks);
     }
 
-    Runnable actionsRunnable = new Runnable() {
-        @Override
-        public void run() {
-            loadEpisodeActions();
-        }
-    };
+    Runnable actionsRunnable = this::loadEpisodeActions;
 
     public void loadEpisodeActionsDelayed() {
         handler.removeCallbacks(actionsRunnable);

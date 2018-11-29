@@ -233,12 +233,9 @@ abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry> implem
         public ViewHolder(View itemView, final OnItemClickListener listener) {
             ButterKnife.bind(this, itemView);
             avatar.setVisibility(View.GONE);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        listener.onItemClick(v, item);
-                    }
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onItemClick(v, item);
                 }
             });
         }

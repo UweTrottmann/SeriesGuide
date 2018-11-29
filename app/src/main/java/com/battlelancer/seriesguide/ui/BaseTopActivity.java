@@ -157,14 +157,10 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
                     DataLiberationTools.setAutoBackupDisabled(BaseTopActivity.this);
                 }
             }
-        }).setAction(R.string.preferences, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(
-                        new Intent(BaseTopActivity.this, DataLiberationActivity.class).putExtra(
-                                DataLiberationActivity.InitBundle.EXTRA_SHOW_AUTOBACKUP, true));
-            }
-        });
+        }).setAction(R.string.preferences,
+                v -> startActivity(new Intent(BaseTopActivity.this, DataLiberationActivity.class)
+                        .putExtra(DataLiberationActivity.InitBundle.EXTRA_SHOW_AUTOBACKUP, true))
+        );
     }
 
     @Override
@@ -187,12 +183,9 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
                     hexagonTools.setDisabled();
                 }
             }
-        }).setAction(R.string.hexagon_signin, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // forward to cloud setup which can help fix the account issue
-                startActivity(new Intent(BaseTopActivity.this, CloudSetupActivity.class));
-            }
+        }).setAction(R.string.hexagon_signin, v -> {
+            // forward to cloud setup which can help fix the account issue
+            startActivity(new Intent(BaseTopActivity.this, CloudSetupActivity.class));
         }).show();
 
         snackbar = newSnackbar;

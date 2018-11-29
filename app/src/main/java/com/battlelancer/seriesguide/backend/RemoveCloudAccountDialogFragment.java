@@ -32,19 +32,9 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.hexagon_remove_account_confirmation);
         builder.setPositiveButton(R.string.hexagon_remove_account,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Utils.executeInOrder(new RemoveHexagonAccountTask(getContext()));
-                    }
-                }
+                (dialog, which) -> Utils.executeInOrder(new RemoveHexagonAccountTask(getContext()))
         );
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                sendCanceledEvent();
-            }
-        });
+        builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> sendCanceledEvent());
 
         return builder.create();
     }

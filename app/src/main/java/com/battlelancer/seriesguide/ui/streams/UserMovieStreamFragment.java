@@ -2,14 +2,12 @@ package com.battlelancer.seriesguide.ui.streams;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ListAdapter;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import com.battlelancer.seriesguide.ui.movies.MovieDetailsActivity;
-import com.uwetrottmann.trakt5.entities.HistoryEntry;
 
 /**
  * Displays a stream of movies the user has recently watched on trakt.
@@ -38,26 +36,21 @@ public class UserMovieStreamFragment extends StreamFragment {
                 activityLoaderCallbacks);
     }
 
-    private MovieHistoryAdapter.OnItemClickListener itemClickListener
-            = new MovieHistoryAdapter.OnItemClickListener() {
-        @Override
-        public void onItemClick(View view, HistoryEntry item) {
-            if (item == null) {
-                return;
-            }
-
-            // display movie details
-            if (item.movie == null || item.movie.ids == null) {
-                return;
-            }
-            Intent i = MovieDetailsActivity.intentMovie(getActivity(), item.movie.ids.tmdb);
-
-            ActivityCompat.startActivity(getActivity(), i,
-                    ActivityOptionsCompat
-                            .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
-                            .toBundle()
-            );
+    private MovieHistoryAdapter.OnItemClickListener itemClickListener = (view, item) -> {
+        if (item == null) {
+            return;
         }
+
+        // display movie details
+        if (item.movie == null || item.movie.ids == null) {
+            return;
+        }
+        Intent i = MovieDetailsActivity.intentMovie(getActivity(), item.movie.ids.tmdb);
+
+        ActivityCompat.startActivity(getActivity(), i, ActivityOptionsCompat
+                .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
+                .toBundle()
+        );
     };
 
     private LoaderManager.LoaderCallbacks<TraktMovieHistoryLoader.Result> activityLoaderCallbacks =

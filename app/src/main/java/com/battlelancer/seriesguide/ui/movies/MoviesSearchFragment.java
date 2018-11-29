@@ -7,9 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -85,8 +83,8 @@ public class MoviesSearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_movies_search, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        View view = inflater.inflate(R.layout.fragment_movies_search, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewMoviesSearch,
                 R.id.recyclerViewMoviesSearch);
@@ -100,14 +98,9 @@ public class MoviesSearchFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         // setup empty view button
-        emptyView.setButtonClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchClickListener.onSearchClick();
-            }
-        });
+        emptyView.setButtonClickListener(v -> searchClickListener.onSearchClick());
 
-        return v;
+        return view;
     }
 
     @Override
@@ -235,29 +228,26 @@ public class MoviesSearchFragment extends Fragment {
             menu.findItem(R.id.menu_action_movies_collection_add).setVisible(!isInCollection);
             menu.findItem(R.id.menu_action_movies_collection_remove).setVisible(isInCollection);
 
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.menu_action_movies_watchlist_add: {
-                            MovieTools.addToWatchlist(getActivity(), movieTmdbId);
-                            return true;
-                        }
-                        case R.id.menu_action_movies_watchlist_remove: {
-                            MovieTools.removeFromWatchlist(getActivity(), movieTmdbId);
-                            return true;
-                        }
-                        case R.id.menu_action_movies_collection_add: {
-                            MovieTools.addToCollection(getActivity(), movieTmdbId);
-                            return true;
-                        }
-                        case R.id.menu_action_movies_collection_remove: {
-                            MovieTools.removeFromCollection(getActivity(), movieTmdbId);
-                            return true;
-                        }
+            popupMenu.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.menu_action_movies_watchlist_add: {
+                        MovieTools.addToWatchlist(getActivity(), movieTmdbId);
+                        return true;
                     }
-                    return false;
+                    case R.id.menu_action_movies_watchlist_remove: {
+                        MovieTools.removeFromWatchlist(getActivity(), movieTmdbId);
+                        return true;
+                    }
+                    case R.id.menu_action_movies_collection_add: {
+                        MovieTools.addToCollection(getActivity(), movieTmdbId);
+                        return true;
+                    }
+                    case R.id.menu_action_movies_collection_remove: {
+                        MovieTools.removeFromCollection(getActivity(), movieTmdbId);
+                        return true;
+                    }
                 }
+                return false;
             });
             popupMenu.show();
         }

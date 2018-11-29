@@ -5,7 +5,6 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
@@ -37,17 +36,14 @@ public class MoviesCollectionFragment extends MoviesBaseFragment {
         PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
         popupMenu.getMenu()
                 .add(0, CONTEXT_COLLECTION_REMOVE_ID, 0, R.string.action_collection_remove);
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case CONTEXT_COLLECTION_REMOVE_ID: {
-                        MovieTools.removeFromCollection(getContext(), movieTmdbId);
-                        return true;
-                    }
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case CONTEXT_COLLECTION_REMOVE_ID: {
+                    MovieTools.removeFromCollection(getContext(), movieTmdbId);
+                    return true;
                 }
-                return false;
             }
+            return false;
         });
         popupMenu.show();
     }

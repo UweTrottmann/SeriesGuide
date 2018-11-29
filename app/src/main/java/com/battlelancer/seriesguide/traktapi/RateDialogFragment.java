@@ -122,56 +122,16 @@ public class RateDialogFragment extends AppCompatDialogFragment {
         }
 
         // rating buttons from 1 (worst) to 10 (best)
-        ratingButtons.get(0).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                rate(Rating.WEAKSAUCE);
-            }
-        });
-        ratingButtons.get(1).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                rate(Rating.TERRIBLE);
-            }
-        });
-        ratingButtons.get(2).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                rate(Rating.BAD);
-            }
-        });
-        ratingButtons.get(3).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                rate(Rating.POOR);
-            }
-        });
-        ratingButtons.get(4).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                rate(Rating.MEH);
-            }
-        });
-        ratingButtons.get(5).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                rate(Rating.FAIR);
-            }
-        });
-        ratingButtons.get(6).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                rate(Rating.GOOD);
-            }
-        });
-        ratingButtons.get(7).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                rate(Rating.GREAT);
-            }
-        });
-        ratingButtons.get(8).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                rate(Rating.SUPERB);
-            }
-        });
-        ratingButtons.get(9).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                rate(Rating.TOTALLYNINJA);
-            }
-        });
+        ratingButtons.get(0).setOnClickListener(v -> rate(Rating.WEAKSAUCE));
+        ratingButtons.get(1).setOnClickListener(v -> rate(Rating.TERRIBLE));
+        ratingButtons.get(2).setOnClickListener(v -> rate(Rating.BAD));
+        ratingButtons.get(3).setOnClickListener(v -> rate(Rating.POOR));
+        ratingButtons.get(4).setOnClickListener(v -> rate(Rating.MEH));
+        ratingButtons.get(5).setOnClickListener(v -> rate(Rating.FAIR));
+        ratingButtons.get(6).setOnClickListener(v -> rate(Rating.GOOD));
+        ratingButtons.get(7).setOnClickListener(v -> rate(Rating.GREAT));
+        ratingButtons.get(8).setOnClickListener(v -> rate(Rating.SUPERB));
+        ratingButtons.get(9).setOnClickListener(v -> rate(Rating.TOTALLYNINJA));
 
         builder = new AlertDialog.Builder(getActivity());
         builder.setView(layout);

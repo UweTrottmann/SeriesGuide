@@ -133,12 +133,9 @@ public class ListWidgetPreferenceFragment extends PreferenceFragment {
         if (!Utils.hasAccessToX(getActivity())) {
             // disable saving prefs not available for non-supporters
             Preference.OnPreferenceChangeListener onDisablePreferenceChangeListener
-                    = new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    Utils.advertiseSubscription(getActivity());
-                    return false;
-                }
+                    = (preference, newValue) -> {
+                Utils.advertiseSubscription(getActivity());
+                return false;
             };
             typePref.setOnPreferenceChangeListener(onDisablePreferenceChangeListener);
             typePref.setSummary(R.string.onlyx);

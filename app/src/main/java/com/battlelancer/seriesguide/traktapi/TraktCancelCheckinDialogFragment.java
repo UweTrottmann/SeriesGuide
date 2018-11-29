@@ -3,8 +3,6 @@ package com.battlelancer.seriesguide.traktapi;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateUtils;
@@ -52,22 +50,15 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
                 waitTimeMinutes < 0 ? getString(R.string.not_available)
                         : DateUtils.formatElapsedTime(waitTimeMinutes)));
 
-        builder.setPositiveButton(R.string.traktcheckin_cancel, new OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                AsyncTask<String, Void, String> cancelCheckinTask
-                        = new CancelCheckInTask(requireContext(), args);
-                cancelCheckinTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }
+        builder.setPositiveButton(R.string.traktcheckin_cancel, (dialog, which) -> {
+            AsyncTask<String, Void, String> cancelCheckinTask
+                    = new CancelCheckInTask(requireContext(), args);
+            cancelCheckinTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         });
-        builder.setNegativeButton(R.string.traktcheckin_wait, new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // broadcast check-in success
-                EventBus.getDefault().post(new TraktTask.TraktActionCompleteEvent(
-                        TraktAction.valueOf(args.getString(InitBundle.TRAKTACTION)), true, null));
-            }
+        builder.setNegativeButton(R.string.traktcheckin_wait, (dialog, which) -> {
+            // broadcast check-in success
+            EventBus.getDefault().post(new TraktTask.TraktActionCompleteEvent(
+                    TraktAction.valueOf(args.getString(InitBundle.TRAKTACTION)), true, null));
         });
 
         return builder.create();

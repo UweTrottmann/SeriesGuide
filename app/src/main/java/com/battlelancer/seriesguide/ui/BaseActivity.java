@@ -203,12 +203,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         // delay sync request to avoid slowing down UI
         final Context context = getApplicationContext();
-        updateShowRunnable = new Runnable() {
-            @Override
-            public void run() {
-                SgSyncAdapter.requestSyncIfTime(context, showTvdbId);
-            }
-        };
+        updateShowRunnable = () -> SgSyncAdapter.requestSyncIfTime(context, showTvdbId);
         handler.postDelayed(updateShowRunnable, DateUtils.SECOND_IN_MILLIS);
     }
 }

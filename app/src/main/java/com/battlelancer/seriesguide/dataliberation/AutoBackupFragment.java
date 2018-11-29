@@ -13,12 +13,9 @@ import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -87,63 +84,37 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
         progressBar.setVisibility(View.GONE);
 
         // setup listeners
-        switchAutoBackup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    tryEnableAutoBackup();
-                } else {
-                    DataLiberationTools.setAutoBackupDisabled(getContext());
-                    setContainerSettingsVisible(false);
-                }
+        switchAutoBackup.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                tryEnableAutoBackup();
+            } else {
+                DataLiberationTools.setAutoBackupDisabled(getContext());
+                setContainerSettingsVisible(false);
             }
         });
-        buttonImportAutoBackup.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tryDataLiberationAction();
-            }
-        });
+        buttonImportAutoBackup.setOnClickListener(view -> tryDataLiberationAction());
 
         // selecting custom backup files is only supported on KitKat and up
         // as we use Storage Access Framework in this case
         if (AndroidUtils.isKitKatOrHigher()) {
             checkBoxDefaultFiles.setChecked(
                     BackupSettings.isUseAutoBackupDefaultFiles(getContext()));
-            checkBoxDefaultFiles.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    PreferenceManager.getDefaultSharedPreferences(buttonView.getContext())
-                            .edit()
-                            .putBoolean(BackupSettings.KEY_AUTO_BACKUP_USE_DEFAULT_FILES, isChecked)
-                            .apply();
-                    updateFileViews();
-                }
+            checkBoxDefaultFiles.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                PreferenceManager.getDefaultSharedPreferences(buttonView.getContext())
+                        .edit()
+                        .putBoolean(BackupSettings.KEY_AUTO_BACKUP_USE_DEFAULT_FILES, isChecked)
+                        .apply();
+                updateFileViews();
             });
-            buttonShowsExportFile.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            buttonShowsExportFile.setOnClickListener(view ->
                     DataLiberationTools.selectExportFile(AutoBackupFragment.this,
-                            JsonExportTask.EXPORT_JSON_FILE_SHOWS,
-                            REQUEST_CODE_SHOWS_EXPORT_URI);
-                }
-            });
-            buttonListsExportFile.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                            JsonExportTask.EXPORT_JSON_FILE_SHOWS, REQUEST_CODE_SHOWS_EXPORT_URI));
+            buttonListsExportFile.setOnClickListener(view ->
                     DataLiberationTools.selectExportFile(AutoBackupFragment.this,
-                            JsonExportTask.EXPORT_JSON_FILE_LISTS,
-                            REQUEST_CODE_LISTS_EXPORT_URI);
-                }
-            });
-            buttonMoviesExportFile.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                            JsonExportTask.EXPORT_JSON_FILE_LISTS, REQUEST_CODE_LISTS_EXPORT_URI));
+            buttonMoviesExportFile.setOnClickListener(view ->
                     DataLiberationTools.selectExportFile(AutoBackupFragment.this,
-                            JsonExportTask.EXPORT_JSON_FILE_MOVIES,
-                            REQUEST_CODE_MOVIES_EXPORT_URI);
-                }
-            });
+                            JsonExportTask.EXPORT_JSON_FILE_MOVIES, REQUEST_CODE_MOVIES_EXPORT_URI));
         } else {
             checkBoxDefaultFiles.setVisibility(View.GONE);
         }

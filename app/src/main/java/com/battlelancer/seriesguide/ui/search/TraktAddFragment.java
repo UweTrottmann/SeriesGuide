@@ -204,14 +204,11 @@ public class TraktAddFragment extends AddFragment {
 
     @Override
     protected void setupEmptyView(EmptyView emptyView) {
-        emptyView.setButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setProgressVisible(true, false);
-                LoaderManager.getInstance(TraktAddFragment.this)
-                        .restartLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
-                                traktAddCallbacks);
-            }
+        emptyView.setButtonClickListener(v -> {
+            setProgressVisible(true, false);
+            LoaderManager.getInstance(TraktAddFragment.this)
+                    .restartLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
+                            traktAddCallbacks);
         });
     }
 
