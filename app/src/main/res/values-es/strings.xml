@@ -271,8 +271,8 @@
     <string name="hexagon_remove_account">Eliminar cuenta</string>
     <string name="hexagon_remove_account_success">Cuenta borrada.</string>
     <string name="hexagon_remove_account_failure">No se pudo eliminar la cuenta.</string>
-    <string name="hexagon_remove_account_confirmation">Quitar tu cuenta borrará todas las series y películas de SeriesGuides Cloud.
-    Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
+    <string name="hexagon_remove_account_confirmation">Quitar tu cuenta borrará todas las series y películas de SeriesGuides Cloud. 
+Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="hexagon_api_queued">Enviando a SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Desconectado de SeriesGuide Cloud.</string>
     <string name="hexagon_google_play_missing">Para usar SeriesGuide Cloud, se requiere Google Play Services.</string>

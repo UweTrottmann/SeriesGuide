@@ -154,7 +154,7 @@
     <string name="user_movie_stream_empty">Yakın zamanda bir trakt aktiviteniz yok. Birkaç filme check-in yapın!</string>
     <!-- Calendar -->
     <string name="upcoming">Yaklaşan</string>
-    <string name="recent">En Son</string>
+    <string name="recent">En Yeni</string>
     <string name="released_today">Bugün yayınlanan</string>
     <string name="noupcoming">Yaklaşan bölüm yok.</string>
     <string name="norecent">Yeni tarihli bölüm yok.</string>
