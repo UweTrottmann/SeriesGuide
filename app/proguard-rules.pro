@@ -49,8 +49,13 @@
 
 # Google API client
 # warnings due to Guava classes used in tests and ErrorProne annotations
--dontwarn com.google.api.client.googleapis.testing.**
--dontwarn com.google.errorprone.annotations.**
+-dontwarn afu.org.checkerframework.**
+-dontwarn org.checkerframework.**
+-dontwarn com.google.errorprone.**
+-dontwarn sun.misc.Unsafe
+-dontwarn java.lang.ClassValue
+-dontwarn com.google.api.client.http.apache.** # Apache HTTP was removed as of Android M
+-dontwarn com.google.api.client.util.** # Unused Apache commons-codec code
 
 # OkHttp 3
 # JSR 305 annotations are for embedding nullability information.
@@ -84,7 +89,6 @@
 # Apache HTTP was removed as of Android M
 -dontwarn org.apache.http.**
 -dontwarn android.net.http.AndroidHttpClient
--dontwarn com.google.api.client.http.apache.**
 -dontwarn com.google.android.gms.internal.**
 
 ## Testing

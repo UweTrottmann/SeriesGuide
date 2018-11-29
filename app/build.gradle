@@ -55,6 +55,11 @@ android {
 
     packagingOptions {
         exclude '/play-services-*.properties'
+        exclude '/META-INF/proguard/*.pro'
+        // exclude Kotlin files only required for reflection
+        exclude '**/*.kotlin_builtins'
+        exclude '**/*.kotlin_metadata'
+        exclude '**/*.kotlin_module'
     }
 
     flavorDimensions "flavor"
@@ -192,7 +197,6 @@ dependencies {
     // https://github.com/googleapis/google-api-java-client/releases
     implementation 'com.google.guava:guava:25.1-android'
     implementation('com.google.api-client:google-api-client-android:1.27.0') {
-        exclude group: 'com.google.android.google-play-services' // including latest ourselves
         exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
         exclude group: 'com.google.guava', module: 'guava' // including Android version instead
     }
