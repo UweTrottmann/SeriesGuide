@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:baselineAligned="false"
-    android:minHeight="48dp"
+    android:minHeight="52dp"
     android:orientation="horizontal"
     android:paddingBottom="4dp"
     android:paddingLeft="@dimen/widget_padding_default"
@@ -14,13 +14,13 @@
     tools:background="@android:color/holo_orange_light"
     tools:ignore="UnusedAttribute,RtlHardcoded">
 
-    <!-- Text container height is 38dp/44dp(w720dp) -->
+    <!-- Text container height is 42dp/45dp(w720dp) -->
     <!-- Image should extend beyond: 0dp top, 2dp bottom (4dp/6dp on w720dp)-->
 
     <ImageView
         android:id="@+id/widgetPoster"
-        android:layout_width="@dimen/widget_item_width"
-        android:layout_height="@dimen/widget_item_height"
+        android:layout_width="@dimen/widget_item_width_large"
+        android:layout_height="@dimen/widget_item_height_large"
         android:contentDescription="@null"
         android:scaleType="centerInside"
         android:src="@drawable/ic_image_missing"
@@ -45,7 +45,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.Body.Bold"
             android:textColor="@color/black_87"
-            android:textSize="@dimen/widget_text_size"
+            android:textSize="@dimen/widget_text_size_large"
             tools:ignore="RtlSymmetry"
             tools:text="Star Trek: Discovery" />
 
@@ -61,7 +61,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.Body"
             android:textColor="@color/black_87"
-            android:textSize="@dimen/widget_text_size"
+            android:textSize="@dimen/widget_text_size_large"
             tools:ignore="RtlSymmetry"
             tools:text="2x13 If The Time Ever Comes" />
 
@@ -76,7 +76,7 @@
             android:fontFamily="sans-serif-condensed"
             android:maxWidth="180dp"
             android:textColor="@color/black_54"
-            android:textSize="@dimen/widget_text_size"
+            android:textSize="@dimen/widget_text_size_large"
             tools:text="Showtime Network · 08:00 PM" />
 
         <TextView
@@ -88,7 +88,7 @@
             android:fontFamily="sans-serif-condensed"
             android:maxLines="1"
             android:textColor="@color/black_54"
-            android:textSize="@dimen/widget_text_size"
+            android:textSize="@dimen/widget_text_size_large"
             tools:text="Mon yesterday" />
 
     </RelativeLayout>

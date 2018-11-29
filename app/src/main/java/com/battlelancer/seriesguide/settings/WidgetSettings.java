@@ -33,6 +33,8 @@ public class WidgetSettings {
 
     public static final String KEY_PREFIX_WIDGET_IS_INFINITE = "is_infinite_";
 
+    public static final String KEY_PREFIX_WIDGET_IS_LARGE_FONT = "is_largefont_";
+
     public static final String KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER = "shows_order_";
 
     public static final String DEFAULT_WIDGET_BACKGROUND_OPACITY = "100";
@@ -113,6 +115,14 @@ public class WidgetSettings {
     public static boolean isInfinite(Context context, int appWidgetId) {
         SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
         return prefs.getBoolean(KEY_PREFIX_WIDGET_IS_INFINITE + appWidgetId, false);
+    }
+
+    /**
+     * Returns if the layouts using larger fonts should be used.
+     */
+    public static boolean isLargeFont(Context context, int appWidgetId) {
+        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
+        return prefs.getBoolean(KEY_PREFIX_WIDGET_IS_LARGE_FONT + appWidgetId, false);
     }
 
     /**

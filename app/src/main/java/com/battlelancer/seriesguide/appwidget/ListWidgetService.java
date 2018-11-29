@@ -15,14 +15,14 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.shows.CalendarQuery;
 import com.battlelancer.seriesguide.ui.shows.CalendarType;
+import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -45,6 +45,7 @@ public class ListWidgetService extends RemoteViewsService {
         private Cursor dataCursor;
         private int widgetType;
         private boolean isLightTheme;
+        private boolean isLargeFont;
 
         public ListRemoteViewsFactory(Context context, Intent intent) {
             this.context = context;
@@ -125,6 +126,7 @@ public class ListWidgetService extends RemoteViewsService {
             this.dataCursor = newCursor;
             this.widgetType = widgetType;
             this.isLightTheme = WidgetSettings.isLightTheme(context, appWidgetId);
+            this.isLargeFont = WidgetSettings.isLargeFont(context, appWidgetId);
 
             if (oldCursor != null) {
                 oldCursor.close();
@@ -154,8 +156,17 @@ public class ListWidgetService extends RemoteViewsService {
             final boolean isShowQuery = widgetType == WidgetSettings.Type.SHOWS;
 
             // build a remote views collection item
-            RemoteViews rv = new RemoteViews(context.getPackageName(),
-                    isLightTheme ? R.layout.appwidget_row_light : R.layout.appwidget_row);
+            int layoutResId;
+            if (isLightTheme) {
+                layoutResId = isLargeFont
+                        ? R.layout.appwidget_row_light_large
+                        : R.layout.appwidget_row_light;
+            } else {
+                layoutResId = isLargeFont
+                        ? R.layout.appwidget_row_large
+                        : R.layout.appwidget_row;
+            }
+            RemoteViews rv = new RemoteViews(context.getPackageName(), layoutResId);
 
             // return empty item if no data available
             if (dataCursor == null
@@ -225,7 +236,12 @@ public class ListWidgetService extends RemoteViewsService {
                 poster = ServiceUtils.loadWithPicasso(context,
                         TvdbImageTools.smallSizeUrl(posterPath))
                         .centerCrop()
-                        .resizeDimen(R.dimen.widget_item_width, R.dimen.widget_item_height)
+                        .resizeDimen(isLargeFont
+                                        ? R.dimen.widget_item_width_large
+                                        : R.dimen.widget_item_width,
+                                isLargeFont
+                                        ? R.dimen.widget_item_height_large
+                                        : R.dimen.widget_item_height)
                         .get();
             } catch (IOException e) {
                 Timber.e(e, "maybeSetPoster: failed.");

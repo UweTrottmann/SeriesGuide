@@ -444,6 +444,7 @@
     <string name="hide_watched">Masquer les épisodes vus</string>
     <string name="pref_widget_opacity">Arrière-plan du widget</string>
     <string name="pref_widget_type">Type du widget</string>
+    <string name="pref_large_font">Use large font</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>
     <string name="widget_background_25">25 %</string>
@@ -458,7 +459,7 @@
     <string name="onlyx">Uniquement pour les supporters</string>
     <string name="action_upgrade">Déverrouiller toutes les fonctionnalités</string>
     <string name="billing_action_subscribe">Souscrire</string>
-    <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+    <string name="billing_action_manage_subscriptions">Gérer les abonnements</string>
     <string name="billing_action_pass">Obtenir X Pass</string>
     <string name="billing_price_subscribe">%1$s/an, faites l’essai gratuitement, annulez à tout moment via %2$s</string>
     <string name="billing_price_pass">Achat à vie</string>
