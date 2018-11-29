@@ -5,6 +5,17 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 46
+----------
+*(in development)*
+
+#### 46-beta1
+*(2018-11-29)*
+
+* 🌟 Add large font option for list widget. This can help with launchers that display widgets 
+  smaller than intended.
+* 📝 Latest translations from crowdin.
+
 Version 45
 ----------
 *(2018-11-08)*
