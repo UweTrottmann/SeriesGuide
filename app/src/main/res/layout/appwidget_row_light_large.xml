@@ -7,15 +7,15 @@
     android:baselineAligned="false"
     android:minHeight="52dp"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/widget_padding_inline"
+    android:paddingBottom="4dp"
     android:paddingLeft="@dimen/widget_padding_default"
     android:paddingRight="@dimen/widget_padding_default"
-    android:paddingTop="@dimen/widget_padding_inline"
+    android:paddingTop="4dp"
     tools:background="@android:color/holo_orange_light"
     tools:ignore="UnusedAttribute,RtlHardcoded">
 
-    <!-- Text container height is 42dp/45dp(w720dp) (includes 2dp top margin) -->
-    <!-- Image should extend 2dp beyond bottom of text container -->
+    <!-- Text container height is 42dp/45dp(w720dp) -->
+    <!-- Image should extend beyond: 0dp top, 2dp bottom (4dp/6dp on w720dp)-->
 
     <ImageView
         android:id="@+id/widgetPoster"
@@ -32,7 +32,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="@dimen/widget_padding_text_top"
         android:layout_weight="1">
 
         <TextView

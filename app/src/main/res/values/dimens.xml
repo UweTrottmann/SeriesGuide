@@ -30,6 +30,7 @@
     <dimen name="widget_text_size_large">15sp</dimen>
     <dimen name="widget_padding_default">8dp</dimen>
     <dimen name="widget_padding_inline">4dp</dimen>
+    <dimen name="widget_padding_text_top">2dp</dimen>
 
     <!-- Grids -->
     <dimen name="showgrid_columnWidth">275dp</dimen>
