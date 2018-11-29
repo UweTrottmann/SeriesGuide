@@ -444,6 +444,7 @@
     <string name="hide_watched">Piilota katsotut jaksot</string>
     <string name="pref_widget_opacity">Widgetin tausta</string>
     <string name="pref_widget_type">Widgetin tyyppi</string>
+    <string name="pref_large_font">Use large font</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Läpinäkyvä</string>
     <string name="widget_background_25">25 %</string>

@@ -111,7 +111,7 @@
     <string name="action_collection_remove">Κατάργηση από τη συλλογή</string>
     <string name="action_collection_added">Προστέθηκε στη συλλογή</string>
     <string name="action_collection_removed">Καταργήθηκε από τη συλλογή</string>
-    <string name="action_watched">Έχει παρακολουθηθεί</string>
+    <string name="action_watched">Έχει παρακολουθηθεί </string>
     <string name="action_unwatched">Δεν παρακολούθησα</string>
     <!-- Shows -->
     <string name="confirm_delete">Θέλετε πράγματι να αφαιρέσετε %s?</string>
@@ -126,7 +126,7 @@
     <string name="action_episode_notifications_off">Απενεργοποίηση ειδοποιήσεων επεισοδίων</string>
     <string name="context_hide">Απόκρυψη</string>
     <string name="context_unhide">Εμφάνιση</string>
-    <string name="hidden">Κρυφή σειρα</string>
+    <string name="hidden">Κρυφή σειρα </string>
     <string name="unhidden">μη-κρυφή σειρά</string>
     <string name="action_shows_add">Προσθήκη Σειράς</string>
     <string name="action_shows_filter">Φίλτρο</string>
@@ -444,6 +444,7 @@
     <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
     <string name="pref_widget_opacity">Φόντο widget</string>
     <string name="pref_widget_type">τύπος Widget</string>
+    <string name="pref_large_font">Use large font</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Διαφανές</string>
     <string name="widget_background_25">25%</string>

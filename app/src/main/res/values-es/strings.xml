@@ -445,6 +445,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="hide_watched">Ocultar episodios vistos</string>
     <string name="pref_widget_opacity">Fondo de widget</string>
     <string name="pref_widget_type">Tipo de widget</string>
+    <string name="pref_large_font">Use large font</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparente</string>
     <string name="widget_background_25">25%</string>

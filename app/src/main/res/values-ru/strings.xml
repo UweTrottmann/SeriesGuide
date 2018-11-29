@@ -466,6 +466,7 @@
     <string name="hide_watched">Скрывать просмотренные эпизоды</string>
     <string name="pref_widget_opacity">Фон виджета</string>
     <string name="pref_widget_type">Тип виджета</string>
+    <string name="pref_large_font">Use large font</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Прозрачный</string>
     <string name="widget_background_25">25%</string>

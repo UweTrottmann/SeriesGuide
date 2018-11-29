@@ -444,6 +444,7 @@
     <string name="hide_watched">نهفتن قسمت‌های تماشا شده</string>
     <string name="pref_widget_opacity">پس‌زمینهٔ ابزارک</string>
     <string name="pref_widget_type">نوع ابزارک</string>
+    <string name="pref_large_font">Use large font</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">شفّاف</string>
     <string name="widget_background_25">۲۵٪</string>
