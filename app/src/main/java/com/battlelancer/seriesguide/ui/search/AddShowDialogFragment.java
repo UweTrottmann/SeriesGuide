@@ -24,7 +24,9 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Setter;
 import butterknife.Unbinder;
+import butterknife.ViewCollections;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -125,7 +127,8 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
             R.id.textViewAddGenresLabel
     }) List<View> labelViews;
 
-    static final ButterKnife.Setter<View, Boolean> VISIBLE
+    @SuppressWarnings({"WeakerAccess", "ConstantConditions"})
+    static final Setter<View, Boolean> VISIBLE
             = (view, value, index) -> view.setVisibility(value ? View.VISIBLE : View.INVISIBLE);
 
     @BindView(R.id.buttonPositive) Button buttonPositive;
@@ -384,7 +387,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
 
         // enable adding of show, display views
         buttonPositive.setEnabled(true);
-        ButterKnife.apply(labelViews, VISIBLE, true);
+        ViewCollections.set(labelViews, VISIBLE, true);
     }
 
     private void showProgressBar(boolean isVisible) {
