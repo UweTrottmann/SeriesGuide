@@ -322,14 +322,16 @@ public class DataLiberationFragment extends Fragment implements
         if (resultCode != Activity.RESULT_OK || !isAdded() || data == null) {
             return;
         }
-
+        Uri uri = data.getData();
+        if (uri == null) {
+            return; // required
+        }
         if (requestCode == REQUEST_CODE_SHOWS_EXPORT_URI
                 || requestCode == REQUEST_CODE_SHOWS_IMPORT_URI
                 || requestCode == REQUEST_CODE_LISTS_EXPORT_URI
                 || requestCode == REQUEST_CODE_LISTS_IMPORT_URI
                 || requestCode == REQUEST_CODE_MOVIES_EXPORT_URI
                 || requestCode == REQUEST_CODE_MOVIES_IMPORT_URI) {
-            Uri uri = data.getData();
 
             // try to persist read and write permission for this URI across device reboots
             try {
