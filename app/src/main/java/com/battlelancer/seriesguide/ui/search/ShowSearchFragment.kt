@@ -82,7 +82,7 @@ class ShowSearchFragment : BaseSearchFragment() {
     private val searchLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Cursor> {
         override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
             loaderArgs = args
-            val query = args?.getString(SearchManager.QUERY)
+            var query = args?.getString(SearchManager.QUERY)
             return if (query.isNullOrEmpty()) {
                 // empty query selects shows with next episodes before this point in time
                 CursorLoader(requireContext(), Shows.CONTENT_URI,
@@ -92,6 +92,7 @@ class ShowSearchFragment : BaseSearchFragment() {
                                 requireContext()) + DateUtils.HOUR_IN_MILLIS).toString()),
                         Shows.SORT_LATEST_EPISODE)
             } else {
+                query = query.replace("\\s".toRegex(), "%");
                 Shows.CONTENT_URI_FILTER.buildUpon().appendPath(query).build().let {
                     CursorLoader(requireActivity(), it, ShowResultsAdapter.Query.PROJECTION,
                             null, null, null)
