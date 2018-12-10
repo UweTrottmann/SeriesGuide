@@ -92,7 +92,11 @@ class ShowSearchFragment : BaseSearchFragment() {
                                 requireContext()) + DateUtils.HOUR_IN_MILLIS).toString()),
                         Shows.SORT_LATEST_EPISODE)
             } else {
-                Shows.CONTENT_URI_FILTER.buildUpon().appendPath(query).build().let {
+                // CONTENT_URI_FILTER will add % to the beginning and end of the given string
+                // so remove trailing whitespace and replace inner whitespaces with %
+                // this improves matching if characters are left out, like "Mr Robot" vs "Mr. Robot"
+                val filter = query.trim().replace("\\s".toRegex(), "%")
+                Shows.CONTENT_URI_FILTER.buildUpon().appendPath(filter).build().let {
                     CursorLoader(requireActivity(), it, ShowResultsAdapter.Query.PROJECTION,
                             null, null, null)
                 }
