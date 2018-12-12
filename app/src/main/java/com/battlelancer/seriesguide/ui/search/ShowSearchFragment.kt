@@ -83,7 +83,7 @@ class ShowSearchFragment : BaseSearchFragment() {
         override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
             loaderArgs = args
             val query = args?.getString(SearchManager.QUERY)
-            return if (query.isNullOrEmpty()) {
+            return if (query.isNullOrBlank()) {
                 // empty query selects shows with next episodes before this point in time
                 CursorLoader(requireContext(), Shows.CONTENT_URI,
                         ShowResultsAdapter.Query.PROJECTION,
