@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.ui.search.SearchTriggerListener;
 import com.battlelancer.seriesguide.ui.search.ShowSearchFragment;
 import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFragment;
+import com.battlelancer.seriesguide.ui.search.TvdbIdExtractor;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -42,8 +43,6 @@ import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import com.google.android.gms.actions.SearchIntents;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -279,26 +278,12 @@ public class SearchActivity extends BaseNavDrawerActivity implements
     }
 
     private void handleSharedText(@Nullable String sharedText) {
-        if (TextUtils.isEmpty(sharedText)) {
+        if (sharedText == null || sharedText.length() == 0) {
             return;
         }
 
         // try to match TVDB URLs
-        // match season and episode pages first
-        Pattern tvdbSeriesIdPattern = Pattern.compile("thetvdb\\.com.*?seriesid=([0-9]*)");
-        int showTvdbId = matchShowTvdbId(tvdbSeriesIdPattern, sharedText);
-        if (showTvdbId <= 0) {
-            // match show pages
-            Pattern tvdbIdPattern = Pattern.compile("thetvdb\\.com.*?id=([0-9]*)");
-            showTvdbId = matchShowTvdbId(tvdbIdPattern, sharedText);
-        }
-        if (showTvdbId <= 0) {
-            // try to match trakt search URLs (the ones shared by this app)
-            Pattern traktShowIdPattern =
-                    Pattern.compile("trakt\\.tv\\/search\\/tvdb\\/([0-9]*)\\?id_type=show");
-            showTvdbId = matchShowTvdbId(traktShowIdPattern, sharedText);
-        }
-
+        int showTvdbId = new TvdbIdExtractor(getApplicationContext(), sharedText).tryToExtractTvdbId();
         if (showTvdbId > 0) {
             // found an id, display the add dialog
             AddShowDialogFragment.show(this, getSupportFragmentManager(), showTvdbId);
@@ -309,20 +294,6 @@ public class SearchActivity extends BaseNavDrawerActivity implements
             triggerTvdbSearch();
             triggerLocalSearch(sharedText);
         }
-    }
-
-    private int matchShowTvdbId(Pattern pattern, String text) {
-        int showTvdbId = -1;
-
-        Matcher matcher = pattern.matcher(text);
-        if (matcher.find()) {
-            try {
-                showTvdbId = Integer.parseInt(matcher.group(1));
-            } catch (NumberFormatException ignored) {
-            }
-        }
-
-        return showTvdbId;
     }
 
     @Override
