@@ -29,6 +29,9 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.picasso.Picasso
 import io.fabric.sdk.android.Fabric
 import io.palaima.debugdrawer.timber.data.LumberYard
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.EventBusException
 import timber.log.Timber
@@ -153,7 +156,9 @@ class SgApp : Application() {
         if (BuildConfig.DEBUG) {
             // debug drawer logging
             val lumberYard = LumberYard.getInstance(this)
-            lumberYard.cleanUp()
+            GlobalScope.launch(Dispatchers.IO) {
+                lumberYard.cleanUp()
+            }
             Timber.plant(lumberYard.tree())
             // detailed logcat logging
             Timber.plant(Timber.DebugTree())
