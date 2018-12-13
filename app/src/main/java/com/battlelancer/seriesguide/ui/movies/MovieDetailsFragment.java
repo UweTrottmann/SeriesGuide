@@ -293,7 +293,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         // This ensures that the anonymous callback we have does not prevent the fragment from
         // being garbage collected. It also prevents our callback from getting invoked even after the
         // fragment is destroyed.
-        Picasso.with(getContext()).cancelRequest(imageViewMoviePoster);
+        Picasso.get().cancelRequest(imageViewMoviePoster);
         // same for Palette task
         if (paletteAsyncTask != null) {
             paletteAsyncTask.cancel(true);

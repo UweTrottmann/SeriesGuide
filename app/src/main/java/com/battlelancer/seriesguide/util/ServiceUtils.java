@@ -53,7 +53,7 @@ public final class ServiceUtils {
      */
     @NonNull
     public static RequestCreator loadWithPicasso(Context context, String path) {
-        RequestCreator requestCreator = Picasso.with(context).load(path);
+        RequestCreator requestCreator = Picasso.get().load(path);
         if (!Utils.isAllowedLargeDataConnection(context.getApplicationContext())) {
             // avoid the network, hit the cache immediately + accept stale images.
             requestCreator.networkPolicy(NetworkPolicy.OFFLINE);
