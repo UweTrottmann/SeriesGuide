@@ -70,10 +70,6 @@
 # Okio
 -dontwarn okio.**
 
-# Picasso
-# Using with OkHttp 3 downloader, but has references to OkHttp2
--dontwarn com.squareup.picasso.OkHttpDownloader
-
 # Retrofit 2.X
 # Retain generic type information for use by reflection by converters and adapters.
 -keepattributes Signature
