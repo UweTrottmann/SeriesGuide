@@ -15,8 +15,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.loader.app.LoaderManager
 import androidx.loader.app.LoaderManager.LoaderCallbacks
 import androidx.loader.content.CursorLoader
@@ -35,6 +33,7 @@ import com.battlelancer.seriesguide.traktapi.TraktRatingsTask
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
+import com.battlelancer.seriesguide.ui.ScopedFragment
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
@@ -44,7 +43,7 @@ import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
-import com.battlelancer.seriesguide.util.ShortcutLiveData
+import com.battlelancer.seriesguide.util.ShortcutCreator
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
@@ -52,6 +51,7 @@ import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.uwetrottmann.androidutils.CheatSheet
 import com.uwetrottmann.tmdb2.entities.Credits
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -61,7 +61,7 @@ import timber.log.Timber
  * Displays extended information (poster, release info, description, ...) and actions (favoriting,
  * shortcut) for a particular show.
  */
-class ShowFragment : Fragment() {
+class ShowFragment : ScopedFragment() {
 
     @BindView(R.id.imageViewShowPosterBackground)
     internal lateinit var imageViewBackground: ImageView
@@ -662,15 +662,12 @@ class ShowFragment : Fragment() {
 
         // create the shortcut
         val shortcutLiveData =
-            ShortcutLiveData(context!!, currentShowTitle, currentPosterPath, currentShowTvdbId)
-        shortcutLiveData.observe(this, Observer { readyEvent ->
-            readyEvent?.createShortcutIfNotHandled()
-            shortcutLiveData.removeObservers(this)
-        })
-        shortcutLiveData.prepareShortcut()
-
-        // Analytics
-        Utils.trackAction(activity, TAG, "Add to Homescreen")
+            ShortcutCreator(context!!, currentShowTitle, currentPosterPath, currentShowTvdbId)
+        launch {
+            shortcutLiveData.prepareAndPinShortcut()
+            // Analytics
+            Utils.trackAction(activity, TAG, "Add to Homescreen")
+        }
     }
 
     private fun shareShow() {
