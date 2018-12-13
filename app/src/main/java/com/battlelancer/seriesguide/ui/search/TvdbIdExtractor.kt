@@ -2,18 +2,33 @@ package com.battlelancer.seriesguide.ui.search
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import java.util.regex.Pattern
 
-class TvdbIdExtractor(val context: Context, val text: String) {
+class TvdbIdExtractor(scope: CoroutineScope, val context: Context, val text: String) :
+    CoroutineScope by scope {
 
-    fun tryToExtractTvdbId(): Int {
-        // try to match TVDB URLs
-        // match season and episode pages first
+    /**
+     * Returns the show TVDb ID or -1 if not found for slug. Runs on [Dispatchers.IO], the return
+     * value is awaited on the calling context.
+     */
+    suspend fun tryToExtractTvdbId(): Int {
+        val showTvdbId = async(Dispatchers.IO) { lookUpShowTvdbId() }
+        return showTvdbId.await()
+    }
+
+    private fun lookUpShowTvdbId(): Int {
+        // match TVDB URLs like
+        // https://www.thetvdb.com/series/lost
+        // https://www.thetvdb.com/series/lost/seasons/1
+        // https://www.thetvdb.com/series/lost/episodes/127131
+        // https://www.thetvdb.com/series/341483
         val tvdbSeriesIdPattern = Pattern.compile("thetvdb\\.com/series/([^/\\n\\r]*)")
         val showSlug = matchShowSlug(tvdbSeriesIdPattern, text)
         if (showSlug.isNullOrBlank()) return -1
 
-        // TODO async lookup of tvdbId --> use coroutines?
         val call = SgApp.getServicesComponent(context).tvdb()
             .search()
             .series(null, null, null, showSlug, null)

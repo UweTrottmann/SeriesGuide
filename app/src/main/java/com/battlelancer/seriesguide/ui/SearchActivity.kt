@@ -41,6 +41,7 @@ import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -285,16 +286,19 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
         }
 
         // try to match TVDB URLs
-        val showTvdbId = TvdbIdExtractor(applicationContext, sharedText).tryToExtractTvdbId()
-        if (showTvdbId > 0) {
-            // found an id, display the add dialog
-            AddShowDialogFragment.show(this, supportFragmentManager, showTvdbId)
-        } else {
-            // no id, populate the search field instead
-            viewPager.currentItem = TAB_POSITION_SEARCH
-            searchView.setText(sharedText)
-            triggerTvdbSearch()
-            triggerLocalSearch(sharedText)
+        launch {
+            val showTvdbId = TvdbIdExtractor(this, applicationContext, sharedText)
+                .tryToExtractTvdbId()
+            if (showTvdbId > 0) {
+                // found an id, display the add dialog
+                AddShowDialogFragment.show(this@SearchActivity, supportFragmentManager, showTvdbId)
+            } else {
+                // no id, populate the search field instead
+                viewPager.currentItem = TAB_POSITION_SEARCH
+                searchView.setText(sharedText)
+                triggerTvdbSearch()
+                triggerLocalSearch(sharedText)
+            }
         }
     }
 
