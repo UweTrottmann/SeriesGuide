@@ -238,7 +238,7 @@ public class TvdbTools {
         retrofit2.Response<SeriesResultsResponse> response;
         try {
             response = tvdbSearch.get()
-                    .series(query, null, null, language)
+                    .series(query, null, null, null, language)
                     .execute();
         } catch (Exception e) {
             throw new TvdbException("searchSeries", e);

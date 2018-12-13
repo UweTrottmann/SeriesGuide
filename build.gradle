@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = '1.3.10' // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
+    ext.coroutines_version = '1.0.1' // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
     ext.versions = [
             'minSdk': 15,
             'compileSdk': 28,
@@ -20,7 +21,7 @@ buildscript {
             'timber': '4.7.1', // github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 
             'androidUtils': '2.3.1', // github.com/UweTrottmann/AndroidUtils/blob/master/RELEASE_NOTES.md
-            'thetvdb': '1.6.1', // github.com/UweTrottmann/thetvdb-java/blob/master/CHANGELOG.md
+            'thetvdb': '2.0.0', // github.com/UweTrottmann/thetvdb-java/blob/master/CHANGELOG.md
             'tmdb': '1.10.1', // github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
             'trakt': '6.0.0', // github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
 
