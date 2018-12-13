@@ -2,21 +2,19 @@ package com.battlelancer.seriesguide.ui.search
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 import java.util.regex.Pattern
 
-class TvdbIdExtractor(scope: CoroutineScope, val context: Context, val text: String) :
-    CoroutineScope by scope {
+class TvdbIdExtractor(val context: Context, val text: String) {
 
     /**
-     * Returns the show TVDb ID or -1 if not found for slug. Runs on [Dispatchers.IO], the return
-     * value is awaited on the calling context.
+     * Returns the show TVDb ID or -1 if not found for slug. Runs in [Dispatchers.IO] context.
      */
     suspend fun tryToExtractTvdbId(): Int {
-        val showTvdbId = async(Dispatchers.IO) { lookUpShowTvdbId() }
-        return showTvdbId.await()
+        return withContext(Dispatchers.IO) {
+            lookUpShowTvdbId()
+        }
     }
 
     private fun lookUpShowTvdbId(): Int {
