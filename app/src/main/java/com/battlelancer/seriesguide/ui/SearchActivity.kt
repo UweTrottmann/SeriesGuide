@@ -287,7 +287,7 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
 
         // try to match TVDB URLs
         launch {
-            val showTvdbId = TvdbIdExtractor(this, applicationContext, sharedText)
+            val showTvdbId = TvdbIdExtractor(applicationContext, sharedText)
                 .tryToExtractTvdbId()
             if (showTvdbId > 0) {
                 // found an id, display the add dialog
