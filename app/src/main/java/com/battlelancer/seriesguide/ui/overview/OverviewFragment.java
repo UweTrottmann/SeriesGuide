@@ -259,7 +259,7 @@ public class OverviewFragment extends Fragment implements
         // This ensures that the anonymous callback we have does not prevent the fragment from
         // being garbage collected. It also prevents our callback from getting invoked even after the
         // fragment is destroyed.
-        Picasso.with(getContext()).cancelRequest(imageEpisode);
+        Picasso.get().cancelRequest(imageEpisode);
 
         unbinder.unbind();
     }
@@ -859,7 +859,7 @@ public class OverviewFragment extends Fragment implements
                                 }
 
                                 @Override
-                                public void onError() {
+                                public void onError(Exception e) {
                                     imageEpisode.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                                 }
                             }

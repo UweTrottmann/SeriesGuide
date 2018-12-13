@@ -24,15 +24,15 @@ import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.crashlytics.android.core.CrashlyticsCore
 import com.google.android.gms.analytics.GoogleAnalytics
-import com.jakewharton.picasso.OkHttp3Downloader
 import com.jakewharton.threetenabp.AndroidThreeTen
+import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import io.fabric.sdk.android.Fabric
 import io.palaima.debugdrawer.timber.data.LumberYard
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.EventBusException
 import timber.log.Timber
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Initializes logging and services.

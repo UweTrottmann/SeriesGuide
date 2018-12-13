@@ -171,8 +171,7 @@ dependencies {
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.4'
 
     implementation "com.squareup.okhttp3:okhttp:${versions.okhttp}"
-    implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation ("com.uwetrottmann.androidutils:androidutils:${versions.androidUtils}") {
         exclude group: 'com.android.support'

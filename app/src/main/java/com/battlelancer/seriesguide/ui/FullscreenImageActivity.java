@@ -78,7 +78,7 @@ public class FullscreenImageActivity extends BaseActivity {
                         }
 
                         @Override
-                        public void onError() {
+                        public void onError(Exception e) {
                             loadLargeImage(false);
                         }
                     });
@@ -115,7 +115,7 @@ public class FullscreenImageActivity extends BaseActivity {
                         }
 
                         @Override
-                        public void onError() {
+                        public void onError(Exception e) {
                             photoView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                         }
                     });
@@ -138,7 +138,7 @@ public class FullscreenImageActivity extends BaseActivity {
             // This ensures that the anonymous callback we have does not prevent the activity from
             // being garbage collected. It also prevents our callback from getting invoked even after the
             // activity has finished.
-            Picasso.with(this).cancelRequest(photoView);
+            Picasso.get().cancelRequest(photoView);
         }
     }
 

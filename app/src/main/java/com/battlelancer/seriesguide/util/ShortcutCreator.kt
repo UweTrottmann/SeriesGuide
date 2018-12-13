@@ -58,7 +58,7 @@ class ShortcutCreator(
         try {
             val posterUrl = TvdbImageTools.smallSizeUrl(posterPath)
             if (posterUrl != null) {
-                val requestCreator = Picasso.with(context)
+                val requestCreator = Picasso.get()
                     .load(posterUrl)
                     .centerCrop()
                     .memoryPolicy(MemoryPolicy.NO_STORE)

@@ -244,7 +244,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         // This ensures that the anonymous callback we have does not prevent the fragment from
         // being garbage collected. It also prevents our callback from getting invoked even after the
         // fragment is destroyed.
-        Picasso.with(requireContext()).cancelRequest(imageViewEpisode);
+        Picasso.get().cancelRequest(imageViewEpisode);
         unbinder.unbind();
     }
 
@@ -675,7 +675,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                                 }
 
                                 @Override
-                                public void onError() {
+                                public void onError(Exception e) {
                                     imageViewEpisode.setScaleType(
                                             ImageView.ScaleType.CENTER_INSIDE);
                                 }
