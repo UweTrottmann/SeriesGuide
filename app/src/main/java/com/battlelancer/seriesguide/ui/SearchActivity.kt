@@ -38,16 +38,24 @@ import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout
 import com.google.android.gms.actions.SearchIntents
 import com.uwetrottmann.androidutils.AndroidUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Handles search intents and displays a [EpisodeSearchFragment] when needed or redirects
  * directly to an [EpisodeDetailsActivity].
  */
-class SearchActivity : BaseNavDrawerActivity(), AddShowDialogFragment.OnAddShowListener,
-    SearchTriggerListener {
+class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
+    AddShowDialogFragment.OnAddShowListener, SearchTriggerListener {
+
+    private lateinit var job: Job
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
 
     @BindView(R.id.containerSearchBar)
     internal lateinit var searchContainer: View
@@ -67,6 +75,9 @@ class SearchActivity : BaseNavDrawerActivity(), AddShowDialogFragment.OnAddShowL
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
+        job = Job()
+
         setupActionBar()
         setupNavDrawer()
 
@@ -360,6 +371,7 @@ class SearchActivity : BaseNavDrawerActivity(), AddShowDialogFragment.OnAddShowL
 
     override fun onDestroy() {
         super.onDestroy()
+        job.cancel()
         // remove any stored initial queries so they are not used when re-creating
         EventBus.getDefault().removeStickyEvent(SearchQueryEvent::class.java)
         EventBus.getDefault().removeStickyEvent(SearchQuerySubmitEvent::class.java)
