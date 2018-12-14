@@ -13,12 +13,14 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.squareup.picasso.Downloader;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Request;
 import com.squareup.picasso.RequestHandler;
 import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResultResponse;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.io.IOException;
+import okhttp3.CacheControl;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
@@ -71,7 +73,7 @@ public class SgPicassoRequestHandler extends RequestHandler {
                     String imagePath = TvdbTools.getHighestRatedPoster(posterResponse.body().data);
                     String imageUrl = TvdbImageTools.smallSizeUrl(imagePath);
                     if (imageUrl != null) {
-                        return loadFromNetwork(Uri.parse(imageUrl));
+                        return loadFromNetwork(Uri.parse(imageUrl), networkPolicy);
                     }
                 }
             } catch (TvdbException ignored) {
@@ -86,18 +88,26 @@ public class SgPicassoRequestHandler extends RequestHandler {
             if (movieSummary != null && movieSummary.poster_path != null) {
                 final String imageUrl = TmdbSettings.getImageBaseUrl(context)
                         + TmdbSettings.POSTER_SIZE_SPEC_W342 + movieSummary.poster_path;
-                return loadFromNetwork(Uri.parse(imageUrl));
+                return loadFromNetwork(Uri.parse(imageUrl), networkPolicy);
             }
         }
 
         return null;
     }
 
-    private Result loadFromNetwork(Uri uri) throws IOException {
+    private Result loadFromNetwork(Uri uri, int networkPolicy) throws IOException {
         // because retry-count is fixed to 0 for custom request handlers
         // BitmapHunter forces the network policy to OFFLINE
-        // but we want to load from the network, so just ignore it and build a regular request
-        okhttp3.Request downloaderRequest = createRequest(uri);
+        // https://github.com/square/picasso/issues/2038
+        // until fixed, re-set the network policy here also (like ServiceUtils.loadWithPicasso)
+        if (Utils.isAllowedLargeDataConnection(context)) {
+            networkPolicy = 0; // no policy
+        } else {
+            // avoid the network, hit the cache immediately + accept stale images.
+            networkPolicy = 1 << 2; // NetworkPolicy.OFFLINE
+        }
+
+        okhttp3.Request downloaderRequest = createRequest(uri, networkPolicy);
         Response response = downloader.load(downloaderRequest);
         ResponseBody body = response.body();
 
@@ -121,8 +131,28 @@ public class SgPicassoRequestHandler extends RequestHandler {
         return new Result(body.source(), loadedFrom);
     }
 
-    private static okhttp3.Request createRequest(Uri uri) {
-        return new okhttp3.Request.Builder().url(uri.toString()).build();
+    private static okhttp3.Request createRequest(Uri uri, int networkPolicy) {
+        CacheControl cacheControl = null;
+        if (networkPolicy != 0) {
+            if (NetworkPolicy.isOfflineOnly(networkPolicy)) {
+                cacheControl = CacheControl.FORCE_CACHE;
+            } else {
+                CacheControl.Builder builder = new CacheControl.Builder();
+                if (!NetworkPolicy.shouldReadFromDiskCache(networkPolicy)) {
+                    builder.noCache();
+                }
+                if (!NetworkPolicy.shouldWriteToDiskCache(networkPolicy)) {
+                    builder.noStore();
+                }
+                cacheControl = builder.build();
+            }
+        }
+
+        okhttp3.Request.Builder builder = new okhttp3.Request.Builder().url(uri.toString());
+        if (cacheControl != null) {
+            builder.cacheControl(cacheControl);
+        }
+        return builder.build();
     }
 
     static class ContentLengthException extends IOException {
