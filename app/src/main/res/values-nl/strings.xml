@@ -10,7 +10,7 @@
     <string name="preferences">Instellingen</string>
     <string name="help">Help</string>
     <string name="help_and_feedback">Help &amp; Feedback</string>
-    <string name="drawer_open">Navigatie menu openen</string>
+    <string name="drawer_open">Navigatiemenu openen</string>
     <!-- Media items -->
     <string name="show">Serie</string>
     <string name="episode">Aflevering</string>
@@ -32,11 +32,11 @@
     <string name="save_selection">Selectie bewaren</string>
     <string name="action_display_all">Toon alles</string>
     <string name="web_search">Zoeken op het web</string>
-    <string name="add_to_homescreen">Toevoegen aan Start</string>
-    <string name="action_open">Open</string>
+    <string name="add_to_homescreen">Toevoegen aan startscherm</string>
+    <string name="action_open">Openen</string>
     <string name="sync_manually">Handmatig synchroniseren</string>
-    <string name="sync_and_update">Synchroniseer &amp; Update</string>
-    <string name="sync_and_download_all">Synchroniseer &amp; Download alles</string>
+    <string name="sync_and_update">Synchroniseren &amp; bijwerken</string>
+    <string name="sync_and_download_all">Synchroniseren &amp; alles downloaden</string>
     <string name="action_turn_off">Uitschakelen</string>
     <string name="action_stream">Stream or purchase</string>
     <!-- Search -->
@@ -44,14 +44,14 @@
     <string name="search_hint">Afleveringen zoeken</string>
     <string name="any_language">Elke taal</string>
     <!-- Status messages -->
-    <string name="updated">Nieuwste versie is geïnstalleerd.</string>
+    <string name="updated">Bijgewerkt naar de nieuwste versie</string>
     <string name="norating">n.v.t.</string>
     <string name="unknown">onbekend</string>
     <string name="offline">Maak verbinding met een netwerk en probeer het opnieuw.</string>
     <string name="app_not_available">Geen app beschikbaar voor deze actie.</string>
     <string name="people_empty">Niemand?! Probeer opnieuw.</string>
     <string name="database_error">Wijziging niet mogelijk.</string>
-    <string name="reinstall_info">Maak een backup, installeer opnieuw en herstel.</string>
+    <string name="reinstall_info">Maak een back-up, installeer opnieuw en herstel</string>
     <string name="api_error_generic">Kon niet praten met %s. Probeer later opnieuw</string>
     <string name="api_failed">Mislukt: %s</string>
     <string name="copy_to_clipboard">Gekopieerd naar klembord</string>
@@ -66,7 +66,7 @@
     <!-- Comments -->
     <string name="comments">Reacties</string>
     <string name="shout_hint">Voer een opmerking in (in het Engels, meer dan 5 woorden)</string>
-    <string name="shout_invalid">Uw opmerking is niet conform de regels!</string>
+    <string name="shout_invalid">Uw opmerking volgt de regels niet!</string>
     <string name="action_post">Verzenden</string>
     <string name="isspoiler">Spoiler waarschuwing!</string>
     <string name="no_shouts">Wees de eerste die shout!</string>
@@ -80,7 +80,7 @@
     <string name="episode_firstaired">Releasedatum</string>
     <string name="episode_firstaired_unknown">Releasedatum onbekend</string>
     <string name="episode_dvdnumber">DVD aflevering</string>
-    <string name="original_release">Originele versie</string>
+    <string name="original_release">Originele release</string>
     <string name="show_genres">Genres</string>
     <string name="show_contentrating">Beoordeling inhoud</string>
     <string name="show_release_times">Releasetijden</string>
@@ -89,9 +89,9 @@
     <string name="episode_writers">Schrijvers</string>
     <string name="show_isalive">Lopende serie</string>
     <string name="show_isnotalive">Afgelopen</string>
-    <string name="no_translation">Er is geen beschrijving vertaald naar %1$s beschikbaar op %2$s.</string>
+    <string name="no_translation">Er is op %2$s geen naar het %1$s vertaalde beschrijving beschikbaar.</string>
     <string name="no_translation_title">Niet vertaald</string>
-    <string name="no_spoilers">Sommige details zijn verborgen om te voorkomen dat je spoilers ziet. Om dit uit te zetten ga naar Instellingen.</string>
+    <string name="no_spoilers">Sommige details zijn verborgen om te voorkomen dat u spoilers ziet. Om dit uit te zetten ga naar Instellingen.</string>
     <string name="format_source">Bron: %s</string>
     <string name="format_last_edited">Aangepast op: %s</string>
     <!-- Date and Time -->
@@ -118,16 +118,16 @@
     <string name="delete_error">Kan show niet verwijderen. Probeer later opnieuw.</string>
     <string name="delete_show">Verwijderen</string>
     <string name="no_nextepisode">Geen volgende aflevering gevonden.</string>
-    <string name="context_favorite">Favoriet</string>
-    <string name="context_unfavorite">Geen favoriet</string>
+    <string name="context_favorite">Toevoegen aan favorieten</string>
+    <string name="context_unfavorite">Verwijderen uit favorieten</string>
     <string name="favorited">Toegevoegd aan favorieten</string>
     <string name="unfavorited">Verwijderd uit favorieten</string>
-    <string name="action_episode_notifications_on">Zet afleveringsmeldingen aan</string>
-    <string name="action_episode_notifications_off">Zet afleveringsmeldingen uit</string>
+    <string name="action_episode_notifications_on">Afleveringsmeldingen aanzetten</string>
+    <string name="action_episode_notifications_off">Afleveringsmeldingen uitzetten</string>
     <string name="context_hide">Verbergen</string>
     <string name="context_unhide">Niet verbergen</string>
     <string name="hidden">Verborgen serie</string>
-    <string name="unhidden">Niet-verborgen serie</string>
+    <string name="unhidden">Serie is opnieuw zichtbaar</string>
     <string name="action_shows_add">Serie toevoegen</string>
     <string name="action_shows_filter">Series filteren</string>
     <string name="empty_filter">Alle filters verwijderen</string>
@@ -164,7 +164,7 @@
     <string name="pref_infinite_scrolling">Oneindige kalender</string>
     <!-- Updating -->
     <string name="update_scheduled">Bijwerken&#8230;</string>
-    <string name="update_no_connection">Verbindt met het internet om bij te werken.</string>
+    <string name="update_no_connection">Verbind met het internet om bij te werken.</string>
     <string name="update_inprogress">Er wordt een update uitgevoerd, probeer het later opnieuw.</string>
     <!-- Seasons -->
     <string name="season_allwatched">Alle afleveringen bekeken</string>
@@ -182,7 +182,7 @@
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Voer de naam van een serie in</string>
-    <string name="add_empty">Er zijn geen series hier.</string>
+    <string name="add_empty">Er zijn hier geen series</string>
     <string name="no_results">Geen resultaten, probeer complete woorden.</string>
     <string name="empty_show_search">Niet gevonden in uw serielijst</string>
     <string name="action_try_any_language">Probeer elke taal</string>
@@ -190,9 +190,9 @@
     <string name="tvdb_error_does_not_exist">Show bestaat (nog) niet op TheTVDB. Probeer later opnieuw.</string>
     <string name="add_all">Alles toevoegen</string>
     <string name="add_multiple">Alle series worden binnenkort in de serielijst weergegeven.</string>
-    <string name="add_started">%s zal binnenkort in het serie overzicht worden weergegeven.</string>
-    <string name="add_error">Kan %s niet toevoegen.</string>
-    <string name="add_already_exists">%s staat al in uw lijst.</string>
+    <string name="add_started">%s zal binnenkort in de serielijst worden weergegeven</string>
+    <string name="add_error">Kon %s niet toevoegen</string>
+    <string name="add_already_exists">%s staat al in uw serielijst</string>
     <string name="title_new_episodes">Nieuwe afleveringen</string>
     <string name="recommended">Aanbevolen</string>
     <string name="watched_shows">Bekeken</string>
@@ -207,7 +207,7 @@
     <string name="list_item_manage">Lijsten beheren</string>
     <string name="list_item_remove">Verwijderen uit lijst</string>
     <string name="list_empty">U kunt series, seizoenen of afleveringen toevoegen aan deze lijst.</string>
-    <string name="action_lists_sort">Sorteer lijst</string>
+    <string name="action_lists_sort">Lijst sorteren</string>
     <string name="action_lists_reorder">Lijsten opnieuw ordenen</string>
     <string name="error_name_already_exists">Een lijst met deze naam bestaat al</string>
     <!-- Movies -->
@@ -217,11 +217,11 @@
     <string name="title_disc_releases">CD releases</string>
     <string name="movies_in_theatres">In de bioscoop</string>
     <string name="movies_collection">Collectie</string>
-    <string name="movies_watchlist">Lijst</string>
-    <string name="watchlist_add">Toevoegen aan watchlist</string>
-    <string name="watchlist_remove">Verwijderen van watchlist</string>
-    <string name="watchlist_added">Toegevoegd aan watchlist</string>
-    <string name="watchlist_removed">Verwijderd van watchlist</string>
+    <string name="movies_watchlist">Kijklijst</string>
+    <string name="watchlist_add">Toevoegen aan te bekijken</string>
+    <string name="watchlist_remove">Verwijderen van te bekijken</string>
+    <string name="watchlist_added">Toegevoegd aan te bekijken</string>
+    <string name="watchlist_removed">Verwijderd van te bekijken</string>
     <string name="movies_search_hint">Typ de naam van een film</string>
     <string name="movies_collection_empty">Je hebt geen films toegevoegd aan je collectie.</string>
     <string name="movies_watchlist_empty">Je hebt geen films toegevoegd aan je watchlist.</string>
@@ -233,15 +233,15 @@
     <string name="action_movies_sort_release">Releasedatum</string>
     <!-- Statistics -->
     <string name="statistics_failed">Kon statistieken niet berekenen.</string>
-    <string name="statistics_shows">Series</string>
-    <string name="statistics_episodes">Afleveringen</string>
-    <string name="statistics_movies">Films</string>
+    <string name="statistics_shows">series</string>
+    <string name="statistics_episodes">afleveringen</string>
+    <string name="statistics_movies">films</string>
     <string name="shows_with_next">%s met de volgende afleveringen</string>
     <string name="shows_continuing">%s lopende</string>
     <string name="episodes_watched">%s bekeken</string>
     <string name="runtime_all_episodes">Speelduur van alle bekeken afleveringen</string>
     <string name="movies_on_watchlist">%s op watchlist</string>
-    <string name="runtime_movies_watchlist">Looptijd van films op de watchlist</string>
+    <string name="runtime_movies_watchlist">looptijd van te bekijken films</string>
     <plurals name="days_plural">
         <item quantity="one">%d dag</item>
         <item quantity="other">%d dagen</item>
@@ -258,30 +258,30 @@
     <string name="feature_supported">Ondersteund</string>
     <string name="feature_not_supported">Niet ondersteund</string>
     <string name="feature_history">Persoonlijke en vriendengeschiedenis</string>
-    <string name="feature_comments">Reacties</string>
+    <string name="feature_comments">Reacties plaatsen</string>
     <string name="feature_sync">Synchronisatie</string>
     <!-- Hexagon -->
     <string name="hexagon_warning">Experimenteel!</string>
-    <string name="hexagon_description">SeriesGuide Cloud helpt uw series, lijsten en films te synchroniseren en te back-uppen.</string>
-    <string name="hexagon_warning_trakt">Terwijl u aangemeld bent bij SeriesGuide Cloud zijn bepaalde functies van trakt niet beschikbaar.</string>
+    <string name="hexagon_description">SeriesGuide Cloud helpt uw series, lijsten en films te synchroniseren en te back-uppen</string>
+    <string name="hexagon_warning_trakt">Terwijl u aangemeld bent bij SeriesGuide Cloud zijn bepaalde functies van trakt niet beschikbaar</string>
     <string name="hexagon_signin">Log in</string>
     <string name="hexagon_signout">Uitloggen</string>
     <string name="hexagon_setup_incomplete">SeriesGuide cloud instellen is niet afgerond.</string>
-    <string name="hexagon_setup_fail_auth">Je Google account is niet verbonden.</string>
-    <string name="hexagon_remove_account">Verwijder account</string>
-    <string name="hexagon_remove_account_success">Account vernietigd.</string>
-    <string name="hexagon_remove_account_failure">Kan de account niet verwijderen.</string>
-    <string name="hexagon_remove_account_confirmation">Uw account verwijderen zorgt er voor dat alle series en films van SeriesGuide cloud worden verwijderd. Vergeet niet om andere gekoppelde apparaten ook te wissen.</string>
-    <string name="hexagon_api_queued">Verzonden naar Seriesguide Cloud.</string>
-    <string name="hexagon_signed_out">Afgemeld van SeriesGuide Cloud.</string>
-    <string name="hexagon_google_play_missing">Voor het gebruik van Seriesguide Cloud moeten Google Play services zijn geïnstalleerd.</string>
+    <string name="hexagon_setup_fail_auth">Uw Google-account was niet in orde</string>
+    <string name="hexagon_remove_account">Account verwijderen</string>
+    <string name="hexagon_remove_account_success">Account vernietigd</string>
+    <string name="hexagon_remove_account_failure">Kon account niet verwijderen</string>
+    <string name="hexagon_remove_account_confirmation">Dit zal al uw series, lijsten en films van SeriesGuide Cloud verwijderen</string>
+    <string name="hexagon_api_queued">Verzonden naar SeriesGuide Cloud.</string>
+    <string name="hexagon_signed_out">Afgemeld bij SeriesGuide Cloud</string>
+    <string name="hexagon_google_play_missing">Google Play Services zijn niet geïnstalleerd</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Toevoegen aan trakt.</string>
     <string name="checkin_success_trakt">Aangemeld bij %s op trakt.</string>
-    <string name="checkin_canceled_success_trakt">Check-in bij trakt geannuleerd.</string>
+    <string name="checkin_canceled_success_trakt">Check-in bij trakt geannuleerd</string>
     <string name="traktcheckin_cancel">Overschrijven</string>
-    <string name="traktcheckin_inprogress">U bent al aangemeld bij een andere aflevering of film. Overschrijf de vorige aanmelding of wacht %s en probeer het opnieuw.</string>
-    <string name="traktcheckin_wait">Wachten</string>
+    <string name="traktcheckin_inprogress">U bent al ingecheckt. Overschrijf de vorige check-in of wacht %s en probeer het opnieuw.</string>
+    <string name="traktcheckin_wait">Ik zal wachten</string>
     <string name="trakt_success">Verzonden naar Trakt.</string>
     <string name="trakt_error_credentials">Er ging iets fout. Controleer uw inlog gegevens en probeer het opnieuw.</string>
     <string name="trakt_error_not_exists">Nog (niet) beschikbaar op trakt. Probeer het later nog eens.</string>
@@ -290,12 +290,12 @@
     <string name="trakt_account">trakt-account</string>
     <string name="connect_trakt">Verbinden met trakt</string>
     <string name="trakt_reconnect">Verbind SeriesGuide met trakt</string>
-    <string name="trakt_reconnect_details">Controleer je trakt-inloggegevens</string>
+    <string name="trakt_reconnect_details">Controleer uw trakt-inloggegevens</string>
     <string name="waitplease">Een ogenblik geduld a.u.b.&#8230;</string>
     <string name="connect">Verbinden</string>
     <string name="disconnect">Verbreken</string>
     <string name="use_integrated_browser">Gebruik de geïntegreerde browser</string>
-    <string name="show_library">Uw bibliotheek weergeven</string>
+    <string name="show_library">Uw trakt-bibliotheek tonen</string>
     <string name="about_trakt">trakt helpt met het bijhouden van welke TV-shows en films u aan het bekijken bent. <a href="http://trakt.tv">Meer weten</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Beoordelen</string>
@@ -319,7 +319,7 @@
     <string name="checkin_hint">Voer een bericht in (optioneel)</string>
     <string name="paste_title">Titel plakken</string>
     <string name="pref_quick_checkin">Snelle check-in</string>
-    <string name="pref_quick_checkin_summary">Vraag niet voor een check-in bericht</string>
+    <string name="pref_quick_checkin_summary">Vraag niet om een check-in-bericht</string>
     <!-- Help -->
     <string name="feedback">Reactie verzenden</string>
     <string name="action_open_in_browser">Openen in browser</string>
@@ -332,16 +332,16 @@
     <string name="pref_onlyfuturesummary">Laat nooit al uitgezonden afleveringen zien</string>
     <string name="pref_onlyseasoneps">Speciale afleveringen verbergen</string>
     <string name="pref_onlyseasonepssummary">Speciale afleveringen overal verbergen uitgezonderd in het seizoenoverzicht</string>
-    <string name="pref_exactdates">Juiste datum weergeven</string>
+    <string name="pref_exactdates">Exacte datum tonen</string>
     <string name="pref_exactdates_summary">\"31 oktober\" in plaats van \"over 3 dagen\"</string>
-    <string name="pref_nospoilers">Voorkomen van spoilers</string>
+    <string name="pref_nospoilers">Spoilers voorkomen</string>
     <string name="pref_nospoilers_summary">Details verbergen totdat een aflevering is bekeken</string>
     <string name="pref_seasonsorting">Seizoenen sorteren op&#8230;</string>
     <string name="pref_episodesorting">Afleveringen sorteren op&#8230;</string>
-    <string name="pref_language">Content taal voorkeur</string>
+    <string name="pref_language">Voorkeurstaal voor inhoud</string>
     <string name="pref_language_fallback">Alternatieve taal</string>
     <string name="pref_updatewifionly">Afbeeldingen alleen via Wi-Fi</string>
-    <string name="pref_updatewifionlysummary">Om dataverbruik te reduceren, niet downloaden over een mobiele verbinding of andere betaald netwerken</string>
+    <string name="pref_updatewifionlysummary">Download niet over mobiele of betalende netwerken om dataverbruik te verlagen</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d dag voordien</item>
         <item quantity="other">%d dagen voordien</item>
@@ -358,11 +358,11 @@
     <string name="licence_tvdb">Deze app gebruikt data en afbeeldingen van TheTVDB, gelicenseerd onder CC BY-NC 4.0.</string>
     <string name="licence_themoviedb">Dit product gebruikt de TMDb API maar is niet goedgekeurd of gecertificeerd door TMDb.</string>
     <string name="licence_trakt">Deze app gebruikt data en afbeeldingen van trakt.</string>
-    <string name="about_open_source">Seriesguide is geprogrammeerd met behulp van open source software.</string>
-    <string name="licences_and_credits">Licenties en verantwoording</string>
+    <string name="about_open_source">SeriesGuide is gebouwd met openbronsoftware.</string>
+    <string name="licences_and_credits">Licenties en bedankingen</string>
     <!-- Sort -->
     <string name="sort">Sorteren op</string>
-    <string name="action_sort_ignore_articles">Negeer artikel</string>
+    <string name="action_sort_ignore_articles">Lidwoorden negeren</string>
     <!-- Sort orders -->
     <string name="sort_order_latest_first">Nieuwste eerst</string>
     <string name="sort_order_oldest_first">Oudste eerst</string>
@@ -372,7 +372,7 @@
     <string name="sort_order_latest_first_dvd">Nieuwste eerst (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Oudste eerst (DVD)</string>
     <!-- Upcoming thresholds -->
-    <string name="pref_upcominglimit">Aankomende bereik</string>
+    <string name="pref_upcominglimit">Bereik binnenkort</string>
     <string name="upcoming_upto_now">nu</string>
     <string name="upcoming_upto_one_day">1 dag</string>
     <string name="upcoming_upto_three_days">3 dagen</string>
@@ -388,7 +388,7 @@
     <string name="pref_theme">Thema</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Andere</string>
-    <string name="pref_autoupdatesummary">Sync en update SeriesGuide data automatisch</string>
+    <string name="pref_autoupdatesummary">Automatisch data synchroniseren en bijwerken</string>
     <string name="pref_autobackup">Automatische back-up</string>
     <string name="pref_autobackupsummary">Wekelijkse back-up van uw series, lijsten en films</string>
     <string name="backup">Back-up maken/herstellen</string>
@@ -400,25 +400,25 @@
     <string name="clear_cache_summary">Alle gebufferde afbeeldingen van het apparaat verwijderen</string>
     <string name="pref_ganalyticssummary">Anonieme gebruiksstatistieken verzenden naar een Google-dienst</string>
     <!-- Backup and Restore -->
-    <string name="backup_full_dump">Neem beschrijvingen, details en ratings op</string>
-    <string name="backup_failed_file_access">Kan geen backup maken. Een backup bestand kon niet gevonden of geopend worden.</string>
+    <string name="backup_full_dump">Inclusief beschrijvingen, details en beoordelingen</string>
+    <string name="backup_failed_file_access">Kan geen back-up maken. Een back-upbestand kon niet gevonden of geopend worden.</string>
     <string name="backup_success">Maken back-up succesvol.</string>
     <string name="backup_failed">Maken back-up mislukt.</string>
-    <string name="import_failed_nosd">Back-up herstellen niet mogelijk. De back-up map is niet beschikbaar.</string>
-    <string name="import_failed_nofile">Er is geen leesbaar back-upbestand.</string>
+    <string name="import_failed_nosd">Back-up herstellen niet mogelijk. De back-upmap is niet beschikbaar.</string>
+    <string name="import_failed_nofile">Er is geen leesbaar back-upbestand</string>
     <string name="import_success">Back-up met succes hersteld.</string>
     <string name="import_failed">Herstellen van de back-up mislukt.</string>
-    <string name="backup_button">Back-up</string>
+    <string name="backup_button">Back-up maken</string>
     <string name="import_button">Herstellen</string>
-    <string name="import_warning">Ik begrijp dat mijn huidige series, lijsten en films worden vervangen!</string>
+    <string name="import_warning">Uw huidige series, lijsten en films worden vervangen door de back-up</string>
     <string name="last_auto_backup">Laatste auto back-up: %s</string>
     <string name="restore_auto_backup">Auto back-up terugzetten</string>
-    <string name="dataliberation_permission_missing">Voor de back-up en restore functie Is toegang tot uw bestanden nodig.</string>
-    <string name="autobackup_permission_missing">Om auto back-up te gebruiken, sta toegang tot uw bestanden toe.</string>
-    <string name="autobackup_files_missing">Om auto backup te gebruiken, selecteer geldige backup bestanden.</string>
+    <string name="dataliberation_permission_missing">Geef toegang tot uw bestanden om back-ups te maken en te herstellen</string>
+    <string name="autobackup_permission_missing">Geef toegang tot uw bestanden om automatisch te back-uppen</string>
+    <string name="autobackup_files_missing">Selecteer geldige back-upbestanden om automatisch te back-uppen</string>
     <string name="no_file_selected">Geen bestand geselecteerd</string>
-    <string name="action_select_file">Selecteer bestand</string>
-    <string name="backup_use_default_files">Gebruik standaard backup bestanden</string>
+    <string name="action_select_file">Bestand selecteren</string>
+    <string name="backup_use_default_files">Standaardbestanden voor back-up gebruiken</string>
     <!-- Welcome dialog -->
     <string name="get_started">Aan de slag</string>
     <string name="welcome_setuplanguage">Selecteer een taal</string>
@@ -431,11 +431,11 @@
     <string name="upcoming_display">Selecteer om toekomstige series weer te geven</string>
     <string name="pref_notifications">Meldingen</string>
     <string name="pref_notificationssummary">Verwittigen bij nieuwe afleveringen</string>
-    <string name="pref_ringtone">Beltoon</string>
+    <string name="pref_ringtone">Geluid</string>
     <string name="pref_vibrate">Trillen</string>
     <string name="pref_vibratesummary">Ook trillen als melding wordt weergegeven</string>
     <string name="pref_notifications_treshold">Wanneer te waarschuwen</string>
-    <string name="pref_notifications_select_shows">Kies series</string>
+    <string name="pref_notifications_select_shows">Series kiezen</string>
     <string name="pref_notifications_select_shows_summary">Series waarvoor de meldingen aanstaan (%d)</string>
     <string name="pref_notification_channel_errors">Fouten</string>
     <!-- Legacy Widgets -->
@@ -444,48 +444,48 @@
     <string name="hide_watched">Bekeken afleveringen verbergen</string>
     <string name="pref_widget_opacity">Widget achtergrond</string>
     <string name="pref_widget_type">Widget type</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Groot lettertype gebruiken</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparantie</string>
     <string name="widget_background_25">25%</string>
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
-    <string name="widget_background_opaque">Doorzichtigheid</string>
+    <string name="widget_background_opaque">Ondoorzichtig</string>
     <!-- DashClock extension -->
     <string name="dashclock_extension_label">Volgende aflevering</string>
     <string name="dashclock_extension_description">Geeft de eerstvolgende aflevering van uw SeriesGuide shows weer.</string>
     <string name="dashclock_pref_upcoming_threshold">Toon afleveringen in de volgende&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Alleen voor leden</string>
-    <string name="action_upgrade">Open alle restricties</string>
+    <string name="action_upgrade">Ontgrendel alle functies</string>
     <string name="billing_action_subscribe">Abonneren</string>
     <string name="billing_action_manage_subscriptions">Abonnementen beheren</string>
-    <string name="billing_action_pass">Neem X-pas</string>
+    <string name="billing_action_pass">Neem X Pass</string>
     <string name="billing_price_subscribe">%1$s/jaar, probeer gratis, annuleer op elk moment via %2$s</string>
     <string name="billing_price_pass">eenmalige aankoop</string>
-    <string name="upgrade_description">Ontgrendel alle toekomstige uitbreidingen, inclusief notificaties\' thema\'s en andere opties. Help me om deze applicatie uit te bereiden in de toekomst.</string>
-    <string name="upgrade_success">Bedankt om Seriesguide te laten groeien. Je hebt toegang tot alle mogelijkheden.</string>
+    <string name="upgrade_description">Ontgrendel alle functies, inclusief meldingen, thema\'s en meer lijstopties voor widgets. Help me toekomstige updates te maken.</string>
+    <string name="upgrade_success">Bedankt om SeriesGuide te steunen! U heeft toegang tot alle functies.</string>
     <string name="billing_learn_more">Waarom betalen? Lees meer.</string>
     <string name="subscription_expired">Abonnement verlopen</string>
-    <string name="subscription_expired_details">Uw X-abonnement is verlopen.</string>
+    <string name="subscription_expired_details">Uw abonnement voor SeriesGuide is verlopen</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Log in op je Amazon account!</string>
-    <string name="subscription_unavailable">Het abonnement is op die moment niet beschikbaar.</string>
-    <string name="subscription_failed">Aankoop niet voltooid.</string>
+    <string name="subscription_not_signed_in">Log in bij uw Amazon-account</string>
+    <string name="subscription_unavailable">Het abonnement is nu niet beschikbaar</string>
+    <string name="subscription_failed">Aankoop niet voltooid</string>
     <string name="pass_unavailable">X Pass is momenteel niet beschikbaar.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Extensies aanpassen</string>
     <string name="action_extensions_add">Extensie toevoegen</string>
-    <string name="action_extensions_search">Vind meer extensies</string>
+    <string name="action_extensions_search">Meer extensies zoeken</string>
     <string name="action_extension_remove">Verwijderen</string>
     <string name="extension_amazon">Zoeken op Amazon</string>
     <string name="description_extension_amazon">Zoek op uw lokale Amazon-site</string>
     <string name="pref_amazon_domain">Amazon-site</string>
-    <string name="extension_google_play">Zoek op Google Play</string>
-    <string name="description_extension_google_play">Zoek op de Google Play Store</string>
+    <string name="extension_google_play">Zoeken op Google Play</string>
+    <string name="description_extension_google_play">Zoeken op de Google Play Store</string>
     <string name="extension_youtube">Zoeken op YouTube</string>
     <string name="description_extension_youtube">Zoek op YouTube naar video\'s</string>
-    <string name="description_extension_web_search">Zoek naar websites en afbeeldingen</string>
+    <string name="description_extension_web_search">Zoeken naar websites en afbeeldingen</string>
     <!-- People -->
     <string name="person_biography">Biografie</string>
     <!-- Feedback -->

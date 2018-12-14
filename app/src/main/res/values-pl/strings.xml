@@ -466,7 +466,7 @@
     <string name="hide_watched">Ukryj obejrzane odcinki</string>
     <string name="pref_widget_opacity">Tło widżetu</string>
     <string name="pref_widget_type">Typ widżetu</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Użyj dużej czcionki</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Przezroczysty</string>
     <string name="widget_background_25">25%</string>

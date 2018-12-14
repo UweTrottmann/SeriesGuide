@@ -433,7 +433,7 @@
     <string name="hide_watched">隐藏已观看剧集</string>
     <string name="pref_widget_opacity">小部件背景</string>
     <string name="pref_widget_type">小部件类型</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">使用大字体</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">100%</string>
     <string name="widget_background_25">25%</string>

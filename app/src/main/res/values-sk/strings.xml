@@ -466,7 +466,7 @@
     <string name="hide_watched">Skryť videné epizódy</string>
     <string name="pref_widget_opacity">Pozadie miniaplikácie</string>
     <string name="pref_widget_type">Typ miniaplikácie</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Použiť veľké písmo</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Priehľadné</string>
     <string name="widget_background_25">25%</string>
