@@ -185,11 +185,12 @@ dependencies {
     }
 
     // https://github.com/palaima/DebugDrawer
-    debugImplementation 'io.palaima.debugdrawer:debugdrawer-view:0.7.0'
-    releaseImplementation 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.7.0'
-    implementation 'io.palaima.debugdrawer:debugdrawer-commons:0.7.0'
-    implementation 'io.palaima.debugdrawer:debugdrawer-actions:0.7.0'
-    implementation 'io.palaima.debugdrawer:debugdrawer-timber:0.7.0'
+    def debugDrawerVersion = "0.7.0" // 0.8.0 requires minSdk 16
+    debugImplementation "io.palaima.debugdrawer:debugdrawer-view:$debugDrawerVersion"
+    releaseImplementation "io.palaima.debugdrawer:debugdrawer-view-no-op:$debugDrawerVersion"
+    implementation "io.palaima.debugdrawer:debugdrawer-commons:$debugDrawerVersion"
+    implementation "io.palaima.debugdrawer:debugdrawer-actions:$debugDrawerVersion"
+    implementation "io.palaima.debugdrawer:debugdrawer-timber:$debugDrawerVersion"
 
     // Google Play Services
     // https://developers.google.com/android/guides/releases
