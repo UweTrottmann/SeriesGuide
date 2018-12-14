@@ -9,6 +9,17 @@ Version 46
 ----------
 *(in development)*
 
+#### 46-beta2
+*(2018-12-14)*
+
+* 🔧 Searching added shows: better results if characters are missing from the title ("Mr Robot" will find "Mr. Robot"). Thanks @thouseef!
+* 🔧 Change the data saver (images over WiFi) setting right from the getting started view.
+* 🔨 Sharing thetvdb.com URLs to SeriesGuide will again suggest to add the show.
+* 🔨 trakt: when posting a comment fails because the account is banned from posting, do not sign out.
+* 🔨 The list widget should no longer crash the app if loading a poster fails.
+* 🔨 Backup: do not crash if no file URI is returned.
+* 📝 Latest translations from crowdin.
+
 #### 46-beta1
 *(2018-11-29)*
 
