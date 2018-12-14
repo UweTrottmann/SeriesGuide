@@ -426,24 +426,24 @@ public class ShowsFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventFirstRunButton(FirstRunView.ButtonEvent event) {
-        switch (event.type) {
-            case FirstRunView.ButtonType.ADD_SHOW: {
+        switch (event.getType()) {
+            case ADD_SHOW: {
                 startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
                         SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
                 Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Add show");
                 break;
             }
-            case FirstRunView.ButtonType.SIGN_IN: {
+            case SIGN_IN: {
                 ((BaseNavDrawerActivity) getActivity()).openNavDrawer();
                 Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Sign in");
                 break;
             }
-            case FirstRunView.ButtonType.RESTORE_BACKUP: {
+            case RESTORE_BACKUP: {
                 startActivity(new Intent(getActivity(), DataLiberationActivity.class));
                 Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Restore backup");
                 break;
             }
-            case FirstRunView.ButtonType.DISMISS: {
+            case DISMISS: {
                 adapter.setDisplayFirstRunHeader(false);
                 model.reRunQuery();
                 Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Dismiss");
