@@ -48,7 +48,9 @@ android {
     }
 
     lintOptions {
-        // for CI server (reports are not public)
+        // for CI server: only check this module with dependencies instead of each module separately
+        checkDependencies true
+        // for CI server: log reports (report files are not public)
         textReport true
         textOutput 'stdout'
     }
