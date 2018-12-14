@@ -8,7 +8,7 @@ buildscript {
             'targetSdk': 26,
 
             // https://developer.android.com/jetpack/docs/release-notes
-            'annotation': '1.0.0',
+            'annotation': '1.0.1',
             'lifecycle': '2.0.0',
             'paging': '2.0.0',
             'room': '2.0.0',
