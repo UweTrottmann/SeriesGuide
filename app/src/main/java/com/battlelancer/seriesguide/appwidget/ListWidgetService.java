@@ -26,7 +26,6 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import java.io.IOException;
 import java.util.Date;
 import timber.log.Timber;
 
@@ -243,7 +242,7 @@ public class ListWidgetService extends RemoteViewsService {
                                         ? R.dimen.widget_item_height_large
                                         : R.dimen.widget_item_height)
                         .get();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 Timber.e(e, "maybeSetPoster: failed.");
                 poster = null;
             }
