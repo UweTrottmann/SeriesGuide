@@ -23,6 +23,8 @@ import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.greenrobot.eventbus.EventBus;
 import org.threeten.bp.OffsetDateTime;
 
@@ -318,9 +320,25 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                     return new TraktResponse(false, context.getString(R.string.shout_invalid));
                 } else if (response.code() == 404) {
                     return new TraktResponse(false, context.getString(R.string.shout_invalid));
-                } else if (SgTrakt.isUnauthorized(context, response)) {
-                    return new TraktResponse(false,
-                            context.getString(R.string.trakt_error_credentials));
+                } else if (SgTrakt.isUnauthorized(response)) {
+                    // for users banned from posting comments requests also return 401
+                    // so do not sign out if an error header does not indicate the token is invalid
+                    String authHeader = response.headers().get("Www-Authenticate");
+                    if (authHeader != null && !authHeader.contains("invalid_token")) {
+                        Pattern pattern = Pattern.compile("error_description=\"(.*)\"");
+                        Matcher matcher = pattern.matcher(authHeader);
+                        String message;
+                        if (matcher.find()) {
+                            message = matcher.group(1);
+                        } else {
+                            message = context.getString(R.string.trakt_error_credentials);
+                        }
+                        return new TraktResponse(false, message);
+                    } else {
+                        TraktCredentials.get(context).setCredentialsInvalid();
+                        return new TraktResponse(false,
+                                context.getString(R.string.trakt_error_credentials));
+                    }
                 } else {
                     SgTrakt.trackFailedRequest(context, "post comment", response);
                 }
