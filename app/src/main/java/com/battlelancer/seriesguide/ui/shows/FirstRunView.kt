@@ -12,6 +12,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.Utils
 import org.greenrobot.eventbus.EventBus
@@ -39,6 +40,8 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
         val noSpoilerCheckBox = noSpoilerView.findViewById<CheckBox>(
             R.id.checkboxFirstRunNoSpoilers
         )
+        val dataSaverContainer = findViewById<RelativeLayout>(R.id.containerFirstRunDataSaver)
+        val dataSaverCheckBox = findViewById<CheckBox>(R.id.checkboxFirstRunDataSaver)
         val buttonAddShow = findViewById<Button>(R.id.buttonFirstRunAddShow)
         val buttonSignIn = findViewById<Button>(R.id.buttonFirstRunSignIn)
         val buttonRestoreBackup = findViewById<Button>(R.id.buttonFirstRunRestore)
@@ -58,6 +61,15 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
             noSpoilerCheckBox.isChecked = noSpoilers
         }
         noSpoilerCheckBox.isChecked = DisplaySettings.preventSpoilers(context)
+        dataSaverContainer.setOnClickListener {
+            val isSaveData = !dataSaverCheckBox.isChecked
+            PreferenceManager.getDefaultSharedPreferences(it.context).edit().apply {
+                putBoolean(UpdateSettings.KEY_ONLYWIFI, isSaveData)
+                apply()
+            }
+            dataSaverCheckBox.isChecked = isSaveData
+        }
+        dataSaverCheckBox.isChecked = UpdateSettings.isLargeDataOverWifiOnly(context)
         buttonAddShow.setOnClickListener {
             EventBus.getDefault()
                 .post(ButtonEvent(ButtonType.ADD_SHOW))
