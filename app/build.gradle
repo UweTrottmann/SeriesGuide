@@ -199,7 +199,10 @@ dependencies {
 
     // App Engine
     // https://github.com/googleapis/google-api-java-client/releases
-    implementation 'com.google.guava:guava:25.1-android'
+    implementation ('com.google.guava:guava:25.1-android') {
+        exclude group: 'org.checkerframework' // not needed at runtime
+        exclude group: 'com.google.errorprone' // not needed at runtime
+    }
     implementation('com.google.api-client:google-api-client-android:1.27.0') {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
         exclude group: 'com.google.guava', module: 'guava' // including Android version instead
