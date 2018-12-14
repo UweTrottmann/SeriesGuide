@@ -81,10 +81,9 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
                 return context.getString(R.string.trakt_error_credentials);
             }
 
-            Checkin checkin = SgApp.getServicesComponent(context).traktCheckin();
+            Checkin checkin = SgApp.getServicesComponent(context).trakt().checkin();
             try {
-                retrofit2.Response<Void> response = checkin.deleteActiveCheckin()
-                        .execute();
+                retrofit2.Response<Void> response = checkin.deleteActiveCheckin().execute();
                 if (response.isSuccessful()) {
                     return null;
                 } else {

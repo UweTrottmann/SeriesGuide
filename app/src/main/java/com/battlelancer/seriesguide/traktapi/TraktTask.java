@@ -23,8 +23,6 @@ import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
-import com.uwetrottmann.trakt5.services.Checkin;
-import com.uwetrottmann.trakt5.services.Comments;
 import org.greenrobot.eventbus.EventBus;
 import org.threeten.bp.OffsetDateTime;
 
@@ -242,7 +240,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     }
 
     private TraktResponse doCheckInAction() {
-        Checkin traktCheckin = SgApp.getServicesComponent(context).traktCheckin();
+        TraktV2 trakt = SgApp.getServicesComponent(context).trakt();
         try {
             retrofit2.Response response;
             String message = args.getString(InitBundle.MESSAGE);
@@ -254,7 +252,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                             .message(message)
                             .build();
 
-                    response = traktCheckin.checkin(checkin).execute();
+                    response = trakt.checkin().checkin(checkin).execute();
                     break;
                 }
                 case CHECKIN_MOVIE: {
@@ -264,7 +262,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                             .message(message)
                             .build();
 
-                    response = traktCheckin.checkin(checkin).execute();
+                    response = trakt.checkin().checkin(checkin).execute();
                     break;
                 }
                 default:
@@ -276,7 +274,6 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                         args.getString(InitBundle.TITLE)));
             } else {
                 // check if the user wants to check-in, but there is already a check-in in progress
-                TraktV2 trakt = SgApp.getServicesComponent(context).trakt();
                 CheckinError checkinError = trakt.checkForCheckinError(response);
                 if (checkinError != null) {
                     OffsetDateTime expiresAt = checkinError.expires_at;
@@ -305,10 +302,10 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     }
 
     private TraktResponse doCommentAction() {
-        Comments traktComments = SgApp.getServicesComponent(context).traktComments();
+        TraktV2 trakt = SgApp.getServicesComponent(context).trakt();
         try {
             // post comment
-            retrofit2.Response<Comment> response = traktComments.post(buildComment())
+            retrofit2.Response<Comment> response = trakt.comments().post(buildComment())
                     .execute();
             if (response.isSuccessful()) {
                 Comment postedComment = response.body();

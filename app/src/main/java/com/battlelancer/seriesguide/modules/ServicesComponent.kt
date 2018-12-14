@@ -18,8 +18,6 @@ import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.services.MoviesService
 import com.uwetrottmann.tmdb2.services.PeopleService
 import com.uwetrottmann.trakt5.TraktV2
-import com.uwetrottmann.trakt5.services.Checkin
-import com.uwetrottmann.trakt5.services.Comments
 import com.uwetrottmann.trakt5.services.Search
 import com.uwetrottmann.trakt5.services.Sync
 import com.uwetrottmann.trakt5.services.Users
@@ -46,8 +44,6 @@ interface ServicesComponent {
     fun showTools(): ShowTools
     fun tmdb(): Tmdb
     fun trakt(): TraktV2
-    fun traktCheckin(): Checkin
-    fun traktComments(): Comments
     fun traktSearch(): Search
     fun traktSync(): Sync
     fun traktUsers(): Users
