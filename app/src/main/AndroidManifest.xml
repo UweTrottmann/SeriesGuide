@@ -438,6 +438,11 @@
             android:name="com.google.android.gms.analytics.AnalyticsService"
             android:enabled="true"
             android:exported="false" />
+
+        <!-- Disable Google Analytics for Firebase collection until explicitly started in SgApp -->
+        <meta-data android:name="firebase_analytics_collection_enabled" android:value="false" />
+        <!-- Do not allow Google Analytics for Firebase to collect the advertising ID -->
+        <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />
     </application>
 
 </manifest>

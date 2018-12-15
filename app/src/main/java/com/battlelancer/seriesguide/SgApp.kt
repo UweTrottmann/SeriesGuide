@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.crashlytics.android.core.CrashlyticsCore
 import com.google.android.gms.analytics.GoogleAnalytics
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
@@ -145,6 +146,9 @@ class SgApp : Application() {
             // use core kit only, Crashlytics kit also adds Answers and Beta kit
             Fabric.with(this, CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
         }
+        // Ensure Firebase Analytics opt-out (also toggled in settings)
+        FirebaseAnalytics.getInstance(this)
+            .setAnalyticsCollectionEnabled(!AppSettings.isGaAppOptOut(this))
         // Ensure GA opt-out
         GoogleAnalytics.getInstance(this).appOptOut = AppSettings.isGaAppOptOut(this)
         if (BuildConfig.DEBUG) {

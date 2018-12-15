@@ -8,6 +8,9 @@ keystore.properties
 local.properties
 secret.properties
 
+### Firebase
+google-services.json
+
 ### Crashlytics
 fabric.properties
 

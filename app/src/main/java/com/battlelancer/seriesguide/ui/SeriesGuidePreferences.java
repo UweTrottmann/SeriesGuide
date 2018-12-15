@@ -61,6 +61,7 @@ import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -386,8 +387,11 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             findPreference(AppSettings.KEY_GOOGLEANALYTICS).setOnPreferenceChangeListener(
                     (preference, newValue) -> {
                         if (preference.getKey().equals(AppSettings.KEY_GOOGLEANALYTICS)) {
-                            boolean isEnabled = (Boolean) newValue;
-                            GoogleAnalytics.getInstance(getActivity()).setAppOptOut(isEnabled);
+                            boolean isOptOut = (Boolean) newValue;
+                            GoogleAnalytics.getInstance(getActivity()).setAppOptOut(isOptOut);
+                            // note: also set during app setup
+                            FirebaseAnalytics.getInstance(getActivity())
+                                    .setAnalyticsCollectionEnabled(!isOptOut);
                             return true;
                         }
                         return false;
