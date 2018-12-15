@@ -59,7 +59,6 @@ public class CalendarFragment extends Fragment
         implements OnItemClickListener, OnSharedPreferenceChangeListener,
         AdapterView.OnItemLongClickListener {
 
-    private static final String TAG = "Calendar";
     private static final int CONTEXT_FLAG_WATCHED_ID = 0;
     private static final int CONTEXT_FLAG_UNWATCHED_ID = 1;
     private static final int CONTEXT_CHECKIN_ID = 2;
@@ -80,7 +79,6 @@ public class CalendarFragment extends Fragment
      */
     public interface InitBundle {
         String TYPE = "type";
-        String ANALYTICS_TAG = "analyticstag";
         String LOADER_ID = "loaderid";
         String EMPTY_STRING_ID = "emptyid";
     }

@@ -52,8 +52,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ShowsFragment extends Fragment {
 
-    private static final String TAG = "Shows";
-
     private int sortOrderId;
     private boolean isSortFavoritesFirst;
     private boolean isSortIgnoreArticles;
@@ -503,7 +501,7 @@ public class ShowsFragment extends Fragment {
 
             popupMenu.setOnMenuItemClickListener(
                     new ShowMenuItemClickListener(getContext(), getFragmentManager(),
-                            show.getShowTvdbId(), show.getEpisodeTvdbId(), TAG));
+                            show.getShowTvdbId(), show.getEpisodeTvdbId()));
             popupMenu.show();
         }
 

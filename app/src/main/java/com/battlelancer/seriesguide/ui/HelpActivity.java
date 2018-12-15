@@ -38,7 +38,6 @@ public class HelpActivity extends BaseActivity {
         return Intent.createChooser(intent, context.getString(R.string.feedback));
     }
 
-    private static final String TAG = "Help";
     private WebView webview;
 
     @SuppressLint("SetJavaScriptEnabled")

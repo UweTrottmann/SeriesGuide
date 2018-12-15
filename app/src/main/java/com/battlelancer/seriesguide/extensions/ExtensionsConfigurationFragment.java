@@ -42,8 +42,6 @@ import timber.log.Timber;
  */
 public class ExtensionsConfigurationFragment extends Fragment {
 
-    private static final String TAG = "Extension Configuration";
-
     @BindView(R.id.listViewExtensionsConfiguration) DragSortListView listView;
 
     private ExtensionsAdapter adapter;

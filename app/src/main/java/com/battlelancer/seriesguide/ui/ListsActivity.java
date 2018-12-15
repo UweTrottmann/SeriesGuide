@@ -43,7 +43,6 @@ public class ListsActivity extends BaseTopActivity {
     public static class ListsChangedEvent {
     }
 
-    public static final String TAG = "Lists";
     public static final int LISTS_LOADER_ID = 1;
     public static final int LISTS_REORDER_LOADER_ID = 2;
 

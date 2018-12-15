@@ -67,7 +67,6 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
 
     companion object {
 
-        private const val TAG = "Episodes"
         private const val ARG_SHOW_TVDBID = "show_tvdbid"
         private const val ARG_SEASON_TVDBID = "season_tvdbid"
         private const val ARG_SEASON_NUMBER = "season_number"

@@ -588,14 +588,14 @@ class ShowFragment : ScopedFragment() {
         }
 
         if (credits.cast != null && credits.cast.size != 0
-            && PeopleListHelper.populateShowCast(activity, castContainer, credits, TAG)) {
+            && PeopleListHelper.populateShowCast(activity, castContainer, credits)) {
             setCastVisibility(true)
         } else {
             setCastVisibility(false)
         }
 
         if (credits.crew != null && credits.crew.size != 0
-            && PeopleListHelper.populateShowCrew(activity, crewContainer, credits, TAG)) {
+            && PeopleListHelper.populateShowCrew(activity, crewContainer, credits)) {
             setCrewVisibility(true)
         } else {
             setCrewVisibility(false)
@@ -682,8 +682,6 @@ class ShowFragment : ScopedFragment() {
     companion object {
 
         const val ARG_SHOW_TVDBID = "tvdbid"
-
-        private const val TAG = "Show Info"
 
         @JvmStatic
         fun newInstance(showTvdbId: Int): ShowFragment {

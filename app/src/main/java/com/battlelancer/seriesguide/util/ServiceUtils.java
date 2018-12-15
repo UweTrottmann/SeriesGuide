@@ -22,8 +22,6 @@ import com.squareup.picasso.RequestCreator;
  */
 public final class ServiceUtils {
 
-    public static final String TAG = "Service Utils";
-
     private static final String IMDB_APP_TITLE_URI_POSTFIX = "/";
 
     private static final String IMDB_APP_TITLE_URI = "imdb:///title/";

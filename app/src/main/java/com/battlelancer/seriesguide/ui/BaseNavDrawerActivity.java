@@ -98,7 +98,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         }
     }
 
-    private static final String TAG_NAV_DRAWER = "Navigation Drawer";
     private static final int NAVDRAWER_CLOSE_DELAY = 250;
     private static final int NAV_ITEM_ACCOUNT_CLOUD_ID = -1;
     private static final int NAV_ITEM_ACCOUNT_TRAKT_ID = -2;

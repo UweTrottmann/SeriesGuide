@@ -105,8 +105,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         String TMDB_ID = "tmdbid";
     }
 
-    private static final String TAG = "Movie Details";
-
     private Unbinder unbinder;
     @BindView(R.id.rootLayoutMovie) FrameLayout rootLayoutMovie;
     @BindView(R.id.progressBar) View progressBar;
@@ -565,7 +563,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         // cast members
         if (credits.cast != null && credits.cast.size() != 0
-                && PeopleListHelper.populateMovieCast(getActivity(), containerCast, credits, TAG)) {
+                && PeopleListHelper.populateMovieCast(getActivity(), containerCast, credits)) {
             setCastVisibility(true);
         } else {
             setCastVisibility(false);
@@ -573,7 +571,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         // crew members
         if (credits.crew != null && credits.crew.size() != 0
-                && PeopleListHelper.populateMovieCrew(getActivity(), containerCrew, credits, TAG)) {
+                && PeopleListHelper.populateMovieCrew(getActivity(), containerCrew, credits)) {
             setCrewVisibility(true);
         } else {
             setCrewVisibility(false);
@@ -706,7 +704,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
         Timber.d("loadMovieActions: received %s actions for %s", actions.size(), tmdbId);
         ActionsHelper.populateActions(getActivity().getLayoutInflater(),
-                getActivity().getTheme(), containerMovieActions, actions, TAG);
+                getActivity().getTheme(), containerMovieActions, actions);
     }
 
     Runnable movieActionsRunnable = () -> {

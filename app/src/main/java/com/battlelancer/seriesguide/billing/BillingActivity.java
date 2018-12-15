@@ -33,8 +33,6 @@ import timber.log.Timber;
 
 public class BillingActivity extends BaseActivity {
 
-    public static final String TAG = "BillingActivity";
-
     // The SKU product ids as set in the Developer Console
     public static final String SKU_X = "x_upgrade";
 

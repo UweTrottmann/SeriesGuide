@@ -39,7 +39,6 @@ public class ListsFragment extends Fragment {
 
     /** LoaderManager is created unique to fragment, so use same id for all of them */
     private static final int LOADER_ID = 1;
-    private static final String TAG = "Lists";
 
     public static ListsFragment newInstance(String list_id) {
         ListsFragment f = new ListsFragment();

@@ -81,7 +81,6 @@ import timber.log.Timber;
  */
 public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsContract {
 
-    private static final String TAG = "Episode Details";
     private static final String ARG_EPISODE_TVDBID = "episode_tvdbid";
     private static final String ARG_IS_IN_MULTIPANE_LAYOUT = "multipane";
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
@@ -702,7 +701,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                                 episodeTvdbId);
                     }
                     ActionsHelper.populateActions(requireActivity().getLayoutInflater(),
-                            requireActivity().getTheme(), containerActions, data, TAG);
+                            requireActivity().getTheme(), containerActions, data);
                 }
 
                 @Override

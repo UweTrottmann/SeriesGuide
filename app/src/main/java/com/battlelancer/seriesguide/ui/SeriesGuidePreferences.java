@@ -76,8 +76,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
     private static final String EXTRA_SETTINGS_SCREEN = "settingsScreen";
 
-    private static final String TAG = "Settings";
-
     // Preference keys
     private static final String KEY_CLEAR_CACHE = "clearCache";
     //    public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";

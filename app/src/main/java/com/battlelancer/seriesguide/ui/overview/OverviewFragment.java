@@ -94,7 +94,6 @@ public class OverviewFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, EpisodeActionsContract {
 
     public static final String ARG_INT_SHOW_TVDBID = "show_tvdbid";
-    private static final String TAG = "Overview";
     private static final String ARG_EPISODE_TVDB_ID = "episodeTvdbId";
 
     @BindView(R.id.containerOverviewShow) View containerShow;
@@ -992,13 +991,13 @@ public class OverviewFragment extends Fragment implements
                         Timber.d("onLoadFinished: received %s actions", data.size());
                     }
                     ActionsHelper.populateActions(getActivity().getLayoutInflater(),
-                            getActivity().getTheme(), containerActions, data, TAG);
+                            getActivity().getTheme(), containerActions, data);
                 }
 
                 @Override
                 public void onLoaderReset(Loader<List<Action>> loader) {
                     ActionsHelper.populateActions(getActivity().getLayoutInflater(),
-                            getActivity().getTheme(), containerActions, null, TAG);
+                            getActivity().getTheme(), containerActions, null);
                 }
             };
 

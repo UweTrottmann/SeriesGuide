@@ -22,15 +22,13 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
     private final FragmentManager fragmentManager;
     private final int showTvdbId;
     private final int episodeTvdbId;
-    private final String logTag;
 
     public ShowMenuItemClickListener(Context context, FragmentManager fm, int showTvdbId,
-            int episodeTvdbId, String logTag) {
+            int episodeTvdbId) {
         this.context = context;
         this.fragmentManager = fm;
         this.showTvdbId = showTvdbId;
         this.episodeTvdbId = episodeTvdbId;
-        this.logTag = logTag;
         this.showTools = SgApp.getServicesComponent(context).showTools();
     }
 

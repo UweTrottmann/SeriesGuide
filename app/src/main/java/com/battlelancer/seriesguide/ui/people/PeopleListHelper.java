@@ -25,27 +25,23 @@ import timber.log.Timber;
 public class PeopleListHelper {
 
     public static boolean populateShowCast(Activity activity,
-            ViewGroup peopleContainer, Credits credits, String logCategory) {
-        return populateCast(activity, peopleContainer, credits, PeopleActivity.MediaType.SHOW,
-                logCategory);
+            ViewGroup peopleContainer, Credits credits) {
+        return populateCast(activity, peopleContainer, credits, PeopleActivity.MediaType.SHOW);
     }
 
     public static boolean populateShowCrew(Activity activity,
-            ViewGroup peopleContainer, Credits credits, String logCategory) {
-        return populateCrew(activity, peopleContainer, credits, PeopleActivity.MediaType.SHOW,
-                logCategory);
+            ViewGroup peopleContainer, Credits credits) {
+        return populateCrew(activity, peopleContainer, credits, PeopleActivity.MediaType.SHOW);
     }
 
     public static boolean populateMovieCast(Activity activity,
-            ViewGroup peopleContainer, Credits credits, String logCategory) {
-        return populateCast(activity, peopleContainer, credits, PeopleActivity.MediaType.MOVIE,
-                logCategory);
+            ViewGroup peopleContainer, Credits credits) {
+        return populateCast(activity, peopleContainer, credits, PeopleActivity.MediaType.MOVIE);
     }
 
     public static boolean populateMovieCrew(Activity activity,
-            ViewGroup peopleContainer, Credits credits, String logCategory) {
-        return populateCrew(activity, peopleContainer, credits, PeopleActivity.MediaType.MOVIE,
-                logCategory);
+            ViewGroup peopleContainer, Credits credits) {
+        return populateCrew(activity, peopleContainer, credits, PeopleActivity.MediaType.MOVIE);
     }
 
     /**
@@ -53,7 +49,7 @@ public class PeopleListHelper {
      * "Show all" link if there are more.
      */
     private static boolean populateCast(Activity activity, ViewGroup peopleContainer,
-            Credits credits, PeopleActivity.MediaType mediaType, String logCategory) {
+            Credits credits, PeopleActivity.MediaType mediaType) {
         if (peopleContainer == null) {
             // nothing we can do, view is already gone
             Timber.d("populateCast: container reference gone, aborting");
@@ -81,7 +77,7 @@ public class PeopleListHelper {
                     castMember.character, castMember.profile_path);
             personView.setOnClickListener(
                     new OnPersonClickListener(activity, mediaType, credits.id,
-                            PeopleActivity.PeopleType.CAST, castMember.id, logCategory)
+                            PeopleActivity.PeopleType.CAST, castMember.id)
             );
 
             peopleContainer.addView(personView);
@@ -91,7 +87,7 @@ public class PeopleListHelper {
         if (cast.size() > 3) {
             addShowAllView(inflater, peopleContainer,
                     new OnPersonClickListener(activity, mediaType, credits.id,
-                            PeopleActivity.PeopleType.CAST, logCategory)
+                            PeopleActivity.PeopleType.CAST)
             );
         }
 
@@ -103,8 +99,7 @@ public class PeopleListHelper {
      * "Show all" link if there are more.
      */
     private static boolean populateCrew(Activity activity, ViewGroup peopleContainer,
-            Credits credits,
-            PeopleActivity.MediaType mediaType, String logCategory) {
+            Credits credits, PeopleActivity.MediaType mediaType) {
         if (peopleContainer == null) {
             // nothing we can do, view is already gone
             Timber.d("populateCrew: container reference gone, aborting");
@@ -132,7 +127,7 @@ public class PeopleListHelper {
                     crewMember.job, crewMember.profile_path);
             personView.setOnClickListener(
                     new OnPersonClickListener(activity, mediaType, credits.id,
-                            PeopleActivity.PeopleType.CREW, crewMember.id, logCategory)
+                            PeopleActivity.PeopleType.CREW, crewMember.id)
             );
 
             peopleContainer.addView(personView);
@@ -142,7 +137,7 @@ public class PeopleListHelper {
         if (crew.size() > 3) {
             addShowAllView(inflater, peopleContainer,
                     new OnPersonClickListener(activity, mediaType, credits.id,
-                            PeopleActivity.PeopleType.CREW, logCategory)
+                            PeopleActivity.PeopleType.CREW)
             );
         }
 
@@ -183,14 +178,13 @@ public class PeopleListHelper {
         private final int personTmdbId;
         private final PeopleActivity.PeopleType peopleType;
         private final PeopleActivity.MediaType mediaType;
-        private final String logCategory;
 
         /**
          * Listener that will show cast or crew members for the given TMDb entity.
          */
         public OnPersonClickListener(Activity activity, PeopleActivity.MediaType mediaType,
-                int mediaTmdbId, PeopleActivity.PeopleType peopleType, String logCategory) {
-            this(activity, mediaType, mediaTmdbId, peopleType, -1, logCategory);
+                int mediaTmdbId, PeopleActivity.PeopleType peopleType) {
+            this(activity, mediaType, mediaTmdbId, peopleType, -1);
         }
 
         /**
@@ -198,14 +192,12 @@ public class PeopleListHelper {
          * specific cast or crew member.
          */
         public OnPersonClickListener(Activity activity, PeopleActivity.MediaType mediaType,
-                int mediaTmdbId, PeopleActivity.PeopleType peopleType, int personTmdbId,
-                String logCategory) {
+                int mediaTmdbId, PeopleActivity.PeopleType peopleType, int personTmdbId) {
             this.activity = activity;
             this.itemTmdbId = mediaTmdbId;
             this.peopleType = peopleType;
             this.mediaType = mediaType;
             this.personTmdbId = personTmdbId;
-            this.logCategory = logCategory;
         }
 
         @Override

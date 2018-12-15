@@ -420,7 +420,6 @@ class SeasonsFragment : Fragment() {
         private const val CONTEXT_WATCHED_SHOW_NONE_ID = 1
         private const val CONTEXT_COLLECTED_SHOW_ALL_ID = 2
         private const val CONTEXT_COLLECTED_SHOW_NONE_ID = 3
-        private const val TAG = "Seasons"
 
         @JvmStatic
         fun newInstance(showId: Int): SeasonsFragment {
