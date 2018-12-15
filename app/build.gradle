@@ -234,8 +234,12 @@ dependencies {
 
 }
 
-// need to apply after dependencies block
-apply plugin: 'com.google.gms.google-services'
+if (file('google-services.json').exists()) {
+    // need to apply after dependencies block
+    apply plugin: 'com.google.gms.google-services'
+} else {
+    println('WARNING: google-services.json missing, Firebase Analytics will not work.')
+}
 
 endpointsClient {
     discoveryDocs = ['src/endpoints/account-v2-rest.discovery',
