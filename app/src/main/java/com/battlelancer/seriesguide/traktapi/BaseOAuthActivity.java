@@ -105,7 +105,7 @@ public abstract class BaseOAuthActivity extends BaseActivity {
     private void launchBrowser() {
         String authorizationUrl = getAuthorizationUrl();
         if (authorizationUrl != null) {
-            Utils.launchWebsite(this, authorizationUrl, "OAuth", "Launch browser for OAuth");
+            Utils.launchWebsite(this, authorizationUrl);
         }
     }
 

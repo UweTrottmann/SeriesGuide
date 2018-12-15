@@ -318,7 +318,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 } else {
                     launchIntent = new Intent(this, BillingActivity.class);
                 }
-                Utils.trackAction(this, TAG_NAV_DRAWER, "Unlock");
                 break;
         }
 

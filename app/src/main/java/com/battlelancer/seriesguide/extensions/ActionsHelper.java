@@ -83,7 +83,6 @@ public class ActionsHelper {
             } else {
                 v.getContext().startActivity(intent);
             }
-            Utils.trackAction(v.getContext(), logCategory, "Manage extensions");
         });
         actionsContainer.addView(configureView);
     }

@@ -336,13 +336,9 @@ public class ShowsActivity extends BaseTopActivity implements
             return true;
         } else if (itemId == R.id.menu_update) {
             SgSyncAdapter.requestSyncDeltaImmediate(this, true);
-            Utils.trackAction(this, TAG, "Update (outdated)");
-
             return true;
         } else if (itemId == R.id.menu_fullupdate) {
             SgSyncAdapter.requestSyncFullImmediate(this, true);
-            Utils.trackAction(this, TAG, "Update (all)");
-
             return true;
         } else {
             return super.onOptionsItemSelected(item);

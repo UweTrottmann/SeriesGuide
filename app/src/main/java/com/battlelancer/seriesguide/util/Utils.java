@@ -37,6 +37,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.google.android.gms.analytics.HitBuilders;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import java.net.UnknownHostException;
@@ -185,14 +186,23 @@ public class Utils {
     }
 
     /**
-     * Track an action event, e.g. when an action item is clicked.
+     * Track a selection event.
      */
-    public static void trackAction(Context context, String category, String label) {
-        Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(category)
-                .setAction("Action Item")
-                .setLabel(label)
-                .build());
+    public static void trackSelect(Context context, String method) {
+        Bundle params = new Bundle();
+        params.putString(FirebaseAnalytics.Param.METHOD, method);
+        FirebaseAnalytics.getInstance(context)
+                .logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
+    }
+
+    /**
+     * Track a share event.
+     */
+    public static void trackShare(Context context, String contentType) {
+        Bundle params = new Bundle();
+        params.putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType);
+        FirebaseAnalytics.getInstance(context)
+                .logEvent(FirebaseAnalytics.Event.SHARE, params);
     }
 
     /**
@@ -380,19 +390,7 @@ public class Utils {
             return false;
         }
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        return openNewDocument(context, intent, null, null);
-    }
-
-    /**
-     * Tries to start a new activity to handle the given URL using {@link #openNewDocument}.
-     */
-    public static void launchWebsite(@Nullable Context context, @Nullable String url,
-            @NonNull String logTag, @NonNull String logItem) {
-        if (context == null || TextUtils.isEmpty(url)) {
-            return;
-        }
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        openNewDocument(context, intent, logTag, logItem);
+        return openNewDocument(context, intent);
     }
 
     /**
@@ -402,8 +400,7 @@ public class Utils {
      * <p>On versions before L, will instead clear the launched activity from the task stack when
      * returning to the app through the task switcher.
      */
-    public static boolean openNewDocument(@NonNull Context context, @NonNull Intent intent,
-            @Nullable String logTag, @Nullable String logItem) {
+    public static boolean openNewDocument(@NonNull Context context, @NonNull Intent intent) {
         // launch as a new document (separate entry in task switcher)
         // or on older versions: clear from task stack when returning to app
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -413,13 +410,7 @@ public class Utils {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         }
 
-        boolean handled = Utils.tryStartActivity(context, intent, true);
-
-        if (logTag != null && logItem != null) {
-            Utils.trackAction(context, logTag, logItem);
-        }
-
-        return handled;
+        return Utils.tryStartActivity(context, intent, true);
     }
 
     /**

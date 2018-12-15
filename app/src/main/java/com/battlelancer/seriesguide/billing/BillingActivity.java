@@ -93,8 +93,8 @@ public class BillingActivity extends BaseActivity {
 
         buttonPass = findViewById(R.id.buttonBillingGetPass);
         buttonPass.setOnClickListener(
-                v -> Utils.launchWebsite(BillingActivity.this, getString(R.string.url_x_pass),
-                        TAG, "X Pass"));
+                v -> Utils.launchWebsite(BillingActivity.this, getString(R.string.url_x_pass)
+                ));
 
         textViewHasUpgrade = findViewById(R.id.textViewBillingExisting);
 
@@ -102,8 +102,8 @@ public class BillingActivity extends BaseActivity {
         contentContainer = findViewById(R.id.containerBilling);
 
         findViewById(R.id.textViewBillingMoreInfo).setOnClickListener(
-                v -> Utils.launchWebsite(BillingActivity.this, getString(R.string.url_whypay),
-                        TAG, "WhyPayWebsite"));
+                v -> Utils.launchWebsite(BillingActivity.this, getString(R.string.url_whypay)
+                ));
     }
 
     @Override

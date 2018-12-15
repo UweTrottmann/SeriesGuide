@@ -288,28 +288,20 @@ public class ShowsFragment extends Fragment {
             isFilterFavorites = !isFilterFavorites;
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_FAVORITES, isFilterFavorites
             );
-
-            Utils.trackAction(getActivity(), TAG, "Filter Favorites");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_unwatched) {
             isFilterUnwatched = !isFilterUnwatched;
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, isFilterUnwatched
             );
-
-            Utils.trackAction(getActivity(), TAG, "Filter Unwatched");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_upcoming) {
             isFilterUpcoming = !isFilterUpcoming;
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UPCOMING, isFilterUpcoming
             );
-
-            Utils.trackAction(getActivity(), TAG, "Filter Upcoming");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_hidden) {
             isFilterHidden = !isFilterHidden;
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_HIDDEN, isFilterHidden);
-
-            Utils.trackAction(getActivity(), TAG, "Filter Hidden");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_remove) {
             isFilterFavorites = false;
@@ -329,8 +321,6 @@ public class ShowsFragment extends Fragment {
                     .apply();
             // refresh filter icon state
             getActivity().invalidateOptionsMenu();
-
-            Utils.trackAction(getActivity(), TAG, "Filter Removed");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_upcoming_range) {
             // yes, converting back to a string for comparison
@@ -357,34 +347,27 @@ public class ShowsFragment extends Fragment {
         } else if (itemId == R.id.menu_action_shows_sort_title) {
             sortOrderId = ShowsSortOrder.TITLE_ID;
             changeSort();
-            Utils.trackAction(getActivity(), TAG, "Sort Title");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_latest_episode) {
             sortOrderId = ShowsSortOrder.LATEST_EPISODE_ID;
             changeSort();
-            Utils.trackAction(getActivity(), TAG, "Sort Episode (latest)");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_oldest_episode) {
             sortOrderId = ShowsSortOrder.OLDEST_EPISODE_ID;
             changeSort();
-            Utils.trackAction(getActivity(), TAG, "Sort Episode (oldest)");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_last_watched) {
             sortOrderId = ShowsSortOrder.LAST_WATCHED_ID;
             changeSort();
-            Utils.trackAction(getActivity(), TAG, "Sort Last watched");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_remaining) {
             sortOrderId = ShowsSortOrder.LEAST_REMAINING_EPISODES_ID;
             changeSort();
-            Utils.trackAction(getActivity(), TAG, "Sort Remaining episodes");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_favorites) {
             isSortFavoritesFirst = !isSortFavoritesFirst;
             changeSortOrFilter(ShowsDistillationSettings.KEY_SORT_FAVORITES_FIRST,
                     isSortFavoritesFirst);
-
-            Utils.trackAction(getActivity(), TAG, "Sort Favorites");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_ignore_articles) {
             isSortIgnoreArticles = !isSortIgnoreArticles;
@@ -392,8 +375,6 @@ public class ShowsFragment extends Fragment {
                     isSortIgnoreArticles);
             // refresh all list widgets
             ListWidgetProvider.notifyDataChanged(getContext());
-
-            Utils.trackAction(getActivity(), TAG, "Sort Ignore Articles");
             return true;
         } else {
             return super.onOptionsItemSelected(item);

@@ -281,12 +281,10 @@ class SeasonsFragment : Fragment() {
                 when (item.itemId) {
                     CONTEXT_WATCHED_SHOW_ALL_ID -> {
                         onFlagShowWatched(true)
-                        Utils.trackAction(activity, TAG, "Flag all watched (inline)")
                         true
                     }
                     CONTEXT_WATCHED_SHOW_NONE_ID -> {
                         onFlagShowWatched(false)
-                        Utils.trackAction(activity, TAG, "Flag all unwatched (inline)")
                         true
                     }
                     else -> false
@@ -321,12 +319,10 @@ class SeasonsFragment : Fragment() {
                 when (item.itemId) {
                     CONTEXT_COLLECTED_SHOW_ALL_ID -> {
                         onFlagShowCollected(true)
-                        Utils.trackAction(activity, TAG, "Flag all collected (inline)")
                         true
                     }
                     CONTEXT_COLLECTED_SHOW_NONE_ID -> {
                         onFlagShowCollected(false)
-                        Utils.trackAction(activity, TAG, "Flag all uncollected (inline)")
                         true
                     }
                     else -> false

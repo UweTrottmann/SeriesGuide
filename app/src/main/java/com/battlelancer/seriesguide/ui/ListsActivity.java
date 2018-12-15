@@ -142,7 +142,7 @@ public class ListsActivity extends BaseTopActivity {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_lists_add) {
             AddListDialogFragment.show(getSupportFragmentManager());
-            Utils.trackAction(this, TAG, "Add list");
+            Utils.trackSelect(this, "Add list");
             return true;
         }
         if (itemId == R.id.menu_action_lists_search) {

@@ -217,23 +217,18 @@ public class CalendarFragment extends Fragment
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_calendar_onlyfavorites) {
             toggleFilterSetting(item, CalendarSettings.KEY_ONLY_FAVORITE_SHOWS);
-            Utils.trackAction(getActivity(), TAG, "Only favorite shows Toggle");
             return true;
         } else if (itemId == R.id.menu_action_calendar_onlycollected) {
             toggleFilterSetting(item, CalendarSettings.KEY_ONLY_COLLECTED);
-            Utils.trackAction(getActivity(), TAG, "Only calendar shows Toggle");
             return true;
         } else if (itemId == R.id.menu_action_calendar_nospecials) {
             toggleFilterSetting(item, DisplaySettings.KEY_HIDE_SPECIALS);
-            Utils.trackAction(getActivity(), TAG, "Hide specials Toggle");
             return true;
         } else if (itemId == R.id.menu_action_calendar_nowatched) {
             toggleFilterSetting(item, CalendarSettings.KEY_HIDE_WATCHED_EPISODES);
-            Utils.trackAction(getActivity(), TAG, "Hide watched Toggle");
             return true;
         } else if (itemId == R.id.menu_action_calendar_infinite) {
             toggleFilterSetting(item, CalendarSettings.KEY_INFINITE_SCROLLING);
-            Utils.trackAction(getActivity(), TAG, "Infinite Scrolling Toggle");
             return true;
         } else {
             return super.onOptionsItemSelected(item);

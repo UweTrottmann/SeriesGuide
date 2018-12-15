@@ -508,20 +508,20 @@ class ShowFragment : ScopedFragment() {
 
         // IMDb button
         val imdbId = showCursor.getString(ShowQuery.IMDBID)
-        ServiceUtils.setUpImdbButton(imdbId, buttonImdb, TAG)
+        ServiceUtils.setUpImdbButton(imdbId, buttonImdb)
 
         // TVDb button
         val tvdbLink = TvdbLinks.show(showSlug, showTvdbId)
-        ViewTools.openUriOnClick(buttonTvdb, tvdbLink, TAG, "TVDb")
+        ViewTools.openUriOnClick(buttonTvdb, tvdbLink)
         buttonTvdb.copyTextToClipboardOnLongClick(tvdbLink)
 
         // trakt button
         val traktLink = TraktTools.buildShowUrl(showTvdbId)
-        ViewTools.openUriOnClick(buttonTrakt, traktLink, TAG, "trakt")
+        ViewTools.openUriOnClick(buttonTrakt, traktLink)
         buttonTrakt.copyTextToClipboardOnLongClick(traktLink)
 
         // web search button
-        ServiceUtils.setUpWebSearchButton(showTitle, buttonWebSearch, TAG)
+        ServiceUtils.setUpWebSearchButton(showTitle, buttonWebSearch)
 
         // shout button
         buttonComments.setOnClickListener { v ->
@@ -533,7 +533,6 @@ class ShowFragment : ScopedFragment() {
                 )
             )
             Utils.startActivityWithAnimation(activity, i, v)
-            Utils.trackAction(v.context, TAG, "Comments")
         }
 
         // poster, full screen poster button
@@ -615,7 +614,7 @@ class ShowFragment : ScopedFragment() {
 
     private fun rateShow() {
         if (RateDialogFragment.newInstanceShow(showTvdbId).safeShow(context, fragmentManager)) {
-            Utils.trackAction(activity, TAG, "Rate (trakt)")
+            Utils.trackSelect(activity, "rate show")
         }
     }
 
@@ -666,7 +665,7 @@ class ShowFragment : ScopedFragment() {
         launch {
             shortcutLiveData.prepareAndPinShortcut()
             // Analytics
-            Utils.trackAction(activity, TAG, "Add to Homescreen")
+            Utils.trackSelect(activity, "add show to home screen")
         }
     }
 
@@ -676,7 +675,7 @@ class ShowFragment : ScopedFragment() {
         val currentShowTitle = showTitle
         if (currentShowSlug != null && currentShowTvdbId != 0 && currentShowTitle != null) {
             ShareUtils.shareShow(activity, currentShowSlug, currentShowTvdbId, currentShowTitle)
-            Utils.trackAction(activity, TAG, "Share")
+            Utils.trackShare(activity, "show")
         }
     }
 

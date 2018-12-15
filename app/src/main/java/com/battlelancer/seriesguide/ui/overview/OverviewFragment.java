@@ -306,10 +306,8 @@ public class OverviewFragment extends Fragment implements
             return true;
         } else if (itemId == R.id.menu_overview_manage_lists) {
             if (isEpisodeDataAvailable) {
-                if (ManageListsDialogFragment.show(getFragmentManager(),
-                        currentEpisodeCursor.getInt(EpisodeQuery._ID), ListItemTypes.EPISODE)) {
-                    Utils.trackAction(getActivity(), TAG, "Manage lists");
-                }
+                ManageListsDialogFragment.show(getFragmentManager(),
+                        currentEpisodeCursor.getInt(EpisodeQuery._ID), ListItemTypes.EPISODE);
             }
             return true;
         }
@@ -332,8 +330,6 @@ public class OverviewFragment extends Fragment implements
                 currentEpisodeCursor.getLong(EpisodeQuery.FIRST_RELEASE_MS),
                 showCursor.getInt(ShowQuery.SHOW_RUNTIME)
         );
-
-        Utils.trackAction(getActivity(), TAG, "Add to calendar");
     }
 
     @OnClick(R.id.imageButtonFavorite)
@@ -346,7 +342,6 @@ public class OverviewFragment extends Fragment implements
         boolean isFavorite = (Boolean) view.getTag();
         SgApp.getServicesComponent(getContext()).showTools()
                 .storeIsFavorite(showTvdbId, !isFavorite);
-        Utils.trackAction(getActivity(), TAG, "Toggle favorited");
     }
 
     @OnClick(R.id.buttonEpisodeCheckin)
@@ -357,7 +352,7 @@ public class OverviewFragment extends Fragment implements
         int episodeTvdbId = currentEpisodeCursor.getInt(EpisodeQuery._ID);
         // check in
         if (CheckInDialogFragment.show(getActivity(), getFragmentManager(), episodeTvdbId)) {
-            Utils.trackAction(getActivity(), TAG, "Check-In");
+            Utils.trackSelect(getActivity(), "check in episode");
         }
     }
 
@@ -366,7 +361,7 @@ public class OverviewFragment extends Fragment implements
         if (StreamingSearch.isNotConfigured(requireContext())) {
             showStreamingSearchConfigDialog();
         } else {
-            StreamingSearch.searchForShow(requireContext(), showTitle, TAG);
+            StreamingSearch.searchForShow(requireContext(), showTitle);
         }
     }
 
@@ -394,7 +389,7 @@ public class OverviewFragment extends Fragment implements
     void onButtonWatchedClick() {
         hasSetEpisodeWatched = true;
         changeEpisodeFlag(EpisodeFlags.WATCHED);
-        Utils.trackAction(getActivity(), TAG, "Flag Watched");
+        Utils.trackSelect(getActivity(), "set episode watched");
     }
 
     @OnClick(R.id.buttonEpisodeCollected)
@@ -407,14 +402,15 @@ public class OverviewFragment extends Fragment implements
         final boolean isCollected = currentEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1;
         EpisodeTools.episodeCollected(getContext(), showTvdbId,
                 currentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, !isCollected);
-
-        Utils.trackAction(getActivity(), TAG, "Toggle Collected");
+        if (!isCollected) {
+            Utils.trackSelect(requireContext(), "add episode to collection");
+        }
     }
 
     @OnClick(R.id.buttonEpisodeSkip)
     void onButtonSkipClicked() {
         changeEpisodeFlag(EpisodeFlags.SKIPPED);
-        Utils.trackAction(getActivity(), TAG, "Flag Skipped");
+        Utils.trackSelect(requireContext(), "skip episode");
     }
 
     private void changeEpisodeFlag(int episodeFlag) {
@@ -434,7 +430,7 @@ public class OverviewFragment extends Fragment implements
         }
         if (RateDialogFragment.newInstanceEpisode(currentEpisodeTvdbId)
                 .safeShow(getContext(), getFragmentManager())) {
-            Utils.trackAction(getActivity(), TAG, "Rate (trakt)");
+            Utils.trackSelect(requireContext(), "rate episode");
         }
     }
 
@@ -447,7 +443,6 @@ public class OverviewFragment extends Fragment implements
                     currentEpisodeTvdbId
             ));
             Utils.startActivityWithAnimation(getActivity(), i, v);
-            Utils.trackAction(v.getContext(), TAG, "Comments");
         }
     }
 
@@ -464,7 +459,7 @@ public class OverviewFragment extends Fragment implements
         ShareUtils.shareEpisode(getActivity(), showTvdbSlug, showTvdbId, seasonTvdbId,
                 currentEpisodeTvdbId, seasonNumber, episodeNumber, showTitle, episodeTitle);
 
-        Utils.trackAction(getActivity(), TAG, "Share");
+        Utils.trackShare(getActivity(), "episode");
     }
 
     public static class EpisodeLoader extends CursorLoader {
@@ -776,11 +771,11 @@ public class OverviewFragment extends Fragment implements
             // fall back to show IMDb id
             imdbId = showCursor.getString(ShowQuery.SHOW_IMDBID);
         }
-        ServiceUtils.setUpImdbButton(imdbId, buttonImdb, TAG);
+        ServiceUtils.setUpImdbButton(imdbId, buttonImdb);
 
         // trakt button
         String traktLink = TraktTools.buildEpisodeUrl(currentEpisodeTvdbId);
-        ViewTools.openUriOnClick(buttonTrakt, traktLink, TAG, "trakt");
+        ViewTools.openUriOnClick(buttonTrakt, traktLink);
         ClipboardTools.copyTextToClipboardOnLongClick(buttonTrakt, traktLink);
     }
 
@@ -811,7 +806,7 @@ public class OverviewFragment extends Fragment implements
         final int seasonTvdbId = currentEpisodeCursor.getInt(EpisodeQuery.SEASON_ID);
         String showTvdbSlug = showCursor.getString(ShowQuery.SHOW_SLUG);
         String tvdbLink = TvdbLinks.episode(showTvdbSlug, showTvdbId, seasonTvdbId, episodeTvdbId);
-        ViewTools.openUriOnClick(buttonTvdb, tvdbLink, TAG, "TVDb");
+        ViewTools.openUriOnClick(buttonTvdb, tvdbLink);
         ClipboardTools.copyTextToClipboardOnLongClick(buttonTvdb, tvdbLink);
     }
 

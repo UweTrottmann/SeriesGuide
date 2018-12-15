@@ -75,7 +75,7 @@ public class HelpActivity extends BaseActivity {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (url != null && !url.startsWith(getString(R.string.help_url))) {
                 // launch browser when leaving help page
-                Utils.launchWebsite(view.getContext(), url, TAG, "Non-help page");
+                Utils.launchWebsite(view.getContext(), url);
                 return true;
             }
             return false;
@@ -109,14 +109,13 @@ public class HelpActivity extends BaseActivity {
         }
         if (itemId == R.id.menu_action_help_send_feedback) {
             createFeedbackEmail();
-            Utils.trackAction(this, TAG, "Feedback");
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void openInBrowser() {
-        Utils.launchWebsite(this, getString(R.string.help_url), TAG, "Open In Browser");
+        Utils.launchWebsite(this, getString(R.string.help_url));
     }
 
     private void createFeedbackEmail() {

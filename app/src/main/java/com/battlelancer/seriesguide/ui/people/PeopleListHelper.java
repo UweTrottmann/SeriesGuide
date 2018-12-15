@@ -219,7 +219,6 @@ public class PeopleListHelper {
                 i.putExtra(PersonFragment.ARG_PERSON_TMDB_ID, personTmdbId);
             }
             Utils.startActivityWithAnimation(activity, i, v);
-            Utils.trackAction(v.getContext(), logCategory, "Cast or crew");
         }
     }
 
