@@ -55,37 +55,17 @@ public class AmazonBillingActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         buttonSubscribe.setEnabled(false);
-        buttonSubscribe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                subscribe();
-            }
-        });
+        buttonSubscribe.setOnClickListener(v -> subscribe());
 
         buttonGetPass.setEnabled(false);
-        buttonGetPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                purchasePass();
-            }
-        });
+        buttonGetPass.setOnClickListener(v -> purchasePass());
 
         dismissButton.setText(R.string.dismiss);
-        dismissButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        dismissButton.setOnClickListener(v -> dismiss());
         hiddenButton.setVisibility(View.GONE);
 
-        buttonMoreInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.launchWebsite(v.getContext(), getString(R.string.url_whypay),
-                        "AmazonBillingActivity", "WhyPayWebsite");
-            }
-        });
+        buttonMoreInfo.setOnClickListener(v -> Utils.launchWebsite(v.getContext(), getString(R.string.url_whypay),
+                "AmazonBillingActivity", "WhyPayWebsite"));
 
         progressBar.setVisibility(View.VISIBLE);
     }
