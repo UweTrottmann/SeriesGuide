@@ -197,7 +197,6 @@ dependencies {
 
     // Google Play Services
     // https://developers.google.com/android/guides/releases
-    implementation "com.google.android.gms:play-services-analytics:16.0.6"
     implementation "com.google.android.gms:play-services-auth:16.0.1"
 
     // App Engine
