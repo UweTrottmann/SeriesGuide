@@ -28,7 +28,6 @@ import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
-import com.battlelancer.seriesguide.Analytics;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.billing.BillingActivity;
@@ -36,7 +35,6 @@ import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
@@ -188,29 +186,6 @@ public class Utils {
         params.putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType);
         FirebaseAnalytics.getInstance(context)
                 .logEvent(FirebaseAnalytics.Event.SHARE, params);
-    }
-
-    /**
-     * Track a context menu event, e.g. when a context item is clicked.
-     */
-    public static void trackContextMenu(Context context, String category, String label) {
-        Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(category)
-                .setAction("Context Item")
-                .setLabel(label)
-                .build());
-    }
-
-    /**
-     * Track a generic click that does not fit {@link #trackAction(android.content.Context, String,
-     * String)} or {@link #trackContextMenu(android.content.Context, String, String)}.
-     */
-    public static void trackClick(Context context, String category, String label) {
-        Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(category)
-                .setAction("Click")
-                .setLabel(label)
-                .build());
     }
 
     /**

@@ -243,45 +243,46 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                 when (item.itemId) {
                     R.id.menu_action_episodes_watched -> {
                         onFlagEpisodeWatched(episodeTvdbId, episodeNumber, true)
-                        Utils.trackContextMenu(requireContext(), TAG, "Flag watched")
+                        Utils.trackSelect(requireContext(), "set episode watched")
                         true
                     }
                     R.id.menu_action_episodes_not_watched -> {
                         onFlagEpisodeWatched(episodeTvdbId, episodeNumber, false)
-                        Utils.trackContextMenu(requireContext(), TAG, "Flag unwatched")
                         true
                     }
                     R.id.menu_action_episodes_collection_add -> {
                         onFlagEpisodeCollected(episodeTvdbId, episodeNumber, true)
-                        Utils.trackContextMenu(requireContext(), TAG, "Flag collected")
+                        Utils.trackSelect(requireContext(), "add episode to collection")
                         true
                     }
                     R.id.menu_action_episodes_collection_remove -> {
                         onFlagEpisodeCollected(episodeTvdbId, episodeNumber, false)
-                        Utils.trackContextMenu(requireContext(), TAG, "Flag uncollected")
                         true
                     }
                     R.id.menu_action_episodes_skip -> {
                         onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, true)
-                        Utils.trackContextMenu(requireContext(), TAG, "Flag skipped")
+                        Utils.trackSelect(requireContext(), "skip episode")
                         true
                     }
                     R.id.menu_action_episodes_dont_skip -> {
                         onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, false)
-                        Utils.trackContextMenu(requireContext(), TAG, "Flag not skipped")
                         true
                     }
                     R.id.menu_action_episodes_watched_previous -> {
-                        EpisodeTools.episodeWatchedPrevious(requireContext(), showTvdbId,
-                                releaseTimeMs, episodeNumber)
-                        Utils.trackContextMenu(requireContext(), TAG, "Flag previously aired")
+                        EpisodeTools.episodeWatchedPrevious(
+                            requireContext(),
+                            showTvdbId,
+                            releaseTimeMs,
+                            episodeNumber
+                        )
                         true
                     }
                     R.id.menu_action_episodes_manage_lists -> {
-                        if (ManageListsDialogFragment.show(fragmentManager,
-                                        episodeTvdbId, ListItemTypes.EPISODE)) {
-                            Utils.trackContextMenu(requireContext(), TAG, "Manage lists")
-                        }
+                        ManageListsDialogFragment.show(
+                            fragmentManager,
+                            episodeTvdbId,
+                            ListItemTypes.EPISODE
+                        )
                         true
                     }
                     else -> false

@@ -214,14 +214,11 @@ public class ListsFragment extends Fragment {
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_action_lists_manage: {
-                    if (ManageListsDialogFragment.show(fragmentManager, itemTvdbId, itemType)) {
-                        Utils.trackContextMenu(context, TAG, "Manage lists");
-                    }
+                    ManageListsDialogFragment.show(fragmentManager, itemTvdbId, itemType);
                     return true;
                 }
                 case R.id.menu_action_lists_remove: {
                     ListsTools.removeListItem(context, itemId);
-                    Utils.trackContextMenu(context, TAG, "Remove from list");
                     return true;
                 }
             }

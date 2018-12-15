@@ -11,5 +11,6 @@ class AnalyticsEvents {
         const val BEAM_ERROR = "beam_error"
 
         const val FEEDBACK = "feedback"
+        const val GET_STARTED = "get_started"
     }
 }
