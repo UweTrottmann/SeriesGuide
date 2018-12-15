@@ -18,6 +18,7 @@ import android.widget.AutoCompleteTextView
 import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.battlelancer.seriesguide.AnalyticsEvents
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.adapters.TabStripAdapter
 import com.battlelancer.seriesguide.settings.SearchSettings
@@ -219,7 +220,10 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
 
         val rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
         if (rawMsgs.isNullOrEmpty()) {
-            Utils.trackCustomEvent(this, "Beam", "Failed", "Data null or zero length")
+            Utils.trackError(
+                this, AnalyticsEvents.BEAM_ERROR, "Get messages",
+                "Data null or zero length"
+            )
             return  // corrupted or invalid data
         }
 
@@ -230,8 +234,8 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
         try {
             showTvdbId = Integer.valueOf(String(msg.records[0].payload))
         } catch (e: NumberFormatException) {
-            Utils.trackCustomEvent(
-                this, "Beam", "Failed",
+            Utils.trackError(
+                this, AnalyticsEvents.BEAM_ERROR, "Parse payload",
                 "NumberFormatException: " + e.message
             )
             return
@@ -239,7 +243,6 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
 
         // display add dialog
         AddShowDialogFragment.show(this, supportFragmentManager, showTvdbId)
-        Utils.trackCustomEvent(this, "Beam", "Success", null)
     }
 
     private fun handleSearchIntent(intent: Intent?) {

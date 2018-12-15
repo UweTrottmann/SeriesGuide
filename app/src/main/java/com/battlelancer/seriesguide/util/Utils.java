@@ -171,21 +171,6 @@ public class Utils {
     }
 
     /**
-     * Track a custom event that does not fit the {@link #trackAction(android.content.Context,
-     * String, String)}, {@link #trackContextMenu(android.content.Context, String, String)} or
-     * {@link #trackClick(android.content.Context, String, String)} trackers. Commonly important
-     * status information.
-     */
-    public static void trackCustomEvent(@NonNull Context context, String category, String action,
-            String label) {
-        Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(category)
-                .setAction(action)
-                .setLabel(label)
-                .build());
-    }
-
-    /**
      * Track a selection event.
      */
     public static void trackSelect(Context context, String method) {
@@ -228,26 +213,45 @@ public class Utils {
                 .build());
     }
 
-    public static void trackFailedRequest(Context context, String category, String action,
-            int code, String message) {
-        // log like "action: 404 not found"
-        Timber.tag(category);
-        Timber.e("%s: %s %s", action, code, message);
-
-        Utils.trackCustomEvent(context, category, action, code + " " + message);
+    /**
+     * Track something gone wrong.
+     */
+    public static void trackError(@NonNull Context context, String eventName, String action,
+            String message) {
+        Bundle params = new Bundle();
+        params.putString("action", action);
+        params.putString("message", message);
+        FirebaseAnalytics.getInstance(context).logEvent(eventName, params);
     }
 
-    public static void trackFailedRequest(Context context, String category, String action,
+    /**
+     * Shortcut for {@link #trackError(Context, String, String, String) trackError(context, eventName, action, code + " " + message)}
+     * plus error log.
+     */
+    public static void trackFailedRequest(Context context, String eventName, String action,
+            int code, String message) {
+        // log like "action: 404 not found"
+        Timber.tag(eventName);
+        Timber.e("%s: %s %s", action, code, message);
+
+        trackError(context, eventName, action, code + " " + message);
+    }
+
+    /**
+     * Shortcut for {@link #trackError(Context, String, String, String) trackError(context, eventName, action, throwable.getClass().getSimpleName())}
+     * plus error log.
+     */
+    public static void trackFailedRequest(Context context, String eventName, String action,
             @NonNull Throwable throwable) {
         // log like "action: Unable to resolve host"
-        Timber.tag(category);
+        Timber.tag(eventName);
         Timber.e(throwable, "%s: %s", action, throwable.getMessage());
 
         if (throwable instanceof UnknownHostException /* mostly devices loosing connection */) {
             return; // do not track
         }
         // for tracking only send exception name
-        Utils.trackCustomEvent(context, category, action, throwable.getClass().getSimpleName());
+        trackError(context, eventName, action, throwable.getClass().getSimpleName());
     }
 
     /**

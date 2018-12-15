@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import com.battlelancer.seriesguide.AnalyticsEvents;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
@@ -41,8 +42,6 @@ import timber.log.Timber;
 @Singleton // needs global state for lastSignInCheck + to avoid rebuilding services
 public class HexagonTools {
 
-    private static final String HEXAGON_ERROR_CATEGORY = "Hexagon Error";
-    private static final String SIGN_IN_ERROR_CATEGORY = "Sign-in Error";
     private static final String ACTION_SILENT_SIGN_IN = "silent sign-in";
     private static final JsonFactory JSON_FACTORY = new AndroidJsonFactory();
     private static final HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
@@ -291,13 +290,13 @@ public class HexagonTools {
     public static void trackFailedRequest(Context context, String action, @NonNull IOException e) {
         if (e instanceof HttpResponseException) {
             HttpResponseException responseException = (HttpResponseException) e;
-            Utils.trackCustomEvent(context, HEXAGON_ERROR_CATEGORY, action,
+            Utils.trackError(context, AnalyticsEvents.HEXAGON_ERROR, action,
                     responseException.getStatusCode() + " " + responseException.getStatusMessage());
             // log like "action: 404 not found"
             Timber.e("%s: %s %s", action, responseException.getStatusCode(),
                     responseException.getStatusMessage());
         } else {
-            Utils.trackFailedRequest(context, HEXAGON_ERROR_CATEGORY, action, e);
+            Utils.trackFailedRequest(context, AnalyticsEvents.HEXAGON_ERROR, action, e);
         }
     }
 
@@ -313,7 +312,7 @@ public class HexagonTools {
     }
 
     public void trackSignInFailure(String action, String failureMessage) {
-        Utils.trackCustomEvent(context, SIGN_IN_ERROR_CATEGORY, action, failureMessage);
+        Utils.trackError(context, AnalyticsEvents.SIGN_IN_ERROR, action, failureMessage);
         Timber.e("%s: %s", action, failureMessage);
     }
 }

@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Context;
 import androidx.annotation.NonNull;
+import com.battlelancer.seriesguide.AnalyticsEvents;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt5.TraktV2;
@@ -15,8 +16,6 @@ import retrofit2.Response;
  * TraktCredentials} to store user credentials.
  */
 public class SgTrakt extends TraktV2 {
-
-    private static String TAG_TRAKT_ERROR = "trakt Error";
 
     private final Context context;
     private final OkHttpClient okHttpClient;
@@ -73,18 +72,19 @@ public class SgTrakt extends TraktV2 {
         if (error != null && error.message != null) {
             message += ", " + error.message;
         }
-        Utils.trackFailedRequest(context, TAG_TRAKT_ERROR, action, response.code(), message);
+        Utils.trackFailedRequest(context, AnalyticsEvents.TRAKT_ERROR, action,
+                response.code(), message);
     }
 
     public static void trackFailedRequest(Context context, String action,
             retrofit2.Response response) {
-        Utils.trackFailedRequest(context, TAG_TRAKT_ERROR, action, response.code(),
-                response.message());
+        Utils.trackFailedRequest(context, AnalyticsEvents.TRAKT_ERROR, action,
+                response.code(), response.message());
     }
 
     public static void trackFailedRequest(Context context, String action,
             @NonNull Throwable throwable) {
-        Utils.trackFailedRequest(context, TAG_TRAKT_ERROR, action, throwable);
+        Utils.trackFailedRequest(context, AnalyticsEvents.TRAKT_ERROR, action, throwable);
     }
 
     /**

@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -291,8 +290,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             if (Utils.hasAccessToX(getActivity())) {
                 enabledPref.setOnPreferenceChangeListener((preference, newValue) -> {
                     boolean isChecked = (boolean) newValue;
-                    Utils.trackCustomEvent(getActivity(), TAG, "Notifications",
-                            isChecked ? "Enable" : "Disable");
 
                     thresholdPref.setEnabled(isChecked);
                     selectionPref.setEnabled(isChecked);
@@ -340,24 +337,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         }
 
         private void setupBasicSettings() {
-            // No aired episodes
-            findPreference(DisplaySettings.KEY_NO_RELEASED_EPISODES).setOnPreferenceClickListener(
-                    preference -> {
-                        boolean isChecked = ((CheckBoxPreference) preference).isChecked();
-                        Utils.trackCustomEvent(getActivity(), TAG, "OnlyFutureEpisodes",
-                                isChecked ? "Enable" : "Disable");
-                        return false;
-                    });
-
-            // No special episodes
-            findPreference(DisplaySettings.KEY_HIDE_SPECIALS).setOnPreferenceClickListener(
-                    preference -> {
-                        boolean isChecked = ((CheckBoxPreference) preference).isChecked();
-                        Utils.trackCustomEvent(getActivity(), TAG, "OnlySeasonEpisodes",
-                                isChecked ? "Enable" : "Disable");
-                        return false;
-                    });
-
             // show currently set values for some prefs
             updateStreamSearchServiceSummary(findPreference(StreamingSearch.KEY_SETTING_SERVICE));
             setListPreferenceSummary(

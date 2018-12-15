@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.sync;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.text.format.DateUtils;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -11,7 +12,7 @@ import com.battlelancer.seriesguide.sync.SyncOptions.SyncType;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.Utils;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import dagger.Lazy;
 import java.net.SocketTimeoutException;
@@ -164,7 +165,10 @@ public class TvdbSync {
 
         int showCount = shows.getCount();
         if (showCount > 0 && AppSettings.shouldReportStats(context)) {
-            Utils.trackCustomEvent(context, "Statistics", "Shows", String.valueOf(showCount));
+            Bundle params = new Bundle();
+            params.putLong(FirebaseAnalytics.Param.SCORE, showCount);
+            FirebaseAnalytics.getInstance(context)
+                    .logEvent(FirebaseAnalytics.Event.POST_SCORE, params);
         }
 
         shows.close();

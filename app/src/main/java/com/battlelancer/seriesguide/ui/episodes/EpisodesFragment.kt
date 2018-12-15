@@ -333,8 +333,6 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                 listViewEpisodes.getItemIdAtPosition(listViewEpisodes.checkedItemPosition)
         LoaderManager.getInstance(this)
             .restartLoader(EpisodesActivity.EPISODES_LOADER_ID, null, episodesLoaderCallbacks)
-
-        Utils.trackCustomEvent(requireActivity(), TAG, "Sorting", sortOrder.name)
     }
 
     /**

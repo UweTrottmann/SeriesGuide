@@ -18,8 +18,6 @@ import timber.log.Timber;
  */
 public class AnalyticsTree extends Timber.DebugTree {
 
-    public static final String CATEGORY_THETVDB_ERROR = "TheTVDB Error";
-
     private final Context context;
 
     public AnalyticsTree(Context context) {
@@ -58,11 +56,11 @@ public class AnalyticsTree extends Timber.DebugTree {
                     if (cause instanceof UnknownHostException) {
                         return; // do not track
                     }
-                    Utils.trackCustomEvent(context, CATEGORY_THETVDB_ERROR,
+                    Utils.trackError(context, AnalyticsEvents.THETVDB_ERROR,
                             tag + ": " + message,
                             e.getMessage() + ": " + cause.getClass().getSimpleName());
                 } else {
-                    Utils.trackCustomEvent(context, CATEGORY_THETVDB_ERROR,
+                    Utils.trackError(context, AnalyticsEvents.THETVDB_ERROR,
                             tag + ": " + message,
                             e.getMessage());
                 }
