@@ -207,6 +207,19 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         }
 
         private void setupRootSettings() {
+            // GA opt-out
+            findPreference(AppSettings.KEY_GOOGLEANALYTICS).setOnPreferenceChangeListener(
+                    (preference, newValue) -> {
+                        if (preference.getKey().equals(AppSettings.KEY_GOOGLEANALYTICS)) {
+                            boolean isOptOut = (Boolean) newValue;
+                            // note: also set during app setup
+                            FirebaseAnalytics.getInstance(getActivity())
+                                    .setAnalyticsCollectionEnabled(!isOptOut);
+                            return true;
+                        }
+                        return false;
+                    });
+
             // display version as About summary
             findPreference(KEY_ABOUT).setSummary(Utils.getVersionString(getActivity()));
         }
@@ -357,19 +370,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                         }
 
                         return true;
-                    });
-
-            // GA opt-out
-            findPreference(AppSettings.KEY_GOOGLEANALYTICS).setOnPreferenceChangeListener(
-                    (preference, newValue) -> {
-                        if (preference.getKey().equals(AppSettings.KEY_GOOGLEANALYTICS)) {
-                            boolean isOptOut = (Boolean) newValue;
-                            // note: also set during app setup
-                            FirebaseAnalytics.getInstance(getActivity())
-                                    .setAnalyticsCollectionEnabled(!isOptOut);
-                            return true;
-                        }
-                        return false;
                     });
         }
 

@@ -65,6 +65,12 @@
 
     <PreferenceCategory android:title="@string/pref_other">
 
+        <SwitchPreference
+            android:defaultValue="True"
+            android:key="enableGAnalytics"
+            android:summary="@string/pref_ganalyticssummary"
+            android:title="@string/analytics" />
+
         <Preference
             android:key="screen_basic"
             android:title="@string/prefs_category_basic" />
