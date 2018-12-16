@@ -69,6 +69,8 @@ public class AboutSettingsFragment extends Fragment {
     private void onWebsiteButtonClick(@IdRes int viewId) {
         if (viewId == R.id.buttonAboutWebsite) {
             viewUrl(R.string.url_website);
+        } else if (viewId == R.id.buttonAboutPrivacy) {
+            viewUrl(R.string.url_privacy);
         } else if (viewId == R.id.buttonAboutTvdbTerms) {
             viewUrl(R.string.url_terms_tvdb);
         } else if (viewId == R.id.buttonAboutCreativeCommons) {

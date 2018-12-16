@@ -344,6 +344,7 @@
         <item quantity="other">%d 分前</item>
     </plurals>
     <!-- About screen -->
+    <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">このアプリは、TheTVDB により CC BY-NC 4.0 の下でライセンスされるデータと画像を使用します。</string>
     <string name="licence_themoviedb">この製品は TMDb API を使用していますが、TMDb による承認または認定はされていません。</string>
     <string name="licence_trakt">このアプリは Trakt の情報や画像を使用します。</string>

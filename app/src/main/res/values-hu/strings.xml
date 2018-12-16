@@ -355,6 +355,7 @@
         <item quantity="other">%d perccel korábban</item>
     </plurals>
     <!-- About screen -->
+    <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">Ez az alkalmazás a TheTVDB, CC BY-NC 4.0 licenc alatt álló adatait és képeit használja.</string>
     <string name="licence_themoviedb">Ez a termék a TMDb API-t használja, de a TMDb hozzájárulása vagy minősítése nélkül.</string>
     <string name="licence_trakt">Ez az applikáció a trakt adatait és képeit használja.</string>

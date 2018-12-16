@@ -344,6 +344,7 @@
         <item quantity="other">%d นาทีก่อนหน้า</item>
     </plurals>
     <!-- About screen -->
+    <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">แอปนี้ใช้ข้อมูลและรูปภาพจาก TheTVDB สงวนสิทธิ์ภายใต้ CC BY-NC 4.0</string>
     <string name="licence_themoviedb">ผลิตภัณฑ์นี้ใช้ API ของ TMDb แต่ไม่ได้รับการรับรองโดย TMDb</string>
     <string name="licence_trakt">แอปนี้ใช้ข้อมูลและรูปภาพจาก trakt</string>
