@@ -11,6 +11,7 @@
     <string name="help">உதவி</string>
     <string name="help_and_feedback">உதவி &amp; பின்னூட்டம்</string>
     <string name="drawer_open">திறந்த ஊடாடுதல் drawer</string>
+    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">காண்பி</string>
     <string name="episode">அத்தியாயத்தில்</string>

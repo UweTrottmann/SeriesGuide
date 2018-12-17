@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
@@ -179,6 +180,10 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 accountClickListener);
         textViewHeaderUserCloud = headerView.findViewById(R.id.textViewDrawerUserCloud);
         textViewHeaderUserTrakt = headerView.findViewById(R.id.textViewDrawerUserTrakt);
+        // show no more update notice
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            headerView.findViewById(R.id.textViewDrawerNoMoreUpdates).setVisibility(View.VISIBLE);
+        }
 
         // setup nav drawer items
         navigationView.inflateMenu(R.menu.menu_drawer);

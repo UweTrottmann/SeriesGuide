@@ -11,6 +11,7 @@
     <string name="help">Ohjeet</string>
     <string name="help_and_feedback">Ohje ja palaute</string>
     <string name="drawer_open">Avaa vetopaneeli</string>
+    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">Ohjelma</string>
     <string name="episode">Jakso</string>

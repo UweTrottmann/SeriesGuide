@@ -11,6 +11,7 @@
     <string name="help">Hilfe</string>
     <string name="help_and_feedback">Hilfe &amp; Feedback</string>
     <string name="drawer_open">Navigation öffnen</string>
+    <string name="no_more_updates">SeriesGuide wird für diese Version von Android keine Updates mehr erhalten.</string>
     <!-- Media items -->
     <string name="show">Serie</string>
     <string name="episode">Folge</string>

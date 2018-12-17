@@ -11,6 +11,7 @@
     <string name="help">說明</string>
     <string name="help_and_feedback">幫助與意見反饋</string>
     <string name="drawer_open">開啟側邊選單</string>
+    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">節目</string>
     <string name="episode">集數</string>

@@ -11,6 +11,7 @@
     <string name="help">Помоћ</string>
     <string name="help_and_feedback">Помоћ &amp; повратне информације</string>
     <string name="drawer_open">Отвори панел за навигацију</string>
+    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">Серија</string>
     <string name="episode">Епизода</string>
