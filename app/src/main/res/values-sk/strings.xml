@@ -377,7 +377,7 @@
         <item quantity="other">%d minút pred</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy">Ochrana osobných údajov</string>
     <string name="licence_tvdb">Táto aplikácia využíva dáta a obrázky z TheTVDB licencované pod CC BY-NC 4.0.</string>
     <string name="licence_themoviedb">Tento produkt používa TMDb API, ale nie je uznaný či certifikovaný TMDb.</string>
     <string name="licence_trakt">Táto aplikácia používa dáta a obrázky z trakt.</string>
