@@ -211,10 +211,10 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             findPreference(AppSettings.KEY_GOOGLEANALYTICS).setOnPreferenceChangeListener(
                     (preference, newValue) -> {
                         if (preference.getKey().equals(AppSettings.KEY_GOOGLEANALYTICS)) {
-                            boolean isOptOut = (Boolean) newValue;
+                            boolean isGaEnabled = (Boolean) newValue;
                             // note: also set during app setup
                             FirebaseAnalytics.getInstance(getActivity())
-                                    .setAnalyticsCollectionEnabled(!isOptOut);
+                                    .setAnalyticsCollectionEnabled(isGaEnabled);
                             return true;
                         }
                         return false;

@@ -147,7 +147,7 @@ class SgApp : Application() {
         }
         // Initialize and ensure Firebase Analytics opt-out (also toggled in settings)
         FirebaseAnalytics.getInstance(this)
-            .setAnalyticsCollectionEnabled(!AppSettings.isGaAppOptOut(this))
+            .setAnalyticsCollectionEnabled(AppSettings.isGaEnabled(this))
 
         if (BuildConfig.DEBUG) {
             // debug drawer logging

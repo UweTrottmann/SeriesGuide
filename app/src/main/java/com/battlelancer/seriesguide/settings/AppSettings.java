@@ -42,9 +42,9 @@ public class AppSettings {
         return lastVersionCode;
     }
 
-    public static boolean isGaAppOptOut(Context context) {
+    public static boolean isGaEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_GOOGLEANALYTICS, false);
+                .getBoolean(KEY_GOOGLEANALYTICS, true);
     }
 
     /**
