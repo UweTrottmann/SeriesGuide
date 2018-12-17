@@ -28,7 +28,6 @@ import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
-import com.battlelancer.seriesguide.Analytics;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.billing.BillingActivity;
@@ -36,7 +35,7 @@ import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
-import com.google.android.gms.analytics.HitBuilders;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import java.net.UnknownHostException;
@@ -170,74 +169,64 @@ public class Utils {
     }
 
     /**
-     * Track a custom event that does not fit the {@link #trackAction(android.content.Context,
-     * String, String)}, {@link #trackContextMenu(android.content.Context, String, String)} or
-     * {@link #trackClick(android.content.Context, String, String)} trackers. Commonly important
-     * status information.
+     * Track a selection event.
      */
-    public static void trackCustomEvent(@NonNull Context context, String category, String action,
-            String label) {
-        Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(category)
-                .setAction(action)
-                .setLabel(label)
-                .build());
+    public static void trackSelect(Context context, String method) {
+        Bundle params = new Bundle();
+        params.putString(FirebaseAnalytics.Param.METHOD, method);
+        FirebaseAnalytics.getInstance(context)
+                .logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
     }
 
     /**
-     * Track an action event, e.g. when an action item is clicked.
+     * Track a share event.
      */
-    public static void trackAction(Context context, String category, String label) {
-        Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(category)
-                .setAction("Action Item")
-                .setLabel(label)
-                .build());
+    public static void trackShare(Context context, String contentType) {
+        Bundle params = new Bundle();
+        params.putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType);
+        FirebaseAnalytics.getInstance(context)
+                .logEvent(FirebaseAnalytics.Event.SHARE, params);
     }
 
     /**
-     * Track a context menu event, e.g. when a context item is clicked.
+     * Track something gone wrong.
      */
-    public static void trackContextMenu(Context context, String category, String label) {
-        Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(category)
-                .setAction("Context Item")
-                .setLabel(label)
-                .build());
+    public static void trackError(@NonNull Context context, String eventName, String action,
+            String message) {
+        Bundle params = new Bundle();
+        params.putString("action", action);
+        params.putString("message", message);
+        FirebaseAnalytics.getInstance(context).logEvent(eventName, params);
     }
 
     /**
-     * Track a generic click that does not fit {@link #trackAction(android.content.Context, String,
-     * String)} or {@link #trackContextMenu(android.content.Context, String, String)}.
+     * Shortcut for {@link #trackError(Context, String, String, String) trackError(context, eventName, action, code + " " + message)}
+     * plus error log.
      */
-    public static void trackClick(Context context, String category, String label) {
-        Analytics.getTracker(context).send(new HitBuilders.EventBuilder()
-                .setCategory(category)
-                .setAction("Click")
-                .setLabel(label)
-                .build());
-    }
-
-    public static void trackFailedRequest(Context context, String category, String action,
+    public static void trackFailedRequest(Context context, String eventName, String action,
             int code, String message) {
         // log like "action: 404 not found"
-        Timber.tag(category);
+        Timber.tag(eventName);
         Timber.e("%s: %s %s", action, code, message);
 
-        Utils.trackCustomEvent(context, category, action, code + " " + message);
+        trackError(context, eventName, action, code + " " + message);
     }
 
-    public static void trackFailedRequest(Context context, String category, String action,
+    /**
+     * Shortcut for {@link #trackError(Context, String, String, String) trackError(context, eventName, action, throwable.getClass().getSimpleName())}
+     * plus error log.
+     */
+    public static void trackFailedRequest(Context context, String eventName, String action,
             @NonNull Throwable throwable) {
         // log like "action: Unable to resolve host"
-        Timber.tag(category);
+        Timber.tag(eventName);
         Timber.e(throwable, "%s: %s", action, throwable.getMessage());
 
         if (throwable instanceof UnknownHostException /* mostly devices loosing connection */) {
             return; // do not track
         }
         // for tracking only send exception name
-        Utils.trackCustomEvent(context, category, action, throwable.getClass().getSimpleName());
+        trackError(context, eventName, action, throwable.getClass().getSimpleName());
     }
 
     /**
@@ -380,19 +369,7 @@ public class Utils {
             return false;
         }
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        return openNewDocument(context, intent, null, null);
-    }
-
-    /**
-     * Tries to start a new activity to handle the given URL using {@link #openNewDocument}.
-     */
-    public static void launchWebsite(@Nullable Context context, @Nullable String url,
-            @NonNull String logTag, @NonNull String logItem) {
-        if (context == null || TextUtils.isEmpty(url)) {
-            return;
-        }
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        openNewDocument(context, intent, logTag, logItem);
+        return openNewDocument(context, intent);
     }
 
     /**
@@ -402,8 +379,7 @@ public class Utils {
      * <p>On versions before L, will instead clear the launched activity from the task stack when
      * returning to the app through the task switcher.
      */
-    public static boolean openNewDocument(@NonNull Context context, @NonNull Intent intent,
-            @Nullable String logTag, @Nullable String logItem) {
+    public static boolean openNewDocument(@NonNull Context context, @NonNull Intent intent) {
         // launch as a new document (separate entry in task switcher)
         // or on older versions: clear from task stack when returning to app
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -413,13 +389,7 @@ public class Utils {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         }
 
-        boolean handled = Utils.tryStartActivity(context, intent, true);
-
-        if (logTag != null && logItem != null) {
-            Utils.trackAction(context, logTag, logItem);
-        }
-
-        return handled;
+        return Utils.tryStartActivity(context, intent, true);
     }
 
     /**

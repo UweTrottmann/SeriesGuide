@@ -377,6 +377,7 @@
         <item quantity="other">За %d хвилин</item>
     </plurals>
     <!-- About screen -->
+    <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">Це додаток використовує дані та зображення ха допомогою TheTVDB з ліцензією CC BY-NC 4.0.</string>
     <string name="licence_themoviedb">Цей продукт використовує TMDb API, але не підтримуваний та сертифікований TMDb.</string>
     <string name="licence_trakt">Ця програма використовує дані та зображення сервіса trakt.</string>

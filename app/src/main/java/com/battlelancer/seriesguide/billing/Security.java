@@ -36,7 +36,6 @@ import timber.log.Timber;
  * purchases as verified.
  */
 public class Security {
-    private static final String TAG = "IABUtil/Security";
 
     private static final String KEY_FACTORY_ALGORITHM = "RSA";
     private static final String SIGNATURE_ALGORITHM = "SHA1withRSA";
@@ -44,7 +43,7 @@ public class Security {
     /**
      * Verifies that the data was signed with the given signature, and returns
      * the verified purchase. The data is in JSON format and signed
-     * with a private key. The data also contains the {@link PurchaseState}
+     * with a private key. The data also contains the PurchaseState
      * and product ID of the purchase.
      * @param base64PublicKey the base64-encoded public key to use for verifying.
      * @param signedData the signed JSON string (signed, not encrypted)

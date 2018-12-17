@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.tmdbapi;
 
 import android.content.Context;
 import androidx.annotation.NonNull;
+import com.battlelancer.seriesguide.AnalyticsEvents;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.tmdb2.Tmdb;
 import okhttp3.OkHttpClient;
@@ -11,8 +12,6 @@ import retrofit2.Response;
  * Custom {@link Tmdb} which uses the app OkHttp instance.
  */
 public class SgTmdb extends Tmdb {
-
-    private static final String TAG_TMDB_ERROR = "TMDB Error";
 
     private final OkHttpClient okHttpClient;
 
@@ -32,12 +31,12 @@ public class SgTmdb extends Tmdb {
     }
 
     public static void trackFailedRequest(Context context, String action, Response response) {
-        Utils.trackFailedRequest(context, TAG_TMDB_ERROR, action, response.code(),
+        Utils.trackFailedRequest(context, AnalyticsEvents.TMDB_ERROR, action, response.code(),
                 response.message());
     }
 
     public static void trackFailedRequest(Context context, String action,
             @NonNull Throwable throwable) {
-        Utils.trackFailedRequest(context, TAG_TMDB_ERROR, action, throwable);
+        Utils.trackFailedRequest(context, AnalyticsEvents.TMDB_ERROR, action, throwable);
     }
 }

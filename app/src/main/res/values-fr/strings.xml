@@ -355,6 +355,7 @@
         <item quantity="other">%d minutes avant</item>
     </plurals>
     <!-- About screen -->
+    <string name="privacy_policy">Règles de confidentialité</string>
     <string name="licence_tvdb">Cette application utilise des données et images provenant de TheTVDB sous license CC BY-NC 4.0.</string>
     <string name="licence_themoviedb">Ce produit utilise l\'API TMDb mais n\'est pas approuvé ou certifié par TMDb.</string>
     <string name="licence_trakt">Cette application utilise des données et images provenant de trakt.</string>

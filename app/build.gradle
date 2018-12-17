@@ -161,9 +161,6 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
     kapt 'org.greenrobot:eventbus-annotation-processor:3.1.1'
 
-    implementation("com.crashlytics.sdk.android:crashlytics:${versions.crashlytics}@aar") {
-        transitive = true
-    }
     implementation 'com.google.flatbuffers:flatbuffers-java:1.9.0'
     implementation 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     implementation "com.google.code.gson:gson:${versions.gson}"
@@ -192,9 +189,14 @@ dependencies {
     implementation "io.palaima.debugdrawer:debugdrawer-actions:$debugDrawerVersion"
     implementation "io.palaima.debugdrawer:debugdrawer-timber:$debugDrawerVersion"
 
+    // Firebase Analytics and Crashlytics
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation("com.crashlytics.sdk.android:crashlytics:${versions.crashlytics}@aar") {
+        transitive = true
+    }
+
     // Google Play Services
     // https://developers.google.com/android/guides/releases
-    implementation "com.google.android.gms:play-services-analytics:16.0.6"
     implementation "com.google.android.gms:play-services-auth:16.0.1"
 
     // App Engine
@@ -229,6 +231,13 @@ dependencies {
     testImplementation "androidx.annotation:annotation:${versions.annotation}"
     testImplementation "com.google.truth:truth:${versions.truth}"
 
+}
+
+if (file('google-services.json').exists()) {
+    // need to apply after dependencies block
+    apply plugin: 'com.google.gms.google-services'
+} else {
+    println('WARNING: google-services.json missing, Firebase Analytics will not work.')
 }
 
 endpointsClient {

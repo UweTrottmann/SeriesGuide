@@ -58,8 +58,6 @@ import org.greenrobot.eventbus.EventBus;
 public class ShowsActivity extends BaseTopActivity implements
         AddShowDialogFragment.OnAddShowListener {
 
-    protected static final String TAG = "Shows";
-
     public static final int SHOWS_LOADER_ID = 100;
     public static final int UPCOMING_LOADER_ID = 101;
     public static final int RECENT_LOADER_ID = 102;
@@ -212,18 +210,14 @@ public class ShowsActivity extends BaseTopActivity implements
 
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
-        argsUpcoming.putString(CalendarFragment.InitBundle.TYPE,
-                CalendarType.UPCOMING);
-        argsUpcoming.putString(CalendarFragment.InitBundle.ANALYTICS_TAG, "Upcoming");
+        argsUpcoming.putString(CalendarFragment.InitBundle.TYPE, CalendarType.UPCOMING);
         argsUpcoming.putInt(CalendarFragment.InitBundle.LOADER_ID, UPCOMING_LOADER_ID);
         argsUpcoming.putInt(CalendarFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
         tabsAdapter.addTab(R.string.upcoming, CalendarFragment.class, argsUpcoming);
 
         // recent tab
         final Bundle argsRecent = new Bundle();
-        argsRecent
-                .putString(CalendarFragment.InitBundle.TYPE, CalendarType.RECENT);
-        argsRecent.putString(CalendarFragment.InitBundle.ANALYTICS_TAG, "Recent");
+        argsRecent.putString(CalendarFragment.InitBundle.TYPE, CalendarType.RECENT);
         argsRecent.putInt(CalendarFragment.InitBundle.LOADER_ID, RECENT_LOADER_ID);
         argsRecent.putInt(CalendarFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
         tabsAdapter.addTab(R.string.recent, CalendarFragment.class, argsRecent);
@@ -336,13 +330,9 @@ public class ShowsActivity extends BaseTopActivity implements
             return true;
         } else if (itemId == R.id.menu_update) {
             SgSyncAdapter.requestSyncDeltaImmediate(this, true);
-            Utils.trackAction(this, TAG, "Update (outdated)");
-
             return true;
         } else if (itemId == R.id.menu_fullupdate) {
             SgSyncAdapter.requestSyncFullImmediate(this, true);
-            Utils.trackAction(this, TAG, "Update (all)");
-
             return true;
         } else {
             return super.onOptionsItemSelected(item);

@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -60,7 +59,7 @@ import com.battlelancer.seriesguide.util.DialogTools;
 import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
-import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -76,8 +75,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
     }
 
     private static final String EXTRA_SETTINGS_SCREEN = "settingsScreen";
-
-    private static final String TAG = "Settings";
 
     // Preference keys
     private static final String KEY_CLEAR_CACHE = "clearCache";
@@ -210,6 +207,19 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         }
 
         private void setupRootSettings() {
+            // GA opt-out
+            findPreference(AppSettings.KEY_GOOGLEANALYTICS).setOnPreferenceChangeListener(
+                    (preference, newValue) -> {
+                        if (preference.getKey().equals(AppSettings.KEY_GOOGLEANALYTICS)) {
+                            boolean isOptOut = (Boolean) newValue;
+                            // note: also set during app setup
+                            FirebaseAnalytics.getInstance(getActivity())
+                                    .setAnalyticsCollectionEnabled(!isOptOut);
+                            return true;
+                        }
+                        return false;
+                    });
+
             // display version as About summary
             findPreference(KEY_ABOUT).setSummary(Utils.getVersionString(getActivity()));
         }
@@ -290,8 +300,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             if (Utils.hasAccessToX(getActivity())) {
                 enabledPref.setOnPreferenceChangeListener((preference, newValue) -> {
                     boolean isChecked = (boolean) newValue;
-                    Utils.trackCustomEvent(getActivity(), TAG, "Notifications",
-                            isChecked ? "Enable" : "Disable");
 
                     thresholdPref.setEnabled(isChecked);
                     selectionPref.setEnabled(isChecked);
@@ -339,24 +347,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         }
 
         private void setupBasicSettings() {
-            // No aired episodes
-            findPreference(DisplaySettings.KEY_NO_RELEASED_EPISODES).setOnPreferenceClickListener(
-                    preference -> {
-                        boolean isChecked = ((CheckBoxPreference) preference).isChecked();
-                        Utils.trackCustomEvent(getActivity(), TAG, "OnlyFutureEpisodes",
-                                isChecked ? "Enable" : "Disable");
-                        return false;
-                    });
-
-            // No special episodes
-            findPreference(DisplaySettings.KEY_HIDE_SPECIALS).setOnPreferenceClickListener(
-                    preference -> {
-                        boolean isChecked = ((CheckBoxPreference) preference).isChecked();
-                        Utils.trackCustomEvent(getActivity(), TAG, "OnlySeasonEpisodes",
-                                isChecked ? "Enable" : "Disable");
-                        return false;
-                    });
-
             // show currently set values for some prefs
             updateStreamSearchServiceSummary(findPreference(StreamingSearch.KEY_SETTING_SERVICE));
             setListPreferenceSummary(
@@ -380,17 +370,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                         }
 
                         return true;
-                    });
-
-            // GA opt-out
-            findPreference(AppSettings.KEY_GOOGLEANALYTICS).setOnPreferenceChangeListener(
-                    (preference, newValue) -> {
-                        if (preference.getKey().equals(AppSettings.KEY_GOOGLEANALYTICS)) {
-                            boolean isEnabled = (Boolean) newValue;
-                            GoogleAnalytics.getInstance(getActivity()).setAppOptOut(isEnabled);
-                            return true;
-                        }
-                        return false;
                     });
         }
 

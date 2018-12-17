@@ -173,7 +173,7 @@
             android:focusable="true"
             android:paddingBottom="@dimen/default_padding"
             android:paddingTop="@dimen/default_padding"
-            android:text="@string/url_privacy"
+            android:text="@string/privacy_policy"
             android:textAppearance="@style/TextAppearance.Body.Green" />
 
     </RelativeLayout>

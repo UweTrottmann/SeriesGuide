@@ -42,8 +42,6 @@ import timber.log.Timber;
  */
 public class ExtensionsConfigurationFragment extends Fragment {
 
-    private static final String TAG = "Extension Configuration";
-
     @BindView(R.id.listViewExtensionsConfiguration) DragSortListView listView;
 
     private ExtensionsAdapter adapter;
@@ -201,7 +199,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
                 @Override
                 public void onAddExtensionClick(View anchor) {
                     showAddExtensionPopupMenu(anchor);
-                    Utils.trackAction(getActivity(), TAG, "Add extension");
+                    Utils.trackSelect(getActivity(), "Add extension");
                 }
             };
 
@@ -246,7 +244,6 @@ public class ExtensionsConfigurationFragment extends Fragment {
                 case R.id.menu_action_extension_disable:
                     enabledNames.remove(position);
                     saveExtensions();
-                    Utils.trackAction(getActivity(), TAG, "Remove extension");
                     return true;
             }
             return false;
@@ -293,8 +290,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
     }
 
     private void onGetMoreExtensions() {
-        Utils.launchWebsite(getActivity(), getString(R.string.url_extensions_search), TAG,
-                "Get more extensions");
+        Utils.launchWebsite(getActivity(), getString(R.string.url_extensions_search));
     }
 
     private void saveExtensions() {

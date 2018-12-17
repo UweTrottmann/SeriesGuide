@@ -215,11 +215,9 @@ public class ViewTools {
         item.setIcon(wrapped);
     }
 
-    public static void openUriOnClick(View button, final String uri, final String logTag,
-            final String logItem) {
+    public static void openUriOnClick(View button, final String uri) {
         if (button != null) {
-            button.setOnClickListener(
-                    v -> Utils.launchWebsite(v.getContext(), uri, logTag, logItem));
+            button.setOnClickListener(v -> Utils.launchWebsite(v.getContext(), uri));
         }
     }
 }

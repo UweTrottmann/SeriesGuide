@@ -366,6 +366,7 @@
         <item quantity="other">%d minuta prije</item>
     </plurals>
     <!-- About screen -->
+    <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">Ova aplikacija koristi podatke i slike sa TheTVDB licencirane pod CC BY-NC 4.0.</string>
     <string name="licence_themoviedb">Ovaj proizvod koristi TMDb API, ali nije odobrenio ili ovjeren od strane TMDb.</string>
     <string name="licence_trakt">Ova aplikacija koristi podatke i slike sa trakt-a.</string>

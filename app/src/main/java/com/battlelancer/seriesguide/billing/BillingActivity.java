@@ -33,8 +33,6 @@ import timber.log.Timber;
 
 public class BillingActivity extends BaseActivity {
 
-    public static final String TAG = "BillingActivity";
-
     // The SKU product ids as set in the Developer Console
     public static final String SKU_X = "x_upgrade";
 
@@ -93,8 +91,8 @@ public class BillingActivity extends BaseActivity {
 
         buttonPass = findViewById(R.id.buttonBillingGetPass);
         buttonPass.setOnClickListener(
-                v -> Utils.launchWebsite(BillingActivity.this, getString(R.string.url_x_pass),
-                        TAG, "X Pass"));
+                v -> Utils.launchWebsite(BillingActivity.this, getString(R.string.url_x_pass)
+                ));
 
         textViewHasUpgrade = findViewById(R.id.textViewBillingExisting);
 
@@ -102,8 +100,8 @@ public class BillingActivity extends BaseActivity {
         contentContainer = findViewById(R.id.containerBilling);
 
         findViewById(R.id.textViewBillingMoreInfo).setOnClickListener(
-                v -> Utils.launchWebsite(BillingActivity.this, getString(R.string.url_whypay),
-                        TAG, "WhyPayWebsite"));
+                v -> Utils.launchWebsite(BillingActivity.this, getString(R.string.url_whypay)
+                ));
     }
 
     @Override

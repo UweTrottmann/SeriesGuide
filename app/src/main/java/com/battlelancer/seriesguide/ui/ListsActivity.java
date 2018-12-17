@@ -29,7 +29,6 @@ import com.battlelancer.seriesguide.ui.lists.ListsPagerAdapter;
 import com.battlelancer.seriesguide.ui.lists.ListsReorderDialogFragment;
 import com.battlelancer.seriesguide.ui.lists.ListsTools;
 import com.battlelancer.seriesguide.util.DialogTools;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import org.greenrobot.eventbus.EventBus;
@@ -44,7 +43,6 @@ public class ListsActivity extends BaseTopActivity {
     public static class ListsChangedEvent {
     }
 
-    public static final String TAG = "Lists";
     public static final int LISTS_LOADER_ID = 1;
     public static final int LISTS_REORDER_LOADER_ID = 2;
 
@@ -142,7 +140,6 @@ public class ListsActivity extends BaseTopActivity {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_lists_add) {
             AddListDialogFragment.show(getSupportFragmentManager());
-            Utils.trackAction(this, TAG, "Add list");
             return true;
         }
         if (itemId == R.id.menu_action_lists_search) {

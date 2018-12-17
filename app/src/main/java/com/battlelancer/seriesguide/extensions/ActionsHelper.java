@@ -30,7 +30,7 @@ public class ActionsHelper {
      */
     public static void populateActions(@NonNull LayoutInflater layoutInflater,
             @NonNull Resources.Theme theme, @Nullable ViewGroup actionsContainer,
-            @Nullable List<Action> data, @NonNull final String logCategory) {
+            @Nullable List<Action> data) {
         if (actionsContainer == null) {
             // nothing we can do, view is already gone
             Timber.d("populateActions: action view container gone, aborting");
@@ -83,7 +83,6 @@ public class ActionsHelper {
             } else {
                 v.getContext().startActivity(intent);
             }
-            Utils.trackAction(v.getContext(), logCategory, "Manage extensions");
         });
         actionsContainer.addView(configureView);
     }

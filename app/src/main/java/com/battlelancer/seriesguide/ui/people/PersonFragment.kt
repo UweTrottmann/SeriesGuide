@@ -85,7 +85,7 @@ class PersonFragment : Fragment() {
 
     @OnClick(R.id.buttonPersonTmdbLink)
     fun onClickButtonTmdbLink() {
-        person?.let { TmdbTools.openTmdbPerson(activity, it.id, TAG) }
+        person?.let { TmdbTools.openTmdbPerson(activity, it.id) }
     }
 
     @OnLongClick(R.id.buttonPersonTmdbLink)
@@ -99,7 +99,7 @@ class PersonFragment : Fragment() {
 
     @OnClick(R.id.buttonPersonWebSearch)
     fun onClickButtonWebSearch() {
-        person?.let { ServiceUtils.performWebSearch(activity, it.name, TAG) }
+        person?.let { ServiceUtils.performWebSearch(activity, it.name) }
     }
 
     private fun populatePersonViews(person: Person?) {
@@ -173,8 +173,6 @@ class PersonFragment : Fragment() {
     companion object {
 
         const val ARG_PERSON_TMDB_ID = "person_tmdb_id"
-
-        private const val TAG = "Person Details"
 
         @JvmStatic
         fun newInstance(tmdbId: Int): PersonFragment {

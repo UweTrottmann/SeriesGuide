@@ -16,7 +16,6 @@ import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
-import com.battlelancer.seriesguide.ui.ListsActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter
@@ -139,8 +138,8 @@ class ShowSearchFragment : BaseSearchFragment() {
                 }
                 setOnMenuItemClickListener(
                         ShowMenuItemClickListener(context,
-                                fragmentManager, viewHolder.showTvdbId, viewHolder.episodeTvdbId,
-                                ListsActivity.TAG))
+                                fragmentManager, viewHolder.showTvdbId, viewHolder.episodeTvdbId
+                        ))
             }.show()
         }
 

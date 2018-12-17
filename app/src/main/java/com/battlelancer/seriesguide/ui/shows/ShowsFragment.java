@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.battlelancer.seriesguide.AnalyticsEvents;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
@@ -37,9 +38,9 @@ import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager;
 import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings.ShowsSortOrder;
 import com.battlelancer.seriesguide.util.TabClickEvent;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -50,9 +51,6 @@ import org.jetbrains.annotations.NotNull;
  * main view of the app.
  */
 public class ShowsFragment extends Fragment {
-
-    private static final String TAG = "Shows";
-    private static final String TAG_FIRST_RUN = "First Run";
 
     private int sortOrderId;
     private boolean isSortFavoritesFirst;
@@ -288,28 +286,20 @@ public class ShowsFragment extends Fragment {
             isFilterFavorites = !isFilterFavorites;
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_FAVORITES, isFilterFavorites
             );
-
-            Utils.trackAction(getActivity(), TAG, "Filter Favorites");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_unwatched) {
             isFilterUnwatched = !isFilterUnwatched;
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, isFilterUnwatched
             );
-
-            Utils.trackAction(getActivity(), TAG, "Filter Unwatched");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_upcoming) {
             isFilterUpcoming = !isFilterUpcoming;
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_UPCOMING, isFilterUpcoming
             );
-
-            Utils.trackAction(getActivity(), TAG, "Filter Upcoming");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_hidden) {
             isFilterHidden = !isFilterHidden;
             changeSortOrFilter(ShowsDistillationSettings.KEY_FILTER_HIDDEN, isFilterHidden);
-
-            Utils.trackAction(getActivity(), TAG, "Filter Hidden");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_remove) {
             isFilterFavorites = false;
@@ -329,8 +319,6 @@ public class ShowsFragment extends Fragment {
                     .apply();
             // refresh filter icon state
             getActivity().invalidateOptionsMenu();
-
-            Utils.trackAction(getActivity(), TAG, "Filter Removed");
             return true;
         } else if (itemId == R.id.menu_action_shows_filter_upcoming_range) {
             // yes, converting back to a string for comparison
@@ -357,34 +345,27 @@ public class ShowsFragment extends Fragment {
         } else if (itemId == R.id.menu_action_shows_sort_title) {
             sortOrderId = ShowsSortOrder.TITLE_ID;
             changeSort();
-            Utils.trackAction(getActivity(), TAG, "Sort Title");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_latest_episode) {
             sortOrderId = ShowsSortOrder.LATEST_EPISODE_ID;
             changeSort();
-            Utils.trackAction(getActivity(), TAG, "Sort Episode (latest)");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_oldest_episode) {
             sortOrderId = ShowsSortOrder.OLDEST_EPISODE_ID;
             changeSort();
-            Utils.trackAction(getActivity(), TAG, "Sort Episode (oldest)");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_last_watched) {
             sortOrderId = ShowsSortOrder.LAST_WATCHED_ID;
             changeSort();
-            Utils.trackAction(getActivity(), TAG, "Sort Last watched");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_remaining) {
             sortOrderId = ShowsSortOrder.LEAST_REMAINING_EPISODES_ID;
             changeSort();
-            Utils.trackAction(getActivity(), TAG, "Sort Remaining episodes");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_favorites) {
             isSortFavoritesFirst = !isSortFavoritesFirst;
             changeSortOrFilter(ShowsDistillationSettings.KEY_SORT_FAVORITES_FIRST,
                     isSortFavoritesFirst);
-
-            Utils.trackAction(getActivity(), TAG, "Sort Favorites");
             return true;
         } else if (itemId == R.id.menu_action_shows_sort_ignore_articles) {
             isSortIgnoreArticles = !isSortIgnoreArticles;
@@ -392,8 +373,6 @@ public class ShowsFragment extends Fragment {
                     isSortIgnoreArticles);
             // refresh all list widgets
             ListWidgetProvider.notifyDataChanged(getContext());
-
-            Utils.trackAction(getActivity(), TAG, "Sort Ignore Articles");
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -430,26 +409,32 @@ public class ShowsFragment extends Fragment {
             case ADD_SHOW: {
                 startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
                         SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
-                Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Add show");
+                trackGetStartedAction("Add show");
                 break;
             }
             case SIGN_IN: {
                 ((BaseNavDrawerActivity) getActivity()).openNavDrawer();
-                Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Sign in");
+                trackGetStartedAction("Sign in");
                 break;
             }
             case RESTORE_BACKUP: {
                 startActivity(new Intent(getActivity(), DataLiberationActivity.class));
-                Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Restore backup");
+                trackGetStartedAction("Restore backup");
                 break;
             }
             case DISMISS: {
                 adapter.setDisplayFirstRunHeader(false);
                 model.reRunQuery();
-                Utils.trackClick(getActivity(), TAG_FIRST_RUN, "Dismiss");
+                trackGetStartedAction("Dismiss");
                 break;
             }
         }
+    }
+
+    private void trackGetStartedAction(String action) {
+        Bundle params = new Bundle();
+        params.putString("action", action);
+        FirebaseAnalytics.getInstance(getContext()).logEvent(AnalyticsEvents.GET_STARTED, params);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -516,7 +501,7 @@ public class ShowsFragment extends Fragment {
 
             popupMenu.setOnMenuItemClickListener(
                     new ShowMenuItemClickListener(getContext(), getFragmentManager(),
-                            show.getShowTvdbId(), show.getEpisodeTvdbId(), TAG));
+                            show.getShowTvdbId(), show.getEpisodeTvdbId()));
             popupMenu.show();
         }
 

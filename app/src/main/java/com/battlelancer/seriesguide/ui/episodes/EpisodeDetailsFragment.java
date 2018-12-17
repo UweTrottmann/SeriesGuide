@@ -81,7 +81,6 @@ import timber.log.Timber;
  */
 public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsContract {
 
-    private static final String TAG = "Episode Details";
     private static final String ARG_EPISODE_TVDBID = "episode_tvdbid";
     private static final String ARG_IS_IN_MULTIPANE_LAYOUT = "multipane";
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
@@ -274,16 +273,13 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             shareEpisode();
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
-            if (ManageListsDialogFragment
-                    .show(getFragmentManager(), episodeTvdbId, ListItemTypes.EPISODE)) {
-                Utils.trackAction(requireActivity(), TAG, "Manage lists");
-            }
+            ManageListsDialogFragment
+                    .show(getFragmentManager(), episodeTvdbId, ListItemTypes.EPISODE);
             return true;
         } else if (itemId == R.id.menu_action_episode_calendar) {
             ShareUtils.suggestCalendarEvent(requireActivity(), showTitle,
                     TextTools.getNextEpisodeString(requireActivity(), seasonNumber, episodeNumber,
                             episodeTitle), episodeReleaseTime, showRunTime);
-            Utils.trackAction(requireActivity(), TAG, "Add to calendar");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -293,16 +289,22 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
      * If episode was watched, flags as unwatched. Otherwise, flags as watched.
      */
     private void onToggleWatched() {
-        changeEpisodeFlag(EpisodeTools.isWatched(episodeFlag)
-                ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED);
+        boolean watched = EpisodeTools.isWatched(episodeFlag);
+        changeEpisodeFlag(watched ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED);
+        if (watched) {
+            Utils.trackSelect(requireContext(), "set episode watched");
+        }
     }
 
     /**
      * If episode was skipped, flags as unwatched. Otherwise, flags as skipped.
      */
     private void onToggleSkipped() {
-        changeEpisodeFlag(EpisodeTools.isSkipped(episodeFlag)
-                ? EpisodeFlags.UNWATCHED : EpisodeFlags.SKIPPED);
+        boolean skipped = EpisodeTools.isSkipped(episodeFlag);
+        changeEpisodeFlag(skipped ? EpisodeFlags.UNWATCHED : EpisodeFlags.SKIPPED);
+        if (skipped) {
+            Utils.trackSelect(requireContext(), "skip episode");
+        }
     }
 
     private void changeEpisodeFlag(int episodeFlag) {
@@ -315,6 +317,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         collected = !collected;
         EpisodeTools.episodeCollected(requireContext(), showTvdbId, episodeTvdbId,
                 seasonNumber, episodeNumber, collected);
+        if (collected) {
+            Utils.trackSelect(requireContext(), "add episode to collection");
+        }
     }
 
     @OnClick(R.id.buttonEpisodeStreamingSearch)
@@ -325,7 +330,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         if (StreamingSearch.isNotConfigured(requireContext())) {
             showStreamingSearchConfigDialog();
         } else {
-            StreamingSearch.searchForShow(requireContext(), showTitle, TAG);
+            StreamingSearch.searchForShow(requireContext(), showTitle);
         }
     }
 
@@ -522,7 +527,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         // check in button
         buttonCheckin.setOnClickListener(v -> {
             if (CheckInDialogFragment.show(getContext(), getFragmentManager(), episodeTvdbId)) {
-                Utils.trackAction(requireContext(), TAG, "Check-In");
+                Utils.trackSelect(requireContext(), "check in episode");
             }
         });
         CheatSheet.setup(buttonCheckin);
@@ -547,10 +552,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         } else {
             ViewTools.setVectorIconTop(theme, buttonWatch, R.drawable.ic_watch_black_24dp);
         }
-        buttonWatch.setOnClickListener(v -> {
-            onToggleWatched();
-            Utils.trackAction(requireContext(), TAG, "Toggle watched");
-        });
+        buttonWatch.setOnClickListener(v -> onToggleWatched());
         buttonWatch.setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
         CheatSheet.setup(buttonWatch, isWatched ? R.string.action_unwatched
                 : R.string.action_watched);
@@ -562,10 +564,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         } else {
             ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
         }
-        buttonCollect.setOnClickListener(v -> {
-            onToggleCollected();
-            Utils.trackAction(requireContext(), TAG, "Toggle collected");
-        });
+        buttonCollect.setOnClickListener(v -> onToggleCollected());
         buttonCollect.setText(collected
                 ? R.string.action_collection_remove : R.string.action_collection_add);
         CheatSheet.setup(buttonCollect, collected
@@ -584,10 +583,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             } else {
                 ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
             }
-            buttonSkip.setOnClickListener(v -> {
-                onToggleSkipped();
-                Utils.trackAction(requireContext(), TAG, "Toggle skipped");
-            });
+            buttonSkip.setOnClickListener(v -> onToggleSkipped());
             buttonSkip.setText(isSkipped ? R.string.action_dont_skip : R.string.action_skip);
             CheatSheet.setup(buttonSkip,
                     isSkipped ? R.string.action_dont_skip : R.string.action_skip);
@@ -596,7 +592,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         // service buttons
         // trakt
         String traktLink = TraktTools.buildEpisodeUrl(episodeTvdbId);
-        ViewTools.openUriOnClick(traktButton, traktLink, TAG, "trakt");
+        ViewTools.openUriOnClick(traktButton, traktLink);
         ClipboardTools.copyTextToClipboardOnLongClick(traktButton, traktLink);
 
         // IMDb
@@ -605,12 +601,12 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             // fall back to show IMDb id
             imdbId = cursor.getString(DetailsQuery.SHOW_IMDBID);
         }
-        ServiceUtils.setUpImdbButton(imdbId, imdbButton, TAG);
+        ServiceUtils.setUpImdbButton(imdbId, imdbButton);
 
         // TVDb
         seasonTvdbId = cursor.getInt(DetailsQuery.SEASON_ID);
         String tvdbLink = TvdbLinks.episode(showTvdbSlug, showTvdbId, seasonTvdbId, episodeTvdbId);
-        ViewTools.openUriOnClick(tvdbButton, tvdbLink, TAG, "TVDb");
+        ViewTools.openUriOnClick(tvdbButton, tvdbLink);
         ClipboardTools.copyTextToClipboardOnLongClick(tvdbButton, tvdbLink);
         // trakt comments
         commentsButton.setOnClickListener(v -> {
@@ -618,7 +614,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             intent.putExtras(TraktCommentsActivity.createInitBundleEpisode(episodeTitle,
                     episodeTvdbId));
             Utils.startActivityWithAnimation(requireActivity(), intent, v);
-            Utils.trackAction(v.getContext(), TAG, "Comments");
         });
 
         containerEpisode.setVisibility(View.VISIBLE);
@@ -638,7 +633,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private void rateEpisode() {
         if (RateDialogFragment.newInstanceEpisode(episodeTvdbId)
                 .safeShow(getContext(), getFragmentManager())) {
-            Utils.trackAction(requireContext(), TAG, "Rate (trakt)");
+            Utils.trackSelect(requireContext(), "rate episode");
         }
     }
 
@@ -648,7 +643,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         }
         ShareUtils.shareEpisode(requireActivity(), showTvdbSlug, showTvdbId, seasonTvdbId,
                 episodeTvdbId, seasonNumber, episodeNumber, showTitle, episodeTitle);
-        Utils.trackAction(requireContext(), TAG, "Share");
+        Utils.trackShare(requireContext(), "episode");
     }
 
     private void loadImage(String imagePath, boolean hideDetails) {
@@ -706,7 +701,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                                 episodeTvdbId);
                     }
                     ActionsHelper.populateActions(requireActivity().getLayoutInflater(),
-                            requireActivity().getTheme(), containerActions, data, TAG);
+                            requireActivity().getTheme(), containerActions, data);
                 }
 
                 @Override

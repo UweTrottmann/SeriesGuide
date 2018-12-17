@@ -7,8 +7,8 @@ import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import com.battlelancer.seriesguide.AnalyticsTree;
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.AnalyticsEvents;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import java.text.SimpleDateFormat;
@@ -193,7 +193,7 @@ public class TimeTools {
         } catch (DateTimeParseException e) {
             // date string could not be parsed
             if (context != null) {
-                Utils.trackCustomEvent(context, AnalyticsTree.CATEGORY_THETVDB_ERROR,
+                Utils.trackError(context, AnalyticsEvents.THETVDB_ERROR,
                         "Date parsing failure", releaseDate);
             }
             Timber.e(e, "TheTVDB date could not be parsed: %s", releaseDate);

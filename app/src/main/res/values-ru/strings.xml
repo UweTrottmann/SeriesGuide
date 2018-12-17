@@ -377,6 +377,7 @@
         <item quantity="other">за %d мин. до</item>
     </plurals>
     <!-- About screen -->
+    <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">Это приложение использует данные и изображения сервиса TheTVDB под лицензией CC BY-NC 4.0.</string>
     <string name="licence_themoviedb">Это приложение использует TMDb API, но это API не поддерживается и не одобрено самим сервисом TMDb.</string>
     <string name="licence_trakt">Это приложение использует данные и изображения сервиса Trakt.</string>

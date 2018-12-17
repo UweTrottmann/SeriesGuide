@@ -40,7 +40,6 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -281,12 +280,10 @@ class SeasonsFragment : Fragment() {
                 when (item.itemId) {
                     CONTEXT_WATCHED_SHOW_ALL_ID -> {
                         onFlagShowWatched(true)
-                        Utils.trackAction(activity, TAG, "Flag all watched (inline)")
                         true
                     }
                     CONTEXT_WATCHED_SHOW_NONE_ID -> {
                         onFlagShowWatched(false)
-                        Utils.trackAction(activity, TAG, "Flag all unwatched (inline)")
                         true
                     }
                     else -> false
@@ -321,12 +318,10 @@ class SeasonsFragment : Fragment() {
                 when (item.itemId) {
                     CONTEXT_COLLECTED_SHOW_ALL_ID -> {
                         onFlagShowCollected(true)
-                        Utils.trackAction(activity, TAG, "Flag all collected (inline)")
                         true
                     }
                     CONTEXT_COLLECTED_SHOW_NONE_ID -> {
                         onFlagShowCollected(false)
-                        Utils.trackAction(activity, TAG, "Flag all uncollected (inline)")
                         true
                     }
                     else -> false
@@ -384,37 +379,30 @@ class SeasonsFragment : Fragment() {
                 when (item.itemId) {
                     R.id.menu_action_seasons_watched_all -> {
                         onFlagSeasonWatched(seasonTvdbId.toLong(), seasonNumber, true)
-                        Utils.trackContextMenu(activity, TAG, "Flag all watched")
                         true
                     }
                     R.id.menu_action_seasons_watched_none -> {
                         onFlagSeasonWatched(seasonTvdbId.toLong(), seasonNumber, false)
-                        Utils.trackContextMenu(activity, TAG,
-                                "Flag all unwatched")
                         true
                     }
                     R.id.menu_action_seasons_collection_add -> {
                         onFlagSeasonCollected(seasonTvdbId.toLong(), seasonNumber, true)
-                        Utils.trackContextMenu(activity, TAG,
-                                "Flag all collected")
                         true
                     }
                     R.id.menu_action_seasons_collection_remove -> {
                         onFlagSeasonCollected(seasonTvdbId.toLong(), seasonNumber, false)
-                        Utils.trackContextMenu(activity, TAG,
-                                "Flag all uncollected")
                         true
                     }
                     R.id.menu_action_seasons_skip -> {
                         onFlagSeasonSkipped(seasonTvdbId.toLong(), seasonNumber)
-                        Utils.trackContextMenu(activity, TAG, "Flag all skipped")
                         true
                     }
                     R.id.menu_action_seasons_manage_lists -> {
-                        if (ManageListsDialogFragment.show(fragmentManager,
-                                seasonTvdbId, ListItemTypes.SEASON)) {
-                            Utils.trackContextMenu(activity, TAG, "Manage lists")
-                        }
+                        ManageListsDialogFragment.show(
+                            fragmentManager,
+                            seasonTvdbId,
+                            ListItemTypes.SEASON
+                        )
                         true
                     }
                     else -> false
@@ -432,7 +420,6 @@ class SeasonsFragment : Fragment() {
         private const val CONTEXT_WATCHED_SHOW_NONE_ID = 1
         private const val CONTEXT_COLLECTED_SHOW_ALL_ID = 2
         private const val CONTEXT_COLLECTED_SHOW_NONE_ID = 3
-        private const val TAG = "Seasons"
 
         @JvmStatic
         fun newInstance(showId: Int): SeasonsFragment {

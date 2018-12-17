@@ -64,8 +64,8 @@ public class AmazonBillingActivity extends BaseActivity {
         dismissButton.setOnClickListener(v -> dismiss());
         hiddenButton.setVisibility(View.GONE);
 
-        buttonMoreInfo.setOnClickListener(v -> Utils.launchWebsite(v.getContext(), getString(R.string.url_whypay),
-                "AmazonBillingActivity", "WhyPayWebsite"));
+        buttonMoreInfo.setOnClickListener(
+                v -> Utils.launchWebsite(v.getContext(), getString(R.string.url_whypay)));
 
         progressBar.setVisibility(View.VISIBLE);
     }

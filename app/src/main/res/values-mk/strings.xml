@@ -355,6 +355,7 @@
         <item quantity="other">%d минути до</item>
     </plurals>
     <!-- About screen -->
+    <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">Оваа апликација користи податоци и слики од TheTVDB лиценцирана од CC BY-NC 4.0.</string>
     <string name="licence_themoviedb">Овој продукт користи TMDb API но не е одобрена или лиценцирана од TMDb.</string>
     <string name="licence_trakt">Оваа апликација користи податоци и слики од trakt.</string>

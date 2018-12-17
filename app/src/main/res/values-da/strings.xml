@@ -355,6 +355,7 @@
         <item quantity="other">%d minutter før</item>
     </plurals>
     <!-- About screen -->
+    <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">Denne app benytter data og billeder fra TheTVDB licenseret under CC BY-NC 4.0.</string>
     <string name="licence_themoviedb">Dette produkt benytter TMDb API\'en, men er ikke godkendt eller certificeret af TMDb.</string>
     <string name="licence_trakt">Denne app benytter data og billeder fra trakt.</string>

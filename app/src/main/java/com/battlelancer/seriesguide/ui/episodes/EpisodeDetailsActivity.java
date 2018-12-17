@@ -43,7 +43,6 @@ import java.util.List;
  */
 public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
-    protected static final String TAG = "Episode Details";
     private static final int LOADER_EPISODE_ID = 100;
     private static final int LOADER_SEASON_ID = 101;
     private static final String STATE_EPISODE_TVDB_ID = "episodeTvdbId";

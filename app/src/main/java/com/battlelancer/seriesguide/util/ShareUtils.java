@@ -19,8 +19,6 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
  */
 public class ShareUtils {
 
-    protected static final String TAG = "ShareUtils";
-
     public static void shareEpisode(Activity activity, @Nullable String showTvdbSlug,
             int showTvdbId, int seasonTvdbId, int episodeTvdbId, int seasonNumber,
             int episodeNumber, String showTitle, String episodeTitle) {
