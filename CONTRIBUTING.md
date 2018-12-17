@@ -67,6 +67,9 @@ SONATYPE_NEXUS_USERNAME=<your sonatype username>
 SONATYPE_NEXUS_PASSWORD=<your sonatype password>
 ```
 
+#### Google Analytics for Firebase
+To use [Google Analytics](https://firebase.google.com/docs/analytics/) add your downloaded [Firebase configuration](https://firebase.google.com/docs/android/setup) file to `app/google-services.json`.
+
 #### Crashlytics
 
 To use [Crashlytics](https://get.fabric.io/crashlytics) create `app/fabric.properties` and 
