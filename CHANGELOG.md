@@ -9,6 +9,14 @@ Version 46
 ----------
 *(in development)*
 
+#### 46-beta3
+*(2018-12-17)*
+
+* 📝 Add no more updates notice for Android 4.4 (KitKat) and older. Version 47 will only be available for Android 5.0 (Lollipop) and newer.
+* 🔨 Do not display Getting Started multiple times after switching tabs.
+* 🔧 Switch to Google Analytics for Firebase. Updated privacy policy in that regard.
+* 📝 Latest translations from crowdin.
+
 #### 46-beta2
 *(2018-12-14)*
 
