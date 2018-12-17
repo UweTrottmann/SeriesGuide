@@ -11,6 +11,7 @@
     <string name="help">Hjelp</string>
     <string name="help_and_feedback">Hjelp og tilbakemelding</string>
     <string name="drawer_open">Åpne navigasjonsskuff</string>
+    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">Serie</string>
     <string name="episode">Episode</string>

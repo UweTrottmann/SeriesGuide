@@ -11,6 +11,7 @@
     <string name="help">Bantuan</string>
     <string name="help_and_feedback">Bantuan &amp; tanggapan</string>
     <string name="drawer_open">Buka drawer navigasi</string>
+    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">Acara</string>
     <string name="episode">Episode</string>

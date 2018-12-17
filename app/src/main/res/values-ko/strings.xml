@@ -11,6 +11,7 @@
     <string name="help">도움말</string>
     <string name="help_and_feedback">도움말 및 의견</string>
     <string name="drawer_open">내비게이션 서랍 열기</string>
+    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">TV 프로그램</string>
     <string name="episode">에피소드</string>

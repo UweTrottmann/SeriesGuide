@@ -11,6 +11,7 @@
     <string name="help">ช่วยเหลือ</string>
     <string name="help_and_feedback">ช่วยเหลือ &amp; ความคิดเห็น</string>
     <string name="drawer_open">เปิดแถบนำทาง</string>
+    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">ซีรีส์</string>
     <string name="episode">ตอน</string>

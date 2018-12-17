@@ -13,6 +13,19 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+    <TextView
+        android:id="@+id/textViewDrawerNoMoreUpdates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingLeft="@dimen/keyline"
+        android:paddingRight="@dimen/keyline"
+        android:text="@string/no_more_updates"
+        android:textAppearance="@style/TextAppearance.Caption"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
     <LinearLayout
         android:id="@+id/containerDrawerAccountTrakt"
         android:layout_width="match_parent"

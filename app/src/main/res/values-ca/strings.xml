@@ -11,6 +11,7 @@
     <string name="help">Ajuda</string>
     <string name="help_and_feedback">Ajuda i comentaris</string>
     <string name="drawer_open">Obre el calaix de navegació</string>
+    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">Sèrie</string>
     <string name="episode">Episodi</string>

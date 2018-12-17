@@ -11,6 +11,7 @@
     <string name="help">Pagalba</string>
     <string name="help_and_feedback">Pagalba &amp; atsiliepimai</string>
     <string name="drawer_open">Atidaryti navigacijos meniu</string>
+    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">Serialas</string>
     <string name="episode">Serija</string>

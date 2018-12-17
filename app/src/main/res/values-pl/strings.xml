@@ -11,6 +11,7 @@
     <string name="help">Pomoc</string>
     <string name="help_and_feedback">Pomoc i opinie</string>
     <string name="drawer_open">Otwórz szufladę nawigacji</string>
+    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">Serial</string>
     <string name="episode">Odcinek</string>
