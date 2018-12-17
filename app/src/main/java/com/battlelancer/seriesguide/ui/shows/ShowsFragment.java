@@ -140,7 +140,8 @@ public class ShowsFragment extends Fragment {
         model = ViewModelProviders.of(this).get(ShowsViewModel.class);
         model.getShowItemsLiveData().observe(this, showItems -> {
             adapter.submitList(showItems);
-            boolean isEmpty = showItems == null || showItems.isEmpty();
+            // note: use adapter count, may display header
+            boolean isEmpty = adapter.getItemCount() == 0;
             updateEmptyView(isEmpty);
         });
         updateShowsQuery();

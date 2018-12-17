@@ -45,7 +45,9 @@ class ShowsAdapter(
     override fun submitList(list: MutableList<ShowItem>?) {
         if (displayFirstRunHeader) {
             val modifiedList = list ?: mutableListOf()
-            modifiedList.add(0, ShowItem.header())
+            if (!modifiedList.contains(ShowItem.HEADER_FIRST_RUN)) {
+                modifiedList.add(0, ShowItem.header())
+            }
             super.submitList(modifiedList)
         } else {
             super.submitList(list)
@@ -110,6 +112,8 @@ class ShowsAdapter(
     ) {
 
         companion object {
+            val HEADER_FIRST_RUN = header()
+
             fun header(): ShowItem {
                 return ShowItem(
                     0,
