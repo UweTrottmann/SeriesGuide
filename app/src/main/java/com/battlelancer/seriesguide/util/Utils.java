@@ -171,9 +171,9 @@ public class Utils {
     /**
      * Track a selection event.
      */
-    public static void trackSelect(Context context, String method) {
+    public static void trackSelect(Context context, String type) {
         Bundle params = new Bundle();
-        params.putString(FirebaseAnalytics.Param.METHOD, method);
+        params.putString(FirebaseAnalytics.Param.CONTENT_TYPE, type);
         FirebaseAnalytics.getInstance(context)
                 .logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
     }
