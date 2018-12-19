@@ -41,9 +41,9 @@ public class FeedbackView extends FrameLayout {
         int FEEDBACK = 2;
     }
 
-    private static final String ACTION_QUESTION_ENJOY = "Question Enjoy";
-    private static final String ACTION_QUESTION_RATE = "Question Rate";
-    private static final String ACTION_QUESTION_FEEDBACK = "Question Feedback";
+    private static final String ACTION_QUESTION_ENJOY = "Enjoy";
+    private static final String ACTION_QUESTION_RATE = "Rate";
+    private static final String ACTION_QUESTION_FEEDBACK = "Feedback";
 
     private TextView questionTextView;
     private Button negativeButton;
@@ -93,8 +93,8 @@ public class FeedbackView extends FrameLayout {
 
     private void trackFeedback(String question, String answer) {
         Bundle params = new Bundle();
-        params.putString("question", question);
-        params.putString("answer", answer);
+        // can't filter by param, so only have one param
+        params.putString("answer", question + ": " + answer);
         FirebaseAnalytics.getInstance(getContext()).logEvent(AnalyticsEvents.FEEDBACK, params);
     }
 

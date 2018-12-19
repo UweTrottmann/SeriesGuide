@@ -194,8 +194,8 @@ public class Utils {
     public static void trackError(@NonNull Context context, String eventName, String action,
             String message) {
         Bundle params = new Bundle();
-        params.putString("action", action);
-        params.putString("message", message);
+        // can't filter by param, so only have one param
+        params.putString("action", action + ": " + message);
         FirebaseAnalytics.getInstance(context).logEvent(eventName, params);
     }
 
