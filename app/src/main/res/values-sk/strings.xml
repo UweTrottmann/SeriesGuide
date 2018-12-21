@@ -11,7 +11,7 @@
     <string name="help">Pomoc</string>
     <string name="help_and_feedback">Pomoc a spätná väzba</string>
     <string name="drawer_open">Otvoriť navigačný panel</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">Pre túto verziu Androidu aplikácia SeriesGuide už nebude aktualizovaná.</string>
     <!-- Media items -->
     <string name="show">Seriál</string>
     <string name="episode">Epizóda</string>

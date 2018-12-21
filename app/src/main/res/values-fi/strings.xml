@@ -11,7 +11,7 @@
     <string name="help">Ohjeet</string>
     <string name="help_and_feedback">Ohje ja palaute</string>
     <string name="drawer_open">Avaa vetopaneeli</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide ei vastaanota enää päivityksiä tästä Android-versiosta.</string>
     <!-- Media items -->
     <string name="show">Ohjelma</string>
     <string name="episode">Jakso</string>
@@ -356,7 +356,7 @@
         <item quantity="other">%d minuuttia ennen</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy">Tietosuojakäytäntö</string>
     <string name="licence_tvdb">Tämä sovellus käyttää TheTVDB:n tietoja ja kuvia, lisensoitu CC BY-NC 4.0.</string>
     <string name="licence_themoviedb">Tämä tuote käyttää TMDb:n API-rajapintaa, mutta se ei ole TMDb:n hyväksymä tai sertifioima.</string>
     <string name="licence_trakt">Tämä sovellus käyttää traktin tietoja ja kuvia.</string>

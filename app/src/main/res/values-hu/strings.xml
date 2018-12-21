@@ -11,7 +11,7 @@
     <string name="help">Súgó</string>
     <string name="help_and_feedback">Súgó &amp; Visszajelzés</string>
     <string name="drawer_open">Navigációs fiók megnyitása</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">Ehhez az android verzióhoz nem készül több SeriesGuide frissítés.</string>
     <!-- Media items -->
     <string name="show">Műsor</string>
     <string name="episode">Epizód</string>
@@ -356,7 +356,7 @@
         <item quantity="other">%d perccel korábban</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy">Adatvédelmi irányelvek</string>
     <string name="licence_tvdb">Ez az alkalmazás a TheTVDB, CC BY-NC 4.0 licenc alatt álló adatait és képeit használja.</string>
     <string name="licence_themoviedb">Ez a termék a TMDb API-t használja, de a TMDb hozzájárulása vagy minősítése nélkül.</string>
     <string name="licence_trakt">Ez az applikáció a trakt adatait és képeit használja.</string>
@@ -446,7 +446,7 @@
     <string name="hide_watched">Megnézett epizódok elrejtése</string>
     <string name="pref_widget_opacity">Widget háttér</string>
     <string name="pref_widget_type">Widget típus</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Nagy betűméret</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Átlátszó</string>
     <string name="widget_background_25">25%</string>
