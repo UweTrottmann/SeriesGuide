@@ -9,6 +9,12 @@ Version 46
 ----------
 *(in development)*
 
+#### 46-beta4
+*(2018-12-21)*
+
+* 🔧 Tweak reported events so errors can be analyzed again.
+* 📝 Latest translations from crowdin.
+
 #### 46-beta3
 *(2018-12-17)*
 
