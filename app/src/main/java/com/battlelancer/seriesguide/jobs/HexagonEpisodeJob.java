@@ -61,7 +61,7 @@ public class HexagonEpisodeJob extends BaseNetworkEpisodeJob {
                 }
                 episodesService.save(uploadWrapper).execute();
             } catch (HttpResponseException e) {
-                HexagonTools.trackFailedRequest(context, "save episodes", e);
+                HexagonTools.trackFailedRequest("save episodes", e);
                 int code = e.getStatusCode();
                 if (code >= 400 && code < 500) {
                     return buildResult(context, NetworkJob.ERROR_HEXAGON_CLIENT);
@@ -69,7 +69,7 @@ public class HexagonEpisodeJob extends BaseNetworkEpisodeJob {
                     return buildResult(context, NetworkJob.ERROR_HEXAGON_SERVER);
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "save episodes", e);
+                HexagonTools.trackFailedRequest("save episodes", e);
                 return buildResult(context, NetworkJob.ERROR_CONNECTION);
             }
 

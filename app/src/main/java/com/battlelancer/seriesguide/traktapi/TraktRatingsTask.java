@@ -88,10 +88,10 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
 
         Ratings ratings;
         if (isShowNotEpisode) {
-            ratings = SgTrakt.executeCall(context, traktShows.get().ratings(showTraktIdString),
+            ratings = SgTrakt.executeCall(traktShows.get().ratings(showTraktIdString),
                     "get show rating");
         } else {
-            ratings = SgTrakt.executeCall(context,
+            ratings = SgTrakt.executeCall(
                     traktEpisodes.get().ratings(showTraktIdString, season, episode),
                     "get episode rating");
         }

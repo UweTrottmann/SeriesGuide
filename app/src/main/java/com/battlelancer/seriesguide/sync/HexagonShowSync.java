@@ -93,7 +93,7 @@ public class HexagonShowSync {
                     hasMoreShows = false;
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "get shows", e);
+                HexagonTools.trackFailedRequest("get shows", e);
                 return false;
             }
 
@@ -231,7 +231,7 @@ public class HexagonShowSync {
             }
             showsService.save(showList).execute();
         } catch (IOException e) {
-            HexagonTools.trackFailedRequest(context, "save shows", e);
+            HexagonTools.trackFailedRequest("save shows", e);
             return false;
         }
 

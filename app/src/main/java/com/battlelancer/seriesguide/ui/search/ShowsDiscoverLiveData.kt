@@ -93,11 +93,11 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
                 if (response.isSuccessful) {
                     response.body() ?: return buildResultFailure(R.string.tmdb, false)
                 } else {
-                    SgTmdb.trackFailedRequest(context, action, response)
+                    SgTmdb.trackFailedRequest(action, response)
                     return buildResultFailure(R.string.tmdb, false)
                 }
             } catch (e: Exception) {
-                SgTmdb.trackFailedRequest(context, action, e)
+                SgTmdb.trackFailedRequest(action, e)
                 return buildResultFailure(R.string.tmdb, false)
             }
 
@@ -171,8 +171,7 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
             val traktSearch = SgApp.getServicesComponent(context).traktSearch()
 
             val searchResults = SgTrakt.executeCall<List<com.uwetrottmann.trakt5.entities.SearchResult>>(
-                    context,
-                    traktSearch.textQueryShow(query,
+                traktSearch.textQueryShow(query,
                             null, null,
                             null, null,
                             null, null, null, null, null,

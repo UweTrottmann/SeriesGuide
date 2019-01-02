@@ -287,7 +287,7 @@ public class HexagonTools {
         return googleSignInOptions;
     }
 
-    public static void trackFailedRequest(Context context, String action, @NonNull IOException e) {
+    public static void trackFailedRequest(String action, @NonNull IOException e) {
         if (e instanceof HttpResponseException) {
             HttpResponseException responseException = (HttpResponseException) e;
             Utils.trackFailedRequest(new HexagonRequestError(action,

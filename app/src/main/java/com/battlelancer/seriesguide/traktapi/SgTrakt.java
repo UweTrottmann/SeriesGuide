@@ -64,7 +64,7 @@ public class SgTrakt extends TraktV2 {
         }
     }
 
-    public static void trackFailedRequest(Context context, TraktV2 trakt, String action,
+    public static void trackFailedRequest(TraktV2 trakt, String action,
             retrofit2.Response response) {
         String message = response.message();
         TraktError error = trakt.checkForTraktError(response);
@@ -74,14 +74,12 @@ public class SgTrakt extends TraktV2 {
         Utils.trackFailedRequest(new TraktRequestError(action, response.code(), message));
     }
 
-    public static void trackFailedRequest(Context context, String action,
-            retrofit2.Response response) {
+    public static void trackFailedRequest(String action, retrofit2.Response response) {
         Utils.trackFailedRequest(
                 new TraktRequestError(action, response.code(), response.message()));
     }
 
-    public static void trackFailedRequest(Context context, String action,
-            @NonNull Throwable throwable) {
+    public static void trackFailedRequest(String action, @NonNull Throwable throwable) {
         Utils.trackFailedRequest(new TraktRequestError(action, throwable));
     }
 
@@ -89,16 +87,16 @@ public class SgTrakt extends TraktV2 {
      * Executes the given call. Will return null if the call fails for any reason, including auth
      * failures.
      */
-    public static <T> T executeCall(Context context, Call<T> call, String action) {
+    public static <T> T executeCall(Call<T> call, String action) {
         try {
             Response<T> response = call.execute();
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                trackFailedRequest(context, action, response);
+                trackFailedRequest(action, response);
             }
         } catch (Exception e) {
-            trackFailedRequest(context, action, e);
+            trackFailedRequest(action, e);
         }
         return null;
     }
@@ -114,11 +112,11 @@ public class SgTrakt extends TraktV2 {
                 return response.body();
             } else {
                 if (!isUnauthorized(context, response)) {
-                    trackFailedRequest(context, action, response);
+                    trackFailedRequest(action, response);
                 }
             }
         } catch (Exception e) {
-            trackFailedRequest(context, action, e);
+            trackFailedRequest(action, e);
         }
         return null;
     }

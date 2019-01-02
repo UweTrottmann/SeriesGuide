@@ -54,7 +54,7 @@ public class ReorderListsTask extends BaseActionTask {
             try {
                 listsService.save(wrapper).execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(getContext(), "reorder lists", e);
+                HexagonTools.trackFailedRequest("reorder lists", e);
                 return ERROR_HEXAGON_API;
             }
         }

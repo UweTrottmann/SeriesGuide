@@ -52,7 +52,7 @@ public class AddListTask extends BaseActionTask {
             try {
                 listsService.save(wrapper).execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(getContext(), "add list", e);
+                HexagonTools.trackFailedRequest("add list", e);
                 return ERROR_HEXAGON_API;
             }
         }

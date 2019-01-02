@@ -86,10 +86,10 @@ public class TraktEpisodeSync {
                     if (SgTrakt.isUnauthorized(context, response)) {
                         return false;
                     }
-                    SgTrakt.trackFailedRequest(context, "get watched shows", response);
+                    SgTrakt.trackFailedRequest("get watched shows", response);
                 }
             } catch (Exception e) {
-                SgTrakt.trackFailedRequest(context, "get watched shows", e);
+                SgTrakt.trackFailedRequest("get watched shows", e);
             }
 
             if (watchedShowsTrakt == null) {
@@ -140,10 +140,10 @@ public class TraktEpisodeSync {
                     if (SgTrakt.isUnauthorized(context, response)) {
                         return false;
                     }
-                    SgTrakt.trackFailedRequest(context, "get collected shows", response);
+                    SgTrakt.trackFailedRequest("get collected shows", response);
                 }
             } catch (Exception e) {
-                SgTrakt.trackFailedRequest(context, "get collected shows", e);
+                SgTrakt.trackFailedRequest("get collected shows", e);
             }
 
             if (collectedShowsTrakt == null) {
@@ -453,10 +453,10 @@ public class TraktEpisodeSync {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return false;
                 }
-                SgTrakt.trackFailedRequest(context, "add episodes to " + flag.name, response);
+                SgTrakt.trackFailedRequest("add episodes to " + flag.name, response);
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "add episodes to " + flag.name, e);
+            SgTrakt.trackFailedRequest("add episodes to " + flag.name, e);
         }
 
         return false;

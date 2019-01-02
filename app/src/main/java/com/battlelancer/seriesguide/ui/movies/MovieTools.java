@@ -380,10 +380,10 @@ public class MovieTools {
                 Timber.e("Finding trakt movie failed (not in results)");
                 return -1;
             } else {
-                SgTrakt.trackFailedRequest(context, "movie trakt id lookup", response);
+                SgTrakt.trackFailedRequest("movie trakt id lookup", response);
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "movie trakt id lookup", e);
+            SgTrakt.trackFailedRequest("movie trakt id lookup", e);
         }
         return null;
     }
@@ -483,9 +483,9 @@ public class MovieTools {
             if (response.isSuccessful()) {
                 return response.body();
             }
-            SgTrakt.trackFailedRequest(context, "get movie rating", response);
+            SgTrakt.trackFailedRequest("get movie rating", response);
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "get movie rating", e);
+            SgTrakt.trackFailedRequest("get movie rating", e);
         }
         return null;
     }
@@ -530,10 +530,10 @@ public class MovieTools {
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                SgTmdb.trackFailedRequest(context, action, response);
+                SgTmdb.trackFailedRequest(action, response);
             }
         } catch (Exception e) {
-            SgTmdb.trackFailedRequest(context, action, e);
+            SgTmdb.trackFailedRequest(action, e);
         }
         return null;
     }

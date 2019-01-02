@@ -90,10 +90,10 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
                     if (SgTrakt.isUnauthorized(context, response)) {
                         return context.getString(R.string.trakt_error_credentials);
                     }
-                    SgTrakt.trackFailedRequest(context, "delete check-in", response);
+                    SgTrakt.trackFailedRequest("delete check-in", response);
                 }
             } catch (Exception e) {
-                SgTrakt.trackFailedRequest(context, "delete check-in", e);
+                SgTrakt.trackFailedRequest("delete check-in", e);
             }
 
             return context.getString(R.string.api_error_generic,

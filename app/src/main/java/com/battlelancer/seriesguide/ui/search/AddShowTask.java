@@ -356,10 +356,10 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
                     publishProgress(RESULT_TRAKT_AUTH_ERROR);
                     return null;
                 }
-                SgTrakt.trackFailedRequest(context, action, response);
+                SgTrakt.trackFailedRequest(action, response);
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, action, e);
+            SgTrakt.trackFailedRequest(action, e);
         }
         publishProgress(RESULT_TRAKT_API_ERROR);
         return null;
