@@ -9,6 +9,12 @@ Version 46
 ----------
 *(in development)*
 
+#### 46-beta5
+*(2019-01-02)*
+
+* 🔧 Drop Firebase Analytics.
+* 📝 Latest translations from crowdin.
+
 #### 46-beta4
 *(2018-12-21)*
 
