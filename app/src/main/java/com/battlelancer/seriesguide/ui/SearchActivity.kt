@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.settings.SearchSettings
 import com.battlelancer.seriesguide.ui.episodes.EpisodeDetailsActivity
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment
+import com.battlelancer.seriesguide.ui.search.BeamError
 import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment
 import com.battlelancer.seriesguide.ui.search.SearchResult
 import com.battlelancer.seriesguide.ui.search.SearchTriggerListener
@@ -221,8 +222,8 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
         val rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
         if (rawMsgs.isNullOrEmpty()) {
             Utils.trackError(
-                this, AnalyticsEvents.BEAM_ERROR, "Get messages",
-                "Data null or zero length"
+                AnalyticsEvents.BEAM_ERROR,
+                BeamError("Get messages", "Data null or zero length")
             )
             return  // corrupted or invalid data
         }
@@ -235,8 +236,8 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
             showTvdbId = Integer.valueOf(String(msg.records[0].payload))
         } catch (e: NumberFormatException) {
             Utils.trackError(
-                this, AnalyticsEvents.BEAM_ERROR, "Parse payload",
-                "NumberFormatException: " + e.message
+                AnalyticsEvents.BEAM_ERROR,
+                BeamError("Parse payload", "NumberFormatException: " + e.message)
             )
             return
         }

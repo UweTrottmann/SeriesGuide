@@ -190,8 +190,7 @@ dependencies {
     implementation "io.palaima.debugdrawer:debugdrawer-actions:$debugDrawerVersion"
     implementation "io.palaima.debugdrawer:debugdrawer-timber:$debugDrawerVersion"
 
-    // Firebase Analytics and Crashlytics
-    implementation 'com.google.firebase:firebase-core:16.0.6'
+    // Crashlytics
     implementation("com.crashlytics.sdk.android:crashlytics:${versions.crashlytics}@aar") {
         transitive = true
     }
@@ -232,13 +231,6 @@ dependencies {
     testImplementation "androidx.annotation:annotation:${versions.annotation}"
     testImplementation "com.google.truth:truth:${versions.truth}"
 
-}
-
-if (file('google-services.json').exists()) {
-    // need to apply after dependencies block
-    apply plugin: 'com.google.gms.google-services'
-} else {
-    println('WARNING: google-services.json missing, Firebase Analytics will not work.')
 }
 
 endpointsClient {

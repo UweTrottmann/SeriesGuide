@@ -46,11 +46,11 @@ public abstract class BaseRateItemTask extends BaseActionTask {
                     if (SgTrakt.isUnauthorized(getContext(), response)) {
                         return ERROR_TRAKT_AUTH;
                     }
-                    SgTrakt.trackFailedRequest(getContext(), getTraktAction(), response);
+                    SgTrakt.trackFailedRequest(getTraktAction(), response);
                     return ERROR_TRAKT_API;
                 }
             } catch (Exception e) {
-                SgTrakt.trackFailedRequest(getContext(), "rate movie", e);
+                SgTrakt.trackFailedRequest("rate movie", e);
                 return ERROR_TRAKT_API;
             }
 

@@ -23,7 +23,6 @@ import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.util.DialogTools;
-import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 import java.util.HashSet;
 
@@ -87,7 +86,6 @@ public class AddListDialogFragment extends AppCompatDialogFragment {
             // add list
             String listName = editTextName.getText().toString().trim();
             ListsTools.addList(getContext(), listName);
-            Utils.trackSelect(getContext(), "Add list");
 
             dismiss();
         });

@@ -292,11 +292,11 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                     return new TraktResponse(false,
                             context.getString(R.string.trakt_error_credentials));
                 } else {
-                    SgTrakt.trackFailedRequest(context, "check-in", response);
+                    SgTrakt.trackFailedRequest("check-in", response);
                 }
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "check-in", e);
+            SgTrakt.trackFailedRequest("check-in", e);
         }
 
         // return generic failure message
@@ -340,11 +340,11 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                                 context.getString(R.string.trakt_error_credentials));
                     }
                 } else {
-                    SgTrakt.trackFailedRequest(context, "post comment", response);
+                    SgTrakt.trackFailedRequest("post comment", response);
                 }
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "post comment", e);
+            SgTrakt.trackFailedRequest("post comment", e);
         }
 
         // return generic failure message

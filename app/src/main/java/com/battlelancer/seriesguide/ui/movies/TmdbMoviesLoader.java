@@ -127,11 +127,11 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
                     results = page.results;
                 }
             } else {
-                SgTmdb.trackFailedRequest(getContext(), action, response);
+                SgTmdb.trackFailedRequest(action, response);
                 return buildErrorResult();
             }
         } catch (Exception e) {
-            SgTmdb.trackFailedRequest(getContext(), action, e);
+            SgTmdb.trackFailedRequest(action, e);
             // only check for connection here to allow hitting the response cache
             return AndroidUtils.isNetworkConnected(getContext())
                     ? buildErrorResult()

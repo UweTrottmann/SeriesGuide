@@ -10,7 +10,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.Utils;
 
 /**
 * Item click listener for show item popup menu.
@@ -37,7 +36,6 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
         switch (item.getItemId()) {
             case R.id.menu_action_shows_watched_next: {
                 DBUtils.markNextEpisode(context, showTvdbId, episodeTvdbId);
-                Utils.trackSelect(context, "set episode watched");
                 return true;
             }
             case R.id.menu_action_shows_favorites_add: {

@@ -107,7 +107,7 @@ public class TraktMovieJob extends BaseNetworkEpisodeJob {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return NetworkJob.ERROR_TRAKT_AUTH;
                 }
-                SgTrakt.trackFailedRequest(context, trakt, errorLabel, response);
+                SgTrakt.trackFailedRequest(trakt, errorLabel, response);
 
                 int code = response.code();
                 if (code == 429 /* Rate Limit Exceeded */ || code >= 500) {
@@ -117,7 +117,7 @@ public class TraktMovieJob extends BaseNetworkEpisodeJob {
                 }
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, errorLabel, e);
+            SgTrakt.trackFailedRequest(errorLabel, e);
             return NetworkJob.ERROR_CONNECTION;
         }
 

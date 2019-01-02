@@ -613,9 +613,7 @@ class ShowFragment : ScopedFragment() {
     }
 
     private fun rateShow() {
-        if (RateDialogFragment.newInstanceShow(showTvdbId).safeShow(context, fragmentManager)) {
-            Utils.trackSelect(activity, "rate show")
-        }
+        RateDialogFragment.newInstanceShow(showTvdbId).safeShow(context, fragmentManager)
     }
 
     private fun loadTraktRatings() {
@@ -664,8 +662,6 @@ class ShowFragment : ScopedFragment() {
             ShortcutCreator(context!!, currentShowTitle, currentPosterPath, currentShowTvdbId)
         launch {
             shortcutLiveData.prepareAndPinShortcut()
-            // Analytics
-            Utils.trackSelect(activity, "add show to home screen")
         }
     }
 
@@ -675,7 +671,6 @@ class ShowFragment : ScopedFragment() {
         val currentShowTitle = showTitle
         if (currentShowSlug != null && currentShowTvdbId != 0 && currentShowTitle != null) {
             ShareUtils.shareShow(activity, currentShowSlug, currentShowTvdbId, currentShowTitle)
-            Utils.trackShare(activity, "show")
         }
     }
 

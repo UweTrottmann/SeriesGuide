@@ -236,11 +236,11 @@ public class TraktCredentials {
                 expiresIn = token.expires_in;
             } else {
                 if (!SgTrakt.isUnauthorized(response)) {
-                    SgTrakt.trackFailedRequest(context, "refresh access token", response);
+                    SgTrakt.trackFailedRequest("refresh access token", response);
                 }
             }
         } catch (IOException e) {
-            SgTrakt.trackFailedRequest(context, "refresh access token", e);
+            SgTrakt.trackFailedRequest("refresh access token", e);
         }
 
         // did we obtain all required data?

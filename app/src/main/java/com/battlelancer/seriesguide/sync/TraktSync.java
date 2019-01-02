@@ -188,9 +188,9 @@ public class TraktSync {
             if (SgTrakt.isUnauthorized(context, response)) {
                 return null;
             }
-            SgTrakt.trackFailedRequest(context, "get last activity", response);
+            SgTrakt.trackFailedRequest("get last activity", response);
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "get last activity", e);
+            SgTrakt.trackFailedRequest("get last activity", e);
         }
         return null;
     }

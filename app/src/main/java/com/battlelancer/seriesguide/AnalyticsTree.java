@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 import androidx.annotation.Nullable;
@@ -10,18 +9,16 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.gson.JsonParseException;
 import java.net.UnknownHostException;
+import org.threeten.bp.format.DateTimeParseException;
 import timber.log.Timber;
 
 /**
- * A customized {@link timber.log.Timber.DebugTree} that logs to Crashlytics and Google Analytics.
+ * A customized {@link timber.log.Timber.DebugTree} that logs to Crashlytics.
  * Always drops debug and verbose logs.
  */
 public class AnalyticsTree extends Timber.DebugTree {
 
-    private final Context context;
-
-    public AnalyticsTree(Context context) {
-        this.context = context.getApplicationContext();
+    public AnalyticsTree() {
     }
 
     @Override
@@ -52,18 +49,12 @@ public class AnalyticsTree extends Timber.DebugTree {
             if (t instanceof TvdbException) {
                 TvdbException e = (TvdbException) t;
                 Throwable cause = e.getCause();
-                if (cause != null) {
-                    if (cause instanceof UnknownHostException) {
-                        return; // do not track
-                    }
-                    Utils.trackError(context, AnalyticsEvents.THETVDB_ERROR,
-                            tag + ": " + message,
-                            e.getMessage() + ": " + cause.getClass().getSimpleName());
-                } else {
-                    Utils.trackError(context, AnalyticsEvents.THETVDB_ERROR,
-                            tag + ": " + message,
-                            e.getMessage());
+                if (cause instanceof UnknownHostException) {
+                    return; // do not track
                 }
+                CrashlyticsCore.getInstance().setString("action", message);
+                Utils.trackError(AnalyticsEvents.THETVDB_ERROR, e);
+                return;
             }
         }
 
@@ -87,7 +78,8 @@ public class AnalyticsTree extends Timber.DebugTree {
         // track some non-fatal exceptions with crashlytics
         if (priority == Log.ERROR) {
             if (t instanceof SQLiteException /* Content provider */
-                    || t instanceof JsonParseException /* Retrofit */) {
+                    || t instanceof JsonParseException /* Retrofit */
+                    || t instanceof DateTimeParseException /* TheTVDB */) {
                 CrashlyticsCore.getInstance().logException(t);
             }
         }

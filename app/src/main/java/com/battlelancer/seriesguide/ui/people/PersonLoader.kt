@@ -21,10 +21,10 @@ internal class PersonLoader(context: Context, private val tmdbId: Int) :
             if (response.isSuccessful) {
                 return response.body()
             } else {
-                SgTmdb.trackFailedRequest(context, "get person summary", response)
+                SgTmdb.trackFailedRequest("get person summary", response)
             }
         } catch (e: Exception) {
-            SgTmdb.trackFailedRequest(context, "get person summary", e)
+            SgTmdb.trackFailedRequest("get person summary", e)
         }
 
         return null

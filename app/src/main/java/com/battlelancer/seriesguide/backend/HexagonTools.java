@@ -287,32 +287,30 @@ public class HexagonTools {
         return googleSignInOptions;
     }
 
-    public static void trackFailedRequest(Context context, String action, @NonNull IOException e) {
+    public static void trackFailedRequest(String action, @NonNull IOException e) {
         if (e instanceof HttpResponseException) {
             HttpResponseException responseException = (HttpResponseException) e;
-            Utils.trackError(context, AnalyticsEvents.HEXAGON_ERROR, action,
-                    responseException.getStatusCode() + " " + responseException.getStatusMessage());
-            // log like "action: 404 not found"
-            Timber.e("%s: %s %s", action, responseException.getStatusCode(),
-                    responseException.getStatusMessage());
+            Utils.trackFailedRequest(new HexagonRequestError(action,
+                    responseException.getStatusCode(), responseException.getStatusMessage()));
         } else {
-            Utils.trackFailedRequest(context, AnalyticsEvents.HEXAGON_ERROR, action, e);
+            Utils.trackFailedRequest(new HexagonRequestError(action, e));
         }
     }
 
-    public void trackSignInFailure(String action, ConnectionResult connectionResult) {
+    void trackSignInFailure(String action, ConnectionResult connectionResult) {
         String failureMessage = connectionResult.getErrorCode() + " "
                 + connectionResult.getErrorMessage();
         trackSignInFailure(action, failureMessage);
     }
 
-    public void trackSignInFailure(String action, Status status) {
+    void trackSignInFailure(String action, Status status) {
         String failureMessage = GoogleSignInStatusCodes.getStatusCodeString(status.getStatusCode());
         trackSignInFailure(action, failureMessage);
     }
 
-    public void trackSignInFailure(String action, String failureMessage) {
-        Utils.trackError(context, AnalyticsEvents.SIGN_IN_ERROR, action, failureMessage);
+    void trackSignInFailure(String action, String failureMessage) {
         Timber.e("%s: %s", action, failureMessage);
+        Utils.trackError(AnalyticsEvents.SIGN_IN_ERROR,
+                new HexagonSignInError(action, failureMessage));
     }
 }

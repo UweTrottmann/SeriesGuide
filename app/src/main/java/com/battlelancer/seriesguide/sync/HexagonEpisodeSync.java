@@ -88,7 +88,7 @@ public class HexagonEpisodeSync {
                     hasMoreEpisodes = false;
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "get updated episodes", e);
+                HexagonTools.trackFailedRequest("get updated episodes", e);
                 return false;
             }
 
@@ -209,7 +209,7 @@ public class HexagonEpisodeSync {
                     hasMoreEpisodes = false;
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "get episodes of show", e);
+                HexagonTools.trackFailedRequest("get episodes of show", e);
                 return false;
             }
 
@@ -379,7 +379,7 @@ public class HexagonEpisodeSync {
                     episodesService.save(episodeList).execute();
                 } catch (IOException e) {
                     // abort
-                    HexagonTools.trackFailedRequest(context, "save episodes of show", e);
+                    HexagonTools.trackFailedRequest("save episodes of show", e);
                     query.close();
                     return false;
                 }

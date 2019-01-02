@@ -35,7 +35,7 @@ import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
-import com.google.firebase.analytics.FirebaseAnalytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import java.net.UnknownHostException;
@@ -169,64 +169,31 @@ public class Utils {
     }
 
     /**
-     * Track a selection event.
-     */
-    public static void trackSelect(Context context, String type) {
-        Bundle params = new Bundle();
-        params.putString(FirebaseAnalytics.Param.CONTENT_TYPE, type);
-        FirebaseAnalytics.getInstance(context)
-                .logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
-    }
-
-    /**
-     * Track a share event.
-     */
-    public static void trackShare(Context context, String contentType) {
-        Bundle params = new Bundle();
-        params.putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType);
-        FirebaseAnalytics.getInstance(context)
-                .logEvent(FirebaseAnalytics.Event.SHARE, params);
-    }
-
-    /**
      * Track something gone wrong.
      */
-    public static void trackError(@NonNull Context context, String eventName, String action,
-            String message) {
-        Bundle params = new Bundle();
-        // can't filter by param, so only have one param
-        params.putString("action", action + ": " + message);
-        FirebaseAnalytics.getInstance(context).logEvent(eventName, params);
+    public static void trackError(String eventName, @NonNull Throwable throwable) {
+        CrashlyticsCore.getInstance().setString("event", eventName);
+        CrashlyticsCore.getInstance().logException(throwable);
     }
 
     /**
-     * Shortcut for {@link #trackError(Context, String, String, String) trackError(context, eventName, action, code + " " + message)}
+     * Shortcut for {@link #trackError(String, Throwable) trackError(eventName, throwable)}
      * plus error log.
      */
-    public static void trackFailedRequest(Context context, String eventName, String action,
-            int code, String message) {
-        // log like "action: 404 not found"
-        Timber.tag(eventName);
-        Timber.e("%s: %s %s", action, code, message);
-
-        trackError(context, eventName, action, code + " " + message);
-    }
-
-    /**
-     * Shortcut for {@link #trackError(Context, String, String, String) trackError(context, eventName, action, throwable.getClass().getSimpleName())}
-     * plus error log.
-     */
-    public static void trackFailedRequest(Context context, String eventName, String action,
-            @NonNull Throwable throwable) {
-        // log like "action: Unable to resolve host"
-        Timber.tag(eventName);
-        Timber.e(throwable, "%s: %s", action, throwable.getMessage());
-
-        if (throwable instanceof UnknownHostException /* mostly devices loosing connection */) {
-            return; // do not track
+    public static void trackFailedRequest(@NonNull RequestError throwable) {
+        if (throwable.getCode() != null && throwable.getFailureMessage() != null) {
+            // log like "action: 404 not found"
+            Timber.tag(throwable.getEvent());
+            Timber.e("%s: %s %s", throwable.getAction(), throwable.getCode(),
+                    throwable.getFailureMessage());
         }
-        // for tracking only send exception name
-        trackError(context, eventName, action, throwable.getClass().getSimpleName());
+
+        if (throwable.getCause() instanceof UnknownHostException) {
+            return; // do not track, mostly devices loosing connection
+        }
+
+        CrashlyticsCore.getInstance().setString("action", throwable.getAction());
+        trackError(throwable.getEvent(), throwable);
     }
 
     /**

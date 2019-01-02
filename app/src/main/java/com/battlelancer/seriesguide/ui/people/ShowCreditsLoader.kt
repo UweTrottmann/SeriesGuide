@@ -45,10 +45,10 @@ class ShowCreditsLoader(context: Context, private var showId: Int, private val f
             if (response.isSuccessful) {
                 return response.body()
             } else {
-                SgTmdb.trackFailedRequest(context, "get show credits", response)
+                SgTmdb.trackFailedRequest("get show credits", response)
             }
         } catch (e: Exception) {
-            SgTmdb.trackFailedRequest(context, "get show credits", e)
+            SgTmdb.trackFailedRequest("get show credits", e)
         }
 
         return null
@@ -68,10 +68,10 @@ class ShowCreditsLoader(context: Context, private var showId: Int, private val f
                     Timber.d("Downloading show credits failed: show not on TMDb")
                 }
             } else {
-                SgTmdb.trackFailedRequest(context, "find tvdb show", response)
+                SgTmdb.trackFailedRequest("find tvdb show", response)
             }
         } catch (e: Exception) {
-            SgTmdb.trackFailedRequest(context, "find tvdb show", e)
+            SgTmdb.trackFailedRequest("find tvdb show", e)
         }
 
         return false

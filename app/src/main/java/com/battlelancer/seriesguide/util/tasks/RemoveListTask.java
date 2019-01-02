@@ -40,7 +40,7 @@ public class RemoveListTask extends BaseActionTask {
             try {
                 listsService.remove(listId).execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(getContext(), "remove list", e);
+                HexagonTools.trackFailedRequest("remove list", e);
                 return ERROR_HEXAGON_API;
             }
         }

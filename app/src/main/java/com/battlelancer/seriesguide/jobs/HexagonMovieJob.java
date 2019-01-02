@@ -41,7 +41,7 @@ public class HexagonMovieJob extends BaseNetworkMovieJob {
             }
             moviesService.save(uploadWrapper).execute();
         } catch (HttpResponseException e) {
-            HexagonTools.trackFailedRequest(context, "save movie", e);
+            HexagonTools.trackFailedRequest("save movie", e);
             int code = e.getStatusCode();
             if (code >= 400 && code < 500) {
                 return buildResult(context, NetworkJob.ERROR_HEXAGON_CLIENT);
@@ -49,7 +49,7 @@ public class HexagonMovieJob extends BaseNetworkMovieJob {
                 return buildResult(context, NetworkJob.ERROR_HEXAGON_SERVER);
             }
         } catch (IOException e) {
-            HexagonTools.trackFailedRequest(context, "save movie", e);
+            HexagonTools.trackFailedRequest("save movie", e);
             return buildResult(context, NetworkJob.ERROR_CONNECTION);
         }
 

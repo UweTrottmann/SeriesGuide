@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.AnalyticsEvents;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import java.text.SimpleDateFormat;
@@ -192,10 +191,6 @@ public class TimeTools {
             localDate = LocalDate.parse(releaseDate);
         } catch (DateTimeParseException e) {
             // date string could not be parsed
-            if (context != null) {
-                Utils.trackError(context, AnalyticsEvents.THETVDB_ERROR,
-                        "Date parsing failure", releaseDate);
-            }
             Timber.e(e, "TheTVDB date could not be parsed: %s", releaseDate);
             return Constants.EPISODE_UNKNOWN_RELEASE;
         }

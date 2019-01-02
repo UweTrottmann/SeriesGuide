@@ -58,7 +58,7 @@ public class ChangeListItemListsTask extends BaseActionTask {
                 try {
                     listsService.save(wrapper).execute();
                 } catch (IOException e) {
-                    HexagonTools.trackFailedRequest(getContext(), "add list items", e);
+                    HexagonTools.trackFailedRequest("add list items", e);
                     return ERROR_HEXAGON_API;
                 }
             }
@@ -70,7 +70,7 @@ public class ChangeListItemListsTask extends BaseActionTask {
                 try {
                     listsService.removeItems(wrapper).execute();
                 } catch (IOException e) {
-                    HexagonTools.trackFailedRequest(getContext(), "remove list items", e);
+                    HexagonTools.trackFailedRequest("remove list items", e);
                     return ERROR_HEXAGON_API;
                 }
             }

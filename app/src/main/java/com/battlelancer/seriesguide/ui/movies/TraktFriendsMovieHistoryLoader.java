@@ -67,7 +67,7 @@ class TraktFriendsMovieHistoryLoader extends GenericSimpleLoader<List<NowAdapter
             }
 
             // get last watched episode
-            List<HistoryEntry> history = SgTrakt.executeCall(getContext(),
+            List<HistoryEntry> history = SgTrakt.executeCall(
                     traktUsers.history(new UserSlug(userSlug), HistoryType.MOVIES, 1, 1,
                             null, null, null), "get friend movie history");
             if (history == null || history.size() == 0) {

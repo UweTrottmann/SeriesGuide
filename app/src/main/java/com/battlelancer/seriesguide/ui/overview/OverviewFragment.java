@@ -350,9 +350,7 @@ public class OverviewFragment extends Fragment implements
         }
         int episodeTvdbId = currentEpisodeCursor.getInt(EpisodeQuery._ID);
         // check in
-        if (CheckInDialogFragment.show(getActivity(), getFragmentManager(), episodeTvdbId)) {
-            Utils.trackSelect(getActivity(), "check in episode");
-        }
+        CheckInDialogFragment.show(getActivity(), getFragmentManager(), episodeTvdbId);
     }
 
     @OnClick(R.id.buttonEpisodeStreamingSearch)
@@ -388,7 +386,6 @@ public class OverviewFragment extends Fragment implements
     void onButtonWatchedClick() {
         hasSetEpisodeWatched = true;
         changeEpisodeFlag(EpisodeFlags.WATCHED);
-        Utils.trackSelect(getActivity(), "set episode watched");
     }
 
     @OnClick(R.id.buttonEpisodeCollected)
@@ -401,15 +398,11 @@ public class OverviewFragment extends Fragment implements
         final boolean isCollected = currentEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1;
         EpisodeTools.episodeCollected(getContext(), showTvdbId,
                 currentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, !isCollected);
-        if (!isCollected) {
-            Utils.trackSelect(requireContext(), "add episode to collection");
-        }
     }
 
     @OnClick(R.id.buttonEpisodeSkip)
     void onButtonSkipClicked() {
         changeEpisodeFlag(EpisodeFlags.SKIPPED);
-        Utils.trackSelect(requireContext(), "skip episode");
     }
 
     private void changeEpisodeFlag(int episodeFlag) {
@@ -427,10 +420,8 @@ public class OverviewFragment extends Fragment implements
         if (currentEpisodeTvdbId == 0) {
             return;
         }
-        if (RateDialogFragment.newInstanceEpisode(currentEpisodeTvdbId)
-                .safeShow(getContext(), getFragmentManager())) {
-            Utils.trackSelect(requireContext(), "rate episode");
-        }
+        RateDialogFragment.newInstanceEpisode(currentEpisodeTvdbId)
+                .safeShow(getContext(), getFragmentManager());
     }
 
     @OnClick(R.id.buttonEpisodeComments)
@@ -457,8 +448,6 @@ public class OverviewFragment extends Fragment implements
 
         ShareUtils.shareEpisode(getActivity(), showTvdbSlug, showTvdbId, seasonTvdbId,
                 currentEpisodeTvdbId, seasonNumber, episodeNumber, showTitle, episodeTitle);
-
-        Utils.trackShare(getActivity(), "episode");
     }
 
     public static class EpisodeLoader extends CursorLoader {

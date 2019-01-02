@@ -49,10 +49,10 @@ class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
             if (response.isSuccessful()) {
                 return extractTrailer(response.body());
             } else {
-                SgTmdb.trackFailedRequest(getContext(), action, response);
+                SgTmdb.trackFailedRequest(action, response);
             }
         } catch (Exception e) {
-            SgTmdb.trackFailedRequest(getContext(), action, e);
+            SgTmdb.trackFailedRequest(action, e);
         }
         return null;
     }

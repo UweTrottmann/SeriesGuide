@@ -97,7 +97,7 @@ public class HexagonMovieSync {
                     hasMoreMovies = false;
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "get movies", e);
+                HexagonTools.trackFailedRequest("get movies", e);
                 return false;
             }
 
@@ -181,7 +181,7 @@ public class HexagonMovieSync {
             }
             moviesService.save(movieList).execute();
         } catch (IOException e) {
-            HexagonTools.trackFailedRequest(context, "save movies", e);
+            HexagonTools.trackFailedRequest("save movies", e);
             return false;
         }
 

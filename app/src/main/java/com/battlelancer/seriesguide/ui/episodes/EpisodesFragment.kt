@@ -242,7 +242,6 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                 when (item.itemId) {
                     R.id.menu_action_episodes_watched -> {
                         onFlagEpisodeWatched(episodeTvdbId, episodeNumber, true)
-                        Utils.trackSelect(requireContext(), "set episode watched")
                         true
                     }
                     R.id.menu_action_episodes_not_watched -> {
@@ -251,7 +250,6 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                     }
                     R.id.menu_action_episodes_collection_add -> {
                         onFlagEpisodeCollected(episodeTvdbId, episodeNumber, true)
-                        Utils.trackSelect(requireContext(), "add episode to collection")
                         true
                     }
                     R.id.menu_action_episodes_collection_remove -> {
@@ -260,7 +258,6 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                     }
                     R.id.menu_action_episodes_skip -> {
                         onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, true)
-                        Utils.trackSelect(requireContext(), "skip episode")
                         true
                     }
                     R.id.menu_action_episodes_dont_skip -> {

@@ -358,7 +358,7 @@ public class TvdbTools {
                     hexagonShow = showsService.getShow().setShowTvdbId(showTvdbId).execute();
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "get show details", e);
+                HexagonTools.trackFailedRequest("get show details", e);
                 throw new TvdbCloudException("getShowDetailsWithHexagon", e);
             }
         }
@@ -412,7 +412,7 @@ public class TvdbTools {
 
         if (showTraktId != null) {
             // get some more details from trakt
-            com.uwetrottmann.trakt5.entities.Show traktShow = SgTrakt.executeCall(context,
+            com.uwetrottmann.trakt5.entities.Show traktShow = SgTrakt.executeCall(
                     traktShows.get().summary(String.valueOf(showTraktId), Extended.FULL),
                     "get show summary"
             );
@@ -451,7 +451,6 @@ public class TvdbTools {
     @Nullable
     private Integer lookupShowTraktId(int showTvdbId) throws TvdbException {
         List<com.uwetrottmann.trakt5.entities.SearchResult> searchResults = SgTrakt.executeCall(
-                context,
                 traktSearch.get().idLookup(IdType.TVDB, String.valueOf(showTvdbId), Type.SHOW,
                         null, 1, 1),
                 "show trakt id lookup"

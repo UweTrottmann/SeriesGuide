@@ -65,11 +65,11 @@ class ShowsPopularDataSource(
                 totalCount = response.headers().get("X-Pagination-Item-Count")?.toInt()
                         ?: throw IllegalStateException("Item count header missing")
             } else {
-                SgTrakt.trackFailedRequest(context, action, response)
+                SgTrakt.trackFailedRequest(action, response)
                 return buildResultGenericFailure()
             }
         } catch (e: Exception) {
-            SgTrakt.trackFailedRequest(context, action, e)
+            SgTrakt.trackFailedRequest(action, e)
             // only check for network here to allow hitting the response cache
             return if (AndroidUtils.isNetworkConnected(context)) {
                 buildResultGenericFailure()
