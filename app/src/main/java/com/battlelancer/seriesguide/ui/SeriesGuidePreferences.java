@@ -42,7 +42,6 @@ import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
@@ -59,7 +58,6 @@ import com.battlelancer.seriesguide.util.DialogTools;
 import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -207,19 +205,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
         }
 
         private void setupRootSettings() {
-            // GA opt-out
-            findPreference(AppSettings.KEY_GOOGLEANALYTICS).setOnPreferenceChangeListener(
-                    (preference, newValue) -> {
-                        if (preference.getKey().equals(AppSettings.KEY_GOOGLEANALYTICS)) {
-                            boolean isGaEnabled = (Boolean) newValue;
-                            // note: also set during app setup
-                            FirebaseAnalytics.getInstance(getActivity())
-                                    .setAnalyticsCollectionEnabled(isGaEnabled);
-                            return true;
-                        }
-                        return false;
-                    });
-
             // display version as About summary
             findPreference(KEY_ABOUT).setSummary(Utils.getVersionString(getActivity()));
         }

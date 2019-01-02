@@ -18,12 +18,10 @@ import com.battlelancer.seriesguide.modules.TmdbModule
 import com.battlelancer.seriesguide.modules.TraktModule
 import com.battlelancer.seriesguide.modules.TvdbModule
 import com.battlelancer.seriesguide.service.NotificationService
-import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.crashlytics.android.core.CrashlyticsCore
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
@@ -145,9 +143,6 @@ class SgApp : Application() {
             // use core kit only, Crashlytics kit also adds Answers and Beta kit
             Fabric.with(this, CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
         }
-        // Initialize and ensure Firebase Analytics opt-out (also toggled in settings)
-        FirebaseAnalytics.getInstance(this)
-            .setAnalyticsCollectionEnabled(AppSettings.isGaEnabled(this))
 
         if (BuildConfig.DEBUG) {
             // debug drawer logging

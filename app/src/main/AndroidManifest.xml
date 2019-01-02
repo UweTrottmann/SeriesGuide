@@ -7,10 +7,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- Firebase Analytics (api project would restrict to maxSdk 25) -->
-    <uses-permission
-        android:name="android.permission.WAKE_LOCK"
-        tools:remove="android:maxSdkVersion" />
     <!-- Notification service -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -424,10 +420,6 @@
                 android:resource="@xml/sync_seriesguide" />
         </service>
 
-        <!-- Disable Google Analytics for Firebase collection until explicitly started in SgApp -->
-        <meta-data android:name="firebase_analytics_collection_enabled" android:value="false" />
-        <!-- Do not allow Google Analytics for Firebase to collect the advertising ID -->
-        <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />
     </application>
 
 </manifest>
