@@ -291,9 +291,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private void onToggleWatched() {
         boolean watched = EpisodeTools.isWatched(episodeFlag);
         changeEpisodeFlag(watched ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED);
-        if (watched) {
-            Utils.trackSelect(requireContext(), "set episode watched");
-        }
     }
 
     /**
@@ -302,9 +299,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private void onToggleSkipped() {
         boolean skipped = EpisodeTools.isSkipped(episodeFlag);
         changeEpisodeFlag(skipped ? EpisodeFlags.UNWATCHED : EpisodeFlags.SKIPPED);
-        if (skipped) {
-            Utils.trackSelect(requireContext(), "skip episode");
-        }
     }
 
     private void changeEpisodeFlag(int episodeFlag) {
@@ -317,9 +311,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         collected = !collected;
         EpisodeTools.episodeCollected(requireContext(), showTvdbId, episodeTvdbId,
                 seasonNumber, episodeNumber, collected);
-        if (collected) {
-            Utils.trackSelect(requireContext(), "add episode to collection");
-        }
     }
 
     @OnClick(R.id.buttonEpisodeStreamingSearch)
@@ -525,11 +516,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         loadImage(imagePath, hideDetails);
 
         // check in button
-        buttonCheckin.setOnClickListener(v -> {
-            if (CheckInDialogFragment.show(getContext(), getFragmentManager(), episodeTvdbId)) {
-                Utils.trackSelect(requireContext(), "check in episode");
-            }
-        });
+        buttonCheckin.setOnClickListener(
+                v -> CheckInDialogFragment.show(getContext(), getFragmentManager(), episodeTvdbId));
         CheatSheet.setup(buttonCheckin);
 
         // hide check-in if not connected to trakt or hexagon is enabled
@@ -631,10 +619,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     }
 
     private void rateEpisode() {
-        if (RateDialogFragment.newInstanceEpisode(episodeTvdbId)
-                .safeShow(getContext(), getFragmentManager())) {
-            Utils.trackSelect(requireContext(), "rate episode");
-        }
+        RateDialogFragment.newInstanceEpisode(episodeTvdbId)
+                .safeShow(getContext(), getFragmentManager());
     }
 
     private void shareEpisode() {
@@ -643,7 +629,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         }
         ShareUtils.shareEpisode(requireActivity(), showTvdbSlug, showTvdbId, seasonTvdbId,
                 episodeTvdbId, seasonNumber, episodeNumber, showTitle, episodeTitle);
-        Utils.trackShare(requireContext(), "episode");
     }
 
     private void loadImage(String imagePath, boolean hideDetails) {

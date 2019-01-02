@@ -199,7 +199,6 @@ public class ExtensionsConfigurationFragment extends Fragment {
                 @Override
                 public void onAddExtensionClick(View anchor) {
                     showAddExtensionPopupMenu(anchor);
-                    Utils.trackSelect(getActivity(), "Add extension");
                 }
             };
 

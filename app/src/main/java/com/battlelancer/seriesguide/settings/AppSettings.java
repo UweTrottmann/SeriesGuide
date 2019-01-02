@@ -21,8 +21,6 @@ public class AppSettings {
     @SuppressWarnings("unused") @Deprecated
     public static final String KEY_HAS_SEEN_NAV_DRAWER = "hasSeenNavDrawer";
 
-    public static final String KEY_LAST_STATS_REPORT = "timeLastStatsReport";
-
     public static final String KEY_ASKED_FOR_FEEDBACK = "askedForFeedback";
 
     /**
@@ -45,24 +43,6 @@ public class AppSettings {
     public static boolean isGaEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_GOOGLEANALYTICS, true);
-    }
-
-    /**
-     * Whether to report stats, or if this was done today already.
-     */
-    public static boolean shouldReportStats(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-        long currentTime = System.currentTimeMillis();
-        long lastReportTime = prefs.getLong(KEY_LAST_STATS_REPORT, 0);
-        boolean shouldReport = lastReportTime + 30 * DateUtils.DAY_IN_MILLIS < currentTime;
-
-        if (shouldReport) {
-            // reset report time
-            prefs.edit().putLong(KEY_LAST_STATS_REPORT, currentTime).apply();
-        }
-
-        return shouldReport;
     }
 
     public static boolean shouldAskForFeedback(Context context) {

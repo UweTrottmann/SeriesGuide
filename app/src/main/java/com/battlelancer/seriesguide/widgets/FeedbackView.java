@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.widgets;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -13,10 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.AnalyticsEvents;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -91,23 +88,14 @@ public class FeedbackView extends FrameLayout {
         setQuestion(savedState.question);
     }
 
-    private void trackFeedback(String question, String answer) {
-        Bundle params = new Bundle();
-        // can't filter by param, so only have one param
-        params.putString("answer", question + ": " + answer);
-        FirebaseAnalytics.getInstance(getContext()).logEvent(AnalyticsEvents.FEEDBACK, params);
-    }
-
     private OnClickListener buttonClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
             if (question == Question.ENJOY) {
                 if (v == positiveButton) {
                     setQuestion(Question.RATE);
-                    trackFeedback(ACTION_QUESTION_ENJOY, "Yes");
                 } else if (v == negativeButton) {
                     setQuestion(Question.FEEDBACK);
-                    trackFeedback(ACTION_QUESTION_ENJOY, "Not really");
                 }
             } else {
                 if (callback == null) {
@@ -116,17 +104,11 @@ public class FeedbackView extends FrameLayout {
                 if (v == positiveButton) {
                     if (question == Question.RATE) {
                         callback.onRate();
-                        trackFeedback(ACTION_QUESTION_RATE, "OK");
                     } else if (question == Question.FEEDBACK) {
                         callback.onFeedback();
-                        trackFeedback(ACTION_QUESTION_FEEDBACK, "OK");
                     }
                 } else if (v == negativeButton) {
                     callback.onDismiss();
-                    trackFeedback(question == Question.RATE
-                                    ? ACTION_QUESTION_RATE
-                                    : ACTION_QUESTION_FEEDBACK,
-                            "No thanks");
                 }
             }
         }

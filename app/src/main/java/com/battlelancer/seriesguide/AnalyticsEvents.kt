@@ -9,8 +9,5 @@ class AnalyticsEvents {
         const val TRAKT_ERROR = "trakt_error"
         const val TRAKT_OAUTH_ERROR = "trakt_oauth_error"
         const val BEAM_ERROR = "beam_error"
-
-        const val FEEDBACK = "feedback"
-        const val GET_STARTED = "get_started"
     }
 }

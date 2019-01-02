@@ -336,7 +336,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         int itemId = item.getItemId();
         if (itemId == R.id.menu_movie_share) {
             ShareUtils.shareMovie(getActivity(), tmdbId, movieDetails.tmdbMovie().title);
-            Utils.trackShare(getActivity(), "movie");
             return true;
         }
         if (itemId == R.id.menu_open_imdb) {
@@ -415,7 +414,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                     MovieTools.unwatchedMovie(getContext(), tmdbId);
                 } else {
                     MovieTools.watchedMovie(getContext(), tmdbId);
-                    Utils.trackSelect(getActivity(), "Set movie watched");
                 }
             });
             buttonMovieWatched.setVisibility(View.VISIBLE);
@@ -440,7 +438,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 MovieTools.removeFromCollection(getContext(), tmdbId);
             } else {
                 MovieTools.addToCollection(getContext(), tmdbId);
-                Utils.trackSelect(getActivity(), "add movie to collection");
             }
         });
 
@@ -461,7 +458,6 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 MovieTools.removeFromWatchlist(getContext(), tmdbId);
             } else {
                 MovieTools.addToWatchlist(getContext(), tmdbId);
-                Utils.trackSelect(getActivity(), "add movie to watchlist");
             }
         });
 
@@ -583,9 +579,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
         if (TextUtils.isEmpty(movieTitle)) {
             return;
         }
-        if (MovieCheckInDialogFragment.show(getFragmentManager(), tmdbId, movieTitle)) {
-            Utils.trackSelect(getActivity(), "check in movie");
-        }
+        MovieCheckInDialogFragment.show(getFragmentManager(), tmdbId, movieTitle);
     }
 
     @OnClick(R.id.buttonMovieStreamingSearch)
@@ -721,10 +715,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
     }
 
     private void rateMovie() {
-        if (RateDialogFragment.newInstanceMovie(tmdbId)
-                .safeShow(getContext(), getFragmentManager())) {
-            Utils.trackSelect(getActivity(), "rate movie");
-        }
+        RateDialogFragment.newInstanceMovie(tmdbId).safeShow(getContext(), getFragmentManager());
     }
 
     private void setCrewVisibility(boolean visible) {

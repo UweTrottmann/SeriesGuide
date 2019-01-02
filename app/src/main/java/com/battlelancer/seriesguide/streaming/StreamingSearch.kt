@@ -104,13 +104,11 @@ object StreamingSearch {
     @JvmStatic
     fun searchForShow(context: Context, showTitle: String) {
         buildAndLaunch(context, showTitle, "show")
-        Utils.trackSelect(context, "stream search show")
     }
 
     @JvmStatic
     fun searchForMovie(context: Context, movieTitle: String) {
         buildAndLaunch(context, movieTitle, "movie")
-        Utils.trackSelect(context, "stream search movie")
     }
 
 }

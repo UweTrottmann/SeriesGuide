@@ -169,26 +169,6 @@ public class Utils {
     }
 
     /**
-     * Track a selection event.
-     */
-    public static void trackSelect(Context context, String type) {
-        Bundle params = new Bundle();
-        params.putString(FirebaseAnalytics.Param.CONTENT_TYPE, type);
-        FirebaseAnalytics.getInstance(context)
-                .logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
-    }
-
-    /**
-     * Track a share event.
-     */
-    public static void trackShare(Context context, String contentType) {
-        Bundle params = new Bundle();
-        params.putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType);
-        FirebaseAnalytics.getInstance(context)
-                .logEvent(FirebaseAnalytics.Event.SHARE, params);
-    }
-
-    /**
      * Track something gone wrong.
      */
     public static void trackError(@NonNull Context context, String eventName, String action,
