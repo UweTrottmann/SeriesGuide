@@ -9,6 +9,7 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.gson.JsonParseException;
 import java.net.UnknownHostException;
+import org.threeten.bp.format.DateTimeParseException;
 import timber.log.Timber;
 
 /**
@@ -77,7 +78,8 @@ public class AnalyticsTree extends Timber.DebugTree {
         // track some non-fatal exceptions with crashlytics
         if (priority == Log.ERROR) {
             if (t instanceof SQLiteException /* Content provider */
-                    || t instanceof JsonParseException /* Retrofit */) {
+                    || t instanceof JsonParseException /* Retrofit */
+                    || t instanceof DateTimeParseException /* TheTVDB */) {
                 CrashlyticsCore.getInstance().logException(t);
             }
         }
