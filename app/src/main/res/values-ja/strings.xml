@@ -11,7 +11,7 @@
     <string name="help">ヘルプ</string>
     <string name="help_and_feedback">ヘルプ &amp; フィードバック</string>
     <string name="drawer_open">ナビゲーションドロワーを開く</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide は、このバージョンの Android の更新をもう受け取りません。</string>
     <!-- Media items -->
     <string name="show">番組</string>
     <string name="episode">エピソード</string>
@@ -345,7 +345,7 @@
         <item quantity="other">%d 分前</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy">プライバシーポリシー</string>
     <string name="licence_tvdb">このアプリは、TheTVDB により CC BY-NC 4.0 の下でライセンスされるデータと画像を使用します。</string>
     <string name="licence_themoviedb">この製品は TMDb API を使用していますが、TMDb による承認または認定はされていません。</string>
     <string name="licence_trakt">このアプリは Trakt の情報や画像を使用します。</string>
@@ -435,7 +435,7 @@
     <string name="hide_watched">視聴済のエピソードを非表示</string>
     <string name="pref_widget_opacity">ウィジェットの背景</string>
     <string name="pref_widget_type">ウィジェットのタイプ</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">大きいフォントを使用する</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">透明</string>
     <string name="widget_background_25">25%</string>

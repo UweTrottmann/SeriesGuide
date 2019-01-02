@@ -11,7 +11,7 @@
     <string name="help">Ayuda</string>
     <string name="help_and_feedback">Ayuda y comentarios</string>
     <string name="drawer_open">Abrir menú lateral</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide no recibirá más actualizaciones para esta versión de Android.</string>
     <!-- Media items -->
     <string name="show">Serie</string>
     <string name="episode">Episodio</string>
@@ -357,7 +357,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
         <item quantity="other">%d minutos antes</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy">Política de privacidad</string>
     <string name="licence_tvdb">La aplicación utiliza datos e imágenes de TheTVDB licenciadas bajo la CC BY-NC 4.0.</string>
     <string name="licence_themoviedb">Este producto utiliza la API de TMDb pero no está patrocinado ni certificado por TMDb.</string>
     <string name="licence_trakt">Esta aplicación utiliza datos e imágenes de trakt.</string>
