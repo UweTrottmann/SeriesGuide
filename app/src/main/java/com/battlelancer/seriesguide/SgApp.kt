@@ -221,8 +221,18 @@ class SgApp : Application() {
     private fun enableStrictMode() {
         // Enable StrictMode
         with(ThreadPolicy.Builder()) {
-            detectAll()
             penaltyLog()
+
+            // exclude disk reads
+            detectDiskWrites()
+            detectNetwork()
+            detectCustomSlowCalls()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                detectResourceMismatches()
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                detectUnbufferedIo()
+            }
             StrictMode.setThreadPolicy(build())
         }
 
