@@ -85,10 +85,10 @@ public class TraktAuthActivity extends BaseOAuthActivity {
         // if state does not match what we sent, drop the auth code
         if (this.state == null || !this.state.equals(state)) {
             // log trakt OAuth failures
-            Utils.trackError(this, AnalyticsEvents.TRAKT_OAUTH_ERROR, ACTION_FETCHING_TOKENS,
-                    ERROR_DESCRIPTION_STATE_MISMATCH);
             Timber.tag(AnalyticsEvents.TRAKT_OAUTH_ERROR);
             Timber.e("%s: %s", ACTION_FETCHING_TOKENS, ERROR_DESCRIPTION_STATE_MISMATCH);
+            Utils.trackError(AnalyticsEvents.TRAKT_OAUTH_ERROR,
+                    new TraktOAuthError(ACTION_FETCHING_TOKENS, ERROR_DESCRIPTION_STATE_MISMATCH));
 
             setMessage(getAuthErrorMessage() + (this.state == null ?
                     "\n\n(State is null.)" :

@@ -171,14 +171,6 @@ public class Utils {
     /**
      * Track something gone wrong.
      */
-    public static void trackError(@NonNull Context context, String eventName, String action,
-            String message) {
-        // TODO need to change code to throw exceptions, then log them here
-    }
-
-    /**
-     * Track something gone wrong.
-     */
     public static void trackError(String eventName, @NonNull Throwable throwable) {
         CrashlyticsCore.getInstance().setString("event", eventName);
         CrashlyticsCore.getInstance().logException(throwable);
