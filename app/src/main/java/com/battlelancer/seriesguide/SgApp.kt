@@ -155,7 +155,7 @@ class SgApp : Application() {
             Timber.plant(Timber.DebugTree())
         }
         // crash and error reporting
-        Timber.plant(AnalyticsTree(this))
+        Timber.plant(AnalyticsTree())
     }
 
     private fun initializeEventBus() {
