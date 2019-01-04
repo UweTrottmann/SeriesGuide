@@ -31,10 +31,10 @@ TheTVDB.com (https://www.thetvdb.com)
 -------------------------------------
 
 This app uses data and images from TheTVDB licensed under a
-Creative Commons Attribution-NonCommercial 4.0 International License.
-http://creativecommons.org/licenses/by-nc/4.0/
+Creative Commons license.
+https://creativecommons.org/licenses/by-nc/3.0/
 
-https://www.thetvdb.com/?tab=tos
+https://www.thetvdb.com/tos
 
 
 TMDb - The Movie Database (https://www.themoviedb.org)

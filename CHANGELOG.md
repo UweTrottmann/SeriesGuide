@@ -7,7 +7,23 @@ All dates are in the European Central timezone.
 
 Version 46
 ----------
-*(in development)*
+*(2019-01-04)*
+
+📝 Add no more updates notice for devices running Android 4.4 (KitKat) and older. The next version will only be available for Android 5.0 (Lollipop) and newer.
+
+🌟 Add large font option for list widget. This can help with launchers that display widgets smaller than intended.
+
+🔨 Sharing thetvdb.com URLs to SeriesGuide will again suggest to add the show.
+
+🔧 Link to new community site.
+
+🔧 Drop Google Analytics.
+
+#### 46
+*(2019-01-04)*
+
+* 🔧 Update link to community site, TheTVDB terms. Move them to root settings page.
+* 📝 Latest translations from crowdin.
 
 #### 46-beta5
 *(2019-01-02)*
