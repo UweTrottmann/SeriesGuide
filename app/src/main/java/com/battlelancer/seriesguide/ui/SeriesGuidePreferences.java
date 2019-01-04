@@ -179,7 +179,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
 
         public static final String KEY_SCREEN_BASIC = "screen_basic";
         private static final String KEY_SCREEN_NOTIFICATIONS = "screen_notifications";
-        private static final String KEY_SCREEN_ADVANCED = "screen_advanced";
 
         private static final int REQUEST_CODE_RINGTONE = 0;
 
@@ -198,13 +197,27 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             } else if (settings.equals(KEY_SCREEN_NOTIFICATIONS)) {
                 addPreferencesFromResource(R.xml.settings_notifications);
                 setupNotificationSettings();
-            } else if (settings.equals(KEY_SCREEN_ADVANCED)) {
-                addPreferencesFromResource(R.xml.settings_advanced);
-                setupAdvancedSettings();
             }
         }
 
         private void setupRootSettings() {
+            // Clear image cache
+            findPreference(KEY_CLEAR_CACHE)
+                    .setOnPreferenceClickListener(preference -> {
+                        // try to open app info where user can clear app cache folders
+                        Intent intent = new Intent(
+                                Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
+                        if (!Utils.tryStartActivity(getActivity(), intent, false)) {
+                            // try to open all apps view if detail view not available
+                            intent = new Intent(
+                                    Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
+                            Utils.tryStartActivity(getActivity(), intent, true);
+                        }
+
+                        return true;
+                    });
+
             // display version as About summary
             findPreference(KEY_ABOUT).setSummary(Utils.getVersionString(getActivity()));
         }
@@ -337,25 +350,6 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             setListPreferenceSummary(
                     (ListPreference) findPreference(DisplaySettings.KEY_LANGUAGE_FALLBACK));
             updateTimeOffsetSummary(findPreference(DisplaySettings.KEY_SHOWS_TIME_OFFSET));
-        }
-
-        private void setupAdvancedSettings() {
-            // Clear image cache
-            findPreference(KEY_CLEAR_CACHE)
-                    .setOnPreferenceClickListener(preference -> {
-                        // try to open app info where user can clear app cache folders
-                        Intent intent = new Intent(
-                                Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
-                        if (!Utils.tryStartActivity(getActivity(), intent, false)) {
-                            // try to open all apps view if detail view not available
-                            intent = new Intent(
-                                    Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
-                            Utils.tryStartActivity(getActivity(), intent, true);
-                        }
-
-                        return true;
-                    });
         }
 
         @Override

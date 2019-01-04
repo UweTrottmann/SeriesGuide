@@ -64,11 +64,9 @@
 
     <!-- Settings -->
     <string name="pref_translate">Translate SeriesGuide</string>
-    <string name="pref_translatesummary">Translate or proofread on crowdin (English)</string>
-    <string name="pref_community">Google+ community</string>
-    <string name="pref_communitysummary">Share ideas, discuss changes or report problems (English)</string>
-    <string name="pref_suggest_features">Suggest improvements</string>
-    <string name="pref_suggest_featuressummary">Suggest and vote on future improvements (English)</string>
+    <string name="pref_translatesummary">Translate or proofread for this app (English)</string>
+    <string name="pref_community">SeriesGuide Community</string>
+    <string name="pref_communitysummary">Ask for help, discuss ideas or report problems (English)</string>
 
     <!-- Themes -->
     <string name="theme_default">SeriesGuide</string>
