@@ -6,14 +6,12 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.sax.Element;
-import android.sax.EndElementListener;
-import android.sax.EndTextElementListener;
 import android.sax.RootElement;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Xml;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
@@ -240,7 +238,7 @@ public class TvdbTools {
         retrofit2.Response<SeriesResultsResponse> response;
         try {
             response = tvdbSearch.get()
-                    .series(query, null, null, language)
+                    .series(query, null, null, null, language)
                     .execute();
         } catch (Exception e) {
             throw new TvdbException("searchSeries", e);
@@ -285,35 +283,20 @@ public class TvdbTools {
         RootElement root = new RootElement("Data");
         Element item = root.getChild("Series");
         // set handlers for elements we want to react to
-        item.setEndElementListener(new EndElementListener() {
-            public void end() {
-                // only take results in the selected language
-                if (language == null || language.equals(currentShow.getLanguage())) {
-                    series.add(currentShow.copy());
-                }
+        item.setEndElementListener(() -> {
+            // only take results in the selected language
+            if (language == null || language.equals(currentShow.getLanguage())) {
+                series.add(currentShow.copy());
             }
         });
-        item.getChild("id").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.setTvdbid(Integer.valueOf(body));
-            }
-        });
-        item.getChild("language").setEndTextElementListener(new EndTextElementListener() {
-            @Override
-            public void end(String body) {
-                currentShow.setLanguage(body.trim());
-            }
-        });
-        item.getChild("SeriesName").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.setTitle(body.trim());
-            }
-        });
-        item.getChild("Overview").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.setOverview(body.trim());
-            }
-        });
+        item.getChild("id").setEndTextElementListener(
+                body -> currentShow.setTvdbid(Integer.valueOf(body)));
+        item.getChild("language").setEndTextElementListener(
+                body -> currentShow.setLanguage(body.trim()));
+        item.getChild("SeriesName").setEndTextElementListener(
+                body -> currentShow.setTitle(body.trim()));
+        item.getChild("Overview").setEndTextElementListener(
+                body -> currentShow.setOverview(body.trim()));
 
         // build search URL: encode query...
         String url;
@@ -375,7 +358,7 @@ public class TvdbTools {
                     hexagonShow = showsService.getShow().setShowTvdbId(showTvdbId).execute();
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "get show details", e);
+                HexagonTools.trackFailedRequest("get show details", e);
                 throw new TvdbCloudException("getShowDetailsWithHexagon", e);
             }
         }
@@ -429,7 +412,7 @@ public class TvdbTools {
 
         if (showTraktId != null) {
             // get some more details from trakt
-            com.uwetrottmann.trakt5.entities.Show traktShow = SgTrakt.executeCall(context,
+            com.uwetrottmann.trakt5.entities.Show traktShow = SgTrakt.executeCall(
                     traktShows.get().summary(String.valueOf(showTraktId), Extended.FULL),
                     "get show summary"
             );
@@ -468,7 +451,6 @@ public class TvdbTools {
     @Nullable
     private Integer lookupShowTraktId(int showTvdbId) throws TvdbException {
         List<com.uwetrottmann.trakt5.entities.SearchResult> searchResults = SgTrakt.executeCall(
-                context,
                 traktSearch.get().idLookup(IdType.TVDB, String.valueOf(showTvdbId), Type.SHOW,
                         null, 1, 1),
                 "show trakt id lookup"

@@ -3,16 +3,14 @@ package com.battlelancer.seriesguide.traktapi;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.text.format.DateUtils;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.FragmentManager;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.traktapi.TraktTask.InitBundle;
@@ -52,22 +50,15 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
                 waitTimeMinutes < 0 ? getString(R.string.not_available)
                         : DateUtils.formatElapsedTime(waitTimeMinutes)));
 
-        builder.setPositiveButton(R.string.traktcheckin_cancel, new OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                AsyncTask<String, Void, String> cancelCheckinTask
-                        = new CancelCheckInTask(requireContext(), args);
-                cancelCheckinTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }
+        builder.setPositiveButton(R.string.traktcheckin_cancel, (dialog, which) -> {
+            AsyncTask<String, Void, String> cancelCheckinTask
+                    = new CancelCheckInTask(requireContext(), args);
+            cancelCheckinTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         });
-        builder.setNegativeButton(R.string.traktcheckin_wait, new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // broadcast check-in success
-                EventBus.getDefault().post(new TraktTask.TraktActionCompleteEvent(
-                        TraktAction.valueOf(args.getString(InitBundle.TRAKTACTION)), true, null));
-            }
+        builder.setNegativeButton(R.string.traktcheckin_wait, (dialog, which) -> {
+            // broadcast check-in success
+            EventBus.getDefault().post(new TraktTask.TraktActionCompleteEvent(
+                    TraktAction.valueOf(args.getString(InitBundle.TRAKTACTION)), true, null));
         });
 
         return builder.create();
@@ -90,20 +81,19 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
                 return context.getString(R.string.trakt_error_credentials);
             }
 
-            Checkin checkin = SgApp.getServicesComponent(context).traktCheckin();
+            Checkin checkin = SgApp.getServicesComponent(context).trakt().checkin();
             try {
-                retrofit2.Response<Void> response = checkin.deleteActiveCheckin()
-                        .execute();
+                retrofit2.Response<Void> response = checkin.deleteActiveCheckin().execute();
                 if (response.isSuccessful()) {
                     return null;
                 } else {
                     if (SgTrakt.isUnauthorized(context, response)) {
                         return context.getString(R.string.trakt_error_credentials);
                     }
-                    SgTrakt.trackFailedRequest(context, "delete check-in", response);
+                    SgTrakt.trackFailedRequest("delete check-in", response);
                 }
             } catch (Exception e) {
-                SgTrakt.trackFailedRequest(context, "delete check-in", e);
+                SgTrakt.trackFailedRequest("delete check-in", e);
             }
 
             return context.getString(R.string.api_error_generic,

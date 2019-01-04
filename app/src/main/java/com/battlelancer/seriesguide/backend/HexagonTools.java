@@ -3,9 +3,10 @@ package com.battlelancer.seriesguide.backend;
 import android.content.Context;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.battlelancer.seriesguide.AnalyticsEvents;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
@@ -41,8 +42,6 @@ import timber.log.Timber;
 @Singleton // needs global state for lastSignInCheck + to avoid rebuilding services
 public class HexagonTools {
 
-    private static final String HEXAGON_ERROR_CATEGORY = "Hexagon Error";
-    private static final String SIGN_IN_ERROR_CATEGORY = "Sign-in Error";
     private static final String ACTION_SILENT_SIGN_IN = "silent sign-in";
     private static final JsonFactory JSON_FACTORY = new AndroidJsonFactory();
     private static final HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
@@ -288,32 +287,30 @@ public class HexagonTools {
         return googleSignInOptions;
     }
 
-    public static void trackFailedRequest(Context context, String action, @NonNull IOException e) {
+    public static void trackFailedRequest(String action, @NonNull IOException e) {
         if (e instanceof HttpResponseException) {
             HttpResponseException responseException = (HttpResponseException) e;
-            Utils.trackCustomEvent(context, HEXAGON_ERROR_CATEGORY, action,
-                    responseException.getStatusCode() + " " + responseException.getStatusMessage());
-            // log like "action: 404 not found"
-            Timber.e("%s: %s %s", action, responseException.getStatusCode(),
-                    responseException.getStatusMessage());
+            Utils.trackFailedRequest(new HexagonRequestError(action,
+                    responseException.getStatusCode(), responseException.getStatusMessage()));
         } else {
-            Utils.trackFailedRequest(context, HEXAGON_ERROR_CATEGORY, action, e);
+            Utils.trackFailedRequest(new HexagonRequestError(action, e));
         }
     }
 
-    public void trackSignInFailure(String action, ConnectionResult connectionResult) {
+    void trackSignInFailure(String action, ConnectionResult connectionResult) {
         String failureMessage = connectionResult.getErrorCode() + " "
                 + connectionResult.getErrorMessage();
         trackSignInFailure(action, failureMessage);
     }
 
-    public void trackSignInFailure(String action, Status status) {
+    void trackSignInFailure(String action, Status status) {
         String failureMessage = GoogleSignInStatusCodes.getStatusCodeString(status.getStatusCode());
         trackSignInFailure(action, failureMessage);
     }
 
-    public void trackSignInFailure(String action, String failureMessage) {
-        Utils.trackCustomEvent(context, SIGN_IN_ERROR_CATEGORY, action, failureMessage);
+    void trackSignInFailure(String action, String failureMessage) {
         Timber.e("%s: %s", action, failureMessage);
+        Utils.trackError(AnalyticsEvents.SIGN_IN_ERROR,
+                new HexagonSignInError(action, failureMessage));
     }
 }

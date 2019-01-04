@@ -2,8 +2,8 @@ package com.battlelancer.seriesguide.ui.movies;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.ui.shows.NowAdapter;
 import com.battlelancer.seriesguide.ui.shows.TraktRecentEpisodeHistoryLoader;

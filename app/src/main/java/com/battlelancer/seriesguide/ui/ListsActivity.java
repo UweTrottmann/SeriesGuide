@@ -7,29 +7,28 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import androidx.core.content.ContextCompat;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.lists.ListsDistillationSettings;
 import com.battlelancer.seriesguide.ui.lists.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.lists.ListManageDialogFragment;
+import com.battlelancer.seriesguide.ui.lists.ListsDistillationSettings;
 import com.battlelancer.seriesguide.ui.lists.ListsPagerAdapter;
 import com.battlelancer.seriesguide.ui.lists.ListsReorderDialogFragment;
 import com.battlelancer.seriesguide.ui.lists.ListsTools;
 import com.battlelancer.seriesguide.util.DialogTools;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import org.greenrobot.eventbus.EventBus;
@@ -44,7 +43,6 @@ public class ListsActivity extends BaseTopActivity {
     public static class ListsChangedEvent {
     }
 
-    public static final String TAG = "Lists";
     public static final int LISTS_LOADER_ID = 1;
     public static final int LISTS_REORDER_LOADER_ID = 2;
 
@@ -62,7 +60,8 @@ public class ListsActivity extends BaseTopActivity {
         setupViews(savedInstanceState);
         setupSyncProgressBar(R.id.progressBarTabs);
 
-        getSupportLoaderManager().initLoader(LISTS_LOADER_ID, null, listsLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .initLoader(LISTS_LOADER_ID, null, listsLoaderCallbacks);
     }
 
     private void setupViews(Bundle savedInstanceState) {
@@ -74,12 +73,9 @@ public class ListsActivity extends BaseTopActivity {
 
         tabs.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
         tabs.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.white));
-        tabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
-            @Override
-            public void onTabClick(int position) {
-                if (viewPager.getCurrentItem() == position) {
-                    showListManageDialog(position);
-                }
+        tabs.setOnTabClickListener(position -> {
+            if (viewPager.getCurrentItem() == position) {
+                showListManageDialog(position);
             }
         });
         tabs.setViewPager(viewPager);
@@ -144,7 +140,6 @@ public class ListsActivity extends BaseTopActivity {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_lists_add) {
             AddListDialogFragment.show(getSupportFragmentManager());
-            Utils.trackAction(this, TAG, "Add list");
             return true;
         }
         if (itemId == R.id.menu_action_lists_search) {
@@ -198,7 +193,8 @@ public class ListsActivity extends BaseTopActivity {
     @SuppressWarnings("UnusedParameters")
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ListsChangedEvent event) {
-        getSupportLoaderManager().restartLoader(LISTS_LOADER_ID, null, listsLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(LISTS_LOADER_ID, null, listsLoaderCallbacks);
     }
 
     private void changeSortOrder(int sortOrderId) {

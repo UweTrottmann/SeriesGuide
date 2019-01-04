@@ -2,9 +2,9 @@ package com.battlelancer.seriesguide.streaming
 
 import android.app.Dialog
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatDialogFragment
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.fragment.app.FragmentManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.util.safeShow
 import org.greenrobot.eventbus.EventBus

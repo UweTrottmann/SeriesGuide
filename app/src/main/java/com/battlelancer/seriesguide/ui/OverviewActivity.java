@@ -10,14 +10,14 @@ import android.nfc.NfcAdapter;
 import android.nfc.NfcAdapter.CreateNdefMessageCallback;
 import android.nfc.NfcEvent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.Constants;
@@ -173,7 +173,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, pager,
                 (SlidingTabLayout) findViewById(R.id.tabsOverview));
         Bundle argsShow = new Bundle();
-        argsShow.putInt(ShowFragment.InitBundle.SHOW_TVDBID, showTvdbId);
+        argsShow.putInt(ShowFragment.ARG_SHOW_TVDBID, showTvdbId);
         tabsAdapter.addTab(R.string.show, ShowFragment.class, argsShow);
 
         tabsAdapter.addTab(R.string.description_overview, OverviewFragment.class, getIntent()

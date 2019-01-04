@@ -2,11 +2,11 @@ package com.battlelancer.seriesguide.ui.shows;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.util.SparseArrayCompat;
 import android.text.format.DateUtils;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.collection.SparseArrayCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -68,10 +68,10 @@ public class TraktRecentEpisodeHistoryLoader
                 if (SgTrakt.isUnauthorized(getContext(), response)) {
                     return buildResultFailure(R.string.trakt_error_credentials);
                 }
-                SgTrakt.trackFailedRequest(getContext(), getAction(), response);
+                SgTrakt.trackFailedRequest(getAction(), response);
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(getContext(), getAction(), e);
+            SgTrakt.trackFailedRequest(getAction(), e);
             return AndroidUtils.isNetworkConnected(getContext())
                     ? buildResultFailure() : buildResultFailure(R.string.offline);
         }

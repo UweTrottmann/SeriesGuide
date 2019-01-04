@@ -1,9 +1,9 @@
 package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -127,11 +127,11 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
                     results = page.results;
                 }
             } else {
-                SgTmdb.trackFailedRequest(getContext(), action, response);
+                SgTmdb.trackFailedRequest(action, response);
                 return buildErrorResult();
             }
         } catch (Exception e) {
-            SgTmdb.trackFailedRequest(getContext(), action, e);
+            SgTmdb.trackFailedRequest(action, e);
             // only check for connection here to allow hitting the response cache
             return AndroidUtils.isNetworkConnected(getContext())
                     ? buildErrorResult()

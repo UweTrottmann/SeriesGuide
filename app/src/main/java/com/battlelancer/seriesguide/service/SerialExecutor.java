@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.service;
 
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import java.util.ArrayDeque;
 import java.util.concurrent.Executor;
 
@@ -16,13 +16,11 @@ class SerialExecutor implements Executor {
     private Runnable active;
 
     public synchronized void execute(@NonNull final Runnable r) {
-        tasks.offer(new Runnable() {
-            public void run() {
-                try {
-                    r.run();
-                } finally {
-                    scheduleNext();
-                }
+        tasks.offer(() -> {
+            try {
+                r.run();
+            } finally {
+                scheduleNext();
             }
         });
         if (active == null) {

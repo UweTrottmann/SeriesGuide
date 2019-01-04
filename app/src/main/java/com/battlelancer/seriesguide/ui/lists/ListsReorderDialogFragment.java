@@ -1,16 +1,16 @@
 package com.battlelancer.seriesguide.ui.lists;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -37,8 +37,8 @@ public class ListsReorderDialogFragment extends AppCompatDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.dialog_lists_reorder, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        View view = inflater.inflate(R.layout.dialog_lists_reorder, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
         DragSortController controller = new DragSortController(dragSortListView,
                 R.id.dragGripViewItemList, DragSortController.ON_DOWN,
@@ -46,31 +46,18 @@ public class ListsReorderDialogFragment extends AppCompatDialogFragment {
         controller.setRemoveEnabled(false);
         dragSortListView.setFloatViewManager(controller);
         dragSortListView.setOnTouchListener(controller);
-        dragSortListView.setDropListener(new DragSortListView.DropListener() {
-            @Override
-            public void drop(int from, int to) {
-                reorderList(from, to);
-            }
-        });
+        dragSortListView.setDropListener(this::reorderList);
 
         buttonNegative.setText(R.string.discard);
-        buttonNegative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        buttonNegative.setOnClickListener(v -> dismiss());
 
         buttonPositive.setText(android.R.string.ok);
-        buttonPositive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveListsOrder();
-                dismiss();
-            }
+        buttonPositive.setOnClickListener(v -> {
+            saveListsOrder();
+            dismiss();
         });
 
-        return v;
+        return view;
     }
 
     @Override
@@ -80,8 +67,8 @@ public class ListsReorderDialogFragment extends AppCompatDialogFragment {
         adapter = new ListsAdapter(getActivity());
         dragSortListView.setAdapter(adapter);
 
-        getLoaderManager().initLoader(ListsActivity.LISTS_REORDER_LOADER_ID, null,
-                listsLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .initLoader(ListsActivity.LISTS_REORDER_LOADER_ID, null, listsLoaderCallbacks);
     }
 
     @Override

@@ -1,9 +1,9 @@
 package com.battlelancer.seriesguide.ui.search
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.paging.PageKeyedDataSource
 import android.content.Context
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.PageKeyedDataSource
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.traktapi.SgTrakt
@@ -65,11 +65,11 @@ class ShowsPopularDataSource(
                 totalCount = response.headers().get("X-Pagination-Item-Count")?.toInt()
                         ?: throw IllegalStateException("Item count header missing")
             } else {
-                SgTrakt.trackFailedRequest(context, action, response)
+                SgTrakt.trackFailedRequest(action, response)
                 return buildResultGenericFailure()
             }
         } catch (e: Exception) {
-            SgTrakt.trackFailedRequest(context, action, e)
+            SgTrakt.trackFailedRequest(action, e)
             // only check for network here to allow hitting the response cache
             return if (AndroidUtils.isNetworkConnected(context)) {
                 buildResultGenericFailure()

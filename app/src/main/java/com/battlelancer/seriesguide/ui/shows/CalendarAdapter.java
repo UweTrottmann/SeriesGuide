@@ -3,14 +3,14 @@ package com.battlelancer.seriesguide.ui.shows;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
-import android.support.annotation.Nullable;
-import android.support.v4.util.LongSparseArray;
-import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.annotation.Nullable;
+import androidx.collection.LongSparseArray;
+import androidx.cursoradapter.widget.CursorAdapter;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
@@ -262,12 +262,10 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
             timestamp = v.findViewById(R.id.textViewActivityTimestamp);
             poster = v.findViewById(R.id.imageViewActivityPoster);
 
-            watchedBox.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    if (itemClickListener != null) {
-                        itemClickListener.onWatchedBoxClick(position,
-                                EpisodeTools.isWatched(watchedBox.getEpisodeFlag()));
-                    }
+            watchedBox.setOnClickListener(view -> {
+                if (itemClickListener != null) {
+                    itemClickListener.onWatchedBoxClick(position,
+                            EpisodeTools.isWatched(watchedBox.getEpisodeFlag()));
                 }
             });
             CheatSheet.setup(watchedBox);

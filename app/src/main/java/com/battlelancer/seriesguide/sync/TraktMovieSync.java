@@ -84,11 +84,11 @@ public class TraktMovieSync {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return false;
                 }
-                SgTrakt.trackFailedRequest(context, "get movie collection", response);
+                SgTrakt.trackFailedRequest("get movie collection", response);
                 return false;
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "get movie collection", e);
+            SgTrakt.trackFailedRequest("get movie collection", e);
             return false;
         }
         if (collection == null) {
@@ -107,11 +107,11 @@ public class TraktMovieSync {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return false;
                 }
-                SgTrakt.trackFailedRequest(context, "get movie watchlist", response);
+                SgTrakt.trackFailedRequest("get movie watchlist", response);
                 return false;
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "get movie watchlist", e);
+            SgTrakt.trackFailedRequest("get movie watchlist", e);
             return false;
         }
         if (watchlist == null) {
@@ -273,14 +273,14 @@ public class TraktMovieSync {
                 }
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, action, e);
+            SgTrakt.trackFailedRequest(action, e);
             return false;
         }
         if (response != null && !response.isSuccessful()) {
             if (SgTrakt.isUnauthorized(context, response)) {
                 return false;
             }
-            SgTrakt.trackFailedRequest(context, action, response);
+            SgTrakt.trackFailedRequest(action, response);
             return false;
         }
 
@@ -338,11 +338,11 @@ public class TraktMovieSync {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return false;
                 }
-                SgTrakt.trackFailedRequest(context, "get watched movies", response);
+                SgTrakt.trackFailedRequest("get watched movies", response);
                 return false;
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "get watched movies", e);
+            SgTrakt.trackFailedRequest("get watched movies", e);
             return false;
         }
         if (watchedMovies == null) {

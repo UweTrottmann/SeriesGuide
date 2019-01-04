@@ -1,11 +1,12 @@
 package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import com.battlelancer.seriesguide.ui.shows.NowAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
+import com.battlelancer.seriesguide.ui.shows.NowAdapter;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.SgPicassoRequestHandler;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import java.util.Date;
@@ -42,7 +43,7 @@ class MoviesNowAdapter extends NowAdapter {
 
             // TMDb poster (resolved on demand as trakt does not have them)
             TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster,
-                    "movietmdb://" + item.movieTmdbId);
+                    SgPicassoRequestHandler.SCHEME_MOVIE_TMDB + "://" + item.movieTmdbId);
 
             holder.show.setText(item.title);
 

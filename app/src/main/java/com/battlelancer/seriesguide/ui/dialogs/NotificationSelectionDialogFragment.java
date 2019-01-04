@@ -3,19 +3,19 @@ package com.battlelancer.seriesguide.ui.dialogs;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatDialogFragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -58,7 +58,8 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getLoaderManager().initLoader(LOADER_ID_SELECTION, null, showsLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .initLoader(LOADER_ID_SELECTION, null, showsLoaderCallbacks);
     }
 
     @Override
@@ -103,12 +104,8 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
     };
 
     private SelectionAdapter.OnItemClickListener onItemClickListener
-            = new SelectionAdapter.OnItemClickListener() {
-        @Override
-        public void onItemClick(int showTvdbId, boolean notify) {
-            SgApp.getServicesComponent(getContext()).showTools().storeNotify(showTvdbId, notify);
-        }
-    };
+            = (showTvdbId, notify) -> SgApp.getServicesComponent(getContext()).showTools()
+            .storeNotify(showTvdbId, notify);
 
     public static class SelectionAdapter extends
             CursorRecyclerViewAdapter<RecyclerView.ViewHolder> {
@@ -149,12 +146,8 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
             public ViewHolder(View itemView, final OnItemClickListener onItemClickListener) {
                 super(itemView);
                 ButterKnife.bind(this, itemView);
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onItemClickListener.onItemClick(showTvdbId, switchCompat.isChecked());
-                    }
-                });
+                itemView.setOnClickListener(
+                        v -> onItemClickListener.onItemClick(showTvdbId, switchCompat.isChecked()));
             }
         }
     }

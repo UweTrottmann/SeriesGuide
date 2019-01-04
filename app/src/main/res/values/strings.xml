@@ -11,6 +11,7 @@
     <string name="help">Help</string>
     <string name="help_and_feedback">Help &amp; Feedback</string>
     <string name="drawer_open">Open navigation drawer</string>
+    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
 
     <!-- Media items -->
     <string name="show">Show</string>
@@ -405,7 +406,8 @@
     </plurals>
 
     <!-- About screen -->
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
     <string name="licence_trakt">This app uses data and images by trakt.</string>
     <string name="about_open_source">SeriesGuide is built using open source software.</string>
@@ -505,6 +507,7 @@
     <string name="hide_watched">Hide watched episodes</string>
     <string name="pref_widget_opacity">Widget background</string>
     <string name="pref_widget_type">Widget type</string>
+    <string name="pref_large_font">Use large font</string>
 
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>

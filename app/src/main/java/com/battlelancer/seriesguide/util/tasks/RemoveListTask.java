@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.util.tasks;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -40,7 +40,7 @@ public class RemoveListTask extends BaseActionTask {
             try {
                 listsService.remove(listId).execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(getContext(), "remove list", e);
+                HexagonTools.trackFailedRequest("remove list", e);
                 return ERROR_HEXAGON_API;
             }
         }

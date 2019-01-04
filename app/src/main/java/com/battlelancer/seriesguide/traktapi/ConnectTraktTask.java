@@ -74,10 +74,10 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
                 refreshToken = body.refresh_token;
                 expiresIn = body.expires_in;
             } else {
-                SgTrakt.trackFailedRequest(context, "get access token", response);
+                SgTrakt.trackFailedRequest("get access token", response);
             }
         } catch (IOException e) {
-            SgTrakt.trackFailedRequest(context, "get access token", e);
+            SgTrakt.trackFailedRequest("get access token", e);
         }
 
         // did we obtain all required data?
@@ -126,7 +126,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
                     displayname = body.user.name;
                 }
             } else {
-                SgTrakt.trackFailedRequest(context, "get user settings", response);
+                SgTrakt.trackFailedRequest("get user settings", response);
                 if (SgTrakt.isUnauthorized(response)) {
                     // access token already is invalid, remove it :(
                     TraktCredentials.get(context).removeCredentials();
@@ -134,7 +134,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
                 }
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "get user settings", e);
+            SgTrakt.trackFailedRequest("get user settings", e);
             return AndroidUtils.isNetworkConnected(context)
                     ? TraktResult.API_ERROR : TraktResult.OFFLINE;
         }

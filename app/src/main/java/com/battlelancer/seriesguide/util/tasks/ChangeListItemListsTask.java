@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.util.tasks;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -58,7 +58,7 @@ public class ChangeListItemListsTask extends BaseActionTask {
                 try {
                     listsService.save(wrapper).execute();
                 } catch (IOException e) {
-                    HexagonTools.trackFailedRequest(getContext(), "add list items", e);
+                    HexagonTools.trackFailedRequest("add list items", e);
                     return ERROR_HEXAGON_API;
                 }
             }
@@ -70,7 +70,7 @@ public class ChangeListItemListsTask extends BaseActionTask {
                 try {
                     listsService.removeItems(wrapper).execute();
                 } catch (IOException e) {
-                    HexagonTools.trackFailedRequest(getContext(), "remove list items", e);
+                    HexagonTools.trackFailedRequest("remove list items", e);
                     return ERROR_HEXAGON_API;
                 }
             }

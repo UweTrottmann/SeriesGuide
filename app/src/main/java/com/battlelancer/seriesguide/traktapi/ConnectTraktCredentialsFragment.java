@@ -2,8 +2,6 @@ package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -11,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -58,13 +58,10 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         textViewHexagonWarning.setVisibility(hexagonEnabled ? View.VISIBLE : View.GONE);
 
         // library button
-        buttonLibrary.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // open search tab, will now have links to trakt lists
-                startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
-                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
-            }
+        buttonLibrary.setOnClickListener(v -> {
+            // open search tab, will now have links to trakt lists
+            startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
+                    SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
         });
 
         syncStatusView.setVisibility(View.GONE);
@@ -129,19 +126,9 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         buttonAccount.setEnabled(true);
         buttonAccount.setText(connectEnabled ? R.string.connect : R.string.disconnect);
         if (connectEnabled) {
-            buttonAccount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    connect();
-                }
-            });
+            buttonAccount.setOnClickListener(v -> connect());
         } else {
-            buttonAccount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    disconnect();
-                }
-            });
+            buttonAccount.setOnClickListener(v -> disconnect());
         }
     }
 }

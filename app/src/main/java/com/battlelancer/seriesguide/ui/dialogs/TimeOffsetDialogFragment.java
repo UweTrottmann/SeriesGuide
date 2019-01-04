@@ -2,9 +2,6 @@ package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
@@ -14,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -50,12 +50,7 @@ public class TimeOffsetDialogFragment extends AppCompatDialogFragment {
 
         buttonNegative.setVisibility(View.GONE);
         buttonPositive.setText(android.R.string.ok);
-        buttonPositive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveAndDismiss();
-            }
-        });
+        buttonPositive.setOnClickListener(v -> saveAndDismiss());
 
         textViewRange.setText(getString(R.string.format_time_offset_range, -24, 24));
         editTextValue.setHint(getString(R.string.format_time_offset_range, -24, 24));

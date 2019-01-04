@@ -6,13 +6,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Build;
-import android.support.v4.widget.CursorAdapter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.cursoradapter.widget.CursorAdapter;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
@@ -92,12 +92,9 @@ class MoviesCursorAdapter extends CursorAdapter {
 
         // context menu
         final int movieTmdbId = cursor.getInt(MoviesQuery.TMDB_ID);
-        holder.contextMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (popupMenuClickListener != null) {
-                    popupMenuClickListener.onPopupMenuClick(v, movieTmdbId);
-                }
+        holder.contextMenu.setOnClickListener(v -> {
+            if (popupMenuClickListener != null) {
+                popupMenuClickListener.onPopupMenuClick(v, movieTmdbId);
             }
         });
 

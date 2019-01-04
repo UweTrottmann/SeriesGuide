@@ -2,16 +2,16 @@ package com.battlelancer.seriesguide.ui.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
-import android.support.annotation.ArrayRes
-import android.support.v4.app.FragmentManager
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatDialogFragment
+import androidx.annotation.ArrayRes
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.fragment.app.FragmentManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment.LanguageChangedEvent
 import com.battlelancer.seriesguide.util.safeShow
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
-import java.util.Locale
+import java.util.*
 
 /**
  * A dialog displaying a list of languages to choose from, posting a [LanguageChangedEvent] if

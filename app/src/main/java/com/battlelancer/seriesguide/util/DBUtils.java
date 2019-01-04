@@ -14,10 +14,10 @@ import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.provider.BaseColumns;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -111,6 +111,7 @@ public class DBUtils {
     /**
      * Triggers the rebuilding of the episode search table.
      */
+    @SuppressLint("Recycle") // Cursor is null
     public static void rebuildFtsTable(Context context) {
         Timber.d("Query to renew FTS table");
         context.getContentResolver()

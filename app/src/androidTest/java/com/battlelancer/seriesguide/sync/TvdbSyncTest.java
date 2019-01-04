@@ -6,9 +6,9 @@ import static org.junit.Assert.assertThat;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.annotation.Nullable;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
 import com.battlelancer.seriesguide.modules.AppModule;
 import com.battlelancer.seriesguide.modules.DaggerTestServicesComponent;
 import com.battlelancer.seriesguide.modules.TestHttpClientModule;

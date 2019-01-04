@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.util.tasks;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -54,7 +54,7 @@ public class ReorderListsTask extends BaseActionTask {
             try {
                 listsService.save(wrapper).execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(getContext(), "reorder lists", e);
+                HexagonTools.trackFailedRequest("reorder lists", e);
                 return ERROR_HEXAGON_API;
             }
         }

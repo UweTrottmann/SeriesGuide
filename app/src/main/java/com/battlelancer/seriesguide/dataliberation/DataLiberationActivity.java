@@ -1,9 +1,9 @@
 package com.battlelancer.seriesguide.dataliberation;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+import androidx.appcompat.app.ActionBar;
+import androidx.fragment.app.Fragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 

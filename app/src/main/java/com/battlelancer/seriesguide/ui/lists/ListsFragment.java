@@ -4,13 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +11,13 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
@@ -39,7 +39,6 @@ public class ListsFragment extends Fragment {
 
     /** LoaderManager is created unique to fragment, so use same id for all of them */
     private static final int LOADER_ID = 1;
-    private static final String TAG = "Lists";
 
     public static ListsFragment newInstance(String list_id) {
         ListsFragment f = new ListsFragment();
@@ -86,7 +85,7 @@ public class ListsFragment extends Fragment {
         gridView.setAdapter(adapter);
         gridView.setEmptyView(emptyView);
 
-        getLoaderManager().initLoader(LOADER_ID, getArguments(), loaderCallbacks);
+        LoaderManager.getInstance(this).initLoader(LOADER_ID, getArguments(), loaderCallbacks);
     }
 
     @Override
@@ -107,7 +106,7 @@ public class ListsFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ListsDistillationSettings.ListsSortOrderChangedEvent event) {
         // sort order has changed, reload lists
-        getLoaderManager().restartLoader(LOADER_ID, getArguments(), loaderCallbacks);
+        LoaderManager.getInstance(this).restartLoader(LOADER_ID, getArguments(), loaderCallbacks);
     }
 
     private LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks
@@ -214,14 +213,11 @@ public class ListsFragment extends Fragment {
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_action_lists_manage: {
-                    if (ManageListsDialogFragment.show(fragmentManager, itemTvdbId, itemType)) {
-                        Utils.trackContextMenu(context, TAG, "Manage lists");
-                    }
+                    ManageListsDialogFragment.show(fragmentManager, itemTvdbId, itemType);
                     return true;
                 }
                 case R.id.menu_action_lists_remove: {
                     ListsTools.removeListItem(context, itemId);
-                    Utils.trackContextMenu(context, TAG, "Remove from list");
                     return true;
                 }
             }

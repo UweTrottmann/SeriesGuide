@@ -9,11 +9,11 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
-import android.support.annotation.ArrayRes;
-import android.support.annotation.StringRes;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import androidx.annotation.ArrayRes;
+import androidx.annotation.StringRes;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
 import com.battlelancer.seriesguide.util.Utils;
@@ -99,6 +99,11 @@ public class ListWidgetPreferenceFragment extends PreferenceFragment {
                 R.string.pref_infinite_scrolling,
                 false
         );
+        CheckBoxPreference isLargeFontPref = checkBoxPref(
+                WidgetSettings.KEY_PREFIX_WIDGET_IS_LARGE_FONT + appWidgetId,
+                R.string.pref_large_font,
+                false
+        );
 
         // use the settings file specific to widgets
         getPreferenceManager().setSharedPreferencesName(WidgetSettings.SETTINGS_FILE);
@@ -119,6 +124,7 @@ public class ListWidgetPreferenceFragment extends PreferenceFragment {
         preferenceScreen.addPreference(appearanceCategory);
         appearanceCategory.addPreference(themePref);
         appearanceCategory.addPreference(backgroundPref);
+        appearanceCategory.addPreference(isLargeFontPref);
 
         setPreferenceScreen(preferenceScreen);
 
@@ -133,12 +139,9 @@ public class ListWidgetPreferenceFragment extends PreferenceFragment {
         if (!Utils.hasAccessToX(getActivity())) {
             // disable saving prefs not available for non-supporters
             Preference.OnPreferenceChangeListener onDisablePreferenceChangeListener
-                    = new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    Utils.advertiseSubscription(getActivity());
-                    return false;
-                }
+                    = (preference, newValue) -> {
+                Utils.advertiseSubscription(getActivity());
+                return false;
             };
             typePref.setOnPreferenceChangeListener(onDisablePreferenceChangeListener);
             typePref.setSummary(R.string.onlyx);

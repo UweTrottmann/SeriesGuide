@@ -83,7 +83,7 @@
             android:contentDescription="@string/action_collection_added"
             app:srcCompat="@drawable/ic_collected_24dp" />
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageViewContextMenu"
             android:layout_width="48dp"
             android:layout_height="48dp"

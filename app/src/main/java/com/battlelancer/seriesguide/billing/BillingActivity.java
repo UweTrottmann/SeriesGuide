@@ -7,18 +7,17 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -33,8 +32,6 @@ import java.util.List;
 import timber.log.Timber;
 
 public class BillingActivity extends BaseActivity {
-
-    public static final String TAG = "BillingActivity";
 
     // The SKU product ids as set in the Developer Console
     public static final String SKU_X = "x_upgrade";
@@ -86,42 +83,25 @@ public class BillingActivity extends BaseActivity {
 
     private void setupViews() {
         buttonSubscribe = findViewById(R.id.buttonBillingGetSubscription);
-        buttonSubscribe.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSubscribeToXButtonClicked();
-            }
-        });
+        buttonSubscribe.setOnClickListener(v -> onSubscribeToXButtonClicked());
         textViewSubscriptionPrice = findViewById(R.id.textViewBillingPriceSubscription);
         Button buttonManageSubs = findViewById(R.id.buttonBillingManageSubscription);
-        buttonManageSubs.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.launchWebsite(v.getContext(), manageSubscriptionUrl);
-            }
-        });
+        buttonManageSubs.setOnClickListener(
+                v -> Utils.launchWebsite(v.getContext(), manageSubscriptionUrl));
 
         buttonPass = findViewById(R.id.buttonBillingGetPass);
-        buttonPass.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.launchWebsite(BillingActivity.this, getString(R.string.url_x_pass), TAG,
-                        "X Pass");
-            }
-        });
+        buttonPass.setOnClickListener(
+                v -> Utils.launchWebsite(BillingActivity.this, getString(R.string.url_x_pass)
+                ));
 
         textViewHasUpgrade = findViewById(R.id.textViewBillingExisting);
 
         progressScreen = findViewById(R.id.progressBarBilling);
         contentContainer = findViewById(R.id.containerBilling);
 
-        findViewById(R.id.textViewBillingMoreInfo).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.launchWebsite(BillingActivity.this, getString(R.string.url_whypay), TAG,
-                        "WhyPayWebsite");
-            }
-        });
+        findViewById(R.id.textViewBillingMoreInfo).setOnClickListener(
+                v -> Utils.launchWebsite(BillingActivity.this, getString(R.string.url_whypay)
+                ));
     }
 
     @Override

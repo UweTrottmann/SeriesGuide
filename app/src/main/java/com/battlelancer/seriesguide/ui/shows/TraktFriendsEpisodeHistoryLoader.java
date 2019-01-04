@@ -1,14 +1,14 @@
 package com.battlelancer.seriesguide.ui.shows;
 
 import android.app.Activity;
-import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
+import androidx.collection.SparseArrayCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
+import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.Friend;
@@ -72,7 +72,7 @@ class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapt
             }
 
             // get last watched episode
-            List<HistoryEntry> history = SgTrakt.executeCall(getContext(),
+            List<HistoryEntry> history = SgTrakt.executeCall(
                     traktUsers.history(new UserSlug(userSlug), HistoryType.EPISODES, 1, 1,
                             null, null, null), "get friend episode history");
             if (history == null || history.size() == 0) {

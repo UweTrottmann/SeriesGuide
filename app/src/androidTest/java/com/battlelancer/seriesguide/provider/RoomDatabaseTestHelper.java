@@ -1,9 +1,9 @@
 package com.battlelancer.seriesguide.provider;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.test.InstrumentationRegistry;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+import androidx.test.InstrumentationRegistry;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.model.SgSeason;

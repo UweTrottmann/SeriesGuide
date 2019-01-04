@@ -1,16 +1,16 @@
 package com.battlelancer.seriesguide.ui.streams;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v4.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.collection.LongSparseArray;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
@@ -233,12 +233,9 @@ abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry> implem
         public ViewHolder(View itemView, final OnItemClickListener listener) {
             ButterKnife.bind(this, itemView);
             avatar.setVisibility(View.GONE);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        listener.onItemClick(v, item);
-                    }
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onItemClick(v, item);
                 }
             });
         }

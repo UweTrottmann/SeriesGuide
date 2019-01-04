@@ -11,6 +11,7 @@
     <string name="help">Βοήθεια</string>
     <string name="help_and_feedback">Βοήθεια &amp; Σχόλια</string>
     <string name="drawer_open">Συρτάρι ανοιχτό</string>
+    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">Σειρά</string>
     <string name="episode">Επεισόδιο</string>
@@ -111,7 +112,7 @@
     <string name="action_collection_remove">Κατάργηση από τη συλλογή</string>
     <string name="action_collection_added">Προστέθηκε στη συλλογή</string>
     <string name="action_collection_removed">Καταργήθηκε από τη συλλογή</string>
-    <string name="action_watched">Έχει παρακολουθηθεί</string>
+    <string name="action_watched">Έχει παρακολουθηθεί </string>
     <string name="action_unwatched">Δεν παρακολούθησα</string>
     <!-- Shows -->
     <string name="confirm_delete">Θέλετε πράγματι να αφαιρέσετε %s?</string>
@@ -126,7 +127,7 @@
     <string name="action_episode_notifications_off">Απενεργοποίηση ειδοποιήσεων επεισοδίων</string>
     <string name="context_hide">Απόκρυψη</string>
     <string name="context_unhide">Εμφάνιση</string>
-    <string name="hidden">Κρυφή σειρα</string>
+    <string name="hidden">Κρυφή σειρα </string>
     <string name="unhidden">μη-κρυφή σειρά</string>
     <string name="action_shows_add">Προσθήκη Σειράς</string>
     <string name="action_shows_filter">Φίλτρο</string>
@@ -355,7 +356,8 @@
         <item quantity="other">%d λεπτό πριν</item>
     </plurals>
     <!-- About screen -->
-    <string name="licence_tvdb">Η εφαρμογή αυτή χρησιμοποιεί δεδομένα και εικόνες από το TheTVDB με εξουσιοδότηση βάσει CC BY-NC 4.0.</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Αυτό το προϊόν χρησιμοποιεί το API του TMDb, αλλά δεν είναι ούτε εγκεκριμένο ούτε πιστοποιημένο από το TMDb.</string>
     <string name="licence_trakt">Αυτή η εφαρμογή χρησιμοποιεί δεδομένα και εικόνες από το trakt.</string>
     <string name="about_open_source">Το SeriesGuide έχει φτιαχτεί με τη χρήση λογισμικού ανοιχτού κώδικα.</string>
@@ -444,6 +446,7 @@
     <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
     <string name="pref_widget_opacity">Φόντο widget</string>
     <string name="pref_widget_type">τύπος Widget</string>
+    <string name="pref_large_font">Use large font</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Διαφανές</string>
     <string name="widget_background_25">25%</string>

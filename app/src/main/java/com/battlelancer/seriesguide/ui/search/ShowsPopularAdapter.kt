@@ -1,9 +1,9 @@
 package com.battlelancer.seriesguide.ui.search
 
-import android.arch.paging.PagedListAdapter
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 
 class ShowsPopularAdapter(val onItemClickListener: AddFragment.AddAdapter.OnItemClickListener) :
         PagedListAdapter<SearchResult, RecyclerView.ViewHolder>(DIFF_CALLBACK) {

@@ -5,11 +5,6 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -41,8 +41,6 @@ import timber.log.Timber;
  * Provides tools to display all installed extensions and enable or disable them.
  */
 public class ExtensionsConfigurationFragment extends Fragment {
-
-    private static final String TAG = "Extension Configuration";
 
     @BindView(R.id.listViewExtensionsConfiguration) DragSortListView listView;
 
@@ -88,8 +86,9 @@ public class ExtensionsConfigurationFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
-                loaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
+                        loaderCallbacks);
     }
 
     @Override
@@ -200,7 +199,6 @@ public class ExtensionsConfigurationFragment extends Fragment {
                 @Override
                 public void onAddExtensionClick(View anchor) {
                     showAddExtensionPopupMenu(anchor);
-                    Utils.trackAction(getActivity(), TAG, "Add extension");
                 }
             };
 
@@ -245,7 +243,6 @@ public class ExtensionsConfigurationFragment extends Fragment {
                 case R.id.menu_action_extension_disable:
                     enabledNames.remove(position);
                     saveExtensions();
-                    Utils.trackAction(getActivity(), TAG, "Remove extension");
                     return true;
             }
             return false;
@@ -292,14 +289,14 @@ public class ExtensionsConfigurationFragment extends Fragment {
     }
 
     private void onGetMoreExtensions() {
-        Utils.launchWebsite(getActivity(), getString(R.string.url_extensions_search), TAG,
-                "Get more extensions");
+        Utils.launchWebsite(getActivity(), getString(R.string.url_extensions_search));
     }
 
     private void saveExtensions() {
         ExtensionManager.get().setEnabledExtensions(getContext(), enabledNames);
-        getLoaderManager().restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID,
-                null, loaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
+                        loaderCallbacks);
     }
 
     private Comparator<ExtensionManager.Extension> alphabeticalComparator

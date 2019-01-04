@@ -3,23 +3,22 @@ package com.battlelancer.seriesguide.ui.lists;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.util.DialogTools;
+import com.google.android.material.textfield.TextInputLayout;
 
 /**
  * Dialog to rename or remove a list.
@@ -81,29 +80,23 @@ public class ListManageDialogFragment extends AppCompatDialogFragment {
         // buttons
         buttonNegative.setEnabled(false);
         buttonNegative.setText(R.string.list_remove);
-        buttonNegative.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // remove list and items
-                ListsTools.removeList(getContext(), listId);
+        buttonNegative.setOnClickListener(v -> {
+            // remove list and items
+            ListsTools.removeList(getContext(), listId);
 
-                dismiss();
-            }
+            dismiss();
         });
         buttonPositive.setText(android.R.string.ok);
-        buttonPositive.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (editTextName == null) {
-                    return;
-                }
-
-                // update title
-                String listName = editTextName.getText().toString().trim();
-                ListsTools.renameList(getContext(), listId, listName);
-
-                dismiss();
+        buttonPositive.setOnClickListener(v -> {
+            if (editTextName == null) {
+                return;
             }
+
+            // update title
+            String listName = editTextName.getText().toString().trim();
+            ListsTools.renameList(getContext(), listId, listName);
+
+            dismiss();
         });
 
         return layout;

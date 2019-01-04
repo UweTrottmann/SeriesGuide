@@ -1,10 +1,10 @@
 package com.battlelancer.seriesguide.ui.search
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.LiveData
 import android.content.Context
 import android.os.AsyncTask
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
+import androidx.lifecycle.LiveData
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.settings.DisplaySettings
@@ -17,9 +17,7 @@ import com.uwetrottmann.tmdb2.entities.TmdbDate
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.enums.Extended
 import timber.log.Timber
-import java.util.Calendar
-import java.util.Date
-import java.util.LinkedList
+import java.util.*
 
 class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveData.Result>() {
 
@@ -95,11 +93,11 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
                 if (response.isSuccessful) {
                     response.body() ?: return buildResultFailure(R.string.tmdb, false)
                 } else {
-                    SgTmdb.trackFailedRequest(context, action, response)
+                    SgTmdb.trackFailedRequest(action, response)
                     return buildResultFailure(R.string.tmdb, false)
                 }
             } catch (e: Exception) {
-                SgTmdb.trackFailedRequest(context, action, e)
+                SgTmdb.trackFailedRequest(action, e)
                 return buildResultFailure(R.string.tmdb, false)
             }
 
@@ -173,8 +171,7 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
             val traktSearch = SgApp.getServicesComponent(context).traktSearch()
 
             val searchResults = SgTrakt.executeCall<List<com.uwetrottmann.trakt5.entities.SearchResult>>(
-                    context,
-                    traktSearch.textQueryShow(query,
+                traktSearch.textQueryShow(query,
                             null, null,
                             null, null,
                             null, null, null, null, null,

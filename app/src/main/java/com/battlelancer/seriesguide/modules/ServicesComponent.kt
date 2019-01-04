@@ -12,13 +12,12 @@ import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader
 import com.battlelancer.seriesguide.ui.search.AddShowTask
 import com.battlelancer.seriesguide.ui.search.TraktAddLoader
 import com.battlelancer.seriesguide.ui.shows.ShowTools
+import com.uwetrottmann.thetvdb.TheTvdb
 import com.uwetrottmann.thetvdb.services.TheTvdbEpisodes
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.services.MoviesService
 import com.uwetrottmann.tmdb2.services.PeopleService
 import com.uwetrottmann.trakt5.TraktV2
-import com.uwetrottmann.trakt5.services.Checkin
-import com.uwetrottmann.trakt5.services.Comments
 import com.uwetrottmann.trakt5.services.Search
 import com.uwetrottmann.trakt5.services.Sync
 import com.uwetrottmann.trakt5.services.Users
@@ -45,11 +44,10 @@ interface ServicesComponent {
     fun showTools(): ShowTools
     fun tmdb(): Tmdb
     fun trakt(): TraktV2
-    fun traktCheckin(): Checkin
-    fun traktComments(): Comments
     fun traktSearch(): Search
     fun traktSync(): Sync
     fun traktUsers(): Users
+    fun tvdb(): TheTvdb
     fun tvdbEpisodes(): TheTvdbEpisodes
     fun tvdbTools(): TvdbTools
 

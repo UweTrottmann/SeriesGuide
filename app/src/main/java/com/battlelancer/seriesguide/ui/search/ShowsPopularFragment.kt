@@ -1,15 +1,14 @@
 package com.battlelancer.seriesguide.ui.search
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
@@ -20,6 +19,7 @@ import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.tasks.RemoveShowTask
+import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode

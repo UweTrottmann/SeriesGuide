@@ -5,15 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -79,20 +79,15 @@ public class RemoveShowDialogFragment extends AppCompatDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.dialog_remove, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        View view = inflater.inflate(R.layout.dialog_remove, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
         showProgressBar(true);
         negativeButton.setText(android.R.string.cancel);
-        negativeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        negativeButton.setOnClickListener(v -> dismiss());
         positiveButton.setText(R.string.delete_show);
 
-        return v;
+        return view;
     }
 
     @Override
@@ -161,12 +156,9 @@ public class RemoveShowDialogFragment extends AppCompatDialogFragment {
         }
 
         dialogText.setText(getString(R.string.confirm_delete, event.showTitle));
-        positiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RemoveShowTask.execute(getContext(), showTvdbId);
-                dismiss();
-            }
+        positiveButton.setOnClickListener(v -> {
+            RemoveShowTask.execute(getContext(), showTvdbId);
+            dismiss();
         });
 
         showProgressBar(false);

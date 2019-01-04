@@ -37,7 +37,7 @@
         android:textAppearance="@style/TextAppearance.Caption"
         tools:text="OCT 15, 2013 (TUE) · 52" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerEpisodeImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include layout="@layout/buttons_episode" />
 

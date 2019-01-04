@@ -91,22 +91,24 @@ object StreamingSearch {
         }
     }
 
-    private fun buildAndLaunch(context: Context, title: String, justWatchType: String,
-            logTag: String) {
+    private fun buildAndLaunch(
+        context: Context,
+        title: String,
+        justWatchType: String) {
         val titleEncoded = Uri.encode(title)
         val searchUrl = getServiceSearchUrl(context, justWatchType)
         val url = "$searchUrl$titleEncoded"
-        Utils.launchWebsite(context, url, logTag, "Stream or purchase")
+        Utils.launchWebsite(context, url)
     }
 
     @JvmStatic
-    fun searchForShow(context: Context, showTitle: String, logTag: String) {
-        buildAndLaunch(context, showTitle, "show", logTag)
+    fun searchForShow(context: Context, showTitle: String) {
+        buildAndLaunch(context, showTitle, "show")
     }
 
     @JvmStatic
-    fun searchForMovie(context: Context, movieTitle: String, logTag: String) {
-        buildAndLaunch(context, movieTitle, "movie", logTag)
+    fun searchForMovie(context: Context, movieTitle: String) {
+        buildAndLaunch(context, movieTitle, "movie")
     }
 
 }

@@ -10,14 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.support.v4.view.ViewCompat;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,17 +23,25 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
-import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
@@ -59,7 +59,6 @@ public class CalendarFragment extends Fragment
         implements OnItemClickListener, OnSharedPreferenceChangeListener,
         AdapterView.OnItemLongClickListener {
 
-    private static final String TAG = "Calendar";
     private static final int CONTEXT_FLAG_WATCHED_ID = 0;
     private static final int CONTEXT_FLAG_UNWATCHED_ID = 1;
     private static final int CONTEXT_CHECKIN_ID = 2;
@@ -80,7 +79,6 @@ public class CalendarFragment extends Fragment
      */
     public interface InitBundle {
         String TYPE = "type";
-        String ANALYTICS_TAG = "analyticstag";
         String LOADER_ID = "loaderid";
         String EMPTY_STRING_ID = "emptyid";
     }
@@ -152,8 +150,9 @@ public class CalendarFragment extends Fragment
           CursorLoader holds on to a cursor with old data. See
           https://github.com/UweTrottmann/SeriesGuide/issues/257.
          */
-        boolean isLoaderExists = getLoaderManager().getLoader(getLoaderId()) != null;
-        getLoaderManager().initLoader(getLoaderId(), null, calendarLoaderCallbacks);
+        LoaderManager loaderManager = LoaderManager.getInstance(this);
+        boolean isLoaderExists = loaderManager.getLoader(getLoaderId()) != null;
+        loaderManager.initLoader(getLoaderId(), null, calendarLoaderCallbacks);
         if (isLoaderExists) {
             requery();
         }
@@ -216,23 +215,18 @@ public class CalendarFragment extends Fragment
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_calendar_onlyfavorites) {
             toggleFilterSetting(item, CalendarSettings.KEY_ONLY_FAVORITE_SHOWS);
-            Utils.trackAction(getActivity(), TAG, "Only favorite shows Toggle");
             return true;
         } else if (itemId == R.id.menu_action_calendar_onlycollected) {
             toggleFilterSetting(item, CalendarSettings.KEY_ONLY_COLLECTED);
-            Utils.trackAction(getActivity(), TAG, "Only calendar shows Toggle");
             return true;
         } else if (itemId == R.id.menu_action_calendar_nospecials) {
             toggleFilterSetting(item, DisplaySettings.KEY_HIDE_SPECIALS);
-            Utils.trackAction(getActivity(), TAG, "Hide specials Toggle");
             return true;
         } else if (itemId == R.id.menu_action_calendar_nowatched) {
             toggleFilterSetting(item, CalendarSettings.KEY_HIDE_WATCHED_EPISODES);
-            Utils.trackAction(getActivity(), TAG, "Hide watched Toggle");
             return true;
         } else if (itemId == R.id.menu_action_calendar_infinite) {
             toggleFilterSetting(item, CalendarSettings.KEY_INFINITE_SCROLLING);
-            Utils.trackAction(getActivity(), TAG, "Infinite Scrolling Toggle");
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -300,37 +294,34 @@ public class CalendarFragment extends Fragment
         final int episodeTvdbId = episode.getInt(CalendarQuery._ID);
         final int seasonNumber = episode.getInt(CalendarQuery.SEASON);
         final int episodeNumber = episode.getInt(CalendarQuery.NUMBER);
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case CONTEXT_CHECKIN_ID: {
-                        checkInEpisode((int) id);
-                        return true;
-                    }
-                    case CONTEXT_FLAG_WATCHED_ID: {
-                        updateEpisodeWatchedState(showTvdbId, episodeTvdbId, seasonNumber,
-                                episodeNumber, true);
-                        return true;
-                    }
-                    case CONTEXT_FLAG_UNWATCHED_ID: {
-                        updateEpisodeWatchedState(showTvdbId, episodeTvdbId, seasonNumber,
-                                episodeNumber, false);
-                        return true;
-                    }
-                    case CONTEXT_COLLECTION_ADD_ID: {
-                        updateEpisodeCollectionState(showTvdbId, episodeTvdbId, seasonNumber,
-                                episodeNumber, true);
-                        return true;
-                    }
-                    case CONTEXT_COLLECTION_REMOVE_ID: {
-                        updateEpisodeCollectionState(showTvdbId, episodeTvdbId, seasonNumber,
-                                episodeNumber, false);
-                        return true;
-                    }
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case CONTEXT_CHECKIN_ID: {
+                    checkInEpisode((int) id);
+                    return true;
                 }
-                return false;
+                case CONTEXT_FLAG_WATCHED_ID: {
+                    updateEpisodeWatchedState(showTvdbId, episodeTvdbId, seasonNumber,
+                            episodeNumber, true);
+                    return true;
+                }
+                case CONTEXT_FLAG_UNWATCHED_ID: {
+                    updateEpisodeWatchedState(showTvdbId, episodeTvdbId, seasonNumber,
+                            episodeNumber, false);
+                    return true;
+                }
+                case CONTEXT_COLLECTION_ADD_ID: {
+                    updateEpisodeCollectionState(showTvdbId, episodeTvdbId, seasonNumber,
+                            episodeNumber, true);
+                    return true;
+                }
+                case CONTEXT_COLLECTION_REMOVE_ID: {
+                    updateEpisodeCollectionState(showTvdbId, episodeTvdbId, seasonNumber,
+                            episodeNumber, false);
+                    return true;
+                }
             }
+            return false;
         });
 
         popupMenu.show();
@@ -416,7 +407,8 @@ public class CalendarFragment extends Fragment
     }
 
     private void requery() {
-        getLoaderManager().restartLoader(getLoaderId(), null, calendarLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(getLoaderId(), null, calendarLoaderCallbacks);
     }
 
     private void schedulePeriodicDataRefresh(boolean enableRefresh) {
@@ -433,7 +425,8 @@ public class CalendarFragment extends Fragment
         @Override
         public void run() {
             if (isAdded()) {
-                getLoaderManager().restartLoader(getLoaderId(), null, calendarLoaderCallbacks);
+                LoaderManager.getInstance(CalendarFragment.this)
+                        .restartLoader(getLoaderId(), null, calendarLoaderCallbacks);
             }
         }
     };

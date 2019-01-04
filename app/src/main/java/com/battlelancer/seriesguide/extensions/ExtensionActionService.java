@@ -8,8 +8,8 @@ import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.EXTRA
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.SafeJobIntentService;
+import androidx.annotation.NonNull;
+import androidx.core.app.SafeJobIntentService;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 

@@ -1,8 +1,8 @@
 package com.battlelancer.seriesguide.util.tasks;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
@@ -46,11 +46,11 @@ public abstract class BaseRateItemTask extends BaseActionTask {
                     if (SgTrakt.isUnauthorized(getContext(), response)) {
                         return ERROR_TRAKT_AUTH;
                     }
-                    SgTrakt.trackFailedRequest(getContext(), getTraktAction(), response);
+                    SgTrakt.trackFailedRequest(getTraktAction(), response);
                     return ERROR_TRAKT_API;
                 }
             } catch (Exception e) {
-                SgTrakt.trackFailedRequest(getContext(), "rate movie", e);
+                SgTrakt.trackFailedRequest("rate movie", e);
                 return ERROR_TRAKT_API;
             }
 

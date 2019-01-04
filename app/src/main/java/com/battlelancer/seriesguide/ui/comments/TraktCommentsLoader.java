@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.ui.comments;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -69,11 +69,10 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
                     if (response.isSuccessful()) {
                         return buildResultSuccess(response.body());
                     } else {
-                        SgTrakt.trackFailedRequest(getContext(), "get movie comments",
-                                response);
+                        SgTrakt.trackFailedRequest("get movie comments", response);
                     }
                 } catch (Exception e) {
-                    SgTrakt.trackFailedRequest(getContext(), "get movie comments", e);
+                    SgTrakt.trackFailedRequest("get movie comments", e);
                 }
             }
             return buildResultFailureWithOfflineCheck();
@@ -114,10 +113,10 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
                     if (response.isSuccessful()) {
                         return buildResultSuccess(response.body());
                     } else {
-                        SgTrakt.trackFailedRequest(getContext(), "get episode comments", response);
+                        SgTrakt.trackFailedRequest("get episode comments", response);
                     }
                 } catch (Exception e) {
-                    SgTrakt.trackFailedRequest(getContext(), "get episode comments", e);
+                    SgTrakt.trackFailedRequest("get episode comments", e);
                 }
                 return buildResultFailureWithOfflineCheck();
             } else {
@@ -139,10 +138,10 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
             if (response.isSuccessful()) {
                 return buildResultSuccess(response.body());
             } else {
-                SgTrakt.trackFailedRequest(getContext(), "get show comments", response);
+                SgTrakt.trackFailedRequest("get show comments", response);
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(getContext(), "get show comments", e);
+            SgTrakt.trackFailedRequest("get show comments", e);
         }
         return buildResultFailureWithOfflineCheck();
     }

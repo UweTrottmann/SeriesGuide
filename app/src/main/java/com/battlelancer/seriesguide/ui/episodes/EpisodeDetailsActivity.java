@@ -4,15 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.Loader;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +14,15 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.core.app.NavUtils;
+import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.ContextCompat;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
+import androidx.viewpager.widget.ViewPager;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
@@ -43,7 +43,6 @@ import java.util.List;
  */
 public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
 
-    protected static final String TAG = "Episode Details";
     private static final int LOADER_EPISODE_ID = 100;
     private static final int LOADER_SEASON_ID = 101;
     private static final String STATE_EPISODE_TVDB_ID = "episodeTvdbId";
@@ -99,7 +98,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         setupViews();
 
         // start loading data
-        getSupportLoaderManager().restartLoader(LOADER_EPISODE_ID, null, basicInfoLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(LOADER_EPISODE_ID, null, basicInfoLoaderCallbacks);
     }
 
     @Override
@@ -254,7 +254,8 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         setTitle(getString(R.string.episodes) + " " + showTitle + " "
                 + SeasonTools.getSeasonString(this, season.season));
 
-        getSupportLoaderManager().restartLoader(LOADER_SEASON_ID, null, seasonLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(LOADER_SEASON_ID, null, seasonLoaderCallbacks);
     }
 
     private LoaderManager.LoaderCallbacks<SeasonEpisodesLoader.Result> seasonLoaderCallbacks
@@ -266,13 +267,13 @@ public class EpisodeDetailsActivity extends BaseNavDrawerActivity {
         }
 
         @Override
-        public void onLoadFinished(Loader<SeasonEpisodesLoader.Result> loader,
+        public void onLoadFinished(@NonNull Loader<SeasonEpisodesLoader.Result> loader,
                 SeasonEpisodesLoader.Result data) {
             populateSeason(data);
         }
 
         @Override
-        public void onLoaderReset(Loader<SeasonEpisodesLoader.Result> loader) {
+        public void onLoaderReset(@NonNull Loader<SeasonEpisodesLoader.Result> loader) {
             // do nothing, keep existing data
         }
     };

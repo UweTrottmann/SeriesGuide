@@ -2,12 +2,6 @@ package com.battlelancer.seriesguide.ui.comments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.Loader;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -16,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -25,6 +18,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.app.LoaderManager.LoaderCallbacks;
+import androidx.loader.content.Loader;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -66,16 +66,11 @@ public class TraktCommentsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_comments, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        View view = inflater.inflate(R.layout.fragment_comments, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewComments, R.id.listViewShouts);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshCommentsWithNetworkCheck();
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(this::refreshCommentsWithNetworkCheck);
         swipeRefreshLayout.setProgressViewOffset(false, getResources().getDimensionPixelSize(
                 R.dimen.swipe_refresh_progress_bar_start_margin),
                 getResources().getDimensionPixelSize(
@@ -85,12 +80,7 @@ public class TraktCommentsFragment extends Fragment {
         list.setOnItemClickListener(onItemClickListener);
         list.setEmptyView(emptyView);
 
-        buttonShout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                comment();
-            }
-        });
+        buttonShout.setOnClickListener(v -> comment());
 
         // disable comment button by default, enable if comment entered
         buttonShout.setEnabled(false);
@@ -112,7 +102,7 @@ public class TraktCommentsFragment extends Fragment {
         // set initial view states
         showProgressBar(true);
 
-        return v;
+        return view;
     }
 
     private void comment() {
@@ -165,8 +155,9 @@ public class TraktCommentsFragment extends Fragment {
         list.setAdapter(adapter);
 
         // load data
-        getLoaderManager().initLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
-                commentsLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .initLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
+                        commentsLoaderCallbacks);
 
         // enable menu
         setHasOptionsMenu(true);
@@ -212,11 +203,7 @@ public class TraktCommentsFragment extends Fragment {
     }
 
     private final AdapterView.OnItemClickListener onItemClickListener
-            = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            onListItemClick((ListView) parent, v, position);
-        }
-    };
+            = (parent, v, position, id) -> onListItemClick((ListView) parent, v, position);
 
     public void onListItemClick(ListView l, View v, int position) {
         final Comment comment = (Comment) l.getItemAtPosition(position);
@@ -275,8 +262,9 @@ public class TraktCommentsFragment extends Fragment {
     }
 
     private void refreshComments() {
-        getLoaderManager().restartLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
-                commentsLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
+                        commentsLoaderCallbacks);
     }
 
     /**
@@ -287,7 +275,7 @@ public class TraktCommentsFragment extends Fragment {
     }
 
     /**
-     * Show or hide the progress bar of the {@link android.support.v4.widget.SwipeRefreshLayout}
+     * Show or hide the progress bar of the {@link SwipeRefreshLayout}
      * wrapping the comments list.
      */
     protected void showProgressBar(boolean isShowing) {

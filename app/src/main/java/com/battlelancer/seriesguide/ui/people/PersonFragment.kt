@@ -2,10 +2,6 @@ package com.battlelancer.seriesguide.ui.people
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.LoaderManager
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.Loader
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +12,10 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.loader.app.LoaderManager
+import androidx.loader.content.Loader
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -73,8 +73,8 @@ class PersonFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        loaderManager.initLoader(PeopleActivity.PERSON_LOADER_ID, null,
-                personLoaderCallbacks)
+        LoaderManager.getInstance(this)
+            .initLoader(PeopleActivity.PERSON_LOADER_ID, null, personLoaderCallbacks)
     }
 
     override fun onDestroyView() {
@@ -85,7 +85,7 @@ class PersonFragment : Fragment() {
 
     @OnClick(R.id.buttonPersonTmdbLink)
     fun onClickButtonTmdbLink() {
-        person?.let { TmdbTools.openTmdbPerson(activity, it.id, TAG) }
+        person?.let { TmdbTools.openTmdbPerson(activity, it.id) }
     }
 
     @OnLongClick(R.id.buttonPersonTmdbLink)
@@ -99,7 +99,7 @@ class PersonFragment : Fragment() {
 
     @OnClick(R.id.buttonPersonWebSearch)
     fun onClickButtonWebSearch() {
-        person?.let { ServiceUtils.performWebSearch(activity, it.name, TAG) }
+        person?.let { ServiceUtils.performWebSearch(activity, it.name) }
     }
 
     private fun populatePersonViews(person: Person?) {
@@ -173,8 +173,6 @@ class PersonFragment : Fragment() {
     companion object {
 
         const val ARG_PERSON_TMDB_ID = "person_tmdb_id"
-
-        private const val TAG = "Person Details"
 
         @JvmStatic
         fun newInstance(tmdbId: Int): PersonFragment {

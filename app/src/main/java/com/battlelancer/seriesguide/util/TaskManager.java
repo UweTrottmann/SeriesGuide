@@ -2,9 +2,9 @@ package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.annotation.MainThread;
-import android.support.annotation.Nullable;
 import android.widget.Toast;
+import androidx.annotation.MainThread;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.ui.search.AddShowTask;

@@ -7,11 +7,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +16,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
@@ -73,7 +73,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
         adapter = new MoviesCursorAdapter(getContext(), this, getLoaderId());
         gridView.setAdapter(adapter);
 
-        getLoaderManager().initLoader(getLoaderId(), null, this);
+        LoaderManager.getInstance(this).initLoader(getLoaderId(), null, this);
 
         setHasOptionsMenu(true);
     }
@@ -153,7 +153,7 @@ public abstract class MoviesBaseFragment extends Fragment implements
     @SuppressWarnings("UnusedParameters")
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(MoviesSortOrderChangedEvent event) {
-        getLoaderManager().restartLoader(getLoaderId(), null, this);
+        LoaderManager.getInstance(this).restartLoader(getLoaderId(), null, this);
     }
 
     /**

@@ -1,14 +1,13 @@
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
@@ -70,14 +69,9 @@ public class MoviesActivity extends BaseTopActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if (savedInstanceState != null) {
                 postponeEnterTransition();
-                viewPager.post(new Runnable() {
-                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-                    @Override
-                    public void run() {
-                        // Allow the adapters to repopulate during the next layout pass before starting the transition animation
-                        startPostponedEnterTransition();
-                    }
-                });
+                // Allow the adapters to repopulate during the next layout pass
+                // before starting the transition animation
+                viewPager.post(this::startPostponedEnterTransition);
             }
         }
     }
@@ -87,12 +81,9 @@ public class MoviesActivity extends BaseTopActivity {
 
         // tabs
         showNowTab = TraktCredentials.get(this).hasCredentials();
-        tabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
-            @Override
-            public void onTabClick(int position) {
-                if (viewPager.getCurrentItem() == position) {
-                    EventBus.getDefault().post(new MoviesTabClickEvent(position, showNowTab));
-                }
+        tabs.setOnTabClickListener(position -> {
+            if (viewPager.getCurrentItem() == position) {
+                EventBus.getDefault().post(new MoviesTabClickEvent(position, showNowTab));
             }
         });
         tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, viewPager, tabs);

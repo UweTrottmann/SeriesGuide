@@ -1,12 +1,12 @@
 package com.battlelancer.seriesguide.billing.amazon;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.app.ActionBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.amazon.device.iap.PurchasingService;
@@ -55,37 +55,17 @@ public class AmazonBillingActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         buttonSubscribe.setEnabled(false);
-        buttonSubscribe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                subscribe();
-            }
-        });
+        buttonSubscribe.setOnClickListener(v -> subscribe());
 
         buttonGetPass.setEnabled(false);
-        buttonGetPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                purchasePass();
-            }
-        });
+        buttonGetPass.setOnClickListener(v -> purchasePass());
 
         dismissButton.setText(R.string.dismiss);
-        dismissButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        dismissButton.setOnClickListener(v -> dismiss());
         hiddenButton.setVisibility(View.GONE);
 
-        buttonMoreInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.launchWebsite(v.getContext(), getString(R.string.url_whypay),
-                        "AmazonBillingActivity", "WhyPayWebsite");
-            }
-        });
+        buttonMoreInfo.setOnClickListener(
+                v -> Utils.launchWebsite(v.getContext(), getString(R.string.url_whypay)));
 
         progressBar.setVisibility(View.VISIBLE);
     }

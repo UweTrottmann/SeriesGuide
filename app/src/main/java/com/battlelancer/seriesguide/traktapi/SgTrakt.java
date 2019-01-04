@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt5.TraktV2;
@@ -15,8 +15,6 @@ import retrofit2.Response;
  * TraktCredentials} to store user credentials.
  */
 public class SgTrakt extends TraktV2 {
-
-    private static String TAG_TRAKT_ERROR = "trakt Error";
 
     private final Context context;
     private final OkHttpClient okHttpClient;
@@ -66,41 +64,39 @@ public class SgTrakt extends TraktV2 {
         }
     }
 
-    public static void trackFailedRequest(Context context, TraktV2 trakt, String action,
+    public static void trackFailedRequest(TraktV2 trakt, String action,
             retrofit2.Response response) {
         String message = response.message();
         TraktError error = trakt.checkForTraktError(response);
         if (error != null && error.message != null) {
             message += ", " + error.message;
         }
-        Utils.trackFailedRequest(context, TAG_TRAKT_ERROR, action, response.code(), message);
+        Utils.trackFailedRequest(new TraktRequestError(action, response.code(), message));
     }
 
-    public static void trackFailedRequest(Context context, String action,
-            retrofit2.Response response) {
-        Utils.trackFailedRequest(context, TAG_TRAKT_ERROR, action, response.code(),
-                response.message());
+    public static void trackFailedRequest(String action, retrofit2.Response response) {
+        Utils.trackFailedRequest(
+                new TraktRequestError(action, response.code(), response.message()));
     }
 
-    public static void trackFailedRequest(Context context, String action,
-            @NonNull Throwable throwable) {
-        Utils.trackFailedRequest(context, TAG_TRAKT_ERROR, action, throwable);
+    public static void trackFailedRequest(String action, @NonNull Throwable throwable) {
+        Utils.trackFailedRequest(new TraktRequestError(action, throwable));
     }
 
     /**
      * Executes the given call. Will return null if the call fails for any reason, including auth
      * failures.
      */
-    public static <T> T executeCall(Context context, Call<T> call, String action) {
+    public static <T> T executeCall(Call<T> call, String action) {
         try {
             Response<T> response = call.execute();
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                trackFailedRequest(context, action, response);
+                trackFailedRequest(action, response);
             }
         } catch (Exception e) {
-            trackFailedRequest(context, action, e);
+            trackFailedRequest(action, e);
         }
         return null;
     }
@@ -116,11 +112,11 @@ public class SgTrakt extends TraktV2 {
                 return response.body();
             } else {
                 if (!isUnauthorized(context, response)) {
-                    trackFailedRequest(context, action, response);
+                    trackFailedRequest(action, response);
                 }
             }
         } catch (Exception e) {
-            trackFailedRequest(context, action, e);
+            trackFailedRequest(action, e);
         }
         return null;
     }

@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.api;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.JobIntentService;
+import androidx.core.app.JobIntentService;
 
 /**
  * Base class to expose a {@link SeriesGuideExtension} service. See the documentation of {@link

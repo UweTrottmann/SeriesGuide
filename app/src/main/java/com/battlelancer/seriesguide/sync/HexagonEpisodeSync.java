@@ -7,16 +7,16 @@ import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
+import androidx.annotation.Nullable;
+import androidx.collection.SparseArrayCompat;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
@@ -88,7 +88,7 @@ public class HexagonEpisodeSync {
                     hasMoreEpisodes = false;
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "get updated episodes", e);
+                HexagonTools.trackFailedRequest("get updated episodes", e);
                 return false;
             }
 
@@ -209,7 +209,7 @@ public class HexagonEpisodeSync {
                     hasMoreEpisodes = false;
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "get episodes of show", e);
+                HexagonTools.trackFailedRequest("get episodes of show", e);
                 return false;
             }
 
@@ -379,7 +379,7 @@ public class HexagonEpisodeSync {
                     episodesService.save(episodeList).execute();
                 } catch (IOException e) {
                     // abort
-                    HexagonTools.trackFailedRequest(context, "save episodes of show", e);
+                    HexagonTools.trackFailedRequest("save episodes of show", e);
                     query.close();
                     return false;
                 }

@@ -1,8 +1,8 @@
 package com.battlelancer.seriesguide.ui.streams;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
@@ -48,10 +48,10 @@ class TraktEpisodeHistoryLoader extends GenericSimpleLoader<TraktEpisodeHistoryL
                 if (SgTrakt.isUnauthorized(getContext(), response)) {
                     return buildResultFailure(R.string.trakt_error_credentials);
                 }
-                SgTrakt.trackFailedRequest(getContext(), getAction(), response);
+                SgTrakt.trackFailedRequest(getAction(), response);
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(getContext(), getAction(), e);
+            SgTrakt.trackFailedRequest(getAction(), e);
             return AndroidUtils.isNetworkConnected(getContext())
                     ? buildResultFailure() : buildResultFailure(R.string.offline);
         }

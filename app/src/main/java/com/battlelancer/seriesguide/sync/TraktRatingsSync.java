@@ -4,8 +4,8 @@ import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
@@ -67,11 +67,11 @@ public class TraktRatingsSync {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return false;
                 }
-                SgTrakt.trackFailedRequest(context, "get show ratings", response);
+                SgTrakt.trackFailedRequest("get show ratings", response);
                 return false;
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "get show ratings", e);
+            SgTrakt.trackFailedRequest("get show ratings", e);
             return false;
         }
         if (ratedShows == null) {
@@ -163,11 +163,11 @@ public class TraktRatingsSync {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return false;
                 }
-                SgTrakt.trackFailedRequest(context, "get episode ratings", response);
+                SgTrakt.trackFailedRequest("get episode ratings", response);
                 return false;
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "get episode ratings", e);
+            SgTrakt.trackFailedRequest("get episode ratings", e);
             return false;
         }
         if (ratedEpisodes == null) {
@@ -258,11 +258,11 @@ public class TraktRatingsSync {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return false;
                 }
-                SgTrakt.trackFailedRequest(context, "get movie ratings", response);
+                SgTrakt.trackFailedRequest("get movie ratings", response);
                 return false;
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "get movie ratings", e);
+            SgTrakt.trackFailedRequest("get movie ratings", e);
             return false;
         }
         if (ratedMovies == null) {

@@ -1,12 +1,7 @@
 package com.battlelancer.seriesguide.ui.stats;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -60,16 +58,11 @@ public class StatsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_stats, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        View view = inflater.inflate(R.layout.fragment_stats, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
         errorView.setVisibility(View.GONE);
-        errorView.setButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadStats();
-            }
-        });
+        errorView.setButtonClickListener(v -> loadStats());
 
         // set some views invisible so they can be animated in once stats are computed
         textViewShowsWithNextEpisode.setVisibility(View.INVISIBLE);
@@ -96,7 +89,7 @@ public class StatsFragment extends Fragment {
         ClipboardTools.copyTextToClipboardOnLongClick(textViewMoviesWatchlist);
         ClipboardTools.copyTextToClipboardOnLongClick(textViewMoviesWatchlistRuntime);
 
-        return v;
+        return view;
     }
 
     @Override
@@ -105,12 +98,7 @@ public class StatsFragment extends Fragment {
         setHasOptionsMenu(true);
 
         model = ViewModelProviders.of(this).get(StatsViewModel.class);
-        model.getStatsData().observe(this, new Observer<StatsLiveData.StatsUpdateEvent>() {
-            @Override
-            public void onChanged(@Nullable StatsLiveData.StatsUpdateEvent statsUpdateEvent) {
-                handleStatsUpdate(statsUpdateEvent);
-            }
-        });
+        model.getStatsData().observe(this, this::handleStatsUpdate);
         loadStats();
     }
 

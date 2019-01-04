@@ -2,21 +2,20 @@ package com.battlelancer.seriesguide.traktapi;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.android.material.textfield.TextInputLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -68,49 +67,38 @@ public abstract class GenericCheckInDialogFragment extends AppCompatDialogFragme
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.dialog_checkin, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        final View view = inflater.inflate(R.layout.dialog_checkin, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
         // Paste episode button
         final String itemTitle = getArguments().getString(InitBundle.ITEM_TITLE);
         final EditText editTextMessage = textInputLayout.getEditText();
         if (!TextUtils.isEmpty(itemTitle)) {
-            buttonPasteTitle.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (editTextMessage == null) {
-                        return;
-                    }
-                    int start = editTextMessage.getSelectionStart();
-                    int end = editTextMessage.getSelectionEnd();
-                    editTextMessage.getText().replace(Math.min(start, end), Math.max(start, end),
-                            itemTitle, 0, itemTitle.length());
+            buttonPasteTitle.setOnClickListener(v -> {
+                if (editTextMessage == null) {
+                    return;
                 }
+                int start = editTextMessage.getSelectionStart();
+                int end = editTextMessage.getSelectionEnd();
+                editTextMessage.getText().replace(Math.min(start, end), Math.max(start, end),
+                        itemTitle, 0, itemTitle.length());
             });
         }
 
         // Clear button
-        buttonClear.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (editTextMessage == null) {
-                    return;
-                }
-                editTextMessage.setText(null);
+        buttonClear.setOnClickListener(v -> {
+            if (editTextMessage == null) {
+                return;
             }
+            editTextMessage.setText(null);
         });
 
         // Checkin Button
-        buttonCheckIn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkIn();
-            }
-        });
+        buttonCheckIn.setOnClickListener(v -> checkIn());
 
         setProgressLock(false);
 
-        return v;
+        return view;
     }
 
     @Override

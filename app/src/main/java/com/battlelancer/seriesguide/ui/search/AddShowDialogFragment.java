@@ -2,30 +2,31 @@ package com.battlelancer.seriesguide.ui.search;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Setter;
 import butterknife.Unbinder;
+import butterknife.ViewCollections;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -126,13 +127,9 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
             R.id.textViewAddGenresLabel
     }) List<View> labelViews;
 
-    static final ButterKnife.Setter<View, Boolean> VISIBLE
-            = new ButterKnife.Setter<View, Boolean>() {
-        @Override
-        public void set(@NonNull View view, Boolean value, int index) {
-            view.setVisibility(value ? View.VISIBLE : View.INVISIBLE);
-        }
-    };
+    @SuppressWarnings({"WeakerAccess", "ConstantConditions"})
+    static final Setter<View, Boolean> VISIBLE
+            = (view, value, index) -> view.setVisibility(value ? View.VISIBLE : View.INVISIBLE);
 
     @BindView(R.id.buttonPositive) Button buttonPositive;
     @BindView(R.id.buttonNegative) Button buttonNegative;
@@ -180,25 +177,17 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
 
         // buttons
         buttonNegative.setText(R.string.dismiss);
-        buttonNegative.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        buttonNegative.setOnClickListener(view -> dismiss());
         buttonPositive.setVisibility(View.GONE);
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
-        containerShowInfo.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                // just copy text from views instead of re-building
-                StringBuilder summaryBuilder = new StringBuilder();
-                summaryBuilder.append(title.getText()).append("\n");
-                summaryBuilder.append(releasedTextView.getText()).append("\n");
-                summaryBuilder.append(showmeta.getText());
-                return ClipboardTools.copyTextToClipboard(v.getContext(), summaryBuilder);
-            }
+        containerShowInfo.setOnLongClickListener(view -> {
+            // just copy text from views instead of re-building
+            StringBuilder summaryBuilder = new StringBuilder();
+            summaryBuilder.append(title.getText()).append("\n");
+            summaryBuilder.append(releasedTextView.getText()).append("\n");
+            summaryBuilder.append(showmeta.getText());
+            return ClipboardTools.copyTextToClipboard(view.getContext(), summaryBuilder);
         });
         ClipboardTools.copyTextToClipboardOnLongClick(overview);
         ClipboardTools.copyTextToClipboardOnLongClick(genres);
@@ -216,8 +205,8 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         Bundle args = new Bundle();
         args.putInt(KEY_SHOW_TVDBID, displayedShow.getTvdbid());
         args.putString(KEY_SHOW_LANGUAGE, displayedShow.getLanguage());
-        getLoaderManager().initLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args,
-                showLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .initLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args, showLoaderCallbacks);
     }
 
     @Override
@@ -261,8 +250,8 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         Bundle args = new Bundle();
         args.putInt(KEY_SHOW_TVDBID, displayedShow.getTvdbid());
         args.putString(KEY_SHOW_LANGUAGE, displayedShow.getLanguage());
-        getLoaderManager().restartLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args,
-                showLoaderCallbacks);
+        LoaderManager.getInstance(this)
+                .restartLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args, showLoaderCallbacks);
     }
 
     private LoaderManager.LoaderCallbacks<TvdbShowLoader.Result> showLoaderCallbacks
@@ -309,26 +298,20 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         if (result.isAdded) {
             // already added, offer to open show instead
             buttonPositive.setText(R.string.action_open);
-            buttonPositive.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(OverviewActivity.intentShow(getContext(),
-                            displayedShow.getTvdbid()));
-                    dismiss();
-                }
+            buttonPositive.setOnClickListener(v -> {
+                startActivity(OverviewActivity.intentShow(getContext(),
+                        displayedShow.getTvdbid()));
+                dismiss();
             });
         } else {
             // not added, offer to add
             buttonPositive.setText(R.string.action_shows_add);
-            buttonPositive.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    EventBus.getDefault()
-                            .post(new AddFragment.OnAddingShowEvent(displayedShow.getTvdbid()));
+            buttonPositive.setOnClickListener(v -> {
+                EventBus.getDefault()
+                        .post(new AddFragment.OnAddingShowEvent(displayedShow.getTvdbid()));
 
-                    addShowListener.onAddShow(displayedShow);
-                    dismiss();
-                }
+                addShowListener.onAddShow(displayedShow);
+                dismiss();
             });
         }
         buttonPositive.setVisibility(View.VISIBLE);
@@ -404,7 +387,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
 
         // enable adding of show, display views
         buttonPositive.setEnabled(true);
-        ButterKnife.apply(labelViews, VISIBLE, true);
+        ViewCollections.set(labelViews, VISIBLE, true);
     }
 
     private void showProgressBar(boolean isVisible) {

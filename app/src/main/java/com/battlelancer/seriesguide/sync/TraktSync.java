@@ -3,8 +3,8 @@ package com.battlelancer.seriesguide.sync;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
@@ -188,9 +188,9 @@ public class TraktSync {
             if (SgTrakt.isUnauthorized(context, response)) {
                 return null;
             }
-            SgTrakt.trackFailedRequest(context, "get last activity", response);
+            SgTrakt.trackFailedRequest("get last activity", response);
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "get last activity", e);
+            SgTrakt.trackFailedRequest("get last activity", e);
         }
         return null;
     }

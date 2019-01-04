@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
@@ -86,10 +86,10 @@ public class TraktEpisodeSync {
                     if (SgTrakt.isUnauthorized(context, response)) {
                         return false;
                     }
-                    SgTrakt.trackFailedRequest(context, "get watched shows", response);
+                    SgTrakt.trackFailedRequest("get watched shows", response);
                 }
             } catch (Exception e) {
-                SgTrakt.trackFailedRequest(context, "get watched shows", e);
+                SgTrakt.trackFailedRequest("get watched shows", e);
             }
 
             if (watchedShowsTrakt == null) {
@@ -140,10 +140,10 @@ public class TraktEpisodeSync {
                     if (SgTrakt.isUnauthorized(context, response)) {
                         return false;
                     }
-                    SgTrakt.trackFailedRequest(context, "get collected shows", response);
+                    SgTrakt.trackFailedRequest("get collected shows", response);
                 }
             } catch (Exception e) {
-                SgTrakt.trackFailedRequest(context, "get collected shows", e);
+                SgTrakt.trackFailedRequest("get collected shows", e);
             }
 
             if (collectedShowsTrakt == null) {
@@ -453,10 +453,10 @@ public class TraktEpisodeSync {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return false;
                 }
-                SgTrakt.trackFailedRequest(context, "add episodes to " + flag.name, response);
+                SgTrakt.trackFailedRequest("add episodes to " + flag.name, response);
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "add episodes to " + flag.name, e);
+            SgTrakt.trackFailedRequest("add episodes to " + flag.name, e);
         }
 
         return false;

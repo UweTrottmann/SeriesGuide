@@ -3,8 +3,6 @@ package com.battlelancer.seriesguide.modules;
 import android.content.Context;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.uwetrottmann.trakt5.TraktV2;
-import com.uwetrottmann.trakt5.services.Checkin;
-import com.uwetrottmann.trakt5.services.Comments;
 import com.uwetrottmann.trakt5.services.Episodes;
 import com.uwetrottmann.trakt5.services.Movies;
 import com.uwetrottmann.trakt5.services.Search;
@@ -18,18 +16,6 @@ import okhttp3.OkHttpClient;
 
 @Module
 public class TraktModule {
-
-    @Singleton
-    @Provides
-    Checkin provideCheckin(TraktV2 trakt) {
-        return trakt.checkin();
-    }
-
-    @Singleton
-    @Provides
-    Comments provideComments(TraktV2 trakt) {
-        return trakt.comments();
-    }
 
     @Singleton
     @Provides

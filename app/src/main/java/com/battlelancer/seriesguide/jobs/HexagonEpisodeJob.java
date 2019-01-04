@@ -1,7 +1,10 @@
 package com.battlelancer.seriesguide.jobs;
 
+import static com.battlelancer.seriesguide.jobs.episodes.JobAction.EPISODE_COLLECTION;
+import static com.battlelancer.seriesguide.jobs.episodes.JobAction.EPISODE_WATCHED_FLAG;
+
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
@@ -14,9 +17,6 @@ import com.uwetrottmann.seriesguide.backend.episodes.model.EpisodeList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.battlelancer.seriesguide.jobs.episodes.JobAction.EPISODE_COLLECTION;
-import static com.battlelancer.seriesguide.jobs.episodes.JobAction.EPISODE_WATCHED_FLAG;
 
 public class HexagonEpisodeJob extends BaseNetworkEpisodeJob {
 
@@ -61,7 +61,7 @@ public class HexagonEpisodeJob extends BaseNetworkEpisodeJob {
                 }
                 episodesService.save(uploadWrapper).execute();
             } catch (HttpResponseException e) {
-                HexagonTools.trackFailedRequest(context, "save episodes", e);
+                HexagonTools.trackFailedRequest("save episodes", e);
                 int code = e.getStatusCode();
                 if (code >= 400 && code < 500) {
                     return buildResult(context, NetworkJob.ERROR_HEXAGON_CLIENT);
@@ -69,7 +69,7 @@ public class HexagonEpisodeJob extends BaseNetworkEpisodeJob {
                     return buildResult(context, NetworkJob.ERROR_HEXAGON_SERVER);
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "save episodes", e);
+                HexagonTools.trackFailedRequest("save episodes", e);
                 return buildResult(context, NetworkJob.ERROR_CONNECTION);
             }
 

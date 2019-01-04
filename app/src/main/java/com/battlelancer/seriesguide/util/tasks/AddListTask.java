@@ -3,8 +3,8 @@ package com.battlelancer.seriesguide.util.tasks;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -52,7 +52,7 @@ public class AddListTask extends BaseActionTask {
             try {
                 listsService.save(wrapper).execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(getContext(), "add list", e);
+                HexagonTools.trackFailedRequest("add list", e);
                 return ERROR_HEXAGON_API;
             }
         }

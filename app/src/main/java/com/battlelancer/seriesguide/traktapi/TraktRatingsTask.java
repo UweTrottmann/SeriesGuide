@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.text.format.DateUtils;
+import androidx.collection.LruCache;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
@@ -22,8 +23,8 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
     private static final long MAXIMUM_AGE = 5 * DateUtils.MINUTE_IN_MILLIS;
 
     // Hard cache, with a fixed maximum capacity
-    private final static android.support.v4.util.LruCache<Long, Long> sCache
-            = new android.support.v4.util.LruCache<>(HARD_CACHE_CAPACITY);
+    private final static LruCache<Long, Long> sCache
+            = new LruCache<>(HARD_CACHE_CAPACITY);
 
     @SuppressLint("StaticFieldLeak") private final Context context;
     private final int showTvdbId;
@@ -87,10 +88,10 @@ public class TraktRatingsTask extends AsyncTask<Void, Void, Void> {
 
         Ratings ratings;
         if (isShowNotEpisode) {
-            ratings = SgTrakt.executeCall(context, traktShows.get().ratings(showTraktIdString),
+            ratings = SgTrakt.executeCall(traktShows.get().ratings(showTraktIdString),
                     "get show rating");
         } else {
-            ratings = SgTrakt.executeCall(context,
+            ratings = SgTrakt.executeCall(
                     traktEpisodes.get().ratings(showTraktIdString, season, episode),
                     "get episode rating");
         }

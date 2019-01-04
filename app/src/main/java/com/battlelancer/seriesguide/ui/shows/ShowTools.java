@@ -8,12 +8,12 @@ import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.util.SparseArrayCompat;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.collection.SparseArrayCompat;
+import androidx.core.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -238,25 +238,23 @@ public class ShowTools {
         }
 
         // schedule database update and sync
-        Runnable runnable = new Runnable() {
-            public void run() {
-                android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+        Runnable runnable = () -> {
+            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
 
-                // change language
-                ContentValues values = new ContentValues();
-                values.put(SeriesGuideContract.Shows.LANGUAGE, languageCode);
-                context.getContentResolver()
-                        .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null,
-                                null);
-                // reset episode last edit time so all get updated
-                values = new ContentValues();
-                values.put(SeriesGuideContract.Episodes.LAST_EDITED, 0);
-                context.getContentResolver()
-                        .update(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
-                                values, null, null);
-                // trigger update
-                SgSyncAdapter.requestSyncSingleImmediate(context, false, showTvdbId);
-            }
+            // change language
+            ContentValues values = new ContentValues();
+            values.put(SeriesGuideContract.Shows.LANGUAGE, languageCode);
+            context.getContentResolver()
+                    .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null,
+                            null);
+            // reset episode last edit time so all get updated
+            values = new ContentValues();
+            values.put(SeriesGuideContract.Episodes.LAST_EDITED, 0);
+            context.getContentResolver()
+                    .update(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
+                            values, null, null);
+            // trigger update
+            SgSyncAdapter.requestSyncSingleImmediate(context, false, showTvdbId);
         };
         AsyncTask.THREAD_POOL_EXECUTOR.execute(runnable);
 

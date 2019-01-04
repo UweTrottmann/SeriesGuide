@@ -1,6 +1,6 @@
 package com.battlelancer.seriesguide.traktapi;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.TraktV2Interceptor;
 import dagger.Lazy;

@@ -1,22 +1,21 @@
 package com.battlelancer.seriesguide.ui.episodes;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.Constants;
@@ -381,12 +380,9 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     };
 
     private OnSharedPreferenceChangeListener onSortOrderChangedListener
-            = new OnSharedPreferenceChangeListener() {
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (DisplaySettings.KEY_EPISODE_SORT_ORDER.equals(key)) {
-                reorderAndUpdateTabs();
-            }
+            = (sharedPreferences, key) -> {
+        if (DisplaySettings.KEY_EPISODE_SORT_ORDER.equals(key)) {
+            reorderAndUpdateTabs();
         }
     };
 

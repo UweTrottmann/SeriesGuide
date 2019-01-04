@@ -1,7 +1,12 @@
 package com.battlelancer.seriesguide.jobs;
 
+import static com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_COLLECTION_ADD;
+import static com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_COLLECTION_REMOVE;
+import static com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHLIST_ADD;
+import static com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHLIST_REMOVE;
+
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
@@ -12,11 +17,6 @@ import com.uwetrottmann.seriesguide.backend.movies.model.MovieList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_COLLECTION_ADD;
-import static com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_COLLECTION_REMOVE;
-import static com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHLIST_ADD;
-import static com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHLIST_REMOVE;
 
 public class HexagonMovieJob extends BaseNetworkMovieJob {
 
@@ -41,7 +41,7 @@ public class HexagonMovieJob extends BaseNetworkMovieJob {
             }
             moviesService.save(uploadWrapper).execute();
         } catch (HttpResponseException e) {
-            HexagonTools.trackFailedRequest(context, "save movie", e);
+            HexagonTools.trackFailedRequest("save movie", e);
             int code = e.getStatusCode();
             if (code >= 400 && code < 500) {
                 return buildResult(context, NetworkJob.ERROR_HEXAGON_CLIENT);
@@ -49,7 +49,7 @@ public class HexagonMovieJob extends BaseNetworkMovieJob {
                 return buildResult(context, NetworkJob.ERROR_HEXAGON_SERVER);
             }
         } catch (IOException e) {
-            HexagonTools.trackFailedRequest(context, "save movie", e);
+            HexagonTools.trackFailedRequest("save movie", e);
             return buildResult(context, NetworkJob.ERROR_CONNECTION);
         }
 

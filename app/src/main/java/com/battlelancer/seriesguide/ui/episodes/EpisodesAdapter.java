@@ -3,14 +3,13 @@ package com.battlelancer.seriesguide.ui.episodes;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.TextViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.core.widget.TextViewCompat;
+import androidx.cursoradapter.widget.CursorAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
@@ -96,14 +95,12 @@ class EpisodesAdapter extends CursorAdapter {
         // watched box
         viewHolder.watchedBox.setEpisodeFlag(watchedFlag);
         final int episodeId = mCursor.getInt(EpisodesQuery._ID);
-        viewHolder.watchedBox.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                WatchedBox box = (WatchedBox) v;
-                // disable button, will be re-enabled on data reload once action completes
-                box.setEnabled(false);
-                onFlagListener.onFlagEpisodeWatched(episodeId, episodeNumber,
-                        !EpisodeTools.isWatched(box.getEpisodeFlag()));
-            }
+        viewHolder.watchedBox.setOnClickListener(v -> {
+            WatchedBox box = (WatchedBox) v;
+            // disable button, will be re-enabled on data reload once action completes
+            box.setEnabled(false);
+            onFlagListener.onFlagEpisodeWatched(episodeId, episodeNumber,
+                    !EpisodeTools.isWatched(box.getEpisodeFlag()));
         });
         viewHolder.watchedBox.setEnabled(true);
         boolean watched = EpisodeTools.isWatched(watchedFlag);
@@ -155,13 +152,10 @@ class EpisodesAdapter extends CursorAdapter {
                 ? R.style.TextAppearance_Body_Secondary : R.style.TextAppearance_Body_Dim);
 
         // context menu
-        viewHolder.contextMenu.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (popupMenuClickListener != null) {
-                    popupMenuClickListener.onPopupMenuClick(v, episodeId, episodeNumber,
-                            releaseTime, watchedFlag, isCollected);
-                }
+        viewHolder.contextMenu.setOnClickListener(v -> {
+            if (popupMenuClickListener != null) {
+                popupMenuClickListener.onPopupMenuClick(v, episodeId, episodeNumber,
+                        releaseTime, watchedFlag, isCollected);
             }
         });
     }

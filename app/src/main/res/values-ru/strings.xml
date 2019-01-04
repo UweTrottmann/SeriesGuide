@@ -11,6 +11,7 @@
     <string name="help">Помощь</string>
     <string name="help_and_feedback">Помощь и обратная связь</string>
     <string name="drawer_open">Открыть навигационную панель</string>
+    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">Инфо</string>
     <string name="episode">Эпизод</string>
@@ -377,7 +378,8 @@
         <item quantity="other">за %d мин. до</item>
     </plurals>
     <!-- About screen -->
-    <string name="licence_tvdb">Это приложение использует данные и изображения сервиса TheTVDB под лицензией CC BY-NC 4.0.</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Это приложение использует TMDb API, но это API не поддерживается и не одобрено самим сервисом TMDb.</string>
     <string name="licence_trakt">Это приложение использует данные и изображения сервиса Trakt.</string>
     <string name="about_open_source">SeriesGuide сделан с использованием открытого программного обеспечения.</string>
@@ -466,6 +468,7 @@
     <string name="hide_watched">Скрывать просмотренные эпизоды</string>
     <string name="pref_widget_opacity">Фон виджета</string>
     <string name="pref_widget_type">Тип виджета</string>
+    <string name="pref_large_font">Use large font</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Прозрачный</string>
     <string name="widget_background_25">25%</string>

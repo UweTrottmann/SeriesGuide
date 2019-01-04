@@ -1,11 +1,11 @@
 package com.battlelancer.seriesguide.ui.search;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.util.SparseArrayCompat;
 import android.text.TextUtils;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.collection.SparseArrayCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -67,7 +67,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                     if (SgTrakt.isUnauthorized(getContext(), response)) {
                         return buildResultFailure(R.string.trakt_error_credentials);
                     } else {
-                        SgTrakt.trackFailedRequest(getContext(), action, response);
+                        SgTrakt.trackFailedRequest(action, response);
                         return buildResultGenericFailure();
                     }
                 }
@@ -92,12 +92,12 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                     if (SgTrakt.isUnauthorized(getContext(), response)) {
                         return buildResultFailure(R.string.trakt_error_credentials);
                     }
-                    SgTrakt.trackFailedRequest(getContext(), action, response);
+                    SgTrakt.trackFailedRequest(action, response);
                     return buildResultGenericFailure();
                 }
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(getContext(), action, e);
+            SgTrakt.trackFailedRequest(action, e);
             // only check for network here to allow hitting the response cache
             return AndroidUtils.isNetworkConnected(getContext())
                     ? buildResultGenericFailure() : buildResultFailure(R.string.offline);

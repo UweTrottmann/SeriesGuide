@@ -30,7 +30,6 @@ import timber.log.Timber;
  * href="https://github.com/GoogleChrome/custom-tabs-client">custom-tabs-client</a> sample.
  */
 public class CustomTabsHelper {
-    private static final String TAG = "CustomTabsHelper";
     static final String STABLE_PACKAGE = "com.android.chrome";
     static final String BETA_PACKAGE = "com.chrome.beta";
     static final String DEV_PACKAGE = "com.chrome.dev";

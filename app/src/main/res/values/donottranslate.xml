@@ -34,15 +34,15 @@
     <string name="url_privacy">https://seriesgui.de/privacy</string>
     <string name="url_whypay">https://seriesgui.de/whypay</string>
     <string name="url_credits">https://github.com/UweTrottmann/SeriesGuide/blob/master/CREDITS.txt</string>
-    <string name="url_terms_tvdb">https://thetvdb.com/?tab=tos</string>
-    <string name="url_creative_commons">http://creativecommons.org/licenses/by-nc/4.0/</string>
+    <string name="url_terms_tvdb">https://www.thetvdb.com/tos</string>
+    <string name="url_creative_commons">https://creativecommons.org/licenses/by-nc/3.0/</string>
     <string name="url_terms_tmdb">https://www.themoviedb.org/terms-of-use</string>
     <string name="url_terms_tmdb_api">https://www.themoviedb.org/documentation/api/terms-of-use</string>
     <string name="url_terms_trakt">https://trakt.tv/terms</string>
 
     <!-- About screen -->
     <string name="website">seriesgui.de</string>
-    <string name="creative_commons">Creative Commons BY-NC 4.0</string>
+    <string name="creative_commons">Creative Commons BY-NC 3.0</string>
     <string name="tvdb_terms">TheTVDB terms</string>
     <string name="tmdb_terms">TMDb terms</string>
     <string name="tmdb_api_terms">TMDb API terms</string>
@@ -64,11 +64,9 @@
 
     <!-- Settings -->
     <string name="pref_translate">Translate SeriesGuide</string>
-    <string name="pref_translatesummary">Translate or proofread on crowdin (English)</string>
-    <string name="pref_community">Google+ community</string>
-    <string name="pref_communitysummary">Share ideas, discuss changes or report problems (English)</string>
-    <string name="pref_suggest_features">Suggest improvements</string>
-    <string name="pref_suggest_featuressummary">Suggest and vote on future improvements (English)</string>
+    <string name="pref_translatesummary">Translate or proofread for this app (English)</string>
+    <string name="pref_community">SeriesGuide Community</string>
+    <string name="pref_communitysummary">Ask for help, discuss ideas or report problems (English)</string>
 
     <!-- Themes -->
     <string name="theme_default">SeriesGuide</string>

@@ -2,11 +2,10 @@ package com.battlelancer.seriesguide.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
+import androidx.appcompat.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.SystemUiHider;
@@ -15,7 +14,6 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import uk.co.senab.photoview.PhotoView;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * Displays an image URL full screen in a zoomable view. If a preview image URL is provided, it is
@@ -80,7 +78,7 @@ public class FullscreenImageActivity extends BaseActivity {
                         }
 
                         @Override
-                        public void onError() {
+                        public void onError(Exception e) {
                             loadLargeImage(false);
                         }
                     });
@@ -94,12 +92,7 @@ public class FullscreenImageActivity extends BaseActivity {
                 SystemUiHider.FLAG_FULLSCREEN);
         systemUiHider.setup();
 
-        photoView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
-            @Override
-            public void onViewTap(View view, float x, float y) {
-                systemUiHider.toggle();
-            }
-        });
+        photoView.setOnViewTapListener((view, x, y) -> systemUiHider.toggle());
     }
 
     private void loadLargeImage(boolean hasPreviewImage) {
@@ -122,7 +115,7 @@ public class FullscreenImageActivity extends BaseActivity {
                         }
 
                         @Override
-                        public void onError() {
+                        public void onError(Exception e) {
                             photoView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                         }
                     });
@@ -145,7 +138,7 @@ public class FullscreenImageActivity extends BaseActivity {
             // This ensures that the anonymous callback we have does not prevent the activity from
             // being garbage collected. It also prevents our callback from getting invoked even after the
             // activity has finished.
-            Picasso.with(this).cancelRequest(photoView);
+            Picasso.get().cancelRequest(photoView);
         }
     }
 

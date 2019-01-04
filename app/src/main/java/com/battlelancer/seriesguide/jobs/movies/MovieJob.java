@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.jobs.movies;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.jobs.BaseJob;
 import com.battlelancer.seriesguide.jobs.FlagJob;
 import com.battlelancer.seriesguide.jobs.SgJobInfo;

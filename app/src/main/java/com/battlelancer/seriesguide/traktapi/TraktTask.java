@@ -23,8 +23,8 @@ import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
-import com.uwetrottmann.trakt5.services.Checkin;
-import com.uwetrottmann.trakt5.services.Comments;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.greenrobot.eventbus.EventBus;
 import org.threeten.bp.OffsetDateTime;
 
@@ -242,7 +242,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     }
 
     private TraktResponse doCheckInAction() {
-        Checkin traktCheckin = SgApp.getServicesComponent(context).traktCheckin();
+        TraktV2 trakt = SgApp.getServicesComponent(context).trakt();
         try {
             retrofit2.Response response;
             String message = args.getString(InitBundle.MESSAGE);
@@ -254,7 +254,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                             .message(message)
                             .build();
 
-                    response = traktCheckin.checkin(checkin).execute();
+                    response = trakt.checkin().checkin(checkin).execute();
                     break;
                 }
                 case CHECKIN_MOVIE: {
@@ -264,7 +264,7 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                             .message(message)
                             .build();
 
-                    response = traktCheckin.checkin(checkin).execute();
+                    response = trakt.checkin().checkin(checkin).execute();
                     break;
                 }
                 default:
@@ -276,7 +276,6 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                         args.getString(InitBundle.TITLE)));
             } else {
                 // check if the user wants to check-in, but there is already a check-in in progress
-                TraktV2 trakt = SgApp.getServicesComponent(context).trakt();
                 CheckinError checkinError = trakt.checkForCheckinError(response);
                 if (checkinError != null) {
                     OffsetDateTime expiresAt = checkinError.expires_at;
@@ -293,11 +292,11 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                     return new TraktResponse(false,
                             context.getString(R.string.trakt_error_credentials));
                 } else {
-                    SgTrakt.trackFailedRequest(context, "check-in", response);
+                    SgTrakt.trackFailedRequest("check-in", response);
                 }
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "check-in", e);
+            SgTrakt.trackFailedRequest("check-in", e);
         }
 
         // return generic failure message
@@ -305,10 +304,10 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     }
 
     private TraktResponse doCommentAction() {
-        Comments traktComments = SgApp.getServicesComponent(context).traktComments();
+        TraktV2 trakt = SgApp.getServicesComponent(context).trakt();
         try {
             // post comment
-            retrofit2.Response<Comment> response = traktComments.post(buildComment())
+            retrofit2.Response<Comment> response = trakt.comments().post(buildComment())
                     .execute();
             if (response.isSuccessful()) {
                 Comment postedComment = response.body();
@@ -321,15 +320,31 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                     return new TraktResponse(false, context.getString(R.string.shout_invalid));
                 } else if (response.code() == 404) {
                     return new TraktResponse(false, context.getString(R.string.shout_invalid));
-                } else if (SgTrakt.isUnauthorized(context, response)) {
-                    return new TraktResponse(false,
-                            context.getString(R.string.trakt_error_credentials));
+                } else if (SgTrakt.isUnauthorized(response)) {
+                    // for users banned from posting comments requests also return 401
+                    // so do not sign out if an error header does not indicate the token is invalid
+                    String authHeader = response.headers().get("Www-Authenticate");
+                    if (authHeader != null && !authHeader.contains("invalid_token")) {
+                        Pattern pattern = Pattern.compile("error_description=\"(.*)\"");
+                        Matcher matcher = pattern.matcher(authHeader);
+                        String message;
+                        if (matcher.find()) {
+                            message = matcher.group(1);
+                        } else {
+                            message = context.getString(R.string.trakt_error_credentials);
+                        }
+                        return new TraktResponse(false, message);
+                    } else {
+                        TraktCredentials.get(context).setCredentialsInvalid();
+                        return new TraktResponse(false,
+                                context.getString(R.string.trakt_error_credentials));
+                    }
                 } else {
-                    SgTrakt.trackFailedRequest(context, "post comment", response);
+                    SgTrakt.trackFailedRequest("post comment", response);
                 }
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, "post comment", e);
+            SgTrakt.trackFailedRequest("post comment", e);
         }
 
         // return generic failure message

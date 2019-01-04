@@ -11,6 +11,7 @@
     <string name="help">Hjelp</string>
     <string name="help_and_feedback">Hjelp og tilbakemelding</string>
     <string name="drawer_open">Åpne navigasjonsskuff</string>
+    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">Serie</string>
     <string name="episode">Episode</string>
@@ -355,7 +356,8 @@
         <item quantity="other">%d minutter før</item>
     </plurals>
     <!-- About screen -->
-    <string name="licence_tvdb">Denne appen bruker data og bilder av TheTVDB lisensiert under CC BY-NC 4.0.</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Dette produktet bruker API\'en til TMDb men er ikke godkjent eller sertifisert av TMDb.</string>
     <string name="licence_trakt">Denne appen bruker data og bilder fra trakt.</string>
     <string name="about_open_source">SeriesGuide er laget med åpen kildekode.</string>
@@ -444,6 +446,7 @@
     <string name="hide_watched">Skjul sette episoder</string>
     <string name="pref_widget_opacity">Modulbakgrunn</string>
     <string name="pref_widget_type">Modultype</string>
+    <string name="pref_large_font">Use large font</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Gjennomsiktig</string>
     <string name="widget_background_25">25%</string>

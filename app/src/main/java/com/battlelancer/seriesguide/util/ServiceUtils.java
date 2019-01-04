@@ -1,16 +1,16 @@
 package com.battlelancer.seriesguide.util;
 
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -21,8 +21,6 @@ import com.squareup.picasso.RequestCreator;
  * SeriesGuide.
  */
 public final class ServiceUtils {
-
-    public static final String TAG = "Service Utils";
 
     private static final String IMDB_APP_TITLE_URI_POSTFIX = "/";
 
@@ -53,7 +51,7 @@ public final class ServiceUtils {
      */
     @NonNull
     public static RequestCreator loadWithPicasso(Context context, String path) {
-        RequestCreator requestCreator = Picasso.with(context).load(path);
+        RequestCreator requestCreator = Picasso.get().load(path);
         if (!Utils.isAllowedLargeDataConnection(context.getApplicationContext())) {
             // avoid the network, hit the cache immediately + accept stale images.
             requestCreator.networkPolicy(NetworkPolicy.OFFLINE);
@@ -65,7 +63,7 @@ public final class ServiceUtils {
      * Displays the IMDb page for the given id (show or episode) in the IMDb app or on the imdb.com
      * web page. If the IMDb id is empty, disables the button.
      */
-    public static void setUpImdbButton(final String imdbId, View imdbButton, final String logTag) {
+    public static void setUpImdbButton(final String imdbId, View imdbButton) {
         if (imdbButton == null) {
             return;
         }
@@ -73,12 +71,7 @@ public final class ServiceUtils {
             imdbButton.setEnabled(false);
         } else {
             imdbButton.setEnabled(true);
-            imdbButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openImdb(imdbId, logTag, v.getContext());
-                }
-            });
+            imdbButton.setOnClickListener(v -> openImdb(imdbId, v.getContext()));
             ClipboardTools.copyTextToClipboardOnLongClick(imdbButton, imdbLink(imdbId));
         }
     }
@@ -86,7 +79,7 @@ public final class ServiceUtils {
     /**
      * Open the IMDb app or web page for the given IMDb id.
      */
-    public static void openImdb(String imdbId, String logTag, Context context) {
+    public static void openImdb(String imdbId, Context context) {
         if (context == null || TextUtils.isEmpty(imdbId)) {
             return;
         }
@@ -100,11 +93,9 @@ public final class ServiceUtils {
             //noinspection deprecation
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         }
-        if (Utils.tryStartActivity(context, intent, false)) {
-            Utils.trackAction(context, logTag, "IMDb");
-        } else {
+        if (!Utils.tryStartActivity(context, intent, false)) {
             // on failure, try launching the web page
-            Utils.launchWebsite(context, imdbLink(imdbId), logTag, "IMDb");
+            Utils.launchWebsite(context, imdbLink(imdbId));
         }
     }
 
@@ -116,6 +107,7 @@ public final class ServiceUtils {
      * Returns a view {@link android.content.Intent} for a search of Google Play's movies category
      * (includes TV shows).
      */
+    @SuppressLint("StringFormatInvalid")
     public static Intent buildGooglePlayIntent(String title, Context context) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         String playStoreQuery = String.format(context.getString(R.string.url_movies_search),
@@ -127,8 +119,8 @@ public final class ServiceUtils {
     /**
      * Opens the YouTube app or web page for the given video.
      */
-    public static void openYoutube(String videoId, String logTag, Context context) {
-        Utils.launchWebsite(context, YOUTUBE_BASE_URL + videoId, logTag, "YouTube");
+    public static void openYoutube(String videoId, Context context) {
+        Utils.launchWebsite(context, YOUTUBE_BASE_URL + videoId);
     }
 
     /**
@@ -175,10 +167,9 @@ public final class ServiceUtils {
      *
      * @param context The {@link Context} to use
      * @param query The search query
-     * @param logTag The log tag to use, for Analytics
      */
-    public static void performWebSearch(Context context, String query, String logTag) {
-        Utils.openNewDocument(context, buildWebSearchIntent(query), logTag, "Web search");
+    public static void performWebSearch(Context context, String query) {
+        Utils.openNewDocument(context, buildWebSearchIntent(query));
     }
 
     /**
@@ -186,9 +177,8 @@ public final class ServiceUtils {
      *
      * @param query The search query for the YouTube app
      * @param button The {@link Button} used to invoke the {@link android.view.View.OnClickListener}
-     * @param logTag The log tag to use, for Analytics
      */
-    public static void setUpWebSearchButton(final String query, View button, final String logTag) {
+    public static void setUpWebSearchButton(final String query, View button) {
         if (button == null) {
             // Return if the button isn't initialized
             return;
@@ -198,11 +188,6 @@ public final class ServiceUtils {
             return;
         }
 
-        button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                performWebSearch(v.getContext(), query, logTag);
-            }
-        });
+        button.setOnClickListener(v -> performWebSearch(v.getContext(), query));
     }
 }

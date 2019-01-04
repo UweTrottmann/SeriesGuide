@@ -5,9 +5,9 @@ import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.widget.RemoteViews;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 
@@ -68,12 +68,8 @@ public class ListWidgetConfigure extends AppCompatActivity {
         appWidgetManager.updateAppWidget(appWidgetId, views);
         // note: broken for API 25 Google stock launcher, work around by delaying notify.
         // https://code.google.com/p/android/issues/detail?id=228575
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view);
-            }
-        };
+        Runnable runnable =
+                () -> appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view);
         new Handler().postDelayed(runnable, 300);
 
         setWidgetResult(RESULT_OK);

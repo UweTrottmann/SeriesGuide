@@ -22,12 +22,8 @@ public class SearchHistory {
     private static final int MAX_HISTORY_SIZE = 10;
     private static final int ISO_8601_DATETIME_NOMILLIS_UTC_LENGTH = 20;
     private static final int DATETIME_PREFIX_LENGTH = ISO_8601_DATETIME_NOMILLIS_UTC_LENGTH + 1;
-    private static final Comparator<String> NATURAL_ORDER_REVERSE = new Comparator<String>() {
-        @Override
-        public int compare(String lhs, String rhs) {
-            return -lhs.compareTo(rhs);
-        }
-    };
+    private static final Comparator<String> NATURAL_ORDER_REVERSE =
+            (lhs, rhs) -> -lhs.compareTo(rhs);
 
     private final Context context;
     private final String settingsKey;

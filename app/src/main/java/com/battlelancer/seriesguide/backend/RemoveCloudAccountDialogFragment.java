@@ -6,10 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialogFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.util.Utils;
@@ -32,19 +32,9 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.hexagon_remove_account_confirmation);
         builder.setPositiveButton(R.string.hexagon_remove_account,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Utils.executeInOrder(new RemoveHexagonAccountTask(getContext()));
-                    }
-                }
+                (dialog, which) -> Utils.executeInOrder(new RemoveHexagonAccountTask(getContext()))
         );
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                sendCanceledEvent();
-            }
-        });
+        builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> sendCanceledEvent());
 
         return builder.create();
     }
@@ -79,7 +69,7 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
                 }
                 accountService.deleteData().execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "remove account", e);
+                HexagonTools.trackFailedRequest("remove account", e);
                 return false;
             }
 

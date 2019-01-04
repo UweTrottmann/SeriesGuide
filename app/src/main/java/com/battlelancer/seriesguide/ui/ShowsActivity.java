@@ -8,16 +8,15 @@ import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import androidx.appcompat.app.ActionBar;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -28,28 +27,29 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.IabHelper;
 import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
-import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
+import com.battlelancer.seriesguide.traktapi.TraktSettings;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
+import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.ui.shows.CalendarFragment;
 import com.battlelancer.seriesguide.ui.shows.CalendarType;
 import com.battlelancer.seriesguide.ui.shows.ShowsFragment;
 import com.battlelancer.seriesguide.ui.shows.ShowsNowFragment;
 import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -57,8 +57,6 @@ import org.greenrobot.eventbus.EventBus;
  */
 public class ShowsActivity extends BaseTopActivity implements
         AddShowDialogFragment.OnAddShowListener {
-
-    protected static final String TAG = "Shows";
 
     public static final int SHOWS_LOADER_ID = 100;
     public static final int UPCOMING_LOADER_ID = 101;
@@ -189,22 +187,16 @@ public class ShowsActivity extends BaseTopActivity implements
     private void setupViews() {
         // setup floating action button for adding shows
         FloatingActionButton buttonAddShow = findViewById(R.id.buttonShowsAdd);
-        buttonAddShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ShowsActivity.this, SearchActivity.class).putExtra(
-                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
-            }
-        });
+        buttonAddShow.setOnClickListener(
+                v -> startActivity(new Intent(ShowsActivity.this, SearchActivity.class)
+                        .putExtra(SearchActivity.EXTRA_DEFAULT_TAB,
+                                SearchActivity.TAB_POSITION_SEARCH)));
 
         viewPager = findViewById(R.id.viewPagerTabs);
         SlidingTabLayout tabs = findViewById(R.id.tabLayoutTabs);
-        tabs.setOnTabClickListener(new SlidingTabLayout.OnTabClickListener() {
-            @Override
-            public void onTabClick(int position) {
-                if (viewPager.getCurrentItem() == position) {
-                    EventBus.getDefault().post(new TabClickEvent(position));
-                }
+        tabs.setOnTabClickListener(position -> {
+            if (viewPager.getCurrentItem() == position) {
+                EventBus.getDefault().post(new TabClickEvent(position));
             }
         });
         tabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(), this, viewPager,
@@ -218,18 +210,14 @@ public class ShowsActivity extends BaseTopActivity implements
 
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
-        argsUpcoming.putString(CalendarFragment.InitBundle.TYPE,
-                CalendarType.UPCOMING);
-        argsUpcoming.putString(CalendarFragment.InitBundle.ANALYTICS_TAG, "Upcoming");
+        argsUpcoming.putString(CalendarFragment.InitBundle.TYPE, CalendarType.UPCOMING);
         argsUpcoming.putInt(CalendarFragment.InitBundle.LOADER_ID, UPCOMING_LOADER_ID);
         argsUpcoming.putInt(CalendarFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
         tabsAdapter.addTab(R.string.upcoming, CalendarFragment.class, argsUpcoming);
 
         // recent tab
         final Bundle argsRecent = new Bundle();
-        argsRecent
-                .putString(CalendarFragment.InitBundle.TYPE, CalendarType.RECENT);
-        argsRecent.putString(CalendarFragment.InitBundle.ANALYTICS_TAG, "Recent");
+        argsRecent.putString(CalendarFragment.InitBundle.TYPE, CalendarType.RECENT);
         argsRecent.putInt(CalendarFragment.InitBundle.LOADER_ID, RECENT_LOADER_ID);
         argsRecent.putInt(CalendarFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
         tabsAdapter.addTab(R.string.recent, CalendarFragment.class, argsRecent);
@@ -342,13 +330,9 @@ public class ShowsActivity extends BaseTopActivity implements
             return true;
         } else if (itemId == R.id.menu_update) {
             SgSyncAdapter.requestSyncDeltaImmediate(this, true);
-            Utils.trackAction(this, TAG, "Update (outdated)");
-
             return true;
         } else if (itemId == R.id.menu_fullupdate) {
             SgSyncAdapter.requestSyncFullImmediate(this, true);
-            Utils.trackAction(this, TAG, "Update (all)");
-
             return true;
         } else {
             return super.onOptionsItemSelected(item);

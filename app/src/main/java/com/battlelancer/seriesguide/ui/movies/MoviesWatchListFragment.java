@@ -4,14 +4,13 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import androidx.annotation.NonNull;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
 
@@ -36,17 +35,14 @@ public class MoviesWatchListFragment extends MoviesBaseFragment {
     public void onPopupMenuClick(View v, final int movieTmdbId) {
         PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
         popupMenu.getMenu().add(0, CONTEXT_WATCHLIST_REMOVE_ID, 0, R.string.watchlist_remove);
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case CONTEXT_WATCHLIST_REMOVE_ID: {
-                        MovieTools.removeFromWatchlist(getContext(), movieTmdbId);
-                        return true;
-                    }
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case CONTEXT_WATCHLIST_REMOVE_ID: {
+                    MovieTools.removeFromWatchlist(getContext(), movieTmdbId);
+                    return true;
                 }
-                return false;
             }
+            return false;
         });
         popupMenu.show();
     }

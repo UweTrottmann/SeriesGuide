@@ -3,15 +3,15 @@ package com.battlelancer.seriesguide.widgets;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
 import java.lang.annotation.Retention;
@@ -38,10 +38,9 @@ public class FeedbackView extends FrameLayout {
         int FEEDBACK = 2;
     }
 
-    private static final String TAG = "Feedback";
-    private static final String ACTION_QUESTION_ENJOY = "Question Enjoy";
-    private static final String ACTION_QUESTION_RATE = "Question Rate";
-    private static final String ACTION_QUESTION_FEEDBACK = "Question Feedback";
+    private static final String ACTION_QUESTION_ENJOY = "Enjoy";
+    private static final String ACTION_QUESTION_RATE = "Rate";
+    private static final String ACTION_QUESTION_FEEDBACK = "Feedback";
 
     private TextView questionTextView;
     private Button negativeButton;
@@ -95,11 +94,8 @@ public class FeedbackView extends FrameLayout {
             if (question == Question.ENJOY) {
                 if (v == positiveButton) {
                     setQuestion(Question.RATE);
-                    Utils.trackCustomEvent(v.getContext(), TAG, ACTION_QUESTION_ENJOY, "Yes");
                 } else if (v == negativeButton) {
                     setQuestion(Question.FEEDBACK);
-                    Utils.trackCustomEvent(v.getContext(), TAG, ACTION_QUESTION_ENJOY,
-                            "Not really");
                 }
             } else {
                 if (callback == null) {
@@ -108,17 +104,11 @@ public class FeedbackView extends FrameLayout {
                 if (v == positiveButton) {
                     if (question == Question.RATE) {
                         callback.onRate();
-                        Utils.trackCustomEvent(v.getContext(), TAG, ACTION_QUESTION_RATE, "OK");
                     } else if (question == Question.FEEDBACK) {
                         callback.onFeedback();
-                        Utils.trackCustomEvent(v.getContext(), TAG, ACTION_QUESTION_FEEDBACK, "OK");
                     }
                 } else if (v == negativeButton) {
                     callback.onDismiss();
-                    Utils.trackCustomEvent(v.getContext(), TAG,
-                            question == Question.RATE ? ACTION_QUESTION_RATE
-                                    : ACTION_QUESTION_FEEDBACK,
-                            "No thanks");
                 }
             }
         }

@@ -3,16 +3,6 @@ package com.battlelancer.seriesguide.ui.shows;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +12,16 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -63,16 +63,11 @@ public class ShowsNowFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_now, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        View view = inflater.inflate(R.layout.fragment_now, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewNow, R.id.recyclerViewNow);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshStream();
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(this::refreshStream);
         swipeRefreshLayout.setProgressViewOffset(false,
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_start_margin),
@@ -83,12 +78,7 @@ public class ShowsNowFragment extends Fragment {
 
         showError(null);
         snackbarButton.setText(R.string.refresh);
-        snackbarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refreshStream();
-            }
-        });
+        snackbarButton.setOnClickListener(v -> refreshStream());
 
         // recycler view layout manager
         final int spanCount = getResources().getInteger(R.integer.grid_column_count);
@@ -111,7 +101,7 @@ public class ShowsNowFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        return v;
+        return view;
     }
 
     @Override
@@ -145,9 +135,10 @@ public class ShowsNowFragment extends Fragment {
             isLoadingRecentlyWatched = true;
             isLoadingFriends = true;
             showProgressBar(true);
-            getLoaderManager().initLoader(ShowsActivity.NOW_TRAKT_USER_LOADER_ID, null,
+            LoaderManager loaderManager = LoaderManager.getInstance(this);
+            loaderManager.initLoader(ShowsActivity.NOW_TRAKT_USER_LOADER_ID, null,
                     recentlyTraktCallbacks);
-            getLoaderManager().initLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
+            loaderManager.initLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
                     traktFriendsHistoryCallbacks);
         }
 
@@ -177,10 +168,11 @@ public class ShowsNowFragment extends Fragment {
      */
     private <D> void initAndMaybeRestartLoader(int loaderId,
             LoaderManager.LoaderCallbacks<D> callbacks) {
-        boolean isLoaderExists = getLoaderManager().getLoader(loaderId) != null;
-        getLoaderManager().initLoader(loaderId, null, callbacks);
+        LoaderManager loaderManager = LoaderManager.getInstance(this);
+        boolean isLoaderExists = loaderManager.getLoader(loaderId) != null;
+        loaderManager.initLoader(loaderId, null, callbacks);
         if (isLoaderExists) {
-            getLoaderManager().restartLoader(loaderId, null, callbacks);
+            loaderManager.restartLoader(loaderId, null, callbacks);
         }
     }
 
@@ -228,13 +220,14 @@ public class ShowsNowFragment extends Fragment {
         // user might get disconnected during our life-time,
         // so properly clean up old loaders so they won't interfere
         isLoadingRecentlyWatched = true;
+        LoaderManager loaderManager = LoaderManager.getInstance(this);
         if (TraktCredentials.get(getActivity()).hasCredentials()) {
             destroyLoaderIfExists(ShowsActivity.NOW_RECENTLY_LOADER_ID);
 
-            getLoaderManager().restartLoader(ShowsActivity.NOW_TRAKT_USER_LOADER_ID, null,
+            loaderManager.restartLoader(ShowsActivity.NOW_TRAKT_USER_LOADER_ID, null,
                     recentlyTraktCallbacks);
             isLoadingFriends = true;
-            getLoaderManager().restartLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
+            loaderManager.restartLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
                     traktFriendsHistoryCallbacks);
         } else {
             // destroy trakt loaders and remove any shown error message
@@ -242,14 +235,15 @@ public class ShowsNowFragment extends Fragment {
             destroyLoaderIfExists(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID);
             showError(null);
 
-            getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
+            loaderManager.restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
                     recentlyLocalCallbacks);
         }
     }
 
     private void destroyLoaderIfExists(int loaderId) {
-        if (getLoaderManager().getLoader(loaderId) != null) {
-            getLoaderManager().destroyLoader(loaderId);
+        LoaderManager loaderManager = LoaderManager.getInstance(this);
+        if (loaderManager.getLoader(loaderId) != null) {
+            loaderManager.destroyLoader(loaderId);
         }
     }
 
@@ -283,7 +277,7 @@ public class ShowsNowFragment extends Fragment {
     }
 
     /**
-     * Show or hide the progress bar of the {@link android.support.v4.widget.SwipeRefreshLayout}
+     * Show or hide the progress bar of the {@link SwipeRefreshLayout}
      * wrapping view.
      */
     private void showProgressBar(boolean show) {
@@ -315,8 +309,9 @@ public class ShowsNowFragment extends Fragment {
         if (event.flagJob instanceof EpisodeWatchedJob
                 && !TraktCredentials.get(getActivity()).hasCredentials()) {
             isLoadingRecentlyWatched = true;
-            getLoaderManager().restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
-                    recentlyLocalCallbacks);
+            LoaderManager.getInstance(this)
+                    .restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
+                            recentlyLocalCallbacks);
         }
     }
 

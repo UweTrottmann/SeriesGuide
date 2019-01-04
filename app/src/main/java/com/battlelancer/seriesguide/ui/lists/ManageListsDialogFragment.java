@@ -4,20 +4,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.support.v4.widget.CursorAdapter;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -26,6 +16,15 @@ import android.widget.Checkable;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.cursoradapter.widget.CursorAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -99,48 +98,40 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
         // buttons
         Button dontAddButton = layout.findViewById(R.id.buttonNegative);
         dontAddButton.setText(android.R.string.cancel);
-        dontAddButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        dontAddButton.setOnClickListener(v -> dismiss());
         Button addButton = layout.findViewById(R.id.buttonPositive);
         addButton.setText(android.R.string.ok);
-        addButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // add item to selected lists, remove from previously selected lists
-                SparseBooleanArray checkedLists = adapter.getCheckedPositions();
-                List<String> addToTheseLists = new ArrayList<>();
-                List<String> removeFromTheseLists = new ArrayList<>();
-                for (int position = 0; position < adapter.getCount(); position++) {
-                    final Cursor listEntry = (Cursor) adapter.getItem(position);
+        addButton.setOnClickListener(v -> {
+            // add item to selected lists, remove from previously selected lists
+            SparseBooleanArray checkedLists = adapter.getCheckedPositions();
+            List<String> addToTheseLists = new ArrayList<>();
+            List<String> removeFromTheseLists = new ArrayList<>();
+            for (int position = 0; position < adapter.getCount(); position++) {
+                final Cursor listEntry = (Cursor) adapter.getItem(position);
 
-                    boolean wasListChecked = !TextUtils.isEmpty(listEntry
-                            .getString(ListsQuery.LIST_ITEM_ID));
-                    boolean isListChecked = checkedLists.get(position);
+                boolean wasListChecked = !TextUtils.isEmpty(listEntry
+                        .getString(ListsQuery.LIST_ITEM_ID));
+                boolean isListChecked = checkedLists.get(position);
 
-                    String listId = listEntry.getString(ListsQuery.LIST_ID);
-                    if (TextUtils.isEmpty(listId)) {
-                        continue; // skip, no id
-                    }
-                    if (wasListChecked && !isListChecked) {
-                        // remove from list
-                        removeFromTheseLists.add(listId);
-                    } else if (!wasListChecked && isListChecked) {
-                        // add to list
-                        addToTheseLists.add(listId);
-                    }
+                String listId = listEntry.getString(ListsQuery.LIST_ID);
+                if (TextUtils.isEmpty(listId)) {
+                    continue; // skip, no id
                 }
-
-                int itemTvdbId = getArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
-                int itemType = getArguments().getInt(InitBundle.INT_ITEM_TYPE);
-                ListsTools.changeListsOfItem(getContext(), itemTvdbId, itemType,
-                        addToTheseLists, removeFromTheseLists);
-
-                dismiss();
+                if (wasListChecked && !isListChecked) {
+                    // remove from list
+                    removeFromTheseLists.add(listId);
+                } else if (!wasListChecked && isListChecked) {
+                    // add to list
+                    addToTheseLists.add(listId);
+                }
             }
+
+            int itemTvdbId = getArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
+            int itemType = getArguments().getInt(InitBundle.INT_ITEM_TYPE);
+            ListsTools.changeListsOfItem(getContext(), itemTvdbId, itemType,
+                    addToTheseLists, removeFromTheseLists);
+
+            dismiss();
         });
 
         // lists list
@@ -210,7 +201,7 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
         adapter = new ListsAdapter(getActivity());
         listView.setAdapter(adapter);
 
-        getLoaderManager().initLoader(0, getArguments(), this);
+        LoaderManager.getInstance(this).initLoader(0, getArguments(), this);
     }
 
     @Override

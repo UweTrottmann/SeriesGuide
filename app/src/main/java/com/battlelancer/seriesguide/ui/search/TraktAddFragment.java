@@ -2,10 +2,6 @@ package com.battlelancer.seriesguide.ui.search;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
@@ -82,8 +82,9 @@ public class TraktAddFragment extends AddFragment {
                 listType == TraktShowsLink.RECOMMENDED);
 
         // load data
-        getLoaderManager().initLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
-                traktAddCallbacks);
+        LoaderManager.getInstance(this)
+                .initLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
+                        traktAddCallbacks);
 
         // add menu options
         setHasOptionsMenu(true);
@@ -195,7 +196,7 @@ public class TraktAddFragment extends AddFragment {
     public void onEventMainThread(ShowTools.ShowChangedEvent event) {
         if (listType == TraktShowsLink.WATCHLIST) {
             // reload watchlist if a show was removed
-            getLoaderManager()
+            LoaderManager.getInstance(this)
                     .restartLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
                             traktAddCallbacks);
         }
@@ -203,14 +204,11 @@ public class TraktAddFragment extends AddFragment {
 
     @Override
     protected void setupEmptyView(EmptyView emptyView) {
-        emptyView.setButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setProgressVisible(true, false);
-                getLoaderManager().restartLoader(
-                        SearchActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
-                        traktAddCallbacks);
-            }
+        emptyView.setButtonClickListener(v -> {
+            setProgressVisible(true, false);
+            LoaderManager.getInstance(TraktAddFragment.this)
+                    .restartLoader(SearchActivity.TRAKT_BASE_LOADER_ID + listType.id, null,
+                            traktAddCallbacks);
         });
     }
 

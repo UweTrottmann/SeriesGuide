@@ -4,21 +4,21 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.AttrRes;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.annotation.AttrRes;
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import com.battlelancer.seriesguide.R;
 
 public class ViewTools {
@@ -195,15 +195,12 @@ public class ViewTools {
     }
 
     public static void showSoftKeyboardOnSearchView(final Context context, final View searchView) {
-        searchView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (searchView.requestFocus()) {
-                    InputMethodManager imm = (InputMethodManager)
-                            context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm != null) {
-                        imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
-                    }
+        searchView.postDelayed(() -> {
+            if (searchView.requestFocus()) {
+                InputMethodManager imm = (InputMethodManager)
+                        context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
                 }
             }
         }, 200); // have to add a little delay (http://stackoverflow.com/a/27540921/1000543)
@@ -218,15 +215,9 @@ public class ViewTools {
         item.setIcon(wrapped);
     }
 
-    public static void openUriOnClick(View button, final String uri, final String logTag,
-            final String logItem) {
+    public static void openUriOnClick(View button, final String uri) {
         if (button != null) {
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Utils.launchWebsite(v.getContext(), uri, logTag, logItem);
-                }
-            });
+            button.setOnClickListener(v -> Utils.launchWebsite(v.getContext(), uri));
         }
     }
 }

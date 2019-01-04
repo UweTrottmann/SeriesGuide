@@ -33,10 +33,10 @@ class TmdbSync internal constructor(private val context: Context,
                     return true
                 }
             } else {
-                SgTmdb.trackFailedRequest(context, "get config", response)
+                SgTmdb.trackFailedRequest("get config", response)
             }
         } catch (e: Exception) {
-            SgTmdb.trackFailedRequest(context, "get config", e)
+            SgTmdb.trackFailedRequest("get config", e)
         }
 
         return false

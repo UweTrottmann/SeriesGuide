@@ -1,13 +1,12 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
-import com.battlelancer.seriesguide.AnalyticsTree;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -192,10 +191,6 @@ public class TimeTools {
             localDate = LocalDate.parse(releaseDate);
         } catch (DateTimeParseException e) {
             // date string could not be parsed
-            if (context != null) {
-                Utils.trackCustomEvent(context, AnalyticsTree.CATEGORY_THETVDB_ERROR,
-                        "Date parsing failure", releaseDate);
-            }
             Timber.e(e, "TheTVDB date could not be parsed: %s", releaseDate);
             return Constants.EPISODE_UNKNOWN_RELEASE;
         }

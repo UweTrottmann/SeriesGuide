@@ -73,7 +73,7 @@ public class HexagonListsSync {
                 cursor = response.getCursor();
                 lists = response.getLists();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "get lists", e);
+                HexagonTools.trackFailedRequest("get lists", e);
                 return false;
             }
 
@@ -230,7 +230,7 @@ public class HexagonListsSync {
 
                 cursor = response.getCursor();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "get list ids", e);
+                HexagonTools.trackFailedRequest("get list ids", e);
                 return false;
             }
         } while (!TextUtils.isEmpty(cursor)); // fetch next batch
@@ -330,7 +330,7 @@ public class HexagonListsSync {
         try {
             listsService.save(listsWrapper).execute();
         } catch (IOException e) {
-            HexagonTools.trackFailedRequest(context, "save lists", e);
+            HexagonTools.trackFailedRequest("save lists", e);
             return false;
         }
         return true;

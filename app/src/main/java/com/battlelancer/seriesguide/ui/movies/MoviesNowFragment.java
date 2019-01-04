@@ -2,14 +2,6 @@ package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,15 +11,23 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ui.shows.NowAdapter;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.ui.streams.HistoryActivity;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.ui.shows.NowAdapter;
+import com.battlelancer.seriesguide.ui.streams.HistoryActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
@@ -59,16 +59,11 @@ public class MoviesNowFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_now, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        View view = inflater.inflate(R.layout.fragment_now, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewNow, R.id.recyclerViewNow);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshStream();
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(this::refreshStream);
         swipeRefreshLayout.setProgressViewOffset(false,
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_start_margin),
@@ -79,12 +74,7 @@ public class MoviesNowFragment extends Fragment {
 
         showError(null);
         snackbarButton.setText(R.string.refresh);
-        snackbarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refreshStream();
-            }
-        });
+        snackbarButton.setOnClickListener(v -> refreshStream());
 
         // recycler view layout manager
         final int spanCount = getResources().getInteger(R.integer.grid_column_count);
@@ -107,7 +97,7 @@ public class MoviesNowFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        return v;
+        return view;
     }
 
     @Override
@@ -141,9 +131,10 @@ public class MoviesNowFragment extends Fragment {
             isLoadingRecentlyWatched = true;
             isLoadingFriends = true;
             showProgressBar(true);
-            getLoaderManager().initLoader(MoviesActivity.NOW_TRAKT_USER_LOADER_ID, null,
+            LoaderManager loaderManager = LoaderManager.getInstance(this);
+            loaderManager.initLoader(MoviesActivity.NOW_TRAKT_USER_LOADER_ID, null,
                     recentlyTraktCallbacks);
-            getLoaderManager().initLoader(MoviesActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
+            loaderManager.initLoader(MoviesActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
                     traktFriendsHistoryCallbacks);
         }
 
@@ -201,10 +192,11 @@ public class MoviesNowFragment extends Fragment {
         // so properly clean up old loaders so they won't interfere
         if (TraktCredentials.get(getActivity()).hasCredentials()) {
             isLoadingRecentlyWatched = true;
-            getLoaderManager().restartLoader(MoviesActivity.NOW_TRAKT_USER_LOADER_ID, null,
+            LoaderManager loaderManager = LoaderManager.getInstance(this);
+            loaderManager.restartLoader(MoviesActivity.NOW_TRAKT_USER_LOADER_ID, null,
                     recentlyTraktCallbacks);
             isLoadingFriends = true;
-            getLoaderManager().restartLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
+            loaderManager.restartLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
                     traktFriendsHistoryCallbacks);
         } else {
             // destroy trakt loaders and remove any shown error message
@@ -215,8 +207,9 @@ public class MoviesNowFragment extends Fragment {
     }
 
     private void destroyLoaderIfExists(int loaderId) {
-        if (getLoaderManager().getLoader(loaderId) != null) {
-            getLoaderManager().destroyLoader(loaderId);
+        LoaderManager loaderManager = LoaderManager.getInstance(this);
+        if (loaderManager.getLoader(loaderId) != null) {
+            loaderManager.destroyLoader(loaderId);
         }
     }
 
@@ -235,7 +228,7 @@ public class MoviesNowFragment extends Fragment {
     }
 
     /**
-     * Show or hide the progress bar of the {@link android.support.v4.widget.SwipeRefreshLayout}
+     * Show or hide the progress bar of the {@link SwipeRefreshLayout}
      * wrapping view.
      */
     private void showProgressBar(boolean show) {

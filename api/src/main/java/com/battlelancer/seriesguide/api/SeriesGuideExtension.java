@@ -24,11 +24,11 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.app.JobIntentService;
-import android.support.v4.app.SafeJobIntentService;
 import android.text.TextUtils;
 import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.core.app.JobIntentService;
+import androidx.core.app.SafeJobIntentService;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -525,11 +525,6 @@ public abstract class SeriesGuideExtension extends SafeJobIntentService {
         Log.e(TAG,
                 "Update not published because subscriber no longer exists, id=" + name);
         // post to Handler to avoid concurrent modification of subscribers
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                handleSubscribe(subscriber, null);
-            }
-        });
+        handler.post(() -> handleSubscribe(subscriber, null));
     }
 }

@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.uwetrottmann.thetvdb.TheTvdb;

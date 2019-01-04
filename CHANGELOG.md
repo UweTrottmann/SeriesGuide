@@ -5,6 +5,64 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 46
+----------
+*(2019-01-04)*
+
+📝 Add no more updates notice for devices running Android 4.4 (KitKat) and older. The next version will only be available for Android 5.0 (Lollipop) and newer.
+
+🌟 Add large font option for list widget. This can help with launchers that display widgets smaller than intended.
+
+🔨 Sharing thetvdb.com URLs to SeriesGuide will again suggest to add the show.
+
+🔧 Link to new community site.
+
+🔧 Drop Google Analytics.
+
+#### 46
+*(2019-01-04)*
+
+* 🔧 Update link to community site, TheTVDB terms. Move them to root settings page.
+* 📝 Latest translations from crowdin.
+
+#### 46-beta5
+*(2019-01-02)*
+
+* 🔧 Drop Firebase Analytics.
+* 📝 Latest translations from crowdin.
+
+#### 46-beta4
+*(2018-12-21)*
+
+* 🔧 Tweak reported events so errors can be analyzed again.
+* 📝 Latest translations from crowdin.
+
+#### 46-beta3
+*(2018-12-17)*
+
+* 📝 Add no more updates notice for Android 4.4 (KitKat) and older. Version 47 will only be available for Android 5.0 (Lollipop) and newer.
+* 🔨 Do not display Getting Started multiple times after switching tabs.
+* 🔧 Switch to Google Analytics for Firebase. Updated privacy policy in that regard.
+* 📝 Latest translations from crowdin.
+
+#### 46-beta2
+*(2018-12-14)*
+
+* 🔧 Searching added shows: better results if characters are missing from the title ("Mr Robot" will find "Mr. Robot"). Thanks @thouseef!
+* 🔧 Change the data saver (images over WiFi) setting right from the getting started view.
+* 🔨 Sharing thetvdb.com URLs to SeriesGuide will again suggest to add the show.
+* 🔨 trakt: when posting a comment fails because the account is banned from posting, do not sign out.
+* 🔨 The list widget should no longer crash the app if loading a poster fails.
+* 🔨 Backup: do not crash if no file URI is returned.
+* 📝 Latest translations from crowdin.
+
+#### 46-beta1
+*(2018-11-29)*
+
+* 🌟 Add large font option for list widget. This can help with launchers that display widgets 
+  smaller than intended.
+* 📝 Latest translations from crowdin.
+
 Version 45
 ----------
 *(2018-11-08)*

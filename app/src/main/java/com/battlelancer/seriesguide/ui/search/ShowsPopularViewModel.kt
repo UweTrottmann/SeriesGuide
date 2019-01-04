@@ -1,11 +1,11 @@
 package com.battlelancer.seriesguide.ui.search
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Transformations
-import android.arch.paging.LivePagedListBuilder
-import android.arch.paging.PagedList
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.battlelancer.seriesguide.SgApp
 
 class ShowsPopularViewModel(application: Application) : AndroidViewModel(application) {

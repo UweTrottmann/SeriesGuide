@@ -33,19 +33,19 @@ public class TmdbTools {
     /**
      * Tries to display the TMDb website of the given movie through a view intent.
      */
-    public static void openTmdbMovie(Context context, int movieTmdbId, String logTag) {
-        openTmdbUrl(context, buildMovieUrl(movieTmdbId), logTag);
+    public static void openTmdbMovie(Context context, int movieTmdbId) {
+        openTmdbUrl(context, buildMovieUrl(movieTmdbId));
     }
 
     /**
      * Tries to display the TMDb website of the given person through a view intent.
      */
-    public static void openTmdbPerson(Context context, int personTmdbId, String logTag) {
-        openTmdbUrl(context, buildPersonUrl(personTmdbId), logTag);
+    public static void openTmdbPerson(Context context, int personTmdbId) {
+        openTmdbUrl(context, buildPersonUrl(personTmdbId));
     }
 
-    private static void openTmdbUrl(Context context, String url, String logTag) {
-        Utils.launchWebsite(context, url, logTag, "TMDb");
+    private static void openTmdbUrl(Context context, String url) {
+        Utils.launchWebsite(context, url);
     }
 
     public static String buildMovieUrl(int movieTmdbId) {

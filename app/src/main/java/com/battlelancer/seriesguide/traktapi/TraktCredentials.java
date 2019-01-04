@@ -8,11 +8,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
@@ -218,7 +218,7 @@ public class TraktCredentials {
     public synchronized boolean refreshAccessToken(TraktV2 trakt) {
         // do we even have a refresh token?
         String oldRefreshToken = TraktOAuthSettings.getRefreshToken(context);
-        if (TextUtils.isEmpty(oldRefreshToken)) {
+        if (oldRefreshToken == null || oldRefreshToken.length() == 0) {
             Timber.d("refreshAccessToken: no refresh token, give up.");
             return false;
         }
@@ -228,19 +228,19 @@ public class TraktCredentials {
         String refreshToken = null;
         long expiresIn = -1;
         try {
-            Response<AccessToken> response = trakt.refreshAccessToken();
-            if (response.isSuccessful()) {
-                AccessToken token = response.body();
+            Response<AccessToken> response = trakt.refreshAccessToken(oldRefreshToken);
+            AccessToken token = response.body();
+            if (response.isSuccessful() && token != null) {
                 accessToken = token.access_token;
                 refreshToken = token.refresh_token;
                 expiresIn = token.expires_in;
             } else {
                 if (!SgTrakt.isUnauthorized(response)) {
-                    SgTrakt.trackFailedRequest(context, "refresh access token", response);
+                    SgTrakt.trackFailedRequest("refresh access token", response);
                 }
             }
         } catch (IOException e) {
-            SgTrakt.trackFailedRequest(context, "refresh access token", e);
+            SgTrakt.trackFailedRequest("refresh access token", e);
         }
 
         // did we obtain all required data?

@@ -1,8 +1,6 @@
 package com.battlelancer.seriesguide.util
 
-import android.annotation.SuppressLint
 import android.app.PendingIntent
-import android.arch.lifecycle.LiveData
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ShortcutInfo
@@ -14,7 +12,6 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.Shader
 import android.graphics.drawable.Icon
-import android.os.AsyncTask
 import android.os.Build
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
@@ -23,6 +20,8 @@ import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Transformation
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.IOException
 
@@ -33,18 +32,54 @@ import java.io.IOException
  * @param posterPath A TVDb show poster path.
  * @param showTvdbId The TVDb ID of the show.
  */
-class ShortcutLiveData(
+class ShortcutCreator(
     localContext: Context,
     private val showTitle: String,
     private val posterPath: String,
     private val showTvdbId: Int
-) : LiveData<ShortcutLiveData.ReadyEvent>() {
+) {
 
     private val context = localContext.applicationContext
     private var posterBitmap: Bitmap? = null
 
-    fun prepareShortcut() {
-        ShortcutAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    /**
+     * Prepares the bitmap for the shortcut on [Dispatchers.IO],
+     * when ready suggest to (O+) or pins the shortcut.
+     */
+    suspend fun prepareAndPinShortcut() {
+        withContext(Dispatchers.IO) {
+            prepareShortcut()
+        }
+        pinShortcut()
+    }
+
+    private fun prepareShortcut() {
+        // Try to get the show poster
+        try {
+            val posterUrl = TvdbImageTools.smallSizeUrl(posterPath)
+            if (posterUrl != null) {
+                val requestCreator = Picasso.get()
+                    .load(posterUrl)
+                    .centerCrop()
+                    .memoryPolicy(MemoryPolicy.NO_STORE)
+                    .networkPolicy(NetworkPolicy.NO_STORE)
+                    .resizeDimen(
+                        R.dimen.show_poster_width_shortcut,
+                        R.dimen.show_poster_height_shortcut
+                    )
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                    // on O+ we use 108x108dp adaptive icon, no need to cut its corners
+                    // pre-O full bitmap is displayed, so cut corners for nicer icon shape
+                    requestCreator.transform(
+                        RoundedCornerTransformation(posterUrl, 10f)
+                    )
+                }
+                posterBitmap = requestCreator.get()
+            }
+        } catch (e: IOException) {
+            Timber.e(e, "Could not load show poster for shortcut %s", posterPath)
+            posterBitmap = null
+        }
     }
 
     private fun pinShortcut() {
@@ -121,45 +156,6 @@ class ShortcutLiveData(
         }
     }
 
-    @SuppressLint("StaticFieldLeak")
-    private inner class ShortcutAsyncTask : AsyncTask<Void, Void, Void>() {
-
-        override fun doInBackground(vararg unused: Void): Void? {
-            // Try to get the show poster
-            try {
-                val posterUrl = TvdbImageTools.smallSizeUrl(posterPath)
-                if (posterUrl != null) {
-                    val requestCreator = Picasso.with(context)
-                        .load(posterUrl)
-                        .centerCrop()
-                        .memoryPolicy(MemoryPolicy.NO_STORE)
-                        .networkPolicy(NetworkPolicy.NO_STORE)
-                        .resizeDimen(
-                            R.dimen.show_poster_width_shortcut,
-                            R.dimen.show_poster_height_shortcut
-                        )
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                        // on O+ we use 108x108dp adaptive icon, no need to cut its corners
-                        // pre-O full bitmap is displayed, so cut corners for nicer icon shape
-                        requestCreator.transform(
-                            RoundedCornerTransformation(posterUrl, 10f)
-                        )
-                    }
-                    posterBitmap = requestCreator.get()
-                }
-            } catch (e: IOException) {
-                Timber.e(e, "Could not load show poster for shortcut %s", posterPath)
-                posterBitmap = null
-            }
-
-            return null
-        }
-
-        override fun onPostExecute(unused: Void?) {
-            value = ReadyEvent()
-        }
-    }
-
     /** A [Transformation] used to draw a [Bitmap] with round corners  */
     private class RoundedCornerTransformation
     /** Constructor for `RoundedCornerTransformation`  */
@@ -193,17 +189,6 @@ class ShortcutLiveData(
 
         override fun key(): String {
             return key
-        }
-    }
-
-    inner class ReadyEvent {
-        private var isHandled = false
-
-        fun createShortcutIfNotHandled() {
-            if (!isHandled) {
-                isHandled = true
-                pinShortcut()
-            }
         }
     }
 

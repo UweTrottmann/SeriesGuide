@@ -19,10 +19,10 @@ class MovieCreditsLoader(context: Context, private val tmdbId: Int)
             if (response.isSuccessful) {
                 return response.body()
             } else {
-                SgTmdb.trackFailedRequest(context, "get movie credits", response)
+                SgTmdb.trackFailedRequest("get movie credits", response)
             }
         } catch (e: Exception) {
-            SgTmdb.trackFailedRequest(context, "get movie credits", e)
+            SgTmdb.trackFailedRequest("get movie credits", e)
         }
 
         return null

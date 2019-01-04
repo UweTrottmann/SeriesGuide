@@ -2,13 +2,8 @@ package com.battlelancer.seriesguide.ui.search;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -16,6 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
@@ -52,7 +51,7 @@ public abstract class AddFragment extends Fragment {
 
     @BindView(R.id.containerAddContent) View contentContainer;
     @BindView(R.id.progressBarAdd) View progressBar;
-    @BindView(android.R.id.list) GridView resultsGridView;
+    @BindView(R.id.gridViewAdd) GridView resultsGridView;
     @BindView(R.id.emptyViewAdd) EmptyView emptyView;
 
     protected List<SearchResult> searchResults;
@@ -281,28 +280,19 @@ public abstract class AddFragment extends Fragment {
             public ViewHolder(View view,
                     final OnItemClickListener onItemClickListener) {
                 ButterKnife.bind(this, view);
-                view.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (onItemClickListener != null) {
-                            onItemClickListener.onItemClick(item);
-                        }
+                view.setOnClickListener(v -> {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(item);
                     }
                 });
-                addIndicator.setOnAddClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (onItemClickListener != null) {
-                            onItemClickListener.onAddClick(item);
-                        }
+                addIndicator.setOnAddClickListener(v -> {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onAddClick(item);
                     }
                 });
-                buttonContextMenu.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (onItemClickListener != null) {
-                            onItemClickListener.onMenuWatchlistClick(v, item.getTvdbid());
-                        }
+                buttonContextMenu.setOnClickListener(v -> {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onMenuWatchlistClick(v, item.getTvdbid());
                     }
                 });
             }

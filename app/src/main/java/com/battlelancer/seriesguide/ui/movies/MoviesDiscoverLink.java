@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.ui.movies;
 
-import android.support.annotation.StringRes;
-import android.support.v4.util.SparseArrayCompat;
+import androidx.annotation.StringRes;
+import androidx.collection.SparseArrayCompat;
 import com.battlelancer.seriesguide.R;
 
 enum MoviesDiscoverLink {

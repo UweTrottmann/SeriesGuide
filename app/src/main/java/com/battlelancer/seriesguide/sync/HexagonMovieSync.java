@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -97,7 +97,7 @@ public class HexagonMovieSync {
                     hasMoreMovies = false;
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest(context, "get movies", e);
+                HexagonTools.trackFailedRequest("get movies", e);
                 return false;
             }
 
@@ -181,7 +181,7 @@ public class HexagonMovieSync {
             }
             moviesService.save(movieList).execute();
         } catch (IOException e) {
-            HexagonTools.trackFailedRequest(context, "save movies", e);
+            HexagonTools.trackFailedRequest("save movies", e);
             return false;
         }
 

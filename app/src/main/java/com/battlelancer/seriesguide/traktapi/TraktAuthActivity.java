@@ -2,9 +2,10 @@ package com.battlelancer.seriesguide.traktapi;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import com.battlelancer.seriesguide.AnalyticsEvents;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.util.Utils;
@@ -22,7 +23,6 @@ public class TraktAuthActivity extends BaseOAuthActivity {
 
     private static final String KEY_STATE = "state";
     private static final String TRAKT_CONNECT_TASK_TAG = "trakt-connect-task";
-    private static final String CATEGORY_OAUTH_ERROR = "OAuth Error";
     private static final String ACTION_FETCHING_TOKENS = "fetching tokens";
     private static final String ERROR_DESCRIPTION_STATE_MISMATCH
             = "invalid_state, State is null or does not match.";
@@ -85,10 +85,10 @@ public class TraktAuthActivity extends BaseOAuthActivity {
         // if state does not match what we sent, drop the auth code
         if (this.state == null || !this.state.equals(state)) {
             // log trakt OAuth failures
-            Utils.trackCustomEvent(this, CATEGORY_OAUTH_ERROR, ACTION_FETCHING_TOKENS,
-                    ERROR_DESCRIPTION_STATE_MISMATCH);
-            Timber.tag(CATEGORY_OAUTH_ERROR);
+            Timber.tag(AnalyticsEvents.TRAKT_OAUTH_ERROR);
             Timber.e("%s: %s", ACTION_FETCHING_TOKENS, ERROR_DESCRIPTION_STATE_MISMATCH);
+            Utils.trackError(AnalyticsEvents.TRAKT_OAUTH_ERROR,
+                    new TraktOAuthError(ACTION_FETCHING_TOKENS, ERROR_DESCRIPTION_STATE_MISMATCH));
 
             setMessage(getAuthErrorMessage() + (this.state == null ?
                     "\n\n(State is null.)" :

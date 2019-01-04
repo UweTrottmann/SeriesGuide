@@ -2,12 +2,12 @@ package com.battlelancer.seriesguide.util;
 
 import static android.database.sqlite.SQLiteDatabase.CONFLICT_NONE;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.text.TextUtils;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.battlelancer.seriesguide.provider.SeriesGuideProvider;
 import java.util.ArrayList;
 import java.util.Arrays;

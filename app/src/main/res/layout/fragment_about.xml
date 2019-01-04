@@ -38,8 +38,15 @@
                 style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/large_padding"
                 android:text="@string/website" />
+
+            <Button
+                android:id="@+id/buttonAboutPrivacy"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/large_padding"
+                android:text="@string/privacy_policy" />
 
             <TextView
                 android:layout_width="match_parent"

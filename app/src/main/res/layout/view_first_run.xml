@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/FirstRunColumn"
@@ -76,11 +76,55 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/containerFirstRunDataSaver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/containerFirstRunNoSpoilers"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:minHeight="?android:attr/listPreferredItemHeight"
+            android:paddingLeft="@dimen/large_padding"
+            android:paddingRight="@dimen/large_padding">
+
+            <CheckBox
+                android:id="@+id/checkboxFirstRunDataSaver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:clickable="false"
+                android:focusable="false" />
+
+            <TextView
+                android:id="@+id/textViewFirstRunDataSaverText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/checkboxFirstRunDataSaver"
+                android:layout_toRightOf="@id/checkboxFirstRunDataSaver"
+                android:ellipsize="marquee"
+                android:maxLines="1"
+                android:text="@string/pref_updatewifionly"
+                android:textAppearance="@style/TextAppearance.Subhead"
+                tools:ignore="EllipsizeMaxLines" />
+
+            <TextView
+                android:id="@+id/textViewFirstRunDataSaverSummary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/textViewFirstRunDataSaverText"
+                android:layout_below="@id/textViewFirstRunDataSaverText"
+                android:paddingBottom="@dimen/inline_padding"
+                android:text="@string/pref_updatewifionlysummary"
+                android:textAppearance="@style/TextAppearance.Body.Secondary" />
+
+        </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/containerFirstRunButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/containerFirstRunNoSpoilers"
+            android:layout_below="@id/containerFirstRunDataSaver"
             android:gravity="end"
             android:orientation="vertical"
             android:paddingBottom="@dimen/inline_padding"
@@ -129,9 +173,9 @@
             android:focusable="true"
             android:paddingBottom="@dimen/default_padding"
             android:paddingTop="@dimen/default_padding"
-            android:text="@string/url_privacy"
+            android:text="@string/privacy_policy"
             android:textAppearance="@style/TextAppearance.Body.Green" />
 
     </RelativeLayout>
 
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

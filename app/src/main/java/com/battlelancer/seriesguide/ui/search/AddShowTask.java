@@ -4,8 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.widget.Toast;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -356,10 +356,10 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
                     publishProgress(RESULT_TRAKT_AUTH_ERROR);
                     return null;
                 }
-                SgTrakt.trackFailedRequest(context, action, response);
+                SgTrakt.trackFailedRequest(action, response);
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(context, action, e);
+            SgTrakt.trackFailedRequest(action, e);
         }
         publishProgress(RESULT_TRAKT_API_ERROR);
         return null;

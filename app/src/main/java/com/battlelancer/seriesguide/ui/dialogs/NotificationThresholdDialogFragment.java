@@ -3,10 +3,6 @@ package com.battlelancer.seriesguide.ui.dialogs;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.IdRes;
-import android.support.annotation.Nullable;
-import android.support.annotation.PluralsRes;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -16,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import androidx.annotation.Nullable;
+import androidx.annotation.PluralsRes;
+import androidx.appcompat.app.AppCompatDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -50,21 +49,13 @@ public class NotificationThresholdDialogFragment extends AppCompatDialogFragment
 
         buttonNegative.setVisibility(View.GONE);
         buttonPositive.setText(android.R.string.ok);
-        buttonPositive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveAndDismiss();
-            }
-        });
+        buttonPositive.setOnClickListener(v -> saveAndDismiss());
 
         editTextValue.addTextChangedListener(textWatcher);
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                // trigger text watcher, takes care of validating the value based on the new unit
-                editTextValue.setText(editTextValue.getText());
-            }
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            // trigger text watcher, takes care of validating the value based on the new unit
+            editTextValue.setText(editTextValue.getText());
         });
 
         bindViews();

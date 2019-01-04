@@ -3,10 +3,10 @@ package com.battlelancer.seriesguide.util;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * A utility class that helps with showing and hiding system UI such as the
@@ -183,10 +183,7 @@ public class SystemUiHider {
     /**
      * A dummy no-op callback for use when there is no other listener set.
      */
-    private static OnVisibilityChangeListener sDummyListener = new OnVisibilityChangeListener() {
-        @Override
-        public void onVisibilityChange(boolean visible) {
-        }
+    private static OnVisibilityChangeListener sDummyListener = visible -> {
     };
 
     /**

@@ -6,15 +6,14 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Build;
 import android.provider.BaseColumns;
-import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.TextViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import androidx.core.widget.TextViewCompat;
+import androidx.cursoradapter.widget.CursorAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
@@ -127,12 +126,9 @@ class SeasonsAdapter extends CursorAdapter {
 
         // context menu
         final int seasonTvdbId = mCursor.getInt(SeasonsQuery._ID);
-        viewHolder.contextMenu.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (popupMenuClickListener != null) {
-                    popupMenuClickListener.onPopupMenuClick(v, seasonTvdbId, seasonNumber);
-                }
+        viewHolder.contextMenu.setOnClickListener(v -> {
+            if (popupMenuClickListener != null) {
+                popupMenuClickListener.onPopupMenuClick(v, seasonTvdbId, seasonNumber);
             }
         });
     }

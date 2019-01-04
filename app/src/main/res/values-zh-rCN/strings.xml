@@ -11,6 +11,7 @@
     <string name="help">帮助</string>
     <string name="help_and_feedback">帮助 &amp; 反馈</string>
     <string name="drawer_open">打开导航栏</string>
+    <string name="no_more_updates">此版本的 Android 将不会收到更多 SeriesGuide 的更新。</string>
     <!-- Media items -->
     <string name="show">节目</string>
     <string name="episode">剧集</string>
@@ -344,7 +345,8 @@
         <item quantity="other">%d 分钟前</item>
     </plurals>
     <!-- About screen -->
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under CC BY-NC 4.0.</string>
+    <string name="privacy_policy">隐私策略</string>
+    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">此应用程序使用了 TMDb 应用程序接口，但与 TMDb 并无关联，且没有获得 TMDb 认证。</string>
     <string name="licence_trakt">此应用程序使用了来自 trakt 的数据和图片。</string>
     <string name="about_open_source">SeriesGuide 是采用开放源码软件编写的。</string>
@@ -433,6 +435,7 @@
     <string name="hide_watched">隐藏已观看剧集</string>
     <string name="pref_widget_opacity">小部件背景</string>
     <string name="pref_widget_type">小部件类型</string>
+    <string name="pref_large_font">使用大字体</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">100%</string>
     <string name="widget_background_25">25%</string>

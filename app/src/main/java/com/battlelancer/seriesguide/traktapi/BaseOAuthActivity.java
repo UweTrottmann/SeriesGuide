@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -13,6 +11,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.Utils;
@@ -94,19 +94,9 @@ public abstract class BaseOAuthActivity extends BaseActivity {
 
         // setup buttons (can be used if browser launch fails or user comes back without code)
         Button buttonBrowser = findViewById(R.id.buttonOauthBrowser);
-        buttonBrowser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchBrowser();
-            }
-        });
+        buttonBrowser.setOnClickListener(v -> launchBrowser());
         Button buttonWebView = findViewById(R.id.buttonOauthWebView);
-        buttonWebView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activateWebView();
-            }
-        });
+        buttonWebView.setOnClickListener(v -> activateWebView());
 
         activateFallbackButtons();
         setMessage(null);
@@ -115,7 +105,7 @@ public abstract class BaseOAuthActivity extends BaseActivity {
     private void launchBrowser() {
         String authorizationUrl = getAuthorizationUrl();
         if (authorizationUrl != null) {
-            Utils.launchWebsite(this, authorizationUrl, "OAuth", "Launch browser for OAuth");
+            Utils.launchWebsite(this, authorizationUrl);
         }
     }
 

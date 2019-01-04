@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             style="@style/Page.Centered"
             android:orientation="vertical">
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchAutoBackup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
                 android:text="@string/pref_autobackupsummary"
                 android:textAppearance="@style/TextAppearance.Body.Secondary" />
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/containerAutoBackupSettings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -144,9 +144,9 @@
                     app:layout_constraintTop_toTopOf="@+id/buttonAutoBackupMoviesExportFile"
                     tools:text="content://some.path.on.storage/sg-movies-export.json" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/containerAutoBackupImport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -198,7 +198,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textViewAutoBackupImportWarning" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
@@ -211,4 +211,4 @@
         android:layout_height="wrap_content"
         android:indeterminate="true" />
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
