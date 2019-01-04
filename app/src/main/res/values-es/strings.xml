@@ -358,7 +358,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Política de privacidad</string>
-    <string name="licence_tvdb">La aplicación utiliza datos e imágenes de TheTVDB licenciadas bajo la CC BY-NC 4.0.</string>
+    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Este producto utiliza la API de TMDb pero no está patrocinado ni certificado por TMDb.</string>
     <string name="licence_trakt">Esta aplicación utiliza datos e imágenes de trakt.</string>
     <string name="about_open_source">SeriesGuide fue desarrollado usando software de código abierto.</string>

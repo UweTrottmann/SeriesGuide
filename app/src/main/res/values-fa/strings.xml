@@ -357,7 +357,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">‫این برنامه از داده‌ها و تصویرهای TheTVDB با مجوز CC BY-NC 4.0 استفاده می‌کند.</string>
+    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">‫این محصول از رابط برنامه‌نویسی TMDb استفاده می‌کند ولی توسّط TMDb تصدیق نشده است.</string>
     <string name="licence_trakt">‫این برنامه از داده‌ها و تصویرهای trakt استفاده می‌کند.</string>
     <string name="about_open_source">SeriesGuide با استفاده از نرم‌افزارهای متن باز ساخته شده است.</string>

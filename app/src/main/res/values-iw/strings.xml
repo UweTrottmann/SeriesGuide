@@ -379,7 +379,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">יישום זה משתמש בנתונים ותמונות מאתר TheTVDB תחת רישיון CC BY-NC 4.0.</string>
+    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">מוצר זה עושה שימוש בממשק התכנות של TMDb, אך הוא אינו נתמך או מאושר על ידי TMDb.</string>
     <string name="licence_trakt">יישום זה משתמש בנתונים ותמונות מאתר trakt.</string>
     <string name="about_open_source">SeriesGuide בנוי באמצעות תוכנת קוד פתוח.</string>

@@ -357,7 +357,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">Η εφαρμογή αυτή χρησιμοποιεί δεδομένα και εικόνες από το TheTVDB με εξουσιοδότηση βάσει CC BY-NC 4.0.</string>
+    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Αυτό το προϊόν χρησιμοποιεί το API του TMDb, αλλά δεν είναι ούτε εγκεκριμένο ούτε πιστοποιημένο από το TMDb.</string>
     <string name="licence_trakt">Αυτή η εφαρμογή χρησιμοποιεί δεδομένα και εικόνες από το trakt.</string>
     <string name="about_open_source">Το SeriesGuide έχει φτιαχτεί με τη χρήση λογισμικού ανοιχτού κώδικα.</string>
