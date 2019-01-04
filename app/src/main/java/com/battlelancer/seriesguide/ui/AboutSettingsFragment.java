@@ -27,6 +27,7 @@ public class AboutSettingsFragment extends Fragment {
 
     @BindView(R.id.textViewAboutVersion) TextView textVersion;
     @BindView(R.id.buttonAboutWebsite) Button buttonWebsite;
+    @BindView(R.id.buttonAboutPrivacy) Button buttonPrivacy;
     @BindView(R.id.buttonAboutTvdbTerms) Button buttonTvdbTerms;
     @BindView(R.id.buttonAboutCreativeCommons) Button buttonCreativeCommons;
     @BindView(R.id.buttonAboutTmdbTerms) Button buttonTmdbTerms;
@@ -47,6 +48,7 @@ public class AboutSettingsFragment extends Fragment {
         textVersion.setText(Utils.getVersionString(getActivity()));
 
         buttonWebsite.setOnClickListener(urlButtonClickListener);
+        buttonPrivacy.setOnClickListener(urlButtonClickListener);
         buttonTvdbTerms.setOnClickListener(urlButtonClickListener);
         buttonCreativeCommons.setOnClickListener(urlButtonClickListener);
         buttonTmdbTerms.setOnClickListener(urlButtonClickListener);
