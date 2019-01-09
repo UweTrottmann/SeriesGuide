@@ -77,7 +77,7 @@ public class TraktAddFragment extends AddFragment {
         super.onActivityCreated(savedInstanceState);
 
         // setup adapter, enable context menu only for recommendations and watchlist
-        adapter = new AddAdapter(getActivity(), new ArrayList<SearchResult>(), itemClickListener,
+        adapter = new AddAdapter(getActivity(), new ArrayList<>(), itemClickListener,
                 listType == TraktShowsLink.RECOMMENDED || listType == TraktShowsLink.WATCHLIST,
                 listType == TraktShowsLink.RECOMMENDED);
 

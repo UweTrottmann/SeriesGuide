@@ -349,7 +349,7 @@ public class ExtensionManager {
         Timber.d("requestAction: requesting from %s for %s", extension, episode.getTvdbId());
         // prepare to receive actions for the given episode
         if (sEpisodeActionsCache.get(episode.getTvdbId()) == null) {
-            sEpisodeActionsCache.put(episode.getTvdbId(), new HashMap<ComponentName, Action>());
+            sEpisodeActionsCache.put(episode.getTvdbId(), new HashMap<>());
         }
         // actually request actions
         context.sendBroadcast(new Intent(IncomingConstants.ACTION_UPDATE)
@@ -376,7 +376,7 @@ public class ExtensionManager {
         Timber.d("requestAction: requesting from %s for %s", extension, movie.getTmdbId());
         // prepare to receive actions for the given episode
         if (sMovieActionsCache.get(movie.getTmdbId()) == null) {
-            sMovieActionsCache.put(movie.getTmdbId(), new HashMap<ComponentName, Action>());
+            sMovieActionsCache.put(movie.getTmdbId(), new HashMap<>());
         }
         // actually request actions
         context.sendBroadcast(new Intent(IncomingConstants.ACTION_UPDATE)
