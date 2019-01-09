@@ -13,6 +13,7 @@
         <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_size_default_sg</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="TextAppearance.Display3">
@@ -35,6 +36,7 @@
 
     <style name="TextAppearance.Title">
         <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="TextAppearance.Title.Dim">
@@ -46,7 +48,7 @@
     </style>
 
     <style name="TextAppearance.Subhead.Bold">
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="TextAppearance.Subhead.Dim">
@@ -62,7 +64,7 @@
     </style>
 
     <style name="TextAppearance.Body.Bold">
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="TextAppearance.Body.Bold.Accent">
@@ -125,6 +127,7 @@
     <style name="TextAppearance.Button">
         <item name="android:textSize">@dimen/text_size_default_sg</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="TextAppearance.SeriesGuide" />
@@ -151,9 +154,7 @@
     <style name="Widget.SeriesGuide" parent="Widget" />
 
     <!-- Buttons -->
-    <!-- Has no background, so use theme text color -->
-    <style name="Widget.SeriesGuide.Button.Borderless" parent="Base.Widget.AppCompat.Button">
-        <item name="android:background">?attr/sgBorderlessButtonBackground</item>
+    <style name="Widget.SeriesGuide.Button.Borderless" parent="android:Widget.Material.Button.Borderless">
         <item name="android:maxLines">2</item>
     </style>
 
@@ -187,7 +188,6 @@
 
     <style name="Widget.SeriesGuide.Button.Borderless.Caption.Platform">
         <item name="android:padding">4dp</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
@@ -215,11 +215,14 @@
     </style>
 
     <!-- Action bar -->
-    <style name="Widget.SeriesGuide.ActionBar" />
+    <style name="Widget.SeriesGuide.ActionBar">
+        <item name="android:elevation">4dp</item>
+    </style>
 
     <!-- Tabs -->
     <style name="Widget.SeriesGuide.TabLayout">
         <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:elevation">4dp</item>
     </style>
 
     <style name="Widget.SeriesGuide.Tab">
@@ -231,7 +234,10 @@
     </style>
 
     <!-- Inline snackbar -->
-    <style name="Widget.SeriesGuide.InlineSnackbar" />
+    <!-- Use of CoordinatorLayout shifts layouts down, counter by moving inline snackbar up. -->
+    <style name="Widget.SeriesGuide.InlineSnackbar">
+        <item name="android:layout_marginBottom">?attr/actionBarSize</item>
+    </style>
 
     <!-- Dialogs -->
     <style name="Widget.SeriesGuide.DialogWindowTitle">
