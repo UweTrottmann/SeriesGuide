@@ -186,6 +186,8 @@ public class Utils {
             Timber.tag(throwable.getEvent());
             Timber.e("%s: %s %s", throwable.getAction(), throwable.getCode(),
                     throwable.getFailureMessage());
+        } else {
+            Timber.e(throwable, throwable.getAction());
         }
 
         if (throwable.getCause() instanceof UnknownHostException) {
