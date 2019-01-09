@@ -268,7 +268,7 @@
     <string name="hexagon_remove_account_confirmation">계정을 삭제하면 SeriesGuide Cloud에서 모든 프로그램과 영화가 제거됩니다.</string>
     <string name="hexagon_api_queued">SeriesGuide Cloud로 전송합니다.</string>
     <string name="hexagon_signed_out">SeriesGuide Cloud에서 로그아웃함</string>
-    <string name="hexagon_google_play_missing">Google Play 서비스가 설치되지 않았습니다</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">trakt에 전송하고 있습니다.</string>
     <string name="checkin_success_trakt">%s을(를) trakt에 체크인하였습니다.</string>

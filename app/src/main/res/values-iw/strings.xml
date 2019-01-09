@@ -289,7 +289,7 @@
     <string name="hexagon_remove_account_confirmation">הסרת החשבון שלך תמחק את כל התוכניות והסרטים מ-SeriesGuide Cloud. הקפד למחוק אותם גם בהתקנים מחוברים אחרים.</string>
     <string name="hexagon_api_queued">שולח ל-SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">אינך מחובר לענן SeriesGuide.</string>
-    <string name="hexagon_google_play_missing">כדי להשתמש ב-SeriesGuide בענן, נדרש שירותי Google Play.</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">שלח ל-trakt.</string>
     <string name="checkin_success_trakt">נעשה צ\'ק-אין ל-%s ב-trakt.</string>

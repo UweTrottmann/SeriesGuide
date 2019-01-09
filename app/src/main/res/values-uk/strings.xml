@@ -289,7 +289,7 @@
     <string name="hexagon_remove_account_confirmation">Видалення облікового запису призведе до видалення всіх серіалів та фільмів з хмари SeriesGuide. Переконайтесь що видалили його і на інших підключених пристроях.</string>
     <string name="hexagon_api_queued">Надсилання до хмари SeriesGuide.</string>
     <string name="hexagon_signed_out">Вихід з SeriesGuide хмари.</string>
-    <string name="hexagon_google_play_missing">Щоб використати SeriesGuide Хмару, потрібен Google Play Service.</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Надсилання до trakt.</string>
     <string name="checkin_success_trakt">Відзначено %s на trakt.</string>
