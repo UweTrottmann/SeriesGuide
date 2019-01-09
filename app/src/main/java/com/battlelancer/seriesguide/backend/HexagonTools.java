@@ -212,7 +212,7 @@ public class HexagonTools {
 
     private void checkSignInState() {
         if (credential.getSelectedAccount() != null && !isTimeForSignInStateCheck()) {
-            Timber.d("%s: just checked state, skip", ACTION_SILENT_SIGN_IN);
+            return;
         }
         lastSignInCheck = SystemClock.elapsedRealtime();
 
