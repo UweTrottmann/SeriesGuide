@@ -289,7 +289,7 @@
     <string name="hexagon_remove_account_confirmation">Pašalinus paskyrą bus panaikintos visos laidos ir filmai iš SeriesGuide Cloud. Įsitikinkite, kad tai pašalinot, ir kituose įtaisuose.</string>
     <string name="hexagon_api_queued">Siunčiama į SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
-    <string name="hexagon_google_play_missing">Norint naudotis SeriesGuide Cloud, Google Play Services yra privalomos.</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Siunčiama į trakt.</string>
     <string name="checkin_success_trakt">Pažymėta %s trakt paskyroje.</string>
