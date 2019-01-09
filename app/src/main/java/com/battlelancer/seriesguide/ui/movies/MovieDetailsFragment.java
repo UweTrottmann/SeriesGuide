@@ -413,7 +413,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                 if (isWatched) {
                     MovieTools.unwatchedMovie(getContext(), tmdbId);
                 } else {
-                    MovieTools.watchedMovie(getContext(), tmdbId);
+                    MovieTools.watchedMovie(getContext(), tmdbId, inWatchlist);
                 }
             });
             buttonMovieWatched.setVisibility(View.VISIBLE);
