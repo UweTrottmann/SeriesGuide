@@ -197,12 +197,6 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <!-- Progress bar -->
-    <style name="Widget.SeriesGuide.ProgressBar" parent="android:Widget.Holo.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/progress_horizontal_sg</item>
-        <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
-    </style>
-
     <!-- TextView -->
     <style name="Widget.SeriesGuide.TextView" />
 
@@ -339,13 +333,6 @@
 
     <!-- ////////////////////////////////////////////// -->
 
-
     <!-- Light styles -->
-
-    <!-- Progress bar -->
-    <style name="Widget.SeriesGuide.ProgressBar.Light" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/progress_horizontal_sg_light</item>
-        <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_sg</item>
-    </style>
 
 </resources>

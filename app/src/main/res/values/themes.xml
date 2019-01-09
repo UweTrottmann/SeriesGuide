@@ -5,30 +5,14 @@
 
     <style name="Theme.BaseSeriesGuide" parent="Theme.AppCompat.NoActionBar">
 
-        <!-- All customizations that are SPECIFIC to API-level 15+ go here. -->
-
-        <!-- Special attributes -->
-        <item name="selectableItemBackground">@drawable/list_selector_sg</item>
-        <item name="sgBorderlessButtonBackground">@drawable/btn_borderless_sg</item>
-
-        <!-- Windows -->
-        <item name="android:dialogTheme">@style/Theme.SeriesGuide.Dialog</item>
-
-        <!-- System widgets -->
-        <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
-        <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar</item>
-        <item name="android:editTextBackground">@drawable/edit_text_sg</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
-
-        <!-- Fast scroll thumb -->
-        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_sg</item>
+        <!-- All customizations that are SPECIFIC to API-level 21 go here. -->
 
     </style>
 
     <!-- SeriesGuides default theme -->
     <style name="Theme.SeriesGuide" parent="Theme.BaseSeriesGuide">
 
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <!-- All customizations that are NOT specific to a supported API-level can go here. -->
 
         <!-- Explicitly add windowActionBar as some devices crash due to it missing -->
         <item name="windowActionBar">false</item>
@@ -46,6 +30,7 @@
         <!-- Windows -->
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="windowActionModeOverlay">true</item>
 
         <!-- System widgets -->
@@ -81,30 +66,14 @@
 
     <style name="Theme.BaseSeriesGuide.DarkBlue" parent="Theme.AppCompat.NoActionBar">
 
-        <!-- All customizations that are SPECIFIC to API-level 15+ go here. -->
-
-        <!-- Special attributes -->
-        <item name="selectableItemBackground">@drawable/list_selector_dark</item>
-        <item name="sgBorderlessButtonBackground">@drawable/btn_borderless_dark</item>
-
-        <!-- Windows -->
-        <item name="android:dialogTheme">@style/Theme.SeriesGuide.DarkBlue.Dialog</item>
-
-        <!-- System widgets -->
-        <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
-        <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar</item>
-        <item name="android:editTextBackground">@drawable/edit_text_sg</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_dark</item>
-
-        <!-- Fast scroll thumb -->
-        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_sg</item>
+        <!-- All customizations that are SPECIFIC to API-level 21 go here. -->
 
     </style>
 
     <!-- Dark Android theme -->
     <style name="Theme.SeriesGuide.DarkBlue" parent="Theme.BaseSeriesGuide.DarkBlue">
 
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <!-- All customizations that are NOT specific to a supported API-level can go here. -->
 
         <!-- Explicitly add windowActionBar as some devices crash due to it missing -->
         <item name="windowActionBar">false</item>
@@ -120,6 +89,7 @@
         <!-- Windows -->
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="windowActionModeOverlay">true</item>
 
         <!-- System widgets -->
@@ -152,27 +122,14 @@
 
     <style name="Theme.BaseSeriesGuide.Light" parent="Theme.AppCompat.Light.NoActionBar">
 
-        <!-- All customizations that are SPECIFIC to API-level 15+ go here. -->
-
-        <!-- Special attributes -->
-        <item name="selectableItemBackground">@drawable/list_selector_sg</item>
-        <item name="sgBorderlessButtonBackground">@drawable/btn_borderless_sg_light</item>
-
-        <!-- System widgets -->
-        <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
-        <item name="android:progressBarStyleHorizontal">@style/Widget.SeriesGuide.ProgressBar.Light</item>
-        <item name="android:editTextBackground">@drawable/edit_text_holo_light</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
-
-        <!-- Fast scroll thumb -->
-        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_sg</item>
+        <!-- All customizations that are SPECIFIC to API-level 21 go here. -->
 
     </style>
 
     <!-- SeriesGuide Light theme -->
     <style name="Theme.SeriesGuide.Light" parent="Theme.BaseSeriesGuide.Light">
 
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <!-- All customizations that are NOT specific to a supported API-level can go here. -->
 
         <!-- Explicitly add windowActionBar as some devices crash due to it missing -->
         <item name="windowActionBar">false</item>
@@ -190,6 +147,7 @@
         <!-- Windows -->
         <item name="android:colorBackground">@color/background_inverse</item>
         <item name="android:windowBackground">@color/background_inverse</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:dialogTheme">@style/Theme.SeriesGuide.Light.Dialog</item>
 
@@ -228,17 +186,15 @@
 
     </style>
 
+    <!-- ####################################### -->
     <!-- Special themes -->
+    <!-- ####################################### -->
+
     <style name="Theme.SeriesGuide.Dialog" parent="Theme.AppCompat.Dialog">
         <!-- Copy of attributes relevant for our dialogs -->
         <item name="colorPrimary">@color/accent_primary</item>
         <item name="colorPrimaryDark">@color/accent_primary_dark</item>
         <item name="colorAccent">@color/teal_500</item>
-        <item name="selectableItemBackground">@drawable/list_selector_sg</item>
-        <item name="sgBorderlessButtonBackground">@drawable/btn_borderless_sg</item>
-
-        <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
     </style>
 
     <style name="Theme.SeriesGuide.Dialog.CheckIn">
@@ -248,11 +204,6 @@
     <style name="Theme.SeriesGuide.DarkBlue.Dialog" parent="Theme.AppCompat.Dialog">
         <!-- Copy of attributes relevant for our dialogs -->
         <item name="colorAccent">@color/teal_500</item>
-        <item name="selectableItemBackground">@drawable/list_selector_dark</item>
-        <item name="sgBorderlessButtonBackground">@drawable/btn_borderless_dark</item>
-
-        <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_dark</item>
     </style>
 
     <style name="Theme.SeriesGuide.DarkBlue.Dialog.CheckIn">
@@ -264,22 +215,25 @@
         <item name="colorPrimary">@color/accent_primary</item>
         <item name="colorPrimaryDark">@color/accent_primary_dark</item>
         <item name="colorAccent">@color/teal_500</item>
-        <item name="selectableItemBackground">@drawable/list_selector_sg</item>
-        <item name="sgBorderlessButtonBackground">@drawable/btn_borderless_sg_light</item>
-
-        <item name="android:borderlessButtonStyle">@style/Widget.SeriesGuide.Button.Borderless</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
     </style>
 
     <style name="Theme.SeriesGuide.Light.Dialog.CheckIn">
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
-    <style name="Theme.SeriesGuide.Drawer" />
+    <style name="Theme.SeriesGuide.Drawer">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+    <style name="Theme.SeriesGuide.DarkBlue.Drawer">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
 
-    <style name="Theme.SeriesGuide.DarkBlue.Drawer" />
-
-    <style name="Theme.SeriesGuide.Light.Drawer" />
+    <style name="Theme.SeriesGuide.Light.Drawer">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
 
     <style name="Theme.SeriesGuide.Immersive">
 
