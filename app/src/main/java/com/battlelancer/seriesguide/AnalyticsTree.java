@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbTraktException;
 import com.battlelancer.seriesguide.util.Utils;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.gson.JsonParseException;
+import java.io.InterruptedIOException;
 import java.net.UnknownHostException;
 import org.threeten.bp.format.DateTimeParseException;
 import timber.log.Timber;
@@ -40,8 +41,11 @@ public class AnalyticsTree extends Timber.DebugTree {
             }
 
             // special treatment for some exceptions
-            if (t instanceof UnknownHostException /* mostly devices loosing connection */) {
-                return; // do not track
+            if (t instanceof UnknownHostException) {
+                return; // do not track, mostly devices loosing connection
+            }
+            if (t instanceof InterruptedIOException) {
+                return; // do not track, mostly timeouts
             }
             if (t instanceof TvdbTraktException) {
                 return; // already tracked as trakt error
