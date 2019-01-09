@@ -1,7 +1,9 @@
 package com.battlelancer.seriesguide.backend;
 
 import android.accounts.Account;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -27,12 +29,13 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.util.DialogTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.widgets.SyncStatusView;
-import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -45,6 +48,7 @@ import timber.log.Timber;
 public class CloudSetupFragment extends Fragment {
 
     private static final int REQUEST_SIGN_IN = 1;
+    private static final int REQUEST_RESOLUTION = 2;
     private static final String ACTION_SIGN_IN = "sign-in";
 
     @BindView(R.id.buttonCloudAction) Button buttonAction;
@@ -58,7 +62,7 @@ public class CloudSetupFragment extends Fragment {
 
     private Snackbar snackbar;
 
-    private GoogleApiClient googleApiClient;
+    private GoogleSignInClient googleSignInClient;
     @Nullable private GoogleSignInAccount signInAccount;
     private HexagonTools hexagonTools;
     private HexagonSetupTask hexagonSetupTask;
@@ -104,11 +108,8 @@ public class CloudSetupFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         hexagonTools = SgApp.getServicesComponent(getContext()).hexagonTools();
-        googleApiClient = new GoogleApiClient.Builder(getContext())
-                .enableAutoManage(getActivity(), onGoogleConnectionFailedListener)
-                .addOnConnectionFailedListener(onGoogleConnectionFailedListener)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, HexagonTools.getGoogleSignInOptions())
-                .build();
+        googleSignInClient = GoogleSignIn
+                .getClient(getActivity(), HexagonTools.getGoogleSignInOptions());
     }
 
     @Override
@@ -117,21 +118,20 @@ public class CloudSetupFragment extends Fragment {
 
         if (!isHexagonSetupRunning()) {
             // check if the user is still signed in
-            OptionalPendingResult<GoogleSignInResult> pendingResult = Auth.GoogleSignInApi
-                    .silentSignIn(googleApiClient);
-            if (pendingResult.isDone()) {
+            Task<GoogleSignInAccount> signInTask = googleSignInClient.silentSignIn();
+            if (signInTask.isSuccessful()) {
                 // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
                 // and the GoogleSignInResult will be available instantly.
                 Timber.d("Got cached sign-in");
-                handleSignInResult(pendingResult.get());
+                handleSignInResult(signInTask);
             } else {
                 // If the user has not previously signed in on this device or the sign-in has expired,
                 // this asynchronous branch will attempt to sign in the user silently.  Cross-device
                 // single sign-on will occur in this branch.
                 Timber.d("Trying async sign-in");
-                pendingResult.setResultCallback(googleSignInResult -> {
+                signInTask.addOnCompleteListener(task -> {
                     if (isAdded()) {
-                        handleSignInResult(googleSignInResult);
+                        handleSignInResult(task);
                     }
                 });
             }
@@ -142,8 +142,10 @@ public class CloudSetupFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResult(result);
+            handleSignInResult(GoogleSignIn.getSignedInAccountFromIntent(data));
+        } else if (requestCode == REQUEST_RESOLUTION && resultCode == Activity.RESULT_OK) {
+            // not doing anything for now, user has to press sign-in button again
+            Timber.i("Resolved an issue with Google sign-in.");
         }
     }
 
@@ -195,22 +197,42 @@ public class CloudSetupFragment extends Fragment {
      * On sign-in success, saves the signed in Google account and auto-starts setup if Cloud is not
      * enabled, yet. On sign-in failure disables Cloud.
      *
-     * @param result May be null (here if coming from onActivityResult).
+     * @param task A completed Google sign-in task.
      */
-    private void handleSignInResult(@Nullable GoogleSignInResult result) {
-        boolean signedIn = result != null && result.isSuccess();
+    private void handleSignInResult(Task<GoogleSignInAccount> task) {
+        GoogleSignInAccount account;
+        String errorCodeString = "";
+        try {
+            account = task.getResult(ApiException.class);
+        } catch (ApiException e) {
+            account = null;
+            int statusCode = e.getStatusCode();
+            errorCodeString = GoogleSignInStatusCodes.getStatusCodeString(statusCode);
+            if (statusCode == GoogleSignInStatusCodes.RESOLUTION_REQUIRED
+                    && e instanceof ResolvableApiException) {
+                try {
+                    ((ResolvableApiException) e)
+                            .startResolutionForResult(getActivity(), REQUEST_RESOLUTION);
+                } catch (IntentSender.SendIntentException ignored) {
+                    // ignored
+                }
+            } else {
+                hexagonTools.trackSignInFailure(ACTION_SIGN_IN, e);
+            }
+        } catch (Exception e) {
+            account = null;
+            errorCodeString = e.getMessage();
+            hexagonTools.trackSignInFailure(ACTION_SIGN_IN, e);
+        }
+
+        boolean signedIn = account != null;
         if (signedIn) {
             Timber.i("Signed in with Google.");
-            signInAccount = result.getSignInAccount();
+            signInAccount = account;
         } else {
-            // not or no longer signed in
-            if (result != null) {
-                hexagonTools.trackSignInFailure(ACTION_SIGN_IN, result.getStatus());
-            } else {
-                hexagonTools.trackSignInFailure(ACTION_SIGN_IN, "result is null");
-            }
             signInAccount = null;
             hexagonTools.setDisabled();
+            showSnackbar(getString(R.string.hexagon_signin_fail_format, errorCodeString));
         }
 
         setProgressVisible(false);
@@ -225,26 +247,32 @@ public class CloudSetupFragment extends Fragment {
     }
 
     private void signIn() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+        Intent signInIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, REQUEST_SIGN_IN);
     }
 
     private void signOut() {
         setProgressVisible(true);
-        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(status -> {
+        googleSignInClient.signOut().addOnCompleteListener(task -> {
             if (!CloudSetupFragment.this.isAdded()) {
                 return;
             }
 
-            setProgressVisible(false);
+            boolean success;
+            try {
+                task.getResult(ApiException.class);
+                success = true;
+            } catch (Exception e) {
+                success = false;
+                hexagonTools.trackSignOutFailure(e);
+            }
 
-            if (status.isSuccess()) {
+            setProgressVisible(false);
+            if (success) {
                 Timber.i("Signed out of Google.");
                 signInAccount = null;
                 hexagonTools.setDisabled();
                 updateViews();
-            } else {
-                hexagonTools.trackSignInFailure("sign-out", status);
             }
         });
     }
@@ -308,7 +336,20 @@ public class CloudSetupFragment extends Fragment {
         buttonRemoveAccount.setEnabled(false);
     }
 
+    private void showSnackbar(CharSequence message) {
+        dismissSnackbar();
+        snackbar = Snackbar.make(getView(), message, Snackbar.LENGTH_INDEFINITE);
+        snackbar.show();
+    }
+
+    private void dismissSnackbar() {
+        if (snackbar != null) {
+            snackbar.dismiss();
+        }
+    }
+
     private void startHexagonSetup() {
+        dismissSnackbar();
         setProgressVisible(true);
 
         if (signInAccount == null) {
@@ -411,25 +452,5 @@ public class CloudSetupFragment extends Fragment {
         }
         setProgressVisible(false); // allow new task
         updateViews();
-    };
-
-    private GoogleApiClient.OnConnectionFailedListener onGoogleConnectionFailedListener
-            = new GoogleApiClient.OnConnectionFailedListener() {
-        @Override
-        public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-            // using auto managed connection so only called if unresolvable error
-            hexagonTools.trackSignInFailure(ACTION_SIGN_IN, connectionResult);
-            if (getView() == null) {
-                return;
-            }
-            setProgressVisible(false);
-            setDisabled();
-            if (snackbar != null) {
-                snackbar.dismiss();
-            }
-            snackbar = Snackbar.make(getView(), R.string.hexagon_google_play_missing,
-                    Snackbar.LENGTH_INDEFINITE);
-            snackbar.show();
-        }
     };
 }

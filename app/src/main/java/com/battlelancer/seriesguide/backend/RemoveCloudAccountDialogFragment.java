@@ -13,9 +13,10 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.util.Utils;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.uwetrottmann.seriesguide.backend.account.Account;
 import java.io.IOException;
 import org.greenrobot.eventbus.EventBus;
@@ -74,18 +75,13 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
             }
 
             // de-authorize app so other clients are signed out as well
-            GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context)
-                    .addApi(Auth.GOOGLE_SIGN_IN_API, HexagonTools.getGoogleSignInOptions())
-                    .build();
-            ConnectionResult connectionResult = googleApiClient.blockingConnect();
-            if (!connectionResult.isSuccess()) {
-                hexagonTools.trackSignInFailure("remove account", connectionResult);
-                return false;
-            }
-            com.google.android.gms.common.api.Status status = Auth.GoogleSignInApi
-                    .revokeAccess(googleApiClient).await();
-            if (!status.isSuccess()) {
-                hexagonTools.trackSignInFailure("remove account", status);
+            GoogleSignInClient googleSignInClient = GoogleSignIn
+                    .getClient(context, HexagonTools.getGoogleSignInOptions());
+            Task<Void> task = googleSignInClient.revokeAccess();
+            try {
+                Tasks.await(task);
+            } catch (Exception e) {
+                hexagonTools.trackRevokeFailure(e);
                 return false;
             }
 
