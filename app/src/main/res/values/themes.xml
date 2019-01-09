@@ -281,11 +281,29 @@
 
     <style name="Theme.SeriesGuide.Light.Drawer" />
 
-    <style name="Theme.SeriesGuide.Immersive" />
+    <style name="Theme.SeriesGuide.Immersive">
 
-    <style name="Theme.SeriesGuide.DarkBlue.Immersive" />
+        <!-- Translucent navbar (native, v19+) -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
 
-    <style name="Theme.SeriesGuide.Light.Immersive" />
+    </style>
+
+    <style name="Theme.SeriesGuide.DarkBlue.Immersive">
+
+        <!-- Translucent navbar (native, v19+) -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+
+    </style>
+
+    <style name="Theme.SeriesGuide.Light.Immersive">
+
+        <!-- Translucent navbar (native, v19+) -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+
+    </style>
 
     <style name="ThemeOverlay.WhiteAccent" parent="ThemeOverlay.AppCompat.Dark">
         <item name="colorAccent">@color/white</item>
