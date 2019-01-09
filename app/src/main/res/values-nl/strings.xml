@@ -275,7 +275,7 @@
     <string name="hexagon_remove_account_confirmation">Dit zal al uw series, lijsten en films van SeriesGuide Cloud verwijderen</string>
     <string name="hexagon_api_queued">Verzonden naar SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Afgemeld bij SeriesGuide Cloud</string>
-    <string name="hexagon_google_play_missing">Google Play Services zijn niet geïnstalleerd</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Toevoegen aan trakt.</string>
     <string name="checkin_success_trakt">Aangemeld bij %s op trakt.</string>

@@ -275,7 +275,7 @@
     <string name="hexagon_remove_account_confirmation">Отстранување на вашиот профил ќе бидат избришани сите емисии и филмови од SeriesGuide Cloud. Бидете сигурни да го отстраните како и од другите поврзани уреди.</string>
     <string name="hexagon_api_queued">Испраќање во SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Одлогирај од SeriesGuide Cloud</string>
-    <string name="hexagon_google_play_missing">За да го користите SeriesGuide Cloud, Google Play Services е потребно.</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Испраќање на trakt.</string>
     <string name="checkin_success_trakt">Провери во %s на trakt.</string>

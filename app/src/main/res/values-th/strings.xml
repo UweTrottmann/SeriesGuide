@@ -268,7 +268,7 @@
     <string name="hexagon_remove_account_confirmation">การลบบัญชีของคุณจะลบซีรีส์และภาพยนตร์ทั้งหมดออกจาก SeriesGuide Cloud ยืนยันให้แน่ใจว่าคุณต้องการลบข้อมูลออกจากอุปกรณ์ที่เชื่อมต่ออยู่ด้วยเช่นกัน</string>
     <string name="hexagon_api_queued">กำลังส่งไปยัง SeriesGuide Cloud</string>
     <string name="hexagon_signed_out">ออกจากระบบ SeriesGuide Cloud แล้ว</string>
-    <string name="hexagon_google_play_missing">ในการใช้ SeriesGuide Cloud, จำเป็นต้องมี Google Play Services</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">กำลังส่งไปยัง trakt</string>
     <string name="checkin_success_trakt">เช็กอิน %s บน trakt แล้ว</string>
