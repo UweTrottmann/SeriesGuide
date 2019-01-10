@@ -429,8 +429,6 @@
     <string name="pref_notifications_select_shows">番組を選択</string>
     <string name="pref_notifications_select_shows_summary">通知を有効にした番組 (%d)</string>
     <string name="pref_notification_channel_errors">エラー</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (小)</string>
     <!-- List Widget -->
     <string name="hide_watched">視聴済のエピソードを非表示</string>
     <string name="pref_widget_opacity">ウィジェットの背景</string>
