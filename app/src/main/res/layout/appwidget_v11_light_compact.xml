@@ -73,7 +73,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:contentDescription="@string/preferences"
-                    android:src="@drawable/ic_action_overflow_round_inverse" />
+                    android:src="@drawable/ic_more_vert_gray_24dp" />
             </FrameLayout>
         </LinearLayout>
     </LinearLayout>
