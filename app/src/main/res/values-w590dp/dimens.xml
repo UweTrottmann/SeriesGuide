@@ -4,10 +4,6 @@
     <!-- Screens with more than 590dp of available width. This would
     include phone devices in landscape. -->
 
-
-
-    <dimen name="search_padding_right">200dp</dimen>
-
     <integer name="grid_column_count">2</integer>
 
 </resources>

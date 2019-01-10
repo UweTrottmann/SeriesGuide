@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Paramètres de base</string>
     <string name="prefs_category_sharing">Services</string>
-    <string name="prefs_category_advanced">Avancé</string>
     <string name="prefs_category_about">A propos</string>
     <string name="pref_onlyfuture">Pas d\'épisodes diffusés</string>
     <string name="pref_onlyfuturesummary">Ne pas afficher les épisodes déjà diffusés</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Décalage de %d heures</string>
     <string name="clear_cache">Vider le cache d\'images</string>
     <string name="clear_cache_summary">Supprimer toutes les images en cache sur votre périphérique</string>
-    <string name="pref_ganalyticssummary">Envoyer des statistiques d’utilisation anonymes à un service Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Inclure les descriptions, informations, notes</string>
     <string name="backup_failed_file_access">Impossible de sauvegarder. Un fichier de sauvegarde ne peut pas être trouvé ou consulté.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Utiliser le fichier de sauvegarde par défaut</string>
     <!-- Welcome dialog -->
     <string name="get_started">Commencer</string>
-    <string name="welcome_setuplanguage">Choisissez la langue</string>
     <string name="dismiss">Passer</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s arrive bientôt</string>

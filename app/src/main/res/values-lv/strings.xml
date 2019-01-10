@@ -335,7 +335,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Pamati</string>
     <string name="prefs_category_sharing">Servisi</string>
-    <string name="prefs_category_advanced">Pārākie uzstādijumi</string>
     <string name="prefs_category_about">Par</string>
     <string name="pref_onlyfuture">Nepastāv neraidītas epizodes</string>
     <string name="pref_onlyfuturesummary">Nekad neuzrādīt vēl neraidītas epizodes</string>
@@ -411,7 +410,6 @@
     <string name="pref_offsetsummary">Nobīdīt raidlaikus %d stundas</string>
     <string name="clear_cache">Iztukšot attēlu kešatmiņu</string>
     <string name="clear_cache_summary">Noņemt visus kešatmiņā ievietotos attēlus no ierīces</string>
-    <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
     <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
@@ -434,7 +432,6 @@
     <string name="backup_use_default_files">Use default backup files</string>
     <!-- Welcome dialog -->
     <string name="get_started">Gūsti startu</string>
-    <string name="welcome_setuplanguage">Izvēlies valodu</string>
     <string name="dismiss">Atcelt</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s tuvojas</string>

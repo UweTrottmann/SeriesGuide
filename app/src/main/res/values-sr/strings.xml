@@ -335,7 +335,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Основно</string>
     <string name="prefs_category_sharing">Услуге</string>
-    <string name="prefs_category_advanced">Напредно</string>
     <string name="prefs_category_about">О апликацији</string>
     <string name="pref_onlyfuture">Нема емитованих епизода</string>
     <string name="pref_onlyfuturesummary">Не приказуј већ емитоване епизоде</string>
@@ -411,7 +410,6 @@
     <string name="pref_offsetsummary">Разлика у емитовању је %d сати</string>
     <string name="clear_cache">Обриши слике из кеш меморије</string>
     <string name="clear_cache_summary">Уклони све слике у кеш меморији вашег уређаја</string>
-    <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
     <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
@@ -434,7 +432,6 @@
     <string name="backup_use_default_files">Use default backup files</string>
     <!-- Welcome dialog -->
     <string name="get_started">Почни</string>
-    <string name="welcome_setuplanguage">Изабери језик</string>
     <string name="dismiss">Одбаци</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s ускоро долази</string>

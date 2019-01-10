@@ -5,4 +5,6 @@
     <issue id="UnusedQuantity" severity="ignore" />
     <!-- Detection broken for long -> Date https://github.com/JakeWharton/timber/issues/216 -->
     <issue id="TimberArgTypes" severity="warning" />
+    <!-- Leaving that to translators and feedback -->
+    <issue id="Typos" severity="ignore" />
 </lint>

@@ -37,7 +37,6 @@
     <color name="black_38">#60000000</color> <!-- secondary text light -->
     <color name="text_secondary_disabled_dark">#66ffffff</color> <!-- 40% white -->
     <color name="text_secondary_disabled_light">#66000000</color> <!-- 30% black -->
-    <color name="text_blue">#FF0099CC</color>
     <color name="text_red">#FFFF4444</color>
 
     <color name="black_11">#ffe3e3e3</color>
@@ -49,5 +48,9 @@
 
     <color name="sg_ripple_material_dark">#33ffffff</color>
     <color name="sg_ripple_material_light">#1f000000</color>
+    <color name="sg_primary_text_default_material_dark">#ffffffff</color>
+    <color name="sg_primary_text_default_material_light">#de000000</color>
+    <color name="sg_primary_text_disabled_material_dark">#4Dffffff</color>
+    <color name="sg_primary_text_disabled_material_light">#39000000</color>
 
 </resources>
