@@ -107,7 +107,7 @@ public class FullscreenImageActivity extends BaseActivity {
         } else {
             // no preview image? show error image instead if loading full image fails
             requestCreator
-                    .error(R.drawable.ic_image_missing)
+                    .error(R.drawable.ic_photo_gray_24dp)
                     .into(photoView, new Callback() {
                         @Override
                         public void onSuccess() {

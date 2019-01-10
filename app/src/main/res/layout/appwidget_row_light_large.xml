@@ -23,7 +23,7 @@
         android:layout_height="@dimen/widget_item_height_large"
         android:contentDescription="@null"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_image_missing"
+        android:src="@drawable/ic_photo_gray_24dp"
         tools:src="@color/black_38" />
 
     <!-- Wrap in LinearLayout to avoid text overlapping image if small. -->

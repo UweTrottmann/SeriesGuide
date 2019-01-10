@@ -234,16 +234,12 @@ public class ListWidgetProvider extends AppWidgetProvider {
     }
 
     /**
-     * Based on the widget size determines whether to use a compact layout. Defaults to false on ICS
-     * and below.
+     * Based on the widget size determines whether to use a compact layout.
      */
     private static boolean isCompactLayout(AppWidgetManager appWidgetManager, int appWidgetId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
-            int minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
-            return minHeight < DIP_THRESHOLD_COMPACT_LAYOUT;
-        }
-        return false;
+        Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
+        int minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
+        return minHeight < DIP_THRESHOLD_COMPACT_LAYOUT;
     }
 
     private PendingIntent getDataChangedPendingIntent(Context context) {

@@ -829,11 +829,11 @@ public class OverviewFragment extends Fragment implements
         if (DisplaySettings.preventSpoilers(getContext())) {
             // show image placeholder
             imageEpisode.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            imageEpisode.setImageResource(R.drawable.ic_image_missing);
+            imageEpisode.setImageResource(R.drawable.ic_photo_gray_24dp);
         } else {
             // try loading image
             ServiceUtils.loadWithPicasso(getActivity(), TvdbImageTools.fullSizeUrl(imagePath))
-                    .error(R.drawable.ic_image_missing)
+                    .error(R.drawable.ic_photo_gray_24dp)
                     .into(imageEpisode,
                             new Callback() {
                                 @Override

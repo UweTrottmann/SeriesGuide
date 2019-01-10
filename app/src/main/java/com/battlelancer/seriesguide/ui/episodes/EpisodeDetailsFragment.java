@@ -641,12 +641,12 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         if (hideDetails) {
             // show image placeholder
             imageViewEpisode.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            imageViewEpisode.setImageResource(R.drawable.ic_image_missing);
+            imageViewEpisode.setImageResource(R.drawable.ic_photo_gray_24dp);
         } else {
             // try loading image
             containerImage.setVisibility(View.VISIBLE);
             ServiceUtils.loadWithPicasso(requireContext(), TvdbImageTools.fullSizeUrl(imagePath))
-                    .error(R.drawable.ic_image_missing)
+                    .error(R.drawable.ic_photo_gray_24dp)
                     .into(imageViewEpisode,
                             new Callback() {
                                 @Override

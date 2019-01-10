@@ -259,10 +259,8 @@ public class NotificationService {
         if (am != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                am.setExact(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
             } else {
-                am.set(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
+                am.setExact(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
             }
         }
     }
@@ -454,6 +452,7 @@ public class NotificationService {
                         REQUEST_CODE_ACTION_CHECKIN,
                         checkInActionIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                 // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
+                // note: Wear and Galaxy Watch devices do typically not support vector icons
                 nb.addAction(R.drawable.ic_action_checkin, context.getString(R.string.checkin),
                         checkInIntent);
 
@@ -467,6 +466,7 @@ public class NotificationService {
                         REQUEST_CODE_ACTION_SET_WATCHED,
                         setWatchedIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                 // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
+                // note: Wear and Galaxy Watch devices do typically not support vector icons
                 nb.addAction(R.drawable.ic_action_tick, context.getString(R.string.action_watched),
                         setWatchedPendingIntent);
 

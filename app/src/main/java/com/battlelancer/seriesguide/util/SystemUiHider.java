@@ -4,7 +4,6 @@ package com.battlelancer.seriesguide.util;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.View;
-import android.view.WindowManager;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -205,35 +204,23 @@ public class SystemUiHider {
             // Test against testFlags to see if the system UI is visible.
             ActionBar supportActionBar = activity.getSupportActionBar();
             if ((vis & testFlags) != 0) {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    // Pre-Jelly Bean, we must use the old window flags API.
-                    activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                            WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                }
-
                 // As we use the appcompat toolbar as an action bar, we must manually hide it
                 if (supportActionBar != null) {
                     supportActionBar.hide();
                 }
 
-                // Trigger the registered listener and cache the visibility
-                // state.
+                // Trigger the registered listener and cache the visibility state.
                 onVisibilityChangeListener.onVisibilityChange(false);
                 visible = false;
             } else {
                 anchorView.setSystemUiVisibility(showFlags);
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    // Pre-Jelly Bean, we must use the old window flags API.
-                    activity.getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                }
 
                 // As we use the appcompat toolbar as an action bar, we must manually show it
                 if (supportActionBar != null) {
                     supportActionBar.show();
                 }
 
-                // Trigger the registered listener and cache the visibility
-                // state.
+                // Trigger the registered listener and cache the visibility state.
                 onVisibilityChangeListener.onVisibilityChange(true);
                 visible = true;
             }
