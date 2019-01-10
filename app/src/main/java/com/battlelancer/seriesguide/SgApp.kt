@@ -238,13 +238,8 @@ class SgApp : Application() {
             detectLeakedSqlLiteObjects()
             detectActivityLeaks()
             detectLeakedClosableObjects()
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                detectLeakedRegistrationObjects()
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                detectFileUriExposure()
-            }
+            detectLeakedRegistrationObjects()
+            detectFileUriExposure()
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 detectContentUriWithoutPermission()
             }

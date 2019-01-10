@@ -99,21 +99,17 @@ public class DragGripView extends View {
         float drawWidth = HORIZ_RIDGES * (tidgeSize + ridgeGap) - ridgeGap;
         float drawLeft;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            switch (Gravity.getAbsoluteGravity(gravity, getLayoutDirection())
-                    & Gravity.HORIZONTAL_GRAVITY_MASK) {
-                case Gravity.CENTER_HORIZONTAL:
-                    drawLeft = getPaddingLeft()
-                            + ((width - getPaddingLeft() - getPaddingRight()) - drawWidth) / 2;
-                    break;
-                case Gravity.RIGHT:
-                    drawLeft = getWidth() - getPaddingRight() - drawWidth;
-                    break;
-                default:
-                    drawLeft = getPaddingLeft();
-            }
-        } else {
-            drawLeft = getPaddingLeft();
+        switch (Gravity.getAbsoluteGravity(gravity, getLayoutDirection())
+                & Gravity.HORIZONTAL_GRAVITY_MASK) {
+            case Gravity.CENTER_HORIZONTAL:
+                drawLeft = getPaddingLeft()
+                        + ((width - getPaddingLeft() - getPaddingRight()) - drawWidth) / 2;
+                break;
+            case Gravity.RIGHT:
+                drawLeft = getWidth() - getPaddingRight() - drawWidth;
+                break;
+            default:
+                drawLeft = getPaddingLeft();
         }
 
         int vertRidges = (int) ((height - getPaddingTop() - getPaddingBottom() + ridgeGap)

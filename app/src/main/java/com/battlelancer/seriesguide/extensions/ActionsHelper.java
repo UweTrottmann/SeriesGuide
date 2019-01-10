@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.extensions;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -55,12 +54,7 @@ public class ActionsHelper {
 
                 final Intent viewIntent = action.getViewIntent();
                 if (viewIntent != null) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        viewIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-                    } else {
-                        //noinspection deprecation
-                        viewIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                    }
+                    viewIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
                     actionView.setOnClickListener(
                             v -> Utils.tryStartActivity(v.getContext(), viewIntent, true));
                 }

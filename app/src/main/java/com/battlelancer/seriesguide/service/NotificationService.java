@@ -259,10 +259,8 @@ public class NotificationService {
         if (am != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                am.setExact(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
             } else {
-                am.set(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
+                am.setExact(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
             }
         }
     }

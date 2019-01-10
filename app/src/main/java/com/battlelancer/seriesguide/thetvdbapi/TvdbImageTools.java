@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.thetvdbapi;
 
 import android.content.Context;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.widget.ImageView;
@@ -90,13 +89,7 @@ public class TvdbImageTools {
      */
     public static void loadShowPosterAlpha(Context context, ImageView imageView,
             String posterPath) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            imageView.setImageAlpha(30);
-        } else {
-            //noinspection deprecation
-            imageView.setAlpha(30);
-        }
-
+        imageView.setImageAlpha(30);
         loadShowPoster(context, imageView, posterPath);
     }
 

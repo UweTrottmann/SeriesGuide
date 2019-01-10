@@ -203,23 +203,17 @@ public class Utils {
     }
 
     /**
-     * Returns false if there is an active, but metered (pre-Jelly Bean: non-WiFi) connection and
+     * Returns false if there is an active, but metered connection and
      * the user did not approve it for large data downloads (e.g. images).
      */
-    public static boolean isAllowedLargeDataConnection(Context context) {
+    static boolean isAllowedLargeDataConnection(Context context) {
         boolean isConnected;
         boolean largeDataOverWifiOnly = UpdateSettings.isLargeDataOverWifiOnly(context);
 
         // check connection state
         if (largeDataOverWifiOnly) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                // better: only allow large data downloads over non-metered connections
-                isConnected = AndroidUtils.isUnmeteredNetworkConnected(context);
-            } else {
-                // only allow large data downloads over WiFi,
-                // assuming it is most likely to be not metered
-                isConnected = AndroidUtils.isWifiConnected(context);
-            }
+            // only allow large data downloads over non-metered connections
+            isConnected = AndroidUtils.isUnmeteredNetworkConnected(context);
         } else {
             isConnected = AndroidUtils.isNetworkConnected(context);
         }
