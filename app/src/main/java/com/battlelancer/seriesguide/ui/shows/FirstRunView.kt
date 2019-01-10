@@ -15,6 +15,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.ViewTools
 import org.greenrobot.eventbus.EventBus
 
 class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
@@ -82,6 +83,7 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
             EventBus.getDefault()
                 .post(ButtonEvent(ButtonType.RESTORE_BACKUP))
         }
+        ViewTools.setVectorIcon(context.theme, buttonDismiss, R.drawable.ic_clear_24dp)
         buttonDismiss.setOnClickListener {
             setFirstRunDismissed()
             EventBus.getDefault().post(ButtonEvent(ButtonType.DISMISS))
