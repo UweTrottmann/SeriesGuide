@@ -3,14 +3,12 @@ package com.battlelancer.seriesguide.util;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.annotation.AttrRes;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -24,34 +22,6 @@ import com.battlelancer.seriesguide.R;
 public class ViewTools {
 
     private ViewTools() {
-    }
-
-    /**
-     * Sets the Drawables (if any) to appear to the start of, above, to the end of, and below the
-     * text.  Use 0 if you do not want a Drawable there. The Drawables' bounds will be set to their
-     * intrinsic bounds.
-     */
-    public static void setCompoundDrawablesRelativeWithIntrinsicBounds(TextView textView,
-            @DrawableRes int left, @DrawableRes int top, @DrawableRes int right,
-            @DrawableRes int bottom) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            textView.setCompoundDrawablesRelativeWithIntrinsicBounds(left, top, right, bottom);
-            return;
-        }
-
-        Context context = textView.getContext();
-        setCompoundDrawablesRelativeWithIntrinsicBounds(
-                textView,
-                left != 0 ? ContextCompat.getDrawable(context, left) : null,
-                top != 0 ? ContextCompat.getDrawable(context, top) : null,
-                right != 0 ? ContextCompat.getDrawable(context, right) : null,
-                bottom != 0 ? ContextCompat.getDrawable(context, bottom) : null);
-    }
-
-    public static void setVectorAttrTop(Resources.Theme theme, TextView textView,
-            @AttrRes int vectorAttr) {
-        int vectorRes = Utils.resolveAttributeToResourceId(theme, vectorAttr);
-        setVectorDrawableTop(theme, textView, vectorRes);
     }
 
     public static void setVectorDrawableTop(Resources.Theme theme, TextView textView,
