@@ -446,8 +446,6 @@
     <string name="pref_notifications_hidden">Ignore hidden shows</string>
     <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
     <string name="pref_notification_channel_errors">Pogreške</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (mali)</string>
     <!-- List Widget -->
     <string name="hide_watched">Sakrij pogledane epizode</string>
     <string name="pref_widget_opacity">Pozadina widgeta</string>
