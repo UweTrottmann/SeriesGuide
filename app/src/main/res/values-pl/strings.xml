@@ -343,7 +343,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Podstawowe</string>
     <string name="prefs_category_sharing">Usługi</string>
-    <string name="prefs_category_advanced">Zaawansowane</string>
     <string name="prefs_category_about">O programie</string>
     <string name="pref_onlyfuture">Bez wyemitowanych</string>
     <string name="pref_onlyfuturesummary">Nigdy nie wyświetlaj wyemitowanych odcinków</string>
@@ -422,7 +421,6 @@
     <string name="pref_offsetsummary">Przesuń czas emisji o %d godzin</string>
     <string name="clear_cache">Usuń bufor obrazów</string>
     <string name="clear_cache_summary">Usuwa wszystkie buforowane obrazy z urządzenia</string>
-    <string name="pref_ganalyticssummary">Wysyła anonimowe statystyki użytkowania do usług Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Uwzględnij opisy, szczegóły, oceny</string>
     <string name="backup_failed_file_access">Nie można utworzyć kopii zapasowej. Nie można odnaleźć lub uzyskać dostępu do pliku kopii.</string>
@@ -445,7 +443,6 @@
     <string name="backup_use_default_files">Użyj domyślnych plików kopii zapasowej</string>
     <!-- Welcome dialog -->
     <string name="get_started">Wprowadzenie</string>
-    <string name="welcome_setuplanguage">Wybierz język</string>
     <string name="dismiss">Zamknij</string>
     <!-- Notifications -->
     <string name="upcoming_show">Nadchodzi odcinek %s</string>

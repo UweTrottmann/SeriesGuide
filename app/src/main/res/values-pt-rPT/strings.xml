@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Básico</string>
     <string name="prefs_category_sharing">Serviços</string>
-    <string name="prefs_category_advanced">Avançado</string>
     <string name="prefs_category_about">Sobre</string>
     <string name="pref_onlyfuture">Nenhum episódio em exibição</string>
     <string name="pref_onlyfuturesummary">Não mostrar episódios que já tenham estreado</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Acertar o fuso horário da exibição por %d horas</string>
     <string name="clear_cache">Apagar imagens da Cache</string>
     <string name="clear_cache_summary">Remove todas as imagens em cache do teu dispositivo</string>
-    <string name="pref_ganalyticssummary">Enviar estatísticas de uso anónimas para um serviço da Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
     <string name="backup_failed_file_access">Cópia de segurança interrompida. Uma cópia de segurança não pôde ser encontrada ou acedida.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Usar ficheiros de cópias de segurança originais</string>
     <!-- Welcome dialog -->
     <string name="get_started">Não deixes para amanhã!</string>
-    <string name="welcome_setuplanguage">Escolhe o idioma</string>
     <string name="dismiss">Dispensar</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s brevemente</string>

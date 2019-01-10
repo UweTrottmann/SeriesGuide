@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">அடிப்படைகள்</string>
     <string name="prefs_category_sharing">சேவைகள்</string>
-    <string name="prefs_category_advanced">மேம்பட்ட</string>
     <string name="prefs_category_about">பற்றி</string>
     <string name="pref_onlyfuture">எந்த aired episodes</string>
     <string name="pref_onlyfuturesummary">ஒருபோதும் காட்சி ஏற்கனவே வெளியான episodes</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">%d மணிநேரத்தில் ஏர் முறை சரியீடு</string>
     <string name="clear_cache">தெளிவான உருவம் இடைமாற்றுகள்</string>
     <string name="clear_cache_summary">உங்கள் சாதனத்தில் இருந்து அனைத்து தேக்கக படிமங்களை அகற்று</string>
-    <string name="pref_ganalyticssummary">Google சேவைக்கு பெயரிலா பயன்பாட்டு புள்ளிவிவரம் அனுப்பு</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
     <string name="backup_failed_file_access">மறுபிரதி எடு முடியாது. மறுபிரதி கோப்பு அல்ல கண்டறியப்பட்ட அல்லது இயலும் அணுக.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">மறுபிரதி கோப்புகளை இயல்புநிலை பயன்படுத்து</string>
     <!-- Welcome dialog -->
     <string name="get_started">தொடங்குதல்</string>
-    <string name="welcome_setuplanguage">மொழி தேர்வு</string>
     <string name="dismiss">நீக்கு</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s வந்து</string>

@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Base</string>
     <string name="prefs_category_sharing">Servizi</string>
-    <string name="prefs_category_advanced">Avanzate</string>
     <string name="prefs_category_about">Info su</string>
     <string name="pref_onlyfuture">Nessun episodio in onda</string>
     <string name="pref_onlyfuturesummary">Non mostrare gli episodi già trasmessi</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Compensazione della messa onda di %d ore</string>
     <string name="clear_cache">Rimuovi le immagini nella cache</string>
     <string name="clear_cache_summary">Rimuovi tutte le immagini memorizzate nella cache dal tuo dispositivo</string>
-    <string name="pref_ganalyticssummary">Invia statistiche anonime sull\'utilizzo a un servizio Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descrizioni, dettagli e valutazioni</string>
     <string name="backup_failed_file_access">Impossibile effettuare il backup. Non è stato possibile trovare o accedere a un file di backup.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Utilizza i file di backup predefiniti</string>
     <!-- Welcome dialog -->
     <string name="get_started">Inizia qui</string>
-    <string name="welcome_setuplanguage">Scegli la lingua</string>
     <string name="dismiss">Cancella</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s sta per essere trasmesso</string>

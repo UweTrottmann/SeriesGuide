@@ -319,7 +319,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">基本資料</string>
     <string name="prefs_category_sharing">服務</string>
-    <string name="prefs_category_advanced">進階</string>
     <string name="prefs_category_about">關於本軟體</string>
     <string name="pref_onlyfuture">無已播出集數</string>
     <string name="pref_onlyfuturesummary">不顯示已經播出劇集</string>
@@ -389,7 +388,6 @@
     <string name="pref_offsetsummary">%d 小時的時差</string>
     <string name="clear_cache">清除圖片暫存檔</string>
     <string name="clear_cache_summary">從您的設備中刪除所有暫存的圖片</string>
-    <string name="pref_ganalyticssummary">向Google服務寄送匿名的使用資料統計</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
     <string name="backup_failed_file_access">無法備份。找不到或無法存取備份檔案。</string>
@@ -412,7 +410,6 @@
     <string name="backup_use_default_files">使用預設備份檔案</string>
     <!-- Welcome dialog -->
     <string name="get_started">開始</string>
-    <string name="welcome_setuplanguage">選擇語言</string>
     <string name="dismiss">解除</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s 就要來了</string>

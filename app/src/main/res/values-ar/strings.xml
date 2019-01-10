@@ -359,7 +359,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">أساسي</string>
     <string name="prefs_category_sharing">خدمات</string>
-    <string name="prefs_category_advanced">متقدم</string>
     <string name="prefs_category_about">حول</string>
     <string name="pref_onlyfuture">عدم إظهار الحلقات التي تم عرضها</string>
     <string name="pref_onlyfuturesummary">عدم عرض الحلقات التي تم بثها مسبقاً</string>
@@ -444,7 +443,6 @@
     <string name="pref_offsetsummary">بدء وقت العرض قبل %d ساعات</string>
     <string name="clear_cache">تنظيف ذاكرة التخزين المؤقتة للصور</string>
     <string name="clear_cache_summary">إزالة جميع الصور المخزنة مؤقتاً من الجهاز</string>
-    <string name="pref_ganalyticssummary">سيتم إرسال إحصاءات مجهولة الهوية لخدمة جوجل</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">يتضمن الأوصاف، و التفاصيل، و التقييمات</string>
     <string name="backup_failed_file_access">لايمكن عمل نسخ إحتياطي، ملف النسخة الإحتياطي لايمكن إجاده أو لا يمكن الوصل إليه.</string>
@@ -467,7 +465,6 @@
     <string name="backup_use_default_files">إستخدم النسخ الإحتياطي الإفتراضي</string>
     <!-- Welcome dialog -->
     <string name="get_started">بدء</string>
-    <string name="welcome_setuplanguage">اختر اللغة</string>
     <string name="dismiss">إبعاد</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s قادم</string>
