@@ -234,7 +234,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                             buttonTriggerJobProcessor
                     ),
                     new TimberModule(),
-                    new DeviceModule(this)
+                    new DeviceModule()
             );
         }
     }
