@@ -59,7 +59,6 @@
 
         <!-- Drawables -->
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
-        <item name="drawableTraktHeart">@drawable/trakt_heart</item>
 
     </style>
 
@@ -113,8 +112,6 @@
 
         <!-- Drawables -->
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
-
-        <item name="drawableTraktHeart">@drawable/trakt_heart</item>
 
     </style>
 
@@ -179,7 +176,6 @@
 
         <!-- Drawables -->
         <item name="drawableBackgroundGradient">@drawable/background_gradient_light</item>
-        <item name="drawableTraktHeart">@drawable/trakt_heart_inverse</item>
 
     </style>
 
