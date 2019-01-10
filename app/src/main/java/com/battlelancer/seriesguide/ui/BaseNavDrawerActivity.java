@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.ui;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktOAuthSettings;
 import com.battlelancer.seriesguide.ui.stats.StatsActivity;
+import com.battlelancer.seriesguide.util.DrawableTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -300,16 +301,16 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 } else {
                     CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
                     builder.setShowTitle(true);
-                    //noinspection deprecation
                     builder.setToolbarColor(getResources().getColor(
                             Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary)));
-                    builder.setActionButton(
-                            BitmapFactory.decodeResource(getResources(),
-                                    R.drawable.ic_action_checkin),
+                    Bitmap icon = DrawableTools
+                            .getBitmapFromVectorDrawable(this, R.drawable.ic_checkin_black_24dp);
+                    builder.setActionButton(icon,
                             getString(R.string.feedback),
                             PendingIntent.getBroadcast(getApplicationContext(), 0,
                                     new Intent(getApplicationContext(),
-                                            FeedbackBroadcastReceiver.class), 0));
+                                            FeedbackBroadcastReceiver.class), 0),
+                            true);
                     CustomTabsIntent customTabsIntent = builder.build();
                     customTabsIntent.intent.setPackage(packageName);
                     customTabsIntent.intent.setData(Uri.parse(getString(R.string.help_url)));
