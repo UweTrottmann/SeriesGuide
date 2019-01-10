@@ -319,7 +319,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">基本</string>
     <string name="prefs_category_sharing">サービス</string>
-    <string name="prefs_category_advanced">高度</string>
     <string name="prefs_category_about">について</string>
     <string name="pref_onlyfuture">未放映のエピソード</string>
     <string name="pref_onlyfuturesummary">すでに放映されたエピソードを表示しません</string>
@@ -389,7 +388,6 @@
     <string name="pref_offsetsummary">放映時間を %d 時間オフセットします</string>
     <string name="clear_cache">画像キャッシュをクリア</string>
     <string name="clear_cache_summary">お使いのデバイスからキャッシュされた画像をすべて削除します</string>
-    <string name="pref_ganalyticssummary">匿名の使用状況に関する統計情報をGoogle サービスに送信します</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">説明、詳細、評価を含める</string>
     <string name="backup_failed_file_access">バックアップできません。バックアップ ファイルが見つからないか、アクセスできません。</string>
@@ -412,7 +410,6 @@
     <string name="backup_use_default_files">デフォルトのバックアップ ファイルを使用する</string>
     <!-- Welcome dialog -->
     <string name="get_started">始めましょう</string>
-    <string name="welcome_setuplanguage">言語を選択</string>
     <string name="dismiss">中止</string>
     <!-- Notifications -->
     <string name="upcoming_show">もうすぐ %s が始まります</string>

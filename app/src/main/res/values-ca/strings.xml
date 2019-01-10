@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Bàsics</string>
     <string name="prefs_category_sharing">Serveis</string>
-    <string name="prefs_category_advanced">Avançat</string>
     <string name="prefs_category_about">Quant a</string>
     <string name="pref_onlyfuture">Amaga episodis emesos</string>
     <string name="pref_onlyfuturesummary">No mostris cap episodi que ja s\'hagi emès</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Les hores d\'estrena tenen un desfasament de %d hores</string>
     <string name="clear_cache">Buida la memòria cau d\'imatges</string>
     <string name="clear_cache_summary">Elimina totes les imatges que SeriesGuide hagi baixat i encara siguin al dispositiu</string>
-    <string name="pref_ganalyticssummary">Enviar estadístiques d\'ús anònimes un servei de Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Incloure descripcions, detalls, valoracions</string>
     <string name="backup_failed_file_access">No es pot fer còpia de seguretat. No es pot trobar o accedir un arxiu de còpia de seguretat.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Utilitzar arxius de còpia de seguretat per defecte</string>
     <!-- Welcome dialog -->
     <string name="get_started">Inici</string>
-    <string name="welcome_setuplanguage">Trieu la llengua</string>
     <string name="dismiss">Omet</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s és a punt de sortir</string>

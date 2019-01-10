@@ -335,7 +335,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Osnovno</string>
     <string name="prefs_category_sharing">Usluge</string>
-    <string name="prefs_category_advanced">Napredno</string>
     <string name="prefs_category_about">O aplikaciji</string>
     <string name="pref_onlyfuture">Nema emitiranih epizoda</string>
     <string name="pref_onlyfuturesummary">Nikada ne prikazuj već pogledane epizode</string>
@@ -411,7 +410,6 @@
     <string name="pref_offsetsummary">Razlika u emitiranju %d sati</string>
     <string name="clear_cache">Očisti predmemoriju slika</string>
     <string name="clear_cache_summary">Uklonite sve slike iz predmemorije vašeg uređaja</string>
-    <string name="pref_ganalyticssummary">Pošalji anonimne statistike korištenja na Google usluge</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Uključi opise, detalje i ocjene</string>
     <string name="backup_failed_file_access">Nije moguće stvoriti sigur. kopiju. Datoteka sigur. kopije nije pronađena ili je nedostupna.</string>
@@ -434,7 +432,6 @@
     <string name="backup_use_default_files">Koristi zadane sigurnosne kopije</string>
     <!-- Welcome dialog -->
     <string name="get_started">Prvi koraci</string>
-    <string name="welcome_setuplanguage">Odaberi jezik</string>
     <string name="dismiss">Odbaci</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s će se emitirati</string>

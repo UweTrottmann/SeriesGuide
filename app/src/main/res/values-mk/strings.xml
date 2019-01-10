@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Основи</string>
     <string name="prefs_category_sharing">Услуги</string>
-    <string name="prefs_category_advanced">Напредно</string>
     <string name="prefs_category_about">За</string>
     <string name="pref_onlyfuture">Не емитувани епизоди</string>
     <string name="pref_onlyfuturesummary">Никогаш не прикажувај серии кој веќе се прикажуваат во моментот</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Опсег на временски %d саати</string>
     <string name="clear_cache">Избриши кеширани слики</string>
     <string name="clear_cache_summary">Избриши ги сите кеширани слики од вашиот уред</string>
-    <string name="pref_ganalyticssummary">Пратете анонимни статистики за користење на Google service</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
     <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Кoристи предефинирaни бекaп фaјлoви</string>
     <!-- Welcome dialog -->
     <string name="get_started">Почни</string>
-    <string name="welcome_setuplanguage">Избери јазик</string>
     <string name="dismiss">Откажи</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s наскоро доаѓа</string>

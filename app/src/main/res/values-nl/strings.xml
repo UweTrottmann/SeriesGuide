@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Basis</string>
     <string name="prefs_category_sharing">Services</string>
-    <string name="prefs_category_advanced">Geavanceerd</string>
     <string name="prefs_category_about">Over</string>
     <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
     <string name="pref_onlyfuturesummary">Laat nooit al uitgezonden afleveringen zien</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Pas uitzendtijd aan met %d uren</string>
     <string name="clear_cache">Afbeeldingenbuffer wissen</string>
     <string name="clear_cache_summary">Alle gebufferde afbeeldingen van het apparaat verwijderen</string>
-    <string name="pref_ganalyticssummary">Anonieme gebruiksstatistieken verzenden naar een Google-dienst</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Inclusief beschrijvingen, details en beoordelingen</string>
     <string name="backup_failed_file_access">Kan geen back-up maken. Een back-upbestand kon niet gevonden of geopend worden.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Standaardbestanden voor back-up gebruiken</string>
     <!-- Welcome dialog -->
     <string name="get_started">Aan de slag</string>
-    <string name="welcome_setuplanguage">Selecteer een taal</string>
     <string name="dismiss">Afwijzen</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s verschijnt binnenkort</string>

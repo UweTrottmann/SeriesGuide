@@ -319,7 +319,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">기본</string>
     <string name="prefs_category_sharing">서비스</string>
-    <string name="prefs_category_advanced">고급</string>
     <string name="prefs_category_about">정보</string>
     <string name="pref_onlyfuture">방영된 에피소드 보이지 않기</string>
     <string name="pref_onlyfuturesummary">방영된 에피소드를 목록에 표시하지 않습니다</string>
@@ -389,7 +388,6 @@
     <string name="pref_offsetsummary">방영 시간을 %d시간 시차 변경하여 나타냅니다</string>
     <string name="clear_cache">이미지 캐쉬 삭제</string>
     <string name="clear_cache_summary">디바이스에 있는 모든 캐쉬된 이미지를 제거합니다</string>
-    <string name="pref_ganalyticssummary">익명의 사용 데이터를 Google 서비스에 전송합니다.</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">설명, 세부 정보, 평가 내용 등이 포함됩니다.</string>
     <string name="backup_failed_file_access">백업 실패. 백업 파일이 없거나 접근할 수 없습니다.</string>
@@ -412,7 +410,6 @@
     <string name="backup_use_default_files">기본 백업 파일 사용</string>
     <!-- Welcome dialog -->
     <string name="get_started">시작하기</string>
-    <string name="welcome_setuplanguage">언어 선택</string>
     <string name="dismiss">취소</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s가 방영 예정입니다</string>

@@ -343,7 +343,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">בסיסי</string>
     <string name="prefs_category_sharing">שירותים</string>
-    <string name="prefs_category_advanced">מתקדם</string>
     <string name="prefs_category_about">אודות</string>
     <string name="pref_onlyfuture">אין פרקים ששודרו</string>
     <string name="pref_onlyfuturesummary">אל תציג פרקים ששודרו</string>
@@ -422,7 +421,6 @@
     <string name="pref_offsetsummary">הסט זמני שידור ב- %d שעות</string>
     <string name="clear_cache">נקה מטמוני תמונות</string>
     <string name="clear_cache_summary">הסר את כל מטמוני התמונות ממכשירך</string>
-    <string name="pref_ganalyticssummary">שלח סטטיסטיקת שימוש אנונימית לשירות גוגל</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">כוללים תיאורים, פרטים, דירוגים</string>
     <string name="backup_failed_file_access">לא ניתן לגבות. קובץ גיבוי לא נמצא או נגיש.</string>
@@ -445,7 +443,6 @@
     <string name="backup_use_default_files">השתמש בברירת מחדל של קבצי גיבוי</string>
     <!-- Welcome dialog -->
     <string name="get_started">התחל</string>
-    <string name="welcome_setuplanguage">בחר שפה</string>
     <string name="dismiss">סגור</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s מתקרב</string>

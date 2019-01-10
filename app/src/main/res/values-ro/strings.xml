@@ -335,7 +335,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Elemente de bază</string>
     <string name="prefs_category_sharing">Servicii</string>
-    <string name="prefs_category_advanced">Avansate</string>
     <string name="prefs_category_about">Despre</string>
     <string name="pref_onlyfuture">Nici un episod difuzat</string>
     <string name="pref_onlyfuturesummary">Nu afișați episoadele deja difuzate</string>
@@ -411,7 +410,6 @@
     <string name="pref_offsetsummary">Compensare timp de difuzare cu %d ore</string>
     <string name="clear_cache">Șterge imaginile din cache</string>
     <string name="clear_cache_summary">Șterge toate imaginile din cache de pe acest dispozitiv</string>
-    <string name="pref_ganalyticssummary">Trimite statistici anonime către serviciul Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descrieri, detalii, note</string>
     <string name="backup_failed_file_access">Backup-ul nu poate fi efectuat. Un fișier de backup nu poate fi localizat sau accesat.</string>
@@ -434,7 +432,6 @@
     <string name="backup_use_default_files">Folosește fișierele de backup implicite</string>
     <!-- Welcome dialog -->
     <string name="get_started">Cum să începeți</string>
-    <string name="welcome_setuplanguage">Alegeți limba</string>
     <string name="dismiss">Respingeți</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s urmează</string>
