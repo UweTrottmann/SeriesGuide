@@ -452,7 +452,8 @@ public class NotificationService {
                         REQUEST_CODE_ACTION_CHECKIN,
                         checkInActionIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                 // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
-                nb.addAction(R.drawable.ic_checkin_black_24dp, context.getString(R.string.checkin),
+                // note: Wear and Galaxy Watch devices do typically not support vector icons
+                nb.addAction(R.drawable.ic_action_checkin, context.getString(R.string.checkin),
                         checkInIntent);
 
                 // Action button to set watched
@@ -465,7 +466,8 @@ public class NotificationService {
                         REQUEST_CODE_ACTION_SET_WATCHED,
                         setWatchedIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                 // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
-                nb.addAction(R.drawable.ic_watch_black_24dp, context.getString(R.string.action_watched),
+                // note: Wear and Galaxy Watch devices do typically not support vector icons
+                nb.addAction(R.drawable.ic_action_tick, context.getString(R.string.action_watched),
                         setWatchedPendingIntent);
 
                 nb.setNumber(1);
