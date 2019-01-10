@@ -49,5 +49,9 @@
 
     <color name="sg_ripple_material_dark">#33ffffff</color>
     <color name="sg_ripple_material_light">#1f000000</color>
+    <color name="sg_primary_text_default_material_dark">#ffffffff</color>
+    <color name="sg_primary_text_default_material_light">#de000000</color>
+    <color name="sg_primary_text_disabled_material_dark">#4Dffffff</color>
+    <color name="sg_primary_text_disabled_material_light">#39000000</color>
 
 </resources>
