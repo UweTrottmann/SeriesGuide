@@ -347,7 +347,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
     }
 
     public void setDrawerIndicatorEnabled() {
-        actionBarToolbar.setNavigationIcon(R.drawable.ic_drawer);
+        actionBarToolbar.setNavigationIcon(R.drawable.ic_menu_24dp);
         actionBarToolbar.setNavigationContentDescription(R.string.drawer_open);
     }
 
