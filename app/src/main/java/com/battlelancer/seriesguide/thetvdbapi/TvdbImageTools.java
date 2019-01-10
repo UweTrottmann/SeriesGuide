@@ -106,7 +106,7 @@ public class TvdbImageTools {
         ServiceUtils.loadWithPicasso(context, smallSizeUrl(posterPath))
                 .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                 .centerCrop()
-                .error(R.drawable.ic_image_missing)
+                .error(R.drawable.ic_photo_gray_24dp)
                 .into(imageView);
     }
 
@@ -114,7 +114,7 @@ public class TvdbImageTools {
         ServiceUtils.loadWithPicasso(context, url)
                 .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                 .centerCrop()
-                .error(R.drawable.ic_image_missing)
+                .error(R.drawable.ic_photo_gray_24dp)
                 .into(imageView);
     }
 
@@ -133,7 +133,7 @@ public class TvdbImageTools {
         ServiceUtils.loadWithPicasso(context, posterUrl)
                 .resizeDimen(R.dimen.show_poster_width_default, R.dimen.show_poster_height_default)
                 .centerCrop()
-                .error(R.drawable.ic_image_missing)
+                .error(R.drawable.ic_photo_gray_24dp)
                 .into(imageView);
     }
 
@@ -149,7 +149,7 @@ public class TvdbImageTools {
         ServiceUtils.loadWithPicasso(context, smallSizeUrl(posterPath))
                 .fit()
                 .centerCrop()
-                .error(R.drawable.ic_image_missing)
+                .error(R.drawable.ic_photo_gray_24dp)
                 .into(imageView);
     }
 

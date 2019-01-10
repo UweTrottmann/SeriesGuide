@@ -249,7 +249,7 @@ public class ListWidgetService extends RemoteViewsService {
             if (poster != null) {
                 rv.setImageViewBitmap(R.id.widgetPoster, poster);
             } else {
-                rv.setImageViewResource(R.id.widgetPoster, R.drawable.ic_image_missing);
+                rv.setImageViewResource(R.id.widgetPoster, R.drawable.ic_photo_gray_24dp);
             }
         }
 
