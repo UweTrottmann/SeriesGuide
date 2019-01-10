@@ -7,15 +7,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
+import com.uwetrottmann.androidutils.CheatSheet
 
 class ShowsViewHolder(
     itemView: View,
-    onItemClickListener: ShowsAdapter.OnItemClickListener,
-    private val drawableStar: VectorDrawableCompat,
-    private val drawableStarZero: VectorDrawableCompat
+    onItemClickListener: ShowsAdapter.OnItemClickListener
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val name: TextView = itemView.findViewById(R.id.seriesname)
@@ -25,9 +23,10 @@ class ShowsViewHolder(
     private val remainingCount: TextView = itemView.findViewById(R.id.textViewShowsRemaining)
     private val poster: ImageView = itemView.findViewById(R.id.showposter)
     private val favorited: ImageView = itemView.findViewById(R.id.favoritedLabel)
+    private val setWatchedButton: ImageView = itemView.findViewById(R.id.imageViewShowsSetWatched)
     private val contextMenu: ImageView = itemView.findViewById(R.id.imageViewShowsContextMenu)
 
-    var showItem: ShowsAdapter.ShowItem? = null
+    private var showItem: ShowsAdapter.ShowItem? = null
 
     init {
         // item
@@ -36,13 +35,15 @@ class ShowsViewHolder(
                 onItemClickListener.onItemClick(view, it.showTvdbId)
             }
         }
-        // favorite star
-        favorited.setOnClickListener { _ ->
+        // set watched button
+        CheatSheet.setup(setWatchedButton)
+        setWatchedButton.setOnClickListener { v ->
             showItem?.let {
-                onItemClickListener.onItemFavoriteClick(it.showTvdbId, !it.isFavorite)
+                onItemClickListener.onItemSetWatchedClick(it)
             }
         }
         // context menu
+        CheatSheet.setup(contextMenu)
         contextMenu.setOnClickListener { v ->
             showItem?.let {
                 onItemClickListener.onItemMenuClick(v, it)
@@ -61,10 +62,9 @@ class ShowsViewHolder(
         remainingCount.text = show.remainingCount
         remainingCount.visibility = if (show.remainingCount != null) View.VISIBLE else View.GONE
 
-        val isFavorite = showItem!!.isFavorite
-        favorited.setImageDrawable(if (isFavorite) drawableStar else drawableStarZero)
-        favorited.contentDescription =
-                context.getString(if (isFavorite) R.string.context_unfavorite else R.string.context_favorite)
+        favorited.visibility = if (show.isFavorite) View.VISIBLE else View.GONE
+
+        setWatchedButton.visibility = if (show.hasNextEpisode) View.VISIBLE else View.GONE
 
         // set poster
         TvdbImageTools.loadShowPosterResizeCrop(context, poster, show.posterPath)
@@ -74,12 +74,11 @@ class ShowsViewHolder(
 
         fun create(
             parent: ViewGroup,
-            onItemClickListener: ShowsAdapter.OnItemClickListener,
-            drawableStar: VectorDrawableCompat,
-            drawableStarZero: VectorDrawableCompat
+            onItemClickListener: ShowsAdapter.OnItemClickListener
         ): ShowsViewHolder {
-            val v = LayoutInflater.from(parent.context).inflate(R.layout.item_show, parent, false)
-            return ShowsViewHolder(v, onItemClickListener, drawableStar, drawableStarZero)
+            val v = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_show_list, parent, false)
+            return ShowsViewHolder(v, onItemClickListener)
         }
     }
 
