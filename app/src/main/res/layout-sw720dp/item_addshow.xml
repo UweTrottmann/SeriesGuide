@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:focusable="true"
-    android:foreground="?attr/selectableItemBackground">
+    android:foreground="?attr/selectableItemBackground"
+    tools:ignore="RtlHardcoded">
 
     <!-- Add FrameLayout parent so we can set a selectable foreground that works on pre-M. -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,9 +19,9 @@
             android:id="@+id/cardViewAddPoster"
             android:layout_width="@dimen/show_poster_width_large"
             android:layout_height="@dimen/show_poster_height_large"
-            android:layout_marginBottom="@dimen/grid_topbottom_padding"
             android:layout_marginLeft="@dimen/grid_leftright_padding"
             android:layout_marginTop="@dimen/grid_topbottom_padding"
+            android:layout_marginBottom="@dimen/grid_topbottom_padding"
             app:cardBackgroundColor="?attr/sgColorBackgroundCard"
             app:cardPreventCornerOverlap="false"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -37,6 +38,15 @@
 
         </androidx.cardview.widget.CardView>
 
+        <com.battlelancer.seriesguide.ui.search.AddIndicator
+            android:id="@+id/addIndicatorAddShow"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/buttonItemAddMore"
             android:layout_width="48dp"
@@ -44,20 +54,11 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/description_menu_overflow"
             android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_more_vert_black_20dp"
             app:tint="?attr/sgColorIcon"
             tools:ignore="MissingPrefix" />
-
-        <com.battlelancer.seriesguide.ui.search.AddIndicator
-            android:id="@+id/addIndicatorAddShow"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
 
         <TextView
             android:id="@+id/textViewAddTitle"
@@ -77,9 +78,9 @@
             android:id="@+id/textViewAddDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
             android:ellipsize="end"
             android:lines="3"
             android:textAppearance="@style/TextAppearance.Subhead"
