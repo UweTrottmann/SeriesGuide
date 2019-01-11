@@ -5,6 +5,21 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 47
+----------
+*(in development)*
+
+#### 47-beta1
+*(2019-01-11)*
+
+* 🔧 Show list: replace favorite button with set watched button. Display an indicator if a show is a favorite instead.
+* 🔧 Cloud: update and improve Google Sign-In.
+* 🔧 Tablets: move add show button on discover screen to top right to match placement of primary action in other places.
+* 🔧 Discover: remove trakt recommendations. They were never useful. Send in feedback if they are for you!
+* 🔨 Only remove movie from watchlist if it actually was on it. This avoids a confusing confirmation message.
+* 📝 Only support Android 5.0 (Lollipop) and newer.
+* 📝 Latest translations from crowdin.
+
 Version 46
 ----------
 *(2019-01-04)*
