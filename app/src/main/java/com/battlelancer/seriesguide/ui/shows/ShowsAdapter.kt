@@ -1,43 +1,30 @@
 package com.battlelancer.seriesguide.ui.shows
 
 import android.content.Context
-import android.content.res.Resources
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.model.SgShow
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.util.ViewTools
 
 class ShowsAdapter(
     private val context: Context,
-    drawableTheme: Resources.Theme,
     private val onItemClickListener: OnItemClickListener
 ) :
     ListAdapter<ShowsAdapter.ShowItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
-
-    private val drawableStar: VectorDrawableCompat = ViewTools.vectorIconActive(
-        context, drawableTheme,
-        R.drawable.ic_star_black_24dp
-    )
-    private val drawableStarZero: VectorDrawableCompat = ViewTools.vectorIconActive(
-        context, drawableTheme,
-        R.drawable.ic_star_border_black_24dp
-    )
 
     interface OnItemClickListener {
         fun onItemClick(anchor: View, showTvdbId: Int)
 
         fun onItemMenuClick(anchor: View, show: ShowItem)
 
-        fun onItemFavoriteClick(showTvdbId: Int, isFavorite: Boolean)
+        fun onItemSetWatchedClick(show: ShowItem)
     }
 
     var displayFirstRunHeader: Boolean = false
@@ -65,12 +52,7 @@ class ShowsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_FIRST_RUN -> FirstRunViewHolder.create(parent)
-            VIEW_TYPE_SHOW_ITEM -> ShowsViewHolder.create(
-                parent,
-                onItemClickListener,
-                drawableStar,
-                drawableStarZero
-            )
+            VIEW_TYPE_SHOW_ITEM -> ShowsViewHolder.create(parent, onItemClickListener)
             else -> throw IllegalArgumentException("Unknown view type $viewType")
         }
     }
@@ -100,6 +82,7 @@ class ShowsAdapter(
     data class ShowItem(
         val showTvdbId: Int,
         val episodeTvdbId: Int,
+        val hasNextEpisode: Boolean,
         val isFavorite: Boolean,
         val isHidden: Boolean,
         val name: String,
@@ -118,6 +101,7 @@ class ShowsAdapter(
                 return ShowItem(
                     0,
                     0,
+                    false,
                     false,
                     false,
                     "",
@@ -165,7 +149,8 @@ class ShowsAdapter(
                 val episodeTime: String?
                 val episode: String
                 val fieldValue = sgShow.nextText
-                if (TextUtils.isEmpty(fieldValue)) {
+                val hasNextEpisode = !TextUtils.isEmpty(fieldValue)
+                if (!hasNextEpisode) {
                     // display show status if there is no next episode
                     episodeTime = ShowTools.getStatus(context, sgShow.status?.toInt() ?: -1)
                     episode = ""
@@ -202,6 +187,7 @@ class ShowsAdapter(
                 return ShowItem(
                     sgShow.tvdbId,
                     episodeTvdbId,
+                    hasNextEpisode,
                     sgShow.favorite,
                     sgShow.hidden,
                     sgShow.title,

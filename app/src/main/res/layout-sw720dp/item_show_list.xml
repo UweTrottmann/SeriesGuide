@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clipToPadding="false"
+    android:focusable="true"
+    tools:ignore="RtlHardcoded">
+
+    <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="@dimen/show_poster_width_large"
+        android:layout_height="@dimen/show_poster_height_large"
+        android:layout_marginLeft="@dimen/grid_leftright_padding"
+        android:layout_marginTop="@dimen/grid_topbottom_padding"
+        android:layout_marginBottom="@dimen/grid_topbottom_padding"
+        app:cardBackgroundColor="?attr/sgColorBackgroundCard"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/showposter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            tools:src="?attr/sgColorShadow" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/favoritedLabel"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:contentDescription="@string/favorited"
+            app:srcCompat="@drawable/ic_star_edge_24px" />
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- 24dp regular icon, 48dp touch target -->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageViewShowsSetWatched"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/action_watched"
+        android:scaleType="centerInside"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_watch_black_24dp"
+        app:tint="?attr/sgColorIcon" />
+
+    <!-- 24dp dense icon, though 48dp touch target -->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageViewShowsContextMenu"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/description_menu_overflow"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/ic_more_vert_black_20dp"
+        app:tint="?attr/sgColorIcon"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/textViewShowsRemaining"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Body.Dim"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/cardView"
+        app:layout_constraintRight_toLeftOf="@+id/imageViewShowsContextMenu"
+        app:layout_constraintTop_toBottomOf="@+id/episodetime"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="42 remaining" />
+
+    <TextView
+        android:id="@+id/textViewShowsTimeAndNetwork"
+        style="@style/Widget.SeriesGuide.TextView.SingleLine"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="40dp"
+        android:ellipsize="start"
+        android:text="@string/norating"
+        android:textAppearance="@style/TextAppearance.Body.Dim"
+        app:layout_constraintLeft_toRightOf="@+id/cardView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="Deprecated"
+        tools:text="Showtime Network · Tue 08:00 PM" />
+
+    <!-- remaining count may be hidden, so to bottom of network -->
+    <TextView
+        android:id="@+id/seriesname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/grid_leftright_padding"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Subhead.Bold"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toRightOf="@+id/cardView"
+        app:layout_constraintRight_toLeftOf="@+id/imageViewShowsContextMenu"
+        app:layout_constraintTop_toBottomOf="@+id/textViewShowsTimeAndNetwork"
+        tools:text="Some Show Title" />
+
+    <TextView
+        android:id="@+id/TextViewShowListNextEpisode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/grid_leftright_padding"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Subhead"
+        app:layout_constraintLeft_toRightOf="@+id/cardView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seriesname"
+        tools:text="10x456 Some Very Cool Episode Title Therefore" />
+
+    <TextView
+        android:id="@+id/episodetime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/grid_leftright_padding"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Body.Dim"
+        app:layout_constraintLeft_toRightOf="@+id/cardView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewShowListNextEpisode"
+        tools:text="Jan 8, 2009 (Thur)" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
@@ -36,6 +35,7 @@ import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment;
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager;
 import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings.ShowsSortOrder;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -129,7 +129,7 @@ public class ShowsFragment extends Fragment {
         getSortAndFilterSettings();
 
         // prepare view adapter
-        adapter = new ShowsAdapter(getContext(), getActivity().getTheme(), onItemClickListener);
+        adapter = new ShowsAdapter(getContext(), onItemClickListener);
         if (!FirstRunView.hasSeenFirstRunFragment(getContext())) {
             adapter.setDisplayFirstRunHeader(true);
         }
@@ -495,9 +495,8 @@ public class ShowsFragment extends Fragment {
         }
 
         @Override
-        public void onItemFavoriteClick(int showTvdbId, boolean isFavorite) {
-            SgApp.getServicesComponent(getContext()).showTools()
-                    .storeIsFavorite(showTvdbId, isFavorite);
+        public void onItemSetWatchedClick(@NotNull ShowsAdapter.ShowItem show) {
+            DBUtils.markNextEpisode(getContext(), show.getShowTvdbId(), show.getEpisodeTvdbId());
         }
     };
 
