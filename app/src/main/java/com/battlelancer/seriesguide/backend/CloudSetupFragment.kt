@@ -200,22 +200,31 @@ class CloudSetupFragment : Fragment() {
      */
     private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
         var account: GoogleSignInAccount?
-        var errorCodeString = ""
+        var errorCodeString: String? = ""
         try {
             account = task.getResult(ApiException::class.java)
         } catch (e: ApiException) {
             account = null
             val statusCode = e.statusCode
             errorCodeString = GoogleSignInStatusCodes.getStatusCodeString(statusCode)
-            if (statusCode == GoogleSignInStatusCodes.RESOLUTION_REQUIRED
-                && e is ResolvableApiException) {
-                try {
-                    e.startResolutionForResult(activity, REQUEST_RESOLUTION)
-                } catch (ignored: IntentSender.SendIntentException) {
-                    // ignored
+            when {
+                statusCode == GoogleSignInStatusCodes.SIGN_IN_REQUIRED -> {
+                    // never signed in or no account on device, show no error message
+                    errorCodeString = null
                 }
-            } else {
-                hexagonTools.trackSignInFailure(ACTION_SIGN_IN, e)
+                statusCode == GoogleSignInStatusCodes.SIGN_IN_CANCELLED -> {
+                    // user chose not to sign in or add account, show no error message
+                    errorCodeString = null
+                }
+                statusCode == GoogleSignInStatusCodes.RESOLUTION_REQUIRED
+                        && e is ResolvableApiException -> {
+                    try {
+                        e.startResolutionForResult(activity, REQUEST_RESOLUTION)
+                    } catch (ignored: IntentSender.SendIntentException) {
+                        // ignored
+                    }
+                }
+                else -> hexagonTools.trackSignInFailure(ACTION_SIGN_IN, e)
             }
         } catch (e: Exception) {
             account = null
@@ -230,7 +239,9 @@ class CloudSetupFragment : Fragment() {
         } else {
             signInAccount = null
             hexagonTools.setDisabled()
-            showSnackbar(getString(R.string.hexagon_signin_fail_format, errorCodeString))
+            errorCodeString?.let {
+                showSnackbar(getString(R.string.hexagon_signin_fail_format, it))
+            }
         }
 
         setProgressVisible(false)
