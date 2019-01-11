@@ -268,7 +268,7 @@
     <string name="hexagon_remove_account_confirmation">删除帐户会同时删除您储存的所有数据，包括在线备份的节目和电影。一旦您在此设备上完成删除，请记得从其它已同步设备上删除相同的 SeriesGuide Cloud 帐户。</string>
     <string name="hexagon_api_queued">正在同步 SeriesGuide Cloud…</string>
     <string name="hexagon_signed_out">已登出 SeriesGuide Cloud</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Google 登录错误（%s）</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">正在与 trakt 同步…</string>
     <string name="checkin_success_trakt">已在 trakt 上为 %s 签到。</string>

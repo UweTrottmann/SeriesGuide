@@ -289,7 +289,7 @@
     <string name="hexagon_remove_account_confirmation">Odstránenie účtu vymaže všetky seriály a filmy zo SeriesGuide Cloudu. Uistite sa, že ste ho odstránili aj z iných pripojených zariadení.</string>
     <string name="hexagon_api_queued">Odosielanie do SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Ste odhlásený zo SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Chyba pri prihlasovaní pomocou Google (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Odosiela sa na trakt.</string>
     <string name="checkin_success_trakt">Práve pozeráte %s na trakt.</string>
