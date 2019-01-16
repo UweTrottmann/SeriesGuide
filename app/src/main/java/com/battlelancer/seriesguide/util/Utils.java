@@ -38,6 +38,7 @@ import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
+import java.io.InterruptedIOException;
 import java.net.UnknownHostException;
 import timber.log.Timber;
 
@@ -190,6 +191,9 @@ public class Utils {
 
         if (throwable.getCause() instanceof UnknownHostException) {
             return; // do not track, mostly devices loosing connection
+        }
+        if (throwable.getCause() instanceof InterruptedIOException) {
+            return; // do not track, mostly timeouts
         }
 
         CrashlyticsCore.getInstance().setString("action", throwable.getAction());

@@ -11,7 +11,7 @@
     <string name="help">مساعدة</string>
     <string name="help_and_feedback">مساعدة واقتراحات</string>
     <string name="drawer_open">فتح قائمة التنقل</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide لن يتحصل على المزيد من التحديثات على نسخة الأندرويد الحالية.</string>
     <!-- Media items -->
     <string name="show">العرض</string>
     <string name="episode">الحلقة</string>
@@ -32,14 +32,14 @@
     <string name="discard">تجاهل</string>
     <string name="save_selection">حفظ التحديد</string>
     <string name="action_display_all">عرض الكل</string>
-    <string name="web_search">البحث في المواقع</string>
+    <string name="web_search">البحث في الانترنت</string>
     <string name="add_to_homescreen">إضافة إلى الشاشة الرئيسية</string>
     <string name="action_open">افتح</string>
-    <string name="sync_manually">قم بالمزامنة يدويا</string>
-    <string name="sync_and_update">المزامنة والتحديث</string>
-    <string name="sync_and_download_all">المزامنة وتحميل كل البيانات</string>
-    <string name="action_turn_off">إغلاق</string>
-    <string name="action_stream">بث او شراء</string>
+    <string name="sync_manually">قم بالمزامنة يدوياً</string>
+    <string name="sync_and_update">المزامنة &amp; والتحديث</string>
+    <string name="sync_and_download_all">المزامنة &amp; وتحميل كل البيانات</string>
+    <string name="action_turn_off">إيقاف تشغيل</string>
+    <string name="action_stream">بث أو شراء</string>
     <!-- Search -->
     <string name="clear_search_history">إزالة تاريخ البحث</string>
     <string name="search_hint">البحث عن الحلقات</string>
@@ -53,9 +53,9 @@
     <string name="people_empty">لا أحد هنا ؟! قم باللمس من أجل المحاولة مرة أخرى.</string>
     <string name="database_error">لا يمكن تعديل البيانات.</string>
     <string name="reinstall_info">حاول أخد نسخة احتياطية، اعادة تثبيت البرنامج ومن ثم استعادة البيانات</string>
-    <string name="api_error_generic">لا يمكن الاتصال ب %s. الرجاء المحاولة لاحقا.</string>
+    <string name="api_error_generic">لا يمكن الاتصال بـ %s. الرجاء المحاولة لاحقا.</string>
     <string name="api_failed">فشل: %s</string>
-    <string name="copy_to_clipboard">نُسِخَ إلى الحافظة</string>
+    <string name="copy_to_clipboard">تم النسخ إلى الحافظة</string>
     <!-- Sharing -->
     <string name="share">مشاركة</string>
     <string name="share_show">مشاركة المسلسل</string>
@@ -77,26 +77,26 @@
         <item quantity="zero">رد %d</item>
         <item quantity="two">%d ردود</item>
         <item quantity="few">%d ردود</item>
-        <item quantity="many">%d ردود</item>
-        <item quantity="other">%d ردود</item>
+        <item quantity="many">%d رد</item>
+        <item quantity="other">%d رد</item>
     </plurals>
     <!-- Metadata -->
-    <string name="episode_number_disk">دي في دي</string>
+    <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">تاريخ الإصدار</string>
     <string name="episode_firstaired_unknown">تاريخ الإصدار غير معروف</string>
-    <string name="episode_dvdnumber">حلقة دي في دي</string>
+    <string name="episode_dvdnumber">حلقة DVD</string>
     <string name="original_release">الإصدار الأصلي</string>
     <string name="show_genres">الأنواع</string>
     <string name="show_contentrating">تقييم المحتوى</string>
     <string name="show_release_times">أوقات العرض</string>
-    <string name="episode_directors">الإدارة</string>
-    <string name="episode_gueststars">ضيف الحلقة</string>
-    <string name="episode_writers">الكُتاب</string>
+    <string name="episode_directors">إخراج</string>
+    <string name="episode_gueststars">ضيوف الحلقة</string>
+    <string name="episode_writers">تأليف</string>
     <string name="show_isalive">مستمر</string>
     <string name="show_isnotalive">انتهى</string>
-    <string name="no_translation">لا يوجد وصف باللغة %1$s على موقع %2$s.</string>
+    <string name="no_translation">لا يوجد وصف باللغة %1$s متاحة على موقع %2$s.</string>
     <string name="no_translation_title">غير مترجمة</string>
-    <string name="no_spoilers">يتم إخفاء بعض التفاصيل لمنع المفسدين. لإيقاف هذا الانتقال إلى إعدادات.</string>
+    <string name="no_spoilers">يتم إخفاء بعض التفاصيل لمنع الحرق. لإيقاف هذا الانتقال إلى إعدادات.</string>
     <string name="format_source">المصدر: %s</string>
     <string name="format_last_edited">آخر تعديل: %s</string>
     <!-- Date and Time -->
@@ -105,36 +105,36 @@
     <string name="daily">يومي</string>
     <string name="runtime_minutes">%s دقيقة</string>
     <!-- Flagging -->
-    <string name="mark_all">مشاهدة الكل</string>
-    <string name="unmark_all">لم يُشاهد شئ</string>
+    <string name="mark_all">تعيين الجميع بمشاهد</string>
+    <string name="unmark_all">تعيين الجميع بغير مشاهد</string>
     <string name="mark_untilhere">تم مشاهدة جميع ما بُث سابقاً</string>
     <string name="collect_all">جمع الكل</string>
     <string name="uncollect_all">لم يتم جمع شئ</string>
     <string name="action_skip">تخطي</string>
-    <string name="action_dont_skip">لا تتخطاه</string>
+    <string name="action_dont_skip">عدم التخطي</string>
     <string name="action_collection_add">إضافة إلى مجموعة</string>
     <string name="action_collection_remove">إزالة من المجموعة</string>
-    <string name="action_collection_added">إضافة إلى مجموعة</string>
-    <string name="action_collection_removed">إزالة من المجموعة</string>
-    <string name="action_watched">تم مشاهدتها</string>
-    <string name="action_unwatched">تعيين كغير مشاهدة</string>
+    <string name="action_collection_added">تمت الإضافة إلى مجموعة</string>
+    <string name="action_collection_removed">تمت الإزالة من المجموعة</string>
+    <string name="action_watched">تعيين كمشاهد</string>
+    <string name="action_unwatched">تعيين كغير مشاهد</string>
     <!-- Shows -->
     <string name="confirm_delete">هل تريد فعلاً إزالة %s؟</string>
-    <string name="delete_error">لم يتم إزالة المسلسل، حاول مرة أخرى.</string>
+    <string name="delete_error">لم تتم إزالة المسلسل، حاول مرة أخرى.</string>
     <string name="delete_show">إزالة</string>
-    <string name="no_nextepisode">لا توجد حلقة قادمة</string>
+    <string name="no_nextepisode">لم يتم العثور على حلقة قادمة</string>
     <string name="context_favorite">أضف إلى المفضلة</string>
     <string name="context_unfavorite">إزالة من المفضلة</string>
-    <string name="favorited">إضافة إلى المفضلة</string>
-    <string name="unfavorited">إزالة من المفضلة</string>
-    <string name="action_episode_notifications_on">تشغيل الاشعارات للحلقات الجديده</string>
-    <string name="action_episode_notifications_off">إغلاق الاشعارات للحلقات الجديده</string>
+    <string name="favorited">تمت الإضافة إلى المفضلة</string>
+    <string name="unfavorited">تمت الإزالة من المفضلة</string>
+    <string name="action_episode_notifications_on">تشغيل الإشعارات للحلقات الجديدة</string>
+    <string name="action_episode_notifications_off">إغلاق الإشعارات للحلقات الجديدة</string>
     <string name="context_hide">إخفاء</string>
     <string name="context_unhide">إظهار</string>
-    <string name="hidden">تم إخفاء المسلسل</string>
+    <string name="hidden">تم الإخفاء</string>
     <string name="unhidden">تم إظهار المسلسل</string>
     <string name="action_shows_add">إضافة مسلسل</string>
-    <string name="action_shows_filter">فلترة للعروض</string>
+    <string name="action_shows_filter">فلترة المسلسلات</string>
     <string name="empty_filter">إزالة كل عوامل التصفية</string>
     <string name="action_shows_filter_favorites">المفضلة</string>
     <string name="action_shows_filter_unwatched">الغير مشاهدة</string>
@@ -148,12 +148,12 @@
     <string name="action_shows_sort_remaining">الحلقات المتبقية</string>
     <string name="action_shows_sort_favorites">المفضلة أولاً</string>
     <string name="context_updateshow">تحديث</string>
-    <string name="context_marknext">شاهد الحلقة التالية</string>
+    <string name="context_marknext">تم مشاهدة الحلقة، الحلقة التالية</string>
     <!-- History -->
-    <string name="user_stream">التاريخ</string>
+    <string name="user_stream">السجل</string>
     <string name="recently_watched">تم مشاهدته مؤخراً</string>
     <string name="friends_recently">أصدقائك على موقع Trakt</string>
-    <string name="now_empty">لا شيء يحدث. مشاهدة بعض البرامج!</string>
+    <string name="now_empty">لا يوجد شيء جديد. شاهد بعض المسلسلات!</string>
     <string name="now_movies_empty">لا يوجد شيء جديد. شاهد بعض الأفلام!</string>
     <string name="user_stream_empty">لا يوجد أي نشاط مؤخرا على موقع Trakt. تحقق من بعض المسلسلات!</string>
     <string name="user_movie_stream_empty">لا يوجد أي نشاط مؤخرا على موقع Trakt. تحقق من بعض الأفلام!</string>
@@ -161,25 +161,25 @@
     <string name="upcoming">القادم</string>
     <string name="recent">مؤخراً</string>
     <string name="released_today">صدر اليوم</string>
-    <string name="noupcoming">.لا توجد حلقات قادمة</string>
-    <string name="norecent">.لا توجد حلقات حالية</string>
+    <string name="noupcoming">لا توجد حلقات قادمة</string>
+    <string name="norecent">لا توجد حلقات حالية</string>
     <string name="calendar_settings">إعدادات التقويم</string>
     <string name="only_favorites">فقط المسلسلات المفضلة</string>
-    <string name="calendar_only_collected">الحلقات المجمعه فقط</string>
+    <string name="calendar_only_collected">الحلقات المجمعة فقط</string>
     <string name="pref_infinite_scrolling">رزنامة النهائية</string>
     <!-- Updating -->
-    <string name="update_scheduled">جاري التحديث</string>
-    <string name="update_no_connection">ليتم التحديث إتصل بالإنترنت.</string>
+    <string name="update_scheduled">جار التحديث&#8230;</string>
+    <string name="update_no_connection">ليتم التحديث اتصل بالإنترنت</string>
     <string name="update_inprogress">التحديث قيد التقدم, حاول مرة أخرى.</string>
     <!-- Seasons -->
     <string name="season_allwatched">تم مشاهدة جميع الحلقات</string>
     <plurals name="other_episodes_plural">
-        <item quantity="zero">%d الحلقات الأخرى</item>
-        <item quantity="one">%d الحلقات الأخرى</item>
-        <item quantity="two">%d الحلقات الأخرى</item>
-        <item quantity="few">%d الحلقات الأخرى</item>
-        <item quantity="many">%d الحلقات الأخرى</item>
-        <item quantity="other">%d الحلقات الأخرى</item>
+        <item quantity="zero">%d حلقات أخرى</item>
+        <item quantity="one">%d حلقة أخرى</item>
+        <item quantity="two">%d حلقتين أخرى</item>
+        <item quantity="few">%d حلقات أخرى</item>
+        <item quantity="many">%d حلقة أخرى</item>
+        <item quantity="other">%d حلقة أخرى</item>
     </plurals>
     <plurals name="not_released_episodes_plural">
         <item quantity="zero">%d يمكن اطلاقها</item>
@@ -242,7 +242,7 @@
     <string name="movies_search_hint">أكتب إسم الفيلم</string>
     <string name="movies_collection_empty">لم تقم بإضافة الأفلام إلى مجموعتك.</string>
     <string name="movies_watchlist_empty">لم تقم بإضافة أي فلم إلى قائمة المشاهدة.</string>
-    <string name="trailer">مقتطفات</string>
+    <string name="trailer">العرض الدعائي</string>
     <string name="movie_cast">طاقم التمثيل</string>
     <string name="movie_crew">طاقم</string>
     <string name="action_movies_sort">فرز الأفلام</string>
@@ -400,8 +400,8 @@
         <item quantity="other">قبل دقائق من %d</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">سياسة الخصوصية</string>
+    <string name="licence_tvdb">هذا البرنامج يستخدم صور و بيانات من TheTVDB مرخصة من قبل Creative Commons.</string>
     <string name="licence_themoviedb">هذا البرنامج يستخدم وصلة TMDb ولكنه غير مدعوم ولامعتمد من TMDb.</string>
     <string name="licence_trakt">هذا البرنامج يستخدم صور وبيانات من Trakt.</string>
     <string name="about_open_source">برنامج دليل المسلسلات بني باستخدام برمجيات المصدر المفتوح.</string>
@@ -490,7 +490,7 @@
     <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
     <string name="pref_widget_opacity">خلفية القطعة العائمة</string>
     <string name="pref_widget_type">نوع القطعة العائمة</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">استخدام الخط الكبير</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">شفافية</string>
     <string name="widget_background_25">25%</string>

@@ -19,6 +19,12 @@ Version 46
 
 🔧 Drop Google Analytics.
 
+#### 46.1
+*(2019-01-16)*
+
+* 🔧 After changing the language of a show or the alternative language in Settings, episode descriptions are updated properly again.
+* 📝 Latest translations from crowdin.
+
 #### 46
 *(2019-01-04)*
 

@@ -11,7 +11,7 @@
     <string name="help">Yardım</string>
     <string name="help_and_feedback">Yardım ve Geribildirim</string>
     <string name="drawer_open">Navigasyon çekmecesini aç</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide, Androidin bu versiyonu için güncelleme almayacak.</string>
     <!-- Media items -->
     <string name="show">Dizi</string>
     <string name="episode">Bölüm</string>
@@ -356,8 +356,8 @@
         <item quantity="other">%d dakika önce</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">Gizlilik Politikası</string>
+    <string name="licence_tvdb">Bu uygulama, theTVDB verilerini ve görsellerini, Yaratıcı Beraberlik lisansı altında kullanmaktadır.</string>
     <string name="licence_themoviedb">Bu uygulama TMDb API\'si kullanmaktadır ama TMDb tarafından onaylı veya sertifikalı değildir.</string>
     <string name="licence_trakt">Bu uygulama, trakt verilerini ve görsellerini kullanmaktadır.</string>
     <string name="about_open_source">SeriesGuide açık kaynak bilgisayar yazılımı kullanılarak oluşturulmuştur.</string>
@@ -446,7 +446,7 @@
     <string name="hide_watched">İzlenmiş bölümleri gizle</string>
     <string name="pref_widget_opacity">Widget arka planı</string>
     <string name="pref_widget_type">Widget tipi</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Büyük Yazı Tipi Kullan</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Saydam</string>
     <string name="widget_background_25">25%</string>
