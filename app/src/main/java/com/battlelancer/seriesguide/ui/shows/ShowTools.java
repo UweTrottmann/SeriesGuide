@@ -249,7 +249,7 @@ public class ShowTools {
                             null);
             // reset episode last edit time so all get updated
             values = new ContentValues();
-            values.put(SeriesGuideContract.Episodes.LAST_EDITED, 0);
+            values.put(SeriesGuideContract.Episodes.LAST_UPDATED, 0);
             context.getContentResolver()
                     .update(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
                             values, null, null);

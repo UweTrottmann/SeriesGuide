@@ -369,7 +369,7 @@ public class ShowsActivity extends BaseTopActivity implements
             if (lastVersion < SgApp.RELEASE_VERSION_12_BETA5) {
                 // flag all episodes as outdated
                 ContentValues values = new ContentValues();
-                values.put(SeriesGuideContract.Episodes.LAST_EDITED, 0);
+                values.put(SeriesGuideContract.Episodes.LAST_UPDATED, 0);
                 getContentResolver().update(SeriesGuideContract.Episodes.CONTENT_URI, values, null,
                         null);
                 // sync is triggered in last condition
