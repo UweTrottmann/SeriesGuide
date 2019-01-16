@@ -41,12 +41,6 @@ public class AnalyticsTree extends Timber.DebugTree {
             }
 
             // special treatment for some exceptions
-            if (t instanceof UnknownHostException) {
-                return; // do not track, mostly devices loosing connection
-            }
-            if (t instanceof InterruptedIOException) {
-                return; // do not track, mostly timeouts
-            }
             if (t instanceof TvdbTraktException) {
                 return; // already tracked as trakt error
             }
@@ -54,7 +48,10 @@ public class AnalyticsTree extends Timber.DebugTree {
                 TvdbException e = (TvdbException) t;
                 Throwable cause = e.getCause();
                 if (cause instanceof UnknownHostException) {
-                    return; // do not track
+                    return; // do not track, mostly devices loosing connection
+                }
+                if (cause instanceof InterruptedIOException) {
+                    return; // do not track, mostly timeouts
                 }
                 CrashlyticsCore.getInstance().setString("action", message);
                 Utils.trackError(AnalyticsEvents.THETVDB_ERROR, e);
