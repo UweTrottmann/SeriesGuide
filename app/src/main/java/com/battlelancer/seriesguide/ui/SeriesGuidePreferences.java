@@ -558,7 +558,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                             .setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
 
                     ContentValues values = new ContentValues();
-                    values.put(Episodes.LAST_EDITED, 0);
+                    values.put(Episodes.LAST_UPDATED, 0);
                     getActivity().getContentResolver()
                             .update(Episodes.CONTENT_URI, values, null, null);
                 }).start();
