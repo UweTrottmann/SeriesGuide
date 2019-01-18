@@ -11,7 +11,7 @@
     <string name="help">Help</string>
     <string name="help_and_feedback">Help &amp; Feedback</string>
     <string name="drawer_open">Navigatiemenu openen</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide zal geen updates meer uitbrengen voor deze versie van Android.</string>
     <!-- Media items -->
     <string name="show">Serie</string>
     <string name="episode">Aflevering</string>
@@ -275,7 +275,7 @@
     <string name="hexagon_remove_account_confirmation">Dit zal al uw series, lijsten en films van SeriesGuide Cloud verwijderen</string>
     <string name="hexagon_api_queued">Verzonden naar SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Afgemeld bij SeriesGuide Cloud</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Fout tijdens Google login (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Toevoegen aan trakt.</string>
     <string name="checkin_success_trakt">Aangemeld bij %s op trakt.</string>
@@ -355,8 +355,8 @@
         <item quantity="other">%d minuten voordien</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">Privacybeleid</string>
+    <string name="licence_tvdb">Deze app gebruikt data en afbeeldingen van TheTVDB, gelicenseerd onder Creative Commons licentie.</string>
     <string name="licence_themoviedb">Dit product gebruikt de TMDb API maar is niet goedgekeurd of gecertificeerd door TMDb.</string>
     <string name="licence_trakt">Deze app gebruikt data en afbeeldingen van trakt.</string>
     <string name="about_open_source">SeriesGuide is gebouwd met openbronsoftware.</string>
