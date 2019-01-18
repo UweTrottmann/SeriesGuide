@@ -68,7 +68,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
                 if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue) {
                     R.color.white
                 } else {
-                    Utils.resolveAttributeToResourceId(context!!.theme, R.attr.colorPrimary)
+                    Utils.resolveAttributeToResourceId(context!!.theme, R.attr.colorAccent)
                 }
             )
         )

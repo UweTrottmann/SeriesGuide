@@ -11,7 +11,9 @@
     <TextView
         android:id="@+id/textViewTabStripItem"
         style="@style/Widget.SeriesGuide.Tab"
+        android:layout_height="40dp"
         android:textAppearance="@style/TextAppearance.Tab"
+        android:textColor="?android:attr/textColorPrimary"
         tools:text="Tab Item" />
 
 </LinearLayout>
