@@ -7,4 +7,6 @@
     <issue id="TimberArgTypes" severity="warning" />
     <!-- Leaving that to translators and feedback -->
     <issue id="Typos" severity="ignore" />
+    <!-- Warn about restricted API until affected code is fixed -->
+    <issue id="RestrictedApi" severity="warning" />
 </lint>
