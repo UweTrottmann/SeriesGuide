@@ -10,70 +10,12 @@
         android:icon="@drawable/ic_filter_white_24dp"
         android:orderInCategory="0"
         android:title="@string/action_shows_filter"
-        app:showAsAction="always">
-        <menu>
-            <item
-                android:id="@+id/menu_action_shows_filter_favorites"
-                android:checkable="true"
-                android:title="@string/action_shows_filter_favorites" />
-            <item
-                android:id="@+id/menu_action_shows_filter_unwatched"
-                android:checkable="true"
-                android:title="@string/action_shows_filter_unwatched" />
-            <item
-                android:id="@+id/menu_action_shows_filter_upcoming"
-                android:checkable="true"
-                android:title="@string/action_shows_filter_upcoming" />
-            <item
-                android:id="@+id/menu_action_shows_filter_hidden"
-                android:checkable="true"
-                android:title="@string/action_shows_filter_hidden" />
-            <item
-                android:id="@+id/menu_action_shows_filter_remove"
-                android:title="@string/empty_filter" />
-            <item
-                android:id="@+id/menu_action_shows_filter_upcoming_range"
-                android:title="@string/pref_upcominglimit" />
-        </menu>
-    </item>
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_action_shows_add"
         android:orderInCategory="2"
         android:title="@string/action_shows_add"
         app:showAsAction="never" />
-
-    <item
-        android:id="@+id/menu_action_shows_sort"
-        android:icon="@drawable/ic_sort_white_24dp"
-        android:orderInCategory="3"
-        android:title="@string/action_shows_sort"
-        app:showAsAction="never">
-        <menu>
-            <item
-                android:id="@+id/menu_action_shows_sort_title"
-                android:title="@string/action_shows_sort_title" />
-            <item
-                android:id="@+id/menu_action_shows_sort_latest_episode"
-                android:title="@string/action_shows_sort_latest_episode" />
-            <item
-                android:id="@+id/menu_action_shows_sort_oldest_episode"
-                android:title="@string/action_shows_sort_oldest_episode" />
-            <item
-                android:id="@+id/menu_action_shows_sort_last_watched"
-                android:title="@string/action_shows_sort_last_watched" />
-            <item
-                android:id="@+id/menu_action_shows_sort_remaining"
-                android:title="@string/action_shows_sort_remaining" />
-            <item
-                android:id="@+id/menu_action_shows_sort_favorites"
-                android:checkable="true"
-                android:title="@string/action_shows_sort_favorites" />
-            <item
-                android:id="@+id/menu_action_shows_sort_ignore_articles"
-                android:checkable="true"
-                android:title="@string/action_sort_ignore_articles" />
-        </menu>
-    </item>
 
 </menu>

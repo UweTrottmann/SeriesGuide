@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBox
+        android:id="@+id/checkbox_shows_filter_favorites"
+        style="@style/Widget.SeriesGuide.DistillationItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/action_shows_filter_favorites" />
+
+    <CheckBox
+        android:id="@+id/checkbox_shows_filter_unwatched"
+        style="@style/Widget.SeriesGuide.DistillationItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/action_shows_filter_unwatched" />
+
+    <CheckBox
+        android:id="@+id/checkbox_shows_filter_upcoming"
+        style="@style/Widget.SeriesGuide.DistillationItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/action_shows_filter_upcoming" />
+
+    <CheckBox
+        android:id="@+id/checkbox_shows_filter_hidden"
+        style="@style/Widget.SeriesGuide.DistillationItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/action_shows_filter_hidden" />
+
+    <Button
+        android:id="@+id/button_shows_filter_remove"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/empty_filter" />
+
+    <Button
+        android:id="@+id/button_shows_filter_upcoming_range"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pref_upcominglimit" />
+
+</merge>

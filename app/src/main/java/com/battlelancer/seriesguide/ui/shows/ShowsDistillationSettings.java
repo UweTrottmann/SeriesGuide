@@ -4,11 +4,15 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import androidx.lifecycle.MutableLiveData;
 
 /**
  * Provides settings used to filter and sort displayed shows in {@link ShowsFragment}.
  */
 public class ShowsDistillationSettings {
+
+    static MutableLiveData<FilterShowsView.ShowFilter> filterLiveData = new MutableLiveData<>();
+    static MutableLiveData<SortShowsView.ShowSortOrder> sortOrderLiveData = new MutableLiveData<>();
 
     static String KEY_SORT_ORDER = "com.battlelancer.seriesguide.sort.order";
     static String KEY_SORT_FAVORITES_FIRST = "com.battlelancer.seriesguide.sort.favoritesfirst";
