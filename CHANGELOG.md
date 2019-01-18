@@ -9,6 +9,13 @@ Version 47
 ----------
 *(in development)*
 
+#### 47-beta2
+*(2019-01-18)*
+
+* 🔧 After changing the language of a show or the alternative language in Settings, episode descriptions are updated properly again.
+* 🔧 Combine show filter and sort options into single view. Stays visible until tap outside or back button press.
+* 📝 Latest translations from crowdin.
+
 #### 47-beta1
 *(2019-01-11)*
 
