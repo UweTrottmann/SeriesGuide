@@ -183,6 +183,11 @@
     <!-- Special themes -->
     <!-- ####################################### -->
 
+    <style name="Theme.SeriesGuide.Dialog.Distillation" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="android:windowBackground">@drawable/sg_distillation_dialog_background</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
     <style name="Theme.SeriesGuide.Dialog" parent="Theme.AppCompat.Dialog">
         <!-- Copy of attributes relevant for our dialogs -->
         <item name="colorPrimary">@color/accent_primary</item>

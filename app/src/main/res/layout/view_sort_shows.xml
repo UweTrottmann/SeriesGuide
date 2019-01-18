@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RadioGroup
+        android:id="@+id/radio_group_shows_sort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radio_shows_sort_title"
+            style="@style/Widget.SeriesGuide.DistillationItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_shows_sort_title" />
+
+        <RadioButton
+            android:id="@+id/radio_shows_sort_latest_episode"
+            style="@style/Widget.SeriesGuide.DistillationItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_shows_sort_latest_episode" />
+
+        <RadioButton
+            android:id="@+id/radio_shows_sort_oldest_episode"
+            style="@style/Widget.SeriesGuide.DistillationItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_shows_sort_oldest_episode" />
+
+        <RadioButton
+            android:id="@+id/radio_shows_sort_last_watched"
+            style="@style/Widget.SeriesGuide.DistillationItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_shows_sort_last_watched" />
+
+        <RadioButton
+            android:id="@+id/radio_shows_sort_remaining"
+            style="@style/Widget.SeriesGuide.DistillationItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_shows_sort_remaining" />
+
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/checkbox_shows_sort_favorites"
+        style="@style/Widget.SeriesGuide.DistillationItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/action_shows_sort_favorites" />
+
+    <CheckBox
+        android:id="@+id/checkbox_shows_sort_ignore_articles"
+        style="@style/Widget.SeriesGuide.DistillationItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/action_sort_ignore_articles" />
+
+</merge>

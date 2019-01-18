@@ -40,37 +40,34 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun updateQuery(
-        isFilterFavorites: Boolean,
-        isFilterUnwatched: Boolean,
-        isFilterUpcoming: Boolean,
-        isFilterHidden: Boolean,
+        showFilter: FilterShowsView.ShowFilter,
         orderClause: String
     ) {
         val selection = StringBuilder()
 
         // restrict to favorites?
-        if (isFilterFavorites) {
+        if (showFilter.isFilterFavorites) {
             selection.append(SeriesGuideContract.Shows.FAVORITE).append("=1")
         }
 
         val timeInAnHour = TimeTools.getCurrentTime(getApplication()) + DateUtils.HOUR_IN_MILLIS
 
         // restrict to shows with a next episode?
-        if (isFilterUnwatched) {
+        if (showFilter.isFilterUnwatched) {
             if (selection.isNotEmpty()) {
                 selection.append(" AND ")
             }
             selection.append(SeriesGuideContract.Shows.SELECTION_WITH_RELEASED_NEXT_EPISODE)
 
             // exclude shows with upcoming next episode
-            if (!isFilterUpcoming) {
+            if (!showFilter.isFilterUpcoming) {
                 selection.append(" AND ")
                     .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
                     .append(timeInAnHour)
             }
         }
         // restrict to shows with an upcoming (yet to air) next episode?
-        if (isFilterUpcoming) {
+        if (showFilter.isFilterUpcoming) {
             if (selection.isNotEmpty()) {
                 selection.append(" AND ")
             }
@@ -82,7 +79,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
                 .append(latestAirtime)
 
             // exclude shows with no upcoming next episode if not filtered for unwatched, too
-            if (!isFilterUnwatched) {
+            if (!showFilter.isFilterUnwatched) {
                 selection.append(" AND ")
                     .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append(">=")
                     .append(timeInAnHour)
@@ -94,7 +91,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
             selection.append(" AND ")
         }
         selection.append(SeriesGuideContract.Shows.HIDDEN)
-            .append(if (isFilterHidden) "=1" else "=0")
+            .append(if (showFilter.isFilterHidden) "=1" else "=0")
 
         queryString.value = "SELECT * FROM ${SeriesGuideDatabase.Tables.SHOWS}" +
                 " WHERE $selection" +
