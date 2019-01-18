@@ -5,6 +5,8 @@
     <issue id="UnusedQuantity" severity="ignore" />
     <!-- Detection broken for long -> Date https://github.com/JakeWharton/timber/issues/216 -->
     <issue id="TimberArgTypes" severity="warning" />
+    <!-- Is broken, disable -->
+    <issue id="StringFormatInTimber" severity="ignore" />
     <!-- Leaving that to translators and feedback -->
     <issue id="Typos" severity="ignore" />
     <!-- Warn about restricted API until affected code is fixed -->
