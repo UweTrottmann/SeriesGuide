@@ -82,19 +82,19 @@ class EpisodesAdapter extends CursorAdapter {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         // episode title
-        final int watchedFlag = mCursor.getInt(EpisodesQuery.WATCHED);
-        final int episodeNumber = mCursor.getInt(EpisodesQuery.NUMBER);
+        final int watchedFlag = cursor.getInt(EpisodesQuery.WATCHED);
+        final int episodeNumber = cursor.getInt(EpisodesQuery.NUMBER);
         boolean hideTitle = EpisodeTools.isUnwatched(watchedFlag)
-                && DisplaySettings.preventSpoilers(mContext);
-        viewHolder.episodeTitle.setText(TextTools.getEpisodeTitle(mContext,
-                hideTitle ? null : mCursor.getString(EpisodesQuery.TITLE), episodeNumber));
+                && DisplaySettings.preventSpoilers(context);
+        viewHolder.episodeTitle.setText(TextTools.getEpisodeTitle(context,
+                hideTitle ? null : cursor.getString(EpisodesQuery.TITLE), episodeNumber));
 
         // number
         viewHolder.episodeNumber.setText(integerFormat.format(episodeNumber));
 
         // watched box
         viewHolder.watchedBox.setEpisodeFlag(watchedFlag);
-        final int episodeId = mCursor.getInt(EpisodesQuery._ID);
+        final int episodeId = cursor.getInt(EpisodesQuery._ID);
         viewHolder.watchedBox.setOnClickListener(v -> {
             WatchedBox box = (WatchedBox) v;
             // disable button, will be re-enabled on data reload once action completes
@@ -105,42 +105,42 @@ class EpisodesAdapter extends CursorAdapter {
         viewHolder.watchedBox.setEnabled(true);
         boolean watched = EpisodeTools.isWatched(watchedFlag);
         viewHolder.watchedBox.setContentDescription(
-                mContext.getString(watched ? R.string.action_unwatched : R.string.action_watched));
+                context.getString(watched ? R.string.action_unwatched : R.string.action_watched));
         CheatSheet.setup(viewHolder.watchedBox,
                 watched ? R.string.action_unwatched : R.string.action_watched
         );
 
         // collected tag
-        final boolean isCollected = mCursor.getInt(EpisodesQuery.COLLECTED) == 1;
+        final boolean isCollected = cursor.getInt(EpisodesQuery.COLLECTED) == 1;
         viewHolder.collected.setVisibility(isCollected ? View.VISIBLE : View.INVISIBLE);
 
         // alternative numbers
-        int absoluteNumber = mCursor.getInt(EpisodesQuery.ABSOLUTE_NUMBER);
+        int absoluteNumber = cursor.getInt(EpisodesQuery.ABSOLUTE_NUMBER);
         String absoluteNumberText = null;
         if (absoluteNumber > 0) {
             absoluteNumberText = NumberFormat.getIntegerInstance().format(absoluteNumber);
         }
-        double dvdNumber = mCursor.getDouble(EpisodesQuery.DVDNUMBER);
+        double dvdNumber = cursor.getDouble(EpisodesQuery.DVDNUMBER);
         String dvdNumberText = null;
         if (dvdNumber > 0) {
-            dvdNumberText = mContext.getString(R.string.episode_number_disk) + " " + dvdNumber;
+            dvdNumberText = context.getString(R.string.episode_number_disk) + " " + dvdNumber;
         }
         viewHolder.episodeAlternativeNumbers.setText(
                 TextTools.dotSeparate(absoluteNumberText, dvdNumberText));
 
         // release time
         boolean isReleased;
-        final long releaseTime = mCursor.getLong(EpisodesQuery.FIRSTAIREDMS);
+        final long releaseTime = cursor.getLong(EpisodesQuery.FIRSTAIREDMS);
         if (releaseTime != -1) {
-            Date actualRelease = TimeTools.applyUserOffset(mContext, releaseTime);
+            Date actualRelease = TimeTools.applyUserOffset(context, releaseTime);
             isReleased = TimeTools.isReleased(actualRelease);
             // "in 15 mins" or "Oct 31, 2010"
-            boolean displayExactDate = DisplaySettings.isDisplayExactDate(mContext);
+            boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
             viewHolder.episodeAirdate.setText(displayExactDate ?
-                    TimeTools.formatToLocalDateShort(mContext, actualRelease)
-                    : TimeTools.formatToLocalRelativeTime(mContext, actualRelease));
+                    TimeTools.formatToLocalDateShort(context, actualRelease)
+                    : TimeTools.formatToLocalRelativeTime(context, actualRelease));
         } else {
-            viewHolder.episodeAirdate.setText(mContext
+            viewHolder.episodeAirdate.setText(context
                     .getString(R.string.episode_firstaired_unknown));
             isReleased = false;
         }

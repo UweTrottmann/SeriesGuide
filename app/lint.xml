@@ -7,8 +7,6 @@
     <issue id="TimberArgTypes" severity="ignore" />
     <!-- Leaving that to translators and feedback -->
     <issue id="Typos" severity="ignore" />
-    <!-- Warn about restricted API until affected code is fixed -->
-    <issue id="RestrictedApi" severity="warning" />
 
     <!-- Timber checks are broken, do not break build -->
     <issue id="LintError" severity="warning" />

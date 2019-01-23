@@ -52,17 +52,17 @@ class SeasonsAdapter extends CursorAdapter {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         // title
-        final int seasonNumber = mCursor.getInt(SeasonsQuery.COMBINED);
+        final int seasonNumber = cursor.getInt(SeasonsQuery.COMBINED);
         viewHolder.seasonTitle.setText(
-                SeasonTools.getSeasonString(mContext, seasonNumber));
+                SeasonTools.getSeasonString(context, seasonNumber));
 
         // unwatched episodes by type
-        final int released = mCursor.getInt(SeasonsQuery.WATCHCOUNT);
-        final int notReleased = mCursor.getInt(SeasonsQuery.UNAIREDCOUNT);
-        final int noReleaseDate = mCursor.getInt(SeasonsQuery.NOAIRDATECOUNT);
+        final int released = cursor.getInt(SeasonsQuery.WATCHCOUNT);
+        final int notReleased = cursor.getInt(SeasonsQuery.UNAIREDCOUNT);
+        final int noReleaseDate = cursor.getInt(SeasonsQuery.NOAIRDATECOUNT);
 
         // progress
-        final int max = mCursor.getInt(SeasonsQuery.TOTALCOUNT);
+        final int max = cursor.getInt(SeasonsQuery.TOTALCOUNT);
         final int progress = max - released - notReleased - noReleaseDate;
         viewHolder.seasonProgressBar.setMax(max);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -70,7 +70,7 @@ class SeasonsAdapter extends CursorAdapter {
         } else {
             viewHolder.seasonProgressBar.setProgress(progress);
         }
-        Resources res = mContext.getResources();
+        Resources res = context.getResources();
         String textProgress;
         if (isRtlLayout) {
             textProgress = res.getString(R.string.format_progress_and_total, max, progress);
@@ -81,7 +81,7 @@ class SeasonsAdapter extends CursorAdapter {
 
         // skipped label
         viewHolder.seasonSkipped
-                .setVisibility(SeasonTools.hasSkippedTag(mCursor.getString(SeasonsQuery.TAGS))
+                .setVisibility(SeasonTools.hasSkippedTag(cursor.getString(SeasonsQuery.TAGS))
                         ? View.VISIBLE : View.GONE);
 
         // season episodes text
@@ -102,7 +102,7 @@ class SeasonsAdapter extends CursorAdapter {
             // ensure at least 1 watched episode by comparing amount of unwatched to total
             if (notReleased + noReleaseDate != max) {
                 // all watched
-                countText.append(mContext.getString(R.string.season_allwatched));
+                countText.append(context.getString(R.string.season_allwatched));
             }
         }
         if (noReleaseDate > 0) {
@@ -125,7 +125,7 @@ class SeasonsAdapter extends CursorAdapter {
         viewHolder.seasonWatchCount.setText(countText);
 
         // context menu
-        final int seasonTvdbId = mCursor.getInt(SeasonsQuery._ID);
+        final int seasonTvdbId = cursor.getInt(SeasonsQuery._ID);
         viewHolder.contextMenu.setOnClickListener(v -> {
             if (popupMenuClickListener != null) {
                 popupMenuClickListener.onPopupMenuClick(v, seasonTvdbId, seasonNumber);
