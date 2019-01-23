@@ -74,6 +74,10 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
         )
         tabLayout.setViewPager(viewPager)
 
+        // ensure size matches children in any case
+        // (on some devices did not resize correctly, Android layouting change?)
+        viewPager.post { viewPager.requestLayout() }
+
         return view
     }
 
