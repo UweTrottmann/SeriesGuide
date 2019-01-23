@@ -37,12 +37,14 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
 
     private final ItemClickListener itemClickListener;
     private final Calendar calendar;
+    private final Context context;
 
     private List<HeaderData> headers;
     private boolean isShowingHeaders;
 
     CalendarAdapter(Activity activity, ItemClickListener itemClickListener) {
         super(activity, null, 0);
+        this.context = activity;
         this.itemClickListener = itemClickListener;
         this.calendar = Calendar.getInstance();
     }
@@ -61,8 +63,9 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
     @Override
     @Nullable
     public Cursor getItem(int position) {
-        if (mDataValid && mCursor != null && mCursor.moveToPosition(position)) {
-            return mCursor;
+        Cursor cursor = (Cursor) super.getItem(position);
+        if (cursor != null && cursor.moveToPosition(position)) {
+            return cursor;
         } else {
             return null;
         }
@@ -144,7 +147,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
 
     private long getHeaderTime(Cursor item) {
         long releaseTime = item.getLong(CalendarQuery.RELEASE_TIME_MS);
-        Date actualRelease = TimeTools.applyUserOffset(mContext, releaseTime);
+        Date actualRelease = TimeTools.applyUserOffset(context, releaseTime);
 
         calendar.setTime(actualRelease);
         // not midnight because upcoming->recent is delayed 1 hour
@@ -199,7 +202,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
         long headerTime = getHeaderTime(item);
         // display headers like "Mon in 3 days", also "today" when applicable
         holder.day.setText(
-                TimeTools.formatToLocalDayAndRelativeWeek(mContext, new Date(headerTime)));
+                TimeTools.formatToLocalDayAndRelativeWeek(context, new Date(headerTime)));
 
         return convertView;
     }
