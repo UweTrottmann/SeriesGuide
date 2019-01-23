@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <CheckBox
-        android:id="@+id/checkbox_shows_filter_favorites"
-        style="@style/Widget.SeriesGuide.DistillationItem"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/action_shows_filter_favorites" />
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <CheckBox
         android:id="@+id/checkbox_shows_filter_unwatched"
@@ -15,12 +9,37 @@
         android:layout_height="wrap_content"
         android:text="@string/action_shows_filter_unwatched" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkbox_shows_filter_upcoming"
+            style="@style/Widget.SeriesGuide.DistillationItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/action_shows_filter_upcoming" />
+
+        <ImageButton
+            android:id="@+id/button_shows_filter_upcoming_range"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/pref_upcominglimit"
+            tools:src="@drawable/ic_settings_white_24dp"
+            tools:tint="?attr/sgColorIcon" />
+
+    </LinearLayout>
+
     <CheckBox
-        android:id="@+id/checkbox_shows_filter_upcoming"
+        android:id="@+id/checkbox_shows_filter_favorites"
         style="@style/Widget.SeriesGuide.DistillationItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/action_shows_filter_upcoming" />
+        android:text="@string/action_shows_filter_favorites" />
 
     <CheckBox
         android:id="@+id/checkbox_shows_filter_hidden"
@@ -35,12 +54,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/empty_filter" />
-
-    <Button
-        android:id="@+id/button_shows_filter_upcoming_range"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/pref_upcominglimit" />
 
 </merge>

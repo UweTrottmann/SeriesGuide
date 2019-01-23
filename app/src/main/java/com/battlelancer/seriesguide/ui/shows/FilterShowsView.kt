@@ -5,10 +5,12 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.util.ViewTools
 
 class FilterShowsView @JvmOverloads constructor(
     context: Context,
@@ -22,6 +24,8 @@ class FilterShowsView @JvmOverloads constructor(
 
         // can't do in onFinishInflate as that is only called when inflating from XML
         ButterKnife.bind(this)
+
+        ViewTools.setVectorIcon(context.theme, buttonUpcomingRange, R.drawable.ic_settings_white_24dp)
 
         checkBoxFavorites.setOnClickListener { updateFilterListener() }
         checkBoxUnwatched.setOnClickListener { updateFilterListener() }
@@ -48,7 +52,7 @@ class FilterShowsView @JvmOverloads constructor(
     @BindView(R.id.button_shows_filter_remove)
     internal lateinit var buttonClearFilters: Button
     @BindView(R.id.button_shows_filter_upcoming_range)
-    internal lateinit var buttonUpcomingRange: Button
+    internal lateinit var buttonUpcomingRange: ImageButton
 
     private var filterListener: FilterListener? = null
 
