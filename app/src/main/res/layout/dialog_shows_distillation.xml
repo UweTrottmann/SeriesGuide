@@ -13,10 +13,17 @@
         android:background="?attr/sgColorDivider"
         tools:layout_height="40dp" />
 
-    <com.battlelancer.seriesguide.widgets.WrappingViewPager
-        android:id="@+id/viewPagerShowsDistillation"
+    <ScrollView
+        android:id="@+id/scrollViewShowsDistillation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout_height="300dp" />
+        android:layout_height="wrap_content">
+
+        <com.battlelancer.seriesguide.widgets.WrappingViewPager
+            android:id="@+id/viewPagerShowsDistillation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout_height="300dp" />
+
+    </ScrollView>
 
 </LinearLayout>
