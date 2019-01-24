@@ -18,10 +18,10 @@ object ShowsDistillationSettings {
 
     internal const val KEY_SORT_ORDER = "com.battlelancer.seriesguide.sort.order"
     internal const val KEY_SORT_FAVORITES_FIRST = "com.battlelancer.seriesguide.sort.favoritesfirst"
-    private const val KEY_FILTER_FAVORITES = "com.battlelancer.seriesguide.filter.favorites"
-    private const val KEY_FILTER_UNWATCHED = "com.battlelancer.seriesguide.filter.unwatched"
-    private const val KEY_FILTER_UPCOMING = "com.battlelancer.seriesguide.filter.upcoming"
-    private const val KEY_FILTER_HIDDEN = "com.battlelancer.seriesguide.filter.hidden"
+    private const val KEY_FILTER_FAVORITES = "seriesguide.show_filter.favorites"
+    private const val KEY_FILTER_UNWATCHED = "seriesguide.show_filter.unwatched"
+    private const val KEY_FILTER_UPCOMING = "seriesguide.show_filter.upcoming"
+    private const val KEY_FILTER_HIDDEN = "seriesguide.show_filter.hidden"
 
     /**
      * Builds an appropriate SQL sort statement for sorting shows.
