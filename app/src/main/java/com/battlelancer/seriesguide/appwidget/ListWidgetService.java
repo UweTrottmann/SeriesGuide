@@ -46,7 +46,7 @@ public class ListWidgetService extends RemoteViewsService {
         private boolean isLightTheme;
         private boolean isLargeFont;
 
-        public ListRemoteViewsFactory(Context context, Intent intent) {
+        ListRemoteViewsFactory(Context context, Intent intent) {
             this.context = context;
             this.appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -79,7 +79,7 @@ public class ListWidgetService extends RemoteViewsService {
                     }
 
                     // with next episode
-                    selection.append(" AND ").append(Shows.SELECTION_WITH_RELEASED_NEXT_EPISODE);
+                    selection.append(" AND ").append(Shows.SELECTION_WITH_NEXT_EPISODE);
 
                     // if next episode is in the future, exclude if too far into the future
                     final long timeInAnHour = System.currentTimeMillis() + DateUtils.HOUR_IN_MILLIS;
