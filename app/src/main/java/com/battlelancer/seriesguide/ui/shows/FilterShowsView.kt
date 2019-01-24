@@ -4,13 +4,13 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.widgets.FilterBox
 
 class FilterShowsView @JvmOverloads constructor(
     context: Context,
@@ -25,30 +25,34 @@ class FilterShowsView @JvmOverloads constructor(
         // can't do in onFinishInflate as that is only called when inflating from XML
         ButterKnife.bind(this)
 
-        ViewTools.setVectorIcon(context.theme, buttonUpcomingRange, R.drawable.ic_settings_white_24dp)
+        ViewTools.setVectorIcon(
+            context.theme,
+            buttonUpcomingRange,
+            R.drawable.ic_settings_white_24dp
+        )
 
         checkBoxFavorites.setOnClickListener { updateFilterListener() }
         checkBoxUnwatched.setOnClickListener { updateFilterListener() }
         checkBoxUpcoming.setOnClickListener { updateFilterListener() }
         checkBoxHidden.setOnClickListener { updateFilterListener() }
         buttonClearFilters.setOnClickListener {
-            checkBoxFavorites.isChecked = false
-            checkBoxUnwatched.isChecked = false
-            checkBoxUpcoming.isChecked = false
-            checkBoxHidden.isChecked = false
+            checkBoxFavorites.state = null
+            checkBoxUnwatched.state = null
+            checkBoxUpcoming.state = null
+            checkBoxHidden.state = null
             filterListener?.onFilterUpdate(ShowFilter.allDisabled())
         }
         buttonUpcomingRange.setOnClickListener { filterListener?.onConfigureUpcomingRangeClick() }
     }
 
     @BindView(R.id.checkbox_shows_filter_favorites)
-    internal lateinit var checkBoxFavorites: CheckBox
+    internal lateinit var checkBoxFavorites: FilterBox
     @BindView(R.id.checkbox_shows_filter_unwatched)
-    internal lateinit var checkBoxUnwatched: CheckBox
+    internal lateinit var checkBoxUnwatched: FilterBox
     @BindView(R.id.checkbox_shows_filter_upcoming)
-    internal lateinit var checkBoxUpcoming: CheckBox
+    internal lateinit var checkBoxUpcoming: FilterBox
     @BindView(R.id.checkbox_shows_filter_hidden)
-    internal lateinit var checkBoxHidden: CheckBox
+    internal lateinit var checkBoxHidden: FilterBox
     @BindView(R.id.button_shows_filter_remove)
     internal lateinit var buttonClearFilters: Button
     @BindView(R.id.button_shows_filter_upcoming_range)
@@ -59,19 +63,19 @@ class FilterShowsView @JvmOverloads constructor(
     private fun updateFilterListener() {
         filterListener?.onFilterUpdate(
             ShowFilter(
-                checkBoxFavorites.isChecked,
-                checkBoxUnwatched.isChecked,
-                checkBoxUpcoming.isChecked,
-                checkBoxHidden.isChecked
+                checkBoxFavorites.state,
+                checkBoxUnwatched.state,
+                checkBoxUpcoming.state,
+                checkBoxHidden.state
             )
         )
     }
 
     fun setInitialFilter(showFilter: ShowFilter) {
-        checkBoxFavorites.isChecked = showFilter.isFilterFavorites
-        checkBoxUnwatched.isChecked = showFilter.isFilterUnwatched
-        checkBoxUpcoming.isChecked = showFilter.isFilterUpcoming
-        checkBoxHidden.isChecked = showFilter.isFilterHidden
+        checkBoxFavorites.state = showFilter.isFilterFavorites
+        checkBoxUnwatched.state = showFilter.isFilterUnwatched
+        checkBoxUpcoming.state = showFilter.isFilterUpcoming
+        checkBoxHidden.state = showFilter.isFilterHidden
     }
 
     fun setFilterListener(filterListener: FilterListener) {
@@ -79,19 +83,20 @@ class FilterShowsView @JvmOverloads constructor(
     }
 
     data class ShowFilter(
-        val isFilterFavorites: Boolean,
-        val isFilterUnwatched: Boolean,
-        val isFilterUpcoming: Boolean,
-        val isFilterHidden: Boolean
+        val isFilterFavorites: Boolean?,
+        val isFilterUnwatched: Boolean?,
+        val isFilterUpcoming: Boolean?,
+        val isFilterHidden: Boolean?
     ) {
         fun isAnyFilterEnabled(): Boolean {
-            return isFilterFavorites || isFilterUnwatched || isFilterUpcoming || isFilterHidden
+            return isFilterFavorites != null || isFilterUnwatched != null
+                    || isFilterUpcoming != null || isFilterHidden != null
         }
 
         companion object {
             @JvmStatic
             fun allDisabled(): ShowFilter {
-                return ShowFilter(false, false, false, false)
+                return ShowFilter(null, null, null, null)
             }
 
             @JvmStatic

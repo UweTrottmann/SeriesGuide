@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <CheckBox
+    <com.battlelancer.seriesguide.widgets.FilterBox
         android:id="@+id/checkbox_shows_filter_unwatched"
-        style="@style/Widget.SeriesGuide.DistillationItem"
+        style="@style/Widget.SeriesGuide.FilterBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/action_shows_filter_unwatched" />
+        app:filterBoxDescription="@string/action_shows_filter_unwatched" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <CheckBox
+        <com.battlelancer.seriesguide.widgets.FilterBox
             android:id="@+id/checkbox_shows_filter_upcoming"
-            style="@style/Widget.SeriesGuide.DistillationItem"
+            style="@style/Widget.SeriesGuide.FilterBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/action_shows_filter_upcoming" />
+            app:filterBoxDescription="@string/action_shows_filter_upcoming" />
 
         <ImageButton
             android:id="@+id/button_shows_filter_upcoming_range"
@@ -34,19 +35,19 @@
 
     </LinearLayout>
 
-    <CheckBox
+    <com.battlelancer.seriesguide.widgets.FilterBox
         android:id="@+id/checkbox_shows_filter_favorites"
-        style="@style/Widget.SeriesGuide.DistillationItem"
+        style="@style/Widget.SeriesGuide.FilterBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/action_shows_filter_favorites" />
+        app:filterBoxDescription="@string/action_shows_filter_favorites" />
 
-    <CheckBox
+    <com.battlelancer.seriesguide.widgets.FilterBox
         android:id="@+id/checkbox_shows_filter_hidden"
-        style="@style/Widget.SeriesGuide.DistillationItem"
+        style="@style/Widget.SeriesGuide.FilterBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/action_shows_filter_hidden" />
+        app:filterBoxDescription="@string/action_shows_filter_hidden" />
 
     <Button
         android:id="@+id/button_shows_filter_remove"

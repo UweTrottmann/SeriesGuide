@@ -85,12 +85,13 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
     private val filterListener = object : FilterShowsView.FilterListener {
         override fun onFilterUpdate(filter: FilterShowsView.ShowFilter) {
             // save new setting
-            PreferenceManager.getDefaultSharedPreferences(activity).edit {
-                putBoolean(ShowsDistillationSettings.KEY_FILTER_FAVORITES, filter.isFilterFavorites)
-                putBoolean(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, filter.isFilterUnwatched)
-                putBoolean(ShowsDistillationSettings.KEY_FILTER_UPCOMING, filter.isFilterUpcoming)
-                putBoolean(ShowsDistillationSettings.KEY_FILTER_HIDDEN, filter.isFilterHidden)
-            }
+            ShowsDistillationSettings.saveFilter(
+                context!!,
+                filter.isFilterFavorites,
+                filter.isFilterUnwatched,
+                filter.isFilterUpcoming,
+                filter.isFilterHidden
+            )
 
             // broadcast new filter
             ShowsDistillationSettings.filterLiveData.postValue(filter)

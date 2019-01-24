@@ -38,4 +38,8 @@
         <attr name="featureDescription" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="FilterBox">
+        <attr name="filterBoxDescription" format="string" />
+    </declare-styleable>
+
 </resources>

@@ -193,12 +193,17 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <!-- RadioButton -->
     <style name="Widget.SeriesGuide.DistillationItem">
         <item name="android:textAppearance">@style/TextAppearance.Menu</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:layout_marginStart">@dimen/large_padding</item>
         <item name="android:layout_marginEnd">@dimen/large_padding</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.FilterBox">
+        <item name="android:paddingStart">@dimen/large_padding</item>
+        <item name="android:paddingEnd">@dimen/large_padding</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
     <!-- TextView -->
