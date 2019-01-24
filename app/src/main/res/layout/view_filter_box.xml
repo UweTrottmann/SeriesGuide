@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/imageViewFilterBox"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/inline_padding"
+        android:layout_marginEnd="@dimen/inline_padding"
+        android:scaleType="centerInside" />
+
+    <TextView
+        android:id="@+id/textViewFilterBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:minHeight="48dp"
+        android:textAppearance="@style/TextAppearance.Menu"
+        tools:text="Filter option" />
+
+</merge>

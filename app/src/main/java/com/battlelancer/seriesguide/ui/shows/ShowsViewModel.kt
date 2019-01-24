@@ -45,29 +45,33 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
     ) {
         val selection = StringBuilder()
 
-        // restrict to favorites?
-        if (showFilter.isFilterFavorites) {
-            selection.append(SeriesGuideContract.Shows.FAVORITE).append("=1")
+        // include or exclude favorites?
+        showFilter.isFilterFavorites?.let {
+            if (it) {
+                selection.append(SeriesGuideContract.Shows.SELECTION_FAVORITES)
+            } else {
+                selection.append(SeriesGuideContract.Shows.SELECTION_NOT_FAVORITES)
+            }
         }
 
         val timeInAnHour = TimeTools.getCurrentTime(getApplication()) + DateUtils.HOUR_IN_MILLIS
 
         // restrict to shows with a next episode?
-        if (showFilter.isFilterUnwatched) {
+        if (showFilter.isFilterUnwatched != null && showFilter.isFilterUnwatched) {
             if (selection.isNotEmpty()) {
                 selection.append(" AND ")
             }
             selection.append(SeriesGuideContract.Shows.SELECTION_WITH_RELEASED_NEXT_EPISODE)
 
             // exclude shows with upcoming next episode
-            if (!showFilter.isFilterUpcoming) {
+            if (showFilter.isFilterUpcoming == null) {
                 selection.append(" AND ")
                     .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
                     .append(timeInAnHour)
             }
         }
         // restrict to shows with an upcoming (yet to air) next episode?
-        if (showFilter.isFilterUpcoming) {
+        if (showFilter.isFilterUpcoming != null && showFilter.isFilterUpcoming) {
             if (selection.isNotEmpty()) {
                 selection.append(" AND ")
             }
@@ -79,23 +83,30 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
                 .append(latestAirtime)
 
             // exclude shows with no upcoming next episode if not filtered for unwatched, too
-            if (!showFilter.isFilterUnwatched) {
+            if (showFilter.isFilterUnwatched == null) {
                 selection.append(" AND ")
                     .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append(">=")
                     .append(timeInAnHour)
             }
         }
 
-        // special: if hidden filter is disabled, exclude hidden shows
-        if (selection.isNotEmpty()) {
-            selection.append(" AND ")
+        // include or exclude hidden?
+        showFilter.isFilterHidden?.let {
+            if (selection.isNotEmpty()) {
+                selection.append(" AND ")
+            }
+            if (it) {
+                selection.append(SeriesGuideContract.Shows.SELECTION_HIDDEN)
+            } else {
+                selection.append(SeriesGuideContract.Shows.SELECTION_NO_HIDDEN)
+            }
         }
-        selection.append(SeriesGuideContract.Shows.HIDDEN)
-            .append(if (showFilter.isFilterHidden) "=1" else "=0")
 
-        queryString.value = "SELECT * FROM ${SeriesGuideDatabase.Tables.SHOWS}" +
-                " WHERE $selection" +
-                " ORDER BY $orderClause"
+        queryString.value = if (selection.isNotEmpty()) {
+            "SELECT * FROM ${SeriesGuideDatabase.Tables.SHOWS} WHERE $selection ORDER BY $orderClause"
+        } else {
+            "SELECT * FROM ${SeriesGuideDatabase.Tables.SHOWS} ORDER BY $orderClause"
+        }
     }
 
     fun reRunQuery() {

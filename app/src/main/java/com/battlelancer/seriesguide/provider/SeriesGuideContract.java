@@ -674,6 +674,7 @@ public class SeriesGuideContract {
         public static final String SELECTION_WITH_NEXT_NOT_HIDDEN = Shows.NEXTEPISODE + "!='' AND "
                 + Shows.HIDDEN + "=0 AND " + Shows.NEXTAIRDATEMS + "<?";
 
+        public static final String SELECTION_HIDDEN = Shows.HIDDEN + "=1";
         public static final String SELECTION_NO_HIDDEN = Shows.HIDDEN + "=0";
 
         public static Uri buildShowUri(String showId) {

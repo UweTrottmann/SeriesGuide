@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.ui.shows
 
 import android.content.Context
 import android.preference.PreferenceManager
+import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
 
@@ -10,19 +11,22 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
  */
 object ShowsDistillationSettings {
 
-    internal val filterLiveData = MutableLiveData<FilterShowsView.ShowFilter>()
-    internal val sortOrderLiveData = MutableLiveData<SortShowsView.ShowSortOrder>()
+    @JvmField
+    val filterLiveData = MutableLiveData<FilterShowsView.ShowFilter>()
+    @JvmField
+    val sortOrderLiveData = MutableLiveData<SortShowsView.ShowSortOrder>()
 
     internal const val KEY_SORT_ORDER = "com.battlelancer.seriesguide.sort.order"
     internal const val KEY_SORT_FAVORITES_FIRST = "com.battlelancer.seriesguide.sort.favoritesfirst"
-    internal const val KEY_FILTER_FAVORITES = "com.battlelancer.seriesguide.filter.favorites"
-    internal const val KEY_FILTER_UNWATCHED = "com.battlelancer.seriesguide.filter.unwatched"
-    internal const val KEY_FILTER_UPCOMING = "com.battlelancer.seriesguide.filter.upcoming"
-    internal const val KEY_FILTER_HIDDEN = "com.battlelancer.seriesguide.filter.hidden"
+    private const val KEY_FILTER_FAVORITES = "com.battlelancer.seriesguide.filter.favorites"
+    private const val KEY_FILTER_UNWATCHED = "com.battlelancer.seriesguide.filter.unwatched"
+    private const val KEY_FILTER_UPCOMING = "com.battlelancer.seriesguide.filter.upcoming"
+    private const val KEY_FILTER_HIDDEN = "com.battlelancer.seriesguide.filter.hidden"
 
     /**
      * Builds an appropriate SQL sort statement for sorting shows.
      */
+    @JvmStatic
     fun getSortQuery(
         sortOrderId: Int, isSortFavoritesFirst: Boolean,
         isSortIgnoreArticles: Boolean
@@ -65,24 +69,65 @@ object ShowsDistillationSettings {
             .getBoolean(KEY_SORT_FAVORITES_FIRST, true)
     }
 
-    internal fun isFilteringFavorites(context: Context): Boolean {
+    internal fun isFilteringFavorites(context: Context): Boolean? {
         return PreferenceManager.getDefaultSharedPreferences(context)
-            .getBoolean(KEY_FILTER_FAVORITES, false)
+            .getInt(KEY_FILTER_FAVORITES, FILTER_DISABLED)
+            .mapFilterState()
     }
 
-    internal fun isFilteringUnwatched(context: Context): Boolean {
+    internal fun isFilteringUnwatched(context: Context): Boolean? {
         return PreferenceManager.getDefaultSharedPreferences(context)
-            .getBoolean(KEY_FILTER_UNWATCHED, false)
+            .getInt(KEY_FILTER_UNWATCHED, FILTER_DISABLED)
+            .mapFilterState()
     }
 
-    internal fun isFilteringUpcoming(context: Context): Boolean {
+    internal fun isFilteringUpcoming(context: Context): Boolean? {
         return PreferenceManager.getDefaultSharedPreferences(context)
-            .getBoolean(KEY_FILTER_UPCOMING, false)
+            .getInt(KEY_FILTER_UPCOMING, FILTER_DISABLED)
+            .mapFilterState()
     }
 
-    internal fun isFilteringHidden(context: Context): Boolean {
+    internal fun isFilteringHidden(context: Context): Boolean? {
         return PreferenceManager.getDefaultSharedPreferences(context)
-            .getBoolean(KEY_FILTER_HIDDEN, false)
+            // exclude hidden shows by default
+            .getInt(KEY_FILTER_HIDDEN, FILTER_EXCLUDE)
+            .mapFilterState()
+    }
+
+    @JvmStatic
+    fun saveFilter(
+        context: Context,
+        isFilteringFavorites: Boolean?,
+        isFilteringUnwatched: Boolean?,
+        isFilteringUpcoming: Boolean?,
+        isFilteringHidden: Boolean?
+    ) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putInt(KEY_FILTER_FAVORITES, isFilteringFavorites.mapFilterState())
+            putInt(KEY_FILTER_UNWATCHED, isFilteringUnwatched.mapFilterState())
+            putInt(KEY_FILTER_UPCOMING, isFilteringUpcoming.mapFilterState())
+            putInt(KEY_FILTER_HIDDEN, isFilteringHidden.mapFilterState())
+        }
+    }
+
+    private const val FILTER_INCLUDE = 1
+    private const val FILTER_EXCLUDE = -1
+    private const val FILTER_DISABLED = 0
+
+    private fun Int.mapFilterState(): Boolean? {
+        return when (this) {
+            FILTER_INCLUDE -> true
+            FILTER_EXCLUDE -> false
+            else -> null
+        }
+    }
+
+    private fun Boolean?.mapFilterState(): Int {
+        return when (this) {
+            null -> FILTER_DISABLED
+            true -> FILTER_INCLUDE
+            false -> FILTER_EXCLUDE
+        }
     }
 
     private interface ShowsSortQuery {
