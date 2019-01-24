@@ -39,14 +39,28 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    private fun Boolean?.isTrue(): Boolean {
+        return this ?: false
+    }
+
+    private fun Boolean?.isFalse(): Boolean {
+        if (this == null) return false
+        return !this
+    }
+
+    private fun Boolean?.isNullOrFalse(): Boolean {
+        if (this == null) return true
+        return !this
+    }
+
     fun updateQuery(
-        showFilter: FilterShowsView.ShowFilter,
+        filter: FilterShowsView.ShowFilter,
         orderClause: String
     ) {
         val selection = StringBuilder()
 
         // include or exclude favorites?
-        showFilter.isFilterFavorites?.let {
+        filter.isFilterFavorites?.let {
             if (it) {
                 selection.append(SeriesGuideContract.Shows.SELECTION_FAVORITES)
             } else {
@@ -54,44 +68,8 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
 
-        val timeInAnHour = TimeTools.getCurrentTime(getApplication()) + DateUtils.HOUR_IN_MILLIS
-
-        // restrict to shows with a next episode?
-        if (showFilter.isFilterUnwatched != null && showFilter.isFilterUnwatched) {
-            if (selection.isNotEmpty()) {
-                selection.append(" AND ")
-            }
-            selection.append(SeriesGuideContract.Shows.SELECTION_WITH_RELEASED_NEXT_EPISODE)
-
-            // exclude shows with upcoming next episode
-            if (showFilter.isFilterUpcoming == null) {
-                selection.append(" AND ")
-                    .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
-                    .append(timeInAnHour)
-            }
-        }
-        // restrict to shows with an upcoming (yet to air) next episode?
-        if (showFilter.isFilterUpcoming != null && showFilter.isFilterUpcoming) {
-            if (selection.isNotEmpty()) {
-                selection.append(" AND ")
-            }
-            // Display shows upcoming within <limit> days + 1 hour
-            val upcomingLimitInDays = AdvancedSettings.getUpcomingLimitInDays(getApplication())
-            val latestAirtime = timeInAnHour + upcomingLimitInDays * DateUtils.DAY_IN_MILLIS
-
-            selection.append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
-                .append(latestAirtime)
-
-            // exclude shows with no upcoming next episode if not filtered for unwatched, too
-            if (showFilter.isFilterUnwatched == null) {
-                selection.append(" AND ")
-                    .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append(">=")
-                    .append(timeInAnHour)
-            }
-        }
-
         // include or exclude hidden?
-        showFilter.isFilterHidden?.let {
+        filter.isFilterHidden?.let {
             if (selection.isNotEmpty()) {
                 selection.append(" AND ")
             }
@@ -100,6 +78,64 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
             } else {
                 selection.append(SeriesGuideContract.Shows.SELECTION_NO_HIDDEN)
             }
+        }
+
+        // unwatched (= next episode is released) and upcoming (= next episode upcoming) filters
+        // assumes that no next episode == max next airdate
+
+        val timeInAnHour = TimeTools.getCurrentTime(getApplication()) + DateUtils.HOUR_IN_MILLIS
+        // next episode upcoming within <limit> days + 1 hour
+        val upcomingLimitInDays = AdvancedSettings.getUpcomingLimitInDays(getApplication())
+        val maxAirtime = timeInAnHour + upcomingLimitInDays * DateUtils.DAY_IN_MILLIS
+
+        if (filter.isFilterUnwatched != null || filter.isFilterUpcoming != null) {
+            if (selection.isNotEmpty()) {
+                selection.append(" AND ")
+            }
+        }
+
+        if (filter.isFilterUnwatched.isTrue() && filter.isFilterUpcoming.isTrue()) {
+            // unwatched and upcoming
+            selection.append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
+                .append(maxAirtime)
+        } else if (
+            filter.isFilterUnwatched.isTrue() && filter.isFilterUpcoming.isNullOrFalse()
+        ) {
+            // unwatched only
+            selection.append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
+                .append(timeInAnHour)
+        } else if (
+            filter.isFilterUpcoming.isTrue() && filter.isFilterUnwatched.isNullOrFalse()
+        ) {
+            // upcoming only
+            selection
+                .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append(">")
+                .append(timeInAnHour)
+                .append(" AND ")
+                .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
+                .append(maxAirtime)
+        } else if (filter.isFilterUnwatched.isFalse()) {
+            if (filter.isFilterUpcoming == null) {
+                // unwatched excluded (== anything in the future or no next episode)
+                selection
+                    .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append(">")
+                    .append(timeInAnHour)
+            } else if (!filter.isFilterUpcoming) {
+                // unwatched and upcoming excluded (== further into the future or no next episode)
+                selection
+                    .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append(">")
+                    .append(maxAirtime)
+            }
+        } else if (filter.isFilterUpcoming.isFalse() && filter.isFilterUnwatched == null) {
+            // upcoming excluded
+            selection
+                .append("(")
+                .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
+                .append(timeInAnHour)
+                .append(" OR ")
+                .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append(">")
+                .append(maxAirtime)
+                .append(")")
         }
 
         queryString.value = if (selection.isNotEmpty()) {
