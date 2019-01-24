@@ -5,7 +5,7 @@ buildscript {
     ext.versions = [
             'minSdk': 21,
             'compileSdk': 28,
-            'targetSdk': 26,
+            'targetSdk': 28,
 
             // https://developer.android.com/jetpack/docs/release-notes
             'annotation': '1.0.1',
