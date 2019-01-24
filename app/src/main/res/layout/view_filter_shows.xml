@@ -36,6 +36,13 @@
     </LinearLayout>
 
     <com.battlelancer.seriesguide.widgets.FilterBox
+        android:id="@+id/checkbox_shows_filter_continuing"
+        style="@style/Widget.SeriesGuide.FilterBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:filterBoxDescription="@string/show_isalive" />
+
+    <com.battlelancer.seriesguide.widgets.FilterBox
         android:id="@+id/checkbox_shows_filter_favorites"
         style="@style/Widget.SeriesGuide.FilterBox"
         android:layout_width="match_parent"

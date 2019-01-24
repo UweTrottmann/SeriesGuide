@@ -79,7 +79,7 @@ public class ShowsFragment extends Fragment {
             ShowsDistillationSettings.filterLiveData
                     .setValue(FilterShowsView.ShowFilter.allDisabled());
 
-            ShowsDistillationSettings.saveFilter(getContext(), null, null, null, null);
+            ShowsDistillationSettings.saveFilter(getContext(), null, null, null, null, null);
         });
 
         return v;

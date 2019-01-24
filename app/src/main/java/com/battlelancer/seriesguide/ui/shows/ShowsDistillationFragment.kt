@@ -90,7 +90,8 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
                 filter.isFilterFavorites,
                 filter.isFilterUnwatched,
                 filter.isFilterUpcoming,
-                filter.isFilterHidden
+                filter.isFilterHidden,
+                filter.isFilterContinuing
             )
 
             // broadcast new filter
