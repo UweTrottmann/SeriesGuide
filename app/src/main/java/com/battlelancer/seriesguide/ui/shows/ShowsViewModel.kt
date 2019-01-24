@@ -68,6 +68,18 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
 
+        // include or exclude continuing shows?
+        filter.isFilterContinuing?.let {
+            if (selection.isNotEmpty()) {
+                selection.append(" AND ")
+            }
+            if (it) {
+                selection.append(SeriesGuideContract.Shows.SELECTION_STATUS_CONTINUING)
+            } else {
+                selection.append(SeriesGuideContract.Shows.SELECTION_STATUS_NO_CONTINUING)
+            }
+        }
+
         // include or exclude hidden?
         filter.isFilterHidden?.let {
             if (selection.isNotEmpty()) {

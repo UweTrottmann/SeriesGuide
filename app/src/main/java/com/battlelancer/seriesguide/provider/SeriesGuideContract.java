@@ -675,6 +675,9 @@ public class SeriesGuideContract {
         public static final String SELECTION_WITH_NEXT_NOT_HIDDEN = Shows.NEXTEPISODE + "!='' AND "
                 + Shows.HIDDEN + "=0 AND " + Shows.NEXTAIRDATEMS + "<?";
 
+        public static final String SELECTION_STATUS_CONTINUING = Shows.STATUS + "=" + ShowTools.Status.CONTINUING;
+        public static final String SELECTION_STATUS_NO_CONTINUING = Shows.STATUS + "!=" + ShowTools.Status.CONTINUING;
+
         public static final String SELECTION_HIDDEN = Shows.HIDDEN + "=1";
         public static final String SELECTION_NO_HIDDEN = Shows.HIDDEN + "=0";
 

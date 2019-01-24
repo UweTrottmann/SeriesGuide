@@ -35,11 +35,13 @@ class FilterShowsView @JvmOverloads constructor(
         checkBoxUnwatched.setOnClickListener { updateFilterListener() }
         checkBoxUpcoming.setOnClickListener { updateFilterListener() }
         checkBoxHidden.setOnClickListener { updateFilterListener() }
+        checkBoxContinuing.setOnClickListener { updateFilterListener() }
         buttonClearFilters.setOnClickListener {
             checkBoxFavorites.state = null
             checkBoxUnwatched.state = null
             checkBoxUpcoming.state = null
             checkBoxHidden.state = null
+            checkBoxContinuing.state = null
             filterListener?.onFilterUpdate(ShowFilter.allDisabled())
         }
         buttonUpcomingRange.setOnClickListener { filterListener?.onConfigureUpcomingRangeClick() }
@@ -53,6 +55,8 @@ class FilterShowsView @JvmOverloads constructor(
     internal lateinit var checkBoxUpcoming: FilterBox
     @BindView(R.id.checkbox_shows_filter_hidden)
     internal lateinit var checkBoxHidden: FilterBox
+    @BindView(R.id.checkbox_shows_filter_continuing)
+    internal lateinit var checkBoxContinuing: FilterBox
     @BindView(R.id.button_shows_filter_remove)
     internal lateinit var buttonClearFilters: Button
     @BindView(R.id.button_shows_filter_upcoming_range)
@@ -66,7 +70,8 @@ class FilterShowsView @JvmOverloads constructor(
                 checkBoxFavorites.state,
                 checkBoxUnwatched.state,
                 checkBoxUpcoming.state,
-                checkBoxHidden.state
+                checkBoxHidden.state,
+                checkBoxContinuing.state
             )
         )
     }
@@ -76,6 +81,7 @@ class FilterShowsView @JvmOverloads constructor(
         checkBoxUnwatched.state = showFilter.isFilterUnwatched
         checkBoxUpcoming.state = showFilter.isFilterUpcoming
         checkBoxHidden.state = showFilter.isFilterHidden
+        checkBoxContinuing.state = showFilter.isFilterContinuing
     }
 
     fun setFilterListener(filterListener: FilterListener) {
@@ -86,17 +92,19 @@ class FilterShowsView @JvmOverloads constructor(
         val isFilterFavorites: Boolean?,
         val isFilterUnwatched: Boolean?,
         val isFilterUpcoming: Boolean?,
-        val isFilterHidden: Boolean?
+        val isFilterHidden: Boolean?,
+        val isFilterContinuing: Boolean?
     ) {
         fun isAnyFilterEnabled(): Boolean {
             return isFilterFavorites != null || isFilterUnwatched != null
                     || isFilterUpcoming != null || isFilterHidden != null
+                    || isFilterContinuing != null
         }
 
         companion object {
             @JvmStatic
             fun allDisabled(): ShowFilter {
-                return ShowFilter(null, null, null, null)
+                return ShowFilter(null, null, null, null, null)
             }
 
             @JvmStatic
@@ -105,7 +113,8 @@ class FilterShowsView @JvmOverloads constructor(
                     ShowsDistillationSettings.isFilteringFavorites(context),
                     ShowsDistillationSettings.isFilteringUnwatched(context),
                     ShowsDistillationSettings.isFilteringUpcoming(context),
-                    ShowsDistillationSettings.isFilteringHidden(context)
+                    ShowsDistillationSettings.isFilteringHidden(context),
+                    ShowsDistillationSettings.isFilteringContinuing(context)
                 )
             }
         }

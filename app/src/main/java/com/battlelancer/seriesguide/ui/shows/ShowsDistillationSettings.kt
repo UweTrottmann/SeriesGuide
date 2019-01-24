@@ -22,6 +22,7 @@ object ShowsDistillationSettings {
     private const val KEY_FILTER_UNWATCHED = "seriesguide.show_filter.unwatched"
     private const val KEY_FILTER_UPCOMING = "seriesguide.show_filter.upcoming"
     private const val KEY_FILTER_HIDDEN = "seriesguide.show_filter.hidden"
+    private const val KEY_FILTER_CONTINUING = "seriesguide.show_filter.continuing"
 
     /**
      * Builds an appropriate SQL sort statement for sorting shows.
@@ -94,19 +95,27 @@ object ShowsDistillationSettings {
             .mapFilterState()
     }
 
+    internal fun isFilteringContinuing(context: Context): Boolean? {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+            .getInt(KEY_FILTER_CONTINUING, FILTER_DISABLED)
+            .mapFilterState()
+    }
+
     @JvmStatic
     fun saveFilter(
         context: Context,
         isFilteringFavorites: Boolean?,
         isFilteringUnwatched: Boolean?,
         isFilteringUpcoming: Boolean?,
-        isFilteringHidden: Boolean?
+        isFilteringHidden: Boolean?,
+        isFilteringContinuing: Boolean?
     ) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
             putInt(KEY_FILTER_FAVORITES, isFilteringFavorites.mapFilterState())
             putInt(KEY_FILTER_UNWATCHED, isFilteringUnwatched.mapFilterState())
             putInt(KEY_FILTER_UPCOMING, isFilteringUpcoming.mapFilterState())
             putInt(KEY_FILTER_HIDDEN, isFilteringHidden.mapFilterState())
+            putInt(KEY_FILTER_CONTINUING, isFilteringContinuing.mapFilterState())
         }
     }
 
