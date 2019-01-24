@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
@@ -51,12 +52,12 @@ class FilterBox @JvmOverloads constructor(
         }
 
     private fun updateImage() {
-        val vectorRes = when (state) {
-            null -> R.drawable.ic_box_blank_24dp
-            true -> R.drawable.ic_box_plus_24dp
-            false -> R.drawable.ic_box_minus_24dp
+        val vectorDrawable = when (state) {
+            null -> ViewTools.vectorIconActive(context, context.theme, R.drawable.ic_box_blank_white_24dp)
+            true -> VectorDrawableCompat.create(context.resources, R.drawable.ic_box_plus_green_24dp, context.theme)
+            false -> VectorDrawableCompat.create(context.resources, R.drawable.ic_box_minus_red_24dp, context.theme)
         }
-        imageView.setImageDrawable(ViewTools.vectorIconActive(context, context.theme, vectorRes))
+        imageView.setImageDrawable(vectorDrawable)
     }
 
     override fun performClick(): Boolean {
