@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
@@ -84,16 +85,12 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
     private val filterListener = object : FilterShowsView.FilterListener {
         override fun onFilterUpdate(filter: FilterShowsView.ShowFilter) {
             // save new setting
-            PreferenceManager.getDefaultSharedPreferences(activity).edit()
-                .putBoolean(
-                    ShowsDistillationSettings.KEY_FILTER_FAVORITES, filter.isFilterFavorites
-                )
-                .putBoolean(
-                    ShowsDistillationSettings.KEY_FILTER_UNWATCHED, filter.isFilterUnwatched
-                )
-                .putBoolean(ShowsDistillationSettings.KEY_FILTER_UPCOMING, filter.isFilterUpcoming)
-                .putBoolean(ShowsDistillationSettings.KEY_FILTER_HIDDEN, filter.isFilterHidden)
-                .apply()
+            PreferenceManager.getDefaultSharedPreferences(activity).edit {
+                putBoolean(ShowsDistillationSettings.KEY_FILTER_FAVORITES, filter.isFilterFavorites)
+                putBoolean(ShowsDistillationSettings.KEY_FILTER_UNWATCHED, filter.isFilterUnwatched)
+                putBoolean(ShowsDistillationSettings.KEY_FILTER_UPCOMING, filter.isFilterUpcoming)
+                putBoolean(ShowsDistillationSettings.KEY_FILTER_HIDDEN, filter.isFilterHidden)
+            }
 
             // broadcast new filter
             ShowsDistillationSettings.filterLiveData.postValue(filter)
@@ -131,17 +128,17 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
     private val sortOrderListener = object : SortShowsView.SortOrderListener {
         override fun onSortOrderUpdate(showSortOrder: SortShowsView.ShowSortOrder) {
             // save new sort order to preferences
-            PreferenceManager.getDefaultSharedPreferences(activity).edit()
-                .putInt(ShowsDistillationSettings.KEY_SORT_ORDER, showSortOrder.sortOrderId)
-                .putBoolean(
+            PreferenceManager.getDefaultSharedPreferences(activity).edit {
+                putInt(ShowsDistillationSettings.KEY_SORT_ORDER, showSortOrder.sortOrderId)
+                putBoolean(
                     ShowsDistillationSettings.KEY_SORT_FAVORITES_FIRST,
                     showSortOrder.isSortFavoritesFirst
                 )
-                .putBoolean(
+                putBoolean(
                     DisplaySettings.KEY_SORT_IGNORE_ARTICLE,
                     showSortOrder.isSortIgnoreArticles
                 )
-                .apply()
+            }
 
             // broadcast new sort order
             ShowsDistillationSettings.sortOrderLiveData.postValue(showSortOrder)

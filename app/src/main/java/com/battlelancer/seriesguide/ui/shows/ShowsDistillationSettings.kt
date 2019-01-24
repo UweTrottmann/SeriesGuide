@@ -60,6 +60,7 @@ object ShowsDistillationSettings {
     }
 
     internal fun isSortFavoritesFirst(context: Context): Boolean {
+
         return PreferenceManager.getDefaultSharedPreferences(context)
             .getBoolean(KEY_SORT_FAVORITES_FIRST, true)
     }

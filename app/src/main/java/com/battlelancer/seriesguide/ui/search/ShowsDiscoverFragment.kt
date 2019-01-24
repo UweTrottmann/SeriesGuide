@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -271,9 +272,9 @@ class ShowsDiscoverFragment : Fragment() {
         this.languageCode = languageCode
 
         // save selected search language
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
-                .putString(DisplaySettings.KEY_LANGUAGE_SEARCH, languageCode)
-                .apply()
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putString(DisplaySettings.KEY_LANGUAGE_SEARCH, languageCode)
+        }
         Timber.d("Set search language to %s", languageCode)
     }
 
