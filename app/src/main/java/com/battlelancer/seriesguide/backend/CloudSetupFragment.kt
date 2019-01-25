@@ -176,7 +176,7 @@ class CloudSetupFragment : Fragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(event: RemoveCloudAccountDialogFragment.CanceledEvent) {
+    fun onEventMainThread(@Suppress("UNUSED_PARAMETER") event: RemoveCloudAccountDialogFragment.CanceledEvent) {
         setProgressVisible(false)
     }
 
