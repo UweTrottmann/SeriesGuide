@@ -9,6 +9,17 @@ Version 47
 ----------
 *(in development)*
 
+#### 47-beta3
+*(2019-01-25)*
+
+* 🌟 New show list filters that can be set to include (+), exclude (-) or disabled.
+* 🌟 Added filter for continuing shows (exclude to display ended shows).
+* 📝 Show list filter settings are set back to defaults.
+* 🔧 Upcoming range setting moved to button next to upcoming filter.
+* 🔧 Show list filter view scrolls if screen is not tall enough.
+* 📝 Target Android 9.0 (Pie).
+* 📝 Latest translations from crowdin.
+
 #### 47-beta2
 *(2019-01-18)*
 
