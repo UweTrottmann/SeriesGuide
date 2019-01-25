@@ -144,7 +144,6 @@
         <item name="android:windowBackground">@color/background_inverse</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="android:dialogTheme">@style/Theme.SeriesGuide.Light.Dialog</item>
 
         <!-- Remove default window shadow -->
         <item name="android:windowContentOverlay">@null</item>
@@ -188,34 +187,7 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
-    <style name="Theme.SeriesGuide.Dialog" parent="Theme.AppCompat.Dialog">
-        <!-- Copy of attributes relevant for our dialogs -->
-        <item name="colorPrimary">@color/accent_primary</item>
-        <item name="colorPrimaryDark">@color/accent_primary_dark</item>
-        <item name="colorAccent">@color/teal_500</item>
-    </style>
-
-    <style name="Theme.SeriesGuide.Dialog.CheckIn">
-        <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
-    </style>
-
-    <style name="Theme.SeriesGuide.DarkBlue.Dialog" parent="Theme.AppCompat.Dialog">
-        <!-- Copy of attributes relevant for our dialogs -->
-        <item name="colorAccent">@color/teal_500</item>
-    </style>
-
-    <style name="Theme.SeriesGuide.DarkBlue.Dialog.CheckIn">
-        <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
-    </style>
-
-    <style name="Theme.SeriesGuide.Light.Dialog" parent="Theme.AppCompat.Light.Dialog">
-        <!-- Copy of attributes relevant for our dialogs -->
-        <item name="colorPrimary">@color/accent_primary</item>
-        <item name="colorPrimaryDark">@color/accent_primary_dark</item>
-        <item name="colorAccent">@color/teal_500</item>
-    </style>
-
-    <style name="Theme.SeriesGuide.Light.Dialog.CheckIn">
+    <style name="Theme.SeriesGuide.Dialog.CheckIn" parent="ThemeOverlay.AppCompat.Dialog">
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
