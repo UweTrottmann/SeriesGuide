@@ -390,7 +390,7 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(event: ClearSearchHistoryEvent) {
+    fun onEventMainThread(@Suppress("UNUSED_PARAMETER") event: ClearSearchHistoryEvent) {
         searchHistory.clearHistory()
         searchHistoryAdapter.clear()
         // setting text to null seems to fix the dropdown from not clearing

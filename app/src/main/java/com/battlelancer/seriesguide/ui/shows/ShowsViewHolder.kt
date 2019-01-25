@@ -37,6 +37,7 @@ class ShowsViewHolder(
         }
         // set watched button
         CheatSheet.setup(setWatchedButton)
+        @Suppress("UNUSED_ANONYMOUS_PARAMETER")
         setWatchedButton.setOnClickListener { v ->
             showItem?.let {
                 onItemClickListener.onItemSetWatchedClick(it)
