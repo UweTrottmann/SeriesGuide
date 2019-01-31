@@ -390,7 +390,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // hide check-in if not connected to trakt or hexagon is enabled
         val isConnectedToTrakt = TraktCredentials.get(activity).hasCredentials()
-        val hideCheckIn = isConnectedToTrakt && !HexagonSettings.isEnabled(activity)
+        val hideCheckIn = !isConnectedToTrakt || HexagonSettings.isEnabled(activity)
         buttonMovieCheckIn.isGone = hideCheckIn
         // hide streaming search if turned off
         val hideStreamingSearch = StreamingSearch.isTurnedOff(requireContext())
