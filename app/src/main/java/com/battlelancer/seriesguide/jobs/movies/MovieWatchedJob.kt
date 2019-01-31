@@ -17,10 +17,6 @@ class MovieWatchedJob(
         return MovieTools.setWatchedFlag(context, movieTmdbId, isWatched)
     }
 
-    override fun supportsHexagon(): Boolean {
-        return false // hexagon does only have watchlist and collection flags
-    }
-
     override fun getConfirmationText(context: Context): String {
         return context.getString(
             if (isWatched) R.string.action_watched else R.string.action_unwatched

@@ -5,6 +5,8 @@ import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.jobs.episodes.JobAction
 import com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_COLLECTION_ADD
 import com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_COLLECTION_REMOVE
+import com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHED_REMOVE
+import com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHED_SET
 import com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHLIST_ADD
 import com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHLIST_REMOVE
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor
@@ -55,6 +57,8 @@ class HexagonMovieJob(
             MOVIE_COLLECTION_REMOVE -> movie.isInCollection = false
             MOVIE_WATCHLIST_ADD -> movie.isInWatchlist = true
             MOVIE_WATCHLIST_REMOVE -> movie.isInWatchlist = false
+            MOVIE_WATCHED_SET -> movie.isWatched = true
+            MOVIE_WATCHED_REMOVE -> movie.isWatched = false
             else -> throw IllegalArgumentException("Action $action not supported.")
         }
 
