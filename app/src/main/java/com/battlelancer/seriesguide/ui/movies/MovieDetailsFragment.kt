@@ -397,28 +397,23 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         buttonMovieStreamingSearch.isGone = hideStreamingSearch
         dividerMovieButtons.isGone = hideCheckIn && hideStreamingSearch
 
-        // watched button (only supported when connected to trakt)
+        // watched button
         val theme = activity!!.theme
         buttonMovieWatched.also {
-            if (isConnectedToTrakt) {
-                val textRes = if (isWatched) R.string.action_unwatched else R.string.action_watched
-                it.setText(textRes)
-                CheatSheet.setup(it, textRes)
-                if (isWatched) {
-                    ViewTools.setVectorDrawableTop(theme, it, R.drawable.ic_watched_24dp)
-                } else {
-                    ViewTools.setVectorIconTop(theme, it, R.drawable.ic_watch_black_24dp)
-                }
-                it.setOnClickListener {
-                    if (isWatched) {
-                        MovieTools.unwatchedMovie(context, tmdbId)
-                    } else {
-                        MovieTools.watchedMovie(context, tmdbId, inWatchlist)
-                    }
-                }
-                it.isGone = false
+            val textRes = if (isWatched) R.string.action_unwatched else R.string.action_watched
+            it.setText(textRes)
+            CheatSheet.setup(it, textRes)
+            if (isWatched) {
+                ViewTools.setVectorDrawableTop(theme, it, R.drawable.ic_watched_24dp)
             } else {
-                it.isGone = true
+                ViewTools.setVectorIconTop(theme, it, R.drawable.ic_watch_black_24dp)
+            }
+            it.setOnClickListener {
+                if (isWatched) {
+                    MovieTools.unwatchedMovie(context, tmdbId)
+                } else {
+                    MovieTools.watchedMovie(context, tmdbId, inWatchlist)
+                }
             }
         }
 
