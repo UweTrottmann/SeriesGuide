@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.ContentValues;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.uwetrottmann.tmdb2.entities.Movie;
@@ -21,6 +22,7 @@ public class MovieDetails {
 
     private int userRating;
 
+    @Nullable
     public Ratings traktRatings() {
         return traktRatings;
     }
@@ -29,6 +31,7 @@ public class MovieDetails {
         this.traktRatings = traktRatings;
     }
 
+    @Nullable
     public Movie tmdbMovie() {
         return tmdbMovie;
     }
