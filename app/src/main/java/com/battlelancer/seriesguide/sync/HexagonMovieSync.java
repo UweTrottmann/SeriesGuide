@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Set;
 import timber.log.Timber;
 
-public class HexagonMovieSync {
+class HexagonMovieSync {
 
     private Context context;
     private HexagonTools hexagonTools;
@@ -37,12 +37,16 @@ public class HexagonMovieSync {
 
     /**
      * Downloads movies from hexagon, updates existing movies with new properties, removes
-     * movies that are neither in collection or watchlist.
+     * movies that are neither in collection or watchlist or watched.
      *
-     * <p> Adds movie tmdb ids to the respective collection or watchlist set.
+     * <p> Adds movie tmdb ids of new movies to the respective collection, watchlist or watched set.
      */
-    public boolean download(@NonNull Set<Integer> newCollectionMovies,
-            @NonNull Set<Integer> newWatchlistMovies, boolean hasMergedMovies) {
+    boolean download(
+            @NonNull Set<Integer> newCollectionMovies,
+            @NonNull Set<Integer> newWatchlistMovies,
+            @NonNull Set<Integer> newWatchedMovies,
+            boolean hasMergedMovies
+    ) {
         List<Movie> movies;
         boolean hasMoreMovies = true;
         String cursor = null;
@@ -109,20 +113,35 @@ public class HexagonMovieSync {
             ArrayList<ContentProviderOperation> batch = new ArrayList<>();
             for (com.uwetrottmann.seriesguide.backend.movies.model.Movie movie : movies) {
                 if (localMovies.contains(movie.getTmdbId())) {
-                    // movie is in database, update collection and watchlist flags
-                    // note: never remove a movie, as it may store a trakt-only watched flag
-                    ContentValues values = new ContentValues();
-                    if (movie.getIsInCollection() != null) {
-                        values.put(SeriesGuideContract.Movies.IN_COLLECTION,
-                                movie.getIsInCollection() ? 1 : 0);
+                    // movie is in database
+                    if (movie.getIsInCollection() != null && !movie.getIsInCollection()
+                            && movie.getIsInWatchlist() != null && !movie.getIsInWatchlist()
+                            && movie.getIsWatched() != null && !movie.getIsWatched()) {
+                        // if no longer in watchlist, collection or watched: remove movie
+                        // note: this is backwards compatible with watched movies downloaded
+                        // by trakt as those will have a null watched flag on Cloud
+                        batch.add(ContentProviderOperation.newDelete(
+                                SeriesGuideContract.Movies.buildMovieUri(movie.getTmdbId()))
+                                .build());
+                    } else {
+                        // update collection, watchlist and watched flags
+                        ContentValues values = new ContentValues();
+                        if (movie.getIsInCollection() != null) {
+                            values.put(SeriesGuideContract.Movies.IN_COLLECTION,
+                                    movie.getIsInCollection() ? 1 : 0);
+                        }
+                        if (movie.getIsInWatchlist() != null) {
+                            values.put(SeriesGuideContract.Movies.IN_WATCHLIST,
+                                    movie.getIsInWatchlist() ? 1 : 0);
+                        }
+                        if (movie.getIsWatched() != null) {
+                            values.put(SeriesGuideContract.Movies.WATCHED,
+                                    movie.getIsWatched() ? 1 : 0);
+                        }
+                        batch.add(ContentProviderOperation.newUpdate(
+                                SeriesGuideContract.Movies.buildMovieUri(movie.getTmdbId()))
+                                .withValues(values).build());
                     }
-                    if (movie.getIsInWatchlist() != null) {
-                        values.put(SeriesGuideContract.Movies.IN_WATCHLIST,
-                                movie.getIsInWatchlist() ? 1 : 0);
-                    }
-                    batch.add(ContentProviderOperation.newUpdate(
-                            SeriesGuideContract.Movies.buildMovieUri(movie.getTmdbId()))
-                            .withValues(values).build());
                 } else {
                     // schedule movie to be added
                     if (movie.getIsInCollection() != null && movie.getIsInCollection()) {
@@ -130,6 +149,9 @@ public class HexagonMovieSync {
                     }
                     if (movie.getIsInWatchlist() != null && movie.getIsInWatchlist()) {
                         newWatchlistMovies.add(movie.getTmdbId());
+                    }
+                    if (movie.getIsWatched() != null && movie.getIsWatched()) {
+                        newWatchedMovies.add(movie.getTmdbId());
                     }
                 }
             }
@@ -156,7 +178,7 @@ public class HexagonMovieSync {
     /**
      * Uploads all local movies to Hexagon.
      */
-    public boolean uploadAll() {
+    boolean uploadAll() {
         Timber.d("uploadAll: uploading all movies");
 
         List<Movie> movies = buildMovieList();
@@ -191,24 +213,25 @@ public class HexagonMovieSync {
     private List<Movie> buildMovieList() {
         List<Movie> movies = new ArrayList<>();
 
-        // query for movies in lists (excluding movies that are only watched)
-        Cursor moviesInLists = context.getContentResolver().query(
+        // query for movies in lists or that are watched
+        Cursor moviesInListsOrWatched = context.getContentResolver().query(
                 SeriesGuideContract.Movies.CONTENT_URI,
-                SeriesGuideContract.Movies.PROJECTION_IN_LIST,
-                SeriesGuideContract.Movies.SELECTION_IN_LIST, null, null);
-        if (moviesInLists == null) {
+                SeriesGuideContract.Movies.PROJECTION_IN_LIST_OR_WATCHED,
+                SeriesGuideContract.Movies.SELECTION_IN_LIST_OR_WATCHED, null, null);
+        if (moviesInListsOrWatched == null) {
             return null;
         }
 
-        while (moviesInLists.moveToNext()) {
+        while (moviesInListsOrWatched.moveToNext()) {
             Movie movie = new Movie();
-            movie.setTmdbId(moviesInLists.getInt(0));
-            movie.setIsInCollection(moviesInLists.getInt(1) == 1);
-            movie.setIsInWatchlist(moviesInLists.getInt(2) == 1);
+            movie.setTmdbId(moviesInListsOrWatched.getInt(0));
+            movie.setIsInCollection(moviesInListsOrWatched.getInt(1) == 1);
+            movie.setIsInWatchlist(moviesInListsOrWatched.getInt(2) == 1);
+            movie.setIsWatched(moviesInListsOrWatched.getInt(3) == 1);
             movies.add(movie);
         }
 
-        moviesInLists.close();
+        moviesInListsOrWatched.close();
 
         return movies;
     }

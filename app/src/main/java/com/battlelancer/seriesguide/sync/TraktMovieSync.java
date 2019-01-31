@@ -194,7 +194,7 @@ public class TraktMovieSync {
         // add movies from trakt missing locally
         // all local movies were removed from trakt collection and watchlist,
         // so they only contain movies missing locally
-        boolean addingSuccessful = movieTools.addMovies(collection, watchlist);
+        boolean addingSuccessful = movieTools.addMovies(collection, watchlist, null);
         if (addingSuccessful) {
             // store last activity timestamps
             TraktSettings.storeLastMoviesChangedAt(context, activity.collected_at,
