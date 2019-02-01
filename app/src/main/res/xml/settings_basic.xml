@@ -4,19 +4,24 @@
 
     <CheckBoxPreference
         app:defaultValue="False"
+        app:iconSpaceReserved="false"
         app:key="com.battlelancer.seriesguide.trakt.quickcheckin"
         app:summary="@string/pref_quick_checkin_summary"
         app:title="@string/pref_quick_checkin" />
 
     <Preference
+        app:iconSpaceReserved="false"
         app:key="com.battlelancer.seriesguide.justwatch"
         app:title="@string/action_stream"
         tools:summary="@string/action_turn_off" />
 
-    <PreferenceCategory app:title="@string/shows">
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/shows">
 
         <CheckBoxPreference
             app:defaultValue="False"
+            app:iconSpaceReserved="false"
             app:key="com.battlelancer.seriesguide.PREVENT_SPOILERS"
             app:summary="@string/pref_nospoilers_summary"
             app:title="@string/pref_nospoilers" />
@@ -25,28 +30,33 @@
             app:defaultValue="@string/show_default_language"
             app:entries="@array/languagesShows"
             app:entryValues="@array/languageCodesShows"
+            app:iconSpaceReserved="false"
             app:key="com.battlelancer.seriesguide.languageFallback"
             app:title="@string/pref_language_fallback" />
 
         <CheckBoxPreference
             app:defaultValue="False"
+            app:iconSpaceReserved="false"
             app:key="onlyFutureEpisodes"
             app:summary="@string/pref_onlyfuturesummary"
             app:title="@string/pref_onlyfuture" />
 
         <CheckBoxPreference
             app:defaultValue="False"
+            app:iconSpaceReserved="false"
             app:key="onlySeasonEpisodes"
             app:summary="@string/pref_onlyseasonepssummary"
             app:title="@string/pref_onlyseasoneps" />
 
         <CheckBoxPreference
             app:defaultValue="False"
+            app:iconSpaceReserved="false"
             app:key="com.battlelancer.seriesguide.shows.exactdate"
             app:summary="@string/pref_exactdates_summary"
             app:title="@string/pref_exactdates" />
 
         <Preference
+            app:iconSpaceReserved="false"
             app:key="com.battlelancer.seriesguide.timeoffset"
             app:title="@string/pref_offset" />
 

@@ -3,32 +3,38 @@
 
     <SwitchPreferenceCompat
         app:defaultValue="true"
+        app:iconSpaceReserved="false"
         app:key="com.battlelancer.seriesguide.notifications"
         app:summary="@string/pref_notificationssummary"
         app:title="@string/pref_notifications" />
 
     <Preference
+        app:iconSpaceReserved="false"
         app:key="com.battlelancer.seriesguide.notifications.threshold"
         app:title="@string/pref_notifications_treshold" />
 
     <Preference
+        app:iconSpaceReserved="false"
         app:key="com.battlelancer.seriesguide.notifications.shows"
         app:title="@string/pref_notifications_select_shows" />
 
     <CheckBoxPreference
         app:defaultValue="true"
+        app:iconSpaceReserved="false"
         app:key="@string/pref_key_notifications_hidden"
         app:summary="@string/pref_notifications_hidden_summary"
         app:title="@string/pref_notifications_hidden" />
 
     <CheckBoxPreference
         app:defaultValue="false"
+        app:iconSpaceReserved="false"
         app:key="com.battlelancer.seriesguide.notifications.vibrate"
         app:summary="@string/pref_vibratesummary"
         app:title="@string/pref_vibrate" />
 
     <Preference
         app:defaultValue="content://settings/system/notification_sound"
+        app:iconSpaceReserved="false"
         app:key="com.battlelancer.seriesguide.notifications.ringtone"
         app:title="@string/pref_ringtone" />
 
