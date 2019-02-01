@@ -1,99 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
-        android:key="com.battlelancer.seriesguide.settings.upgrade"
-        android:title="@string/action_upgrade" />
+        app:key="com.battlelancer.seriesguide.settings.upgrade"
+        app:title="@string/action_upgrade" />
 
-    <SwitchPreference
-        android:defaultValue="True"
-        android:key="com.battlelancer.seriesguide.autoupdate"
-        android:summary="@string/pref_autoupdatesummary"
-        android:title="@string/pref_autoupdate" />
+    <SwitchPreferenceCompat
+        app:defaultValue="True"
+        app:key="com.battlelancer.seriesguide.autoupdate"
+        app:summary="@string/pref_autoupdatesummary"
+        app:title="@string/pref_autoupdate" />
 
     <CheckBoxPreference
-        android:defaultValue="False"
-        android:key="com.battlelancer.seriesguide.autoupdatewlanonly"
-        android:title="@string/pref_updatewifionly"
-        android:summary="@string/pref_updatewifionlysummary" />
+        app:defaultValue="False"
+        app:key="com.battlelancer.seriesguide.autoupdatewlanonly"
+        app:summary="@string/pref_updatewifionlysummary"
+        app:title="@string/pref_updatewifionly" />
 
     <Preference
-        android:key="screen_notifications"
-        android:title="@string/pref_notifications" />
+        app:key="screen_notifications"
+        app:title="@string/pref_notifications" />
 
-    <PreferenceCategory android:title="@string/prefs_category_sharing">
-
-        <Preference
-            android:key="com.battlelancer.seriesguide.settings.cloud"
-            android:title="@string/hexagon" />
+    <PreferenceCategory app:title="@string/prefs_category_sharing">
 
         <Preference
-            android:key="com.battlelancer.seriesguide.settings.trakt"
-            android:title="@string/trakt" />
+            app:key="com.battlelancer.seriesguide.settings.cloud"
+            app:title="@string/hexagon" />
+
+        <Preference
+            app:key="com.battlelancer.seriesguide.settings.trakt"
+            app:title="@string/trakt" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/backup">
+    <PreferenceCategory app:title="@string/backup">
 
         <Preference
-            android:key="com.battlelancer.seriesguide.settings.autobackup"
-            android:summary="@string/pref_autobackupsummary"
-            android:title="@string/pref_autobackup" />
+            app:key="com.battlelancer.seriesguide.settings.autobackup"
+            app:summary="@string/pref_autobackupsummary"
+            app:title="@string/pref_autobackup" />
 
         <Preference
-            android:key="com.battlelancer.seriesguide.settings.dataliberation"
-            android:summary="@string/backup_summary"
-            android:title="@string/backup" />
+            app:key="com.battlelancer.seriesguide.settings.dataliberation"
+            app:summary="@string/backup_summary"
+            app:title="@string/backup" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_appearance">
+    <PreferenceCategory app:title="@string/pref_appearance">
         <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/themeSelection"
-            android:entryValues="@array/themeSelectionData"
-            android:key="com.battlelancer.seriesguide.theme"
-            android:title="@string/pref_theme" />
+            app:defaultValue="0"
+            app:entries="@array/themeSelection"
+            app:entryValues="@array/themeSelectionData"
+            app:key="com.battlelancer.seriesguide.theme"
+            app:title="@string/pref_theme" />
         <ListPreference
-            android:defaultValue="default"
-            android:entries="@array/numbers"
-            android:entryValues="@array/numberData"
-            android:key="numberformat"
-            android:title="@string/pref_number" />
+            app:defaultValue="default"
+            app:entries="@array/numbers"
+            app:entryValues="@array/numberData"
+            app:key="numberformat"
+            app:title="@string/pref_number" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_other">
+    <PreferenceCategory app:title="@string/pref_other">
 
         <Preference
-            android:key="screen_basic"
-            android:title="@string/prefs_category_basic" />
+            app:key="screen_basic"
+            app:title="@string/prefs_category_basic" />
 
         <Preference
-            android:key="clearCache"
-            android:summary="@string/clear_cache_summary"
-            android:title="@string/clear_cache" />
+            app:key="clearCache"
+            app:summary="@string/clear_cache_summary"
+            app:title="@string/clear_cache" />
 
         <Preference
-            android:summary="@string/pref_communitysummary"
-            android:title="@string/pref_community" >
+            app:summary="@string/pref_communitysummary"
+            app:title="@string/pref_community">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://discuss.seriesgui.de" />
         </Preference>
 
         <Preference
-            android:summary="@string/pref_translatesummary"
-            android:title="@string/pref_translate" >
+            app:summary="@string/pref_translatesummary"
+            app:title="@string/pref_translate">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://crowdin.net/project/seriesguide-translations/invite" />
         </Preference>
 
         <Preference
-            android:key="aboutPref"
-            android:title="@string/prefs_category_about" />
+            app:key="aboutPref"
+            app:title="@string/prefs_category_about" />
 
     </PreferenceCategory>
 
-</PreferenceScreen>
+</androidx.preference.PreferenceScreen>
