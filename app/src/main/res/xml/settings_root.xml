@@ -4,78 +4,102 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
+        app:iconSpaceReserved="false"
         app:key="com.battlelancer.seriesguide.settings.upgrade"
         app:title="@string/action_upgrade" />
 
     <SwitchPreferenceCompat
         app:defaultValue="True"
+        app:iconSpaceReserved="false"
         app:key="com.battlelancer.seriesguide.autoupdate"
         app:summary="@string/pref_autoupdatesummary"
         app:title="@string/pref_autoupdate" />
 
     <CheckBoxPreference
         app:defaultValue="False"
+        app:iconSpaceReserved="false"
         app:key="com.battlelancer.seriesguide.autoupdatewlanonly"
         app:summary="@string/pref_updatewifionlysummary"
         app:title="@string/pref_updatewifionly" />
 
     <Preference
+        app:iconSpaceReserved="false"
         app:key="screen_notifications"
         app:title="@string/pref_notifications" />
 
-    <PreferenceCategory app:title="@string/prefs_category_sharing">
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/prefs_category_sharing">
 
         <Preference
+            app:iconSpaceReserved="false"
             app:key="com.battlelancer.seriesguide.settings.cloud"
             app:title="@string/hexagon" />
 
         <Preference
+            app:iconSpaceReserved="false"
             app:key="com.battlelancer.seriesguide.settings.trakt"
             app:title="@string/trakt" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/backup">
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/backup">
 
         <Preference
+            app:iconSpaceReserved="false"
             app:key="com.battlelancer.seriesguide.settings.autobackup"
             app:summary="@string/pref_autobackupsummary"
             app:title="@string/pref_autobackup" />
 
         <Preference
+            app:iconSpaceReserved="false"
             app:key="com.battlelancer.seriesguide.settings.dataliberation"
             app:summary="@string/backup_summary"
             app:title="@string/backup" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/pref_appearance">
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_appearance">
+
         <ListPreference
             app:defaultValue="0"
             app:entries="@array/themeSelection"
             app:entryValues="@array/themeSelectionData"
+            app:iconSpaceReserved="false"
             app:key="com.battlelancer.seriesguide.theme"
             app:title="@string/pref_theme" />
+
         <ListPreference
             app:defaultValue="default"
             app:entries="@array/numbers"
             app:entryValues="@array/numberData"
+            app:iconSpaceReserved="false"
             app:key="numberformat"
             app:title="@string/pref_number" />
+
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/pref_other">
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_other">
 
         <Preference
+            app:iconSpaceReserved="false"
             app:key="screen_basic"
             app:title="@string/prefs_category_basic" />
 
         <Preference
+            app:iconSpaceReserved="false"
             app:key="clearCache"
             app:summary="@string/clear_cache_summary"
             app:title="@string/clear_cache" />
 
         <Preference
+            app:iconSpaceReserved="false"
             app:summary="@string/pref_communitysummary"
             app:title="@string/pref_community">
             <intent
@@ -84,6 +108,7 @@
         </Preference>
 
         <Preference
+            app:iconSpaceReserved="false"
             app:summary="@string/pref_translatesummary"
             app:title="@string/pref_translate">
             <intent
@@ -92,6 +117,7 @@
         </Preference>
 
         <Preference
+            app:iconSpaceReserved="false"
             app:key="aboutPref"
             app:title="@string/prefs_category_about" />
 
