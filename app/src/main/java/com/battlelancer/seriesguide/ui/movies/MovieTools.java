@@ -199,7 +199,7 @@ public class MovieTools {
             return false;
         }
         if (!movieInDatabase && flag) {
-            // Only add, never remove shells. Next trakt watched movie sync will take care of that.
+            // Only add, never remove shells. Next Cloud or trakt movie sync will take care of that.
             return addMovieWatchedShell(context.getContentResolver(), movieTmdbId);
         } else {
             return updateMovie(context, movieTmdbId, SeriesGuideContract.Movies.WATCHED, flag);
