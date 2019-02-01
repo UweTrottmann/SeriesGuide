@@ -45,7 +45,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dialog.window?.setGravity(Gravity.TOP or Gravity.END)
+        dialog?.window?.setGravity(Gravity.TOP or Gravity.END)
 
         val view = inflater.inflate(R.layout.dialog_shows_distillation, container, false)
         unbinder = ButterKnife.bind(this, view)

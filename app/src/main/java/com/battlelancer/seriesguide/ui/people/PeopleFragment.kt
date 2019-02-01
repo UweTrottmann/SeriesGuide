@@ -88,13 +88,13 @@ class PeopleFragment : Fragment() {
         }
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
 
         try {
             onShowPersonListener = context as OnShowPersonListener
         } catch (e: ClassCastException) {
-            throw ClassCastException(context!!.toString() + " must implement OnShowPersonListener")
+            throw ClassCastException("$context must implement OnShowPersonListener")
         }
 
     }

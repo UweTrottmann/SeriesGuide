@@ -234,13 +234,13 @@ class ShowFragment : ScopedFragment() {
         unbinder.unbind()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.show_menu, menu)
+        inflater.inflate(R.menu.show_menu, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             R.id.menu_show_manage_lists -> {
                 ManageListsDialogFragment.show(fragmentManager, showTvdbId, ListItemTypes.SHOW)
                 true

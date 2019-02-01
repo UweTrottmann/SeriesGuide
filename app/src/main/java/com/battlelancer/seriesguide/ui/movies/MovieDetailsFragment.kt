@@ -331,8 +331,8 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val itemId = item?.itemId
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.itemId
         if (itemId == R.id.menu_movie_share) {
             movieDetails?.tmdbMovie()?.let { ShareUtils.shareMovie(activity, tmdbId, it.title) }
             return true
