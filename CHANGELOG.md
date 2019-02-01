@@ -12,6 +12,14 @@ Version 47
 #### 47-beta3
 *(2019-01-25)*
 
+* 🌟 Set movies watched (previously only when connected to trakt).
+* 🌟 Cloud: sync watched movies. If trakt is connected, too, will upload existing watched movies, 
+  then use Cloud to sync them going forward. Watched changes are still sent to trakt.
+* 📝 Latest translations from crowdin.
+
+#### 47-beta3
+*(2019-01-25)*
+
 * 🌟 New show list filters that can be set to include (+), exclude (-) or disabled.
 * 🌟 Added filter for continuing shows (exclude to display ended shows).
 * 📝 Show list filter settings are set back to defaults.
