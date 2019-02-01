@@ -1,0 +1,83 @@
+package com.battlelancer.seriesguide.ui
+
+import android.os.Bundle
+import android.view.MenuItem
+import androidx.annotation.StyleRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.ui.preferences.SgPreferencesFragment
+
+/**
+ * Allows tweaking of various SeriesGuide settings. Does NOT inherit
+ * from [com.battlelancer.seriesguide.ui.BaseActivity] to avoid
+ * handling actions which might be confusing nwhile adjusting settings.
+ */
+class SeriesGuidePreferences : AppCompatActivity() {
+
+    class UpdateSummariesEvent
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(SeriesGuidePreferences.THEME)
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_settings)
+        setupActionBar()
+
+        if (savedInstanceState == null) {
+            val f = SgPreferencesFragment()
+            val ft = fragmentManager.beginTransaction()
+            ft.add(R.id.containerSettings, f)
+            ft.commit()
+
+            // open a sub settings screen if requested
+            val settingsScreen = intent.getStringExtra(EXTRA_SETTINGS_SCREEN)
+            if (settingsScreen != null) {
+                switchToSettings(settingsScreen)
+            }
+        }
+    }
+
+    private fun setupActionBar() {
+        val toolbar = findViewById<Toolbar>(R.id.sgToolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onBackPressed() {
+        // Because we use the platform fragment manager we need to pop fragments on our own
+        if (!fragmentManager.popBackStackImmediate()) {
+            super.onBackPressed()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    fun switchToSettings(settingsId: String) {
+        val f = SgPreferencesFragment().apply {
+            arguments = Bundle().apply {
+                putString(EXTRA_SETTINGS_SCREEN, settingsId)
+            }
+        }
+        val ft = fragmentManager.beginTransaction()
+        ft.replace(R.id.containerSettings, f)
+        ft.addToBackStack(null)
+        ft.commit()
+    }
+
+    companion object {
+
+        const val EXTRA_SETTINGS_SCREEN = "settingsScreen"
+
+        @StyleRes
+        @JvmField
+        var THEME = R.style.Theme_SeriesGuide
+    }
+}
