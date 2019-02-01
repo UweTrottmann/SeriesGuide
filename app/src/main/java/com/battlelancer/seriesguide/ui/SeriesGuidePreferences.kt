@@ -24,9 +24,8 @@ class SeriesGuidePreferences : AppCompatActivity() {
         setupActionBar()
 
         if (savedInstanceState == null) {
-            val f = SgPreferencesFragment()
-            val ft = fragmentManager.beginTransaction()
-            ft.add(R.id.containerSettings, f)
+            val ft = supportFragmentManager.beginTransaction()
+            ft.add(R.id.containerSettings, SgPreferencesFragment())
             ft.commit()
 
             // open a sub settings screen if requested
@@ -44,8 +43,9 @@ class SeriesGuidePreferences : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        // Because we use the platform fragment manager we need to pop fragments on our own
-        if (!fragmentManager.popBackStackImmediate()) {
+        // Because the multi-screen support built into preferences library is not used,
+        // need to pop fragments manually
+        if (!supportFragmentManager.popBackStackImmediate()) {
             super.onBackPressed()
         }
     }
@@ -66,7 +66,7 @@ class SeriesGuidePreferences : AppCompatActivity() {
                 putString(EXTRA_SETTINGS_SCREEN, settingsId)
             }
         }
-        val ft = fragmentManager.beginTransaction()
+        val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.containerSettings, f)
         ft.addToBackStack(null)
         ft.commit()

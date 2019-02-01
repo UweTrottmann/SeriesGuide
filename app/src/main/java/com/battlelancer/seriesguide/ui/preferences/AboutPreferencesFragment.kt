@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui.preferences
 
-import android.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
@@ -18,9 +18,6 @@ import com.battlelancer.seriesguide.util.Utils
 /**
  * Displays information about the app, the developer and licence information about content and
  * libraries.
- *
- * Note: this is a platform, not a support library fragment, so it can be used right within
- * [com.battlelancer.seriesguide.ui.SeriesGuidePreferences].
  */
 class AboutPreferencesFragment : Fragment() {
 

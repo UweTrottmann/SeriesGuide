@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <CheckBoxPreference
-        android:defaultValue="False"
-        android:key="com.battlelancer.seriesguide.trakt.quickcheckin"
-        android:summary="@string/pref_quick_checkin_summary"
-        android:title="@string/pref_quick_checkin" />
+        app:defaultValue="False"
+        app:key="com.battlelancer.seriesguide.trakt.quickcheckin"
+        app:summary="@string/pref_quick_checkin_summary"
+        app:title="@string/pref_quick_checkin" />
 
     <Preference
-        android:key="com.battlelancer.seriesguide.justwatch"
-        android:title="@string/action_stream"
+        app:key="com.battlelancer.seriesguide.justwatch"
+        app:title="@string/action_stream"
         tools:summary="@string/action_turn_off" />
 
-    <PreferenceCategory android:title="@string/shows">
+    <PreferenceCategory app:title="@string/shows">
 
         <CheckBoxPreference
-            android:defaultValue="False"
-            android:key="com.battlelancer.seriesguide.PREVENT_SPOILERS"
-            android:summary="@string/pref_nospoilers_summary"
-            android:title="@string/pref_nospoilers" />
+            app:defaultValue="False"
+            app:key="com.battlelancer.seriesguide.PREVENT_SPOILERS"
+            app:summary="@string/pref_nospoilers_summary"
+            app:title="@string/pref_nospoilers" />
 
         <ListPreference
-            android:defaultValue="@string/show_default_language"
-            android:entries="@array/languagesShows"
-            android:entryValues="@array/languageCodesShows"
-            android:key="com.battlelancer.seriesguide.languageFallback"
-            android:title="@string/pref_language_fallback" />
+            app:defaultValue="@string/show_default_language"
+            app:entries="@array/languagesShows"
+            app:entryValues="@array/languageCodesShows"
+            app:key="com.battlelancer.seriesguide.languageFallback"
+            app:title="@string/pref_language_fallback" />
 
         <CheckBoxPreference
-            android:defaultValue="False"
-            android:key="onlyFutureEpisodes"
-            android:summary="@string/pref_onlyfuturesummary"
-            android:title="@string/pref_onlyfuture" />
+            app:defaultValue="False"
+            app:key="onlyFutureEpisodes"
+            app:summary="@string/pref_onlyfuturesummary"
+            app:title="@string/pref_onlyfuture" />
 
         <CheckBoxPreference
-            android:defaultValue="False"
-            android:key="onlySeasonEpisodes"
-            android:summary="@string/pref_onlyseasonepssummary"
-            android:title="@string/pref_onlyseasoneps" />
+            app:defaultValue="False"
+            app:key="onlySeasonEpisodes"
+            app:summary="@string/pref_onlyseasonepssummary"
+            app:title="@string/pref_onlyseasoneps" />
 
         <CheckBoxPreference
-            android:defaultValue="False"
-            android:key="com.battlelancer.seriesguide.shows.exactdate"
-            android:summary="@string/pref_exactdates_summary"
-            android:title="@string/pref_exactdates" />
+            app:defaultValue="False"
+            app:key="com.battlelancer.seriesguide.shows.exactdate"
+            app:summary="@string/pref_exactdates_summary"
+            app:title="@string/pref_exactdates" />
 
         <Preference
-            android:key="com.battlelancer.seriesguide.timeoffset"
-            android:title="@string/pref_offset" />
+            app:key="com.battlelancer.seriesguide.timeoffset"
+            app:title="@string/pref_offset" />
 
     </PreferenceCategory>
 
-</PreferenceScreen>
+</androidx.preference.PreferenceScreen>
