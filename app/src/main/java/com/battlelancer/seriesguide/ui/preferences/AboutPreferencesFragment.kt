@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui
+package com.battlelancer.seriesguide.ui.preferences
 
 import android.app.Fragment
 import android.os.Bundle
@@ -20,9 +20,9 @@ import com.battlelancer.seriesguide.util.Utils
  * libraries.
  *
  * Note: this is a platform, not a support library fragment, so it can be used right within
- * [SeriesGuidePreferences].
+ * [com.battlelancer.seriesguide.ui.SeriesGuidePreferences].
  */
-class AboutSettingsFragment : Fragment() {
+class AboutPreferencesFragment : Fragment() {
 
     @BindView(R.id.textViewAboutVersion)
     internal lateinit var textVersion: TextView
