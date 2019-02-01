@@ -211,12 +211,12 @@ class ShowsDiscoverFragment : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.tvdb_add_menu, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.tvdb_add_menu, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val itemId = item?.itemId
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.itemId
         if (itemId == R.id.menu_action_shows_search_clear_history) {
             // tell the hosting activity to clear the search view history
             EventBus.getDefault().post(SearchActivity.ClearSearchHistoryEvent())
