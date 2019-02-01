@@ -14,8 +14,8 @@
  "description": "Store and retrieve a users movies.",
  "discoveryVersion": "v1",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/search-16.gif",
-  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+  "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
  },
  "id": "movies:v2",
  "kind": "discovery#restDescription",
@@ -126,6 +126,9 @@
      "type": "boolean"
     },
     "isInWatchlist": {
+     "type": "boolean"
+    },
+    "isWatched": {
      "type": "boolean"
     },
     "tmdbId": {

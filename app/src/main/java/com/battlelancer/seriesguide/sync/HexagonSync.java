@@ -6,10 +6,10 @@ import android.database.Cursor;
 import android.preference.PreferenceManager;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.ListsActivity;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
+import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.HashMap;
@@ -163,9 +163,14 @@ public class HexagonSync {
         // download movies and apply property changes, build list of new movies
         Set<Integer> newCollectionMovies = new HashSet<>();
         Set<Integer> newWatchlistMovies = new HashSet<>();
+        Set<Integer> newWatchedMovies = new HashSet<>();
         HexagonMovieSync movieSync = new HexagonMovieSync(context, hexagonTools);
-        boolean downloadSuccessful = movieSync.download(newCollectionMovies, newWatchlistMovies,
-                hasMergedMovies);
+        boolean downloadSuccessful = movieSync.download(
+                newCollectionMovies,
+                newWatchlistMovies,
+                newWatchedMovies,
+                hasMergedMovies
+        );
         if (!downloadSuccessful) {
             return false;
         }
@@ -178,7 +183,8 @@ public class HexagonSync {
         }
 
         // add new movies with the just downloaded properties
-        boolean addingSuccessful = movieTools.addMovies(newCollectionMovies, newWatchlistMovies);
+        boolean addingSuccessful = movieTools
+                .addMovies(newCollectionMovies, newWatchlistMovies, newWatchedMovies);
         if (!hasMergedMovies) {
             // ensure all missing movies from Hexagon are added before merge is complete
             if (!addingSuccessful) {

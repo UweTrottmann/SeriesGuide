@@ -1044,6 +1044,14 @@ public class SeriesGuideContract {
                 IN_WATCHLIST // 2
         };
 
+        public static final String SELECTION_IN_LIST_OR_WATCHED = SELECTION_IN_LIST + " OR " + Movies.WATCHED + "=1";
+        public static final String[] PROJECTION_IN_LIST_OR_WATCHED = {
+                TMDB_ID, // 0
+                IN_COLLECTION, // 1
+                IN_WATCHLIST, // 2
+                WATCHED // 3
+        };
+
         public static final String SELECTION_UNWATCHED = Movies.WATCHED + "=0";
 
         /** Default sort order. */

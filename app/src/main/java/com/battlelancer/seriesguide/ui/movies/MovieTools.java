@@ -199,7 +199,7 @@ public class MovieTools {
             return false;
         }
         if (!movieInDatabase && flag) {
-            // Only add, never remove shells. Next trakt watched movie sync will take care of that.
+            // Only add, never remove shells. Next Cloud or trakt movie sync will take care of that.
             return addMovieWatchedShell(context.getContentResolver(), movieTmdbId);
         } else {
             return updateMovie(context, movieTmdbId, SeriesGuideContract.Movies.WATCHED, flag);
@@ -395,16 +395,26 @@ public class MovieTools {
      *
      * @param newCollectionMovies Movie TMDB ids to add to the collection.
      * @param newWatchlistMovies Movie TMDB ids to add to the watchlist.
+     * @param newWatchedMovies Movie TMDB ids to set watched.
      */
-    public boolean addMovies(@NonNull Set<Integer> newCollectionMovies,
-            @NonNull Set<Integer> newWatchlistMovies) {
+    public boolean addMovies(
+            @NonNull Set<Integer> newCollectionMovies,
+            @NonNull Set<Integer> newWatchlistMovies,
+            @Nullable Set<Integer> newWatchedMovies
+    ) {
         Timber.d("addMovies: %s to collection, %s to watchlist", newCollectionMovies.size(),
                 newWatchlistMovies.size());
+        if (newWatchedMovies != null) {
+            Timber.d("addMovies: %s to watched", newWatchedMovies.size());
+        }
 
         // build a single list of tmdb ids
         Set<Integer> newMovies = new HashSet<>();
         newMovies.addAll(newCollectionMovies);
         newMovies.addAll(newWatchlistMovies);
+        if (newWatchedMovies != null) {
+            newMovies.addAll(newWatchedMovies);
+        }
 
         String languageCode = DisplaySettings.getMoviesLanguage(context);
         List<MovieDetails> movies = new LinkedList<>();
@@ -428,6 +438,9 @@ public class MovieTools {
             // set flags
             movieDetails.setInCollection(newCollectionMovies.contains(tmdbId));
             movieDetails.setInWatchlist(newWatchlistMovies.contains(tmdbId));
+            if (newWatchedMovies != null) {
+                movieDetails.setWatched(newWatchedMovies.contains(tmdbId));
+            }
 
             movies.add(movieDetails);
 

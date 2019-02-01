@@ -135,9 +135,9 @@ public class NetworkJobProcessor {
             case MOVIE_COLLECTION_REMOVE:
             case MOVIE_WATCHLIST_ADD:
             case MOVIE_WATCHLIST_REMOVE:
-                return new HexagonMovieJob(hexagonTools, action, jobInfo);
             case MOVIE_WATCHED_SET:
             case MOVIE_WATCHED_REMOVE:
+                return new HexagonMovieJob(hexagonTools, action, jobInfo);
             default:
                 return null; // action not supported by hexagon
         }
