@@ -55,6 +55,9 @@ internal class HexagonMovieSync(
             Timber.d("download: all movies")
         }
 
+        var updatedCount = 0
+        var removedCount = 0
+
         while (hasMoreMovies) {
             // abort if connection is lost
             if (!AndroidUtils.isNetworkConnected(context)) {
@@ -113,6 +116,7 @@ internal class HexagonMovieSync(
                                 SeriesGuideContract.Movies.buildMovieUri(movie.tmdbId)
                             ).build()
                         )
+                        removedCount++
                     } else {
                         // update collection, watchlist and watched flags
                         val values = ContentValues().apply {
@@ -134,6 +138,7 @@ internal class HexagonMovieSync(
                                 SeriesGuideContract.Movies.buildMovieUri(movie.tmdbId)
                             ).withValues(values).build()
                         )
+                        updatedCount++
                     }
                 } else {
                     // schedule movie to be added
@@ -157,6 +162,8 @@ internal class HexagonMovieSync(
             }
 
         }
+
+        Timber.d("download: updated %d and removed %d movies", updatedCount, removedCount)
 
         // set new last sync time
         if (hasMergedMovies) {
