@@ -232,28 +232,22 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     private fun setupViews() {
-        val decorationHeightPx: Int
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // avoid overlap with status + action bar (adjust top margin)
-            // warning: pre-M status bar not always translucent (e.g. Nexus 10)
-            // (using fitsSystemWindows would not work correctly with multiple views)
-            val config = (activity as MovieDetailsActivity).systemBarTintManager.config
-            val pixelInsetTop = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                config.statusBarHeight // full screen, status bar transparent
-            } else {
-                config.getPixelInsetTop(false) // status bar translucent
-            }
-
-            // action bar height is pre-set as top margin, add to it
-            decorationHeightPx = pixelInsetTop + contentContainerMovie.paddingTop
-            contentContainerMovie.setPadding(0, decorationHeightPx, 0, 0)
-
-            // dual pane layout?
-            contentContainerMovieRight?.setPadding(0, decorationHeightPx, 0, 0)
+        // avoid overlap with status + action bar (adjust top margin)
+        // warning: pre-M status bar not always translucent (e.g. Nexus 10)
+        // (using fitsSystemWindows would not work correctly with multiple views)
+        val config = (activity as MovieDetailsActivity).systemBarTintManager.config
+        val pixelInsetTop = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            config.statusBarHeight // full screen, status bar transparent
         } else {
-            // content container has actionBarSize top padding by default
-            decorationHeightPx = contentContainerMovie.paddingTop
+            config.getPixelInsetTop(false) // status bar translucent
         }
+
+        // action bar height is pre-set as top margin, add to it
+        val decorationHeightPx = pixelInsetTop + contentContainerMovie.paddingTop
+        contentContainerMovie.setPadding(0, decorationHeightPx, 0, 0)
+
+        // dual pane layout?
+        contentContainerMovieRight?.setPadding(0, decorationHeightPx, 0, 0)
 
         // show toolbar title and background when scrolling
         val defaultPaddingPx = resources.getDimensionPixelSize(R.dimen.default_padding)
