@@ -377,15 +377,13 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // release date and runtime: "July 17, 2009 | 95 min"
         val releaseAndRuntime = StringBuilder()
-        if (tmdbMovie.release_date != null) {
-            releaseAndRuntime.append(
-                TimeTools.formatToLocalDate(context, tmdbMovie.release_date)
-            )
+        tmdbMovie.release_date?.let {
+            releaseAndRuntime.append(TimeTools.formatToLocalDate(context, it))
             releaseAndRuntime.append(" | ")
         }
-        releaseAndRuntime.append(
-            getString(R.string.runtime_minutes, tmdbMovie.runtime.toString())
-        )
+        tmdbMovie.runtime?.let {
+            releaseAndRuntime.append(getString(R.string.runtime_minutes, it.toString()))
+        }
         textViewMovieDate.text = releaseAndRuntime.toString()
 
         // hide check-in if not connected to trakt or hexagon is enabled
