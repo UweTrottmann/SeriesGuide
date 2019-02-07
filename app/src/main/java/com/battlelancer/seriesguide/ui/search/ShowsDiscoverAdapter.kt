@@ -161,7 +161,7 @@ class ShowsDiscoverAdapter(
         : RecyclerView.ViewHolder(itemView) {
 
         lateinit var link: TraktShowsLink
-        @BindView(R.id.textViewDiscoverLink)
+        @BindView(R.id.textViewGridLink)
         lateinit var title: TextView
 
         init {
