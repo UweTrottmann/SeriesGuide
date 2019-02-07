@@ -542,7 +542,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
 
         // cast members
-        if (credits.cast != null && credits.cast.size != 0
+        if (credits.cast?.size != 0
             && PeopleListHelper.populateMovieCast(activity, containerCast, credits)) {
             setCastVisibility(true)
         } else {
@@ -550,7 +550,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
 
         // crew members
-        if (credits.crew != null && credits.crew.size != 0
+        if (credits.crew?.size != 0
             && PeopleListHelper.populateMovieCrew(activity, containerCrew, credits)) {
             setCrewVisibility(true)
         } else {

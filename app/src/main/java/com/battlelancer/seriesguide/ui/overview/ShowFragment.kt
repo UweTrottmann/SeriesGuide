@@ -587,14 +587,14 @@ class ShowFragment : ScopedFragment() {
             return
         }
 
-        if (credits.cast != null && credits.cast.size != 0
+        if (credits.cast?.size != 0
             && PeopleListHelper.populateShowCast(activity, castContainer, credits)) {
             setCastVisibility(true)
         } else {
             setCastVisibility(false)
         }
 
-        if (credits.crew != null && credits.crew.size != 0
+        if (credits.crew?.size != 0
             && PeopleListHelper.populateShowCrew(activity, crewContainer, credits)) {
             setCrewVisibility(true)
         } else {
