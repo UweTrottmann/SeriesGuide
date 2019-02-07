@@ -115,7 +115,7 @@ class MoviesDiscoverAdapter extends MoviesAdapter {
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.textViewGridHeader) TextView header;
+        @BindView(R.id.textViewDiscoverHeader) TextView header;
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
