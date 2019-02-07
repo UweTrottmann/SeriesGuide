@@ -57,7 +57,7 @@ task generateJavadoc(type: Javadoc) {
 // Add in dependency classpath to avoid cannot find symbol (http://stackoverflow.com/a/34572606/1676363)
 afterEvaluate {
     generateJavadoc.classpath += files(android.libraryVariants.collect { variant ->
-        variant.javaCompile.classpath.files
+        variant.javaCompileProvider.get().classpath.files
     })
 }
 
