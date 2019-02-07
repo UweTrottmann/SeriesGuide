@@ -85,13 +85,13 @@ class PersonFragment : Fragment() {
 
     @OnClick(R.id.buttonPersonTmdbLink)
     fun onClickButtonTmdbLink() {
-        person?.let { TmdbTools.openTmdbPerson(activity, it.id) }
+        person?.id?.let { TmdbTools.openTmdbPerson(activity, it) }
     }
 
     @OnLongClick(R.id.buttonPersonTmdbLink)
     fun onLongClickButtonTmdbLink(view: View): Boolean {
-        person?.let {
-            copyTextToClipboard(view.context, TmdbTools.buildPersonUrl(it.id))
+        person?.id?.let {
+            copyTextToClipboard(view.context, TmdbTools.buildPersonUrl(it))
             return true
         }
         return false

@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.sync
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.text.TextUtils
 import android.text.format.DateUtils
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.TmdbSettings
@@ -24,11 +23,10 @@ class TmdbSync internal constructor(private val context: Context,
             val response = configurationService.configuration().execute()
             if (response.isSuccessful) {
                 val config = response.body()
-                if (config != null && config.images != null
-                        && !TextUtils.isEmpty(config.images.secure_base_url)) {
+                if (!config?.images?.secure_base_url.isNullOrEmpty()) {
                     prefs.edit()
                             .putString(TmdbSettings.KEY_TMDB_BASE_URL,
-                                    config.images.secure_base_url)
+                                    config!!.images!!.secure_base_url)
                             .apply()
                     return true
                 }

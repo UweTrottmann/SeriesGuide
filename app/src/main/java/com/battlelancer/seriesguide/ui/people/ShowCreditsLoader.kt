@@ -60,13 +60,15 @@ class ShowCreditsLoader(context: Context, private var showId: Int, private val f
                     .find(showId.toString(), ExternalSource.TVDB_ID, null)
                     .execute()
             if (response.isSuccessful) {
-                val tvResults = response.body()!!.tv_results
-                if (!tvResults.isEmpty()) {
-                    showId = tvResults[0].id
-                    return true // found it!
-                } else {
-                    Timber.d("Downloading show credits failed: show not on TMDb")
+                val tvResults = response.body()?.tv_results
+                if (!tvResults.isNullOrEmpty()) {
+                    val showId = tvResults[0].id
+                    showId?.let {
+                        this.showId = showId
+                        return true // found it!
+                    }
                 }
+                Timber.d("Downloading show credits failed: show not on TMDb")
             } else {
                 SgTmdb.trackFailedRequest("find tvdb show", response)
             }
