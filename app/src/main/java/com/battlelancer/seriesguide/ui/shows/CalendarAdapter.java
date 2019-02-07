@@ -18,7 +18,7 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.widgets.WatchedBox;
-import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
+import com.battlelancer.seriesguide.widgets.gridheaderview.StickyGridHeadersBaseAdapter;
 import com.uwetrottmann.androidutils.CheatSheet;
 import java.util.ArrayList;
 import java.util.Calendar;

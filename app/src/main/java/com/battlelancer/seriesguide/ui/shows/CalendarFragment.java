@@ -46,7 +46,7 @@ import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
-import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
+import com.battlelancer.seriesguide.widgets.gridheaderview.StickyGridHeadersGridView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

@@ -17,7 +17,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.shows.HeaderData;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.ViewTools;
-import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
+import com.battlelancer.seriesguide.widgets.gridheaderview.StickyGridHeadersBaseAdapter;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import java.util.ArrayList;
 import java.util.Calendar;
