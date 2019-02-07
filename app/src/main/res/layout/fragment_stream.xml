@@ -25,7 +25,7 @@
 
         </ScrollView>
 
-        <com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView
+        <com.battlelancer.seriesguide.widgets.gridheaderview.StickyGridHeadersGridView
             android:id="@+id/gridViewStream"
             style="@style/Widget.SeriesGuide.Grid"
             android:layout_width="match_parent"
