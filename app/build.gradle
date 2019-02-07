@@ -201,13 +201,10 @@ dependencies {
 
     // App Engine
     // https://github.com/googleapis/google-api-java-client/releases
-    implementation ('com.google.guava:guava:25.1-android') {
-        exclude group: 'org.checkerframework' // not needed at runtime
-        exclude group: 'com.google.errorprone' // not needed at runtime
-    }
-    implementation('com.google.api-client:google-api-client-android:1.27.0') {
+    implementation('com.google.api-client:google-api-client-android:1.28.0') {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
-        exclude group: 'com.google.guava', module: 'guava' // including Android version instead
+        exclude group: 'org.checkerframework' // from guava, not needed at runtime
+        exclude group: 'com.google.errorprone' // from guava, not needed at runtime
     }
 
     // Amazon flavor specific
@@ -229,7 +226,10 @@ dependencies {
     // Local unit tests
     testImplementation 'junit:junit:4.12'
     testImplementation "androidx.annotation:annotation:${versions.annotation}"
-    testImplementation "com.google.truth:truth:${versions.truth}"
+    testImplementation("com.google.truth:truth:${versions.truth}") {
+        exclude group: 'org.checkerframework' // from guava, not needed at runtime
+        exclude group: 'com.google.errorprone' // from guava, not needed at runtime
+    }
 
 }
 
