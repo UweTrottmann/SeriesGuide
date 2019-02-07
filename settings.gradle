@@ -1,3 +1,2 @@
 include ':api'
-include ':libraries:stickygridheaders'
 include ':app'

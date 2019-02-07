@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.ui.shows;
 
 /**
  * Stores information about a header, used by
- * {@link com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter}
+ * {@link com.battlelancer.seriesguide.widgets.gridheaderview.StickyGridHeadersBaseAdapter}
  * adapters.
  */
 public class HeaderData {
