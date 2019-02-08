@@ -9,6 +9,12 @@ Version 47
 ----------
 *(in development)*
 
+#### 47-beta4
+*(2019-02-08)*
+
+* 🔨 Do not crash when opening movie with unknown running time.
+* 🔨 Do not crash when opening show sort options with deprecated sort order.
+
 #### 47-beta3
 *(2019-01-25)*
 
