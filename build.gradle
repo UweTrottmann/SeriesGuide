@@ -29,8 +29,8 @@ buildscript {
             'threetenABP': '1.1.1', // github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
 
             // version 15xxxyy -> min SDK 15, release xxx, build yy
-            'code': 2103505,
-            'name': '47-beta5',
+            'code': 2103506,
+            'name': '47-beta6',
     ]
     // load some properties that should not be part of version control
     if (file('secret.properties').exists()) {

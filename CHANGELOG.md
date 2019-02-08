@@ -9,14 +9,19 @@ Version 47
 ----------
 *(in development)*
 
-#### 47-beta4
+#### 47-beta6
+*(2019-02-08)*
+
+* 🔨 Do not crash when loading movie details.
+
+#### 47-beta5
 *(2019-02-08)*
 
 * 🔨 Do not crash when opening movie with unknown running time.
 * 🔨 Do not crash when opening show sort options with deprecated sort order.
 
-#### 47-beta3
-*(2019-01-25)*
+#### 47-beta4
+*(2019-02-01)*
 
 * 🌟 Set movies watched (previously only when connected to trakt).
 * 🌟 Cloud: sync watched movies. If trakt is connected, too, will upload existing watched movies, 
