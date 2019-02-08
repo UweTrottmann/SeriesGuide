@@ -429,8 +429,7 @@ public class SeriesGuideDatabase {
 
             + ");";
 
-    @VisibleForTesting
-    public static final String CREATE_SEARCH_TABLE = "CREATE VIRTUAL TABLE "
+    static final String CREATE_SEARCH_TABLE = "CREATE VIRTUAL TABLE "
             + Tables.EPISODES_SEARCH + " USING fts4("
 
             // set episodes table as external content table
