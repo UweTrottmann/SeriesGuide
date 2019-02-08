@@ -31,7 +31,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.SystemClock;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
 import android.view.Gravity;
@@ -48,6 +47,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import timber.log.Timber;
 
 /**
  * ListView subclass that mediates drag and drop resorting of items.
@@ -792,11 +792,6 @@ public class DragSortListView extends ListView {
             // item height based on current shuffle state
             return calcItemHeight(position, getChildHeight(position));
         }
-    }
-
-    private void printPosData() {
-        Log.d("mobeta", "mSrcPos=" + mSrcPos + " mFirstExpPos=" + mFirstExpPos + " mSecondExpPos="
-                + mSecondExpPos);
     }
 
     private class HeightCache {
@@ -2841,10 +2836,10 @@ public class DragSortListView extends ListView {
             if (!mFile.exists()) {
                 try {
                     mFile.createNewFile();
-                    Log.d("mobeta", "file created");
+                    Timber.d("file created");
                 } catch (IOException e) {
-                    Log.w("mobeta", "Could not create dslv_state.txt");
-                    Log.d("mobeta", e.getMessage());
+                    Timber.w("Could not create dslv_state.txt");
+                    Timber.d(e);
                 }
             }
         }
