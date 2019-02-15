@@ -10,6 +10,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.AccessToken;
@@ -74,10 +75,10 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
                 refreshToken = body.refresh_token;
                 expiresIn = body.expires_in;
             } else {
-                SgTrakt.trackFailedRequest("get access token", response);
+                Errors.logAndReport("get access token", response);
             }
         } catch (IOException e) {
-            SgTrakt.trackFailedRequest("get access token", e);
+            Errors.logAndReport("get access token", e);
         }
 
         // did we obtain all required data?
@@ -126,7 +127,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
                     displayname = body.user.name;
                 }
             } else {
-                SgTrakt.trackFailedRequest("get user settings", response);
+                Errors.logAndReport("get user settings", response);
                 if (SgTrakt.isUnauthorized(response)) {
                     // access token already is invalid, remove it :(
                     TraktCredentials.get(context).removeCredentials();
@@ -134,7 +135,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
                 }
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("get user settings", e);
+            Errors.logAndReport("get user settings", e);
             return AndroidUtils.isNetworkConnected(context)
                     ? TraktResult.API_ERROR : TraktResult.OFFLINE;
         }
