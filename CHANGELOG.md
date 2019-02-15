@@ -12,7 +12,7 @@ Version 47
 #### 47-beta6
 *(2019-02-08)*
 
-* 🔨 Do not crash when loading movie details.
+* 🔨 Do not crash when loading show discover screen.
 
 #### 47-beta5
 *(2019-02-08)*
