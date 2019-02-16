@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.util
 
 import androidx.annotation.VisibleForTesting
+import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.crashlytics.android.core.CrashlyticsCore
 import retrofit2.Response
 import timber.log.Timber
@@ -99,6 +100,7 @@ class Errors {
             val callStackIndex = stackTrace.indexOfFirst {
                 it.className != Companion::class.java.name
                         && it.className != Errors::class.java.name
+                        && it.className != SgTrakt::class.java.name
             }
             val newStackTrace = arrayOfNulls<StackTraceElement>(stackTrace.size - callStackIndex)
             System.arraycopy(stackTrace, callStackIndex, newStackTrace, 0, newStackTrace.size)
