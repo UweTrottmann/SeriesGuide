@@ -15,6 +15,7 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.trakt5.entities.BaseSeason;
 import com.uwetrottmann.trakt5.entities.BaseShow;
@@ -86,10 +87,10 @@ public class TraktEpisodeSync {
                     if (SgTrakt.isUnauthorized(context, response)) {
                         return false;
                     }
-                    SgTrakt.trackFailedRequest("get watched shows", response);
+                    Errors.logAndReport("get watched shows", response);
                 }
             } catch (Exception e) {
-                SgTrakt.trackFailedRequest("get watched shows", e);
+                Errors.logAndReport("get watched shows", e);
             }
 
             if (watchedShowsTrakt == null) {
@@ -140,10 +141,10 @@ public class TraktEpisodeSync {
                     if (SgTrakt.isUnauthorized(context, response)) {
                         return false;
                     }
-                    SgTrakt.trackFailedRequest("get collected shows", response);
+                    Errors.logAndReport("get collected shows", response);
                 }
             } catch (Exception e) {
-                SgTrakt.trackFailedRequest("get collected shows", e);
+                Errors.logAndReport("get collected shows", e);
             }
 
             if (collectedShowsTrakt == null) {
@@ -453,10 +454,10 @@ public class TraktEpisodeSync {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return false;
                 }
-                SgTrakt.trackFailedRequest("add episodes to " + flag.name, response);
+                Errors.logAndReport("add episodes to " + flag.name, response);
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("add episodes to " + flag.name, e);
+            Errors.logAndReport("add episodes to " + flag.name, e);
         }
 
         return false;

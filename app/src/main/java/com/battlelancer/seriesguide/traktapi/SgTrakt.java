@@ -1,8 +1,8 @@
 package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.BuildConfig;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.TraktError;
@@ -74,15 +74,6 @@ public class SgTrakt extends TraktV2 {
         Utils.trackFailedRequest(new TraktRequestError(action, response.code(), message));
     }
 
-    public static void trackFailedRequest(String action, retrofit2.Response response) {
-        Utils.trackFailedRequest(
-                new TraktRequestError(action, response.code(), response.message()));
-    }
-
-    public static void trackFailedRequest(String action, @NonNull Throwable throwable) {
-        Utils.trackFailedRequest(new TraktRequestError(action, throwable));
-    }
-
     /**
      * Executes the given call. Will return null if the call fails for any reason, including auth
      * failures.
@@ -93,10 +84,10 @@ public class SgTrakt extends TraktV2 {
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                trackFailedRequest(action, response);
+                Errors.logAndReport(action, response);
             }
         } catch (Exception e) {
-            trackFailedRequest(action, e);
+            Errors.logAndReport(action, e);
         }
         return null;
     }
@@ -112,11 +103,11 @@ public class SgTrakt extends TraktV2 {
                 return response.body();
             } else {
                 if (!isUnauthorized(context, response)) {
-                    trackFailedRequest(action, response);
+                    Errors.logAndReport(action, response);
                 }
             }
         } catch (Exception e) {
-            trackFailedRequest(action, e);
+            Errors.logAndReport(action, e);
         }
         return null;
     }

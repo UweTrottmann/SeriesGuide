@@ -9,6 +9,7 @@ import com.battlelancer.seriesguide.modules.ServicesComponent;
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.MovieIds;
 import com.uwetrottmann.trakt5.entities.SyncErrors;
@@ -117,7 +118,7 @@ public class TraktMovieJob extends BaseNetworkEpisodeJob {
                 }
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(errorLabel, e);
+            Errors.logAndReport(errorLabel, e);
             return NetworkJob.ERROR_CONNECTION;
         }
 
