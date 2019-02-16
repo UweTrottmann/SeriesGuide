@@ -7,6 +7,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.trakt5.entities.SyncErrors;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
@@ -46,11 +47,11 @@ public abstract class BaseRateItemTask extends BaseActionTask {
                     if (SgTrakt.isUnauthorized(getContext(), response)) {
                         return ERROR_TRAKT_AUTH;
                     }
-                    SgTrakt.trackFailedRequest(getTraktAction(), response);
+                    Errors.logAndReport(getTraktAction(), response);
                     return ERROR_TRAKT_API;
                 }
             } catch (Exception e) {
-                SgTrakt.trackFailedRequest("rate movie", e);
+                Errors.logAndReport(getTraktAction(), e);
                 return ERROR_TRAKT_API;
             }
 

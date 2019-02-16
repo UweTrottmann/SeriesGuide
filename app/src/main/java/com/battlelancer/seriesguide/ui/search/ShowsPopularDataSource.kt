@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.traktapi.SgTrakt
+import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.enums.Extended
@@ -65,11 +65,11 @@ class ShowsPopularDataSource(
                 totalCount = response.headers().get("X-Pagination-Item-Count")?.toInt()
                         ?: throw IllegalStateException("Item count header missing")
             } else {
-                SgTrakt.trackFailedRequest(action, response)
+                Errors.logAndReport(action, response)
                 return buildResultGenericFailure()
             }
         } catch (e: Exception) {
-            SgTrakt.trackFailedRequest(action, e)
+            Errors.logAndReport(action, e)
             // only check for network here to allow hitting the response cache
             return if (AndroidUtils.isNetworkConnected(context)) {
                 buildResultGenericFailure()

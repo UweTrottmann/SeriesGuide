@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.CheckinError;
@@ -292,11 +293,11 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                     return new TraktResponse(false,
                             context.getString(R.string.trakt_error_credentials));
                 } else {
-                    SgTrakt.trackFailedRequest("check-in", response);
+                    Errors.logAndReport("check-in", response);
                 }
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("check-in", e);
+            Errors.logAndReport("check-in", e);
         }
 
         // return generic failure message
@@ -340,11 +341,11 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                                 context.getString(R.string.trakt_error_credentials));
                     }
                 } else {
-                    SgTrakt.trackFailedRequest("post comment", response);
+                    Errors.logAndReport("post comment", response);
                 }
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("post comment", e);
+            Errors.logAndReport("post comment", e);
         }
 
         // return generic failure message

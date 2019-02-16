@@ -18,6 +18,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.AccessToken;
 import java.io.IOException;
@@ -236,11 +237,11 @@ public class TraktCredentials {
                 expiresIn = token.expires_in;
             } else {
                 if (!SgTrakt.isUnauthorized(response)) {
-                    SgTrakt.trackFailedRequest("refresh access token", response);
+                    Errors.logAndReport("refresh access token", response);
                 }
             }
         } catch (IOException e) {
-            SgTrakt.trackFailedRequest("refresh access token", e);
+            Errors.logAndReport("refresh access token", e);
         }
 
         // did we obtain all required data?
