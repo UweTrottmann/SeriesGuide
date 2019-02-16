@@ -9,6 +9,12 @@ Version 47
 ----------
 *(in development)*
 
+#### 47-beta7
+*(2019-02-16)*
+
+* 🔧 Experiment with improved error reporting to better pinpoint issues.
+* 🔨 Crashes and errors are reported again.
+
 #### 47-beta6
 *(2019-02-08)*
 
