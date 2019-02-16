@@ -52,14 +52,27 @@ class Errors {
 
         /**
          * Maps to ClientError, ServerError or RequestError depending on response code.
-         * Then logs and reports error. Adds action as key to report.
+         * Then logs and reports error. Adds action as key to report. Appends additional message.
          */
         @JvmStatic
-        fun logAndReport(action: String, response: Response<*>) {
+        fun logAndReport(action: String, response: Response<*>, message: String?) {
             val throwable = when {
-                response.isClientError() -> ClientError(action, response)
-                response.isServerError() -> ServerError(action, response)
-                else -> RequestError("", action, response.code(), response.message())
+                response.isClientError() -> when {
+                    message != null -> ClientError(action, response, message)
+                    else -> ClientError(action, response)
+                }
+                response.isServerError() -> when {
+                    message != null -> ServerError(action, response, message)
+                    else -> ServerError(action, response)
+                }
+                else -> when {
+                    message != null -> RequestError(
+                        action,
+                        response.code(),
+                        "${response.message()} $message"
+                    )
+                    else -> RequestError(action, response.code(), response.message())
+                }
             }
 
             removeErrorToolsFromStackTrace(throwable)
@@ -68,6 +81,15 @@ class Errors {
 
             CrashlyticsCore.getInstance().setString("action", action)
             CrashlyticsCore.getInstance().logException(throwable)
+        }
+
+        /**
+         * Maps to ClientError, ServerError or RequestError depending on response code.
+         * Then logs and reports error. Adds action as key to report.
+         */
+        @JvmStatic
+        fun logAndReport(action: String, response: Response<*>) {
+            logAndReport(action, response, null)
         }
 
         @JvmStatic

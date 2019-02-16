@@ -24,13 +24,47 @@ open class RequestError : Throwable {
         this.failureMessage = message
     }
 
+    constructor(
+        action: String,
+        code: Int,
+        message: String
+    ) : super("$action: $code $message") {
+        this.event = ""
+        this.action = action
+        this.code = code
+        this.failureMessage = message
+    }
+
     constructor(event: String, action: String, cause: Throwable) : super(action, cause) {
         this.event = event
         this.action = action
     }
 }
 
-class ClientError(action: String, response: Response<*>) :
-    RequestError("", action, response.code(), response.message())
-class ServerError(action: String, response: Response<*>) :
-    RequestError("", action, response.code(), response.message())
+class ClientError : RequestError {
+    constructor(action: String, response: Response<*>) : super(
+        action,
+        response.code(),
+        response.message()
+    )
+
+    constructor(action: String, response: Response<*>, additionalMessage: String) : super(
+        action,
+        response.code(),
+        "${response.code()} $additionalMessage"
+    )
+}
+
+class ServerError : RequestError {
+    constructor(action: String, response: Response<*>) : super(
+        action,
+        response.code(),
+        response.message()
+    )
+
+    constructor(action: String, response: Response<*>, additionalMessage: String) : super(
+        action,
+        response.code(),
+        "${response.code()} $additionalMessage"
+    )
+}
