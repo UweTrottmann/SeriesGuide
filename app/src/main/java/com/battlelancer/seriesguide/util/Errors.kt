@@ -11,7 +11,7 @@ class Errors {
 
     companion object {
 
-        const val CALL_STACK_INDEX = 2
+        private const val CALL_STACK_INDEX = 2
 
         /**
          * Logs the exception and if it should be, reports it. Bends the stack trace of the
@@ -96,9 +96,19 @@ class Errors {
         @VisibleForTesting
         fun removeErrorToolsFromStackTrace(throwable: Throwable) {
             val stackTrace = throwable.stackTrace
-            val newStackTrace = arrayOfNulls<StackTraceElement>(stackTrace.size - CALL_STACK_INDEX)
-            System.arraycopy(stackTrace, CALL_STACK_INDEX, newStackTrace, 0, newStackTrace.size)
+            val callStackIndex = stackTrace.indexOfFirst {
+                it.className != Companion::class.java.name
+                        && it.className != Errors::class.java.name
+            }
+            val newStackTrace = arrayOfNulls<StackTraceElement>(stackTrace.size - callStackIndex)
+            System.arraycopy(stackTrace, callStackIndex, newStackTrace, 0, newStackTrace.size)
             throwable.stackTrace = newStackTrace
+        }
+
+        @JvmStatic
+        @VisibleForTesting
+        fun testCreateThrowable(): Throwable {
+            return Throwable()
         }
 
     }
