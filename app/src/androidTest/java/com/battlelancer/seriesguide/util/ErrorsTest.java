@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -12,7 +13,7 @@ public class ErrorsTest {
         Throwable throwable = new Throwable();
         StackTraceElement[] stackTraceOriginal = throwable.getStackTrace();
 
-        int lineNumberBelow = 16;
+        int lineNumberBelow = stackTraceOriginal[0].getLineNumber() + 4 /* lines below */;
         Errors.bendCauseStackTrace(throwable);
 
         StackTraceElement[] stackTraceModified = throwable.getStackTrace();
@@ -32,16 +33,16 @@ public class ErrorsTest {
 
     @Test
     public void removeErrorToolsFromStackTrace() {
-        Throwable throwable = new Throwable();
+        Throwable throwable = Errors.testCreateThrowable();
         StackTraceElement[] stackTraceOriginal = throwable.getStackTrace();
 
         Errors.removeErrorToolsFromStackTrace(throwable);
 
         StackTraceElement[] stackTraceModified = throwable.getStackTrace();
-        assertEquals(stackTraceOriginal.length - Errors.CALL_STACK_INDEX, stackTraceModified.length);
+        assertTrue(stackTraceModified.length < stackTraceOriginal.length);
+        int sizeDiff = stackTraceOriginal.length - stackTraceModified.length;
         for (int i = 0; i < stackTraceModified.length; i++) {
-            assertEquals(stackTraceOriginal[i + Errors.CALL_STACK_INDEX], stackTraceModified[i]);
+            assertEquals(stackTraceOriginal[i + sizeDiff], stackTraceModified[i]);
         }
     }
-
 }
