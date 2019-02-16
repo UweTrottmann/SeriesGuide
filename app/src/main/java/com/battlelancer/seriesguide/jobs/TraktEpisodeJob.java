@@ -119,7 +119,8 @@ public class TraktEpisodeJob extends BaseNetworkEpisodeJob {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return NetworkJob.ERROR_TRAKT_AUTH;
                 }
-                SgTrakt.trackFailedRequest(trakt, errorLabel, response);
+                Errors.logAndReport(errorLabel, response,
+                        SgTrakt.checkForTraktError(trakt, response));
 
                 int code = response.code();
                 if (code == 429 /* Rate Limit Exceeded */ || code >= 500) {
