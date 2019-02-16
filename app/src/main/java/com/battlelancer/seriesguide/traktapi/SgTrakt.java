@@ -1,9 +1,9 @@
 package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Context;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.util.Errors;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.TraktError;
 import okhttp3.OkHttpClient;
@@ -64,14 +64,14 @@ public class SgTrakt extends TraktV2 {
         }
     }
 
-    public static void trackFailedRequest(TraktV2 trakt, String action,
-            retrofit2.Response response) {
-        String message = response.message();
+    @Nullable
+    public static String checkForTraktError(TraktV2 trakt, Response response) {
         TraktError error = trakt.checkForTraktError(response);
         if (error != null && error.message != null) {
-            message += ", " + error.message;
+            return error.message;
+        } else {
+            return null;
         }
-        Utils.trackFailedRequest(new TraktRequestError(action, response.code(), message));
     }
 
     /**
