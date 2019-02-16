@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
@@ -67,11 +68,11 @@ public class TraktRatingsSync {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return false;
                 }
-                SgTrakt.trackFailedRequest("get show ratings", response);
+                Errors.logAndReport("get show ratings", response);
                 return false;
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("get show ratings", e);
+            Errors.logAndReport("get show ratings", e);
             return false;
         }
         if (ratedShows == null) {
@@ -163,11 +164,11 @@ public class TraktRatingsSync {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return false;
                 }
-                SgTrakt.trackFailedRequest("get episode ratings", response);
+                Errors.logAndReport("get episode ratings", response);
                 return false;
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("get episode ratings", e);
+            Errors.logAndReport("get episode ratings", e);
             return false;
         }
         if (ratedEpisodes == null) {
@@ -258,11 +259,11 @@ public class TraktRatingsSync {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return false;
                 }
-                SgTrakt.trackFailedRequest("get movie ratings", response);
+                Errors.logAndReport("get movie ratings", response);
                 return false;
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("get movie ratings", e);
+            Errors.logAndReport("get movie ratings", e);
             return false;
         }
         if (ratedMovies == null) {

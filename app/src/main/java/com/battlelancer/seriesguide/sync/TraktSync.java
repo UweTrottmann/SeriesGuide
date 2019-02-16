@@ -9,6 +9,7 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.LastActivityMore;
@@ -187,9 +188,9 @@ public class TraktSync {
             if (SgTrakt.isUnauthorized(context, response)) {
                 return null;
             }
-            SgTrakt.trackFailedRequest("get last activity", response);
+            Errors.logAndReport("get last activity", response);
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("get last activity", e);
+            Errors.logAndReport("get last activity", e);
         }
         return null;
     }

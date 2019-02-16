@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -68,10 +69,10 @@ public class TraktRecentEpisodeHistoryLoader
                 if (SgTrakt.isUnauthorized(getContext(), response)) {
                     return buildResultFailure(R.string.trakt_error_credentials);
                 }
-                SgTrakt.trackFailedRequest(getAction(), response);
+                Errors.logAndReport(getAction(), response);
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(getAction(), e);
+            Errors.logAndReport(getAction(), e);
             return AndroidUtils.isNetworkConnected(getContext())
                     ? buildResultFailure() : buildResultFailure(R.string.offline);
         }
