@@ -6,10 +6,10 @@ import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.AnalyticsEvents;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -40,8 +40,6 @@ import timber.log.Timber;
 public class HexagonTools {
 
     private static final String ACTION_SILENT_SIGN_IN = "silent sign-in";
-    private static final String ACTION_SIGN_OUT = "sign-out";
-    private static final String ACTION_REMOVE_ACCOUNT = "remove account";
     private static final JsonFactory JSON_FACTORY = new AndroidJsonFactory();
     private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     private static final long SIGN_IN_CHECK_INTERVAL_MS = 5 * DateUtils.MINUTE_IN_MILLIS;
@@ -230,14 +228,13 @@ public class HexagonTools {
                 account = signInAccount.getAccount();
                 credential.setSelectedAccount(account);
             } else {
-                trackSignInFailure(ACTION_SILENT_SIGN_IN, "GoogleSignInAccount is null");
+                Errors.logAndReport(ACTION_SILENT_SIGN_IN,
+                        new HexagonAuthError(ACTION_SILENT_SIGN_IN,
+                                "GoogleSignInAccount is null"));
             }
         } catch (Exception e) {
-            if (e.getCause() != null) {
-                trackSignInFailure(ACTION_SILENT_SIGN_IN, e.getCause());
-            } else {
-                trackSignInFailure(ACTION_SILENT_SIGN_IN, e);
-            }
+            Errors.logAndReport(ACTION_SILENT_SIGN_IN,
+                    HexagonAuthError.build(ACTION_SILENT_SIGN_IN, e));
         }
 
         boolean shouldFixAccount = account == null;
@@ -286,30 +283,5 @@ public class HexagonTools {
         } else {
             Utils.trackFailedRequest(new HexagonRequestError(action, e));
         }
-    }
-
-    void trackSignInFailure(String action, Throwable cause) {
-        logAndTrackFailure(AnalyticsEvents.SIGN_IN_ERROR, HexagonSignInError.build(action, cause));
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    private void trackSignInFailure(String action, String failureMessage) {
-        logAndTrackFailure(AnalyticsEvents.SIGN_IN_ERROR,
-                new HexagonSignInError(action, failureMessage));
-    }
-
-    void trackSignOutFailure(Exception cause) {
-        logAndTrackFailure(AnalyticsEvents.SIGN_OUT_ERROR,
-                HexagonSignOutError.build(ACTION_SIGN_OUT, cause));
-    }
-
-    void trackRevokeFailure(Exception cause) {
-        logAndTrackFailure(AnalyticsEvents.REVOKE_ERROR,
-                HexagonRevokeError.build(ACTION_REMOVE_ACCOUNT, cause));
-    }
-
-    private void logAndTrackFailure(String eventName, HexagonAuthError error) {
-        Timber.e("%s: %s", error.getAction(), error.getFailure());
-        Utils.trackError(eventName, error);
     }
 }

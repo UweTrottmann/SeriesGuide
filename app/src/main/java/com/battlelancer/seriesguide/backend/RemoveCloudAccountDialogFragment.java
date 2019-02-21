@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -81,7 +82,7 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
             try {
                 Tasks.await(task);
             } catch (Exception e) {
-                hexagonTools.trackRevokeFailure(e);
+                Errors.logAndReport("remove account", HexagonAuthError.build("remove account", e));
                 return false;
             }
 
