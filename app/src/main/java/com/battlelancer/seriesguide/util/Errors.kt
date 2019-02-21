@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.util
 
 import androidx.annotation.VisibleForTesting
+import com.battlelancer.seriesguide.thetvdbapi.TvdbException
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.google.api.client.http.HttpResponseException
 import retrofit2.Response
@@ -94,7 +95,7 @@ class Errors {
          * Then logs and reports error. Adds action as key to report. Appends additional message.
          */
         @JvmStatic
-        fun logAndReport(action: String, response: Response<*>, message: String?) {
+        fun logAndReport(action: String, response: okhttp3.Response, message: String?) {
             val throwable = when {
                 response.isClientError() -> when {
                     message != null -> ClientError(action, response, message)
@@ -124,11 +125,36 @@ class Errors {
 
         /**
          * Maps to ClientError, ServerError or RequestError depending on response code.
+         * Then logs and reports error. Adds action as key to report. Appends additional message.
+         */
+        @JvmStatic
+        fun logAndReport(action: String, response: Response<*>, message: String?) {
+            logAndReport(action, response.raw(), message)
+        }
+
+        /**
+         * Maps to ClientError, ServerError or RequestError depending on response code.
          * Then logs and reports error. Adds action as key to report.
          */
         @JvmStatic
         fun logAndReport(action: String, response: Response<*>) {
-            logAndReport(action, response, null)
+            logAndReport(action, response.raw(), null)
+        }
+
+        @JvmStatic
+        @Throws(TvdbException::class)
+        fun throwAndReportIfNotSuccessfulTvdb(action: String, response: okhttp3.Response) {
+            if (!response.isSuccessful) {
+                logAndReport(action, response, null)
+
+                if (response.code() == 404) {
+                    // special case: item does not exist (any longer)
+                    throw TvdbException("$action: ${response.code()} ${response.message()}", true)
+                } else {
+                    // other non-2xx response
+                    throw TvdbException("$action: ${response.code()} ${response.message()}")
+                }
+            }
         }
 
         @JvmStatic
@@ -160,11 +186,11 @@ class Errors {
 
 }
 
-private fun Response<*>.isClientError(): Boolean {
+private fun okhttp3.Response.isClientError(): Boolean {
     return code() in 400..499
 }
 
-private fun Response<*>.isServerError(): Boolean {
+private fun okhttp3.Response.isServerError(): Boolean {
     return code() in 500..599
 }
 

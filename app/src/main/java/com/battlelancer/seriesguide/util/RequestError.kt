@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.util
 
 import com.google.api.client.http.HttpResponseException
-import retrofit2.Response
+import okhttp3.Response
 
 /**
  * Throwable to track service request errors.
@@ -43,13 +43,13 @@ open class RequestError : Throwable {
 }
 
 class ClientError : RequestError {
-    constructor(action: String, response: Response<*>) : super(
+    constructor(action: String, response: Response) : super(
         action,
         response.code(),
         response.message()
     )
 
-    constructor(action: String, response: Response<*>, additionalMessage: String) : super(
+    constructor(action: String, response: Response, additionalMessage: String) : super(
         action,
         response.code(),
         "${response.code()} $additionalMessage"
@@ -63,13 +63,13 @@ class ClientError : RequestError {
 }
 
 class ServerError : RequestError {
-    constructor(action: String, response: Response<*>) : super(
+    constructor(action: String, response: Response) : super(
         action,
         response.code(),
         response.message()
     )
 
-    constructor(action: String, response: Response<*>, additionalMessage: String) : super(
+    constructor(action: String, response: Response, additionalMessage: String) : super(
         action,
         response.code(),
         "${response.code()} $additionalMessage"

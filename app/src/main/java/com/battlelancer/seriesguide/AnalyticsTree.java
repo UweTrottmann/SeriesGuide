@@ -3,12 +3,7 @@ package com.battlelancer.seriesguide;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTraktException;
-import com.battlelancer.seriesguide.util.Errors;
 import com.google.gson.JsonParseException;
-import java.io.InterruptedIOException;
-import java.net.UnknownHostException;
 import org.threeten.bp.format.DateTimeParseException;
 import timber.log.Timber;
 
@@ -30,31 +25,6 @@ public class AnalyticsTree extends Timber.DebugTree {
         // drop debug and verbose logs
         if (priority == Log.DEBUG || priority == Log.VERBOSE) {
             return;
-        }
-
-        if (priority == Log.ERROR) {
-            // remove any stack trace attached by Timber
-            int newLine = message.indexOf('\n');
-            if (newLine > 0) {
-                message = message.substring(0, newLine);
-            }
-
-            // special treatment for some exceptions
-            if (t instanceof TvdbTraktException) {
-                return; // already tracked as trakt error
-            }
-            if (t instanceof TvdbException) {
-                TvdbException e = (TvdbException) t;
-                Throwable cause = e.getCause();
-                if (cause instanceof UnknownHostException) {
-                    return; // do not track, mostly devices loosing connection
-                }
-                if (cause instanceof InterruptedIOException) {
-                    return; // do not track, mostly timeouts
-                }
-                Errors.logAndReportNoBend(message, e);
-                return;
-            }
         }
 
         // transform priority into string
