@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.entities.Videos;
 import com.uwetrottmann.tmdb2.enumerations.VideoType;
@@ -49,10 +49,10 @@ class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
             if (response.isSuccessful()) {
                 return extractTrailer(response.body());
             } else {
-                SgTmdb.trackFailedRequest(action, response);
+                Errors.logAndReport(action, response);
             }
         } catch (Exception e) {
-            SgTmdb.trackFailedRequest(action, e);
+            Errors.logAndReport(action, e);
         }
         return null;
     }

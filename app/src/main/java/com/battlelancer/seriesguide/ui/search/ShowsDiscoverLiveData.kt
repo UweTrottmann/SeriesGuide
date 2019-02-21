@@ -9,9 +9,9 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.ui.shows.ShowTools
+import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.TmdbDate
 import com.uwetrottmann.trakt5.enums.Extended
@@ -94,11 +94,11 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
                 if (response.isSuccessful) {
                     response.body() ?: return buildResultFailure(R.string.tmdb, false)
                 } else {
-                    SgTmdb.trackFailedRequest(action, response)
+                    Errors.logAndReport(action, response)
                     return buildResultFailure(R.string.tmdb, false)
                 }
             } catch (e: Exception) {
-                SgTmdb.trackFailedRequest(action, e)
+                Errors.logAndReport(action, e)
                 return buildResultFailure(R.string.tmdb, false)
             }
 

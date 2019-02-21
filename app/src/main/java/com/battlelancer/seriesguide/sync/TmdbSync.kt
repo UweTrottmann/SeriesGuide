@@ -6,8 +6,8 @@ import android.text.format.DateUtils
 import androidx.core.content.edit
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.TmdbSettings
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb
 import com.battlelancer.seriesguide.ui.movies.MovieTools
+import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.services.ConfigurationService
 import timber.log.Timber
@@ -31,10 +31,10 @@ class TmdbSync internal constructor(private val context: Context,
                     return true
                 }
             } else {
-                SgTmdb.trackFailedRequest("get config", response)
+                Errors.logAndReport("get config", response)
             }
         } catch (e: Exception) {
-            SgTmdb.trackFailedRequest("get config", e)
+            Errors.logAndReport("get config", e)
         }
 
         return false
