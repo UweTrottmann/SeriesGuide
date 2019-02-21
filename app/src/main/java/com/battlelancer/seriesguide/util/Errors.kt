@@ -11,8 +11,6 @@ class Errors {
 
     companion object {
 
-        private const val CALL_STACK_INDEX = 3
-
         /**
          * Logs the exception and if it should be, reports it. Bends the stack trace of the
          * bottom-most exception to the call site of this method. Adds action as key to report.
@@ -34,10 +32,10 @@ class Errors {
          */
         private fun bendCauseStackTrace(throwable: Throwable) {
             val synthStackTrace = Throwable().stackTrace
-            if (synthStackTrace.size <= CALL_STACK_INDEX) {
-                throw IllegalStateException("Synthetic stacktrace didn't have enough elements")
-            }
-            val elementToInject = synthStackTrace[CALL_STACK_INDEX]
+            val callStackIndex = indexOfFirstCallSiteElement(synthStackTrace)
+            if (callStackIndex == -1) return // keep stack trace as is
+
+            val elementToInject = synthStackTrace[callStackIndex]
 
             val ultimateCause = throwable.getUlimateCause()
 
@@ -94,11 +92,8 @@ class Errors {
         @VisibleForTesting
         fun removeErrorToolsFromStackTrace(throwable: Throwable) {
             val stackTrace = throwable.stackTrace
-            val callStackIndex = stackTrace.indexOfFirst {
-                it.className != Companion::class.java.name
-                        && it.className != Errors::class.java.name
-                        && it.className != SgTrakt::class.java.name
-            }
+            val callStackIndex = indexOfFirstCallSiteElement(stackTrace)
+
             val newStackTrace = arrayOfNulls<StackTraceElement>(stackTrace.size - callStackIndex)
             System.arraycopy(stackTrace, callStackIndex, newStackTrace, 0, newStackTrace.size)
             throwable.stackTrace = newStackTrace
@@ -108,6 +103,14 @@ class Errors {
         @VisibleForTesting
         fun testCreateThrowable(): Throwable {
             return Throwable()
+        }
+
+        private fun indexOfFirstCallSiteElement(stackTrace: Array<StackTraceElement>): Int {
+            return stackTrace.indexOfFirst {
+                it.className != Companion::class.java.name
+                        && it.className != Errors::class.java.name
+                        && it.className != SgTrakt::class.java.name
+            }
         }
 
     }
