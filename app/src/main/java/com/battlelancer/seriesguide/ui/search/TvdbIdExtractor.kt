@@ -37,8 +37,11 @@ class TvdbIdExtractor(val context: Context, val text: String) {
             .series(null, null, null, showSlug, null)
         try {
             val response = call.execute()
-            if (response.isSuccessful && response.body() != null) {
-                return response.body()!!.data[0].id
+            if (response.isSuccessful) {
+                val body = response.body()
+                if (body?.data?.isNotEmpty() == true) {
+                    return body.data?.get(0)?.id ?: -1
+                }
             }
         } catch (e: Exception) {
         }
