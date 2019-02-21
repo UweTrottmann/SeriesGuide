@@ -1,10 +1,13 @@
 package com.battlelancer.seriesguide.util
 
 import androidx.annotation.VisibleForTesting
+import com.battlelancer.seriesguide.thetvdbapi.TvdbException
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.crashlytics.android.core.CrashlyticsCore
+import com.google.api.client.http.HttpResponseException
 import retrofit2.Response
 import timber.log.Timber
+import java.io.IOException
 import java.io.InterruptedIOException
 import java.net.UnknownHostException
 
@@ -12,7 +15,18 @@ class Errors {
 
     companion object {
 
-        private const val CALL_STACK_INDEX = 3
+        /**
+         * Logs the exception and if it should be, reports it. Adds action as key to report.
+         */
+        @JvmStatic
+        fun logAndReportNoBend(action: String, throwable: Throwable) {
+            Timber.e(throwable, action)
+
+            if (!throwable.shouldReport()) return
+
+            CrashlyticsCore.getInstance().setString("action", action)
+            CrashlyticsCore.getInstance().logException(throwable)
+        }
 
         /**
          * Logs the exception and if it should be, reports it. Bends the stack trace of the
@@ -35,10 +49,10 @@ class Errors {
          */
         private fun bendCauseStackTrace(throwable: Throwable) {
             val synthStackTrace = Throwable().stackTrace
-            if (synthStackTrace.size <= CALL_STACK_INDEX) {
-                throw IllegalStateException("Synthetic stacktrace didn't have enough elements")
-            }
-            val elementToInject = synthStackTrace[CALL_STACK_INDEX]
+            val callStackIndex = indexOfFirstCallSiteElement(synthStackTrace)
+            if (callStackIndex == -1) return // keep stack trace as is
+
+            val elementToInject = synthStackTrace[callStackIndex]
 
             val ultimateCause = throwable.getUlimateCause()
 
@@ -50,11 +64,39 @@ class Errors {
         }
 
         /**
+         * If a HttpResponseException, maps to ClientError, ServerError or RequestError depending on
+         * response code. Otherwise bends the stack trace of the bottom-most exception to the call
+         * site of this method. Then logs the exception and if it should be, reports it.
+         */
+        @JvmStatic
+        fun logAndReportHexagon(action: String, e: IOException) {
+            val throwable = if (e is HttpResponseException) {
+                val requestError = when {
+                    e.isClientError() -> ClientError(action, e)
+                    e.isServerError() -> ServerError(action, e)
+                    else -> RequestError(action, e.statusCode, e.statusMessage)
+                }
+                removeErrorToolsFromStackTrace(requestError)
+                requestError
+            } else {
+                bendCauseStackTrace(e)
+                e
+            }
+
+            Timber.e(throwable, action)
+
+            if (!throwable.shouldReport()) return
+
+            CrashlyticsCore.getInstance().setString("action", action)
+            CrashlyticsCore.getInstance().logException(throwable)
+        }
+
+        /**
          * Maps to ClientError, ServerError or RequestError depending on response code.
          * Then logs and reports error. Adds action as key to report. Appends additional message.
          */
         @JvmStatic
-        fun logAndReport(action: String, response: Response<*>, message: String?) {
+        fun logAndReport(action: String, response: okhttp3.Response, message: String?) {
             val throwable = when {
                 response.isClientError() -> when {
                     message != null -> ClientError(action, response, message)
@@ -84,22 +126,44 @@ class Errors {
 
         /**
          * Maps to ClientError, ServerError or RequestError depending on response code.
+         * Then logs and reports error. Adds action as key to report. Appends additional message.
+         */
+        @JvmStatic
+        fun logAndReport(action: String, response: Response<*>, message: String?) {
+            logAndReport(action, response.raw(), message)
+        }
+
+        /**
+         * Maps to ClientError, ServerError or RequestError depending on response code.
          * Then logs and reports error. Adds action as key to report.
          */
         @JvmStatic
         fun logAndReport(action: String, response: Response<*>) {
-            logAndReport(action, response, null)
+            logAndReport(action, response.raw(), null)
+        }
+
+        @JvmStatic
+        @Throws(TvdbException::class)
+        fun throwAndReportIfNotSuccessfulTvdb(action: String, response: okhttp3.Response) {
+            if (!response.isSuccessful) {
+                logAndReport(action, response, null)
+
+                if (response.code() == 404) {
+                    // special case: item does not exist (any longer)
+                    throw TvdbException("$action: ${response.code()} ${response.message()}", true)
+                } else {
+                    // other non-2xx response
+                    throw TvdbException("$action: ${response.code()} ${response.message()}")
+                }
+            }
         }
 
         @JvmStatic
         @VisibleForTesting
         fun removeErrorToolsFromStackTrace(throwable: Throwable) {
             val stackTrace = throwable.stackTrace
-            val callStackIndex = stackTrace.indexOfFirst {
-                it.className != Companion::class.java.name
-                        && it.className != Errors::class.java.name
-                        && it.className != SgTrakt::class.java.name
-            }
+            val callStackIndex = indexOfFirstCallSiteElement(stackTrace)
+
             val newStackTrace = arrayOfNulls<StackTraceElement>(stackTrace.size - callStackIndex)
             System.arraycopy(stackTrace, callStackIndex, newStackTrace, 0, newStackTrace.size)
             throwable.stackTrace = newStackTrace
@@ -111,16 +175,32 @@ class Errors {
             return Throwable()
         }
 
+        private fun indexOfFirstCallSiteElement(stackTrace: Array<StackTraceElement>): Int {
+            return stackTrace.indexOfFirst {
+                it.className != Companion::class.java.name
+                        && it.className != Errors::class.java.name
+                        && it.className != SgTrakt::class.java.name
+            }
+        }
+
     }
 
 }
 
-private fun Response<*>.isClientError(): Boolean {
+private fun okhttp3.Response.isClientError(): Boolean {
     return code() in 400..499
 }
 
-private fun Response<*>.isServerError(): Boolean {
+private fun okhttp3.Response.isServerError(): Boolean {
     return code() in 500..599
+}
+
+private fun HttpResponseException.isClientError(): Boolean {
+    return statusCode in 400..499
+}
+
+private fun HttpResponseException.isServerError(): Boolean {
+    return statusCode in 500..599
 }
 
 /**

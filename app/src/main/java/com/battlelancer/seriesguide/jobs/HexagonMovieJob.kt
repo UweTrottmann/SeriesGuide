@@ -10,6 +10,7 @@ import com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHED_SET
 import com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHLIST_ADD
 import com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHLIST_REMOVE
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor
+import com.battlelancer.seriesguide.util.Errors
 import com.google.api.client.http.HttpResponseException
 import com.uwetrottmann.seriesguide.backend.movies.model.Movie
 import com.uwetrottmann.seriesguide.backend.movies.model.MovieList
@@ -33,7 +34,7 @@ class HexagonMovieJob(
             )
             moviesService.save(uploadWrapper).execute()
         } catch (e: HttpResponseException) {
-            HexagonTools.trackFailedRequest("save movie", e)
+            Errors.logAndReportHexagon("save movie", e)
             val code = e.statusCode
             return if (code in 400..499) {
                 buildResult(context, NetworkJob.ERROR_HEXAGON_CLIENT)
@@ -41,7 +42,7 @@ class HexagonMovieJob(
                 buildResult(context, NetworkJob.ERROR_HEXAGON_SERVER)
             }
         } catch (e: IOException) {
-            HexagonTools.trackFailedRequest("save movie", e)
+            Errors.logAndReportHexagon("save movie", e)
             return buildResult(context, NetworkJob.ERROR_CONNECTION)
         }
 

@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.sync.SyncProgress
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
 import com.battlelancer.seriesguide.widgets.SyncStatusView
@@ -224,12 +225,15 @@ class CloudSetupFragment : Fragment() {
                         // ignored
                     }
                 }
-                else -> hexagonTools.trackSignInFailure(ACTION_SIGN_IN, e)
+                else -> Errors.logAndReport(
+                    ACTION_SIGN_IN,
+                    HexagonAuthError.build(ACTION_SIGN_IN, e)
+                )
             }
         } catch (e: Exception) {
             account = null
             errorCodeString = e.message ?: ""
-            hexagonTools.trackSignInFailure(ACTION_SIGN_IN, e)
+            Errors.logAndReport(ACTION_SIGN_IN, HexagonAuthError.build(ACTION_SIGN_IN, e))
         }
 
         val signedIn = account != null
@@ -271,7 +275,7 @@ class CloudSetupFragment : Fragment() {
                 task.getResult(ApiException::class.java)
                 true
             } catch (e: Exception) {
-                hexagonTools.trackSignOutFailure(e)
+                Errors.logAndReport("sign-out", HexagonAuthError.build("sign-out", e))
                 false
             }
 
@@ -367,13 +371,13 @@ class CloudSetupFragment : Fragment() {
         } else if (!isHexagonSetupRunning) {
             HexagonSettings.setSetupIncomplete(context)
             hexagonSetupTask =
-                    HexagonSetupTask(
-                        hexagonTools,
-                        signInAccount!!,
-                        onHexagonSetupFinishedListener
-                    ).also {
-                        it.execute()
-                    }
+                HexagonSetupTask(
+                    hexagonTools,
+                    signInAccount!!,
+                    onHexagonSetupFinishedListener
+                ).also {
+                    it.execute()
+                }
         }
     }
 

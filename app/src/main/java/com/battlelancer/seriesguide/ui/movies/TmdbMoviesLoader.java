@@ -7,7 +7,7 @@ import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.Tmdb;
@@ -127,11 +127,11 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<TmdbMoviesLoader.Resul
                     results = page.results;
                 }
             } else {
-                SgTmdb.trackFailedRequest(action, response);
+                Errors.logAndReport(action, response);
                 return buildErrorResult();
             }
         } catch (Exception e) {
-            SgTmdb.trackFailedRequest(action, e);
+            Errors.logAndReport(action, e);
             // only check for connection here to allow hitting the response cache
             return AndroidUtils.isNetworkConnected(getContext())
                     ? buildErrorResult()
