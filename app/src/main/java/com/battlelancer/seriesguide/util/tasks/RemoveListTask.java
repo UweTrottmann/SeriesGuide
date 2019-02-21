@@ -6,6 +6,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.ListsActivity;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import java.io.IOException;
 import org.greenrobot.eventbus.EventBus;
@@ -40,7 +41,7 @@ public class RemoveListTask extends BaseActionTask {
             try {
                 listsService.remove(listId).execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest("remove list", e);
+                Errors.logAndReportHexagon("remove list", e);
                 return ERROR_HEXAGON_API;
             }
         }

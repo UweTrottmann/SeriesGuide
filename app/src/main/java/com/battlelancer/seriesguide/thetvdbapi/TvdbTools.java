@@ -27,6 +27,7 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -358,7 +359,7 @@ public class TvdbTools {
                     hexagonShow = showsService.getShow().setShowTvdbId(showTvdbId).execute();
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest("get show details", e);
+                Errors.logAndReportHexagon("get show details", e);
                 throw new TvdbCloudException("getShowDetailsWithHexagon", e);
             }
         }

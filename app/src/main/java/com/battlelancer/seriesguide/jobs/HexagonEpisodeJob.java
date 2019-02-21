@@ -10,6 +10,7 @@ import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
+import com.battlelancer.seriesguide.util.Errors;
 import com.google.api.client.http.HttpResponseException;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
@@ -61,7 +62,7 @@ public class HexagonEpisodeJob extends BaseNetworkEpisodeJob {
                 }
                 episodesService.save(uploadWrapper).execute();
             } catch (HttpResponseException e) {
-                HexagonTools.trackFailedRequest("save episodes", e);
+                Errors.logAndReportHexagon("save episodes", e);
                 int code = e.getStatusCode();
                 if (code >= 400 && code < 500) {
                     return buildResult(context, NetworkJob.ERROR_HEXAGON_CLIENT);
@@ -69,7 +70,7 @@ public class HexagonEpisodeJob extends BaseNetworkEpisodeJob {
                     return buildResult(context, NetworkJob.ERROR_HEXAGON_SERVER);
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest("save episodes", e);
+                Errors.logAndReportHexagon("save episodes", e);
                 return buildResult(context, NetworkJob.ERROR_CONNECTION);
             }
 

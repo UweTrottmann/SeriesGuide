@@ -9,6 +9,7 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.ListsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgListList;
@@ -54,7 +55,7 @@ public class ReorderListsTask extends BaseActionTask {
             try {
                 listsService.save(wrapper).execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest("reorder lists", e);
+                Errors.logAndReportHexagon("reorder lists", e);
                 return ERROR_HEXAGON_API;
             }
         }

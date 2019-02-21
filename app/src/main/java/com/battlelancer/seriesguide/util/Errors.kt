@@ -3,8 +3,10 @@ package com.battlelancer.seriesguide.util
 import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.crashlytics.android.core.CrashlyticsCore
+import com.google.api.client.http.HttpResponseException
 import retrofit2.Response
 import timber.log.Timber
+import java.io.IOException
 import java.io.InterruptedIOException
 import java.net.UnknownHostException
 
@@ -45,6 +47,34 @@ class Errors {
             System.arraycopy(stackTrace, 0, newStackTrace, 1, stackTrace.size)
             newStackTrace[0] = elementToInject
             ultimateCause.stackTrace = newStackTrace
+        }
+
+        /**
+         * If a HttpResponseException, maps to ClientError, ServerError or RequestError depending on
+         * response code. Otherwise bends the stack trace of the bottom-most exception to the call
+         * site of this method. Then logs the exception and if it should be, reports it.
+         */
+        @JvmStatic
+        fun logAndReportHexagon(action: String, e: IOException) {
+            val throwable = if (e is HttpResponseException) {
+                val requestError = when {
+                    e.isClientError() -> ClientError(action, e)
+                    e.isServerError() -> ServerError(action, e)
+                    else -> RequestError(action, e.statusCode, e.statusMessage)
+                }
+                removeErrorToolsFromStackTrace(requestError)
+                requestError
+            } else {
+                bendCauseStackTrace(e)
+                e
+            }
+
+            Timber.e(throwable, action)
+
+            if (!throwable.shouldReport()) return
+
+            CrashlyticsCore.getInstance().setString("action", action)
+            CrashlyticsCore.getInstance().logException(throwable)
         }
 
         /**
@@ -124,6 +154,14 @@ private fun Response<*>.isClientError(): Boolean {
 
 private fun Response<*>.isServerError(): Boolean {
     return code() in 500..599
+}
+
+private fun HttpResponseException.isClientError(): Boolean {
+    return statusCode in 400..499
+}
+
+private fun HttpResponseException.isServerError(): Boolean {
+    return statusCode in 500..599
 }
 
 /**
