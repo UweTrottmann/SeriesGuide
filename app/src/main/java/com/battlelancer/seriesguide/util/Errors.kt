@@ -14,6 +14,19 @@ class Errors {
     companion object {
 
         /**
+         * Logs the exception and if it should be, reports it. Adds action as key to report.
+         */
+        @JvmStatic
+        fun logAndReportNoBend(action: String, throwable: Throwable) {
+            Timber.e(throwable, action)
+
+            if (!throwable.shouldReport()) return
+
+            CrashlyticsCore.getInstance().setString("action", action)
+            CrashlyticsCore.getInstance().logException(throwable)
+        }
+
+        /**
          * Logs the exception and if it should be, reports it. Bends the stack trace of the
          * bottom-most exception to the call site of this method. Adds action as key to report.
          */
