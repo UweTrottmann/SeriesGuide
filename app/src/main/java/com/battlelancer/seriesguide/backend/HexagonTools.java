@@ -17,11 +17,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
-import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.uwetrottmann.seriesguide.backend.account.Account;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
@@ -43,7 +43,7 @@ public class HexagonTools {
     private static final String ACTION_SIGN_OUT = "sign-out";
     private static final String ACTION_REMOVE_ACCOUNT = "remove account";
     private static final JsonFactory JSON_FACTORY = new AndroidJsonFactory();
-    private static final HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
+    private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     private static final long SIGN_IN_CHECK_INTERVAL_MS = 5 * DateUtils.MINUTE_IN_MILLIS;
 
     private static GoogleSignInOptions googleSignInOptions;
