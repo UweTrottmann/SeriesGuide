@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.util
 
+import com.google.api.client.http.HttpResponseException
 import retrofit2.Response
 
 /**
@@ -53,6 +54,12 @@ class ClientError : RequestError {
         response.code(),
         "${response.code()} $additionalMessage"
     )
+
+    constructor(action: String, e: HttpResponseException) : super(
+        action,
+        e.statusCode,
+        e.statusMessage
+    )
 }
 
 class ServerError : RequestError {
@@ -66,5 +73,11 @@ class ServerError : RequestError {
         action,
         response.code(),
         "${response.code()} $additionalMessage"
+    )
+
+    constructor(action: String, e: HttpResponseException) : super(
+        action,
+        e.statusCode,
+        e.statusMessage
     )
 }

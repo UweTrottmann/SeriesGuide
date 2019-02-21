@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Errors;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
@@ -88,7 +89,7 @@ public class HexagonEpisodeSync {
                     hasMoreEpisodes = false;
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest("get updated episodes", e);
+                Errors.logAndReportHexagon("get updated episodes", e);
                 return false;
             }
 
@@ -209,7 +210,7 @@ public class HexagonEpisodeSync {
                     hasMoreEpisodes = false;
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest("get episodes of show", e);
+                Errors.logAndReportHexagon("get episodes of show", e);
                 return false;
             }
 
@@ -379,7 +380,7 @@ public class HexagonEpisodeSync {
                     episodesService.save(episodeList).execute();
                 } catch (IOException e) {
                     // abort
-                    HexagonTools.trackFailedRequest("save episodes of show", e);
+                    Errors.logAndReportHexagon("save episodes of show", e);
                     query.close();
                     return false;
                 }

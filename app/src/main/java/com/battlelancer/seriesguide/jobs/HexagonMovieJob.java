@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
+import com.battlelancer.seriesguide.util.Errors;
 import com.google.api.client.http.HttpResponseException;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
 import com.uwetrottmann.seriesguide.backend.movies.model.Movie;
@@ -41,7 +42,7 @@ public class HexagonMovieJob extends BaseNetworkMovieJob {
             }
             moviesService.save(uploadWrapper).execute();
         } catch (HttpResponseException e) {
-            HexagonTools.trackFailedRequest("save movie", e);
+            Errors.logAndReportHexagon("save movie", e);
             int code = e.getStatusCode();
             if (code >= 400 && code < 500) {
                 return buildResult(context, NetworkJob.ERROR_HEXAGON_CLIENT);
@@ -49,7 +50,7 @@ public class HexagonMovieJob extends BaseNetworkMovieJob {
                 return buildResult(context, NetworkJob.ERROR_HEXAGON_SERVER);
             }
         } catch (IOException e) {
-            HexagonTools.trackFailedRequest("save movie", e);
+            Errors.logAndReportHexagon("save movie", e);
             return buildResult(context, NetworkJob.ERROR_CONNECTION);
         }
 

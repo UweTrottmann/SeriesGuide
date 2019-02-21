@@ -71,7 +71,7 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
                 }
                 accountService.deleteData().execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest("remove account", e);
+                Errors.logAndReportHexagon("remove account", e);
                 return false;
             }
 

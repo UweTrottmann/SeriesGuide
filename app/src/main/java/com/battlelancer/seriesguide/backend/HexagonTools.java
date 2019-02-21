@@ -10,7 +10,6 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
 import com.battlelancer.seriesguide.util.Errors;
-import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -19,7 +18,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -28,7 +26,6 @@ import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
-import java.io.IOException;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import timber.log.Timber;
@@ -273,15 +270,5 @@ public class HexagonTools {
                     .build();
         }
         return googleSignInOptions;
-    }
-
-    public static void trackFailedRequest(String action, @NonNull IOException e) {
-        if (e instanceof HttpResponseException) {
-            HttpResponseException responseException = (HttpResponseException) e;
-            Utils.trackFailedRequest(new HexagonRequestError(action,
-                    responseException.getStatusCode(), responseException.getStatusMessage()));
-        } else {
-            Utils.trackFailedRequest(new HexagonRequestError(action, e));
-        }
     }
 }
