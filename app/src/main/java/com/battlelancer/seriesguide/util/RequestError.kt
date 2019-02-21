@@ -6,78 +6,49 @@ import okhttp3.Response
 /**
  * Throwable to track service request errors.
  */
-open class RequestError : Throwable {
-    var event: String
-    var action: String
-    var code: Int? = null
-    var failureMessage: String? = null
+open class RequestError(action: String, code: Int, message: String) :
+    Throwable("$action: $code $message") {
 
-    // message like "action: 404 not found"
-    constructor(
-        event: String,
-        action: String,
-        code: Int,
-        message: String
-    ) : super("$action: $code $message") {
-        this.event = event
-        this.action = action
-        this.code = code
-        this.failureMessage = message
-    }
+    constructor(action: String, response: Response) : this(
+        action,
+        response.code(),
+        response.message()
+    )
 
-    constructor(
-        action: String,
-        code: Int,
-        message: String
-    ) : super("$action: $code $message") {
-        this.event = ""
-        this.action = action
-        this.code = code
-        this.failureMessage = message
-    }
+    constructor(action: String, response: Response, additionalMessage: String) : this(
+        action,
+        response.code(),
+        "${response.code()} $additionalMessage"
+    )
 
-    constructor(event: String, action: String, cause: Throwable) : super(action, cause) {
-        this.event = event
-        this.action = action
-    }
+    constructor(action: String, e: HttpResponseException) : this(
+        action,
+        e.statusCode,
+        e.statusMessage
+    )
+
 }
 
 class ClientError : RequestError {
-    constructor(action: String, response: Response) : super(
-        action,
-        response.code(),
-        response.message()
-    )
+    constructor(action: String, response: Response) : super(action, response)
 
     constructor(action: String, response: Response, additionalMessage: String) : super(
         action,
-        response.code(),
-        "${response.code()} $additionalMessage"
+        response,
+        additionalMessage
     )
 
-    constructor(action: String, e: HttpResponseException) : super(
-        action,
-        e.statusCode,
-        e.statusMessage
-    )
+    constructor(action: String, e: HttpResponseException) : super(action, e)
 }
 
 class ServerError : RequestError {
-    constructor(action: String, response: Response) : super(
-        action,
-        response.code(),
-        response.message()
-    )
+    constructor(action: String, response: Response) : super(action, response)
 
     constructor(action: String, response: Response, additionalMessage: String) : super(
         action,
-        response.code(),
-        "${response.code()} $additionalMessage"
+        response,
+        additionalMessage
     )
 
-    constructor(action: String, e: HttpResponseException) : super(
-        action,
-        e.statusCode,
-        e.statusMessage
-    )
+    constructor(action: String, e: HttpResponseException) : super(action, e)
 }
