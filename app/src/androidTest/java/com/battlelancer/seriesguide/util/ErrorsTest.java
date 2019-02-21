@@ -14,7 +14,7 @@ public class ErrorsTest {
         StackTraceElement[] stackTraceOriginal = throwable.getStackTrace();
 
         int lineNumberBelow = stackTraceOriginal[0].getLineNumber() + 4 /* lines below */;
-        Errors.bendCauseStackTrace(throwable);
+        Errors.logAndReport("dummy", throwable);
 
         StackTraceElement[] stackTraceModified = throwable.getStackTrace();
 

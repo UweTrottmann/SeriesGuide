@@ -11,7 +11,7 @@ class Errors {
 
     companion object {
 
-        private const val CALL_STACK_INDEX = 2
+        private const val CALL_STACK_INDEX = 3
 
         /**
          * Logs the exception and if it should be, reports it. Bends the stack trace of the
@@ -32,9 +32,7 @@ class Errors {
         /**
          * Inserts the call site stack trace element at the beginning of the bottom-most exception.
          */
-        @JvmStatic
-        @VisibleForTesting
-        fun bendCauseStackTrace(throwable: Throwable) {
+        private fun bendCauseStackTrace(throwable: Throwable) {
             val synthStackTrace = Throwable().stackTrace
             if (synthStackTrace.size <= CALL_STACK_INDEX) {
                 throw IllegalStateException("Synthetic stacktrace didn't have enough elements")
