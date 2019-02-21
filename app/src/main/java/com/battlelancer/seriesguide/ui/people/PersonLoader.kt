@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.ui.people
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb
+import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.GenericSimpleLoader
 import com.uwetrottmann.tmdb2.entities.Person
 import retrofit2.Response
@@ -21,10 +21,10 @@ internal class PersonLoader(context: Context, private val tmdbId: Int) :
             if (response.isSuccessful) {
                 return response.body()
             } else {
-                SgTmdb.trackFailedRequest("get person summary", response)
+                Errors.logAndReport("get person summary", response)
             }
         } catch (e: Exception) {
-            SgTmdb.trackFailedRequest("get person summary", e)
+            Errors.logAndReport("get person summary", e)
         }
 
         return null

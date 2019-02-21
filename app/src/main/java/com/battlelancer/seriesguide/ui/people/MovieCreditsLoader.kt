@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.ui.people
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb
+import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.GenericSimpleLoader
 import com.uwetrottmann.tmdb2.entities.Credits
 
@@ -19,10 +19,10 @@ class MovieCreditsLoader(context: Context, private val tmdbId: Int)
             if (response.isSuccessful) {
                 return response.body()
             } else {
-                SgTmdb.trackFailedRequest("get movie credits", response)
+                Errors.logAndReport("get movie credits", response)
             }
         } catch (e: Exception) {
-            SgTmdb.trackFailedRequest("get movie credits", e)
+            Errors.logAndReport("get movie credits", e)
         }
 
         return null
