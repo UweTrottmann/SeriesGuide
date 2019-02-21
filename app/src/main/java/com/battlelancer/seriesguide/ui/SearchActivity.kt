@@ -18,7 +18,6 @@ import android.widget.AutoCompleteTextView
 import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.battlelancer.seriesguide.AnalyticsEvents
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.adapters.TabStripAdapter
 import com.battlelancer.seriesguide.settings.SearchSettings
@@ -32,10 +31,10 @@ import com.battlelancer.seriesguide.ui.search.SearchTriggerListener
 import com.battlelancer.seriesguide.ui.search.ShowSearchFragment
 import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFragment
 import com.battlelancer.seriesguide.ui.search.TvdbIdExtractor
+import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout
 import com.google.android.gms.actions.SearchIntents
@@ -221,9 +220,9 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
 
         val rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
         if (rawMsgs.isNullOrEmpty()) {
-            Utils.trackError(
-                AnalyticsEvents.BEAM_ERROR,
-                BeamError("Get messages", "Data null or zero length")
+            Errors.logAndReportNoBend(
+                "get messages",
+                BeamError("get messages", "Data null or zero length")
             )
             return  // corrupted or invalid data
         }
@@ -235,9 +234,9 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
         try {
             showTvdbId = Integer.valueOf(String(msg.records[0].payload))
         } catch (e: NumberFormatException) {
-            Utils.trackError(
-                AnalyticsEvents.BEAM_ERROR,
-                BeamError("Parse payload", "NumberFormatException: " + e.message)
+            Errors.logAndReportNoBend(
+                "get messages",
+                BeamError("parse payload", "NumberFormatException: " + e.message)
             )
             return
         }

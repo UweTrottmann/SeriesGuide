@@ -5,7 +5,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTraktException;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.Errors;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.gson.JsonParseException;
 import java.io.InterruptedIOException;
@@ -53,8 +53,7 @@ public class AnalyticsTree extends Timber.DebugTree {
                 if (cause instanceof InterruptedIOException) {
                     return; // do not track, mostly timeouts
                 }
-                CrashlyticsCore.getInstance().setString("action", message);
-                Utils.trackError(AnalyticsEvents.THETVDB_ERROR, e);
+                Errors.logAndReportNoBend(message, e);
                 return;
             }
         }
