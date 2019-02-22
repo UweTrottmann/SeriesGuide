@@ -289,7 +289,7 @@
     <string name="hexagon_remove_account_confirmation">Pašalinus paskyrą bus panaikintos visos laidos ir filmai iš SeriesGuide Cloud. Įsitikinkite, kad tai pašalinot, ir kituose įtaisuose.</string>
     <string name="hexagon_api_queued">Siunčiama į SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
-    <string name="hexagon_google_play_missing">Norint naudotis SeriesGuide Cloud, Google Play Services yra privalomos.</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Siunčiama į trakt.</string>
     <string name="checkin_success_trakt">Pažymėta %s trakt paskyroje.</string>
@@ -343,7 +343,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Pagrindai</string>
     <string name="prefs_category_sharing">Paslaugos</string>
-    <string name="prefs_category_advanced">Išplėstinė</string>
     <string name="prefs_category_about">Apie</string>
     <string name="pref_onlyfuture">Neparodytos serijos</string>
     <string name="pref_onlyfuturesummary">Niekada nerodyti jau parodytų serijų</string>
@@ -422,7 +421,6 @@
     <string name="pref_offsetsummary">Rodymo laikas pastumtas %d val</string>
     <string name="clear_cache">Pašalinti išsaugotus paveikslus</string>
     <string name="clear_cache_summary">Pašalina visus išsaugotus paveikslus iš jūsų įrenginio</string>
-    <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
     <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
@@ -445,7 +443,6 @@
     <string name="backup_use_default_files">Use default backup files</string>
     <!-- Welcome dialog -->
     <string name="get_started">Get started</string>
-    <string name="welcome_setuplanguage">Choose language</string>
     <string name="dismiss">Dismiss</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s is coming up</string>
@@ -462,8 +459,6 @@
     <string name="pref_notifications_select_shows">Select shows</string>
     <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
     <string name="pref_notification_channel_errors">Errors</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (small)</string>
     <!-- List Widget -->
     <string name="hide_watched">Slėpti pažiūrėtas serijas</string>
     <string name="pref_widget_opacity">Widget background</string>

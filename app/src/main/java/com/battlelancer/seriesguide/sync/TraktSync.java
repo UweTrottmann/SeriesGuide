@@ -9,6 +9,7 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.LastActivityMore;
@@ -32,12 +33,11 @@ public class TraktSync {
     }
 
     /**
-     * @param onlyRatingsAndWatchedMovies To not conflict with Hexagon sync, can turn on so only
-     *                                    ratings and watched movies are synced and movies are
-     *                                    cleaned up.
+     * @param onlyRatings To not conflict with Hexagon sync, can turn on so only
+     *                    ratings are synced.
      */
     public SgSyncAdapter.UpdateResult sync(HashSet<Integer> localShows, long currentTime,
-            boolean onlyRatingsAndWatchedMovies) {
+            boolean onlyRatings) {
         // get last activity timestamps
         progress.publish(SyncProgress.Step.TRAKT);
         if (!AndroidUtils.isNetworkConnected(context)) {
@@ -56,7 +56,7 @@ public class TraktSync {
         if (localShows.size() == 0) {
             Timber.d("performTraktSync: no local shows, skip shows");
         } else {
-            if (!onlyRatingsAndWatchedMovies) {
+            if (!onlyRatings) {
                 // EPISODES
                 // download and upload episode watched and collected flags
                 progress.publish(SyncProgress.Step.TRAKT_EPISODES);
@@ -98,7 +98,7 @@ public class TraktSync {
         TraktMovieSync movieSync = new TraktMovieSync(context, movieTools, traktSync);
 
         // sync watchlist and collection with trakt
-        if (!onlyRatingsAndWatchedMovies) {
+        if (!onlyRatings) {
             if (!AndroidUtils.isNetworkConnected(context)) {
                 progress.recordError();
                 return SgSyncAdapter.UpdateResult.INCOMPLETE;
@@ -107,20 +107,20 @@ public class TraktSync {
                 progress.recordError();
                 return SgSyncAdapter.UpdateResult.INCOMPLETE;
             }
-        }
 
-        // download watched movies
-        if (!AndroidUtils.isNetworkConnected(context)) {
-            progress.recordError();
-            return SgSyncAdapter.UpdateResult.INCOMPLETE;
-        }
-        if (!movieSync.downloadWatched(lastActivity.movies.watched_at)) {
-            progress.recordError();
-            return SgSyncAdapter.UpdateResult.INCOMPLETE;
-        }
+            // download watched movies
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                progress.recordError();
+                return SgSyncAdapter.UpdateResult.INCOMPLETE;
+            }
+            if (!movieSync.downloadWatched(lastActivity.movies.watched_at)) {
+                progress.recordError();
+                return SgSyncAdapter.UpdateResult.INCOMPLETE;
+            }
 
-        // clean up any useless movies (not watched or not in any list)
-        MovieTools.deleteUnusedMovies(context);
+            // clean up any useless movies (not watched or not in any list)
+            MovieTools.deleteUnusedMovies(context);
+        }
 
         // download movie ratings
         progress.publish(SyncProgress.Step.TRAKT_RATINGS);
@@ -188,9 +188,9 @@ public class TraktSync {
             if (SgTrakt.isUnauthorized(context, response)) {
                 return null;
             }
-            SgTrakt.trackFailedRequest("get last activity", response);
+            Errors.logAndReport("get last activity", response);
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("get last activity", e);
+            Errors.logAndReport("get last activity", e);
         }
         return null;
     }

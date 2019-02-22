@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.streaming
 import android.content.Context
 import android.net.Uri
 import android.preference.PreferenceManager
+import androidx.core.content.edit
 import com.battlelancer.seriesguide.util.Utils
 import java.util.Locale
 
@@ -75,9 +76,9 @@ object StreamingSearch {
     }
 
     fun setServiceOrEmpty(context: Context, countryOrEmpty: String) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
-                .putString(KEY_SETTING_SERVICE, countryOrEmpty)
-                .apply()
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putString(KEY_SETTING_SERVICE, countryOrEmpty)
+        }
     }
 
     private fun getServiceSearchUrl(context: Context, type: String): String {

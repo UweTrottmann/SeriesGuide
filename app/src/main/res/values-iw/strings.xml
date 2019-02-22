@@ -289,7 +289,7 @@
     <string name="hexagon_remove_account_confirmation">הסרת החשבון שלך תמחק את כל התוכניות והסרטים מ-SeriesGuide Cloud. הקפד למחוק אותם גם בהתקנים מחוברים אחרים.</string>
     <string name="hexagon_api_queued">שולח ל-SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">אינך מחובר לענן SeriesGuide.</string>
-    <string name="hexagon_google_play_missing">כדי להשתמש ב-SeriesGuide בענן, נדרש שירותי Google Play.</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">שלח ל-trakt.</string>
     <string name="checkin_success_trakt">נעשה צ\'ק-אין ל-%s ב-trakt.</string>
@@ -343,7 +343,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">בסיסי</string>
     <string name="prefs_category_sharing">שירותים</string>
-    <string name="prefs_category_advanced">מתקדם</string>
     <string name="prefs_category_about">אודות</string>
     <string name="pref_onlyfuture">אין פרקים ששודרו</string>
     <string name="pref_onlyfuturesummary">אל תציג פרקים ששודרו</string>
@@ -422,7 +421,6 @@
     <string name="pref_offsetsummary">הסט זמני שידור ב- %d שעות</string>
     <string name="clear_cache">נקה מטמוני תמונות</string>
     <string name="clear_cache_summary">הסר את כל מטמוני התמונות ממכשירך</string>
-    <string name="pref_ganalyticssummary">שלח סטטיסטיקת שימוש אנונימית לשירות גוגל</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">כוללים תיאורים, פרטים, דירוגים</string>
     <string name="backup_failed_file_access">לא ניתן לגבות. קובץ גיבוי לא נמצא או נגיש.</string>
@@ -445,7 +443,6 @@
     <string name="backup_use_default_files">השתמש בברירת מחדל של קבצי גיבוי</string>
     <!-- Welcome dialog -->
     <string name="get_started">התחל</string>
-    <string name="welcome_setuplanguage">בחר שפה</string>
     <string name="dismiss">סגור</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s מתקרב</string>
@@ -462,8 +459,6 @@
     <string name="pref_notifications_select_shows">בחר סדרות</string>
     <string name="pref_notifications_select_shows_summary">סדרות עבורן מופעלות (%d)</string>
     <string name="pref_notification_channel_errors">שגיאות</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (קטן)</string>
     <!-- List Widget -->
     <string name="hide_watched">הסתר פרקים שנצפו</string>
     <string name="pref_widget_opacity">רקע ווידג\'ט</string>

@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgListItem;
@@ -58,7 +59,7 @@ public class ChangeListItemListsTask extends BaseActionTask {
                 try {
                     listsService.save(wrapper).execute();
                 } catch (IOException e) {
-                    HexagonTools.trackFailedRequest("add list items", e);
+                    Errors.logAndReportHexagon("add list items", e);
                     return ERROR_HEXAGON_API;
                 }
             }
@@ -70,7 +71,7 @@ public class ChangeListItemListsTask extends BaseActionTask {
                 try {
                     listsService.removeItems(wrapper).execute();
                 } catch (IOException e) {
-                    HexagonTools.trackFailedRequest("remove list items", e);
+                    Errors.logAndReportHexagon("remove list items", e);
                     return ERROR_HEXAGON_API;
                 }
             }

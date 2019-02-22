@@ -303,7 +303,7 @@
     <string name="hexagon_remove_account_confirmation">إزالة حسابك ستؤدي إلى إلغاء كل مسلسلاتك و افلامك من سحابة SeriesGuide. تأكد من إزالته من الأجهزة الأخرى المتصلة أيضا.</string>
     <string name="hexagon_api_queued">جار الإرسال إلى سحابة دليل المسلسلات.</string>
     <string name="hexagon_signed_out">تسجيل الخروج من SeriesGuide Cloud.</string>
-    <string name="hexagon_google_play_missing">حتى تستخدم سحابة برنامج دليل المسلسلات، لابد من توفر خدمات قوقل بلاي.</string>
+    <string name="hexagon_signin_fail_format">خطأ في تسجيل الدخول الى Google (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">تقديم إلى تراكت.</string>
     <string name="checkin_success_trakt">تم فحص %s على التراكت.</string>
@@ -359,7 +359,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">أساسي</string>
     <string name="prefs_category_sharing">خدمات</string>
-    <string name="prefs_category_advanced">متقدم</string>
     <string name="prefs_category_about">حول</string>
     <string name="pref_onlyfuture">عدم إظهار الحلقات التي تم عرضها</string>
     <string name="pref_onlyfuturesummary">عدم عرض الحلقات التي تم بثها مسبقاً</string>
@@ -444,7 +443,6 @@
     <string name="pref_offsetsummary">بدء وقت العرض قبل %d ساعات</string>
     <string name="clear_cache">تنظيف ذاكرة التخزين المؤقتة للصور</string>
     <string name="clear_cache_summary">إزالة جميع الصور المخزنة مؤقتاً من الجهاز</string>
-    <string name="pref_ganalyticssummary">سيتم إرسال إحصاءات مجهولة الهوية لخدمة جوجل</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">يتضمن الأوصاف، و التفاصيل، و التقييمات</string>
     <string name="backup_failed_file_access">لايمكن عمل نسخ إحتياطي، ملف النسخة الإحتياطي لايمكن إجاده أو لا يمكن الوصل إليه.</string>
@@ -467,7 +465,6 @@
     <string name="backup_use_default_files">إستخدم النسخ الإحتياطي الإفتراضي</string>
     <!-- Welcome dialog -->
     <string name="get_started">بدء</string>
-    <string name="welcome_setuplanguage">اختر اللغة</string>
     <string name="dismiss">إبعاد</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s قادم</string>
@@ -484,8 +481,6 @@
     <string name="pref_notifications_select_shows">اختار العروض</string>
     <string name="pref_notifications_select_shows_summary">يظهر عدد الاشعارات المتاحه للعروض (%d)</string>
     <string name="pref_notification_channel_errors">أخطاء</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">دليل المسلسلات (صغير)</string>
     <!-- List Widget -->
     <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
     <string name="pref_widget_opacity">خلفية القطعة العائمة</string>

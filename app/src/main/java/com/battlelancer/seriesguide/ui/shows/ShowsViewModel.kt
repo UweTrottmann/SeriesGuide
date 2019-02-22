@@ -39,66 +39,122 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    private fun Boolean?.isTrue(): Boolean {
+        return this ?: false
+    }
+
+    private fun Boolean?.isFalse(): Boolean {
+        if (this == null) return false
+        return !this
+    }
+
+    private fun Boolean?.isNullOrFalse(): Boolean {
+        if (this == null) return true
+        return !this
+    }
+
     fun updateQuery(
-        isFilterFavorites: Boolean,
-        isFilterUnwatched: Boolean,
-        isFilterUpcoming: Boolean,
-        isFilterHidden: Boolean,
+        filter: FilterShowsView.ShowFilter,
         orderClause: String
     ) {
         val selection = StringBuilder()
 
-        // restrict to favorites?
-        if (isFilterFavorites) {
-            selection.append(SeriesGuideContract.Shows.FAVORITE).append("=1")
+        // include or exclude favorites?
+        filter.isFilterFavorites?.let {
+            if (it) {
+                selection.append(SeriesGuideContract.Shows.SELECTION_FAVORITES)
+            } else {
+                selection.append(SeriesGuideContract.Shows.SELECTION_NOT_FAVORITES)
+            }
         }
+
+        // include or exclude continuing shows?
+        filter.isFilterContinuing?.let {
+            if (selection.isNotEmpty()) {
+                selection.append(" AND ")
+            }
+            if (it) {
+                selection.append(SeriesGuideContract.Shows.SELECTION_STATUS_CONTINUING)
+            } else {
+                selection.append(SeriesGuideContract.Shows.SELECTION_STATUS_NO_CONTINUING)
+            }
+        }
+
+        // include or exclude hidden?
+        filter.isFilterHidden?.let {
+            if (selection.isNotEmpty()) {
+                selection.append(" AND ")
+            }
+            if (it) {
+                selection.append(SeriesGuideContract.Shows.SELECTION_HIDDEN)
+            } else {
+                selection.append(SeriesGuideContract.Shows.SELECTION_NO_HIDDEN)
+            }
+        }
+
+        // unwatched (= next episode is released) and upcoming (= next episode upcoming) filters
+        // assumes that no next episode == max next airdate
 
         val timeInAnHour = TimeTools.getCurrentTime(getApplication()) + DateUtils.HOUR_IN_MILLIS
+        // next episode upcoming within <limit> days + 1 hour
+        val upcomingLimitInDays = AdvancedSettings.getUpcomingLimitInDays(getApplication())
+        val maxAirtime = timeInAnHour + upcomingLimitInDays * DateUtils.DAY_IN_MILLIS
 
-        // restrict to shows with a next episode?
-        if (isFilterUnwatched) {
+        if (filter.isFilterUnwatched != null || filter.isFilterUpcoming != null) {
             if (selection.isNotEmpty()) {
                 selection.append(" AND ")
-            }
-            selection.append(SeriesGuideContract.Shows.SELECTION_WITH_RELEASED_NEXT_EPISODE)
-
-            // exclude shows with upcoming next episode
-            if (!isFilterUpcoming) {
-                selection.append(" AND ")
-                    .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
-                    .append(timeInAnHour)
             }
         }
-        // restrict to shows with an upcoming (yet to air) next episode?
-        if (isFilterUpcoming) {
-            if (selection.isNotEmpty()) {
-                selection.append(" AND ")
-            }
-            // Display shows upcoming within <limit> days + 1 hour
-            val upcomingLimitInDays = AdvancedSettings.getUpcomingLimitInDays(getApplication())
-            val latestAirtime = timeInAnHour + upcomingLimitInDays * DateUtils.DAY_IN_MILLIS
 
+        if (filter.isFilterUnwatched.isTrue() && filter.isFilterUpcoming.isTrue()) {
+            // unwatched and upcoming
             selection.append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
-                .append(latestAirtime)
-
-            // exclude shows with no upcoming next episode if not filtered for unwatched, too
-            if (!isFilterUnwatched) {
-                selection.append(" AND ")
-                    .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append(">=")
+                .append(maxAirtime)
+        } else if (
+            filter.isFilterUnwatched.isTrue() && filter.isFilterUpcoming.isNullOrFalse()
+        ) {
+            // unwatched only
+            selection.append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
+                .append(timeInAnHour)
+        } else if (
+            filter.isFilterUpcoming.isTrue() && filter.isFilterUnwatched.isNullOrFalse()
+        ) {
+            // upcoming only
+            selection
+                .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append(">")
+                .append(timeInAnHour)
+                .append(" AND ")
+                .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
+                .append(maxAirtime)
+        } else if (filter.isFilterUnwatched.isFalse()) {
+            if (filter.isFilterUpcoming == null) {
+                // unwatched excluded (== anything in the future or no next episode)
+                selection
+                    .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append(">")
                     .append(timeInAnHour)
+            } else if (!filter.isFilterUpcoming) {
+                // unwatched and upcoming excluded (== further into the future or no next episode)
+                selection
+                    .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append(">")
+                    .append(maxAirtime)
             }
+        } else if (filter.isFilterUpcoming.isFalse() && filter.isFilterUnwatched == null) {
+            // upcoming excluded
+            selection
+                .append("(")
+                .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
+                .append(timeInAnHour)
+                .append(" OR ")
+                .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append(">")
+                .append(maxAirtime)
+                .append(")")
         }
 
-        // special: if hidden filter is disabled, exclude hidden shows
-        if (selection.isNotEmpty()) {
-            selection.append(" AND ")
+        queryString.value = if (selection.isNotEmpty()) {
+            "SELECT * FROM ${SeriesGuideDatabase.Tables.SHOWS} WHERE $selection ORDER BY $orderClause"
+        } else {
+            "SELECT * FROM ${SeriesGuideDatabase.Tables.SHOWS} ORDER BY $orderClause"
         }
-        selection.append(SeriesGuideContract.Shows.HIDDEN)
-            .append(if (isFilterHidden) "=1" else "=0")
-
-        queryString.value = "SELECT * FROM ${SeriesGuideDatabase.Tables.SHOWS}" +
-                " WHERE $selection" +
-                " ORDER BY $orderClause"
     }
 
     fun reRunQuery() {

@@ -27,7 +27,6 @@ class ShowsDiscoverAdapter(
     init {
         links.add(TraktShowsLink.POPULAR)
         if (TraktCredentials.get(context).hasCredentials()) {
-            links.add(TraktShowsLink.RECOMMENDED)
             links.add(TraktShowsLink.WATCHED)
             links.add(TraktShowsLink.COLLECTION)
             links.add(TraktShowsLink.WATCHLIST)
@@ -162,7 +161,7 @@ class ShowsDiscoverAdapter(
         : RecyclerView.ViewHolder(itemView) {
 
         lateinit var link: TraktShowsLink
-        @BindView(R.id.textViewDiscoverLink)
+        @BindView(R.id.textViewGridLink)
         lateinit var title: TextView
 
         init {

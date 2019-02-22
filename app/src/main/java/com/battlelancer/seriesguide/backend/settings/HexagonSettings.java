@@ -28,7 +28,7 @@ public class HexagonSettings {
             = "com.battlelancer.seriesguide.hexagon.v2.merged.shows";
 
     public static final String KEY_MERGED_MOVIES
-            = "com.battlelancer.seriesguide.hexagon.v2.merged.movies";
+            = "com.battlelancer.seriesguide.hexagon.v2.merged.movies2";
 
     public static final String KEY_MERGED_LISTS
             = "com.battlelancer.seriesguide.hexagon.v2.merged.lists";

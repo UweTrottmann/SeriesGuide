@@ -289,7 +289,7 @@
     <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из SeriesGuide Cloud. Также убедитесь в том, что он удалён на других подключенных устройствах.</string>
     <string name="hexagon_api_queued">Отправка в облако SeriesGuide.</string>
     <string name="hexagon_signed_out">Вышли из SeriesGuide Cloud.</string>
-    <string name="hexagon_google_play_missing">Чтобы использовать облако SeriesGuide, требуются службы Google Play.</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Отправка в trakt.</string>
     <string name="checkin_success_trakt">Отмечено в %s на trakt.</string>
@@ -343,7 +343,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Основные</string>
     <string name="prefs_category_sharing">Сервисы</string>
-    <string name="prefs_category_advanced">Дополнительно</string>
     <string name="prefs_category_about">О программе</string>
     <string name="pref_onlyfuture">Скрыть вышедшие эпизоды</string>
     <string name="pref_onlyfuturesummary">Не показывать транслировавшиеся эпизоды</string>
@@ -422,7 +421,6 @@
     <string name="pref_offsetsummary">Смещение времени эфира на %d часов</string>
     <string name="clear_cache">Очистить кэш изображений</string>
     <string name="clear_cache_summary">Удалить все кэшированные изображения с Вашего устройства</string>
-    <string name="pref_ganalyticssummary">Отправлять анонимную статистику использования в сервис Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Вкл. описания, детали, рейтинги</string>
     <string name="backup_failed_file_access">Не могу произвести резервное копирование. Файл резервной копии не может быть найден или к нему нет доступа.</string>
@@ -445,7 +443,6 @@
     <string name="backup_use_default_files">Использовать файлы резервных копий по умолчанию</string>
     <!-- Welcome dialog -->
     <string name="get_started">Начать</string>
-    <string name="welcome_setuplanguage">Выбрать язык</string>
     <string name="dismiss">Отменить</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s выпущено</string>
@@ -462,13 +459,11 @@
     <string name="pref_notifications_select_shows">Выбрать сериалы</string>
     <string name="pref_notifications_select_shows_summary">Сериалы с включенными уведомлениями (%d)</string>
     <string name="pref_notification_channel_errors">Ошибки</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (малый)</string>
     <!-- List Widget -->
     <string name="hide_watched">Скрывать просмотренные эпизоды</string>
     <string name="pref_widget_opacity">Фон виджета</string>
     <string name="pref_widget_type">Тип виджета</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Использовать крупный шрифт</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Прозрачный</string>
     <string name="widget_background_25">25%</string>

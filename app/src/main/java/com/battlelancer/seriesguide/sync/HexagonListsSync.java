@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.lists.ListsTools;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Errors;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
@@ -73,7 +74,7 @@ public class HexagonListsSync {
                 cursor = response.getCursor();
                 lists = response.getLists();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest("get lists", e);
+                Errors.logAndReportHexagon("get lists", e);
                 return false;
             }
 
@@ -230,7 +231,7 @@ public class HexagonListsSync {
 
                 cursor = response.getCursor();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest("get list ids", e);
+                Errors.logAndReportHexagon("get list ids", e);
                 return false;
             }
         } while (!TextUtils.isEmpty(cursor)); // fetch next batch
@@ -330,7 +331,7 @@ public class HexagonListsSync {
         try {
             listsService.save(listsWrapper).execute();
         } catch (IOException e) {
-            HexagonTools.trackFailedRequest("save lists", e);
+            Errors.logAndReportHexagon("save lists", e);
             return false;
         }
         return true;

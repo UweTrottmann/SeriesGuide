@@ -5,6 +5,78 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 47
+----------
+*(2019-02-22)*
+
+* 🔧 Show list: replace favorite button with set watched button.
+* 🌟 Set movies watched (previously only when connected to trakt).
+* 🌟 New show list filters that can be set to include (+), exclude (-) or disabled.
+* 🌟 Added filter for continuing shows (exclude to display ended shows).
+* 📝 Show list filter settings are set back to defaults.
+* 🔧 Sharing old TheTVDB links to SeriesGuide to add shows works again.
+
+#### 47
+*(2019-02-22)*
+
+* 🔧 Sharing old TheTVDB links to SeriesGuide to add shows works again.
+* 🔧 Switch to improved error reporting to better pinpoint issues.
+* 📝 Latest translations from crowdin.
+
+#### 47-beta7
+*(2019-02-16)*
+
+* 🔧 Experiment with improved error reporting to better pinpoint issues.
+* 🔨 Crashes and errors are reported again.
+
+#### 47-beta6
+*(2019-02-08)*
+
+* 🔨 Do not crash when loading show discover screen.
+
+#### 47-beta5
+*(2019-02-08)*
+
+* 🔨 Do not crash when opening movie with unknown running time.
+* 🔨 Do not crash when opening show sort options with deprecated sort order.
+
+#### 47-beta4
+*(2019-02-01)*
+
+* 🌟 Set movies watched (previously only when connected to trakt).
+* 🌟 Cloud: sync watched movies. If trakt is connected, too, will upload existing watched movies, 
+  then use Cloud to sync them going forward. Watched changes are still sent to trakt.
+* 📝 Latest translations from crowdin.
+
+#### 47-beta3
+*(2019-01-25)*
+
+* 🌟 New show list filters that can be set to include (+), exclude (-) or disabled.
+* 🌟 Added filter for continuing shows (exclude to display ended shows).
+* 📝 Show list filter settings are set back to defaults.
+* 🔧 Upcoming range setting moved to button next to upcoming filter.
+* 🔧 Show list filter view scrolls if screen is not tall enough.
+* 📝 Target Android 9.0 (Pie).
+* 📝 Latest translations from crowdin.
+
+#### 47-beta2
+*(2019-01-18)*
+
+* 🔧 After changing the language of a show or the alternative language in Settings, episode descriptions are updated properly again.
+* 🔧 Combine show filter and sort options into single view. Stays visible until tap outside or back button press.
+* 📝 Latest translations from crowdin.
+
+#### 47-beta1
+*(2019-01-11)*
+
+* 🔧 Show list: replace favorite button with set watched button. Display an indicator if a show is a favorite instead.
+* 🔧 Cloud: update and improve Google Sign-In.
+* 🔧 Tablets: move add show button on discover screen to top right to match placement of primary action in other places.
+* 🔧 Discover: remove trakt recommendations. They were never useful. Send in feedback if they are for you!
+* 🔨 Only remove movie from watchlist if it actually was on it. This avoids a confusing confirmation message.
+* 📝 Only support Android 5.0 (Lollipop) and newer.
+* 📝 Latest translations from crowdin.
+
 Version 46
 ----------
 *(2019-01-04)*

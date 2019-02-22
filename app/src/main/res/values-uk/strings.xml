@@ -289,7 +289,7 @@
     <string name="hexagon_remove_account_confirmation">Видалення облікового запису призведе до видалення всіх серіалів та фільмів з хмари SeriesGuide. Переконайтесь що видалили його і на інших підключених пристроях.</string>
     <string name="hexagon_api_queued">Надсилання до хмари SeriesGuide.</string>
     <string name="hexagon_signed_out">Вихід з SeriesGuide хмари.</string>
-    <string name="hexagon_google_play_missing">Щоб використати SeriesGuide Хмару, потрібен Google Play Service.</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Надсилання до trakt.</string>
     <string name="checkin_success_trakt">Відзначено %s на trakt.</string>
@@ -343,7 +343,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Основні</string>
     <string name="prefs_category_sharing">Послуги</string>
-    <string name="prefs_category_advanced">Додатково</string>
     <string name="prefs_category_about">Про</string>
     <string name="pref_onlyfuture">Немає серій що вийшли</string>
     <string name="pref_onlyfuturesummary">Не показувати серії що вийшли</string>
@@ -422,7 +421,6 @@
     <string name="pref_offsetsummary">Зсув ефірного часу на %d годин</string>
     <string name="clear_cache">Очистити кеш зображень</string>
     <string name="clear_cache_summary">Видалити всі кешовані зображення з пристрою</string>
-    <string name="pref_ganalyticssummary">Відправляти анонімну статистику використання служб Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
     <string name="backup_failed_file_access">Не можливо створити резервну копію. Файл бекапу не знайдено або немає доступу.</string>
@@ -445,7 +443,6 @@
     <string name="backup_use_default_files">Використовувати резервну копію за замовчуванням</string>
     <!-- Welcome dialog -->
     <string name="get_started">Початок роботи</string>
-    <string name="welcome_setuplanguage">Вибрати мову</string>
     <string name="dismiss">Відхилити</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s наближається</string>
@@ -462,8 +459,6 @@
     <string name="pref_notifications_select_shows">Виберіть серіали</string>
     <string name="pref_notifications_select_shows_summary">Серіалів зі включеним сповіщенням (%d)</string>
     <string name="pref_notification_channel_errors">Errors</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (малий)</string>
     <!-- List Widget -->
     <string name="hide_watched">Приховати переглянуті серії</string>
     <string name="pref_widget_opacity">Фон віджета</string>

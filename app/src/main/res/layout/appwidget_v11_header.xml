@@ -52,7 +52,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center_vertical|end"
             android:contentDescription="@string/preferences"
-            android:src="@drawable/ic_action_overflow_round" />
+            android:src="@drawable/ic_more_vert_white_24dp" />
 
     </FrameLayout>
 

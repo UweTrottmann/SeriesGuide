@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.modules;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.StatFs;
 import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdbInterceptor;
 import com.battlelancer.seriesguide.tmdbapi.SgTmdbInterceptor;
@@ -69,13 +68,7 @@ public class HttpClientModule {
 
         try {
             StatFs statFs = new StatFs(dir.getAbsolutePath());
-            long available;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                available = statFs.getBlockCountLong() * statFs.getBlockSizeLong();
-            } else {
-                //noinspection deprecation
-                available = ((long) statFs.getBlockCount()) * statFs.getBlockSize();
-            }
+            long available = statFs.getBlockCountLong() * statFs.getBlockSizeLong();
             // Target 2% of the total space.
             size = available / 50;
         } catch (IllegalArgumentException ignored) {

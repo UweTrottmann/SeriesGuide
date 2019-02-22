@@ -16,8 +16,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.ListsActivity;
-import com.mobeta.android.dslv.DragSortController;
-import com.mobeta.android.dslv.DragSortListView;
+import com.battlelancer.seriesguide.widgets.dragsortview.DragSortController;
+import com.battlelancer.seriesguide.widgets.dragsortview.DragSortListView;
 import java.util.ArrayList;
 import java.util.List;
 

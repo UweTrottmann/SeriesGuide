@@ -9,15 +9,16 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.ui.shows.ShowTools
+import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.TmdbDate
-import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.enums.Extended
 import timber.log.Timber
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.LinkedList
 
 class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveData.Result>() {
 
@@ -88,29 +89,34 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
                     .build()
 
             val action = "get shows w new episodes"
-            val results = try {
+            val resultsPage = try {
                 val response = call.execute()
                 if (response.isSuccessful) {
                     response.body() ?: return buildResultFailure(R.string.tmdb, false)
                 } else {
-                    SgTmdb.trackFailedRequest(action, response)
+                    Errors.logAndReport(action, response)
                     return buildResultFailure(R.string.tmdb, false)
                 }
             } catch (e: Exception) {
-                SgTmdb.trackFailedRequest(action, e)
+                Errors.logAndReport(action, e)
                 return buildResultFailure(R.string.tmdb, false)
             }
 
+            val results = resultsPage.results
+                ?: return buildResultFailure(R.string.tmdb, false)
+
             val tvService = tmdb.tvService()
-            val searchResults = results.results.mapNotNull {
+            val searchResults = results.mapNotNull { tvShow ->
                 if (isCancelled) {
                     return null // do not bother fetching ids for remaining results
                 }
 
-                val idResponse = try {
-                    tvService.externalIds(it.id, null).execute()
-                } catch (e: Exception) {
-                    null
+                val idResponse = tvShow.id?.let {
+                    try {
+                        tvService.externalIds(it, null).execute()
+                    } catch (e: Exception) {
+                        null
+                    }
                 }
 
                 val externalIds = idResponse?.body()
@@ -119,9 +125,9 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
                     null // just ignore this show
                 } else {
                     SearchResult().apply {
-                        tvdbid = externalIds.tvdb_id
-                        title = it.name
-                        overview = it.overview
+                        tvdbid = externalIds.tvdb_id!!
+                        title = tvShow.name
+                        overview = tvShow.overview
                         language = languageActual
                     }
                 }
@@ -184,9 +190,9 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
                         .asSequence()
                         .filter {
                             // skip shows without required TVDB id
-                            it.show != null && it.show.ids != null && it.show.ids.tvdb != null
+                            it.show?.ids?.tvdb != null
                         }
-                        .mapTo(LinkedList<Show>()) { it.show }
+                        .mapTo(LinkedList()) { it.show!! }
 
                 // manually set the language to English
                 val results = TraktAddLoader.parseTraktShowsToSearchResults(context,

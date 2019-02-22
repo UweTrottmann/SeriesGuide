@@ -11,7 +11,7 @@
     <string name="help">Help</string>
     <string name="help_and_feedback">Help &amp; Feedback</string>
     <string name="drawer_open">Navigatiemenu openen</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide zal geen updates meer uitbrengen voor deze versie van Android.</string>
     <!-- Media items -->
     <string name="show">Serie</string>
     <string name="episode">Aflevering</string>
@@ -275,7 +275,7 @@
     <string name="hexagon_remove_account_confirmation">Dit zal al uw series, lijsten en films van SeriesGuide Cloud verwijderen</string>
     <string name="hexagon_api_queued">Verzonden naar SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Afgemeld bij SeriesGuide Cloud</string>
-    <string name="hexagon_google_play_missing">Google Play Services zijn niet geïnstalleerd</string>
+    <string name="hexagon_signin_fail_format">Fout tijdens Google login (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Toevoegen aan trakt.</string>
     <string name="checkin_success_trakt">Aangemeld bij %s op trakt.</string>
@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Basis</string>
     <string name="prefs_category_sharing">Services</string>
-    <string name="prefs_category_advanced">Geavanceerd</string>
     <string name="prefs_category_about">Over</string>
     <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
     <string name="pref_onlyfuturesummary">Laat nooit al uitgezonden afleveringen zien</string>
@@ -356,8 +355,8 @@
         <item quantity="other">%d minuten voordien</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">Privacybeleid</string>
+    <string name="licence_tvdb">Deze app gebruikt data en afbeeldingen van TheTVDB, gelicenseerd onder Creative Commons licentie.</string>
     <string name="licence_themoviedb">Dit product gebruikt de TMDb API maar is niet goedgekeurd of gecertificeerd door TMDb.</string>
     <string name="licence_trakt">Deze app gebruikt data en afbeeldingen van trakt.</string>
     <string name="about_open_source">SeriesGuide is gebouwd met openbronsoftware.</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Pas uitzendtijd aan met %d uren</string>
     <string name="clear_cache">Afbeeldingenbuffer wissen</string>
     <string name="clear_cache_summary">Alle gebufferde afbeeldingen van het apparaat verwijderen</string>
-    <string name="pref_ganalyticssummary">Anonieme gebruiksstatistieken verzenden naar een Google-dienst</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Inclusief beschrijvingen, details en beoordelingen</string>
     <string name="backup_failed_file_access">Kan geen back-up maken. Een back-upbestand kon niet gevonden of geopend worden.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Standaardbestanden voor back-up gebruiken</string>
     <!-- Welcome dialog -->
     <string name="get_started">Aan de slag</string>
-    <string name="welcome_setuplanguage">Selecteer een taal</string>
     <string name="dismiss">Afwijzen</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s verschijnt binnenkort</string>
@@ -440,8 +437,6 @@
     <string name="pref_notifications_select_shows">Series kiezen</string>
     <string name="pref_notifications_select_shows_summary">Series waarvoor de meldingen aanstaan (%d)</string>
     <string name="pref_notification_channel_errors">Fouten</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (klein)</string>
     <!-- List Widget -->
     <string name="hide_watched">Bekeken afleveringen verbergen</string>
     <string name="pref_widget_opacity">Widget achtergrond</string>

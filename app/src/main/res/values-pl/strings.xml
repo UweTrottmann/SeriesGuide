@@ -289,7 +289,7 @@
     <string name="hexagon_remove_account_confirmation">Usunięcie konta spowoduje usunięcie wszystkich seriali i filmów z chmury SeriesGuide. Upewnij się, że dane te zostały usunięte także z pozostałych podłączonych urządzeń.</string>
     <string name="hexagon_api_queued">Wysłanie do chmury SeriesGuide.</string>
     <string name="hexagon_signed_out">Wylogowano z SeriesGuide Cloud.</string>
-    <string name="hexagon_google_play_missing">Aby użyć chmury SeriesGuide Cloud wymagane jest Google Play Services.</string>
+    <string name="hexagon_signin_fail_format">Błąd logowania przez Google (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Wysyłanie do trakt.</string>
     <string name="checkin_success_trakt">%s oznaczono jako oglądane na trakt.</string>
@@ -343,7 +343,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Podstawowe</string>
     <string name="prefs_category_sharing">Usługi</string>
-    <string name="prefs_category_advanced">Zaawansowane</string>
     <string name="prefs_category_about">O programie</string>
     <string name="pref_onlyfuture">Bez wyemitowanych</string>
     <string name="pref_onlyfuturesummary">Nigdy nie wyświetlaj wyemitowanych odcinków</string>
@@ -379,7 +378,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Polityka prywatności</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="licence_tvdb">Ta aplikacja korzysta z danych i obrazów z serwisu TheTVDB na licencji Creative Commons.</string>
     <string name="licence_themoviedb">Ten produkt używa interfejsu API TMDb, ale nie jest zatwierdzony lub poświadczony przez TMDb.</string>
     <string name="licence_trakt">Ta aplikacja korzysta z danych i zdjęć z trakt.</string>
     <string name="about_open_source">SeriesGuide jest zbudowany przy użyciu oprogramowania open source.</string>
@@ -422,7 +421,6 @@
     <string name="pref_offsetsummary">Przesuń czas emisji o %d godzin</string>
     <string name="clear_cache">Usuń bufor obrazów</string>
     <string name="clear_cache_summary">Usuwa wszystkie buforowane obrazy z urządzenia</string>
-    <string name="pref_ganalyticssummary">Wysyła anonimowe statystyki użytkowania do usług Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Uwzględnij opisy, szczegóły, oceny</string>
     <string name="backup_failed_file_access">Nie można utworzyć kopii zapasowej. Nie można odnaleźć lub uzyskać dostępu do pliku kopii.</string>
@@ -445,7 +443,6 @@
     <string name="backup_use_default_files">Użyj domyślnych plików kopii zapasowej</string>
     <!-- Welcome dialog -->
     <string name="get_started">Wprowadzenie</string>
-    <string name="welcome_setuplanguage">Wybierz język</string>
     <string name="dismiss">Zamknij</string>
     <!-- Notifications -->
     <string name="upcoming_show">Nadchodzi odcinek %s</string>
@@ -462,8 +459,6 @@
     <string name="pref_notifications_select_shows">Wybierz seriale</string>
     <string name="pref_notifications_select_shows_summary">Seriale z aktywnymi powiadomieniami (%d)</string>
     <string name="pref_notification_channel_errors">Błędy</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (mały)</string>
     <!-- List Widget -->
     <string name="hide_watched">Ukryj obejrzane odcinki</string>
     <string name="pref_widget_opacity">Tło widżetu</string>

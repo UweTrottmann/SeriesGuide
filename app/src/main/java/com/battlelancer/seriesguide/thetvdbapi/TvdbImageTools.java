@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.thetvdbapi;
 
 import android.content.Context;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.widget.ImageView;
@@ -90,13 +89,7 @@ public class TvdbImageTools {
      */
     public static void loadShowPosterAlpha(Context context, ImageView imageView,
             String posterPath) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            imageView.setImageAlpha(30);
-        } else {
-            //noinspection deprecation
-            imageView.setAlpha(30);
-        }
-
+        imageView.setImageAlpha(30);
         loadShowPoster(context, imageView, posterPath);
     }
 
@@ -113,7 +106,7 @@ public class TvdbImageTools {
         ServiceUtils.loadWithPicasso(context, smallSizeUrl(posterPath))
                 .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                 .centerCrop()
-                .error(R.drawable.ic_image_missing)
+                .error(R.drawable.ic_photo_gray_24dp)
                 .into(imageView);
     }
 
@@ -121,7 +114,7 @@ public class TvdbImageTools {
         ServiceUtils.loadWithPicasso(context, url)
                 .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                 .centerCrop()
-                .error(R.drawable.ic_image_missing)
+                .error(R.drawable.ic_photo_gray_24dp)
                 .into(imageView);
     }
 
@@ -140,7 +133,7 @@ public class TvdbImageTools {
         ServiceUtils.loadWithPicasso(context, posterUrl)
                 .resizeDimen(R.dimen.show_poster_width_default, R.dimen.show_poster_height_default)
                 .centerCrop()
-                .error(R.drawable.ic_image_missing)
+                .error(R.drawable.ic_photo_gray_24dp)
                 .into(imageView);
     }
 
@@ -156,7 +149,7 @@ public class TvdbImageTools {
         ServiceUtils.loadWithPicasso(context, smallSizeUrl(posterPath))
                 .fit()
                 .centerCrop()
-                .error(R.drawable.ic_image_missing)
+                .error(R.drawable.ic_photo_gray_24dp)
                 .into(imageView);
     }
 

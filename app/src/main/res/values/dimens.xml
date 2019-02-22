@@ -17,10 +17,6 @@
     <dimen name="text_size_default_sg">14sp</dimen>
     <dimen name="text_size_caption_sg">12sp</dimen>
 
-    <!-- Legacy widget -->
-    <dimen name="widget_paddingRight">3dp</dimen>
-    <dimen name="widget_paddingLeft">8dp</dimen>
-    <dimen name="widget_poster_width">25dp</dimen>
     <!-- List widget -->
     <dimen name="widget_item_width">27dp</dimen>
     <dimen name="widget_item_width_large">30dp</dimen>
@@ -35,14 +31,12 @@
     <!-- Grids -->
     <dimen name="showgrid_columnWidth">275dp</dimen>
     <integer name="grid_column_count">1</integer>
-    <!-- CardView adds padding on pre-v21 to draw shadows, reduce grid spacing accordingly -->
-    <dimen name="grid_topbottom_padding">5dp</dimen>
-    <dimen name="grid_leftright_padding">6dp</dimen>
-    <dimen name="grid_vertical_spacing">3dp</dimen>
-    <dimen name="grid_horizontal_spacing">4dp</dimen>
-    <!-- Workaround margins due to grid inset breaking percent layouts. -->
-    <dimen name="grid_item_margin_vertical">1dp</dimen>
-    <dimen name="grid_item_margin_horizontal">2dp</dimen>
+    <dimen name="grid_topbottom_padding">8dp</dimen>
+    <dimen name="grid_leftright_padding">8dp</dimen>
+    <dimen name="grid_vertical_spacing">8dp</dimen>
+    <dimen name="grid_horizontal_spacing">8dp</dimen>
+    <dimen name="grid_item_margin_vertical">4dp</dimen>
+    <dimen name="grid_item_margin_horizontal">4dp</dimen>
 
     <!-- Fast scroll width, tested on Android 4.4 and 5.0. -->
     <dimen name="grid_fast_scroll_padding">28dp</dimen>
@@ -97,6 +91,5 @@
     <dimen name="dialog_min_width">300dp</dimen>
     <dimen name="empty_view_width">250dp</dimen>
     <dimen name="tab_padding_horizontal">12dp</dimen>
-    <dimen name="search_padding_right">16dp</dimen>
 
 </resources>

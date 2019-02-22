@@ -48,11 +48,11 @@ class EpisodeResultsAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
-        viewHolder.episodeTvdbId = mCursor.getInt(EpisodeSearchQuery._ID);
+        viewHolder.episodeTvdbId = cursor.getInt(EpisodeSearchQuery._ID);
 
-        viewHolder.showTitle.setText(mCursor.getString(EpisodeSearchQuery.SHOW_TITLE));
-        Resources.Theme theme = mContext.getTheme();
-        int episodeFlag = mCursor.getInt(EpisodeSearchQuery.WATCHED);
+        viewHolder.showTitle.setText(cursor.getString(EpisodeSearchQuery.SHOW_TITLE));
+        Resources.Theme theme = context.getTheme();
+        int episodeFlag = cursor.getInt(EpisodeSearchQuery.WATCHED);
         if (EpisodeTools.isWatched(episodeFlag)) {
             viewHolder.watchedStatus.setImageResource(R.drawable.ic_watched_24dp);
         } else if (EpisodeTools.isSkipped(episodeFlag)) {
@@ -63,15 +63,15 @@ class EpisodeResultsAdapter extends CursorAdapter {
         }
 
         // ensure matched term is bold
-        String snippet = mCursor.getString(EpisodeSearchQuery.OVERVIEW);
+        String snippet = cursor.getString(EpisodeSearchQuery.OVERVIEW);
         viewHolder.searchSnippet.setText(snippet != null ? Html.fromHtml(snippet) : null);
 
         // episode
-        int number = mCursor.getInt(EpisodeSearchQuery.NUMBER);
-        int season = mCursor.getInt(EpisodeSearchQuery.SEASON);
-        String title = mCursor.getString(EpisodeSearchQuery.TITLE);
+        int number = cursor.getInt(EpisodeSearchQuery.NUMBER);
+        int season = cursor.getInt(EpisodeSearchQuery.SEASON);
+        String title = cursor.getString(EpisodeSearchQuery.TITLE);
         viewHolder.episodeTitle
-                .setText(TextTools.getNextEpisodeString(mContext, season, number, title));
+                .setText(TextTools.getNextEpisodeString(context, season, number, title));
 
         // poster
         TvdbImageTools.loadShowPosterResizeSmallCrop(context, viewHolder.poster,

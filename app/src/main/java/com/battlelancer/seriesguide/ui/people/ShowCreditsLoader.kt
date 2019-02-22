@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.ui.people
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb
+import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.GenericSimpleLoader
 import com.uwetrottmann.tmdb2.entities.Credits
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource
@@ -45,10 +45,10 @@ class ShowCreditsLoader(context: Context, private var showId: Int, private val f
             if (response.isSuccessful) {
                 return response.body()
             } else {
-                SgTmdb.trackFailedRequest("get show credits", response)
+                Errors.logAndReport("get show credits", response)
             }
         } catch (e: Exception) {
-            SgTmdb.trackFailedRequest("get show credits", e)
+            Errors.logAndReport("get show credits", e)
         }
 
         return null
@@ -60,18 +60,20 @@ class ShowCreditsLoader(context: Context, private var showId: Int, private val f
                     .find(showId.toString(), ExternalSource.TVDB_ID, null)
                     .execute()
             if (response.isSuccessful) {
-                val tvResults = response.body()!!.tv_results
-                if (!tvResults.isEmpty()) {
-                    showId = tvResults[0].id
-                    return true // found it!
-                } else {
-                    Timber.d("Downloading show credits failed: show not on TMDb")
+                val tvResults = response.body()?.tv_results
+                if (!tvResults.isNullOrEmpty()) {
+                    val showId = tvResults[0].id
+                    showId?.let {
+                        this.showId = showId
+                        return true // found it!
+                    }
                 }
+                Timber.d("Downloading show credits failed: show not on TMDb")
             } else {
-                SgTmdb.trackFailedRequest("find tvdb show", response)
+                Errors.logAndReport("find tvdb show", response)
             }
         } catch (e: Exception) {
-            SgTmdb.trackFailedRequest("find tvdb show", e)
+            Errors.logAndReport("find tvdb show", e)
         }
 
         return false

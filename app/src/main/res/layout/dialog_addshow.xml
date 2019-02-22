@@ -37,7 +37,7 @@
                     android:layout_height="@dimen/show_poster_height_large"
                     android:scaleType="centerInside"
                     tools:ignore="ContentDescription"
-                    tools:src="@drawable/ic_image_missing" />
+                    tools:src="@drawable/ic_photo_gray_24dp" />
 
                 <TextView
                     android:id="@+id/textViewAddTitle"

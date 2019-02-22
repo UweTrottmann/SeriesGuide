@@ -7,6 +7,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.shows.TraktRecentEpisodeHistoryLoader;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
@@ -48,10 +49,10 @@ class TraktEpisodeHistoryLoader extends GenericSimpleLoader<TraktEpisodeHistoryL
                 if (SgTrakt.isUnauthorized(getContext(), response)) {
                     return buildResultFailure(R.string.trakt_error_credentials);
                 }
-                SgTrakt.trackFailedRequest(getAction(), response);
+                Errors.logAndReport(getAction(), response);
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(getAction(), e);
+            Errors.logAndReport(getAction(), e);
             return AndroidUtils.isNetworkConnected(getContext())
                     ? buildResultFailure() : buildResultFailure(R.string.offline);
         }

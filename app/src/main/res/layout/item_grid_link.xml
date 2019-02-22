@@ -15,7 +15,7 @@
     tools:layout_width="150dp">
 
     <TextView
-        android:id="@+id/textViewDiscoverLink"
+        android:id="@+id/textViewGridLink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"

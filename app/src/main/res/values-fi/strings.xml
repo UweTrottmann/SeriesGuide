@@ -275,7 +275,7 @@
     <string name="hexagon_remove_account_confirmation">Tilin poistaminen poistaa kaikki ohjelmat ja elokuvat SeriesGuide Cloud -palvelimelta. Muista poistaa ne myös muista yhdistetyistä laitteista.</string>
     <string name="hexagon_api_queued">Lähetetään SeriesGuide Cloudiin.</string>
     <string name="hexagon_signed_out">Kirjauduttu ulos SeriesGuide Cloudista.</string>
-    <string name="hexagon_google_play_missing">SeriesGuide Cloudin käyttämiseen vaaditaan Google Play Palvelut.</string>
+    <string name="hexagon_signin_fail_format">Virhe Google-kirjautumisessa (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Lähetetään traktiin.</string>
     <string name="checkin_success_trakt">Kuitattu kohteeseen %s traktissa.</string>
@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Yleiset</string>
     <string name="prefs_category_sharing">Palvelut</string>
-    <string name="prefs_category_advanced">Edistyneet</string>
     <string name="prefs_category_about">Tietoja</string>
     <string name="pref_onlyfuture">Ei esitettyjä jaksoja</string>
     <string name="pref_onlyfuturesummary">Älä koskaan näytä jo esitettyjä jaksoja</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Siirrä lähetysaikoja %d tunnilla</string>
     <string name="clear_cache">Tyhjennä kuvavälimuisti</string>
     <string name="clear_cache_summary">Poistaa kaikki välimuistiin tallennetut kuvat</string>
-    <string name="pref_ganalyticssummary">Lähetä anonyymia käyttötilastoja Googlen palveluun</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Sisällyttä kuvaukset, tiedot, arvosanat</string>
     <string name="backup_failed_file_access">Ei voida varmuuskopioida. Varmuuskopiota ei löydy tai sitä ei voida käyttää.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Käytä oletusvarmuuskopiotiedostoja</string>
     <!-- Welcome dialog -->
     <string name="get_started">Aloita</string>
-    <string name="welcome_setuplanguage">Valitse kieli</string>
     <string name="dismiss">Hylkää</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s on tulossa</string>
@@ -440,8 +437,6 @@
     <string name="pref_notifications_select_shows">Valitse ohjelmat</string>
     <string name="pref_notifications_select_shows_summary">Ohjelmat, joissa ilmoitukset ovat käytössä (%d)</string>
     <string name="pref_notification_channel_errors">Virheet</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (pieni)</string>
     <!-- List Widget -->
     <string name="hide_watched">Piilota katsotut jaksot</string>
     <string name="pref_widget_opacity">Widgetin tausta</string>

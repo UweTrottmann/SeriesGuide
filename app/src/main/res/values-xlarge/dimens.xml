@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <!-- Legacy widget -->
-    <dimen name="widget_paddingRight">3dp</dimen>
-    <dimen name="widget_paddingLeft">10dp</dimen>
-    <dimen name="widget_poster_width">40dp</dimen>
-
-</resources>

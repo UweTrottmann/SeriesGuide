@@ -11,7 +11,7 @@
     <string name="help">Hjælp</string>
     <string name="help_and_feedback">Hjælp &amp; Feedback</string>
     <string name="drawer_open">Åbn navigationsmenu</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide modtager ikke flere opdateringer til denne version af Android.</string>
     <!-- Media items -->
     <string name="show">Vis</string>
     <string name="episode">Episode</string>
@@ -275,7 +275,7 @@
     <string name="hexagon_remove_account_confirmation">Hvis du sletter din konto, slettes alle film og serier fra SeriesGuide Cloud. Sørg for også at fjerne kontoen på andre tilsluttede enheder.</string>
     <string name="hexagon_api_queued">Sender til SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Logget ud af SeriesGuide Cloud.</string>
-    <string name="hexagon_google_play_missing">Google Play-tjenester kræves for at benytte SeriesGuide Cloud.</string>
+    <string name="hexagon_signin_fail_format">Fejl i Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Sender til trakt.</string>
     <string name="checkin_success_trakt">%s tjekket ind på trakt.</string>
@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Grundlæggende</string>
     <string name="prefs_category_sharing">Tjenester</string>
-    <string name="prefs_category_advanced">Avanceret</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Ingen sendte episoder</string>
     <string name="pref_onlyfuturesummary">Vis aldrig allerede sendte episoder</string>
@@ -356,8 +355,8 @@
         <item quantity="other">%d minutter før</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">Fortrolighedspolitik</string>
+    <string name="licence_tvdb">Denne app benytter data og billeder fra TheTVDB, som er licenseret under en Creative Commons-licens.</string>
     <string name="licence_themoviedb">Dette produkt benytter TMDb API\'en, men er ikke godkendt eller certificeret af TMDb.</string>
     <string name="licence_trakt">Denne app benytter data og billeder fra trakt.</string>
     <string name="about_open_source">SeriesGuide er udviklet ved hjælp af open source-software.</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Forskyd sendetidspunkter med %d timer</string>
     <string name="clear_cache">Ryd billed-cache</string>
     <string name="clear_cache_summary">Fjern alle gemte billeder fra din enhed</string>
-    <string name="pref_ganalyticssummary">Send anonym brugsstatistik til en Google-tjeneste</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Inkluder beskrivelser, detaljer og bedømmelser</string>
     <string name="backup_failed_file_access">Kan ikke sikkerhedskopiere. En sikkerhedskopieringsfil kan ikke findes eller tilgås.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Benyt standardsikkerhedskopifiler</string>
     <!-- Welcome dialog -->
     <string name="get_started">Kom i gang</string>
-    <string name="welcome_setuplanguage">Vælg sprog</string>
     <string name="dismiss">Ignorér</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s sendes snart</string>
@@ -440,13 +437,11 @@
     <string name="pref_notifications_select_shows">Vælg serier</string>
     <string name="pref_notifications_select_shows_summary">Serier med episodemeddelelser slået til (%d)</string>
     <string name="pref_notification_channel_errors">Fejl</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (lille)</string>
     <!-- List Widget -->
     <string name="hide_watched">Skjul sete episoder</string>
     <string name="pref_widget_opacity">Widget-baggrund</string>
     <string name="pref_widget_type">Widget-type</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Brug stor skrifttype</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Gennemsigtig</string>
     <string name="widget_background_25">25 %</string>

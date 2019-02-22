@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- With scroll flags for CoordinatorLayouts with scrollable children to support app bar scrolling on L+. -->
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,6 +12,7 @@
     android:minHeight="?attr/actionBarSize"
     android:theme="?attr/actionBarTheme"
     app:contentInsetStartWithNavigation="0dp"
+    app:layout_scrollFlags="scroll|enterAlways|snap"
     app:popupTheme="?attr/actionBarPopupTheme">
 
     <!-- focusableInTouchMode: prevent auto-focus on search text view. -->
@@ -36,7 +39,7 @@
             android:layout_height="44dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/clear"
-            android:src="@drawable/ic_action_cancel"
+            android:src="@drawable/ic_clear_24dp"
             app:layout_constraintRight_toRightOf="@+id/editTextSearchBar"
             app:layout_constraintTop_toTopOf="parent" />
 

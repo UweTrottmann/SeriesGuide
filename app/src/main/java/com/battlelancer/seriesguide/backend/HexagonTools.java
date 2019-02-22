@@ -6,32 +6,26 @@ import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.AnalyticsEvents;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.android.gms.auth.api.Auth;
+import com.battlelancer.seriesguide.util.Errors;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
-import com.google.android.gms.common.api.Status;
-import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.uwetrottmann.seriesguide.backend.account.Account;
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
-import java.io.IOException;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import timber.log.Timber;
@@ -44,13 +38,13 @@ public class HexagonTools {
 
     private static final String ACTION_SILENT_SIGN_IN = "silent sign-in";
     private static final JsonFactory JSON_FACTORY = new AndroidJsonFactory();
-    private static final HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
+    private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     private static final long SIGN_IN_CHECK_INTERVAL_MS = 5 * DateUtils.MINUTE_IN_MILLIS;
 
     private static GoogleSignInOptions googleSignInOptions;
 
     private final Context context;
-    private GoogleApiClient googleApiClient;
+    private GoogleSignInClient googleSignInClient;
     private GoogleAccountCredential credential;
     private long lastSignInCheck;
     private Shows showsService;
@@ -97,7 +91,7 @@ public class HexagonTools {
 
     /**
      * Creates and returns a new instance for this hexagon service or null if not signed in.
-     *
+     * <p>
      * Warning: checks sign-in state, make sure to guard with {@link HexagonSettings#isEnabled}.
      */
     @Nullable
@@ -114,7 +108,7 @@ public class HexagonTools {
 
     /**
      * Returns the instance for this hexagon service or null if not signed in.
-     *
+     * <p>
      * Warning: checks sign-in state, make sure to guard with {@link HexagonSettings#isEnabled}.
      */
     @Nullable
@@ -134,7 +128,7 @@ public class HexagonTools {
 
     /**
      * Returns the instance for this hexagon service or null if not signed in.
-     *
+     * <p>
      * Warning: checks sign-in state, make sure to guard with {@link HexagonSettings#isEnabled}.
      */
     @Nullable
@@ -154,7 +148,7 @@ public class HexagonTools {
 
     /**
      * Returns the instance for this hexagon service or null if not signed in.
-     *
+     * <p>
      * Warning: checks sign-in state, make sure to guard with {@link HexagonSettings#isEnabled}.
      */
     @Nullable
@@ -197,8 +191,8 @@ public class HexagonTools {
      * account might have gotten signed out).
      *
      * @param checkSignInState If enabled, tries to silently sign in with Google. If it fails, sets
-     * the {@link HexagonSettings#KEY_SHOULD_VALIDATE_ACCOUNT} flag. If successful, clears the
-     * flag.
+     *                         the {@link HexagonSettings#KEY_SHOULD_VALIDATE_ACCOUNT} flag. If
+     *                         successful, clears the flag.
      */
     private synchronized GoogleAccountCredential getAccountCredential(boolean checkSignInState) {
         if (credential == null) {
@@ -213,40 +207,31 @@ public class HexagonTools {
 
     private void checkSignInState() {
         if (credential.getSelectedAccount() != null && !isTimeForSignInStateCheck()) {
-            Timber.d("%s: just checked state, skip", ACTION_SILENT_SIGN_IN);
+            return;
         }
         lastSignInCheck = SystemClock.elapsedRealtime();
 
-        if (googleApiClient == null) {
-            googleApiClient = new GoogleApiClient.Builder(context)
-                    .addApi(Auth.GOOGLE_SIGN_IN_API, getGoogleSignInOptions())
-                    .build();
+        if (googleSignInClient == null) {
+            googleSignInClient = GoogleSignIn.getClient(context, getGoogleSignInOptions());
         }
 
         android.accounts.Account account = null;
-        ConnectionResult connectionResult = googleApiClient.blockingConnect();
+        Task<GoogleSignInAccount> signInTask = googleSignInClient.silentSignIn();
 
-        if (connectionResult.isSuccess()) {
-            OptionalPendingResult<GoogleSignInResult> pendingResult
-                    = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
-
-            GoogleSignInResult result = pendingResult.await();
-            if (result.isSuccess()) {
-                GoogleSignInAccount signInAccount = result.getSignInAccount();
-                if (signInAccount != null) {
-                    Timber.i("%s: successful", ACTION_SILENT_SIGN_IN);
-                    account = signInAccount.getAccount();
-                    credential.setSelectedAccount(account);
-                } else {
-                    trackSignInFailure(ACTION_SILENT_SIGN_IN, "GoogleSignInAccount is null");
-                }
+        try {
+            GoogleSignInAccount signInAccount = Tasks.await(signInTask);
+            if (signInAccount != null) {
+                Timber.i("%s: successful", ACTION_SILENT_SIGN_IN);
+                account = signInAccount.getAccount();
+                credential.setSelectedAccount(account);
             } else {
-                trackSignInFailure(ACTION_SILENT_SIGN_IN, result.getStatus());
+                Errors.logAndReport(ACTION_SILENT_SIGN_IN,
+                        new HexagonAuthError(ACTION_SILENT_SIGN_IN,
+                                "GoogleSignInAccount is null"));
             }
-
-            googleApiClient.disconnect();
-        } else {
-            trackSignInFailure(ACTION_SILENT_SIGN_IN, connectionResult);
+        } catch (Exception e) {
+            Errors.logAndReport(ACTION_SILENT_SIGN_IN,
+                    HexagonAuthError.build(ACTION_SILENT_SIGN_IN, e));
         }
 
         boolean shouldFixAccount = account == null;
@@ -285,32 +270,5 @@ public class HexagonTools {
                     .build();
         }
         return googleSignInOptions;
-    }
-
-    public static void trackFailedRequest(String action, @NonNull IOException e) {
-        if (e instanceof HttpResponseException) {
-            HttpResponseException responseException = (HttpResponseException) e;
-            Utils.trackFailedRequest(new HexagonRequestError(action,
-                    responseException.getStatusCode(), responseException.getStatusMessage()));
-        } else {
-            Utils.trackFailedRequest(new HexagonRequestError(action, e));
-        }
-    }
-
-    void trackSignInFailure(String action, ConnectionResult connectionResult) {
-        String failureMessage = connectionResult.getErrorCode() + " "
-                + connectionResult.getErrorMessage();
-        trackSignInFailure(action, failureMessage);
-    }
-
-    void trackSignInFailure(String action, Status status) {
-        String failureMessage = GoogleSignInStatusCodes.getStatusCodeString(status.getStatusCode());
-        trackSignInFailure(action, failureMessage);
-    }
-
-    void trackSignInFailure(String action, String failureMessage) {
-        Timber.e("%s: %s", action, failureMessage);
-        Utils.trackError(AnalyticsEvents.SIGN_IN_ERROR,
-                new HexagonSignInError(action, failureMessage));
     }
 }

@@ -275,7 +275,7 @@
     <string name="hexagon_remove_account_confirmation">С премахването на акаунта ви ще се изтрият всички предавания и филми от SeriesGuide облака. Не забраявайте да го премахнете и на други свързани устройства.</string>
     <string name="hexagon_api_queued">Изпращане към SeriesGuide облака.</string>
     <string name="hexagon_signed_out">Излизане от облака SeriesGuide.</string>
-    <string name="hexagon_google_play_missing">Необходимо е да използвате SeriesGuide Cloud, Google Play Services.</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Подаване към trakt.</string>
     <string name="checkin_success_trakt">Отметнато %s в trakt.</string>
@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Основни</string>
     <string name="prefs_category_sharing">Услуги</string>
-    <string name="prefs_category_advanced">Разширени</string>
     <string name="prefs_category_about">Относно</string>
     <string name="pref_onlyfuture">Няма излъчени епизоди</string>
     <string name="pref_onlyfuturesummary">Не показвай вече излъчвани епизоди</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Преместване на часовете за излъчване с %d часа</string>
     <string name="clear_cache">Изчисти кеша на изображенията</string>
     <string name="clear_cache_summary">Премахнете всички кеширани снимки от вашето устройство</string>
-    <string name="pref_ganalyticssummary">Изпрати анонимни данни за потреблението на Google услугите</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Включва описания, детайли, рейтинги</string>
     <string name="backup_failed_file_access">Не може да се архивира. Архивения файл не може да бъде намерен или е не достъпен.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Използвайте файловете подразбиране за архивиране</string>
     <!-- Welcome dialog -->
     <string name="get_started">Начало</string>
-    <string name="welcome_setuplanguage">Избор на език</string>
     <string name="dismiss">Отхвърли</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s предстои</string>
@@ -440,8 +437,6 @@
     <string name="pref_notifications_select_shows">Избери сериали</string>
     <string name="pref_notifications_select_shows_summary">Сериали с включени известия (%d)</string>
     <string name="pref_notification_channel_errors">Грешки</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (малка)</string>
     <!-- List Widget -->
     <string name="hide_watched">Скрий гледаните епизоди</string>
     <string name="pref_widget_opacity">Фон на уиджета</string>

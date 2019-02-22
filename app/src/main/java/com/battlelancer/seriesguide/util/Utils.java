@@ -35,11 +35,8 @@ import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
-import com.crashlytics.android.core.CrashlyticsCore;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
-import java.io.InterruptedIOException;
-import java.net.UnknownHostException;
 import timber.log.Timber;
 
 /**
@@ -170,54 +167,17 @@ public class Utils {
     }
 
     /**
-     * Track something gone wrong.
-     */
-    public static void trackError(String eventName, @NonNull Throwable throwable) {
-        CrashlyticsCore.getInstance().setString("event", eventName);
-        CrashlyticsCore.getInstance().logException(throwable);
-    }
-
-    /**
-     * Shortcut for {@link #trackError(String, Throwable) trackError(eventName, throwable)}
-     * plus error log.
-     */
-    public static void trackFailedRequest(@NonNull RequestError throwable) {
-        if (throwable.getCode() != null && throwable.getFailureMessage() != null) {
-            // log like "action: 404 not found"
-            Timber.tag(throwable.getEvent());
-            Timber.e("%s: %s %s", throwable.getAction(), throwable.getCode(),
-                    throwable.getFailureMessage());
-        }
-
-        if (throwable.getCause() instanceof UnknownHostException) {
-            return; // do not track, mostly devices loosing connection
-        }
-        if (throwable.getCause() instanceof InterruptedIOException) {
-            return; // do not track, mostly timeouts
-        }
-
-        CrashlyticsCore.getInstance().setString("action", throwable.getAction());
-        trackError(throwable.getEvent(), throwable);
-    }
-
-    /**
-     * Returns false if there is an active, but metered (pre-Jelly Bean: non-WiFi) connection and
+     * Returns false if there is an active, but metered connection and
      * the user did not approve it for large data downloads (e.g. images).
      */
-    public static boolean isAllowedLargeDataConnection(Context context) {
+    static boolean isAllowedLargeDataConnection(Context context) {
         boolean isConnected;
         boolean largeDataOverWifiOnly = UpdateSettings.isLargeDataOverWifiOnly(context);
 
         // check connection state
         if (largeDataOverWifiOnly) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                // better: only allow large data downloads over non-metered connections
-                isConnected = AndroidUtils.isUnmeteredNetworkConnected(context);
-            } else {
-                // only allow large data downloads over WiFi,
-                // assuming it is most likely to be not metered
-                isConnected = AndroidUtils.isWifiConnected(context);
-            }
+            // only allow large data downloads over non-metered connections
+            isConnected = AndroidUtils.isUnmeteredNetworkConnected(context);
         } else {
             isConnected = AndroidUtils.isNetworkConnected(context);
         }

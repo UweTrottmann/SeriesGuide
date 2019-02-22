@@ -275,7 +275,7 @@
     <string name="hexagon_remove_account_confirmation">Hesabınızı kaldırdığınızda SeriesGuide Cloud üzerindeki bütün film ve dizileriniz silinecektir. Hesabınızı diğer bağlı cihazlardan da kaldırdığınızdan emin olun.</string>
     <string name="hexagon_api_queued">SeriesGuide bulutuna gönder.</string>
     <string name="hexagon_signed_out">SeriesGuide Bulut servisinden çıkış yapıldı.</string>
-    <string name="hexagon_google_play_missing">SeriesGuide Bulut\'u kullanabilmek için, Google Play Hizmetleri gereklidir.</string>
+    <string name="hexagon_signin_fail_format">Google ile Giriş hatası (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">trakt\'e gönderiliyor.</string>
     <string name="checkin_success_trakt">trakt üzerinden %s girişi yapıldı.</string>
@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Temel Ayarlar</string>
     <string name="prefs_category_sharing">Servisler</string>
-    <string name="prefs_category_advanced">Gelişmiş</string>
     <string name="prefs_category_about">Hakkında</string>
     <string name="pref_onlyfuture">Yayınlanan bölüm yok</string>
     <string name="pref_onlyfuturesummary">Yayınlanmış bölümleri gösterme</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Yayınlanma süresini %d saat ötele</string>
     <string name="clear_cache">Resim önbelleğini temizle</string>
     <string name="clear_cache_summary">Tüm resim önbelleğini cihazınızdan silin</string>
-    <string name="pref_ganalyticssummary">Kullanım istatistiklerini Google Servislerine anonim olarak gönder</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Açıklamalar, ayrıntılar ve değerlendirmeler dahil</string>
     <string name="backup_failed_file_access">Yedekleme başarısız. Bir yedek dosyası bulunamadı ya da dosyaya erişilemedi.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Varsayılan yedek dosyalarını kullan</string>
     <!-- Welcome dialog -->
     <string name="get_started">Başlarken</string>
-    <string name="welcome_setuplanguage">Dil seçin</string>
     <string name="dismiss">Kapat</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s geliyor</string>
@@ -440,8 +437,6 @@
     <string name="pref_notifications_select_shows">Dizi seç</string>
     <string name="pref_notifications_select_shows_summary">Bildirimlerin etkinleştirildiği diziler (%d)</string>
     <string name="pref_notification_channel_errors">Hatalar</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (dar)</string>
     <!-- List Widget -->
     <string name="hide_watched">İzlenmiş bölümleri gizle</string>
     <string name="pref_widget_opacity">Widget arka planı</string>

@@ -275,7 +275,7 @@
     <string name="hexagon_remove_account_confirmation">Η αφαίρεση του λογαριασμού σας θα διαγράψει όλες τις σειρές και τις ταινίες από το SeriesGuide cloud. Σιγουρευτείτε ότι θα τον αφαιρέσετε και από τις άλλες συνδεδεμένες συσκευές σας.</string>
     <string name="hexagon_api_queued">Αποστολή στο SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Αποσυνδεθείτε από το SeriesGuide Cloud.</string>
-    <string name="hexagon_google_play_missing">Για να χρησιμοποιήσετε το SeriesGuide Cloud, απαιτούνται οι Υπηρεσίες Google Play.</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Υποβολή στο trakt.</string>
     <string name="checkin_success_trakt">Ελέγχεται σε %s στο trakt.</string>
@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Βασικά</string>
     <string name="prefs_category_sharing">Υπηρεσίες</string>
-    <string name="prefs_category_advanced">Για προχωρημένους</string>
     <string name="prefs_category_about">Σχετικά</string>
     <string name="pref_onlyfuture">Επεισόδια που δεν έχουν προβληθεί</string>
     <string name="pref_onlyfuturesummary">Να μην εμφανίζονται ποτέ τα επεισόδια που έχουν ήδη προβληθεί</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Μετατόπιση ωρών προβολής κατα %d ώρες</string>
     <string name="clear_cache">Καθαρισμός προσωρινής μνήμης εικόνων</string>
     <string name="clear_cache_summary">Αφαιρέστε όλες τις προσωρινά αποθηκευμένες εικόνες από τη συσκευή σας</string>
-    <string name="pref_ganalyticssummary">Αποστολή ανώνυμων στατιστικών χρήσης σε μία υπηρεσία της Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Να περιλαμβάνονται περιγραφές, λεπτομέρειες και αξιολογήσεις</string>
     <string name="backup_failed_file_access">Αδυναμία λήψης αντιγράφου ασφαλείας. Δεν μπορεί να βρεθεί ή να προσπελαστεί ένα αρχείο αντιγράφου ασφαλείας.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Χρησιμοποιήστε τα προεπιλεγμένα αρχεία αντιγράφων ασφαλείας</string>
     <!-- Welcome dialog -->
     <string name="get_started">Ξεκινήστε</string>
-    <string name="welcome_setuplanguage">Επιλέξτε γλώσσα</string>
     <string name="dismiss">Απόρριψη</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s επερχόμενα</string>
@@ -440,8 +437,6 @@
     <string name="pref_notifications_select_shows">Επιλογή σειρών</string>
     <string name="pref_notifications_select_shows_summary">Σειρές που έχουν ενεργές ειδοποιήσεις (%d)</string>
     <string name="pref_notification_channel_errors">Σφάλματα</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (μικρό)</string>
     <!-- List Widget -->
     <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
     <string name="pref_widget_opacity">Φόντο widget</string>

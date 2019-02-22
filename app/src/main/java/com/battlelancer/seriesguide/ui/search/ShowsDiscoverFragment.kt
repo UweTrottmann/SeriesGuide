@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -211,12 +212,12 @@ class ShowsDiscoverFragment : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.tvdb_add_menu, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.tvdb_add_menu, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val itemId = item?.itemId
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.itemId
         if (itemId == R.id.menu_action_shows_search_clear_history) {
             // tell the hosting activity to clear the search view history
             EventBus.getDefault().post(SearchActivity.ClearSearchHistoryEvent())
@@ -271,9 +272,9 @@ class ShowsDiscoverFragment : Fragment() {
         this.languageCode = languageCode
 
         // save selected search language
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
-                .putString(DisplaySettings.KEY_LANGUAGE_SEARCH, languageCode)
-                .apply()
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putString(DisplaySettings.KEY_LANGUAGE_SEARCH, languageCode)
+        }
         Timber.d("Set search language to %s", languageCode)
     }
 

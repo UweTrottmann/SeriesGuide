@@ -268,7 +268,7 @@
     <string name="hexagon_remove_account_confirmation">移除你的帳戶將會刪除SeriesGuide Cloud上所有節目與電影的紀錄。請確認其他裝置上的資料也一併刪除。</string>
     <string name="hexagon_api_queued">發送至SeriesGuide Cloud。</string>
     <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
-    <string name="hexagon_google_play_missing">若要使用SeriesGuide Cloud，需要Google play服務。</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">正發送至trakt。</string>
     <string name="checkin_success_trakt">在trakt上打卡%s</string>
@@ -319,7 +319,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">基本資料</string>
     <string name="prefs_category_sharing">服務</string>
-    <string name="prefs_category_advanced">進階</string>
     <string name="prefs_category_about">關於本軟體</string>
     <string name="pref_onlyfuture">無已播出集數</string>
     <string name="pref_onlyfuturesummary">不顯示已經播出劇集</string>
@@ -389,7 +388,6 @@
     <string name="pref_offsetsummary">%d 小時的時差</string>
     <string name="clear_cache">清除圖片暫存檔</string>
     <string name="clear_cache_summary">從您的設備中刪除所有暫存的圖片</string>
-    <string name="pref_ganalyticssummary">向Google服務寄送匿名的使用資料統計</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
     <string name="backup_failed_file_access">無法備份。找不到或無法存取備份檔案。</string>
@@ -412,7 +410,6 @@
     <string name="backup_use_default_files">使用預設備份檔案</string>
     <!-- Welcome dialog -->
     <string name="get_started">開始</string>
-    <string name="welcome_setuplanguage">選擇語言</string>
     <string name="dismiss">解除</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s 就要來了</string>
@@ -429,8 +426,6 @@
     <string name="pref_notifications_select_shows">Select shows</string>
     <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
     <string name="pref_notification_channel_errors">Errors</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (小)</string>
     <!-- List Widget -->
     <string name="hide_watched">隱藏已看過集數</string>
     <string name="pref_widget_opacity">小工具背景</string>

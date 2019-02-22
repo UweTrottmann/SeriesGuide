@@ -275,7 +275,7 @@
     <string name="hexagon_remove_account_confirmation">Rimuovendo il tuo account verranno eliminati tutti i film e le serie TV dalla SeriesGuide Cloud. Assicurati di rimuoverlo anche su tutti gli altri dispositivi connessi.</string>
     <string name="hexagon_api_queued">Invio a SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Disconnesso da SeriesGuide Cloud.</string>
-    <string name="hexagon_google_play_missing">Per utilizzare SeriesGuide Clouds è necessario avere installato Google Play Services.</string>
+    <string name="hexagon_signin_fail_format">Errore con l\'accesso a Google (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Invio a trakt.</string>
     <string name="checkin_success_trakt">Check-in di %s su trakt riuscito.</string>
@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Base</string>
     <string name="prefs_category_sharing">Servizi</string>
-    <string name="prefs_category_advanced">Avanzate</string>
     <string name="prefs_category_about">Info su</string>
     <string name="pref_onlyfuture">Nessun episodio in onda</string>
     <string name="pref_onlyfuturesummary">Non mostrare gli episodi già trasmessi</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Compensazione della messa onda di %d ore</string>
     <string name="clear_cache">Rimuovi le immagini nella cache</string>
     <string name="clear_cache_summary">Rimuovi tutte le immagini memorizzate nella cache dal tuo dispositivo</string>
-    <string name="pref_ganalyticssummary">Invia statistiche anonime sull\'utilizzo a un servizio Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descrizioni, dettagli e valutazioni</string>
     <string name="backup_failed_file_access">Impossibile effettuare il backup. Non è stato possibile trovare o accedere a un file di backup.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Utilizza i file di backup predefiniti</string>
     <!-- Welcome dialog -->
     <string name="get_started">Inizia qui</string>
-    <string name="welcome_setuplanguage">Scegli la lingua</string>
     <string name="dismiss">Cancella</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s sta per essere trasmesso</string>
@@ -440,8 +437,6 @@
     <string name="pref_notifications_select_shows">Seleziona serie</string>
     <string name="pref_notifications_select_shows_summary">Serie con notifiche abilitate (%d)</string>
     <string name="pref_notification_channel_errors">Errori</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (piccolo)</string>
     <!-- List Widget -->
     <string name="hide_watched">Nascondi episodi già visti</string>
     <string name="pref_widget_opacity">Sfondo widget</string>

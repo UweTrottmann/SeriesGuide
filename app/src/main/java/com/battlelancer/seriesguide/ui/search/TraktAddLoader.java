@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.TraktV2;
@@ -67,7 +68,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                     if (SgTrakt.isUnauthorized(getContext(), response)) {
                         return buildResultFailure(R.string.trakt_error_credentials);
                     } else {
-                        SgTrakt.trackFailedRequest(action, response);
+                        Errors.logAndReport(action, response);
                         return buildResultGenericFailure();
                     }
                 }
@@ -92,12 +93,12 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                     if (SgTrakt.isUnauthorized(getContext(), response)) {
                         return buildResultFailure(R.string.trakt_error_credentials);
                     }
-                    SgTrakt.trackFailedRequest(action, response);
+                    Errors.logAndReport(action, response);
                     return buildResultGenericFailure();
                 }
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(action, e);
+            Errors.logAndReport(action, e);
             // only check for network here to allow hitting the response cache
             return AndroidUtils.isNetworkConnected(getContext())
                     ? buildResultGenericFailure() : buildResultFailure(R.string.offline);

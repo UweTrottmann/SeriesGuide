@@ -268,7 +268,7 @@
     <string name="hexagon_remove_account_confirmation">删除帐户会同时删除您储存的所有数据，包括在线备份的节目和电影。一旦您在此设备上完成删除，请记得从其它已同步设备上删除相同的 SeriesGuide Cloud 帐户。</string>
     <string name="hexagon_api_queued">正在同步 SeriesGuide Cloud…</string>
     <string name="hexagon_signed_out">已登出 SeriesGuide Cloud</string>
-    <string name="hexagon_google_play_missing">若要使用 SeriesGuide Cloud，需要 Google Play 服务。</string>
+    <string name="hexagon_signin_fail_format">Google 登录错误（%s）</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">正在与 trakt 同步…</string>
     <string name="checkin_success_trakt">已在 trakt 上为 %s 签到。</string>
@@ -319,7 +319,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">基本</string>
     <string name="prefs_category_sharing">服务</string>
-    <string name="prefs_category_advanced">高级</string>
     <string name="prefs_category_about">关于</string>
     <string name="pref_onlyfuture">不显示已播剧集</string>
     <string name="pref_onlyfuturesummary">忽略已播剧集的观看状态</string>
@@ -389,7 +388,6 @@
     <string name="pref_offsetsummary">显示时间与原播出时间相差 %d 小时</string>
     <string name="clear_cache">清理图片缓存</string>
     <string name="clear_cache_summary">删除缓存图片</string>
-    <string name="pref_ganalyticssummary">向 Google 服务发送匿名使用情况统计信息</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">包括说明、详细信息、评级</string>
     <string name="backup_failed_file_access">备份失败：不能访问备份文件。</string>
@@ -412,7 +410,6 @@
     <string name="backup_use_default_files">使用默认备份文件</string>
     <!-- Welcome dialog -->
     <string name="get_started">入门</string>
-    <string name="welcome_setuplanguage">选择语言</string>
     <string name="dismiss">忽略</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s 即将播出</string>
@@ -429,8 +426,6 @@
     <string name="pref_notifications_select_shows">选择节目</string>
     <string name="pref_notifications_select_shows_summary">已启用通知的节目（%d）</string>
     <string name="pref_notification_channel_errors">错误</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide 最小尺寸</string>
     <!-- List Widget -->
     <string name="hide_watched">隐藏已观看剧集</string>
     <string name="pref_widget_opacity">小部件背景</string>

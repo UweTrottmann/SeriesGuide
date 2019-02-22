@@ -5,15 +5,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import com.battlelancer.seriesguide.AnalyticsEvents;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.Utils;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import timber.log.Timber;
 
 /**
  * Starts a trakt OAuth 2.0 authorization flow using the default browser or an embedded {@link
@@ -85,9 +84,7 @@ public class TraktAuthActivity extends BaseOAuthActivity {
         // if state does not match what we sent, drop the auth code
         if (this.state == null || !this.state.equals(state)) {
             // log trakt OAuth failures
-            Timber.tag(AnalyticsEvents.TRAKT_OAUTH_ERROR);
-            Timber.e("%s: %s", ACTION_FETCHING_TOKENS, ERROR_DESCRIPTION_STATE_MISMATCH);
-            Utils.trackError(AnalyticsEvents.TRAKT_OAUTH_ERROR,
+            Errors.logAndReportNoBend(ACTION_FETCHING_TOKENS,
                     new TraktOAuthError(ACTION_FETCHING_TOKENS, ERROR_DESCRIPTION_STATE_MISMATCH));
 
             setMessage(getAuthErrorMessage() + (this.state == null ?

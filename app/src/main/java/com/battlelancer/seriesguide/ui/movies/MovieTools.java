@@ -17,9 +17,8 @@ import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.entities.Movie;
@@ -173,15 +172,17 @@ public class MovieTools {
         }
     }
 
-    public static void watchedMovie(Context context, int movieTmdbId) {
+    static void watchedMovie(Context context, int movieTmdbId, boolean inWatchlist) {
         FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, true));
         // background: watched state currently only supported with trakt
         // trakt removes from watchlist automatically, but app would not show until next sync
         // and not mirror on hexagon, so do it manually
-        removeFromWatchlist(context, movieTmdbId);
+        if (inWatchlist) {
+            removeFromWatchlist(context, movieTmdbId);
+        }
     }
 
-    public static void unwatchedMovie(Context context, int movieTmdbId) {
+    static void unwatchedMovie(Context context, int movieTmdbId) {
         FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, false));
     }
 
@@ -197,7 +198,7 @@ public class MovieTools {
             return false;
         }
         if (!movieInDatabase && flag) {
-            // Only add, never remove shells. Next trakt watched movie sync will take care of that.
+            // Only add, never remove shells. Next Cloud or trakt movie sync will take care of that.
             return addMovieWatchedShell(context.getContentResolver(), movieTmdbId);
         } else {
             return updateMovie(context, movieTmdbId, SeriesGuideContract.Movies.WATCHED, flag);
@@ -380,10 +381,10 @@ public class MovieTools {
                 Timber.e("Finding trakt movie failed (not in results)");
                 return -1;
             } else {
-                SgTrakt.trackFailedRequest("movie trakt id lookup", response);
+                Errors.logAndReport("movie trakt id lookup", response);
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("movie trakt id lookup", e);
+            Errors.logAndReport("movie trakt id lookup", e);
         }
         return null;
     }
@@ -393,16 +394,26 @@ public class MovieTools {
      *
      * @param newCollectionMovies Movie TMDB ids to add to the collection.
      * @param newWatchlistMovies Movie TMDB ids to add to the watchlist.
+     * @param newWatchedMovies Movie TMDB ids to set watched.
      */
-    public boolean addMovies(@NonNull Set<Integer> newCollectionMovies,
-            @NonNull Set<Integer> newWatchlistMovies) {
+    public boolean addMovies(
+            @NonNull Set<Integer> newCollectionMovies,
+            @NonNull Set<Integer> newWatchlistMovies,
+            @Nullable Set<Integer> newWatchedMovies
+    ) {
         Timber.d("addMovies: %s to collection, %s to watchlist", newCollectionMovies.size(),
                 newWatchlistMovies.size());
+        if (newWatchedMovies != null) {
+            Timber.d("addMovies: %s to watched", newWatchedMovies.size());
+        }
 
         // build a single list of tmdb ids
         Set<Integer> newMovies = new HashSet<>();
         newMovies.addAll(newCollectionMovies);
         newMovies.addAll(newWatchlistMovies);
+        if (newWatchedMovies != null) {
+            newMovies.addAll(newWatchedMovies);
+        }
 
         String languageCode = DisplaySettings.getMoviesLanguage(context);
         List<MovieDetails> movies = new LinkedList<>();
@@ -426,6 +437,9 @@ public class MovieTools {
             // set flags
             movieDetails.setInCollection(newCollectionMovies.contains(tmdbId));
             movieDetails.setInWatchlist(newWatchlistMovies.contains(tmdbId));
+            if (newWatchedMovies != null) {
+                movieDetails.setWatched(newWatchedMovies.contains(tmdbId));
+            }
 
             movies.add(movieDetails);
 
@@ -483,9 +497,9 @@ public class MovieTools {
             if (response.isSuccessful()) {
                 return response.body();
             }
-            SgTrakt.trackFailedRequest("get movie rating", response);
+            Errors.logAndReport("get movie rating", response);
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("get movie rating", e);
+            Errors.logAndReport("get movie rating", e);
         }
         return null;
     }
@@ -530,10 +544,10 @@ public class MovieTools {
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                SgTmdb.trackFailedRequest(action, response);
+                Errors.logAndReport(action, response);
             }
         } catch (Exception e) {
-            SgTmdb.trackFailedRequest(action, e);
+            Errors.logAndReport(action, e);
         }
         return null;
     }

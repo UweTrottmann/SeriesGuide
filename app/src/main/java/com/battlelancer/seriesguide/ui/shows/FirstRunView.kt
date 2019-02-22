@@ -10,11 +10,13 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.edit
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.ViewTools
 import org.greenrobot.eventbus.EventBus
 
 class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
@@ -52,9 +54,9 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
             // new state is inversion of current state
             val noSpoilers = !noSpoilerCheckBox.isChecked
             // save
-            PreferenceManager.getDefaultSharedPreferences(v.context).edit()
-                .putBoolean(DisplaySettings.KEY_PREVENT_SPOILERS, noSpoilers)
-                .apply()
+            PreferenceManager.getDefaultSharedPreferences(v.context).edit {
+                putBoolean(DisplaySettings.KEY_PREVENT_SPOILERS, noSpoilers)
+            }
             // update next episode strings right away
             TaskManager.getInstance().tryNextEpisodeUpdateTask(v.context)
             // show
@@ -63,9 +65,8 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
         noSpoilerCheckBox.isChecked = DisplaySettings.preventSpoilers(context)
         dataSaverContainer.setOnClickListener {
             val isSaveData = !dataSaverCheckBox.isChecked
-            PreferenceManager.getDefaultSharedPreferences(it.context).edit().apply {
+            PreferenceManager.getDefaultSharedPreferences(it.context).edit {
                 putBoolean(UpdateSettings.KEY_ONLYWIFI, isSaveData)
-                apply()
             }
             dataSaverCheckBox.isChecked = isSaveData
         }
@@ -82,6 +83,7 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
             EventBus.getDefault()
                 .post(ButtonEvent(ButtonType.RESTORE_BACKUP))
         }
+        ViewTools.setVectorIcon(context.theme, buttonDismiss, R.drawable.ic_clear_24dp)
         buttonDismiss.setOnClickListener {
             setFirstRunDismissed()
             EventBus.getDefault().post(ButtonEvent(ButtonType.DISMISS))
@@ -93,8 +95,9 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
     }
 
     private fun setFirstRunDismissed() {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        prefs.edit().putBoolean(FirstRunView.PREF_KEY_FIRSTRUN, true).apply()
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putBoolean(FirstRunView.PREF_KEY_FIRSTRUN, true)
+        }
     }
 
     companion object {

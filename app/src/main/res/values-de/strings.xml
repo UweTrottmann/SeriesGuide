@@ -275,7 +275,7 @@
     <string name="hexagon_remove_account_confirmation">Dies entfernt Ihre Serien, Listen und Filme aus SeriesGuide Cloud</string>
     <string name="hexagon_api_queued">Sende an SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Von SeriesGuide Cloud abgemeldet</string>
-    <string name="hexagon_google_play_missing">Google Play Services nicht installiert</string>
+    <string name="hexagon_signin_fail_format">Fehler bei der Google-Anmeldung (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Sende an trakt</string>
     <string name="checkin_success_trakt">Auf trakt in %s eingecheckt</string>
@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Grundlegendes</string>
     <string name="prefs_category_sharing">Dienste</string>
-    <string name="prefs_category_advanced">Weiteres</string>
     <string name="prefs_category_about">Über</string>
     <string name="pref_onlyfuture">Keine gesendeten Folgen</string>
     <string name="pref_onlyfuturesummary">Zeige nie bereits ausgestrahlte Folgen an</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Sendezeit um %d Stunden verschieben</string>
     <string name="clear_cache">Bilder-Cache leeren</string>
     <string name="clear_cache_summary">Alle zwischengespeicherten Bilder von Ihrem Gerät entfernen</string>
-    <string name="pref_ganalyticssummary">Anonyme Nutzungs-Statistiken an einen Google-Dienst senden</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Beschreibungen, Details, Bewertungen einschließen</string>
     <string name="backup_failed_file_access">Kann nicht sichern. Eine Sicherungs-Datei konnte nicht gefunden oder beschrieben werden.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Standard-Sicherungsdateien verwenden</string>
     <!-- Welcome dialog -->
     <string name="get_started">Erste Schritte</string>
-    <string name="welcome_setuplanguage">Sprache auswählen</string>
     <string name="dismiss">Schließen</string>
     <!-- Notifications -->
     <string name="upcoming_show">In Kürze läuft %s</string>
@@ -440,8 +437,6 @@
     <string name="pref_notifications_select_shows">Serien auswählen</string>
     <string name="pref_notifications_select_shows_summary">Serien für die Benachrichtigungen angezeigt werden (%d)</string>
     <string name="pref_notification_channel_errors">Fehler</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (klein)</string>
     <!-- List Widget -->
     <string name="hide_watched">Angesehene Folgen verstecken</string>
     <string name="pref_widget_opacity">Widget-Hintergrund</string>

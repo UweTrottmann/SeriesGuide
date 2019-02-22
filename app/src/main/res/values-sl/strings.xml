@@ -289,7 +289,7 @@
     <string name="hexagon_remove_account_confirmation">This will delete your shows, lists and movies from SeriesGuide Cloud</string>
     <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
-    <string name="hexagon_google_play_missing">Google Play Services not installed</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Dodajanje na trakt.</string>
     <string name="checkin_success_trakt">Prijavljen v %s v trakt.</string>
@@ -343,7 +343,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Osnove</string>
     <string name="prefs_category_sharing">Storitve</string>
-    <string name="prefs_category_advanced">Napredno</string>
     <string name="prefs_category_about">O programu</string>
     <string name="pref_onlyfuture">Ni predvajanih epizod</string>
     <string name="pref_onlyfuturesummary">Nikoli ne prikaži že objavljenih epizod</string>
@@ -422,7 +421,6 @@
     <string name="pref_offsetsummary">Zamakni čas predvajanja za %d ur</string>
     <string name="clear_cache">Izbriši predp. slik</string>
     <string name="clear_cache_summary">Odstrani vse predpomnjene slike iz naprave</string>
-    <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
     <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
@@ -445,7 +443,6 @@
     <string name="backup_use_default_files">Use default backup files</string>
     <!-- Welcome dialog -->
     <string name="get_started">Get started</string>
-    <string name="welcome_setuplanguage">Izberi jezik</string>
     <string name="dismiss">Razveljavi</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s prihaja na spored</string>
@@ -462,8 +459,6 @@
     <string name="pref_notifications_select_shows">Select shows</string>
     <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
     <string name="pref_notification_channel_errors">Errors</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (majhen)</string>
     <!-- List Widget -->
     <string name="hide_watched">Skrij gledane epizode</string>
     <string name="pref_widget_opacity">Widget background</string>

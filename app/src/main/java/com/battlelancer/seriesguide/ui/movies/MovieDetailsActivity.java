@@ -28,7 +28,7 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
 
     public static Intent intentMovie(Context context, int movieTmdbId) {
         return new Intent(context, MovieDetailsActivity.class)
-                .putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, movieTmdbId);
+                .putExtra(MovieDetailsFragment.ARG_TMDB_ID, movieTmdbId);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
             return;
         }
 
-        int tmdbId = getIntent().getExtras().getInt(MovieDetailsFragment.InitBundle.TMDB_ID);
+        int tmdbId = getIntent().getExtras().getInt(MovieDetailsFragment.ARG_TMDB_ID);
         if (tmdbId == 0) {
             finish();
             return;

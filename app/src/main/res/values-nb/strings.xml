@@ -275,7 +275,7 @@
     <string name="hexagon_remove_account_confirmation">Fjerning av kontoen vil slette alle serier og filmer fra SeriesGuide Cloud. Husk å fjerne den fra andre tilkoblede enheter også.</string>
     <string name="hexagon_api_queued">Sender til SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Utlogget fra SeriesGuide Cloud</string>
-    <string name="hexagon_google_play_missing">For å kunne bruk SeriesGuide Cloud er Google Play-tjenester nødvendig.</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Sender til trakt.</string>
     <string name="checkin_success_trakt">Sjekket inn %s på trakt.</string>
@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Grunnleggende</string>
     <string name="prefs_category_sharing">Tjenester</string>
-    <string name="prefs_category_advanced">Avansert</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Ingen sendte episoder</string>
     <string name="pref_onlyfuturesummary">Ikke vis episoder som allerede er sendt</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Tidsforskjell på %d timer</string>
     <string name="clear_cache">Tøm hurtiglageret</string>
     <string name="clear_cache_summary">Fjern alle hurtiglagrede bilder fra enheten</string>
-    <string name="pref_ganalyticssummary">Sende anonym brukerstatistikk til en Google-tjeneste</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Inkluderer beskrivelser, detaljer og vurderinger</string>
     <string name="backup_failed_file_access">Sikkerhetskopiering mislyktes. Klarte ikke finne eller åpne filen.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Bruk standard sikkerhetskopifiler</string>
     <!-- Welcome dialog -->
     <string name="get_started">Kom i gang</string>
-    <string name="welcome_setuplanguage">Velg språk</string>
     <string name="dismiss">Avvis</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s kommer</string>
@@ -440,8 +437,6 @@
     <string name="pref_notifications_select_shows">Velg serier</string>
     <string name="pref_notifications_select_shows_summary">Serier med meldinger aktivert (%d)</string>
     <string name="pref_notification_channel_errors">Feil</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (liten)</string>
     <!-- List Widget -->
     <string name="hide_watched">Skjul sette episoder</string>
     <string name="pref_widget_opacity">Modulbakgrunn</string>

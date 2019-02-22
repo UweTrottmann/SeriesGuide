@@ -275,7 +275,7 @@
     <string name="hexagon_remove_account_confirmation">A fiókod eltávolításával minden sorozat és film törlődni fog a SeriesGuide Cloudról. Gondoskodj minden más eszközről való törléséről is.</string>
     <string name="hexagon_api_queued">Küldés a SeriesGuide felhő tárhelyre.</string>
     <string name="hexagon_signed_out">Kijelentkezett a SeriesGuide felhő tárhelyről.</string>
-    <string name="hexagon_google_play_missing">A SeriesGuide Cloud használatához a Google Play Szolgáltatások megléte szükséges.</string>
+    <string name="hexagon_signin_fail_format">Hiba történt a Google Bejelentkezéssel (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Elküldés a traktnak.</string>
     <string name="checkin_success_trakt">Bejelentkezve trakttal ide: %s.</string>
@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Alap beállítások</string>
     <string name="prefs_category_sharing">Szolgáltatások</string>
-    <string name="prefs_category_advanced">Haladó beállítások</string>
     <string name="prefs_category_about">A programról</string>
     <string name="pref_onlyfuture">Leadott epizódok nélkül</string>
     <string name="pref_onlyfuturesummary">Soha ne mutassa a már leadott epizódokat</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Vetítési időhöz képest időeltolás %d órával</string>
     <string name="clear_cache">Képtároló törlése</string>
     <string name="clear_cache_summary">Az összes tárolt kép törlése az eszközről</string>
-    <string name="pref_ganalyticssummary">Névtelen használati statisztikák küldése Google szolgáltatás felé</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Tartalmazza a leírásokat, részleteket, értékeléseket</string>
     <string name="backup_failed_file_access">Nem sikerült a mentés. A biztonsági mentés fájl nem található vagy nem hozzáférhető.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Használja az alapértelmezett biztonsági mentés fájlokat</string>
     <!-- Welcome dialog -->
     <string name="get_started">Vágjunk bele!</string>
-    <string name="welcome_setuplanguage">Válassz nyelvet</string>
     <string name="dismiss">Mégsem</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s kezdődik</string>
@@ -440,8 +437,6 @@
     <string name="pref_notifications_select_shows">Sorozatok kiválasztása</string>
     <string name="pref_notifications_select_shows_summary">Sorozatok, melyek értesítései engedélyezve vannak (%d)</string>
     <string name="pref_notification_channel_errors">Hibák</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (kicsi)</string>
     <!-- List Widget -->
     <string name="hide_watched">Megnézett epizódok elrejtése</string>
     <string name="pref_widget_opacity">Widget háttér</string>

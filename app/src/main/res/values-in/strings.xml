@@ -268,7 +268,7 @@
     <string name="hexagon_remove_account_confirmation">Menghapus akun anda akan menghapus semua acara dan film dari SeriesGuide Cloud. Pastikan untuk menghapusnya dari perangkat terhubung lainnya juga.</string>
     <string name="hexagon_api_queued">Mengirim ke SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Keluar dari SeriesGuide Cloud.</string>
-    <string name="hexagon_google_play_missing">Untuk Menggunakan SeriesGuide Cloud, dibutuhkan Google Play Services.</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Mengirim ke trakt.</string>
     <string name="checkin_success_trakt">Check-in %s pada trakt.</string>
@@ -319,7 +319,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Dasar</string>
     <string name="prefs_category_sharing">Layanan</string>
-    <string name="prefs_category_advanced">Tingkat Lanjut</string>
     <string name="prefs_category_about">Tentang</string>
     <string name="pref_onlyfuture">Tidak Ada episode yang sudah ditayangkan</string>
     <string name="pref_onlyfuturesummary">Jangan pernah tampilan episode yang sudah ditayangkan</string>
@@ -389,7 +388,6 @@
     <string name="pref_offsetsummary">Seimbangkan waktu rilis selama %d jam</string>
     <string name="clear_cache">Bersihkan caches gambar</string>
     <string name="clear_cache_summary">Hapus semua cache gambar dari perangkat Anda</string>
-    <string name="pref_ganalyticssummary">Kirim statistik penggunaan anonim ke layanan Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Termasuk deskripsi, rincian, peringkat</string>
     <string name="backup_failed_file_access">Tidak dapat mencadangkan. File cadangan tidak dapat ditemukan atau diakses.</string>
@@ -412,7 +410,6 @@
     <string name="backup_use_default_files">Gunakan cadangan file default</string>
     <!-- Welcome dialog -->
     <string name="get_started">Mulai</string>
-    <string name="welcome_setuplanguage">Pilih Bahasa</string>
     <string name="dismiss">Bubar</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s akan datang</string>
@@ -429,8 +426,6 @@
     <string name="pref_notifications_select_shows">Pilih acara</string>
     <string name="pref_notifications_select_shows_summary">Acara yang memiliki Pemberitahuan aktif (%d)</string>
     <string name="pref_notification_channel_errors">Kesalahan</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (kecil)</string>
     <!-- List Widget -->
     <string name="hide_watched">Sembunyikan episode yang telah ditonton</string>
     <string name="pref_widget_opacity">Latar belakang widget</string>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayoutShowsDistillation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.battlelancer.seriesguide.widgets.SlidingTabLayout
+        android:id="@+id/tabLayoutShowsDistillation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/sgColorDivider"
+        tools:layout_height="40dp" />
+
+    <ScrollView
+        android:id="@+id/scrollViewShowsDistillation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.battlelancer.seriesguide.widgets.WrappingViewPager
+            android:id="@+id/viewPagerShowsDistillation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout_height="300dp" />
+
+    </ScrollView>
+
+</LinearLayout>

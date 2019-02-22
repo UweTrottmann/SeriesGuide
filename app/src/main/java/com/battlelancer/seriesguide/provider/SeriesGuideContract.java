@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+@SuppressWarnings("WeakerAccess")
 public class SeriesGuideContract {
 
     public interface ShowsColumns {
@@ -669,11 +670,15 @@ public class SeriesGuideContract {
         public static final String SELECTION_FAVORITES = Shows.FAVORITE + "=1";
         public static final String SELECTION_NOT_FAVORITES = Shows.FAVORITE + "=0";
         public static final String SELECTION_NOTIFY = Shows.NOTIFY + "=1";
-        public static final String SELECTION_WITH_RELEASED_NEXT_EPISODE = Shows.NEXTAIRDATEMS + "!="
+        public static final String SELECTION_WITH_NEXT_EPISODE = Shows.NEXTAIRDATEMS + "!="
                 + DBUtils.UNKNOWN_NEXT_RELEASE_DATE;
         public static final String SELECTION_WITH_NEXT_NOT_HIDDEN = Shows.NEXTEPISODE + "!='' AND "
                 + Shows.HIDDEN + "=0 AND " + Shows.NEXTAIRDATEMS + "<?";
 
+        public static final String SELECTION_STATUS_CONTINUING = Shows.STATUS + "=" + ShowTools.Status.CONTINUING;
+        public static final String SELECTION_STATUS_NO_CONTINUING = Shows.STATUS + "!=" + ShowTools.Status.CONTINUING;
+
+        public static final String SELECTION_HIDDEN = Shows.HIDDEN + "=1";
         public static final String SELECTION_NO_HIDDEN = Shows.HIDDEN + "=0";
 
         public static Uri buildShowUri(String showId) {
@@ -1037,6 +1042,14 @@ public class SeriesGuideContract {
                 TMDB_ID, // 0
                 IN_COLLECTION, // 1
                 IN_WATCHLIST // 2
+        };
+
+        public static final String SELECTION_IN_LIST_OR_WATCHED = SELECTION_IN_LIST + " OR " + Movies.WATCHED + "=1";
+        public static final String[] PROJECTION_IN_LIST_OR_WATCHED = {
+                TMDB_ID, // 0
+                IN_COLLECTION, // 1
+                IN_WATCHLIST, // 2
+                WATCHED // 3
         };
 
         public static final String SELECTION_UNWATCHED = Movies.WATCHED + "=0";

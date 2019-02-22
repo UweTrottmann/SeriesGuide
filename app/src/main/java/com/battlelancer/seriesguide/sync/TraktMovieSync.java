@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.entities.BaseMovie;
@@ -84,11 +85,11 @@ public class TraktMovieSync {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return false;
                 }
-                SgTrakt.trackFailedRequest("get movie collection", response);
+                Errors.logAndReport("get movie collection", response);
                 return false;
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("get movie collection", e);
+            Errors.logAndReport("get movie collection", e);
             return false;
         }
         if (collection == null) {
@@ -107,11 +108,11 @@ public class TraktMovieSync {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return false;
                 }
-                SgTrakt.trackFailedRequest("get movie watchlist", response);
+                Errors.logAndReport("get movie watchlist", response);
                 return false;
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("get movie watchlist", e);
+            Errors.logAndReport("get movie watchlist", e);
             return false;
         }
         if (watchlist == null) {
@@ -194,7 +195,7 @@ public class TraktMovieSync {
         // add movies from trakt missing locally
         // all local movies were removed from trakt collection and watchlist,
         // so they only contain movies missing locally
-        boolean addingSuccessful = movieTools.addMovies(collection, watchlist);
+        boolean addingSuccessful = movieTools.addMovies(collection, watchlist, null);
         if (addingSuccessful) {
             // store last activity timestamps
             TraktSettings.storeLastMoviesChangedAt(context, activity.collected_at,
@@ -273,14 +274,14 @@ public class TraktMovieSync {
                 }
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(action, e);
+            Errors.logAndReport(action, e);
             return false;
         }
         if (response != null && !response.isSuccessful()) {
             if (SgTrakt.isUnauthorized(context, response)) {
                 return false;
             }
-            SgTrakt.trackFailedRequest(action, response);
+            Errors.logAndReport(action, response);
             return false;
         }
 
@@ -338,11 +339,11 @@ public class TraktMovieSync {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return false;
                 }
-                SgTrakt.trackFailedRequest("get watched movies", response);
+                Errors.logAndReport("get watched movies", response);
                 return false;
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("get watched movies", e);
+            Errors.logAndReport("get watched movies", e);
             return false;
         }
         if (watchedMovies == null) {

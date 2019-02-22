@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -100,6 +101,7 @@ public class TimeOffsetDialogFragment extends AppCompatDialogFragment {
         updateSummaryAndExample(value);
     }
 
+    @SuppressLint("SetTextI18n")
     private void updateSummaryAndExample(int value) {
         textViewSummary.setText(getString(R.string.pref_offsetsummary, value));
 

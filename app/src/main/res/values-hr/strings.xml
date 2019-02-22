@@ -282,7 +282,7 @@
     <string name="hexagon_remove_account_confirmation">Uklanjanjem svog računa će te izbrisati sve serije i filmove sa SeriesGuide Oblaka. Ne zaboravite ih ukloniti i sa ostalih povezanih uređaja.</string>
     <string name="hexagon_api_queued">Slanje na SeriesGuide oblak.</string>
     <string name="hexagon_signed_out">Odjavljeni ste sa SeriesGuide oblaka.</string>
-    <string name="hexagon_google_play_missing">Za korištenje SeriesGuide Oblaka potrebne su Google Play Usluge.</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Poslano na trakt.</string>
     <string name="checkin_success_trakt">Prijavljen u %s na traktu.</string>
@@ -335,7 +335,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Osnovno</string>
     <string name="prefs_category_sharing">Usluge</string>
-    <string name="prefs_category_advanced">Napredno</string>
     <string name="prefs_category_about">O aplikaciji</string>
     <string name="pref_onlyfuture">Nema emitiranih epizoda</string>
     <string name="pref_onlyfuturesummary">Nikada ne prikazuj već pogledane epizode</string>
@@ -411,7 +410,6 @@
     <string name="pref_offsetsummary">Razlika u emitiranju %d sati</string>
     <string name="clear_cache">Očisti predmemoriju slika</string>
     <string name="clear_cache_summary">Uklonite sve slike iz predmemorije vašeg uređaja</string>
-    <string name="pref_ganalyticssummary">Pošalji anonimne statistike korištenja na Google usluge</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Uključi opise, detalje i ocjene</string>
     <string name="backup_failed_file_access">Nije moguće stvoriti sigur. kopiju. Datoteka sigur. kopije nije pronađena ili je nedostupna.</string>
@@ -434,7 +432,6 @@
     <string name="backup_use_default_files">Koristi zadane sigurnosne kopije</string>
     <!-- Welcome dialog -->
     <string name="get_started">Prvi koraci</string>
-    <string name="welcome_setuplanguage">Odaberi jezik</string>
     <string name="dismiss">Odbaci</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s će se emitirati</string>
@@ -451,8 +448,6 @@
     <string name="pref_notifications_select_shows">Odaberi serije</string>
     <string name="pref_notifications_select_shows_summary">Serije za koje su obavijesti omogućene (%d)</string>
     <string name="pref_notification_channel_errors">Pogreške</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (mali)</string>
     <!-- List Widget -->
     <string name="hide_watched">Sakrij pogledane epizode</string>
     <string name="pref_widget_opacity">Pozadina widgeta</string>

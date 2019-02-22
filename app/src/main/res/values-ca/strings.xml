@@ -275,7 +275,7 @@
     <string name="hexagon_remove_account_confirmation">Si esborreu el vostre compte, també s\'esborraran totes les sèries i peŀlícules que tingueu al Cloud de SeriesGuide. Assegureu-vos d\'esborrar-ho dels altres dispositius on el tingueu sincronitzat.</string>
     <string name="hexagon_api_queued">Enviant a SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Has desconnectat de SeriesGuide Cloud.</string>
-    <string name="hexagon_google_play_missing">Per utilitzar SeriesGuide Cloud es requereixen els Google Play Services.</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">S\'està enviant a trakt.</string>
     <string name="checkin_success_trakt">S\'ha enregistrat a %s de trakt.</string>
@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Bàsics</string>
     <string name="prefs_category_sharing">Serveis</string>
-    <string name="prefs_category_advanced">Avançat</string>
     <string name="prefs_category_about">Quant a</string>
     <string name="pref_onlyfuture">Amaga episodis emesos</string>
     <string name="pref_onlyfuturesummary">No mostris cap episodi que ja s\'hagi emès</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Les hores d\'estrena tenen un desfasament de %d hores</string>
     <string name="clear_cache">Buida la memòria cau d\'imatges</string>
     <string name="clear_cache_summary">Elimina totes les imatges que SeriesGuide hagi baixat i encara siguin al dispositiu</string>
-    <string name="pref_ganalyticssummary">Enviar estadístiques d\'ús anònimes un servei de Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Incloure descripcions, detalls, valoracions</string>
     <string name="backup_failed_file_access">No es pot fer còpia de seguretat. No es pot trobar o accedir un arxiu de còpia de seguretat.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Utilitzar arxius de còpia de seguretat per defecte</string>
     <!-- Welcome dialog -->
     <string name="get_started">Inici</string>
-    <string name="welcome_setuplanguage">Trieu la llengua</string>
     <string name="dismiss">Omet</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s és a punt de sortir</string>
@@ -440,8 +437,6 @@
     <string name="pref_notifications_select_shows">Seleccionar sèries</string>
     <string name="pref_notifications_select_shows_summary">Sèries que tenen notificacions habilitades (%d)</string>
     <string name="pref_notification_channel_errors">Errors</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (petit)</string>
     <!-- List Widget -->
     <string name="hide_watched">Amaga els episodis vistos</string>
     <string name="pref_widget_opacity">Fons del widget</string>

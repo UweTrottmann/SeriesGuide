@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.util;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -37,12 +36,7 @@ public class Shadows {
         }
         GradientDrawable shadowDrawable = new GradientDrawable(orientation,
                 new int[] { Color.TRANSPARENT, shadowColor });
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            shadowView.setBackground(shadowDrawable);
-        } else {
-            //noinspection deprecation
-            shadowView.setBackgroundDrawable(shadowDrawable);
-        }
+        shadowView.setBackground(shadowDrawable);
     }
 
     public void resetShadowColor() {

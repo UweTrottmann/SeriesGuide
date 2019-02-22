@@ -268,7 +268,7 @@
     <string name="hexagon_remove_account_confirmation">การลบบัญชีของคุณจะลบซีรีส์และภาพยนตร์ทั้งหมดออกจาก SeriesGuide Cloud ยืนยันให้แน่ใจว่าคุณต้องการลบข้อมูลออกจากอุปกรณ์ที่เชื่อมต่ออยู่ด้วยเช่นกัน</string>
     <string name="hexagon_api_queued">กำลังส่งไปยัง SeriesGuide Cloud</string>
     <string name="hexagon_signed_out">ออกจากระบบ SeriesGuide Cloud แล้ว</string>
-    <string name="hexagon_google_play_missing">ในการใช้ SeriesGuide Cloud, จำเป็นต้องมี Google Play Services</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">กำลังส่งไปยัง trakt</string>
     <string name="checkin_success_trakt">เช็กอิน %s บน trakt แล้ว</string>
@@ -319,7 +319,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">พื้นฐาน</string>
     <string name="prefs_category_sharing">บริการ</string>
-    <string name="prefs_category_advanced">ขั้นสูง</string>
     <string name="prefs_category_about">เกี่ยวกับ</string>
     <string name="pref_onlyfuture">ซ่อนตอนที่ออกอากาศแล้ว</string>
     <string name="pref_onlyfuturesummary">ไม่ต้องแสดงตอนที่ออกอากาศไปแล้ว</string>
@@ -389,7 +388,6 @@
     <string name="pref_offsetsummary">ชดเชยเวลาออกอากาศ %d ชั่วโมง</string>
     <string name="clear_cache">ลบแคชรูปภาพ</string>
     <string name="clear_cache_summary">ลบแคชรูปภาพทั้งหมดออกจากอุปกรณ์ของคุณ</string>
-    <string name="pref_ganalyticssummary">ส่งสถิติการใช้งานแบบไม่ระบุชื่อกับบริการของ Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">รวมคำอธิบาย, รายละเอียด, คะแนน</string>
     <string name="backup_failed_file_access">ไม่สามารถสำรองข้อมูล ไม่พบหรือไม่สามารถเข้าถึงไฟล์สำรอง</string>
@@ -412,7 +410,6 @@
     <string name="backup_use_default_files">ใช้ไฟล์สำรองเริ่มต้น</string>
     <!-- Welcome dialog -->
     <string name="get_started">เริ่มต้น</string>
-    <string name="welcome_setuplanguage">เลือกภาษา</string>
     <string name="dismiss">ปิด</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s กำลังมา</string>
@@ -429,8 +426,6 @@
     <string name="pref_notifications_select_shows">เลือกรายการ</string>
     <string name="pref_notifications_select_shows_summary">รายการที่เปิดใช้การแจ้งเตือน (%d)</string>
     <string name="pref_notification_channel_errors">ข้อผิดพลาด</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (เล็ก)</string>
     <!-- List Widget -->
     <string name="hide_watched">ซ่อนตอนที่ดูแล้ว</string>
     <string name="pref_widget_opacity">พื้นหลังวิตเจ็ต</string>
