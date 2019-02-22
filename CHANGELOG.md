@@ -7,7 +7,21 @@ All dates are in the European Central timezone.
 
 Version 47
 ----------
-*(in development)*
+*(2019-02-22)*
+
+* 🔧 Show list: replace favorite button with set watched button.
+* 🌟 Set movies watched (previously only when connected to trakt).
+* 🌟 New show list filters that can be set to include (+), exclude (-) or disabled.
+* 🌟 Added filter for continuing shows (exclude to display ended shows).
+* 📝 Show list filter settings are set back to defaults.
+* 🔧 Sharing old TheTVDB links to SeriesGuide to add shows works again.
+
+#### 47
+*(2019-02-22)*
+
+* 🔧 Sharing old TheTVDB links to SeriesGuide to add shows works again.
+* 🔧 Switch to improved error reporting to better pinpoint issues.
+* 📝 Latest translations from crowdin.
 
 #### 47-beta7
 *(2019-02-16)*
