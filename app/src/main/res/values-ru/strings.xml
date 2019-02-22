@@ -343,7 +343,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Основные</string>
     <string name="prefs_category_sharing">Сервисы</string>
-    <string name="prefs_category_advanced">Дополнительно</string>
     <string name="prefs_category_about">О программе</string>
     <string name="pref_onlyfuture">Скрыть вышедшие эпизоды</string>
     <string name="pref_onlyfuturesummary">Не показывать транслировавшиеся эпизоды</string>
@@ -422,7 +421,6 @@
     <string name="pref_offsetsummary">Смещение времени эфира на %d часов</string>
     <string name="clear_cache">Очистить кэш изображений</string>
     <string name="clear_cache_summary">Удалить все кэшированные изображения с Вашего устройства</string>
-    <string name="pref_ganalyticssummary">Отправлять анонимную статистику использования в сервис Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Вкл. описания, детали, рейтинги</string>
     <string name="backup_failed_file_access">Не могу произвести резервное копирование. Файл резервной копии не может быть найден или к нему нет доступа.</string>
@@ -445,7 +443,6 @@
     <string name="backup_use_default_files">Использовать файлы резервных копий по умолчанию</string>
     <!-- Welcome dialog -->
     <string name="get_started">Начать</string>
-    <string name="welcome_setuplanguage">Выбрать язык</string>
     <string name="dismiss">Отменить</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s выпущено</string>
@@ -468,7 +465,7 @@
     <string name="hide_watched">Скрывать просмотренные эпизоды</string>
     <string name="pref_widget_opacity">Фон виджета</string>
     <string name="pref_widget_type">Тип виджета</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Использовать крупный шрифт</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Прозрачный</string>
     <string name="widget_background_25">25%</string>

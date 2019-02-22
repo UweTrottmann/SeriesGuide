@@ -35,7 +35,6 @@ import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
-import com.crashlytics.android.core.CrashlyticsCore;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import java.io.InterruptedIOException;
@@ -173,8 +172,8 @@ public class Utils {
      * Track something gone wrong.
      */
     public static void trackError(String eventName, @NonNull Throwable throwable) {
-        CrashlyticsCore.getInstance().setString("event", eventName);
-        CrashlyticsCore.getInstance().logException(throwable);
+//        CrashlyticsCore.getInstance().setString("event", eventName);
+//        CrashlyticsCore.getInstance().logException(throwable);
     }
 
     /**
@@ -196,7 +195,7 @@ public class Utils {
             return; // do not track, mostly timeouts
         }
 
-        CrashlyticsCore.getInstance().setString("action", throwable.getAction());
+//        CrashlyticsCore.getInstance().setString("action", throwable.getAction());
         trackError(throwable.getEvent(), throwable);
     }
 

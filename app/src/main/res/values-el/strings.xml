@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Βασικά</string>
     <string name="prefs_category_sharing">Υπηρεσίες</string>
-    <string name="prefs_category_advanced">Για προχωρημένους</string>
     <string name="prefs_category_about">Σχετικά</string>
     <string name="pref_onlyfuture">Επεισόδια που δεν έχουν προβληθεί</string>
     <string name="pref_onlyfuturesummary">Να μην εμφανίζονται ποτέ τα επεισόδια που έχουν ήδη προβληθεί</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Μετατόπιση ωρών προβολής κατα %d ώρες</string>
     <string name="clear_cache">Καθαρισμός προσωρινής μνήμης εικόνων</string>
     <string name="clear_cache_summary">Αφαιρέστε όλες τις προσωρινά αποθηκευμένες εικόνες από τη συσκευή σας</string>
-    <string name="pref_ganalyticssummary">Αποστολή ανώνυμων στατιστικών χρήσης σε μία υπηρεσία της Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Να περιλαμβάνονται περιγραφές, λεπτομέρειες και αξιολογήσεις</string>
     <string name="backup_failed_file_access">Αδυναμία λήψης αντιγράφου ασφαλείας. Δεν μπορεί να βρεθεί ή να προσπελαστεί ένα αρχείο αντιγράφου ασφαλείας.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Χρησιμοποιήστε τα προεπιλεγμένα αρχεία αντιγράφων ασφαλείας</string>
     <!-- Welcome dialog -->
     <string name="get_started">Ξεκινήστε</string>
-    <string name="welcome_setuplanguage">Επιλέξτε γλώσσα</string>
     <string name="dismiss">Απόρριψη</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s επερχόμενα</string>

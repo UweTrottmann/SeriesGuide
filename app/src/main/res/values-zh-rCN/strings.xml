@@ -319,7 +319,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">基本</string>
     <string name="prefs_category_sharing">服务</string>
-    <string name="prefs_category_advanced">高级</string>
     <string name="prefs_category_about">关于</string>
     <string name="pref_onlyfuture">不显示已播剧集</string>
     <string name="pref_onlyfuturesummary">忽略已播剧集的观看状态</string>
@@ -389,7 +388,6 @@
     <string name="pref_offsetsummary">显示时间与原播出时间相差 %d 小时</string>
     <string name="clear_cache">清理图片缓存</string>
     <string name="clear_cache_summary">删除缓存图片</string>
-    <string name="pref_ganalyticssummary">向 Google 服务发送匿名使用情况统计信息</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">包括说明、详细信息、评级</string>
     <string name="backup_failed_file_access">备份失败：不能访问备份文件。</string>
@@ -412,7 +410,6 @@
     <string name="backup_use_default_files">使用默认备份文件</string>
     <!-- Welcome dialog -->
     <string name="get_started">入门</string>
-    <string name="welcome_setuplanguage">选择语言</string>
     <string name="dismiss">忽略</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s 即将播出</string>

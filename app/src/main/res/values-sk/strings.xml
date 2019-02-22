@@ -343,7 +343,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Základné</string>
     <string name="prefs_category_sharing">Služby</string>
-    <string name="prefs_category_advanced">Pokročilé</string>
     <string name="prefs_category_about">O aplikácii</string>
     <string name="pref_onlyfuture">Nezobrazovať odvysielané epizódy</string>
     <string name="pref_onlyfuturesummary">Nikdy nezobrazovať už odvysielané epizódy</string>
@@ -422,7 +421,6 @@
     <string name="pref_offsetsummary">Posunúť časy vysielania o %d hodín</string>
     <string name="clear_cache">Vymazať vyrovnávaciu pamäť obrázkov</string>
     <string name="clear_cache_summary">Odstrániť všetky obrázky stiahnuté do zariadenia</string>
-    <string name="pref_ganalyticssummary">Posielať anonymné štatistiky o používaní do služby Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Zahrnúť popisy, podrobnosti, hodnotenia</string>
     <string name="backup_failed_file_access">Nie je možné zálohovať. Záložný súbor nie je možné nájsť alebo k nemu nie je prístup.</string>
@@ -445,7 +443,6 @@
     <string name="backup_use_default_files">Použiť predvolené záložné súbory</string>
     <!-- Welcome dialog -->
     <string name="get_started">Začíname</string>
-    <string name="welcome_setuplanguage">Vyberte jazyk</string>
     <string name="dismiss">Zatvoriť</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s práve vychádzajú</string>

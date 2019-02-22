@@ -343,7 +343,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Pagrindai</string>
     <string name="prefs_category_sharing">Paslaugos</string>
-    <string name="prefs_category_advanced">Išplėstinė</string>
     <string name="prefs_category_about">Apie</string>
     <string name="pref_onlyfuture">Neparodytos serijos</string>
     <string name="pref_onlyfuturesummary">Niekada nerodyti jau parodytų serijų</string>
@@ -422,7 +421,6 @@
     <string name="pref_offsetsummary">Rodymo laikas pastumtas %d val</string>
     <string name="clear_cache">Pašalinti išsaugotus paveikslus</string>
     <string name="clear_cache_summary">Pašalina visus išsaugotus paveikslus iš jūsų įrenginio</string>
-    <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
     <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
@@ -445,7 +443,6 @@
     <string name="backup_use_default_files">Use default backup files</string>
     <!-- Welcome dialog -->
     <string name="get_started">Get started</string>
-    <string name="welcome_setuplanguage">Choose language</string>
     <string name="dismiss">Dismiss</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s is coming up</string>

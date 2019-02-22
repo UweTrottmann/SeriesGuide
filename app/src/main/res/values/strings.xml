@@ -375,7 +375,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Basics</string>
     <string name="prefs_category_sharing">Services</string>
-    <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">About</string>
     <string name="pref_onlyfuture">No aired episodes</string>
     <string name="pref_onlyfuturesummary">Never display already aired episodes</string>
@@ -456,7 +455,6 @@
     <string name="pref_offsetsummary">Offset air times by %d hours</string>
     <string name="clear_cache">Clear image caches</string>
     <string name="clear_cache_summary">Remove all cached images from your device</string>
-    <string name="pref_ganalyticssummary">Send anonymous usage statistics to a Google service</string>
 
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
@@ -481,7 +479,6 @@
 
     <!-- Welcome dialog -->
     <string name="get_started">Get started</string>
-    <string name="welcome_setuplanguage">Choose language</string>
     <string name="dismiss">Dismiss</string>
 
     <!-- Notifications -->

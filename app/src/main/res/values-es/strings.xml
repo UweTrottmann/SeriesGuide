@@ -328,7 +328,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Básicos</string>
     <string name="prefs_category_sharing">Servicios</string>
-    <string name="prefs_category_advanced">Avanzado</string>
     <string name="prefs_category_about">Acerca de</string>
     <string name="pref_onlyfuture">No hay episodios emitidos</string>
     <string name="pref_onlyfuturesummary">Nunca mostrar episodios ya transmitidos</string>
@@ -401,7 +400,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_offsetsummary">Ajustar %d horas los tiempos de emisión</string>
     <string name="clear_cache">Limpiar el caché de imágenes</string>
     <string name="clear_cache_summary">Quitar todas las imágenes en la memoria caché del dispositivo</string>
-    <string name="pref_ganalyticssummary">Enviar estadísticas de uso anónimas a un servicio de Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
     <string name="backup_failed_file_access">No se puede hacer copia de seguridad. El archivo de copia de seguridad no se encuentra o es inaccesible.</string>
@@ -424,7 +422,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="backup_use_default_files">Utilizar archivos de copia de seguridad por defecto</string>
     <!-- Welcome dialog -->
     <string name="get_started">Empezar</string>
-    <string name="welcome_setuplanguage">Elija idioma</string>
     <string name="dismiss">Descartar</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s está llegando</string>

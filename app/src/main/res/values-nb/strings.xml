@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Grunnleggende</string>
     <string name="prefs_category_sharing">Tjenester</string>
-    <string name="prefs_category_advanced">Avansert</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Ingen sendte episoder</string>
     <string name="pref_onlyfuturesummary">Ikke vis episoder som allerede er sendt</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Tidsforskjell på %d timer</string>
     <string name="clear_cache">Tøm hurtiglageret</string>
     <string name="clear_cache_summary">Fjern alle hurtiglagrede bilder fra enheten</string>
-    <string name="pref_ganalyticssummary">Sende anonym brukerstatistikk til en Google-tjeneste</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Inkluderer beskrivelser, detaljer og vurderinger</string>
     <string name="backup_failed_file_access">Sikkerhetskopiering mislyktes. Klarte ikke finne eller åpne filen.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Bruk standard sikkerhetskopifiler</string>
     <!-- Welcome dialog -->
     <string name="get_started">Kom i gang</string>
-    <string name="welcome_setuplanguage">Velg språk</string>
     <string name="dismiss">Avvis</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s kommer</string>

@@ -319,7 +319,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Dasar</string>
     <string name="prefs_category_sharing">Layanan</string>
-    <string name="prefs_category_advanced">Tingkat Lanjut</string>
     <string name="prefs_category_about">Tentang</string>
     <string name="pref_onlyfuture">Tidak Ada episode yang sudah ditayangkan</string>
     <string name="pref_onlyfuturesummary">Jangan pernah tampilan episode yang sudah ditayangkan</string>
@@ -389,7 +388,6 @@
     <string name="pref_offsetsummary">Seimbangkan waktu rilis selama %d jam</string>
     <string name="clear_cache">Bersihkan caches gambar</string>
     <string name="clear_cache_summary">Hapus semua cache gambar dari perangkat Anda</string>
-    <string name="pref_ganalyticssummary">Kirim statistik penggunaan anonim ke layanan Google</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Termasuk deskripsi, rincian, peringkat</string>
     <string name="backup_failed_file_access">Tidak dapat mencadangkan. File cadangan tidak dapat ditemukan atau diakses.</string>
@@ -412,7 +410,6 @@
     <string name="backup_use_default_files">Gunakan cadangan file default</string>
     <!-- Welcome dialog -->
     <string name="get_started">Mulai</string>
-    <string name="welcome_setuplanguage">Pilih Bahasa</string>
     <string name="dismiss">Bubar</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s akan datang</string>

@@ -327,7 +327,6 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Основни</string>
     <string name="prefs_category_sharing">Услуги</string>
-    <string name="prefs_category_advanced">Разширени</string>
     <string name="prefs_category_about">Относно</string>
     <string name="pref_onlyfuture">Няма излъчени епизоди</string>
     <string name="pref_onlyfuturesummary">Не показвай вече излъчвани епизоди</string>
@@ -400,7 +399,6 @@
     <string name="pref_offsetsummary">Преместване на часовете за излъчване с %d часа</string>
     <string name="clear_cache">Изчисти кеша на изображенията</string>
     <string name="clear_cache_summary">Премахнете всички кеширани снимки от вашето устройство</string>
-    <string name="pref_ganalyticssummary">Изпрати анонимни данни за потреблението на Google услугите</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Включва описания, детайли, рейтинги</string>
     <string name="backup_failed_file_access">Не може да се архивира. Архивения файл не може да бъде намерен или е не достъпен.</string>
@@ -423,7 +421,6 @@
     <string name="backup_use_default_files">Използвайте файловете подразбиране за архивиране</string>
     <!-- Welcome dialog -->
     <string name="get_started">Начало</string>
-    <string name="welcome_setuplanguage">Избор на език</string>
     <string name="dismiss">Отхвърли</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s предстои</string>

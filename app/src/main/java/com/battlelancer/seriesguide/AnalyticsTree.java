@@ -6,7 +6,6 @@ import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTraktException;
 import com.battlelancer.seriesguide.util.Utils;
-import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.gson.JsonParseException;
 import java.io.InterruptedIOException;
 import java.net.UnknownHostException;
@@ -53,7 +52,7 @@ public class AnalyticsTree extends Timber.DebugTree {
                 if (cause instanceof InterruptedIOException) {
                     return; // do not track, mostly timeouts
                 }
-                CrashlyticsCore.getInstance().setString("action", message);
+//                CrashlyticsCore.getInstance().setString("action", message);
                 Utils.trackError(AnalyticsEvents.THETVDB_ERROR, e);
                 return;
             }
@@ -74,14 +73,14 @@ public class AnalyticsTree extends Timber.DebugTree {
         }
 
         // finally log to crashlytics
-        CrashlyticsCore.getInstance().log(level + "/" + tag + ": " + message);
+//        CrashlyticsCore.getInstance().log(level + "/" + tag + ": " + message);
 
         // track some non-fatal exceptions with crashlytics
         if (priority == Log.ERROR) {
             if (t instanceof SQLiteException /* Content provider */
                     || t instanceof JsonParseException /* Retrofit */
                     || t instanceof DateTimeParseException /* TheTVDB */) {
-                CrashlyticsCore.getInstance().logException(t);
+//                CrashlyticsCore.getInstance().logException(t);
             }
         }
     }
