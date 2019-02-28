@@ -77,7 +77,10 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
 
         // ensure size matches children in any case
         // (on some devices did not resize correctly, Android layouting change?)
-        viewPager.post { viewPager.requestLayout() }
+        viewPager.post {
+            @Suppress("UNNECESSARY_SAFE_CALL") // view might already been unbound
+            viewPager?.requestLayout()
+        }
 
         return view
     }
