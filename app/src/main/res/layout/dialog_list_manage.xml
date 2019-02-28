@@ -5,27 +5,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
+    <LinearLayout
         style="@style/DefaultPadding.DialogContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:minWidth="@dimen/dialog_min_width">
 
+        <!-- match_parent is broken, so use LinearLayout that scales this to max width instead -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutListManageListName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/list_title_hint">
 
             <!-- Set inputType as it does not default to (single-line) text like EditText. -->
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:hint="@string/list_title_hint" />
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-    </FrameLayout>
+    </LinearLayout>
 
     <include layout="@layout/dialog_buttons" />
 
