@@ -191,7 +191,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // comments button
         buttonMovieComments.isGone = true
-        ViewTools.setVectorIconLeft(theme, buttonMovieComments, R.drawable.ic_forum_black_24dp)
 
         // cast and crew
         setCastVisibility(false)

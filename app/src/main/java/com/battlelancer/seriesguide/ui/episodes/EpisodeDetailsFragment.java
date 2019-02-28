@@ -182,14 +182,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         ViewTools.setVectorIconLeft(theme, buttonStreamingSearch,
                 R.drawable.ic_play_arrow_black_24dp);
 
-        // comments button
-        ViewTools.setVectorIconLeft(theme, commentsButton, R.drawable.ic_forum_black_24dp);
-
-        // other bottom buttons
-        ViewTools.setVectorIconLeft(theme, imdbButton, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorIconLeft(theme, tvdbButton, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorIconLeft(theme, traktButton, R.drawable.ic_link_black_24dp);
-
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         ClipboardTools.copyTextToClipboardOnLongClick(textViewTitle);
         ClipboardTools.copyTextToClipboardOnLongClick(textViewReleaseTime);

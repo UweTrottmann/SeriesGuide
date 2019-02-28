@@ -196,14 +196,6 @@ public class OverviewFragment extends Fragment implements
         CheatSheet.setup(containerRatings, R.string.action_rate);
         textRatingRange.setText(getString(R.string.format_rating_range, 10));
 
-        // comments button
-        ViewTools.setVectorIconLeft(theme, buttonComments, R.drawable.ic_forum_black_24dp);
-
-        // other bottom buttons
-        ViewTools.setVectorIconLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp);
-
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         ClipboardTools.copyTextToClipboardOnLongClick(textDescription);
         ClipboardTools.copyTextToClipboardOnLongClick(textGuestStars);

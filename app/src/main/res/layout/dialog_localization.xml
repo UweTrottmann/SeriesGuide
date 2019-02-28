@@ -25,7 +25,7 @@
 
         <Button
             android:id="@+id/buttonLocalizationLanguage"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Sheet.Menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/inline_padding"
@@ -45,7 +45,7 @@
 
         <Button
             android:id="@+id/buttonLocalizationRegion"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Sheet.Menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_padding"

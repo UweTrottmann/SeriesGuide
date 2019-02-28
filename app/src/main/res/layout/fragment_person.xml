@@ -93,8 +93,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewPersonBiography"
-            tools:drawableLeft="@drawable/ic_link_black_24dp"
-            tools:drawableTint="?attr/sgColorIcon" />
+            app:icon="@drawable/ic_link_black_24dp" />
 
         <Button
             android:id="@+id/buttonPersonWebSearch"
@@ -105,8 +104,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonPersonTmdbLink"
-            tools:drawableLeft="@drawable/ic_search_white_24dp"
-            tools:drawableTint="?attr/sgColorIcon" />
+            app:icon="@drawable/ic_search_white_24dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

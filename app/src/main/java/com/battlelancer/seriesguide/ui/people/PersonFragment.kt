@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -25,7 +24,6 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TmdbTools
-import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboard
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.Person
@@ -43,10 +41,6 @@ class PersonFragment : Fragment() {
     lateinit var textViewName: TextView
     @BindView(R.id.textViewPersonBiography)
     lateinit var textViewBiography: TextView
-    @BindView(R.id.buttonPersonTmdbLink)
-    lateinit var buttonTmdbLink: Button
-    @BindView(R.id.buttonPersonWebSearch)
-    lateinit var buttonWebSearch: Button
     private lateinit var unbinder: Unbinder
 
     private var personTmdbId: Int = 0
@@ -62,11 +56,6 @@ class PersonFragment : Fragment() {
             savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_person, container, false)
         unbinder = ButterKnife.bind(this, rootView)
-
-        val theme = requireActivity().theme
-        ViewTools.setVectorIconLeft(theme, buttonTmdbLink, R.drawable.ic_link_black_24dp)
-        ViewTools.setVectorIconLeft(theme, buttonWebSearch, R.drawable.ic_search_white_24dp)
-
         return rootView
     }
 

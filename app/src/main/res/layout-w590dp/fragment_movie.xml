@@ -172,13 +172,13 @@
                         android:background="?attr/sgColorDivider"
                         tools:ignore="UnknownIdInLayout" />
 
-                    <!-- Compound drawable set in code. -->
                     <Button
                         android:id="@+id/buttonMovieComments"
                         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/comments" />
+                        android:text="@string/comments"
+                        app:icon="@drawable/ic_forum_black_24dp" />
 
                     <View
                         android:id="@+id/dividerMovie3"

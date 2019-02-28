@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginRight="@dimen/large_padding"
     android:baselineAligned="false"
     android:orientation="horizontal"
@@ -87,8 +88,7 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/tmdb"
-                tools:drawableLeft="@drawable/ic_link_black_24dp"
-                tools:drawableTint="?attr/sgColorIcon" />
+                app:icon="@drawable/ic_link_black_24dp" />
 
             <Button
                 android:id="@+id/buttonPersonWebSearch"
@@ -96,8 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:text="@string/web_search"
-                tools:drawableLeft="@drawable/ic_search_white_24dp"
-                tools:drawableTint="?attr/sgColorIcon" />
+                app:icon="@drawable/ic_search_white_24dp" />
 
         </LinearLayout>
 

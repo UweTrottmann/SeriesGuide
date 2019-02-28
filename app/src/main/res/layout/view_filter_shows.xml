@@ -58,7 +58,7 @@
 
     <Button
         android:id="@+id/button_shows_filter_remove"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet.Menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/empty_filter" />

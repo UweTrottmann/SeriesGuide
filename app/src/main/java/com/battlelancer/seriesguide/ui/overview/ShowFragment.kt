@@ -172,22 +172,10 @@ class ShowFragment : ScopedFragment() {
         CheatSheet.setup(buttonRate, R.string.action_rate)
         textViewRatingRange.text = getString(R.string.format_rating_range, 10)
 
-        // link, search and comments button
-        ViewTools.setVectorIconLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp)
-        ViewTools.setVectorIconLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp)
-        ViewTools.setVectorIconLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp)
-        ViewTools.setVectorIconLeft(theme, buttonWebSearch, R.drawable.ic_search_white_24dp)
-        ViewTools.setVectorIconLeft(theme, buttonComments, R.drawable.ic_forum_black_24dp)
-
         // share button
-        ViewTools.setVectorIconLeft(theme, buttonShare, R.drawable.ic_share_white_24dp)
         buttonShare.setOnClickListener { shareShow() }
 
         // shortcut button
-        ViewTools.setVectorIconLeft(
-            theme, buttonShortcut,
-            R.drawable.ic_add_to_home_screen_black_24dp
-        )
         buttonShortcut.setOnClickListener { createShortcut() }
 
         setCastVisibility(false)

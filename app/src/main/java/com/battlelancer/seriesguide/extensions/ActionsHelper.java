@@ -9,11 +9,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import java.util.List;
@@ -37,18 +35,12 @@ public class ActionsHelper {
         }
         actionsContainer.removeAllViews();
 
-        // re-use drawable for all buttons
-        VectorDrawableCompat drawable = ViewTools.vectorIconActive(actionsContainer.getContext(),
-                theme, R.drawable.ic_extension_black_24dp);
-
         // add a view per action
         if (data != null) {
             for (Action action : data) {
                 Button actionView = (Button) layoutInflater.inflate(R.layout.item_action,
                         actionsContainer, false);
                 actionView.setText(action.getTitle());
-                ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(actionView, drawable,
-                        null, null, null);
 
                 CheatSheet.setup(actionView, action.getTitle());
 
