@@ -170,8 +170,6 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         final View v = inflater.inflate(R.layout.dialog_addshow, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-        ViewTools.setVectorIconLeft(getActivity().getTheme(), buttonLanguage,
-                R.drawable.ic_language_white_24dp);
         CheatSheet.setup(buttonLanguage, R.string.pref_language);
         ratingRange.setText(getString(R.string.format_rating_range, 10));
 

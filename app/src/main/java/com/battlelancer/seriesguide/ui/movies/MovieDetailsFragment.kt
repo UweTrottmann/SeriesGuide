@@ -186,7 +186,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // language button
         buttonMovieLanguage.isGone = true
-        ViewTools.setVectorIconLeft(theme, buttonMovieLanguage, R.drawable.ic_language_white_24dp)
         CheatSheet.setup(buttonMovieLanguage, R.string.pref_language)
         buttonMovieLanguage.setOnClickListener { displayLanguageSettings() }
 

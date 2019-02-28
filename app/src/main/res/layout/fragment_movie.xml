@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootLayoutMovie"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -110,6 +111,7 @@
                 android:layout_below="@+id/dividerMovie0"
                 android:layout_marginLeft="@dimen/padding_button"
                 android:layout_marginRight="@dimen/padding_button"
+                app:icon="@drawable/ic_language_white_24dp"
                 tools:text="Deutsch" />
 
             <TextView

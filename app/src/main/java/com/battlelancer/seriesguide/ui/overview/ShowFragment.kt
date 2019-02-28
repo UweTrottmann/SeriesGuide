@@ -164,7 +164,6 @@ class ShowFragment : ScopedFragment() {
 
         // language button
         val theme = activity!!.theme
-        ViewTools.setVectorIconLeft(theme, buttonLanguage, R.drawable.ic_language_white_24dp)
         buttonLanguage.setOnClickListener { displayLanguageSettings() }
         CheatSheet.setup(buttonLanguage, R.string.pref_language)
 
