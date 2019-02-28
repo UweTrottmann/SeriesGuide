@@ -9,7 +9,7 @@
         android:paddingBottom="@dimen/inline_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
-        android:paddingTop="@dimen/larger_padding"
+        android:paddingTop="@dimen/inline_padding"
         app:allowStacking="true">
 
         <androidx.legacy.widget.Space
