@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="3"
             android:padding="8dp"
             android:text="@string/action_watched"
             tools:drawableTint="?attr/sgColorIcon"
@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="3"
             android:padding="8dp"
             android:text="@string/watchlist_add"
             tools:drawableTint="?attr/sgColorIcon"
@@ -45,7 +45,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="3"
             android:padding="8dp"
             android:text="@string/action_collection_add"
             tools:drawableTint="?attr/sgColorIcon"
@@ -63,7 +63,7 @@
 
     <Button
         android:id="@+id/buttonMovieCheckIn"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/padding_button"
@@ -75,7 +75,7 @@
 
     <Button
         android:id="@+id/buttonMovieStreamingSearch"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/padding_button"
