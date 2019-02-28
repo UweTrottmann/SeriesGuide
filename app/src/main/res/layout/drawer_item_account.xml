@@ -37,7 +37,7 @@
         android:paddingLeft="@dimen/keyline"
         android:paddingRight="@dimen/keyline"
         android:paddingTop="@dimen/default_padding"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark">
 
         <TextView
             android:id="@+id/textViewDrawerAccountTrakt"
@@ -70,7 +70,7 @@
         android:paddingLeft="@dimen/keyline"
         android:paddingRight="@dimen/keyline"
         android:paddingTop="@dimen/default_padding"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark">
 
         <TextView
             android:id="@+id/textViewDrawerAccountCloud"

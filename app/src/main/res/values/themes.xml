@@ -3,7 +3,7 @@
 
     <style name="Theme" />
 
-    <style name="Theme.BaseSeriesGuide" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.BaseSeriesGuide" parent="Theme.MaterialComponents.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 21 go here. -->
 
@@ -22,7 +22,7 @@
         <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
         <item name="colorPrimaryDark">@color/accent_primary_dark</item>
         <!--   theme UI controls like checkboxes and text fields -->
-        <item name="colorAccent">@color/teal_500</item>
+        <item name="colorSecondary">@color/teal_500</item>
 
         <!-- Special attributes -->
         <item name="sgActivatedItemBackgroundDrawer">@drawable/activated_background_drawer_sg</item>
@@ -37,7 +37,7 @@
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
 
         <!-- Action bar -->
-        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.ActionBar</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
@@ -62,7 +62,7 @@
 
     </style>
 
-    <style name="Theme.BaseSeriesGuide.DarkBlue" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.BaseSeriesGuide.DarkBlue" parent="Theme.MaterialComponents.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 21 go here. -->
 
@@ -79,7 +79,7 @@
         <!--   your app's branding color (for the app bar) -->
         <item name="colorPrimary">@android:color/black</item>
         <!--   theme UI controls like checkboxes and text fields -->
-        <item name="colorAccent">@color/teal_500</item>
+        <item name="colorSecondary">@color/teal_500</item>
 
         <!-- Special attributes -->
         <item name="sgActivatedItemBackgroundDrawer">@drawable/activated_background_drawer_sg</item>
@@ -115,7 +115,7 @@
 
     </style>
 
-    <style name="Theme.BaseSeriesGuide.Light" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.BaseSeriesGuide.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 21 go here. -->
 
@@ -134,7 +134,7 @@
         <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
         <item name="colorPrimaryDark">@color/accent_primary_dark</item>
         <!--   theme UI controls like checkboxes and text fields -->
-        <item name="colorAccent">@color/teal_500</item>
+        <item name="colorSecondary">@color/teal_500</item>
 
         <!-- Special attributes -->
         <item name="sgActivatedItemBackgroundDrawer">@drawable/activated_background_drawer_sg_light</item>
@@ -152,8 +152,8 @@
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg_light</item>
 
         <!-- Action bar -->
-        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
-        <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
+        <item name="actionBarPopupTheme">@style/ThemeOverlay.MaterialComponents.Light</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
@@ -182,12 +182,12 @@
     <!-- Special themes -->
     <!-- ####################################### -->
 
-    <style name="Theme.SeriesGuide.Dialog.Distillation" parent="ThemeOverlay.AppCompat.Dialog">
+    <style name="Theme.SeriesGuide.Dialog.Distillation" parent="ThemeOverlay.MaterialComponents.Dialog">
         <item name="android:windowBackground">@drawable/sg_distillation_dialog_background</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
-    <style name="Theme.SeriesGuide.Dialog.CheckIn" parent="ThemeOverlay.AppCompat.Dialog">
+    <style name="Theme.SeriesGuide.Dialog.CheckIn" parent="ThemeOverlay.MaterialComponents.Dialog">
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
@@ -229,8 +229,8 @@
 
     </style>
 
-    <style name="ThemeOverlay.WhiteAccent" parent="ThemeOverlay.AppCompat.Dark">
-        <item name="colorAccent">@color/white</item>
+    <style name="ThemeOverlay.WhiteAccent" parent="ThemeOverlay.MaterialComponents.Dark">
+        <item name="colorSecondary">@color/white</item>
     </style>
 
 </resources>

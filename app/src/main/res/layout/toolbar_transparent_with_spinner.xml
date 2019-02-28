@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="@color/transparent"
-    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
     app:layout_scrollFlags="scroll|enterAlways|snap">
 
     <Spinner
