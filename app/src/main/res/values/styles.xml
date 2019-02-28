@@ -150,8 +150,9 @@
     <style name="Widget.SeriesGuide" parent="Widget" />
 
     <!-- Buttons -->
-    <style name="Widget.SeriesGuide.Button.Borderless" parent="android:Widget.Material.Button.Borderless">
+    <style name="Widget.SeriesGuide.Button.Borderless" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:maxLines">2</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Default">
