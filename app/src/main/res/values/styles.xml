@@ -16,23 +16,15 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
-    <style name="TextAppearance.Display3">
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
-        <item name="android:textSize">56sp</item>
-    </style>
+    <style name="TextAppearance.Display3" parent="TextAppearance.MaterialComponents.Headline2" />
 
-    <style name="TextAppearance.Display1">
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
-        <item name="android:textSize">34sp</item>
-    </style>
+    <style name="TextAppearance.Display1" parent="TextAppearance.MaterialComponents.Headline4" />
 
     <style name="TextAppearance.Display1.White">
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="TextAppearance.Headline">
-        <item name="android:textSize">24sp</item>
-    </style>
+    <style name="TextAppearance.Headline" parent="TextAppearance.MaterialComponents.Headline5" />
 
     <style name="TextAppearance.Title">
         <item name="android:textSize">20sp</item>
