@@ -121,7 +121,7 @@
 
     </style>
 
-    <style name="Theme.BaseSeriesGuide.Light" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.BaseSeriesGuide.Light" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 21 go here. -->
 
@@ -161,8 +161,8 @@
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg_light</item>
 
         <!-- Action bar -->
-        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
-        <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
+        <item name="actionBarPopupTheme">@style/ThemeOverlay.MaterialComponents.Light</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
@@ -239,7 +239,7 @@
 
     </style>
 
-    <style name="ThemeOverlay.WhiteAccent" parent="ThemeOverlay.AppCompat.Dark">
+    <style name="ThemeOverlay.WhiteAccent" parent="ThemeOverlay.MaterialComponents.Dark">
         <item name="colorAccent">@color/white</item>
     </style>
 
