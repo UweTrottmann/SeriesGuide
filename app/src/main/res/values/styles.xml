@@ -165,6 +165,7 @@
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Sheet.Menu">
+        <item name="rippleColor">?attr/colorControlHighlight</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textAppearance">@style/TextAppearance.Menu</item>
     </style>
