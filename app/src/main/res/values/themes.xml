@@ -32,6 +32,8 @@
         <item name="android:windowBackground">@color/background</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="windowActionModeOverlay">true</item>
+        <!-- Note: nav bar color needs to be opaque! -->
+        <item name="android:navigationBarColor">@color/black</item>
 
         <!-- System widgets -->
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
@@ -89,6 +91,8 @@
         <item name="android:windowBackground">@color/background</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="windowActionModeOverlay">true</item>
+        <!-- Note: nav bar color needs to be opaque! -->
+        <item name="android:navigationBarColor">@color/black</item>
 
         <!-- System widgets -->
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
@@ -144,6 +148,8 @@
         <item name="android:windowBackground">@color/background_inverse</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="windowActionModeOverlay">true</item>
+        <!-- Note: nav bar color needs to be opaque! -->
+        <item name="android:navigationBarColor">@color/black</item>
 
         <!-- Remove default window shadow -->
         <item name="android:windowContentOverlay">@null</item>

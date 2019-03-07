@@ -32,6 +32,7 @@
     <color name="white">#ffffffff</color> <!-- primary text dark -->
     <color name="white_70">#b3ffffff</color> <!-- secondary text dark -->
     <color name="white_50">#80ffffff</color>
+    <color name="black">#ff000000</color>
     <color name="black_87">#de000000</color> <!-- primary text light -->
     <color name="black_54">#8a000000</color> <!-- secondary text light -->
     <color name="black_38">#60000000</color> <!-- secondary text light -->
