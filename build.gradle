@@ -26,7 +26,6 @@ buildscript {
             'trakt': '6.1.0', // github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
 
             'truth': '0.42', // github.com/google/truth/releases
-            'threetenABP': '1.1.1', // github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
 
             // version 15xxxyy -> min SDK 15, release xxx, build yy
             'code': 1503410,
