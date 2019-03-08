@@ -826,7 +826,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 val primaryColor = ContextCompat.getColor(
                     v.context,
                     Utils.resolveAttributeToResourceId(
-                        v.context.theme, R.attr.sgColorBackgroundDim
+                        v.context.theme, R.attr.sgColorStatusBarOverlay
                     )
                 )
                 actionBar.setBackgroundDrawable(ColorDrawable(primaryColor))
