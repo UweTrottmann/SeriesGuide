@@ -11,7 +11,6 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.SearchActivity
-import com.uwetrottmann.androidutils.AndroidUtils
 import org.greenrobot.eventbus.EventBus
 
 abstract class BaseSearchFragment : Fragment() {
@@ -47,8 +46,8 @@ abstract class BaseSearchFragment : Fragment() {
 
         ButterKnife.bind(this, view)
 
-        // enable app bar scrolling out of view only on L or higher
-        ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher())
+        // enable app bar scrolling out of view
+        ViewCompat.setNestedScrollingEnabled(gridView, true)
 
         emptyView.visibility = View.GONE
     }

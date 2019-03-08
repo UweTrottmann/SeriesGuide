@@ -441,16 +441,6 @@ public class SeriesGuideDatabase {
 
             + ");";
 
-    /** Some Android 4.0 devices do not support FTS4, despite being standard since 3.0. */
-    static final String CREATE_SEARCH_TABLE_API_ICS = "CREATE VIRTUAL TABLE "
-            + Tables.EPISODES_SEARCH + " USING FTS3("
-
-            + EpisodeSearchColumns.TITLE + " TEXT,"
-
-            + EpisodeSearchColumns.OVERVIEW + " TEXT"
-
-            + ");";
-
     @VisibleForTesting
     public static final String CREATE_LISTS_TABLE = "CREATE TABLE " + Tables.LISTS + " ("
 
@@ -1058,11 +1048,7 @@ public class SeriesGuideDatabase {
             return;
         }
 
-        if (AndroidUtils.isJellyBeanOrHigher()) {
-            rebuildFtsTableJellyBean(db);
-        } else {
-            rebuildFtsTableIcs(db);
-        }
+        rebuildFtsTableJellyBean(db);
     }
 
     /**
@@ -1084,67 +1070,12 @@ public class SeriesGuideDatabase {
         }
     }
 
-    /**
-     * Works with FTS3 search table.
-     */
-    private static void rebuildFtsTableIcs(SupportSQLiteDatabase db) {
-        try {
-            db.beginTransaction();
-            try {
-                db.execSQL(
-                        "INSERT OR IGNORE INTO " + Tables.EPISODES_SEARCH
-                                + "(docid," + Episodes.TITLE + "," + Episodes.OVERVIEW + ")"
-                                + " select " + Episodes._ID + "," + Episodes.TITLE
-                                + "," + Episodes.OVERVIEW
-                                + " from " + Tables.EPISODES + ";");
-                db.setTransactionSuccessful();
-            } finally {
-                db.endTransaction();
-            }
-        } catch (SQLiteException e) {
-            Timber.e(e, "rebuildFtsTableIcs: failed to populate table.");
-            // try to build a basic table with only episode titles
-            rebuildBasicFtsTableIcs(db);
-        }
-    }
-
-    /**
-     * Similar to {@link #rebuildFtsTableIcs(SupportSQLiteDatabase)}. However only inserts the
-     * episode title, not the overviews to conserve space.
-     */
-    private static void rebuildBasicFtsTableIcs(SupportSQLiteDatabase db) {
-        if (!recreateFtsTable(db)) {
-            return;
-        }
-
-        try {
-            db.beginTransaction();
-            try {
-                db.execSQL(
-                        "INSERT OR IGNORE INTO " + Tables.EPISODES_SEARCH
-                                + "(docid," + Episodes.TITLE + ")"
-                                + " select " + Episodes._ID + "," + Episodes.TITLE
-                                + " from " + Tables.EPISODES + ";");
-                db.setTransactionSuccessful();
-            } finally {
-                db.endTransaction();
-            }
-        } catch (SQLiteException e) {
-            Timber.e(e, "rebuildBasicFtsTableIcs: failed to populate table.");
-            DBUtils.postDatabaseError(e);
-        }
-    }
-
     private static boolean recreateFtsTable(SupportSQLiteDatabase db) {
         try {
             db.beginTransaction();
             try {
                 db.execSQL("drop table if exists " + Tables.EPISODES_SEARCH);
-                if (AndroidUtils.isJellyBeanOrHigher()) {
-                    db.execSQL(CREATE_SEARCH_TABLE);
-                } else {
-                    db.execSQL(CREATE_SEARCH_TABLE_API_ICS);
-                }
+                db.execSQL(CREATE_SEARCH_TABLE);
                 db.setTransactionSuccessful();
             } finally {
                 db.endTransaction();

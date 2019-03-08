@@ -38,7 +38,6 @@ import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout
 import com.google.android.gms.actions.SearchIntents
-import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -397,11 +396,7 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
     }
 
     override fun getSnackbarParentView(): View {
-        return if (AndroidUtils.isLollipopOrHigher()) {
-            findViewById(R.id.coordinatorLayoutSearch)
-        } else {
-            super.getSnackbarParentView()
-        }
+        return findViewById(R.id.coordinatorLayoutSearch)
     }
 
     override fun switchToDiscoverAndSearch() {

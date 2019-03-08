@@ -25,7 +25,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -50,8 +49,8 @@ public abstract class MoviesBaseFragment extends Fragment implements
         View v = inflater.inflate(LAYOUT, container, false);
 
         gridView = v.findViewById(R.id.gridViewMovies);
-        // enable app bar scrolling out of view only on L or higher
-        ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
+        // enable app bar scrolling out of view
+        ViewCompat.setNestedScrollingEnabled(gridView, true);
         emptyView = v.findViewById(R.id.textViewMoviesEmpty);
         gridView.setEmptyView(emptyView);
         gridView.setOnItemClickListener(this);
