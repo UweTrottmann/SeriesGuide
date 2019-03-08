@@ -36,7 +36,6 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -415,113 +414,103 @@ public class NotificationService {
         final NotificationCompat.Builder nb =
                 new NotificationCompat.Builder(context, SgApp.NOTIFICATION_CHANNEL_EPISODES);
 
-        boolean richNotification = AndroidUtils.isJellyBeanOrHigher();
-        if (richNotification) {
-            // JELLY BEAN and above
-            if (count == 1) {
-                // single episode
-                upcomingEpisodes.moveToPosition(notifyPositions.get(0));
-                maybeSetPoster(nb, upcomingEpisodes.getString(NotificationQuery.POSTER));
+        // JELLY BEAN and above
+        if (count == 1) {
+            // single episode
+            upcomingEpisodes.moveToPosition(notifyPositions.get(0));
+            maybeSetPoster(nb, upcomingEpisodes.getString(NotificationQuery.POSTER));
 
-                if (!DisplaySettings.preventSpoilers(context)) {
-                    final String episodeTitle = TextTools.getEpisodeTitle(context,
-                            upcomingEpisodes.getString(NotificationQuery.TITLE),
-                            upcomingEpisodes.getInt(NotificationQuery.NUMBER));
-                    final String episodeSummary = upcomingEpisodes
-                            .getString(NotificationQuery.OVERVIEW);
+            if (!DisplaySettings.preventSpoilers(context)) {
+                final String episodeTitle = TextTools.getEpisodeTitle(context,
+                        upcomingEpisodes.getString(NotificationQuery.TITLE),
+                        upcomingEpisodes.getInt(NotificationQuery.NUMBER));
+                final String episodeSummary = upcomingEpisodes
+                        .getString(NotificationQuery.OVERVIEW);
 
-                    final SpannableStringBuilder bigText = new SpannableStringBuilder();
-                    bigText.append(episodeTitle);
-                    bigText.setSpan(new StyleSpan(Typeface.BOLD), 0, bigText.length(), 0);
-                    if (!TextUtils.isEmpty(episodeSummary)) {
-                        bigText.append("\n").append(episodeSummary);
-                    }
-
-                    nb.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText)
-                            .setSummaryText(contentText));
+                final SpannableStringBuilder bigText = new SpannableStringBuilder();
+                bigText.append(episodeTitle);
+                bigText.setSpan(new StyleSpan(Typeface.BOLD), 0, bigText.length(), 0);
+                if (!TextUtils.isEmpty(episodeSummary)) {
+                    bigText.append("\n").append(episodeSummary);
                 }
 
-                // Action button to check in
-                Intent checkInActionIntent = new Intent(context, QuickCheckInActivity.class);
-                checkInActionIntent.putExtra(QuickCheckInActivity.InitBundle.EPISODE_TVDBID,
-                        upcomingEpisodes.getInt(NotificationQuery._ID));
-                checkInActionIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime);
-                checkInActionIntent.addFlags(
-                        Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                PendingIntent checkInIntent = PendingIntent.getActivity(context,
-                        REQUEST_CODE_ACTION_CHECKIN,
-                        checkInActionIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-                // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
-                // note: Wear and Galaxy Watch devices do typically not support vector icons
-                nb.addAction(R.drawable.ic_action_checkin, context.getString(R.string.checkin),
-                        checkInIntent);
-
-                // Action button to set watched
-                Intent setWatchedIntent = new Intent(context, NotificationActionReceiver.class);
-                setWatchedIntent.putExtra(EXTRA_EPISODE_TVDBID,
-                        upcomingEpisodes.getInt(NotificationQuery._ID));
-                // data to handle delete
-                checkInActionIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime);
-                PendingIntent setWatchedPendingIntent = PendingIntent.getBroadcast(context,
-                        REQUEST_CODE_ACTION_SET_WATCHED,
-                        setWatchedIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-                // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
-                // note: Wear and Galaxy Watch devices do typically not support vector icons
-                nb.addAction(R.drawable.ic_action_tick, context.getString(R.string.action_watched),
-                        setWatchedPendingIntent);
-
-                nb.setNumber(1);
-            } else {
-                // multiple episodes
-                NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-
-                // display at most the first five
-                for (int displayIndex = 0; displayIndex < Math.min(count, 5); displayIndex++) {
-                    if (!upcomingEpisodes.moveToPosition(notifyPositions.get(displayIndex))) {
-                        // could not go to the desired position (testing just in case)
-                        break;
-                    }
-
-                    final SpannableStringBuilder lineText = new SpannableStringBuilder();
-
-                    // show title and number, like 'Show 1x01'
-                    String title = TextTools.getShowWithEpisodeNumber(
-                            context,
-                            upcomingEpisodes.getString(NotificationQuery.SHOW_TITLE),
-                            upcomingEpisodes.getInt(NotificationQuery.SEASON),
-                            upcomingEpisodes.getInt(NotificationQuery.NUMBER)
-                    );
-                    lineText.append(title);
-                    lineText.setSpan(new StyleSpan(Typeface.BOLD), 0, lineText.length(), 0);
-
-                    lineText.append(" ");
-
-                    // "8:00 PM Network"
-                    String time = TimeTools.formatToLocalTime(context, TimeTools
-                            .applyUserOffset(context, upcomingEpisodes
-                                    .getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
-                    String network = upcomingEpisodes
-                            .getString(NotificationQuery.NETWORK);
-                    lineText.append(TextTools.dotSeparate(time, network)); // switch on purpose
-
-                    inboxStyle.addLine(lineText);
-                }
-
-                // tell if we could not display all episodes
-                if (count > 5) {
-                    inboxStyle.setSummaryText(context.getString(R.string.more, count - 5));
-                }
-
-                nb.setStyle(inboxStyle);
-                nb.setNumber(count);
+                nb.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText)
+                        .setSummaryText(contentText));
             }
+
+            // Action button to check in
+            Intent checkInActionIntent = new Intent(context, QuickCheckInActivity.class);
+            checkInActionIntent.putExtra(QuickCheckInActivity.InitBundle.EPISODE_TVDBID,
+                    upcomingEpisodes.getInt(NotificationQuery._ID));
+            checkInActionIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime);
+            checkInActionIntent.addFlags(
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+            PendingIntent checkInIntent = PendingIntent.getActivity(context,
+                    REQUEST_CODE_ACTION_CHECKIN,
+                    checkInActionIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+            // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
+            // note: Wear and Galaxy Watch devices do typically not support vector icons
+            nb.addAction(R.drawable.ic_action_checkin, context.getString(R.string.checkin),
+                    checkInIntent);
+
+            // Action button to set watched
+            Intent setWatchedIntent = new Intent(context, NotificationActionReceiver.class);
+            setWatchedIntent.putExtra(EXTRA_EPISODE_TVDBID,
+                    upcomingEpisodes.getInt(NotificationQuery._ID));
+            // data to handle delete
+            checkInActionIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime);
+            PendingIntent setWatchedPendingIntent = PendingIntent.getBroadcast(context,
+                    REQUEST_CODE_ACTION_SET_WATCHED,
+                    setWatchedIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+            // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
+            // note: Wear and Galaxy Watch devices do typically not support vector icons
+            nb.addAction(R.drawable.ic_action_tick, context.getString(R.string.action_watched),
+                    setWatchedPendingIntent);
+
+            nb.setNumber(1);
         } else {
-            // ICS and below
-            if (count == 1) {
-                // single episode
-                upcomingEpisodes.moveToPosition(notifyPositions.get(0));
-                maybeSetPoster(nb, upcomingEpisodes.getString(NotificationQuery.POSTER));
+            // multiple episodes
+            NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+
+            // display at most the first five
+            for (int displayIndex = 0; displayIndex < Math.min(count, 5); displayIndex++) {
+                if (!upcomingEpisodes.moveToPosition(notifyPositions.get(displayIndex))) {
+                    // could not go to the desired position (testing just in case)
+                    break;
+                }
+
+                final SpannableStringBuilder lineText = new SpannableStringBuilder();
+
+                // show title and number, like 'Show 1x01'
+                String title = TextTools.getShowWithEpisodeNumber(
+                        context,
+                        upcomingEpisodes.getString(NotificationQuery.SHOW_TITLE),
+                        upcomingEpisodes.getInt(NotificationQuery.SEASON),
+                        upcomingEpisodes.getInt(NotificationQuery.NUMBER)
+                );
+                lineText.append(title);
+                lineText.setSpan(new StyleSpan(Typeface.BOLD), 0, lineText.length(), 0);
+
+                lineText.append(" ");
+
+                // "8:00 PM Network"
+                String time = TimeTools.formatToLocalTime(context, TimeTools
+                        .applyUserOffset(context, upcomingEpisodes
+                                .getLong(NotificationQuery.EPISODE_FIRST_RELEASE_MS)));
+                String network = upcomingEpisodes
+                        .getString(NotificationQuery.NETWORK);
+                lineText.append(TextTools.dotSeparate(time, network)); // switch on purpose
+
+                inboxStyle.addLine(lineText);
             }
+
+            // tell if we could not display all episodes
+            if (count > 5) {
+                inboxStyle.setSummaryText(context.getString(R.string.more, count - 5));
+            }
+
+            nb.setStyle(inboxStyle);
+            nb.setNumber(count);
         }
 
         // notification sound
@@ -563,9 +552,8 @@ public class NotificationService {
         NotificationManagerCompat nm = NotificationManagerCompat.from(context);
         nm.notify(SgApp.NOTIFICATION_EPISODE_ID, notification);
 
-        Timber.d("Notification: count=%d, rich(JB+)=%s, sound=%s, vibrate=%s, delete=%s",
+        Timber.d("Notification: count=%d, sound=%s, vibrate=%s, delete=%s",
                 count,
-                richNotification ? "YES" : "NO",
                 hasSound ? "YES" : "NO",
                 vibrates ? "YES" : "NO",
                 Instant.ofEpochMilli(latestAirtime));

@@ -11,7 +11,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * Hosts a {@link MovieDetailsFragment} displaying details about the movie defined by the given TMDb
@@ -65,21 +64,19 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
     }
 
     private void setupViews() {
-        if (AndroidUtils.isKitKatOrHigher()) {
-            // fix padding with translucent (K+)/transparent (M+) status bar
-            // warning: pre-M status bar not always translucent (e.g. Nexus 10)
-            // (using fitsSystemWindows would not work correctly with multiple views)
-            systemBarTintManager = new SystemBarTintManager(this);
-            SystemBarTintManager.SystemBarConfig config = systemBarTintManager.getConfig();
-            int insetTop = AndroidUtils.isMarshmallowOrHigher()
-                    ? config.getStatusBarHeight() // transparent status bar
-                    : config.getPixelInsetTop(false); // translucent status bar
-            ViewGroup actionBarToolbar = findViewById(R.id.sgToolbar);
-            ViewGroup.MarginLayoutParams layoutParams
-                    = (ViewGroup.MarginLayoutParams) actionBarToolbar.getLayoutParams();
-            layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin + insetTop,
-                    layoutParams.rightMargin, layoutParams.bottomMargin);
-        }
+        // fix padding with translucent (K+)/transparent (M+) status bar
+        // warning: pre-M status bar not always translucent (e.g. Nexus 10)
+        // (using fitsSystemWindows would not work correctly with multiple views)
+        systemBarTintManager = new SystemBarTintManager(this);
+        SystemBarTintManager.SystemBarConfig config = systemBarTintManager.getConfig();
+        int insetTop = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                ? config.getStatusBarHeight() // transparent status bar
+                : config.getPixelInsetTop(false); // translucent status bar
+        ViewGroup actionBarToolbar = findViewById(R.id.sgToolbar);
+        ViewGroup.MarginLayoutParams layoutParams
+                = (ViewGroup.MarginLayoutParams) actionBarToolbar.getLayoutParams();
+        layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin + insetTop,
+                layoutParams.rightMargin, layoutParams.bottomMargin);
     }
 
     @Override

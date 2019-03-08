@@ -22,7 +22,6 @@ import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;
 import com.battlelancer.seriesguide.widgets.EmptyView;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -78,8 +77,8 @@ public abstract class AddFragment extends Fragment {
 
         // basic setup of grid view
         resultsGridView.setEmptyView(emptyView);
-        // enable app bar scrolling out of view only on L or higher
-        ViewCompat.setNestedScrollingEnabled(resultsGridView, AndroidUtils.isLollipopOrHigher());
+        // enable app bar scrolling out of view
+        ViewCompat.setNestedScrollingEnabled(resultsGridView, true);
 
         // restore an existing adapter
         if (adapter != null) {

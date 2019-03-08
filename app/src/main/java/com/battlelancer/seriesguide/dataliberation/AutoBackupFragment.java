@@ -29,7 +29,6 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.snackbar.Snackbar;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -76,7 +75,7 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_auto_backup, container, false);
         unbinder = ButterKnife.bind(this, v);
@@ -94,30 +93,26 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
         });
         buttonImportAutoBackup.setOnClickListener(view -> tryDataLiberationAction());
 
-        // selecting custom backup files is only supported on KitKat and up
+        // note: selecting custom backup files is only supported on KitKat and up
         // as we use Storage Access Framework in this case
-        if (AndroidUtils.isKitKatOrHigher()) {
-            checkBoxDefaultFiles.setChecked(
-                    BackupSettings.isUseAutoBackupDefaultFiles(getContext()));
-            checkBoxDefaultFiles.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                PreferenceManager.getDefaultSharedPreferences(buttonView.getContext())
-                        .edit()
-                        .putBoolean(BackupSettings.KEY_AUTO_BACKUP_USE_DEFAULT_FILES, isChecked)
-                        .apply();
-                updateFileViews();
-            });
-            buttonShowsExportFile.setOnClickListener(view ->
-                    DataLiberationTools.selectExportFile(AutoBackupFragment.this,
-                            JsonExportTask.EXPORT_JSON_FILE_SHOWS, REQUEST_CODE_SHOWS_EXPORT_URI));
-            buttonListsExportFile.setOnClickListener(view ->
-                    DataLiberationTools.selectExportFile(AutoBackupFragment.this,
-                            JsonExportTask.EXPORT_JSON_FILE_LISTS, REQUEST_CODE_LISTS_EXPORT_URI));
-            buttonMoviesExportFile.setOnClickListener(view ->
-                    DataLiberationTools.selectExportFile(AutoBackupFragment.this,
-                            JsonExportTask.EXPORT_JSON_FILE_MOVIES, REQUEST_CODE_MOVIES_EXPORT_URI));
-        } else {
-            checkBoxDefaultFiles.setVisibility(View.GONE);
-        }
+        checkBoxDefaultFiles.setChecked(
+                BackupSettings.isUseAutoBackupDefaultFiles(getContext()));
+        checkBoxDefaultFiles.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            PreferenceManager.getDefaultSharedPreferences(buttonView.getContext())
+                    .edit()
+                    .putBoolean(BackupSettings.KEY_AUTO_BACKUP_USE_DEFAULT_FILES, isChecked)
+                    .apply();
+            updateFileViews();
+        });
+        buttonShowsExportFile.setOnClickListener(view ->
+                DataLiberationTools.selectExportFile(AutoBackupFragment.this,
+                        JsonExportTask.EXPORT_JSON_FILE_SHOWS, REQUEST_CODE_SHOWS_EXPORT_URI));
+        buttonListsExportFile.setOnClickListener(view ->
+                DataLiberationTools.selectExportFile(AutoBackupFragment.this,
+                        JsonExportTask.EXPORT_JSON_FILE_LISTS, REQUEST_CODE_LISTS_EXPORT_URI));
+        buttonMoviesExportFile.setOnClickListener(view ->
+                DataLiberationTools.selectExportFile(AutoBackupFragment.this,
+                        JsonExportTask.EXPORT_JSON_FILE_MOVIES, REQUEST_CODE_MOVIES_EXPORT_URI));
         updateFileViews();
 
         return v;
@@ -202,9 +197,7 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
             // don't touch views if fragment is not added to activity any longer
             return;
         }
-        if (AndroidUtils.isKitKatOrHigher()) {
-            updateFileViews();
-        }
+        updateFileViews();
         setProgressLock(false);
     }
 
@@ -317,8 +310,7 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
     }
 
     private void updateFileViews() {
-        if (!BackupSettings.isUseAutoBackupDefaultFiles(getContext())
-                && AndroidUtils.isKitKatOrHigher()) {
+        if (!BackupSettings.isUseAutoBackupDefaultFiles(getContext())) {
             setUriOrPlaceholder(textShowsExportFile, BackupSettings.getFileUri(getContext(),
                     BackupSettings.KEY_AUTO_BACKUP_SHOWS_EXPORT_URI));
             setUriOrPlaceholder(textListsExportFile, BackupSettings.getFileUri(getContext(),

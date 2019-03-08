@@ -15,7 +15,6 @@ import com.battlelancer.seriesguide.model.SgListItem
 import com.battlelancer.seriesguide.model.SgMovie
 import com.battlelancer.seriesguide.model.SgSeason
 import com.battlelancer.seriesguide.model.SgShow
-import com.uwetrottmann.androidutils.AndroidUtils
 import timber.log.Timber
 
 @Database(entities = arrayOf(
@@ -102,12 +101,8 @@ abstract class SgRoomDatabase : RoomDatabase() {
         @JvmField
         val CALLBACK: RoomDatabase.Callback = object : RoomDatabase.Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
-                // manually create FTS table not supported by Room
-                if (AndroidUtils.isJellyBeanOrHigher()) {
-                    db.execSQL(SeriesGuideDatabase.CREATE_SEARCH_TABLE)
-                } else {
-                    db.execSQL(SeriesGuideDatabase.CREATE_SEARCH_TABLE_API_ICS)
-                }
+                // manually create FTS table, not supported by Room
+                db.execSQL(SeriesGuideDatabase.CREATE_SEARCH_TABLE)
             }
         }
 

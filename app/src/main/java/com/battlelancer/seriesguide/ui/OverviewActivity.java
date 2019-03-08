@@ -33,7 +33,6 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import java.lang.ref.WeakReference;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -292,7 +291,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
 
     @Override
     protected View getSnackbarParentView() {
-        if (AndroidUtils.isLollipopOrHigher() && getResources().getBoolean(R.bool.isSinglePane)) {
+        if (getResources().getBoolean(R.bool.isSinglePane)) {
             return findViewById(R.id.coordinatorLayoutOverview);
         } else {
             return super.getSnackbarParentView();

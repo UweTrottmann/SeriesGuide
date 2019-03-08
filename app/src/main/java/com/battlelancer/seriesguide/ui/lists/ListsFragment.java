@@ -27,7 +27,6 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -80,8 +79,8 @@ public class ListsFragment extends Fragment {
 
         // setup grid view
         GridView gridView = getView().findViewById(R.id.gridViewList);
-        // enable app bar scrolling out of view only on L or higher
-        ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
+        // enable app bar scrolling out of view
+        ViewCompat.setNestedScrollingEnabled(gridView, true);
         gridView.setAdapter(adapter);
         gridView.setEmptyView(emptyView);
 
