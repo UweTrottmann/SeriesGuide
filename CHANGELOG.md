@@ -5,6 +5,18 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 48
+----------
+*(in development)*
+
+#### 48-beta1
+*(2019-03-08)*
+
+* 🔧 Force black navigation bar.
+* 🔧 Use darker overlay action and status bar for better readability (movie details).
+* 🔧 Backup screens: show file path below button for better readability.
+* 📝 Latest translations from crowdin.
+
 Version 47
 ----------
 *(2019-02-22)*
