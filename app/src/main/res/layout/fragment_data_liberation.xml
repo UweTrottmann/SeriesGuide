@@ -58,14 +58,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:minHeight="32dp"
                 android:textAppearance="@style/TextAppearance.Body.Secondary"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toRightOf="@+id/buttonDataLibShowsExportFile"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/buttonDataLibShowsExportFile"
-                tools:text="content://some.path.on.storage/sg-shows-export.json content://some.path.on.storage/sg-shows-export.json" />
+                app:layout_constraintTop_toBottomOf="@+id/buttonDataLibShowsExportFile"
+                tools:text="content://some.path.on.storage/sg-shows-export/some.path.on.storage/sg-shows-export.json" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -92,13 +89,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:minHeight="32dp"
                 android:textAppearance="@style/TextAppearance.Body.Secondary"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toRightOf="@+id/buttonDataLibListsExportFile"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/buttonDataLibListsExportFile"
+                app:layout_constraintTop_toBottomOf="@+id/buttonDataLibListsExportFile"
                 tools:text="some path" />
 
             <TextView
@@ -126,13 +120,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:minHeight="32dp"
                 android:textAppearance="@style/TextAppearance.Body.Secondary"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toRightOf="@+id/buttonDataLibMoviesExportFile"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/buttonDataLibMoviesExportFile"
+                app:layout_constraintTop_toBottomOf="@+id/buttonDataLibMoviesExportFile"
                 tools:text="content://some.path.on.storage/sg-movies-export.json" />
 
             <Button
@@ -183,12 +174,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:minHeight="32dp"
                 android:textAppearance="@style/TextAppearance.Body.Secondary"
-                app:layout_constraintLeft_toRightOf="@+id/buttonDataLibShowsImportFile"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/buttonDataLibShowsImportFile"
+                app:layout_constraintTop_toBottomOf="@+id/buttonDataLibShowsImportFile"
                 tools:text="content://some.path.on.storage/sg-shows-export.json" />
 
             <CheckBox
@@ -217,13 +206,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:minHeight="32dp"
                 android:textAppearance="@style/TextAppearance.Body.Secondary"
-                app:layout_constraintHorizontal_bias="0.3"
-                app:layout_constraintLeft_toRightOf="@+id/buttonDataLibListsImportFile"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/buttonDataLibListsImportFile"
+                app:layout_constraintTop_toBottomOf="@+id/buttonDataLibListsImportFile"
                 tools:text="content://some.path.on.storage/sg-lists-export.json" />
 
             <CheckBox
@@ -252,13 +238,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:minHeight="32dp"
                 android:textAppearance="@style/TextAppearance.Body.Secondary"
-                app:layout_constraintHorizontal_bias="0.396"
-                app:layout_constraintLeft_toRightOf="@+id/buttonDataLibMoviesImportFile"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/buttonDataLibMoviesImportFile"
+                app:layout_constraintTop_toBottomOf="@+id/buttonDataLibMoviesImportFile"
                 tools:text="content://some.path.on.storage/sg-movies-export.json" />
 
             <TextView

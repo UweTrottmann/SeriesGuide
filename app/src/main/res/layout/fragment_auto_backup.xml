@@ -69,14 +69,12 @@
                     android:id="@+id/textViewAutoBackupShowsExportFile"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:minHeight="32dp"
+                    android:layout_marginLeft="8dp"
                     android:textAppearance="@style/TextAppearance.Body.Secondary"
-                    app:layout_constraintLeft_toRightOf="@+id/buttonAutoBackupShowsExportFile"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/buttonAutoBackupShowsExportFile"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonAutoBackupShowsExportFile"
                     tools:text="content://some.path.on.storage/sg-shows-export.json" />
 
                 <TextView
@@ -102,14 +100,12 @@
                     android:id="@+id/textViewAutoBackupListsExportFile"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:minHeight="32dp"
+                    android:layout_marginLeft="8dp"
                     android:textAppearance="@style/TextAppearance.Body.Secondary"
-                    app:layout_constraintLeft_toRightOf="@+id/buttonAutoBackupListsExportFile"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/buttonAutoBackupListsExportFile"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonAutoBackupListsExportFile"
                     tools:text="content://sg-lists-export.json" />
 
                 <TextView
@@ -135,13 +131,12 @@
                     android:id="@+id/textViewAutoBackupMoviesExportFile"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="8dp"
                     android:textAppearance="@style/TextAppearance.Body.Secondary"
-                    app:layout_constraintLeft_toRightOf="@+id/buttonAutoBackupMoviesExportFile"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/buttonAutoBackupMoviesExportFile"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonAutoBackupMoviesExportFile"
                     tools:text="content://some.path.on.storage/sg-movies-export.json" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
