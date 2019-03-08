@@ -135,18 +135,6 @@
                 app:layout_constraintTop_toTopOf="@+id/buttonDataLibMoviesExportFile"
                 tools:text="content://some.path.on.storage/sg-movies-export.json" />
 
-            <Button
-                android:id="@+id/buttonDataLibExport"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/backup_button"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDataLibMoviesExportFile" />
-
             <TextView
                 android:id="@+id/textViewDataLibLabelImport"
                 android:layout_width="wrap_content"
@@ -155,7 +143,7 @@
                 android:text="@string/import_button"
                 android:textAppearance="@style/TextAppearance.Body.Bold.Accent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonDataLibExport" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewDataLibMoviesExportFile" />
 
             <CheckBox
                 android:id="@+id/checkBoxDataLibShows"

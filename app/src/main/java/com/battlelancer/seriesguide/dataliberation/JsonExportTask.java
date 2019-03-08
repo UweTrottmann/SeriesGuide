@@ -123,11 +123,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         this.isFullDump = isFullDump;
         this.isAutoBackupMode = isAutoBackupMode;
         this.type = type;
-        // use Storage Access Framework on KitKat and up to select custom backup files,
-        // on older versions use default folders
-        // also auto backup by default uses default folders
-        isUseDefaultFolders = !AndroidUtils.isKitKatOrHigher()
-                || (isAutoBackupMode && BackupSettings.isUseAutoBackupDefaultFiles(context));
+        // note: using Storage Access Framework on KitKat and up to select custom backup files,
+        // though auto backup by default uses default folders
+        isUseDefaultFolders =
+                isAutoBackupMode && BackupSettings.isUseAutoBackupDefaultFiles(context);
     }
 
     @Override

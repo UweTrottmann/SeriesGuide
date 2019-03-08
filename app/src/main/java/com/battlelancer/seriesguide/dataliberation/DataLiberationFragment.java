@@ -27,7 +27,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.snackbar.Snackbar;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -95,7 +94,6 @@ public class DataLiberationFragment extends Fragment implements
     @BindView(R.id.textViewDataLibMoviesImportFile) TextView textMoviesImportFile;
     @BindView(R.id.buttonDataLibMoviesImportFile) Button buttonMoviesImportFile;
 
-    @BindView(R.id.buttonDataLibExport) Button buttonExport;
     @BindView(R.id.buttonDataLibImport) Button buttonImport;
     @BindView(R.id.progressBarDataLib) ProgressBar progressBar;
     @BindView(R.id.checkBoxDataLibFullDump) CheckBox checkBoxFullDump;
@@ -116,7 +114,7 @@ public class DataLiberationFragment extends Fragment implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_data_liberation, container, false);
         unbinder = ButterKnife.bind(this, view);
@@ -124,10 +122,6 @@ public class DataLiberationFragment extends Fragment implements
         progressBar.setVisibility(View.GONE);
 
         // setup listeners
-        buttonExport.setOnClickListener(v -> {
-            type = null;
-            tryDataLiberationAction(REQUEST_CODE_EXPORT);
-        });
         checkBoxShows.setOnCheckedChangeListener(
                 (buttonView, isChecked) -> updateImportButtonEnabledState());
         checkBoxLists.setOnCheckedChangeListener(
@@ -136,41 +130,31 @@ public class DataLiberationFragment extends Fragment implements
                 (buttonView, isChecked) -> updateImportButtonEnabledState());
         buttonImport.setOnClickListener(v -> tryDataLiberationAction(REQUEST_CODE_IMPORT));
 
-        // selecting custom backup files is only supported on KitKat and up
+        // note: selecting custom backup files is only supported on KitKat and up
         // as we use Storage Access Framework in this case
-        if (AndroidUtils.isKitKatOrHigher()) {
-            buttonExport.setVisibility(View.GONE); // back up runs immediately upon file creation
-            buttonShowsExportFile.setOnClickListener(
-                    v -> DataLiberationTools.selectExportFile(DataLiberationFragment.this,
-                            JsonExportTask.EXPORT_JSON_FILE_SHOWS,
-                            REQUEST_CODE_SHOWS_EXPORT_URI));
-            buttonShowsImportFile.setOnClickListener(
-                    v -> DataLiberationTools.selectImportFile(DataLiberationFragment.this,
-                            REQUEST_CODE_SHOWS_IMPORT_URI));
+        buttonShowsExportFile.setOnClickListener(
+                v -> DataLiberationTools.selectExportFile(DataLiberationFragment.this,
+                        JsonExportTask.EXPORT_JSON_FILE_SHOWS,
+                        REQUEST_CODE_SHOWS_EXPORT_URI));
+        buttonShowsImportFile.setOnClickListener(
+                v -> DataLiberationTools.selectImportFile(DataLiberationFragment.this,
+                        REQUEST_CODE_SHOWS_IMPORT_URI));
 
-            buttonListsExportFile.setOnClickListener(
-                    v -> DataLiberationTools.selectExportFile(DataLiberationFragment.this,
-                            JsonExportTask.EXPORT_JSON_FILE_LISTS,
-                            REQUEST_CODE_LISTS_EXPORT_URI));
-            buttonListsImportFile.setOnClickListener(
-                    v -> DataLiberationTools.selectImportFile(DataLiberationFragment.this,
-                            REQUEST_CODE_LISTS_IMPORT_URI));
+        buttonListsExportFile.setOnClickListener(
+                v -> DataLiberationTools.selectExportFile(DataLiberationFragment.this,
+                        JsonExportTask.EXPORT_JSON_FILE_LISTS,
+                        REQUEST_CODE_LISTS_EXPORT_URI));
+        buttonListsImportFile.setOnClickListener(
+                v -> DataLiberationTools.selectImportFile(DataLiberationFragment.this,
+                        REQUEST_CODE_LISTS_IMPORT_URI));
 
-            buttonMoviesExportFile.setOnClickListener(
-                    v -> DataLiberationTools.selectExportFile(DataLiberationFragment.this,
-                            JsonExportTask.EXPORT_JSON_FILE_MOVIES,
-                            REQUEST_CODE_MOVIES_EXPORT_URI));
-            buttonMoviesImportFile.setOnClickListener(
-                    v -> DataLiberationTools.selectImportFile(DataLiberationFragment.this,
-                            REQUEST_CODE_MOVIES_IMPORT_URI));
-        } else {
-            buttonShowsExportFile.setVisibility(View.GONE);
-            buttonShowsImportFile.setVisibility(View.GONE);
-            buttonListsExportFile.setVisibility(View.GONE);
-            buttonListsImportFile.setVisibility(View.GONE);
-            buttonMoviesExportFile.setVisibility(View.GONE);
-            buttonMoviesImportFile.setVisibility(View.GONE);
-        }
+        buttonMoviesExportFile.setOnClickListener(
+                v -> DataLiberationTools.selectExportFile(DataLiberationFragment.this,
+                        JsonExportTask.EXPORT_JSON_FILE_MOVIES,
+                        REQUEST_CODE_MOVIES_EXPORT_URI));
+        buttonMoviesImportFile.setOnClickListener(
+                v -> DataLiberationTools.selectImportFile(DataLiberationFragment.this,
+                        REQUEST_CODE_MOVIES_IMPORT_URI));
         updateFileViews();
 
         return view;
@@ -244,9 +228,7 @@ public class DataLiberationFragment extends Fragment implements
             // don't touch views if fragment is not added to activity any longer
             return;
         }
-        if (AndroidUtils.isKitKatOrHigher()) {
-            updateFileViews();
-        }
+        updateFileViews();
         setProgressLock(false);
     }
 
@@ -256,7 +238,6 @@ public class DataLiberationFragment extends Fragment implements
         } else {
             updateImportButtonEnabledState();
         }
-        buttonExport.setEnabled(!isLocked);
         progressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
         checkBoxFullDump.setEnabled(!isLocked);
         buttonShowsExportFile.setEnabled(!isLocked);
@@ -368,31 +349,18 @@ public class DataLiberationFragment extends Fragment implements
     }
 
     private void updateFileViews() {
-        if (AndroidUtils.isKitKatOrHigher()) {
-            setUriOrPlaceholder(textShowsExportFile, BackupSettings.getFileUri(getContext(),
-                    BackupSettings.KEY_SHOWS_EXPORT_URI));
-            setUriOrPlaceholder(textShowsImportFile, BackupSettings.getFileUri(getContext(),
-                    BackupSettings.KEY_SHOWS_IMPORT_URI));
-            setUriOrPlaceholder(textListsExportFile, BackupSettings.getFileUri(getContext(),
-                    BackupSettings.KEY_LISTS_EXPORT_URI));
-            setUriOrPlaceholder(textListsImportFile, BackupSettings.getFileUri(getContext(),
-                    BackupSettings.KEY_LISTS_IMPORT_URI));
-            setUriOrPlaceholder(textMoviesExportFile, BackupSettings.getFileUri(getContext(),
-                    BackupSettings.KEY_MOVIES_EXPORT_URI));
-            setUriOrPlaceholder(textMoviesImportFile, BackupSettings.getFileUri(getContext(),
-                    BackupSettings.KEY_MOVIES_IMPORT_URI));
-        } else {
-            String path = JsonExportTask.getExportPath(false).toString();
-            String showsFilePath = path + "/" + JsonExportTask.EXPORT_JSON_FILE_SHOWS;
-            textShowsExportFile.setText(showsFilePath);
-            textShowsImportFile.setText(showsFilePath);
-            String listsFilePath = path + "/" + JsonExportTask.EXPORT_JSON_FILE_LISTS;
-            textListsExportFile.setText(listsFilePath);
-            textListsImportFile.setText(listsFilePath);
-            String moviesFilePath = path + "/" + JsonExportTask.EXPORT_JSON_FILE_MOVIES;
-            textMoviesExportFile.setText(moviesFilePath);
-            textMoviesImportFile.setText(moviesFilePath);
-        }
+        setUriOrPlaceholder(textShowsExportFile, BackupSettings.getFileUri(getContext(),
+                BackupSettings.KEY_SHOWS_EXPORT_URI));
+        setUriOrPlaceholder(textShowsImportFile, BackupSettings.getFileUri(getContext(),
+                BackupSettings.KEY_SHOWS_IMPORT_URI));
+        setUriOrPlaceholder(textListsExportFile, BackupSettings.getFileUri(getContext(),
+                BackupSettings.KEY_LISTS_EXPORT_URI));
+        setUriOrPlaceholder(textListsImportFile, BackupSettings.getFileUri(getContext(),
+                BackupSettings.KEY_LISTS_IMPORT_URI));
+        setUriOrPlaceholder(textMoviesExportFile, BackupSettings.getFileUri(getContext(),
+                BackupSettings.KEY_MOVIES_EXPORT_URI));
+        setUriOrPlaceholder(textMoviesImportFile, BackupSettings.getFileUri(getContext(),
+                BackupSettings.KEY_MOVIES_IMPORT_URI));
     }
 
     private void setUriOrPlaceholder(TextView textView, Uri uri) {
