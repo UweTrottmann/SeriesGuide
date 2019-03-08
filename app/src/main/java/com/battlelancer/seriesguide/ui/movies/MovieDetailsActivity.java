@@ -11,7 +11,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * Hosts a {@link MovieDetailsFragment} displaying details about the movie defined by the given TMDb
@@ -70,7 +69,7 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
         // (using fitsSystemWindows would not work correctly with multiple views)
         systemBarTintManager = new SystemBarTintManager(this);
         SystemBarTintManager.SystemBarConfig config = systemBarTintManager.getConfig();
-        int insetTop = AndroidUtils.isMarshmallowOrHigher()
+        int insetTop = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 ? config.getStatusBarHeight() // transparent status bar
                 : config.getPixelInsetTop(false); // translucent status bar
         ViewGroup actionBarToolbar = findViewById(R.id.sgToolbar);
