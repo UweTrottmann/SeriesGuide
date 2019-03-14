@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.BaseSeriesGuide.Light" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <!-- All customizations that are SPECIFIC to API-level 27 go here. -->
+
+        <!-- Note: nav bar color needs to be opaque! -->
+        <!-- Use white to reduce burn-in on OLED displays -->
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
+    </style>
+
+</resources>
