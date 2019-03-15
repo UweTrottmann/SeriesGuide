@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -59,7 +60,10 @@ class MoviesWatchedFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MoviesWatchedViewModel::class.java)
-        viewModel.movieList.observe(this, Observer { adapter.submitList(it) })
+        viewModel.movieList.observe(this, Observer {
+            textViewEmpty.isGone = it.size > 0
+            adapter.submitList(it)
+        })
     }
 
     override fun onStart() {
