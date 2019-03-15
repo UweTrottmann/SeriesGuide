@@ -219,6 +219,7 @@
     <string name="movies_in_theatres">Vizyonda</string>
     <string name="movies_collection">Koleksiyon</string>
     <string name="movies_watchlist">İzleme listesi</string>
+    <string name="movies_watched">İzlenmiş</string>
     <string name="watchlist_add">İzleme Listesine Ekle</string>
     <string name="watchlist_remove">İzleme Listesinden Kaldır</string>
     <string name="watchlist_added">İzleme Listesine Eklendi</string>

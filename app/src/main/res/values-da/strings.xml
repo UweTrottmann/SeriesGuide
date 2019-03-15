@@ -219,6 +219,7 @@
     <string name="movies_in_theatres">I biograferne</string>
     <string name="movies_collection">Samling</string>
     <string name="movies_watchlist">Overvågningsliste</string>
+    <string name="movies_watched">Set</string>
     <string name="watchlist_add">Føj til overvågningsliste</string>
     <string name="watchlist_remove">Fjern fra overvågningsliste</string>
     <string name="watchlist_added">Føjet til overvågningsliste</string>

@@ -219,6 +219,7 @@
     <string name="movies_in_theatres">Mozikban</string>
     <string name="movies_collection">Gyűjtemény</string>
     <string name="movies_watchlist">Figyelőlista</string>
+    <string name="movies_watched">Megnézve</string>
     <string name="watchlist_add">Figyelőlistához ad</string>
     <string name="watchlist_remove">Figyelőlistáról töröl</string>
     <string name="watchlist_added">Hozzáadva a figyelőlistához</string>

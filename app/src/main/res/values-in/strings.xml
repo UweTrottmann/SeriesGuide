@@ -215,6 +215,7 @@
     <string name="movies_in_theatres">Di bioskop</string>
     <string name="movies_collection">Koleksi</string>
     <string name="movies_watchlist">Daftar tontonan</string>
+    <string name="movies_watched">Ditonton</string>
     <string name="watchlist_add">Tambah ke daftar tonton</string>
     <string name="watchlist_remove">Hapus dari daftar tontonan</string>
     <string name="watchlist_added">Ditambahkan ke daftar tontonan</string>

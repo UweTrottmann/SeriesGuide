@@ -223,6 +223,7 @@
     <string name="movies_in_theatres">În cinematografe</string>
     <string name="movies_collection">Colecție</string>
     <string name="movies_watchlist">Listă vizionate</string>
+    <string name="movies_watched">Vizionat</string>
     <string name="watchlist_add">Adaugă în watchlist</string>
     <string name="watchlist_remove">Elimina din watchlist</string>
     <string name="watchlist_added">Adăugat în watchlist</string>

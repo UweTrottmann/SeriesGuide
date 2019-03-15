@@ -215,6 +215,7 @@
     <string name="movies_in_theatres">ในโรง</string>
     <string name="movies_collection">คลังเก็บ</string>
     <string name="movies_watchlist">อยากดู</string>
+    <string name="movies_watched">ดูแล้ว</string>
     <string name="watchlist_add">เพิ่มในรายการที่อยากดู</string>
     <string name="watchlist_remove">ลบออกจากรายการที่อยากดู</string>
     <string name="watchlist_added">เพิ่มในรายการที่อยากดูแล้ว</string>

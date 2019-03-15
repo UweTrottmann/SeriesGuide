@@ -219,6 +219,7 @@
     <string name="movies_in_theatres">Teattereissa</string>
     <string name="movies_collection">Kokoelma</string>
     <string name="movies_watchlist">Seurantalista</string>
+    <string name="movies_watched">Katsottu</string>
     <string name="watchlist_add">Lisää seurantalistalle</string>
     <string name="watchlist_remove">Poista seurantalistalta</string>
     <string name="watchlist_added">Lisätty seurantalistalle</string>

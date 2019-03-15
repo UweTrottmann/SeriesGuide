@@ -223,6 +223,7 @@
     <string name="movies_in_theatres">U bioskopima</string>
     <string name="movies_collection">Колекција</string>
     <string name="movies_watchlist">Листа за гледање</string>
+    <string name="movies_watched">Одгледано</string>
     <string name="watchlist_add">Додај на листу за гледање</string>
     <string name="watchlist_remove">Уклони са листе за гледање</string>
     <string name="watchlist_added">Додато на листу за гледање</string>

@@ -219,6 +219,7 @@
     <string name="movies_in_theatres">Στους κινηματογράφους</string>
     <string name="movies_collection">Συλλογή</string>
     <string name="movies_watchlist">Λίστα προς παρακολούθηση</string>
+    <string name="movies_watched">Είδατε</string>
     <string name="watchlist_add">Προσθήκη στη λίστα παρακολούθησης</string>
     <string name="watchlist_remove">Αφαίρεση από τη λίστα παρακολούθησης</string>
     <string name="watchlist_added">Προστέθηκε στη λίστα παρακολούθησης</string>

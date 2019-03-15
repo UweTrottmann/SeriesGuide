@@ -219,6 +219,7 @@
     <string name="movies_in_theatres">Nos Cinemas</string>
     <string name="movies_collection">Coleção</string>
     <string name="movies_watchlist">Desejo Ver</string>
+    <string name="movies_watched">Vistas</string>
     <string name="watchlist_add">Adicionar aos que desejo ver</string>
     <string name="watchlist_remove">Remover dos que desejo ver</string>
     <string name="watchlist_added">Adicionado aos que desejo ver</string>

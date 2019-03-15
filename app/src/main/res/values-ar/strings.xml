@@ -235,6 +235,7 @@
     <string name="movies_in_theatres">حاليا في السينما</string>
     <string name="movies_collection">مجموعة</string>
     <string name="movies_watchlist">قائمة المشاهدة</string>
+    <string name="movies_watched">تمت مشاهدتها</string>
     <string name="watchlist_add">إضافة لقائمة المشاهدة</string>
     <string name="watchlist_remove">إلزالة من قائمة المشاهدة</string>
     <string name="watchlist_added">تمت الإضافة إلى قائمة المشاهدة</string>

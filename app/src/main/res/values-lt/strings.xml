@@ -227,6 +227,7 @@
     <string name="movies_in_theatres">In theaters</string>
     <string name="movies_collection">Kolekcija</string>
     <string name="movies_watchlist">Stebimi</string>
+    <string name="movies_watched">Matyti</string>
     <string name="watchlist_add">Įtraukti į stebimų sąrašą</string>
     <string name="watchlist_remove">Pašalinti iš stebimų sąrašo</string>
     <string name="watchlist_added">Įtraukta į stebimų sarašą</string>

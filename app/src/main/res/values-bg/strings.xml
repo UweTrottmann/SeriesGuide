@@ -219,6 +219,7 @@
     <string name="movies_in_theatres">В кината</string>
     <string name="movies_collection">Колекция</string>
     <string name="movies_watchlist">Списък за гледане</string>
+    <string name="movies_watched">Гледано</string>
     <string name="watchlist_add">Добави към списъка за гледане</string>
     <string name="watchlist_remove">Премахни от списъка за гледане</string>
     <string name="watchlist_added">Добавено към списъка за гледане</string>

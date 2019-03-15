@@ -219,6 +219,7 @@
     <string name="movies_in_theatres">En els teatres</string>
     <string name="movies_collection">Coŀlecció</string>
     <string name="movies_watchlist">Llista de seguiment</string>
+    <string name="movies_watched">Vist</string>
     <string name="watchlist_add">Afegeix a la llista de seguiment</string>
     <string name="watchlist_remove">Elimina de la llista de seguiment</string>
     <string name="watchlist_added">S\'ha afegit a la llista de seguiment</string>

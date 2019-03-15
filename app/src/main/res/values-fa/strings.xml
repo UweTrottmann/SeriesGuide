@@ -219,6 +219,7 @@
     <string name="movies_in_theatres">در سینماها</string>
     <string name="movies_collection">مجموعه</string>
     <string name="movies_watchlist">فهرست تماشا</string>
+    <string name="movies_watched">تماشا شده</string>
     <string name="watchlist_add">افزودن به فهرست تماشا</string>
     <string name="watchlist_remove">حذف از فهرست تماشا</string>
     <string name="watchlist_added">به فهرست تماشا افزوده شد</string>
