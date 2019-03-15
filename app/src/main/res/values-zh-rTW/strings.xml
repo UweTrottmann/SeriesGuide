@@ -215,6 +215,7 @@
     <string name="movies_in_theatres">上映中</string>
     <string name="movies_collection">收藏</string>
     <string name="movies_watchlist">待看清單</string>
+    <string name="movies_watched">已看過</string>
     <string name="watchlist_add">新增至待看清單</string>
     <string name="watchlist_remove">從待看清單中移除</string>
     <string name="watchlist_added">已增加至待看清單</string>

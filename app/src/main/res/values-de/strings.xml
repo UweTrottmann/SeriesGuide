@@ -219,6 +219,7 @@
     <string name="movies_in_theatres">Im Kino</string>
     <string name="movies_collection">Sammlung</string>
     <string name="movies_watchlist">Ansehen-Liste</string>
+    <string name="movies_watched">Angesehen</string>
     <string name="watchlist_add">Zur Ansehen-Liste hinzufügen</string>
     <string name="watchlist_remove">Aus Ansehen-Liste entfernen</string>
     <string name="watchlist_added">Zur Ansehen-Liste hinzugefügt</string>

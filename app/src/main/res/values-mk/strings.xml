@@ -219,6 +219,7 @@
     <string name="movies_in_theatres">Во кината</string>
     <string name="movies_collection">Колекција</string>
     <string name="movies_watchlist">Листа за гледање</string>
+    <string name="movies_watched">Гледано</string>
     <string name="watchlist_add">Додај во листа за гледање</string>
     <string name="watchlist_remove">Избриши од листа</string>
     <string name="watchlist_added">Додадено во листа</string>

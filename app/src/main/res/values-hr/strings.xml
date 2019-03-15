@@ -223,6 +223,7 @@
     <string name="movies_in_theatres">U kinima</string>
     <string name="movies_collection">Zbirka</string>
     <string name="movies_watchlist">Popis gledanja</string>
+    <string name="movies_watched">Pogledano</string>
     <string name="watchlist_add">Dodaj na popis gledanja</string>
     <string name="watchlist_remove">Ukloni s popisa gledanja</string>
     <string name="watchlist_added">Dodano na popis gledanja</string>

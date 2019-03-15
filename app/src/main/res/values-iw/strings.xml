@@ -227,6 +227,7 @@
     <string name="movies_in_theatres">בבתי הקולנוע</string>
     <string name="movies_collection">אוסף</string>
     <string name="movies_watchlist">רשימת מעקב</string>
+    <string name="movies_watched">נצפה</string>
     <string name="watchlist_add">הוסף לרשימת צפייה</string>
     <string name="watchlist_remove">הסר מרשימת צפייה</string>
     <string name="watchlist_added">נוסף לרשימת צפייה</string>

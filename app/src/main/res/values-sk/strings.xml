@@ -227,6 +227,7 @@
     <string name="movies_in_theatres">V kinách</string>
     <string name="movies_collection">Zbierka</string>
     <string name="movies_watchlist">Chcem vidieť</string>
+    <string name="movies_watched">Videné</string>
     <string name="watchlist_add">Pridať do Chcem vidieť</string>
     <string name="watchlist_remove">Vymazať z Chcem vidieť</string>
     <string name="watchlist_added">Pridané do Chcem vidieť</string>

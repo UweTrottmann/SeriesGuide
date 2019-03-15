@@ -227,6 +227,7 @@
     <string name="movies_in_theatres">In theaters</string>
     <string name="movies_collection">Zbirka</string>
     <string name="movies_watchlist">Spisek za gledanje</string>
+    <string name="movies_watched">Watched</string>
     <string name="watchlist_add">Dodaj na spisek opazovanj</string>
     <string name="watchlist_remove">Odstrani iz spiska opazovanj</string>
     <string name="watchlist_added">Dodan v opazovanja</string>
