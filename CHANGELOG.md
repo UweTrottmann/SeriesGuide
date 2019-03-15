@@ -9,8 +9,8 @@ Version 48
 ----------
 *(in development)*
 
-#### 48-beta1
-*(2019-03-08)*
+#### 48-beta2
+*(2019-03-15)*
 
 * 🌟 Add watched movies tab. Might show blank items until movies are updated.
 * 🔧 Force black navigation bar on OnePlus devices as well.
