@@ -43,9 +43,9 @@ internal class MoviesWatchedAdapter(
             // If you use the "==" operator, make sure that the object implements
             // .equals(). Alternatively, write custom data comparison logic here.
             override fun areContentsTheSame(oldItem: SgMovie, newItem: SgMovie): Boolean {
-                // TODO expand with all properties that are displayed
                 return oldItem.title == newItem.title
                         && oldItem.poster == newItem.poster
+                        && oldItem.releasedMs == newItem.releasedMs
             }
         }
     }
