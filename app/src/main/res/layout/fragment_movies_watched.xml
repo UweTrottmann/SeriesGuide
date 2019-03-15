@@ -6,8 +6,26 @@
     tools:context=".ui.movies.MoviesWatchedFragment">
 
     <TextView
+        android:id="@+id/textViewEmptyMoviesWatched"
+        android:layout_width="@dimen/empty_view_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/now_movies_empty"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMoviesWatched"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:clipToPadding="false"
+        android:paddingLeft="@dimen/grid_item_margin_horizontal"
+        android:paddingTop="@dimen/grid_item_margin_vertical"
+        android:paddingRight="@dimen/grid_item_margin_horizontal"
+        android:paddingBottom="@dimen/grid_item_margin_vertical"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/item_discover_movie" />
 
 </FrameLayout>

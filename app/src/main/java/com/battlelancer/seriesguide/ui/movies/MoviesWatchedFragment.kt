@@ -6,6 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.RecyclerView
+import butterknife.BindView
+import butterknife.ButterKnife
+import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.MoviesActivity
 import org.greenrobot.eventbus.EventBus
@@ -18,13 +22,32 @@ class MoviesWatchedFragment : Fragment() {
         fun newInstance() = MoviesWatchedFragment()
     }
 
+    @BindView(R.id.textViewEmptyMoviesWatched)
+    lateinit var textViewEmpty: View
+    @BindView(R.id.recyclerViewMoviesWatched)
+    lateinit var recyclerView: RecyclerView
+    private lateinit var unbinder: Unbinder
+
     private lateinit var viewModel: MoviesWatchedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_movies_watched, container, false)
+        val v = inflater.inflate(R.layout.fragment_movies_watched, container, false)
+        unbinder = ButterKnife.bind(this, v)
+        return v
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recyclerView.apply {
+            setHasFixedSize(true)
+            layoutManager = AutoGridLayoutManager(
+                context, R.dimen.movie_grid_columnWidth, 1, 3
+            )
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -43,6 +66,11 @@ class MoviesWatchedFragment : Fragment() {
         EventBus.getDefault().unregister(this)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        unbinder.unbind()
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventTabClick(event: MoviesActivity.MoviesTabClickEvent) {
         val positionOfThisTab = if (event.showingNowTab) {
@@ -51,7 +79,7 @@ class MoviesWatchedFragment : Fragment() {
             MoviesActivity.TAB_POSITION_WATCHED_DEFAULT
         }
         if (event.position == positionOfThisTab) {
-            // TODO recyclerView.smoothScrollToPosition(0)
+            recyclerView.smoothScrollToPosition(0)
         }
     }
 
