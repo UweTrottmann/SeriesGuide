@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
@@ -29,6 +31,7 @@ class MoviesWatchedFragment : Fragment() {
     private lateinit var unbinder: Unbinder
 
     private lateinit var viewModel: MoviesWatchedViewModel
+    private lateinit var adapter: MoviesWatchedAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,18 +45,21 @@ class MoviesWatchedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView.apply {
-            setHasFixedSize(true)
-            layoutManager = AutoGridLayoutManager(
+        adapter = MoviesWatchedAdapter(itemClickListener)
+
+        recyclerView.also {
+            it.setHasFixedSize(true)
+            it.layoutManager = AutoGridLayoutManager(
                 context, R.dimen.movie_grid_columnWidth, 1, 3
             )
+            it.adapter = adapter
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MoviesWatchedViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel.movieList.observe(this, Observer { adapter.submitList(it) })
     }
 
     override fun onStart() {
@@ -82,5 +88,16 @@ class MoviesWatchedFragment : Fragment() {
             recyclerView.smoothScrollToPosition(0)
         }
     }
+
+    private val itemClickListener: MoviesAdapter.ItemClickListener =
+        object : MoviesAdapter.ItemClickListener {
+            override fun onClickMovie(movieTmdbId: Int, posterView: ImageView?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onClickMovieMoreOptions(movieTmdbId: Int, anchor: View?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        }
 
 }

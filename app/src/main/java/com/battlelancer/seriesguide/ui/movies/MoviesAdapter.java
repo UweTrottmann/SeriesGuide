@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.model.SgMovie;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
@@ -124,6 +125,10 @@ class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     itemClickListener.onClickMovieMoreOptions(movieTmdbId, v);
                 }
             });
+        }
+
+        public void bindTo(@Nullable SgMovie sgMovie) {
+            // TODO bindTo
         }
     }
 }

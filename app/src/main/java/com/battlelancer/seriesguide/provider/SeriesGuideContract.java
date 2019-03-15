@@ -1052,6 +1052,7 @@ public class SeriesGuideContract {
                 WATCHED // 3
         };
 
+        public static final String SELECTION_WATCHED = Movies.WATCHED + "=1";
         public static final String SELECTION_UNWATCHED = Movies.WATCHED + "=0";
 
         /** Default sort order. */

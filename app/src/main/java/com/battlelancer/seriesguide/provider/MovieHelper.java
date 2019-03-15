@@ -1,7 +1,10 @@
 package com.battlelancer.seriesguide.provider;
 
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Query;
+import androidx.room.RawQuery;
+import androidx.sqlite.db.SupportSQLiteQuery;
 import com.battlelancer.seriesguide.model.SgMovie;
 import com.battlelancer.seriesguide.model.SgMovieTmdbId;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -24,6 +27,9 @@ public interface MovieHelper {
             + ")")
     List<SgMovieTmdbId> getMoviesToUpdate(long releasedAfter, long updatedBeforeForReleasedAfter,
             long updatedBeforeAllOthers);
+
+    @RawQuery(observedEntities = SgMovie.class)
+    DataSource.Factory<Integer, SgMovie> getWatchedMovies(SupportSQLiteQuery query);
 
     /** For testing. */
     @Query("SELECT * FROM " + Tables.MOVIES)
