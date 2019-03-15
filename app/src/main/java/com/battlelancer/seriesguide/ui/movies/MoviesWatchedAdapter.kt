@@ -1,14 +1,22 @@
 package com.battlelancer.seriesguide.ui.movies
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.model.SgMovie
+import com.battlelancer.seriesguide.settings.TmdbSettings
+import java.text.DateFormat
 
-internal class MoviesWatchedAdapter(val itemClickListener: MoviesAdapter.ItemClickListener) :
-    PagedListAdapter<SgMovie, MoviesAdapter.MovieViewHolder>(DIFF_CALLBACK) {
+internal class MoviesWatchedAdapter(
+    context: Context,
+    val itemClickListener: MoviesAdapter.ItemClickListener
+) : PagedListAdapter<SgMovie, MoviesAdapter.MovieViewHolder>(DIFF_CALLBACK) {
+
+    private val dateFormatMovieReleaseDate: DateFormat = MovieTools.getMovieShortDateFormat()
+    private val posterBaseUrl = TmdbSettings.getPosterBaseUrl(context)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -23,7 +31,7 @@ internal class MoviesWatchedAdapter(val itemClickListener: MoviesAdapter.ItemCli
         val movie: SgMovie? = getItem(position)
 
         // Note that "movie" is a placeholder if it's null.
-        holder.bindTo(movie)
+        holder.bindTo(movie, dateFormatMovieReleaseDate, posterBaseUrl)
     }
 
     companion object {

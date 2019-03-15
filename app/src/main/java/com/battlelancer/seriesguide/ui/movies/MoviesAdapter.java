@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.model.SgMovie;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.squareup.picasso.Picasso;
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.text.DateFormat;
@@ -127,8 +128,30 @@ class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             });
         }
 
-        public void bindTo(@Nullable SgMovie sgMovie) {
-            // TODO bindTo
+        public void bindTo(@Nullable SgMovie sgMovie, DateFormat dateFormatMovieReleaseDate, String posterBaseUrl) {
+            if (sgMovie == null) {
+                movieTmdbId = -1;
+                title.setText("");
+                date.setText("");
+                Picasso.get().cancelRequest(poster);
+                poster.setImageDrawable(null);
+            } else {
+                movieTmdbId = sgMovie.tmdbId;
+                title.setText(sgMovie.title);
+                if (sgMovie.releasedMs != null) {
+                    date.setText(dateFormatMovieReleaseDate.format(sgMovie.releasedMs));
+                } else {
+                    date.setText("");
+                }
+
+                // poster
+                // use fixed size so bitmaps can be re-used on config change
+                Context context = itemView.getContext().getApplicationContext();
+                ServiceUtils.loadWithPicasso(context, posterBaseUrl + sgMovie.poster)
+                        .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
+                        .centerCrop()
+                        .into(poster);
+            }
         }
     }
 }
