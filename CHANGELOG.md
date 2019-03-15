@@ -12,6 +12,14 @@ Version 48
 #### 48-beta1
 *(2019-03-08)*
 
+* 🌟 Add watched movies tab. Might show blank items until movies are updated.
+* 🔧 Force black navigation bar on OnePlus devices as well.
+* 🔧 Use white navigation bar on light theme if on Android 8.1 or higher for burn-in protection.
+* 📝 Latest translations from crowdin.
+
+#### 48-beta1
+*(2019-03-08)*
+
 * 🔧 Force black navigation bar.
 * 🔧 Use darker overlay action and status bar for better readability (movie details).
 * 🔧 Backup screens: show file path below button for better readability.
