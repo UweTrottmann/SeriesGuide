@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -46,7 +45,7 @@ class MoviesWatchedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = MoviesWatchedAdapter(context!!, itemClickListener)
+        adapter = MoviesWatchedAdapter(context!!, MovieClickListener(context))
 
         recyclerView.also {
             it.setHasFixedSize(true)
@@ -92,16 +91,5 @@ class MoviesWatchedFragment : Fragment() {
             recyclerView.smoothScrollToPosition(0)
         }
     }
-
-    private val itemClickListener: MoviesAdapter.ItemClickListener =
-        object : MoviesAdapter.ItemClickListener {
-            override fun onClickMovie(movieTmdbId: Int, posterView: ImageView?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onClickMovieMoreOptions(movieTmdbId: Int, anchor: View?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-        }
 
 }

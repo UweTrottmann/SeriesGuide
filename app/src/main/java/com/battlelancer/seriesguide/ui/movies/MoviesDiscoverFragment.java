@@ -1,6 +1,6 @@
 package com.battlelancer.seriesguide.ui.movies;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -139,18 +139,18 @@ public class MoviesDiscoverFragment extends Fragment {
         }
     }
 
-    private static class MovieItemClickListener extends MoviesSearchFragment.MovieItemClickListener
+    private static class MovieItemClickListener extends MovieClickListener
             implements MoviesDiscoverAdapter.ItemClickListener {
 
-        MovieItemClickListener(Activity activity) {
-            super(activity);
+        MovieItemClickListener(Context context) {
+            super(context);
         }
 
         @Override
         public void onClickLink(MoviesDiscoverLink link, View anchor) {
-            Intent intent = new Intent(getActivity(), MoviesSearchActivity.class);
+            Intent intent = new Intent(getContext(), MoviesSearchActivity.class);
             intent.putExtra(MoviesSearchActivity.EXTRA_ID_LINK, link.id);
-            Utils.startActivityWithAnimation(getActivity(), intent, anchor);
+            Utils.startActivityWithAnimation(getContext(), intent, anchor);
         }
     }
 

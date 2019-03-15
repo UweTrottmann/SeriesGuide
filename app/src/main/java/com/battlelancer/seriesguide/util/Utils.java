@@ -257,8 +257,8 @@ public class Utils {
         }
     }
 
-    public static void startActivityWithAnimation(Activity activity, Intent intent, View view) {
-        ActivityCompat.startActivity(activity, intent,
+    public static void startActivityWithAnimation(Context context, Intent intent, View view) {
+        ActivityCompat.startActivity(context, intent,
                 ActivityOptionsCompat
                         .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
                         .toBundle()
