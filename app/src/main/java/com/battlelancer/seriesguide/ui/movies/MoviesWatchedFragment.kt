@@ -2,6 +2,9 @@ package com.battlelancer.seriesguide.ui.movies
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
@@ -56,6 +59,12 @@ class MoviesWatchedFragment : Fragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // note: fragment is in static view pager tab so will never be destroyed if swiped away
+        EventBus.getDefault().register(this)
+    }
+
     // note: can not use onCreate, causes issues with ViewPager this tab is in
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -64,21 +73,31 @@ class MoviesWatchedFragment : Fragment() {
             textViewEmpty.isGone = it.size > 0
             adapter.submitList(it)
         })
+
+        setHasOptionsMenu(true)
     }
 
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        MoviesOptionsMenu(context!!).create(menu, inflater)
     }
 
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (MoviesOptionsMenu(context!!).onItemSelected(item, activity!!)) {
+            true
+        } else {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         unbinder.unbind()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -91,6 +110,11 @@ class MoviesWatchedFragment : Fragment() {
         if (event.position == positionOfThisTab) {
             recyclerView.smoothScrollToPosition(0)
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventMainThread(@Suppress("UNUSED_PARAMETER") event: MoviesDistillationSettings.MoviesSortOrderChangedEvent) {
+        viewModel.updateQueryString()
     }
 
 }
