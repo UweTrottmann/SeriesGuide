@@ -17,7 +17,7 @@ import java.util.List;
 public interface MovieHelper {
 
     @Query("SELECT movies_tmdbid FROM movies WHERE "
-            + "(movies_incollection=1 OR movies_inwatchlist=1)"
+            + "(movies_incollection=1 OR movies_inwatchlist=1 OR movies_watched=1)"
             + " AND ("
             + "movies_last_updated IS NULL"
             + " OR "
