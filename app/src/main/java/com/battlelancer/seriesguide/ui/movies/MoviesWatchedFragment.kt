@@ -108,7 +108,7 @@ class MoviesWatchedFragment : Fragment() {
             MoviesActivity.TAB_POSITION_WATCHED_DEFAULT
         }
         if (event.position == positionOfThisTab) {
-            recyclerView.smoothScrollToPosition(0)
+            recyclerView.scrollToPosition(0)
         }
     }
 
