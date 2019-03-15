@@ -6,17 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.model.SgMovie;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.squareup.picasso.Picasso;
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.text.DateFormat;
@@ -102,56 +97,5 @@ class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @NonNull
     String getTransitionNamePrefix() {
         return "moviesAdapterPoster_";
-    }
-
-    static class MovieViewHolder extends RecyclerView.ViewHolder {
-
-        int movieTmdbId;
-        @BindView(R.id.textViewMovieTitle) TextView title;
-        @BindView(R.id.textViewMovieDate) TextView date;
-        @BindView(R.id.imageViewMoviePoster) ImageView poster;
-        @BindView(R.id.imageViewMovieItemContextMenu) ImageView contextMenu;
-
-        public MovieViewHolder(View itemView, final ItemClickListener itemClickListener) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-
-            itemView.setOnClickListener(v -> {
-                if (itemClickListener != null) {
-                    itemClickListener.onClickMovie(movieTmdbId, poster);
-                }
-            });
-            contextMenu.setOnClickListener(v -> {
-                if (itemClickListener != null) {
-                    itemClickListener.onClickMovieMoreOptions(movieTmdbId, v);
-                }
-            });
-        }
-
-        public void bindTo(@Nullable SgMovie sgMovie, DateFormat dateFormatMovieReleaseDate, String posterBaseUrl) {
-            if (sgMovie == null) {
-                movieTmdbId = -1;
-                title.setText("");
-                date.setText("");
-                Picasso.get().cancelRequest(poster);
-                poster.setImageDrawable(null);
-            } else {
-                movieTmdbId = sgMovie.tmdbId;
-                title.setText(sgMovie.title);
-                if (sgMovie.releasedMs != null) {
-                    date.setText(dateFormatMovieReleaseDate.format(sgMovie.releasedMs));
-                } else {
-                    date.setText("");
-                }
-
-                // poster
-                // use fixed size so bitmaps can be re-used on config change
-                Context context = itemView.getContext().getApplicationContext();
-                ServiceUtils.loadWithPicasso(context, posterBaseUrl + sgMovie.poster)
-                        .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
-                        .centerCrop()
-                        .into(poster);
-            }
-        }
     }
 }

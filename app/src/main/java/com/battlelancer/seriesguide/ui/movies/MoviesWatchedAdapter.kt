@@ -13,7 +13,7 @@ import java.text.DateFormat
 internal class MoviesWatchedAdapter(
     context: Context,
     val itemClickListener: MoviesAdapter.ItemClickListener
-) : PagedListAdapter<SgMovie, MoviesAdapter.MovieViewHolder>(DIFF_CALLBACK) {
+) : PagedListAdapter<SgMovie, MovieViewHolder>(DIFF_CALLBACK) {
 
     private val dateFormatMovieReleaseDate: DateFormat = MovieTools.getMovieShortDateFormat()
     private val posterBaseUrl = TmdbSettings.getPosterBaseUrl(context)
@@ -21,13 +21,13 @@ internal class MoviesWatchedAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): MoviesAdapter.MovieViewHolder {
+    ): MovieViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_discover_movie, parent, false)
-        return MoviesAdapter.MovieViewHolder(itemView, itemClickListener)
+        return MovieViewHolder(itemView, itemClickListener)
     }
 
-    override fun onBindViewHolder(holder: MoviesAdapter.MovieViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie: SgMovie? = getItem(position)
 
         // Note that "movie" is a placeholder if it's null.
