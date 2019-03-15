@@ -56,8 +56,9 @@ class MoviesWatchedFragment : Fragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    // note: can not use onCreate, causes issues with ViewPager this tab is in
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MoviesWatchedViewModel::class.java)
         viewModel.movieList.observe(this, Observer {
             textViewEmpty.isGone = it.size > 0
