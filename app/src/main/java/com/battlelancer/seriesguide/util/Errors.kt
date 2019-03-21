@@ -119,6 +119,8 @@ class Errors {
 
             Timber.e(throwable, action)
 
+            if (response.code() == 404) return // do not send 404 to Crashlytics
+
 //            CrashlyticsCore.getInstance().setString("action", action)
 //            CrashlyticsCore.getInstance().logException(throwable)
         }
