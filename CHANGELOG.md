@@ -9,6 +9,11 @@ Version 48
 ----------
 *(in development)*
 
+#### 48-beta3
+*(2019-03-21)*
+
+* 🌟 Statistics: display number and run time of watched movies. Might be incorrect until movies are updated.
+
 #### 48-beta2
 *(2019-03-15)*
 
