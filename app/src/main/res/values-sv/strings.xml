@@ -243,6 +243,7 @@
     <string name="episodes_watched">%s sedda</string>
     <string name="runtime_all_episodes">speltid på alla sedda avsnitt</string>
     <string name="movies_on_watchlist">%s på bevakningslistan</string>
+    <string name="movies_watched_format">%s sedda</string>
     <string name="runtime_movies_watchlist">speltid på filmbevakningslistan</string>
     <plurals name="days_plural">
         <item quantity="one">%d dag</item>

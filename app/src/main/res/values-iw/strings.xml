@@ -251,6 +251,7 @@
     <string name="episodes_watched">%s נצפו</string>
     <string name="runtime_all_episodes">משך כל הפרקים שנצפו</string>
     <string name="movies_on_watchlist">%s ברשימת הצפייה</string>
+    <string name="movies_watched_format">%s נצפו</string>
     <string name="runtime_movies_watchlist">זמן כולל של רשימת הצפייה</string>
     <plurals name="days_plural">
         <item quantity="one">יום %d</item>

@@ -243,6 +243,7 @@
     <string name="episodes_watched">%s izlendi</string>
     <string name="runtime_all_episodes">İzlenen tüm bölümlerin toplam süresi</string>
     <string name="movies_on_watchlist">%s İzleme listesi</string>
+    <string name="movies_watched_format">%s izlendi</string>
     <string name="runtime_movies_watchlist">Film izleme listesinin toplam süresi</string>
     <plurals name="days_plural">
         <item quantity="one">%d gün</item>

@@ -247,6 +247,7 @@
     <string name="episodes_watched">%s urmărit</string>
     <string name="runtime_all_episodes">Timpul de urmărire al tuturor episoadelor</string>
     <string name="movies_on_watchlist">%s pe lista de urmărite</string>
+    <string name="movies_watched_format">%s urmărit</string>
     <string name="runtime_movies_watchlist">Total timp vizionat listă favorite</string>
     <plurals name="days_plural">
         <item quantity="one">%d zi</item>

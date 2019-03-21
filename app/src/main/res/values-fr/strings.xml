@@ -243,6 +243,7 @@
     <string name="episodes_watched">%s vus</string>
     <string name="runtime_all_episodes">Durée totale de tous les épisodes vus</string>
     <string name="movies_on_watchlist">%s dans la liste à voir</string>
+    <string name="movies_watched_format">%s vus</string>
     <string name="runtime_movies_watchlist">Durée totale des films dans la liste à voir</string>
     <plurals name="days_plural">
         <item quantity="one">%d jour</item>

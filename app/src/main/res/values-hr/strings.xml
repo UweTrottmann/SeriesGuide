@@ -247,6 +247,7 @@
     <string name="episodes_watched">%s pogledano</string>
     <string name="runtime_all_episodes">Trajanje svih pogledanih epizoda</string>
     <string name="movies_on_watchlist">%s na popisu gledanja</string>
+    <string name="movies_watched_format">%s pogledano</string>
     <string name="runtime_movies_watchlist">vrijeme na popisu gledanja</string>
     <plurals name="days_plural">
         <item quantity="one">%d dan</item>

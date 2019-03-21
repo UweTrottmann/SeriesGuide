@@ -251,6 +251,7 @@
     <string name="episodes_watched">%s zhlédnutých</string>
     <string name="runtime_all_episodes">Celková délka všech zhlédnutých epizod</string>
     <string name="movies_on_watchlist">%s z Watchlistu</string>
+    <string name="movies_watched_format">%s zhlédnutých</string>
     <string name="runtime_movies_watchlist">Celková délka filmového watchlistu</string>
     <plurals name="days_plural">
         <item quantity="one">%d den</item>

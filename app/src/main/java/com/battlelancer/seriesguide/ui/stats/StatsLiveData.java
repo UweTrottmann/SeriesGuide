@@ -133,8 +133,10 @@ class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
             // movies (count, in watchlist, runtime of watchlist)
             final Cursor movies = resolver.query(SeriesGuideContract.Movies.CONTENT_URI,
                     new String[]{SeriesGuideContract.Movies._ID,
-                            SeriesGuideContract.Movies.IN_WATCHLIST,
-                            SeriesGuideContract.Movies.RUNTIME_MIN}, null, null, null
+                            SeriesGuideContract.Movies.IN_WATCHLIST, // 1
+                            SeriesGuideContract.Movies.WATCHED, // 2
+                            SeriesGuideContract.Movies.RUNTIME_MIN // 3
+                    }, null, null, null
             );
             if (movies == null) {
                 return false;
@@ -143,16 +145,24 @@ class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
 
             int inWatchlist = 0;
             long watchlistRuntime = 0;
+            int watched = 0;
+            long watchedRuntime = 0;
             while (movies.moveToNext()) {
-                if (movies.getInt(1) == 1) {
+                if (movies.getInt(1 /* IN_WATCHLIST */) == 1) {
                     inWatchlist++;
-                    watchlistRuntime += movies.getInt(2) * DateUtils.MINUTE_IN_MILLIS;
+                    watchlistRuntime += movies.getInt(3 /* RUNTIME_MIN */) * DateUtils.MINUTE_IN_MILLIS;
+                }
+                if (movies.getInt(2 /* WATCHED */) == 1 ) {
+                    watched++;
+                    watchedRuntime += movies.getInt(3 /* RUNTIME_MIN */) * DateUtils.MINUTE_IN_MILLIS;
                 }
             }
             movies.close();
 
             stats.moviesWatchlist = inWatchlist;
             stats.moviesWatchlistRuntime = watchlistRuntime;
+            stats.moviesWatched = watched;
+            stats.moviesWatchedRuntime = watchedRuntime;
             return true;
         }
 
@@ -242,5 +252,7 @@ class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
         int movies;
         int moviesWatchlist;
         long moviesWatchlistRuntime;
+        int moviesWatched;
+        long moviesWatchedRuntime;
     }
 }
