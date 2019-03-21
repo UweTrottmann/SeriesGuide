@@ -48,7 +48,10 @@ public class StatsFragment extends Fragment {
     @BindView(R.id.textViewStatsMovies) TextView textViewMovies;
     @BindView(R.id.textViewStatsMoviesWatchlist) TextView textViewMoviesWatchlist;
     @BindView(R.id.progressBarStatsMoviesWatchlist) ProgressBar progressBarMoviesWatchlist;
+    @BindView(R.id.textViewStatsMoviesWatched) TextView textViewMoviesWatched;
+    @BindView(R.id.progressBarStatsMoviesWatched) ProgressBar progressBarMoviesWatched;
     @BindView(R.id.textViewStatsMoviesWatchlistRuntime) TextView textViewMoviesWatchlistRuntime;
+    @BindView(R.id.textViewStatsMoviesWatchedRuntime) TextView textViewMoviesWatchedRuntime;
 
     private Unbinder unbinder;
     private StatsViewModel model;
@@ -76,7 +79,10 @@ public class StatsFragment extends Fragment {
 
         textViewMoviesWatchlist.setVisibility(View.INVISIBLE);
         progressBarMoviesWatchlist.setVisibility(View.INVISIBLE);
+        textViewMoviesWatched.setVisibility(View.INVISIBLE);
+        progressBarMoviesWatched.setVisibility(View.INVISIBLE);
         textViewMoviesWatchlistRuntime.setVisibility(View.INVISIBLE);
+        textViewMoviesWatchedRuntime.setVisibility(View.INVISIBLE);
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         ClipboardTools.copyTextToClipboardOnLongClick(textViewShows);
@@ -87,7 +93,9 @@ public class StatsFragment extends Fragment {
         ClipboardTools.copyTextToClipboardOnLongClick(textViewEpisodesRuntime);
         ClipboardTools.copyTextToClipboardOnLongClick(textViewMovies);
         ClipboardTools.copyTextToClipboardOnLongClick(textViewMoviesWatchlist);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewMoviesWatched);
         ClipboardTools.copyTextToClipboardOnLongClick(textViewMoviesWatchlistRuntime);
+        ClipboardTools.copyTextToClipboardOnLongClick(textViewMoviesWatchedRuntime);
 
         return view;
     }
@@ -220,9 +228,22 @@ public class StatsFragment extends Fragment {
                 format.format(stats.moviesWatchlist)).toUpperCase(Locale.getDefault()));
         textViewMoviesWatchlist.setVisibility(View.VISIBLE);
 
+        // watched movies
+        progressBarMoviesWatched.setMax(stats.movies);
+        progressBarMoviesWatched.setProgress(stats.moviesWatched);
+        progressBarMoviesWatched.setVisibility(View.VISIBLE);
+
+        textViewMoviesWatched.setText(getString(R.string.movies_watched_format,
+                format.format(stats.moviesWatched)).toUpperCase(Locale.getDefault()));
+        textViewMoviesWatched.setVisibility(View.VISIBLE);
+
         // runtime of movie watchlist
         textViewMoviesWatchlistRuntime.setText(getTimeDuration(stats.moviesWatchlistRuntime));
         textViewMoviesWatchlistRuntime.setVisibility(View.VISIBLE);
+
+        // runtime of watched movies
+        textViewMoviesWatchedRuntime.setText(getTimeDuration(stats.moviesWatchedRuntime));
+        textViewMoviesWatchedRuntime.setVisibility(View.VISIBLE);
     }
 
     private String getTimeDuration(long duration) {

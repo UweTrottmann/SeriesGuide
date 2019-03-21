@@ -202,11 +202,31 @@
             android:textAppearance="@style/TextAppearance.Caption"
             tools:text="1803 WATCHLIST" />
 
+        <ProgressBar
+            android:id="@+id/progressBarStatsMoviesWatched"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewStatsMoviesWatchlist"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/default_padding" />
+
+        <TextView
+            android:id="@+id/textViewStatsMoviesWatched"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/progressBarStatsMoviesWatched"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
+            android:textAppearance="@style/TextAppearance.Caption"
+            tools:text="1803 WATCHED" />
+
         <TextView
             android:id="@+id/textViewStatsMoviesWatchlistRuntime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewStatsMoviesWatchlist"
+            android:layout_below="@+id/textViewStatsMoviesWatched"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/large_padding"
             android:background="?attr/selectableItemBackground"
@@ -226,6 +246,33 @@
             android:layout_below="@+id/textViewStatsMoviesWatchlistRuntime"
             android:layout_centerHorizontal="true"
             android:text="@string/runtime_movies_watchlist"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.Caption" />
+
+        <TextView
+            android:id="@+id/textViewStatsMoviesWatchedRuntime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/labelStatsMoviesWatchlistRuntime"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/large_padding"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:text="@string/norating"
+            android:textAppearance="@style/TextAppearance.Headline"
+            android:textColor="?android:attr/textColorSecondary"
+            tools:ignore="UnusedAttribute"
+            tools:text="61 days 13 hours 29 minutes" />
+
+        <TextView
+            android:id="@+id/labelStatsMoviesWatchedRuntime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewStatsMoviesWatchedRuntime"
+            android:layout_centerHorizontal="true"
+            android:text="@string/movies_watched"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.Caption" />
     </RelativeLayout>

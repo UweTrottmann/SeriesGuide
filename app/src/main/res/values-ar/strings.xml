@@ -259,6 +259,7 @@
     <string name="episodes_watched">%s تمت مشاهدتها</string>
     <string name="runtime_all_episodes">مجموع مشاهدة جميع الحلقات</string>
     <string name="movies_on_watchlist">%s في قائمة المشاهدة لاحقا</string>
+    <string name="movies_watched_format">%s تمت مشاهدتها</string>
     <string name="runtime_movies_watchlist">وقت التشغيل لقائمة المشاهدة</string>
     <plurals name="days_plural">
         <item quantity="one">يومان</item>

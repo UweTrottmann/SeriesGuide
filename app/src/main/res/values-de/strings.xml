@@ -243,6 +243,7 @@
     <string name="episodes_watched">%s angesehen</string>
     <string name="runtime_all_episodes">Laufzeit aller angesehenen Folgen</string>
     <string name="movies_on_watchlist">%s auf Ansehen-Liste</string>
+    <string name="movies_watched_format">%s angesehen</string>
     <string name="runtime_movies_watchlist">Laufzeit von Filmen auf der Ansehen-Liste</string>
     <plurals name="days_plural">
         <item quantity="one">%d Tag</item>

@@ -239,6 +239,7 @@
     <string name="episodes_watched">%s 集已看</string>
     <string name="runtime_all_episodes">所有看過影集的時數總計</string>
     <string name="movies_on_watchlist">%s於待看清單中。</string>
+    <string name="movies_watched_format">%s 集已看</string>
     <string name="runtime_movies_watchlist">待看清單之總播放時間</string>
     <plurals name="days_plural">
         <item quantity="other">%d 天</item>

@@ -239,6 +239,7 @@
     <string name="episodes_watched">%s ditonton</string>
     <string name="runtime_all_episodes">lamanya semua episode yang sudah ditonton</string>
     <string name="movies_on_watchlist">%s di daftar tonton</string>
+    <string name="movies_watched_format">%s ditonton</string>
     <string name="runtime_movies_watchlist">lamanya daftar tonton film</string>
     <plurals name="days_plural">
         <item quantity="other">%d hari</item>
