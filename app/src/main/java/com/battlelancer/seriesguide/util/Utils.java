@@ -13,7 +13,6 @@ import android.content.pm.Signature;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -267,17 +266,9 @@ public class Utils {
 
     public static void startActivityWithTransition(Activity activity, Intent intent, View view,
             @StringRes int sharedElementNameRes) {
-        Bundle activityOptions;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // shared element transition on L+
-            activityOptions = ActivityOptions.makeSceneTransitionAnimation(activity, view,
-                    activity.getString(sharedElementNameRes)).toBundle();
-        } else {
-            // simple scale up animation pre-L
-            activityOptions = ActivityOptionsCompat
-                    .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
-                    .toBundle();
-        }
+        // shared element transition on L+
+        Bundle activityOptions = ActivityOptions.makeSceneTransitionAnimation(activity, view,
+                activity.getString(sharedElementNameRes)).toBundle();
         ActivityCompat.startActivity(activity, intent, activityOptions);
     }
 
@@ -306,20 +297,10 @@ public class Utils {
     /**
      * Tries to start the given intent as a new document (e.g. opening a website, other app) so it
      * appears as a new entry in the task switcher using {@link #tryStartActivity}.
-     *
-     * <p>On versions before L, will instead clear the launched activity from the task stack when
-     * returning to the app through the task switcher.
      */
     public static boolean openNewDocument(@NonNull Context context, @NonNull Intent intent) {
         // launch as a new document (separate entry in task switcher)
-        // or on older versions: clear from task stack when returning to app
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-        } else {
-            //noinspection deprecation
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        }
-
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
         return Utils.tryStartActivity(context, intent, true);
     }
 

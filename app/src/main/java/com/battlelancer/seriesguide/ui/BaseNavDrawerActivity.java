@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -181,10 +182,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 accountClickListener);
         textViewHeaderUserCloud = headerView.findViewById(R.id.textViewDrawerUserCloud);
         textViewHeaderUserTrakt = headerView.findViewById(R.id.textViewDrawerUserTrakt);
-        // show no more update notice
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            headerView.findViewById(R.id.textViewDrawerNoMoreUpdates).setVisibility(View.VISIBLE);
-        }
+        maybeShowNoMoreUpdatesNotice(headerView);
 
         // setup nav drawer items
         navigationView.inflateMenu(R.menu.menu_drawer);
@@ -236,6 +234,17 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                     new TimberModule(),
                     new DeviceModule()
             );
+        }
+    }
+
+    /**
+     * Shows a no updates info text in the drawer if the device is running a version of Android
+     * that will not be supported by a future version of this app.
+     */
+    @SuppressLint("ObsoleteSdkInt")
+    private void maybeShowNoMoreUpdatesNotice(View headerView) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            headerView.findViewById(R.id.textViewDrawerNoMoreUpdates).setVisibility(View.VISIBLE);
         }
     }
 

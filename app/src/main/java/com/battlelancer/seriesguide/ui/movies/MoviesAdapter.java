@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,9 +78,7 @@ class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .into(actualHolder.poster);
 
             // set unique transition names
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                actualHolder.poster.setTransitionName(getTransitionNamePrefix() + movie.id);
-            }
+            actualHolder.poster.setTransitionName(getTransitionNamePrefix() + movie.id);
         }
     }
 
