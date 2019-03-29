@@ -9,6 +9,12 @@ Version 48
 ----------
 *(in development)*
 
+#### 48-beta4
+*(2019-03-29)*
+
+* 🔧 Do not ask for storage permission in backup/restore tool (still required for auto-backup).
+* 📝 Latest translations from crowdin.
+
 #### 48-beta3
 *(2019-03-21)*
 
