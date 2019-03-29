@@ -1,10 +1,8 @@
 package com.battlelancer.seriesguide.dataliberation;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -18,7 +16,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +31,7 @@ import timber.log.Timber;
 
 /**
  * One button export or import of the show database using a JSON file on external storage.
+ * Uses Storage Access Framework so no permissions are required.
  */
 public class DataLiberationFragment extends Fragment implements
         JsonExportTask.OnTaskProgressListener {
@@ -128,7 +126,7 @@ public class DataLiberationFragment extends Fragment implements
                 (buttonView, isChecked) -> updateImportButtonEnabledState());
         checkBoxMovies.setOnCheckedChangeListener(
                 (buttonView, isChecked) -> updateImportButtonEnabledState());
-        buttonImport.setOnClickListener(v -> tryDataLiberationAction(REQUEST_CODE_IMPORT));
+        buttonImport.setOnClickListener(v -> doDataLiberationAction(REQUEST_CODE_IMPORT));
 
         // note: selecting custom backup files is only supported on KitKat and up
         // as we use Storage Access Framework in this case
@@ -251,35 +249,6 @@ public class DataLiberationFragment extends Fragment implements
         checkBoxMovies.setEnabled(!isLocked);
     }
 
-    private void tryDataLiberationAction(int requestCode) {
-        // make sure we have write permission
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            // don't have it? request it, do task if granted
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    requestCode);
-            return;
-        }
-
-        doDataLiberationAction(requestCode);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-            @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CODE_EXPORT
-                || requestCode == REQUEST_CODE_IMPORT) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                doDataLiberationAction(requestCode);
-            } else {
-                if (getView() != null) {
-                    Snackbar.make(getView(), R.string.dataliberation_permission_missing,
-                            Snackbar.LENGTH_LONG).show();
-                }
-            }
-        }
-    }
-
     private void doDataLiberationAction(int requestCode) {
         if (requestCode == REQUEST_CODE_EXPORT) {
             setProgressLock(true);
@@ -326,16 +295,16 @@ public class DataLiberationFragment extends Fragment implements
             if (requestCode == REQUEST_CODE_SHOWS_EXPORT_URI) {
                 BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_SHOWS_EXPORT_URI, uri);
                 type = JsonExportTask.BACKUP_SHOWS;
-                tryDataLiberationAction(REQUEST_CODE_EXPORT);
+                doDataLiberationAction(REQUEST_CODE_EXPORT);
             } else if (requestCode == REQUEST_CODE_LISTS_EXPORT_URI) {
                 BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_LISTS_EXPORT_URI, uri);
                 type = JsonExportTask.BACKUP_LISTS;
-                tryDataLiberationAction(REQUEST_CODE_EXPORT);
+                doDataLiberationAction(REQUEST_CODE_EXPORT);
             } else if (requestCode == REQUEST_CODE_MOVIES_EXPORT_URI) {
                 BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_MOVIES_EXPORT_URI,
                         uri);
                 type = JsonExportTask.BACKUP_MOVIES;
-                tryDataLiberationAction(REQUEST_CODE_EXPORT);
+                doDataLiberationAction(REQUEST_CODE_EXPORT);
             } else if (requestCode == REQUEST_CODE_SHOWS_IMPORT_URI) {
                 BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_SHOWS_IMPORT_URI, uri);
             } else if (requestCode == REQUEST_CODE_LISTS_IMPORT_URI) {
