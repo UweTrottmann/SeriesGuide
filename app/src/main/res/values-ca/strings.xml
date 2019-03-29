@@ -11,7 +11,7 @@
     <string name="help">Ajuda</string>
     <string name="help_and_feedback">Ajuda i comentaris</string>
     <string name="drawer_open">Obre el calaix de navegació</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide no rebrà més actualitzacions per aquesta versió d\'Android.</string>
     <!-- Media items -->
     <string name="show">Sèrie</string>
     <string name="episode">Episodi</string>
@@ -33,13 +33,13 @@
     <string name="save_selection">Desa la selecció</string>
     <string name="action_display_all">Mostra-ho tot</string>
     <string name="web_search">Cerca web</string>
-    <string name="add_to_homescreen">Add to Home screen</string>
+    <string name="add_to_homescreen">Afegir a la pantalla d\'inici</string>
     <string name="action_open">Obre</string>
     <string name="sync_manually">Sincronitza manualment</string>
     <string name="sync_and_update">Sincronització i actualització</string>
     <string name="sync_and_download_all">Sincronitza i descarrega tot</string>
     <string name="action_turn_off">Apagar</string>
-    <string name="action_stream">Stream or purchase</string>
+    <string name="action_stream">Veure on-line o comprar</string>
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>
@@ -55,7 +55,7 @@
     <string name="reinstall_info">Intenta fer un backup en el panell de Configuraciò, torneu a instal·lar i restaurar.</string>
     <string name="api_error_generic">No és possible contactar amb %s. Proveu-ho més tard.</string>
     <string name="api_failed">Ha fallat: %s</string>
-    <string name="copy_to_clipboard">Copied to clipboard</string>
+    <string name="copy_to_clipboard">Copiat al portapapers</string>
     <!-- Sharing -->
     <string name="share">Comparteix</string>
     <string name="share_show">Comparteix la serie</string>
@@ -277,7 +277,7 @@
     <string name="hexagon_remove_account_confirmation">Si esborreu el vostre compte, també s\'esborraran totes les sèries i peŀlícules que tingueu al Cloud de SeriesGuide. Assegureu-vos d\'esborrar-ho dels altres dispositius on el tingueu sincronitzat.</string>
     <string name="hexagon_api_queued">Enviant a SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Has desconnectat de SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Error amb l\'inici de sessió de Google (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">S\'està enviant a trakt.</string>
     <string name="checkin_success_trakt">S\'ha enregistrat a %s de trakt.</string>
@@ -357,8 +357,8 @@
         <item quantity="other">%d minuts abans</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">Política de Privacitat</string>
+    <string name="licence_tvdb">Aquesta aplicació utilitza dades i imatges de TheTVDB llicenciades sota una llicència Creative Commons.</string>
     <string name="licence_themoviedb">Aquest producte fa servir l\'API de TMDb però no està reconeguda ni certificada per TMDb.</string>
     <string name="licence_trakt">Aquesta aplicació fa servir dades i imatges de trakt.</string>
     <string name="about_open_source">SeriesGuide s\'ha construït utilitzant programari de codi obert.</string>
@@ -443,7 +443,7 @@
     <string name="hide_watched">Amaga els episodis vistos</string>
     <string name="pref_widget_opacity">Fons del widget</string>
     <string name="pref_widget_type">Tipus de widget</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Utilitzar font gran</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>
     <string name="widget_background_25">25%</string>
@@ -458,7 +458,7 @@
     <string name="onlyx">Només per a patrocinadors</string>
     <string name="action_upgrade">Desbloquejar totes les opcions</string>
     <string name="billing_action_subscribe">Vull subscriure\'m</string>
-    <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+    <string name="billing_action_manage_subscriptions">Gestionar subscripcions</string>
     <string name="billing_action_pass">Obtenir un «X Pass»</string>
     <string name="billing_price_subscribe">%1$s/any, prova de forma gratuïta, cancel·la en qualsevol moment mitjançant %2$s</string>
     <string name="billing_price_pass">compra única</string>
