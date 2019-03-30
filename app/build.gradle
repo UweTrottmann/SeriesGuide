@@ -118,9 +118,11 @@ android {
                 ext.enableCrashlytics = false
             }
 
-            multiDexEnabled true
+            multiDexEnabled false
             // disable shrinking to use incremental dex in builds
-            minifyEnabled false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
             // en_XA (LTR) and ar_XB (RTL) to test UI adjusting to unusual glyphs and long strings
             // keep disabled unless needed, slows down build
             pseudoLocalesEnabled false
