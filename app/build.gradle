@@ -224,7 +224,10 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.1'
-    androidTestImplementation "com.google.truth:truth:${versions.truth}"
+    androidTestImplementation ("com.google.truth:truth:${versions.truth}") {
+        exclude group: 'org.checkerframework' // from guava, not needed at runtime
+        exclude group: 'com.google.errorprone' // from guava, not needed at runtime
+    }
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     androidTestImplementation 'com.google.code.findbugs:jsr305:3.0.2'
     kaptAndroidTest "com.google.dagger:dagger-compiler:${versions.dagger}"
