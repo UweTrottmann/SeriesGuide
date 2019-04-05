@@ -4,8 +4,7 @@ import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_42_
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_43_44;
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_44_45;
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_45_46;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static com.google.common.truth.Truth.assertThat;
 
 import android.database.sqlite.SQLiteDatabase;
 import androidx.room.Room;
@@ -147,29 +146,29 @@ public class MigrationTest {
         SgRoomDatabase database = getMigratedRoomDatabase();
         assertTestData(database);
         SgShow dbShow = database.showHelper().getShow();
-        assertNull(dbShow.slug);
+        assertThat(dbShow.slug).isNull();
     }
 
     private void assertTestData(SgRoomDatabase database) {
         // MigrationTestHelper automatically verifies the schema changes, but not the data validity
         // Validate that the data was migrated properly.
         SgShow dbShow = database.showHelper().getShow();
-        assertEquals(SHOW.tvdb_id, dbShow.tvdbId);
-        assertEquals(SHOW.title, dbShow.title);
-        assertEquals(String.valueOf(SHOW.runtime), dbShow.runtime);
+        assertThat(dbShow.tvdbId).isEqualTo(SHOW.tvdb_id);
+        assertThat(dbShow.title).isEqualTo(SHOW.title);
+        assertThat(dbShow.runtime).isEqualTo(String.valueOf(SHOW.runtime));
 
         SgSeason dbSeason = database.seasonHelper().getSeason();
-        assertEquals(SEASON.tvdbId, dbSeason.tvdbId);
-        assertEquals(SEASON.showTvdbId, dbSeason.showTvdbId);
-        assertEquals(SEASON.number, dbSeason.number);
+        assertThat(dbSeason.tvdbId).isEqualTo(SEASON.tvdbId);
+        assertThat(dbSeason.showTvdbId).isEqualTo(SEASON.showTvdbId);
+        assertThat(dbSeason.number).isEqualTo(SEASON.number);
 
         SgEpisode dbEpisode = database.episodeHelper().getEpisode();
-        assertEquals(EPISODE.id.intValue(), dbEpisode.tvdbId);
-        assertEquals(SHOW.tvdb_id, dbEpisode.showTvdbId);
-        assertEquals(SEASON.tvdbId.intValue(), dbEpisode.seasonTvdbId);
-        assertEquals(EPISODE.episodeName, dbEpisode.title);
-        assertEquals(EPISODE.airedEpisodeNumber.intValue(), dbEpisode.number);
-        assertEquals(SEASON.number.intValue(), dbEpisode.season);
+        assertThat(dbEpisode.tvdbId).isEqualTo(EPISODE.id);
+        assertThat(dbEpisode.showTvdbId).isEqualTo(SHOW.tvdb_id);
+        assertThat(dbEpisode.seasonTvdbId).isEqualTo(SEASON.tvdbId);
+        assertThat(dbEpisode.title).isEqualTo(EPISODE.episodeName);
+        assertThat(dbEpisode.number).isEqualTo(EPISODE.airedEpisodeNumber);
+        assertThat(dbEpisode.season).isEqualTo(SEASON.number);
     }
 
     private SgRoomDatabase getMigratedRoomDatabase() {
