@@ -206,7 +206,7 @@ dependencies {
     // App Engine
     // override Guava version to avoid duplicate classes due to listenablefuture extraction
     // remove once API client depends on Guava 27.0 or newer
-    implementation 'com.google.guava:guava:27.0.1-android'
+    implementation 'com.google.guava:guava:27.1-android'
     // https://github.com/googleapis/google-api-java-client/releases
     implementation('com.google.api-client:google-api-client-android:1.28.0') {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
