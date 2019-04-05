@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.provider;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static com.google.common.truth.Truth.assertThat;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -39,8 +38,8 @@ public class SearchTableTest {
                 + "LIMIT 1";
         String[] args = {SeriesGuideDatabase.Tables.EPISODES_SEARCH};
         Cursor result = db.query(query, args);
-        assertNotNull(result);
-        assertEquals(1, result.getCount());
+        assertThat(result).isNotNull();
+        assertThat(result.getCount()).isEqualTo(1);
     }
 
 }

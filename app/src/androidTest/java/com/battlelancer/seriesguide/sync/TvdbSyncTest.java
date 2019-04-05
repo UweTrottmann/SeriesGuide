@@ -1,8 +1,6 @@
 package com.battlelancer.seriesguide.sync;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static com.google.common.truth.Truth.assertThat;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -62,8 +60,8 @@ public class TvdbSyncTest {
 
         TvdbSync tvdbSync = new TvdbSync(syncType, 0);
 
-        assertThat(sync(tvdbSync), equalTo(null));
-        assertThat(tvdbSync.hasUpdatedShows(), is(false));
+        assertThat(sync(tvdbSync)).isNull();
+        assertThat(tvdbSync.hasUpdatedShows()).isFalse();
     }
 
     @Test
@@ -72,8 +70,8 @@ public class TvdbSyncTest {
 
         TvdbSync tvdbSync = new TvdbSync(syncType, 0);
 
-        assertThat(sync(tvdbSync), equalTo(SgSyncAdapter.UpdateResult.SUCCESS));
-        assertThat(tvdbSync.hasUpdatedShows(), is(false));
+        assertThat(sync(tvdbSync)).isEqualTo(SgSyncAdapter.UpdateResult.SUCCESS);
+        assertThat(tvdbSync.hasUpdatedShows()).isFalse();
     }
 
     @Test
@@ -82,8 +80,8 @@ public class TvdbSyncTest {
 
         TvdbSync tvdbSync = new TvdbSync(syncType, 0);
 
-        assertThat(sync(tvdbSync), equalTo(SgSyncAdapter.UpdateResult.SUCCESS));
-        assertThat(tvdbSync.hasUpdatedShows(), is(false));
+        assertThat(sync(tvdbSync)).isEqualTo(SgSyncAdapter.UpdateResult.SUCCESS);
+        assertThat(tvdbSync.hasUpdatedShows()).isFalse();
     }
 
     @Nullable
