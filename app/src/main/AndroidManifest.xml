@@ -40,6 +40,11 @@
         android:theme="@style/Theme.SeriesGuide"
         tools:ignore="AllowBackup,UnusedAttribute">
 
+        <!-- AndroidX testing, remove once minSdkVersion is 28 or higher. -->
+        <uses-library
+            android:name="android.test.runner"
+            android:required="false" />
+
         <!-- Samsung MultiWindow support -->
         <meta-data
             android:name="com.samsung.android.sdk.multiwindow.enable"

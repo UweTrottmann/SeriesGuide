@@ -10,8 +10,8 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.text.format.DateUtils;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.battlelancer.seriesguide.model.SgMovie;
 import com.battlelancer.seriesguide.modules.AppModule;
 import com.battlelancer.seriesguide.modules.DaggerTestServicesComponent;
@@ -51,14 +51,14 @@ public class TmdbSyncTest {
         ProviderTestRule does not work with Room, so instead blatantly replace the instance with one
          that uses an in-memory database and use the real ContentResolver.
          */
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = ApplicationProvider.getApplicationContext();
         SgRoomDatabase.switchToInMemory(context);
         resolver = context.getContentResolver();
         db = SgRoomDatabase.getInstance(context);
         movieHelper = db.movieHelper();
 
         TestServicesComponent component = DaggerTestServicesComponent.builder()
-                .appModule(new AppModule(InstrumentationRegistry.getTargetContext()))
+                .appModule(new AppModule(context))
                 .httpClientModule(new TestHttpClientModule())
                 .traktModule(new TestTraktModule())
                 .tmdbModule(new TestTmdbModule())
@@ -164,7 +164,7 @@ public class TmdbSyncTest {
     }
 
     private void doUpdateAndAssertSuccess() {
-        TmdbSync tmdbSync = new TmdbSync(InstrumentationRegistry.getTargetContext(),
+        TmdbSync tmdbSync = new TmdbSync(ApplicationProvider.getApplicationContext(),
                 tmdbConfigService, movieTools);
         boolean successful = tmdbSync.updateMovies();
         assertEquals(true, successful);
