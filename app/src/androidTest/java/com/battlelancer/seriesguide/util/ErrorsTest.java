@@ -1,8 +1,6 @@
 package com.battlelancer.seriesguide.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.Test;
 
@@ -18,17 +16,17 @@ public class ErrorsTest {
 
         StackTraceElement[] stackTraceModified = throwable.getStackTrace();
 
-        assertEquals(stackTraceOriginal.length + 1, stackTraceModified.length);
+        assertThat(stackTraceModified.length).isEqualTo(stackTraceOriginal.length + 1);
 
         StackTraceElement newElement = stackTraceModified[0];
 
-        assertNotEquals(stackTraceOriginal[0], newElement);
+        assertThat(newElement).isNotEqualTo(stackTraceOriginal[0]);
         for (int i = 0; i < stackTraceOriginal.length; i++) {
-            assertEquals(stackTraceOriginal[i], stackTraceModified[i + 1]);
+            assertThat(stackTraceModified[i + 1]).isEqualTo(stackTraceOriginal[i]);
         }
 
-        assertEquals(this.getClass().getName(), newElement.getClassName());
-        assertEquals(lineNumberBelow, newElement.getLineNumber());
+        assertThat(newElement.getClassName()).isEqualTo(this.getClass().getName());
+        assertThat(newElement.getLineNumber()).isEqualTo(lineNumberBelow);
     }
 
     @Test
@@ -39,10 +37,10 @@ public class ErrorsTest {
         Errors.removeErrorToolsFromStackTrace(throwable);
 
         StackTraceElement[] stackTraceModified = throwable.getStackTrace();
-        assertTrue(stackTraceModified.length < stackTraceOriginal.length);
+        assertThat(stackTraceModified.length < stackTraceOriginal.length).isTrue();
         int sizeDiff = stackTraceOriginal.length - stackTraceModified.length;
         for (int i = 0; i < stackTraceModified.length; i++) {
-            assertEquals(stackTraceOriginal[i + sizeDiff], stackTraceModified[i]);
+            assertThat(stackTraceModified[i]).isEqualTo(stackTraceOriginal[i + sizeDiff]);
         }
     }
 }

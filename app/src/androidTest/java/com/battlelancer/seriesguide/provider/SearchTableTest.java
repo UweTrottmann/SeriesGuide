@@ -1,13 +1,12 @@
 package com.battlelancer.seriesguide.provider;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static com.google.common.truth.Truth.assertThat;
 
 import android.content.Context;
 import android.database.Cursor;
 import androidx.room.Room;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import java.io.IOException;
 import org.junit.After;
 import org.junit.Before;
@@ -21,7 +20,7 @@ public class SearchTableTest {
 
     @Before
     public void createDb() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = ApplicationProvider.getApplicationContext();
         db = Room.inMemoryDatabaseBuilder(context, SgRoomDatabase.class)
                 .addCallback(SgRoomDatabase.CALLBACK)
                 .build();
@@ -39,8 +38,8 @@ public class SearchTableTest {
                 + "LIMIT 1";
         String[] args = {SeriesGuideDatabase.Tables.EPISODES_SEARCH};
         Cursor result = db.query(query, args);
-        assertNotNull(result);
-        assertEquals(1, result.getCount());
+        assertThat(result).isNotNull();
+        assertThat(result.getCount()).isEqualTo(1);
     }
 
 }
