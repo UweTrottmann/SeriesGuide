@@ -152,6 +152,7 @@ dependencies {
     implementation 'androidx.palette:palette:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation "androidx.work:work-runtime-ktx:2.0.0"
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
@@ -209,6 +210,9 @@ dependencies {
     implementation "com.google.android.gms:play-services-auth:16.0.1"
 
     // App Engine
+    // override Guava version to avoid duplicate classes due to listenablefuture extraction
+    // remove once API client depends on Guava 27.0 or newer
+    implementation 'com.google.guava:guava:27.0.1-android'
     // https://github.com/googleapis/google-api-java-client/releases
     implementation('com.google.api-client:google-api-client-android:1.29.2') {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
