@@ -12,8 +12,9 @@ import androidx.room.Room;
 import androidx.room.testing.MigrationTestHelper;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.model.SgEpisode;
 import com.battlelancer.seriesguide.model.SgSeason;
@@ -62,10 +63,10 @@ public class MigrationTest {
     @Before
     public void setUp() {
         // delete database file to ensure onCreate is called in SqliteTestDbOpenHelper
-        InstrumentationRegistry.getTargetContext().deleteDatabase(TEST_DB_NAME);
+        ApplicationProvider.getApplicationContext().deleteDatabase(TEST_DB_NAME);
 
         // create the database with version 42 using SQLite API
-        sqliteTestDbHelper = new SqliteTestDbOpenHelper(InstrumentationRegistry.getTargetContext(),
+        sqliteTestDbHelper = new SqliteTestDbOpenHelper(ApplicationProvider.getApplicationContext(),
                 TEST_DB_NAME);
     }
 
@@ -172,7 +173,7 @@ public class MigrationTest {
     }
 
     private SgRoomDatabase getMigratedRoomDatabase() {
-        SgRoomDatabase database = Room.databaseBuilder(InstrumentationRegistry.getTargetContext(),
+        SgRoomDatabase database = Room.databaseBuilder(ApplicationProvider.getApplicationContext(),
                 SgRoomDatabase.class, TEST_DB_NAME)
                 .addMigrations(
                         MIGRATION_42_43,

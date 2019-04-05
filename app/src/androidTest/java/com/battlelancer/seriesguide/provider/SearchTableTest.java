@@ -6,8 +6,8 @@ import static org.junit.Assert.assertNotNull;
 import android.content.Context;
 import android.database.Cursor;
 import androidx.room.Room;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import java.io.IOException;
 import org.junit.After;
 import org.junit.Before;
@@ -21,7 +21,7 @@ public class SearchTableTest {
 
     @Before
     public void createDb() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = ApplicationProvider.getApplicationContext();
         db = Room.inMemoryDatabaseBuilder(context, SgRoomDatabase.class)
                 .addCallback(SgRoomDatabase.CALLBACK)
                 .build();

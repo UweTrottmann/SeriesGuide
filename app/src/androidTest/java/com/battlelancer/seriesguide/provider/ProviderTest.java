@@ -12,8 +12,8 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.os.RemoteException;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.model.List;
@@ -82,19 +82,19 @@ public class ProviderTest {
         // ProviderTestRule does not work with Room
         // so instead blatantly replace the instance with one that uses an in-memory database
         // and use the real ContentResolver
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = ApplicationProvider.getApplicationContext();
         SgRoomDatabase.switchToInMemory(context);
         resolver = context.getContentResolver();
     }
 
     @After
     public void closeDb() {
-        SgRoomDatabase.getInstance(InstrumentationRegistry.getTargetContext()).close();
+        SgRoomDatabase.getInstance(ApplicationProvider.getApplicationContext()).close();
     }
 
     @Test
     public void showDefaultValues() throws Exception {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = ApplicationProvider.getApplicationContext();
 
         ContentValues values = SHOW.toContentValues(context, true);
         ContentProviderOperation op = ContentProviderOperation.newInsert(Shows.CONTENT_URI)
@@ -159,7 +159,7 @@ public class ProviderTest {
     private void insertAndAssertSeason(ContentProviderOperation seasonOp)
             throws RemoteException, OperationApplicationException {
         // with Room insert actually checks constraints, so add a matching show first
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = ApplicationProvider.getApplicationContext();
 
         ContentValues values = SHOW.toContentValues(context, true);
         ContentProviderOperation showOp = ContentProviderOperation.newInsert(Shows.CONTENT_URI)
@@ -207,7 +207,7 @@ public class ProviderTest {
 
     private void insertAndAssertEpisode(ContentValues episodeValues) throws Exception {
         // with Room insert actually checks constraints, so add a matching show and season first
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = ApplicationProvider.getApplicationContext();
 
         ContentValues showValues = SHOW.toContentValues(context, true);
         ContentProviderOperation showOp = ContentProviderOperation.newInsert(Shows.CONTENT_URI)
@@ -248,7 +248,7 @@ public class ProviderTest {
 
     @Test
     public void listDefaultValues() throws Exception {
-        AddListTask addListTask = new AddListTask(InstrumentationRegistry.getTargetContext(),
+        AddListTask addListTask = new AddListTask(ApplicationProvider.getApplicationContext(),
                 LIST.name);
         addListTask.doDatabaseUpdate(resolver, addListTask.getListId());
 

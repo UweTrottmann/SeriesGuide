@@ -7,8 +7,8 @@ import static org.junit.Assert.assertThat;
 import android.content.ContentResolver;
 import android.content.Context;
 import androidx.annotation.Nullable;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.battlelancer.seriesguide.modules.AppModule;
 import com.battlelancer.seriesguide.modules.DaggerTestServicesComponent;
 import com.battlelancer.seriesguide.modules.TestHttpClientModule;
@@ -37,12 +37,12 @@ public class TvdbSyncTest {
         // ProviderTestRule does not work with Room
         // so instead blatantly replace the instance with one that uses an in-memory database
         // and use the real ContentResolver
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = ApplicationProvider.getApplicationContext();
         SgRoomDatabase.switchToInMemory(context);
         resolver = context.getContentResolver();
 
         TestServicesComponent component = DaggerTestServicesComponent.builder()
-                .appModule(new AppModule(InstrumentationRegistry.getContext()))
+                .appModule(new AppModule(context))
                 .httpClientModule(new TestHttpClientModule())
                 .traktModule(new TestTraktModule())
                 .tmdbModule(new TestTmdbModule())
@@ -53,7 +53,7 @@ public class TvdbSyncTest {
 
     @After
     public void closeDb() {
-        SgRoomDatabase.getInstance(InstrumentationRegistry.getTargetContext()).close();
+        SgRoomDatabase.getInstance(ApplicationProvider.getApplicationContext()).close();
     }
 
     @Test
@@ -88,7 +88,7 @@ public class TvdbSyncTest {
 
     @Nullable
     private SgSyncAdapter.UpdateResult sync(TvdbSync tvdbSync) {
-        return tvdbSync.sync(InstrumentationRegistry.getContext(), resolver,
+        return tvdbSync.sync(ApplicationProvider.getApplicationContext(), resolver,
                 tvdbToolsLazy, System.currentTimeMillis());
     }
 }
