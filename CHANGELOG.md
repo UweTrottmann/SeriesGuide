@@ -9,6 +9,12 @@ Version 48
 ----------
 *(in development)*
 
+#### 48-beta5
+*(2019-04-12)*
+
+* 🔧 Experiment: refresh season watched counts using new Worker API.
+* 📝 Latest translations from crowdin.
+
 #### 48-beta4
 *(2019-03-29)*
 
