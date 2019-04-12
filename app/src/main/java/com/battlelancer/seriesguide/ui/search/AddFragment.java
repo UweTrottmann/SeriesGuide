@@ -179,15 +179,12 @@ public abstract class AddFragment extends Fragment {
 
         private final OnItemClickListener menuClickListener;
         private final boolean showMenuWatchlist;
-        private final boolean hideMenuWatchlistIfAdded;
 
         public AddAdapter(Activity activity, List<SearchResult> objects,
-                OnItemClickListener menuClickListener, boolean showMenuWatchlist,
-                boolean hideMenuWatchlistIfAdded) {
+                OnItemClickListener menuClickListener, boolean showMenuWatchlist) {
             super(activity, 0, objects);
             this.menuClickListener = menuClickListener;
             this.showMenuWatchlist = showMenuWatchlist;
-            this.hideMenuWatchlistIfAdded = hideMenuWatchlistIfAdded;
         }
 
         @Nullable
@@ -242,10 +239,7 @@ public abstract class AddFragment extends Fragment {
             holder.item = item;
 
             // hide watchlist menu if not useful
-            boolean showMenuWatchlistActual = showMenuWatchlist
-                    && (!hideMenuWatchlistIfAdded || item.getState() != SearchResult.STATE_ADDED);
-            holder.buttonContextMenu.setVisibility(showMenuWatchlistActual
-                    ? View.VISIBLE : View.GONE);
+            holder.buttonContextMenu.setVisibility(showMenuWatchlist ? View.VISIBLE : View.GONE);
             // display added indicator instead of add button if already added that show
             holder.addIndicator.setState(item.getState());
             String showTitle = item.getTitle();

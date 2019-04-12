@@ -29,8 +29,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 /**
- * Multi-purpose "Add show" tab. Can display either the connected trakt user's recommendations,
- * library or watchlist.
+ * Can display either the connected trakt user's watched, collected or watchlist-ed shows and offer
+ * to add them.
  */
 public class TraktAddFragment extends AddFragment {
 
@@ -76,10 +76,10 @@ public class TraktAddFragment extends AddFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // setup adapter, enable context menu only for recommendations and watchlist
+        // setup adapter, enable context menu only for watchlist
         adapter = new AddAdapter(getActivity(), new ArrayList<>(), itemClickListener,
-                listType == TraktShowsLink.RECOMMENDED || listType == TraktShowsLink.WATCHLIST,
-                listType == TraktShowsLink.RECOMMENDED);
+                listType == TraktShowsLink.WATCHLIST
+        );
 
         // load data
         LoaderManager.getInstance(this)
@@ -117,11 +117,8 @@ public class TraktAddFragment extends AddFragment {
             PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
             popupMenu.inflate(R.menu.add_dialog_popup_menu);
 
-            if (listType == TraktShowsLink.RECOMMENDED) {
-                popupMenu.getMenu()
-                        .findItem(R.id.menu_action_show_watchlist_remove)
-                        .setVisible(false);
-            } else if (listType == TraktShowsLink.WATCHLIST) {
+            // prevent adding shows to watchlist already on watchlist
+            if (listType == TraktShowsLink.WATCHLIST) {
                 popupMenu.getMenu().findItem(R.id.menu_action_show_watchlist_add).setVisible(false);
             }
 

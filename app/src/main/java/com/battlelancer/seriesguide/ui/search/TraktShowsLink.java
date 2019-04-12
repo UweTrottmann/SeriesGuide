@@ -6,10 +6,9 @@ import com.battlelancer.seriesguide.R;
 
 public enum TraktShowsLink {
     POPULAR(0, R.string.title_popular),
-    RECOMMENDED(1, R.string.recommended),
-    WATCHED(2, R.string.watched_shows),
-    COLLECTION(3, R.string.shows_collection),
-    WATCHLIST(4, R.string.watchlist);
+    WATCHED(1, R.string.watched_shows),
+    COLLECTION(2, R.string.shows_collection),
+    WATCHLIST(3, R.string.watchlist);
 
     final int id;
     final int titleRes;

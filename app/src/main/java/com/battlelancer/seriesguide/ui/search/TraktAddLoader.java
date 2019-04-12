@@ -24,7 +24,7 @@ import java.util.List;
 import retrofit2.Response;
 
 /**
- * Loads either the connected trakt user's recommendations, library or watchlist.
+ * Loads either the connected trakt user's watched, collected or watchlist-ed shows.
  */
 public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
 
@@ -57,45 +57,32 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         List<Show> shows = new LinkedList<>();
         String action = null;
         try {
-            if (type == TraktShowsLink.RECOMMENDED) {
-                action = "load recommended shows";
-                Response<List<Show>> response = trakt.recommendations()
-                        .shows(Extended.FULL)
-                        .execute();
-                if (response.isSuccessful()) {
-                    shows = response.body();
-                } else {
-                    if (SgTrakt.isUnauthorized(getContext(), response)) {
-                        return buildResultFailure(R.string.trakt_error_credentials);
-                    } else {
-                        Errors.logAndReport(action, response);
-                        return buildResultGenericFailure();
-                    }
+            Response<List<BaseShow>> response;
+            if (type == TraktShowsLink.WATCHED) {
+                action = "load watched shows";
+                response = trakt.sync().watchedShows(Extended.NOSEASONS).execute();
+            } else if (type == TraktShowsLink.COLLECTION) {
+                action = "load show collection";
+                response = trakt.sync().collectionShows(null).execute();
+            } else if (type == TraktShowsLink.WATCHLIST) {
+                action = "load show watchlist";
+                response = trakt.sync().watchlistShows(Extended.FULL).execute();
+            } else {
+                action = "load unknown type";
+                throw new IllegalArgumentException("Unknown type " + type);
+            }
+
+            if (response.isSuccessful()) {
+                List<BaseShow> body = response.body();
+                if (body != null) {
+                    extractShows(body, shows);
                 }
             } else {
-                Response<List<BaseShow>> response;
-                if (type == TraktShowsLink.WATCHED) {
-                    action = "load watched shows";
-                    response = trakt.sync().watchedShows(Extended.NOSEASONS).execute();
-                } else if (type == TraktShowsLink.COLLECTION) {
-                    action = "load show collection";
-                    response = trakt.sync().collectionShows(null).execute();
-                } else if (type == TraktShowsLink.WATCHLIST) {
-                    action = "load show watchlist";
-                    response = trakt.sync().watchlistShows(Extended.FULL).execute();
-                } else {
-                    throw new IllegalArgumentException("Unknown type " + type);
+                if (SgTrakt.isUnauthorized(getContext(), response)) {
+                    return buildResultFailure(R.string.trakt_error_credentials);
                 }
-                if (response.isSuccessful()) {
-                    //noinspection ConstantConditions successful response bodies are never null
-                    extractShows(response.body(), shows);
-                } else {
-                    if (SgTrakt.isUnauthorized(getContext(), response)) {
-                        return buildResultFailure(R.string.trakt_error_credentials);
-                    }
-                    Errors.logAndReport(action, response);
-                    return buildResultGenericFailure();
-                }
+                Errors.logAndReport(action, response);
+                return buildResultGenericFailure();
             }
         } catch (Exception e) {
             Errors.logAndReport(action, e);
@@ -105,7 +92,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         }
 
         // return empty list right away if there are no results
-        if (shows == null || shows.size() == 0) {
+        if (shows.size() == 0) {
             return buildResultSuccess(new LinkedList<>());
         }
 
