@@ -37,7 +37,7 @@ public class TraktAddFragment extends AddFragment {
     /**
      * Which trakt list should be shown. One of {@link TraktShowsLink}.
      */
-    public final static String ARG_TYPE = "traktListType";
+    private final static String ARG_TYPE = "traktListType";
 
     public static TraktAddFragment newInstance(TraktShowsLink link) {
         TraktAddFragment f = new TraktAddFragment();
@@ -101,7 +101,7 @@ public class TraktAddFragment extends AddFragment {
                     startActivity(OverviewActivity.intentShow(getContext(), item.getTvdbid()));
                 } else {
                     // display more details in a dialog
-                    AddShowDialogFragment.show(getContext(), getFragmentManager(), item);
+                    AddShowDialogFragment.show(getContext(), requireFragmentManager(), item);
                 }
             }
         }
@@ -217,7 +217,7 @@ public class TraktAddFragment extends AddFragment {
         }
 
         @Override
-        public void onLoadFinished(Loader<TraktAddLoader.Result> loader,
+        public void onLoadFinished(@NonNull Loader<TraktAddLoader.Result> loader,
                 TraktAddLoader.Result data) {
             if (!isAdded()) {
                 return;
@@ -228,7 +228,7 @@ public class TraktAddFragment extends AddFragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<TraktAddLoader.Result> loader) {
+        public void onLoaderReset(@NonNull Loader<TraktAddLoader.Result> loader) {
             // keep currently displayed data
         }
     };
