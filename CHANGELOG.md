@@ -9,6 +9,13 @@ Version 48
 ----------
 *(in development)*
 
+#### 48-beta6
+*(2019-04-17)*
+
+* 🔧 Support 'Upcoming' status for shows.
+* 🔧 Ask Google Play Services (if available) to update security provider.
+* 🔨 Fix crashes in movie details view and when pinning shortcuts.
+
 #### 48-beta5
 *(2019-04-12)*
 
