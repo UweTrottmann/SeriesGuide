@@ -811,7 +811,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         override fun onScrollChange(
             v: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int
         ) {
-            val actionBar = (activity as AppCompatActivity).supportActionBar ?: return
+            val actionBar = (activity as AppCompatActivity?)?.supportActionBar ?: return
 
             val viewId = v.id
 
