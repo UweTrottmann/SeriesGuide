@@ -89,6 +89,7 @@
     <string name="episode_writers">각본</string>
     <string name="show_isalive">방영중</string>
     <string name="show_isnotalive">종영</string>
+    <string name="show_isUpcoming">방영 예정</string>
     <string name="no_translation">%2$s에 %1$s로 번역한 설명이 없습니다.</string>
     <string name="no_translation_title">번역되지 않음</string>
     <string name="no_spoilers">일부 내용은 스포일러를 방지하기 위해 숨겨진 상태입니다. 설정에서 이를 해제할 수 있습니다.</string>

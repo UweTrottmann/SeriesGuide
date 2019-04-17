@@ -90,6 +90,7 @@
     <string name="episode_writers">Forfattere</string>
     <string name="show_isalive">Fortsetter</string>
     <string name="show_isnotalive">Avsluttet</string>
+    <string name="show_isUpcoming">Kommer snart</string>
     <string name="no_translation">Det er ingen beskrivelse oversatt til %1$s på %2$s.</string>
     <string name="no_translation_title">Ikke oversatt</string>
     <string name="no_spoilers">Noen detaljer er skjult for å unngå spoilere. Gå til Innstillinger for å deaktivere dette.</string>
