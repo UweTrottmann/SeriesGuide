@@ -661,7 +661,7 @@ class ShowFragment : ScopedFragment() {
         val shortcutLiveData =
             ShortcutCreator(context!!, currentShowTitle, currentPosterPath, currentShowTvdbId)
         launch {
-            shortcutLiveData.prepareAndPinShortcut()
+            shortcutLiveData.prepareAndPinShortcut(this)
         }
     }
 
