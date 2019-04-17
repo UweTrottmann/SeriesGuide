@@ -90,6 +90,7 @@
     <string name="episode_writers">Író(k)</string>
     <string name="show_isalive">Még fut</string>
     <string name="show_isnotalive">Véget ért</string>
+    <string name="show_isUpcoming">Következő</string>
     <string name="no_translation">Nincs leírás %1$s nyelven a %2$s adatbázisban.</string>
     <string name="no_translation_title">Nincs lefordítva</string>
     <string name="no_spoilers">Néhány részlet elrejtésre kerül a spoilerek megakadályozása miatt. A kikapcsoláshoz menj a Beállításokba.</string>

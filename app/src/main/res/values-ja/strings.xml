@@ -89,6 +89,7 @@
     <string name="episode_writers">作家</string>
     <string name="show_isalive">継続中</string>
     <string name="show_isnotalive">完結済み</string>
+    <string name="show_isUpcoming">次回</string>
     <string name="no_translation">%2$s に %1$s で利用できる説明がありません。</string>
     <string name="no_translation_title">翻訳されていません</string>
     <string name="no_spoilers">一部の詳細を非表示にして、ネタバレを防ぎます。これを無効にするには設定に移動します。</string>

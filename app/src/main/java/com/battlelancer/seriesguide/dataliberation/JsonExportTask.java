@@ -84,6 +84,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
      * Show status used when exporting data. Compare with {@link ShowTools.Status}.
      */
     public interface ShowStatusExport {
+        String UPCOMING = "upcoming";
         String CONTINUING = "continuing";
         String ENDED = "ended";
         String UNKNOWN = "unknown";

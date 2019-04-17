@@ -90,6 +90,7 @@
     <string name="episode_writers">Schrijvers</string>
     <string name="show_isalive">Lopende serie</string>
     <string name="show_isnotalive">Afgelopen</string>
+    <string name="show_isUpcoming">Eerstvolgende</string>
     <string name="no_translation">Er is op %2$s geen naar het %1$s vertaalde beschrijving beschikbaar.</string>
     <string name="no_translation_title">Niet vertaald</string>
     <string name="no_spoilers">Sommige details zijn verborgen om te voorkomen dat u spoilers ziet. Om dit uit te zetten ga naar Instellingen.</string>

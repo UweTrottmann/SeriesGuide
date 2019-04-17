@@ -92,6 +92,7 @@
     <string name="episode_writers">Rašytojai</string>
     <string name="show_isalive">Rodomas</string>
     <string name="show_isnotalive">Pasibaigęs</string>
+    <string name="show_isUpcoming">Artėjančios</string>
     <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
     <string name="no_translation_title">Nėra išversta</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
