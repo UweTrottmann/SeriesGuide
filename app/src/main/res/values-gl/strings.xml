@@ -90,6 +90,7 @@
     <string name="episode_writers">Guionistas</string>
     <string name="show_isalive">En exibizón</string>
     <string name="show_isnotalive">Finalizada</string>
+    <string name="show_isUpcoming">Próximos</string>
     <string name="no_translation">Non hai unha descrición traducida para %1$s dispoñíbel en %2$s.</string>
     <string name="no_translation_title">Non traducida</string>
     <string name="no_spoilers">Algúns detalles están ocultos para evitar spoilers. Para desativar aceda a Configuracións.</string>

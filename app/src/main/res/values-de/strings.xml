@@ -90,6 +90,7 @@
     <string name="episode_writers">Autoren</string>
     <string name="show_isalive">Wird fortgesetzt</string>
     <string name="show_isnotalive">Endete</string>
+    <string name="show_isUpcoming">Demnächst</string>
     <string name="no_translation">Es ist keine auf %1$s übersetzte Beschreibung bei %2$s verfügbar.</string>
     <string name="no_translation_title">Nicht übersetzt</string>
     <string name="no_spoilers">Einige Details werden ausgeblendet um Spoiler zu vermeiden. Dies kann in den Einstellungen ausgeschaltet werden.</string>

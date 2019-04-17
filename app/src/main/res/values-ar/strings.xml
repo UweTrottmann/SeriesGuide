@@ -94,6 +94,7 @@
     <string name="episode_writers">تأليف</string>
     <string name="show_isalive">مستمر</string>
     <string name="show_isnotalive">انتهى</string>
+    <string name="show_isUpcoming">القادم</string>
     <string name="no_translation">لا يوجد وصف باللغة %1$s متاحة على موقع %2$s.</string>
     <string name="no_translation_title">غير مترجمة</string>
     <string name="no_spoilers">يتم إخفاء بعض التفاصيل لمنع الحرق. لإيقاف هذا الانتقال إلى إعدادات.</string>

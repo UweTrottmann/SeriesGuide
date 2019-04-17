@@ -92,6 +92,7 @@
     <string name="episode_writers">Scénář</string>
     <string name="show_isalive">Pokračuje</string>
     <string name="show_isnotalive">Ukončený</string>
+    <string name="show_isUpcoming">Nadcházející</string>
     <string name="no_translation">Pro jazyk %1$s není na %2$s dostupný žádný popis.</string>
     <string name="no_translation_title">Nepřeloženo</string>
     <string name="no_spoilers">Některé detaily jsou skryty aby zabránily spoilerům. Lze vypnout v nastavení.</string>
