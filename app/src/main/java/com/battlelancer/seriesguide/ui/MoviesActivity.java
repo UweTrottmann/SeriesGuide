@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -19,6 +18,7 @@ import com.battlelancer.seriesguide.ui.movies.MoviesDiscoverFragment;
 import com.battlelancer.seriesguide.ui.movies.MoviesNowFragment;
 import com.battlelancer.seriesguide.ui.movies.MoviesSearchActivity;
 import com.battlelancer.seriesguide.ui.movies.MoviesWatchListFragment;
+import com.battlelancer.seriesguide.ui.movies.MoviesWatchedFragment;
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import org.greenrobot.eventbus.EventBus;
 
@@ -46,10 +46,12 @@ public class MoviesActivity extends BaseTopActivity {
     public static final int TAB_POSITION_DISCOVER = 0;
     public static final int TAB_POSITION_WATCHLIST_DEFAULT = 1;
     public static final int TAB_POSITION_COLLECTION_DEFAULT = 2;
+    public static final int TAB_POSITION_WATCHED_DEFAULT = 2;
     public static final int TAB_POSITION_NOW = 1;
     public static final int TAB_POSITION_WATCHLIST_WITH_NOW = 2;
     public static final int TAB_POSITION_COLLECTION_WITH_NOW = 3;
-    private static final int TAB_COUNT_WITH_TRAKT = 4;
+    public static final int TAB_POSITION_WATCHED_WITH_NOW = 4;
+    private static final int TAB_COUNT_WITH_TRAKT = 5;
 
     @BindView(R.id.viewPagerTabs) ViewPager viewPager;
     @BindView(R.id.tabLayoutTabs) SlidingTabLayout tabs;
@@ -66,13 +68,11 @@ public class MoviesActivity extends BaseTopActivity {
         setupViews(savedInstanceState);
         setupSyncProgressBar(R.id.progressBarTabs);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (savedInstanceState != null) {
-                postponeEnterTransition();
-                // Allow the adapters to repopulate during the next layout pass
-                // before starting the transition animation
-                viewPager.post(this::startPostponedEnterTransition);
-            }
+        if (savedInstanceState != null) {
+            postponeEnterTransition();
+            // Allow the adapters to repopulate during the next layout pass
+            // before starting the transition animation
+            viewPager.post(this::startPostponedEnterTransition);
         }
     }
 
@@ -98,6 +98,8 @@ public class MoviesActivity extends BaseTopActivity {
         tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
         // collection
         tabsAdapter.addTab(R.string.movies_collection, MoviesCollectionFragment.class, null);
+        // watched
+        tabsAdapter.addTab(R.string.movies_watched, MoviesWatchedFragment.class, null);
 
         tabsAdapter.notifyTabsChanged();
         if (savedInstanceState == null) {

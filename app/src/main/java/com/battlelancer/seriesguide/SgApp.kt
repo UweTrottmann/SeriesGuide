@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
@@ -22,6 +23,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.crashlytics.android.core.CrashlyticsCore
+import com.google.android.gms.security.ProviderInstaller
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
@@ -48,7 +50,6 @@ class SgApp : Application() {
         const val JOB_ID_EXTENSION_WEBSEARCH = 1004
         const val JOB_ID_EXTENSION_YOUTUBE = 1005
         const val JOB_ID_EXTENSION_ACTIONS_SERVICE = 1006
-        const val JOB_ID_UNWATCHED_UPDATER_SERVICE = 1007
 
         const val NOTIFICATION_EPISODE_ID = 1
         const val NOTIFICATION_SUBSCRIPTION_ID = 2
@@ -124,7 +125,11 @@ class SgApp : Application() {
         // set up logging first so crashes during initialization are caught
         initializeLogging()
 
-        AndroidThreeTen.init(this)
+        // get latest TZDB.dat from
+        // https://github.com/ThreeTen/threetenbp/blob/master/src/main/resources/org/threeten/bp/TZDB.dat
+        // (switch to tagged version!)
+        // current version: v1.3.8
+        AndroidThreeTen.init(this, "org/threeten/bp/TZDB.dat")
         initializeEventBus()
         initializePicasso()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -135,6 +140,21 @@ class SgApp : Application() {
         ThemeUtils.updateTheme(DisplaySettings.getThemeIndex(this))
 
         ExtensionManager.get().checkEnabledExtensions(this)
+
+        // Tell Google Play Services to update the security provider.
+        // This is not technically required, but might improve connection issues
+        // due to encryption on some devices.
+        ProviderInstaller.installIfNeededAsync(applicationContext, providerInstallListener)
+    }
+
+    private val providerInstallListener = object : ProviderInstaller.ProviderInstallListener {
+        override fun onProviderInstallFailed(errorCode: Int, recoveryIntent: Intent?) {
+            Timber.e("Failed to install GMS provider $errorCode")
+        }
+
+        override fun onProviderInstalled() {
+            Timber.v("Successfully installed GMS provider")
+        }
     }
 
     private fun initializeLogging() {

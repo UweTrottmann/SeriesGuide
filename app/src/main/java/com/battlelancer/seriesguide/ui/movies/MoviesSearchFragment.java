@@ -1,16 +1,10 @@
 package com.battlelancer.seriesguide.ui.movies;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -23,9 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
@@ -108,7 +100,7 @@ public class MoviesSearchFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // setup adapter
-        adapter = new MoviesAdapter(getContext(), new MovieItemClickListener(getActivity()));
+        adapter = new MoviesAdapter(getContext(), new MovieClickListener(getActivity()));
         recyclerView.setAdapter(adapter);
 
         swipeRefreshLayout.setRefreshing(true);
@@ -181,75 +173,4 @@ public class MoviesSearchFragment extends Fragment {
             searchClickListener.onSearchClick();
         }
     };
-
-    static class MovieItemClickListener implements MoviesAdapter.ItemClickListener {
-
-        private Activity activity;
-
-        MovieItemClickListener(Activity activity) {
-            this.activity = activity;
-        }
-
-        Activity getActivity() {
-            return activity;
-        }
-
-        @Override
-        public void onClickMovie(int movieTmdbId, ImageView posterView) {
-            // launch details activity
-            Intent intent = MovieDetailsActivity.intentMovie(getActivity(), movieTmdbId);
-            Utils.startActivityWithAnimation(getActivity(), intent, posterView);
-        }
-
-        @Override
-        public void onClickMovieMoreOptions(final int movieTmdbId, View anchor) {
-            PopupMenu popupMenu = new PopupMenu(anchor.getContext(), anchor);
-            popupMenu.inflate(R.menu.movies_popup_menu);
-
-            // check if movie is already in watchlist or collection
-            boolean isInWatchlist = false;
-            boolean isInCollection = false;
-            Cursor movie = getActivity().getContentResolver().query(
-                    SeriesGuideContract.Movies.buildMovieUri(movieTmdbId),
-                    new String[] { SeriesGuideContract.Movies.IN_WATCHLIST,
-                            SeriesGuideContract.Movies.IN_COLLECTION }, null, null, null
-            );
-            if (movie != null) {
-                if (movie.moveToFirst()) {
-                    isInWatchlist = movie.getInt(0) == 1;
-                    isInCollection = movie.getInt(1) == 1;
-                }
-                movie.close();
-            }
-
-            Menu menu = popupMenu.getMenu();
-            menu.findItem(R.id.menu_action_movies_watchlist_add).setVisible(!isInWatchlist);
-            menu.findItem(R.id.menu_action_movies_watchlist_remove).setVisible(isInWatchlist);
-            menu.findItem(R.id.menu_action_movies_collection_add).setVisible(!isInCollection);
-            menu.findItem(R.id.menu_action_movies_collection_remove).setVisible(isInCollection);
-
-            popupMenu.setOnMenuItemClickListener(item -> {
-                switch (item.getItemId()) {
-                    case R.id.menu_action_movies_watchlist_add: {
-                        MovieTools.addToWatchlist(getActivity(), movieTmdbId);
-                        return true;
-                    }
-                    case R.id.menu_action_movies_watchlist_remove: {
-                        MovieTools.removeFromWatchlist(getActivity(), movieTmdbId);
-                        return true;
-                    }
-                    case R.id.menu_action_movies_collection_add: {
-                        MovieTools.addToCollection(getActivity(), movieTmdbId);
-                        return true;
-                    }
-                    case R.id.menu_action_movies_collection_remove: {
-                        MovieTools.removeFromCollection(getActivity(), movieTmdbId);
-                        return true;
-                    }
-                }
-                return false;
-            });
-            popupMenu.show();
-        }
-    }
 }

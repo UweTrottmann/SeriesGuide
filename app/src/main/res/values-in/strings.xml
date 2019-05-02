@@ -89,6 +89,7 @@
     <string name="episode_writers">Penulis</string>
     <string name="show_isalive">Berkelanjutan</string>
     <string name="show_isnotalive">Berakhir</string>
+    <string name="show_isUpcoming">Mendatang</string>
     <string name="no_translation">Tidak ada deskripsi yang diterjemahkan ke %1$s tersedia di %2$s.</string>
     <string name="no_translation_title">Belum diterjemahkan</string>
     <string name="no_spoilers">Beberapa detail telah disembunyikan untuk mencegah bocoran. Untuk menonaktikan ini pergi ke pengaturan.</string>
@@ -215,6 +216,7 @@
     <string name="movies_in_theatres">Di bioskop</string>
     <string name="movies_collection">Koleksi</string>
     <string name="movies_watchlist">Daftar tontonan</string>
+    <string name="movies_watched">Ditonton</string>
     <string name="watchlist_add">Tambah ke daftar tonton</string>
     <string name="watchlist_remove">Hapus dari daftar tontonan</string>
     <string name="watchlist_added">Ditambahkan ke daftar tontonan</string>
@@ -238,6 +240,7 @@
     <string name="episodes_watched">%s ditonton</string>
     <string name="runtime_all_episodes">lamanya semua episode yang sudah ditonton</string>
     <string name="movies_on_watchlist">%s di daftar tonton</string>
+    <string name="movies_watched_format">%s ditonton</string>
     <string name="runtime_movies_watchlist">lamanya daftar tonton film</string>
     <plurals name="days_plural">
         <item quantity="other">%d hari</item>

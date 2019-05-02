@@ -91,6 +91,7 @@
     <string name="episode_writers">Rakstnieki</string>
     <string name="show_isalive">Turpinās</string>
     <string name="show_isnotalive">Beidzies</string>
+    <string name="show_isUpcoming">Gaidāmās</string>
     <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
     <string name="no_translation_title">Nav tulkots</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
@@ -223,6 +224,7 @@
     <string name="movies_in_theatres">In theaters</string>
     <string name="movies_collection">Kolekcija</string>
     <string name="movies_watchlist">Redzamo filmu saraksts</string>
+    <string name="movies_watched">Watched</string>
     <string name="watchlist_add">Pievienot uzraugāmo sarakstam</string>
     <string name="watchlist_remove">Noņemt no uzraugāmo saraksta</string>
     <string name="watchlist_added">Pievienots uzraugāmo sarakstam</string>
@@ -246,6 +248,7 @@
     <string name="episodes_watched">%s noskatītas</string>
     <string name="runtime_all_episodes">Visu noskatīto epizožu kopējais garums</string>
     <string name="movies_on_watchlist">%s vočlistā</string>
+    <string name="movies_watched_format">%s noskatītas</string>
     <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
     <plurals name="days_plural">
         <item quantity="one">%d day</item>

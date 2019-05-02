@@ -1,12 +1,10 @@
 package com.battlelancer.seriesguide.ui.movies;
 
-import static com.battlelancer.seriesguide.ui.movies.MoviesDistillationSettings.MoviesSortOrder;
 import static com.battlelancer.seriesguide.ui.movies.MoviesDistillationSettings.MoviesSortOrderChangedEvent;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,10 +20,8 @@ import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -50,8 +46,8 @@ public abstract class MoviesBaseFragment extends Fragment implements
         View v = inflater.inflate(LAYOUT, container, false);
 
         gridView = v.findViewById(R.id.gridViewMovies);
-        // enable app bar scrolling out of view only on L or higher
-        ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
+        // enable app bar scrolling out of view
+        ViewCompat.setNestedScrollingEnabled(gridView, true);
         emptyView = v.findViewById(R.id.textViewMoviesEmpty);
         gridView.setEmptyView(emptyView);
         gridView.setOnItemClickListener(this);
@@ -94,60 +90,17 @@ public abstract class MoviesBaseFragment extends Fragment implements
             return;
         }
 
-        inflater.inflate(R.menu.movies_lists_menu, menu);
-
-        menu.findItem(R.id.menu_action_movies_sort_ignore_articles)
-                .setChecked(DisplaySettings.isSortOrderIgnoringArticles(getContext()));
+        new MoviesOptionsMenu(requireContext()).create(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.menu_action_movies_sort_title) {
-            if (MoviesDistillationSettings.getSortOrderId(getContext())
-                    == MoviesSortOrder.TITLE_ALPHABETICAL_ID) {
-                changeSortOrder(MoviesSortOrder.TITLE_REVERSE_ALHPABETICAL_ID);
-            } else {
-                // was sorted title reverse or by release date
-                changeSortOrder(MoviesSortOrder.TITLE_ALPHABETICAL_ID);
-            }
+        MoviesOptionsMenu menu = new MoviesOptionsMenu(requireContext());
+        if (menu.onItemSelected(item, requireActivity())) {
             return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
-        if (itemId == R.id.menu_action_movies_sort_release) {
-            if (MoviesDistillationSettings.getSortOrderId(getContext())
-                    == MoviesSortOrder.RELEASE_DATE_NEWEST_FIRST_ID) {
-                changeSortOrder(MoviesSortOrder.RELEASE_DATE_OLDEST_FIRST_ID);
-            } else {
-                // was sorted by oldest first or by title
-                changeSortOrder(MoviesSortOrder.RELEASE_DATE_NEWEST_FIRST_ID);
-            }
-            return true;
-        }
-        if (itemId == R.id.menu_action_movies_sort_ignore_articles) {
-            changeSortIgnoreArticles(!DisplaySettings.isSortOrderIgnoringArticles(getContext()));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void changeSortOrder(int sortOrderId) {
-        PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
-                .putInt(MoviesDistillationSettings.KEY_SORT_ORDER, sortOrderId)
-                .apply();
-
-        EventBus.getDefault().post(new MoviesSortOrderChangedEvent());
-    }
-
-    private void changeSortIgnoreArticles(boolean value) {
-        PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
-                .putBoolean(DisplaySettings.KEY_SORT_IGNORE_ARTICLE, value)
-                .apply();
-
-        // refresh icon state
-        getActivity().invalidateOptionsMenu();
-
-        EventBus.getDefault().post(new MoviesSortOrderChangedEvent());
     }
 
     @SuppressWarnings("UnusedParameters")

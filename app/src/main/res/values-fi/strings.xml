@@ -90,6 +90,7 @@
     <string name="episode_writers">Kirjoittajat</string>
     <string name="show_isalive">Jatkuu</string>
     <string name="show_isnotalive">Päättynyt</string>
+    <string name="show_isUpcoming">Tulevat</string>
     <string name="no_translation">Kuvausta ei ole saatavilla kielellä %1$s palvelussa %2$s.</string>
     <string name="no_translation_title">Ei käännetty</string>
     <string name="no_spoilers">Osa tiedoista on piilotettu juonipaljastuksien varalta. Voit poistaa tämän käytöstä asetuksista.</string>
@@ -219,6 +220,7 @@
     <string name="movies_in_theatres">Teattereissa</string>
     <string name="movies_collection">Kokoelma</string>
     <string name="movies_watchlist">Seurantalista</string>
+    <string name="movies_watched">Katsottu</string>
     <string name="watchlist_add">Lisää seurantalistalle</string>
     <string name="watchlist_remove">Poista seurantalistalta</string>
     <string name="watchlist_added">Lisätty seurantalistalle</string>
@@ -242,6 +244,7 @@
     <string name="episodes_watched">%s katsottuna</string>
     <string name="runtime_all_episodes">kaikkien katsottujen jaksojen kesto</string>
     <string name="movies_on_watchlist">%s seurantalistalla</string>
+    <string name="movies_watched_format">%s katsottuna</string>
     <string name="runtime_movies_watchlist">seurantalistan elokuvien kesto</string>
     <plurals name="days_plural">
         <item quantity="one">%d päivä</item>

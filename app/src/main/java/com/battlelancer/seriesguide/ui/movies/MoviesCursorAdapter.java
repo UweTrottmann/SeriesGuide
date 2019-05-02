@@ -5,7 +5,6 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
-import android.os.Build;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,10 +98,8 @@ class MoviesCursorAdapter extends CursorAdapter {
         });
 
         // set unique transition names
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            holder.poster.setTransitionName(
-                    "moviesCursorAdapterPoster_" + uniqueId + "_" + movieTmdbId);
-        }
+        holder.poster.setTransitionName(
+                "moviesCursorAdapterPoster_" + uniqueId + "_" + movieTmdbId);
     }
 
     public static class ViewHolder {

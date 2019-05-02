@@ -89,6 +89,7 @@
     <string name="episode_writers">編劇</string>
     <string name="show_isalive">待續</string>
     <string name="show_isnotalive">已完結</string>
+    <string name="show_isUpcoming">即將播出</string>
     <string name="no_translation">%2$s沒有%1$s的翻譯說明。</string>
     <string name="no_translation_title">無翻譯</string>
     <string name="no_spoilers">一些細節已隱藏起來避免劇透，可前往設定關閉此功能。</string>
@@ -215,6 +216,7 @@
     <string name="movies_in_theatres">上映中</string>
     <string name="movies_collection">收藏</string>
     <string name="movies_watchlist">待看清單</string>
+    <string name="movies_watched">已看過</string>
     <string name="watchlist_add">新增至待看清單</string>
     <string name="watchlist_remove">從待看清單中移除</string>
     <string name="watchlist_added">已增加至待看清單</string>
@@ -238,6 +240,7 @@
     <string name="episodes_watched">%s 集已看</string>
     <string name="runtime_all_episodes">所有看過影集的時數總計</string>
     <string name="movies_on_watchlist">%s於待看清單中。</string>
+    <string name="movies_watched_format">%s 集已看</string>
     <string name="runtime_movies_watchlist">待看清單之總播放時間</string>
     <plurals name="days_plural">
         <item quantity="other">%d 天</item>

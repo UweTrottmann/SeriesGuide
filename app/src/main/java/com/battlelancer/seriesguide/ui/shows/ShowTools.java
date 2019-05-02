@@ -55,6 +55,7 @@ public class ShowTools {
      * Show status valued as stored in the database in {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows#STATUS}.
      */
     public interface Status {
+        int UPCOMING = 2;
         int CONTINUING = 1;
         int ENDED = 0;
         int UNKNOWN = -1;
@@ -445,7 +446,9 @@ public class ShowTools {
      */
     @Nullable
     public static String getStatus(@NonNull Context context, int encodedStatus) {
-        if (encodedStatus == Status.CONTINUING) {
+        if (encodedStatus == Status.UPCOMING) {
+            return context.getString(R.string.show_isUpcoming);
+        } else if (encodedStatus == Status.CONTINUING) {
             return context.getString(R.string.show_isalive);
         } else if (encodedStatus == Status.ENDED) {
             return context.getString(R.string.show_isnotalive);

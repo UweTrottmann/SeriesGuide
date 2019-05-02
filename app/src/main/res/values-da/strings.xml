@@ -90,6 +90,7 @@
     <string name="episode_writers">Manuskriptforfattere</string>
     <string name="show_isalive">Fortsætter</string>
     <string name="show_isnotalive">Afsluttet</string>
+    <string name="show_isUpcoming">Kommende</string>
     <string name="no_translation">Der er ingen beskrivelse oversat til %1$s tilgængelig på %2$s.</string>
     <string name="no_translation_title">Ikke oversat</string>
     <string name="no_spoilers">Visse detaljer er skjult for at undgå spoilers. Du kan slå dette fra under Indstillinger.</string>
@@ -219,6 +220,7 @@
     <string name="movies_in_theatres">I biograferne</string>
     <string name="movies_collection">Samling</string>
     <string name="movies_watchlist">Overvågningsliste</string>
+    <string name="movies_watched">Set</string>
     <string name="watchlist_add">Føj til overvågningsliste</string>
     <string name="watchlist_remove">Fjern fra overvågningsliste</string>
     <string name="watchlist_added">Føjet til overvågningsliste</string>
@@ -242,6 +244,7 @@
     <string name="episodes_watched">%s set</string>
     <string name="runtime_all_episodes">varighed af alle sete episoder</string>
     <string name="movies_on_watchlist">%s på overvågningsliste</string>
+    <string name="movies_watched_format">%s set</string>
     <string name="runtime_movies_watchlist">varighed af film på overvågningsliste</string>
     <plurals name="days_plural">
         <item quantity="one">%d dag</item>

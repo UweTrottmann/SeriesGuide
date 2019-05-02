@@ -90,6 +90,7 @@
     <string name="episode_writers">Scénaristes</string>
     <string name="show_isalive">En cours</string>
     <string name="show_isnotalive">Terminé</string>
+    <string name="show_isUpcoming">À venir</string>
     <string name="no_translation">La traduction en %1$s n\'est pas disponible sur %2$s.</string>
     <string name="no_translation_title">Non traduit</string>
     <string name="no_spoilers">Certains détails sont masqués afin d’éviter les spoilers. Pour modifier ceci allez dans paramètres.</string>
@@ -219,6 +220,7 @@
     <string name="movies_in_theatres">Dans les salles</string>
     <string name="movies_collection">Collection</string>
     <string name="movies_watchlist">Liste à voir</string>
+    <string name="movies_watched">Vu</string>
     <string name="watchlist_add">Ajouter dans la liste à voir</string>
     <string name="watchlist_remove">Retirer de la liste à voir</string>
     <string name="watchlist_added">Ajouté dans la liste à voir</string>
@@ -242,6 +244,7 @@
     <string name="episodes_watched">%s vus</string>
     <string name="runtime_all_episodes">Durée totale de tous les épisodes vus</string>
     <string name="movies_on_watchlist">%s dans la liste à voir</string>
+    <string name="movies_watched_format">%s vus</string>
     <string name="runtime_movies_watchlist">Durée totale des films dans la liste à voir</string>
     <plurals name="days_plural">
         <item quantity="one">%d jour</item>

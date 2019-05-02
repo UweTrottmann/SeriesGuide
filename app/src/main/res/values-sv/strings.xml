@@ -38,7 +38,7 @@
     <string name="sync_manually">Synkronisera manuellt</string>
     <string name="sync_and_update">Synkronisera &amp; Uppdatera</string>
     <string name="sync_and_download_all">Synkronisera &amp; Ladda ner alla</string>
-    <string name="action_turn_off">Turn off</string>
+    <string name="action_turn_off">Stäng av</string>
     <string name="action_stream">Stream or purchase</string>
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
@@ -55,7 +55,7 @@
     <string name="reinstall_info">Försök att säkerhetskopiera i inställningar, installera om och återställ.</string>
     <string name="api_error_generic">Kunde inte kommunicera med %s. Försök igen senare.</string>
     <string name="api_failed">Misslyckades: %s</string>
-    <string name="copy_to_clipboard">Copied to clipboard</string>
+    <string name="copy_to_clipboard">Kopierat till urklipp</string>
     <!-- Sharing -->
     <string name="share">Dela</string>
     <string name="share_show">Dela serie</string>
@@ -90,6 +90,7 @@
     <string name="episode_writers">Författare</string>
     <string name="show_isalive">Fortsätter</string>
     <string name="show_isnotalive">Avslutad</string>
+    <string name="show_isUpcoming">Kommande</string>
     <string name="no_translation">Det finns ingen beskrivning översatt till %1$s tillgänglig på %2$s.</string>
     <string name="no_translation_title">Ej översatt</string>
     <string name="no_spoilers">Vissa detaljer är dolda för att undvika spoilers. För att stänga av detta, gå till inställningar.</string>
@@ -219,6 +220,7 @@
     <string name="movies_in_theatres">På bio</string>
     <string name="movies_collection">Samling</string>
     <string name="movies_watchlist">Bevakningslista</string>
+    <string name="movies_watched">Sedda</string>
     <string name="watchlist_add">Lägg till i bevakningslistan</string>
     <string name="watchlist_remove">Ta bort ifrån bevakningslistan</string>
     <string name="watchlist_added">Lades till i bevakningslistan</string>
@@ -242,6 +244,7 @@
     <string name="episodes_watched">%s sedda</string>
     <string name="runtime_all_episodes">speltid på alla sedda avsnitt</string>
     <string name="movies_on_watchlist">%s på bevakningslistan</string>
+    <string name="movies_watched_format">%s sedda</string>
     <string name="runtime_movies_watchlist">speltid på filmbevakningslistan</string>
     <plurals name="days_plural">
         <item quantity="one">%d dag</item>
@@ -456,7 +459,7 @@
     <string name="onlyx">Endast för supporters</string>
     <string name="action_upgrade">Lås upp alla funktioner</string>
     <string name="billing_action_subscribe">Prenumerera</string>
-    <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+    <string name="billing_action_manage_subscriptions">Hantera prenumerationer</string>
     <string name="billing_action_pass">Skaffa X Pass</string>
     <string name="billing_price_subscribe">%1$s/år, prova gratis, avbryt när som helst genom %2$s</string>
     <string name="billing_price_pass">engångsköp</string>

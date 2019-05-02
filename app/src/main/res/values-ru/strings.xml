@@ -11,7 +11,7 @@
     <string name="help">Помощь</string>
     <string name="help_and_feedback">Помощь и обратная связь</string>
     <string name="drawer_open">Открыть навигационную панель</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide больше не будет получать обновления для этой версии Android.</string>
     <!-- Media items -->
     <string name="show">Инфо</string>
     <string name="episode">Эпизод</string>
@@ -92,6 +92,7 @@
     <string name="episode_writers">Сценаристы</string>
     <string name="show_isalive">Продолжается</string>
     <string name="show_isnotalive">Завершён</string>
+    <string name="show_isUpcoming">Следующие эпизоды</string>
     <string name="no_translation">Перевод описания с %1$s недоступно для %2$s.</string>
     <string name="no_translation_title">Не переведено</string>
     <string name="no_spoilers">Некоторые детали скрыты, чтобы предотвратить спойлеры. Чтобы отключить эту функцию, перейдите в Настройки.</string>
@@ -227,6 +228,7 @@
     <string name="movies_in_theatres">Смотрите в кинотеатрах</string>
     <string name="movies_collection">Коллекция</string>
     <string name="movies_watchlist">Список просмотра</string>
+    <string name="movies_watched">Просмотрено</string>
     <string name="watchlist_add">Добавить в список просмотра</string>
     <string name="watchlist_remove">Удалить из списка просмотра</string>
     <string name="watchlist_added">Добавлены в список просмотра</string>
@@ -250,6 +252,7 @@
     <string name="episodes_watched">%s просмотрено</string>
     <string name="runtime_all_episodes">Общее время всех просмотренных эпизодов</string>
     <string name="movies_on_watchlist">%s в списке просмотра</string>
+    <string name="movies_watched_format">%s просмотрено</string>
     <string name="runtime_movies_watchlist">Общее время в списке просмотра</string>
     <plurals name="days_plural">
         <item quantity="one">%d день</item>
@@ -289,7 +292,7 @@
     <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из SeriesGuide Cloud. Также убедитесь в том, что он удалён на других подключенных устройствах.</string>
     <string name="hexagon_api_queued">Отправка в облако SeriesGuide.</string>
     <string name="hexagon_signed_out">Вышли из SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Ошибка при входе в аккаунт Google (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Отправка в trakt.</string>
     <string name="checkin_success_trakt">Отмечено в %s на trakt.</string>
@@ -377,8 +380,8 @@
         <item quantity="other">за %d мин. до</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="licence_tvdb">Это приложение использует данные и изображения TheTVDB, лицензированные по лицензии Creative Commons.</string>
     <string name="licence_themoviedb">Это приложение использует TMDb API, но это API не поддерживается и не одобрено самим сервисом TMDb.</string>
     <string name="licence_trakt">Это приложение использует данные и изображения сервиса Trakt.</string>
     <string name="about_open_source">SeriesGuide сделан с использованием открытого программного обеспечения.</string>

@@ -1,17 +1,14 @@
 package com.battlelancer.seriesguide.sync;
 
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth.assert_;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.text.format.DateUtils;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.battlelancer.seriesguide.model.SgMovie;
 import com.battlelancer.seriesguide.modules.AppModule;
 import com.battlelancer.seriesguide.modules.DaggerTestServicesComponent;
@@ -51,14 +48,14 @@ public class TmdbSyncTest {
         ProviderTestRule does not work with Room, so instead blatantly replace the instance with one
          that uses an in-memory database and use the real ContentResolver.
          */
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = ApplicationProvider.getApplicationContext();
         SgRoomDatabase.switchToInMemory(context);
         resolver = context.getContentResolver();
         db = SgRoomDatabase.getInstance(context);
         movieHelper = db.movieHelper();
 
         TestServicesComponent component = DaggerTestServicesComponent.builder()
-                .appModule(new AppModule(InstrumentationRegistry.getTargetContext()))
+                .appModule(new AppModule(context))
                 .httpClientModule(new TestHttpClientModule())
                 .traktModule(new TestTraktModule())
                 .tmdbModule(new TestTmdbModule())
@@ -85,8 +82,8 @@ public class TmdbSyncTest {
 
         // only the outdated movie should have been updated, not the shell
         List<SgMovie> movies = movieHelper.getAllMovies();
-        assertEquals(0, findMovieWithId(movies, 10).lastUpdated.longValue());
-        assertTrue(findMovieWithId(movies, 12).lastUpdated > lastUpdatedOutdated);
+        assertThat(findMovieWithId(movies, 10).lastUpdated).isEqualTo(0);
+        assertThat(findMovieWithId(movies, 12).lastUpdated > lastUpdatedOutdated).isTrue();
     }
 
     @Test
@@ -112,12 +109,12 @@ public class TmdbSyncTest {
 
         // only the recently released outdated and the older very outdated movie should have been updated
         List<SgMovie> movies = movieHelper.getAllMovies();
-        assertEquals(lastUpdatedCurrent, findMovieWithId(movies, 10).lastUpdated.longValue());
-        assertTrue(lastUpdatedOutdated < findMovieWithId(movies, 11).lastUpdated);
+        assertThat(findMovieWithId(movies, 10).lastUpdated).isEqualTo(lastUpdatedCurrent);
+        assertThat(lastUpdatedOutdated < findMovieWithId(movies, 11).lastUpdated).isTrue();
 
-        assertEquals(lastUpdatedCurrent, findMovieWithId(movies, 12).lastUpdated.longValue());
-        assertEquals(lastUpdatedOutdated, findMovieWithId(movies, 13).lastUpdated.longValue());
-        assertTrue(lastUpdatedVeryOutdated < findMovieWithId(movies, 14).lastUpdated);
+        assertThat(findMovieWithId(movies, 12).lastUpdated).isEqualTo(lastUpdatedCurrent);
+        assertThat(findMovieWithId(movies, 13).lastUpdated).isEqualTo(lastUpdatedOutdated);
+        assertThat(lastUpdatedVeryOutdated < findMovieWithId(movies, 14).lastUpdated).isTrue();
     }
 
     @Test
@@ -130,8 +127,8 @@ public class TmdbSyncTest {
         // the movie should have been updated
         List<SgMovie> movies = movieHelper.getAllMovies();
         SgMovie dbMovie = findMovieWithId(movies, 12);
-        assertNotNull(dbMovie.lastUpdated);
-        assertNotEquals(0, dbMovie.lastUpdated.longValue());
+        assertThat(dbMovie.lastUpdated).isNotNull();
+        assertThat(dbMovie.lastUpdated).isNotEqualTo(0);
     }
 
     private SgMovie findMovieWithId(List<SgMovie> movies, int tmdbId) {
@@ -140,7 +137,7 @@ public class TmdbSyncTest {
                 return movie;
             }
         }
-        fail("Did not find movie with TMDB id " + tmdbId);
+        assert_().fail("Did not find movie with TMDB id %s", tmdbId);
         throw new IllegalArgumentException();
     }
 
@@ -164,9 +161,9 @@ public class TmdbSyncTest {
     }
 
     private void doUpdateAndAssertSuccess() {
-        TmdbSync tmdbSync = new TmdbSync(InstrumentationRegistry.getTargetContext(),
+        TmdbSync tmdbSync = new TmdbSync(ApplicationProvider.getApplicationContext(),
                 tmdbConfigService, movieTools);
         boolean successful = tmdbSync.updateMovies();
-        assertEquals(true, successful);
+        assertThat(successful).isTrue();
     }
 }

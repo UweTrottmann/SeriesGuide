@@ -102,6 +102,7 @@
     <string name="episode_writers">Writers</string>
     <string name="show_isalive">Continuing</string>
     <string name="show_isnotalive">Ended</string>
+    <string name="show_isUpcoming">Upcoming</string>
     <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
     <string name="no_translation_title">Not translated</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
@@ -241,6 +242,7 @@
     <string name="movies_in_theatres">In theaters</string>
     <string name="movies_collection">Collection</string>
     <string name="movies_watchlist">Watchlist</string>
+    <string name="movies_watched">Watched</string>
     <string name="watchlist_add">Add to watchlist</string>
     <string name="watchlist_remove">Remove from watchlist</string>
     <string name="watchlist_added">Added to watchlist</string>
@@ -265,6 +267,7 @@
     <string name="episodes_watched">%s watched</string>
     <string name="runtime_all_episodes">runtime of all watched episodes</string>
     <string name="movies_on_watchlist">%s on watchlist</string>
+    <string name="movies_watched_format">%s watched</string>
     <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
 
     <plurals name="days_plural">

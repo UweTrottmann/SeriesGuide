@@ -49,16 +49,17 @@ public class DataLiberationTools {
 
     /**
      * Transform a string representation of {@link com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport}
-     * to a {@link ShowTools.Status} to be stored in the
-     * database.
+     * to a {@link ShowTools.Status} to be stored in the database.
      *
-     * <p>If neither continuing or ended will default to {@link ShowTools.Status#UNKNOWN}.
+     * <p>Falls back to {@link ShowTools.Status#UNKNOWN}.
      */
     public static int encodeShowStatus(@Nullable String status) {
         if (status == null) {
             return ShowTools.Status.UNKNOWN;
         }
         switch (status) {
+            case JsonExportTask.ShowStatusExport.UPCOMING:
+                return ShowTools.Status.UPCOMING;
             case JsonExportTask.ShowStatusExport.CONTINUING:
                 return ShowTools.Status.CONTINUING;
             case JsonExportTask.ShowStatusExport.ENDED:
@@ -77,6 +78,8 @@ public class DataLiberationTools {
      */
     public static String decodeShowStatus(int encodedStatus) {
         switch (encodedStatus) {
+            case ShowTools.Status.UPCOMING:
+                return JsonExportTask.ShowStatusExport.UPCOMING;
             case ShowTools.Status.CONTINUING:
                 return JsonExportTask.ShowStatusExport.CONTINUING;
             case ShowTools.Status.ENDED:

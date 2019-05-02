@@ -91,6 +91,7 @@
     <string name="episode_writers">Scenaristi</string>
     <string name="show_isalive">Nastavlja se</string>
     <string name="show_isnotalive">Završilo</string>
+    <string name="show_isUpcoming">Nadolazeće</string>
     <string name="no_translation">Nema prevedenog opisa za %1$s dostupnoh na %2$s.</string>
     <string name="no_translation_title">Nije prevedeno</string>
     <string name="no_spoilers">Neki detalji su skriveni kako bi se spriječili spojleri. Ovo možete isključiti u postavkama.</string>
@@ -223,6 +224,7 @@
     <string name="movies_in_theatres">U kinima</string>
     <string name="movies_collection">Zbirka</string>
     <string name="movies_watchlist">Popis gledanja</string>
+    <string name="movies_watched">Pogledano</string>
     <string name="watchlist_add">Dodaj na popis gledanja</string>
     <string name="watchlist_remove">Ukloni s popisa gledanja</string>
     <string name="watchlist_added">Dodano na popis gledanja</string>
@@ -246,6 +248,7 @@
     <string name="episodes_watched">%s pogledano</string>
     <string name="runtime_all_episodes">Trajanje svih pogledanih epizoda</string>
     <string name="movies_on_watchlist">%s na popisu gledanja</string>
+    <string name="movies_watched_format">%s pogledano</string>
     <string name="runtime_movies_watchlist">vrijeme na popisu gledanja</string>
     <plurals name="days_plural">
         <item quantity="one">%d dan</item>

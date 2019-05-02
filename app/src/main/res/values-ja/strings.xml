@@ -89,6 +89,7 @@
     <string name="episode_writers">作家</string>
     <string name="show_isalive">継続中</string>
     <string name="show_isnotalive">完結済み</string>
+    <string name="show_isUpcoming">次回</string>
     <string name="no_translation">%2$s に %1$s で利用できる説明がありません。</string>
     <string name="no_translation_title">翻訳されていません</string>
     <string name="no_spoilers">一部の詳細を非表示にして、ネタバレを防ぎます。これを無効にするには設定に移動します。</string>
@@ -215,6 +216,7 @@
     <string name="movies_in_theatres">上映中</string>
     <string name="movies_collection">コレクション</string>
     <string name="movies_watchlist">ウォッチリスト</string>
+    <string name="movies_watched">視聴済</string>
     <string name="watchlist_add">ウォッチリストに追加</string>
     <string name="watchlist_remove">ウォッチリストから削除</string>
     <string name="watchlist_added">ウォッチリストに追加しました</string>
@@ -238,6 +240,7 @@
     <string name="episodes_watched">%s 視聴済</string>
     <string name="runtime_all_episodes">すべての視聴済エピソードのランタイム</string>
     <string name="movies_on_watchlist">%s ウォッチリスト内</string>
+    <string name="movies_watched_format">%s 視聴済</string>
     <string name="runtime_movies_watchlist">映画ウォッチリストのランタイム</string>
     <plurals name="days_plural">
         <item quantity="other">%d 日</item>

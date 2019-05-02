@@ -14,7 +14,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import java.util.List;
 import timber.log.Timber;
@@ -69,14 +68,10 @@ public class ActionsHelper {
         configureView.setText(R.string.action_extensions_configure);
         configureView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), ExtensionsConfigurationActivity.class);
-            if (AndroidUtils.isJellyBeanOrHigher()) {
-                v.getContext()
-                        .startActivity(intent,
-                                ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(),
-                                        v.getHeight()).toBundle());
-            } else {
-                v.getContext().startActivity(intent);
-            }
+            v.getContext()
+                    .startActivity(intent,
+                            ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(),
+                                    v.getHeight()).toBundle());
         });
         actionsContainer.addView(configureView);
     }

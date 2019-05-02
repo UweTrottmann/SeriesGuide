@@ -16,10 +16,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import androidx.test.InstrumentationRegistry;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
@@ -50,7 +50,7 @@ public class ShowsActivityTest {
     public void setUp() throws Exception {
         // delete the database and close the database helper inside the provider
         // to ensure a clean state for the add show test
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = ApplicationProvider.getApplicationContext();
         context.deleteDatabase(SeriesGuideDatabase.DATABASE_NAME);
         context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI_CLOSE,
                 null, null, null, null);

@@ -23,6 +23,7 @@
     <attr name="sgColorNavDrawerIcon" format="reference" />
     <attr name="sgColorNavDrawerText" format="reference" />
     <attr name="sgColorShadow" format="reference|color" />
+    <attr name="sgColorStatusBarOverlay" format="reference|color" />
 
     <!-- Drawables -->
     <attr name="drawableBackgroundGradient" format="reference" />

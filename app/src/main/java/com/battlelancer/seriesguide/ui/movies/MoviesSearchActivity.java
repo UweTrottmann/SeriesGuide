@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.res.TypedArray;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -67,12 +66,10 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
                             MoviesSearchFragment.newInstance(link))
                     .commit();
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                postponeEnterTransition();
-                // allow the adapter to repopulate during the next layout pass
-                // before starting the transition animation
-                containerMoviesSearchFragment.post(this::startPostponedEnterTransition);
-            }
+            postponeEnterTransition();
+            // allow the adapter to repopulate during the next layout pass
+            // before starting the transition animation
+            containerMoviesSearchFragment.post(this::startPostponedEnterTransition);
         }
     }
 

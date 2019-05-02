@@ -92,6 +92,7 @@
     <string name="episode_writers">Rašytojai</string>
     <string name="show_isalive">Rodomas</string>
     <string name="show_isnotalive">Pasibaigęs</string>
+    <string name="show_isUpcoming">Artėjančios</string>
     <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
     <string name="no_translation_title">Nėra išversta</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
@@ -227,6 +228,7 @@
     <string name="movies_in_theatres">In theaters</string>
     <string name="movies_collection">Kolekcija</string>
     <string name="movies_watchlist">Stebimi</string>
+    <string name="movies_watched">Matyti</string>
     <string name="watchlist_add">Įtraukti į stebimų sąrašą</string>
     <string name="watchlist_remove">Pašalinti iš stebimų sąrašo</string>
     <string name="watchlist_added">Įtraukta į stebimų sarašą</string>
@@ -250,6 +252,7 @@
     <string name="episodes_watched">%s matyti</string>
     <string name="runtime_all_episodes">visų matytų serijų laikas</string>
     <string name="movies_on_watchlist">%s stebimų sąraše</string>
+    <string name="movies_watched_format">%s matyti</string>
     <string name="runtime_movies_watchlist">stebimų filmų peržiūros laikas</string>
     <plurals name="days_plural">
         <item quantity="one">%d day</item>

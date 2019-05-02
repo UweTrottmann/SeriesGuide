@@ -47,7 +47,6 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.gridheaderview.StickyGridHeadersGridView;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -98,8 +97,8 @@ public class CalendarFragment extends Fragment
         emptyView.setText(getString(getArguments().getInt(InitBundle.EMPTY_STRING_ID)));
 
         gridView = v.findViewById(R.id.gridViewCalendar);
-        // enable app bar scrolling out of view only on L or higher
-        ViewCompat.setNestedScrollingEnabled(gridView, AndroidUtils.isLollipopOrHigher());
+        // enable app bar scrolling out of view
+        ViewCompat.setNestedScrollingEnabled(gridView, true);
         gridView.setEmptyView(emptyView);
         gridView.setAreHeadersSticky(false);
 

@@ -40,6 +40,11 @@
         android:theme="@style/Theme.SeriesGuide"
         tools:ignore="AllowBackup,UnusedAttribute">
 
+        <!-- AndroidX testing, remove once minSdkVersion is 28 or higher. -->
+        <uses-library
+            android:name="android.test.runner"
+            android:required="false" />
+
         <!-- Samsung MultiWindow support -->
         <meta-data
             android:name="com.samsung.android.sdk.multiwindow.enable"
@@ -233,11 +238,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity android:name="com.battlelancer.seriesguide.ui.people.PeopleActivity" />
         <activity android:name="com.battlelancer.seriesguide.ui.people.PersonActivity" />
-
-        <!-- Unwatched counter update service -->
-        <service
-            android:name="com.battlelancer.seriesguide.ui.overview.UnwatchedUpdaterService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <!-- Notification service -->
         <receiver android:name="com.battlelancer.seriesguide.service.NotificationActionReceiver" />

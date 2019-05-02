@@ -90,6 +90,7 @@
     <string name="episode_writers">Сценаристи</string>
     <string name="show_isalive">Продължава</string>
     <string name="show_isnotalive">Завършил</string>
+    <string name="show_isUpcoming">Предстоящи</string>
     <string name="no_translation">Няма описание преведено на %1$s възможно на %2$s.</string>
     <string name="no_translation_title">Не е преведено</string>
     <string name="no_spoilers">Някои детайли са скрити, за да се избегнат спойлерите. За да изключите това отидете в настройки.</string>
@@ -219,6 +220,7 @@
     <string name="movies_in_theatres">В кината</string>
     <string name="movies_collection">Колекция</string>
     <string name="movies_watchlist">Списък за гледане</string>
+    <string name="movies_watched">Гледано</string>
     <string name="watchlist_add">Добави към списъка за гледане</string>
     <string name="watchlist_remove">Премахни от списъка за гледане</string>
     <string name="watchlist_added">Добавено към списъка за гледане</string>
@@ -242,6 +244,7 @@
     <string name="episodes_watched">%s гледани</string>
     <string name="runtime_all_episodes">Продължителност на всички гледани епизоди</string>
     <string name="movies_on_watchlist">%s в плейлистата</string>
+    <string name="movies_watched_format">%s гледани</string>
     <string name="runtime_movies_watchlist">Обща продължителност на гледаните филми</string>
     <plurals name="days_plural">
         <item quantity="one">%d ден</item>

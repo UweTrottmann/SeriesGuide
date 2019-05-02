@@ -8,21 +8,21 @@
     <style name="Theme.SeriesGuide.Immersive">
 
         <!-- Transparent status bar (native, v21+) -->
-        <item name="android:statusBarColor">@color/black_38</item>
+        <item name="android:statusBarColor">?attr/sgColorStatusBarOverlay</item>
 
     </style>
 
     <style name="Theme.SeriesGuide.DarkBlue.Immersive">
 
         <!-- Transparent status bar (native, v21+) -->
-        <item name="android:statusBarColor">@color/black_38</item>
+        <item name="android:statusBarColor">?attr/sgColorStatusBarOverlay</item>
 
     </style>
 
     <style name="Theme.SeriesGuide.Light.Immersive">
 
         <!-- Transparent (v21+) and light status bar (native, v23+) -->
-        <item name="android:statusBarColor">@color/white_50</item>
+        <item name="android:statusBarColor">?attr/sgColorStatusBarOverlay</item>
         <item name="android:windowLightStatusBar">true</item>
 
     </style>

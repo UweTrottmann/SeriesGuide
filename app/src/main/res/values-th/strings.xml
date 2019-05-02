@@ -11,7 +11,7 @@
     <string name="help">ช่วยเหลือ</string>
     <string name="help_and_feedback">ช่วยเหลือ &amp; ความคิดเห็น</string>
     <string name="drawer_open">เปิดแถบนำทาง</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide จะไม่ออกอัปเดตสำหรับ Android เวอร์ชันนี้อีก</string>
     <!-- Media items -->
     <string name="show">ซีรีส์</string>
     <string name="episode">ตอน</string>
@@ -89,6 +89,7 @@
     <string name="episode_writers">ผู้เขียนบท</string>
     <string name="show_isalive">ยังไม่จบ</string>
     <string name="show_isnotalive">จบแล้ว</string>
+    <string name="show_isUpcoming">เร็วๆ นี้</string>
     <string name="no_translation">ไม่มีรายละเอียดที่ถูกแปลเป็น %1$s พร้อมใช้งานที่ %2$s</string>
     <string name="no_translation_title">ยังไม่ถูกแปล</string>
     <string name="no_spoilers">รายละเอียดบางอย่างถูกซ่อนเพื่อป้องกันการสปอยล์ ปิดการป้องกันนี้ได้ในการตั้งค่า</string>
@@ -215,6 +216,7 @@
     <string name="movies_in_theatres">ในโรง</string>
     <string name="movies_collection">คลังเก็บ</string>
     <string name="movies_watchlist">อยากดู</string>
+    <string name="movies_watched">ดูแล้ว</string>
     <string name="watchlist_add">เพิ่มในรายการที่อยากดู</string>
     <string name="watchlist_remove">ลบออกจากรายการที่อยากดู</string>
     <string name="watchlist_added">เพิ่มในรายการที่อยากดูแล้ว</string>
@@ -238,6 +240,7 @@
     <string name="episodes_watched">ดูแล้ว %s ตอน</string>
     <string name="runtime_all_episodes">ระยะเวลารวมตอนที่ดูแล้วทั้งหมด</string>
     <string name="movies_on_watchlist">%s เรื่องที่อยากดู</string>
+    <string name="movies_watched_format">ดูแล้ว %s ตอน</string>
     <string name="runtime_movies_watchlist">ระยะเวลารวมของภาพยนตร์ที่อยากดู</string>
     <plurals name="days_plural">
         <item quantity="other">%d วัน</item>
@@ -268,7 +271,7 @@
     <string name="hexagon_remove_account_confirmation">การลบบัญชีของคุณจะลบซีรีส์และภาพยนตร์ทั้งหมดออกจาก SeriesGuide Cloud ยืนยันให้แน่ใจว่าคุณต้องการลบข้อมูลออกจากอุปกรณ์ที่เชื่อมต่ออยู่ด้วยเช่นกัน</string>
     <string name="hexagon_api_queued">กำลังส่งไปยัง SeriesGuide Cloud</string>
     <string name="hexagon_signed_out">ออกจากระบบ SeriesGuide Cloud แล้ว</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">ข้อผิดพลาดในการเข้าสู่ระบบด้วย Google (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">กำลังส่งไปยัง trakt</string>
     <string name="checkin_success_trakt">เช็กอิน %s บน trakt แล้ว</string>
@@ -344,8 +347,8 @@
         <item quantity="other">%d นาทีก่อนหน้า</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
+    <string name="licence_tvdb">แอปนี้ใช้ข้อมูลและรูปภาพจาก TheTVDB สงวนสิทธิ์ภายใต้สัญญาอนุญาต Creative Commons</string>
     <string name="licence_themoviedb">ผลิตภัณฑ์นี้ใช้ API ของ TMDb แต่ไม่ได้รับการรับรองโดย TMDb</string>
     <string name="licence_trakt">แอปนี้ใช้ข้อมูลและรูปภาพจาก trakt</string>
     <string name="about_open_source">SeriesGuide สร้างด้วยซอฟต์แวร์โอเพนซอร์ส</string>
@@ -430,7 +433,7 @@
     <string name="hide_watched">ซ่อนตอนที่ดูแล้ว</string>
     <string name="pref_widget_opacity">พื้นหลังวิตเจ็ต</string>
     <string name="pref_widget_type">ชนิดวิตเจ็ต</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">ใช้อักษรขนาดใหญ่ขึ้น</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">โปร่งใส</string>
     <string name="widget_background_25">25%</string>

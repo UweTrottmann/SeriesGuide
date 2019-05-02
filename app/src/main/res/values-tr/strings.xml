@@ -90,6 +90,7 @@
     <string name="episode_writers">Yazarlar</string>
     <string name="show_isalive">Devam ediyor</string>
     <string name="show_isnotalive">Sona erdi</string>
+    <string name="show_isUpcoming">Yaklaşan</string>
     <string name="no_translation">%2$s\'de %1$s\'ye çevrilmiş herhangi bir açıklama bulunmamaktadır.</string>
     <string name="no_translation_title">Çevrilmedi</string>
     <string name="no_spoilers">Bazı detaylar spoiler önlemek için gizli kalır. Bunu kapatmak için ayarlara gidiniz.</string>
@@ -219,6 +220,7 @@
     <string name="movies_in_theatres">Vizyonda</string>
     <string name="movies_collection">Koleksiyon</string>
     <string name="movies_watchlist">İzleme listesi</string>
+    <string name="movies_watched">İzlenmiş</string>
     <string name="watchlist_add">İzleme Listesine Ekle</string>
     <string name="watchlist_remove">İzleme Listesinden Kaldır</string>
     <string name="watchlist_added">İzleme Listesine Eklendi</string>
@@ -242,6 +244,7 @@
     <string name="episodes_watched">%s izlendi</string>
     <string name="runtime_all_episodes">İzlenen tüm bölümlerin toplam süresi</string>
     <string name="movies_on_watchlist">%s İzleme listesi</string>
+    <string name="movies_watched_format">%s izlendi</string>
     <string name="runtime_movies_watchlist">Film izleme listesinin toplam süresi</string>
     <plurals name="days_plural">
         <item quantity="one">%d gün</item>

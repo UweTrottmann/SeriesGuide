@@ -20,7 +20,9 @@ import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Transformation
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.IOException
@@ -46,10 +48,11 @@ class ShortcutCreator(
      * Prepares the bitmap for the shortcut on [Dispatchers.IO],
      * when ready suggest to (O+) or pins the shortcut.
      */
-    suspend fun prepareAndPinShortcut() {
+    suspend fun prepareAndPinShortcut(coroutineScope: CoroutineScope) {
         withContext(Dispatchers.IO) {
             prepareShortcut()
         }
+        if (!coroutineScope.isActive) return
         pinShortcut()
     }
 

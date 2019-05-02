@@ -91,6 +91,7 @@
     <string name="episode_writers">Scenarişti</string>
     <string name="show_isalive">Continuă</string>
     <string name="show_isnotalive">Terminat</string>
+    <string name="show_isUpcoming">Urmează</string>
     <string name="no_translation">Nu există nici o traducere în %1$s disponibilă pe %2$s.</string>
     <string name="no_translation_title">Ne tradus</string>
     <string name="no_spoilers">Unele detalii sunt ascunse pentru a evita spoilere. Pentru a nu folosi aceasta protecție mergeți în Setări.</string>
@@ -223,6 +224,7 @@
     <string name="movies_in_theatres">În cinematografe</string>
     <string name="movies_collection">Colecție</string>
     <string name="movies_watchlist">Listă vizionate</string>
+    <string name="movies_watched">Vizionat</string>
     <string name="watchlist_add">Adaugă în watchlist</string>
     <string name="watchlist_remove">Elimina din watchlist</string>
     <string name="watchlist_added">Adăugat în watchlist</string>
@@ -246,6 +248,7 @@
     <string name="episodes_watched">%s urmărit</string>
     <string name="runtime_all_episodes">Timpul de urmărire al tuturor episoadelor</string>
     <string name="movies_on_watchlist">%s pe lista de urmărite</string>
+    <string name="movies_watched_format">%s urmărit</string>
     <string name="runtime_movies_watchlist">Total timp vizionat listă favorite</string>
     <plurals name="days_plural">
         <item quantity="one">%d zi</item>

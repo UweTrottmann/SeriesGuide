@@ -811,7 +811,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         override fun onScrollChange(
             v: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int
         ) {
-            val actionBar = (activity as AppCompatActivity).supportActionBar ?: return
+            val actionBar = (activity as AppCompatActivity?)?.supportActionBar ?: return
 
             val viewId = v.id
 
@@ -826,7 +826,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 val primaryColor = ContextCompat.getColor(
                     v.context,
                     Utils.resolveAttributeToResourceId(
-                        v.context.theme, R.attr.sgColorBackgroundDim
+                        v.context.theme, R.attr.sgColorStatusBarOverlay
                     )
                 )
                 actionBar.setBackgroundDrawable(ColorDrawable(primaryColor))

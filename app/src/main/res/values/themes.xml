@@ -32,6 +32,8 @@
         <item name="android:windowBackground">@color/background</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="windowActionModeOverlay">true</item>
+        <!-- Note: nav bar color needs to be opaque! -->
+        <item name="android:navigationBarColor">@color/black_almost</item>
 
         <!-- System widgets -->
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
@@ -56,6 +58,7 @@
         <item name="sgColorNavDrawerIcon">@color/nav_drawer_icon_sg</item>
         <item name="sgColorNavDrawerText">@color/nav_drawer_text_sg</item>
         <item name="sgColorShadow">@color/protection_dark</item>
+        <item name="sgColorStatusBarOverlay">@color/black_87</item>
 
         <!-- Drawables -->
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
@@ -89,6 +92,8 @@
         <item name="android:windowBackground">@color/background</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="windowActionModeOverlay">true</item>
+        <!-- Note: nav bar color needs to be opaque! -->
+        <item name="android:navigationBarColor">@color/black_almost</item>
 
         <!-- System widgets -->
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
@@ -109,6 +114,7 @@
         <item name="sgColorNavDrawerIcon">@color/nav_drawer_icon_dark</item>
         <item name="sgColorNavDrawerText">@color/nav_drawer_text_dark</item>
         <item name="sgColorShadow">@color/protection_dark</item>
+        <item name="sgColorStatusBarOverlay">@color/black_87</item>
 
         <!-- Drawables -->
         <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
@@ -118,6 +124,9 @@
     <style name="Theme.BaseSeriesGuide.Light" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 21 go here. -->
+
+        <!-- Note: nav bar color needs to be opaque! -->
+        <item name="android:navigationBarColor">@color/black_almost</item>
 
     </style>
 
@@ -172,6 +181,7 @@
         <item name="sgColorNavDrawerIcon">@color/nav_drawer_icon_sg_light</item>
         <item name="sgColorNavDrawerText">@color/nav_drawer_text_sg_light</item>
         <item name="sgColorShadow">@color/protection_light</item>
+        <item name="sgColorStatusBarOverlay">@color/white_87</item>
 
         <!-- Drawables -->
         <item name="drawableBackgroundGradient">@drawable/background_gradient_light</item>

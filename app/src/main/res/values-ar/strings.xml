@@ -94,6 +94,7 @@
     <string name="episode_writers">تأليف</string>
     <string name="show_isalive">مستمر</string>
     <string name="show_isnotalive">انتهى</string>
+    <string name="show_isUpcoming">القادم</string>
     <string name="no_translation">لا يوجد وصف باللغة %1$s متاحة على موقع %2$s.</string>
     <string name="no_translation_title">غير مترجمة</string>
     <string name="no_spoilers">يتم إخفاء بعض التفاصيل لمنع الحرق. لإيقاف هذا الانتقال إلى إعدادات.</string>
@@ -235,6 +236,7 @@
     <string name="movies_in_theatres">حاليا في السينما</string>
     <string name="movies_collection">مجموعة</string>
     <string name="movies_watchlist">قائمة المشاهدة</string>
+    <string name="movies_watched">تمت مشاهدتها</string>
     <string name="watchlist_add">إضافة لقائمة المشاهدة</string>
     <string name="watchlist_remove">إلزالة من قائمة المشاهدة</string>
     <string name="watchlist_added">تمت الإضافة إلى قائمة المشاهدة</string>
@@ -258,6 +260,7 @@
     <string name="episodes_watched">%s تمت مشاهدتها</string>
     <string name="runtime_all_episodes">مجموع مشاهدة جميع الحلقات</string>
     <string name="movies_on_watchlist">%s في قائمة المشاهدة لاحقا</string>
+    <string name="movies_watched_format">%s تمت مشاهدتها</string>
     <string name="runtime_movies_watchlist">وقت التشغيل لقائمة المشاهدة</string>
     <plurals name="days_plural">
         <item quantity="one">يومان</item>

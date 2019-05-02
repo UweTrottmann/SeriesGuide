@@ -90,6 +90,7 @@
     <string name="episode_writers">Író(k)</string>
     <string name="show_isalive">Még fut</string>
     <string name="show_isnotalive">Véget ért</string>
+    <string name="show_isUpcoming">Következő</string>
     <string name="no_translation">Nincs leírás %1$s nyelven a %2$s adatbázisban.</string>
     <string name="no_translation_title">Nincs lefordítva</string>
     <string name="no_spoilers">Néhány részlet elrejtésre kerül a spoilerek megakadályozása miatt. A kikapcsoláshoz menj a Beállításokba.</string>
@@ -219,6 +220,7 @@
     <string name="movies_in_theatres">Mozikban</string>
     <string name="movies_collection">Gyűjtemény</string>
     <string name="movies_watchlist">Figyelőlista</string>
+    <string name="movies_watched">Megnézve</string>
     <string name="watchlist_add">Figyelőlistához ad</string>
     <string name="watchlist_remove">Figyelőlistáról töröl</string>
     <string name="watchlist_added">Hozzáadva a figyelőlistához</string>
@@ -242,6 +244,7 @@
     <string name="episodes_watched">%s megnézve</string>
     <string name="runtime_all_episodes">Összes epizód műsorideje</string>
     <string name="movies_on_watchlist">%s a figyelőlistában</string>
+    <string name="movies_watched_format">%s megnézve</string>
     <string name="runtime_movies_watchlist">LEJÁTSZÁSI LISTA TELJES JÁTÉKIDEJE</string>
     <plurals name="days_plural">
         <item quantity="one">%d nap</item>

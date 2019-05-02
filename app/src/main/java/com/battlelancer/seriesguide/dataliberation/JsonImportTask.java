@@ -73,20 +73,16 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         isImportShows = importShows;
         isImportLists = importLists;
         isImportMovies = importMovies;
-        // use Storage Access Framework on KitKat and up to select custom backup files,
-        // on older versions use default folders
-        // also auto backup by default uses default folders
-        isUseDefaultFolders = !AndroidUtils.isKitKatOrHigher();
+        // note: use Storage Access Framework on KitKat and up to select custom backup files
+        isUseDefaultFolders = false;
     }
 
     public JsonImportTask(Context context) {
         this(context, true, true, true);
         isImportingAutoBackup = true;
-        // use Storage Access Framework on KitKat and up to select custom backup files,
-        // on older versions use default folders
-        // also auto backup by default uses default folders
-        isUseDefaultFolders = !AndroidUtils.isKitKatOrHigher()
-                || BackupSettings.isUseAutoBackupDefaultFiles(context);
+        // note: use Storage Access Framework on KitKat and up to select custom backup files,
+        // though auto backup by default uses default folders
+        isUseDefaultFolders = BackupSettings.isUseAutoBackupDefaultFiles(context);
     }
 
     @Override

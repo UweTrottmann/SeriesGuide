@@ -90,6 +90,7 @@
     <string name="episode_writers">Συγγραφείς</string>
     <string name="show_isalive">Συνεχίζεται</string>
     <string name="show_isnotalive">Σταμάτησε</string>
+    <string name="show_isUpcoming">Επερχόμενα</string>
     <string name="no_translation">Δεν υπάρχει περιγραφή μεταφρασμένη στα %1$s διαθέσιμη στο %2$s.</string>
     <string name="no_translation_title">Χωρίς μετάφραση</string>
     <string name="no_spoilers">Κάποιες λεπτομέρειες είναι μη ορατές ώστε να μην αποκαλυφθούν πληροφορίες για την υπόθεση. Για να το απενεργοποιήσετε πηγαίνετε στις Ρυθμίσεις.</string>
@@ -219,6 +220,7 @@
     <string name="movies_in_theatres">Στους κινηματογράφους</string>
     <string name="movies_collection">Συλλογή</string>
     <string name="movies_watchlist">Λίστα προς παρακολούθηση</string>
+    <string name="movies_watched">Είδατε</string>
     <string name="watchlist_add">Προσθήκη στη λίστα παρακολούθησης</string>
     <string name="watchlist_remove">Αφαίρεση από τη λίστα παρακολούθησης</string>
     <string name="watchlist_added">Προστέθηκε στη λίστα παρακολούθησης</string>
@@ -242,6 +244,7 @@
     <string name="episodes_watched">%s παρακολουθήθηκαν</string>
     <string name="runtime_all_episodes">Συνολικός χρόνος όλων των επεισοδίων που έχετε παρακολουθήσει</string>
     <string name="movies_on_watchlist">%s στην λίστα παρακολούθησης</string>
+    <string name="movies_watched_format">%s παρακολουθήθηκαν</string>
     <string name="runtime_movies_watchlist">Συνολικός χρόνος όλων των επεισοδίων που παρακολούθησες</string>
     <plurals name="days_plural">
         <item quantity="one">%d ημέρα</item>

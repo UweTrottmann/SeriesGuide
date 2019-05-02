@@ -5,6 +5,61 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 48
+----------
+*(2019-05-02)*
+
+* Support 'Upcoming' status for shows.
+* Add watched movies tab.
+* Statistics: display number and run time of watched movies.
+* Color navigation bar black for dark themes, white on light theme.
+
+#### 48
+*(2019-05-02)*
+
+* 🔨 Do not crash if updating security provider fails.
+* 📝 Latest translations from crowdin.
+
+#### 48-beta6
+*(2019-04-17)*
+
+* 🔧 Support 'Upcoming' status for shows.
+* 🔧 Ask Google Play Services (if available) to update security provider.
+* 🔨 Fix crashes in movie details view and when pinning shortcuts.
+
+#### 48-beta5
+*(2019-04-12)*
+
+* 🔧 Experiment: refresh season watched counts using new Worker API.
+* 📝 Latest translations from crowdin.
+
+#### 48-beta4
+*(2019-03-29)*
+
+* 🔧 Do not ask for storage permission in backup/restore tool (still required for auto-backup).
+* 📝 Latest translations from crowdin.
+
+#### 48-beta3
+*(2019-03-21)*
+
+* 🌟 Statistics: display number and run time of watched movies. Might be incorrect until movies are updated.
+
+#### 48-beta2
+*(2019-03-15)*
+
+* 🌟 Add watched movies tab. Might show blank items until movies are updated.
+* 🔧 Force black navigation bar on OnePlus devices as well.
+* 🔧 Use white navigation bar on light theme if on Android 8.1 or higher for burn-in protection.
+* 📝 Latest translations from crowdin.
+
+#### 48-beta1
+*(2019-03-08)*
+
+* 🔧 Force black navigation bar.
+* 🔧 Use darker overlay action and status bar for better readability (movie details).
+* 🔧 Backup screens: show file path below button for better readability.
+* 📝 Latest translations from crowdin.
+
 Version 47
 ----------
 *(2019-02-22)*
