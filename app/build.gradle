@@ -190,6 +190,7 @@ dependencies {
 
     // https://github.com/palaima/DebugDrawer
     def debugDrawerVersion = "0.8.0"
+    implementation "io.palaima.debugdrawer:debugdrawer-base:$debugDrawerVersion"
     debugImplementation "io.palaima.debugdrawer:debugdrawer-view:$debugDrawerVersion"
     releaseImplementation "io.palaima.debugdrawer:debugdrawer-view-no-op:$debugDrawerVersion"
     implementation "io.palaima.debugdrawer:debugdrawer-commons:$debugDrawerVersion"
