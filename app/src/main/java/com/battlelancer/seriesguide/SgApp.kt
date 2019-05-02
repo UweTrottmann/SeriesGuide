@@ -148,7 +148,7 @@ class SgApp : Application() {
     }
 
     private val providerInstallListener = object : ProviderInstaller.ProviderInstallListener {
-        override fun onProviderInstallFailed(errorCode: Int, recoveryIntent: Intent) {
+        override fun onProviderInstallFailed(errorCode: Int, recoveryIntent: Intent?) {
             Timber.e("Failed to install GMS provider $errorCode")
         }
 
