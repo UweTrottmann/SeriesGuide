@@ -11,7 +11,7 @@
     <string name="help">עזרה</string>
     <string name="help_and_feedback">עזרה &amp; משוב</string>
     <string name="drawer_open">פתח תפריט ניווט</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide לא תקבל יותר עדכונים עבור גרסת האנדרואיד הנוכחית.</string>
     <!-- Media items -->
     <string name="show">סדרה</string>
     <string name="episode">פרק</string>
@@ -33,13 +33,13 @@
     <string name="save_selection">שמור בחירה</string>
     <string name="action_display_all">הצג הכל</string>
     <string name="web_search">חיפוש באינטרנט</string>
-    <string name="add_to_homescreen">Add to Home screen</string>
+    <string name="add_to_homescreen">הוסף לדף הבית</string>
     <string name="action_open">פתח</string>
     <string name="sync_manually">סנכרון ידני</string>
     <string name="sync_and_update">סנכרון &amp; עדכון</string>
     <string name="sync_and_download_all">סנכרון &amp; הורד הכל</string>
-    <string name="action_turn_off">Turn off</string>
-    <string name="action_stream">Stream or purchase</string>
+    <string name="action_turn_off">כבה</string>
+    <string name="action_stream">צפה או רכוש</string>
     <!-- Search -->
     <string name="clear_search_history">נקה את היסטוריית החיפוש</string>
     <string name="search_hint">חפש פרקים</string>
@@ -55,7 +55,7 @@
     <string name="reinstall_info">נסה לגבות את ההגדרות, להתקין מחדש, ולשחזר.</string>
     <string name="api_error_generic">לא יכולה לדבר עם %s. נסה שוב מאוחר יותר.</string>
     <string name="api_failed">נכשל: %s</string>
-    <string name="copy_to_clipboard">Copied to clipboard</string>
+    <string name="copy_to_clipboard">הועתק</string>
     <!-- Sharing -->
     <string name="share">שתף</string>
     <string name="share_show">שתף סדרה</string>
@@ -194,7 +194,7 @@
     <string name="checkin_searchhint">הקלד שם סדרה</string>
     <string name="add_empty">אין סדרות כאן.</string>
     <string name="no_results">אין תוצאות, נסה ביטויים שלמים.</string>
-    <string name="empty_show_search">Not found in your show list</string>
+    <string name="empty_show_search">לא נמצא ברשימת הסדרות</string>
     <string name="action_try_any_language">נסה בכל שפה</string>
     <string name="action_try_again">נסה שוב</string>
     <string name="tvdb_error_does_not_exist">הסדרה אינה קיימת (עדיין) ב-TheTVDB. נסה שוב מאוחר יותר.</string>
@@ -292,7 +292,7 @@
     <string name="hexagon_remove_account_confirmation">הסרת החשבון שלך תמחק את כל התוכניות והסרטים מ-SeriesGuide Cloud. הקפד למחוק אותם גם בהתקנים מחוברים אחרים.</string>
     <string name="hexagon_api_queued">שולח ל-SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">אינך מחובר לענן SeriesGuide.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">כניסה דרך גוגל נכשלה (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">שלח ל-trakt.</string>
     <string name="checkin_success_trakt">נעשה צ\'ק-אין ל-%s ב-trakt.</string>
@@ -380,8 +380,8 @@
         <item quantity="other">%d דקות לפני</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">מדיניות פרטיות</string>
+    <string name="licence_tvdb">יישום זה משתמש במידע ובתמונות מ TheTVDB תחת רישיון Creative Commons.</string>
     <string name="licence_themoviedb">מוצר זה עושה שימוש בממשק התכנות של TMDb, אך הוא אינו נתמך או מאושר על ידי TMDb.</string>
     <string name="licence_trakt">יישום זה משתמש בנתונים ותמונות מאתר trakt.</string>
     <string name="about_open_source">SeriesGuide בנוי באמצעות תוכנת קוד פתוח.</string>
@@ -466,7 +466,7 @@
     <string name="hide_watched">הסתר פרקים שנצפו</string>
     <string name="pref_widget_opacity">רקע ווידג\'ט</string>
     <string name="pref_widget_type">סוג ווידג\'ט</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">השתמש בגופן גדול</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">שקוף</string>
     <string name="widget_background_25">25%</string>
@@ -481,7 +481,7 @@
     <string name="onlyx">עמום</string>
     <string name="action_upgrade">פתח את כל האפשרויות</string>
     <string name="billing_action_subscribe">הצטרף כמנוי</string>
-    <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+    <string name="billing_action_manage_subscriptions">נהל הרשמות</string>
     <string name="billing_action_pass">קבל את X Pass</string>
     <string name="billing_price_subscribe">%1$s לשנה, נסה בחינם, בטל בכל עת באמצעות %2$s</string>
     <string name="billing_price_pass">רכישה חד פעמית</string>
