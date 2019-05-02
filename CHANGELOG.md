@@ -7,7 +7,18 @@ All dates are in the European Central timezone.
 
 Version 48
 ----------
-*(in development)*
+*(2019-05-02)*
+
+* Support 'Upcoming' status for shows.
+* Add watched movies tab.
+* Statistics: display number and run time of watched movies.
+* Color navigation bar black for dark themes, white on light theme.
+
+#### 48
+*(2019-05-02)*
+
+* 🔨 Do not crash if updating security provider fails.
+* 📝 Latest translations from crowdin.
 
 #### 48-beta6
 *(2019-04-17)*
