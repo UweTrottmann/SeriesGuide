@@ -1,9 +1,11 @@
 SeriesGuide Show Manager
 ========================
 
-This GitHub repository hosts the code for the Android app SeriesGuide.
+Android app to help you keep track of your favorite TV shows and movies.
 
-For more information about SeriesGuide have a look at [seriesgui.de](https://seriesgui.de).
+[Download at seriesgui.de](https://seriesgui.de).
+
+<img src="screenshots/phone.png" height="375"/>
 
 Contributing
 ------------
