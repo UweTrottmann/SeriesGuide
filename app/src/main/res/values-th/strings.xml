@@ -324,6 +324,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">ทั่วไป</string>
     <string name="prefs_category_sharing">บริการ</string>
+    <string name="prefs_category_advanced">ขั้นสูง</string>
     <string name="prefs_category_about">เกี่ยวกับ</string>
     <string name="pref_onlyfuture">ซ่อนตอนที่ออกอากาศแล้ว</string>
     <string name="pref_onlyfuturesummary">ไม่ต้องแสดงตอนที่ออกอากาศไปแล้ว</string>

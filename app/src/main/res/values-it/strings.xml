@@ -332,6 +332,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Base</string>
     <string name="prefs_category_sharing">Servizi</string>
+    <string name="prefs_category_advanced">Avanzate</string>
     <string name="prefs_category_about">Info su</string>
     <string name="pref_onlyfuture">Nessun episodio in onda</string>
     <string name="pref_onlyfuturesummary">Non mostrare gli episodi già trasmessi</string>

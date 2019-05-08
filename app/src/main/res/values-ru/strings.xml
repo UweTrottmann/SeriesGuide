@@ -348,6 +348,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Основные</string>
     <string name="prefs_category_sharing">Сервисы</string>
+    <string name="prefs_category_advanced">Дополнительно</string>
     <string name="prefs_category_about">О программе</string>
     <string name="pref_onlyfuture">Скрыть вышедшие эпизоды</string>
     <string name="pref_onlyfuturesummary">Не показывать транслировавшиеся эпизоды</string>

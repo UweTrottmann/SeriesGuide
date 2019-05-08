@@ -348,6 +348,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Základné</string>
     <string name="prefs_category_sharing">Služby</string>
+    <string name="prefs_category_advanced">Pokročilé</string>
     <string name="prefs_category_about">O aplikácii</string>
     <string name="pref_onlyfuture">Nezobrazovať odvysielané epizódy</string>
     <string name="pref_onlyfuturesummary">Nikdy nezobrazovať už odvysielané epizódy</string>

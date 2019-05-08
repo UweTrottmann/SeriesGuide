@@ -332,6 +332,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Grundlegendes</string>
     <string name="prefs_category_sharing">Dienste</string>
+    <string name="prefs_category_advanced">Weiteres</string>
     <string name="prefs_category_about">Über</string>
     <string name="pref_onlyfuture">Keine gesendeten Folgen</string>
     <string name="pref_onlyfuturesummary">Zeige nie bereits ausgestrahlte Folgen an</string>

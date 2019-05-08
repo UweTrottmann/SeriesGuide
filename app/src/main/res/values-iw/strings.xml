@@ -348,6 +348,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">בסיסי</string>
     <string name="prefs_category_sharing">שירותים</string>
+    <string name="prefs_category_advanced">מתקדם</string>
     <string name="prefs_category_about">אודות</string>
     <string name="pref_onlyfuture">אין פרקים ששודרו</string>
     <string name="pref_onlyfuturesummary">אל תציג פרקים ששודרו</string>
