@@ -327,6 +327,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Básicos</string>
     <string name="prefs_category_sharing">Servicios</string>
+    <string name="prefs_category_advanced">Avanzado</string>
     <string name="prefs_category_about">Acerca de</string>
     <string name="pref_onlyfuture">No hay episodios emitidos</string>
     <string name="pref_onlyfuturesummary">Nunca mostrar episodios ya transmitidos</string>

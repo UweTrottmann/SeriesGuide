@@ -27,6 +27,11 @@
         app:key="screen_notifications"
         app:title="@string/pref_notifications" />
 
+    <Preference
+        app:iconSpaceReserved="false"
+        app:key="screen_basic"
+        app:title="@string/prefs_category_advanced" />
+
     <PreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/prefs_category_sharing">
@@ -86,11 +91,6 @@
     <PreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/pref_other">
-
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="screen_basic"
-            app:title="@string/prefs_category_basic" />
 
         <Preference
             app:iconSpaceReserved="false"

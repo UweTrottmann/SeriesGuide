@@ -326,6 +326,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Βασικά</string>
     <string name="prefs_category_sharing">Υπηρεσίες</string>
+    <string name="prefs_category_advanced">Για προχωρημένους</string>
     <string name="prefs_category_about">Σχετικά</string>
     <string name="pref_onlyfuture">Επεισόδια που δεν έχουν προβληθεί</string>
     <string name="pref_onlyfuturesummary">Να μην εμφανίζονται ποτέ τα επεισόδια που έχουν ήδη προβληθεί</string>

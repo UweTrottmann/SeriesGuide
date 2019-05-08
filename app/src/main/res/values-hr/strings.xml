@@ -334,6 +334,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Osnovno</string>
     <string name="prefs_category_sharing">Usluge</string>
+    <string name="prefs_category_advanced">Napredno</string>
     <string name="prefs_category_about">O aplikaciji</string>
     <string name="pref_onlyfuture">Nema emitiranih epizoda</string>
     <string name="pref_onlyfuturesummary">Nikada ne prikazuj već pogledane epizode</string>
