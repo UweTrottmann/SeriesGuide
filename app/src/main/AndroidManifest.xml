@@ -383,7 +383,8 @@
         <!-- Sync service -->
         <service
             android:name="com.battlelancer.seriesguide.sync.SgAuthenticationService"
-            android:exported="true">
+            android:exported="true"
+            tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
@@ -394,7 +395,8 @@
         </service>
         <service
             android:name="com.battlelancer.seriesguide.sync.SgSyncService"
-            android:exported="true">
+            android:exported="true"
+            tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
