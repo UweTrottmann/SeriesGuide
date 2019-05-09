@@ -14,7 +14,13 @@ class HeaderDecoration : RecyclerView.ItemDecoration() {
         state: RecyclerView.State
     ) {
         val itemPosition = parent.getChildAdapterPosition(view)
-        val topInset = 0 // item with header + all items in same row :/
+        val itemHasHeader = (parent.adapter as CalendarAdapter2).itemHasHeader(itemPosition)
+        // item with header + all items in same row :/
+        val topInset = if (itemHasHeader) {
+            100
+        } else {
+            0
+        }
         outRect.set(0, topInset, 0, 0)
     }
 

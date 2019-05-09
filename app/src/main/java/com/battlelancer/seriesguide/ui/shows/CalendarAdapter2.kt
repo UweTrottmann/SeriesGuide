@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.battlelancer.seriesguide.model.EpisodeWithShow
+import com.battlelancer.seriesguide.ui.shows.CalendarFragment2ViewModel.CalendarItem
 
 class CalendarAdapter2(private val context: Context) :
-    ListAdapter<EpisodeWithShow, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+    ListAdapter<CalendarItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     data class Item(val id: Int)
 
@@ -23,13 +23,22 @@ class CalendarAdapter2(private val context: Context) :
         }
     }
 
-    companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<EpisodeWithShow>() {
-            override fun areItemsTheSame(old: EpisodeWithShow, new: EpisodeWithShow): Boolean =
-                // TODO expand
-                old.episodeTvdbId == new.episodeTvdbId
+    fun itemHasHeader(itemPosition: Int): Boolean {
+        if (itemPosition == 0) return true // top most item always has date header
 
-            override fun areContentsTheSame(old: EpisodeWithShow, new: EpisodeWithShow): Boolean {
+        // show header if previous episode falls onto another day
+        val episode = getItem(itemPosition)
+        val episodeBefore = getItem(itemPosition - 1)
+        return episode.headerTime != episodeBefore.headerTime
+    }
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CalendarItem>() {
+            override fun areItemsTheSame(old: CalendarItem, new: CalendarItem): Boolean =
+                // TODO expand
+                old.episode.episodeTvdbId == new.episode.episodeTvdbId
+
+            override fun areContentsTheSame(old: CalendarItem, new: CalendarItem): Boolean {
                 return old == new
             }
         }
