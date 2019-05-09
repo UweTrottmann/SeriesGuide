@@ -203,9 +203,6 @@ public class ShowsActivity extends BaseTopActivity implements
         tabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(), this, viewPager,
                 tabs, buttonAddShow);
 
-        // TODO remove me
-        tabsAdapter.addTab(R.string.upcoming, CalendarFragment2.class, null);
-
         // shows tab
         tabsAdapter.addTab(R.string.shows, ShowsFragment.class, null);
 
@@ -213,11 +210,13 @@ public class ShowsActivity extends BaseTopActivity implements
         tabsAdapter.addTab(R.string.user_stream, ShowsNowFragment.class, null);
 
         // upcoming tab
-        final Bundle argsUpcoming = new Bundle();
-        argsUpcoming.putString(CalendarFragment.InitBundle.TYPE, CalendarType.UPCOMING);
-        argsUpcoming.putInt(CalendarFragment.InitBundle.LOADER_ID, UPCOMING_LOADER_ID);
-        argsUpcoming.putInt(CalendarFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
-        tabsAdapter.addTab(R.string.upcoming, CalendarFragment.class, argsUpcoming);
+        // TODO remove me
+        tabsAdapter.addTab(R.string.upcoming, CalendarFragment2.class, null);
+//        final Bundle argsUpcoming = new Bundle();
+//        argsUpcoming.putString(CalendarFragment.InitBundle.TYPE, CalendarType.UPCOMING);
+//        argsUpcoming.putInt(CalendarFragment.InitBundle.LOADER_ID, UPCOMING_LOADER_ID);
+//        argsUpcoming.putInt(CalendarFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
+//        tabsAdapter.addTab(R.string.upcoming, CalendarFragment.class, argsUpcoming);
 
         // recent tab
         final Bundle argsRecent = new Bundle();
