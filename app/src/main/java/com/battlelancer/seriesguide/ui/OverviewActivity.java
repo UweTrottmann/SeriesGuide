@@ -32,7 +32,6 @@ import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;
-import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
 import java.lang.ref.WeakReference;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -170,7 +169,7 @@ public class OverviewActivity extends BaseNavDrawerActivity {
 
         // setup tab strip
         TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, pager,
-                (SlidingTabLayout) findViewById(R.id.tabsOverview));
+                findViewById(R.id.tabsOverview));
         Bundle argsShow = new Bundle();
         argsShow.putInt(ShowFragment.ARG_SHOW_TVDBID, showTvdbId);
         tabsAdapter.addTab(R.string.show, ShowFragment.class, argsShow);
