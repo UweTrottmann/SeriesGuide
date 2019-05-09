@@ -4,11 +4,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
-import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
-import android.nfc.NfcAdapter;
-import android.nfc.NfcAdapter.CreateNdefMessageCallback;
-import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +15,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
@@ -34,7 +28,6 @@ import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.lang.ref.WeakReference;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import org.greenrobot.eventbus.Subscribe;
@@ -54,8 +47,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     private static final String EXTRA_INT_SHOW_TVDBID = OverviewFragment.ARG_INT_SHOW_TVDBID;
     private static final String EXTRA_BOOLEAN_DISPLAY_SEASONS = "EXTRA_DISPLAY_SEASONS";
 
-    // keep reference to adapter while activity is alive
-    @SuppressWarnings("FieldCanBeLocal") private NfcAdapter nfcAdapter;
     private int showTvdbId;
 
     @Nullable @BindView(R.id.viewOverviewShadowStart) View shadowOverviewStart;
@@ -88,8 +79,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         }
 
         setupViews(savedInstanceState);
-
-        setupAndroidBeam();
 
         updateShowDelayed(showTvdbId);
     }
@@ -192,32 +181,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         Fragment overviewFragment = getSupportFragmentManager().findFragmentById(fragmentId);
         if (overviewFragment != null) {
             getSupportFragmentManager().beginTransaction().remove(overviewFragment).commit();
-        }
-    }
-
-    private void setupAndroidBeam() {
-        // Support beaming shows via Android Beam
-        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        if (nfcAdapter != null) {
-            nfcAdapter.setNdefPushMessageCallback(new CreateNdefMessageCallback() {
-                @Override
-                public NdefMessage createNdefMessage(NfcEvent event) {
-                    // send show TVDB id
-                    return new NdefMessage(new NdefRecord[] {
-                            createMimeRecord(String.valueOf(showTvdbId).getBytes())
-                    });
-                }
-
-                /**
-                 * Creates a custom MIME type encapsulated in an NDEF record
-                 */
-                public NdefRecord createMimeRecord(byte[] payload) {
-                    byte[] mimeBytes = Constants.ANDROID_BEAM_NDEF_MIME_TYPE.getBytes(
-                            Charset.forName("US-ASCII"));
-                    return new NdefRecord(
-                            NdefRecord.TNF_MIME_MEDIA, mimeBytes, new byte[0], payload);
-                }
-            }, this);
         }
     }
 

@@ -2,8 +2,6 @@ package com.battlelancer.seriesguide.ui
 
 import android.app.SearchManager
 import android.content.Intent
-import android.nfc.NdefMessage
-import android.nfc.NfcAdapter
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -25,7 +23,6 @@ import com.battlelancer.seriesguide.settings.SearchSettings
 import com.battlelancer.seriesguide.ui.episodes.EpisodeDetailsActivity
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment
-import com.battlelancer.seriesguide.ui.search.BeamError
 import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment
 import com.battlelancer.seriesguide.ui.search.SearchResult
 import com.battlelancer.seriesguide.ui.search.SearchTriggerListener
@@ -86,7 +83,6 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
 
         setupViews(savedInstanceState == null)
 
-        handleBeamIntent(intent)
         handleSearchIntent(intent)
     }
 
@@ -206,44 +202,7 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        handleBeamIntent(intent)
         handleSearchIntent(intent)
-    }
-
-    /**
-     * Handles Android Beam intents, extracts the beamed show from the NDEF Message and displays an
-     * add dialog for the show.
-     */
-    private fun handleBeamIntent(intent: Intent?) {
-        if (intent == null || NfcAdapter.ACTION_NDEF_DISCOVERED != intent.action) {
-            return
-        }
-
-        val rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
-        if (rawMsgs.isNullOrEmpty()) {
-            Utils.trackError(
-                AnalyticsEvents.BEAM_ERROR,
-                BeamError("Get messages", "Data null or zero length")
-            )
-            return  // corrupted or invalid data
-        }
-
-        // only one message sent during the beam
-        val msg = rawMsgs[0] as NdefMessage
-
-        val showTvdbId: Int
-        try {
-            showTvdbId = Integer.valueOf(String(msg.records[0].payload))
-        } catch (e: NumberFormatException) {
-            Utils.trackError(
-                AnalyticsEvents.BEAM_ERROR,
-                BeamError("Parse payload", "NumberFormatException: " + e.message)
-            )
-            return
-        }
-
-        // display add dialog
-        AddShowDialogFragment.show(this, supportFragmentManager, showTvdbId)
     }
 
     private fun handleSearchIntent(intent: Intent?) {
