@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide;
 
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -58,6 +59,7 @@ public class Constants {
             return query;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return this.value;
@@ -105,6 +107,7 @@ public class Constants {
             return query;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return this.value;
