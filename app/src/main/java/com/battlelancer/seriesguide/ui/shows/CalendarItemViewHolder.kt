@@ -13,7 +13,9 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.widgets.WatchedBox
+import com.uwetrottmann.androidutils.CheatSheet
 
 class CalendarItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -27,6 +29,10 @@ class CalendarItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private var item: CalendarFragment2ViewModel.CalendarItem? = null
 
+    init {
+        CheatSheet.setup(watchedBox)
+    }
+
     fun bind(
         context: Context,
         item: CalendarFragment2ViewModel.CalendarItem
@@ -34,9 +40,10 @@ class CalendarItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
         this.item = item
         val episode = item.episode!!
 
-        // TODO expand
+        // show title
         showTextView.text = episode.seriestitle
 
+        // episode number and title
         val hideTitle =
             EpisodeTools.isUnwatched(episode.watched) && DisplaySettings.preventSpoilers(context)
         episodeTextView.text = TextTools.getNextEpisodeString(
@@ -46,6 +53,32 @@ class CalendarItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
             if (hideTitle) null else episode.episodetitle
         )
 
+        // timestamp, absolute time and network
+        val releaseTime = episode.episode_firstairedms
+        val time = if (releaseTime != -1L) {
+            val actualRelease = TimeTools.applyUserOffset(context, releaseTime)
+            // timestamp
+            timestamp.text = if (DisplaySettings.isDisplayExactDate(context)) {
+                TimeTools.formatToLocalDateShort(context, actualRelease)
+            } else {
+                TimeTools.formatToLocalRelativeTime(context, actualRelease)
+            }
+            // release time of this episode
+            TimeTools.formatToLocalTime(context, actualRelease)
+        } else {
+            timestamp.text = null
+            null
+        }
+        info.text = TextTools.dotSeparate(episode.network, time)
+
+        // watched box
+        val episodeFlag = episode.watched
+        watchedBox.episodeFlag = episodeFlag
+        val watched = EpisodeTools.isWatched(episodeFlag)
+        watchedBox.contentDescription =
+            context.getString(if (watched) R.string.action_unwatched else R.string.action_watched)
+
+        // collected indicator
         collected.isGone = !episode.episode_collected
 
         // set poster
