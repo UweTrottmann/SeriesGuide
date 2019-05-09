@@ -57,12 +57,14 @@ class TvdbEpisodeTools constructor(
         var page: Int? = 0
         while (page != null) {
             val response = getEpisodes(showTvdbId, page, language)
+            val episodes = response.data
+                ?: break // no episode data returned, stop (likely API error)
 
             // fall back if no translation is available for some episodes
             // note: just checking errors is not enough as no error if just some are not translated
             val fallbackResponse = if (fallbackLanguage != null
                     && (response.errors?.invalidLanguage != null
-                    || response.data.find { it.episodeName.isNullOrEmpty() || it.overview.isNullOrEmpty() } != null)) {
+                    || episodes.find { it.episodeName.isNullOrEmpty() || it.overview.isNullOrEmpty() } != null)) {
                 // assumes that episode pages match between languages
                 // worst case: no fallback title or overview
                 getEpisodes(showTvdbId, page, fallbackLanguage)
@@ -71,7 +73,7 @@ class TvdbEpisodeTools constructor(
             }
 
             val values = ContentValues()
-            for (episode in response.data) {
+            for (episode in episodes) {
                 val episodeId = episode.id
                 val seasonNumber = episode.airedSeason
                 val seasonId = episode.airedSeasonID
@@ -142,7 +144,7 @@ class TvdbEpisodeTools constructor(
 
                 values.clear()
             }
-            page = response.links.next
+            page = response.links?.next
         }
 
         // add delete ops for leftover episodeIds in our db
