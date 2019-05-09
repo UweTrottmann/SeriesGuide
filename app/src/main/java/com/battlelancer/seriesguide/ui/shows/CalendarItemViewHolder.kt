@@ -15,7 +15,7 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.widgets.WatchedBox
 
-class CalendarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class CalendarItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val showTextView: TextView = itemView.findViewById(R.id.textViewActivityShow)
     private val episodeTextView: TextView = itemView.findViewById(R.id.textViewActivityEpisode)
@@ -27,9 +27,12 @@ class CalendarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private var item: CalendarFragment2ViewModel.CalendarItem? = null
 
-    fun bind(item: CalendarFragment2ViewModel.CalendarItem, context: Context) {
+    fun bind(
+        context: Context,
+        item: CalendarFragment2ViewModel.CalendarItem
+    ) {
         this.item = item
-        val episode = item.episode
+        val episode = item.episode!!
 
         // TODO expand
         showTextView.text = episode.seriestitle
@@ -54,10 +57,10 @@ class CalendarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     companion object {
 
-        fun create(parent: ViewGroup): CalendarViewHolder {
+        fun create(parent: ViewGroup): CalendarItemViewHolder {
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_calendar, parent, false)
-            return CalendarViewHolder(view)
+            return CalendarItemViewHolder(view)
         }
 
     }

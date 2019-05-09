@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.ui.shows.CalendarFragment.ACTIVITY_DAY_LIMIT
 import com.battlelancer.seriesguide.util.TimeTools
 import java.util.Calendar
+import java.util.LinkedList
 
 class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -31,41 +32,41 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
         upcomingEpisodesLiveData.addSource(upcomingEpisodesRawLiveData) { episodes ->
             // calculate actually displayed values on a background thread
             AsyncTask.THREAD_POOL_EXECUTOR.execute {
-                val mapped = episodes?.map {
-                    CalendarItem.map(getApplication(), it)
+                val mapped = LinkedList<CalendarItem>()
+
+                var previousHeaderTime: Long = 0
+                episodes.forEachIndexed { index, episode ->
+                    // insert header if first item or previous item has different header time
+                    val headerTime =
+                        calculateHeaderTime(getApplication(), episode.episode_firstairedms)
+                    if (index == 0 || headerTime != previousHeaderTime) {
+                        mapped.add(CalendarItem(headerTime, null))
+                    }
+                    previousHeaderTime = headerTime
+
+                    mapped.add(CalendarItem(headerTime, episode))
                 }
+
                 upcomingEpisodesLiveData.postValue(mapped)
             }
         }
     }
 
-    data class CalendarItem(
-        val headerTime: Long,
-        val episode: EpisodeWithShow
-    ) {
-        companion object {
-            fun map(context: Context, episodeWithShow: EpisodeWithShow): CalendarItem {
-                return CalendarItem(
-                    calculateHeaderTime(context, episodeWithShow.episode_firstairedms),
-                    episodeWithShow
-                )
-            }
+    private fun calculateHeaderTime(context: Context, releaseTime: Long): Long {
+        val actualRelease = TimeTools.applyUserOffset(context, releaseTime)
 
-            private fun calculateHeaderTime(context: Context, releaseTime: Long): Long {
-                val actualRelease = TimeTools.applyUserOffset(context, releaseTime)
+        val calendar = Calendar.getInstance()
+        calendar.time = actualRelease
+        // not midnight because upcoming->recent is delayed 1 hour
+        // so header would display wrong relative time close to midnight
+        calendar.set(Calendar.HOUR_OF_DAY, 1)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
 
-                val calendar = Calendar.getInstance()
-                calendar.time = actualRelease
-                // not midnight because upcoming->recent is delayed 1 hour
-                // so header would display wrong relative time close to midnight
-                calendar.set(Calendar.HOUR_OF_DAY, 1)
-                calendar.set(Calendar.MINUTE, 0)
-                calendar.set(Calendar.SECOND, 0)
-                calendar.set(Calendar.MILLISECOND, 0)
-
-                return calendar.timeInMillis
-            }
-        }
+        return calendar.timeInMillis
     }
+
+    data class CalendarItem(val headerTime: Long, val episode: EpisodeWithShow?)
 
 }
