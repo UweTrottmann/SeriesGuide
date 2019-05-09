@@ -9,7 +9,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.battlelancer.seriesguide.model.EpisodeWithShow
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.ui.shows.CalendarFragment.ACTIVITY_DAY_LIMIT
 import com.battlelancer.seriesguide.util.TimeTools
 import java.util.Calendar
 import java.util.LinkedList
@@ -20,14 +19,10 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
     private val upcomingEpisodesRawLiveData: LiveData<List<EpisodeWithShow>>
 
     init {
-        val timeThreshold =
-            System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS * ACTIVITY_DAY_LIMIT
-//        val recentThreshold = TimeTools.getCurrentTime(getApplication()) - DateUtils.HOUR_IN_MILLIS
-        val recentThreshold =
-            TimeTools.getCurrentTime(getApplication()) - DateUtils.DAY_IN_MILLIS * ACTIVITY_DAY_LIMIT
+        val recentThreshold = TimeTools.getCurrentTime(getApplication()) - DateUtils.HOUR_IN_MILLIS
 
         upcomingEpisodesRawLiveData = SgRoomDatabase.getInstance(getApplication()).episodeHelper()
-            .getUpcomingEpisodes(recentThreshold, timeThreshold)
+            .getUpcomingEpisodes(recentThreshold)
 
         upcomingEpisodesLiveData.addSource(upcomingEpisodesRawLiveData) { episodes ->
             // calculate actually displayed values on a background thread

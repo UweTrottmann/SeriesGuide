@@ -23,8 +23,9 @@ public interface EpisodeHelper {
 
     @Query("SELECT episodes._id AS episodeTvdbId, episodetitle, episodenumber, season, episode_firstairedms, watched, episode_collected, series_id AS showTvdbId, seriestitle, network, poster FROM episodes "
             + "LEFT OUTER JOIN series ON episodes.series_id=series._id "
-            + "WHERE episode_firstairedms>=:recentThreshold AND episode_firstairedms<:timeThreshold AND series_hidden=0 "
-            + "ORDER BY episode_firstairedms ASC,seriestitle COLLATE NOCASE ASC,episodenumber ASC")
-    LiveData<List<EpisodeWithShow>> getUpcomingEpisodes(long recentThreshold, long timeThreshold);
+            + "WHERE episode_firstairedms>=:recentThreshold AND series_hidden=0 "
+            + "ORDER BY episode_firstairedms ASC,seriestitle COLLATE NOCASE ASC,episodenumber ASC "
+            + "LIMIT 50")
+    LiveData<List<EpisodeWithShow>> getUpcomingEpisodes(long recentThreshold);
 
 }
