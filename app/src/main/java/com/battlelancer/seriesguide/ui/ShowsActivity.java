@@ -40,6 +40,7 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.ui.shows.CalendarFragment;
+import com.battlelancer.seriesguide.ui.shows.CalendarFragment2;
 import com.battlelancer.seriesguide.ui.shows.CalendarType;
 import com.battlelancer.seriesguide.ui.shows.ShowsFragment;
 import com.battlelancer.seriesguide.ui.shows.ShowsNowFragment;
@@ -201,6 +202,9 @@ public class ShowsActivity extends BaseTopActivity implements
         });
         tabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(), this, viewPager,
                 tabs, buttonAddShow);
+
+        // TODO remove me
+        tabsAdapter.addTab(R.string.upcoming, CalendarFragment2.class, null);
 
         // shows tab
         tabsAdapter.addTab(R.string.shows, ShowsFragment.class, null);

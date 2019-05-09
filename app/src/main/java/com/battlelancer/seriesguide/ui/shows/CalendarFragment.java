@@ -64,7 +64,7 @@ public class CalendarFragment extends Fragment
     private static final int CONTEXT_COLLECTION_ADD_ID = 3;
     private static final int CONTEXT_COLLECTION_REMOVE_ID = 4;
 
-    private static final int ACTIVITY_DAY_LIMIT = 30;
+    public static final int ACTIVITY_DAY_LIMIT = 30;
 
     private StickyGridHeadersGridView gridView;
     private CalendarAdapter adapter;
