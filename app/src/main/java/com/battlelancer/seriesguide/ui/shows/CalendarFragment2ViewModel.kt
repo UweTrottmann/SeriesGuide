@@ -7,22 +7,28 @@ import android.text.format.DateUtils
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.model.EpisodeWithShow
+import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.TimeTools
 import java.util.Calendar
 import java.util.LinkedList
 
 class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(application) {
 
-    val upcomingEpisodesLiveData = MediatorLiveData<List<CalendarItem>>()
+    private val queryLiveData = MutableLiveData<String>()
     private val upcomingEpisodesRawLiveData: LiveData<List<EpisodeWithShow>>
+    val upcomingEpisodesLiveData = MediatorLiveData<List<CalendarItem>>()
 
     init {
-        val recentThreshold = TimeTools.getCurrentTime(getApplication()) - DateUtils.HOUR_IN_MILLIS
-
-        upcomingEpisodesRawLiveData = SgRoomDatabase.getInstance(getApplication()).episodeHelper()
-            .getUpcomingEpisodes(recentThreshold)
+        upcomingEpisodesRawLiveData = Transformations.switchMap(queryLiveData) { queryString ->
+            SgRoomDatabase.getInstance(getApplication()).episodeHelper()
+                .getEpisodesWithShow(SimpleSQLiteQuery(queryString, null))
+        }
 
         upcomingEpisodesLiveData.addSource(upcomingEpisodesRawLiveData) { episodes ->
             // calculate actually displayed values on a background thread
@@ -45,6 +51,59 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
                 upcomingEpisodesLiveData.postValue(mapped)
             }
         }
+    }
+
+    /**
+     * Builds the calendar query based on given settings, updates the associated LiveData which
+     * will update the query results.
+     *
+     * @param type A [CalendarType], defaults to UPCOMING.
+     */
+    fun updateCalendarQuery(
+        type: String,
+        isOnlyCollected: Boolean,
+        isOnlyFavorites: Boolean,
+        isOnlyUnwatched: Boolean
+    ) {
+        // go an hour back in time, so episodes move to recent one hour late
+        val recentThreshold = TimeTools.getCurrentTime(getApplication()) - DateUtils.HOUR_IN_MILLIS
+
+        val query: StringBuilder
+        val sortOrder: String
+        if (CalendarType.RECENT == type) {
+            query = StringBuilder("episode_firstairedms!=-1 AND episode_firstairedms<$recentThreshold AND series_hidden=0")
+            sortOrder = CalendarQuery.SORTING_RECENT
+        } else {
+            query = StringBuilder("episode_firstairedms>=$recentThreshold AND series_hidden=0")
+            sortOrder = CalendarQuery.SORTING_UPCOMING
+        }
+
+        // append only favorites selection if necessary
+        if (isOnlyFavorites) {
+            query.append(" AND ").append(SeriesGuideContract.Shows.SELECTION_FAVORITES)
+        }
+
+        // append no specials selection if necessary
+        val isNoSpecials = DisplaySettings.isHidingSpecials(getApplication())
+        if (isNoSpecials) {
+            query.append(" AND ").append(SeriesGuideContract.Episodes.SELECTION_NO_SPECIALS)
+        }
+
+        // append unwatched selection if necessary
+        if (isOnlyUnwatched) {
+            query.append(" AND ").append(SeriesGuideContract.Episodes.SELECTION_UNWATCHED)
+        }
+
+        // only show collected episodes
+        if (isOnlyCollected) {
+            query.append(" AND ").append(SeriesGuideContract.Episodes.SELECTION_COLLECTED)
+        }
+
+        queryLiveData.value = "${EpisodeWithShow.select} " +
+                "LEFT OUTER JOIN series ON episodes.series_id=series._id " +
+                "WHERE $query " +
+                "ORDER BY $sortOrder " +
+                "LIMIT 50" // good compromise between performance and showing most info
     }
 
     private fun calculateHeaderTime(context: Context, releaseTime: Long): Long {

@@ -5,8 +5,11 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables.E
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
+import androidx.room.RawQuery;
+import androidx.sqlite.db.SupportSQLiteQuery;
 import com.battlelancer.seriesguide.model.EpisodeWithShow;
 import com.battlelancer.seriesguide.model.SgEpisode;
+import com.battlelancer.seriesguide.model.SgShow;
 import java.util.List;
 
 /**
@@ -21,11 +24,6 @@ public interface EpisodeHelper {
     @Query("SELECT * FROM " + EPISODES + " LIMIT 1")
     SgEpisode getEpisode();
 
-    @Query("SELECT episodes._id AS episodeTvdbId, episodetitle, episodenumber, season, episode_firstairedms, watched, episode_collected, series_id AS showTvdbId, seriestitle, network, poster FROM episodes "
-            + "LEFT OUTER JOIN series ON episodes.series_id=series._id "
-            + "WHERE episode_firstairedms>=:recentThreshold AND series_hidden=0 "
-            + "ORDER BY episode_firstairedms ASC,seriestitle COLLATE NOCASE ASC,episodenumber ASC "
-            + "LIMIT 50")
-    LiveData<List<EpisodeWithShow>> getUpcomingEpisodes(long recentThreshold);
-
+    @RawQuery(observedEntities = {SgEpisode.class, SgShow.class})
+    LiveData<List<EpisodeWithShow>> getEpisodesWithShow(SupportSQLiteQuery query);
 }

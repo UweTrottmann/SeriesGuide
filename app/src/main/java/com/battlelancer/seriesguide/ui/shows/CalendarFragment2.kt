@@ -67,6 +67,16 @@ class CalendarFragment2 : Fragment() {
         viewModel.upcomingEpisodesLiveData.observe(this, Observer {
             adapter.submitList(it)
         })
+        updateCalendarQuery()
+    }
+
+    private fun updateCalendarQuery() {
+        viewModel.updateCalendarQuery(
+            CalendarType.UPCOMING,
+            CalendarSettings.isOnlyCollected(context),
+            CalendarSettings.isOnlyFavorites(context),
+            CalendarSettings.isHidingWatchedEpisodes(context)
+        )
     }
 
 }
