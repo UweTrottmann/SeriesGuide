@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.shows;
 
 import android.app.Activity;
-import android.content.Context;
 import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +31,7 @@ import retrofit2.Response;
 public class TraktRecentEpisodeHistoryLoader
         extends GenericSimpleLoader<TraktRecentEpisodeHistoryLoader.Result> {
 
-    protected static final int MAX_HISTORY_SIZE = 25;
+    protected static final int MAX_HISTORY_SIZE = 10;
 
     public static class Result {
         public List<NowAdapter.NowItem> items;
@@ -146,11 +145,7 @@ public class TraktRecentEpisodeHistoryLoader
     }
 
     protected Call<List<HistoryEntry>> buildCall() {
-        return buildUserEpisodeHistoryCall(getContext());
-    }
-
-    public static Call<List<HistoryEntry>> buildUserEpisodeHistoryCall(Context context) {
-        Users traktUsers = SgApp.getServicesComponent(context).traktUsers();
+        Users traktUsers = SgApp.getServicesComponent(getContext()).traktUsers();
         return traktUsers.history(UserSlug.ME, HistoryType.EPISODES, 1, MAX_HISTORY_SIZE,
                 null, null, null);
     }
