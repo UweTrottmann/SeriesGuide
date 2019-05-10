@@ -19,10 +19,10 @@ import com.battlelancer.seriesguide.settings.WidgetSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.shows.CalendarFragment2.CalendarType;
 import com.battlelancer.seriesguide.ui.shows.CalendarQuery;
-import com.battlelancer.seriesguide.ui.shows.CalendarType;
 import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings;
-import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.CalendarUtils;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -103,12 +103,12 @@ public class ListWidgetService extends RemoteViewsService {
                     );
                     break;
                 case WidgetSettings.Type.RECENT:
-                    newCursor = DBUtils.activityQuery(context, CalendarType.RECENT,
+                    newCursor = CalendarUtils.calendarQuery(context, CalendarType.RECENT,
                             isOnlyCollected, isOnlyFavorites, isOnlyUnwatched, isInfinite);
                     break;
                 case WidgetSettings.Type.UPCOMING:
                 default:
-                    newCursor = DBUtils.activityQuery(context,
+                    newCursor = CalendarUtils.calendarQuery(context,
                             CalendarType.UPCOMING,
                             isOnlyCollected, isOnlyFavorites, isOnlyUnwatched, isInfinite);
                     break;
@@ -177,7 +177,7 @@ public class ListWidgetService extends RemoteViewsService {
             Bundle extras = new Bundle();
             extras.putInt(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                     dataCursor.getInt(isShowQuery ?
-                            ShowsQuery.SHOW_NEXT_EPISODE_ID : CalendarQuery._ID));
+                            ShowsQuery.SHOW_NEXT_EPISODE_ID : CalendarQuery.EPISODE_TVDB_ID));
             Intent fillInIntent = new Intent();
             fillInIntent.putExtras(extras);
             rv.setOnClickFillInIntent(R.id.appwidget_row, fillInIntent);
