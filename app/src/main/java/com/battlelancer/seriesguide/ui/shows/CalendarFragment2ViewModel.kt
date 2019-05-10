@@ -35,11 +35,15 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
             AsyncTask.THREAD_POOL_EXECUTOR.execute {
                 val mapped = LinkedList<CalendarItem>()
 
+                val calendar = Calendar.getInstance()
                 var previousHeaderTime: Long = 0
                 episodes.forEachIndexed { index, episode ->
                     // insert header if first item or previous item has different header time
-                    val headerTime =
-                        calculateHeaderTime(getApplication(), episode.episode_firstairedms)
+                    val headerTime = calculateHeaderTime(
+                        getApplication(),
+                        calendar,
+                        episode.episode_firstairedms
+                    )
                     if (index == 0 || headerTime != previousHeaderTime) {
                         mapped.add(CalendarItem(headerTime, null))
                     }
@@ -106,10 +110,9 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
                 "LIMIT 50" // good compromise between performance and showing most info
     }
 
-    private fun calculateHeaderTime(context: Context, releaseTime: Long): Long {
+    private fun calculateHeaderTime(context: Context, calendar: Calendar, releaseTime: Long): Long {
         val actualRelease = TimeTools.applyUserOffset(context, releaseTime)
 
-        val calendar = Calendar.getInstance()
         calendar.time = actualRelease
         // not midnight because upcoming->recent is delayed 1 hour
         // so header would display wrong relative time close to midnight
