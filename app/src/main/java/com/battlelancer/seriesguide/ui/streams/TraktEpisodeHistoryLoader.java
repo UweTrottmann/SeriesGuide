@@ -4,13 +4,16 @@ import android.app.Activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.ui.shows.TraktRecentEpisodeHistoryLoader;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
+import com.uwetrottmann.trakt5.entities.UserSlug;
+import com.uwetrottmann.trakt5.enums.HistoryType;
+import com.uwetrottmann.trakt5.services.Users;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -19,6 +22,8 @@ import retrofit2.Response;
  * Loads the last few episodes watched on trakt.
  */
 class TraktEpisodeHistoryLoader extends GenericSimpleLoader<TraktEpisodeHistoryLoader.Result> {
+
+    protected static final int MAX_HISTORY_SIZE = 50;
 
     static class Result {
         public List<HistoryEntry> results;
@@ -75,7 +80,9 @@ class TraktEpisodeHistoryLoader extends GenericSimpleLoader<TraktEpisodeHistoryL
     }
 
     protected Call<List<HistoryEntry>> buildCall() {
-        return TraktRecentEpisodeHistoryLoader.buildUserEpisodeHistoryCall(getContext());
+        Users traktUsers = SgApp.getServicesComponent(getContext()).traktUsers();
+        return traktUsers.history(UserSlug.ME, HistoryType.EPISODES, 1, MAX_HISTORY_SIZE,
+                null, null, null);
     }
 
     private Result buildResultFailure() {
