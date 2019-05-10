@@ -62,12 +62,7 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
      * will update the query results.
      * [type] defaults to [CalendarFragment2.CalendarType.UPCOMING].
      */
-    fun updateCalendarQuery(
-        type: CalendarFragment2.CalendarType,
-        isOnlyCollected: Boolean,
-        isOnlyFavorites: Boolean,
-        isOnlyUnwatched: Boolean
-    ) {
+    fun updateCalendarQuery(type: CalendarFragment2.CalendarType) {
         // go an hour back in time, so episodes move to recent one hour late
         val recentThreshold = TimeTools.getCurrentTime(getApplication()) - DateUtils.HOUR_IN_MILLIS
 
@@ -83,23 +78,22 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
         }
 
         // append only favorites selection if necessary
-        if (isOnlyFavorites) {
+        if (CalendarSettings.isOnlyFavorites(getApplication())) {
             query.append(" AND ").append(SeriesGuideContract.Shows.SELECTION_FAVORITES)
         }
 
         // append no specials selection if necessary
-        val isNoSpecials = DisplaySettings.isHidingSpecials(getApplication())
-        if (isNoSpecials) {
+        if (DisplaySettings.isHidingSpecials(getApplication())) {
             query.append(" AND ").append(SeriesGuideContract.Episodes.SELECTION_NO_SPECIALS)
         }
 
         // append unwatched selection if necessary
-        if (isOnlyUnwatched) {
+        if (CalendarSettings.isHidingWatchedEpisodes(getApplication())) {
             query.append(" AND ").append(SeriesGuideContract.Episodes.SELECTION_UNWATCHED)
         }
 
         // only show collected episodes
-        if (isOnlyCollected) {
+        if (CalendarSettings.isOnlyCollected(getApplication())) {
             query.append(" AND ").append(SeriesGuideContract.Episodes.SELECTION_COLLECTED)
         }
 

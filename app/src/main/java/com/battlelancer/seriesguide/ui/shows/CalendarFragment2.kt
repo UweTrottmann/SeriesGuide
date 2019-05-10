@@ -130,12 +130,7 @@ class CalendarFragment2 : Fragment() {
     }
 
     private fun updateCalendarQuery() {
-        viewModel.updateCalendarQuery(
-            type,
-            CalendarSettings.isOnlyCollected(context),
-            CalendarSettings.isOnlyFavorites(context),
-            CalendarSettings.isHidingWatchedEpisodes(context)
-        )
+        viewModel.updateCalendarQuery(type)
     }
 
     override fun onStart() {
