@@ -9,12 +9,22 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.model.EpisodeWithShow
 import com.battlelancer.seriesguide.ui.shows.CalendarFragment2ViewModel.CalendarItem
 import com.battlelancer.seriesguide.util.TimeTools
 import java.util.Date
 
-class CalendarAdapter2(private val context: Context) :
+class CalendarAdapter2(
+    private val context: Context,
+    private val itemClickListener: ItemClickListener
+) :
     ListAdapter<CalendarItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+
+    interface ItemClickListener {
+        fun onItemClick(episodeTvdbId: Int)
+        fun onItemLongClick(anchor: View, episode: EpisodeWithShow)
+        fun onItemWatchBoxClick(episode: EpisodeWithShow, isWatched: Boolean)
+    }
 
     override fun getItemViewType(position: Int): Int {
         val isHeader = getItem(position).episode == null
@@ -28,7 +38,7 @@ class CalendarAdapter2(private val context: Context) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_HEADER -> CalendarHeaderViewHolder.create(parent)
-            VIEW_TYPE_ITEM -> CalendarItemViewHolder.create(parent)
+            VIEW_TYPE_ITEM -> CalendarItemViewHolder.create(parent, itemClickListener)
             else -> throw IllegalArgumentException("Unknown viewType $viewType")
         }
     }

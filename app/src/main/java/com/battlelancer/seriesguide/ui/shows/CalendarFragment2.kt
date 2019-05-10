@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui.shows
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -9,6 +10,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,15 +18,19 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.model.EpisodeWithShow
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
+import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 
 class CalendarFragment2 : Fragment() {
-
-    companion object {
-        fun newInstance() = CalendarFragment2()
-    }
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: CalendarFragment2ViewModel
@@ -45,7 +51,7 @@ class CalendarFragment2 : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = CalendarAdapter2(context!!)
+        adapter = CalendarAdapter2(context!!, calendarItemClickListener)
 
         val layoutManager = AutoGridLayoutManager(
             context,
@@ -162,6 +168,123 @@ class CalendarFragment2 : Fragment() {
             || CalendarSettings.KEY_INFINITE_SCROLLING == key) {
             updateCalendarQuery()
         }
+    }
+
+    private val calendarItemClickListener = object :
+        CalendarAdapter2.ItemClickListener {
+        override fun onItemClick(episodeTvdbId: Int) {
+            val intent = Intent(activity, EpisodesActivity::class.java)
+                .putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeTvdbId)
+            Utils.startActivityWithAnimation(activity, intent, view)
+        }
+
+        override fun onItemLongClick(anchor: View, episode: EpisodeWithShow) {
+            val context = anchor.context
+
+            val popupMenu = PopupMenu(context, anchor)
+            val menu = popupMenu.menu
+
+            // only display the action appropriate for the items current state
+            if (EpisodeTools.isWatched(episode.watched)) {
+                menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 0, R.string.action_unwatched)
+            } else {
+                menu.add(0, CONTEXT_FLAG_WATCHED_ID, 0, R.string.action_watched)
+            }
+            if (episode.episode_collected) {
+                menu.add(0, CONTEXT_COLLECTION_REMOVE_ID, 1, R.string.action_collection_remove)
+            } else {
+                menu.add(0, CONTEXT_COLLECTION_ADD_ID, 1, R.string.action_collection_add)
+            }
+            // display check-in if only trakt is connected
+            if (TraktCredentials.get(context).hasCredentials()
+                && !HexagonSettings.isEnabled(context)) {
+                menu.add(0, CONTEXT_CHECKIN_ID, 2, R.string.checkin)
+            }
+
+            val showTvdbId = episode.showTvdbId
+            val episodeTvdbId = episode.episodeTvdbId
+            val seasonNumber = episode.season
+            val episodeNumber = episode.episodenumber
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    CONTEXT_CHECKIN_ID -> {
+                        CheckInDialogFragment.show(
+                            getContext()!!,
+                            fragmentManager,
+                            episode.episodeTvdbId
+                        )
+                        return@setOnMenuItemClickListener true
+                    }
+                    CONTEXT_FLAG_WATCHED_ID -> {
+                        updateEpisodeWatchedState(
+                            showTvdbId, episodeTvdbId, seasonNumber,
+                            episodeNumber, true
+                        )
+                        return@setOnMenuItemClickListener true
+                    }
+                    CONTEXT_FLAG_UNWATCHED_ID -> {
+                        updateEpisodeWatchedState(
+                            showTvdbId, episodeTvdbId, seasonNumber,
+                            episodeNumber, false
+                        )
+                        return@setOnMenuItemClickListener true
+                    }
+                    CONTEXT_COLLECTION_ADD_ID -> {
+                        updateEpisodeCollectionState(
+                            showTvdbId, episodeTvdbId, seasonNumber,
+                            episodeNumber, true
+                        )
+                        return@setOnMenuItemClickListener true
+                    }
+                    CONTEXT_COLLECTION_REMOVE_ID -> {
+                        updateEpisodeCollectionState(
+                            showTvdbId, episodeTvdbId, seasonNumber,
+                            episodeNumber, false
+                        )
+                        return@setOnMenuItemClickListener true
+                    }
+                }
+                false
+            }
+
+            popupMenu.show()
+        }
+
+        override fun onItemWatchBoxClick(episode: EpisodeWithShow, isWatched: Boolean) {
+            updateEpisodeWatchedState(
+                episode.showTvdbId, episode.episodeTvdbId, episode.season, episode.episodenumber,
+                !isWatched
+            )
+        }
+    }
+
+    private fun updateEpisodeCollectionState(
+        showTvdbId: Int, episodeTvdbId: Int, seasonNumber: Int,
+        episodeNumber: Int, addToCollection: Boolean
+    ) {
+        EpisodeTools.episodeCollected(
+            context, showTvdbId, episodeTvdbId,
+            seasonNumber, episodeNumber, addToCollection
+        )
+    }
+
+    private fun updateEpisodeWatchedState(
+        showTvdbId: Int, episodeTvdbId: Int, seasonNumber: Int,
+        episodeNumber: Int, isWatched: Boolean
+    ) {
+        EpisodeTools.episodeWatched(
+            context, showTvdbId, episodeTvdbId,
+            seasonNumber, episodeNumber,
+            if (isWatched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED
+        )
+    }
+
+    companion object {
+        private const val CONTEXT_FLAG_WATCHED_ID = 0
+        private const val CONTEXT_FLAG_UNWATCHED_ID = 1
+        private const val CONTEXT_CHECKIN_ID = 2
+        private const val CONTEXT_COLLECTION_ADD_ID = 3
+        private const val CONTEXT_COLLECTION_REMOVE_ID = 4
     }
 
 }

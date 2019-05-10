@@ -17,7 +17,10 @@ import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.widgets.WatchedBox
 import com.uwetrottmann.androidutils.CheatSheet
 
-class CalendarItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class CalendarItemViewHolder(
+    itemView: View,
+    itemClickListener: CalendarAdapter2.ItemClickListener
+) : RecyclerView.ViewHolder(itemView) {
 
     private val showTextView: TextView = itemView.findViewById(R.id.textViewActivityShow)
     private val episodeTextView: TextView = itemView.findViewById(R.id.textViewActivityEpisode)
@@ -30,6 +33,26 @@ class CalendarItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     private var item: CalendarFragment2ViewModel.CalendarItem? = null
 
     init {
+        itemView.setOnClickListener {
+            item?.episode?.let {
+                itemClickListener.onItemClick(it.episodeTvdbId)
+            }
+        }
+        itemView.setOnLongClickListener {
+            item?.episode?.let {
+                itemClickListener.onItemLongClick(itemView, it)
+            }
+            true
+        }
+        watchedBox.setOnClickListener {
+            item?.episode?.let {
+                itemClickListener.onItemWatchBoxClick(
+                    it,
+                    EpisodeTools.isWatched(watchedBox.episodeFlag)
+                )
+            }
+        }
+
         CheatSheet.setup(watchedBox)
     }
 
@@ -90,10 +113,13 @@ class CalendarItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     companion object {
 
-        fun create(parent: ViewGroup): CalendarItemViewHolder {
+        fun create(
+            parent: ViewGroup,
+            itemClickListener: CalendarAdapter2.ItemClickListener
+        ): CalendarItemViewHolder {
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_calendar, parent, false)
-            return CalendarItemViewHolder(view)
+            return CalendarItemViewHolder(view, itemClickListener)
         }
 
     }
