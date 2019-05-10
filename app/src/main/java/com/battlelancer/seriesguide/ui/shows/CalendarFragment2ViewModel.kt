@@ -60,7 +60,7 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
      * @param type A [CalendarType], defaults to UPCOMING.
      */
     fun updateCalendarQuery(
-        type: String,
+        type: CalendarFragment2.CalendarType,
         isOnlyCollected: Boolean,
         isOnlyFavorites: Boolean,
         isOnlyUnwatched: Boolean
@@ -70,7 +70,7 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
 
         val query: StringBuilder
         val sortOrder: String
-        if (CalendarType.RECENT == type) {
+        if (CalendarFragment2.CalendarType.RECENT == type) {
             query = StringBuilder("episode_firstairedms!=-1 AND episode_firstairedms<$recentThreshold AND series_hidden=0")
             sortOrder = CalendarQuery.SORTING_RECENT
         } else {

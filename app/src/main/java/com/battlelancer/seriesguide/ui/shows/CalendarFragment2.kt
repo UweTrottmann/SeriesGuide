@@ -32,10 +32,27 @@ import com.battlelancer.seriesguide.util.ViewTools
 
 class CalendarFragment2 : Fragment() {
 
+    enum class CalendarType(val id: Int) {
+        UPCOMING(1),
+        RECENT(2)
+    }
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: CalendarFragment2ViewModel
 
     private lateinit var adapter: CalendarAdapter2
+    private lateinit var type: CalendarType
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val argType = arguments!!.getInt(ARG_CALENDAR_TYPE)
+        type = when (argType) {
+            CalendarType.UPCOMING.id -> CalendarType.UPCOMING
+            CalendarType.RECENT.id -> CalendarType.RECENT
+            else -> throw IllegalArgumentException("Unknown calendar type $argType")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -91,7 +108,7 @@ class CalendarFragment2 : Fragment() {
 
     private fun updateCalendarQuery() {
         viewModel.updateCalendarQuery(
-            CalendarType.UPCOMING,
+            type,
             CalendarSettings.isOnlyCollected(context),
             CalendarSettings.isOnlyFavorites(context),
             CalendarSettings.isHidingWatchedEpisodes(context)
@@ -280,6 +297,8 @@ class CalendarFragment2 : Fragment() {
     }
 
     companion object {
+        const val ARG_CALENDAR_TYPE = "calendarType"
+
         private const val CONTEXT_FLAG_WATCHED_ID = 0
         private const val CONTEXT_FLAG_UNWATCHED_ID = 1
         private const val CONTEXT_CHECKIN_ID = 2
