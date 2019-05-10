@@ -11,7 +11,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.TextView
 import androidx.core.content.edit
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -38,6 +40,7 @@ class CalendarFragment2 : Fragment() {
     }
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var textViewEmpty: TextView
     private lateinit var viewModel: CalendarFragment2ViewModel
 
     private lateinit var adapter: CalendarAdapter2
@@ -61,6 +64,7 @@ class CalendarFragment2 : Fragment() {
         val view = inflater.inflate(R.layout.fragment_calendar2, container, false)
 
         recyclerView = view.findViewById(R.id.recyclerViewCalendar)
+        textViewEmpty = view.findViewById(R.id.textViewCalendarEmpty)
 
         return view
     }
@@ -89,6 +93,14 @@ class CalendarFragment2 : Fragment() {
             it.layoutManager = layoutManager
             it.adapter = adapter
         }
+
+        textViewEmpty.setText(
+            if (type == CalendarType.UPCOMING) {
+                R.string.noupcoming
+            } else {
+                R.string.norecent
+            }
+        )
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -97,6 +109,7 @@ class CalendarFragment2 : Fragment() {
         viewModel = ViewModelProviders.of(this).get(CalendarFragment2ViewModel::class.java)
         viewModel.upcomingEpisodesLiveData.observe(this, Observer {
             adapter.submitList(it)
+            updateEmptyView(it.isEmpty())
         })
         updateCalendarQuery()
 
@@ -104,6 +117,11 @@ class CalendarFragment2 : Fragment() {
             .registerOnSharedPreferenceChangeListener(prefChangeListener)
 
         setHasOptionsMenu(true)
+    }
+
+    private fun updateEmptyView(isEmpty: Boolean) {
+        recyclerView.isGone = isEmpty
+        textViewEmpty.isGone = !isEmpty
     }
 
     private fun updateCalendarQuery() {
