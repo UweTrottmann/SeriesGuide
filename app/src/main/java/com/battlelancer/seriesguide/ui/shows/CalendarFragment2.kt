@@ -25,12 +25,17 @@ import com.battlelancer.seriesguide.model.EpisodeWithShow
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class CalendarFragment2 : Fragment() {
 
@@ -133,11 +138,29 @@ class CalendarFragment2 : Fragment() {
         )
     }
 
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
 
         PreferenceManager.getDefaultSharedPreferences(activity)
             .unregisterOnSharedPreferenceChangeListener(prefChangeListener)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventTabClick(event: TabClickEvent) {
+        if (CalendarType.UPCOMING == type && event.position == ShowsActivity.InitBundle.INDEX_TAB_UPCOMING
+            || CalendarType.RECENT == type && event.position == ShowsActivity.InitBundle.INDEX_TAB_RECENT) {
+            recyclerView.smoothScrollToPosition(0)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
