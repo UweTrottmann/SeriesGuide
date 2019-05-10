@@ -18,6 +18,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
+import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout
 import com.battlelancer.seriesguide.widgets.gridheaderview.StickyGridHeadersGridView
@@ -99,6 +100,10 @@ abstract class StreamFragment : Fragment() {
                 refreshStreamWithNetworkCheck()
                 true
             }
+            R.id.menu_action_stream_web -> {
+                Utils.launchWebsite(context, TRAKT_HISTORY_URL)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -159,5 +164,9 @@ abstract class StreamFragment : Fragment() {
      */
     protected fun showProgressBar(isShowing: Boolean) {
         contentContainer.isRefreshing = isShowing
+    }
+
+    companion object {
+        private const val TRAKT_HISTORY_URL = "https://trakt.tv/users/me/history/"
     }
 }
