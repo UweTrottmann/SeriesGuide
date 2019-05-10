@@ -5,6 +5,19 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 49
+----------
+*(in development)*
+
+#### 49-beta1
+*(2019-05-10)*
+
+* 🔧 Add link to trakt history website on history screen. Show up to 50 items (was 25).
+* 🔧 If connected to trakt, show at most 10 recently watched episodes or movies on history tabs (was 25).
+* 🔨 Switched upcoming/recent tabs to RecyclerView, should resolve various crashes.
+* 📝 The infinite calendar option has been removed. Instead upcoming/recent now show up to 50 episodes.
+* 📝 Drop support for beaming shows from overview screen. Share the TheTVDB link instead.
+
 Version 48
 ----------
 *(2019-05-02)*
