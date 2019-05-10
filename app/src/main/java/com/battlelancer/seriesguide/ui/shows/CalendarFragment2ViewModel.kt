@@ -121,6 +121,9 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
         return calendar.timeInMillis
     }
 
+    /**
+     * [episode] is null if this is a header item.
+     */
     data class CalendarItem(val headerTime: Long, val episode: EpisodeWithShow?)
 
 }

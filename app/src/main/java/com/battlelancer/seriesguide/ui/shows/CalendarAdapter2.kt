@@ -12,8 +12,7 @@ import com.battlelancer.seriesguide.ui.shows.CalendarFragment2ViewModel.Calendar
 class CalendarAdapter2(
     private val context: Context,
     private val itemClickListener: ItemClickListener
-) :
-    ListAdapter<CalendarItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+) : ListAdapter<CalendarItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     interface ItemClickListener {
         fun onItemClick(episodeTvdbId: Int)
@@ -52,7 +51,6 @@ class CalendarAdapter2(
 
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CalendarItem>() {
             override fun areItemsTheSame(old: CalendarItem, new: CalendarItem): Boolean =
-                // TODO expand
                 old.headerTime == new.headerTime
                         && old.episode?.episodeTvdbId == new.episode?.episodeTvdbId
 
