@@ -39,9 +39,7 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
-import com.battlelancer.seriesguide.ui.shows.CalendarFragment;
 import com.battlelancer.seriesguide.ui.shows.CalendarFragment2;
-import com.battlelancer.seriesguide.ui.shows.CalendarType;
 import com.battlelancer.seriesguide.ui.shows.ShowsFragment;
 import com.battlelancer.seriesguide.ui.shows.ShowsNowFragment;
 import com.battlelancer.seriesguide.util.ActivityTools;
@@ -212,16 +210,12 @@ public class ShowsActivity extends BaseTopActivity implements
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
         argsUpcoming.putInt(CalendarFragment2.ARG_CALENDAR_TYPE, CalendarFragment2.CalendarType.UPCOMING.getId());
-//        tabsAdapter.addTab(R.string.upcoming, CalendarFragment.class, argsUpcoming);
-        // TODO remove me
         tabsAdapter.addTab(R.string.upcoming, CalendarFragment2.class, argsUpcoming);
 
         // recent tab
         final Bundle argsRecent = new Bundle();
-        argsRecent.putString(CalendarFragment.InitBundle.TYPE, CalendarType.RECENT);
-        argsRecent.putInt(CalendarFragment.InitBundle.LOADER_ID, RECENT_LOADER_ID);
-        argsRecent.putInt(CalendarFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
-        tabsAdapter.addTab(R.string.recent, CalendarFragment.class, argsRecent);
+        argsRecent.putInt(CalendarFragment2.ARG_CALENDAR_TYPE, CalendarFragment2.CalendarType.RECENT.getId());
+        tabsAdapter.addTab(R.string.recent, CalendarFragment2.class, argsRecent);
 
         // display new tabs
         tabsAdapter.notifyTabsChanged();
