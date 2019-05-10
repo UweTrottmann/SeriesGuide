@@ -7,7 +7,7 @@ buildscript {
             'compileSdk': 28,
             'targetSdk': 28,
 
-            // https://developer.android.com/jetpack/docs/release-notes
+            // https://developer.android.com/jetpack/androidx/releases
             'annotation': '1.0.2',
             'lifecycle': '2.0.0',
             'paging': '2.1.0',
