@@ -27,10 +27,6 @@
                 android:id="@+id/menu_action_calendar_nospecials"
                 android:checkable="true"
                 android:title="@string/pref_onlyseasoneps" />
-            <item
-                android:id="@+id/menu_action_calendar_infinite"
-                android:checkable="true"
-                android:title="@string/pref_infinite_scrolling" />
         </menu>
     </item>
 

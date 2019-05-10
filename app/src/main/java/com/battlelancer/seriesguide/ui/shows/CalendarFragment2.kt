@@ -183,9 +183,6 @@ class CalendarFragment2 : Fragment() {
             DisplaySettings.isHidingSpecials(context)
         menu.findItem(R.id.menu_action_calendar_nowatched).isChecked =
             CalendarSettings.isHidingWatchedEpisodes(context)
-
-        menu.findItem(R.id.menu_action_calendar_infinite).isVisible = false
-        menu.findItem(R.id.menu_action_calendar_infinite).isEnabled = false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
