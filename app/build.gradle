@@ -139,6 +139,7 @@ dependencies {
 
     implementation project(':api')
 
+    implementation "androidx.core:core-ktx:1.0.2"
     implementation "androidx.annotation:annotation:${versions.annotation}"
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.cardview:cardview:1.0.0'
