@@ -128,7 +128,7 @@ class SgApp : Application() {
         // get latest TZDB.dat from
         // https://github.com/ThreeTen/threetenbp/blob/master/src/main/resources/org/threeten/bp/TZDB.dat
         // (switch to tagged version!)
-        // current version: v1.3.8
+        // current version: v1.4.0
         AndroidThreeTen.init(this, "org/threeten/bp/TZDB.dat")
         initializeEventBus()
         initializePicasso()
