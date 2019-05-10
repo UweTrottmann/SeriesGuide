@@ -56,8 +56,7 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
     /**
      * Builds the calendar query based on given settings, updates the associated LiveData which
      * will update the query results.
-     *
-     * @param type A [CalendarType], defaults to UPCOMING.
+     * [type] defaults to [CalendarFragment2.CalendarType.UPCOMING].
      */
     fun updateCalendarQuery(
         type: CalendarFragment2.CalendarType,
@@ -71,7 +70,8 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
         val query: StringBuilder
         val sortOrder: String
         if (CalendarFragment2.CalendarType.RECENT == type) {
-            query = StringBuilder("episode_firstairedms!=-1 AND episode_firstairedms<$recentThreshold AND series_hidden=0")
+            query =
+                StringBuilder("episode_firstairedms!=-1 AND episode_firstairedms<$recentThreshold AND series_hidden=0")
             sortOrder = CalendarQuery.SORTING_RECENT
         } else {
             query = StringBuilder("episode_firstairedms>=$recentThreshold AND series_hidden=0")
