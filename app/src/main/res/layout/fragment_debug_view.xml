@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="280dp"
-    android:layout_height="match_parent"
-    android:layout_gravity="end"
-    android:background="?android:attr/colorBackground">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <io.palaima.debugdrawer.view.DebugView
         android:id="@+id/debugView"

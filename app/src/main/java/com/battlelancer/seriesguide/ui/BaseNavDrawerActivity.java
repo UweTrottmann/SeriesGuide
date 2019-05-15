@@ -29,21 +29,15 @@ import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.customtabs.CustomTabsHelper;
 import com.battlelancer.seriesguide.customtabs.FeedbackBroadcastReceiver;
 import com.battlelancer.seriesguide.jobs.FlagJob;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.traktapi.TraktOAuthSettings;
 import com.battlelancer.seriesguide.ui.stats.StatsActivity;
+import com.battlelancer.seriesguide.util.DialogTools;
 import com.battlelancer.seriesguide.util.DrawableTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import io.palaima.debugdrawer.actions.ActionsModule;
-import io.palaima.debugdrawer.actions.ButtonAction;
-import io.palaima.debugdrawer.commons.DeviceModule;
-import io.palaima.debugdrawer.timber.TimberModule;
-import io.palaima.debugdrawer.view.DebugView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -186,6 +180,9 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
         // setup nav drawer items
         navigationView.inflateMenu(R.menu.menu_drawer);
+        if (!BuildConfig.DEBUG) {
+            navigationView.getMenu().removeItem(R.id.navigation_sub_item_debug);
+        }
         navigationView.setItemIconTintList(ContextCompat.getColorStateList(this,
                 Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorNavDrawerIcon)));
         navigationView.setItemTextColor(ContextCompat.getColorStateList(this,
@@ -197,44 +194,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                     onNavItemClick(menuItem.getItemId());
                     return false;
                 });
-
-        if (BuildConfig.DEBUG) {
-            // add debug drawer
-            View debugLayout = getLayoutInflater().inflate(R.layout.debug_drawer, drawerLayout,
-                    true);
-            DebugView debugView = debugLayout.findViewById(R.id.debugView);
-
-            ButtonAction buttonClearTraktRefreshToken = new ButtonAction(
-                    "Clear trakt refresh token",
-                    () -> TraktOAuthSettings.storeRefreshData(getApplicationContext(),
-                            "", 3600 /* 1 hour */));
-
-            ButtonAction buttonInvalidateTraktAccessToken = new ButtonAction(
-                    "Invalidate trakt access token",
-                    () -> TraktCredentials.get(getApplicationContext())
-                            .storeAccessToken("invalid-token"));
-
-            ButtonAction buttonInvalidateTraktRefreshToken = new ButtonAction(
-                    "Invalidate trakt refresh token",
-                    () -> TraktOAuthSettings.storeRefreshData(getApplicationContext(),
-                            "invalid-token", 3600 /* 1 hour */));
-
-            ButtonAction buttonTriggerJobProcessor = new ButtonAction(
-                    "Schedule job processing",
-                    () -> SgSyncAdapter.requestSyncJobsImmediate(getApplicationContext())
-            );
-
-            debugView.modules(
-                    new ActionsModule(
-                            buttonClearTraktRefreshToken,
-                            buttonInvalidateTraktAccessToken,
-                            buttonInvalidateTraktRefreshToken,
-                            buttonTriggerJobProcessor
-                    ),
-                    new TimberModule(),
-                    new DeviceModule()
-            );
-        }
     }
 
     /**
@@ -331,6 +290,12 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                     launchIntent = new Intent(this, AmazonBillingActivity.class);
                 } else {
                     launchIntent = new Intent(this, BillingActivity.class);
+                }
+                break;
+            case R.id.navigation_sub_item_debug:
+                if (BuildConfig.DEBUG) {
+                    DialogTools.safeShow(new DebugViewFragment(), getSupportFragmentManager(),
+                            "debugViewDialog");
                 }
                 break;
         }
