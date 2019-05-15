@@ -105,6 +105,7 @@ class CalendarFragment2 : Fragment() {
         FastScrollerDecoration(
             recyclerView, thumbDrawable, trackDrawable, thumbDrawable, trackDrawable,
             resources.getDimensionPixelSize(R.dimen.sg_fastscroll_default_thickness),
+            resources.getDimensionPixelSize(R.dimen.sg_fastscroll_minimum_height),
             resources.getDimensionPixelSize(R.dimen.sg_fastscroll_minimum_range),
             resources.getDimensionPixelOffset(R.dimen.sg_fastscroll_margin)
         )

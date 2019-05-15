@@ -35,8 +35,9 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * Copy of androidx\recyclerview\widget\FastScroller.java to fix the following issues:
- * - let thumb drawable height not go below minimum usable size
  * - set a bigger thumb drawable width
+ * - let thumb drawable height not go below minimum usable size (this somewhat breaks the approach
+ * of basing everything on the center of the thumb drawable, OK for now)
  */
 public class FastScrollerDecoration extends RecyclerView.ItemDecoration implements RecyclerView.OnItemTouchListener {
     @IntDef({STATE_HIDDEN, STATE_VISIBLE, STATE_DRAGGING})
@@ -91,6 +92,9 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
     private final int mHorizontalThumbHeight;
     private final int mHorizontalTrackHeight;
 
+    // Final values for both scroll bars
+    private final int mMinimumThumbSize;
+
     // Dynamic values for the vertical scroll bar
     @VisibleForTesting int mVerticalThumbHeight;
     @VisibleForTesting int mVerticalThumbCenterY;
@@ -137,8 +141,8 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
 
     public FastScrollerDecoration(RecyclerView recyclerView, StateListDrawable verticalThumbDrawable,
             Drawable verticalTrackDrawable, StateListDrawable horizontalThumbDrawable,
-            Drawable horizontalTrackDrawable, int defaultWidth, int scrollbarMinimumRange,
-            int margin) {
+            Drawable horizontalTrackDrawable, int defaultWidth, int minimumSize,
+            int scrollbarMinimumRange, int margin) {
         mVerticalThumbDrawable = verticalThumbDrawable;
         mVerticalTrackDrawable = verticalTrackDrawable;
         mHorizontalThumbDrawable = horizontalThumbDrawable;
@@ -149,6 +153,7 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
             .max(defaultWidth, horizontalThumbDrawable.getIntrinsicWidth());
         mHorizontalTrackHeight = Math
             .max(defaultWidth, horizontalTrackDrawable.getIntrinsicWidth());
+        mMinimumThumbSize = minimumSize;
         mScrollbarMinimumRange = scrollbarMinimumRange;
         mMargin = margin;
         mVerticalThumbDrawable.setAlpha(SCROLLBAR_FULL_OPAQUE);
@@ -300,7 +305,7 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
         int viewWidth = mRecyclerViewWidth;
 
         int left = viewWidth - mVerticalThumbWidth;
-        int top = mVerticalThumbCenterY - mVerticalThumbHeight / 2;
+        int top = Math.max(0, mVerticalThumbCenterY - mVerticalThumbHeight / 2);
         mVerticalThumbDrawable.setBounds(0, 0, mVerticalThumbWidth, mVerticalThumbHeight);
         mVerticalTrackDrawable
             .setBounds(0, 0, mVerticalTrackWidth, mRecyclerViewHeight);
@@ -366,16 +371,18 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
             float middleScreenPos = offsetY + verticalVisibleLength / 2.0f;
             mVerticalThumbCenterY =
                 (int) ((verticalVisibleLength * middleScreenPos) / verticalContentLength);
-            mVerticalThumbHeight = Math.min(verticalVisibleLength,
-                (verticalVisibleLength * verticalVisibleLength) / verticalContentLength);
+            int desiredThumbHeight = Math.min(verticalVisibleLength,
+                    (verticalVisibleLength * verticalVisibleLength) / verticalContentLength);
+            mVerticalThumbHeight = Math.max(mMinimumThumbSize, desiredThumbHeight);
         }
 
         if (mNeedHorizontalScrollbar) {
             float middleScreenPos = offsetX + horizontalVisibleLength / 2.0f;
             mHorizontalThumbCenterX =
                 (int) ((horizontalVisibleLength * middleScreenPos) / horizontalContentLength);
-            mHorizontalThumbWidth = Math.min(horizontalVisibleLength,
-                (horizontalVisibleLength * horizontalVisibleLength) / horizontalContentLength);
+            int desiredThumbWidth = Math.min(horizontalVisibleLength,
+                    (horizontalVisibleLength * horizontalVisibleLength) / horizontalContentLength);
+            mHorizontalThumbWidth = Math.max(mMinimumThumbSize, desiredThumbWidth);
         }
 
         if (mState == STATE_HIDDEN || mState == STATE_VISIBLE) {
@@ -502,10 +509,12 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
 
     @VisibleForTesting
     boolean isPointInsideVerticalThumb(float x, float y) {
+        boolean insideOnYAxis = y <= mVerticalThumbHeight
+                || (y >= mVerticalThumbCenterY - mVerticalThumbHeight / 2
+                && y <= mVerticalThumbCenterY + mVerticalThumbHeight / 2);
         return (isLayoutRTL() ? x <= mVerticalThumbWidth / 2
-            : x >= mRecyclerViewWidth - mVerticalThumbWidth)
-            && y >= mVerticalThumbCenterY - mVerticalThumbHeight / 2
-            && y <= mVerticalThumbCenterY + mVerticalThumbHeight / 2;
+                : x >= mRecyclerViewWidth - mVerticalThumbWidth)
+                && insideOnYAxis;
     }
 
     @VisibleForTesting
