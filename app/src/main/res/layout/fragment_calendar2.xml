@@ -12,8 +12,6 @@
         android:clipToPadding="false"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:scrollbarStyle="outsideOverlay"
-        android:scrollbars="vertical"
         tools:listitem="@layout/item_calendar" />
 
     <TextView

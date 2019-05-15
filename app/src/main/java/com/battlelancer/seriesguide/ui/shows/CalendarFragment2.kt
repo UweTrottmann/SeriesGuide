@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.ui.shows
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
@@ -33,6 +34,7 @@ import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.widgets.FastScrollerDecoration
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -98,6 +100,14 @@ class CalendarFragment2 : Fragment() {
             it.layoutManager = layoutManager
             it.adapter = adapter
         }
+        val thumbDrawable = context!!.getDrawable(R.drawable.fast_scroll_thumb) as StateListDrawable
+        val trackDrawable = context!!.getDrawable(R.drawable.fast_scroll_track)
+        FastScrollerDecoration(
+            recyclerView, thumbDrawable, trackDrawable, thumbDrawable, trackDrawable,
+            resources.getDimensionPixelSize(R.dimen.sg_fastscroll_default_thickness),
+            resources.getDimensionPixelSize(R.dimen.sg_fastscroll_minimum_range),
+            resources.getDimensionPixelOffset(R.dimen.sg_fastscroll_margin)
+        )
 
         textViewEmpty.setText(
             if (type == CalendarType.UPCOMING) {
