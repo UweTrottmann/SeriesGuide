@@ -3,8 +3,9 @@ package com.battlelancer.seriesguide.ui.shows
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.AsyncPagedListDiffer
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.model.EpisodeWithShow
 import com.battlelancer.seriesguide.ui.shows.CalendarFragment2ViewModel.CalendarItem
@@ -12,7 +13,7 @@ import com.battlelancer.seriesguide.ui.shows.CalendarFragment2ViewModel.Calendar
 class CalendarAdapter2(
     private val context: Context,
     private val itemClickListener: ItemClickListener
-) : ListAdapter<CalendarItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface ItemClickListener {
         fun onItemClick(episodeTvdbId: Int)
@@ -20,8 +21,23 @@ class CalendarAdapter2(
         fun onItemWatchBoxClick(episode: EpisodeWithShow, isWatched: Boolean)
     }
 
+    private val differ = AsyncPagedListDiffer(this, DIFF_CALLBACK)
+
+    fun submitList(pagedList: PagedList<CalendarItem>) {
+        differ.submitList(pagedList)
+    }
+
+    private fun getItem(position: Int): CalendarItem? {
+        return differ.getItem(position)
+    }
+
+    override fun getItemCount(): Int {
+        return differ.itemCount
+    }
+
     override fun getItemViewType(position: Int): Int {
-        val isHeader = getItem(position).episode == null
+        val item = getItem(position)
+        val isHeader = item != null && item.episode == null
         return if (isHeader) {
             VIEW_TYPE_HEADER
         } else {
@@ -39,7 +55,7 @@ class CalendarAdapter2(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is CalendarHeaderViewHolder -> holder.bind(context, getItem(position).headerTime)
+            is CalendarHeaderViewHolder -> holder.bind(context, getItem(position))
             is CalendarItemViewHolder -> holder.bind(context, getItem(position))
             else -> throw IllegalArgumentException("Unknown view holder type")
         }

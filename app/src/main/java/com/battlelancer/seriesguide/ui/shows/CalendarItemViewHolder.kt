@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.widgets.WatchedBox
+import com.squareup.picasso.Picasso
 import com.uwetrottmann.androidutils.CheatSheet
 
 class CalendarItemViewHolder(
@@ -58,9 +60,14 @@ class CalendarItemViewHolder(
 
     fun bind(
         context: Context,
-        item: CalendarFragment2ViewModel.CalendarItem
+        item: CalendarFragment2ViewModel.CalendarItem?
     ) {
         this.item = item
+        if (item == null) {
+            clear()
+            return
+        }
+
         val episode = item.episode!!
 
         // show title
@@ -109,6 +116,17 @@ class CalendarItemViewHolder(
             context, poster,
             TvdbImageTools.smallSizeUrl(episode.poster)
         )
+    }
+
+    private fun clear() {
+        showTextView.text = null
+        episodeTextView.text = null
+        timestamp.text = null
+        info.text = null
+        watchedBox.episodeFlag = EpisodeFlags.UNWATCHED
+        collected.isGone = true
+        Picasso.get().cancelRequest(poster)
+        poster.setImageDrawable(null)
     }
 
     companion object {
