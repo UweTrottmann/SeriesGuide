@@ -11,19 +11,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.widgets.WatchedBox
-import com.squareup.picasso.Picasso
 import com.uwetrottmann.androidutils.CheatSheet
+import java.util.Date
 
 class CalendarItemViewHolder(
-    itemView: View,
+    parent: ViewGroup,
     itemClickListener: CalendarAdapter2.ItemClickListener
-) : RecyclerView.ViewHolder(itemView) {
+) : RecyclerView.ViewHolder(
+    LayoutInflater.from(parent.context).inflate(
+        R.layout.item_calendar,
+        parent,
+        false
+    )
+) {
 
+    private val headerTextView: TextView = itemView.findViewById(R.id.textViewGridHeader)
     private val showTextView: TextView = itemView.findViewById(R.id.textViewActivityShow)
     private val episodeTextView: TextView = itemView.findViewById(R.id.textViewActivityEpisode)
     private val collected: View = itemView.findViewById(R.id.imageViewActivityCollected)
@@ -60,12 +66,19 @@ class CalendarItemViewHolder(
 
     fun bind(
         context: Context,
-        item: CalendarFragment2ViewModel.CalendarItem?
+        item: CalendarFragment2ViewModel.CalendarItem,
+        previousItem: CalendarFragment2ViewModel.CalendarItem?
     ) {
         this.item = item
-        if (item == null) {
-            clear()
-            return
+
+        // optional header
+        val isShowingHeader = previousItem == null || previousItem.headerTime != item.headerTime
+        headerTextView.isGone = !isShowingHeader
+        headerTextView.text = if (isShowingHeader) {
+            // display headers like "Mon in 3 days", also "today" when applicable
+            TimeTools.formatToLocalDayAndRelativeWeek(context, Date(item.headerTime))
+        } else {
+            null
         }
 
         val episode = item.episode!!
@@ -116,30 +129,6 @@ class CalendarItemViewHolder(
             context, poster,
             TvdbImageTools.smallSizeUrl(episode.poster)
         )
-    }
-
-    private fun clear() {
-        showTextView.text = null
-        episodeTextView.text = null
-        timestamp.text = null
-        info.text = null
-        watchedBox.episodeFlag = EpisodeFlags.UNWATCHED
-        collected.isGone = true
-        Picasso.get().cancelRequest(poster)
-        poster.setImageDrawable(null)
-    }
-
-    companion object {
-
-        fun create(
-            parent: ViewGroup,
-            itemClickListener: CalendarAdapter2.ItemClickListener
-        ): CalendarItemViewHolder {
-            val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_calendar, parent, false)
-            return CalendarItemViewHolder(view, itemClickListener)
-        }
-
     }
 
 }

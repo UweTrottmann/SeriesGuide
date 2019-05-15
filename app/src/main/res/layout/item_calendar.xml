@@ -6,6 +6,20 @@
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground">
 
+    <TextView
+        android:id="@+id/textViewGridHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingTop="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:paddingBottom="0dp"
+        android:textAppearance="@style/TextAppearance.Subhead.Bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Recently Watched" />
+
     <ImageView
         android:id="@+id/imageViewActivityCollected"
         android:layout_width="14dp"
@@ -28,7 +42,7 @@
         android:textAppearance="@style/TextAppearance.Caption.Dim"
         app:layout_constraintLeft_toRightOf="@+id/cardViewActivity"
         app:layout_constraintRight_toLeftOf="@+id/watchedBoxActivity"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGridHeader"
         tools:text="Showtime Network · Tue 08:00 PM" />
 
     <TextView
@@ -86,7 +100,6 @@
         android:id="@+id/cardViewActivity"
         android:layout_width="69dp"
         android:layout_height="104dp"
-        android:layout_marginStart="@dimen/grid_leftright_padding"
         android:layout_marginLeft="@dimen/grid_leftright_padding"
         android:layout_marginTop="@dimen/grid_topbottom_padding"
         android:layout_marginBottom="@dimen/grid_topbottom_padding"
@@ -94,7 +107,7 @@
         app:cardPreventCornerOverlap="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/textViewGridHeader">
 
         <ImageView
             android:id="@+id/imageViewActivityPoster"
@@ -117,6 +130,6 @@
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewGridHeader" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

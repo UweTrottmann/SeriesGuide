@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.paging.Config
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
@@ -22,6 +23,11 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
     private val queryLiveData = MutableLiveData<String>()
     val upcomingEpisodesLiveData: LiveData<PagedList<CalendarItem>>
 
+    private val calendarItemPagingConfig = Config(
+        pageSize = 50,
+        enablePlaceholders = false /* some items may have a header, so their height differs */
+    )
+
     init {
         upcomingEpisodesLiveData = Transformations.switchMap(queryLiveData) { queryString ->
             SgRoomDatabase.getInstance(getApplication()).episodeHelper()
@@ -36,7 +42,7 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
                         )
                         CalendarItem(headerTime, episode)
                     }
-                }.toLiveData(pageSize = 50)
+                }.toLiveData(config = calendarItemPagingConfig)
         }
     }
 

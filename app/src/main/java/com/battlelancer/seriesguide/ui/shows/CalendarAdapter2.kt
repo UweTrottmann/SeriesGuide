@@ -27,8 +27,8 @@ class CalendarAdapter2(
         differ.submitList(pagedList)
     }
 
-    private fun getItem(position: Int): CalendarItem? {
-        return differ.getItem(position)
+    private fun getItem(position: Int): CalendarItem {
+        return differ.getItem(position)!! // not using placeholders
     }
 
     override fun getItemCount(): Int {
@@ -48,15 +48,18 @@ class CalendarAdapter2(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_HEADER -> CalendarHeaderViewHolder.create(parent)
-            VIEW_TYPE_ITEM -> CalendarItemViewHolder.create(parent, itemClickListener)
+            VIEW_TYPE_ITEM -> CalendarItemViewHolder(parent, itemClickListener)
             else -> throw IllegalArgumentException("Unknown viewType $viewType")
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val currentItem = getItem(position)
+        val previousPosition = position - 1
+        val previousItem = if (previousPosition >= 0) getItem(previousPosition) else null
         when (holder) {
-            is CalendarHeaderViewHolder -> holder.bind(context, getItem(position))
-            is CalendarItemViewHolder -> holder.bind(context, getItem(position))
+            is CalendarHeaderViewHolder -> holder.bind(context, currentItem)
+            is CalendarItemViewHolder -> holder.bind(context, currentItem, previousItem)
             else -> throw IllegalArgumentException("Unknown view holder type")
         }
     }
