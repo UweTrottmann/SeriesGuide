@@ -30,6 +30,7 @@ class CalendarItemViewHolder(
 ) {
 
     private val headerTextView: TextView = itemView.findViewById(R.id.textViewGridHeader)
+    private val itemContainer: ViewGroup = itemView.findViewById(R.id.constraintLayoutCalendar)
     private val showTextView: TextView = itemView.findViewById(R.id.textViewActivityShow)
     private val episodeTextView: TextView = itemView.findViewById(R.id.textViewActivityEpisode)
     private val collected: View = itemView.findViewById(R.id.imageViewActivityCollected)
@@ -41,12 +42,12 @@ class CalendarItemViewHolder(
     private var item: CalendarFragment2ViewModel.CalendarItem? = null
 
     init {
-        itemView.setOnClickListener {
+        itemContainer.setOnClickListener {
             item?.episode?.let {
                 itemClickListener.onItemClick(it.episodeTvdbId)
             }
         }
-        itemView.setOnLongClickListener {
+        itemContainer.setOnLongClickListener {
             item?.episode?.let {
                 itemClickListener.onItemLongClick(itemView, it)
             }
