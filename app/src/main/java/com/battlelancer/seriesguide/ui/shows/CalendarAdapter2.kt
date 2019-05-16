@@ -37,7 +37,7 @@ class CalendarAdapter2(
 
     override fun getItemViewType(position: Int): Int {
         val item = getItem(position)
-        val isHeader = item != null && item.episode == null
+        val isHeader = item.episode == null
         return if (isHeader) {
             VIEW_TYPE_HEADER
         } else {
@@ -55,11 +55,11 @@ class CalendarAdapter2(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val currentItem = getItem(position)
-        val previousPosition = position - 1
-        val previousItem = if (previousPosition >= 0) getItem(previousPosition) else null
+//        val previousPosition = position - 1
+//        val previousItem = if (previousPosition >= 0) getItem(previousPosition) else null
         when (holder) {
             is CalendarHeaderViewHolder -> holder.bind(context, currentItem)
-            is CalendarItemViewHolder -> holder.bind(context, currentItem, previousItem)
+            is CalendarItemViewHolder -> holder.bind(context, currentItem, null)
             else -> throw IllegalArgumentException("Unknown view holder type")
         }
     }

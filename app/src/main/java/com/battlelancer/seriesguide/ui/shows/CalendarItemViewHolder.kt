@@ -16,7 +16,6 @@ import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.widgets.WatchedBox
 import com.uwetrottmann.androidutils.CheatSheet
-import java.util.Date
 
 class CalendarItemViewHolder(
     parent: ViewGroup,
@@ -73,14 +72,15 @@ class CalendarItemViewHolder(
         this.item = item
 
         // optional header
-        val isShowingHeader = previousItem == null || previousItem.headerTime != item.headerTime
-        headerTextView.isGone = !isShowingHeader
-        headerTextView.text = if (isShowingHeader) {
-            // display headers like "Mon in 3 days", also "today" when applicable
-            TimeTools.formatToLocalDayAndRelativeWeek(context, Date(item.headerTime))
-        } else {
-            null
-        }
+        headerTextView.isGone = true
+//        val isShowingHeader = previousItem == null || previousItem.headerTime != item.headerTime
+//        headerTextView.isGone = !isShowingHeader
+//        headerTextView.text = if (isShowingHeader) {
+//            // display headers like "Mon in 3 days", also "today" when applicable
+//            TimeTools.formatToLocalDayAndRelativeWeek(context, Date(item.headerTime))
+//        } else {
+//            null
+//        }
 
         val episode = item.episode!!
 

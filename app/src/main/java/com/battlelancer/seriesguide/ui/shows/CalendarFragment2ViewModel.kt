@@ -8,7 +8,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.Config
+import androidx.paging.DataSource
 import androidx.paging.PagedList
+import androidx.paging.PositionalDataSource
 import androidx.paging.toLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.model.EpisodeWithShow
@@ -24,25 +26,26 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
     val upcomingEpisodesLiveData: LiveData<PagedList<CalendarItem>>
 
     private val calendarItemPagingConfig = Config(
-        pageSize = 50,
+        pageSize = 10,
         enablePlaceholders = false /* some items may have a header, so their height differs */
     )
 
     init {
         upcomingEpisodesLiveData = Transformations.switchMap(queryLiveData) { queryString ->
-            SgRoomDatabase.getInstance(getApplication()).episodeHelper()
-                .getEpisodesWithShow(SimpleSQLiteQuery(queryString, null))
-                .mapByPage { episodes ->
-                    val calendar = Calendar.getInstance()
-                    episodes.map { episode ->
-                        val headerTime = calculateHeaderTime(
-                            getApplication(),
-                            calendar,
-                            episode.episode_firstairedms
-                        )
-                        CalendarItem(headerTime, episode)
-                    }
-                }.toLiveData(config = calendarItemPagingConfig)
+            object : DataSource.Factory<Int, CalendarItem>() {
+                override fun create(): DataSource<Int, CalendarItem> {
+                    return CalendarDataSource(
+                        getApplication(),
+                        SgRoomDatabase.getInstance(getApplication()).episodeHelper()
+                            .getEpisodesWithShow(
+                                SimpleSQLiteQuery(
+                                    queryString,
+                                    null
+                                )
+                            ).create() as PositionalDataSource<EpisodeWithShow>
+                    )
+                }
+            }.toLiveData(config = calendarItemPagingConfig)
         }
     }
 
