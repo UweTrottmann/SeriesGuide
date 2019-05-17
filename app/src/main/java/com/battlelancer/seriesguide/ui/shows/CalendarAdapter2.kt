@@ -37,7 +37,7 @@ class CalendarAdapter2(
 
     override fun getItemViewType(position: Int): Int {
         val item = getItem(position)
-        val isHeader = item != null && item.episode == null
+        val isHeader = item.episode == null
         return if (isHeader) {
             VIEW_TYPE_HEADER
         } else {
