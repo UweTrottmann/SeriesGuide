@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.provider;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables.EPISODES;
 
-import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Query;
 import androidx.room.RawQuery;
@@ -10,7 +10,6 @@ import androidx.sqlite.db.SupportSQLiteQuery;
 import com.battlelancer.seriesguide.model.EpisodeWithShow;
 import com.battlelancer.seriesguide.model.SgEpisode;
 import com.battlelancer.seriesguide.model.SgShow;
-import java.util.List;
 
 /**
  * Data Access Object for the episodes table.
@@ -25,5 +24,5 @@ public interface EpisodeHelper {
     SgEpisode getEpisode();
 
     @RawQuery(observedEntities = {SgEpisode.class, SgShow.class})
-    LiveData<List<EpisodeWithShow>> getEpisodesWithShow(SupportSQLiteQuery query);
+    DataSource.Factory<Integer, EpisodeWithShow> getEpisodesWithShow(SupportSQLiteQuery query);
 }

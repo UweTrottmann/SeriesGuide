@@ -486,8 +486,10 @@ public class TimeTools {
 
     /**
      * Formats to day and relative week in relation to the current system time (e.g. "Mon in 3
-     * weeks") as defined by the devices locale. If the time is within the next or previous 6 days,
-     * just returns the day. If the time is today, returns local variant of 'Released today'.
+     * weeks") as defined by the devices locale.
+     * - If the time is today, returns local variant of 'Released today'.
+     * - If the time is within the next or previous 6 days, just returns the day.
+     * - If the time is more than 6 weeks away, returns the day with a short date.
      *
      * Note: on Android L_MR1 and below, shows date instead as 'in x weeks' is not supported.
      */
@@ -514,9 +516,14 @@ public class TimeTools {
             Instant now = then.minus(weekDiff * 7, ChronoUnit.DAYS);
 
             dayAndTime.append(" ");
-            dayAndTime.append(DateUtils
-                    .getRelativeTimeSpanString(then.toEpochMilli(), now.toEpochMilli(),
-                            DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
+            if (Math.abs(weekDiff) <= 6) {
+                dayAndTime.append(DateUtils
+                        .getRelativeTimeSpanString(then.toEpochMilli(), now.toEpochMilli(),
+                                DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
+            } else {
+                // for everything further away from now display date instead
+                dayAndTime.append(formatToLocalDateShort(context, thenDate));
+            }
         }
 
         return dayAndTime.toString();

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
@@ -16,12 +17,21 @@ import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.widgets.WatchedBox
 import com.uwetrottmann.androidutils.CheatSheet
+import java.util.Date
 
 class CalendarItemViewHolder(
-    itemView: View,
+    parent: ViewGroup,
     itemClickListener: CalendarAdapter2.ItemClickListener
-) : RecyclerView.ViewHolder(itemView) {
+) : RecyclerView.ViewHolder(
+    LayoutInflater.from(parent.context).inflate(
+        R.layout.item_calendar,
+        parent,
+        false
+    )
+) {
 
+    private val headerTextView: TextView = itemView.findViewById(R.id.textViewGridHeader)
+    private val itemContainer: ViewGroup = itemView.findViewById(R.id.constraintLayoutCalendar)
     private val showTextView: TextView = itemView.findViewById(R.id.textViewActivityShow)
     private val episodeTextView: TextView = itemView.findViewById(R.id.textViewActivityEpisode)
     private val collected: View = itemView.findViewById(R.id.imageViewActivityCollected)
@@ -33,12 +43,12 @@ class CalendarItemViewHolder(
     private var item: CalendarFragment2ViewModel.CalendarItem? = null
 
     init {
-        itemView.setOnClickListener {
+        itemContainer.setOnClickListener {
             item?.episode?.let {
                 itemClickListener.onItemClick(it.episodeTvdbId)
             }
         }
-        itemView.setOnLongClickListener {
+        itemContainer.setOnLongClickListener {
             item?.episode?.let {
                 itemClickListener.onItemLongClick(itemView, it)
             }
@@ -58,9 +68,27 @@ class CalendarItemViewHolder(
 
     fun bind(
         context: Context,
-        item: CalendarFragment2ViewModel.CalendarItem
+        item: CalendarFragment2ViewModel.CalendarItem,
+        previousItem: CalendarFragment2ViewModel.CalendarItem?,
+        multiColumn: Boolean
     ) {
         this.item = item
+
+        // optional header
+        val isShowingHeader = previousItem == null || previousItem.headerTime != item.headerTime
+        if (multiColumn) {
+            // in a multi-column layout it looks nicer if all items are inset by header height
+            headerTextView.isInvisible = !isShowingHeader
+        } else {
+            headerTextView.isGone = !isShowingHeader
+        }
+        headerTextView.text = if (isShowingHeader) {
+            // display headers like "Mon in 3 days", also "today" when applicable
+            TimeTools.formatToLocalDayAndRelativeWeek(context, Date(item.headerTime))
+        } else {
+            null
+        }
+
         val episode = item.episode!!
 
         // show title
@@ -109,19 +137,6 @@ class CalendarItemViewHolder(
             context, poster,
             TvdbImageTools.smallSizeUrl(episode.poster)
         )
-    }
-
-    companion object {
-
-        fun create(
-            parent: ViewGroup,
-            itemClickListener: CalendarAdapter2.ItemClickListener
-        ): CalendarItemViewHolder {
-            val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_calendar, parent, false)
-            return CalendarItemViewHolder(view, itemClickListener)
-        }
-
     }
 
 }

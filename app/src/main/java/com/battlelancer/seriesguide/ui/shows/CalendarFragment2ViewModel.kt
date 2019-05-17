@@ -2,13 +2,14 @@ package com.battlelancer.seriesguide.ui.shows
 
 import android.app.Application
 import android.content.Context
-import android.os.AsyncTask
 import android.text.format.DateUtils
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.paging.Config
+import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.model.EpisodeWithShow
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
@@ -16,44 +17,32 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.TimeTools
 import java.util.Calendar
-import java.util.LinkedList
 
 class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(application) {
 
     private val queryLiveData = MutableLiveData<String>()
-    private val upcomingEpisodesRawLiveData: LiveData<List<EpisodeWithShow>>
-    val upcomingEpisodesLiveData = MediatorLiveData<List<CalendarItem>>()
+    val upcomingEpisodesLiveData: LiveData<PagedList<CalendarItem>>
+
+    private val calendarItemPagingConfig = Config(
+        pageSize = 50,
+        enablePlaceholders = false /* some items may have a header, so their height differs */
+    )
 
     init {
-        upcomingEpisodesRawLiveData = Transformations.switchMap(queryLiveData) { queryString ->
+        upcomingEpisodesLiveData = Transformations.switchMap(queryLiveData) { queryString ->
             SgRoomDatabase.getInstance(getApplication()).episodeHelper()
                 .getEpisodesWithShow(SimpleSQLiteQuery(queryString, null))
-        }
-
-        upcomingEpisodesLiveData.addSource(upcomingEpisodesRawLiveData) { episodes ->
-            // calculate actually displayed values on a background thread
-            AsyncTask.THREAD_POOL_EXECUTOR.execute {
-                val mapped = LinkedList<CalendarItem>()
-
-                val calendar = Calendar.getInstance()
-                var previousHeaderTime: Long = 0
-                episodes.forEachIndexed { index, episode ->
-                    // insert header if first item or previous item has different header time
-                    val headerTime = calculateHeaderTime(
-                        getApplication(),
-                        calendar,
-                        episode.episode_firstairedms
-                    )
-                    if (index == 0 || headerTime != previousHeaderTime) {
-                        mapped.add(CalendarItem(headerTime, null))
+                .mapByPage { episodes ->
+                    val calendar = Calendar.getInstance()
+                    episodes.map { episode ->
+                        val headerTime = calculateHeaderTime(
+                            getApplication(),
+                            calendar,
+                            episode.episode_firstairedms
+                        )
+                        CalendarItem(headerTime, episode)
                     }
-                    previousHeaderTime = headerTime
-
-                    mapped.add(CalendarItem(headerTime, episode))
-                }
-
-                upcomingEpisodesLiveData.postValue(mapped)
-            }
+                }.toLiveData(config = calendarItemPagingConfig)
         }
     }
 
@@ -100,8 +89,7 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
         queryLiveData.value = "${EpisodeWithShow.select} " +
                 "LEFT OUTER JOIN series ON episodes.series_id=series._id " +
                 "WHERE $query " +
-                "ORDER BY $sortOrder " +
-                "LIMIT 50" // good compromise between performance and showing most info
+                "ORDER BY $sortOrder "
     }
 
     private fun calculateHeaderTime(context: Context, calendar: Calendar, releaseTime: Long): Long {

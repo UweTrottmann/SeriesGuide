@@ -40,6 +40,10 @@
 
     <!-- Fast scroll width, tested on Android 4.4 and 5.0. -->
     <dimen name="grid_fast_scroll_padding">28dp</dimen>
+    <dimen name="sg_fastscroll_default_thickness">16dp</dimen>
+    <dimen name="sg_fastscroll_minimum_height">56dp</dimen>
+    <dimen name="sg_fastscroll_margin">0dp</dimen>
+    <dimen name="sg_fastscroll_minimum_range">50dp</dimen>
 
     <!-- Show posters, 2:3 aspect ratio -->
     <dimen name="show_poster_width_default">69dp</dimen>
