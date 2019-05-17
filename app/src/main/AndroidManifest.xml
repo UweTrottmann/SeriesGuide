@@ -89,10 +89,6 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-            <!-- Parent activity meta-data to support ICS -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.episodes.EpisodesActivity" />
         <activity android:name="com.battlelancer.seriesguide.ui.episodes.EpisodeDetailsActivity" />
@@ -129,13 +125,7 @@
         </activity>
         <activity
             android:name=".ui.search.TraktShowsActivity"
-            android:parentActivityName=".ui.SearchActivity">
-
-            <!-- Parent activity meta-data to support ICS -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.SearchActivity" />
-        </activity>
+            android:parentActivityName=".ui.SearchActivity" />
 
         <!-- Movies -->
         <activity
@@ -144,29 +134,15 @@
         <activity
             android:name="com.battlelancer.seriesguide.ui.movies.MoviesSearchActivity"
             android:parentActivityName="com.battlelancer.seriesguide.ui.MoviesActivity"
-            android:windowSoftInputMode="stateHidden">
-            <!-- Parent activity meta-data to support ICS -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.MoviesActivity" />
-        </activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.movies.MovieDetailsActivity"
-            android:parentActivityName="com.battlelancer.seriesguide.ui.MoviesActivity">
-            <!-- Parent activity meta-data to support ICS -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.MoviesActivity" />
-        </activity>
+            android:parentActivityName="com.battlelancer.seriesguide.ui.MoviesActivity" />
 
         <!-- Settings -->
         <activity
             android:name="com.battlelancer.seriesguide.ui.SeriesGuidePreferences"
             android:label="@string/preferences">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
-
             <intent-filter>
                 <action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -219,11 +195,7 @@
             android:taskAffinity="com.battlelancer.seriesguide.task.quickcheckin" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.HelpActivity"
-            android:label="@string/help">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
-        </activity>
+            android:label="@string/help" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.FullscreenImageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
