@@ -8,18 +8,21 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.model.EpisodeWithShow
+import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.shows.CalendarFragment2ViewModel.CalendarItem
 
 class CalendarAdapter2(
     private val context: Context,
     private val itemClickListener: ItemClickListener
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), AutoGridLayoutManager.SpanCountListener {
 
     interface ItemClickListener {
         fun onItemClick(episodeTvdbId: Int)
         fun onItemLongClick(anchor: View, episode: EpisodeWithShow)
         fun onItemWatchBoxClick(episode: EpisodeWithShow, isWatched: Boolean)
     }
+
+    var isMultiColumn: Boolean = false
 
     private val differ = AsyncPagedListDiffer(this, DIFF_CALLBACK)
 
@@ -59,9 +62,18 @@ class CalendarAdapter2(
         val previousItem = if (previousPosition >= 0) getItem(previousPosition) else null
         when (holder) {
             is CalendarHeaderViewHolder -> holder.bind(context, currentItem)
-            is CalendarItemViewHolder -> holder.bind(context, currentItem, previousItem)
+            is CalendarItemViewHolder -> holder.bind(
+                context,
+                currentItem,
+                previousItem,
+                isMultiColumn
+            )
             else -> throw IllegalArgumentException("Unknown view holder type")
         }
+    }
+
+    override fun onSetSpanCount(spanCount: Int) {
+        isMultiColumn = spanCount > 1
     }
 
     companion object {

@@ -83,7 +83,8 @@ class CalendarFragment2 : Fragment() {
 
         val layoutManager = AutoGridLayoutManager(
             context,
-            R.dimen.showgrid_columnWidth, 1, 1
+            R.dimen.showgrid_columnWidth, 1, 1,
+            adapter
         )
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {

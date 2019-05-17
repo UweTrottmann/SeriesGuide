@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
@@ -68,13 +69,19 @@ class CalendarItemViewHolder(
     fun bind(
         context: Context,
         item: CalendarFragment2ViewModel.CalendarItem,
-        previousItem: CalendarFragment2ViewModel.CalendarItem?
+        previousItem: CalendarFragment2ViewModel.CalendarItem?,
+        multiColumn: Boolean
     ) {
         this.item = item
 
         // optional header
         val isShowingHeader = previousItem == null || previousItem.headerTime != item.headerTime
-        headerTextView.isGone = !isShowingHeader
+        if (multiColumn) {
+            // in a multi-column layout it looks nicer if all items are inset by header height
+            headerTextView.isInvisible = !isShowingHeader
+        } else {
+            headerTextView.isGone = !isShowingHeader
+        }
         headerTextView.text = if (isShowingHeader) {
             // display headers like "Mon in 3 days", also "today" when applicable
             TimeTools.formatToLocalDayAndRelativeWeek(context, Date(item.headerTime))
