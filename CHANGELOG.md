@@ -9,6 +9,13 @@ Version 49
 ----------
 *(in development)*
 
+#### 49-beta2
+*(2019-05-10)*
+
+* 🔧 The new calendar is now always infinite. If multiple columns are shown, groups are no longer 
+  broken into a new row, instead using all available space.
+* 📝 Latest translations from crowdin.
+
 #### 49-beta1
 *(2019-05-10)*
 
