@@ -11,7 +11,7 @@
     <string name="help">Hjälp</string>
     <string name="help_and_feedback">Hjälp &amp; feedback</string>
     <string name="drawer_open">Öppna navigeringslåda</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide kommer inte att mottaga fler uppdateringar för den här versionen av Android.</string>
     <!-- Media items -->
     <string name="show">Serie</string>
     <string name="episode">Avsnitt</string>
@@ -33,13 +33,13 @@
     <string name="save_selection">Spara valda</string>
     <string name="action_display_all">Visa alla</string>
     <string name="web_search">Webbsökning</string>
-    <string name="add_to_homescreen">Add to Home screen</string>
+    <string name="add_to_homescreen">Lägg till på hemskärmen</string>
     <string name="action_open">Öppna</string>
     <string name="sync_manually">Synkronisera manuellt</string>
     <string name="sync_and_update">Synkronisera &amp; Uppdatera</string>
     <string name="sync_and_download_all">Synkronisera &amp; Ladda ner alla</string>
     <string name="action_turn_off">Stäng av</string>
-    <string name="action_stream">Stream or purchase</string>
+    <string name="action_stream">Streama eller köp</string>
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
     <string name="search_hint">Sök avsnitt</string>
@@ -186,7 +186,7 @@
     <string name="checkin_searchhint">Skriv ett serienamn</string>
     <string name="add_empty">Det finns inga serier här.</string>
     <string name="no_results">Inga resultat, försök med hela ord.</string>
-    <string name="empty_show_search">Not found in your show list</string>
+    <string name="empty_show_search">Hittades inte i din serielista</string>
     <string name="action_try_any_language">Testa alla språk</string>
     <string name="action_try_again">Försök igen</string>
     <string name="tvdb_error_does_not_exist">Serien finns inte (ännu) på TheTVDB. Försök igen senare.</string>
@@ -278,7 +278,7 @@
     <string name="hexagon_remove_account_confirmation">Att ta bort ditt konto kommer även att radera alla serier och filmer från SeriesGuide Cloud. Se till att ta bort det även på andra anslutna enheter.</string>
     <string name="hexagon_api_queued">Skickar till SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Loggat ut från SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Fel med Google-inloggning (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Skickar till trakt.</string>
     <string name="checkin_success_trakt">Checkat in %s på trakt.</string>
@@ -358,8 +358,8 @@
         <item quantity="other">%s minuter innan</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">Sekretesspolicy</string>
+    <string name="licence_tvdb">Denna app använder data och avbildningar av TheTVDB licensierat under en Creative Commons-licens.</string>
     <string name="licence_themoviedb">Denna produkt använder TMDb:s API men är inte stödd eller certifierad av TMDb.</string>
     <string name="licence_trakt">Den här appen använder data och bilder från trakt.</string>
     <string name="about_open_source">SeriesGuide är byggt med öppen källkod.</string>
@@ -444,7 +444,7 @@
     <string name="hide_watched">Dölj sedda avsnitt</string>
     <string name="pref_widget_opacity">Widgetbakgrund </string>
     <string name="pref_widget_type">Widgettyp </string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Använd stort teckensnitt</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>
     <string name="widget_background_25">25%</string>
