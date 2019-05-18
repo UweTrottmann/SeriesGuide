@@ -20,12 +20,12 @@ import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Transformation
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.IOException
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 /**
  * Add a shortcut to the overview page of the given show to the Home screen.
@@ -42,50 +42,54 @@ class ShortcutCreator(
 ) {
 
     private val context = localContext.applicationContext
-    private var posterBitmap: Bitmap? = null
 
     /**
      * Prepares the bitmap for the shortcut on [Dispatchers.IO],
      * when ready suggest to (O+) or pins the shortcut.
      */
-    suspend fun prepareAndPinShortcut(coroutineScope: CoroutineScope) {
-        withContext(Dispatchers.IO) {
-            prepareShortcut()
+    suspend fun prepareAndPinShortcut() {
+        val bitmap = withContext(Dispatchers.IO) {
+            createBitmap()
         }
-        if (!coroutineScope.isActive) return
-        pinShortcut()
+        withContext(Dispatchers.Main) {
+            pinShortcut(bitmap)
+        }
     }
 
-    private fun prepareShortcut() {
+    private suspend fun createBitmap(): Bitmap? = suspendCoroutine { continuation ->
         // Try to get the show poster
+        val posterUrl = TvdbImageTools.smallSizeUrl(posterPath)
+        if (posterUrl == null) {
+            continuation.resume(null)
+            return@suspendCoroutine
+        }
+
+        val requestCreator = Picasso.get()
+            .load(posterUrl)
+            .centerCrop()
+            .memoryPolicy(MemoryPolicy.NO_STORE)
+            .networkPolicy(NetworkPolicy.NO_STORE)
+            .resizeDimen(
+                R.dimen.show_poster_width_shortcut,
+                R.dimen.show_poster_height_shortcut
+            )
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            // on O+ we use 108x108dp adaptive icon, no need to cut its corners
+            // pre-O full bitmap is displayed, so cut corners for nicer icon shape
+            requestCreator.transform(
+                RoundedCornerTransformation(posterUrl, 10f)
+            )
+        }
+
         try {
-            val posterUrl = TvdbImageTools.smallSizeUrl(posterPath)
-            if (posterUrl != null) {
-                val requestCreator = Picasso.get()
-                    .load(posterUrl)
-                    .centerCrop()
-                    .memoryPolicy(MemoryPolicy.NO_STORE)
-                    .networkPolicy(NetworkPolicy.NO_STORE)
-                    .resizeDimen(
-                        R.dimen.show_poster_width_shortcut,
-                        R.dimen.show_poster_height_shortcut
-                    )
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                    // on O+ we use 108x108dp adaptive icon, no need to cut its corners
-                    // pre-O full bitmap is displayed, so cut corners for nicer icon shape
-                    requestCreator.transform(
-                        RoundedCornerTransformation(posterUrl, 10f)
-                    )
-                }
-                posterBitmap = requestCreator.get()
-            }
+            continuation.resume(requestCreator.get())
         } catch (e: IOException) {
             Timber.e(e, "Could not load show poster for shortcut %s", posterPath)
-            posterBitmap = null
+            continuation.resume(null)
         }
     }
 
-    private fun pinShortcut() {
+    private fun pinShortcut(posterBitmap: Bitmap?) {
         // Intent used when the shortcut is tapped
         val shortcutIntent = OverviewActivity.intentShow(context, showTvdbId)
         shortcutIntent.action = Intent.ACTION_MAIN
