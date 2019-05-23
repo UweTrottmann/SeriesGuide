@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.tmdbapi;
+package com.uwetrottmann.seriesguide.tmdbapi;
 
 import androidx.annotation.NonNull;
 import com.uwetrottmann.tmdb2.Tmdb;
@@ -22,6 +22,7 @@ public class SgTmdbInterceptor implements Interceptor {
         this.tmdb = tmdb;
     }
 
+    @NonNull
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         return TmdbInterceptor.handleIntercept(chain, tmdb.get());

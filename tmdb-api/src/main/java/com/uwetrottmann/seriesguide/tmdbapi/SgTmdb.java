@@ -1,5 +1,6 @@
-package com.battlelancer.seriesguide.tmdbapi;
+package com.uwetrottmann.seriesguide.tmdbapi;
 
+import androidx.annotation.NonNull;
 import com.uwetrottmann.tmdb2.Tmdb;
 import okhttp3.OkHttpClient;
 
@@ -20,6 +21,7 @@ public class SgTmdb extends Tmdb {
         this.okHttpClient = okHttpClient;
     }
 
+    @NonNull
     @Override
     protected synchronized OkHttpClient okHttpClient() {
         return okHttpClient;
