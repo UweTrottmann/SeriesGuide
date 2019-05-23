@@ -20,7 +20,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.EmptyView;
-import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
+import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 
 /**
  * Integrates with a search interface and displays movies based on query results. Can pre-populate

@@ -1,4 +1,4 @@
-<com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayoutNow"
     android:layout_width="match_parent"
@@ -43,5 +43,5 @@
 
     </FrameLayout>
 
-</com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout>
+</com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout>
 
