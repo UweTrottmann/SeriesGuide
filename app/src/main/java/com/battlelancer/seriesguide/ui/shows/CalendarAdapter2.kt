@@ -3,8 +3,7 @@ package com.battlelancer.seriesguide.ui.shows
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import androidx.paging.AsyncPagedListDiffer
-import androidx.paging.PagedList
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.model.EpisodeWithShow
@@ -14,7 +13,8 @@ import com.battlelancer.seriesguide.ui.shows.CalendarFragment2ViewModel.Calendar
 class CalendarAdapter2(
     private val context: Context,
     private val itemClickListener: ItemClickListener
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), AutoGridLayoutManager.SpanCountListener {
+) : PagedListAdapter<CalendarItem, RecyclerView.ViewHolder>(DIFF_CALLBACK),
+    AutoGridLayoutManager.SpanCountListener {
 
     interface ItemClickListener {
         fun onItemClick(episodeTvdbId: Int)
@@ -24,26 +24,12 @@ class CalendarAdapter2(
 
     var isMultiColumn: Boolean = false
 
-    private val differ = AsyncPagedListDiffer(this, DIFF_CALLBACK)
-
-    fun submitList(pagedList: PagedList<CalendarItem>) {
-        differ.submitList(pagedList)
-    }
-
-    private fun getItem(position: Int): CalendarItem {
-        return differ.getItem(position)!! // not using placeholders
-    }
-
-    override fun getItemCount(): Int {
-        return differ.itemCount
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return CalendarItemViewHolder(parent, itemClickListener)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val currentItem = getItem(position)
+        val currentItem = getItem(position)!! // not using placeholders
         val previousPosition = position - 1
         val previousItem = if (previousPosition >= 0) getItem(previousPosition) else null
         when (holder) {
