@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.battlelancer.seriesguide.widgets;
+package com.uwetrottmann.seriesguide.widgets;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -46,7 +46,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <com.battlelancer.seriesguide.widgets.SlidingTabLayout
+                    <com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
                         android:id="@+id/tabsEpisodes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

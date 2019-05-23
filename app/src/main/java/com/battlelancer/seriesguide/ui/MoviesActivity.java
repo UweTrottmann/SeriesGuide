@@ -19,7 +19,7 @@ import com.battlelancer.seriesguide.ui.movies.MoviesNowFragment;
 import com.battlelancer.seriesguide.ui.movies.MoviesSearchActivity;
 import com.battlelancer.seriesguide.ui.movies.MoviesWatchListFragment;
 import com.battlelancer.seriesguide.ui.movies.MoviesWatchedFragment;
-import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
+import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
 import org.greenrobot.eventbus.EventBus;
 
 /**

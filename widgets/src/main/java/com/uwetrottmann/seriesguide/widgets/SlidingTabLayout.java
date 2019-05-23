@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.battlelancer.seriesguide.widgets;
+package com.uwetrottmann.seriesguide.widgets;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -25,7 +25,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -33,14 +32,13 @@ import androidx.viewpager.widget.ViewPager;
  * To be used with ViewPager to provide a tab indicator component which give constant feedback as to
  * the user's scroll progress.
  * <p/>
- * To use the component, simply add it to your view hierarchy. Then in your {@link
- * android.app.Activity} or {@link Fragment} call {@link
+ * To use the component, simply add it to your view hierarchy. Then in your activity or fragment call {@link
  * #setViewPager(ViewPager)} providing it the ViewPager this layout is being
  * used for.
  * <p/>
  * The colors can be customized in two ways. The first and simplest is to provide an array of colors
  * via {@link #setSelectedIndicatorColors(int...)}. The alternative is via the {@link
- * com.battlelancer.seriesguide.widgets.SlidingTabLayout.TabColorizer} interface which provides you
+ * SlidingTabLayout.TabColorizer} interface which provides you
  * complete control over which color is used for any individual position.
  * <p/>
  * The views used as tabs can be customized by calling {@link #setCustomTabView(int, int)},
@@ -54,7 +52,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     /**
      * Allows complete control over the colors drawn in the tab layout. Set with {@link
-     * #setCustomTabColorizer(com.battlelancer.seriesguide.widgets.SlidingTabLayout.TabColorizer)}.
+     * #setCustomTabColorizer(SlidingTabLayout.TabColorizer)}.
      */
     public interface TabColorizer {
 
@@ -103,7 +101,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     /**
-     * Set the custom {@link com.battlelancer.seriesguide.widgets.SlidingTabLayout.TabColorizer} to
+     * Set the custom {@link SlidingTabLayout.TabColorizer} to
      * be used.
      *
      * If you only require simple custmisation then you can use
@@ -125,7 +123,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     /**
      * Set the {@link ViewPager.OnPageChangeListener}. When using {@link
-     * com.battlelancer.seriesguide.widgets.SlidingTabLayout} you are
+     * SlidingTabLayout} you are
      * required to set any {@link ViewPager.OnPageChangeListener} through
      * this method. This is so
      * that the layout can update it's scroll position correctly.
@@ -137,7 +135,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     /**
-     * Set the {@link com.battlelancer.seriesguide.widgets.SlidingTabLayout.OnTabClickListener}.
+     * Set the {@link SlidingTabLayout.OnTabClickListener}.
      */
     public void setOnTabClickListener(OnTabClickListener listener) {
         onTabClickListener = listener;
