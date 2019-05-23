@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.widgets.dragsortview;
+package com.uwetrottmann.seriesguide.widgets.dragsortview;
 
 import android.content.Context;
 import android.view.View;

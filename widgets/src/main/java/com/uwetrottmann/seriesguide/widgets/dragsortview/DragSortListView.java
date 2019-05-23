@@ -19,7 +19,7 @@
  * limitations under the License.
  */
 
-package com.battlelancer.seriesguide.widgets.dragsortview;
+package com.uwetrottmann.seriesguide.widgets.dragsortview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -42,7 +42,7 @@ import android.widget.BaseAdapter;
 import android.widget.Checkable;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import com.battlelancer.seriesguide.R;
+import com.uwetrottmann.seriesguide.widgets.R;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
