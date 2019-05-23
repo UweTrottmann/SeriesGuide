@@ -136,6 +136,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
     implementation project(':api')
+    implementation project(':widgets')
 
     implementation "androidx.core:core:${versions.core}"
     implementation "androidx.core:core-ktx:${versions.core}"
