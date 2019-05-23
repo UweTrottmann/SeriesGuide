@@ -137,6 +137,7 @@ dependencies {
 
     implementation project(':api')
     implementation project(':customtabs')
+    implementation project(':tmdb-api')
     implementation project(':widgets')
 
     implementation "androidx.core:core:${versions.core}"
@@ -185,7 +186,6 @@ dependencies {
     }
     implementation 'com.uwetrottmann.photoview:library:1.2.4'
     implementation "com.uwetrottmann.thetvdb-java:thetvdb-java:${versions.thetvdb}"
-    implementation "com.uwetrottmann.tmdb2:tmdb-java:${versions.tmdb}"
     implementation ("com.uwetrottmann.trakt5:trakt-java:${versions.trakt}") {
         exclude group: 'org.threeten', module: 'threetenbp' // using ThreeTenABP instead
     }
