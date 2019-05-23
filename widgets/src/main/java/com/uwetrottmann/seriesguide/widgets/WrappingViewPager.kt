@@ -2,7 +2,6 @@ package com.uwetrottmann.seriesguide.widgets
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import androidx.viewpager.widget.ViewPager
 
 /**
@@ -38,10 +37,10 @@ class WrappingViewPager @JvmOverloads constructor(
         if (child != null) {
             child.measure(
                 widthMeasureSpec,
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+                MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
             )
             val h = child.measuredHeight
-            heightMeasureSpecUpdate = View.MeasureSpec.makeMeasureSpec(h, View.MeasureSpec.EXACTLY)
+            heightMeasureSpecUpdate = MeasureSpec.makeMeasureSpec(h, MeasureSpec.EXACTLY)
         }
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpecUpdate)
