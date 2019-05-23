@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.widgets.dragsortview;
+package com.uwetrottmann.seriesguide.widgets.dragsortview;
 
 import android.graphics.Point;
 import android.view.GestureDetector;
