@@ -48,7 +48,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
+import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.greenrobot.eventbus.EventBus;
 
