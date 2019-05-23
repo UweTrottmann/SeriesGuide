@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.customtabs;
+package com.battlelancer.seriesguide.service;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
