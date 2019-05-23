@@ -89,7 +89,7 @@ class CalendarItemViewHolder(
             null
         }
 
-        val episode = item.episode!!
+        val episode = item.episode
 
         // show title
         showTextView.text = episode.seriestitle
