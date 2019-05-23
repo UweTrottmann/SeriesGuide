@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.widgets
+package com.uwetrottmann.seriesguide.widgets
 
 import android.content.Context
 import android.util.AttributeSet

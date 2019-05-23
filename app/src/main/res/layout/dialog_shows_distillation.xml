@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.battlelancer.seriesguide.widgets.WrappingViewPager
+        <com.uwetrottmann.seriesguide.widgets.WrappingViewPager
             android:id="@+id/viewPagerShowsDistillation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
