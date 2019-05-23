@@ -38,22 +38,8 @@ class CalendarAdapter2(
         return differ.itemCount
     }
 
-    override fun getItemViewType(position: Int): Int {
-        val item = getItem(position)
-        val isHeader = item.episode == null
-        return if (isHeader) {
-            VIEW_TYPE_HEADER
-        } else {
-            VIEW_TYPE_ITEM
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
-            VIEW_TYPE_HEADER -> CalendarHeaderViewHolder.create(parent)
-            VIEW_TYPE_ITEM -> CalendarItemViewHolder(parent, itemClickListener)
-            else -> throw IllegalArgumentException("Unknown viewType $viewType")
-        }
+        return CalendarItemViewHolder(parent, itemClickListener)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -61,7 +47,6 @@ class CalendarAdapter2(
         val previousPosition = position - 1
         val previousItem = if (previousPosition >= 0) getItem(previousPosition) else null
         when (holder) {
-            is CalendarHeaderViewHolder -> holder.bind(context, currentItem)
             is CalendarItemViewHolder -> holder.bind(
                 context,
                 currentItem,
@@ -77,16 +62,12 @@ class CalendarAdapter2(
     }
 
     companion object {
-        const val VIEW_TYPE_HEADER = 0
-        const val VIEW_TYPE_ITEM = 1
-
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CalendarItem>() {
             override fun areItemsTheSame(old: CalendarItem, new: CalendarItem): Boolean =
-                old.headerTime == new.headerTime
-                        && old.episode?.episodeTvdbId == new.episode?.episodeTvdbId
+                old.episode.episodeTvdbId == new.episode.episodeTvdbId
 
             override fun areContentsTheSame(old: CalendarItem, new: CalendarItem): Boolean {
-                return old == new
+                return old.episode == new.episode
             }
         }
     }

@@ -109,6 +109,6 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
     /**
      * [episode] is null if this is a header item.
      */
-    data class CalendarItem(val headerTime: Long, val episode: EpisodeWithShow?)
+    data class CalendarItem(val headerTime: Long, val episode: EpisodeWithShow)
 
 }

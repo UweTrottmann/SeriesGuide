@@ -18,7 +18,6 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
@@ -86,15 +85,6 @@ class CalendarFragment2 : Fragment() {
             R.dimen.showgrid_columnWidth, 1, 1,
             adapter
         )
-        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if (adapter.getItemViewType(position) == CalendarAdapter2.VIEW_TYPE_HEADER) {
-                    layoutManager.spanCount
-                } else {
-                    1
-                }
-            }
-        }
 
         recyclerView.also {
             it.setHasFixedSize(true)
