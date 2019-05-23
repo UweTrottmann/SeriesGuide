@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-package com.battlelancer.seriesguide.widgets.gridheaderview;
+package com.uwetrottmann.seriesguide.widgets.gridheaderview;
 
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -39,7 +39,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.GridView;
 import android.widget.ListAdapter;
-import com.battlelancer.seriesguide.widgets.gridheaderview.StickyGridHeadersBaseAdapterWrapper.HeaderFillerView;
+import com.uwetrottmann.seriesguide.widgets.gridheaderview.StickyGridHeadersBaseAdapterWrapper.HeaderFillerView;
 import java.util.ArrayList;
 import java.util.List;
 

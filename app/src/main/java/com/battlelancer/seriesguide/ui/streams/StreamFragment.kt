@@ -21,7 +21,7 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout
-import com.battlelancer.seriesguide.widgets.gridheaderview.StickyGridHeadersGridView
+import com.uwetrottmann.seriesguide.widgets.gridheaderview.StickyGridHeadersGridView
 import com.uwetrottmann.androidutils.AndroidUtils
 
 /**

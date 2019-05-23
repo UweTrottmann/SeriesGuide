@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.widgets.gridheaderview;
+package com.uwetrottmann.seriesguide.widgets.gridheaderview;
 
 import android.database.DataSetObserver;
 import android.view.View;
