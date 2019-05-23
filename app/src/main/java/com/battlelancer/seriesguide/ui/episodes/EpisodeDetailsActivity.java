@@ -33,7 +33,7 @@ import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
+import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
 import java.util.List;
 
 /**

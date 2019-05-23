@@ -33,7 +33,7 @@ import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.tasks.RemoveShowTask
 import com.battlelancer.seriesguide.widgets.EmptyView
-import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout
+import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode

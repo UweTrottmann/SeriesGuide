@@ -37,7 +37,7 @@
 
                     <include layout="@layout/toolbar_transparent_with_spinner" />
 
-                    <com.battlelancer.seriesguide.widgets.SlidingTabLayout
+                    <com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
                         android:id="@+id/tabsEpisodeDetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

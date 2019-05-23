@@ -77,10 +77,6 @@
     <!-- Inline buttons -->
     <dimen name="buttons_min_height">64dp</dimen>
 
-    <!-- Reorder drag grip -->
-    <dimen name="drag_grip_ridge_size">4dp</dimen>
-    <dimen name="drag_grip_ridge_gap">2dp</dimen>
-
     <!-- Refresh progress circle -->
     <dimen name="swipe_refresh_progress_bar_start_margin">-40dp</dimen>
     <dimen name="swipe_refresh_progress_bar_end_margin">16dp</dimen>

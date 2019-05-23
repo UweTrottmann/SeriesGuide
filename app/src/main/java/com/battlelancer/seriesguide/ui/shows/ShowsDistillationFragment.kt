@@ -23,7 +23,7 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
-import com.battlelancer.seriesguide.widgets.SlidingTabLayout
+import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 
 class ShowsDistillationFragment : AppCompatDialogFragment() {
 

@@ -32,7 +32,7 @@ import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ViewTools
-import com.battlelancer.seriesguide.widgets.SlidingTabLayout
+import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import com.google.android.gms.actions.SearchIntents
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

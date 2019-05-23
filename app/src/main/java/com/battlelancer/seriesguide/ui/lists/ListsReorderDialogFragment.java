@@ -16,8 +16,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.ListsActivity;
-import com.battlelancer.seriesguide.widgets.dragsortview.DragSortController;
-import com.battlelancer.seriesguide.widgets.dragsortview.DragSortListView;
+import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortController;
+import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortListView;
 import java.util.ArrayList;
 import java.util.List;
 
