@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.battlelancer.seriesguide.widgets.gridheaderview.StickyGridHeadersGridView
+    <com.uwetrottmann.seriesguide.widgets.gridheaderview.StickyGridHeadersGridView
         android:id="@+id/gridViewCalendar"
         style="@style/Widget.SeriesGuide.Grid"
         android:layout_width="match_parent"

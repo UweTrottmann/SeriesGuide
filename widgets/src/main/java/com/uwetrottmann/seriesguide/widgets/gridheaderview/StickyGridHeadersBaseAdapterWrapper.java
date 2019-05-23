@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-package com.battlelancer.seriesguide.widgets.gridheaderview;
+package com.uwetrottmann.seriesguide.widgets.gridheaderview;
 
 import android.content.Context;
 import android.database.DataSetObserver;
