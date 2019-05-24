@@ -22,7 +22,6 @@ import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.sync.HexagonShowSync;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -62,10 +61,12 @@ public class ShowTools {
     }
 
     private final Context context;
+    private final ShowTools2 showTools2;
 
     @Inject
     public ShowTools(@ApplicationContext Context context) {
         this.context = context;
+        this.showTools2 = new ShowTools2(this, context);
     }
 
     /**
@@ -167,63 +168,14 @@ public class ShowTools {
      * Saves new favorite flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeIsFavorite(int showTvdbId, boolean isFavorite) {
-        if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context)) {
-                return;
-            }
-            // send to cloud
-            Show show = new Show();
-            show.setTvdbId(showTvdbId);
-            show.setIsFavorite(isFavorite);
-            uploadShowAsync(show);
-        }
-
-        // save to local database
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Shows.FAVORITE, isFavorite ? 1 : 0);
-        context.getContentResolver().update(
-                SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
-
-        // also notify URIs used by search and lists
-        context.getContentResolver()
-                .notifyChange(SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
-        context.getContentResolver()
-                .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
-
-        // favorite status may determine eligibility for notifications
-        NotificationService.trigger(context);
-
-        Toast.makeText(context, context.getString(isFavorite ?
-                R.string.favorited : R.string.unfavorited), Toast.LENGTH_SHORT).show();
+        showTools2.storeIsFavorite(showTvdbId, isFavorite);
     }
 
     /**
      * Saves new hidden flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeIsHidden(int showTvdbId, boolean isHidden) {
-        if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context)) {
-                return;
-            }
-            // send to cloud
-            Show show = new Show();
-            show.setTvdbId(showTvdbId);
-            show.setIsHidden(isHidden);
-            uploadShowAsync(show);
-        }
-
-        // save to local database
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Shows.HIDDEN, isHidden ? 1 : 0);
-        context.getContentResolver().update(
-                SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
-
-        // also notify filter URI used by search
-        context.getContentResolver()
-                .notifyChange(SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
-
-        Toast.makeText(context, context.getString(isHidden ?
-                R.string.hidden : R.string.unhidden), Toast.LENGTH_SHORT).show();
+        showTools2.storeIsHidden(showTvdbId, isHidden);
     }
 
     public void storeLanguage(final int showTvdbId, final String languageCode) {
@@ -273,25 +225,7 @@ public class ShowTools {
      * Saves new notify flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeNotify(int showTvdbId, boolean notify) {
-        if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context)) {
-                return;
-            }
-            // send to cloud
-            Show show = new Show();
-            show.setTvdbId(showTvdbId);
-            show.setNotify(notify);
-            uploadShowAsync(show);
-        }
-
-        // save to local database
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Shows.NOTIFY, notify ? 1 : 0);
-        context.getContentResolver().update(
-                SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
-
-        // new notify setting may determine eligibility for notifications
-        NotificationService.trigger(context);
+        showTools2.storeNotify(showTvdbId, notify);
     }
 
     /**
@@ -310,7 +244,7 @@ public class ShowTools {
                 AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    private void uploadShowAsync(Show show) {
+    void uploadShowAsync(Show show) {
         new ShowsUploadTask(context, show).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
