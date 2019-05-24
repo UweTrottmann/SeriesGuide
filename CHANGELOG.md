@@ -9,6 +9,13 @@ Version 49
 ----------
 *(in development)*
 
+#### 49-beta3
+*(2019-05-24)*
+
+* 🔧 Experimental internal improvements when changing favorite, notify or hidden state of a show.
+* 🔨 Potential fix for calendar jumping away from first item.
+* 📝 Latest translations from crowdin.
+
 #### 49-beta2
 *(2019-05-10)*
 
