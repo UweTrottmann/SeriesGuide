@@ -62,10 +62,12 @@ public class ShowTools {
     }
 
     private final Context context;
+    private final ShowTools2 showTools2;
 
     @Inject
     public ShowTools(@ApplicationContext Context context) {
         this.context = context;
+        this.showTools2 = new ShowTools2(this, context);
     }
 
     /**
@@ -167,34 +169,7 @@ public class ShowTools {
      * Saves new favorite flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeIsFavorite(int showTvdbId, boolean isFavorite) {
-        if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context)) {
-                return;
-            }
-            // send to cloud
-            Show show = new Show();
-            show.setTvdbId(showTvdbId);
-            show.setIsFavorite(isFavorite);
-            uploadShowAsync(show);
-        }
-
-        // save to local database
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Shows.FAVORITE, isFavorite ? 1 : 0);
-        context.getContentResolver().update(
-                SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
-
-        // also notify URIs used by search and lists
-        context.getContentResolver()
-                .notifyChange(SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
-        context.getContentResolver()
-                .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
-
-        // favorite status may determine eligibility for notifications
-        NotificationService.trigger(context);
-
-        Toast.makeText(context, context.getString(isFavorite ?
-                R.string.favorited : R.string.unfavorited), Toast.LENGTH_SHORT).show();
+        showTools2.storeIsFavorite(showTvdbId, isFavorite);
     }
 
     /**
@@ -310,7 +285,7 @@ public class ShowTools {
                 AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    private void uploadShowAsync(Show show) {
+    void uploadShowAsync(Show show) {
         new ShowsUploadTask(context, show).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
