@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core:1.0.1'
+    implementation "androidx.core:core:${versions.core}"
 }
 
 // load local.properties file
