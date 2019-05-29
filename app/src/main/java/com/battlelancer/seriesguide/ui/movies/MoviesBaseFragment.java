@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.movies;
 
 import static com.battlelancer.seriesguide.ui.movies.MoviesDistillationSettings.MoviesSortOrderChangedEvent;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -21,7 +19,6 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
-import com.battlelancer.seriesguide.util.Utils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -29,16 +26,15 @@ import org.greenrobot.eventbus.ThreadMode;
 /**
  * A shell for a fragment displaying a number of movies.
  */
-public abstract class MoviesBaseFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener,
-        MoviesCursorAdapter.PopupMenuClickListener {
+public abstract class MoviesBaseFragment extends Fragment
+        implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int LAYOUT = R.layout.fragment_movies;
 
     private GridView gridView;
     TextView emptyView;
 
-    MoviesCursorAdapter adapter;
+    private MoviesCursorAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -50,7 +46,6 @@ public abstract class MoviesBaseFragment extends Fragment implements
         ViewCompat.setNestedScrollingEnabled(gridView, true);
         emptyView = v.findViewById(R.id.textViewMoviesEmpty);
         gridView.setEmptyView(emptyView);
-        gridView.setOnItemClickListener(this);
 
         return v;
     }
@@ -66,7 +61,8 @@ public abstract class MoviesBaseFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        adapter = new MoviesCursorAdapter(getContext(), this, getLoaderId());
+        adapter = new MoviesCursorAdapter(getContext(), new MovieClickListener(requireContext()),
+                getLoaderId());
         gridView.setAdapter(adapter);
 
         LoaderManager.getInstance(this).initLoader(getLoaderId(), null, this);
@@ -123,28 +119,12 @@ public abstract class MoviesBaseFragment extends Fragment implements
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Cursor movie = (Cursor) adapter.getItem(position);
-        int tmdbId = movie.getInt(MoviesCursorAdapter.MoviesQuery.TMDB_ID);
-
-        // launch movie details activity
-        Intent i = MovieDetailsActivity.intentMovie(getActivity(), tmdbId);
-
-        MoviesCursorAdapter.ViewHolder viewHolder
-                = (MoviesCursorAdapter.ViewHolder) view.getTag();
-        Utils.startActivityWithAnimation(getActivity(), i, viewHolder.poster);
-    }
-
-    @Override
-    public abstract void onPopupMenuClick(View v, int movieTmdbId);
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         adapter.swapCursor(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         adapter.swapCursor(null);
     }
 

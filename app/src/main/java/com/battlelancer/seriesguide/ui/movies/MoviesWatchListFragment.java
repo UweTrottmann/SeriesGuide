@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupMenu;
 import androidx.annotation.NonNull;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -19,8 +18,6 @@ import com.battlelancer.seriesguide.ui.MoviesActivity;
  */
 public class MoviesWatchListFragment extends MoviesBaseFragment {
 
-    private static final int CONTEXT_WATCHLIST_REMOVE_ID = 0;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -31,22 +28,7 @@ public class MoviesWatchListFragment extends MoviesBaseFragment {
         return v;
     }
 
-    @Override
-    public void onPopupMenuClick(View v, final int movieTmdbId) {
-        PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-        popupMenu.getMenu().add(0, CONTEXT_WATCHLIST_REMOVE_ID, 0, R.string.watchlist_remove);
-        popupMenu.setOnMenuItemClickListener(item -> {
-            switch (item.getItemId()) {
-                case CONTEXT_WATCHLIST_REMOVE_ID: {
-                    MovieTools.removeFromWatchlist(getContext(), movieTmdbId);
-                    return true;
-                }
-            }
-            return false;
-        });
-        popupMenu.show();
-    }
-
+    @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
         return new CursorLoader(getContext(), Movies.CONTENT_URI,
