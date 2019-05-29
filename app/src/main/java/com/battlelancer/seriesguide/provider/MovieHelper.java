@@ -6,6 +6,7 @@ import androidx.room.Query;
 import androidx.room.RawQuery;
 import androidx.sqlite.db.SupportSQLiteQuery;
 import com.battlelancer.seriesguide.model.SgMovie;
+import com.battlelancer.seriesguide.model.SgMovieFlags;
 import com.battlelancer.seriesguide.model.SgMovieTmdbId;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import java.util.List;
@@ -30,6 +31,10 @@ public interface MovieHelper {
 
     @RawQuery(observedEntities = SgMovie.class)
     DataSource.Factory<Integer, SgMovie> getWatchedMovies(SupportSQLiteQuery query);
+
+    @Query("SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched "
+            + "FROM movies WHERE movies_tmdbid=:tmdbId")
+    SgMovieFlags getMovieFlags(int tmdbId);
 
     /** For testing. */
     @Query("SELECT * FROM " + Tables.MOVIES)
