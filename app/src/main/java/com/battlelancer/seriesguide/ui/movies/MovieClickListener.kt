@@ -30,6 +30,8 @@ internal open class MovieClickListener(val context: Context) : MoviesAdapter.Ite
         val popupMenu = PopupMenu(anchor.context, anchor)
         popupMenu.inflate(R.menu.movies_popup_menu)
         popupMenu.menu.apply {
+            findItem(R.id.menu_action_movies_set_watched).isVisible = !movieFlags.watched
+            findItem(R.id.menu_action_movies_set_unwatched).isVisible = movieFlags.watched
             findItem(R.id.menu_action_movies_watchlist_add).isVisible = !movieFlags.inWatchlist
             findItem(R.id.menu_action_movies_watchlist_remove).isVisible = movieFlags.inWatchlist
             findItem(R.id.menu_action_movies_collection_add).isVisible = !movieFlags.inCollection
@@ -37,6 +39,14 @@ internal open class MovieClickListener(val context: Context) : MoviesAdapter.Ite
         }
         popupMenu.setOnMenuItemClickListener { item ->
             return@setOnMenuItemClickListener when (item.itemId) {
+                R.id.menu_action_movies_set_watched -> {
+                    MovieTools.watchedMovie(context, movieTmdbId, movieFlags.inWatchlist)
+                    true
+                }
+                R.id.menu_action_movies_set_unwatched -> {
+                    MovieTools.unwatchedMovie(context, movieTmdbId)
+                    true
+                }
                 R.id.menu_action_movies_watchlist_add -> {
                     MovieTools.addToWatchlist(context, movieTmdbId)
                     true
