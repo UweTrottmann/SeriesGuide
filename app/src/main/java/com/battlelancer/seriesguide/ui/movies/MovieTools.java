@@ -195,7 +195,7 @@ public class MovieTools {
     public static boolean setWatchedFlag(Context context, int movieTmdbId, boolean flag) {
         Boolean movieInDatabase = isMovieInDatabase(context, movieTmdbId);
         if (movieInDatabase == null) {
-            return false;
+            return false; // query failed
         }
         if (!movieInDatabase && flag) {
             // Only add, never remove shells. Next Cloud or trakt movie sync will take care of that.

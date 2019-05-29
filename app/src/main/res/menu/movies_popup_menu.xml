@@ -3,6 +3,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menu_action_movies_set_watched"
+        android:title="@string/action_watched" />
+    <item
+        android:id="@+id/menu_action_movies_set_unwatched"
+        android:title="@string/action_unwatched" />
+    <item
         android:id="@+id/menu_action_movies_watchlist_add"
         android:title="@string/watchlist_add" />
     <item
