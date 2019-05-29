@@ -16,6 +16,9 @@ import com.battlelancer.seriesguide.ui.MoviesActivity
  */
 class MoviesCollectionFragment : MoviesBaseFragment() {
 
+    override val loaderId: Int
+        get() = MoviesActivity.COLLECTION_LOADER_ID
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,9 +38,7 @@ class MoviesCollectionFragment : MoviesBaseFragment() {
         )
     }
 
-    internal override fun getLoaderId(): Int = MoviesActivity.COLLECTION_LOADER_ID
-
-    internal override fun getTabPosition(showingNowTab: Boolean): Int {
+    override fun getTabPosition(showingNowTab: Boolean): Int {
         return if (showingNowTab) {
             MoviesActivity.TAB_POSITION_COLLECTION_WITH_NOW
         } else {
