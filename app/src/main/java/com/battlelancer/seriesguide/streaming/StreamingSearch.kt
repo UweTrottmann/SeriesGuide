@@ -34,6 +34,8 @@ object StreamingSearch {
             "lt" to "search",
             "lv" to "search",
             "ee" to "search",
+            "pt" to "search",
+            "pl" to "search",
             "za" to "search",
             "au" to "search",
             "nz" to "search",
