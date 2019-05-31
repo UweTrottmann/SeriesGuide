@@ -55,6 +55,7 @@ class TmdbSync internal constructor(private val context: Context,
                 .getMoviesToUpdate(releasedAfter, updatedBefore, updatedBeforeOther)
         Timber.d("Updating %d movie(s)...", movies.size)
 
+        var result = true
         for (movie in movies) {
             if (!AndroidUtils.isNetworkConnected(context)) {
                 return false // stop updates: no network connection
@@ -69,11 +70,12 @@ class TmdbSync internal constructor(private val context: Context,
                 // update local database
                 movieTools.updateMovie(details, movie.tmdbId)
             } else {
+                result = false // report failure if updating at least one fails
                 Timber.e("Failed to update movie with TMDB id %d", movie.tmdbId)
             }
         }
 
-        return true // successful
+        return result
     }
 
     companion object {
