@@ -375,7 +375,7 @@ public class ShowsActivity extends BaseTopActivity implements
             }
             if (lastVersion < SgApp.RELEASE_VERSION_23_BETA4) {
                 // make next trakt sync download watched movies
-                TraktSettings.resetMoviesLastActivity(this);
+                TraktSettings.resetMoviesLastWatchedAt(this);
             }
             if (lastVersion < SgApp.RELEASE_VERSION_26_BETA3) {
                 // flag all shows outdated so delta sync will pick up, if full sync gets aborted

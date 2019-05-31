@@ -257,8 +257,8 @@ public class MovieTools {
         // add to database
         context.getContentResolver().insert(SeriesGuideContract.Movies.CONTENT_URI, values);
 
-        // ensure ratings and watched flags are downloaded on next sync
-        TraktSettings.resetMoviesLastActivity(context);
+        // ensure ratings for new movie are downloaded on next sync
+        TraktSettings.resetMoviesLastRatedAt(context);
 
         return true;
     }
