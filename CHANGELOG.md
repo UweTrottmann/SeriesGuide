@@ -9,6 +9,16 @@ Version 49
 ----------
 *(in development)*
 
+#### 49-beta4
+*(2019-05-31)*
+
+* 🔧 Streaming search: add JustWatch for Portugal (but appears to be broken) and Poland.
+* 🔧 Add set watched option to movie more options (three dots) menu.
+* 🔨 Movie not in collection or watchlist is properly added after setting it watched.
+* 🔨 trakt sync adds movies that are just watched.
+* 🔧 TMDb sync now reports failure if any movie failed to update.
+* 📝 Latest translations from crowdin.
+
 #### 49-beta3
 *(2019-05-24)*
 
