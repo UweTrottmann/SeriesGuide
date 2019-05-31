@@ -36,6 +36,9 @@ public interface MovieHelper {
             + "FROM movies WHERE movies_tmdbid=:tmdbId")
     SgMovieFlags getMovieFlags(int tmdbId);
 
+    @Query("DELETE FROM movies WHERE movies_tmdbid=:tmdbId")
+    int deleteMovie(int tmdbId);
+
     /** For testing. */
     @Query("SELECT * FROM " + Tables.MOVIES)
     List<SgMovie> getAllMovies();

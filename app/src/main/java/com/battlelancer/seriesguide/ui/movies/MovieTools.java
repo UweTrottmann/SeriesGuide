@@ -1,21 +1,20 @@
 package com.battlelancer.seriesguide.ui.movies;
 
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.jobs.FlagJobAsyncTask;
 import com.battlelancer.seriesguide.jobs.movies.MovieCollectionJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob;
+import com.battlelancer.seriesguide.model.SgMovieFlags;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.util.Errors;
@@ -53,7 +52,8 @@ public class MovieTools {
 
     public enum Lists {
         COLLECTION(SeriesGuideContract.Movies.IN_COLLECTION),
-        WATCHLIST(SeriesGuideContract.Movies.IN_WATCHLIST);
+        WATCHLIST(SeriesGuideContract.Movies.IN_WATCHLIST),
+        WATCHED(SeriesGuideContract.Movies.WATCHED);
 
         public final String databaseColumn;
 
@@ -128,7 +128,7 @@ public class MovieTools {
         // do we have this movie in the database already?
         Boolean movieExists = isMovieInDatabase(context, movieTmdbId);
         if (movieExists == null) {
-            return false;
+            return false; // query failed
         }
         if (movieExists) {
             return updateMovie(context, movieTmdbId, list.databaseColumn, true);
@@ -148,24 +148,29 @@ public class MovieTools {
     /**
      * Removes the movie from the given list.
      *
-     * <p>If it would not be on any list afterwards and is not watched, deletes the movie from the
-     * local database.
+     * <p>If it would not be on any list afterwards, deletes the movie from the local database.
      *
      * @return If the database operation was successful.
      */
     public static boolean removeFromList(Context context, int movieTmdbId, Lists listToRemoveFrom) {
-        Lists otherListToCheck = listToRemoveFrom == Lists.COLLECTION
-                ? Lists.WATCHLIST : Lists.COLLECTION;
-        Boolean isInOtherList = isMovieInList(context, movieTmdbId, otherListToCheck);
-        if (isInOtherList == null) {
-            // query failed, or movie not in local database
-            return false;
+        SgMovieFlags movieFlags = SgRoomDatabase.getInstance(context).movieHelper()
+                .getMovieFlags(movieTmdbId);
+        if (movieFlags == null) {
+            return false; // query failed
         }
 
-        // if movie will not be in any list and is not watched, remove it completely
-        //noinspection SimplifiableIfStatement
-        if (!isInOtherList && deleteMovieIfUnwatched(context, movieTmdbId)) {
-            return true;
+        boolean removeMovie = false;
+        if (listToRemoveFrom == Lists.COLLECTION) {
+            removeMovie = !movieFlags.getInWatchlist() && !movieFlags.getWatched();
+        } else if (listToRemoveFrom == Lists.WATCHLIST) {
+            removeMovie = !movieFlags.getInCollection() && !movieFlags.getWatched();
+        } else if (listToRemoveFrom == Lists.WATCHED) {
+            removeMovie = !movieFlags.getInCollection() && !movieFlags.getInWatchlist();
+        }
+
+        // if movie will not be in any list, remove it completely
+        if (removeMovie) {
+            return deleteMovie(context, movieTmdbId);
         } else {
             // otherwise, just update
             return updateMovie(context, movieTmdbId, listToRemoveFrom.databaseColumn, false);
@@ -174,7 +179,6 @@ public class MovieTools {
 
     static void watchedMovie(Context context, int movieTmdbId, boolean inWatchlist) {
         FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, true));
-        // background: watched state currently only supported with trakt
         // trakt removes from watchlist automatically, but app would not show until next sync
         // and not mirror on hexagon, so do it manually
         if (inWatchlist) {
@@ -184,25 +188,6 @@ public class MovieTools {
 
     static void unwatchedMovie(Context context, int movieTmdbId) {
         FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, false));
-    }
-
-    /**
-     * Set watched flag of movie in local database. If setting watched, but not in database, creates
-     * a new movie watched shell.
-     *
-     * @return If the database operation was successful.
-     */
-    public static boolean setWatchedFlag(Context context, int movieTmdbId, boolean flag) {
-        Boolean movieInDatabase = isMovieInDatabase(context, movieTmdbId);
-        if (movieInDatabase == null) {
-            return false; // query failed
-        }
-        if (!movieInDatabase && flag) {
-            // Only add, never remove shells. Next Cloud or trakt movie sync will take care of that.
-            return addMovieWatchedShell(context.getContentResolver(), movieTmdbId);
-        } else {
-            return updateMovie(context, movieTmdbId, SeriesGuideContract.Movies.WATCHED, flag);
-        }
     }
 
     private static ContentValues[] buildMoviesContentValues(List<MovieDetails> movies) {
@@ -239,30 +224,6 @@ public class MovieTools {
         return localMoviesIds;
     }
 
-    /**
-     * Determines if the movie is in the given list.
-     *
-     * @return true if the movie is in the given list, false otherwise. Can return {@code null} if
-     * the database could not be queried or the movie does not exist.
-     */
-    private static Boolean isMovieInList(Context context, int movieTmdbId, Lists list) {
-        Cursor movie = context.getContentResolver()
-                .query(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId),
-                        new String[]{list.databaseColumn}, null, null, null);
-        if (movie == null) {
-            return null;
-        }
-
-        Boolean isInList = null;
-        if (movie.moveToFirst()) {
-            isInList = movie.getInt(0) == 1;
-        }
-
-        movie.close();
-
-        return isInList;
-    }
-
     private static Boolean isMovieInDatabase(Context context, int movieTmdbId) {
         Cursor movie = context.getContentResolver()
                 .query(SeriesGuideContract.Movies.CONTENT_URI, new String[]{
@@ -290,6 +251,7 @@ public class MovieTools {
         // build values
         details.setInCollection(listToAddTo == Lists.COLLECTION);
         details.setInWatchlist(listToAddTo == Lists.WATCHLIST);
+        details.setWatched(listToAddTo == Lists.WATCHED);
         ContentValues values = details.toContentValuesInsert();
 
         // add to database
@@ -302,28 +264,8 @@ public class MovieTools {
     }
 
     /**
-     * Inserts a movie shell into the database only holding TMDB id, list and watched states.
+     * Returns {@code true} if the movie was updated.
      */
-    @VisibleForTesting
-    public static boolean addMovieWatchedShell(ContentResolver resolver, int movieTmdbId) {
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Movies.TMDB_ID, movieTmdbId);
-        values.put(SeriesGuideContract.Movies.IN_COLLECTION, 0);
-        values.put(SeriesGuideContract.Movies.IN_WATCHLIST, 0);
-        values.put(SeriesGuideContract.Movies.WATCHED, 1);
-        // set default values
-        values.put(SeriesGuideContract.Movies.RUNTIME_MIN, 0);
-        values.put(SeriesGuideContract.Movies.PLAYS, 0);
-        values.put(SeriesGuideContract.Movies.RATING_TMDB, 0);
-        values.put(SeriesGuideContract.Movies.RATING_VOTES_TMDB, 0);
-        values.put(SeriesGuideContract.Movies.RATING_TRAKT, 0);
-        values.put(SeriesGuideContract.Movies.RATING_VOTES_TRAKT, 0);
-        values.put(SeriesGuideContract.Movies.LAST_UPDATED, 0);
-
-        Uri insert = resolver.insert(SeriesGuideContract.Movies.CONTENT_URI, values);
-        return insert != null;
-    }
-
     private static boolean updateMovie(Context context, int movieTmdbId, String column,
             boolean value) {
         ContentValues values = new ContentValues();
@@ -349,13 +291,12 @@ public class MovieTools {
     }
 
     /**
-     * @return {@code true} if the movie was deleted (because it was not watched).
+     * Returns {@code true} if the movie was deleted.
      */
-    private static boolean deleteMovieIfUnwatched(Context context, int movieTmdbId) {
-        int rowsDeleted = context.getContentResolver()
-                .delete(SeriesGuideContract.Movies.buildMovieUri(movieTmdbId),
-                        SeriesGuideContract.Movies.SELECTION_UNWATCHED, null);
-        Timber.d("deleteMovieIfUnwatched: deleted %s movies", rowsDeleted);
+    private static boolean deleteMovie(Context context, int movieTmdbId) {
+        int rowsDeleted = SgRoomDatabase.getInstance(context).movieHelper()
+                .deleteMovie(movieTmdbId);
+        Timber.d("deleteMovie: deleted %s movies", rowsDeleted);
         return rowsDeleted > 0;
     }
 
