@@ -132,7 +132,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             progress.publish(SyncProgress.Step.TMDB);
             TmdbSync tmdbSync = new TmdbSync(getContext(), tmdbConfigService.get(),
                     movieTools.get());
-            // get latest TMDb configuration
+            // get latest TMDb configuration, hexagon+trakt might add movies and need it
             if (!tmdbSync.updateConfiguration(prefs)) {
                 progress.recordError();
             }
@@ -165,7 +165,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     Timber.d("Syncing: Hexagon...SKIP");
                 }
 
-                // sync with trakt (only watched movies + ratings if hexagon is enabled)
+                // sync with trakt (only ratings if hexagon is enabled)
                 if (TraktCredentials.get(getContext()).hasCredentials()) {
                     UpdateResult resultTraktSync = new TraktSync(getContext(), movieTools.get(),
                             traktSync.get(), progress)

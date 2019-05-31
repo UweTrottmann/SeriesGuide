@@ -23,7 +23,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeTools;
 import com.battlelancer.seriesguide.ui.movies.MovieDetails;
-import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.tasks.AddListTask;
 import com.uwetrottmann.thetvdb.entities.Episode;
@@ -190,6 +189,7 @@ public class ProviderTest {
 
     @Test
     public void episodeDefaultValues() throws Exception {
+        assertThat(EPISODE.id).isNotNull();
         ContentValues values = new ContentValues();
         TvdbEpisodeTools.toContentValues(EPISODE, values,
                 EPISODE.id, 1234, SHOW.tvdb_id, 0,
@@ -247,7 +247,7 @@ public class ProviderTest {
     }
 
     @Test
-    public void listDefaultValues() throws Exception {
+    public void listDefaultValues() {
         AddListTask addListTask = new AddListTask(ApplicationProvider.getApplicationContext(),
                 LIST.name);
         addListTask.doDatabaseUpdate(resolver, addListTask.getListId());
@@ -286,28 +286,21 @@ public class ProviderTest {
     }
 
     @Test
-    public void movieDefaultValues() throws Exception {
+    public void movieDefaultValues() {
         ContentValues values = MOVIE.toContentValuesInsert();
         resolver.insert(Movies.CONTENT_URI, values);
 
-        assertMovie(false);
+        assertMovie();
     }
 
     @Test
-    public void movieDefaultValuesWatchedShell() throws Exception {
-        MovieTools.addMovieWatchedShell(resolver, MOVIE.tmdbMovie().id);
-
-        assertMovie(true);
-    }
-
-    @Test
-    public void movieDefaultValuesImport() throws Exception {
+    public void movieDefaultValuesImport() {
         resolver.insert(Movies.CONTENT_URI, MOVIE_I.toContentValues());
 
-        assertMovie(false);
+        assertMovie();
     }
 
-    private void assertMovie(boolean isWatched) {
+    private void assertMovie() {
         Cursor query = resolver.query(Movies.CONTENT_URI, null,
                 null, null, null);
         assertThat(query).isNotNull();
@@ -318,7 +311,7 @@ public class ProviderTest {
         assertDefaultValue(query, Movies.IN_COLLECTION, 0);
         assertDefaultValue(query, Movies.IN_WATCHLIST, 0);
         assertDefaultValue(query, Movies.PLAYS, 0);
-        assertDefaultValue(query, Movies.WATCHED, isWatched ? 1 : 0);
+        assertDefaultValue(query, Movies.WATCHED, 0);
         assertDefaultValue(query, Movies.RATING_TMDB, 0);
         assertDefaultValue(query, Movies.RATING_VOTES_TMDB, 0);
         assertDefaultValue(query, Movies.RATING_TRAKT, 0);

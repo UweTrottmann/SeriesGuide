@@ -70,23 +70,6 @@ public class TmdbSyncTest {
     }
 
     @Test
-    public void doesNotUpdateShells() {
-        // watched shell
-        MovieTools.addMovieWatchedShell(resolver, 10);
-        // in collection/watchlist + released today + last updated long before threshold
-        long lastUpdatedOutdated = System.currentTimeMillis() - TmdbSync.UPDATED_BEFORE_DAYS
-                - DateUtils.DAY_IN_MILLIS;
-        insertMovie(12, System.currentTimeMillis(), lastUpdatedOutdated);
-
-        doUpdateAndAssertSuccess();
-
-        // only the outdated movie should have been updated, not the shell
-        List<SgMovie> movies = movieHelper.getAllMovies();
-        assertThat(findMovieWithId(movies, 10).lastUpdated).isEqualTo(0);
-        assertThat(findMovieWithId(movies, 12).lastUpdated > lastUpdatedOutdated).isTrue();
-    }
-
-    @Test
     public void updatesMoviesLessFrequentIfOlder() {
         long lastUpdatedCurrent = System.currentTimeMillis();
         long lastUpdatedOutdated = System.currentTimeMillis()
