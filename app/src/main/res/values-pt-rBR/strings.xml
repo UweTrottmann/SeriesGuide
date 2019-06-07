@@ -439,6 +439,8 @@
     <string name="pref_notifications_treshold">Quando notificar</string>
     <string name="pref_notifications_select_shows">Selecionar séries</string>
     <string name="pref_notifications_select_shows_summary">Séries que possuem notificações ativadas (%d)</string>
+    <string name="pref_notifications_hidden">Ignore hidden shows</string>
+    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
     <string name="pref_notification_channel_errors">Erros</string>
     <!-- List Widget -->
     <string name="hide_watched">Ocultar episódios já assistidos</string>

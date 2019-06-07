@@ -307,8 +307,9 @@ public class NotificationService {
         if (isNoSpecials) {
             selection.append(" AND ").append(Episodes.SELECTION_NO_SPECIALS);
         }
-        // always exclude hidden shows
-        selection.append(" AND ").append(Shows.SELECTION_NO_HIDDEN);
+        if (NotificationSettings.isIgnoreHiddenShows(context)) {
+            selection.append(" AND ").append(Shows.SELECTION_NO_HIDDEN);
+        }
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 PROJECTION, selection.toString(), new String[] {
