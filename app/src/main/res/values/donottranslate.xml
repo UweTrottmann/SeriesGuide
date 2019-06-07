@@ -61,6 +61,7 @@
     <string name="menu_action_extensions_disable_debug">[Debug] Disable extensions</string>
 
     <!-- Settings -->
+    <string name="pref_key_notifications_hidden">com.battlelancer.seriesguide.notifications.hidden</string>
     <string name="pref_translate">Translate SeriesGuide</string>
     <string name="pref_translatesummary">Translate or proofread for this app (English)</string>
     <string name="pref_community">SeriesGuide Community</string>

@@ -45,6 +45,8 @@ public class NotificationSettings {
     /** Only visible on pre-O. */
     public static final String KEY_VIBRATE = "com.battlelancer.seriesguide.notifications.vibrate";
 
+    public static final String KEY_IGNORE_HIDDEN = "com.battlelancer.seriesguide.notifications.hidden";
+
     private static final int THRESHOLD_DEFAULT_MIN = 10;
 
     public static boolean isNotificationsEnabled(Context context) {
@@ -150,6 +152,14 @@ public class NotificationSettings {
     public static boolean isNotificationVibrating(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_VIBRATE, false);
+    }
+
+    /**
+     * Whether hidden shows should be ignored when notifying about upcoming episodes.
+     */
+    public static boolean isIgnoreHiddenShows(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_IGNORE_HIDDEN, true);
     }
 
     public static void setDefaultsForChannelErrors(Context context,

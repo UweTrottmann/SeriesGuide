@@ -426,6 +426,8 @@
     <string name="pref_notifications_treshold">알람시기</string>
     <string name="pref_notifications_select_shows">프로그램 선택</string>
     <string name="pref_notifications_select_shows_summary">알림 설정된 프로그램 수: %d개</string>
+    <string name="pref_notifications_hidden">Ignore hidden shows</string>
+    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
     <string name="pref_notification_channel_errors">오류</string>
     <!-- Legacy Widgets -->
     <string name="smallwidget">시리즈가이드 (소형)</string>

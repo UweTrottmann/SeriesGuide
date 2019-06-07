@@ -288,6 +288,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
             Preference enabledPref = findPreference(NotificationSettings.KEY_ENABLED);
             final Preference thresholdPref = findPreference(NotificationSettings.KEY_THRESHOLD);
             final Preference selectionPref = findPreference(NotificationSettings.KEY_SELECTION);
+            final Preference hiddenPref = findPreference(NotificationSettings.KEY_IGNORE_HIDDEN);
             // only visible pre-O
             final Preference vibratePref = findPreference(NotificationSettings.KEY_VIBRATE);
             final Preference ringtonePref = findPreference(NotificationSettings.KEY_RINGTONE);
@@ -316,6 +317,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                         getActivity());
                 thresholdPref.setEnabled(isNotificationsEnabled);
                 selectionPref.setEnabled(isNotificationsEnabled);
+                hiddenPref.setEnabled(isNotificationsEnabled);
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                     channelsPref.setEnabled(isNotificationsEnabled);
                 } else {
@@ -328,6 +330,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 enabledPref.setSummary(R.string.onlyx);
                 thresholdPref.setEnabled(false);
                 selectionPref.setEnabled(false);
+                hiddenPref.setEnabled(false);
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                     channelsPref.setEnabled(false);
                 } else {
