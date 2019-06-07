@@ -14,6 +14,7 @@ Version 49
 
 * 🌟 Add setting to ignore hidden shows for notifications (defaults to enabled).
 * 🌟 Filters: add option to make all hidden shows visible at once.
+* 🔨 Do not crash when changing show states (favorite, hidden, notify).
 * 📝 Latest translations from crowdin.
 
 #### 49-beta4
