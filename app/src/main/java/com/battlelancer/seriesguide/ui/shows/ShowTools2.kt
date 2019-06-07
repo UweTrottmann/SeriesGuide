@@ -7,7 +7,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.service.NotificationService
-import com.battlelancer.seriesguide.util.Utils
+import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.Show
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -32,7 +32,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         // send to cloud
         val isCloudButNotConnected = withContext(Dispatchers.Default) {
             if (HexagonSettings.isEnabled(context)) {
-                if (Utils.isNotConnected(context)) {
+                if (isNotConnected(context)) {
                     return@withContext true
                 }
                 val show = Show()
@@ -87,7 +87,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         // send to cloud
         val isCloudButNotConnected = withContext(Dispatchers.Default) {
             if (HexagonSettings.isEnabled(context)) {
-                if (Utils.isNotConnected(context)) {
+                if (isNotConnected(context)) {
                     return@withContext true
                 }
                 val show = Show()
@@ -140,7 +140,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         // send to cloud
         val isCloudButNotConnected = withContext(Dispatchers.Default) {
             if (HexagonSettings.isEnabled(context)) {
-                if (Utils.isNotConnected(context)) {
+                if (isNotConnected(context)) {
                     return@withContext true
                 }
                 val show = Show()
@@ -167,6 +167,17 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         withContext(Dispatchers.Default) {
             NotificationService.trigger(context)
         }
+    }
+
+    private suspend fun isNotConnected(context: Context): Boolean {
+        val isConnected = AndroidUtils.isNetworkConnected(context)
+        // display offline toast
+        if (!isConnected) {
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show()
+            }
+        }
+        return !isConnected
     }
 
 }
