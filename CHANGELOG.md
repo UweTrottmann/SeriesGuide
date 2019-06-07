@@ -9,6 +9,13 @@ Version 49
 ----------
 *(in development)*
 
+#### 49-beta5
+*(2019-06-07)*
+
+* 🌟 Add setting to ignore hidden shows for notifications (defaults to enabled).
+* 🌟 Filters: add option to make all hidden shows visible at once.
+* 📝 Latest translations from crowdin.
+
 #### 49-beta4
 *(2019-05-31)*
 
