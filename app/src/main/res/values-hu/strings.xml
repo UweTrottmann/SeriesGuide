@@ -137,6 +137,8 @@
     <string name="action_shows_filter_unwatched">Nem látott</string>
     <string name="action_shows_filter_upcoming">Következő</string>
     <string name="action_shows_filter_hidden">Rejtett</string>
+    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">Sorozatok rendezése</string>
     <string name="action_shows_sort_title">Cím</string>
     <string name="action_shows_sort_latest_episode">Legújabb epizód</string>

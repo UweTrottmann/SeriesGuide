@@ -138,6 +138,8 @@
     <string name="action_shows_filter_unwatched">Nenoskatītie</string>
     <string name="action_shows_filter_upcoming">Gaidāmās</string>
     <string name="action_shows_filter_hidden">Slēptās</string>
+    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">Kārtot seriālus</string>
     <string name="action_shows_sort_title">Nosaukums</string>
     <string name="action_shows_sort_latest_episode">Latest episode</string>

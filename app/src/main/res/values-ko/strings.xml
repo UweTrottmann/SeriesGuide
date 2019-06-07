@@ -136,6 +136,8 @@
     <string name="action_shows_filter_unwatched">미시청</string>
     <string name="action_shows_filter_upcoming">방영 예정</string>
     <string name="action_shows_filter_hidden">숨긴 항목</string>
+    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">프로그램 정렬</string>
     <string name="action_shows_sort_title">제목</string>
     <string name="action_shows_sort_latest_episode">최근 에피소드</string>

@@ -44,6 +44,7 @@ class FilterShowsView @JvmOverloads constructor(
             checkBoxContinuing.state = null
             filterListener?.onFilterUpdate(ShowFilter.allDisabled())
         }
+        buttonMakeAllVisible.setOnClickListener { filterListener?.onMakeAllHiddenVisibleClick() }
         buttonUpcomingRange.setOnClickListener { filterListener?.onConfigureUpcomingRangeClick() }
     }
 
@@ -61,6 +62,8 @@ class FilterShowsView @JvmOverloads constructor(
     internal lateinit var buttonClearFilters: Button
     @BindView(R.id.button_shows_filter_upcoming_range)
     internal lateinit var buttonUpcomingRange: ImageButton
+    @BindView(R.id.button_shows_filter_all_visible)
+    internal lateinit var buttonMakeAllVisible: Button
 
     private var filterListener: FilterListener? = null
 
@@ -123,6 +126,7 @@ class FilterShowsView @JvmOverloads constructor(
     interface FilterListener {
         fun onFilterUpdate(filter: ShowFilter)
         fun onConfigureUpcomingRangeClick()
+        fun onMakeAllHiddenVisibleClick()
     }
 
 }

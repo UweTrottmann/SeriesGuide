@@ -137,6 +137,8 @@
     <string name="action_shows_filter_unwatched">تماشا نشده</string>
     <string name="action_shows_filter_upcoming">بزودی</string>
     <string name="action_shows_filter_hidden">پنهان شده</string>
+    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">چینش آثار نمایشی</string>
     <string name="action_shows_sort_title">عنوان</string>
     <string name="action_shows_sort_latest_episode">آخرین قسمت</string>

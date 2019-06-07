@@ -136,6 +136,8 @@
     <string name="action_shows_filter_unwatched">ยังไม่ได้ดู</string>
     <string name="action_shows_filter_upcoming">เร็วๆ นี้</string>
     <string name="action_shows_filter_hidden">ซ่อน</string>
+    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">แสดงซีรีส์</string>
     <string name="action_shows_sort_title">ชื่อเรื่อง</string>
     <string name="action_shows_sort_latest_episode">ตอนล่าสุด</string>

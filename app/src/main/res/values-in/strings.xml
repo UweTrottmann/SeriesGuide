@@ -136,6 +136,8 @@
     <string name="action_shows_filter_unwatched">Belum ditonton</string>
     <string name="action_shows_filter_upcoming">Mendatang</string>
     <string name="action_shows_filter_hidden">Tersembunyi</string>
+    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">Sortir acara</string>
     <string name="action_shows_sort_title">Judul</string>
     <string name="action_shows_sort_latest_episode">Episode Terbaru</string>

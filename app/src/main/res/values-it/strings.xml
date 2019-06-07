@@ -137,6 +137,8 @@
     <string name="action_shows_filter_unwatched">Non visti</string>
     <string name="action_shows_filter_upcoming">Prossimi</string>
     <string name="action_shows_filter_hidden">Nascosti</string>
+    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">Ordina le serie</string>
     <string name="action_shows_sort_title">Titolo</string>
     <string name="action_shows_sort_latest_episode">Episodio più recente</string>

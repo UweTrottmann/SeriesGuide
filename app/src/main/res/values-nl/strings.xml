@@ -137,6 +137,8 @@
     <string name="action_shows_filter_unwatched">Onbekeken</string>
     <string name="action_shows_filter_upcoming">Eerstvolgende</string>
     <string name="action_shows_filter_hidden">Verborgen</string>
+    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">Series sorteren</string>
     <string name="action_shows_sort_title">Titel</string>
     <string name="action_shows_sort_latest_episode">Laatste aflevering</string>

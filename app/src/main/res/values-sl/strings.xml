@@ -139,6 +139,8 @@
     <string name="action_shows_filter_unwatched">Nepregledano</string>
     <string name="action_shows_filter_upcoming">Prihajajoče</string>
     <string name="action_shows_filter_hidden">Skrito</string>
+    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">Razvrsti oddaje</string>
     <string name="action_shows_sort_title">Naslov</string>
     <string name="action_shows_sort_latest_episode">Latest episode</string>

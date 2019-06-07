@@ -136,6 +136,8 @@
     <string name="action_shows_filter_unwatched">未視聴</string>
     <string name="action_shows_filter_upcoming">次回</string>
     <string name="action_shows_filter_hidden">非表示</string>
+    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">番組を並び替え</string>
     <string name="action_shows_sort_title">タイトル</string>
     <string name="action_shows_sort_latest_episode">最新のエピソード</string>

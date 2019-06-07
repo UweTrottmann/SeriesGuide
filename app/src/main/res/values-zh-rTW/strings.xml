@@ -136,6 +136,8 @@
     <string name="action_shows_filter_unwatched">尚未觀看</string>
     <string name="action_shows_filter_upcoming">即將播出</string>
     <string name="action_shows_filter_hidden">隱藏</string>
+    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">排序影集</string>
     <string name="action_shows_sort_title">依影集名稱</string>
     <string name="action_shows_sort_latest_episode">最新一集</string>
