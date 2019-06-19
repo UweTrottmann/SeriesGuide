@@ -58,7 +58,7 @@ class TvdbEpisodeTools constructor(
         while (page != null) {
             val response = getEpisodes(showTvdbId, page, language)
             val episodes = response.data
-                ?: break // no episode data returned, stop (likely API error)
+                ?: throw TvdbDataException("fetchEpisodes response is null") // No episode data returned, stop (likely API error).
 
             // fall back if no translation is available for some episodes
             // note: just checking errors is not enough as no error if just some are not translated
