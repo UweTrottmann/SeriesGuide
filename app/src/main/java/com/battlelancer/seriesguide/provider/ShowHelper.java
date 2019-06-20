@@ -27,6 +27,9 @@ public interface ShowHelper {
     @Query("SELECT count(_id) FROM series WHERE series_hidden=1")
     int countHiddenShows();
 
+    @Query("SELECT _id FROM series WHERE series_hidden=1")
+    List<Integer> getHiddenShowsTvdbIds();
+
     @Query("UPDATE series SET series_hidden=0 WHERE series_hidden=1")
     int makeHiddenVisible();
 

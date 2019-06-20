@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.service.NotificationService
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.Show
@@ -166,6 +167,46 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         // new notify setting may determine eligibility for notifications
         withContext(Dispatchers.Default) {
             NotificationService.trigger(context)
+        }
+    }
+
+    /**
+     * Removes hidden flag from all hidden shows in the local database and, if signed in, sends to
+     * the cloud as well.
+     */
+    fun storeAllHiddenVisible() {
+        GlobalScope.launch {
+            // Send to cloud.
+            val isCloudButNotConnected = withContext(Dispatchers.Default) {
+                if (HexagonSettings.isEnabled(context)) {
+                    if (isNotConnected(context)) {
+                        return@withContext true
+                    }
+
+                    val hiddenShowTvdbIds = withContext(Dispatchers.IO) {
+                        SgRoomDatabase.getInstance(context).showHelper().hiddenShowsTvdbIds
+                    }
+
+                    val shows = hiddenShowTvdbIds.map { showTvdbId ->
+                        val show = Show()
+                        show.tvdbId = showTvdbId
+                        show.isHidden = false
+                        show
+                    }
+
+                    withContext(Dispatchers.Main) {
+                        showTools.uploadShowsAsync(shows)
+                    }
+                }
+                return@withContext false
+            }
+            // Do not save to local database if sending to cloud is impossible.
+            if (isCloudButNotConnected) return@launch
+
+            // Save to local database.
+            withContext(Dispatchers.IO) {
+                SgRoomDatabase.getInstance(context).showHelper().makeHiddenVisible()
+            }
         }
     }
 

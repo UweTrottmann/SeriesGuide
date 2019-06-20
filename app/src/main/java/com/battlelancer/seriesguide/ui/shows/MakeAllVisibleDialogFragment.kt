@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -31,7 +31,10 @@ class MakeAllVisibleDialogFragment : AppCompatDialogFragment(), CoroutineScope {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dialog = AlertDialog.Builder(context!!)
             .setMessage(getString(R.string.description_make_all_visible_format, "?"))
-            .setPositiveButton(R.string.action_shows_make_all_visible) { _, _ -> unhideAllHiddenShows() }
+            .setPositiveButton(R.string.action_shows_make_all_visible) { _, _ ->
+                SgApp.getServicesComponent(context!!).showTools().storeAllHiddenVisible()
+                dismiss()
+            }
             .setNegativeButton(android.R.string.cancel) { _, _ -> dismiss() }
             .create()
         return dialog
@@ -56,16 +59,6 @@ class MakeAllVisibleDialogFragment : AppCompatDialogFragment(), CoroutineScope {
         withContext(Dispatchers.Main) {
             dialog.setMessage(getString(R.string.description_make_all_visible_format, count))
         }
-    }
-
-    private fun unhideAllHiddenShows() {
-        val context = context!!.applicationContext
-        GlobalScope.launch {
-            withContext(Dispatchers.IO) {
-                SgRoomDatabase.getInstance(context).showHelper().makeHiddenVisible()
-            }
-        }
-        dismiss()
     }
 
     override fun onDestroyView() {

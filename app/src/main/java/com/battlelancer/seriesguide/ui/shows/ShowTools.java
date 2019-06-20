@@ -16,7 +16,6 @@ import androidx.collection.SparseArrayCompat;
 import androidx.core.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
@@ -89,7 +88,7 @@ public class ShowTools {
 
         // SEARCH DATABASE ENTRIES
         final Cursor episodes = context.getContentResolver().query(
-                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId), new String[] {
+                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
                         SeriesGuideContract.Episodes._ID
                 }, null, null, null
         );
@@ -178,6 +177,14 @@ public class ShowTools {
         showTools2.storeIsHidden(showTvdbId, isHidden);
     }
 
+    /**
+     * Removes hidden flag from all hidden shows in the local database and, if signed in, sends to
+     * the cloud as well.
+     */
+    public void storeAllHiddenVisible() {
+        showTools2.storeAllHiddenVisible();
+    }
+
     public void storeLanguage(final int showTvdbId, final String languageCode) {
         if (HexagonSettings.isEnabled(context)) {
             if (Utils.isNotConnected(context)) {
@@ -245,28 +252,36 @@ public class ShowTools {
     }
 
     void uploadShowAsync(Show show) {
-        new ShowsUploadTask(context, show).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new ShowsCloudUploadTask(context, show).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public static class ShowsUploadTask extends AsyncTask<Void, Void, Void> {
+    void uploadShowsAsync(List<Show> shows) {
+        new ShowsCloudUploadTask(context, shows).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    public static class ShowsCloudUploadTask extends AsyncTask<Void, Void, Void> {
 
         @SuppressLint("StaticFieldLeak") private final Context context;
-        private final Show show;
-        @Inject HexagonTools hexagonTools;
+        private final List<Show> shows = new LinkedList<>();
 
-        public ShowsUploadTask(Context context, Show show) {
+        private ShowsCloudUploadTask(Context context) {
             this.context = context.getApplicationContext();
-            this.show = show;
-            SgApp.getServicesComponent(context).inject(this);
+        }
+
+        ShowsCloudUploadTask(Context context, Show show) {
+            this(context);
+            this.shows.add(show);
+        }
+
+        ShowsCloudUploadTask(Context context, List<Show> shows) {
+            this(context);
+            this.shows.addAll(shows);
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-            List<Show> shows = new LinkedList<>();
-            shows.add(show);
-
-            new HexagonShowSync(context, hexagonTools).upload(shows);
-
+            new HexagonShowSync(context, SgApp.getServicesComponent(context).hexagonTools())
+                    .upload(shows);
             return null;
         }
     }
@@ -274,8 +289,8 @@ public class ShowTools {
     public static boolean addLastWatchedUpdateOpIfNewer(Context context,
             ArrayList<ContentProviderOperation> batch, int showTvdbId, long lastWatchedMsNew) {
         Uri uri = SeriesGuideContract.Shows.buildShowUri(showTvdbId);
-        Cursor query = context.getContentResolver().query(uri, new String[] {
-                SeriesGuideContract.Shows.LASTWATCHED_MS }, null, null, null);
+        Cursor query = context.getContentResolver().query(uri, new String[]{
+                SeriesGuideContract.Shows.LASTWATCHED_MS}, null, null, null);
         if (query == null) {
             Timber.e("addLastWatchedTimeUpdateOpIfNewer: query was null.");
             return false;
@@ -304,7 +319,7 @@ public class ShowTools {
     public static Integer getShowTraktId(@NonNull Context context, int showTvdbId) {
         Cursor traktIdQuery = context.getContentResolver()
                 .query(SeriesGuideContract.Shows.buildShowUri(showTvdbId),
-                        new String[] { SeriesGuideContract.Shows.TRAKT_ID }, null, null, null);
+                        new String[]{SeriesGuideContract.Shows.TRAKT_ID}, null, null, null);
         if (traktIdQuery == null) {
             return null;
         }
@@ -332,7 +347,7 @@ public class ShowTools {
         HashSet<Integer> existingShows = new HashSet<>();
 
         Cursor shows = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
-                new String[] { SeriesGuideContract.Shows._ID }, null, null, null);
+                new String[]{SeriesGuideContract.Shows._ID}, null, null, null);
         if (shows == null) {
             return null;
         }
@@ -357,7 +372,7 @@ public class ShowTools {
         SparseArrayCompat<String> existingShows = new SparseArrayCompat<>();
 
         Cursor shows = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
-                new String[] { SeriesGuideContract.Shows._ID, SeriesGuideContract.Shows.POSTER },
+                new String[]{SeriesGuideContract.Shows._ID, SeriesGuideContract.Shows.POSTER},
                 null, null, null);
         if (shows == null) {
             return null;
