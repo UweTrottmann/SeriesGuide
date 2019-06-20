@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui.shows;
 
-import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,13 +14,11 @@ import androidx.annotation.Nullable;
 import androidx.collection.SparseArrayCompat;
 import androidx.core.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.sync.HexagonShowSync;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -251,39 +248,8 @@ public class ShowTools {
                 AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    void uploadShowAsync(Show show) {
-        new ShowsCloudUploadTask(context, show).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
-    void uploadShowsAsync(List<Show> shows) {
-        new ShowsCloudUploadTask(context, shows).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
-    public static class ShowsCloudUploadTask extends AsyncTask<Void, Void, Void> {
-
-        @SuppressLint("StaticFieldLeak") private final Context context;
-        private final List<Show> shows = new LinkedList<>();
-
-        private ShowsCloudUploadTask(Context context) {
-            this.context = context.getApplicationContext();
-        }
-
-        ShowsCloudUploadTask(Context context, Show show) {
-            this(context);
-            this.shows.add(show);
-        }
-
-        ShowsCloudUploadTask(Context context, List<Show> shows) {
-            this(context);
-            this.shows.addAll(shows);
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            new HexagonShowSync(context, SgApp.getServicesComponent(context).hexagonTools())
-                    .upload(shows);
-            return null;
-        }
+    private void uploadShowAsync(Show show) {
+        showTools2.uploadShowToCloud(show);
     }
 
     public static boolean addLastWatchedUpdateOpIfNewer(Context context,

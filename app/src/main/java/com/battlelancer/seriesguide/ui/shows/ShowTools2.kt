@@ -4,10 +4,12 @@ import android.content.ContentValues
 import android.content.Context
 import android.widget.Toast
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.service.NotificationService
+import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.Show
 import kotlinx.coroutines.Dispatchers
@@ -30,24 +32,26 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     }
 
     private suspend fun storeIsFavoriteAsync(showTvdbId: Int, isFavorite: Boolean) {
-        // send to cloud
-        val isCloudButNotConnected = withContext(Dispatchers.Default) {
-            if (HexagonSettings.isEnabled(context)) {
-                if (isNotConnected(context)) {
-                    return@withContext true
-                }
-                val show = Show()
-                show.tvdbId = showTvdbId
-                show.isFavorite = isFavorite
-                withContext(Dispatchers.Main) {
-                    showTools.uploadShowAsync(show)
-                }
+        // Send to cloud.
+        val isCloudFailed = withContext(Dispatchers.Default) {
+            if (!HexagonSettings.isEnabled(context)) {
+                return@withContext false
             }
-            return@withContext false
-        }
-        if (isCloudButNotConnected) return
+            if (isNotConnected(context)) {
+                return@withContext true
+            }
 
-        // save to local database
+            val show = Show()
+            show.tvdbId = showTvdbId
+            show.isFavorite = isFavorite
+
+            val success = uploadShowToCloudAsync(show)
+            return@withContext !success
+        }
+        // Do not save to local database if sending to cloud has failed.
+        if (isCloudFailed) return
+
+        // Save to local database.
         withContext(Dispatchers.IO) {
             val values = ContentValues()
             values.put(SeriesGuideContract.Shows.FAVORITE, if (isFavorite) 1 else 0)
@@ -85,24 +89,26 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     }
 
     private suspend fun storeIsHiddenAsync(showTvdbId: Int, isHidden: Boolean) {
-        // send to cloud
-        val isCloudButNotConnected = withContext(Dispatchers.Default) {
-            if (HexagonSettings.isEnabled(context)) {
-                if (isNotConnected(context)) {
-                    return@withContext true
-                }
-                val show = Show()
-                show.tvdbId = showTvdbId
-                show.isHidden = isHidden
-                withContext(Dispatchers.Main) {
-                    showTools.uploadShowAsync(show)
-                }
+        // Send to cloud.
+        val isCloudFailed = withContext(Dispatchers.Default) {
+            if (!HexagonSettings.isEnabled(context)) {
+                return@withContext false
             }
-            return@withContext false
-        }
-        if (isCloudButNotConnected) return
+            if (isNotConnected(context)) {
+                return@withContext true
+            }
 
-        // save to local database
+            val show = Show()
+            show.tvdbId = showTvdbId
+            show.isHidden = isHidden
+
+            val success = uploadShowToCloudAsync(show)
+            return@withContext !success
+        }
+        // Do not save to local database if sending to cloud has failed.
+        if (isCloudFailed) return
+
+        // Save to local database.
         withContext(Dispatchers.IO) {
             val values = ContentValues()
             values.put(SeriesGuideContract.Shows.HIDDEN, if (isHidden) 1 else 0)
@@ -138,24 +144,26 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     }
 
     private suspend fun storeNotifyAsync(showTvdbId: Int, notify: Boolean) {
-        // send to cloud
-        val isCloudButNotConnected = withContext(Dispatchers.Default) {
-            if (HexagonSettings.isEnabled(context)) {
-                if (isNotConnected(context)) {
-                    return@withContext true
-                }
-                val show = Show()
-                show.tvdbId = showTvdbId
-                show.notify = notify
-                withContext(Dispatchers.Main) {
-                    showTools.uploadShowAsync(show)
-                }
+        // Send to cloud.
+        val isCloudFailed = withContext(Dispatchers.Default) {
+            if (!HexagonSettings.isEnabled(context)) {
+                return@withContext false
             }
-            return@withContext false
-        }
-        if (isCloudButNotConnected) return
+            if (isNotConnected(context)) {
+                return@withContext true
+            }
 
-        // save to local database
+            val show = Show()
+            show.tvdbId = showTvdbId
+            show.notify = notify
+
+            val success = uploadShowToCloudAsync(show)
+            return@withContext !success
+        }
+        // Do not save to local database if sending to cloud has failed.
+        if (isCloudFailed) return
+
+        // Save to local database.
         withContext(Dispatchers.IO) {
             val values = ContentValues()
             values.put(SeriesGuideContract.Shows.NOTIFY, if (notify) 1 else 0)
@@ -177,31 +185,30 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     fun storeAllHiddenVisible() {
         GlobalScope.launch {
             // Send to cloud.
-            val isCloudButNotConnected = withContext(Dispatchers.Default) {
-                if (HexagonSettings.isEnabled(context)) {
-                    if (isNotConnected(context)) {
-                        return@withContext true
-                    }
-
-                    val hiddenShowTvdbIds = withContext(Dispatchers.IO) {
-                        SgRoomDatabase.getInstance(context).showHelper().hiddenShowsTvdbIds
-                    }
-
-                    val shows = hiddenShowTvdbIds.map { showTvdbId ->
-                        val show = Show()
-                        show.tvdbId = showTvdbId
-                        show.isHidden = false
-                        show
-                    }
-
-                    withContext(Dispatchers.Main) {
-                        showTools.uploadShowsAsync(shows)
-                    }
+            val isCloudFailed = withContext(Dispatchers.Default) {
+                if (!HexagonSettings.isEnabled(context)) {
+                    return@withContext false
                 }
-                return@withContext false
+                if (isNotConnected(context)) {
+                    return@withContext true
+                }
+
+                val hiddenShowTvdbIds = withContext(Dispatchers.IO) {
+                    SgRoomDatabase.getInstance(context).showHelper().hiddenShowsTvdbIds
+                }
+
+                val shows = hiddenShowTvdbIds.map { showTvdbId ->
+                    val show = Show()
+                    show.tvdbId = showTvdbId
+                    show.isHidden = false
+                    show
+                }
+
+                val success = uploadShowsToCloudAsync(shows)
+                return@withContext !success
             }
-            // Do not save to local database if sending to cloud is impossible.
-            if (isCloudButNotConnected) return@launch
+            // Do not save to local database if sending to cloud has failed.
+            if (isCloudFailed) return@launch
 
             // Save to local database.
             withContext(Dispatchers.IO) {
@@ -219,6 +226,23 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             }
         }
         return !isConnected
+    }
+
+    fun uploadShowToCloud(show: Show) {
+        GlobalScope.launch {
+            uploadShowToCloudAsync(show)
+        }
+    }
+
+    private suspend fun uploadShowToCloudAsync(show: Show): Boolean {
+        return uploadShowsToCloudAsync(listOf(show))
+    }
+
+    private suspend fun uploadShowsToCloudAsync(shows: List<Show>): Boolean {
+        return withContext(Dispatchers.IO) {
+            HexagonShowSync(context, SgApp.getServicesComponent(context).hexagonTools())
+                .upload(shows)
+        }
     }
 
 }
