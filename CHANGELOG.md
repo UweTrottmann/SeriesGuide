@@ -9,6 +9,16 @@ Version 49
 ----------
 *(in development)*
 
+#### 49-beta6
+*(2019-06-21)*
+
+* 🔨 When making all hidden shows visible also upload changes to Cloud.
+* 🔨 trakt sign-in: do not crash if WebView is currently unavailable (e.g. it is updated).
+* 🔨 Potential fix for crashes when receiving actions from extensions.
+* 🔧 When changing the state of a show (e.g. favoriting or hiding it), will wait until sent to Cloud 
+  before applying the change locally.
+* 📝 Latest translations from crowdin.
+
 #### 49-beta5
 *(2019-06-07)*
 
