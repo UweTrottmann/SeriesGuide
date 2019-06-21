@@ -63,24 +63,6 @@ public abstract class BaseOAuthActivity extends BaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        /*
-          Force the text-to-speech accessibility Javascript plug-in service on Android 4.2.2 to
-          get shutdown, to avoid leaking its context.
-
-          http://stackoverflow.com/a/18798305/1000543
-         */
-        if (webview != null) {
-            webview.getSettings().setJavaScriptEnabled(false);
-            // remove client to avoid callbacks to non-existent views
-            webview.setWebViewClient(null);
-            webview = null;
-        }
-    }
-
-    @Override
     protected void setupActionBar() {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
