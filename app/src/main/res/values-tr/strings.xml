@@ -137,8 +137,8 @@
     <string name="action_shows_filter_unwatched">İzlenmemiş</string>
     <string name="action_shows_filter_upcoming">Yaklaşan</string>
     <string name="action_shows_filter_hidden">Gizli</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="action_shows_make_all_visible">Tüm gizli öğeleri görünür yap</string>
+    <string name="description_make_all_visible_format">Tüm (%s) gizli program tekrar görünür hale gelsin mi?</string>
     <string name="action_shows_sort">Dizileri sırala</string>
     <string name="action_shows_sort_title">Başlık</string>
     <string name="action_shows_sort_latest_episode">Son bölüme göre</string>
@@ -441,8 +441,8 @@
     <string name="pref_notifications_treshold">Bildirim zamanı</string>
     <string name="pref_notifications_select_shows">Dizi seç</string>
     <string name="pref_notifications_select_shows_summary">Bildirimlerin etkinleştirildiği diziler (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Gizli programları yoksay</string>
+    <string name="pref_notifications_hidden_summary">Bildirimler etkin olsa bile, gizli programlar hakkında bildirimde bulunmayın</string>
     <string name="pref_notification_channel_errors">Hatalar</string>
     <!-- List Widget -->
     <string name="hide_watched">İzlenmiş bölümleri gizle</string>

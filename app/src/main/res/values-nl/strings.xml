@@ -9,7 +9,7 @@
     <string name="search">Zoeken</string>
     <string name="preferences">Instellingen</string>
     <string name="help">Help</string>
-    <string name="help_and_feedback">Help &amp; Feedback</string>
+    <string name="help_and_feedback">Help &amp; feedback</string>
     <string name="drawer_open">Navigatiemenu openen</string>
     <string name="no_more_updates">SeriesGuide zal geen updates meer uitbrengen voor deze versie van Android.</string>
     <!-- Media items -->
@@ -39,7 +39,7 @@
     <string name="sync_and_update">Synchroniseren &amp; bijwerken</string>
     <string name="sync_and_download_all">Synchroniseren &amp; alles downloaden</string>
     <string name="action_turn_off">Uitschakelen</string>
-    <string name="action_stream">Stream or purchase</string>
+    <string name="action_stream">Streamen of kopen</string>
     <!-- Search -->
     <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
     <string name="search_hint">Afleveringen zoeken</string>
@@ -52,8 +52,8 @@
     <string name="app_not_available">Geen app beschikbaar voor deze actie.</string>
     <string name="people_empty">Niemand?! Probeer opnieuw.</string>
     <string name="database_error">Wijziging niet mogelijk.</string>
-    <string name="reinstall_info">Maak een back-up, installeer opnieuw en herstel</string>
-    <string name="api_error_generic">Kon niet praten met %s. Probeer later opnieuw</string>
+    <string name="reinstall_info">Maak een back-up in de Instellingen, installeer opnieuw en herstel</string>
+    <string name="api_error_generic">Kon niet praten met %s. Probeer later opnieuw.</string>
     <string name="api_failed">Mislukt: %s</string>
     <string name="copy_to_clipboard">Gekopieerd naar klembord</string>
     <!-- Sharing -->
@@ -67,7 +67,7 @@
     <!-- Comments -->
     <string name="comments">Reacties</string>
     <string name="shout_hint">Voer een opmerking in (in het Engels, meer dan 5 woorden)</string>
-    <string name="shout_invalid">Uw opmerking volgt de regels niet!</string>
+    <string name="shout_invalid">Uw reactie volgt de regels niet!</string>
     <string name="action_post">Verzenden</string>
     <string name="isspoiler">Spoiler waarschuwing!</string>
     <string name="no_shouts">Wees de eerste die shout!</string>
@@ -105,7 +105,7 @@
     <string name="mark_all">Alles bekeken</string>
     <string name="unmark_all">Niets bekeken</string>
     <string name="mark_untilhere">Alle eerder uitgezonden bekijken</string>
-    <string name="collect_all">Verzamel alles</string>
+    <string name="collect_all">Alles verzameld</string>
     <string name="uncollect_all">Niets verzameld</string>
     <string name="action_skip">Overslaan</string>
     <string name="action_dont_skip">Niet overslaan</string>
@@ -137,14 +137,14 @@
     <string name="action_shows_filter_unwatched">Onbekeken</string>
     <string name="action_shows_filter_upcoming">Eerstvolgende</string>
     <string name="action_shows_filter_hidden">Verborgen</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="action_shows_make_all_visible">Alle verborgen tonen</string>
+    <string name="description_make_all_visible_format">Alle verborgen series (%s) opnieuw zichtbaar maken?</string>
     <string name="action_shows_sort">Series sorteren</string>
     <string name="action_shows_sort_title">Titel</string>
     <string name="action_shows_sort_latest_episode">Laatste aflevering</string>
     <string name="action_shows_sort_oldest_episode">Oudste aflevering</string>
     <string name="action_shows_sort_last_watched">Laatst bekeken</string>
-    <string name="action_shows_sort_remaining">Overige afleveringen</string>
+    <string name="action_shows_sort_remaining">Resterende afleveringen</string>
     <string name="action_shows_sort_favorites">Favorieten eerst</string>
     <string name="context_updateshow">Bijwerken</string>
     <string name="context_marknext">Volgende aflevering bekeken</string>
@@ -154,8 +154,8 @@
     <string name="friends_recently">Uw Trakt-vrienden</string>
     <string name="now_empty">Nog niets, kijk eerst wat series!</string>
     <string name="now_movies_empty">Niks te doen. Kijk een film!</string>
-    <string name="user_stream_empty">Geen recente activiteit op trakt. Check in bij shows!</string>
-    <string name="user_movie_stream_empty">Geen recente activiteit op trakt. Check in bij films!</string>
+    <string name="user_stream_empty">Geen recente activiteit op trakt. Kijk en check in bij wat shows!</string>
+    <string name="user_movie_stream_empty">Geen recente activiteit op trakt. Bekijk en check in bij films!</string>
     <!-- Calendar -->
     <string name="upcoming">Eerstvolgende</string>
     <string name="recent">Recente</string>
@@ -189,8 +189,8 @@
     <string name="add_empty">Er zijn hier geen series</string>
     <string name="no_results">Geen resultaten, probeer complete woorden.</string>
     <string name="empty_show_search">Niet gevonden in uw serielijst</string>
-    <string name="action_try_any_language">Probeer elke taal</string>
-    <string name="action_try_again">Probeer nogmaals</string>
+    <string name="action_try_any_language">Elke taal proberen</string>
+    <string name="action_try_again">Nogmaals proberen</string>
     <string name="tvdb_error_does_not_exist">Show bestaat (nog) niet op TheTVDB. Probeer later opnieuw.</string>
     <string name="add_all">Alles toevoegen</string>
     <string name="add_multiple">Alle series worden binnenkort in de serielijst weergegeven.</string>
@@ -218,7 +218,7 @@
     <string name="title_discover">Ontdekken</string>
     <string name="title_popular">Populair</string>
     <string name="title_digital_releases">Digitale releases</string>
-    <string name="title_disc_releases">CD releases</string>
+    <string name="title_disc_releases">Releases op schijf</string>
     <string name="movies_in_theatres">In de bioscoop</string>
     <string name="movies_collection">Collectie</string>
     <string name="movies_watchlist">Kijklijst</string>
@@ -331,7 +331,7 @@
     <string name="action_open_in_browser">Openen in browser</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Basis</string>
-    <string name="prefs_category_sharing">Services</string>
+    <string name="prefs_category_sharing">Diensten</string>
     <string name="prefs_category_about">Over</string>
     <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
     <string name="pref_onlyfuturesummary">Laat nooit al uitgezonden afleveringen zien</string>
@@ -441,8 +441,8 @@
     <string name="pref_notifications_treshold">Wanneer te waarschuwen</string>
     <string name="pref_notifications_select_shows">Series kiezen</string>
     <string name="pref_notifications_select_shows_summary">Series waarvoor de meldingen aanstaan (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Verborgen series negeren</string>
+    <string name="pref_notifications_hidden_summary">Geen melding sturen over verborgen series, zelfs als meldingen ingeschakeld zijn</string>
     <string name="pref_notification_channel_errors">Fouten</string>
     <!-- List Widget -->
     <string name="hide_watched">Bekeken afleveringen verbergen</string>

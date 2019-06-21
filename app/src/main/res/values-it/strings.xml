@@ -137,8 +137,8 @@
     <string name="action_shows_filter_unwatched">Non visti</string>
     <string name="action_shows_filter_upcoming">Prossimi</string>
     <string name="action_shows_filter_hidden">Nascosti</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="action_shows_make_all_visible">Rendi visibili tutti i nascosti</string>
+    <string name="description_make_all_visible_format">Rendere tutte le serie TV nascoste (%s) di nuovo visibili?</string>
     <string name="action_shows_sort">Ordina le serie</string>
     <string name="action_shows_sort_title">Titolo</string>
     <string name="action_shows_sort_latest_episode">Episodio più recente</string>
@@ -441,8 +441,8 @@
     <string name="pref_notifications_treshold">Quando notificare</string>
     <string name="pref_notifications_select_shows">Seleziona serie</string>
     <string name="pref_notifications_select_shows_summary">Serie con notifiche abilitate (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Ignora serie TV nascoste</string>
+    <string name="pref_notifications_hidden_summary">Non invia notifiche sulle serie TV nascoste, anche se le notifiche sono abilitate</string>
     <string name="pref_notification_channel_errors">Errori</string>
     <!-- List Widget -->
     <string name="hide_watched">Nascondi episodi già visti</string>
