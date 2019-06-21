@@ -28,7 +28,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
-import androidx.core.app.SafeJobIntentService;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -168,7 +167,7 @@ import org.json.JSONTokener;
  * <p> Based on code from <a href="https://github.com/romannurik/muzei">Muzei</a>, an awesome Live
  * Wallpaper by Roman Nurik.
  */
-public abstract class SeriesGuideExtension extends SafeJobIntentService {
+public abstract class SeriesGuideExtension extends JobIntentService {
 
     private static final String TAG = "SeriesGuideExtension";
 

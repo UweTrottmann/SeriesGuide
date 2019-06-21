@@ -9,14 +9,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
-import androidx.core.app.SafeJobIntentService;
+import androidx.core.app.JobIntentService;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.api.Action;
 
 /**
  * Processes actions published by enabled extensions.
  */
-public class ExtensionActionService extends SafeJobIntentService {
+public class ExtensionActionService extends JobIntentService {
 
     public static void enqueue(Context context, Intent actionIntent) {
         enqueueWork(context, ExtensionActionService.class, SgApp.JOB_ID_EXTENSION_ACTIONS_SERVICE,
