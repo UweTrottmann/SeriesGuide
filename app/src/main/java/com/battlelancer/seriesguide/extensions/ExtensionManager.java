@@ -386,6 +386,9 @@ public class ExtensionManager {
                 .putExtra(IncomingConstants.EXTRA_VERSION, 2));
     }
 
+    /**
+     * This is thread-safe.
+     */
     public void handlePublishedAction(Context context, String token, Action action, int type) {
         if (TextUtils.isEmpty(token) || action == null) {
             // whoops, no token or action received
