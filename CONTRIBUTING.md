@@ -21,7 +21,7 @@ patches or translations the following applies:
 
 #### No code!
 * You can [get help](https://seriesgui.de/help).
-* You can [suggest features](https://seriesguide.uservoice.com).
+* You can [suggest features](https://dicuss.seriesgui.de).
 * You can [translate the app](https://crowdin.com/project/seriesguide-translations).
 * You can [discuss bugs](https://github.com/UweTrottmann/SeriesGuide/issues) or [submit a bug](https://github.com/UweTrottmann/SeriesGuide/issues/new).
 
@@ -66,9 +66,6 @@ SG_IAP_KEY_D=<keypart>
 SONATYPE_NEXUS_USERNAME=<your sonatype username>
 SONATYPE_NEXUS_PASSWORD=<your sonatype password>
 ```
-
-#### Google Analytics for Firebase
-To use [Google Analytics](https://firebase.google.com/docs/analytics/) add your downloaded [Firebase configuration](https://firebase.google.com/docs/android/setup) file to `app/google-services.json`.
 
 #### Crashlytics
 
