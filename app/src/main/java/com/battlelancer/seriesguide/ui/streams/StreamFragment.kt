@@ -20,9 +20,9 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
 import com.uwetrottmann.seriesguide.widgets.gridheaderview.StickyGridHeadersGridView
-import com.uwetrottmann.androidutils.AndroidUtils
 
 /**
  * Displays a stream of activities that can be refreshed by the user via a swipe gesture (or an
@@ -90,7 +90,7 @@ abstract class StreamFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.stream_menu, menu)
     }
 
