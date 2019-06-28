@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <SwitchPreference
-        android:defaultValue="True"
+        android:defaultValue="true"
         android:key="com.battlelancer.seriesguide.notifications"
         android:summary="@string/pref_notificationssummary"
         android:title="@string/pref_notifications" />
@@ -14,6 +14,12 @@
     <Preference
         android:key="com.battlelancer.seriesguide.notifications.shows"
         android:title="@string/pref_notifications_select_shows" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="@string/pref_key_notifications_hidden"
+        android:summary="@string/pref_notifications_hidden_summary"
+        android:title="@string/pref_notifications_hidden" />
 
     <Preference
         android:key="com.battlelancer.seriesguide.notifications.channels"

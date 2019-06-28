@@ -26,17 +26,12 @@ class MoviesCursorAdapter extends CursorAdapter {
 
     private final DateFormat dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat();
 
-    private final PopupMenuClickListener popupMenuClickListener;
+    private final MovieClickListener movieClickListener;
 
-    interface PopupMenuClickListener {
-        void onPopupMenuClick(View v, int movieTmdbId);
-    }
-
-    MoviesCursorAdapter(Context context, PopupMenuClickListener popupMenuClickListener,
-            int uniqueId) {
+    MoviesCursorAdapter(Context context, MovieClickListener movieClickListener, int uniqueId) {
         super(context, null, 0);
+        this.movieClickListener = movieClickListener;
         this.uniqueId = uniqueId;
-        this.popupMenuClickListener = popupMenuClickListener;
 
         // figure out which size of posters to load based on screen density
         if (DisplaySettings.isVeryHighDensityScreen(context)) {
@@ -53,53 +48,14 @@ class MoviesCursorAdapter extends CursorAdapter {
         // do not use parent layout params to avoid padding issues
         @SuppressLint("InflateParams") View v =
                 LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie, null);
-
-        ViewHolder viewHolder = new ViewHolder();
-        viewHolder.title = v.findViewById(R.id.textViewMovieTitle);
-        viewHolder.releaseDate = v.findViewById(R.id.textViewMovieDate);
-        viewHolder.poster = v.findViewById(R.id.imageViewMoviePoster);
-        viewHolder.contextMenu = v.findViewById(R.id.imageViewMovieItemContextMenu);
-
-        v.setTag(viewHolder);
-
+        new ViewHolder(v, movieClickListener);
         return v;
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder holder = (ViewHolder) view.getTag();
-
-        // title
-        holder.title.setText(cursor.getString(MoviesQuery.TITLE));
-
-        // release date
-        long released = cursor.getLong(MoviesQuery.RELEASED_UTC_MS);
-        if (released != Long.MAX_VALUE) {
-            holder.releaseDate.setText(dateFormatMovieReleaseDate.format(new Date(released)));
-        } else {
-            holder.releaseDate.setText("");
-        }
-
-        // load poster, cache on external storage
-        String posterPath = cursor.getString(MoviesQuery.POSTER);
-        // use fixed size so bitmaps can be re-used on config change
-        ServiceUtils.loadWithPicasso(context, TextUtils.isEmpty(posterPath)
-                ? null : tmdbImageBaseUrl + posterPath)
-                .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
-                .centerCrop()
-                .into(holder.poster);
-
-        // context menu
-        final int movieTmdbId = cursor.getInt(MoviesQuery.TMDB_ID);
-        holder.contextMenu.setOnClickListener(v -> {
-            if (popupMenuClickListener != null) {
-                popupMenuClickListener.onPopupMenuClick(v, movieTmdbId);
-            }
-        });
-
-        // set unique transition names
-        holder.poster.setTransitionName(
-                "moviesCursorAdapterPoster_" + uniqueId + "_" + movieTmdbId);
+        holder.bind(context, cursor, dateFormatMovieReleaseDate, tmdbImageBaseUrl, uniqueId);
     }
 
     public static class ViewHolder {
@@ -107,6 +63,51 @@ class MoviesCursorAdapter extends CursorAdapter {
         public TextView releaseDate;
         public ImageView poster;
         public View contextMenu;
+
+        private int movieTmdbId;
+
+        public ViewHolder(View itemView, MovieClickListener clickListener) {
+            itemView.setTag(this);
+
+            this.title = itemView.findViewById(R.id.textViewMovieTitle);
+            this.releaseDate = itemView.findViewById(R.id.textViewMovieDate);
+            this.poster = itemView.findViewById(R.id.imageViewMoviePoster);
+            this.contextMenu = itemView.findViewById(R.id.imageViewMovieItemContextMenu);
+
+            itemView.setOnClickListener(v -> clickListener.onClickMovie(movieTmdbId, poster));
+            // context menu
+            contextMenu
+                    .setOnClickListener(v -> clickListener.onClickMovieMoreOptions(movieTmdbId, v));
+        }
+
+        public void bind(Context context, Cursor cursor, DateFormat dateFormat,
+                String tmdbImageBaseUrl, int uniqueId) {
+            this.movieTmdbId = cursor.getInt(MoviesQuery.TMDB_ID);
+
+            // title
+            title.setText(cursor.getString(MoviesQuery.TITLE));
+
+            // release date
+            long released = cursor.getLong(MoviesQuery.RELEASED_UTC_MS);
+            if (released != Long.MAX_VALUE) {
+                releaseDate.setText(dateFormat.format(new Date(released)));
+            } else {
+                releaseDate.setText("");
+            }
+
+            // load poster, cache on external storage
+            String posterPath = cursor.getString(MoviesQuery.POSTER);
+            // use fixed size so bitmaps can be re-used on config change
+            ServiceUtils.loadWithPicasso(context, TextUtils.isEmpty(posterPath)
+                    ? null : tmdbImageBaseUrl + posterPath)
+                    .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
+                    .centerCrop()
+                    .into(poster);
+
+            // set unique transition names
+            poster.setTransitionName(
+                    "moviesCursorAdapterPoster_" + uniqueId + "_" + movieTmdbId);
+        }
     }
 
     public interface MoviesQuery {

@@ -128,37 +128,57 @@ public class TraktSettings {
     }
 
     /**
-     * If either collection or watchlist have changes newer than last stored.
+     * If either collection, watchlist or watched list have changes newer than last stored.
      */
-    public static boolean isMovieListsChanged(Context context, OffsetDateTime collectedAt,
-            OffsetDateTime watchlistedAt) {
-        return TimeTools.isAfterMillis(collectedAt, TraktSettings.getLastMoviesCollectedAt(context))
-                || TimeTools.isAfterMillis(watchlistedAt,
-                TraktSettings.getLastMoviesWatchlistedAt(context));
+    public static boolean isMovieListsChanged(
+            Context context,
+            OffsetDateTime collectedAt,
+            OffsetDateTime watchlistedAt,
+            OffsetDateTime watchedAt
+    ) {
+        return TimeTools.isAfterMillis(collectedAt, getLastMoviesCollectedAt(context))
+                || TimeTools.isAfterMillis(watchlistedAt, getLastMoviesWatchlistedAt(context))
+                || TimeTools.isAfterMillis(watchedAt, getLastMoviesWatchedAt(context));
     }
 
     /**
-     * Store last collected and watchlisted timestamps.
+     * Store last collected, watchlisted and watched timestamps.
      */
-    public static void storeLastMoviesChangedAt(Context context, OffsetDateTime collectedAt,
-            OffsetDateTime watchlistedAt) {
+    public static void storeLastMoviesChangedAt(
+            Context context,
+            OffsetDateTime collectedAt,
+            OffsetDateTime watchlistedAt,
+            OffsetDateTime watchedAt
+    ) {
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putLong(TraktSettings.KEY_LAST_MOVIES_COLLECTED_AT,
                         collectedAt.toInstant().toEpochMilli())
                 .putLong(TraktSettings.KEY_LAST_MOVIES_WATCHLISTED_AT,
                         watchlistedAt.toInstant().toEpochMilli())
+                .putLong(TraktSettings.KEY_LAST_MOVIES_WATCHED_AT,
+                        watchedAt.toInstant().toEpochMilli())
                 .apply();
     }
 
     /**
-     * Reset {@link #KEY_LAST_MOVIES_RATED_AT} and {@link #KEY_LAST_MOVIES_WATCHED_AT} to 0 so all
-     * ratings and watched movies will be downloaded the next time a sync runs.
+     * Reset {@link #KEY_LAST_MOVIES_RATED_AT} to 0 so all movie ratings will be downloaded the next
+     * time a sync runs.
      */
-    public static boolean resetMoviesLastActivity(Context context) {
+    public static boolean resetMoviesLastRatedAt(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putLong(TraktSettings.KEY_LAST_MOVIES_RATED_AT, 0)
+                .commit();
+    }
+
+    /**
+     * Reset {@link #KEY_LAST_MOVIES_WATCHED_AT} to 0 so all watched movies will be downloaded the
+     * next time a sync runs.
+     */
+    public static boolean resetMoviesLastWatchedAt(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
                 .putLong(TraktSettings.KEY_LAST_MOVIES_WATCHED_AT, 0)
                 .commit();
     }

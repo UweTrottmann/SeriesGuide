@@ -136,6 +136,8 @@
     <string name="action_shows_filter_unwatched">未視聴</string>
     <string name="action_shows_filter_upcoming">次回</string>
     <string name="action_shows_filter_hidden">非表示</string>
+    <string name="action_shows_make_all_visible">非表示をすべて表示する</string>
+    <string name="description_make_all_visible_format">非表示の番組 (%s) をもう一度すべて表示しますか?</string>
     <string name="action_shows_sort">番組を並び替え</string>
     <string name="action_shows_sort_title">タイトル</string>
     <string name="action_shows_sort_latest_episode">最新のエピソード</string>
@@ -428,6 +430,8 @@
     <string name="pref_notifications_treshold">通知のタイミング</string>
     <string name="pref_notifications_select_shows">番組を選択</string>
     <string name="pref_notifications_select_shows_summary">通知を有効にした番組 (%d)</string>
+    <string name="pref_notifications_hidden">非表示の番組を無視する</string>
+    <string name="pref_notifications_hidden_summary">通知を有効にした場合でも、非表示の番組は通知しません</string>
     <string name="pref_notification_channel_errors">エラー</string>
     <!-- List Widget -->
     <string name="hide_watched">視聴済のエピソードを非表示</string>

@@ -5,23 +5,20 @@ Keep track of your favorite TV shows and movies.
 - Track your watched episodes, keep tabs on new releases and manage your media collection.
 - Connect with trakt to check in, comment, rate and to sync between devices and media centers.
 - No sign-in required, keeps working without an internet connection.
-- DashClock extension.
 - List widget.
 - Plug in extensions or build your own: https://seriesgui.de/api
 
-.....
+NOTE: You can not watch episodes or movies. For episodes only the release date on the original network is listed.
 
 Get the subscription to unlock all features and support SeriesGuide! You will get more list widget options, notifications for new episodes and more. You also support continued fixes and new features.
 
 https://seriesgui.de/whypay
 
-NOTE: Dates and times are limited to the first release in the country of origin.
-
-This app uses data and images by TheTVDB licensed under CC BY-NC 4.0. https://thetvdb.com/?tab=tos http://creativecommons.org/licenses/by-nc/4.0/
+This app uses data and images by TheTVDB licensed under CC BY-NC 4.0. https://thetvdb.com/?tab=tos https://creativecommons.org/licenses/by-nc/4.0/
 This product uses the TMDb API but is not endorsed or certified by TMDb. https://www.themoviedb.org/terms-of-use https://www.themoviedb.org/documentation/api/terms-of-use
 This app uses data and images by trakt. https://trakt.tv/terms
 
-Sample shows by Ross Scott, visit him at http://www.accursedfarms.com
+Sample shows by Ross Scott, visit him at https://www.accursedfarms.com
 
 SeriesGuide X Pass – Unlock all features
 

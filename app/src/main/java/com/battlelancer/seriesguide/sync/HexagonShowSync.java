@@ -219,6 +219,11 @@ public class HexagonShowSync {
      * Uploads the given list of shows to Hexagon.
      */
     public boolean upload(List<Show> shows) {
+        if (shows.isEmpty()) {
+            Timber.d("upload: no shows to upload");
+            return true;
+        }
+
         // wrap into helper object
         ShowList showList = new ShowList();
         showList.setShows(shows);

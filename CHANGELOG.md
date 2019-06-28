@@ -5,6 +5,74 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 49
+----------
+*(2019-06-28)*
+
+* 🔧 Calendar is always infinite, uses all available space on large screens, has larger fast 
+  scroller that is easier to grab.
+* 🌟 Add setting to ignore hidden shows for notifications (defaults to enabled).
+* 🌟 Filters: add option to make all hidden shows visible at once.
+* 🔧 History: Add link to trakt history website. Show up to 50 items (was 25).
+* 🔧 Streaming search: add JustWatch for Poland.
+* 🔧 Movies: Add set watched option to more options (three dots) menu.
+
+#### 49
+*(2019-06-28)*
+
+* 📝 Latest translations from crowdin.
+
+#### 49-beta6
+*(2019-06-21)*
+
+* 🔨 When making all hidden shows visible also upload changes to Cloud.
+* 🔨 trakt sign-in: do not crash if WebView is currently unavailable (e.g. it is updated).
+* 🔨 Potential fix for crashes when receiving actions from extensions.
+* 🔧 When changing the state of a show (e.g. favoriting or hiding it), will wait until sent to Cloud 
+  before applying the change locally.
+* 📝 Latest translations from crowdin.
+
+#### 49-beta5
+*(2019-06-07)*
+
+* 🌟 Add setting to ignore hidden shows for notifications (defaults to enabled).
+* 🌟 Filters: add option to make all hidden shows visible at once.
+* 🔨 Do not crash when changing show states (favorite, hidden, notify).
+* 📝 Latest translations from crowdin.
+
+#### 49-beta4
+*(2019-05-31)*
+
+* 🔧 Streaming search: add JustWatch for Portugal (but appears to be broken) and Poland.
+* 🔧 Add set watched option to movie more options (three dots) menu.
+* 🔨 Movie not in collection or watchlist is properly added after setting it watched.
+* 🔨 trakt sync adds movies that are just watched.
+* 🔧 TMDb sync now reports failure if any movie failed to update.
+* 📝 Latest translations from crowdin.
+
+#### 49-beta3
+*(2019-05-24)*
+
+* 🔧 Experimental internal improvements when changing favorite, notify or hidden state of a show.
+* 🔨 Potential fix for calendar jumping away from first item.
+* 📝 Latest translations from crowdin.
+
+#### 49-beta2
+*(2019-05-10)*
+
+* 🔧 The new calendar is now always infinite. If multiple columns are shown, groups are no longer 
+  broken into a new row, instead using all available space.
+* 📝 Latest translations from crowdin.
+
+#### 49-beta1
+*(2019-05-10)*
+
+* 🔧 Add link to trakt history website on history screen. Show up to 50 items (was 25).
+* 🔧 If connected to trakt, show at most 10 recently watched episodes or movies on history tabs (was 25).
+* 🔨 Switched upcoming/recent tabs to RecyclerView, should resolve various crashes.
+* 📝 The infinite calendar option has been removed. Instead upcoming/recent now show up to 50 episodes.
+* 📝 Drop support for beaming shows from overview screen. Share the TheTVDB link instead.
+
 Version 48
 ----------
 *(2019-05-02)*

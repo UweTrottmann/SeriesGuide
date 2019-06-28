@@ -138,6 +138,8 @@
     <string name="action_shows_filter_unwatched">Nije pogledano</string>
     <string name="action_shows_filter_upcoming">Nadolazeće</string>
     <string name="action_shows_filter_hidden">Skriveno</string>
+    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">Sortiraj serije</string>
     <string name="action_shows_sort_title">Naslov</string>
     <string name="action_shows_sort_latest_episode">Zadnja epizoda</string>
@@ -450,6 +452,8 @@
     <string name="pref_notifications_treshold">Kada obavijestiti</string>
     <string name="pref_notifications_select_shows">Odaberi serije</string>
     <string name="pref_notifications_select_shows_summary">Serije za koje su obavijesti omogućene (%d)</string>
+    <string name="pref_notifications_hidden">Ignore hidden shows</string>
+    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
     <string name="pref_notification_channel_errors">Pogreške</string>
     <!-- List Widget -->
     <string name="hide_watched">Sakrij pogledane epizode</string>

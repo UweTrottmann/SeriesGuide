@@ -40,6 +40,10 @@
 
     <!-- Fast scroll width, tested on Android 4.4 and 5.0. -->
     <dimen name="grid_fast_scroll_padding">28dp</dimen>
+    <dimen name="sg_fastscroll_default_thickness">16dp</dimen>
+    <dimen name="sg_fastscroll_minimum_height">56dp</dimen>
+    <dimen name="sg_fastscroll_margin">0dp</dimen>
+    <dimen name="sg_fastscroll_minimum_range">50dp</dimen>
 
     <!-- Show posters, 2:3 aspect ratio -->
     <dimen name="show_poster_width_default">69dp</dimen>
@@ -72,10 +76,6 @@
 
     <!-- Inline buttons -->
     <dimen name="buttons_min_height">64dp</dimen>
-
-    <!-- Reorder drag grip -->
-    <dimen name="drag_grip_ridge_size">4dp</dimen>
-    <dimen name="drag_grip_ridge_gap">2dp</dimen>
 
     <!-- Refresh progress circle -->
     <dimen name="swipe_refresh_progress_bar_start_margin">-40dp</dimen>

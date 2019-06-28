@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide;
 
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -8,9 +9,6 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Constants {
-
-    // Use non-application id-based type as beaming is meant to be cross-flavor compatible
-    public static final String ANDROID_BEAM_NDEF_MIME_TYPE = "application/vnd.com.uwetrottmann.seriesguide";
 
     /**
      * See {@link Episodes#FIRSTAIREDMS}.
@@ -58,6 +56,7 @@ public class Constants {
             return query;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return this.value;
@@ -105,6 +104,7 @@ public class Constants {
             return query;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return this.value;

@@ -30,7 +30,7 @@ import com.battlelancer.seriesguide.ui.shows.NowAdapter;
 import com.battlelancer.seriesguide.ui.streams.HistoryActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
-import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
+import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

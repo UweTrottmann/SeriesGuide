@@ -63,4 +63,11 @@
         android:layout_height="wrap_content"
         android:text="@string/empty_filter" />
 
+    <Button
+        android:id="@+id/button_shows_filter_all_visible"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/action_shows_make_all_visible" />
+
 </merge>

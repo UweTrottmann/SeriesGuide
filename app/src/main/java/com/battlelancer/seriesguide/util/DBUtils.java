@@ -29,10 +29,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
-import com.battlelancer.seriesguide.ui.shows.CalendarFragment;
-import com.battlelancer.seriesguide.ui.shows.CalendarQuery;
-import com.battlelancer.seriesguide.ui.shows.CalendarSettings;
-import com.battlelancer.seriesguide.ui.shows.CalendarType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -270,36 +266,6 @@ public class DBUtils {
         int count = cursor.getInt(0);
         cursor.close();
         return count;
-    }
-
-    /**
-     * Returns episodes that air today or within the next {@link CalendarFragment#ACTIVITY_DAY_LIMIT}
-     * days. Excludes shows that are hidden.
-     *
-     * <p>Filters by watched episodes or favorite shows if enabled.
-     *
-     * @return Cursor using the projection of {@link CalendarQuery}.
-     */
-    @Nullable
-    public static Cursor upcomingEpisodesQuery(Context context, boolean isOnlyUnwatched) {
-        boolean isOnlyCollected = CalendarSettings.isOnlyCollected(context);
-        boolean isOnlyFavorites = CalendarSettings.isOnlyFavorites(context);
-        return activityQuery(context, CalendarType.UPCOMING, isOnlyCollected, isOnlyFavorites,
-                isOnlyUnwatched, false);
-    }
-
-    /**
-     * @return Cursor with projection {@link CalendarQuery}.
-     * @see CalendarFragment#buildActivityQuery(Context, String, boolean, boolean, boolean, boolean)
-     */
-    @Nullable
-    public static Cursor activityQuery(Context context, String type, boolean isOnlyCollected,
-            boolean isOnlyFavorites, boolean isOnlyUnwatched, boolean isInfinite) {
-        String[][] args = CalendarFragment
-                .buildActivityQuery(context, type, isOnlyCollected, isOnlyFavorites,
-                        isOnlyUnwatched, isInfinite);
-        return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                CalendarQuery.PROJECTION, args[0][0], args[1], args[2][0]);
     }
 
     /**

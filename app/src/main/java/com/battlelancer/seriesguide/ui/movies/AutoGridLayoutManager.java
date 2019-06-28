@@ -3,15 +3,21 @@ package com.battlelancer.seriesguide.ui.movies;
 import android.content.Context;
 import android.content.res.Resources;
 import androidx.annotation.DimenRes;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.battlelancer.seriesguide.R;
 
 public class AutoGridLayoutManager extends GridLayoutManager {
 
+    public interface SpanCountListener {
+        void onSetSpanCount(int spanCount);
+    }
+
     private final int columnWidth;
     private final int itemSpanSize;
     private final int minSpanCount;
+    @Nullable private final SpanCountListener spanCountListener;
     private boolean columnWidthChanged;
 
     /**
@@ -21,7 +27,19 @@ public class AutoGridLayoutManager extends GridLayoutManager {
      */
     public AutoGridLayoutManager(Context context, @DimenRes int itemWidthRes, int itemSpanSize,
             int minSpanCount) {
+        this(context, itemWidthRes, itemSpanSize, minSpanCount, null);
+    }
+
+    /**
+     * @param itemWidthRes Expected width of item to use to calculate span count.
+     * @param itemSpanSize Span size of item to use to calculate span count.
+     * @param minSpanCount Grid will have at least this many spans.
+     * @param spanCountListener Called once the span count has been determined.
+     */
+    public AutoGridLayoutManager(Context context, @DimenRes int itemWidthRes, int itemSpanSize,
+            int minSpanCount, @Nullable SpanCountListener spanCountListener) {
         super(context, minSpanCount);
+        this.spanCountListener = spanCountListener;
 
         Resources resources = context.getResources();
         int itemWidth = resources.getDimensionPixelSize(itemWidthRes);
@@ -48,7 +66,7 @@ public class AutoGridLayoutManager extends GridLayoutManager {
         int width = getWidth();
         int height = getHeight();
         if (columnWidthChanged && width > 0 && height > 0) {
-            columnWidthChanged = false;
+            columnWidthChanged = false; // only calculate span count once
             int totalSpace;
             if (getOrientation() == RecyclerView.VERTICAL) {
                 totalSpace = width - getPaddingRight() - getPaddingLeft();
@@ -57,6 +75,9 @@ public class AutoGridLayoutManager extends GridLayoutManager {
             }
             int spanCount = Math.max(minSpanCount, (totalSpace / columnWidth) * itemSpanSize);
             setSpanCount(spanCount);
+            if (spanCountListener != null) {
+                spanCountListener.onSetSpanCount(spanCount);
+            }
         }
         super.onLayoutChildren(recycler, state);
     }

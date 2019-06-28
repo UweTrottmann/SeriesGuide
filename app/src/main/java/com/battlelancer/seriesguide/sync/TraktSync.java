@@ -97,7 +97,7 @@ public class TraktSync {
         progress.publish(SyncProgress.Step.TRAKT_MOVIES);
         TraktMovieSync movieSync = new TraktMovieSync(context, movieTools, traktSync);
 
-        // sync watchlist and collection with trakt
+        // sync watchlist, collection and watched movies with trakt
         if (!onlyRatings) {
             if (!AndroidUtils.isNetworkConnected(context)) {
                 progress.recordError();
@@ -107,17 +107,6 @@ public class TraktSync {
                 progress.recordError();
                 return SgSyncAdapter.UpdateResult.INCOMPLETE;
             }
-
-            // download watched movies
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                progress.recordError();
-                return SgSyncAdapter.UpdateResult.INCOMPLETE;
-            }
-            if (!movieSync.downloadWatched(lastActivity.movies.watched_at)) {
-                progress.recordError();
-                return SgSyncAdapter.UpdateResult.INCOMPLETE;
-            }
-
             // clean up any useless movies (not watched or not in any list)
             MovieTools.deleteUnusedMovies(context);
         }

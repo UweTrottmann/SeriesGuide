@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core:1.0.1'
+    implementation "androidx.core:core:${versions.core}"
 }
 
 // load local.properties file
@@ -62,12 +62,12 @@ afterEvaluate {
 }
 
 task javadocJar(type: Jar, dependsOn: generateJavadoc) {
-    classifier = 'javadoc'
+    archiveClassifier.set("javadoc")
     from generateJavadoc.destinationDir
 }
 
 task sourcesJar(type: Jar) {
-    classifier = 'sources'
+    archiveClassifier.set("sources")
     from android.sourceSets.main.java.srcDirs
 }
 

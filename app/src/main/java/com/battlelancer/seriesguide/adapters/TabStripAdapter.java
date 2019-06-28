@@ -10,12 +10,12 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
+import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
 import java.util.ArrayList;
 import java.util.Locale;
 
 /**
- * Helper class for easy setup of a {@link com.battlelancer.seriesguide.widgets.SlidingTabLayout}.
+ * Helper class for easy setup of a {@link SlidingTabLayout}.
  */
 public class TabStripAdapter extends FragmentPagerAdapter {
 

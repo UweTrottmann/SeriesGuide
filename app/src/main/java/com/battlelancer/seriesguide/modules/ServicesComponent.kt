@@ -55,7 +55,6 @@ interface ServicesComponent {
     fun inject(connectTraktTask: ConnectTraktTask)
     fun inject(sgSyncAdapter: SgSyncAdapter)
     fun inject(showCreditsLoader: ShowCreditsLoader)
-    fun inject(showsUploadTask: ShowTools.ShowsUploadTask)
     fun inject(tmdbMoviesLoader: TmdbMoviesLoader)
     fun inject(traktAddLoader: TraktAddLoader)
     fun inject(traktCommentsLoader: TraktCommentsLoader)

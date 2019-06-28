@@ -137,6 +137,8 @@
     <string name="action_shows_filter_unwatched">No vist</string>
     <string name="action_shows_filter_upcoming">Propers</string>
     <string name="action_shows_filter_hidden">Ocults</string>
+    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">Ordena sèries</string>
     <string name="action_shows_sort_title">Títol</string>
     <string name="action_shows_sort_latest_episode">Últim episodi</string>
@@ -439,6 +441,8 @@
     <string name="pref_notifications_treshold">Moment per notificar</string>
     <string name="pref_notifications_select_shows">Seleccionar sèries</string>
     <string name="pref_notifications_select_shows_summary">Sèries que tenen notificacions habilitades (%d)</string>
+    <string name="pref_notifications_hidden">Ignore hidden shows</string>
+    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
     <string name="pref_notification_channel_errors">Errors</string>
     <!-- List Widget -->
     <string name="hide_watched">Amaga els episodis vistos</string>

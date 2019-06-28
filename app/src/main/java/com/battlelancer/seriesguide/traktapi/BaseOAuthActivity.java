@@ -4,17 +4,20 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.Utils;
 import timber.log.Timber;
 
@@ -31,7 +34,7 @@ public abstract class BaseOAuthActivity extends BaseActivity {
     private static final String OAUTH_URI_SCHEME = "sgoauth";
     public static final String OAUTH_CALLBACK_URL_CUSTOM = OAUTH_URI_SCHEME + "://callback";
 
-    private WebView webview;
+    @Nullable private WebView webview;
     private View buttonContainer;
     private View progressBar;
     private TextView textViewMessage;
@@ -60,24 +63,6 @@ public abstract class BaseOAuthActivity extends BaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        /*
-          Force the text-to-speech accessibility Javascript plug-in service on Android 4.2.2 to
-          get shutdown, to avoid leaking its context.
-
-          http://stackoverflow.com/a/18798305/1000543
-         */
-        if (webview != null) {
-            webview.getSettings().setJavaScriptEnabled(false);
-            // remove client to avoid callbacks to non-existent views
-            webview.setWebViewClient(null);
-            webview = null;
-        }
-    }
-
-    @Override
     protected void setupActionBar() {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
@@ -87,7 +72,6 @@ public abstract class BaseOAuthActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        webview = findViewById(R.id.webView);
         buttonContainer = findViewById(R.id.containerOauthButtons);
         progressBar = findViewById(R.id.progressBarOauth);
         textViewMessage = buttonContainer.findViewById(R.id.textViewOauthMessage);
@@ -119,7 +103,7 @@ public abstract class BaseOAuthActivity extends BaseActivity {
     private boolean handleAuthIntent(Intent intent) {
         // handle auth callback from external browser
         Uri callbackUri = intent.getData();
-        if (callbackUri == null || !callbackUri.getScheme().equals(OAUTH_URI_SCHEME)) {
+        if (callbackUri == null || !OAUTH_URI_SCHEME.equals(callbackUri.getScheme())) {
             return false;
         }
         fetchTokensAndFinish(callbackUri.getQueryParameter("code"),
@@ -128,24 +112,48 @@ public abstract class BaseOAuthActivity extends BaseActivity {
     }
 
     protected void activateFallbackButtons() {
-        webview.setVisibility(View.GONE);
         buttonContainer.setVisibility(View.VISIBLE);
+        if (webview != null) {
+            webview.setVisibility(View.GONE);
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     protected void activateWebView() {
         buttonContainer.setVisibility(View.GONE);
+
+        // Inflate the WebView on demand.
+        WebView webview = findViewById(R.id.webView);
+        if (webview == null) {
+            FrameLayout container = findViewById(R.id.frameLayoutOauth);
+            try {
+                LayoutInflater.from(container.getContext())
+                        .inflate(R.layout.view_webview, container, true);
+                webview = findViewById(R.id.webView);
+            } catch (Exception e) {
+                // There are various crashes where inflating fails due to a
+                // "Failed to load WebView provider: No WebView installed" exception.
+                // The most reasonable explanation is that the WebView is getting updated right
+                // when we want to inflate it.
+                // So just finish the activity and make the user open it again.
+                Errors.logAndReportNoBend("Inflate WebView", e);
+                finish();
+                return;
+            }
+        }
+        this.webview = webview;
+
         webview.setVisibility(View.VISIBLE);
 
         webview.setWebViewClient(webViewClient);
         webview.getSettings().setJavaScriptEnabled(true);
 
-        // make sure we start fresh
+        // Clear all previous sign-in state.
         CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.removeAllCookie();
+        cookieManager.removeAllCookies(null);
         webview.clearCache(true);
 
-        // load the authorization page
+        // Load the authorization page.
         Timber.d("Initiating authorization request...");
         String authUrl = getAuthorizationUrl();
         if (authUrl != null) {

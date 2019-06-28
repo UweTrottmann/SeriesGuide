@@ -17,7 +17,7 @@
 
             <include layout="@layout/toolbar_search" />
 
-            <com.battlelancer.seriesguide.widgets.SlidingTabLayout
+            <com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
                 android:id="@+id/tabsSearch"
                 style="@style/Widget.SeriesGuide.TabLayout"
                 android:layout_width="match_parent"

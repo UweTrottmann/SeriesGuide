@@ -137,6 +137,8 @@
     <string name="action_shows_filter_unwatched">கவனிக்கப்படாத</string>
     <string name="action_shows_filter_upcoming">வரவிருக்கும்</string>
     <string name="action_shows_filter_hidden">மறைந்திருக்கும்</string>
+    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">அடுக்கு காட்சிகள்</string>
     <string name="action_shows_sort_title">தலைப்பு</string>
     <string name="action_shows_sort_latest_episode">Latest episode</string>
@@ -439,6 +441,8 @@
     <string name="pref_notifications_treshold">எப்போது அறிவிக்க</string>
     <string name="pref_notifications_select_shows">Select shows</string>
     <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
+    <string name="pref_notifications_hidden">Ignore hidden shows</string>
+    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
     <string name="pref_notification_channel_errors">Errors</string>
     <!-- List Widget -->
     <string name="hide_watched">பார்த்த episodes மறை</string>

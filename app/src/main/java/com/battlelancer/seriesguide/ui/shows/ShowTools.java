@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui.shows;
 
-import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,15 +14,11 @@ import androidx.annotation.Nullable;
 import androidx.collection.SparseArrayCompat;
 import androidx.core.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.sync.HexagonShowSync;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -62,10 +57,12 @@ public class ShowTools {
     }
 
     private final Context context;
+    private final ShowTools2 showTools2;
 
     @Inject
     public ShowTools(@ApplicationContext Context context) {
         this.context = context;
+        this.showTools2 = new ShowTools2(this, context);
     }
 
     /**
@@ -88,7 +85,7 @@ public class ShowTools {
 
         // SEARCH DATABASE ENTRIES
         final Cursor episodes = context.getContentResolver().query(
-                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId), new String[] {
+                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
                         SeriesGuideContract.Episodes._ID
                 }, null, null, null
         );
@@ -167,63 +164,22 @@ public class ShowTools {
      * Saves new favorite flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeIsFavorite(int showTvdbId, boolean isFavorite) {
-        if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context)) {
-                return;
-            }
-            // send to cloud
-            Show show = new Show();
-            show.setTvdbId(showTvdbId);
-            show.setIsFavorite(isFavorite);
-            uploadShowAsync(show);
-        }
-
-        // save to local database
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Shows.FAVORITE, isFavorite ? 1 : 0);
-        context.getContentResolver().update(
-                SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
-
-        // also notify URIs used by search and lists
-        context.getContentResolver()
-                .notifyChange(SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
-        context.getContentResolver()
-                .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
-
-        // favorite status may determine eligibility for notifications
-        NotificationService.trigger(context);
-
-        Toast.makeText(context, context.getString(isFavorite ?
-                R.string.favorited : R.string.unfavorited), Toast.LENGTH_SHORT).show();
+        showTools2.storeIsFavorite(showTvdbId, isFavorite);
     }
 
     /**
      * Saves new hidden flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeIsHidden(int showTvdbId, boolean isHidden) {
-        if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context)) {
-                return;
-            }
-            // send to cloud
-            Show show = new Show();
-            show.setTvdbId(showTvdbId);
-            show.setIsHidden(isHidden);
-            uploadShowAsync(show);
-        }
+        showTools2.storeIsHidden(showTvdbId, isHidden);
+    }
 
-        // save to local database
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Shows.HIDDEN, isHidden ? 1 : 0);
-        context.getContentResolver().update(
-                SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
-
-        // also notify filter URI used by search
-        context.getContentResolver()
-                .notifyChange(SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
-
-        Toast.makeText(context, context.getString(isHidden ?
-                R.string.hidden : R.string.unhidden), Toast.LENGTH_SHORT).show();
+    /**
+     * Removes hidden flag from all hidden shows in the local database and, if signed in, sends to
+     * the cloud as well.
+     */
+    public void storeAllHiddenVisible() {
+        showTools2.storeAllHiddenVisible();
     }
 
     public void storeLanguage(final int showTvdbId, final String languageCode) {
@@ -273,25 +229,7 @@ public class ShowTools {
      * Saves new notify flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeNotify(int showTvdbId, boolean notify) {
-        if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context)) {
-                return;
-            }
-            // send to cloud
-            Show show = new Show();
-            show.setTvdbId(showTvdbId);
-            show.setNotify(notify);
-            uploadShowAsync(show);
-        }
-
-        // save to local database
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Shows.NOTIFY, notify ? 1 : 0);
-        context.getContentResolver().update(
-                SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
-
-        // new notify setting may determine eligibility for notifications
-        NotificationService.trigger(context);
+        showTools2.storeNotify(showTvdbId, notify);
     }
 
     /**
@@ -311,37 +249,14 @@ public class ShowTools {
     }
 
     private void uploadShowAsync(Show show) {
-        new ShowsUploadTask(context, show).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
-    public static class ShowsUploadTask extends AsyncTask<Void, Void, Void> {
-
-        @SuppressLint("StaticFieldLeak") private final Context context;
-        private final Show show;
-        @Inject HexagonTools hexagonTools;
-
-        public ShowsUploadTask(Context context, Show show) {
-            this.context = context.getApplicationContext();
-            this.show = show;
-            SgApp.getServicesComponent(context).inject(this);
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            List<Show> shows = new LinkedList<>();
-            shows.add(show);
-
-            new HexagonShowSync(context, hexagonTools).upload(shows);
-
-            return null;
-        }
+        showTools2.uploadShowToCloud(show);
     }
 
     public static boolean addLastWatchedUpdateOpIfNewer(Context context,
             ArrayList<ContentProviderOperation> batch, int showTvdbId, long lastWatchedMsNew) {
         Uri uri = SeriesGuideContract.Shows.buildShowUri(showTvdbId);
-        Cursor query = context.getContentResolver().query(uri, new String[] {
-                SeriesGuideContract.Shows.LASTWATCHED_MS }, null, null, null);
+        Cursor query = context.getContentResolver().query(uri, new String[]{
+                SeriesGuideContract.Shows.LASTWATCHED_MS}, null, null, null);
         if (query == null) {
             Timber.e("addLastWatchedTimeUpdateOpIfNewer: query was null.");
             return false;
@@ -370,7 +285,7 @@ public class ShowTools {
     public static Integer getShowTraktId(@NonNull Context context, int showTvdbId) {
         Cursor traktIdQuery = context.getContentResolver()
                 .query(SeriesGuideContract.Shows.buildShowUri(showTvdbId),
-                        new String[] { SeriesGuideContract.Shows.TRAKT_ID }, null, null, null);
+                        new String[]{SeriesGuideContract.Shows.TRAKT_ID}, null, null, null);
         if (traktIdQuery == null) {
             return null;
         }
@@ -398,7 +313,7 @@ public class ShowTools {
         HashSet<Integer> existingShows = new HashSet<>();
 
         Cursor shows = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
-                new String[] { SeriesGuideContract.Shows._ID }, null, null, null);
+                new String[]{SeriesGuideContract.Shows._ID}, null, null, null);
         if (shows == null) {
             return null;
         }
@@ -423,7 +338,7 @@ public class ShowTools {
         SparseArrayCompat<String> existingShows = new SparseArrayCompat<>();
 
         Cursor shows = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
-                new String[] { SeriesGuideContract.Shows._ID, SeriesGuideContract.Shows.POSTER },
+                new String[]{SeriesGuideContract.Shows._ID, SeriesGuideContract.Shows.POSTER},
                 null, null, null);
         if (shows == null) {
             return null;

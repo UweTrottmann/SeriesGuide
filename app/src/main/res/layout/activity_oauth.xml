@@ -9,13 +9,11 @@
     <include layout="@layout/toolbar" />
 
     <FrameLayout
+        android:id="@+id/frameLayoutOauth"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <WebView
-            android:id="@+id/webView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <!-- WebView added in-code to avoid crash if inflating it fails. -->
 
         <LinearLayout
             android:id="@+id/containerOauthButtons"

@@ -136,6 +136,8 @@
     <string name="action_shows_filter_unwatched">仍有未观看剧集</string>
     <string name="action_shows_filter_upcoming">即将播出</string>
     <string name="action_shows_filter_hidden">已被标记为隐藏</string>
+    <string name="action_shows_make_all_visible">使所有隐藏的节目可见</string>
+    <string name="description_make_all_visible_format">重新显示所有隐藏的节目（%s）吗？</string>
     <string name="action_shows_sort">排序节目</string>
     <string name="action_shows_sort_title">依据节目名称</string>
     <string name="action_shows_sort_latest_episode">最新一集</string>
@@ -428,6 +430,8 @@
     <string name="pref_notifications_treshold">通知显示时刻</string>
     <string name="pref_notifications_select_shows">选择节目</string>
     <string name="pref_notifications_select_shows_summary">已启用通知的节目（%d）</string>
+    <string name="pref_notifications_hidden">忽略隐藏的节目</string>
+    <string name="pref_notifications_hidden_summary">即使已启用通知，也不通知隐藏的节目</string>
     <string name="pref_notification_channel_errors">错误</string>
     <!-- List Widget -->
     <string name="hide_watched">隐藏已观看剧集</string>

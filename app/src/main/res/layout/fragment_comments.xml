@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="0dp">
 
-    <com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout
+    <com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
         android:id="@+id/swipeRefreshLayoutShouts"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -46,7 +46,7 @@
 
         </FrameLayout>
 
-    </com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout>
+    </com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout>
 
     <include
         android:id="@+id/divider"

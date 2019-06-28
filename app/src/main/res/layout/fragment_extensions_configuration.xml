@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.battlelancer.seriesguide.widgets.dragsortview.DragSortListView
+    <com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortListView
         android:id="@+id/listViewExtensionsConfiguration"
         style="@style/Page.Centered"
         android:divider="@android:color/transparent"

@@ -137,6 +137,8 @@
     <string name="action_shows_filter_unwatched">Δεν έχουν παρακολουθηθεί</string>
     <string name="action_shows_filter_upcoming">Επερχόμενα</string>
     <string name="action_shows_filter_hidden">Κρυφά</string>
+    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">Ταξινόμηση σειρών</string>
     <string name="action_shows_sort_title">Τίτλος</string>
     <string name="action_shows_sort_latest_episode">Νεότερο επεισόδιο</string>
@@ -439,6 +441,8 @@
     <string name="pref_notifications_treshold">Πότε να ειδοποιήστε</string>
     <string name="pref_notifications_select_shows">Επιλογή σειρών</string>
     <string name="pref_notifications_select_shows_summary">Σειρές που έχουν ενεργές ειδοποιήσεις (%d)</string>
+    <string name="pref_notifications_hidden">Ignore hidden shows</string>
+    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
     <string name="pref_notification_channel_errors">Σφάλματα</string>
     <!-- List Widget -->
     <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
