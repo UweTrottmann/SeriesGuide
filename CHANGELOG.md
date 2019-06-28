@@ -7,7 +7,20 @@ All dates are in the European Central timezone.
 
 Version 49
 ----------
-*(in development)*
+*(2019-06-28)*
+
+* 🔧 Calendar is always infinite, uses all available space on large screens, has larger fast 
+  scroller that is easier to grab.
+* 🌟 Add setting to ignore hidden shows for notifications (defaults to enabled).
+* 🌟 Filters: add option to make all hidden shows visible at once.
+* 🔧 History: Add link to trakt history website. Show up to 50 items (was 25).
+* 🔧 Streaming search: add JustWatch for Poland.
+* 🔧 Movies: Add set watched option to more options (three dots) menu.
+
+#### 49
+*(2019-06-28)*
+
+* 📝 Latest translations from crowdin.
 
 #### 49-beta6
 *(2019-06-21)*
