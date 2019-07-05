@@ -102,7 +102,7 @@ public class ExtensionManager {
     /**
      * Queries the {@link android.content.pm.PackageManager} for any installed {@link
      * com.battlelancer.seriesguide.api.SeriesGuideExtension} extensions. Their info is extracted
-     * into {@link com.battlelancer.seriesguide.extensions.ExtensionManager.Extension} objects.
+     * into {@link Extension} objects.
      */
     @NonNull
     public List<Extension> queryAllAvailableExtensions(Context context) {
@@ -526,13 +526,5 @@ public class ExtensionManager {
     synchronized void clearActionsCache() {
         sEpisodeActionsCache.evictAll();
         sMovieActionsCache.evictAll();
-    }
-
-    public class Extension {
-        public Drawable icon;
-        public String label;
-        public ComponentName componentName;
-        public String description;
-        public ComponentName settingsActivity;
     }
 }
