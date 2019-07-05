@@ -5,6 +5,16 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 50
+----------
+*(in development)*
+
+#### 50-beta1
+*(2019-07-05)*
+
+* 🔧 Restore infinite calendar option due to feedback. Defaults to enabled for new and existing users.
+* 🔨 Potential fixes for crashes due to extensions.
+
 Version 49
 ----------
 *(2019-06-28)*
