@@ -87,16 +87,17 @@ public class ExtensionManager {
     private static ExtensionManager _instance;
 
     /**
-     * Ensure that {@link #loadSubscriptions(Context)} was called to set up the manager.
+     * When first used {@link #checkEnabledExtensions(Context)} is called to set up the manager.
      */
-    public static synchronized ExtensionManager get() {
+    public static synchronized ExtensionManager get(Context context) {
         if (_instance == null) {
-            _instance = new ExtensionManager();
+            _instance = new ExtensionManager(context.getApplicationContext());
         }
         return _instance;
     }
 
-    private ExtensionManager() {
+    private ExtensionManager(Context context) {
+        checkEnabledExtensions(context);
     }
 
     /**
@@ -162,7 +163,7 @@ public class ExtensionManager {
      * Checks if all extensions are still installed, re-subscribes to those that are in case one was
      * updated, removes those unavailable.
      */
-    public synchronized void checkEnabledExtensions(Context context) {
+    private synchronized void checkEnabledExtensions(Context context) {
         // make a copy of enabled extensions
         List<ComponentName> enabledExtensions = getEnabledExtensions(context);
 

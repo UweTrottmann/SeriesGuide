@@ -33,7 +33,7 @@ public class ExtensionPackageChangeReceiver extends BroadcastReceiver {
             return;
         }
 
-        ExtensionManager extensionManager = ExtensionManager.get();
+        ExtensionManager extensionManager = ExtensionManager.get(context);
         List<ComponentName> enabledExtensions = extensionManager.getEnabledExtensions(context);
         int affectedExtensionIndex = -1;
         for (int i = 0; i < enabledExtensions.size(); i++) {

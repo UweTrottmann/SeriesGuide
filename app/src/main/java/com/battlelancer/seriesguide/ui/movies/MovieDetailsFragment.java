@@ -677,7 +677,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
 
     @Override
     public void loadMovieActions() {
-        List<Action> actions = ExtensionManager.get()
+        List<Action> actions = ExtensionManager.get(getContext())
                 .getLatestMovieActions(getContext(), tmdbId);
 
         // no actions available yet, request extensions to publish them
@@ -692,7 +692,7 @@ public class MovieDetailsFragment extends Fragment implements MovieActionsContra
                         .title(movieDetails.tmdbMovie().title)
                         .releaseDate(movieDetails.tmdbMovie().release_date)
                         .build();
-                ExtensionManager.get().requestMovieActions(getContext(), movie);
+                ExtensionManager.get(getContext()).requestMovieActions(getContext(), movie);
             }
         }
 

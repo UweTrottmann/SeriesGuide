@@ -104,20 +104,21 @@ public class ExtensionsConfigurationFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_extensions_enable) {
-            List<ExtensionManager.Extension> extensions = ExtensionManager.get()
+            List<ExtensionManager.Extension> extensions = ExtensionManager.get(getContext())
                     .queryAllAvailableExtensions(getContext());
             List<ComponentName> enabledExtensions = new ArrayList<>();
             for (ExtensionManager.Extension extension : extensions) {
                 enabledExtensions.add(extension.componentName);
             }
-            ExtensionManager.get()
+            ExtensionManager.get(getContext())
                     .setEnabledExtensions(getContext(), enabledExtensions);
             Toast.makeText(getActivity(), "Enabled all available extensions", Toast.LENGTH_LONG)
                     .show();
             return true;
         }
         if (itemId == R.id.menu_action_extensions_disable) {
-            ExtensionManager.get().setEnabledExtensions(getContext(), new ArrayList<>());
+            ExtensionManager.get(getContext())
+                    .setEnabledExtensions(getContext(), new ArrayList<>());
             Toast.makeText(getActivity(), "Disabled all available extensions", Toast.LENGTH_LONG)
                     .show();
             return true;
@@ -150,7 +151,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
             }
 
             // find all disabled extensions
-            List<ComponentName> enabledNames = ExtensionManager.get()
+            List<ComponentName> enabledNames = ExtensionManager.get(getContext())
                     .getEnabledExtensions(getContext());
             List<ExtensionManager.Extension> disabled = new ArrayList<>();
             Map<ComponentName, ExtensionManager.Extension> enabledByComponent = new HashMap<>();
@@ -238,7 +239,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
                                             true),
                             true
                     );
-                    ExtensionManager.get().clearActionsCache();
+                    ExtensionManager.get(getContext()).clearActionsCache();
                     return true;
                 case R.id.menu_action_extension_disable:
                     enabledNames.remove(position);
@@ -293,7 +294,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
     }
 
     private void saveExtensions() {
-        ExtensionManager.get().setEnabledExtensions(getContext(), enabledNames);
+        ExtensionManager.get(getContext()).setEnabledExtensions(getContext(), enabledNames);
         LoaderManager.getInstance(this)
                 .restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
                         loaderCallbacks);
