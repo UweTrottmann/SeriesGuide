@@ -12,8 +12,8 @@ public class CalendarSettings {
     static final String KEY_HIDE_WATCHED_EPISODES
             = "com.battlelancer.seriesguide.activity.nowatched";
 
-    static final String KEY_INFINITE_SCROLLING
-            = "com.battlelancer.seriesguide.activity.infinite";
+    static final String KEY_INFINITE_SCROLLING_2
+            = "com.battlelancer.seriesguide.calendar.infinite";
 
     static final String KEY_ONLY_COLLECTED
             = "com.battlelancer.seriesguide.activity.onlycollected";
@@ -30,12 +30,12 @@ public class CalendarSettings {
     }
 
     /**
-     * Whether the calendar should be infinite or limited to a number of days.
+     * Whether the calendar should be infinite (default) or limited to a number of days.
      */
     static boolean isInfiniteScrolling(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-                KEY_INFINITE_SCROLLING,
-                false);
+                KEY_INFINITE_SCROLLING_2,
+                true);
     }
 
     /**

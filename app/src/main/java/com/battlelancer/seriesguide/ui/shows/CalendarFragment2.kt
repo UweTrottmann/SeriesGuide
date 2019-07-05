@@ -183,6 +183,8 @@ class CalendarFragment2 : ScopedFragment() {
             DisplaySettings.isHidingSpecials(context)
         menu.findItem(R.id.menu_action_calendar_nowatched).isChecked =
             CalendarSettings.isHidingWatchedEpisodes(context)
+        menu.findItem(R.id.menu_action_calendar_infinite).isChecked =
+            CalendarSettings.isInfiniteScrolling(context)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -203,6 +205,10 @@ class CalendarFragment2 : ScopedFragment() {
                 toggleFilterSetting(item, CalendarSettings.KEY_HIDE_WATCHED_EPISODES)
                 true
             }
+            R.id.menu_action_calendar_infinite -> {
+                toggleFilterSetting(item, CalendarSettings.KEY_INFINITE_SCROLLING_2)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -220,7 +226,7 @@ class CalendarFragment2 : ScopedFragment() {
             || CalendarSettings.KEY_ONLY_COLLECTED == key
             || DisplaySettings.KEY_HIDE_SPECIALS == key
             || CalendarSettings.KEY_HIDE_WATCHED_EPISODES == key
-            || CalendarSettings.KEY_INFINITE_SCROLLING == key) {
+            || CalendarSettings.KEY_INFINITE_SCROLLING_2 == key) {
             updateCalendarQuery()
         }
     }
