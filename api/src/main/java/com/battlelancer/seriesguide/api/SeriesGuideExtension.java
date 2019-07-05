@@ -331,7 +331,7 @@ public abstract class SeriesGuideExtension extends JobIntentService {
         if (ACTION_SUBSCRIBE.equals(action)) {
             // just subscribing or unsubscribing
             handleSubscribe(
-                    (ComponentName) intent.getParcelableExtra(EXTRA_SUBSCRIBER_COMPONENT),
+                    intent.getParcelableExtra(EXTRA_SUBSCRIBER_COMPONENT),
                     intent.getStringExtra(EXTRA_TOKEN));
         } else if (ACTION_UPDATE.equals(action)) {
             // subscriber requests an updated action
