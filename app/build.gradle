@@ -206,7 +206,7 @@ dependencies {
 
     // Google Play Services
     // https://developers.google.com/android/guides/releases
-    implementation "com.google.android.gms:play-services-auth:16.0.1"
+    implementation "com.google.android.gms:play-services-auth:17.0.0"
 
     // App Engine
     // override Guava version to avoid duplicate classes due to listenablefuture extraction
