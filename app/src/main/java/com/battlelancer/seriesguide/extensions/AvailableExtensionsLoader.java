@@ -18,6 +18,6 @@ class AvailableExtensionsLoader extends GenericSimpleLoader<List<ExtensionManage
     @NonNull
     @Override
     public List<ExtensionManager.Extension> loadInBackground() {
-        return ExtensionManager.get().queryAllAvailableExtensions(getContext());
+        return ExtensionManager.get(getContext()).queryAllAvailableExtensions(getContext());
     }
 }

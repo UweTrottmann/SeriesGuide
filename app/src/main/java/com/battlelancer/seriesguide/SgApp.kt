@@ -10,7 +10,6 @@ import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import androidx.annotation.RequiresApi
-import com.battlelancer.seriesguide.extensions.ExtensionManager
 import com.battlelancer.seriesguide.modules.AppModule
 import com.battlelancer.seriesguide.modules.DaggerServicesComponent
 import com.battlelancer.seriesguide.modules.HttpClientModule
@@ -138,8 +137,6 @@ class SgApp : Application() {
 
         // Load the current theme into a global variable
         ThemeUtils.updateTheme(DisplaySettings.getThemeIndex(this))
-
-        ExtensionManager.get().checkEnabledExtensions(this)
 
         // Tell Google Play Services to update the security provider.
         // This is not technically required, but might improve connection issues

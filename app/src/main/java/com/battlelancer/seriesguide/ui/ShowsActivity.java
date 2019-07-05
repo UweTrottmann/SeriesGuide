@@ -395,7 +395,7 @@ public class ShowsActivity extends BaseTopActivity implements
                 }
             }
             if (lastVersion < SgApp.RELEASE_VERSION_40_BETA4) {
-                ExtensionManager.get().setDefaultEnabledExtensions(this);
+                ExtensionManager.get(this).setDefaultEnabledExtensions(this);
             }
             if (lastVersion < SgApp.RELEASE_VERSION_40_BETA6) {
                 // cancel old widget alarm using implicit intent
