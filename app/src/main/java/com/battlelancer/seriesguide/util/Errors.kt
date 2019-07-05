@@ -109,10 +109,10 @@ class Errors {
                 else -> when {
                     message != null -> RequestError(
                         action,
-                        response.code(),
-                        "${response.message()} $message"
+                        response.code,
+                        "${response.message} $message"
                     )
-                    else -> RequestError(action, response.code(), response.message())
+                    else -> RequestError(action, response.code, response.message)
                 }
             }
 
@@ -120,7 +120,7 @@ class Errors {
 
             Timber.e(throwable, action)
 
-            if (response.code() == 404) return // do not send 404 to Crashlytics
+            if (response.code == 404) return // do not send 404 to Crashlytics
 
             CrashlyticsCore.getInstance().setString("action", action)
             CrashlyticsCore.getInstance().logException(throwable)
@@ -150,12 +150,12 @@ class Errors {
             if (!response.isSuccessful) {
                 logAndReport(action, response, null)
 
-                if (response.code() == 404) {
+                if (response.code == 404) {
                     // special case: item does not exist (any longer)
-                    throw TvdbException("$action: ${response.code()} ${response.message()}", true)
+                    throw TvdbException("$action: ${response.code} ${response.message}", true)
                 } else {
                     // other non-2xx response
-                    throw TvdbException("$action: ${response.code()} ${response.message()}")
+                    throw TvdbException("$action: ${response.code} ${response.message}")
                 }
             }
         }
@@ -190,11 +190,11 @@ class Errors {
 }
 
 private fun okhttp3.Response.isClientError(): Boolean {
-    return code() in 400..499
+    return code in 400..499
 }
 
 private fun okhttp3.Response.isServerError(): Boolean {
-    return code() in 500..599
+    return code in 500..599
 }
 
 private fun HttpResponseException.isClientError(): Boolean {

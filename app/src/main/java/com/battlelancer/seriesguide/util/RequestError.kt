@@ -11,14 +11,14 @@ open class RequestError(action: String, code: Int, message: String) :
 
     constructor(action: String, response: Response) : this(
         action,
-        response.code(),
-        response.message()
+        response.code,
+        response.message
     )
 
     constructor(action: String, response: Response, additionalMessage: String) : this(
         action,
-        response.code(),
-        "${response.code()} $additionalMessage"
+        response.code,
+        "${response.code} $additionalMessage"
     )
 
     constructor(action: String, e: HttpResponseException) : this(
