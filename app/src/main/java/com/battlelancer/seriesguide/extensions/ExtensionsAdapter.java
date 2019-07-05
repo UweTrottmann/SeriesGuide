@@ -13,7 +13,6 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.extensions.ExtensionManager.Extension;
 import com.battlelancer.seriesguide.util.ViewTools;
 
 /**
