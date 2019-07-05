@@ -31,6 +31,7 @@ import io.palaima.debugdrawer.timber.data.LumberYard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.EventBusException
 import timber.log.Timber
@@ -95,6 +96,10 @@ class SgApp : Application() {
          * The content authority used to identify the SeriesGuide [android.content.ContentProvider].
          */
         const val CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider"
+
+        /** Executes one coroutine at a time. But does not guarantee order if they suspend. */
+        @Suppress("EXPERIMENTAL_API_USAGE")
+        val SINGLE = newSingleThreadContext("SingleThread")
 
         private var servicesComponent: ServicesComponent? = null
 
