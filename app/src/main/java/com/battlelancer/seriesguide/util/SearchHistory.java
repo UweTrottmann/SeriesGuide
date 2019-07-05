@@ -52,8 +52,7 @@ public class SearchHistory {
             TreeMap<String, String> map = new TreeMap<>(NATURAL_ORDER_REVERSE);
             HashMap<String, String> queryMap = new HashMap<>();
             for (String historyEntry : storedSearchHistory) {
-                String query = historyEntry.substring(DATETIME_PREFIX_LENGTH,
-                        historyEntry.length());
+                String query = historyEntry.substring(DATETIME_PREFIX_LENGTH);
                 map.put(historyEntry, query);
                 queryMap.put(query, historyEntry);
             }

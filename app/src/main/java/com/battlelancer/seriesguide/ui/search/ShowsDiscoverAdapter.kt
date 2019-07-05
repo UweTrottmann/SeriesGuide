@@ -198,11 +198,11 @@ class ShowsDiscoverAdapter(
         init {
             ButterKnife.bind(this, itemView)
             itemView.setOnClickListener { onItemClickListener.onItemClick(item) }
-            addIndicator.setOnAddClickListener({
+            addIndicator.setOnAddClickListener {
                 onItemClickListener.onAddClick(item)
-            })
+            }
             buttonContextMenu.setOnClickListener {
-                onItemClickListener.onMenuWatchlistClick(it, item.getTvdbid())
+                onItemClickListener.onMenuWatchlistClick(it, item.tvdbid)
             }
         }
     }
