@@ -9,6 +9,14 @@ Version 50
 ----------
 *(in development)*
 
+#### 50-beta2
+*(2019-07-06)*
+
+* 🔧 Shows/Movies: move search action left-most as likely most used. Show refresh action on history tabs.
+* 🔧 Show overview: move share action to more options to reduce clutter.
+* 🔧 Episodes list: show sort by action.
+* 🔨 Enable crash reporting.
+
 #### 50-beta1
 *(2019-07-05)*
 
