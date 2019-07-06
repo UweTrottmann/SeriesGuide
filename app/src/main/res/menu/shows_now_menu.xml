@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_action_now_refresh"
+        android:id="@+id/menu_action_shows_now_refresh"
         android:orderInCategory="2"
         android:title="@string/refresh"
         app:showAsAction="never" />
