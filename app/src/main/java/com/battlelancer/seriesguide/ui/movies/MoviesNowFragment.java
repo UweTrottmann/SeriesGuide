@@ -171,13 +171,13 @@ public class MoviesNowFragment extends Fragment {
             return;
         }
 
-        inflater.inflate(R.menu.now_menu, menu);
+        inflater.inflate(R.menu.movies_now_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_action_now_refresh) {
+        if (itemId == R.id.menu_action_movies_now_refresh) {
             refreshStream();
             return true;
         }
