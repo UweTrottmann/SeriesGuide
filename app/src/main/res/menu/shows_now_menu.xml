@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Search action of activity is left-most. -->
+    <item
+        android:id="@+id/menu_action_shows_now_refresh"
+        android:icon="@drawable/ic_refresh_white_24dp"
+        android:orderInCategory="1"
+        android:title="@string/refresh"
+        app:showAsAction="ifRoom" />
+
+</menu>

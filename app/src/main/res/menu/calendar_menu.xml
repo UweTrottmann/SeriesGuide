@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Icon is set in code. -->
+    <!-- Search action of activity is left-most. -->
     <item
         android:id="@+id/menu_calendar_visibility"
-        android:orderInCategory="0"
+        android:orderInCategory="1"
         android:title="@string/calendar_settings"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         tools:ignore="AlwaysShowAction">
         <menu>
             <item
