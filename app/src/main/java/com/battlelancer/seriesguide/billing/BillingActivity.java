@@ -82,7 +82,7 @@ public class BillingActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        buttonSubscribe = findViewById(R.id.buttonBillingGetSubscription);
+        buttonSubscribe = findViewById(R.id.buttonBillingAllAccess);
         buttonSubscribe.setOnClickListener(v -> onSubscribeToXButtonClicked());
         textViewSubscriptionPrice = findViewById(R.id.textViewBillingPriceSubscription);
         Button buttonManageSubs = findViewById(R.id.buttonBillingManageSubscription);

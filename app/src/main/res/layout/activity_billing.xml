@@ -50,42 +50,101 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textViewBillingDescription"
-                    android:layout_marginTop="@dimen/default_padding"
+                    android:layout_marginTop="@dimen/large_padding"
+                    android:layout_marginBottom="@dimen/large_padding"
                     android:text="@string/upgrade_success"
                     android:textAppearance="@style/TextAppearance.Body.Highlight.Accent"
                     android:textSize="16sp" />
 
                 <Button
-                    android:id="@+id/buttonBillingGetSubscription"
+                    android:id="@+id/buttonBillingSponsor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textViewBillingExisting"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/default_padding"
                     android:enabled="false"
-                    android:text="@string/billing_action_subscribe" />
+                    android:text="@string/billing_action_subscribe"
+                    tools:text="Sponsor Sub" />
 
                 <TextView
-                    android:id="@+id/textViewBillingPriceSubscription"
+                    android:id="@+id/textViewBillingSponsorDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/buttonBillingGetSubscription"
+                    android:layout_below="@+id/buttonBillingSponsor"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/inline_padding"
                     android:gravity="center_horizontal"
                     android:maxWidth="250dp"
                     android:textAppearance="@style/TextAppearance.Body.Highlight"
                     android:textStyle="italic"
-                    tools:text="1.99 €/year, try for free, cancel any time through Google Play" />
+                    tools:text="12,00 €/year\nSupport development of future updates. Includes All Access." />
+
+                <Button
+                    android:id="@+id/buttonBillingSupport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewBillingSponsorDescription"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/large_padding"
+                    android:enabled="false"
+                    android:text="@string/billing_action_subscribe"
+                    tools:text="Support Sub" />
+
+                <TextView
+                    android:id="@+id/buttonBillingSupportDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/buttonBillingSupport"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_horizontal"
+                    android:maxWidth="250dp"
+                    android:textAppearance="@style/TextAppearance.Body.Highlight"
+                    android:textStyle="italic"
+                    tools:text="6,00 €/year\nSupport development of future updates. Includes All Access." />
+
+                <Button
+                    android:id="@+id/buttonBillingAllAccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/buttonBillingSupportDescription"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/large_padding"
+                    android:enabled="false"
+                    android:text="@string/billing_action_subscribe"
+                    tools:text="All Access Sub" />
+
+                <TextView
+                    android:id="@+id/buttonBillingAllAccessDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/buttonBillingAllAccess"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_horizontal"
+                    android:maxWidth="250dp"
+                    android:textAppearance="@style/TextAppearance.Body.Highlight"
+                    android:textStyle="italic"
+                    tools:text="2,00 €/year\nUnlock all features, including Cloud backup." />
+
+                <TextView
+                    android:id="@+id/textViewBillingSubDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/buttonBillingAllAccessDescription"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_horizontal"
+                    android:text="@string/billing_sub_description_format"
+                    android:textAppearance="@style/TextAppearance.Body.Highlight"
+                    android:textStyle="italic" />
 
                 <Button
                     android:id="@+id/buttonBillingManageSubscription"
                     style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewBillingPriceSubscription"
+                    android:layout_below="@+id/textViewBillingSubDescription"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/default_padding"
+                    android:layout_marginTop="@dimen/inline_padding"
                     android:text="@string/billing_action_manage_subscriptions" />
 
                 <Button
