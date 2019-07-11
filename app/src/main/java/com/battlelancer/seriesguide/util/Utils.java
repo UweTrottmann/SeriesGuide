@@ -35,6 +35,8 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.billing.BillingRepository;
+import com.uwetrottmann.seriesguide.billing.localdb.GoldStatus;
 import java.io.File;
 import timber.log.Timber;
 
@@ -75,10 +77,19 @@ public class Utils {
      * Returns if the user should get access to paid features.
      */
     public static boolean hasAccessToX(Context context) {
-        // debug builds, installed X Pass or subscription unlock all features
-        // Amazon version only supports X pass as in-app purchase, so skip check
-        return (!isAmazonVersion() && hasXpass(context))
-                || AdvancedSettings.getLastSupporterState(context);
+        // debug builds, installed X Pass key or subscription unlock all features
+        if (isAmazonVersion()) {
+            // Amazon version only supports all access as in-app purchase, so skip key check
+            return AdvancedSettings.getLastSupporterState(context);
+        } else {
+            if (hasXpass(context)) {
+                return true;
+            } else {
+                GoldStatus goldStatus = BillingRepository.getInstance(context)
+                        .getGoldStatusLiveData().getValue();
+                return goldStatus != null && goldStatus.getEntitled();
+            }
+        }
     }
 
     /**
@@ -87,8 +98,7 @@ public class Utils {
      */
     public static boolean hasXpass(Context context) {
         // dev builds and the SeriesGuide X key app are not handled through the Play store
-        //noinspection ConstantConditions,PointlessBooleanExpression
-        return (BuildConfig.DEBUG || hasUnlockKeyInstalled(context));
+        return BuildConfig.DEBUG || hasUnlockKeyInstalled(context);
     }
 
     /**
