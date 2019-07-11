@@ -2,6 +2,7 @@ package com.uwetrottmann.seriesguide.billing
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.android.billingclient.api.AcknowledgePurchaseParams
@@ -24,7 +25,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-class BillingRepository(private val application: Application) {
+class BillingRepository(private val applicationContext: Context) {
 
     /**
      * The [BillingClient] is the most reliable and primary source of truth for all purchases
@@ -59,7 +60,7 @@ class BillingRepository(private val application: Application) {
      */
     val subsSkuDetailsListLiveData: LiveData<List<AugmentedSkuDetails>> by lazy {
         if (!::localCacheBillingClient.isInitialized) {
-            localCacheBillingClient = LocalBillingDb.getInstance(application)
+            localCacheBillingClient = LocalBillingDb.getInstance(applicationContext)
         }
         localCacheBillingClient.skuDetailsDao().getSubscriptionSkuDetails()
     }
@@ -73,7 +74,7 @@ class BillingRepository(private val application: Application) {
      */
     val goldStatusLiveData: LiveData<GoldStatus> by lazy {
         if (!::localCacheBillingClient.isInitialized) {
-            localCacheBillingClient = LocalBillingDb.getInstance(application)
+            localCacheBillingClient = LocalBillingDb.getInstance(applicationContext)
         }
         localCacheBillingClient.entitlementsDao().getGoldStatus()
     }
@@ -88,8 +89,8 @@ class BillingRepository(private val application: Application) {
      */
     fun startDataSourceConnections() {
         Timber.d("startDataSourceConnections")
+        localCacheBillingClient = LocalBillingDb.getInstance(applicationContext)
         instantiateAndConnectToPlayBillingService()
-        localCacheBillingClient = LocalBillingDb.getInstance(application)
     }
 
     fun endDataSourceConnections() {
@@ -100,7 +101,7 @@ class BillingRepository(private val application: Application) {
     }
 
     private fun instantiateAndConnectToPlayBillingService() {
-        playStoreBillingClient = BillingClient.newBuilder(application.applicationContext)
+        playStoreBillingClient = BillingClient.newBuilder(applicationContext)
             .enablePendingPurchases() // required or app will crash
             .setListener(purchasesUpdatedListener)
             .build()
@@ -377,6 +378,7 @@ class BillingRepository(private val application: Application) {
          */
         override fun onBillingServiceDisconnected() {
             Timber.d("onBillingServiceDisconnected")
+            // TODO Exponential back-off.
             connectToPlayBillingService()
         }
 
@@ -386,11 +388,11 @@ class BillingRepository(private val application: Application) {
         @Volatile
         private var INSTANCE: BillingRepository? = null
 
-        fun getInstance(application: Application): BillingRepository =
+        @JvmStatic
+        fun getInstance(context: Context): BillingRepository =
             INSTANCE ?: synchronized(this) {
-                INSTANCE
-                    ?: BillingRepository(application)
-                        .also { INSTANCE = it }
+                INSTANCE ?: BillingRepository(context.applicationContext)
+                    .also { INSTANCE = it }
             }
     }
 
