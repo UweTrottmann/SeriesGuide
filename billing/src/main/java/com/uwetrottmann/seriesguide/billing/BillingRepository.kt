@@ -61,7 +61,6 @@ class BillingRepository(private val application: Application) {
         if (!::localCacheBillingClient.isInitialized) {
             localCacheBillingClient = LocalBillingDb.getInstance(application)
         }
-        // TODO exclude old subscriptions
         localCacheBillingClient.skuDetailsDao().getSubscriptionSkuDetails()
     }
 
@@ -227,8 +226,8 @@ class BillingRepository(private val application: Application) {
                 SeriesGuideSku.X_SUB_SPONSOR -> {
                     val goldStatus = GoldStatus(true)
                     insert(goldStatus)
-                    /* You can only buy all access once. Disable all subscriptions. */
-                    SeriesGuideSku.SUBS_SKUS.forEach { sku ->
+                    /* You can only buy all access once. Disable all available subscriptions. */
+                    SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE.forEach { sku ->
                         localCacheBillingClient.skuDetailsDao()
                             .insertOrUpdate(sku, goldStatus.mayPurchase())
                     }
@@ -349,7 +348,10 @@ class BillingRepository(private val application: Application) {
             when (billingResult.responseCode) {
                 BillingClient.BillingResponseCode.OK -> {
                     Timber.d("onBillingSetupFinished successfully")
-                    querySkuDetailsAsync(BillingClient.SkuType.SUBS, SeriesGuideSku.SUBS_SKUS)
+                    querySkuDetailsAsync(
+                        BillingClient.SkuType.SUBS,
+                        SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE
+                    )
                     queryPurchasesAsync()
                 }
                 BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> {
@@ -403,10 +405,7 @@ class BillingRepository(private val application: Application) {
         const val X_SUB_SUPPORTER = "sub_supporter"
         const val X_SUB_SPONSOR = "sub_sponsor"
 
-        val SUBS_SKUS = listOf(
-            X_SUB_LEGACY,
-            X_SUB_2014_02,
-            X_SUB_2016_05,
+        val SUBS_SKUS_FOR_PURCHASE = listOf(
             X_SUB_ALL_ACCESS,
             X_SUB_SUPPORTER,
             X_SUB_SPONSOR
