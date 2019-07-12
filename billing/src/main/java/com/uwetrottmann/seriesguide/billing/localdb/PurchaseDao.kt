@@ -31,7 +31,7 @@ interface PurchaseDao {
     fun insert(purchase: CachedPurchase)
 
     @Transaction
-    fun insert(vararg purchases: Purchase) {
+    fun insert(purchases: List<Purchase>) {
         purchases.forEach {
             insert(CachedPurchase(data = it))
         }

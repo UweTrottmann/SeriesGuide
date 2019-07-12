@@ -102,7 +102,7 @@ class BillingRepository(private val applicationContext: Context) {
 
     private fun instantiateAndConnectToPlayBillingService() {
         playStoreBillingClient = BillingClient.newBuilder(applicationContext)
-            .enablePendingPurchases() // required or app will crash
+            .enablePendingPurchases()  // Not used for subscriptions.
             .setListener(purchasesUpdatedListener)
             .build()
         connectToPlayBillingService()
@@ -160,22 +160,19 @@ class BillingRepository(private val applicationContext: Context) {
     private fun processPurchases(purchasesResult: Set<Purchase>) =
         CoroutineScope(Job() + Dispatchers.IO).launch {
             Timber.d("processPurchases called")
-            val validPurchases = HashSet<Purchase>(purchasesResult.size)
+            val validPurchasesSet = HashSet<Purchase>(purchasesResult.size)
             Timber.d("processPurchases newBatch content $purchasesResult")
 
             purchasesResult.forEach { purchase ->
                 if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
                     if (isSignatureValid(purchase)) {
-                        validPurchases.add(purchase)
+                        validPurchasesSet.add(purchase)
                     }
-                } else if (purchase.purchaseState == Purchase.PurchaseState.PENDING) {
-                    Timber.d("Received a pending purchase of SKU: ${purchase.sku}")
-                    // handle pending purchases, e.g. confirm with users about the pending
-                    // purchases, prompt them to complete it, etc.
                 }
             }
 
-            Timber.d("processPurchases non-consumables content $validPurchases")
+            val validPurchases = validPurchasesSet.toList()
+            Timber.d("processPurchases valid purchases $validPurchases")
             /*
               As is being done in this sample, for extra reliability you may store the
               receipts/purchases to a your own remote/local database for until after you
@@ -186,8 +183,15 @@ class BillingRepository(private val applicationContext: Context) {
              */
             val testing = localCacheBillingClient.purchaseDao().getPurchases()
             Timber.d("processPurchases purchases in the db ${testing.size}")
-            localCacheBillingClient.purchaseDao().insert(*validPurchases.toTypedArray())
-            acknowledgeNonConsumablePurchasesAsync(validPurchases.toList())
+
+            if (validPurchases.isEmpty()) {
+                // This should only happen after querying all purchases.
+                // When called from PurchasesUpdatedListener there should always be one.
+                revokeEntitlement()
+            } else {
+                localCacheBillingClient.purchaseDao().insert(validPurchases)
+                acknowledgeNonConsumablePurchasesAsync(validPurchases)
+            }
         }
 
     /**
@@ -197,25 +201,30 @@ class BillingRepository(private val applicationContext: Context) {
      */
     private fun acknowledgeNonConsumablePurchasesAsync(nonConsumables: List<Purchase>) {
         nonConsumables.forEach { purchase ->
-            val params = AcknowledgePurchaseParams.newBuilder()
-                .setPurchaseToken(purchase.purchaseToken)
-                .build()
-            playStoreBillingClient.acknowledgePurchase(params) { billingResult ->
-                when (billingResult.responseCode) {
-                    BillingClient.BillingResponseCode.OK -> {
-                        disburseNonConsumableEntitlement(purchase)
+            if (purchase.isAcknowledged) {
+                // Already acknowledged, immediately grant entitlement.
+                disburseEntitlement(purchase)
+            } else {
+                // Acknowledge purchase.
+                val params = AcknowledgePurchaseParams.newBuilder()
+                    .setPurchaseToken(purchase.purchaseToken)
+                    .build()
+                playStoreBillingClient.acknowledgePurchase(params) { billingResult ->
+                    when (billingResult.responseCode) {
+                        BillingClient.BillingResponseCode.OK -> {
+                            disburseEntitlement(purchase)
+                        }
+                        else -> Timber.d("acknowledgeNonConsumablePurchasesAsync response is ${billingResult.debugMessage}")
                     }
-                    else -> Timber.d("acknowledgeNonConsumablePurchasesAsync response is ${billingResult.debugMessage}")
                 }
             }
-
         }
     }
 
     /**
      * This is the final step, where purchases/receipts are converted to premium contents.
      */
-    private fun disburseNonConsumableEntitlement(purchase: Purchase) =
+    private fun disburseEntitlement(purchase: Purchase) =
         CoroutineScope(Job() + Dispatchers.IO).launch {
             when (purchase.sku) {
                 SeriesGuideSku.X_PASS_IN_APP,
@@ -239,6 +248,17 @@ class BillingRepository(private val applicationContext: Context) {
             localCacheBillingClient.purchaseDao().delete(purchase)
         }
 
+    private fun revokeEntitlement() =
+        CoroutineScope(Job() + Dispatchers.IO).launch {
+            val goldStatus = GoldStatus(false)
+            insert(goldStatus)
+            /* Enable all available subscriptions. */
+            SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE.forEach { sku ->
+                localCacheBillingClient.skuDetailsDao()
+                    .insertOrUpdate(sku, goldStatus.mayPurchase())
+            }
+        }
+
     @WorkerThread
     private suspend fun insert(entitlement: Entitlement) = withContext(Dispatchers.IO) {
         localCacheBillingClient.entitlementsDao().insert(entitlement)
@@ -247,12 +267,10 @@ class BillingRepository(private val applicationContext: Context) {
     /**
      * Requests SKU details from Google Play and adds or updates the associated [AugmentedSkuDetails].
      */
-    private fun querySkuDetailsAsync(
-        @BillingClient.SkuType skuType: String,
-        skuList: List<String>
-    ) {
+    private fun querySkuDetailsAsync() {
+        val skuType = BillingClient.SkuType.SUBS
         val params = SkuDetailsParams.newBuilder()
-            .setSkusList(skuList)
+            .setSkusList(SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE)
             .setType(skuType)
             .build()
         Timber.d("querySkuDetailsAsync for $skuType")
@@ -349,10 +367,7 @@ class BillingRepository(private val applicationContext: Context) {
             when (billingResult.responseCode) {
                 BillingClient.BillingResponseCode.OK -> {
                     Timber.d("onBillingSetupFinished successfully")
-                    querySkuDetailsAsync(
-                        BillingClient.SkuType.SUBS,
-                        SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE
-                    )
+                    querySkuDetailsAsync()
                     queryPurchasesAsync()
                 }
                 BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> {
