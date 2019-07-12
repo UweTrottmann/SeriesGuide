@@ -59,6 +59,7 @@ data class AugmentedSkuDetails(
         @PrimaryKey val sku: String,
         val type: String?,
         val price: String?,
+        val priceMicros: Long?,
         val title: String?,
         val description: String?,
         val originalJson: String?

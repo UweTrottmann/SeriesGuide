@@ -35,7 +35,7 @@ import com.android.billingclient.api.SkuDetails
 @Dao
 interface AugmentedSkuDetailsDao {
 
-    @Query("SELECT * FROM AugmentedSkuDetails WHERE type = '${BillingClient.SkuType.SUBS}'")
+    @Query("SELECT * FROM AugmentedSkuDetails WHERE type = '${BillingClient.SkuType.SUBS}' ORDER BY priceMicros DESC")
     fun getSubscriptionSkuDetails(): LiveData<List<AugmentedSkuDetails>>
 
     @Transaction
@@ -43,7 +43,16 @@ interface AugmentedSkuDetailsDao {
         val result = getById(sku)
         val canPurchase = if (result == null) true else result.canPurchase
         val originalJson = toString().substring("SkuDetails: ".length)
-        val detail = AugmentedSkuDetails(canPurchase, sku, type, price, title, description, originalJson)
+        val detail = AugmentedSkuDetails(
+            canPurchase,
+            sku,
+            type,
+            price,
+            priceAmountMicros,
+            title,
+            description,
+            originalJson
+        )
         insert(detail)
     }
 
@@ -53,7 +62,7 @@ interface AugmentedSkuDetailsDao {
         if (result != null) {
             update(sku, canPurchase)
         } else {
-            insert(AugmentedSkuDetails(canPurchase, sku, null, null, null, null, null))
+            insert(AugmentedSkuDetails(canPurchase, sku, null, null, null, null, null, null))
         }
     }
 
