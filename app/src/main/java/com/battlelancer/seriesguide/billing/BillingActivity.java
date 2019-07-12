@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -23,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
@@ -146,65 +143,65 @@ public class BillingActivity extends BaseActivity {
         }
     }
 
-    @Nullable
-    public static String latestSubscriptionSkuOrNull(@NonNull Inventory inventory) {
-        if (inventory.getPurchase(SKU_X_SUB_2017_08) != null) {
-            return SKU_X_SUB_2017_08;
-        }
-        if (inventory.getPurchase(SKU_X_SUB_2016_05) != null) {
-            return SKU_X_SUB_2016_05;
-        }
-        if (inventory.getPurchase(SKU_X_SUB_2014_02) != null) {
-            return SKU_X_SUB_2014_02;
-        }
-        if (inventory.getPurchase(SKU_X_SUB_LEGACY) != null) {
-            return SKU_X_SUB_LEGACY;
-        }
-        return null;
-    }
+//    @Nullable
+//    public static String latestSubscriptionSkuOrNull(@NonNull Inventory inventory) {
+//        if (inventory.getPurchase(SKU_X_SUB_2017_08) != null) {
+//            return SKU_X_SUB_2017_08;
+//        }
+//        if (inventory.getPurchase(SKU_X_SUB_2016_05) != null) {
+//            return SKU_X_SUB_2016_05;
+//        }
+//        if (inventory.getPurchase(SKU_X_SUB_2014_02) != null) {
+//            return SKU_X_SUB_2014_02;
+//        }
+//        if (inventory.getPurchase(SKU_X_SUB_LEGACY) != null) {
+//            return SKU_X_SUB_LEGACY;
+//        }
+//        return null;
+//    }
 
-    /**
-     * Checks if the user is subscribed to X features or has the deprecated X upgrade (so he gets
-     * the subscription for life). Also sets the current state through {@link
-     * AdvancedSettings#setSupporterState(Context, boolean)}.
-     */
-    public static boolean checkForSubscription(@NonNull Context context,
-            @NonNull Inventory inventory) {
-        /*
-         * Check for items we own. Notice that for each purchase, we check the
-         * developer payload to see if it's correct! See
-         * verifyDeveloperPayload().
-         */
-
-        // Does the user have the deprecated X Upgrade in-app purchase? If so unlock all features.
-        Purchase premiumPurchase = inventory.getPurchase(SKU_X);
-        boolean hasXUpgrade = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
-
-        // Does the user have an active unlock all subscription?
-        String subscriptionSkuOrNull = latestSubscriptionSkuOrNull(inventory);
-        boolean isSubscribedToX = subscriptionSkuOrNull != null
-                && verifyDeveloperPayload(inventory.getPurchase(subscriptionSkuOrNull));
-
-        if (hasXUpgrade) {
-            Timber.d("User has X SUBSCRIPTION for life.");
-        } else {
-            Timber.d("User has %s", isSubscribedToX ? "X SUBSCRIPTION" : "NO X SUBSCRIPTION");
-        }
-
-        // notify the user about a change in subscription state
-        boolean isSubscribedOld = AdvancedSettings.getLastSupporterState(context);
-        boolean isSubscribed = hasXUpgrade || isSubscribedToX;
-        if (!isSubscribedOld && isSubscribed) {
-            Toast.makeText(context, R.string.upgrade_success, Toast.LENGTH_SHORT).show();
-        } else if (isSubscribedOld && !isSubscribed) {
-            onExpiredNotification(context);
-        }
-
-        // Save current state until we query again
-        AdvancedSettings.setSupporterState(context, isSubscribed);
-
-        return isSubscribed;
-    }
+//    /**
+//     * Checks if the user is subscribed to X features or has the deprecated X upgrade (so he gets
+//     * the subscription for life). Also sets the current state through {@link
+//     * AdvancedSettings#setSupporterState(Context, boolean)}.
+//     */
+//    public static boolean checkForSubscription(@NonNull Context context,
+//            @NonNull Inventory inventory) {
+//        /*
+//         * Check for items we own. Notice that for each purchase, we check the
+//         * developer payload to see if it's correct! See
+//         * verifyDeveloperPayload().
+//         */
+//
+//        // Does the user have the deprecated X Upgrade in-app purchase? If so unlock all features.
+//        Purchase premiumPurchase = inventory.getPurchase(SKU_X);
+//        boolean hasXUpgrade = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
+//
+//        // Does the user have an active unlock all subscription?
+//        String subscriptionSkuOrNull = latestSubscriptionSkuOrNull(inventory);
+//        boolean isSubscribedToX = subscriptionSkuOrNull != null
+//                && verifyDeveloperPayload(inventory.getPurchase(subscriptionSkuOrNull));
+//
+//        if (hasXUpgrade) {
+//            Timber.d("User has X SUBSCRIPTION for life.");
+//        } else {
+//            Timber.d("User has %s", isSubscribedToX ? "X SUBSCRIPTION" : "NO X SUBSCRIPTION");
+//        }
+//
+//        // notify the user about a change in subscription state
+//        boolean isSubscribedOld = AdvancedSettings.getLastSupporterState(context);
+//        boolean isSubscribed = hasXUpgrade || isSubscribedToX;
+//        if (!isSubscribedOld && isSubscribed) {
+//            Toast.makeText(context, R.string.upgrade_success, Toast.LENGTH_SHORT).show();
+//        } else if (isSubscribedOld && !isSubscribed) {
+//            onExpiredNotification(context);
+//        }
+//
+//        // Save current state until we query again
+//        AdvancedSettings.setSupporterState(context, isSubscribed);
+//
+//        return isSubscribed;
+//    }
 
     /**
      * Displays a notification that the subscription has expired. Its action opens {@link
@@ -243,19 +240,19 @@ public class BillingActivity extends BaseActivity {
         }
     }
 
-    /**
-     * Verifies the developer payload of a purchase.
-     */
-    public static boolean verifyDeveloperPayload(Purchase p) {
-        String payload = p.getDeveloperPayload();
-
-        /*
-         * Not doing anything sophisticated here,
-         * this is open source anyhow.
-         */
-
-        return SOME_STRING.equals(payload);
-    }
+//    /**
+//     * Verifies the developer payload of a purchase.
+//     */
+//    public static boolean verifyDeveloperPayload(Purchase p) {
+//        String payload = p.getDeveloperPayload();
+//
+//        /*
+//         * Not doing anything sophisticated here,
+//         * this is open source anyhow.
+//         */
+//
+//        return SOME_STRING.equals(payload);
+//    }
 
     private void updateViewStates(boolean hasUpgrade) {
         // Only enable key app button if the user does not have all access yet.
