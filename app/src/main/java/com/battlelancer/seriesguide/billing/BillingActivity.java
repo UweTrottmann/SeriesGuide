@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +17,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -27,8 +29,9 @@ import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.util.Utils;
-import java.util.ArrayList;
-import java.util.List;
+import com.uwetrottmann.seriesguide.billing.BillingViewModel;
+import com.uwetrottmann.seriesguide.billing.localdb.AugmentedSkuDetails;
+import org.jetbrains.annotations.NotNull;
 import timber.log.Timber;
 
 public class BillingActivity extends BaseActivity {
@@ -42,9 +45,6 @@ public class BillingActivity extends BaseActivity {
     public static final String SKU_X_SUB_LEGACY = "x_subscription";
     public static final String SKU_X_SUB_NEW_PURCHASES = SKU_X_SUB_2017_08;
 
-    // (arbitrary) request code for the purchase flow
-    private static final int RC_REQUEST = 21;
-
     private static final String SOME_STRING = "SURPTk9UQ0FSRUlGWU9VUElSQVRFVEhJUw==";
     private static final String PLAY_MANAGE_SUBS_ALL = "https://play.google.com/store/account/subscriptions";
     private static final String PLAY_MANAGE_SUBS_ONE =
@@ -52,13 +52,12 @@ public class BillingActivity extends BaseActivity {
 
     private View progressScreen;
     private View contentContainer;
-    private Button buttonSubscribe;
+    private RecyclerView recyclerView;
+    private SkuDetailsAdapter adapter;
     private Button buttonPass;
-    private TextView textViewSubscriptionPrice;
     private View textViewHasUpgrade;
 
-    private IabHelper billingHelper;
-    private String subPrice;
+    @Nullable private BillingViewModel billingViewModel;
     private String manageSubscriptionUrl;
 
     @Override
@@ -70,6 +69,20 @@ public class BillingActivity extends BaseActivity {
         manageSubscriptionUrl = PLAY_MANAGE_SUBS_ALL;
 
         setupViews();
+
+        if (Utils.hasXpass(this)) {
+            setWaitMode(false);
+            updateViewStates(true);
+        } else {
+            setWaitMode(true);
+            billingViewModel = ViewModelProviders.of(this).get(BillingViewModel.class);
+            billingViewModel.getGoldStatusLiveData().observe(this, goldStatus -> {
+                setWaitMode(false);
+                updateViewStates(goldStatus != null && goldStatus.getEntitled());
+            });
+            billingViewModel.getSubsSkuDetailsListLiveData().observe(this,
+                    augmentedSkuDetails -> adapter.setSkuDetailsList(augmentedSkuDetails));
+        }
     }
 
     @Override
@@ -82,9 +95,19 @@ public class BillingActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        buttonSubscribe = findViewById(R.id.buttonBillingAllAccess);
-        buttonSubscribe.setOnClickListener(v -> onSubscribeToXButtonClicked());
-        textViewSubscriptionPrice = findViewById(R.id.textViewBillingPriceSubscription);
+        recyclerView = findViewById(R.id.recyclerViewBilling);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter = new SkuDetailsAdapter() {
+            @Override
+            public void onSkuDetailsClicked(@NotNull AugmentedSkuDetails item) {
+                if (billingViewModel != null) {
+                    billingViewModel.makePurchase(BillingActivity.this, item);
+                }
+            }
+        };
+        recyclerView.setAdapter(adapter);
+
         Button buttonManageSubs = findViewById(R.id.buttonBillingManageSubscription);
         buttonManageSubs.setOnClickListener(
                 v -> Utils.launchWebsite(v.getContext(), manageSubscriptionUrl));
@@ -114,109 +137,14 @@ public class BillingActivity extends BaseActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Timber.d("onActivityResult(%s,%s,%s)", requestCode, resultCode, data);
-        // Have we been disposed of in the meantime? If so, quit.
-        if (billingHelper == null) {
-            return;
-        }
-
-        // Pass on the activity result to the helper for handling
-        if (!billingHelper.handleActivityResult(requestCode, resultCode, data)) {
-            // not handled, so handle it ourselves (here's where you'd
-            // perform any handling of activity results not related to in-app
-            // billing...
-            super.onActivityResult(requestCode, resultCode, data);
-        } else {
-            Timber.d("onActivityResult handled by IABUtil.");
-        }
-    }
-
-    @Override
     protected void onStart() {
         super.onStart();
 
-        // do not query IAB if user has key
-        boolean hasUpgrade = Utils.hasXpass(this);
-        updateViewStates(hasUpgrade);
-        if (hasUpgrade) {
-            setWaitMode(false);
-        } else {
-            setWaitMode(true);
-
-            billingHelper = new IabHelper(this);
-            billingHelper.startSetup(billingSetupListener);
+        // Check if user has installed key app.
+        if (Utils.hasXpass(this)) {
+            updateViewStates(true);
         }
     }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        if (billingHelper != null) {
-            billingHelper.dispose();
-            billingHelper = null;
-        }
-    }
-
-    private IabHelper.OnIabSetupFinishedListener billingSetupListener
-            = new IabHelper.OnIabSetupFinishedListener() {
-        public void onIabSetupFinished(IabResult result) {
-            if (billingHelper == null) {
-                // disposed
-                return;
-            }
-
-            if (!result.isSuccess()) {
-                logAndShowAlertDialog(R.string.subscription_unavailable,
-                        "Problem setting up In-app Billing: " + result.getMessage());
-                enableFallBackMode();
-                setWaitMode(false);
-                return;
-            }
-
-            Timber.d("onIabSetupFinished: Successful. Querying inventory.");
-            List<String> detailSkus = new ArrayList<>();
-            detailSkus.add(SKU_X_SUB_NEW_PURCHASES);
-            billingHelper.queryInventoryAsync(true, detailSkus, queryInventoryFinishedListener);
-        }
-    };
-
-    // Listener that's called when we finish querying the items and
-    // subscriptions we own
-    IabHelper.QueryInventoryFinishedListener queryInventoryFinishedListener
-            = new IabHelper.QueryInventoryFinishedListener() {
-        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            if (billingHelper == null) {
-                // disposed
-                return;
-            }
-
-            if (result.isFailure()) {
-                logAndShowAlertDialog(R.string.subscription_unavailable,
-                        "Could not query inventory: " + result.getMessage());
-                return;
-            }
-
-            // get sub state
-            boolean hasUpgrade = checkForSubscription(BillingActivity.this, inventory);
-            // get local sub price
-            SkuDetails skuDetails = inventory.getSkuDetails(SKU_X_SUB_NEW_PURCHASES);
-            if (skuDetails != null) {
-                subPrice = skuDetails.getPrice();
-            }
-
-            if (hasUpgrade) {
-                String subscriptionSkuOrNull = latestSubscriptionSkuOrNull(inventory);
-                if (subscriptionSkuOrNull != null) {
-                    manageSubscriptionUrl = PLAY_MANAGE_SUBS_ONE + subscriptionSkuOrNull;
-                }
-            }
-
-            updateViewStates(hasUpgrade);
-            setWaitMode(false);
-        }
-    };
 
     @Nullable
     public static String latestSubscriptionSkuOrNull(@NonNull Inventory inventory) {
@@ -329,61 +257,8 @@ public class BillingActivity extends BaseActivity {
         return SOME_STRING.equals(payload);
     }
 
-    // User clicked the "Subscribe" button.
-    private void onSubscribeToXButtonClicked() {
-        Timber.d("Subscribe button clicked; launching purchase flow for X subscription.");
-
-        setWaitMode(true);
-
-        billingHelper.launchSubscriptionPurchaseFlow(this, SKU_X_SUB_NEW_PURCHASES, RC_REQUEST,
-                purchaseFinishedListener, SOME_STRING);
-    }
-
-    // Callback for when a purchase is finished
-    IabHelper.OnIabPurchaseFinishedListener purchaseFinishedListener
-            = new IabHelper.OnIabPurchaseFinishedListener() {
-        public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-            Timber.d("Purchase finished: %s, purchase: %s", result, purchase);
-
-            // Have we been disposed of in the meantime? If so, quit.
-            if (billingHelper == null) {
-                return;
-            }
-
-            if (result.isFailure()) {
-                if (result.getResponse() != IabHelper.IABHELPER_USER_CANCELLED) {
-                    logAndShowAlertDialog(R.string.subscription_failed, result.getMessage());
-                }
-                setWaitMode(false);
-                return;
-            }
-            if (!verifyDeveloperPayload(purchase)) {
-                logAndShowAlertDialog(R.string.subscription_failed,
-                        "Authenticity verification failed.");
-                setWaitMode(false);
-                return;
-            }
-
-            Timber.d("Purchase successful.");
-
-            if (purchase.getSku().equals(SKU_X_SUB_NEW_PURCHASES)) {
-                Timber.d("Purchased X subscription. Congratulating user.");
-                // Save current state until we query again
-                AdvancedSettings.setSupporterState(BillingActivity.this, true);
-                updateViewStates(true);
-                setWaitMode(false);
-            }
-        }
-    };
-
     private void updateViewStates(boolean hasUpgrade) {
-        // Only enable purchase button if the user does not have the upgrade yet
-        buttonSubscribe.setEnabled(!hasUpgrade);
-        textViewSubscriptionPrice.setText(
-                getString(R.string.billing_price_subscribe,
-                        subPrice != null ? subPrice : "--",
-                        getString(R.string.google_play))
-        );
+        // Only enable key app button if the user does not have all access yet.
         buttonPass.setEnabled(!hasUpgrade);
         textViewHasUpgrade.setVisibility(hasUpgrade ? View.VISIBLE : View.GONE);
     }
@@ -392,7 +267,6 @@ public class BillingActivity extends BaseActivity {
      * Disables the purchase button and hides the subscribed message.
      */
     private void enableFallBackMode() {
-        buttonSubscribe.setEnabled(false);
         buttonPass.setEnabled(true);
         textViewHasUpgrade.setVisibility(View.GONE);
     }
