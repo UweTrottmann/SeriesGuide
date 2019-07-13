@@ -234,7 +234,8 @@ class BillingRepository(private val applicationContext: Context) {
                 SeriesGuideSku.X_SUB_ALL_ACCESS,
                 SeriesGuideSku.X_SUB_SUPPORTER,
                 SeriesGuideSku.X_SUB_SPONSOR -> {
-                    val goldStatus = GoldStatus(true)
+                    val isSub = SeriesGuideSku.X_PASS_IN_APP != purchase.sku
+                    val goldStatus = GoldStatus(true, isSub, purchase.sku)
                     insert(goldStatus)
                     /* You can only buy all access once. Disable all available subscriptions. */
                     SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE.forEach { sku ->
@@ -250,7 +251,7 @@ class BillingRepository(private val applicationContext: Context) {
 
     private fun revokeEntitlement() =
         CoroutineScope(Job() + Dispatchers.IO).launch {
-            val goldStatus = GoldStatus(false)
+            val goldStatus = GoldStatus(false, isSub = true, sku = null)
             insert(goldStatus)
             /* Enable all available subscriptions. */
             SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE.forEach { sku ->

@@ -60,6 +60,12 @@ class BillingActivity : BaseActivity() {
                     it.goldStatusLiveData.observe(this, Observer { goldStatus ->
                         setWaitMode(false)
                         updateViewStates(goldStatus != null && goldStatus.entitled)
+                        manageSubscriptionUrl =
+                            if (goldStatus?.isSub == true && goldStatus.sku != null) {
+                                PLAY_MANAGE_SUBS_ONE + goldStatus.sku
+                            } else {
+                                PLAY_MANAGE_SUBS_ALL
+                            }
                     })
                     it.subsSkuDetailsListLiveData.observe(this, Observer { skuDetails ->
                         adapter.setSkuDetailsList(skuDetails)
