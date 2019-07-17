@@ -52,8 +52,9 @@
                     android:layout_below="@+id/textViewBillingDescription"
                     android:layout_marginTop="@dimen/large_padding"
                     android:layout_marginBottom="@dimen/large_padding"
+                    android:gravity="center_horizontal"
                     android:text="@string/upgrade_success"
-                    android:textAppearance="@style/TextAppearance.Body.Highlight.Accent"
+                    android:textAppearance="@style/TextAppearance.Body.Bold.Accent"
                     android:textSize="16sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
