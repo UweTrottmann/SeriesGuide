@@ -287,7 +287,10 @@ class BillingRepository(private val applicationContext: Context) {
                     }
                 }
                 else -> {
-                    Timber.e(billingResult.debugMessage)
+                    val error = "querySkuDetailsAsync failed. " +
+                            "Response code: ${billingResult.responseCode} " +
+                            "Message: ${billingResult.debugMessage}"
+                    Timber.e(error)
                 }
             }
         }
