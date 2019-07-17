@@ -38,7 +38,7 @@ class BillingActivity : BaseActivity() {
     private lateinit var buttonPass: Button
     private lateinit var textViewHasUpgrade: View
 
-    private var billingViewModel: BillingViewModel? = null
+    private lateinit var billingViewModel: BillingViewModel
     private lateinit var manageSubscriptionUrl: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,27 +50,30 @@ class BillingActivity : BaseActivity() {
 
         setupViews()
 
+        // Always get subscription SKU info.
+        // Users might want to support even if unlock app is installed.
+        billingViewModel = ViewModelProviders.of(this)
+            .get(BillingViewModel::class.java).also {
+                it.subsSkuDetailsListLiveData.observe(this, Observer { skuDetails ->
+                    adapter.setSkuDetailsList(skuDetails)
+                })
+            }
+        // Only use subscription state if unlock app is not installed.
         if (Utils.hasXpass(this)) {
             setWaitMode(false)
             updateViewStates(true)
         } else {
             setWaitMode(true)
-            billingViewModel = ViewModelProviders.of(this)
-                .get(BillingViewModel::class.java).also {
-                    it.goldStatusLiveData.observe(this, Observer { goldStatus ->
-                        setWaitMode(false)
-                        updateViewStates(goldStatus != null && goldStatus.entitled)
-                        manageSubscriptionUrl =
-                            if (goldStatus?.isSub == true && goldStatus.sku != null) {
-                                PLAY_MANAGE_SUBS_ONE + goldStatus.sku
-                            } else {
-                                PLAY_MANAGE_SUBS_ALL
-                            }
-                    })
-                    it.subsSkuDetailsListLiveData.observe(this, Observer { skuDetails ->
-                        adapter.setSkuDetailsList(skuDetails)
-                    })
-                }
+            billingViewModel.goldStatusLiveData.observe(this, Observer { goldStatus ->
+                setWaitMode(false)
+                updateViewStates(goldStatus != null && goldStatus.entitled)
+                manageSubscriptionUrl =
+                    if (goldStatus?.isSub == true && goldStatus.sku != null) {
+                        PLAY_MANAGE_SUBS_ONE + goldStatus.sku
+                    } else {
+                        PLAY_MANAGE_SUBS_ALL
+                    }
+            })
         }
     }
 
@@ -86,7 +89,7 @@ class BillingActivity : BaseActivity() {
 
         adapter = object : SkuDetailsAdapter() {
             override fun onSkuDetailsClicked(item: AugmentedSkuDetails) {
-                billingViewModel?.makePurchase(this@BillingActivity, item)
+                billingViewModel.makePurchase(this@BillingActivity, item)
             }
         }
         recyclerView.adapter = adapter
