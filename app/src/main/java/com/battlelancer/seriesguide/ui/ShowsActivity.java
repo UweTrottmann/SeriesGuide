@@ -248,7 +248,7 @@ public class ShowsActivity extends BaseTopActivity implements
             return;
         }
         // Automatically starts checking all access status.
-        // Ends connection if activity is destroyed.
+        // Ends connection if activity is finished (and was not ended elsewhere already).
         BillingViewModel billingViewModel = ViewModelProviders.of(this).get(BillingViewModel.class);
         billingViewModel.getEntitlementRevokedEvent()
                 .observe(this, aVoid -> BillingActivity.showExpiredNotification(this));
