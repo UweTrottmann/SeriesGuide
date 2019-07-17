@@ -21,9 +21,12 @@ import com.uwetrottmann.seriesguide.billing.localdb.LocalBillingDb
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import kotlin.math.pow
+import kotlin.math.roundToLong
 
 class BillingRepository(private val applicationContext: Context) {
 
@@ -54,6 +57,8 @@ class BillingRepository(private val applicationContext: Context) {
      * in the Google Play Store.
      */
     private lateinit var localCacheBillingClient: LocalBillingDb
+
+    private var disconnectCount = 0
 
     /**
      * This list tells clients what subscriptions are available for sale.
@@ -382,6 +387,7 @@ class BillingRepository(private val applicationContext: Context) {
          * established. It might make sense to get [SkuDetails] and [Purchases][Purchase] at this point.
          */
         override fun onBillingSetupFinished(billingResult: BillingResult) {
+            disconnectCount = 0
             when (billingResult.responseCode) {
                 BillingClient.BillingResponseCode.OK -> {
                     Timber.d("onBillingSetupFinished successfully")
@@ -411,8 +417,14 @@ class BillingRepository(private val applicationContext: Context) {
          */
         override fun onBillingServiceDisconnected() {
             Timber.d("onBillingServiceDisconnected")
-            // TODO Exponential back-off.
-            connectToPlayBillingService()
+            if (disconnectCount > 3) {
+                return // Do not try again. Wait until BillingClient is started again.
+            }
+            disconnectCount++
+            CoroutineScope(Job() + Dispatchers.Default).launch {
+                delay((2.toDouble().pow(disconnectCount) * 1000).roundToLong())
+                connectToPlayBillingService()
+            }
         }
 
     }
