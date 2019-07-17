@@ -76,8 +76,11 @@ class BillingRepository(private val applicationContext: Context) {
         if (!::localCacheBillingClient.isInitialized) {
             localCacheBillingClient = LocalBillingDb.getInstance(applicationContext)
         }
-        localCacheBillingClient.entitlementsDao().getGoldStatus()
+        localCacheBillingClient.entitlementsDao().getGoldStatusLiveData()
     }
+
+    /** Triggered when the entitlement was revoked. Use only with one observer at a time. */
+    val entitlementRevokedEvent = SingleLiveEvent<Void>()
 
     /**
      * Correlated data sources belong inside a repository module so that the rest of
@@ -251,12 +254,23 @@ class BillingRepository(private val applicationContext: Context) {
 
     private fun revokeEntitlement() =
         CoroutineScope(Job() + Dispatchers.IO).launch {
+            // Save if existing entitlement is getting revoked.
+            val wasEntitled =
+                localCacheBillingClient.entitlementsDao().getGoldStatus()?.entitled ?: false
+
             val goldStatus = GoldStatus(false, isSub = true, sku = null)
             insert(goldStatus)
             /* Enable all available subscriptions. */
             SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE.forEach { sku ->
                 localCacheBillingClient.skuDetailsDao()
                     .insertOrUpdate(sku, goldStatus.mayPurchase())
+            }
+
+            // Notify if existing entitlement was revoked.
+            if (wasEntitled) {
+                withContext(Dispatchers.Main) {
+                    entitlementRevokedEvent.call()
+                }
             }
         }
 

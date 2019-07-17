@@ -38,7 +38,10 @@ interface EntitlementsDao {
     fun update(goldStatus: GoldStatus)
 
     @Query("SELECT * FROM gold_status LIMIT 1")
-    fun getGoldStatus(): LiveData<GoldStatus>
+    fun getGoldStatus(): GoldStatus?
+
+    @Query("SELECT * FROM gold_status LIMIT 1")
+    fun getGoldStatusLiveData(): LiveData<GoldStatus>
 
     @Delete
     fun delete(goldStatus: GoldStatus)

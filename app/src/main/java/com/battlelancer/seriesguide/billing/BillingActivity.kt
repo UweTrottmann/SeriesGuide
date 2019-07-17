@@ -235,9 +235,10 @@ class BillingActivity : BaseActivity() {
         //    }
 
         /**
-         * Displays a notification that the subscription has expired. Its action opens [ ].
+         * Displays a notification that the subscription has expired. Its action opens this activity.
          */
-        fun onExpiredNotification(context: Context) {
+        @JvmStatic
+        fun showExpiredNotification(context: Context) {
             val nb = NotificationCompat.Builder(context, SgApp.NOTIFICATION_CHANNEL_ERRORS)
             NotificationSettings.setDefaultsForChannelErrors(context, nb)
 

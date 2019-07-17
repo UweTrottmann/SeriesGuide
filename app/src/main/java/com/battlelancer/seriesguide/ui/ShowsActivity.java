@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.api.Intents;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -248,7 +249,9 @@ public class ShowsActivity extends BaseTopActivity implements
         }
         // Automatically starts checking all access status.
         // Ends connection if activity is destroyed.
-        ViewModelProviders.of(this).get(BillingViewModel.class);
+        BillingViewModel billingViewModel = ViewModelProviders.of(this).get(BillingViewModel.class);
+        billingViewModel.getEntitlementRevokedEvent()
+                .observe(this, aVoid -> BillingActivity.showExpiredNotification(this));
     }
 
     @Override
