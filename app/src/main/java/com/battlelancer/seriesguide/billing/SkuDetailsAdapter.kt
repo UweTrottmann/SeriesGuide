@@ -77,14 +77,14 @@ open class SkuDetailsAdapter : RecyclerView.Adapter<SkuDetailsAdapter.SkuDetails
         private fun onDisabled(enabled: Boolean) {
             if (enabled) {
                 itemView.apply {
-                    TextViewCompat.setTextAppearance(skuTitle, R.style.TextAppearance_Body)
-                    TextViewCompat.setTextAppearance(skuPrice, R.style.TextAppearance_Body)
+                    TextViewCompat.setTextAppearance(skuTitle, R.style.TextAppearance_Body_Bold)
+                    TextViewCompat.setTextAppearance(skuPrice, R.style.TextAppearance_Body_Bold)
                     TextViewCompat.setTextAppearance(skuDescription, R.style.TextAppearance_Body)
                 }
             } else {
                 itemView.apply {
-                    TextViewCompat.setTextAppearance(skuTitle, R.style.TextAppearance_Body_Dim)
-                    TextViewCompat.setTextAppearance(skuPrice, R.style.TextAppearance_Body_Dim)
+                    TextViewCompat.setTextAppearance(skuTitle, R.style.TextAppearance_Body_Bold_Dim)
+                    TextViewCompat.setTextAppearance(skuPrice, R.style.TextAppearance_Body_Bold_Dim)
                     TextViewCompat.setTextAppearance(
                         skuDescription,
                         R.style.TextAppearance_Body_Dim
