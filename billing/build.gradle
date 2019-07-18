@@ -33,7 +33,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
     // Google Play Billing
-    implementation 'com.android.billingclient:billing:2.0.1'
+    implementation 'com.android.billingclient:billing:2.0.2'
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
