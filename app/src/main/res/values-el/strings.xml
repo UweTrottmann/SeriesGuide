@@ -466,6 +466,8 @@
     <string name="billing_action_manage_subscriptions">Διαχείριση συνδρομών</string>
     <string name="billing_action_pass">Αποκτήστε το X Pass</string>
     <string name="billing_price_subscribe">%1$s/χρόνο, δοκιμάστε δωρεάν, ακυρώστε οποιαδήποτε στιγμή μέσω του %2$s</string>
+    <string name="billing_duration_format">%1$s/year</string>
+    <string name="billing_sub_description">Try for free, cancel any time.</string>
     <string name="billing_price_pass">εφάπαξ αγοράς</string>
     <string name="upgrade_description">Ξεκλειδώσετε όλα τα χαρακτηριστικά συμπεριλαμβανομένων των κοινοποιήσεων, θεμάτων και περισσότερες επιλογές widget λιστών. Βοήθησε με να κάνω μελλοντικές ενημερώσεις.</string>
     <string name="upgrade_success">Ευχαριστούμε για την υποστήριξη του SeriesGuide! Έχετε πρόσβαση σε όλα τα χαρακτηριστικά.</string>

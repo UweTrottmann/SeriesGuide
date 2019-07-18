@@ -455,6 +455,8 @@
     <string name="billing_action_manage_subscriptions">구독 관리</string>
     <string name="billing_action_pass">X Pass 구매</string>
     <string name="billing_price_subscribe">1년 사용 요금: %1$s, 무료 체험 가능, %2$s에서 취소 가능</string>
+    <string name="billing_duration_format">%1$s/year</string>
+    <string name="billing_sub_description">Try for free, cancel any time.</string>
     <string name="billing_price_pass">1회 구매로 계속 사용</string>
     <string name="upgrade_description">알림, 테마 및 위젯 옵션을 포함한 모든 기능을 사용할 수 있습니다. 뿐만 아니라 지속적인 개발을 후원할 수 있습니다.</string>
     <string name="upgrade_success">SeriesGuide를 지원해주셔서 감사합니다! 모든 기능을 사용할 수 있습니다.</string>

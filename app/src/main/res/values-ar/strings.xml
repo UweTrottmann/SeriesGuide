@@ -510,6 +510,8 @@
     <string name="billing_action_manage_subscriptions">إدارة الإشتراكات</string>
     <string name="billing_action_pass">أحصل على X Pass</string>
     <string name="billing_price_subscribe">%1$s/سنة، جرب مجاناً، و قم بالإلغاء في أي وقت عبر %2$s</string>
+    <string name="billing_duration_format">%1$s/year</string>
+    <string name="billing_sub_description">Try for free, cancel any time.</string>
     <string name="billing_price_pass">الشراء يكون مرة واحدة</string>
     <string name="upgrade_description">فتح جميع الميزات بما في ذلك التنبيهات والتصميم والمزيد من الميزات. مساعدتي في التحديثات المستقبلية.</string>
     <string name="upgrade_success">شكرا لك لدعم SeriesGuide! . لديك حق الوصول إلى كافة الميزات .</string>

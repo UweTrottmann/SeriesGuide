@@ -466,6 +466,8 @@
     <string name="billing_action_manage_subscriptions">Abonelikleri Yönet</string>
     <string name="billing_action_pass">X Pass alın</string>
     <string name="billing_price_subscribe">%1$s/yıl, ücretsiz dene, %2$s üzerinden istediğin zaman iptal et</string>
+    <string name="billing_duration_format">%1$s/year</string>
+    <string name="billing_sub_description">Try for free, cancel any time.</string>
     <string name="billing_price_pass">tek seferlik ödeme</string>
     <string name="upgrade_description">Bildirimler, temalar, daha fazla widgetlar gibi özellikleri acın ve uygulamayı geliştirmeme yardım edin.</string>
     <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>

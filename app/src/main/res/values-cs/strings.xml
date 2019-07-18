@@ -488,6 +488,8 @@
     <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
     <string name="billing_action_pass">Získejte X Pass</string>
     <string name="billing_price_subscribe">%1$s na rok, vyzkoušejte zdarma, zrušit to můžete kdykoli prostřednictvím %2$s</string>
+    <string name="billing_duration_format">%1$s/year</string>
+    <string name="billing_sub_description">Try for free, cancel any time.</string>
     <string name="billing_price_pass">jednorázový nákup</string>
     <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
     <string name="upgrade_success">Díky za podpoření SeriesGuide! Nyní máte přístup ke všem funkcím.</string>
