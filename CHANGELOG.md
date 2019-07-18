@@ -15,7 +15,8 @@ Version 50
 * 🌟 Introduce Sponsor and Supporter subscriptions so people who can or want to can make a more
   significant contribution. This helps me make future updates.
 * 📝 Rename existing subscription to All Access. Reduced price for new and existing subscribers so
- more people can get access to Cloud.
+  more people can get access to Cloud.
+* 🔧 Move subscriptions to new Google Play billing library.
 * 📝 Latest translations from crowdin.
 
 #### 50-beta2
