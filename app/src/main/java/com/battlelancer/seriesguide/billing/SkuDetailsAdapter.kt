@@ -67,7 +67,7 @@ open class SkuDetailsAdapter : RecyclerView.Adapter<SkuDetailsAdapter.SkuDetails
                     val name = title?.substring(0, title!!.indexOf("("))
                     skuTitle.text = name
                     skuDescription.text = description
-                    skuPrice.text = price
+                    skuPrice.text = context.getString(R.string.billing_duration_format, price)
                     isEnabled = canPurchase
                     onDisabled(canPurchase)
                 }

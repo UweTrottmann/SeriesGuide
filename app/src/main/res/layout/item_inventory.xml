@@ -30,10 +30,11 @@
             android:id="@+id/sku_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Body.Bold"
             app:layout_constraintBottom_toBottomOf="@id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="12,00 €" />
+            tools:text="12,00 €/year" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
