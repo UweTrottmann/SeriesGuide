@@ -136,6 +136,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
     implementation project(':api')
+    implementation project(':billing')
     implementation project(':customtabs')
     implementation project(':tmdb-api')
     implementation project(':widgets')

@@ -466,6 +466,8 @@
     <string name="billing_action_manage_subscriptions">Feliratkozások kezelése</string>
     <string name="billing_action_pass">X Pass beszerzése</string>
     <string name="billing_price_subscribe">%1$s/év, próbálja ki ingyen, bármikor kiléphet a %2$s segítségével</string>
+    <string name="billing_duration_format">%1$s/year</string>
+    <string name="billing_sub_description">Try for free, cancel any time.</string>
     <string name="billing_price_pass">Egyszeri fizetés</string>
     <string name="upgrade_description">Old fel a összes funkciót, beleértve az értesítéseket, témákat és a több widget lista lehetőséget. Segíts, hogy frissíthessem a programot a jövőben is.</string>
     <string name="upgrade_success">Köszönöm a támogatást. Most már hozzáférsz az összes funkcióhoz.</string>

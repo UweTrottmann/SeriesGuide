@@ -466,6 +466,8 @@
     <string name="billing_action_manage_subscriptions">Behandle abonnement</string>
     <string name="billing_action_pass">Få X pass</string>
     <string name="billing_price_subscribe">%1$s/år, prøv gratis, avbryt når som helst gjennom %2$s</string>
+    <string name="billing_duration_format">%1$s/year</string>
+    <string name="billing_sub_description">Try for free, cancel any time.</string>
     <string name="billing_price_pass">engangskjøp</string>
     <string name="upgrade_description">Lås opp alle funksjonene inkludert varslinger, temaer og flere alternativer for modulen. Hjelp meg å lage fremtidige oppdateringer.</string>
     <string name="upgrade_success">Takk for at du støtter SeriesGuide! Du har nå tilgang til alle funksjonene.</string>

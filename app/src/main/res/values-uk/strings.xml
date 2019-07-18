@@ -488,6 +488,8 @@
     <string name="billing_action_manage_subscriptions">Впорядкувати підписки</string>
     <string name="billing_action_pass">Отримати X Pass</string>
     <string name="billing_price_subscribe">%1$s/рік, спробуйте безкоштовно, скасуйте у будь-який час через %2$s</string>
+    <string name="billing_duration_format">%1$s/year</string>
+    <string name="billing_sub_description">Try for free, cancel any time.</string>
     <string name="billing_price_pass">Одноразове замовлення</string>
     <string name="upgrade_description">Розблокуйте усі функції включно зі сповіщеннями, темами і більшою кількістю опцій для віджетів. Допоможіть випускати майбутні оновлення.</string>
     <string name="upgrade_success">Дякую за підтримку SeriesGuide! Тепер ви маєте доступ до всіх функцій.</string>

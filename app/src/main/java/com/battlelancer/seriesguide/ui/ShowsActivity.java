@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
@@ -24,7 +25,7 @@ import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.api.Intents;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.billing.IabHelper;
+import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -47,8 +48,9 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.uwetrottmann.seriesguide.billing.BillingViewModel;
+import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -64,8 +66,6 @@ public class ShowsActivity extends BaseTopActivity implements
     public static final int NOW_RECENTLY_LOADER_ID = 104;
     public static final int NOW_TRAKT_USER_LOADER_ID = 106;
     public static final int NOW_TRAKT_FRIENDS_LOADER_ID = 107;
-
-    private IabHelper billingHelper;
 
     private ShowsTabPageAdapter tabsAdapter;
     private ViewPager viewPager;
@@ -247,8 +247,11 @@ public class ShowsActivity extends BaseTopActivity implements
         if (Utils.hasXpass(this)) {
             return;
         }
-        billingHelper = new IabHelper(this);
-        billingHelper.startSetupAndQueryInventory();
+        // Automatically starts checking all access status.
+        // Ends connection if activity is finished (and was not ended elsewhere already).
+        BillingViewModel billingViewModel = ViewModelProviders.of(this).get(BillingViewModel.class);
+        billingViewModel.getEntitlementRevokedEvent()
+                .observe(this, aVoid -> BillingActivity.showExpiredNotification(this));
     }
 
     @Override
@@ -300,15 +303,6 @@ public class ShowsActivity extends BaseTopActivity implements
         PreferenceManager.getDefaultSharedPreferences(this).edit()
                 .putInt(DisplaySettings.KEY_LAST_ACTIVE_SHOWS_TAB, viewPager.getCurrentItem())
                 .apply();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (billingHelper != null) {
-            billingHelper.dispose();
-            billingHelper = null;
-        }
     }
 
     @Override

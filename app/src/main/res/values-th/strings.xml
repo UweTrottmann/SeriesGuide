@@ -455,6 +455,8 @@
     <string name="billing_action_manage_subscriptions">จัดการการสมัครสมาชิก​</string>
     <string name="billing_action_pass">รับ X Pass</string>
     <string name="billing_price_subscribe">%1$s/ปี, ลองใช้ฟรี, ยกเลิกได้ทุกเวลาผ่าน %2$s</string>
+    <string name="billing_duration_format">%1$s/year</string>
+    <string name="billing_sub_description">Try for free, cancel any time.</string>
     <string name="billing_price_pass">จ่ายครั้งเดียว</string>
     <string name="upgrade_description">ปลดล็อกคุณสมบัติทั้งหมด รวมทั้งการแจ้งเตือน, ธีม และตัวเลือกวิตเจ็ตเพิ่มเติม ช่วยให้เราสร้างการอัปเดตในอนาคต</string>
     <string name="upgrade_success">ขอบคุณสำหรับการสนับสนุน SeriesGuide! คุณสามารถเข้าถึงคุณสมบัติทั้งหมดได้แล้ว</string>
