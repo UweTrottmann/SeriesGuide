@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.billing
 
+import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
@@ -37,10 +39,12 @@ class BillingActivity : BaseActivity() {
     private lateinit var buttonManageSubs: Button
     private lateinit var buttonPass: Button
     private lateinit var textViewHasUpgrade: View
+    private lateinit var textViewBillingError: TextView
 
     private lateinit var billingViewModel: BillingViewModel
     private lateinit var manageSubscriptionUrl: String
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_billing)
@@ -58,6 +62,14 @@ class BillingActivity : BaseActivity() {
                     adapter.setSkuDetailsList(skuDetails)
                 })
             }
+        billingViewModel.errorEvent.observe(this, Observer { message ->
+            message?.let {
+                textViewBillingError.apply {
+                    text = "${getString(R.string.subscription_unavailable)} ($message)"
+                    isGone = false
+                }
+            }
+        })
         // Only use subscription state if unlock app is not installed.
         if (Utils.hasXpass(this)) {
             setWaitMode(false)
@@ -95,6 +107,9 @@ class BillingActivity : BaseActivity() {
         recyclerView.adapter = adapter
 
         textViewHasUpgrade = findViewById(R.id.textViewBillingExisting)
+        textViewBillingError = findViewById<TextView>(R.id.textViewBillingError).apply {
+            isGone = true
+        }
         buttonManageSubs = findViewById<Button>(R.id.buttonBillingManageSubscription).also {
             it.setOnClickListener { v ->
                 Utils.launchWebsite(

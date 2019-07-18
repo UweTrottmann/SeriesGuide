@@ -13,6 +13,7 @@ class BillingViewModel(application: Application) : AndroidViewModel(application)
     val goldStatusLiveData: LiveData<GoldStatus>
     val subsSkuDetailsListLiveData: LiveData<List<AugmentedSkuDetails>>
     val entitlementRevokedEvent: LiveData<Void>
+    val errorEvent: LiveData<String>
 
     private val repository: BillingRepository = BillingRepository.getInstance(application)
 
@@ -21,6 +22,7 @@ class BillingViewModel(application: Application) : AndroidViewModel(application)
         goldStatusLiveData = repository.goldStatusLiveData
         subsSkuDetailsListLiveData = repository.subsSkuDetailsListLiveData
         entitlementRevokedEvent = repository.entitlementRevokedEvent
+        errorEvent = repository.errorEvent
     }
 
     override fun onCleared() {

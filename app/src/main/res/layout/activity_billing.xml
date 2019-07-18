@@ -57,6 +57,15 @@
                     tools:listitem="@layout/item_inventory" />
 
                 <TextView
+                    android:id="@+id/textViewBillingError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:gravity="center_horizontal"
+                    android:textAppearance="@style/TextAppearance.Body.Highlight.Red"
+                    tools:text="@string/subscription_unavailable" />
+
+                <TextView
                     android:id="@+id/textViewBillingSubDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

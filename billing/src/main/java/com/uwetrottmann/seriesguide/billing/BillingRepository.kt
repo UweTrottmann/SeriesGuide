@@ -87,6 +87,9 @@ class BillingRepository(private val applicationContext: Context) {
     /** Triggered when the entitlement was revoked. Use only with one observer at a time. */
     val entitlementRevokedEvent = SingleLiveEvent<Void>()
 
+    /** Triggered if there was an error. Contains an error message to display. */
+    val errorEvent = SingleLiveEvent<String>()
+
     /**
      * Correlated data sources belong inside a repository module so that the rest of
      * the app can have appropriate access to the data it needs. Still, it may be effective to
@@ -222,7 +225,12 @@ class BillingRepository(private val applicationContext: Context) {
                         BillingClient.BillingResponseCode.OK -> {
                             disburseEntitlement(purchase)
                         }
-                        else -> Timber.d("acknowledgeNonConsumablePurchasesAsync response is ${billingResult.debugMessage}")
+                        else -> {
+                            "acknowledgeNonConsumablePurchasesAsync failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
+                                Timber.e(it)
+                                errorEvent.postValue(it)
+                            }
+                        }
                     }
                 }
             }
@@ -306,10 +314,10 @@ class BillingRepository(private val applicationContext: Context) {
                     }
                 }
                 else -> {
-                    val error = "querySkuDetailsAsync failed. " +
-                            "Response code: ${billingResult.responseCode} " +
-                            "Message: ${billingResult.debugMessage}"
-                    Timber.e(error)
+                    "querySkuDetailsAsync failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
+                        Timber.e(it)
+                        errorEvent.postValue(it)
+                    }
                 }
             }
         }
@@ -349,7 +357,12 @@ class BillingRepository(private val applicationContext: Context) {
         when (billingResult.responseCode) {
             BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> connectToPlayBillingService()
             BillingClient.BillingResponseCode.OK -> succeeded = true
-            else -> Timber.w("isSubscriptionSupported() error: ${billingResult.debugMessage}")
+            else -> {
+                "isSubscriptionSupported failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
+                    Timber.e(it)
+                    errorEvent.postValue(it)
+                }
+            }
         }
         return succeeded
     }
@@ -375,8 +388,14 @@ class BillingRepository(private val applicationContext: Context) {
             BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> {
                 connectToPlayBillingService()
             }
+            BillingClient.BillingResponseCode.USER_CANCELED -> {
+                Timber.i("onPurchasesUpdated: User canceled the purchase.")
+            }
             else -> {
-                Timber.i(billingResult.debugMessage)
+                "onPurchasesUpdated failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
+                    Timber.e(it)
+                    errorEvent.postValue(it)
+                }
             }
         }
     }
@@ -394,14 +413,9 @@ class BillingRepository(private val applicationContext: Context) {
                     querySkuDetailsAsync()
                     queryPurchasesAsync()
                 }
-                BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> {
-                    //Some apps may choose to make decisions based on this knowledge.
-                    Timber.d(billingResult.debugMessage)
-                }
                 else -> {
-                    // Do nothing. Someone else will connect it through retry policy.
-                    // May choose to send to server though.
                     Timber.d(billingResult.debugMessage)
+                    errorEvent.postValue("${billingResult.responseCode}: ${billingResult.debugMessage}")
                 }
             }
         }
@@ -418,6 +432,10 @@ class BillingRepository(private val applicationContext: Context) {
         override fun onBillingServiceDisconnected() {
             Timber.d("onBillingServiceDisconnected")
             if (disconnectCount > 3) {
+                "Billing service reconnection failed.".let {
+                    Timber.e(it)
+                    errorEvent.postValue(it)
+                }
                 return // Do not try again. Wait until BillingClient is started again.
             }
             disconnectCount++
