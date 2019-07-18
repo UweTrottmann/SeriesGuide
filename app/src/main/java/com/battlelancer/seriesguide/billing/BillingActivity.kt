@@ -10,7 +10,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.view.isGone
@@ -28,7 +27,6 @@ import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.Utils
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
 import com.uwetrottmann.seriesguide.billing.localdb.AugmentedSkuDetails
-import timber.log.Timber
 
 class BillingActivity : BaseActivity() {
 
@@ -174,83 +172,12 @@ class BillingActivity : BaseActivity() {
         contentContainer.isGone = isActive
     }
 
-    private fun logAndShowAlertDialog(errorResId: Int, message: String) {
-        Timber.e(message)
-
-        AlertDialog.Builder(this)
-            .setMessage(getString(errorResId) + "\n\n" + message)
-            .setPositiveButton(android.R.string.ok, null)
-            .create()
-            .show()
-    }
-
     companion object {
 
-        private const val SOME_STRING = "SURPTk9UQ0FSRUlGWU9VUElSQVRFVEhJUw=="
         private const val PLAY_MANAGE_SUBS_ALL =
             "https://play.google.com/store/account/subscriptions"
         private const val PLAY_MANAGE_SUBS_ONE =
             "$PLAY_MANAGE_SUBS_ALL?package=${BuildConfig.APPLICATION_ID}&sku="
-
-        //    @Nullable
-        //    public static String latestSubscriptionSkuOrNull(@NonNull Inventory inventory) {
-        //        if (inventory.getPurchase(SKU_X_SUB_2017_08) != null) {
-        //            return SKU_X_SUB_2017_08;
-        //        }
-        //        if (inventory.getPurchase(SKU_X_SUB_2016_05) != null) {
-        //            return SKU_X_SUB_2016_05;
-        //        }
-        //        if (inventory.getPurchase(SKU_X_SUB_2014_02) != null) {
-        //            return SKU_X_SUB_2014_02;
-        //        }
-        //        if (inventory.getPurchase(SKU_X_SUB_LEGACY) != null) {
-        //            return SKU_X_SUB_LEGACY;
-        //        }
-        //        return null;
-        //    }
-
-        //    /**
-        //     * Checks if the user is subscribed to X features or has the deprecated X upgrade (so he gets
-        //     * the subscription for life). Also sets the current state through {@link
-        //     * AdvancedSettings#setSupporterState(Context, boolean)}.
-        //     */
-        //    public static boolean checkForSubscription(@NonNull Context context,
-        //            @NonNull Inventory inventory) {
-        //        /*
-        //         * Check for items we own. Notice that for each purchase, we check the
-        //         * developer payload to see if it's correct! See
-        //         * verifyDeveloperPayload().
-        //         */
-        //
-        //        // Does the user have the deprecated X Upgrade in-app purchase? If so unlock all features.
-        //        Purchase premiumPurchase = inventory.getPurchase(SKU_X);
-        //        boolean hasXUpgrade = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
-        //
-        //        // Does the user have an active unlock all subscription?
-        //        String subscriptionSkuOrNull = latestSubscriptionSkuOrNull(inventory);
-        //        boolean isSubscribedToX = subscriptionSkuOrNull != null
-        //                && verifyDeveloperPayload(inventory.getPurchase(subscriptionSkuOrNull));
-        //
-        //        if (hasXUpgrade) {
-        //            Timber.d("User has X SUBSCRIPTION for life.");
-        //        } else {
-        //            Timber.d("User has %s", isSubscribedToX ? "X SUBSCRIPTION" : "NO X SUBSCRIPTION");
-        //        }
-        //
-        //        // notify the user about a change in subscription state
-        //        boolean isSubscribedOld = AdvancedSettings.getLastSupporterState(context);
-        //        boolean isSubscribed = hasXUpgrade || isSubscribedToX;
-        //        if (!isSubscribedOld && isSubscribed) {
-        //            Toast.makeText(context, R.string.upgrade_success, Toast.LENGTH_SHORT).show();
-        //        } else if (isSubscribedOld && !isSubscribed) {
-        //            onExpiredNotification(context);
-        //        }
-        //
-        //        // Save current state until we query again
-        //        AdvancedSettings.setSupporterState(context, isSubscribed);
-        //
-        //        return isSubscribed;
-        //    }
 
         /**
          * Displays a notification that the subscription has expired. Its action opens this activity.
