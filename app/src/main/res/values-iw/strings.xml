@@ -140,7 +140,7 @@
     <string name="action_shows_filter_upcoming">בקרוב</string>
     <string name="action_shows_filter_hidden">מוסתר</string>
     <string name="action_shows_make_all_visible">הצג את כל המוסתרים</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="description_make_all_visible_format">הצג שוב את כל הסדרות המוסתרות (%s)?</string>
     <string name="action_shows_sort">מיון סדרות</string>
     <string name="action_shows_sort_title">שם</string>
     <string name="action_shows_sort_latest_episode">הפרק האחרון</string>
@@ -488,8 +488,8 @@
     <string name="billing_action_manage_subscriptions">נהל הרשמות</string>
     <string name="billing_action_pass">קבל את X Pass</string>
     <string name="billing_price_subscribe">%1$s לשנה, נסה בחינם, בטל בכל עת באמצעות %2$s</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_duration_format">%1$s/שנה</string>
+    <string name="billing_sub_description">הנסיון בחינם, ניתן לבטל בכל זמן שתרצו.</string>
     <string name="billing_price_pass">רכישה חד פעמית</string>
     <string name="upgrade_description">פתח את כל האפשרויות, כולל התראות, ערכות נושא ואפשרויות נוספות בווידג\'ט הרשימה. עזור לי לפתח עדכונים עתידיים.</string>
     <string name="upgrade_success">תודה על תמיכתך ב-SeriesGuide! יש לך גישה לכל האפשרויות.</string>

@@ -488,8 +488,8 @@
     <string name="billing_action_manage_subscriptions">Správa predplatného</string>
     <string name="billing_action_pass">Získať X Pass</string>
     <string name="billing_price_subscribe">%1$s/ročne, vyskúšajte zadarmo, zrušte kedykoľvek prostredníctvom %2$s</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_duration_format">%1$s/rok</string>
+    <string name="billing_sub_description">Zdarma vyskúšajte, zrušte kedykoľvek.</string>
     <string name="billing_price_pass">jednorázová platba</string>
     <string name="upgrade_description">Odomknúť všetky funkcie vrátane upozornení, tém a možností pre miniaplikáciu. Pomôžte mi s budúcimi aktualizáciami.</string>
     <string name="upgrade_success">Ďakujeme za podporu SeriesGuide! Máte prístup ku všetkým funkciám.</string>
