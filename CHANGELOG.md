@@ -9,6 +9,13 @@ Version 50
 ----------
 *(in development)*
 
+#### 50-beta4
+*(2019-07-19)*
+
+* 🌟 Support upgrading subscription to new Sponsor and Supporter tiers.
+* 🔧 Show icon which subscription tier is active.
+* 📝 Latest translations from crowdin.
+
 #### 50-beta3
 *(2019-07-18)*
 
