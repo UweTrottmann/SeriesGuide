@@ -51,6 +51,7 @@ abstract class LocalBillingDb : RoomDatabase() {
 
         private fun buildDatabase(appContext: Context): LocalBillingDb {
             return Room.databaseBuilder(appContext, LocalBillingDb::class.java, DATABASE_NAME)
+                .allowMainThreadQueries() // Gold status detection currently runs on main thread.
                 .fallbackToDestructiveMigration() // Data is cache, so it is OK to delete
                 .build()
         }
