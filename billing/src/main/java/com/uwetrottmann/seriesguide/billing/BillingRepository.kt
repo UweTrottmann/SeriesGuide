@@ -242,7 +242,7 @@ class BillingRepository(private val applicationContext: Context) {
      */
     private fun disburseEntitlement(purchase: Purchase) =
         CoroutineScope(Job() + Dispatchers.IO).launch {
-            when (purchase.sku) {
+            when (val purchaseSku = purchase.sku) {
                 SeriesGuideSku.X_PASS_IN_APP,
                 SeriesGuideSku.X_SUB_LEGACY,
                 SeriesGuideSku.X_SUB_2014_02,
@@ -250,16 +250,32 @@ class BillingRepository(private val applicationContext: Context) {
                 SeriesGuideSku.X_SUB_ALL_ACCESS,
                 SeriesGuideSku.X_SUB_SUPPORTER,
                 SeriesGuideSku.X_SUB_SPONSOR -> {
-                    val isSub = SeriesGuideSku.X_PASS_IN_APP != purchase.sku
-                    val goldStatus = GoldStatus(true, isSub, purchase.sku)
+                    val isSub = SeriesGuideSku.X_PASS_IN_APP != purchaseSku
+
+                    val goldStatus = GoldStatus(true, isSub, purchaseSku)
                     insert(goldStatus)
-                    /* You can only buy all access once. Disable all available subscriptions. */
-                    SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE.forEach { sku ->
-                        localCacheBillingClient.skuDetailsDao()
-                            .insertOrUpdate(sku, goldStatus.mayPurchase())
+
+                    // You can only have one subscription. Prevent re-purchase of active one.
+                    val activeSku = when (purchaseSku) {
+                        SeriesGuideSku.X_SUB_SUPPORTER,
+                        SeriesGuideSku.X_SUB_SPONSOR -> purchaseSku
+                        else -> {
+                            // Show deprecated subscription SKUs and in-app SKU
+                            // as if they were All Access.
+                            SeriesGuideSku.X_SUB_ALL_ACCESS
+                        }
+                    }
+                    localCacheBillingClient.skuDetailsDao()
+                        .insertOrUpdate(activeSku, goldStatus.mayPurchase())
+                    // Allow up- and downgrading to other subscription tiers.
+                    SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE.forEach { otherSku ->
+                        if (otherSku != activeSku) {
+                            localCacheBillingClient.skuDetailsDao()
+                                .insertOrUpdate(otherSku, !goldStatus.mayPurchase())
+                        }
                     }
                 }
-                else -> Timber.e("Sku ${purchase.sku} not recognized.")
+                else -> Timber.e("Sku $purchaseSku not recognized.")
             }
             // Entitlement processed, remove receipt.
             localCacheBillingClient.purchaseDao().delete(purchase)
@@ -328,13 +344,31 @@ class BillingRepository(private val applicationContext: Context) {
      * launch the Google Play Billing flow. The response to this call is returned in
      * [purchasesUpdatedListener].
      */
-    fun launchBillingFlow(activity: Activity, augmentedSkuDetails: AugmentedSkuDetails) =
-        launchBillingFlow(activity, SkuDetails(augmentedSkuDetails.originalJson))
+    fun launchBillingFlow(activity: Activity, augmentedSkuDetails: AugmentedSkuDetails) {
+        val skuDetails = SkuDetails(augmentedSkuDetails.originalJson)
 
-    fun launchBillingFlow(activity: Activity, skuDetails: SkuDetails) {
-        val purchaseParams = BillingFlowParams.newBuilder()
-            .setSkuDetails(skuDetails)
-            .build()
+        // Check if this is a subscription up- or downgrade.
+        val oldSku = localCacheBillingClient.entitlementsDao().getGoldStatus()?.let {
+            if (it.isSub) it.sku else null
+        }
+        val prorationMode = if (
+            oldSku == SeriesGuideSku.X_SUB_SPONSOR
+            || (oldSku == SeriesGuideSku.X_SUB_SUPPORTER && skuDetails.sku == SeriesGuideSku.X_SUB_ALL_ACCESS)
+        ) {
+            // Downgrade immediately, bill new price once renewed.
+            BillingFlowParams.ProrationMode.IMMEDIATE_WITHOUT_PRORATION
+        } else {
+            // Upgrade immediately, credit existing purchase. Or oldSku == null.
+            BillingFlowParams.ProrationMode.IMMEDIATE_WITH_TIME_PRORATION
+        }
+
+        val purchaseParams = BillingFlowParams.newBuilder().apply {
+            setSkuDetails(skuDetails)
+            if (oldSku != null) {
+                setOldSku(oldSku)
+                setReplaceSkusProrationMode(prorationMode)
+            }
+        }.build()
         playStoreBillingClient.launchBillingFlow(activity, purchaseParams)
     }
 
