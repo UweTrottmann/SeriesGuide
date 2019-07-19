@@ -15,15 +15,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/sku_image"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@null"
+            app:layout_constraintBottom_toBottomOf="@id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_check_circle_green_24dp" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/sku_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
             android:textAppearance="@style/TextAppearance.Body.Bold"
             app:layout_constraintBottom_toBottomOf="@id/guideline"
             app:layout_constraintEnd_toStartOf="@+id/sku_price"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/sku_image"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginStart="0dp"
             tools:text="This is a Title placeholder." />
 
         <androidx.appcompat.widget.AppCompatTextView

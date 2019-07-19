@@ -1,8 +1,10 @@
 package com.battlelancer.seriesguide.billing
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isGone
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
@@ -51,6 +53,7 @@ open class SkuDetailsAdapter : RecyclerView.Adapter<SkuDetailsAdapter.SkuDetails
             false
         )
     ) {
+        private val skuImage: View = itemView.findViewById(R.id.sku_image)
         private val skuTitle: TextView = itemView.findViewById(R.id.sku_title)
         private val skuPrice: TextView = itemView.findViewById(R.id.sku_price)
         private val skuDescription: TextView = itemView.findViewById(R.id.sku_description)
@@ -77,12 +80,16 @@ open class SkuDetailsAdapter : RecyclerView.Adapter<SkuDetailsAdapter.SkuDetails
         private fun onDisabled(enabled: Boolean) {
             if (enabled) {
                 itemView.apply {
+                    // Subscription for purchase.
+                    skuImage.isGone = true
                     TextViewCompat.setTextAppearance(skuTitle, R.style.TextAppearance_Body_Bold)
                     TextViewCompat.setTextAppearance(skuPrice, R.style.TextAppearance_Body_Bold)
                     TextViewCompat.setTextAppearance(skuDescription, R.style.TextAppearance_Body)
                 }
             } else {
                 itemView.apply {
+                    // Subscription is active.
+                    skuImage.isGone = false
                     TextViewCompat.setTextAppearance(skuTitle, R.style.TextAppearance_Body_Bold_Dim)
                     TextViewCompat.setTextAppearance(skuPrice, R.style.TextAppearance_Body_Bold_Dim)
                     TextViewCompat.setTextAppearance(
