@@ -67,7 +67,15 @@ open class SkuDetailsAdapter : RecyclerView.Adapter<SkuDetailsAdapter.SkuDetails
         fun bind(item: AugmentedSkuDetails?) {
             item?.apply {
                 itemView.apply {
-                    val name = title?.substring(0, title!!.indexOf("("))
+                    val name = title?.let {
+                        // In most cases subscription title is followed by app name in (), remove it.
+                        val indexOfAppName = it.indexOf("(")
+                        if (indexOfAppName != -1) {
+                            it.substring(0, indexOfAppName)
+                        } else {
+                            it
+                        }
+                    }
                     skuTitle.text = name
                     skuDescription.text = description
                     skuPrice.text = context.getString(R.string.billing_duration_format, price)
