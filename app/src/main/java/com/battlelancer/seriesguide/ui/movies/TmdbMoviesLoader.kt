@@ -50,12 +50,13 @@ class TmdbMoviesLoader(
 
     override fun loadInBackground(): Result {
         val languageCode = DisplaySettings.getMoviesLanguage(context)
+        val regionCode = DisplaySettings.getMoviesRegion(context)
 
         val response: Response<MovieResultsPage>
         var action: String? = null
         try {
             if (query.isNullOrEmpty()) {
-                val pair = buildMovieListCall(languageCode)
+                val pair = buildMovieListCall(languageCode, regionCode)
                 action = pair.first
                 response = pair.second.execute()
             } else {
@@ -65,8 +66,8 @@ class TmdbMoviesLoader(
                         query,
                         null,
                         languageCode,
+                        regionCode,
                         false,
-                        null,
                         null,
                         null
                     ).execute()
@@ -89,14 +90,16 @@ class TmdbMoviesLoader(
         }
     }
 
-    private fun buildMovieListCall(languageCode: String?): Pair<String, Call<MovieResultsPage>> {
-        val regionCode = DisplaySettings.getMoviesRegion(context)
+    private fun buildMovieListCall(
+        languageCode: String?,
+        regionCode: String?
+    ): Pair<String, Call<MovieResultsPage>> {
         val action: String
         val call: Call<MovieResultsPage>
         when (link) {
             MoviesDiscoverLink.POPULAR -> {
                 action = "get popular movies"
-                call = tmdb.moviesService().popular(null, languageCode)
+                call = tmdb.moviesService().popular(null, languageCode, regionCode)
             }
             MoviesDiscoverLink.DIGITAL -> {
                 action = "get movie digital releases"
