@@ -4,7 +4,7 @@ import androidx.annotation.StringRes;
 import androidx.collection.SparseArrayCompat;
 import com.battlelancer.seriesguide.R;
 
-enum MoviesDiscoverLink {
+public enum MoviesDiscoverLink {
     IN_THEATERS(0, R.string.movies_in_theatres),
     POPULAR(1, R.string.title_popular),
     DIGITAL(2, R.string.title_digital_releases),
