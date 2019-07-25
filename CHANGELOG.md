@@ -18,6 +18,7 @@ Version 50
   release date depending on the selected region. Preferably the theatrical one.
 * 🔨 Correctly detect active subscription after restarting the app.
 * 🔨 Do not crash if subscription title can not be parsed.
+* 📝 Distribute as Android App Bundle. This can not be sideloaded, use the official APK from the website!
 * 📝 Latest translations from crowdin.
 
 #### 50-beta4
