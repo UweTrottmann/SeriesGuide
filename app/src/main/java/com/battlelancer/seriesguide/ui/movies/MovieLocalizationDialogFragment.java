@@ -31,7 +31,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * A dialog displaying a list of languages and regions to choose from, posting a {@link
- * LocalizationChangedEvent} if a language or region different from the given ones was chosen.
+ * LocalizationChangedEvent} once the dialog is dismissed (even if language or region
+ * have not changed).
  */
 public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
 
