@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.text.format.DateUtils
 import androidx.core.content.edit
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.TmdbSettings
 import com.battlelancer.seriesguide.ui.movies.MovieTools
 import com.battlelancer.seriesguide.util.Errors
@@ -12,9 +13,11 @@ import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.services.ConfigurationService
 import timber.log.Timber
 
-class TmdbSync internal constructor(private val context: Context,
-        private val configurationService: ConfigurationService,
-        private val movieTools: MovieTools) {
+class TmdbSync internal constructor(
+    private val context: Context,
+    private val configurationService: ConfigurationService,
+    private val movieTools: MovieTools
+) {
 
     /**
      * Downloads and stores the latest image url configuration from themoviedb.org.
@@ -52,8 +55,11 @@ class TmdbSync internal constructor(private val context: Context,
         val updatedBefore = currentTimeMillis - UPDATED_BEFORE_DAYS
         val updatedBeforeOther = currentTimeMillis - UPDATED_BEFORE_HALF_YEAR
         val movies = SgRoomDatabase.getInstance(context).movieHelper()
-                .getMoviesToUpdate(releasedAfter, updatedBefore, updatedBeforeOther)
+            .getMoviesToUpdate(releasedAfter, updatedBefore, updatedBeforeOther)
         Timber.d("Updating %d movie(s)...", movies.size)
+
+        val languageCode = DisplaySettings.getMoviesLanguage(context)
+        val regionCode = DisplaySettings.getMoviesRegion(context)
 
         var result = true
         for (movie in movies) {
@@ -65,7 +71,9 @@ class TmdbSync internal constructor(private val context: Context,
             }
 
             // try loading details from tmdb
-            val details = movieTools.getMovieDetails(movie.tmdbId, false)
+            val details = movieTools.getMovieDetails(
+                languageCode, regionCode, movie.tmdbId, false
+            )
             if (details.tmdbMovie() != null) {
                 // update local database
                 movieTools.updateMovie(details, movie.tmdbId)

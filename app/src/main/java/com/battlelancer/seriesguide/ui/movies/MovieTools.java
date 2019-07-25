@@ -20,7 +20,9 @@ import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.tmdb2.entities.AppendToResponse;
 import com.uwetrottmann.tmdb2.entities.Movie;
+import com.uwetrottmann.tmdb2.enumerations.AppendToResponseItem;
 import com.uwetrottmann.tmdb2.services.MoviesService;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.entities.SearchResult;
@@ -66,6 +68,7 @@ public class MovieTools {
     private final Lazy<MoviesService> tmdbMovies;
     private final Lazy<Movies> traktMovies;
     private final Lazy<Search> traktSearch;
+    private final MovieTools2 movieTools2;
 
     @Inject
     public MovieTools(
@@ -78,6 +81,7 @@ public class MovieTools {
         this.tmdbMovies = tmdbMovies;
         this.traktMovies = traktMovies;
         this.traktSearch = traktSearch;
+        this.movieTools2 = new MovieTools2();
     }
 
     /**
@@ -357,6 +361,7 @@ public class MovieTools {
         }
 
         String languageCode = DisplaySettings.getMoviesLanguage(context);
+        String regionCode = DisplaySettings.getMoviesRegion(context);
         List<MovieDetails> movies = new LinkedList<>();
 
         // loop through ids
@@ -368,7 +373,7 @@ public class MovieTools {
             }
 
             // download movie data
-            MovieDetails movieDetails = getMovieDetails(languageCode, tmdbId, false);
+            MovieDetails movieDetails = getMovieDetails(languageCode, regionCode, tmdbId, false);
             if (movieDetails.tmdbMovie() == null) {
                 // skip if minimal values failed to load
                 Timber.d("addMovies: downloaded movie %s incomplete, skipping", tmdbId);
@@ -399,20 +404,26 @@ public class MovieTools {
     }
 
     /**
-     * Download movie data from TMDB (and trakt) using the {@link DisplaySettings#getMoviesLanguage(Context)}.
+     * Download movie data from TMDB (and trakt) using
+     * {@link DisplaySettings#getMoviesLanguage(Context)}
+     * and {@link DisplaySettings#getMoviesRegion(Context)}.
      *
      * @param getTraktRating Rating from TMDB is always fetched. Fetching trakt rating involves
      * looking up the trakt id first, so skip if not necessary.
      */
     public MovieDetails getMovieDetails(int movieTmdbId, boolean getTraktRating) {
         String languageCode = DisplaySettings.getMoviesLanguage(context);
-        return getMovieDetails(languageCode, movieTmdbId, getTraktRating);
+        String regionCode = DisplaySettings.getMoviesRegion(context);
+        return getMovieDetails(languageCode, regionCode, movieTmdbId, getTraktRating);
     }
 
     /**
-     * Download movie data from trakt and TMDb.
+     * Download movie data from TMDB (and trakt).
+     *
+     * @param getTraktRating Rating from TMDB is always fetched. Fetching trakt rating involves
+     * looking up the trakt id first, so skip if not necessary.
      */
-    private MovieDetails getMovieDetails(String languageCode, int movieTmdbId,
+    public MovieDetails getMovieDetails(String languageCode, String regionCode, int movieTmdbId,
             boolean getTraktRating) {
         MovieDetails details = new MovieDetails();
 
@@ -425,7 +436,7 @@ public class MovieTools {
         }
 
         // load summary from tmdb
-        details.tmdbMovie(loadSummaryFromTmdb(languageCode, movieTmdbId));
+        details.tmdbMovie(loadSummaryFromTmdb(languageCode, regionCode, movieTmdbId));
 
         return details;
     }
@@ -446,41 +457,56 @@ public class MovieTools {
     }
 
     @Nullable
-    private com.uwetrottmann.tmdb2.entities.Movie loadSummaryFromTmdb(String languageCode,
-            int movieTmdbId) {
+    private com.uwetrottmann.tmdb2.entities.Movie loadSummaryFromTmdb(
+            @Nullable String languageCode,
+            String regionCode,
+            int movieTmdbId
+    ) {
         // try to get local movie summary
-        Movie movie = getMovieSummary("get local movie summary", languageCode, movieTmdbId);
+        Movie movie = getMovieSummary("get local movie summary",
+                languageCode, movieTmdbId, true);
         if (movie != null && !TextUtils.isEmpty(movie.overview)) {
+            movieTools2.updateReleaseDateForRegion(movie, movie.release_dates, regionCode);
             return movie;
         }
 
         // fall back to default language if TMDb has no localized text
-        movie = getMovieSummary("get default movie summary", null, movieTmdbId);
-        if (movie != null) {
+        Movie movieFallback = getMovieSummary("get default movie summary",
+                null, movieTmdbId, false);
+        if (movieFallback != null) {
             // add note about non-translated or non-existing overview
-            String untranslatedOverview = movie.overview;
-            movie.overview = context.getString(R.string.no_translation,
+            String untranslatedOverview = movieFallback.overview;
+            movieFallback.overview = context.getString(R.string.no_translation,
                     LanguageTools.getMovieLanguageStringFor(context, languageCode),
                     context.getString(R.string.tmdb));
             if (!TextUtils.isEmpty(untranslatedOverview)) {
-                movie.overview += "\n\n" + untranslatedOverview;
+                movieFallback.overview += "\n\n" + untranslatedOverview;
+            }
+            if (movie != null) {
+                movieTools2.updateReleaseDateForRegion(movie, movie.release_dates, regionCode);
             }
         }
-        return movie;
+        return movieFallback;
     }
 
     @Nullable
     public Movie getMovieSummary(int movieTmdbId) {
         String languageCode = DisplaySettings.getMoviesLanguage(context);
-        return getMovieSummary("get local movie summary", languageCode, movieTmdbId);
+        return getMovieSummary("get local movie summary", languageCode, movieTmdbId, false);
     }
 
     @Nullable
     private Movie getMovieSummary(@NonNull String action, @Nullable String language,
-            int movieTmdbId) {
+            int movieTmdbId, boolean includeReleaseDates) {
         try {
             Response<Movie> response = tmdbMovies.get()
-                    .summary(movieTmdbId, language, null)
+                    .summary(
+                            movieTmdbId,
+                            language,
+                            includeReleaseDates
+                                    ? new AppendToResponse(AppendToResponseItem.RELEASE_DATES)
+                                    : null
+                    )
                     .execute();
             if (response.isSuccessful()) {
                 return response.body();
