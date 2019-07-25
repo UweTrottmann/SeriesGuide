@@ -46,8 +46,11 @@ public class TraktSync {
             return SgSyncAdapter.UpdateResult.INCOMPLETE;
         }
         LastActivities lastActivity = getLastActivity();
-        if (lastActivity == null) {
-            // trakt is likely offline or busy, try later
+        if (lastActivity == null
+                || lastActivity.episodes == null
+                || lastActivity.shows == null
+                || lastActivity.movies == null) {
+            // trakt is offline or busy, or there are server errors, try later.
             progress.recordError();
             Timber.e("performTraktSync: last activity download failed");
             return SgSyncAdapter.UpdateResult.INCOMPLETE;
