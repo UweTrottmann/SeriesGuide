@@ -9,6 +9,17 @@ Version 50
 ----------
 *(in development)*
 
+#### 50-beta5
+*(2019-07-25)*
+
+* 🔧 The list of popular movies and movie search display release dates depending on the selected
+  region.
+* 🔧 The movie watchlist, collection, watched tab and the details view will start to display the 
+  release date depending on the selected region. Preferably the theatrical one.
+* 🔨 Correctly detect active subscription after restarting the app.
+* 🔨 Do not crash if subscription title can not be parsed.
+* 📝 Latest translations from crowdin.
+
 #### 50-beta4
 *(2019-07-19)*
 
