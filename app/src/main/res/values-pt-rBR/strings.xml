@@ -219,7 +219,7 @@
     <string name="title_popular">Popular</string>
     <string name="title_digital_releases">Lançamentos digitais</string>
     <string name="title_disc_releases">Lançamentos em disco</string>
-    <string name="movies_in_theatres">No cinema</string>
+    <string name="movies_in_theatres">Nos cinemas</string>
     <string name="movies_collection">Coleção</string>
     <string name="movies_watchlist">Lista</string>
     <string name="movies_watched">Assistido</string>
@@ -280,7 +280,7 @@
     <string name="hexagon_remove_account_confirmation">Isto apagará suas séries, listas e filmes do SeriesGuide Cloud</string>
     <string name="hexagon_api_queued">Enviando ao SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Desconectado do SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Erro ao Fazer Login com o Google (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Enviando ao trakt.</string>
     <string name="checkin_success_trakt">Feito check-in de %s no trakt.</string>
@@ -290,8 +290,8 @@
     <string name="traktcheckin_wait">Vou esperar</string>
     <string name="trakt_success">Enviado ao trakt.</string>
     <string name="trakt_error_credentials">Alguma coisa deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
-    <string name="trakt_error_not_exists">(Ainda) Não disponível no trakt.. Tente novamente mais tarde.</string>
-    <string name="trakt_notice_not_exists">Não pode (ainda) ser rastreado com trakt.</string>
+    <string name="trakt_error_not_exists">Não disponível (ainda) no trakt. Tente novamente mais tarde.</string>
+    <string name="trakt_notice_not_exists">Não pode (ainda) ser rastreado com trakt</string>
     <!-- Connect trakt -->
     <string name="trakt_account">Conta trakt</string>
     <string name="connect_trakt">Conectar trakt</string>
@@ -310,7 +310,7 @@
     <string name="hate">Horrível :(</string>
     <string name="rating2">Péssimo</string>
     <string name="rating3">Ruim</string>
-    <string name="rating4">Medíocre</string>
+    <string name="rating4">Pobre</string>
     <string name="rating5">Mais ou menos</string>
     <string name="rating6">Razoável</string>
     <string name="rating7">Bom</string>
@@ -346,7 +346,7 @@
     <string name="pref_language">Idioma preferido do conteúdo</string>
     <string name="pref_language_fallback">Idioma alternativo</string>
     <string name="pref_updatewifionly">Imagens apenas via Wi-Fi</string>
-    <string name="pref_updatewifionlysummary">Para reduzir custos de dados, não baixará através de redes móveis ou redes limitadas</string>
+    <string name="pref_updatewifionlysummary">Para reduzir o consumo de dados, não baixar através de redes móveis ou redes limitadas</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d dia antes</item>
         <item quantity="other">%d dias antes</item>
@@ -361,9 +361,9 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Política de Privacidade</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="licence_tvdb">Este app usa dados e imagens do TheTVDB licenciado sob uma licença Creative Commons.</string>
     <string name="licence_themoviedb">Este produto usa a API TMDb mas não é endossado ou certificado pelo TMDb.</string>
-    <string name="licence_trakt">Este app usa dados e imagens por trakt.</string>
+    <string name="licence_trakt">Este app usa dados e imagens do trakt.</string>
     <string name="about_open_source">SeriesGuide foi construído usando um software de código aberto.</string>
     <string name="licences_and_credits">Licenças e créditos</string>
     <!-- Sort -->
@@ -372,7 +372,7 @@
     <!-- Sort orders -->
     <string name="sort_order_latest_first">Mais recentes primeiro</string>
     <string name="sort_order_oldest_first">Mais antigos primeiro</string>
-    <string name="sort_order_unwatched_first">Não vistos primeiro</string>
+    <string name="sort_order_unwatched_first">Não assistidos primeiro</string>
     <string name="sort_order_alphabetical">A - Z</string>
     <string name="sort_order_top_rated_first">Melhor classificado</string>
     <string name="sort_order_latest_first_dvd">Mais recentes primeiro (DVD)</string>
@@ -432,7 +432,7 @@
     <string name="upcoming_episodes">Novos episódios estão chegando</string>
     <string name="upcoming_episodes_number">%s novos episódios</string>
     <string name="more">e outros %d</string>
-    <string name="upcoming_display">Selecione para mostrar próximas exibições</string>
+    <string name="upcoming_display">Selecione para mostrar próximas séries</string>
     <string name="pref_notifications">Notificações</string>
     <string name="pref_notificationssummary">Notificar sobre novos episódios</string>
     <string name="pref_ringtone">Toque</string>
@@ -461,9 +461,9 @@
     <string name="dashclock_pref_upcoming_threshold">Mostrar próximos episódios&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Só para quem desbloqueou o app</string>
-    <string name="action_upgrade">Desbloquear recursos</string>
+    <string name="action_upgrade">Desbloqueie todos os recursos</string>
     <string name="billing_action_subscribe">Assinar</string>
-    <string name="billing_action_manage_subscriptions">Gerenciar inscrições</string>
+    <string name="billing_action_manage_subscriptions">Gerenciar assinaturas</string>
     <string name="billing_action_pass">Adquira o X Pass</string>
     <string name="billing_price_subscribe">%1$s/ano, teste gratuitamente, cancele a qualquer momento até %2$s</string>
     <string name="billing_duration_format">%1$s/ano</string>
@@ -477,7 +477,7 @@
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in">Entre com sua conta da Amazon!</string>
     <string name="subscription_unavailable">A assinatura não está disponível no momento</string>
-    <string name="subscription_failed">Compra não concluída.</string>
+    <string name="subscription_failed">Compra não concluída</string>
     <string name="pass_unavailable">X Pass não está disponível no momento.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Personalizar extensões</string>
