@@ -9,7 +9,6 @@ import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -20,11 +19,9 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.collection.SparseArrayCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.isGone
 import androidx.core.widget.NestedScrollView
@@ -42,7 +39,6 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.extensions.ActionsHelper
 import com.battlelancer.seriesguide.extensions.ExtensionManager
 import com.battlelancer.seriesguide.extensions.MovieActionsContract
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.TmdbSettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog
@@ -54,7 +50,6 @@ import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
-import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.people.MovieCreditsLoader
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
 import com.battlelancer.seriesguide.util.LanguageTools
@@ -154,7 +149,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     private var movieDetails: MovieDetails? = MovieDetails()
     private var movieTitle: String? = null
     private var trailer: Videos.Video? = null
-    private var languageCode: String? = null
 
     private val handler = Handler()
     private var paletteAsyncTask: AsyncTask<Bitmap, Void, Palette>? = null
@@ -188,7 +182,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         buttonMovieLanguage.isGone = true
         ViewTools.setVectorIconLeft(theme, buttonMovieLanguage, R.drawable.ic_language_white_24dp)
         CheatSheet.setup(buttonMovieLanguage, R.string.pref_language)
-        buttonMovieLanguage.setOnClickListener { displayLanguageSettings() }
+        buttonMovieLanguage.setOnClickListener {
+            MovieLocalizationDialogFragment.show(fragmentManager)
+        }
 
         // comments button
         buttonMovieComments.isGone = true
@@ -222,7 +218,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         args.putInt(ARG_TMDB_ID, tmdbId)
         LoaderManager.getInstance(this).apply {
             initLoader(MovieDetailsActivity.LOADER_ID_MOVIE, args, movieLoaderCallbacks)
-            initLoader<Videos.Video>(
+            initLoader(
                 MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args, trailerLoaderCallbacks
             )
             initLoader(MovieDetailsActivity.LOADER_ID_MOVIE_CREDITS, args, creditsLoaderCallbacks)
@@ -465,7 +461,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // language button
         buttonMovieLanguage.also {
             val languageData = LanguageTools.getMovieLanguageData(context)
-            if (languageData != null) languageCode = languageData.languageCode
             it.text = languageData?.languageString
             it.isGone = false
         }
@@ -649,29 +644,14 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         buttonMovieStreamingSearch.isEnabled = enabled
     }
 
-    private fun displayLanguageSettings() {
-        LanguageChoiceDialogFragment.show(
-            fragmentManager!!, R.array.languageCodesMovies, languageCode, "movieLanguageDialog"
-        )
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun handleLanguageEvent(event: LanguageChoiceDialogFragment.LanguageChangedEvent) {
-        if (!AndroidUtils.isNetworkConnected(context)) {
-            Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show()
-            return
-        }
-
-        PreferenceManager.getDefaultSharedPreferences(context).edit {
-            putString(DisplaySettings.KEY_MOVIES_LANGUAGE, event.selectedLanguageCode)
-        }
-
+    fun handleLanguageEvent(@Suppress("UNUSED_PARAMETER") event: MovieLocalizationDialogFragment.LocalizationChangedEvent) {
         // reload movie details and trailers (but not cast/crew info which is not language dependent)
         restartMovieLoader()
         val args = Bundle().apply {
             putInt(ARG_TMDB_ID, tmdbId)
         }
-        LoaderManager.getInstance(this).restartLoader<Videos.Video>(
+        LoaderManager.getInstance(this).restartLoader(
             MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args, trailerLoaderCallbacks
         )
     }
