@@ -42,6 +42,7 @@ abstract class LocalBillingDb : RoomDatabase() {
         private var INSTANCE: LocalBillingDb? = null
         private const val DATABASE_NAME = "purchase_db"
 
+        @JvmStatic
         fun getInstance(context: Context): LocalBillingDb =
             INSTANCE ?: synchronized(this) {
                 INSTANCE ?: buildDatabase(context.applicationContext).also {

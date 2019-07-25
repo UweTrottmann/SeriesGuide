@@ -35,8 +35,8 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.billing.BillingRepository;
 import com.uwetrottmann.seriesguide.billing.localdb.GoldStatus;
+import com.uwetrottmann.seriesguide.billing.localdb.LocalBillingDb;
 import java.io.File;
 import timber.log.Timber;
 
@@ -85,8 +85,8 @@ public class Utils {
             if (hasXpass(context)) {
                 return true;
             } else {
-                GoldStatus goldStatus = BillingRepository.getInstance(context)
-                        .getGoldStatusLiveData().getValue();
+                GoldStatus goldStatus = LocalBillingDb.getInstance(context).entitlementsDao()
+                        .getGoldStatus();
                 return goldStatus != null && goldStatus.getEntitled();
             }
         }
