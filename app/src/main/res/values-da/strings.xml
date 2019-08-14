@@ -137,8 +137,8 @@
     <string name="action_shows_filter_unwatched">Ikke set</string>
     <string name="action_shows_filter_upcoming">Kommende</string>
     <string name="action_shows_filter_hidden">Skjult</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="action_shows_make_all_visible">Gør alle skjulte synlige</string>
+    <string name="description_make_all_visible_format">Gør alle skjulte serier (%s) synlige igen?</string>
     <string name="action_shows_sort">Sortér serier</string>
     <string name="action_shows_sort_title">Titel</string>
     <string name="action_shows_sort_latest_episode">Seneste episode</string>
@@ -441,8 +441,8 @@
     <string name="pref_notifications_treshold">Meddelelsesfrekvens</string>
     <string name="pref_notifications_select_shows">Vælg serier</string>
     <string name="pref_notifications_select_shows_summary">Serier med episodemeddelelser slået til (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Ignorér skjulte serier</string>
+    <string name="pref_notifications_hidden_summary">Selv hvis beskeder er aktiveret, giv ikke besked om skjulte serier</string>
     <string name="pref_notification_channel_errors">Fejl</string>
     <!-- List Widget -->
     <string name="hide_watched">Skjul sete episoder</string>
@@ -466,8 +466,8 @@
     <string name="billing_action_manage_subscriptions">Administrer abonnementer</string>
     <string name="billing_action_pass">Få X Pass</string>
     <string name="billing_price_subscribe">%1$s/år, prøv gratis, afmeld når som helst via %2$s</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_duration_format">%1$s/år</string>
+    <string name="billing_sub_description">Prøv gratis, opsig når som helst.</string>
     <string name="billing_price_pass">engangskøb</string>
     <string name="upgrade_description">Oplås alle funktioner, herunder meddelelser, temaer og flere widget-indstillinger. Hjælp os med at udvikle fremtidige opdateringer.</string>
     <string name="upgrade_success">Tak for din støtte til SeriesGuide! Du har nu adgang til alle funktioner.</string>

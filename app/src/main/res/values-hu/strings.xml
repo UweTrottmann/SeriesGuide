@@ -137,8 +137,8 @@
     <string name="action_shows_filter_unwatched">Nem látott</string>
     <string name="action_shows_filter_upcoming">Következő</string>
     <string name="action_shows_filter_hidden">Rejtett</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="action_shows_make_all_visible">Elrejtett szöveg mutatása</string>
+    <string name="description_make_all_visible_format">Az összes elrejtett sorozat (%s) mutatása?</string>
     <string name="action_shows_sort">Sorozatok rendezése</string>
     <string name="action_shows_sort_title">Cím</string>
     <string name="action_shows_sort_latest_episode">Legújabb epizód</string>
@@ -441,8 +441,8 @@
     <string name="pref_notifications_treshold">Mikor értesítsen</string>
     <string name="pref_notifications_select_shows">Sorozatok kiválasztása</string>
     <string name="pref_notifications_select_shows_summary">Sorozatok, melyek értesítései engedélyezve vannak (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Elrejtett sorozatok mellőzése</string>
+    <string name="pref_notifications_hidden_summary">Még ha be is vannak kapcsolva az értesítések, ne értesítsen a rejtett sorozatokról</string>
     <string name="pref_notification_channel_errors">Hibák</string>
     <!-- List Widget -->
     <string name="hide_watched">Megnézett epizódok elrejtése</string>
@@ -466,8 +466,8 @@
     <string name="billing_action_manage_subscriptions">Feliratkozások kezelése</string>
     <string name="billing_action_pass">X Pass beszerzése</string>
     <string name="billing_price_subscribe">%1$s/év, próbálja ki ingyen, bármikor kiléphet a %2$s segítségével</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_duration_format">%1$s/év</string>
+    <string name="billing_sub_description">Próbáld ki ingyen, lépj ki bármikor.</string>
     <string name="billing_price_pass">Egyszeri fizetés</string>
     <string name="upgrade_description">Old fel a összes funkciót, beleértve az értesítéseket, témákat és a több widget lista lehetőséget. Segíts, hogy frissíthessem a programot a jövőben is.</string>
     <string name="upgrade_success">Köszönöm a támogatást. Most már hozzáférsz az összes funkcióhoz.</string>
