@@ -7,7 +7,20 @@ All dates are in the European Central timezone.
 
 Version 50
 ----------
-*(in development)*
+*(2019-08-16)*
+
+* 🌟 Add Sponsor and Supporter subscriptions. If you can or want to you can now make a more
+  significant contribution to help me make future updates.
+* 📝 Existing subscription is now All Access. Reduced price (for existing subscribers, too) so
+  more people can get access to Cloud.
+* 🔧 Add option to turn off infinite calendar.
+* 🔧 Movie release times setting also affects popular, search. Watchlist, collection, watched and
+  details views will start using it.
+
+#### 50
+*(2019-08-14)*
+
+* 📝 Latest translations from crowdin.
 
 #### 50-beta5
 *(2019-07-25)*
