@@ -12,7 +12,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -87,22 +86,23 @@ public class ExtensionManager {
     private static ExtensionManager _instance;
 
     /**
-     * Ensure that {@link #loadSubscriptions(Context)} was called to set up the manager.
+     * When first used {@link #checkEnabledExtensions(Context)} is called to set up the manager.
      */
-    public static synchronized ExtensionManager get() {
+    public static synchronized ExtensionManager get(Context context) {
         if (_instance == null) {
-            _instance = new ExtensionManager();
+            _instance = new ExtensionManager(context.getApplicationContext());
         }
         return _instance;
     }
 
-    private ExtensionManager() {
+    private ExtensionManager(Context context) {
+        checkEnabledExtensions(context);
     }
 
     /**
      * Queries the {@link android.content.pm.PackageManager} for any installed {@link
      * com.battlelancer.seriesguide.api.SeriesGuideExtension} extensions. Their info is extracted
-     * into {@link com.battlelancer.seriesguide.extensions.ExtensionManager.Extension} objects.
+     * into {@link Extension} objects.
      */
     @NonNull
     public List<Extension> queryAllAvailableExtensions(Context context) {
@@ -162,7 +162,7 @@ public class ExtensionManager {
      * Checks if all extensions are still installed, re-subscribes to those that are in case one was
      * updated, removes those unavailable.
      */
-    public synchronized void checkEnabledExtensions(Context context) {
+    private synchronized void checkEnabledExtensions(Context context) {
         // make a copy of enabled extensions
         List<ComponentName> enabledExtensions = getEnabledExtensions(context);
 
@@ -198,7 +198,7 @@ public class ExtensionManager {
      * Compares the list of currently enabled extensions with the given list and enables added
      * extensions and disables removed extensions.
      */
-    public synchronized void setEnabledExtensions(Context context,
+    synchronized void setEnabledExtensions(Context context,
             @NonNull List<ComponentName> extensions) {
         Set<ComponentName> extensionsToEnable = new HashSet<>(extensions);
         boolean isChanged = false;
@@ -235,13 +235,14 @@ public class ExtensionManager {
      * Returns a copy of the list of currently enabled extensions in the order the user previously
      * determined.
      */
-    public synchronized List<ComponentName> getEnabledExtensions(Context context) {
+    synchronized List<ComponentName> getEnabledExtensions(Context context) {
         return new ArrayList<>(enabledExtensions(context));
     }
 
     private void enableExtension(Context context, ComponentName extension) {
         if (extension == null) {
             Timber.e("enableExtension: empty extension");
+            return;
         }
 
         Map<ComponentName, String> subscriptions = subscriptions(context);
@@ -304,7 +305,7 @@ public class ExtensionManager {
      * Returns the currently available {@link com.battlelancer.seriesguide.api.Action} list for the
      * given episode, identified through its TVDb id. Sorted in the order determined by the user.
      */
-    public synchronized List<Action> getLatestEpisodeActions(Context context, int episodeTvdbId) {
+    synchronized List<Action> getLatestEpisodeActions(Context context, int episodeTvdbId) {
         Map<ComponentName, Action> actionMap = sEpisodeActionsCache.get(episodeTvdbId);
         return actionListFrom(context, actionMap);
     }
@@ -335,7 +336,7 @@ public class ExtensionManager {
     /**
      * Asks all enabled extensions to publish an action for the given episode.
      */
-    public synchronized void requestEpisodeActions(Context context, Episode episode) {
+    synchronized void requestEpisodeActions(Context context, Episode episode) {
         for (ComponentName extension : subscriptions(context).keySet()) {
             requestEpisodeAction(context, extension, episode);
         }
@@ -426,6 +427,7 @@ public class ExtensionManager {
             }
             // store action for this entity
             ComponentName extension = tokens.get(token);
+            //noinspection ConstantConditions Should never be null if token exists.
             actionMap.put(extension, action);
         }
 
@@ -468,6 +470,10 @@ public class ExtensionManager {
             }
             String[] arr = subscription.split("\\|", 2);
             ComponentName extension = ComponentName.unflattenFromString(arr[0]);
+            if (extension == null) {
+                Timber.e("Failed to restore subscription: %s", subscription);
+                continue;
+            }
             String token = arr[1];
             enabledExtensions.add(extension);
             subscriptions.put(extension, token);
@@ -514,19 +520,11 @@ public class ExtensionManager {
 
     /**
      * Removes all currently cached {@link com.battlelancer.seriesguide.api.Action} objects for all
-     * enabled {@linkplain com.battlelancer.seriesguide.extensions.ExtensionManager.Extension}s.
+     * enabled {@linkplain Extension}s.
      * Call this e.g. after going into an extensions settings activity.
      */
-    public synchronized void clearActionsCache() {
+    synchronized void clearActionsCache() {
         sEpisodeActionsCache.evictAll();
         sMovieActionsCache.evictAll();
-    }
-
-    public class Extension {
-        public Drawable icon;
-        public String label;
-        public ComponentName componentName;
-        public String description;
-        public ComponentName settingsActivity;
     }
 }

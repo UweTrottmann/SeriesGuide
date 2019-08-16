@@ -477,6 +477,8 @@
     <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
     <string name="billing_action_pass">Купи X Pass</string>
     <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+    <string name="billing_duration_format">%1$s/year</string>
+    <string name="billing_sub_description">Try for free, cancel any time.</string>
     <string name="billing_price_pass">доживотна куповина</string>
     <string name="upgrade_description">Откључај све опције укључујући нотификације, теме и више опција за листе. Помозите ми са будућим унапређењима.</string>
     <string name="upgrade_success">Хвала што сте подржали SeriesGuide! Омогућен вам је приступ свим опцијама.</string>

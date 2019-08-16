@@ -488,6 +488,8 @@
     <string name="billing_action_manage_subscriptions">Zarządzaj subskrypcjami</string>
     <string name="billing_action_pass">Kup X Pass</string>
     <string name="billing_price_subscribe">%1$s na rok. Wypróbuj za darmo. Anuluj w każdym momencie przy użyciu %2$s</string>
+    <string name="billing_duration_format">%1$s/rok</string>
+    <string name="billing_sub_description">Wypróbuj za darmo. Anuluj w każdym momencie.</string>
     <string name="billing_price_pass">jednorazowy zakup</string>
     <string name="upgrade_description">Odblokowuje pełną funkcjonalność: powiadomienia, skórki oraz więcej opcji widżetu. Dzięki temu wspomagasz przyszłe aktualizacje.</string>
     <string name="upgrade_success">Dziękujemy za wsparcie SeriesGuide! Masz dostęp do wszystkich funkcji.</string>

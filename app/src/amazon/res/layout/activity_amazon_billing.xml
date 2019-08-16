@@ -41,7 +41,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewAmazonBillingDescription"
                 android:layout_marginTop="@dimen/default_padding"
-                android:textAppearance="@style/TextAppearance.Body.Highlight.Accent"
+                android:gravity="center_horizontal"
+                android:textAppearance="@style/TextAppearance.Body.Bold.Accent"
                 android:textSize="16sp"
                 tools:text="@string/upgrade_success" />
 

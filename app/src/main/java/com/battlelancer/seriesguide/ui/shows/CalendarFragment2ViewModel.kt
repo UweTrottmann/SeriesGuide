@@ -12,7 +12,8 @@ import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.model.EpisodeWithShow
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.TimeTools
@@ -58,6 +59,8 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
         withContext(Dispatchers.Default) {
             Timber.i("updateCalendarQuery")
 
+            val isInfiniteCalendar = CalendarSettings.isInfiniteScrolling(getApplication())
+
             // go an hour back in time, so episodes move to recent one hour late
             val recentThreshold =
                 TimeTools.getCurrentTime(getApplication()) - DateUtils.HOUR_IN_MILLIS
@@ -65,32 +68,46 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
             val query: StringBuilder
             val sortOrder: String
             if (CalendarFragment2.CalendarType.RECENT == type) {
+                val timeThreshold = if (isInfiniteCalendar) {
+                    // Include all past episodes.
+                    Long.MIN_VALUE
+                } else {
+                    // Only episodes from the last few days.
+                    System.currentTimeMillis() - CALENDAR_DAY_LIMIT_MS
+                }
                 query =
-                    StringBuilder("episode_firstairedms!=-1 AND episode_firstairedms<$recentThreshold AND series_hidden=0")
+                    StringBuilder("${Episodes.SELECTION_HAS_RELEASE_DATE} AND ${Episodes.FIRSTAIREDMS}<$recentThreshold AND ${Episodes.FIRSTAIREDMS}>$timeThreshold AND ${Shows.SELECTION_NO_HIDDEN}")
                 sortOrder = CalendarQuery.SORTING_RECENT
-            } else {
-                query = StringBuilder("episode_firstairedms>=$recentThreshold AND series_hidden=0")
+            } else /* UPCOMING */ {
+                val timeThreshold = if (isInfiniteCalendar) {
+                    // Include all future episodes.
+                    Long.MAX_VALUE
+                } else {
+                    // Only episodes from the next few days.
+                    System.currentTimeMillis() + CALENDAR_DAY_LIMIT_MS
+                }
+                query = StringBuilder("${Episodes.FIRSTAIREDMS}>=$recentThreshold AND ${Episodes.FIRSTAIREDMS}<$timeThreshold AND ${Shows.SELECTION_NO_HIDDEN}")
                 sortOrder = CalendarQuery.SORTING_UPCOMING
             }
 
             // append only favorites selection if necessary
             if (CalendarSettings.isOnlyFavorites(getApplication())) {
-                query.append(" AND ").append(SeriesGuideContract.Shows.SELECTION_FAVORITES)
+                query.append(" AND ").append(Shows.SELECTION_FAVORITES)
             }
 
             // append no specials selection if necessary
             if (DisplaySettings.isHidingSpecials(getApplication())) {
-                query.append(" AND ").append(SeriesGuideContract.Episodes.SELECTION_NO_SPECIALS)
+                query.append(" AND ").append(Episodes.SELECTION_NO_SPECIALS)
             }
 
             // append unwatched selection if necessary
             if (CalendarSettings.isHidingWatchedEpisodes(getApplication())) {
-                query.append(" AND ").append(SeriesGuideContract.Episodes.SELECTION_UNWATCHED)
+                query.append(" AND ").append(Episodes.SELECTION_UNWATCHED)
             }
 
             // only show collected episodes
             if (CalendarSettings.isOnlyCollected(getApplication())) {
-                query.append(" AND ").append(SeriesGuideContract.Episodes.SELECTION_COLLECTED)
+                query.append(" AND ").append(Episodes.SELECTION_COLLECTED)
             }
 
             // Post value because not on main thread + also avoids race condition if data is
@@ -122,5 +139,9 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
      * [episode] is null if this is a header item.
      */
     data class CalendarItem(val headerTime: Long, val episode: EpisodeWithShow)
+
+    companion object {
+        private const val CALENDAR_DAY_LIMIT_MS = 31 * DateUtils.DAY_IN_MILLIS
+    }
 
 }

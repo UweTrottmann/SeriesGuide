@@ -2,10 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- If multi-pane keep left of share episode action. -->
     <item
         android:id="@+id/menu_epsorting"
         android:icon="@drawable/ic_sort_white_24dp"
+        android:orderInCategory="0"
         android:title="@string/sort"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 
 </menu>

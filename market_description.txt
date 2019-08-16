@@ -23,3 +23,12 @@ Sample shows by Ross Scott, visit him at https://www.accursedfarms.com
 SeriesGuide X Pass – Unlock all features
 
 Unlock permanent access to all features of SeriesGuide. Requires both SeriesGuide and X Pass to be installed.
+
+All Access Sub
+Unlock all features, including Cloud backup.
+
+Supporter Sub
+Support development of future updates. Includes All Access.
+
+Sponsor Sub
+Big contribution to ensure future updates. Includes All Access.

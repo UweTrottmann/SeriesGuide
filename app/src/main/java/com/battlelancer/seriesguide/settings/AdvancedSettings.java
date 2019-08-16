@@ -39,7 +39,8 @@ public class AdvancedSettings {
     }
 
     /**
-     * Returns if the user was a supporter through an in-app purchase the last time we checked.
+     * (Only Amazon version) Returns if the user was a supporter through an in-app purchase
+     * the last time we checked.
      */
     public static boolean getLastSupporterState(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
@@ -47,7 +48,7 @@ public class AdvancedSettings {
     }
 
     /**
-     * Set if the user currently has an active purchase to support the app.
+     * (Only Amazon version) Set if the user currently has an active purchase to support the app.
      */
     public static void setSupporterState(Context context, boolean isSubscribedToX) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(

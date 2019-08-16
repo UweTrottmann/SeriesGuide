@@ -455,6 +455,8 @@
     <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
     <string name="billing_action_pass">Dapatkan X Pass</string>
     <string name="billing_price_subscribe">%1$s/tahun, coba gratis, batalkan Kapan saja melalui %2$s</string>
+    <string name="billing_duration_format">%1$s/year</string>
+    <string name="billing_sub_description">Try for free, cancel any time.</string>
     <string name="billing_price_pass">pembelian satu kali</string>
     <string name="upgrade_description">Buka semua fitur termasuk pemberitahuan, tema dan lebih banyak pilihan daftar widget. Membantu saya membuat pembaruan di masa mendatang.</string>
     <string name="upgrade_success">Terima kasih telah mendukung SeriesGuide! Anda memiliki akses ke semua fitur.</string>

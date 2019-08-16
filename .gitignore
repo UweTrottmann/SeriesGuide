@@ -8,6 +8,9 @@ keystore.properties
 local.properties
 secret.properties
 
+### bundletool
+bundletool
+
 ### Firebase
 google-services.json
 

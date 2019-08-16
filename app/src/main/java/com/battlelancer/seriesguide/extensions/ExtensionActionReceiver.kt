@@ -43,7 +43,8 @@ class ExtensionActionReceiver : BroadcastReceiver() {
                         )
                     }
 
-                    ExtensionManager.get().handlePublishedAction(appContext, token, action, type)
+                    ExtensionManager.get(context)
+                        .handlePublishedAction(appContext, token, action, type)
                 }
             }
         }

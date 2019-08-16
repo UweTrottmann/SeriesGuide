@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Icon is set in code. -->
+    <!-- Search action of activity is left-most. -->
     <item
         android:id="@+id/menu_calendar_visibility"
-        android:orderInCategory="0"
+        android:orderInCategory="1"
         android:title="@string/calendar_settings"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         tools:ignore="AlwaysShowAction">
         <menu>
             <item
@@ -27,6 +28,10 @@
                 android:id="@+id/menu_action_calendar_nospecials"
                 android:checkable="true"
                 android:title="@string/pref_onlyseasoneps" />
+            <item
+                android:id="@+id/menu_action_calendar_infinite"
+                android:checkable="true"
+                android:title="@string/pref_infinite_scrolling" />
         </menu>
     </item>
 

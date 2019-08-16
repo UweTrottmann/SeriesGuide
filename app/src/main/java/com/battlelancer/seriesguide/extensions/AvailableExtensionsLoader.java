@@ -9,7 +9,7 @@ import java.util.List;
  * Queries for any installed {@link com.battlelancer.seriesguide.api.SeriesGuideExtension}
  * extensions.
  */
-class AvailableExtensionsLoader extends GenericSimpleLoader<List<ExtensionManager.Extension>> {
+class AvailableExtensionsLoader extends GenericSimpleLoader<List<Extension>> {
 
     AvailableExtensionsLoader(Context context) {
         super(context);
@@ -17,7 +17,7 @@ class AvailableExtensionsLoader extends GenericSimpleLoader<List<ExtensionManage
 
     @NonNull
     @Override
-    public List<ExtensionManager.Extension> loadInBackground() {
-        return ExtensionManager.get().queryAllAvailableExtensions(getContext());
+    public List<Extension> loadInBackground() {
+        return ExtensionManager.get(getContext()).queryAllAvailableExtensions(getContext());
     }
 }

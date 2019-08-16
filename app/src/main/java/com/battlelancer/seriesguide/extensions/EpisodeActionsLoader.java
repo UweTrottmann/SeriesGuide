@@ -28,7 +28,7 @@ public class EpisodeActionsLoader extends GenericSimpleLoader<List<Action>> {
 
     @Override
     public List<Action> loadInBackground() {
-        List<Action> actions = ExtensionManager.get()
+        List<Action> actions = ExtensionManager.get(getContext())
                 .getLatestEpisodeActions(getContext(), episodeTvdbId);
 
         // no actions available yet, request extensions to publish them
@@ -64,7 +64,7 @@ public class EpisodeActionsLoader extends GenericSimpleLoader<List<Action>> {
             query = null;
 
             if (episode != null) {
-                ExtensionManager.get()
+                ExtensionManager.get(getContext())
                         .requestEpisodeActions(getContext(), episode);
             }
         }

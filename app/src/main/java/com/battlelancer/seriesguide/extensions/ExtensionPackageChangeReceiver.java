@@ -25,7 +25,15 @@ public class ExtensionPackageChangeReceiver extends BroadcastReceiver {
         }
 
         String changedPackage = intent.getData().getSchemeSpecificPart();
-        ExtensionManager extensionManager = ExtensionManager.get();
+        String appPackageName = context.getPackageName();
+        if (appPackageName.equals(changedPackage)) {
+            // Ignore changes to SeriesGuide itself. Will re-subscribe to extensions on app restart.
+            // E.g. WorkManager enabling RescheduleReceiver triggers ACTION_PACKAGE_CHANGED.
+            Timber.i("Ignoring update of ourself.");
+            return;
+        }
+
+        ExtensionManager extensionManager = ExtensionManager.get(context);
         List<ComponentName> enabledExtensions = extensionManager.getEnabledExtensions(context);
         int affectedExtensionIndex = -1;
         for (int i = 0; i < enabledExtensions.size(); i++) {

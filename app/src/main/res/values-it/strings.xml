@@ -466,6 +466,8 @@
     <string name="billing_action_manage_subscriptions">Gestisci abbonamenti</string>
     <string name="billing_action_pass">Ottieni X Pass</string>
     <string name="billing_price_subscribe">%1$s/anno, prova gratuita, annulla in qualsiasi momento tramite %2$s</string>
+    <string name="billing_duration_format">%1$s/anno</string>
+    <string name="billing_sub_description">Prova gratis, annulla in qualsiasi momento.</string>
     <string name="billing_price_pass">paga una sola volta</string>
     <string name="upgrade_description">Sblocca tutte le funzionalità, incluse le notifiche, i temi e maggiori opzioni per i widget delle liste. Aiutami a rendere possibile i futuri aggiornamenti.</string>
     <string name="upgrade_success">Grazie per il sostegno a SeriesGuide! Hai accesso a tutte le funzionalità.</string>

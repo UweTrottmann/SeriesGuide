@@ -139,8 +139,8 @@
     <string name="action_shows_filter_unwatched">טרם נצפה</string>
     <string name="action_shows_filter_upcoming">בקרוב</string>
     <string name="action_shows_filter_hidden">מוסתר</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="action_shows_make_all_visible">הצג את כל המוסתרים</string>
+    <string name="description_make_all_visible_format">הצג שוב את כל הסדרות המוסתרות (%s)?</string>
     <string name="action_shows_sort">מיון סדרות</string>
     <string name="action_shows_sort_title">שם</string>
     <string name="action_shows_sort_latest_episode">הפרק האחרון</string>
@@ -463,8 +463,8 @@
     <string name="pref_notifications_treshold">מתי להתריע</string>
     <string name="pref_notifications_select_shows">בחר סדרות</string>
     <string name="pref_notifications_select_shows_summary">סדרות עבורן מופעלות (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">התעלם מסדרות מוסתרות</string>
+    <string name="pref_notifications_hidden_summary">לא להציג התראות על סדרות נסתרות, גם אם התראות פועלות</string>
     <string name="pref_notification_channel_errors">שגיאות</string>
     <!-- List Widget -->
     <string name="hide_watched">הסתר פרקים שנצפו</string>
@@ -488,6 +488,8 @@
     <string name="billing_action_manage_subscriptions">נהל הרשמות</string>
     <string name="billing_action_pass">קבל את X Pass</string>
     <string name="billing_price_subscribe">%1$s לשנה, נסה בחינם, בטל בכל עת באמצעות %2$s</string>
+    <string name="billing_duration_format">%1$s/שנה</string>
+    <string name="billing_sub_description">הנסיון בחינם, ניתן לבטל בכל זמן שתרצו.</string>
     <string name="billing_price_pass">רכישה חד פעמית</string>
     <string name="upgrade_description">פתח את כל האפשרויות, כולל התראות, ערכות נושא ואפשרויות נוספות בווידג\'ט הרשימה. עזור לי לפתח עדכונים עתידיים.</string>
     <string name="upgrade_success">תודה על תמיכתך ב-SeriesGuide! יש לך גישה לכל האפשרויות.</string>

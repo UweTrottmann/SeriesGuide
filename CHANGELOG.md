@@ -5,6 +5,66 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 50
+----------
+*(2019-08-16)*
+
+* 🌟 Add Sponsor and Supporter subscriptions. If you can or want to you can now make a more
+  significant contribution to help me make future updates.
+* 📝 Existing subscription is now All Access. Reduced price (for existing subscribers, too) so
+  more people can get access to Cloud.
+* 🔧 Add option to turn off infinite calendar.
+* 🔧 Movie release times setting also affects popular, search. Watchlist, collection, watched and
+  details views will start using it.
+
+#### 50
+*(2019-08-14)*
+
+* 📝 Latest translations from crowdin.
+
+#### 50-beta5
+*(2019-07-25)*
+
+* 🔧 The list of popular movies and movie search display release dates depending on the selected
+  region.
+* 🔧 The movie watchlist, collection, watched tab and the details view will start to display the 
+  release date depending on the selected region. Preferably the theatrical one.
+* 🔨 Correctly detect active subscription after restarting the app.
+* 🔨 Do not crash if subscription title can not be parsed.
+* 📝 Distribute as Android App Bundle. This can not be sideloaded, use the official APK from the website!
+* 📝 Latest translations from crowdin.
+
+#### 50-beta4
+*(2019-07-19)*
+
+* 🌟 Support upgrading subscription to new Sponsor and Supporter tiers.
+* 🔧 Show icon which subscription tier is active.
+* 📝 Latest translations from crowdin.
+
+#### 50-beta3
+*(2019-07-18)*
+
+* 🌟 Introduce Sponsor and Supporter subscriptions so people who can or want to can make a more
+  significant contribution. This helps me make future updates.
+* 📝 Rename existing subscription to All Access. Reduced price for new and existing subscribers so
+  more people can get access to Cloud.
+* 🔧 Move subscriptions to new Google Play billing library.
+* 📝 Latest translations from crowdin.
+
+#### 50-beta2
+*(2019-07-06)*
+
+* 🔧 Shows/Movies: move search action left-most as likely most used. Show refresh action on history tabs.
+* 🔧 Show overview: move share action to more options to reduce clutter.
+* 🔧 Episodes list: show sort by action.
+* 🔨 Enable crash reporting.
+
+#### 50-beta1
+*(2019-07-05)*
+
+* 🔧 Restore infinite calendar option due to feedback. Defaults to enabled for new and existing users.
+* 🔨 Potential fixes for crashes due to extensions.
+
 Version 49
 ----------
 *(2019-06-28)*

@@ -152,11 +152,11 @@ public class MoviesSearchFragment extends Fragment {
             if (!isAdded()) {
                 return;
             }
-            emptyView.setMessage(data.emptyText);
-            boolean hasNoResults = data.results == null || data.results.size() == 0;
+            emptyView.setMessage(data.getEmptyText());
+            boolean hasNoResults = data.getResults() == null || data.getResults().size() == 0;
             emptyView.setVisibility(hasNoResults ? View.VISIBLE : View.GONE);
             recyclerView.setVisibility(hasNoResults ? View.GONE : View.VISIBLE);
-            adapter.updateMovies(data.results);
+            adapter.updateMovies(data.getResults());
             swipeRefreshLayout.setRefreshing(false);
         }
 

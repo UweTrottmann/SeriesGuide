@@ -466,6 +466,8 @@
     <string name="billing_action_manage_subscriptions">Abonnementen beheren</string>
     <string name="billing_action_pass">Neem X Pass</string>
     <string name="billing_price_subscribe">%1$s/jaar, probeer gratis, annuleer op elk moment via %2$s</string>
+    <string name="billing_duration_format">%1$s/year</string>
+    <string name="billing_sub_description">Try for free, cancel any time.</string>
     <string name="billing_price_pass">eenmalige aankoop</string>
     <string name="upgrade_description">Ontgrendel alle functies, inclusief meldingen, thema\'s en meer lijstopties voor widgets. Help me toekomstige updates te maken.</string>
     <string name="upgrade_success">Bedankt om SeriesGuide te steunen! U heeft toegang tot alle functies.</string>

@@ -10,6 +10,10 @@ import com.battlelancer.seriesguide.ui.BaseActivity;
 
 /**
  * Just hosting a {@link com.battlelancer.seriesguide.extensions.ExtensionsConfigurationFragment}.
+ * <p>
+ * Is exported so it can be launched by extension.
+ * <p>
+ * Test with 'adb shell am start -n com.battlelancer.seriesguide/com.battlelancer.seriesguide.extensions.ExtensionsConfigurationActivity'.
  */
 public class ExtensionsConfigurationActivity extends BaseActivity {
 

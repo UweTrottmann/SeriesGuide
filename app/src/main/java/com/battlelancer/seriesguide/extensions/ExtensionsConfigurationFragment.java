@@ -48,7 +48,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
     private PopupMenu addExtensionPopupMenu;
     private Unbinder unbinder;
 
-    private List<ExtensionManager.Extension> disabledExtensions = new ArrayList<>();
+    private List<Extension> disabledExtensions = new ArrayList<>();
     private List<ComponentName> enabledNames;
 
     @SuppressLint("ClickableViewAccessibility") // ordering not supported if non-touch
@@ -104,20 +104,21 @@ public class ExtensionsConfigurationFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_extensions_enable) {
-            List<ExtensionManager.Extension> extensions = ExtensionManager.get()
+            List<Extension> extensions = ExtensionManager.get(getContext())
                     .queryAllAvailableExtensions(getContext());
             List<ComponentName> enabledExtensions = new ArrayList<>();
-            for (ExtensionManager.Extension extension : extensions) {
+            for (Extension extension : extensions) {
                 enabledExtensions.add(extension.componentName);
             }
-            ExtensionManager.get()
+            ExtensionManager.get(getContext())
                     .setEnabledExtensions(getContext(), enabledExtensions);
             Toast.makeText(getActivity(), "Enabled all available extensions", Toast.LENGTH_LONG)
                     .show();
             return true;
         }
         if (itemId == R.id.menu_action_extensions_disable) {
-            ExtensionManager.get().setEnabledExtensions(getContext(), new ArrayList<>());
+            ExtensionManager.get(getContext())
+                    .setEnabledExtensions(getContext(), new ArrayList<>());
             Toast.makeText(getActivity(), "Disabled all available extensions", Toast.LENGTH_LONG)
                     .show();
             return true;
@@ -133,16 +134,16 @@ public class ExtensionsConfigurationFragment extends Fragment {
         unbinder.unbind();
     }
 
-    private LoaderManager.LoaderCallbacks<List<ExtensionManager.Extension>> loaderCallbacks
-            = new LoaderManager.LoaderCallbacks<List<ExtensionManager.Extension>>() {
+    private LoaderManager.LoaderCallbacks<List<Extension>> loaderCallbacks
+            = new LoaderManager.LoaderCallbacks<List<Extension>>() {
         @Override
-        public Loader<List<ExtensionManager.Extension>> onCreateLoader(int id, Bundle args) {
+        public Loader<List<Extension>> onCreateLoader(int id, Bundle args) {
             return new AvailableExtensionsLoader(getActivity());
         }
 
         @Override
-        public void onLoadFinished(@NonNull Loader<List<ExtensionManager.Extension>> loader,
-                @NonNull List<ExtensionManager.Extension> all) {
+        public void onLoadFinished(@NonNull Loader<List<Extension>> loader,
+                @NonNull List<Extension> all) {
             if (all.size() == 0) {
                 Timber.d("Did not find any extension");
             } else {
@@ -150,11 +151,11 @@ public class ExtensionsConfigurationFragment extends Fragment {
             }
 
             // find all disabled extensions
-            List<ComponentName> enabledNames = ExtensionManager.get()
+            List<ComponentName> enabledNames = ExtensionManager.get(getContext())
                     .getEnabledExtensions(getContext());
-            List<ExtensionManager.Extension> disabled = new ArrayList<>();
-            Map<ComponentName, ExtensionManager.Extension> enabledByComponent = new HashMap<>();
-            for (ExtensionManager.Extension extension : all) {
+            List<Extension> disabled = new ArrayList<>();
+            Map<ComponentName, Extension> enabledByComponent = new HashMap<>();
+            for (Extension extension : all) {
                 if (enabledNames.contains(extension.componentName)) {
                     enabledByComponent.put(extension.componentName, extension);
                 } else {
@@ -163,7 +164,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
             }
 
             // list enabled extensions in order dictated by extension manager
-            List<ExtensionManager.Extension> enabled = new ArrayList<>();
+            List<Extension> enabled = new ArrayList<>();
             for (ComponentName component : enabledNames) {
                 enabled.add(enabledByComponent.get(component));
             }
@@ -183,7 +184,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(@NonNull Loader<List<ExtensionManager.Extension>> loader) {
+        public void onLoaderReset(@NonNull Loader<List<Extension>> loader) {
             adapter.clear();
         }
     };
@@ -192,7 +193,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
             new ExtensionsAdapter.OnItemClickListener() {
                 @Override
                 public void onExtensionMenuButtonClick(View anchor,
-                        ExtensionManager.Extension extension, int position) {
+                        Extension extension, int position) {
                     showExtensionPopupMenu(anchor, extension, position);
                 }
 
@@ -202,7 +203,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
                 }
             };
 
-    private void showExtensionPopupMenu(View anchor, ExtensionManager.Extension extension,
+    private void showExtensionPopupMenu(View anchor, Extension extension,
             int position) {
         PopupMenu popupMenu = new PopupMenu(anchor.getContext(), anchor);
         popupMenu.getMenuInflater().inflate(R.menu.extension_menu, popupMenu.getMenu());
@@ -238,7 +239,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
                                             true),
                             true
                     );
-                    ExtensionManager.get().clearActionsCache();
+                    ExtensionManager.get(getContext()).clearActionsCache();
                     return true;
                 case R.id.menu_action_extension_disable:
                     enabledNames.remove(position);
@@ -261,7 +262,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
         Collections.sort(disabledExtensions, alphabeticalComparator);
         // list of installed, but disabled extensions
         for (int i = 0; i < disabledExtensions.size(); i++) {
-            ExtensionManager.Extension extension = disabledExtensions.get(i);
+            Extension extension = disabledExtensions.get(i);
             menu.add(Menu.NONE, i + 1, Menu.NONE, extension.label);
         }
         // no third-party extensions supported on Amazon app store for now
@@ -277,7 +278,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
             }
 
             // add to enabled extensions
-            ExtensionManager.Extension extension = disabledExtensions.get(item.getItemId() - 1);
+            Extension extension = disabledExtensions.get(item.getItemId() - 1);
             enabledNames.add(extension.componentName);
             saveExtensions();
             // scroll to end of list
@@ -293,23 +294,23 @@ public class ExtensionsConfigurationFragment extends Fragment {
     }
 
     private void saveExtensions() {
-        ExtensionManager.get().setEnabledExtensions(getContext(), enabledNames);
+        ExtensionManager.get(getContext()).setEnabledExtensions(getContext(), enabledNames);
         LoaderManager.getInstance(this)
                 .restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
                         loaderCallbacks);
     }
 
-    private Comparator<ExtensionManager.Extension> alphabeticalComparator
-            = new Comparator<ExtensionManager.Extension>() {
+    private Comparator<Extension> alphabeticalComparator
+            = new Comparator<Extension>() {
         @Override
-        public int compare(ExtensionManager.Extension extension1,
-                ExtensionManager.Extension extension2) {
+        public int compare(Extension extension1,
+                Extension extension2) {
             String title1 = createTitle(extension1);
             String title2 = createTitle(extension2);
             return title1.compareToIgnoreCase(title2);
         }
 
-        private String createTitle(ExtensionManager.Extension extension) {
+        private String createTitle(Extension extension) {
             String title = extension.label;
             if (TextUtils.isEmpty(title)) {
                 title = extension.componentName.flattenToShortString();
