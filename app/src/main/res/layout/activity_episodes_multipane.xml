@@ -51,7 +51,13 @@
                     <com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
                         android:id="@+id/tabsEpisodes"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:layout_height="48dp" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="?attr/sgColorDivider" />
 
                     <androidx.viewpager.widget.ViewPager
                         android:id="@+id/pagerEpisodes"
