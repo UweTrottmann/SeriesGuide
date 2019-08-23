@@ -552,7 +552,7 @@ class ShowFragment : ScopedFragment() {
                 )
                 intent.putExtra(
                     FullscreenImageActivity.EXTRA_IMAGE,
-                    TvdbImageTools.fullSizeUrl(posterPath)
+                    TvdbImageTools.artworkUrl(posterPath)
                 )
                 Utils.startActivityWithAnimation(activity, intent, v)
             }

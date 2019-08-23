@@ -584,7 +584,7 @@ public class NotificationService {
             // add special large resolution background for wearables
             // https://developer.android.com/training/wearables/notifications/creating.html#AddWearableFeatures
             Bitmap posterSquare = ServiceUtils.loadWithPicasso(context,
-                    TvdbImageTools.fullSizeUrl(posterPath))
+                    TvdbImageTools.artworkUrl(posterPath))
                     .centerCrop()
                     .resize(400, 400)
                     .get();

@@ -510,7 +510,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         containerImage.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), FullscreenImageActivity.class);
             intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE,
-                    TvdbImageTools.fullSizeUrl(imagePath));
+                    TvdbImageTools.artworkUrl(imagePath));
             Utils.startActivityWithAnimation(requireActivity(), intent, v);
         });
         loadImage(imagePath, hideDetails);
@@ -645,7 +645,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         } else {
             // try loading image
             containerImage.setVisibility(View.VISIBLE);
-            ServiceUtils.loadWithPicasso(requireContext(), TvdbImageTools.fullSizeUrl(imagePath))
+            ServiceUtils.loadWithPicasso(requireContext(), TvdbImageTools.artworkUrl(imagePath))
                     .error(R.drawable.ic_image_missing)
                     .into(imageViewEpisode,
                             new Callback() {
