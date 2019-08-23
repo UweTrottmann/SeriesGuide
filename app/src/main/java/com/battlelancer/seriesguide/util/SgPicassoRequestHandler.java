@@ -25,7 +25,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 /**
- * This is mostly a copy of {@link com.squareup.picasso.NetworkRequestHandler} that is not visible.
+ * This is mostly a copy of {@code com.squareup.picasso.NetworkRequestHandler} that is not visible.
  * Extended to fetch the image url from a given show TVDB id or movie TMDB id.
  */
 public class SgPicassoRequestHandler extends RequestHandler {
