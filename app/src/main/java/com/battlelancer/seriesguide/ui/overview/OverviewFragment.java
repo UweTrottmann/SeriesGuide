@@ -832,7 +832,7 @@ public class OverviewFragment extends Fragment implements
             imageEpisode.setImageResource(R.drawable.ic_photo_gray_24dp);
         } else {
             // try loading image
-            ServiceUtils.loadWithPicasso(getActivity(), TvdbImageTools.fullSizeUrl(imagePath))
+            ServiceUtils.loadWithPicasso(getActivity(), TvdbImageTools.artworkUrl(imagePath))
                     .error(R.drawable.ic_photo_gray_24dp)
                     .into(imageEpisode,
                             new Callback() {

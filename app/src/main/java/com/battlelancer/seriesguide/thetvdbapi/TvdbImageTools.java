@@ -27,14 +27,10 @@ public class TvdbImageTools {
     }
 
     /**
-     * Builds a full size url for a TVDb poster or screenshot (episode still) using the given image
-     * path.
-     *
-     * <p>Posters probably should use {@link #smallSizeUrl(String)} which downloads a much smaller
-     * version.
+     * Builds a url for a TVDb poster or screenshot (episode still) using the given image path.
      */
     @Nullable
-    public static String fullSizeUrl(@Nullable String imagePath) {
+    public static String artworkUrl(@Nullable String imagePath) {
         if (TextUtils.isEmpty(imagePath)) {
             return null;
         } else {
