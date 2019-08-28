@@ -41,7 +41,14 @@ public class SeriesGuideContract {
 
         String OVERVIEW = "overview";
 
+        /**
+         * A poster path. Needs to be prefixed with the poster server URL.
+         */
         String POSTER = "poster";
+        /**
+         * Path to a small variant of the poster. Needs to be prefixed with the poster server URL.
+         */
+        String POSTER_SMALL = "series_poster_small";
 
         String CONTENTRATING = "contentrating";
 

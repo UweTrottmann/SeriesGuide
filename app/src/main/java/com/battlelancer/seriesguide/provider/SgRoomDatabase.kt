@@ -18,14 +18,19 @@ import com.battlelancer.seriesguide.model.SgShow
 import com.uwetrottmann.androidutils.AndroidUtils
 import timber.log.Timber
 
-@Database(entities = arrayOf(
+@Database(
+    entities = [
         SgShow::class,
-        SgSeason::class, SgEpisode::class,
+        SgSeason::class,
+        SgEpisode::class,
         SgList::class,
-        SgListItem::class, SgMovie::class,
+        SgListItem::class,
+        SgMovie::class,
         SgActivity::class,
         SgJob::class
-), version = SgRoomDatabase.VERSION)
+    ],
+    version = SgRoomDatabase.VERSION
+)
 abstract class SgRoomDatabase : RoomDatabase() {
 
     abstract fun showHelper(): ShowHelper
@@ -42,7 +47,8 @@ abstract class SgRoomDatabase : RoomDatabase() {
         private const val VERSION_44_RECREATE_SERIES_EPISODES = 44
         private const val VERSION_45_RECREATE_SEASONS = 45
         const val VERSION_46_SERIES_SLUG = 46
-        const val VERSION = VERSION_46_SERIES_SLUG
+        const val VERSION_47_SERIES_POSTER_THUMB = 47
+        const val VERSION = VERSION_47_SERIES_POSTER_THUMB
 
         @Volatile
         private var instance: SgRoomDatabase? = null
@@ -63,6 +69,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
                     val newInstance = Room.databaseBuilder(context.applicationContext,
                             SgRoomDatabase::class.java, SeriesGuideDatabase.DATABASE_NAME)
                             .addMigrations(
+                                    MIGRATION_46_47,
                                     MIGRATION_45_46,
                                     MIGRATION_44_45,
                                     MIGRATION_42_44,
@@ -100,7 +107,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
         }
 
         @JvmField
-        val CALLBACK: RoomDatabase.Callback = object : RoomDatabase.Callback() {
+        val CALLBACK: Callback = object : Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 // manually create FTS table not supported by Room
                 if (AndroidUtils.isJellyBeanOrHigher()) {
@@ -108,6 +115,18 @@ abstract class SgRoomDatabase : RoomDatabase() {
                 } else {
                     db.execSQL(SeriesGuideDatabase.CREATE_SEARCH_TABLE_API_ICS)
                 }
+            }
+        }
+
+        @JvmField
+        val MIGRATION_46_47: Migration = object :
+            Migration(VERSION_46_SERIES_SLUG, VERSION_47_SERIES_POSTER_THUMB) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Timber.d("Migrating database from 46 to 47")
+
+                database.execSQL("ALTER TABLE series ADD COLUMN series_poster_small TEXT;")
+                // || concatenates strings.
+                database.execSQL("UPDATE series SET series_poster_small = '_cache/' || poster;")
             }
         }
 

@@ -20,7 +20,8 @@ import timber.log.Timber;
 public class TvdbImageTools {
 
     private static final String TVDB_MIRROR_BANNERS = "https://www.thetvdb.com/banners/";
-    private static final String TVDB_MIRROR_BANNERS_CACHE = TVDB_MIRROR_BANNERS + "_cache/";
+    public static final String TVDB_CACHE_PREFIX = "_cache/";
+    private static final String TVDB_MIRROR_BANNERS_CACHE = TVDB_MIRROR_BANNERS + TVDB_CACHE_PREFIX;
     private static Mac sha256_hmac;
 
     // prevent init
