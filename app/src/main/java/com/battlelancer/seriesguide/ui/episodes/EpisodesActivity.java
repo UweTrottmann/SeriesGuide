@@ -20,18 +20,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.jobs.episodes.BaseEpisodesJob;
+import com.battlelancer.seriesguide.model.SgShowMinimal;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.Utils;
@@ -162,7 +162,8 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
             return;
         }
 
-        final Show show = DBUtils.getShow(this, showTvdbId);
+        final SgShowMinimal show = SgRoomDatabase.getInstance(this)
+                .showHelper().getShowMinimal(showTvdbId);
         if (show == null) {
             finish();
             return;
@@ -174,10 +175,10 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         updateShowDelayed(showTvdbId);
     }
 
-    private void setupActionBar(Show show) {
+    private void setupActionBar(SgShowMinimal show) {
         setupActionBar();
         // setup ActionBar
-        String showTitle = show.title;
+        String showTitle = show.getTitle();
         String seasonString = SeasonTools.getSeasonString(this, seasonNumber);
         setTitle(showTitle + " " + seasonString);
         ActionBar actionBar = getSupportActionBar();
@@ -190,7 +191,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         }
     }
 
-    private void setupViews(Bundle savedInstanceState, Show show, int episodeId) {
+    private void setupViews(Bundle savedInstanceState, SgShowMinimal show, int episodeId) {
         // check if we should start with a specific episode
         int startPosition = 0;
         if (isDualPane) {
@@ -213,7 +214,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         if (isDualPane) {
             // set the pager background
             //noinspection ConstantConditions
-            TvdbImageTools.loadShowPosterAlpha(this, backgroundImageView, show.poster);
+            TvdbImageTools.loadShowPosterAlpha(this, backgroundImageView, show.getPosterSmall());
 
             // pager setup
             episodeDetailsAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),

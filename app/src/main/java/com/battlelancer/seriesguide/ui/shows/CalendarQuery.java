@@ -16,7 +16,7 @@ public interface CalendarQuery {
             SeriesGuideContract.Shows.REF_SHOW_ID,
             SeriesGuideContract.Shows.TITLE,
             SeriesGuideContract.Shows.NETWORK,
-            SeriesGuideContract.Shows.POSTER
+            SeriesGuideContract.Shows.POSTER_SMALL
     };
 
     String QUERY_UPCOMING = SeriesGuideContract.Episodes.FIRSTAIREDMS + ">=? AND "
@@ -46,5 +46,5 @@ public interface CalendarQuery {
     int SHOW_ID = 7;
     int SHOW_TITLE = 8;
     int SHOW_NETWORK = 9;
-    int SHOW_POSTER_PATH = 10;
+    int SHOW_POSTER_SMALL = 10;
 }

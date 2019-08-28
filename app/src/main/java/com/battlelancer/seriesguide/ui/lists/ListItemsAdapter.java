@@ -126,7 +126,7 @@ class ListItemsAdapter extends BaseShowsAdapter {
 
         // poster
         TvdbImageTools.loadShowPosterResizeCrop(context, viewHolder.poster,
-                cursor.getString(Query.SHOW_POSTER));
+                cursor.getString(Query.SHOW_POSTER_SMALL));
 
         // context menu
         viewHolder.itemType = itemType;
@@ -165,7 +165,7 @@ class ListItemsAdapter extends BaseShowsAdapter {
                 Shows.REF_SHOW_ID,
                 Shows.TITLE, // 5
                 Shows.OVERVIEW,
-                Shows.POSTER,
+                Shows.POSTER_SMALL,
                 Shows.NETWORK,
                 Shows.RELEASE_TIME,
                 Shows.RELEASE_WEEKDAY, // 10
@@ -185,7 +185,7 @@ class ListItemsAdapter extends BaseShowsAdapter {
         int SHOW_ID = 4;
         int SHOW_TITLE = 5;
         int ITEM_TITLE = 6;
-        int SHOW_POSTER = 7;
+        int SHOW_POSTER_SMALL = 7;
         int SHOW_NETWORK = 8;
         int SHOW_OR_EPISODE_RELEASE_TIME = 9;
         int SHOW_RELEASE_WEEKDAY = 10;

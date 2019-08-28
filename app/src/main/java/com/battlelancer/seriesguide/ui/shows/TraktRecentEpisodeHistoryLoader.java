@@ -95,7 +95,7 @@ public class TraktRecentEpisodeHistoryLoader
     }
 
     protected void addItems(List<NowAdapter.NowItem> items, List<HistoryEntry> history) {
-        SparseArrayCompat<String> localShows = ShowTools.getShowTvdbIdsAndPosters(getContext());
+        SparseArrayCompat<String> localShows = ShowTools.getSmallPostersByTvdbId(getContext());
         long timeDayAgo = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS;
         for (int i = 0, size = history.size(); i < size; i++) {
             HistoryEntry entry = history.get(i);
@@ -117,7 +117,7 @@ public class TraktRecentEpisodeHistoryLoader
             Integer showTvdbId = entry.show.ids == null ? null : entry.show.ids.tvdb;
             if (showTvdbId != null && localShows != null) {
                 // prefer poster of already added show, fall back to first uploaded poster
-                posterUrl = TvdbImageTools.smallSizeOrResolveUrl(localShows.get(showTvdbId),
+                posterUrl = TvdbImageTools.posterUrlOrResolve(localShows.get(showTvdbId),
                         showTvdbId, DisplaySettings.LANGUAGE_EN);
             } else {
                 posterUrl = null;

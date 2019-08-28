@@ -150,7 +150,7 @@ public class AppWidget extends AppWidgetProvider {
 
                     // show poster
                     String posterPath = upcomingEpisodes.getString(
-                            CalendarQuery.SHOW_POSTER_PATH);
+                            CalendarQuery.SHOW_POSTER_SMALL);
                     maybeSetPoster(item, posterPath);
 
                     views.addView(R.id.LinearLayoutWidget, item);
@@ -182,7 +182,7 @@ public class AppWidget extends AppWidgetProvider {
         private void maybeSetPoster(RemoteViews item, String posterPath) {
             try {
                 Bitmap poster = ServiceUtils.loadWithPicasso(this,
-                        TvdbImageTools.smallSizeUrl(posterPath))
+                        TvdbImageTools.artworkUrl(posterPath))
                         .centerCrop()
                         .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                         .get();
