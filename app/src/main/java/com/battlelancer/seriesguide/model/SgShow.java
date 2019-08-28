@@ -87,6 +87,9 @@ public class SgShow {
     @ColumnInfo(name = Shows.POSTER)
     public String poster = "";
 
+    @ColumnInfo(name = Shows.POSTER_SMALL)
+    public String posterSmall = "";
+
     @ColumnInfo(name = Shows.NEXTAIRDATEMS)
     public Long nextAirdateMs;
     @ColumnInfo(name = Shows.NEXTTEXT)
@@ -124,5 +127,4 @@ public class SgShow {
 
     @ColumnInfo(name = Shows.NOTIFY)
     public boolean notify = true;
-
 }

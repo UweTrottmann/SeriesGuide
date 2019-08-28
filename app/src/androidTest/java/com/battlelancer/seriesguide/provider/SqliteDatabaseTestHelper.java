@@ -21,8 +21,10 @@ public class SqliteDatabaseTestHelper {
         ContentValues values = show.toContentValues(InstrumentationRegistry.getTargetContext(),
                 true);
 
-        // remove columns added after version 42
+        // Remove columns added after version 42.
+        // Also check RoomDatabaseTestHelper!
         values.remove(Shows.SLUG);
+        values.remove(Shows.POSTER_SMALL);
 
         db.insertWithOnConflict(Tables.SHOWS, null, values,
                 SQLiteDatabase.CONFLICT_REPLACE);

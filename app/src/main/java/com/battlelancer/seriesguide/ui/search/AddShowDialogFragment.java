@@ -383,7 +383,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         ViewTools.setValueOrPlaceholder(genres, TextTools.splitAndKitTVDBStrings(show.genres));
 
         // poster
-        TvdbImageTools.loadShowPosterFitCrop(getActivity(), poster, show.poster);
+        TvdbImageTools.loadShowPosterFitCrop(getActivity(), poster, show.poster_small);
 
         // enable adding of show, display views
         buttonPositive.setEnabled(true);

@@ -117,6 +117,7 @@ public class ProviderTest {
         assertNotNullValue(query, Shows.CONTENTRATING);
         assertNotNullValue(query, Shows.NEXTEPISODE);
         assertNotNullValue(query, Shows.POSTER);
+        assertNotNullValue(query, Shows.POSTER_SMALL);
         assertNotNullValue(query, Shows.NEXTTEXT);
         assertNotNullValue(query, Shows.IMDBID);
         // getInt returns 0 if NULL, so check explicitly

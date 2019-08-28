@@ -24,7 +24,7 @@ class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
     @Override
     void setData(List<HistoryEntry> data) {
         super.setData(data);
-        localShowPosters = ShowTools.getShowTvdbIdsAndPosters(getContext());
+        localShowPosters = ShowTools.getSmallPostersByTvdbId(getContext());
     }
 
     @Override
@@ -37,7 +37,7 @@ class EpisodeHistoryAdapter extends SectionedHistoryAdapter {
                 ? null : item.show.ids.tvdb;
         if (localShowPosters != null && showTvdbId != null) {
             // prefer poster of already added show, fall back to first uploaded poster
-            posterUrl = TvdbImageTools.smallSizeOrResolveUrl(localShowPosters.get(showTvdbId),
+            posterUrl = TvdbImageTools.posterUrlOrResolve(localShowPosters.get(showTvdbId),
                     showTvdbId, DisplaySettings.LANGUAGE_EN);
         } else {
             posterUrl = null;

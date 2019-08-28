@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.provider;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-import androidx.test.InstrumentationRegistry;
+import androidx.test.core.app.ApplicationProvider;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.model.SgSeason;
@@ -19,12 +19,16 @@ import com.uwetrottmann.thetvdb.entities.Episode;
 public class RoomDatabaseTestHelper {
 
     public static void insertShow(Show show, SupportSQLiteDatabase db, int version) {
-        ContentValues values = show.toContentValues(InstrumentationRegistry.getTargetContext(),
+        ContentValues values = show.toContentValues(ApplicationProvider.getApplicationContext(),
                 true);
 
-        // remove columns added in newer versions
+        // Remove columns added in newer versions.
+        // Also check SqliteDatabaseTestHelper!
         if (version < SgRoomDatabase.VERSION_46_SERIES_SLUG) {
             values.remove(Shows.SLUG);
+        }
+        if (version < SgRoomDatabase.VERSION_47_SERIES_POSTER_THUMB) {
+            values.remove(Shows.POSTER_SMALL);
         }
 
         db.insert(Tables.SHOWS, SQLiteDatabase.CONFLICT_REPLACE, values);

@@ -17,7 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
-import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.model.SgShowMinimal;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.ui.overview.OverviewFragment;
 import com.battlelancer.seriesguide.ui.overview.SeasonsFragment;
 import com.battlelancer.seriesguide.ui.overview.ShowFragment;
@@ -239,10 +240,11 @@ public class OverviewActivity extends BaseNavDrawerActivity {
 
     private void launchSearch() {
         // refine search with the show's title
-        Show show = DBUtils.getShow(this, showTvdbId);
+        SgShowMinimal show = SgRoomDatabase.getInstance(this)
+                .showHelper().getShowMinimal(showTvdbId);
         if (show != null) {
             Bundle appSearchData = new Bundle();
-            appSearchData.putString(EpisodeSearchFragment.ARG_SHOW_TITLE, show.title);
+            appSearchData.putString(EpisodeSearchFragment.ARG_SHOW_TITLE, show.getTitle());
 
             Intent intent = new Intent(this, SearchActivity.class);
             intent.putExtra(SearchManager.APP_DATA, appSearchData);
