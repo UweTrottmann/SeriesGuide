@@ -119,9 +119,11 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
                     }
                 }
 
+                // On TMDB the TVDB might be 0, ignore those shows, too.
                 val externalIds = idResponse?.body()
-                if (idResponse == null || !idResponse.isSuccessful ||
-                        externalIds == null || externalIds.tvdb_id == null) {
+                if (idResponse == null || !idResponse.isSuccessful
+                    || externalIds == null || externalIds.tvdb_id == null
+                    || externalIds.tvdb_id == 0) {
                     null // just ignore this show
                 } else {
                     SearchResult().apply {
