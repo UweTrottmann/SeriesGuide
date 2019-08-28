@@ -56,7 +56,7 @@ class ShowsPopularViewHolder(itemView: View, onItemClickListener: OnItemClickLis
         // only local shows will have a poster path set
         // try to fall back to the first uploaded TVDB poster for all others
         val posterUrl = if (searchResult != null) {
-            TvdbImageTools.smallSizeOrResolveUrl(searchResult.posterPath,
+            TvdbImageTools.posterUrlOrResolve(searchResult.posterPath,
                     searchResult.tvdbid, searchResult.language)
         } else null
         TvdbImageTools.loadUrlResizeCrop(itemView.context, poster, posterUrl)

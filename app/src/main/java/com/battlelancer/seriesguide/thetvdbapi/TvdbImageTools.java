@@ -20,7 +20,6 @@ public class TvdbImageTools {
 
     private static final String TVDB_MIRROR_BANNERS = "https://www.thetvdb.com/banners/";
     public static final String TVDB_CACHE_PREFIX = "_cache/";
-    private static final String TVDB_MIRROR_BANNERS_CACHE = TVDB_MIRROR_BANNERS + TVDB_CACHE_PREFIX;
     private static Mac sha256_hmac;
 
     // prevent init
@@ -41,24 +40,12 @@ public class TvdbImageTools {
 
     /**
      * Builds a full url for a TVDb show poster using the given image path.
-     */
-    @Nullable
-    public static String smallSizeUrl(@Nullable String imagePath) {
-        if (TextUtils.isEmpty(imagePath)) {
-            return null;
-        } else {
-            return buildImageCacheUrl(TVDB_MIRROR_BANNERS_CACHE + imagePath);
-        }
-    }
-
-    /**
-     * Builds a full url for a TVDb show poster using the given image path.
      *
      * @param imagePath If empty, will return an URL that will be resolved to the highest rated
-     * poster using additional network requests.
+     * small poster using additional network requests.
      */
     @Nullable
-    public static String smallSizeOrResolveUrl(@Nullable String imagePath, int showTvdbId,
+    public static String posterUrlOrResolve(@Nullable String imagePath, int showTvdbId,
             @Nullable String language) {
         if (TextUtils.isEmpty(imagePath)) {
             String url = SgPicassoRequestHandler.SCHEME_SHOW_TVDB + "://" + showTvdbId;
@@ -67,7 +54,7 @@ public class TvdbImageTools {
             }
             return url;
         }
-        return smallSizeUrl(imagePath);
+        return artworkUrl(imagePath);
     }
 
     /**
@@ -75,7 +62,7 @@ public class TvdbImageTools {
      * without any resizing or cropping.
      */
     public static void loadShowPoster(Context context, ImageView imageView, String posterPath) {
-        ServiceUtils.loadWithPicasso(context, smallSizeUrl(posterPath))
+        ServiceUtils.loadWithPicasso(context, artworkUrl(posterPath))
                 .noFade()
                 .into(imageView);
     }
@@ -100,7 +87,7 @@ public class TvdbImageTools {
      */
     public static void loadShowPosterResizeCrop(Context context, ImageView imageView,
             String posterPath) {
-        ServiceUtils.loadWithPicasso(context, smallSizeUrl(posterPath))
+        ServiceUtils.loadWithPicasso(context, artworkUrl(posterPath))
                 .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                 .centerCrop()
                 .error(R.drawable.ic_photo_gray_24dp)
@@ -143,7 +130,7 @@ public class TvdbImageTools {
      */
     public static void loadShowPosterFitCrop(Context context, ImageView imageView,
             String posterPath) {
-        ServiceUtils.loadWithPicasso(context, smallSizeUrl(posterPath))
+        ServiceUtils.loadWithPicasso(context, artworkUrl(posterPath))
                 .fit()
                 .centerCrop()
                 .error(R.drawable.ic_photo_gray_24dp)

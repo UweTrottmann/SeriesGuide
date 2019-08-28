@@ -31,7 +31,7 @@ import kotlin.coroutines.suspendCoroutine
  * Add a shortcut to the overview page of the given show to the Home screen.
  *
  * @param showTitle The name of the shortcut.
- * @param posterPath A TVDb show poster path.
+ * @param posterPath A TVDb show small poster path.
  * @param showTvdbId The TVDb ID of the show.
  */
 class ShortcutCreator(
@@ -58,7 +58,7 @@ class ShortcutCreator(
 
     private suspend fun createBitmap(): Bitmap? = suspendCoroutine { continuation ->
         // Try to get the show poster
-        val posterUrl = TvdbImageTools.smallSizeUrl(posterPath)
+        val posterUrl = TvdbImageTools.artworkUrl(posterPath)
         if (posterUrl == null) {
             continuation.resume(null)
             return@suspendCoroutine

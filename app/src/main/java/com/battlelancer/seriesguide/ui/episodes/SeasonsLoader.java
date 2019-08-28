@@ -56,7 +56,7 @@ class SeasonsLoader extends GenericSimpleLoader<SeasonsLoader.Result> {
 
         int showTvdbId = episodeQuery.getInt(EpisodeQuery.SHOW_TVDB_ID);
         String showTitle = episodeQuery.getString(EpisodeQuery.SHOW_TITLE);
-        String showPoster = episodeQuery.getString(EpisodeQuery.SHOW_POSTER);
+        String showPoster = episodeQuery.getString(EpisodeQuery.SHOW_POSTER_SMALL);
         int seasonTvdbId = episodeQuery.getInt(EpisodeQuery.SEASON_TVDB_ID);
 
         episodeQuery.close();
@@ -92,12 +92,12 @@ class SeasonsLoader extends GenericSimpleLoader<SeasonsLoader.Result> {
         String[] PROJECTION = new String[] {
                 SeriesGuideContract.Shows.REF_SHOW_ID,
                 SeriesGuideContract.Shows.TITLE,
-                SeriesGuideContract.Shows.POSTER,
+                SeriesGuideContract.Shows.POSTER_SMALL,
                 SeriesGuideContract.Seasons.REF_SEASON_ID,
         };
         int SHOW_TVDB_ID = 0;
         int SHOW_TITLE = 1;
-        int SHOW_POSTER = 2;
+        int SHOW_POSTER_SMALL = 2;
         int SEASON_TVDB_ID = 3;
     }
 

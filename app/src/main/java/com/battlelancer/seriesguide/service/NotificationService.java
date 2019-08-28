@@ -94,8 +94,14 @@ public class NotificationService {
     };
 
     private static final String[] PROJECTION = new String[] {
-            Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.FIRSTAIREDMS,
-            Shows.TITLE, Shows.NETWORK, Episodes.NUMBER, Episodes.SEASON, Shows.POSTER,
+            Tables.EPISODES + "." + Episodes._ID,
+            Episodes.TITLE,
+            Episodes.FIRSTAIREDMS,
+            Shows.TITLE,
+            Shows.NETWORK,
+            Episodes.NUMBER,
+            Episodes.SEASON,
+            Shows.POSTER_SMALL,
             Episodes.OVERVIEW
     };
 
@@ -117,7 +123,7 @@ public class NotificationService {
         int NETWORK = 4;
         int NUMBER = 5;
         int SEASON = 6;
-        int POSTER = 7;
+        int POSTER_SMALL = 7;
         int OVERVIEW = 8;
     }
 
@@ -419,7 +425,7 @@ public class NotificationService {
         if (count == 1) {
             // single episode
             upcomingEpisodes.moveToPosition(notifyPositions.get(0));
-            maybeSetPoster(nb, upcomingEpisodes.getString(NotificationQuery.POSTER));
+            maybeSetPoster(nb, upcomingEpisodes.getString(NotificationQuery.POSTER_SMALL));
 
             if (!DisplaySettings.preventSpoilers(context)) {
                 final String episodeTitle = TextTools.getEpisodeTitle(context,
@@ -563,7 +569,7 @@ public class NotificationService {
     private void maybeSetPoster(NotificationCompat.Builder nb, String posterPath) {
         try {
             Bitmap poster = ServiceUtils.loadWithPicasso(context,
-                    TvdbImageTools.smallSizeUrl(posterPath))
+                    TvdbImageTools.artworkUrl(posterPath))
                     .centerCrop()
                     .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                     .get();

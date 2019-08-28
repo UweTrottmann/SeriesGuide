@@ -75,7 +75,7 @@ class EpisodeResultsAdapter extends CursorAdapter {
 
         // poster
         TvdbImageTools.loadShowPosterResizeSmallCrop(context, viewHolder.poster,
-                TvdbImageTools.smallSizeUrl(cursor.getString(EpisodeSearchQuery.SHOW_POSTER)));
+                TvdbImageTools.artworkUrl(cursor.getString(EpisodeSearchQuery.SHOW_POSTER_SMALL)));
     }
 
     interface OnItemClickListener {

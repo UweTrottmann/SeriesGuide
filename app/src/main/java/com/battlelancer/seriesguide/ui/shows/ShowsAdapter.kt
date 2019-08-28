@@ -195,7 +195,7 @@ class ShowsAdapter(
                     episode,
                     episodeTime,
                     remainingCount,
-                    sgShow.poster,
+                    sgShow.posterSmall,
                     false
                 )
             }
