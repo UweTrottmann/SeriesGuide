@@ -121,7 +121,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
 
                 database.execSQL("ALTER TABLE series ADD COLUMN series_poster_small TEXT;")
                 // || concatenates strings.
-                database.execSQL("UPDATE series SET series_poster_small = '_cache/' || poster;")
+                database.execSQL("UPDATE series SET series_poster_small = '_cache/' || poster WHERE poster NOT NULL AND poster != '';")
             }
         }
 
