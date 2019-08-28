@@ -68,10 +68,11 @@ public class SgPicassoRequestHandler extends RequestHandler {
                     // no posters for this language, fall back to default
                     posterResponse = tvdbTools.getSeriesPosters(showTvdbId, null);
                 }
-                if (posterResponse.isSuccessful()) {
-                    //noinspection ConstantConditions
-                    String imagePath = TvdbTools.getHighestRatedPoster(posterResponse.body().data);
-                    String imageUrl = TvdbImageTools.smallSizeUrl(imagePath);
+                if (posterResponse.isSuccessful() && posterResponse.body() != null && posterResponse.body().data != null) {
+                    String imagePath = TvdbTools.getHighestRatedPoster(
+                            posterResponse.body().data
+                    ).smallSize;
+                    String imageUrl = TvdbImageTools.artworkUrl(imagePath);
                     if (imageUrl != null) {
                         return loadFromNetwork(Uri.parse(imageUrl), networkPolicy);
                     }
