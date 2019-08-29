@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.sync;
 
 import static com.google.common.truth.Truth.assertThat;
-import static com.google.common.truth.Truth.assert_;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -22,6 +21,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.ui.movies.MovieDetails;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
+import com.google.common.truth.Truth;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.services.ConfigurationService;
 import java.util.Date;
@@ -120,7 +120,7 @@ public class TmdbSyncTest {
                 return movie;
             }
         }
-        assert_().fail("Did not find movie with TMDB id %s", tmdbId);
+        Truth.assertWithMessage("Did not find movie with TMDB id %s", tmdbId).fail();
         throw new IllegalArgumentException();
     }
 
