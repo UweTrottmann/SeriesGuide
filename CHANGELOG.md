@@ -5,6 +5,17 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 51
+----------
+*(in development)*
+
+#### 51-beta1
+*(2019-08-29)*
+
+* 🔧 Fetch show small poster path instead of constructing it, to future proof for upcoming changes at TheTVDB.com.
+* 🔨 Fix discover screen displaying shows that can not be added.
+* 🔨 Fix the subscriptions screen displaying a developer error in some cases.
+
 Version 50
 ----------
 *(2019-08-16)*
