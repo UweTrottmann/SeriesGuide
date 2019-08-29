@@ -26,7 +26,7 @@ buildscript {
             'tmdb': '2.0.1', // github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
             'trakt': '6.1.0', // github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
 
-            'truth': '0.44', // github.com/google/truth/releases
+            'truth': '1.0', // github.com/google/truth/releases
 
             // version 15xxxyy -> min SDK 15, release xxx, build yy
             'code': 1503410,
