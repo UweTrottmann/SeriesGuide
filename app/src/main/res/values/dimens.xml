@@ -38,8 +38,7 @@
     <dimen name="grid_item_margin_vertical">4dp</dimen>
     <dimen name="grid_item_margin_horizontal">4dp</dimen>
 
-    <!-- Fast scroll width, tested on Android 4.4 and 5.0. -->
-    <dimen name="grid_fast_scroll_padding">28dp</dimen>
+    <!-- RecyclerView Fast Scroller decoration -->
     <dimen name="sg_fastscroll_default_thickness">16dp</dimen>
     <dimen name="sg_fastscroll_minimum_height">56dp</dimen>
     <dimen name="sg_fastscroll_margin">0dp</dimen>
