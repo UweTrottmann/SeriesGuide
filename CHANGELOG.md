@@ -9,6 +9,11 @@ Version 51
 ----------
 *(in development)*
 
+#### 51-beta2
+*(2019-08-30)*
+
+* 🔨 Do not crash when viewing an episode and there is no show title or poster. 
+
 #### 51-beta1
 *(2019-08-29)*
 
