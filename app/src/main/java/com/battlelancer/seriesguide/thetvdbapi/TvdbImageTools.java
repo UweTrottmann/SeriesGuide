@@ -43,7 +43,7 @@ public class TvdbImageTools {
      * Builds a full url for a TVDb show poster using the given image path.
      *
      * @param imagePath If empty, will return an URL that will be resolved to the highest rated
-     * small poster using additional network requests.
+     *                  small poster using additional network requests.
      */
     @Nullable
     public static String posterUrlOrResolve(@Nullable String imagePath, int showTvdbId,
@@ -62,7 +62,8 @@ public class TvdbImageTools {
      * Tries to load the given TVDb show poster into the given {@link ImageView}
      * without any resizing or cropping.
      */
-    public static void loadShowPoster(Context context, ImageView imageView, String posterPath) {
+    public static void loadShowPoster(Context context, ImageView imageView,
+            @Nullable String posterPath) {
         ServiceUtils.loadWithPicasso(context, artworkUrl(posterPath))
                 .noFade()
                 .into(imageView);
@@ -73,14 +74,13 @@ public class TvdbImageTools {
      * resizing or cropping. In addition sets alpha on the view.
      */
     public static void loadShowPosterAlpha(Context context, ImageView imageView,
-            String posterPath) {
+            @Nullable String posterPath) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             imageView.setImageAlpha(30);
         } else {
             //noinspection deprecation
             imageView.setAlpha(30);
         }
-
         loadShowPoster(context, imageView, posterPath);
     }
 
@@ -93,7 +93,7 @@ public class TvdbImageTools {
      * screen size.
      */
     public static void loadShowPosterResizeCrop(Context context, ImageView imageView,
-            String posterPath) {
+            @Nullable String posterPath) {
         ServiceUtils.loadWithPicasso(context, artworkUrl(posterPath))
                 .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                 .centerCrop()
@@ -101,7 +101,8 @@ public class TvdbImageTools {
                 .into(imageView);
     }
 
-    public static void loadUrlResizeCrop(Context context, ImageView imageView, String url) {
+    public static void loadUrlResizeCrop(Context context, ImageView imageView,
+            @Nullable String url) {
         ServiceUtils.loadWithPicasso(context, url)
                 .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                 .centerCrop()
@@ -120,7 +121,7 @@ public class TvdbImageTools {
      * @param posterUrl This should already be a built TVDB poster URL, not just a poster path!
      */
     public static void loadShowPosterResizeSmallCrop(Context context, ImageView imageView,
-            String posterUrl) {
+            @Nullable String posterUrl) {
         ServiceUtils.loadWithPicasso(context, posterUrl)
                 .resizeDimen(R.dimen.show_poster_width_default, R.dimen.show_poster_height_default)
                 .centerCrop()
@@ -136,7 +137,7 @@ public class TvdbImageTools {
      * <p>The resize dimensions are determined based on the image view size.
      */
     public static void loadShowPosterFitCrop(Context context, ImageView imageView,
-            String posterPath) {
+            @Nullable String posterPath) {
         ServiceUtils.loadWithPicasso(context, artworkUrl(posterPath))
                 .fit()
                 .centerCrop()
