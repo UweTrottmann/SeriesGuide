@@ -9,6 +9,11 @@ Version 51
 ----------
 *(in development)*
 
+#### 51-beta3
+*(2019-09-04)*
+
+* 🔨 Resolve connection issues with TheTVDB and trakt.
+
 #### 51-beta2
 *(2019-08-30)*
 
