@@ -424,10 +424,6 @@
     <string name="upcoming_upto_one_week">أسبوع</string>
     <string name="upcoming_upto_two_weeks">أسبوعين</string>
     <string name="upcoming_upto_one_month">شهر</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">ساعة</string>
-    <string name="upcoming_upto_six_hours">6 ساعات</string>
-    <string name="upcoming_upto_half_day">12 ساعة</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">المظهر</string>
     <string name="pref_theme">التصميم</string>
@@ -496,10 +492,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">شفاف</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">الحلقة القادمة</string>
-    <string name="dashclock_extension_description">عرض الحلقة القادمة  من دليل المسلسلات الخاص بك</string>
-    <string name="dashclock_pref_upcoming_threshold">عرض الحلقات القادمة</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">فقط للداعمين</string>
     <string name="action_upgrade">فتح كافة الميزات</string>

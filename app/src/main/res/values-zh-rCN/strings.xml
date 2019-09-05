@@ -369,10 +369,6 @@
     <string name="upcoming_upto_one_week">1 周</string>
     <string name="upcoming_upto_two_weeks">2 周</string>
     <string name="upcoming_upto_one_month">1 月</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">小时</string>
-    <string name="upcoming_upto_six_hours">6 小时</string>
-    <string name="upcoming_upto_half_day">12 小时</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">外观</string>
     <string name="pref_theme">主题</string>
@@ -441,10 +437,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">0%</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">即将播出</string>
-    <string name="dashclock_extension_description">显示 SeriesGuide 节目单中即将播出的剧集</string>
-    <string name="dashclock_pref_upcoming_threshold">显示在此时间内播出的剧集&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">仅限完整版</string>
     <string name="action_upgrade">解锁高级功能</string>

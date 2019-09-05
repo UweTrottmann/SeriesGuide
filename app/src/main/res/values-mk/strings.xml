@@ -380,10 +380,6 @@
     <string name="upcoming_upto_one_week">1 недела</string>
     <string name="upcoming_upto_two_weeks">2 недели</string>
     <string name="upcoming_upto_one_month">1 месец</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 час</string>
-    <string name="upcoming_upto_six_hours">6 часа</string>
-    <string name="upcoming_upto_half_day">12 часа</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Изглед</string>
     <string name="pref_theme">Тема</string>
@@ -452,10 +448,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Видливо</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Предстојни епизоди</string>
-    <string name="dashclock_extension_description">Ги прикажува следните претстојни епизоди од вашите SeriesGuide серии.</string>
-    <string name="dashclock_pref_upcoming_threshold">Пријажи епизоди помеѓу&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Само за подржувачите</string>
     <string name="action_upgrade">Отклучи ги сите нови функционалност</string>
