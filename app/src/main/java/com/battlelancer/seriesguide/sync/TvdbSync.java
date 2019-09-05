@@ -46,6 +46,7 @@ public class TvdbSync {
         if (showsToUpdate == null) {
             return null;
         }
+        Timber.d("Updating %d show(s)...", showsToUpdate.length);
 
         // from here on we need more sophisticated abort handling, so keep track of errors
         SgSyncAdapter.UpdateResult resultCode = SgSyncAdapter.UpdateResult.SUCCESS;
