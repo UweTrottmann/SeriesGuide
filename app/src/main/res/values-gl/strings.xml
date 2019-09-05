@@ -227,7 +227,7 @@
     <string name="watchlist_remove">Eliminar de por ver</string>
     <string name="watchlist_added">Engadido a por ver</string>
     <string name="watchlist_removed">Eliminado de por ver</string>
-    <string name="movies_search_hint">Escribe o título de un filme</string>
+    <string name="movies_search_hint">Escribe o título dun filme</string>
     <string name="movies_collection_empty">Non engadiches filmes á túa coleción</string>
     <string name="movies_watchlist_empty">Non engadiches filmes á túa lista de por ver</string>
     <string name="trailer">Trailer</string>
@@ -291,18 +291,18 @@
     <string name="trakt_success">Enviado a trakt</string>
     <string name="trakt_error_credentials">Algo foi mal. Por favor comproba as túas credenciais e volve a intentalo.</string>
     <string name="trakt_error_not_exists">Non dispoñible (aínda) en trakt. Proba mais tarde.</string>
-    <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt</string>
+    <string name="trakt_notice_not_exists">Non se pode seguir (aínda) con trakt</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt account</string>
+    <string name="trakt_account">conta trakt</string>
     <string name="connect_trakt">Conectar trakt</string>
     <string name="trakt_reconnect">Conectar SeriesGuide a trakt</string>
-    <string name="trakt_reconnect_details">Check your trakt credentials</string>
+    <string name="trakt_reconnect_details">Verifica as túas credenciais de trakt</string>
     <string name="waitplease">Un momento, por favor&#8230;</string>
     <string name="connect">Conectar</string>
     <string name="disconnect">Desconectar</string>
     <string name="use_integrated_browser">Empregar navegador integrado</string>
-    <string name="show_library">Show your trakt library</string>
-    <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
+    <string name="show_library">Amosar a túa biblioteca</string>
+    <string name="about_trakt">trakt axuda a manter un rexistro dos programas de televisión e películas que estás a ver. <a href="https://trakt.tv">Saber máis</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Votar</string>
     <string name="your_rating">A súa puntuación</string>
@@ -337,17 +337,17 @@
     <string name="pref_onlyfuture">Ocultar episodios exibidos</string>
     <string name="pref_onlyfuturesummary">Non amosar episodios xa exibidos</string>
     <string name="pref_onlyseasoneps">Agochar episodios especiais</string>
-    <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
+    <string name="pref_onlyseasonepssummary">Os episodios especiais desaparecerán excepto das listas de temporadas</string>
     <string name="pref_exactdates">Mostrar datas exactas</string>
-    <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
+    <string name="pref_exactdates_summary">\"31 de Outubro\" en vez de \"en 3 dias\"</string>
     <string name="pref_nospoilers">Evitar spoilers</string>
-    <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
-    <string name="pref_seasonsorting">Sort seasons by&#8230;</string>
+    <string name="pref_nospoilers_summary">Ocultar detalles ata que un episodio sexa visto</string>
+    <string name="pref_seasonsorting">Ordenar temporadas por&#8230;</string>
     <string name="pref_episodesorting">Ordenar episodios por&#8230;</string>
     <string name="pref_language">Idioma preferido para o contenido</string>
-    <string name="pref_language_fallback">Alternative language</string>
+    <string name="pref_language_fallback">Idioma alternativo</string>
     <string name="pref_updatewifionly">Imaxes só por Wi-Fi</string>
-    <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+    <string name="pref_updatewifionlysummary">Para reducir o consumo de datos, non descargar a través de redes móbiles</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d día antes</item>
         <item quantity="other">%d días antes</item>
@@ -362,52 +362,52 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Política de privacidade</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="licence_tvdb">Esta aplicación emprega datos e imaxes de TheTVDB licenciadas baixo unha licenza Creative Commons.</string>
     <string name="licence_themoviedb">Este producto emprega a API de TMDb pero non está patrocinado nin certificado por TMDb.</string>
     <string name="licence_trakt">Esta aplicación emprega datos e imaxes de trakt.</string>
-    <string name="about_open_source">SeriesGuide is built using open source software.</string>
-    <string name="licences_and_credits">Licences and credits</string>
+    <string name="about_open_source">SeriesGuide desenvolveuse empregando software de código aberto.</string>
+    <string name="licences_and_credits">Licenzas e créditos</string>
     <!-- Sort -->
     <string name="sort">Ordenar por</string>
-    <string name="action_sort_ignore_articles">Ignore articles</string>
+    <string name="action_sort_ignore_articles">Ignorar artigos</string>
     <!-- Sort orders -->
-    <string name="sort_order_latest_first">Latest first</string>
+    <string name="sort_order_latest_first">Mais recentes primeiro</string>
     <string name="sort_order_oldest_first">Máis antigos primeiro</string>
-    <string name="sort_order_unwatched_first">Unwatched first</string>
+    <string name="sort_order_unwatched_first">Non vistos primeiro</string>
     <string name="sort_order_alphabetical">A - Z</string>
-    <string name="sort_order_top_rated_first">Top rated</string>
-    <string name="sort_order_latest_first_dvd">Latest first (DVD)</string>
+    <string name="sort_order_top_rated_first">Mais votados</string>
+    <string name="sort_order_latest_first_dvd">Mais recentes primeiro (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Máis antigos primeiro (DVD)</string>
     <!-- Upcoming thresholds -->
-    <string name="pref_upcominglimit">Upcoming range</string>
+    <string name="pref_upcominglimit">Intervalo para próximos episodios</string>
     <string name="upcoming_upto_now">agora</string>
     <string name="upcoming_upto_one_day">1 día</string>
     <string name="upcoming_upto_three_days">3 días</string>
     <string name="upcoming_upto_one_week">1 semana</string>
-    <string name="upcoming_upto_two_weeks">2 weeks</string>
-    <string name="upcoming_upto_one_month">1 month</string>
+    <string name="upcoming_upto_two_weeks">2 semanas</string>
+    <string name="upcoming_upto_one_month">1 mes</string>
     <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 hour</string>
-    <string name="upcoming_upto_six_hours">6 hours</string>
-    <string name="upcoming_upto_half_day">12 hours</string>
+    <string name="upcoming_upto_one_hour">1 hora</string>
+    <string name="upcoming_upto_six_hours">6 horas</string>
+    <string name="upcoming_upto_half_day">12 horas</string>
     <!-- Appearance settings -->
-    <string name="pref_appearance">Appearance</string>
-    <string name="pref_theme">Theme</string>
+    <string name="pref_appearance">Aparencia</string>
+    <string name="pref_theme">Tema</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Other</string>
-    <string name="pref_autoupdatesummary">Automatically sync and update content</string>
-    <string name="pref_autobackup">Auto Backup</string>
-    <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
-    <string name="backup">Backup/Restore</string>
-    <string name="backup_summary">Backup or restore your shows</string>
-    <string name="pref_number">Number format</string>
-    <string name="pref_offset">Manual time offset</string>
-    <string name="pref_offsetsummary">Offset air times by %d hours</string>
-    <string name="clear_cache">Clear image caches</string>
-    <string name="clear_cache_summary">Remove all cached images from your device</string>
+    <string name="pref_other">Outros</string>
+    <string name="pref_autoupdatesummary">Sincronizar e actualizar os datos automaticamente</string>
+    <string name="pref_autobackup">Copias de seguridade automáticas</string>
+    <string name="pref_autobackupsummary">Copia de seguridade semanal das túas series, listas e películas</string>
+    <string name="backup">Copa de seguridade / Recuperar</string>
+    <string name="backup_summary">Facer unha copia de seguridade ou restaurar as túas series</string>
+    <string name="pref_number">Formato numérico</string>
+    <string name="pref_offset">Axuste de hora manual</string>
+    <string name="pref_offsetsummary">Axustar %d horas os tempos de emisión</string>
+    <string name="clear_cache">Limpar caché de imaxes</string>
+    <string name="clear_cache_summary">Borrar todas as imaxes da caché do dispositivo</string>
     <!-- Backup and Restore -->
-    <string name="backup_full_dump">Include descriptions, details, ratings</string>
-    <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
+    <string name="backup_full_dump">Incluir descricións, detalles, valoracións</string>
+    <string name="backup_failed_file_access">Non se puido facer a copia de seguridade. Unha copia de seguridade non se atopou ou é inaccesible.</string>
     <string name="backup_success">Respaldo realizado correctamente</string>
     <string name="backup_failed">Erro na copia de seguranza</string>
     <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
@@ -417,8 +417,8 @@
     <string name="backup_button">Crear unha copia de seguranza</string>
     <string name="import_button">Restaurar copia de seguranza</string>
     <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
-    <string name="last_auto_backup">Last Auto Backup: %s</string>
-    <string name="restore_auto_backup">Restore Auto Backup</string>
+    <string name="last_auto_backup">Última copia de seguridade automática: %s</string>
+    <string name="restore_auto_backup">Restaurar copia de seguridade automática</string>
     <string name="dataliberation_permission_missing">To backup or restore, allow access to your files</string>
     <string name="autobackup_permission_missing">To use auto backup, allow access to your files</string>
     <string name="autobackup_files_missing">To use auto backup, select valid backup files</string>
@@ -426,13 +426,13 @@
     <string name="action_select_file">Seleccionar ficheiro</string>
     <string name="backup_use_default_files">Use default backup files</string>
     <!-- Welcome dialog -->
-    <string name="get_started">Get started</string>
+    <string name="get_started">Comezar</string>
     <string name="dismiss">Rexeitar</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s is coming up</string>
     <string name="upcoming_episodes">New episodes are coming up</string>
     <string name="upcoming_episodes_number">%s novos episodios</string>
-    <string name="more">%d more</string>
+    <string name="more">%d máis</string>
     <string name="upcoming_display">Select to display upcoming shows</string>
     <string name="pref_notifications">Notificacións</string>
     <string name="pref_notificationssummary">Notify about new episodes</string>

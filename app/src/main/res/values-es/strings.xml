@@ -468,8 +468,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="billing_action_manage_subscriptions">Gestionar suscripciones</string>
     <string name="billing_action_pass">Obtener X Pass</string>
     <string name="billing_price_subscribe">%1$s/año, prueba gratuita, cancela en cualquier momento mediante %2$s</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_duration_format">%1$s/año</string>
+    <string name="billing_sub_description">Pruebe gratis, cancele en cualquier momento.</string>
     <string name="billing_price_pass">Compra por única vez</string>
     <string name="upgrade_description">Desbloquea todas las funciones incluyendo notificaciones, temas y mas opciones para los widgets. Ayudame a hacer futuras actualizaciones.</string>
     <string name="upgrade_success">Gracias por apoyar a SeriesGuide! Tienes acceso a todas las funciones.</string>
