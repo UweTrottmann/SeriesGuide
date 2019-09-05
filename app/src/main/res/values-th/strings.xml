@@ -375,10 +375,6 @@
     <string name="upcoming_upto_one_week">1 สัปดาห์</string>
     <string name="upcoming_upto_two_weeks">2 สัปดาห์</string>
     <string name="upcoming_upto_one_month">1 เดือน</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 ชั่วโมง</string>
-    <string name="upcoming_upto_six_hours">6 ชั่วโมง</string>
-    <string name="upcoming_upto_half_day">12 ชั่วโมง</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">คุณลักษณะ</string>
     <string name="pref_theme">ธีม</string>
@@ -445,10 +441,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">ทึบแสง</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">ตอนที่กำลังมา</string>
-    <string name="dashclock_extension_description">แสดงตอนที่กำลังมาของซีรีส์ของคุณใน SeriesGuide</string>
-    <string name="dashclock_pref_upcoming_threshold">แสดงตอนภายใน&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">เฉพาะผู้สนับสนุน</string>
     <string name="action_upgrade">ปลดล็อกคุณสมบัติทั้งหมด</string>

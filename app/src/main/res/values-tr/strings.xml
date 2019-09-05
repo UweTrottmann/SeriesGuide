@@ -386,10 +386,6 @@
     <string name="upcoming_upto_one_week">bir hafta</string>
     <string name="upcoming_upto_two_weeks">iki hafta</string>
     <string name="upcoming_upto_one_month">bir ay</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">saat</string>
-    <string name="upcoming_upto_six_hours">6 saat</string>
-    <string name="upcoming_upto_half_day">12 saat</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Görünüm</string>
     <string name="pref_theme">Tema</string>
@@ -456,10 +452,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Opak</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Gelecek bölüm</string>
-    <string name="dashclock_extension_description">SeriesGuide dizilerinizin gelecek bölümünü gösterir.</string>
-    <string name="dashclock_pref_upcoming_threshold">Dizinin sonraki bölümlerinde&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Sadece destekçileri için</string>
     <string name="action_upgrade">Tüm özellikleri aç</string>
