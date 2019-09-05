@@ -324,6 +324,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">基本</string>
     <string name="prefs_category_sharing">サービス</string>
+    <string name="prefs_category_advanced">高度</string>
     <string name="prefs_category_about">について</string>
     <string name="pref_onlyfuture">未放映のエピソード</string>
     <string name="pref_onlyfuturesummary">すでに放映されたエピソードを表示しません</string>

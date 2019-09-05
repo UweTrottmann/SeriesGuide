@@ -332,6 +332,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Основни</string>
     <string name="prefs_category_sharing">Услуги</string>
+    <string name="prefs_category_advanced">Разширени</string>
     <string name="prefs_category_about">Относно</string>
     <string name="pref_onlyfuture">Няма излъчени епизоди</string>
     <string name="pref_onlyfuturesummary">Не показвай вече излъчвани епизоди</string>

@@ -332,6 +332,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Bàsics</string>
     <string name="prefs_category_sharing">Serveis</string>
+    <string name="prefs_category_advanced">Avançat</string>
     <string name="prefs_category_about">Quant a</string>
     <string name="pref_onlyfuture">Amaga episodis emesos</string>
     <string name="pref_onlyfuturesummary">No mostris cap episodi que ja s\'hagi emès</string>

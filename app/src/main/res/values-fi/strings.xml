@@ -332,6 +332,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Yleiset</string>
     <string name="prefs_category_sharing">Palvelut</string>
+    <string name="prefs_category_advanced">Edistyneet</string>
     <string name="prefs_category_about">Tietoja</string>
     <string name="pref_onlyfuture">Ei esitettyjä jaksoja</string>
     <string name="pref_onlyfuturesummary">Älä koskaan näytä jo esitettyjä jaksoja</string>

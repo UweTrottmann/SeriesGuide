@@ -332,6 +332,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Básico</string>
     <string name="prefs_category_sharing">Serviços</string>
+    <string name="prefs_category_advanced">Avançado</string>
     <string name="prefs_category_about">Sobre</string>
     <string name="pref_onlyfuture">Nenhum episódio em exibição</string>
     <string name="pref_onlyfuturesummary">Não mostrar episódios que já tenham estreado</string>

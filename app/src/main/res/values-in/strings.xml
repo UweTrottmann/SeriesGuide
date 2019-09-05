@@ -324,6 +324,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Dasar</string>
     <string name="prefs_category_sharing">Layanan</string>
+    <string name="prefs_category_advanced">Tingkat Lanjut</string>
     <string name="prefs_category_about">Tentang</string>
     <string name="pref_onlyfuture">Tidak Ada episode yang sudah ditayangkan</string>
     <string name="pref_onlyfuturesummary">Jangan pernah tampilan episode yang sudah ditayangkan</string>

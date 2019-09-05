@@ -348,6 +348,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Podstawowe</string>
     <string name="prefs_category_sharing">Usługi</string>
+    <string name="prefs_category_advanced">Zaawansowane</string>
     <string name="prefs_category_about">O programie</string>
     <string name="pref_onlyfuture">Bez wyemitowanych</string>
     <string name="pref_onlyfuturesummary">Nigdy nie wyświetlaj wyemitowanych odcinków</string>

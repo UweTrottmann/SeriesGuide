@@ -324,6 +324,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">기본</string>
     <string name="prefs_category_sharing">서비스</string>
+    <string name="prefs_category_advanced">고급</string>
     <string name="prefs_category_about">정보</string>
     <string name="pref_onlyfuture">방영된 에피소드 보이지 않기</string>
     <string name="pref_onlyfuturesummary">방영된 에피소드를 목록에 표시하지 않습니다</string>

@@ -332,6 +332,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Grundlæggende</string>
     <string name="prefs_category_sharing">Tjenester</string>
+    <string name="prefs_category_advanced">Avanceret</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Ingen sendte episoder</string>
     <string name="pref_onlyfuturesummary">Vis aldrig allerede sendte episoder</string>

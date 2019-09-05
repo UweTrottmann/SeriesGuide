@@ -348,6 +348,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Pagrindai</string>
     <string name="prefs_category_sharing">Paslaugos</string>
+    <string name="prefs_category_advanced">Išplėstinė</string>
     <string name="prefs_category_about">Apie</string>
     <string name="pref_onlyfuture">Neparodytos serijos</string>
     <string name="pref_onlyfuturesummary">Niekada nerodyti jau parodytų serijų</string>

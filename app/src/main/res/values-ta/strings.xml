@@ -332,6 +332,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">அடிப்படைகள்</string>
     <string name="prefs_category_sharing">சேவைகள்</string>
+    <string name="prefs_category_advanced">மேம்பட்ட</string>
     <string name="prefs_category_about">பற்றி</string>
     <string name="pref_onlyfuture">எந்த aired episodes</string>
     <string name="pref_onlyfuturesummary">ஒருபோதும் காட்சி ஏற்கனவே வெளியான episodes</string>
