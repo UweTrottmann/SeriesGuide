@@ -386,10 +386,6 @@
     <string name="upcoming_upto_one_week">μία εβδομάδα</string>
     <string name="upcoming_upto_two_weeks">δύο εβδομάδες</string>
     <string name="upcoming_upto_one_month">ένας μήνας</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">ώρα</string>
-    <string name="upcoming_upto_six_hours">6 ώρες</string>
-    <string name="upcoming_upto_half_day">12 ώρες</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Εμφάνιση</string>
     <string name="pref_theme">Θέμα</string>
@@ -456,10 +452,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Αδιαφανές</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Επερχόμενο επεισόδιο</string>
-    <string name="dashclock_extension_description">Εμφανίζει το επερχόμενο επεισόδιο των σειρών σας στο SeriesGuide.</string>
-    <string name="dashclock_pref_upcoming_threshold">Εμφάνιση επεισοδίων στην επόμενη</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Μόνο για υποστηρικτές</string>
     <string name="action_upgrade">Ξεκλειδώσετε όλα τα χαρακτηριστικά</string>

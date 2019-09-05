@@ -386,10 +386,6 @@
     <string name="upcoming_upto_one_week">1 vecka</string>
     <string name="upcoming_upto_two_weeks">2 veckor</string>
     <string name="upcoming_upto_one_month">1 månad</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 timme</string>
-    <string name="upcoming_upto_six_hours">6 timmar</string>
-    <string name="upcoming_upto_half_day">12 timmar</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Utseende</string>
     <string name="pref_theme">Tema</string>
@@ -456,10 +452,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Solid</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Kommande avsnitt</string>
-    <string name="dashclock_extension_description">Visar nästa uppkommande avsnitt av dina SeriesGuide-serier..</string>
-    <string name="dashclock_pref_upcoming_threshold">Visa avsnitt inom&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Endast för supporters</string>
     <string name="action_upgrade">Lås upp alla funktioner</string>

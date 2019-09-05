@@ -386,10 +386,6 @@
     <string name="upcoming_upto_one_week">۱ هفته</string>
     <string name="upcoming_upto_two_weeks">۲ هفته</string>
     <string name="upcoming_upto_one_month">۱ ماه</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">۱ ساعت</string>
-    <string name="upcoming_upto_six_hours">۶ ساعت</string>
-    <string name="upcoming_upto_half_day">۱۲ ساعت</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">ظاهر</string>
     <string name="pref_theme">زمینه</string>
@@ -456,10 +452,6 @@
     <string name="widget_background_50">۵۰٪</string>
     <string name="widget_background_75">۷۵٪</string>
     <string name="widget_background_opaque">کدر</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">قسمت‌های پیش رو</string>
-    <string name="dashclock_extension_description">نمایش قسمت‌های پیش روی بعدی از نمایش‌های سریزگایدتان.</string>
-    <string name="dashclock_pref_upcoming_threshold">نمایش قسمت‌ها درون&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">فقط برای حامیان</string>
     <string name="action_upgrade">باز کردن تمام ویژگی‌ها</string>

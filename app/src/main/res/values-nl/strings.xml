@@ -386,10 +386,6 @@
     <string name="upcoming_upto_one_week">1 week</string>
     <string name="upcoming_upto_two_weeks">2 weken</string>
     <string name="upcoming_upto_one_month">een maand</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">uur</string>
-    <string name="upcoming_upto_six_hours">6 uur</string>
-    <string name="upcoming_upto_half_day">12 uur</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Uiterlijk</string>
     <string name="pref_theme">Thema</string>
@@ -456,10 +452,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Ondoorzichtig</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Volgende aflevering</string>
-    <string name="dashclock_extension_description">Geeft de eerstvolgende aflevering van uw SeriesGuide shows weer.</string>
-    <string name="dashclock_pref_upcoming_threshold">Toon afleveringen in de volgende&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Alleen voor leden</string>
     <string name="action_upgrade">Ontgrendel alle functies</string>
