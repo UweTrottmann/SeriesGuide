@@ -7,29 +7,10 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.shows.CalendarFragment2.CalendarType
 import com.battlelancer.seriesguide.ui.shows.CalendarQuery
-import com.battlelancer.seriesguide.ui.shows.CalendarSettings
 
 object CalendarUtils {
 
     private const val ACTIVITY_DAY_LIMIT = 30
-
-    /**
-     * Returns episodes that air today or within the next [ACTIVITY_DAY_LIMIT]
-     * days. Excludes shows that are hidden.
-     *
-     * Filters by watched episodes or favorite shows if enabled.
-     *
-     * @return Cursor using the projection of [CalendarQuery].
-     */
-    @JvmStatic
-    fun upcomingEpisodesQuery(context: Context, isOnlyUnwatched: Boolean): Cursor? {
-        val isOnlyCollected = CalendarSettings.isOnlyCollected(context)
-        val isOnlyFavorites = CalendarSettings.isOnlyFavorites(context)
-        return calendarQuery(
-            context, CalendarType.UPCOMING, isOnlyCollected, isOnlyFavorites,
-            isOnlyUnwatched, false
-        )
-    }
 
     /**
      * @return Cursor with projection [CalendarQuery].
