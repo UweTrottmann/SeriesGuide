@@ -11,11 +11,11 @@ class ShowsPopularAdapter(
 ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ShowsPopularViewHolder.create(parent, onItemClickListener)
+        return SearchResultViewHolder.create(parent, onItemClickListener)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as ShowsPopularViewHolder).bindTo(getItem(position))
+        (holder as SearchResultViewHolder).bindTo(getItem(position))
     }
 
     fun setStateForTvdbId(showTvdbId: Int, newState: Int) {
