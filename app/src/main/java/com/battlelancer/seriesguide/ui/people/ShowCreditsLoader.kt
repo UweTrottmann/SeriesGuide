@@ -22,7 +22,7 @@ class ShowCreditsLoader(
 
     override fun loadInBackground(): Credits? {
         if (findTmdbId) {
-            val tmdbId = TmdbTools2(context).findShowTmdbId(showId)
+            val tmdbId = TmdbTools2().findShowTmdbId(context, showId)
             showId = if (tmdbId != null && tmdbId > 0) {
                 tmdbId
             } else {

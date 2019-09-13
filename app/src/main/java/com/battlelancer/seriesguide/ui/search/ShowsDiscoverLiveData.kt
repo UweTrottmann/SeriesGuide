@@ -9,6 +9,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.Errors
@@ -74,12 +75,7 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
         }
 
         private fun getShowsWithNewEpisodes(): Result? {
-            val languageActual = if (language == languageCodeAny) {
-                // TMDB falls back to English if sending 'xx', so set to English beforehand
-                DisplaySettings.LANGUAGE_EN
-            } else {
-                language
-            }
+            val languageActual = TmdbTools2().getSafeLanguageCode(language, languageCodeAny)
 
             val tmdb = SgApp.getServicesComponent(context).tmdb()
             val call = tmdb.discoverTv()
