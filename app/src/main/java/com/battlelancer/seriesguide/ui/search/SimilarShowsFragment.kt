@@ -5,17 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.EmptyView
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
-import timber.log.Timber
 
-class SimilarShowsFragment: Fragment() {
+class SimilarShowsFragment: BaseAddShowsFragment() {
 
     private var showTvdbId: Int = 0
 
@@ -26,6 +25,8 @@ class SimilarShowsFragment: Fragment() {
     private lateinit var swipeRefreshLayout: EmptyViewSwipeRefreshLayout
     private lateinit var emptyView: EmptyView
     private lateinit var recyclerView: RecyclerView
+
+    private lateinit var adapter: SimilarShowsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,20 +53,36 @@ class SimilarShowsFragment: Fragment() {
         }
         swipeRefreshLayout.isRefreshing = true
         emptyView.isGone = true
+
+        recyclerView.apply {
+            setHasFixedSize(true)
+            layoutManager = AutoGridLayoutManager(context, R.dimen.showgrid_columnWidth, 1, 1)
+        }
+
+        adapter = SimilarShowsAdapter(itemClickListener)
+        recyclerView.adapter = adapter
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         similarShowsViewModel.resultsLiveData.observe(this, Observer {
-            Timber.i("Found %s similar shows!", it.size)
             swipeRefreshLayout.isRefreshing = false
+            adapter.submitList(it)
         })
         similarShowsViewModel.errorLiveData.observe(this, Observer { message ->
             recyclerView.isGone = message != null
             emptyView.isGone = message == null
             emptyView.setMessage(message)
         })
+    }
+
+    override fun setAllPendingNotAdded() {
+        similarShowsViewModel.setAllPendingNotAdded()
+    }
+
+    override fun setStateForTvdbId(showTvdbId: Int, newState: Int) {
+        similarShowsViewModel.setStateForTvdbId(showTvdbId, newState)
     }
 
     companion object {

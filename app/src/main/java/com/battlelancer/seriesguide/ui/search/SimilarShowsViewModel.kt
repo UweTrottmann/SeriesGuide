@@ -96,4 +96,36 @@ class SimilarShowsViewModel(
         errorLiveData.postValue(null)
     }
 
+    fun setStateForTvdbId(showTvdbId: Int, newState: Int) {
+        val results = resultsLiveData.value ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            // Make a copy (otherwise the adapter will think it's the same list).
+            val modifiedResults = results.toList()
+            // Set new state on affected shows.
+            for (element in modifiedResults) {
+                if (element.tvdbid == showTvdbId) {
+                    element.state = newState
+                }
+            }
+            // Set as new value.
+            resultsLiveData.postValue(modifiedResults)
+        }
+    }
+
+    fun setAllPendingNotAdded() {
+        val results = resultsLiveData.value ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            // Make a copy (otherwise the adapter will think it's the same list).
+            val modifiedResults = results.toList()
+            // Set new state on affected shows.
+            for (element in modifiedResults) {
+                if (element.state == SearchResult.STATE_ADDING) {
+                    element.state = SearchResult.STATE_ADD
+                }
+            }
+            // Set as new value.
+            resultsLiveData.postValue(modifiedResults)
+        }
+    }
+
 }
