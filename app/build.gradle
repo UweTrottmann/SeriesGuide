@@ -151,6 +151,7 @@ dependencies {
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:${versions.paging}"
 
