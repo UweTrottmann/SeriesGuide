@@ -3,7 +3,9 @@ package com.battlelancer.seriesguide.tmdbapi
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.ui.search.SearchResult
 import com.battlelancer.seriesguide.util.Errors
+import com.uwetrottmann.tmdb2.entities.BaseTvShow
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource
 
 class TmdbTools2 {
@@ -33,6 +35,45 @@ class TmdbTools2 {
         }
 
         return null
+    }
+
+    // TODO: Use in ShowsDiscoverLiveData once using coroutines.
+    /**
+     * Maps TMDB TV shows to search results.
+     * Resolves the TheTVDB id using a network call on the calling thread!
+     * Excludes shows where no TheTVDB id could be resolved (for any reason).
+     */
+    fun mapTvShowsToSearchResults(
+        context: Context,
+        languageCode: String,
+        results: List<BaseTvShow>
+    ): List<SearchResult> {
+        val tvService = SgApp.getServicesComponent(context.applicationContext).tmdb().tvService()
+        return results.mapNotNull { tvShow ->
+            // Find TheTVDB id.
+            val idResponse = tvShow.id?.let {
+                try {
+                    tvService.externalIds(it, null).execute()
+                } catch (e: Exception) {
+                    null
+                }
+            }
+
+            // On TMDB the TheTVDB id might be 0, ignore those shows, too.
+            val externalIds = idResponse?.body()
+            if (idResponse == null || !idResponse.isSuccessful
+                || externalIds == null || externalIds.tvdb_id == null
+                || externalIds.tvdb_id == 0) {
+                null // Ignore this show.
+            } else {
+                SearchResult().apply {
+                    tvdbid = externalIds.tvdb_id!!
+                    title = tvShow.name
+                    overview = tvShow.overview
+                    language = languageCode
+                }
+            }
+        }
     }
 
     fun getSafeLanguageCode(languageCodeOrAny: String, anyCode: String): String {
