@@ -102,6 +102,7 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
                 ?: return buildResultFailure(R.string.tmdb, false)
 
             val tvService = tmdb.tvService()
+            // TODO Replace with TmdbTools2.mapTvShowsToSearchResults once using coroutines.
             val searchResults = results.mapNotNull { tvShow ->
                 if (isCancelled) {
                     return null // do not bother fetching ids for remaining results
