@@ -32,18 +32,16 @@ abstract class BaseAddShowsFragment : Fragment() {
     /**
      * Called if the user triggers adding a single new show through the add dialog. The show is not
      * actually added, yet.
-     *
-     * @see onEvent
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event: AddFragment.OnAddingShowEvent) {
+    fun onEventAddingShow(event: AddFragment.OnAddingShowEvent) {
         if (event.showTvdbId > 0) {
             setStateForTvdbId(event.showTvdbId, SearchResult.STATE_ADDING)
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event: AddShowTask.OnShowAddedEvent) {
+    fun onEventShowAdded(event: AddShowTask.OnShowAddedEvent) {
         when {
             event.successful -> setStateForTvdbId(event.showTvdbId, SearchResult.STATE_ADDED)
             event.showTvdbId > 0 -> setStateForTvdbId(event.showTvdbId, SearchResult.STATE_ADD)
@@ -52,7 +50,7 @@ abstract class BaseAddShowsFragment : Fragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event: RemoveShowTask.OnShowRemovedEvent) {
+    fun onEventShowRemoved(event: RemoveShowTask.OnShowRemovedEvent) {
         if (event.resultCode == NetworkResult.SUCCESS) {
             setStateForTvdbId(event.showTvdbId, SearchResult.STATE_ADD)
         }
