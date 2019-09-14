@@ -99,8 +99,10 @@ class SimilarShowsViewModel(
     fun setStateForTvdbId(showTvdbId: Int, newState: Int) {
         val results = resultsLiveData.value ?: return
         viewModelScope.launch(Dispatchers.IO) {
-            // Make a copy (otherwise the adapter will think it's the same list).
-            val modifiedResults = results.toList()
+            // Make a copy (otherwise will modify the item instances used by the adapter).
+            val modifiedResults = results.map {
+                it.copy()
+            }
             // Set new state on affected shows.
             for (element in modifiedResults) {
                 if (element.tvdbid == showTvdbId) {
@@ -115,8 +117,10 @@ class SimilarShowsViewModel(
     fun setAllPendingNotAdded() {
         val results = resultsLiveData.value ?: return
         viewModelScope.launch(Dispatchers.IO) {
-            // Make a copy (otherwise the adapter will think it's the same list).
-            val modifiedResults = results.toList()
+            // Make a copy (otherwise will modify the item instances used by the adapter).
+            val modifiedResults = results.map {
+                it.copy()
+            }
             // Set new state on affected shows.
             for (element in modifiedResults) {
                 if (element.state == SearchResult.STATE_ADDING) {
