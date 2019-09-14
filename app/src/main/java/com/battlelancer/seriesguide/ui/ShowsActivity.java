@@ -413,6 +413,11 @@ public class ShowsActivity extends BaseTopActivity implements
                 }
                 // new alarm is set automatically as upgrading causes app widgets to update
             }
+            if (lastVersion < SgApp.RELEASE_VERSION_46_5_K) {
+                // Movies were not added in all cases when syncing, so ensure they are now.
+                TraktSettings.resetMoviesLastActivity(this);
+                HexagonSettings.resetSyncState(this);
+            }
 
             // set this as lastVersion
             editor.putInt(AppSettings.KEY_VERSION, currentVersion);

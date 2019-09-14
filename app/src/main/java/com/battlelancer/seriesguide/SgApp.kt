@@ -90,6 +90,10 @@ class SgApp : Application() {
          * ListWidgetProvider alarm intent is now explicit.
          */
         const val RELEASE_VERSION_40_BETA6 = 1502805
+        /**
+         * For trakt and hexagon sync movies were not added in all cases, reset sync times.
+         */
+        const val RELEASE_VERSION_46_5_K = 1503411
 
         /**
          * The content authority used to identify the SeriesGuide [android.content.ContentProvider].
