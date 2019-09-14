@@ -13,6 +13,7 @@ Version 51
 *(2019-09-14)*
 
 * 🔨 Add movies to watchlist, collection or watched in all cases when syncing with trakt or Cloud.
+  On upgrading to this version the next sync will add missing movies.
 * 🔧 Remove DashClock extension, DashClock has been unpublished for a long time.
 * 🔧 Switch settings to new underlying implementation.
 * 🔧 Move basic settings link up to the first section, rename it to Advanced.
