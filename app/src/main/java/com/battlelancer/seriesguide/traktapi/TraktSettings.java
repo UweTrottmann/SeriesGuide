@@ -173,13 +173,13 @@ public class TraktSettings {
     }
 
     /**
-     * Reset {@link #KEY_LAST_MOVIES_WATCHED_AT} to 0 so all watched movies will be downloaded the
+     * Remove {@link #KEY_LAST_MOVIES_WATCHED_AT} so all watched movies will be downloaded the
      * next time a sync runs.
      */
     public static boolean resetMoviesLastWatchedAt(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
-                .putLong(TraktSettings.KEY_LAST_MOVIES_WATCHED_AT, 0)
+                .remove(KEY_LAST_MOVIES_WATCHED_AT)
                 .commit();
     }
 
