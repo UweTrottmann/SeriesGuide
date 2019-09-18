@@ -49,8 +49,13 @@ class SimilarShowsFragment: BaseAddShowsFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         swipeRefreshLayout.apply {
             ViewTools.setSwipeRefreshLayoutColors(activity!!.theme, this)
-            setOnRefreshListener { similarShowsViewModel.loadSimilarShows(showTvdbId) }
+            setOnRefreshListener { loadSimilarShows() }
         }
+        emptyView.setButtonClickListener {
+            swipeRefreshLayout.isRefreshing = true
+            loadSimilarShows()
+        }
+
         swipeRefreshLayout.isRefreshing = true
         emptyView.isGone = true
 
@@ -61,6 +66,10 @@ class SimilarShowsFragment: BaseAddShowsFragment() {
 
         adapter = SimilarShowsAdapter(itemClickListener)
         recyclerView.adapter = adapter
+    }
+
+    private fun loadSimilarShows() {
+        similarShowsViewModel.loadSimilarShows(showTvdbId)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
