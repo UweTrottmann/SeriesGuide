@@ -178,8 +178,7 @@ class ShowFragment : ScopedFragment() {
         textViewRatingRange.text = getString(R.string.format_rating_range, 10)
 
         // link, search and comments button
-        // TODO use different icon.
-        ViewTools.setVectorIconLeft(theme, buttonSimilar, R.drawable.ic_link_black_24dp)
+        ViewTools.setVectorIconLeft(theme, buttonSimilar, R.drawable.ic_search_white_24dp)
         ViewTools.setVectorIconLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp)
         ViewTools.setVectorIconLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp)
         ViewTools.setVectorIconLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp)

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/title_similar_shows"
-        tools:drawableLeft="@drawable/ic_link_black_24dp"
+        tools:drawableLeft="@drawable/ic_search_white_24dp"
         tools:drawableTint="?attr/sgColorIcon" />
 
     <Button
