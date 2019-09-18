@@ -67,10 +67,10 @@ class SimilarShowsFragment: BaseAddShowsFragment() {
         super.onActivityCreated(savedInstanceState)
 
         similarShowsViewModel.resultsLiveData.observe(this, Observer {
-            swipeRefreshLayout.isRefreshing = false
             adapter.submitList(it)
         })
         similarShowsViewModel.errorLiveData.observe(this, Observer { message ->
+            swipeRefreshLayout.isRefreshing = false
             recyclerView.isGone = message != null
             emptyView.isGone = message == null
             emptyView.setMessage(message)

@@ -57,10 +57,12 @@ class SimilarShowsViewModel(
                     response.body()
                 } else {
                     Errors.logAndReport("get similar shows", response)
+                    reportError()
                     return@launch
                 }
             } catch (e: Exception) {
                 Errors.logAndReport("get similar shows", e)
+                reportError()
                 return@launch
             }
 
