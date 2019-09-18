@@ -17,6 +17,12 @@ Version 50
 * 🔧 Movie release times setting also affects popular, search. Watchlist, collection, watched and
   details views will start using it.
 
+#### 50.1
+*(2019-09-18)*
+
+* 🔨 Add movies to watchlist, collection or watched in all cases when syncing with trakt or Cloud.
+  On updating to this version the next sync will add missing movies.
+
 #### 50
 *(2019-08-14)*
 
