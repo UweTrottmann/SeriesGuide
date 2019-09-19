@@ -86,14 +86,12 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        similarShowsViewModel.resultsLiveData.observe(this, Observer {
-            adapter.submitList(it)
-        })
-        similarShowsViewModel.errorLiveData.observe(this, Observer { message ->
+        similarShowsViewModel.resultLiveData.observe(this, Observer {
+            adapter.submitList(it.results)
+            emptyView.setMessage(it.emptyMessage)
+            recyclerView.isGone = it.results.isNullOrEmpty()
+            emptyView.isGone = !it.results.isNullOrEmpty()
             swipeRefreshLayout.isRefreshing = false
-            recyclerView.isGone = message != null
-            emptyView.isGone = message == null
-            emptyView.setMessage(message)
         })
     }
 

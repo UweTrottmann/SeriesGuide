@@ -22,8 +22,7 @@ class SimilarShowsViewModel(
     showTvdbId: Int
 ) : AndroidViewModel(application) {
 
-    val errorLiveData = MutableLiveData<String?>()
-    val resultsLiveData = MutableLiveData<List<SearchResult>>()
+    val resultLiveData = MutableLiveData<Result>()
 
     init {
         loadSimilarShows(showTvdbId)
@@ -39,7 +38,7 @@ class SimilarShowsViewModel(
                 tmdbTools.findShowTmdbId(context, showTvdbId)
             }
             if (showTmdbId == null || showTmdbId <= 0) {
-                reportError()
+                postFailedResult()
                 return@launch
             }
 
@@ -57,17 +56,17 @@ class SimilarShowsViewModel(
                     response.body()
                 } else {
                     Errors.logAndReport("get similar shows", response)
-                    reportError()
+                    postFailedResult()
                     return@launch
                 }
             } catch (e: Exception) {
                 Errors.logAndReport("get similar shows", e)
-                reportError()
+                postFailedResult()
                 return@launch
             }
 
             val results = if (page?.results == null) {
-                reportError()
+                postFailedResult()
                 return@launch
             } else {
                 page.results
@@ -79,27 +78,31 @@ class SimilarShowsViewModel(
             // Mark local shows and use existing TheTVDB poster path.
             SearchTools().markLocalShowsAsAddedAndSetPosterPath(context, searchResults)
 
-            clearError()
-            resultsLiveData.postValue(searchResults)
+            postSuccessfulResult(searchResults)
         }
     }
 
-    private fun reportError() {
+    private fun postFailedResult() {
         val context = getApplication<Application>()
         val message = if (AndroidUtils.isNetworkConnected(context)) {
             context.getString(R.string.api_error_generic, context.getString(R.string.tmdb))
         } else {
             context.getString(R.string.offline)
         }
-        errorLiveData.postValue(message)
+        resultLiveData.postValue(Result(message, null))
     }
 
-    private fun clearError() {
-        errorLiveData.postValue(null)
+    private fun postSuccessfulResult(results: List<SearchResult>) {
+        resultLiveData.postValue(
+            Result(
+                getApplication<Application>().getString(R.string.empty_no_results),
+                results
+            )
+        )
     }
 
     fun setStateForTvdbId(showTvdbId: Int, newState: Int) {
-        val results = resultsLiveData.value ?: return
+        val results = resultLiveData.value?.results ?: return
         viewModelScope.launch(Dispatchers.IO) {
             // Make a copy (otherwise will modify the item instances used by the adapter).
             val modifiedResults = results.map {
@@ -112,12 +115,12 @@ class SimilarShowsViewModel(
                 }
             }
             // Set as new value.
-            resultsLiveData.postValue(modifiedResults)
+            postSuccessfulResult(modifiedResults)
         }
     }
 
     fun setAllPendingNotAdded() {
-        val results = resultsLiveData.value ?: return
+        val results = resultLiveData.value?.results ?: return
         viewModelScope.launch(Dispatchers.IO) {
             // Make a copy (otherwise will modify the item instances used by the adapter).
             val modifiedResults = results.map {
@@ -130,8 +133,13 @@ class SimilarShowsViewModel(
                 }
             }
             // Set as new value.
-            resultsLiveData.postValue(modifiedResults)
+            postSuccessfulResult(modifiedResults)
         }
     }
+
+    data class Result(
+        val emptyMessage: String,
+        val results: List<SearchResult>?
+    )
 
 }
