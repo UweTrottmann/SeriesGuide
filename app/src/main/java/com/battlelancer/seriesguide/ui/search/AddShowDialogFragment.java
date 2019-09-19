@@ -174,6 +174,9 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         ViewTools.setVectorIconLeft(getActivity().getTheme(), buttonLanguage,
                 R.drawable.ic_language_white_24dp);
         CheatSheet.setup(buttonLanguage, R.string.pref_language);
+        ViewTools.setVectorIconLeft(getActivity().getTheme(), buttonDisplaySimilar,
+                R.drawable.ic_search_white_24dp);
+
         ratingRange.setText(getString(R.string.format_rating_range, 10));
 
         // buttons
