@@ -84,7 +84,7 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
         setupViews(savedInstanceState == null)
 
         SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this, Observer {
-            startActivity(SimilarShowsActivity.intent(this, it))
+            startActivity(SimilarShowsActivity.intent(this, it.tvdbid, it.title))
         })
 
         handleSearchIntent(intent)

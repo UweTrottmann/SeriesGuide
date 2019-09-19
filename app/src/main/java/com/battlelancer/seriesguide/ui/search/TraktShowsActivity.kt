@@ -31,7 +31,7 @@ class TraktShowsActivity : BaseNavDrawerActivity(), AddShowDialogFragment.OnAddS
         }
 
         SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this, Observer {
-            startActivity(SimilarShowsActivity.intent(this, it))
+            startActivity(SimilarShowsActivity.intent(this, it.tvdbid, it.title))
         })
     }
 

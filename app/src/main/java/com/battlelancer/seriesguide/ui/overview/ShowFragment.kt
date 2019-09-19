@@ -516,7 +516,7 @@ class ShowFragment : ScopedFragment() {
 
         // Similar shows button.
         buttonSimilar.setOnClickListener {
-            startActivity(SimilarShowsActivity.intent(context!!, showTvdbId))
+            startActivity(SimilarShowsActivity.intent(context!!, showTvdbId, showTitle))
         }
 
         // IMDb button

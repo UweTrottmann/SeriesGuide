@@ -240,8 +240,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
     @OnClick(R.id.buttonAddDisplaySimilar)
     public void sendDisplaySimilarShowsEvent() {
         dismissAllowingStateLoss();
-        SimilarShowsFragment.getDisplaySimilarShowsEventLiveData()
-                .postValue(displayedShow.getTvdbid());
+        SimilarShowsFragment.getDisplaySimilarShowsEventLiveData().postValue(displayedShow);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -23,6 +24,7 @@ import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
 class SimilarShowsFragment : BaseAddShowsFragment() {
 
     private var showTvdbId: Int = 0
+    private var showTitle: String? = null
 
     private val similarShowsViewModel: SimilarShowsViewModel by viewModels {
         SimilarShowsViewModelFactory(activity!!.application, showTvdbId)
@@ -38,6 +40,7 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
         super.onCreate(savedInstanceState)
 
         showTvdbId = arguments!!.getInt(ARG_SHOW_TVDB_ID)
+        showTitle = arguments!!.getString(ARG_SHOW_TITLE)
 
         setHasOptionsMenu(true)
     }
@@ -94,6 +97,12 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
         })
     }
 
+    override fun onStart() {
+        super.onStart()
+        // Set (or restore if going back) the show title as action bar subtitle.
+        (activity as AppCompatActivity).supportActionBar?.subtitle = showTitle
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
 
@@ -127,15 +136,17 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
 
     companion object {
         private const val ARG_SHOW_TVDB_ID = "ARG_SHOW_TVDB_ID"
+        private const val ARG_SHOW_TITLE = "ARG_SHOW_TITLE"
         private const val MENU_ITEM_SEARCH_ID = 1
 
         @JvmStatic
-        val displaySimilarShowsEventLiveData = SingleLiveEvent<Int>()
+        val displaySimilarShowsEventLiveData = SingleLiveEvent<SearchResult>()
 
-        fun newInstance(showTvdbId: Int): SimilarShowsFragment {
+        fun newInstance(showTvdbId: Int, showTitle: String?): SimilarShowsFragment {
             return SimilarShowsFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_SHOW_TVDB_ID, showTvdbId)
+                    putString(ARG_SHOW_TITLE, showTitle)
                 }
             }
         }

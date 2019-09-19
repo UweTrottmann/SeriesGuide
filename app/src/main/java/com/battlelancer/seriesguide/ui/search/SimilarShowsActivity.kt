@@ -21,13 +21,14 @@ class SimilarShowsActivity : BaseActivity(), AddShowDialogFragment.OnAddShowList
             finish()
             return
         }
+        val showTitle = intent.getStringExtra(EXTRA_SHOW_TITLE)
 
         if (savedInstanceState == null) {
-            addFragmentWithSimilarShows(showTvdbId)
+            addFragmentWithSimilarShows(showTvdbId, showTitle)
         }
 
         SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this, Observer {
-            addFragmentWithSimilarShows(it, true)
+            addFragmentWithSimilarShows(it.tvdbid, it.title, true)
         })
     }
 
@@ -53,8 +54,12 @@ class SimilarShowsActivity : BaseActivity(), AddShowDialogFragment.OnAddShowList
         TaskManager.getInstance().performAddTask(this, show)
     }
 
-    private fun addFragmentWithSimilarShows(showTvdbId: Int, addToBackStack: Boolean = false) {
-        val fragment = SimilarShowsFragment.newInstance(showTvdbId)
+    private fun addFragmentWithSimilarShows(
+        showTvdbId: Int,
+        showTitle: String?,
+        addToBackStack: Boolean = false
+    ) {
+        val fragment = SimilarShowsFragment.newInstance(showTvdbId, showTitle)
         supportFragmentManager.beginTransaction().apply {
             if (addToBackStack) {
                 replace(R.id.content_frame, fragment)
@@ -67,13 +72,13 @@ class SimilarShowsActivity : BaseActivity(), AddShowDialogFragment.OnAddShowList
 
     companion object {
         private const val EXTRA_SHOW_THETVDB_ID = "EXTRA_SHOW_THETVDB_ID"
+        private const val EXTRA_SHOW_TITLE = "EXTRA_SHOW_TITLE"
 
         @JvmStatic
-        fun intent(context: Context, showTvdbId: Int): Intent {
-            return Intent(context, SimilarShowsActivity::class.java).putExtra(
-                EXTRA_SHOW_THETVDB_ID,
-                showTvdbId
-            )
+        fun intent(context: Context, showTvdbId: Int, showTitle: String?): Intent {
+            return Intent(context, SimilarShowsActivity::class.java)
+                .putExtra(EXTRA_SHOW_THETVDB_ID, showTvdbId)
+                .putExtra(EXTRA_SHOW_TITLE, showTitle)
         }
     }
 
