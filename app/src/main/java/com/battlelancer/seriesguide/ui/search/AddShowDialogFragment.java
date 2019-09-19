@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
@@ -114,6 +115,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
     @BindView(R.id.textViewAddShowMeta) TextView showmeta;
     @BindView(R.id.buttonAddLanguage) Button buttonLanguage;
     @BindView(R.id.buttonAddDisplaySimilar) Button buttonDisplaySimilar;
+    @BindView(R.id.buttonAddStreamingSearch) Button buttonStreamingSearch;
     @BindView(R.id.textViewAddDescription) TextView overview;
     @BindView(R.id.textViewAddRatingValue) TextView rating;
     @BindView(R.id.textViewAddRatingRange) TextView ratingRange;
@@ -176,10 +178,16 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         CheatSheet.setup(buttonLanguage, R.string.pref_language);
         ViewTools.setVectorIconLeft(getActivity().getTheme(), buttonDisplaySimilar,
                 R.drawable.ic_search_white_24dp);
+        ViewTools.setVectorIconLeft(getActivity().getTheme(), buttonStreamingSearch,
+                R.drawable.ic_play_arrow_black_24dp);
 
         ratingRange.setText(getString(R.string.format_rating_range, 10));
 
         // buttons
+        buttonStreamingSearch.setVisibility(
+                StreamingSearch.isNotConfiguredOrTurnedOff(requireContext())
+                        ? View.GONE : View.VISIBLE
+        );
         buttonNegative.setText(R.string.dismiss);
         buttonNegative.setOnClickListener(view -> dismiss());
         buttonPositive.setVisibility(View.GONE);
@@ -233,7 +241,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
     }
 
     @OnClick(R.id.buttonAddLanguage)
-    public void onClickButtonLanguage() {
+    void onClickButtonLanguage() {
         LanguageChoiceDialogFragment.show(getFragmentManager(),
                 R.array.languageCodesShows, displayedShow.getLanguage(),
                 LanguageChoiceDialogFragment.TAG_ADD_DIALOG
@@ -241,9 +249,17 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
     }
 
     @OnClick(R.id.buttonAddDisplaySimilar)
-    public void sendDisplaySimilarShowsEvent() {
+    void onClickButtonDisplaySimilarShows() {
         dismissAllowingStateLoss();
         SimilarShowsFragment.getDisplaySimilarShowsEventLiveData().postValue(displayedShow);
+    }
+
+    @OnClick(R.id.buttonAddStreamingSearch)
+    void onClickButtonStreamingSearch() {
+        String showTitle = displayedShow.getTitle();
+        if (showTitle != null) {
+            StreamingSearch.searchForShow(requireContext(), showTitle);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
