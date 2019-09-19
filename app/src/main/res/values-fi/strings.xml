@@ -202,6 +202,9 @@
     <string name="watched_shows">Katsottu</string>
     <string name="shows_collection">Kokoelma</string>
     <string name="watchlist">Seurantalista</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Ensimmäinen lista</string>
     <string name="list_add">Lisää lista</string>

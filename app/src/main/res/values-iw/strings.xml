@@ -210,6 +210,9 @@
     <string name="watched_shows">נצפה</string>
     <string name="shows_collection">אוסף</string>
     <string name="watchlist">רשימת מעקב</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">הרשימה הראשונה</string>
     <string name="list_add">הוסף רשימה</string>

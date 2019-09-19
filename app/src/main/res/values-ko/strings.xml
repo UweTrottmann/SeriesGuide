@@ -198,6 +198,9 @@
     <string name="watched_shows">시청한 목록</string>
     <string name="shows_collection">컬렉션</string>
     <string name="watchlist">관심목록</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">첫번째 목록</string>
     <string name="list_add">목록 추가</string>

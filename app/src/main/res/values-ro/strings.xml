@@ -206,6 +206,9 @@
     <string name="watched_shows">Vizionat</string>
     <string name="shows_collection">Colecție</string>
     <string name="watchlist">Listă vizionate</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Prima listă</string>
     <string name="list_add">Adăugați listă</string>

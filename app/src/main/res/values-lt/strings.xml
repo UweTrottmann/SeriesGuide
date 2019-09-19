@@ -210,6 +210,9 @@
     <string name="watched_shows">Matyti</string>
     <string name="shows_collection">Kolekcija</string>
     <string name="watchlist">Stebimi</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Pirmasis sąrašas</string>
     <string name="list_add">Pridėti sąrašą</string>

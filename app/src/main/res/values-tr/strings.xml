@@ -202,6 +202,9 @@
     <string name="watched_shows">İzlenmiş</string>
     <string name="shows_collection">Koleksiyon</string>
     <string name="watchlist">İzleme listesi</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">İlk liste</string>
     <string name="list_add">Yeni liste</string>

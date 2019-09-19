@@ -198,6 +198,9 @@
     <string name="watched_shows">Ditonton</string>
     <string name="shows_collection">Koleksi</string>
     <string name="watchlist">Daftar tontonan</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Daftar pertama</string>
     <string name="list_add">Tambah daftar</string>

@@ -202,6 +202,9 @@
     <string name="watched_shows">تماشا شده</string>
     <string name="shows_collection">مجموعه</string>
     <string name="watchlist">فهرست تماشا</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">فهرست نخست</string>
     <string name="list_add">افزودن فهرست</string>

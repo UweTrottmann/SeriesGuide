@@ -202,6 +202,9 @@
     <string name="watched_shows">Sett</string>
     <string name="shows_collection">Samling</string>
     <string name="watchlist">Overvåkningsliste</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Første liste</string>
     <string name="list_add">Legg til liste</string>
