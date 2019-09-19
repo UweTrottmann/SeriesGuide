@@ -223,6 +223,10 @@
     <string name="shows_collection">Collection</string>
     <string name="watchlist">Watchlist</string>
 
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
+
     <!-- Lists -->
     <string name="first_list">First list</string>
     <string name="list_add">Add list</string>

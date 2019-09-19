@@ -198,6 +198,9 @@
     <string name="watched_shows">已看過</string>
     <string name="shows_collection">收藏</string>
     <string name="watchlist">待看清單</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">第一個清單</string>
     <string name="list_add">新增清單</string>

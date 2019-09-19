@@ -9,8 +9,8 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.traktapi.SgTrakt
-import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.TmdbDate
@@ -74,12 +74,7 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
         }
 
         private fun getShowsWithNewEpisodes(): Result? {
-            val languageActual = if (language == languageCodeAny) {
-                // TMDB falls back to English if sending 'xx', so set to English beforehand
-                DisplaySettings.LANGUAGE_EN
-            } else {
-                language
-            }
+            val languageActual = TmdbTools2().getSafeLanguageCode(language, languageCodeAny)
 
             val tmdb = SgApp.getServicesComponent(context).tmdb()
             val call = tmdb.discoverTv()
@@ -106,6 +101,7 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
                 ?: return buildResultFailure(R.string.tmdb, false)
 
             val tvService = tmdb.tvService()
+            // TODO Replace with TmdbTools2.mapTvShowsToSearchResults once using coroutines.
             val searchResults = results.mapNotNull { tvShow ->
                 if (isCancelled) {
                     return null // do not bother fetching ids for remaining results
@@ -134,7 +130,7 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
                     }
                 }
             }
-            markLocalShows(searchResults)
+            SearchTools().markLocalShowsAsAddedAndSetPosterPath(context, searchResults)
             return buildResultSuccess(searchResults, R.string.add_empty, false)
         }
 
@@ -148,31 +144,13 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
                 } else {
                     tvdbTools.searchSeries(query, language)
                 }
-                markLocalShows(results)
+                SearchTools().markLocalShowsAsAddedAndSetPosterPath(context, results)
                 return buildResultSuccess(results, R.string.no_results, true)
             } catch (e: TvdbException) {
                 Timber.e(e, "Searching show failed")
             }
 
             return buildResultFailure(R.string.tvdb, true)
-        }
-
-        private fun markLocalShows(results: List<SearchResult>?) {
-            val existingPosterPaths = ShowTools.getSmallPostersByTvdbId(context)
-            if (existingPosterPaths == null || results == null) {
-                return
-            }
-
-            for (result in results) {
-                result.overview = String.format("(%s) %s", result.language, result.overview)
-
-                if (existingPosterPaths.indexOfKey(result.tvdbid) >= 0) {
-                    // is already in local database
-                    result.state = SearchResult.STATE_ADDED
-                    // use the poster we fetched for it (or null if there is none)
-                    result.posterPath = existingPosterPaths[result.tvdbid]
-                }
-            }
         }
 
         private fun searchShowsOnTrakt(): Result? {

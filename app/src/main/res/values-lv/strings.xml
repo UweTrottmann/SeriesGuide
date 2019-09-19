@@ -206,6 +206,9 @@
     <string name="watched_shows">Watched</string>
     <string name="shows_collection">Kolekcija</string>
     <string name="watchlist">Redzamo filmu saraksts</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Pirmais saraksts</string>
     <string name="list_add">Pievienot sarakstu</string>

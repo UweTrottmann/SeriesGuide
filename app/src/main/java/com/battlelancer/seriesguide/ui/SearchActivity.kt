@@ -13,6 +13,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -27,13 +28,15 @@ import com.battlelancer.seriesguide.ui.search.SearchResult
 import com.battlelancer.seriesguide.ui.search.SearchTriggerListener
 import com.battlelancer.seriesguide.ui.search.ShowSearchFragment
 import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFragment
+import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity
+import com.battlelancer.seriesguide.ui.search.SimilarShowsFragment
 import com.battlelancer.seriesguide.ui.search.TvdbIdExtractor
 import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ViewTools
-import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import com.google.android.gms.actions.SearchIntents
+import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -79,6 +82,10 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
         setupNavDrawer()
 
         setupViews(savedInstanceState == null)
+
+        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this, Observer {
+            startActivity(SimilarShowsActivity.intent(this, it.tvdbid, it.title))
+        })
 
         handleSearchIntent(intent)
     }

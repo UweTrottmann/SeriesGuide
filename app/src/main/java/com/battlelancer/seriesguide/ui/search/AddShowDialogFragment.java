@@ -113,6 +113,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
     @BindView(R.id.textViewAddTitle) TextView title;
     @BindView(R.id.textViewAddShowMeta) TextView showmeta;
     @BindView(R.id.buttonAddLanguage) Button buttonLanguage;
+    @BindView(R.id.buttonAddDisplaySimilar) Button buttonDisplaySimilar;
     @BindView(R.id.textViewAddDescription) TextView overview;
     @BindView(R.id.textViewAddRatingValue) TextView rating;
     @BindView(R.id.textViewAddRatingRange) TextView ratingRange;
@@ -173,6 +174,9 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
         ViewTools.setVectorIconLeft(getActivity().getTheme(), buttonLanguage,
                 R.drawable.ic_language_white_24dp);
         CheatSheet.setup(buttonLanguage, R.string.pref_language);
+        ViewTools.setVectorIconLeft(getActivity().getTheme(), buttonDisplaySimilar,
+                R.drawable.ic_search_white_24dp);
+
         ratingRange.setText(getString(R.string.format_rating_range, 10));
 
         // buttons
@@ -234,6 +238,12 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
                 R.array.languageCodesShows, displayedShow.getLanguage(),
                 LanguageChoiceDialogFragment.TAG_ADD_DIALOG
         );
+    }
+
+    @OnClick(R.id.buttonAddDisplaySimilar)
+    public void sendDisplaySimilarShowsEvent() {
+        dismissAllowingStateLoss();
+        SimilarShowsFragment.getDisplaySimilarShowsEventLiveData().postValue(displayedShow);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

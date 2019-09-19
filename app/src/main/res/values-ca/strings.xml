@@ -202,6 +202,9 @@
     <string name="watched_shows">Vist</string>
     <string name="shows_collection">Coŀlecció</string>
     <string name="watchlist">Llista de seguiment</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Primera llista</string>
     <string name="list_add">Afegeix llista</string>

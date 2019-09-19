@@ -206,6 +206,9 @@
     <string name="watched_shows">Одгледано</string>
     <string name="shows_collection">Колекција</string>
     <string name="watchlist">Листа за гледање</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Прва листа</string>
     <string name="list_add">Додај листу</string>

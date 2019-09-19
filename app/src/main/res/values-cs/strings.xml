@@ -210,6 +210,9 @@
     <string name="watched_shows">Zhlédnuto</string>
     <string name="shows_collection">Sbírka</string>
     <string name="watchlist">Chci vidět</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">První seznam</string>
     <string name="list_add">Přidat seznam</string>

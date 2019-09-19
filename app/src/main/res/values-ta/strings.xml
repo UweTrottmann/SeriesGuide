@@ -202,6 +202,9 @@
     <string name="watched_shows">பார்த்த</string>
     <string name="shows_collection">தொகுப்பு</string>
     <string name="watchlist">Watchlist</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">முதல் பட்டியல்</string>
     <string name="list_add">பட்டியல் சேர்</string>

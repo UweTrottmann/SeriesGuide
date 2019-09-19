@@ -210,6 +210,9 @@
     <string name="watched_shows">Переглянуто</string>
     <string name="shows_collection">Колекція</string>
     <string name="watchlist">Список перегляду</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Перший список</string>
     <string name="list_add">Додати список</string>

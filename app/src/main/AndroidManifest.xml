@@ -123,6 +123,7 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.search.SimilarShowsActivity" />
         <activity
             android:name=".ui.search.TraktShowsActivity"
             android:parentActivityName=".ui.SearchActivity" />

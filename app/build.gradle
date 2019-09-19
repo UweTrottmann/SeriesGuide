@@ -133,6 +133,7 @@ dependencies {
 
     implementation project(':api')
     implementation project(':billing')
+    implementation project(':common')
     implementation project(':customtabs')
     implementation project(':tmdb-api')
     implementation project(':widgets')
@@ -143,6 +144,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.browser:browser:1.0.0'
+    implementation 'androidx.fragment:fragment-ktx:1.1.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.palette:palette:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
@@ -151,6 +153,7 @@ dependencies {
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:${versions.paging}"
 

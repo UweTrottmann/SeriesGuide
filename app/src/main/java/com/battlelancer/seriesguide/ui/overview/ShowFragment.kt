@@ -39,6 +39,7 @@ import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
 import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader
+import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity
 import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
@@ -109,6 +110,8 @@ class ShowFragment : ScopedFragment() {
     internal lateinit var buttonLanguage: Button
     @BindView(R.id.containerRatings)
     internal lateinit var buttonRate: View
+    @BindView(R.id.buttonShowSimilar)
+    internal lateinit var buttonSimilar: Button
     @BindView(R.id.buttonShowImdb)
     internal lateinit var buttonImdb: Button
     @BindView(R.id.buttonShowTvdb)
@@ -175,6 +178,7 @@ class ShowFragment : ScopedFragment() {
         textViewRatingRange.text = getString(R.string.format_rating_range, 10)
 
         // link, search and comments button
+        ViewTools.setVectorIconLeft(theme, buttonSimilar, R.drawable.ic_search_white_24dp)
         ViewTools.setVectorIconLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp)
         ViewTools.setVectorIconLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp)
         ViewTools.setVectorIconLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp)
@@ -509,6 +513,11 @@ class ShowFragment : ScopedFragment() {
             activity,
             showCursor.getInt(ShowQuery.RATING_USER)
         )
+
+        // Similar shows button.
+        buttonSimilar.setOnClickListener {
+            startActivity(SimilarShowsActivity.intent(context!!, showTvdbId, showTitle))
+        }
 
         // IMDb button
         val imdbId = showCursor.getString(ShowQuery.IMDBID)
