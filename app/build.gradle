@@ -133,6 +133,7 @@ dependencies {
 
     implementation project(':api')
     implementation project(':billing')
+    implementation project(':common')
     implementation project(':customtabs')
     implementation project(':tmdb-api')
     implementation project(':widgets')

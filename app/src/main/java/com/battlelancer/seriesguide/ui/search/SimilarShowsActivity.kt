@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.lifecycle.Observer
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.util.TaskManager
@@ -24,6 +25,10 @@ class SimilarShowsActivity : BaseActivity(), AddShowDialogFragment.OnAddShowList
         if (savedInstanceState == null) {
             addFragmentWithSimilarShows(showTvdbId)
         }
+
+        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this, Observer {
+            addFragmentWithSimilarShows(it, true)
+        })
     }
 
     override fun setupActionBar() {
@@ -48,10 +53,15 @@ class SimilarShowsActivity : BaseActivity(), AddShowDialogFragment.OnAddShowList
         TaskManager.getInstance().performAddTask(this, show)
     }
 
-    fun addFragmentWithSimilarShows(showTvdbId: Int, addToBackStack: Boolean = false) {
+    private fun addFragmentWithSimilarShows(showTvdbId: Int, addToBackStack: Boolean = false) {
+        val fragment = SimilarShowsFragment.newInstance(showTvdbId)
         supportFragmentManager.beginTransaction().apply {
-            if (addToBackStack) addToBackStack(null)
-            add(R.id.content_frame, SimilarShowsFragment.newInstance(showTvdbId))
+            if (addToBackStack) {
+                replace(R.id.content_frame, fragment)
+                addToBackStack(null)
+            } else {
+                add(R.id.content_frame, fragment)
+            }
         }.commit()
     }
 

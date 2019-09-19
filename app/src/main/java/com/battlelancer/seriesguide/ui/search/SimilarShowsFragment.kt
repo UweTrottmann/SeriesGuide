@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.EmptyView
+import com.uwetrottmann.seriesguide.common.SingleLiveEvent
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
 
 class SimilarShowsFragment : BaseAddShowsFragment() {
@@ -127,6 +128,9 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
     companion object {
         private const val ARG_SHOW_TVDB_ID = "ARG_SHOW_TVDB_ID"
         private const val MENU_ITEM_SEARCH_ID = 1
+
+        @JvmStatic
+        val displaySimilarShowsEventLiveData = SingleLiveEvent<Int>()
 
         fun newInstance(showTvdbId: Int): SimilarShowsFragment {
             return SimilarShowsFragment().apply {

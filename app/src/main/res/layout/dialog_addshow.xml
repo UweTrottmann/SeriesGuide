@@ -157,6 +157,17 @@
                 android:text="@string/trakt"
                 android:textAppearance="@style/TextAppearance.Caption" />
 
+            <Button
+                android:id="@+id/buttonAddDisplaySimilar"
+                style="@style/Widget.SeriesGuide.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewAddRatingLabel"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_padding"
+                android:text="@string/title_similar_shows" />
+
         </RelativeLayout>
     </ScrollView>
 

@@ -113,6 +113,7 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
     @BindView(R.id.textViewAddTitle) TextView title;
     @BindView(R.id.textViewAddShowMeta) TextView showmeta;
     @BindView(R.id.buttonAddLanguage) Button buttonLanguage;
+    @BindView(R.id.buttonAddDisplaySimilar) Button buttonDisplaySimilar;
     @BindView(R.id.textViewAddDescription) TextView overview;
     @BindView(R.id.textViewAddRatingValue) TextView rating;
     @BindView(R.id.textViewAddRatingRange) TextView ratingRange;
@@ -234,6 +235,13 @@ public class AddShowDialogFragment extends AppCompatDialogFragment {
                 R.array.languageCodesShows, displayedShow.getLanguage(),
                 LanguageChoiceDialogFragment.TAG_ADD_DIALOG
         );
+    }
+
+    @OnClick(R.id.buttonAddDisplaySimilar)
+    public void sendDisplaySimilarShowsEvent() {
+        dismissAllowingStateLoss();
+        SimilarShowsFragment.getDisplaySimilarShowsEventLiveData()
+                .postValue(displayedShow.getTvdbid());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
