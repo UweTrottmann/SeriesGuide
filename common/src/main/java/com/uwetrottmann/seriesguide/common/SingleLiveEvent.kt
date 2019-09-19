@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.uwetrottmann.seriesguide.billing
+package com.uwetrottmann.seriesguide.common
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
