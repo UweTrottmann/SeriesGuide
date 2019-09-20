@@ -9,7 +9,6 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.VibrationEffect
 import android.os.Vibrator
 import android.preference.PreferenceManager
 import android.provider.Settings
@@ -415,17 +414,8 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 && NotificationSettings.isNotificationVibrating(pref.context)) {
                 // demonstrate vibration pattern used by SeriesGuide
                 val vibrator = activity!!.getSystemService<Vibrator>()
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator?.vibrate(
-                        VibrationEffect.createWaveform(
-                            NotificationService.VIBRATION_PATTERN,
-                            -1
-                        )
-                    )
-                } else {
-                    @Suppress("DEPRECATION") // Using new API above.
-                    vibrator?.vibrate(NotificationService.VIBRATION_PATTERN, -1)
-                }
+                @Suppress("DEPRECATION") // Not visible on O+, no need to use new API.
+                vibrator?.vibrate(NotificationService.VIBRATION_PATTERN, -1)
             }
             if (StreamingSearch.KEY_SETTING_SERVICE == key) {
                 updateStreamSearchServiceSummary(pref)
