@@ -209,11 +209,8 @@ dependencies {
     implementation "com.google.android.gms:play-services-auth:17.0.0"
 
     // App Engine
-    // override Guava version to avoid duplicate classes due to listenablefuture extraction
-    // remove once API client depends on Guava 27.0 or newer
-    implementation 'com.google.guava:guava:27.0.1-android'
     // https://github.com/googleapis/google-api-java-client/releases
-    implementation('com.google.api-client:google-api-client-android:1.30.2') {
+    implementation('com.google.api-client:google-api-client-android:1.30.3') {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
         exclude group: 'org.checkerframework' // from guava, not needed at runtime
         exclude group: 'com.google.errorprone' // from guava, not needed at runtime
