@@ -144,7 +144,7 @@ class ShowsDiscoverFragment : Fragment() {
                     startActivity(OverviewActivity.intentShow(context, item.tvdbid))
                 } else {
                     // display more details in a dialog
-                    AddShowDialogFragment.show(context, fragmentManager, item)
+                    AddShowDialogFragment.show(context!!, fragmentManager!!, item)
                 }
             }
         }
