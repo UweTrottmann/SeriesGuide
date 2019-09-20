@@ -9,6 +9,13 @@ Version 51
 ----------
 *(in development)*
 
+#### 51-beta5
+*(2019-09-20)*
+
+* 🌟 Display similar shows from the show details dialog and screen. Powered by themoviedb.org!
+* 🔧 Display streaming search in show details dialog if it was configured.
+* 📝 Latest translations from crowdin.
+
 #### 51-beta4
 *(2019-09-14)*
 
