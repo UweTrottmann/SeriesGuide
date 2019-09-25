@@ -94,6 +94,7 @@ class SgApp : Application() {
         /**
          * For trakt and hexagon sync movies were not added in all cases, reset sync times.
          */
+        const val RELEASE_VERSION_50_1 = 2105008
         const val RELEASE_VERSION_51_BETA4 = 2105103
 
         /**
