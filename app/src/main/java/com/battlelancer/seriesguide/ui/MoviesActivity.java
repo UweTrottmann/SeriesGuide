@@ -111,8 +111,9 @@ public class MoviesActivity extends BaseTopActivity {
 
         setDrawerSelectedItem(R.id.navigation_item_movies);
 
+        // Broken: tabs will update, but view pager does not use correct fragments.
         // add trakt-only tab if user just signed in
-        maybeAddNowTab();
+//        maybeAddNowTab();
     }
 
     @Override
