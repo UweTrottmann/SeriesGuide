@@ -113,7 +113,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
         setTitle(peopleType == PeopleType.CAST ? R.string.movie_cast : R.string.movie_crew);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_clear_24dp);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(
                     peopleType == PeopleType.CAST ? R.string.movie_cast : R.string.movie_crew);

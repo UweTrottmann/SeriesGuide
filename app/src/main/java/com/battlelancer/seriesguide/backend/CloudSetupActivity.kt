@@ -25,7 +25,10 @@ class CloudSetupActivity : BaseActivity() {
 
     override fun setupActionBar() {
         super.setupActionBar()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.apply {
+            setHomeAsUpIndicator(R.drawable.ic_clear_24dp)
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

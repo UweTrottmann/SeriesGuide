@@ -37,6 +37,7 @@ class PersonActivity : BaseActivity() {
             it.setBackgroundDrawable(
                 ContextCompat.getDrawable(this, R.drawable.background_actionbar_gradient)
             )
+            it.setHomeAsUpIndicator(R.drawable.ic_clear_24dp)
             it.setDisplayHomeAsUpEnabled(true)
             it.setDisplayShowTitleEnabled(false)
         }
