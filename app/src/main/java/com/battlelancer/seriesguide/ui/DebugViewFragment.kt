@@ -17,13 +17,16 @@ import io.palaima.debugdrawer.commons.DeviceModule
 import io.palaima.debugdrawer.timber.TimberModule
 import io.palaima.debugdrawer.view.DebugView
 
+/**
+ * Displays a [DebugView]. Notably allows to display and share logs.
+ */
 class DebugViewFragment : AppCompatDialogFragment() {
 
     private lateinit var debugView: DebugView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NO_TITLE, 0)
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Light)
     }
 
     override fun onCreateView(

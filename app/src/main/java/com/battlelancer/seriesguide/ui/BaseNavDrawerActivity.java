@@ -20,14 +20,14 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
-import com.battlelancer.seriesguide.service.FeedbackBroadcastReceiver;
 import com.battlelancer.seriesguide.jobs.FlagJob;
+import com.battlelancer.seriesguide.service.FeedbackBroadcastReceiver;
+import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.stats.StatsActivity;
@@ -180,7 +180,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
         // setup nav drawer items
         navigationView.inflateMenu(R.menu.menu_drawer);
-        if (!BuildConfig.DEBUG) {
+        if (!AppSettings.isUserDebugModeEnabled(this)) {
             navigationView.getMenu().removeItem(R.id.navigation_sub_item_debug);
         }
         navigationView.setItemIconTintList(ContextCompat.getColorStateList(this,
@@ -293,7 +293,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 }
                 break;
             case R.id.navigation_sub_item_debug:
-                if (BuildConfig.DEBUG) {
+                if (AppSettings.isUserDebugModeEnabled(this)) {
                     DialogTools.safeShow(new DebugViewFragment(), getSupportFragmentManager(),
                             "debugViewDialog");
                 }

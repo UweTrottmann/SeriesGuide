@@ -18,10 +18,13 @@ public class AppSettings {
 
     public static final String KEY_GOOGLEANALYTICS = "enableGAnalytics";
 
-    @SuppressWarnings("unused") @Deprecated
+    @SuppressWarnings("unused")
+    @Deprecated
     public static final String KEY_HAS_SEEN_NAV_DRAWER = "hasSeenNavDrawer";
 
     public static final String KEY_ASKED_FOR_FEEDBACK = "askedForFeedback";
+
+    public static final String KEY_USER_DEBUG_MODE_ENBALED = "com.battlelancer.seriesguide.userDebugModeEnabled";
 
     /**
      * Returns the version code of the previously installed version. Is the current version on fresh
@@ -75,5 +78,14 @@ public class AppSettings {
                 .edit()
                 .putBoolean(KEY_ASKED_FOR_FEEDBACK, true)
                 .apply();
+    }
+
+    /**
+     * Returns if user-visible debug components should be enabled
+     * (e.g. logging to logcat, debug views). Always true for debug builds.
+     */
+    public static boolean isUserDebugModeEnabled(Context context) {
+        return BuildConfig.DEBUG || PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_USER_DEBUG_MODE_ENBALED, false);
     }
 }
