@@ -1,15 +1,15 @@
 package com.battlelancer.seriesguide.extensions
 
 import android.content.SharedPreferences
-import android.preference.ListPreference
-import android.preference.Preference
-import android.preference.PreferenceFragment
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 
 /**
  * A [android.preference.PreferenceFragment] which has a helper method to easily display the
  * current settings value of a [android.preference.ListPreference].
  */
-abstract class BaseSettingsFragment : PreferenceFragment() {
+abstract class BaseSettingsFragment : PreferenceFragmentCompat() {
 
     companion object {
 

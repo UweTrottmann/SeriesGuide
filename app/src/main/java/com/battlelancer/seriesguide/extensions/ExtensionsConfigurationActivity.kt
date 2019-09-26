@@ -20,21 +20,18 @@ class ExtensionsConfigurationActivity : BaseActivity() {
         setContentView(R.layout.activity_singlepane)
         setupActionBar()
 
-        if (intent.hasExtra(SeriesGuideExtension.EXTRA_FROM_SERIESGUIDE_SETTINGS)) {
-            // Launch Amazon extension settings instead.
-            if (savedInstanceState == null) {
-                val f = AmazonConfigurationFragment()
-                fragmentManager.beginTransaction()
-                    .add(R.id.content_frame, f)
-                    .commit()
+        if (savedInstanceState == null) {
+            val f = if (
+                intent.hasExtra(SeriesGuideExtension.EXTRA_FROM_SERIESGUIDE_SETTINGS)
+            ) {
+                // Launch Amazon extension settings instead.
+                AmazonConfigurationFragment()
+            } else {
+                ExtensionsConfigurationFragment()
             }
-        } else {
-            if (savedInstanceState == null) {
-                val f = ExtensionsConfigurationFragment()
-                supportFragmentManager.beginTransaction()
-                    .add(R.id.content_frame, f)
-                    .commit()
-            }
+            supportFragmentManager.beginTransaction()
+                .add(R.id.content_frame, f)
+                .commit()
         }
     }
 
