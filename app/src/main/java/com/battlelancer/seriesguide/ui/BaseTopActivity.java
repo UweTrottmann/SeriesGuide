@@ -159,7 +159,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
             }
         }).setAction(R.string.preferences,
                 v -> startActivity(new Intent(BaseTopActivity.this, DataLiberationActivity.class)
-                        .putExtra(DataLiberationActivity.InitBundle.EXTRA_SHOW_AUTOBACKUP, true))
+                        .putExtra(DataLiberationActivity.EXTRA_SHOW_AUTOBACKUP, true))
         );
     }
 
