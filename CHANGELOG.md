@@ -9,6 +9,16 @@ Version 51
 ----------
 *(in development)*
 
+#### 51-beta6
+*(2019-09-26)*
+
+* 🔧 Show a close instead of an up button for screens that have no parent screen.
+* 🔧 Migrate widget settings and Amazon extension settings to new implementation.
+* 🔧 Allow users to enable debug mode, for example to share log output.
+* 🔨 Do not show movie history tab at wrong position after connecting trakt. Wait until the movies
+  section is left and visited again.
+* 📝 Latest translations from crowdin.
+
 #### 51-beta5
 *(2019-09-20)*
 
