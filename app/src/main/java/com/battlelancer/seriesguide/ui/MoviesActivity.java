@@ -144,7 +144,9 @@ public class MoviesActivity extends BaseTopActivity {
         int currentTabCount = tabsAdapter.getCount();
         showNowTab = TraktCredentials.get(this).hasCredentials();
         if (showNowTab && currentTabCount != TAB_COUNT_WITH_TRAKT) {
-            tabsAdapter.addTab(R.string.user_stream, MoviesNowFragment.class, null);
+            tabsAdapter.addTab(
+                    R.string.user_stream, MoviesNowFragment.class, null, TAB_POSITION_NOW
+            );
             // update tabs
             tabsAdapter.notifyTabsChanged();
         }
