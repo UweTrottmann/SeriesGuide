@@ -2,18 +2,18 @@ package com.battlelancer.seriesguide.appwidget;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceGroup;
-import android.preference.PreferenceScreen;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import androidx.annotation.ArrayRes;
 import androidx.annotation.StringRes;
+import androidx.preference.CheckBoxPreference;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceGroup;
+import androidx.preference.PreferenceScreen;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.WidgetSettings;
 import com.battlelancer.seriesguide.util.Utils;
@@ -23,7 +23,7 @@ import com.battlelancer.seriesguide.util.ViewTools;
  * Shows settings fragment for a specific app widget, hosted inside a {@link ListWidgetConfigure}
  * activity.
  */
-public class ListWidgetPreferenceFragment extends PreferenceFragment {
+public class ListWidgetPreferenceFragment extends PreferenceFragmentCompat {
 
     private PreferenceScreen preferenceScreen;
     private ListPreference typePref;
@@ -46,7 +46,10 @@ public class ListWidgetPreferenceFragment extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
 
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         int appWidgetId = getArguments().getInt("appWidgetId");
 
         typePref = listPref(
@@ -239,7 +242,7 @@ public class ListWidgetPreferenceFragment extends PreferenceFragment {
      * immediately updated upon calling this method. The exact display format is
      * dependent on the type of preference.
      */
-    public void bindPreferenceSummaryToValue(ListPreference preference) {
+    private void bindPreferenceSummaryToValue(ListPreference preference) {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(preferenceChangeListener);
 
