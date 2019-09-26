@@ -123,4 +123,19 @@
 
     </PreferenceCategory>
 
+    <!-- Danger Zone - not translated -->
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_category_danger">
+
+        <!-- AppSettings -->
+        <SwitchPreferenceCompat
+            app:defaultValue="False"
+            app:iconSpaceReserved="false"
+            app:key="com.battlelancer.seriesguide.userDebugModeEnabled"
+            app:summary="@string/pref_user_debug_mode_summary"
+            app:title="@string/pref_user_debug_mode" />
+
+    </PreferenceCategory>
+
 </androidx.preference.PreferenceScreen>

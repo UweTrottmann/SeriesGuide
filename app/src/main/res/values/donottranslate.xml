@@ -66,6 +66,10 @@
     <string name="pref_translatesummary">Translate or proofread for this app (English)</string>
     <string name="pref_community">SeriesGuide Community</string>
     <string name="pref_communitysummary">Ask for help, discuss ideas or report problems (English)</string>
+    <string name="pref_category_danger">Danger Zone</string>
+    <string name="pref_user_debug_mode">Debug mode</string>
+    <string name="pref_user_debug_mode_summary">Allows to diagnose errors, but slows down the app.</string>
+    <string name="pref_user_debug_mode_note">Now force stop and restart the app!</string>
 
     <!-- Themes -->
     <string name="theme_default">SeriesGuide</string>

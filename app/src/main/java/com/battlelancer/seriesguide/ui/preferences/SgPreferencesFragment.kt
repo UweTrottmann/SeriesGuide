@@ -13,6 +13,7 @@ import android.os.Vibrator
 import android.preference.PreferenceManager
 import android.provider.Settings
 import android.text.TextUtils
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
@@ -31,6 +32,7 @@ import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.service.NotificationService
+import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.settings.UpdateSettings
@@ -359,6 +361,12 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 Utils.tryStartActivity(activity, intent, true)
             }
             return true
+        }
+        if (AppSettings.KEY_USER_DEBUG_MODE_ENBALED == key) {
+            Toast.makeText(
+                context, R.string.pref_user_debug_mode_note, Toast.LENGTH_LONG
+            ).show()
+            return false // Let the pref handle the click (and change its value).
         }
         if (KEY_ABOUT == key) {
             val ft = fragmentManager!!.beginTransaction()
