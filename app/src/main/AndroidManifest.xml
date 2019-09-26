@@ -48,12 +48,23 @@
             android:name="com.samsung.android.sdk.multiwindow.enable"
             android:value="true" />
 
-        <!-- Content provider -->
+        <!-- Database content provider -->
         <provider
             android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider"
             android:authorities="${applicationId}.provider"
             android:exported="true"
             tools:ignore="ExportedContentProvider" />
+
+        <!-- File sharing content provider -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.uwetrottmann.seriesguide.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
 
         <!-- Launch activity -->
         <activity

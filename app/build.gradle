@@ -189,13 +189,13 @@ dependencies {
         exclude group: 'org.threeten', module: 'threetenbp' // using ThreeTenABP instead
     }
 
-    // https://github.com/palaima/DebugDrawer
-    def debugDrawerVersion = "0.8.0"
-    implementation "io.palaima.debugdrawer:debugdrawer-base:$debugDrawerVersion"
-    implementation "io.palaima.debugdrawer:debugdrawer-view:$debugDrawerVersion"
-    implementation "io.palaima.debugdrawer:debugdrawer-commons:$debugDrawerVersion"
-    implementation "io.palaima.debugdrawer:debugdrawer-actions:$debugDrawerVersion"
-    implementation "io.palaima.debugdrawer:debugdrawer-timber:$debugDrawerVersion"
+    // https://github.com/lenguyenthanh/DebugDrawer
+    def debugDrawerVersion = "0.9.0"
+    implementation "com.github.lenguyenthanh.debugdrawer:debugdrawer-base:$debugDrawerVersion"
+    implementation "com.github.lenguyenthanh.debugdrawer:debugdrawer-view:$debugDrawerVersion"
+    implementation "com.github.lenguyenthanh.debugdrawer:debugdrawer-commons:$debugDrawerVersion"
+    implementation "com.github.lenguyenthanh.debugdrawer:debugdrawer-actions:$debugDrawerVersion"
+    implementation "com.github.lenguyenthanh.debugdrawer:debugdrawer-timber:$debugDrawerVersion"
 
     // Crashlytics
     implementation("com.crashlytics.sdk.android:crashlytics:${versions.crashlytics}@aar") {
