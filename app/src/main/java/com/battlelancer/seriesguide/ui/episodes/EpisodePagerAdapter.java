@@ -36,9 +36,10 @@ class EpisodePagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getItemPosition(@NonNull Object object) {
         /*
-         * This breaks the FragmentStatePagerAdapter (see
-         * http://code.google.com/p/android/issues/detail?id=37990), so we
-         * just destroy everything!
+         * This breaks the FragmentStatePagerAdapter
+         * (see https://issuetracker.google.com/issues/36956111),
+         * so just destroy everything!
+         * Note: This might be fixed with ViewPager2.
          */
         // EpisodeDetailsFragment fragment = (EpisodeDetailsFragment)
         // object;
