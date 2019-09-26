@@ -17,6 +17,9 @@ import io.palaima.debugdrawer.commons.DeviceModule
 import io.palaima.debugdrawer.timber.TimberModule
 import io.palaima.debugdrawer.view.DebugView
 
+/**
+ * Displays a [DebugView]. Notably allows to display and share logs.
+ */
 class DebugViewFragment : AppCompatDialogFragment() {
 
     private lateinit var debugView: DebugView
