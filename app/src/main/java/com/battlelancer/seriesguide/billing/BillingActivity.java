@@ -77,6 +77,7 @@ public class BillingActivity extends BaseActivity {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_clear_24dp);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }

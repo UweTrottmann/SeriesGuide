@@ -38,6 +38,7 @@ class TraktCommentsActivity : BaseActivity() {
         val commentsTitle: String? = intent.getStringExtra(EXTRA_TITLE)
         title = "${getString(R.string.comments)} $commentsTitle"
         supportActionBar?.apply {
+            setHomeAsUpIndicator(R.drawable.ic_clear_24dp)
             setDisplayHomeAsUpEnabled(true)
             setTitle(R.string.comments)
             subtitle = commentsTitle

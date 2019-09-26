@@ -43,6 +43,7 @@ class FullscreenImageActivity : BaseActivity() {
     override fun setupActionBar() {
         super.setupActionBar()
         supportActionBar?.apply {
+            setHomeAsUpIndicator(R.drawable.ic_clear_24dp)
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowTitleEnabled(false)
         }
