@@ -183,7 +183,7 @@
     <!-- Add show -->
     <string name="checkin_searchhint">番組名を入力</string>
     <string name="add_empty">番組がありません</string>
-    <string name="no_results">結果はありません。完全な単語で試してください。</string>
+    <string name="no_results">検索結果はありません。完全な単語で試してください。</string>
     <string name="empty_show_search">番組リストにありません</string>
     <string name="action_try_any_language">任意の言語を試してください</string>
     <string name="action_try_again">もう一度やり直してください</string>
@@ -199,8 +199,8 @@
     <string name="shows_collection">コレクション</string>
     <string name="watchlist">ウォッチリスト</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">検索結果はありません</string>
+    <string name="title_similar_shows">類似の番組</string>
     <!-- Lists -->
     <string name="first_list">最初のリスト</string>
     <string name="list_add">リストを追加</string>

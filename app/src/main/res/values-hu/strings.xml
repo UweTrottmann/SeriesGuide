@@ -203,8 +203,8 @@
     <string name="shows_collection">Gyűjtemény</string>
     <string name="watchlist">Figyelőlista</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">Nincs találat</string>
+    <string name="title_similar_shows">Hasonló sorozatok</string>
     <!-- Lists -->
     <string name="first_list">Első lista</string>
     <string name="list_add">Lista hozzáadása</string>
