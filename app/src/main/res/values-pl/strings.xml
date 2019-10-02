@@ -211,8 +211,8 @@
     <string name="shows_collection">Kolekcja</string>
     <string name="watchlist">Do obejrzenia</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">Brak wyników</string>
+    <string name="title_similar_shows">Podobne seriale</string>
     <!-- Lists -->
     <string name="first_list">Pierwsza lista</string>
     <string name="list_add">Dodaj listę</string>
