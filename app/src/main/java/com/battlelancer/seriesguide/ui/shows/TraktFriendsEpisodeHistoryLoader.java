@@ -57,7 +57,7 @@ class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapt
                 new NowAdapter.NowItem().header(getContext().getString(R.string.friends_recently)));
 
         // add last watched episode for each friend
-        SparseArrayCompat<String> localShows = ShowTools.getShowTvdbIdsAndPosters(getContext());
+        SparseArrayCompat<String> localShows = ShowTools.getSmallPostersByTvdbId(getContext());
         boolean hideTitle = DisplaySettings.preventSpoilers(getContext());
         for (int i = 0; i < size; i++) {
             Friend friend = friends.get(i);
@@ -92,7 +92,7 @@ class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapt
             Integer showTvdbId = entry.show.ids == null ? null : entry.show.ids.tvdb;
             if (showTvdbId != null && localShows != null) {
                 // prefer poster of already added show, fall back to first uploaded poster
-                posterUrl = TvdbImageTools.smallSizeOrResolveUrl(localShows.get(showTvdbId),
+                posterUrl = TvdbImageTools.posterUrlOrResolve(localShows.get(showTvdbId),
                         showTvdbId, DisplaySettings.LANGUAGE_EN);
             } else {
                 posterUrl = null;

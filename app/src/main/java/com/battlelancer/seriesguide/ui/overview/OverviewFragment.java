@@ -524,7 +524,7 @@ public class OverviewFragment extends Fragment implements
                 Shows.RELEASE_TIMEZONE,
                 Shows.RELEASE_COUNTRY,
                 Shows.NETWORK,
-                Shows.POSTER,
+                Shows.POSTER_SMALL,
                 Shows.IMDBID,
                 Shows.RUNTIME,
                 Shows.FAVORITE,
@@ -539,7 +539,7 @@ public class OverviewFragment extends Fragment implements
         int SHOW_RELEASE_TIMEZONE = 5;
         int SHOW_RELEASE_COUNTRY = 6;
         int SHOW_NETWORK = 7;
-        int SHOW_POSTER = 8;
+        int SHOW_POSTER_SMALL = 8;
         int SHOW_IMDBID = 9;
         int SHOW_RUNTIME = 10;
         int SHOW_FAVORITE = 11;
@@ -832,7 +832,7 @@ public class OverviewFragment extends Fragment implements
             imageEpisode.setImageResource(R.drawable.ic_photo_gray_24dp);
         } else {
             // try loading image
-            ServiceUtils.loadWithPicasso(getActivity(), TvdbImageTools.fullSizeUrl(imagePath))
+            ServiceUtils.loadWithPicasso(getActivity(), TvdbImageTools.artworkUrl(imagePath))
                     .error(R.drawable.ic_photo_gray_24dp)
                     .into(imageEpisode,
                             new Callback() {
@@ -893,7 +893,7 @@ public class OverviewFragment extends Fragment implements
 
         // poster background
         TvdbImageTools.loadShowPosterAlpha(getActivity(), imageBackground,
-                show.getString(ShowQuery.SHOW_POSTER));
+                show.getString(ShowQuery.SHOW_POSTER_SMALL));
 
         // regular network and time
         String network = show.getString(ShowQuery.SHOW_NETWORK);

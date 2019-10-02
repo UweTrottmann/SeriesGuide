@@ -202,6 +202,9 @@
     <string name="watched_shows">Sedda</string>
     <string name="shows_collection">Samling</string>
     <string name="watchlist">Bevakningslista</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Första listan</string>
     <string name="list_add">Lägg till lista</string>
@@ -332,6 +335,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Grunder</string>
     <string name="prefs_category_sharing">Tjänster</string>
+    <string name="prefs_category_advanced">Avancerat</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Inga sända avsnitt</string>
     <string name="pref_onlyfuturesummary">Visa aldrig redan sända avsnitt</string>
@@ -385,10 +389,6 @@
     <string name="upcoming_upto_one_week">1 vecka</string>
     <string name="upcoming_upto_two_weeks">2 veckor</string>
     <string name="upcoming_upto_one_month">1 månad</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 timme</string>
-    <string name="upcoming_upto_six_hours">6 timmar</string>
-    <string name="upcoming_upto_half_day">12 timmar</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Utseende</string>
     <string name="pref_theme">Tema</string>
@@ -455,10 +455,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Solid</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Kommande avsnitt</string>
-    <string name="dashclock_extension_description">Visar nästa uppkommande avsnitt av dina SeriesGuide-serier..</string>
-    <string name="dashclock_pref_upcoming_threshold">Visa avsnitt inom&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Endast för supporters</string>
     <string name="action_upgrade">Lås upp alla funktioner</string>

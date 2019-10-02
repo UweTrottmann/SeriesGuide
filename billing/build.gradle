@@ -28,12 +28,15 @@ android {
 }
 
 dependencies {
+    implementation project(':common')
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
     // Google Play Billing
-    implementation 'com.android.billingclient:billing:2.0.2'
+    // https://developer.android.com/google/play/billing/billing_library_releases_notes
+    implementation 'com.android.billingclient:billing:2.0.3'
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"

@@ -206,6 +206,9 @@
     <string name="watched_shows">Pogledano</string>
     <string name="shows_collection">Zbirka</string>
     <string name="watchlist">Popis gledanja</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Prvi popis</string>
     <string name="list_add">Dodaj popis</string>
@@ -340,6 +343,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Osnovno</string>
     <string name="prefs_category_sharing">Usluge</string>
+    <string name="prefs_category_advanced">Napredno</string>
     <string name="prefs_category_about">O aplikaciji</string>
     <string name="pref_onlyfuture">Nema emitiranih epizoda</string>
     <string name="pref_onlyfuturesummary">Nikada ne prikazuj već pogledane epizode</string>
@@ -396,10 +400,6 @@
     <string name="upcoming_upto_one_week">tjedna</string>
     <string name="upcoming_upto_two_weeks">2 tjedna</string>
     <string name="upcoming_upto_one_month">1 mjeseca</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">sati</string>
-    <string name="upcoming_upto_six_hours">6 sati</string>
-    <string name="upcoming_upto_half_day">12 sati</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Izgled</string>
     <string name="pref_theme">Tema</string>
@@ -466,10 +466,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Neprozirna</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Nadolazeća epizoda</string>
-    <string name="dashclock_extension_description">Prikazuje sljedeću nadolazeću epizodu tvojih SeriesGuide serija.</string>
-    <string name="dashclock_pref_upcoming_threshold">Prikaži epizode u sljedećem</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Samo za podršku</string>
     <string name="action_upgrade">Otključaj sve značajke</string>

@@ -202,6 +202,9 @@
     <string name="watched_shows">İzlenmiş</string>
     <string name="shows_collection">Koleksiyon</string>
     <string name="watchlist">İzleme listesi</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">İlk liste</string>
     <string name="list_add">Yeni liste</string>
@@ -332,6 +335,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Temel Ayarlar</string>
     <string name="prefs_category_sharing">Servisler</string>
+    <string name="prefs_category_advanced">Gelişmiş</string>
     <string name="prefs_category_about">Hakkında</string>
     <string name="pref_onlyfuture">Yayınlanan bölüm yok</string>
     <string name="pref_onlyfuturesummary">Yayınlanmış bölümleri gösterme</string>
@@ -385,10 +389,6 @@
     <string name="upcoming_upto_one_week">bir hafta</string>
     <string name="upcoming_upto_two_weeks">iki hafta</string>
     <string name="upcoming_upto_one_month">bir ay</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">saat</string>
-    <string name="upcoming_upto_six_hours">6 saat</string>
-    <string name="upcoming_upto_half_day">12 saat</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Görünüm</string>
     <string name="pref_theme">Tema</string>
@@ -455,10 +455,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Opak</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Gelecek bölüm</string>
-    <string name="dashclock_extension_description">SeriesGuide dizilerinizin gelecek bölümünü gösterir.</string>
-    <string name="dashclock_pref_upcoming_threshold">Dizinin sonraki bölümlerinde&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Sadece destekçileri için</string>
     <string name="action_upgrade">Tüm özellikleri aç</string>
@@ -467,7 +463,7 @@
     <string name="billing_action_pass">X Pass alın</string>
     <string name="billing_price_subscribe">%1$s/yıl, ücretsiz dene, %2$s üzerinden istediğin zaman iptal et</string>
     <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_sub_description">Ücretsiz dene, istediğin zaman vazgeç.</string>
     <string name="billing_price_pass">tek seferlik ödeme</string>
     <string name="upgrade_description">Bildirimler, temalar, daha fazla widgetlar gibi özellikleri acın ve uygulamayı geliştirmeme yardım edin.</string>
     <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>

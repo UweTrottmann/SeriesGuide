@@ -12,7 +12,7 @@ data class EpisodeWithShow (
     val showTvdbId: Int = 0,
     val seriestitle: String? = null,
     val network: String? = null,
-    val poster: String? = null
+    val series_poster_small: String? = null
 ) {
     companion object {
         const val select = "SELECT " +
@@ -26,7 +26,7 @@ data class EpisodeWithShow (
                 "series_id AS showTvdbId, " +
                 "seriestitle, " +
                 "network, " +
-                "poster " +
+                "series_poster_small " +
                 "FROM episodes"
     }
 }

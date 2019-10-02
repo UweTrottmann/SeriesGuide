@@ -18,6 +18,7 @@ import com.battlelancer.seriesguide.modules.TmdbModule
 import com.battlelancer.seriesguide.modules.TraktModule
 import com.battlelancer.seriesguide.modules.TvdbModule
 import com.battlelancer.seriesguide.service.NotificationService
+import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -94,6 +95,7 @@ class SgApp : Application() {
         /**
          * For trakt and hexagon sync movies were not added in all cases, reset sync times.
          */
+        const val RELEASE_VERSION_50_1 = 2105008
         const val RELEASE_VERSION_51_BETA4 = 2105103
 
         /**
@@ -170,7 +172,7 @@ class SgApp : Application() {
             Fabric.with(this, CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
         }
 
-        if (BuildConfig.DEBUG) {
+        if (AppSettings.isUserDebugModeEnabled(this)) {
             // debug drawer logging
             val lumberYard = LumberYard.getInstance(this)
             GlobalScope.launch(Dispatchers.IO) {

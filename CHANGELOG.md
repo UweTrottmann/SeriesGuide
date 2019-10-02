@@ -5,6 +5,59 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 51
+----------
+*(2019-10-02)*
+
+* 🌟 Display similar shows from the show details dialog and screen. Powered by themoviedb.org!
+* 🔧 Display streaming search in show details dialog, if it was configured.
+* 🔧 Move advanced settings up to the first settings section.
+* 🔧 Remove DashClock extension, DashClock has been unpublished for a long time.
+* 🔧 Allow users to enable debug mode, for example to share log output.
+
+#### 51-beta6
+*(2019-09-26)*
+
+* 🔧 Show a close instead of an up button for screens that have no parent screen.
+* 🔧 Migrate widget settings and Amazon extension settings to new implementation.
+* 🔧 Allow users to enable debug mode, for example to share log output.
+* 🔨 Do not show movie history tab at wrong position after connecting trakt. Wait until the movies
+  section is left and visited again.
+* 📝 Latest translations from crowdin.
+
+#### 51-beta5
+*(2019-09-20)*
+
+* 🌟 Display similar shows from the show details dialog and screen. Powered by themoviedb.org!
+* 🔧 Display streaming search in show details dialog if it was configured.
+* 📝 Latest translations from crowdin.
+
+#### 51-beta4
+*(2019-09-14)*
+
+* 🔨 Add movies to watchlist, collection or watched in all cases when syncing with trakt or Cloud.
+  On upgrading to this version the next sync will add missing movies.
+* 🔧 Remove DashClock extension, DashClock has been unpublished for a long time.
+* 🔧 Switch settings to new underlying implementation.
+* 🔧 Move basic settings link up to the first section, rename it to Advanced.
+
+#### 51-beta3
+*(2019-09-04)*
+
+* 🔨 Resolve connection issues with TheTVDB and trakt.
+
+#### 51-beta2
+*(2019-08-30)*
+
+* 🔨 Do not crash when viewing an episode and there is no show title or poster. 
+
+#### 51-beta1
+*(2019-08-29)*
+
+* 🔧 Fetch show small poster path instead of constructing it, to future proof for upcoming changes at TheTVDB.com.
+* 🔨 Fix discover screen displaying shows that can not be added.
+* 🔨 Fix the subscriptions screen displaying a developer error in some cases.
+
 Version 50
 ----------
 *(2019-08-16)*

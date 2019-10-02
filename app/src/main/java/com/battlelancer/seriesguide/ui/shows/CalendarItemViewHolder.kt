@@ -135,7 +135,7 @@ class CalendarItemViewHolder(
         // set poster
         TvdbImageTools.loadShowPosterResizeSmallCrop(
             context, poster,
-            TvdbImageTools.smallSizeUrl(episode.poster)
+            TvdbImageTools.artworkUrl(episode.series_poster_small)
         )
     }
 

@@ -202,6 +202,9 @@
     <string name="watched_shows">Megnézve</string>
     <string name="shows_collection">Gyűjtemény</string>
     <string name="watchlist">Figyelőlista</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">Nincs találat</string>
+    <string name="title_similar_shows">Hasonló sorozatok</string>
     <!-- Lists -->
     <string name="first_list">Első lista</string>
     <string name="list_add">Lista hozzáadása</string>
@@ -332,6 +335,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Alap beállítások</string>
     <string name="prefs_category_sharing">Szolgáltatások</string>
+    <string name="prefs_category_advanced">Haladó beállítások</string>
     <string name="prefs_category_about">A programról</string>
     <string name="pref_onlyfuture">Leadott epizódok nélkül</string>
     <string name="pref_onlyfuturesummary">Soha ne mutassa a már leadott epizódokat</string>
@@ -385,10 +389,6 @@
     <string name="upcoming_upto_one_week">egy hét</string>
     <string name="upcoming_upto_two_weeks">két hét</string>
     <string name="upcoming_upto_one_month">egy hónap</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 óra</string>
-    <string name="upcoming_upto_six_hours">6 óra</string>
-    <string name="upcoming_upto_half_day">12 óra</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Megjelenés</string>
     <string name="pref_theme">Téma</string>
@@ -455,10 +455,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Nem átlátszó</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Következő epizód</string>
-    <string name="dashclock_extension_description">Megjeleníti a következő epizódokat a SeriesGuide sorozataidból.</string>
-    <string name="dashclock_pref_upcoming_threshold">Mutasd a következő epizódokat</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Csak támogatóknak</string>
     <string name="action_upgrade">Összes beállítás feloldása</string>

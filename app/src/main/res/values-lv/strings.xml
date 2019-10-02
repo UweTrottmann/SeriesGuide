@@ -206,6 +206,9 @@
     <string name="watched_shows">Watched</string>
     <string name="shows_collection">Kolekcija</string>
     <string name="watchlist">Redzamo filmu saraksts</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Pirmais saraksts</string>
     <string name="list_add">Pievienot sarakstu</string>
@@ -340,6 +343,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Pamati</string>
     <string name="prefs_category_sharing">Servisi</string>
+    <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">Par</string>
     <string name="pref_onlyfuture">Nepastāv neraidītas epizodes</string>
     <string name="pref_onlyfuturesummary">Nekad neuzrādīt vēl neraidītas epizodes</string>
@@ -396,10 +400,6 @@
     <string name="upcoming_upto_one_week">1 nedēļa</string>
     <string name="upcoming_upto_two_weeks">2 nedēļas</string>
     <string name="upcoming_upto_one_month">1 mēnesis</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 stundu pirms</string>
-    <string name="upcoming_upto_six_hours">6 stundas pirms</string>
-    <string name="upcoming_upto_half_day">12 stundas pirms</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Izskats</string>
     <string name="pref_theme">Theme</string>
@@ -466,10 +466,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Opaque</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Epizode tuvojas</string>
-    <string name="dashclock_extension_description">Uzrāda nākamās tavu SeriesGuide šovu epizodes.</string>
-    <string name="dashclock_pref_upcoming_threshold">Uz rādīt epizodi&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Only for supporters</string>
     <string name="action_upgrade">Unlock all features</string>

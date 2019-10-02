@@ -4,6 +4,7 @@ import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_42_
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_43_44;
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_44_45;
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_45_46;
+import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_46_47;
 import static com.google.common.truth.Truth.assertThat;
 
 import android.database.sqlite.SQLiteDatabase;
@@ -18,6 +19,7 @@ import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.model.SgEpisode;
 import com.battlelancer.seriesguide.model.SgSeason;
 import com.battlelancer.seriesguide.model.SgShow;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.uwetrottmann.thetvdb.entities.Episode;
 import java.io.IOException;
 import org.junit.After;
@@ -39,6 +41,7 @@ public class MigrationTest {
         SHOW.tvdb_id = 21;
         SHOW.title = "The No Answers Show";
         SHOW.runtime = 45;
+        SHOW.poster = "example.jpg";
 
         SEASON.tvdbId = 21;
         SEASON.showTvdbId = "21";
@@ -149,13 +152,29 @@ public class MigrationTest {
         assertThat(dbShow.slug).isNull();
     }
 
+    @Test
+    public void migrationFrom46To47_containsCorrectData() throws IOException {
+        SupportSQLiteDatabase db = migrationTestHelper.createDatabase(TEST_DB_NAME, 46);
+        RoomDatabaseTestHelper.insertShow(SHOW, db, 46);
+        RoomDatabaseTestHelper.insertSeason(SEASON, db);
+        RoomDatabaseTestHelper
+                .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);
+        db.close();
+
+        SgRoomDatabase database = getMigratedRoomDatabase();
+        assertTestData(database);
+        SgShow dbShow = database.showHelper().getShow();
+        assertThat(dbShow.posterSmall).isEqualTo(TvdbImageTools.TVDB_CACHE_PREFIX + dbShow.poster);
+    }
+
     private void assertTestData(SgRoomDatabase database) {
-        // MigrationTestHelper automatically verifies the schema changes, but not the data validity
+        // MigrationTestHelper automatically verifies the schema changes, but not the data validity.
         // Validate that the data was migrated properly.
         SgShow dbShow = database.showHelper().getShow();
         assertThat(dbShow.tvdbId).isEqualTo(SHOW.tvdb_id);
         assertThat(dbShow.title).isEqualTo(SHOW.title);
         assertThat(dbShow.runtime).isEqualTo(String.valueOf(SHOW.runtime));
+        assertThat(dbShow.poster).isEqualTo(SHOW.poster);
 
         SgSeason dbSeason = database.seasonHelper().getSeason();
         assertThat(dbSeason.tvdbId).isEqualTo(SEASON.tvdbId);
@@ -178,7 +197,8 @@ public class MigrationTest {
                         MIGRATION_42_43,
                         MIGRATION_43_44,
                         MIGRATION_44_45,
-                        MIGRATION_45_46
+                        MIGRATION_45_46,
+                        MIGRATION_46_47
                 )
                 .build();
         // close the database and release any stream resources when the test finishes

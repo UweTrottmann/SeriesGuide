@@ -10,8 +10,10 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.ui.search.AddFragment.AddAdapter.OnItemClickListener
 
-class ShowsPopularViewHolder(itemView: View, onItemClickListener: OnItemClickListener)
-    : RecyclerView.ViewHolder(itemView) {
+class SearchResultViewHolder(
+    itemView: View,
+    onItemClickListener: OnItemClickListener
+) : RecyclerView.ViewHolder(itemView) {
 
     private val title = itemView.findViewById<TextView>(R.id.textViewAddTitle)
     private val description = itemView.findViewById<TextView>(R.id.textViewAddDescription)
@@ -56,7 +58,7 @@ class ShowsPopularViewHolder(itemView: View, onItemClickListener: OnItemClickLis
         // only local shows will have a poster path set
         // try to fall back to the first uploaded TVDB poster for all others
         val posterUrl = if (searchResult != null) {
-            TvdbImageTools.smallSizeOrResolveUrl(searchResult.posterPath,
+            TvdbImageTools.posterUrlOrResolve(searchResult.posterPath,
                     searchResult.tvdbid, searchResult.language)
         } else null
         TvdbImageTools.loadUrlResizeCrop(itemView.context, poster, posterUrl)
@@ -64,10 +66,10 @@ class ShowsPopularViewHolder(itemView: View, onItemClickListener: OnItemClickLis
 
     companion object {
         fun create(parent: ViewGroup,
-                onItemClickListener: OnItemClickListener): ShowsPopularViewHolder {
+                onItemClickListener: OnItemClickListener): SearchResultViewHolder {
             val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_addshow, parent, false)
-            return ShowsPopularViewHolder(view, onItemClickListener)
+            return SearchResultViewHolder(view, onItemClickListener)
         }
     }
 

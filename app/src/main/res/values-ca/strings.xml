@@ -202,6 +202,9 @@
     <string name="watched_shows">Vist</string>
     <string name="shows_collection">Coŀlecció</string>
     <string name="watchlist">Llista de seguiment</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Primera llista</string>
     <string name="list_add">Afegeix llista</string>
@@ -332,6 +335,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Bàsics</string>
     <string name="prefs_category_sharing">Serveis</string>
+    <string name="prefs_category_advanced">Avançat</string>
     <string name="prefs_category_about">Quant a</string>
     <string name="pref_onlyfuture">Amaga episodis emesos</string>
     <string name="pref_onlyfuturesummary">No mostris cap episodi que ja s\'hagi emès</string>
@@ -385,10 +389,6 @@
     <string name="upcoming_upto_one_week">1 setmana</string>
     <string name="upcoming_upto_two_weeks">2 setmanes</string>
     <string name="upcoming_upto_one_month">1 mes</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1hora</string>
-    <string name="upcoming_upto_six_hours">6 hores</string>
-    <string name="upcoming_upto_half_day">12 hores</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Aparença</string>
     <string name="pref_theme">Tema</string>
@@ -455,10 +455,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Opac</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Proper episodi</string>
-    <string name="dashclock_extension_description">Mostra el proper episodi de les sèries que teniu a SeriesGuide.</string>
-    <string name="dashclock_pref_upcoming_threshold">Mostra episodi dins&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Només per a patrocinadors</string>
     <string name="action_upgrade">Desbloquejar totes les opcions</string>

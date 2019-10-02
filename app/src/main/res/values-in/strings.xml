@@ -198,6 +198,9 @@
     <string name="watched_shows">Ditonton</string>
     <string name="shows_collection">Koleksi</string>
     <string name="watchlist">Daftar tontonan</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Daftar pertama</string>
     <string name="list_add">Tambah daftar</string>
@@ -324,6 +327,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Dasar</string>
     <string name="prefs_category_sharing">Layanan</string>
+    <string name="prefs_category_advanced">Tingkat Lanjut</string>
     <string name="prefs_category_about">Tentang</string>
     <string name="pref_onlyfuture">Tidak Ada episode yang sudah ditayangkan</string>
     <string name="pref_onlyfuturesummary">Jangan pernah tampilan episode yang sudah ditayangkan</string>
@@ -374,10 +378,6 @@
     <string name="upcoming_upto_one_week">1 minggu</string>
     <string name="upcoming_upto_two_weeks">2 minggu</string>
     <string name="upcoming_upto_one_month">1 bulan</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 jam</string>
-    <string name="upcoming_upto_six_hours">6 jam</string>
-    <string name="upcoming_upto_half_day">12 jam</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Tampilan</string>
     <string name="pref_theme">Tema</string>
@@ -444,10 +444,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Buram</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Episode mendatang</string>
-    <string name="dashclock_extension_description">Tampilkan episode mendatang berikutnya dari acara SeriesGuide anda.</string>
-    <string name="dashclock_pref_upcoming_threshold">Tampilan episode dalam&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Hnaya untuk pendukung</string>
     <string name="action_upgrade">Buka semua fitur</string>

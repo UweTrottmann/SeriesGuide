@@ -222,7 +222,7 @@ public class ListWidgetService extends RemoteViewsService {
 
             // show poster
             String posterPath = dataCursor.getString(isShowQuery
-                    ? ShowsQuery.SHOW_POSTER : CalendarQuery.SHOW_POSTER_PATH);
+                    ? ShowsQuery.SHOW_POSTER_SMALL : CalendarQuery.SHOW_POSTER_SMALL);
             maybeSetPoster(rv, posterPath);
 
             // Return the remote views object.
@@ -233,7 +233,7 @@ public class ListWidgetService extends RemoteViewsService {
             Bitmap poster;
             try {
                 poster = ServiceUtils.loadWithPicasso(context,
-                        TvdbImageTools.smallSizeUrl(posterPath))
+                        TvdbImageTools.artworkUrl(posterPath))
                         .centerCrop()
                         .resizeDimen(isLargeFont
                                         ? R.dimen.widget_item_width_large
@@ -295,8 +295,15 @@ public class ListWidgetService extends RemoteViewsService {
 
     interface ShowsQuery {
         String[] PROJECTION = {
-                Qualified.SHOWS_ID, Shows.TITLE, Shows.NETWORK, Shows.POSTER, Shows.STATUS,
-                Shows.NEXTEPISODE, Episodes.TITLE, Episodes.NUMBER, Episodes.SEASON,
+                Qualified.SHOWS_ID,
+                Shows.TITLE,
+                Shows.NETWORK,
+                Shows.POSTER_SMALL,
+                Shows.STATUS,
+                Shows.NEXTEPISODE,
+                Episodes.TITLE,
+                Episodes.NUMBER,
+                Episodes.SEASON,
                 Episodes.FIRSTAIREDMS
         };
 
@@ -306,7 +313,7 @@ public class ListWidgetService extends RemoteViewsService {
 
         int SHOW_NETWORK = 2;
 
-        int SHOW_POSTER = 3;
+        int SHOW_POSTER_SMALL = 3;
 
         int SHOW_STATUS = 4;
 

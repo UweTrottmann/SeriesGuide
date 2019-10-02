@@ -66,6 +66,10 @@
     <string name="pref_translatesummary">Translate or proofread for this app (English)</string>
     <string name="pref_community">SeriesGuide Community</string>
     <string name="pref_communitysummary">Ask for help, discuss ideas or report problems (English)</string>
+    <string name="pref_category_danger">Danger Zone</string>
+    <string name="pref_user_debug_mode">Debug mode</string>
+    <string name="pref_user_debug_mode_summary">Allows to diagnose errors, but slows down the app.</string>
+    <string name="pref_user_debug_mode_note">Now force stop and restart the app!</string>
 
     <!-- Themes -->
     <string name="theme_default">SeriesGuide</string>
@@ -476,24 +480,6 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
-    </string-array>
-
-    <!-- DashClock extension thresholds -->
-    <string-array name="dashclockUpcomingThresholds">
-        <item>@string/upcoming_upto_one_hour</item>
-        <item>@string/upcoming_upto_six_hours</item>
-        <item>@string/upcoming_upto_half_day</item>
-        <item>@string/upcoming_upto_one_day</item>
-        <item>@string/upcoming_upto_three_days</item>
-        <item>@string/upcoming_upto_one_week</item>
-    </string-array>
-    <string-array name="dashclockUpcomingThresholdsData">
-        <item>1</item>
-        <item>6</item>
-        <item>12</item>
-        <item>24</item>
-        <item>72</item>
-        <item>168</item>
     </string-array>
 
     <string-array name="amazonDomainsData">

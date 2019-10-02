@@ -198,6 +198,9 @@
     <string name="watched_shows">已看過</string>
     <string name="shows_collection">收藏</string>
     <string name="watchlist">待看清單</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">第一個清單</string>
     <string name="list_add">新增清單</string>
@@ -324,6 +327,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">基本資料</string>
     <string name="prefs_category_sharing">服務</string>
+    <string name="prefs_category_advanced">進階</string>
     <string name="prefs_category_about">關於本軟體</string>
     <string name="pref_onlyfuture">無已播出集數</string>
     <string name="pref_onlyfuturesummary">不顯示已經播出劇集</string>
@@ -374,10 +378,6 @@
     <string name="upcoming_upto_one_week">一星期</string>
     <string name="upcoming_upto_two_weeks">兩星期</string>
     <string name="upcoming_upto_one_month">一個月</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">一小時</string>
-    <string name="upcoming_upto_six_hours">六小時</string>
-    <string name="upcoming_upto_half_day">十二小時</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">外觀</string>
     <string name="pref_theme">主題</string>
@@ -444,10 +444,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">透明度</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">即將撥出的集數</string>
-    <string name="dashclock_extension_description">顯示您SeriesGuide中即將到來的下一集。</string>
-    <string name="dashclock_pref_upcoming_threshold">顯示集數於&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">僅供贊助者</string>
     <string name="action_upgrade">解鎖所有功能</string>

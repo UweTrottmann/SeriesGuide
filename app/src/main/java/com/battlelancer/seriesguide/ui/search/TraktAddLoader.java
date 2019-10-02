@@ -133,7 +133,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         List<SearchResult> results = new ArrayList<>();
 
         // build list
-        SparseArrayCompat<String> existingPosterPaths = ShowTools.getShowTvdbIdsAndPosters(context);
+        SparseArrayCompat<String> existingPosterPaths = ShowTools.getSmallPostersByTvdbId(context);
         for (Show show : traktShows) {
             if (show.ids == null || show.ids.tvdb == null) {
                 // has no TheTVDB id

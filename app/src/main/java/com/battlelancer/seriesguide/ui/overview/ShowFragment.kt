@@ -39,6 +39,7 @@ import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
 import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader
+import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity
 import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
@@ -109,6 +110,8 @@ class ShowFragment : ScopedFragment() {
     internal lateinit var buttonLanguage: Button
     @BindView(R.id.containerRatings)
     internal lateinit var buttonRate: View
+    @BindView(R.id.buttonShowSimilar)
+    internal lateinit var buttonSimilar: Button
     @BindView(R.id.buttonShowImdb)
     internal lateinit var buttonImdb: Button
     @BindView(R.id.buttonShowTvdb)
@@ -140,6 +143,7 @@ class ShowFragment : ScopedFragment() {
     private var showSlug: String? = null
     private var showTitle: String? = null
     private var posterPath: String? = null
+    private var posterPathSmall: String? = null
     private var languageCode: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -174,6 +178,7 @@ class ShowFragment : ScopedFragment() {
         textViewRatingRange.text = getString(R.string.format_rating_range, 10)
 
         // link, search and comments button
+        ViewTools.setVectorIconLeft(theme, buttonSimilar, R.drawable.ic_search_white_24dp)
         ViewTools.setVectorIconLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp)
         ViewTools.setVectorIconLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp)
         ViewTools.setVectorIconLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp)
@@ -262,6 +267,7 @@ class ShowFragment : ScopedFragment() {
                 Shows.RELEASE_COUNTRY,
                 Shows.NETWORK,
                 Shows.POSTER,
+                Shows.POSTER_SMALL,
                 Shows.IMDBID,
                 Shows.RUNTIME,
                 Shows.FAVORITE,
@@ -287,21 +293,22 @@ class ShowFragment : ScopedFragment() {
             const val RELEASE_COUNTRY = 6
             const val NETWORK = 7
             const val POSTER = 8
-            const val IMDBID = 9
-            const val RUNTIME = 10
-            const val IS_FAVORITE = 11
-            const val OVERVIEW = 12
-            const val FIRST_RELEASE = 13
-            const val CONTENT_RATING = 14
-            const val GENRES = 15
-            const val RATING_GLOBAL = 16
-            const val RATING_VOTES = 17
-            const val RATING_USER = 18
-            const val LAST_EDIT_MS = 19
-            const val LANGUAGE = 20
-            const val NOTIFY = 21
-            const val HIDDEN = 22
-            const val SLUG = 23
+            const val POSTER_SMALL = 9
+            const val IMDBID = 10
+            const val RUNTIME = 11
+            const val IS_FAVORITE = 12
+            const val OVERVIEW = 13
+            const val FIRST_RELEASE = 14
+            const val CONTENT_RATING = 15
+            const val GENRES = 16
+            const val RATING_GLOBAL = 17
+            const val RATING_VOTES = 18
+            const val RATING_USER = 19
+            const val LAST_EDIT_MS = 20
+            const val LANGUAGE = 21
+            const val NOTIFY = 22
+            const val HIDDEN = 23
+            const val SLUG = 24
         }
     }
 
@@ -334,6 +341,7 @@ class ShowFragment : ScopedFragment() {
         // title
         showTitle = showCursor.getString(ShowQuery.TITLE)
         posterPath = showCursor.getString(ShowQuery.POSTER)
+        posterPathSmall = showCursor.getString(ShowQuery.POSTER_SMALL)
 
         // status
         ShowTools.setStatusAndColor(textViewStatus, showCursor.getInt(ShowQuery.STATUS))
@@ -506,6 +514,11 @@ class ShowFragment : ScopedFragment() {
             showCursor.getInt(ShowQuery.RATING_USER)
         )
 
+        // Similar shows button.
+        buttonSimilar.setOnClickListener {
+            startActivity(SimilarShowsActivity.intent(context!!, showTvdbId, showTitle))
+        }
+
         // IMDb button
         val imdbId = showCursor.getString(ShowQuery.IMDBID)
         ServiceUtils.setUpImdbButton(imdbId, buttonImdb)
@@ -536,29 +549,29 @@ class ShowFragment : ScopedFragment() {
         }
 
         // poster, full screen poster button
-        if (TextUtils.isEmpty(posterPath)) {
+        if (TextUtils.isEmpty(posterPathSmall)) {
             // have no poster
             containerPoster.isClickable = false
             containerPoster.isFocusable = false
         } else {
             // poster and fullscreen button
-            TvdbImageTools.loadShowPoster(activity, imageViewPoster, posterPath)
+            TvdbImageTools.loadShowPoster(activity, imageViewPoster, posterPathSmall)
             containerPoster.isFocusable = true
             containerPoster.setOnClickListener { v ->
                 val intent = Intent(activity, FullscreenImageActivity::class.java)
                 intent.putExtra(
                     FullscreenImageActivity.EXTRA_PREVIEW_IMAGE,
-                    TvdbImageTools.smallSizeUrl(posterPath)
+                    TvdbImageTools.artworkUrl(posterPathSmall)
                 )
                 intent.putExtra(
                     FullscreenImageActivity.EXTRA_IMAGE,
-                    TvdbImageTools.fullSizeUrl(posterPath)
+                    TvdbImageTools.artworkUrl(posterPath)
                 )
                 Utils.startActivityWithAnimation(activity, intent, v)
             }
 
             // poster background
-            TvdbImageTools.loadShowPosterAlpha(activity, imageViewBackground, posterPath)
+            TvdbImageTools.loadShowPosterAlpha(activity, imageViewBackground, posterPathSmall)
         }
 
         loadTraktRatings()
@@ -652,7 +665,7 @@ class ShowFragment : ScopedFragment() {
 
         val currentShowTvdbId = showTvdbId
         val currentShowTitle = showTitle
-        val currentPosterPath = posterPath
+        val currentPosterPath = posterPathSmall
         if (currentShowTvdbId == 0 || currentShowTitle == null || currentPosterPath == null) {
             return
         }

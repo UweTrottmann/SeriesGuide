@@ -202,6 +202,9 @@
     <string name="watched_shows">Angesehen</string>
     <string name="shows_collection">Sammlung</string>
     <string name="watchlist">Ansehen-Liste</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">Keine Ergebnisse</string>
+    <string name="title_similar_shows">Ähnliche Serien</string>
     <!-- Lists -->
     <string name="first_list">Erste Liste</string>
     <string name="list_add">Liste hinzufügen</string>
@@ -332,6 +335,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Grundlegendes</string>
     <string name="prefs_category_sharing">Dienste</string>
+    <string name="prefs_category_advanced">Weiteres</string>
     <string name="prefs_category_about">Über</string>
     <string name="pref_onlyfuture">Keine gesendeten Folgen</string>
     <string name="pref_onlyfuturesummary">Zeige nie bereits ausgestrahlte Folgen an</string>
@@ -385,10 +389,6 @@
     <string name="upcoming_upto_one_week">1 Woche</string>
     <string name="upcoming_upto_two_weeks">2 Wochen</string>
     <string name="upcoming_upto_one_month">1 Monat</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 Stunde</string>
-    <string name="upcoming_upto_six_hours">6 Stunden</string>
-    <string name="upcoming_upto_half_day">12 Stunden</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Erscheinungsbild</string>
     <string name="pref_theme">Design</string>
@@ -455,10 +455,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Undurchsichtig</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Nächste Folge</string>
-    <string name="dashclock_extension_description">Zeigt die nächste Folge Ihrer Serien in SeriesGuide</string>
-    <string name="dashclock_pref_upcoming_threshold">Zeige Folge innerhalb&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Nur für Unterstützer</string>
     <string name="action_upgrade">Alle Funktionen freischalten</string>

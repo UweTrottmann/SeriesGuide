@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.appwidget;
 
-import android.app.FragmentTransaction;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,9 +49,9 @@ public class ListWidgetConfigure extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             ListWidgetPreferenceFragment f = ListWidgetPreferenceFragment.newInstance(appWidgetId);
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(R.id.content_frame, f);
-            ft.commit();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.content_frame, f)
+                    .commit();
         }
     }
 

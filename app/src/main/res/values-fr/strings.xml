@@ -202,6 +202,9 @@
     <string name="watched_shows">Vu</string>
     <string name="shows_collection">Collection</string>
     <string name="watchlist">Liste à voir</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Première liste</string>
     <string name="list_add">Ajouter une liste</string>
@@ -332,6 +335,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Paramètres de base</string>
     <string name="prefs_category_sharing">Services</string>
+    <string name="prefs_category_advanced">Avancé</string>
     <string name="prefs_category_about">A propos</string>
     <string name="pref_onlyfuture">Pas d\'épisodes diffusés</string>
     <string name="pref_onlyfuturesummary">Ne pas afficher les épisodes déjà diffusés</string>
@@ -385,10 +389,6 @@
     <string name="upcoming_upto_one_week">une semaine</string>
     <string name="upcoming_upto_two_weeks">deux semaines</string>
     <string name="upcoming_upto_one_month">un mois</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 heure</string>
-    <string name="upcoming_upto_six_hours">6 heures</string>
-    <string name="upcoming_upto_half_day">12 heures</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Apparence</string>
     <string name="pref_theme">Thème</string>
@@ -455,10 +455,6 @@
     <string name="widget_background_50">50 %</string>
     <string name="widget_background_75">75 %</string>
     <string name="widget_background_opaque">Opaque</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Prochain épisode</string>
-    <string name="dashclock_extension_description">Affiche le prochain épisode à venir parmi vos séries.</string>
-    <string name="dashclock_pref_upcoming_threshold">Montrer les épisodes à venir dans&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Uniquement pour les supporters</string>
     <string name="action_upgrade">Déverrouiller toutes les fonctionnalités</string>

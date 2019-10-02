@@ -48,12 +48,23 @@
             android:name="com.samsung.android.sdk.multiwindow.enable"
             android:value="true" />
 
-        <!-- Content provider -->
+        <!-- Database content provider -->
         <provider
             android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider"
             android:authorities="${applicationId}.provider"
             android:exported="true"
             tools:ignore="ExportedContentProvider" />
+
+        <!-- File sharing content provider -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.uwetrottmann.seriesguide.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
 
         <!-- Launch activity -->
         <activity
@@ -123,6 +134,7 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.search.SimilarShowsActivity" />
         <activity
             android:name=".ui.search.TraktShowsActivity"
             android:parentActivityName=".ui.SearchActivity" />
@@ -240,34 +252,6 @@
         <service
             android:name="com.battlelancer.seriesguide.appwidget.ListWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
-
-        <!-- DashClock Extension -->
-        <service
-            android:name="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeExtension"
-            android:icon="@drawable/ic_notification"
-            android:label="@string/dashclock_extension_label"
-            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
-            <intent-filter>
-                <action android:name="com.google.android.apps.dashclock.Extension" />
-            </intent-filter>
-
-            <meta-data
-                android:name="protocolVersion"
-                android:value="2" />
-            <meta-data
-                android:name="worldReadable"
-                android:value="true" />
-            <meta-data
-                android:name="description"
-                android:value="@string/dashclock_extension_description" />
-            <meta-data
-                android:name="settingsActivity"
-                android:value="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity" />
-        </service>
-
-        <activity
-            android:name="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity"
-            android:exported="true" />
 
         <!-- SeriesGuide Extension listener -->
         <receiver

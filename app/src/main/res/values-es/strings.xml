@@ -202,6 +202,9 @@
     <string name="watched_shows">Visto</string>
     <string name="shows_collection">Colección</string>
     <string name="watchlist">Lista de visualización</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Primera lista</string>
     <string name="list_add">Añadir lista</string>
@@ -333,6 +336,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Básicos</string>
     <string name="prefs_category_sharing">Servicios</string>
+    <string name="prefs_category_advanced">Avanzado</string>
     <string name="prefs_category_about">Acerca de</string>
     <string name="pref_onlyfuture">No hay episodios emitidos</string>
     <string name="pref_onlyfuturesummary">Nunca mostrar episodios ya transmitidos</string>
@@ -386,10 +390,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="upcoming_upto_one_week">una semana</string>
     <string name="upcoming_upto_two_weeks">2 semanas</string>
     <string name="upcoming_upto_one_month">un mes</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 hora</string>
-    <string name="upcoming_upto_six_hours">6 horas</string>
-    <string name="upcoming_upto_half_day">12 horas</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Apariencia</string>
     <string name="pref_theme">Tema</string>
@@ -456,10 +456,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Opaco</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Próximo episodio</string>
-    <string name="dashclock_extension_description">Muestra el próximo episodio de sus series de SeriesGuide.</string>
-    <string name="dashclock_pref_upcoming_threshold">Mostrar episodio dentro de&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Solo para seguidores</string>
     <string name="action_upgrade">Desbloquea todas las funciones</string>
@@ -467,8 +463,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="billing_action_manage_subscriptions">Gestionar suscripciones</string>
     <string name="billing_action_pass">Obtener X Pass</string>
     <string name="billing_price_subscribe">%1$s/año, prueba gratuita, cancela en cualquier momento mediante %2$s</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_duration_format">%1$s/año</string>
+    <string name="billing_sub_description">Pruebe gratis, cancele en cualquier momento.</string>
     <string name="billing_price_pass">Compra por única vez</string>
     <string name="upgrade_description">Desbloquea todas las funciones incluyendo notificaciones, temas y mas opciones para los widgets. Ayudame a hacer futuras actualizaciones.</string>
     <string name="upgrade_success">Gracias por apoyar a SeriesGuide! Tienes acceso a todas las funciones.</string>

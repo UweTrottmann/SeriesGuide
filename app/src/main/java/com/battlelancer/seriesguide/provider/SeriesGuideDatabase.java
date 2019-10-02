@@ -241,7 +241,7 @@ public class SeriesGuideDatabase {
                         // from shows table
                         + Shows.TITLE + ","
                         + Shows.TITLE_NOARTICLE + ","
-                        + Shows.POSTER + ","
+                        + Shows.POSTER_SMALL + ","
                         + Shows.NETWORK + ","
                         + Shows.STATUS + ","
                         + Shows.FAVORITE + ","
@@ -1098,7 +1098,7 @@ public class SeriesGuideDatabase {
                 Episodes.WATCHED,
                 Episodes.OVERVIEW,
                 Shows.TITLE,
-                Shows.POSTER
+                Shows.POSTER_SMALL
         };
 
         int _ID = 0;
@@ -1108,7 +1108,7 @@ public class SeriesGuideDatabase {
         int WATCHED = 4;
         int OVERVIEW = 5;
         int SHOW_TITLE = 6;
-        int SHOW_POSTER = 7;
+        int SHOW_POSTER_SMALL = 7;
     }
 
     private final static String EPISODE_COLUMNS = Episodes._ID + ","
@@ -1120,7 +1120,7 @@ public class SeriesGuideDatabase {
     private final static String SELECT_SHOWS = "SELECT "
             + BaseColumns._ID + " as sid,"
             + Shows.TITLE + ","
-            + Shows.POSTER
+            + Shows.POSTER_SMALL
             + " FROM " + Tables.SHOWS;
 
     private final static String SELECT_MATCH = "SELECT "
@@ -1140,7 +1140,7 @@ public class SeriesGuideDatabase {
             + " ON " + EpisodeSearch._DOCID + "=" + Episodes._ID;
 
     private final static String QUERY_SEARCH_EPISODES = "SELECT "
-            + EPISODE_COLUMNS + "," + Episodes.OVERVIEW + "," + Shows.TITLE + "," + Shows.POSTER
+            + EPISODE_COLUMNS + "," + Episodes.OVERVIEW + "," + Shows.TITLE + "," + Shows.POSTER_SMALL
             + " FROM "
             + "("
             + "(" + SELECT_SHOWS + ") JOIN (" + JOIN_MATCHES_EPISODES + ") ON sid="

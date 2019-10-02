@@ -54,7 +54,7 @@ class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>
                             Episodes.FIRSTAIREDMS,
                             Shows.REF_SHOW_ID,
                             Shows.TITLE,
-                            Shows.POSTER // 7
+                            Shows.POSTER_SMALL // 7
                     }, null, null, null);
             if (episodeQuery == null) {
                 continue;
@@ -67,7 +67,7 @@ class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>
                         episodeQuery.getString(6),
                         TextTools.getNextEpisodeString(getContext(), episodeQuery.getInt(3),
                                 episodeQuery.getInt(2), episodeQuery.getString(1)),
-                        TvdbImageTools.smallSizeUrl(episodeQuery.getString(7))
+                        TvdbImageTools.artworkUrl(episodeQuery.getString(7))
                 ).tvdbIds(episodeTvdbId, episodeQuery.getInt(5)).recentlyWatchedLocal();
                 items.add(item);
             }

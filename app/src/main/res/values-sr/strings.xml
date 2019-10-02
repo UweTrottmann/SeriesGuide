@@ -206,6 +206,9 @@
     <string name="watched_shows">Одгледано</string>
     <string name="shows_collection">Колекција</string>
     <string name="watchlist">Листа за гледање</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Прва листа</string>
     <string name="list_add">Додај листу</string>
@@ -340,6 +343,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Основно</string>
     <string name="prefs_category_sharing">Услуге</string>
+    <string name="prefs_category_advanced">Напредно</string>
     <string name="prefs_category_about">О апликацији</string>
     <string name="pref_onlyfuture">Нема емитованих епизода</string>
     <string name="pref_onlyfuturesummary">Не приказуј већ емитоване епизоде</string>
@@ -396,10 +400,6 @@
     <string name="upcoming_upto_one_week">недељу дана</string>
     <string name="upcoming_upto_two_weeks">2 недеље</string>
     <string name="upcoming_upto_one_month">месец</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">сат</string>
-    <string name="upcoming_upto_six_hours">6 сати</string>
-    <string name="upcoming_upto_half_day">12 сати</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Изглед</string>
     <string name="pref_theme">Тема</string>
@@ -466,10 +466,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Прозирно</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Предстојећа епизода</string>
-    <string name="dashclock_extension_description">Прикажу предстојећу епизоду Ваших SeriesGuide серија.</string>
-    <string name="dashclock_pref_upcoming_threshold">Прикажи епизоде у следећем&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Само за кориснике који су подржали развитак апликације</string>
     <string name="action_upgrade">Откључај све опције</string>

@@ -198,6 +198,9 @@
     <string name="watched_shows">시청한 목록</string>
     <string name="shows_collection">컬렉션</string>
     <string name="watchlist">관심목록</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">첫번째 목록</string>
     <string name="list_add">목록 추가</string>
@@ -324,6 +327,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">기본</string>
     <string name="prefs_category_sharing">서비스</string>
+    <string name="prefs_category_advanced">고급</string>
     <string name="prefs_category_about">정보</string>
     <string name="pref_onlyfuture">방영된 에피소드 보이지 않기</string>
     <string name="pref_onlyfuturesummary">방영된 에피소드를 목록에 표시하지 않습니다</string>
@@ -374,10 +378,6 @@
     <string name="upcoming_upto_one_week">1주</string>
     <string name="upcoming_upto_two_weeks">2주</string>
     <string name="upcoming_upto_one_month">한달</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">시간</string>
-    <string name="upcoming_upto_six_hours">6 시간</string>
-    <string name="upcoming_upto_half_day">12 시간</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">모양</string>
     <string name="pref_theme">테마</string>
@@ -444,10 +444,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">불투명</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">방영예정 에피소드</string>
-    <string name="dashclock_extension_description">SeriesGuide에 있는 프로그램의 다음 에피소드를 표시합니다.</string>
-    <string name="dashclock_pref_upcoming_threshold">방영 예정 에피소드 보기</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">후원자만 사용가능</string>
     <string name="action_upgrade">모든 기능 사용하기</string>

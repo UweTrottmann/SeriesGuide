@@ -63,6 +63,12 @@ object StreamingSearch {
     }
 
     @JvmStatic
+    fun isNotConfiguredOrTurnedOff(context: Context): Boolean {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+            .getString(KEY_SETTING_SERVICE, null).isNullOrEmpty()
+    }
+
+    @JvmStatic
     fun getServiceOrEmptyOrNull(context: Context): String? {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(KEY_SETTING_SERVICE, null)

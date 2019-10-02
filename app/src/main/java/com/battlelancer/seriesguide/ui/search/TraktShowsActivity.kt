@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui.search
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity
 import com.battlelancer.seriesguide.util.TaskManager
@@ -28,6 +29,10 @@ class TraktShowsActivity : BaseNavDrawerActivity(), AddShowDialogFragment.OnAddS
                     .add(R.id.containerTraktShowsFragment, fragment)
                     .commit()
         }
+
+        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this, Observer {
+            startActivity(SimilarShowsActivity.intent(this, it.tvdbid, it.title))
+        })
     }
 
     fun setupActionBar(link: TraktShowsLink) {

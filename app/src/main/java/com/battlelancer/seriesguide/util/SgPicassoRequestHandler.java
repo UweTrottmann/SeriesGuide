@@ -25,7 +25,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 /**
- * This is mostly a copy of {@link com.squareup.picasso.NetworkRequestHandler} that is not visible.
+ * This is mostly a copy of {@code com.squareup.picasso.NetworkRequestHandler} that is not visible.
  * Extended to fetch the image url from a given show TVDB id or movie TMDB id.
  */
 public class SgPicassoRequestHandler extends RequestHandler {
@@ -68,10 +68,11 @@ public class SgPicassoRequestHandler extends RequestHandler {
                     // no posters for this language, fall back to default
                     posterResponse = tvdbTools.getSeriesPosters(showTvdbId, null);
                 }
-                if (posterResponse.isSuccessful()) {
-                    //noinspection ConstantConditions
-                    String imagePath = TvdbTools.getHighestRatedPoster(posterResponse.body().data);
-                    String imageUrl = TvdbImageTools.smallSizeUrl(imagePath);
+                if (posterResponse.isSuccessful() && posterResponse.body() != null && posterResponse.body().data != null) {
+                    String imagePath = TvdbTools.getHighestRatedPoster(
+                            posterResponse.body().data
+                    ).smallSize;
+                    String imageUrl = TvdbImageTools.artworkUrl(imagePath);
                     if (imageUrl != null) {
                         return loadFromNetwork(Uri.parse(imageUrl), networkPolicy);
                     }

@@ -210,6 +210,9 @@
     <string name="watched_shows">Watched</string>
     <string name="shows_collection">Zbirka</string>
     <string name="watchlist">Spisek za gledanje</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Prvi spisek</string>
     <string name="list_add">Dodaj spisek</string>
@@ -348,6 +351,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Osnove</string>
     <string name="prefs_category_sharing">Storitve</string>
+    <string name="prefs_category_advanced">Napredno</string>
     <string name="prefs_category_about">O programu</string>
     <string name="pref_onlyfuture">Ni predvajanih epizod</string>
     <string name="pref_onlyfuturesummary">Nikoli ne prikaži že objavljenih epizod</string>
@@ -407,10 +411,6 @@
     <string name="upcoming_upto_one_week">tedna</string>
     <string name="upcoming_upto_two_weeks">dveh tednov</string>
     <string name="upcoming_upto_one_month">meseca</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">ura</string>
-    <string name="upcoming_upto_six_hours">6 ur</string>
-    <string name="upcoming_upto_half_day">12 ur</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Videz</string>
     <string name="pref_theme">Tema</string>
@@ -477,10 +477,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Opaque</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Upcoming episode</string>
-    <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows</string>
-    <string name="dashclock_pref_upcoming_threshold">Display episode within&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Only for supporters</string>
     <string name="action_upgrade">Unlock all features</string>

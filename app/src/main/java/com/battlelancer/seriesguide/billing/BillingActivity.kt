@@ -89,8 +89,10 @@ class BillingActivity : BaseActivity() {
 
     override fun setupActionBar() {
         super.setupActionBar()
-        val actionBar = supportActionBar
-        actionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.apply {
+            setHomeAsUpIndicator(R.drawable.ic_clear_24dp)
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
 
     private fun setupViews() {

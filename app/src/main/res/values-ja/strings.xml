@@ -183,7 +183,7 @@
     <!-- Add show -->
     <string name="checkin_searchhint">番組名を入力</string>
     <string name="add_empty">番組がありません</string>
-    <string name="no_results">結果はありません。完全な単語で試してください。</string>
+    <string name="no_results">検索結果はありません。完全な単語で試してください。</string>
     <string name="empty_show_search">番組リストにありません</string>
     <string name="action_try_any_language">任意の言語を試してください</string>
     <string name="action_try_again">もう一度やり直してください</string>
@@ -198,6 +198,9 @@
     <string name="watched_shows">視聴済</string>
     <string name="shows_collection">コレクション</string>
     <string name="watchlist">ウォッチリスト</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">検索結果はありません</string>
+    <string name="title_similar_shows">類似の番組</string>
     <!-- Lists -->
     <string name="first_list">最初のリスト</string>
     <string name="list_add">リストを追加</string>
@@ -324,6 +327,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">基本</string>
     <string name="prefs_category_sharing">サービス</string>
+    <string name="prefs_category_advanced">高度</string>
     <string name="prefs_category_about">について</string>
     <string name="pref_onlyfuture">未放映のエピソード</string>
     <string name="pref_onlyfuturesummary">すでに放映されたエピソードを表示しません</string>
@@ -374,10 +378,6 @@
     <string name="upcoming_upto_one_week">1 週間</string>
     <string name="upcoming_upto_two_weeks">2 週間</string>
     <string name="upcoming_upto_one_month">1 ヶ月</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 時間</string>
-    <string name="upcoming_upto_six_hours">6 時間</string>
-    <string name="upcoming_upto_half_day">12 時間</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">外観</string>
     <string name="pref_theme">テーマ</string>
@@ -444,10 +444,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">不透明</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">今後のエピソード</string>
-    <string name="dashclock_extension_description">SeriesGuide の番組の次のエピソードを表示します</string>
-    <string name="dashclock_pref_upcoming_threshold">&#8230;以内のエピソードを表示</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">サポーターに対してのみ</string>
     <string name="action_upgrade">すべての機能のロックを解除</string>

@@ -68,7 +68,7 @@ Licensed under the Apache License, Version 2.0
 
 Material Design Icons (https://material.io/tools/icons)
 
-Android Support Libraries (https://developer.android.com/topic/libraries/support-library/index.html)
+Android Jetpack Libraries (https://android.googlesource.com/platform/frameworks/support/)
 Copyright 2013 The Android Open Source Project
 
 AndroidUtils (https://github.com/UweTrottmann/AndroidUtils)
@@ -81,8 +81,8 @@ dagger 2 (https://github.com/google/dagger)
 Copyright 2012 Square, Inc.
 Copyright 2012 Google, Inc.
 
-DashClock API (https://code.google.com/p/dashclock/)
-Copyright 2013 Google Inc.
+DebugDrawer (https://github.com/palaima/DebugDrawer)
+Copyright 2016 Mantas Palaima
 
 drag-sort-listview (https://github.com/bauerca/drag-sort-listview)
 Copyright 2012 Carl Bauer
@@ -103,6 +103,12 @@ gson (https://code.google.com/p/google-gson/)
 Copyright 2008 Google Inc.
 
 jackson-core (https://github.com/FasterXML/jackson-core)
+
+Kotlin (https://github.com/JetBrains/kotlin)
+Copyright JetBrains s.r.o.
+
+Kotlin Coroutines (https://github.com/Kotlin/kotlinx.coroutines)
+Copyright JetBrains s.r.o.
 
 okhttp (https://github.com/square/okhttp)
 Copyright 2012 Square, Inc.
@@ -155,6 +161,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 
+Licensed under Android Software Development Kit License
+-------------------------------------------------------
+
+Google Play Billing (https://developer.android.com/google/play/billing/billing_library_overview)
+
+Google Play Services (https://developers.google.com/android/guides/overview)
+
+Licensed under Android Software Development Kit License
+(https://developer.android.com/studio/terms.html)
+
+
 Licensed under the BSD License
 ------------------------------
 
@@ -185,6 +202,12 @@ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+Crashlytics (https://firebase.google.com/docs/crashlytics/)
+-----------------------------------------------------------
+
+Crashlytics Terms of Service (https://firebase.google.com/terms/crashlytics)
 
 
 junit (https://github.com/junit-team/junit4)

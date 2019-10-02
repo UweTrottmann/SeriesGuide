@@ -18,7 +18,7 @@ interface CalendarQuery {
             Shows.REF_SHOW_ID,
             Shows.TITLE,
             Shows.NETWORK,
-            Shows.POSTER
+            Shows.POSTER_SMALL
         )
 
         const val QUERY_UPCOMING = "${Episodes.FIRSTAIREDMS}>=? AND ${Episodes.FIRSTAIREDMS}<? " +
@@ -44,6 +44,6 @@ interface CalendarQuery {
         const val SHOW_ID = 7
         const val SHOW_TITLE = 8
         const val SHOW_NETWORK = 9
-        const val SHOW_POSTER_PATH = 10
+        const val SHOW_POSTER_SMALL = 10
     }
 }

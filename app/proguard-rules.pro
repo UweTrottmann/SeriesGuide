@@ -67,20 +67,13 @@
 # OkHttp platform used only on JVM and when Conscrypt dependency is available.
 -dontwarn okhttp3.internal.platform.ConscryptPlatform
 
-# Okio
--dontwarn okio.**
-
-# Retrofit 2.X
-# Retain generic type information for use by reflection by converters and adapters.
--keepattributes Signature
-# Retain service method parameters when optimizing.
--keepclassmembers,allowshrinking,allowobfuscation interface * {
-    @retrofit2.http.* <methods>;
-}
-# Ignore annotation used for build tooling.
--dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
-# Ignore JSR 305 annotations for embedding nullability information.
--dontwarn javax.annotation.**
+# Retrofit 2.x
+# Keep entity and enum classes. R8 may strip unused, but required fields from entities.
+-keep class com.uwetrottmann.trakt5.entities.** { *; }
+-keep class com.uwetrottmann.trakt5.enums.** { *; }
+-keep class com.uwetrottmann.tmdb2.entities.** { *; }
+-keep class com.uwetrottmann.tmdb2.enumerations.** { *; }
+-keep class com.uwetrottmann.thetvdb.entities.** { *; }
 
 # Apache HTTP was removed as of Android M
 -dontwarn org.apache.http.**
@@ -91,8 +84,4 @@
 -dontwarn android.test.**
 
 # Ignore some notes about unused classes referenced in method signatures
--dontnote com.tonicartos.widget.stickygridheaders.**
--dontnote com.uwetrottmann.thetvdb.**
--dontnote com.uwetrottmann.tmdb2.**
--dontnote com.uwetrottmann.trakt5.**
 -dontnote uk.co.senab.photoview.**

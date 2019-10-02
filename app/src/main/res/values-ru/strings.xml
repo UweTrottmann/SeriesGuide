@@ -210,6 +210,9 @@
     <string name="watched_shows">Просмотрено</string>
     <string name="shows_collection">Коллекция</string>
     <string name="watchlist">Список просмотра</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Первый список</string>
     <string name="list_add">Добавить список</string>
@@ -348,6 +351,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Основные</string>
     <string name="prefs_category_sharing">Сервисы</string>
+    <string name="prefs_category_advanced">Дополнительно</string>
     <string name="prefs_category_about">О программе</string>
     <string name="pref_onlyfuture">Скрыть вышедшие эпизоды</string>
     <string name="pref_onlyfuturesummary">Не показывать транслировавшиеся эпизоды</string>
@@ -407,10 +411,6 @@
     <string name="upcoming_upto_one_week">1 неделя</string>
     <string name="upcoming_upto_two_weeks">2 недели</string>
     <string name="upcoming_upto_one_month">1 месяц</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 час</string>
-    <string name="upcoming_upto_six_hours">6 часов</string>
-    <string name="upcoming_upto_half_day">12 часов</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Оформление</string>
     <string name="pref_theme">Тема</string>
@@ -477,10 +477,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Непрозрачный</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Предстоящий</string>
-    <string name="dashclock_extension_description">Отображает следующий предстоящий эпизод ваших SeriesGuide сериалов.</string>
-    <string name="dashclock_pref_upcoming_threshold">Эпизоды скоро&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Только для пожертвовавших</string>
     <string name="action_upgrade">Разблокировать все возможности</string>

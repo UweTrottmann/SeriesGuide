@@ -210,6 +210,9 @@
     <string name="watched_shows">נצפה</string>
     <string name="shows_collection">אוסף</string>
     <string name="watchlist">רשימת מעקב</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">הרשימה הראשונה</string>
     <string name="list_add">הוסף רשימה</string>
@@ -348,6 +351,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">בסיסי</string>
     <string name="prefs_category_sharing">שירותים</string>
+    <string name="prefs_category_advanced">מתקדם</string>
     <string name="prefs_category_about">אודות</string>
     <string name="pref_onlyfuture">אין פרקים ששודרו</string>
     <string name="pref_onlyfuturesummary">אל תציג פרקים ששודרו</string>
@@ -407,10 +411,6 @@
     <string name="upcoming_upto_one_week">שבוע אחד</string>
     <string name="upcoming_upto_two_weeks">שבועיים</string>
     <string name="upcoming_upto_one_month">חודש אחד</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">שעה אחת</string>
-    <string name="upcoming_upto_six_hours">6 שעות</string>
-    <string name="upcoming_upto_half_day">12 שעות</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">תצוגה</string>
     <string name="pref_theme">ערכת נושא</string>
@@ -477,10 +477,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">עמום</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">פרקים קרובים</string>
-    <string name="dashclock_extension_description">מציג את הפרק הקרוב הבא מסדרות ה-SeriesGuide שלך.</string>
-    <string name="dashclock_pref_upcoming_threshold">הצג פרקים ב&#8230; הבאות</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">עמום</string>
     <string name="action_upgrade">פתח את כל האפשרויות</string>

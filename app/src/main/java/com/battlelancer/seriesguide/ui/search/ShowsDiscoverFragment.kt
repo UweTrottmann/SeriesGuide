@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.core.content.edit
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,7 +18,6 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.OverviewActivity
@@ -31,7 +29,6 @@ import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
-import com.battlelancer.seriesguide.util.tasks.RemoveShowTask
 import com.battlelancer.seriesguide.widgets.EmptyView
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
 import org.greenrobot.eventbus.EventBus
@@ -44,7 +41,7 @@ import timber.log.Timber
  * also with links to recommendations, watched and collected shows. If a search event is received,
  * displays search results. If a link is clicked launches a new activity to display them.
  */
-class ShowsDiscoverFragment : Fragment() {
+class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
     private val KEY_QUERY = "searchQuery"
 
@@ -126,12 +123,12 @@ class ShowsDiscoverFragment : Fragment() {
             this.layoutManager = layoutManager
         }
 
-        adapter = ShowsDiscoverAdapter(requireContext(), itemClickListener,
+        adapter = ShowsDiscoverAdapter(requireContext(), discoverItemClickListener,
                 TraktCredentials.get(context).hasCredentials(), true)
         recyclerView.adapter = adapter
     }
 
-    private val itemClickListener = object : ShowsDiscoverAdapter.OnItemClickListener {
+    private val discoverItemClickListener = object : ShowsDiscoverAdapter.OnItemClickListener {
         override fun onLinkClick(anchor: View, link: TraktShowsLink) {
             Utils.startActivityWithAnimation(activity,
                     TraktShowsActivity.intent(requireContext(), link),
@@ -145,7 +142,7 @@ class ShowsDiscoverFragment : Fragment() {
                     startActivity(OverviewActivity.intentShow(context, item.tvdbid))
                 } else {
                     // display more details in a dialog
-                    AddShowDialogFragment.show(context, fragmentManager, item)
+                    AddShowDialogFragment.show(context!!, fragmentManager!!, item)
                 }
             }
         }
@@ -236,21 +233,9 @@ class ShowsDiscoverFragment : Fragment() {
                 LanguageChoiceDialogFragment.TAG_DISCOVER)
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        EventBus.getDefault().register(this)
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(KEY_QUERY, query)
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        EventBus.getDefault().unregister(this)
     }
 
     override fun onDestroyView() {
@@ -278,48 +263,19 @@ class ShowsDiscoverFragment : Fragment() {
         Timber.d("Set search language to %s", languageCode)
     }
 
-    /**
-     * Called if the user triggers adding a single new show through the add dialog. The show is not
-     * actually added, yet.
-     *
-     * @see [onShowAddedEvent]
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onAddingShowEvent(event: OnAddingShowEvent) {
-        if (event.showTvdbId > 0) {
-            adapter.setStateForTvdbId(event.showTvdbId, SearchResult.STATE_ADDING)
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onShowAddedEvent(event: AddShowTask.OnShowAddedEvent) {
-        when {
-            event.successful -> setShowAdded(event.showTvdbId)
-            event.showTvdbId > 0 -> setShowNotAdded(event.showTvdbId)
-            else -> adapter.setAllPendingNotAdded()
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onShowRemovedEvent(event: RemoveShowTask.OnShowRemovedEvent) {
-        if (event.resultCode == NetworkResult.SUCCESS) {
-            setShowNotAdded(event.showTvdbId)
-        }
-    }
-
-    private fun setShowAdded(showTvdbId: Int) {
-        adapter.setStateForTvdbId(showTvdbId, SearchResult.STATE_ADDED)
-    }
-
-    private fun setShowNotAdded(showTvdbId: Int) {
-        adapter.setStateForTvdbId(showTvdbId, SearchResult.STATE_ADD)
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTabClickEvent(event: TabClickEvent) {
         if (event.position == SearchActivity.TAB_POSITION_SEARCH) {
             recyclerView.smoothScrollToPosition(0)
         }
+    }
+
+    override fun setAllPendingNotAdded() {
+        adapter.setAllPendingNotAdded()
+    }
+
+    override fun setStateForTvdbId(showTvdbId: Int, newState: Int) {
+        adapter.setStateForTvdbId(showTvdbId, newState)
     }
 
 }

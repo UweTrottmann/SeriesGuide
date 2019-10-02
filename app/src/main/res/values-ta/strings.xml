@@ -202,6 +202,9 @@
     <string name="watched_shows">பார்த்த</string>
     <string name="shows_collection">தொகுப்பு</string>
     <string name="watchlist">Watchlist</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">No results</string>
+    <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">முதல் பட்டியல்</string>
     <string name="list_add">பட்டியல் சேர்</string>
@@ -332,6 +335,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">அடிப்படைகள்</string>
     <string name="prefs_category_sharing">சேவைகள்</string>
+    <string name="prefs_category_advanced">மேம்பட்ட</string>
     <string name="prefs_category_about">பற்றி</string>
     <string name="pref_onlyfuture">எந்த aired episodes</string>
     <string name="pref_onlyfuturesummary">ஒருபோதும் காட்சி ஏற்கனவே வெளியான episodes</string>
@@ -385,10 +389,6 @@
     <string name="upcoming_upto_one_week">1 வாரம்</string>
     <string name="upcoming_upto_two_weeks">2 வாரங்கள்</string>
     <string name="upcoming_upto_one_month">1 மாதம்</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 மணி நேரம்</string>
-    <string name="upcoming_upto_six_hours">6 மணி நேரம்</string>
-    <string name="upcoming_upto_half_day">12 மணி நேரம்</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">தோற்றம்</string>
     <string name="pref_theme">கருப்பொருள்</string>
@@ -455,10 +455,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">ஒளி</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">வரவிருக்கும் சம்பவம்</string>
-    <string name="dashclock_extension_description">காட்டுகிறது உங்கள் SeriesGuide அடுத்த வரவிருக்கும் பகுதியான காண்பிக்கும்.</string>
-    <string name="dashclock_pref_upcoming_threshold">உள்ளிருந்து காட்சி சம்பவம்&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">ஆதரவாளர்கள்-மட்டுமே</string>
     <string name="action_upgrade">அனைத்து அம்சங்களும் பூட்டவிழ்</string>
