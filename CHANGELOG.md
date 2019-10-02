@@ -7,7 +7,13 @@ All dates are in the European Central timezone.
 
 Version 51
 ----------
-*(in development)*
+*(2019-10-02)*
+
+* 🌟 Display similar shows from the show details dialog and screen. Powered by themoviedb.org!
+* 🔧 Display streaming search in show details dialog, if it was configured.
+* 🔧 Move advanced settings up to the first settings section.
+* 🔧 Remove DashClock extension, DashClock has been unpublished for a long time.
+* 🔧 Allow users to enable debug mode, for example to share log output.
 
 #### 51-beta6
 *(2019-09-26)*
