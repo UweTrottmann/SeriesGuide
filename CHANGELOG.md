@@ -15,6 +15,13 @@ Version 51
 * 🔧 Remove DashClock extension, DashClock has been unpublished for a long time.
 * 🔧 Allow users to enable debug mode, for example to share log output.
 
+#### 51
+*(2019-10-02)*
+
+* 🔨 Do not crash when trying to display details for a show not existing on TheTVDB.com.
+* 🔨 Do not crash if there is no app available to select notification sound.
+* 📝 Latest translations from crowdin.
+
 #### 51-beta6
 *(2019-09-26)*
 
