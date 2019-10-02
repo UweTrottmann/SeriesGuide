@@ -348,7 +348,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 if (TextUtils.isEmpty(existingValue)) null else Uri.parse(existingValue)
             )
 
-            startActivityForResult(intent, REQUEST_CODE_RINGTONE)
+            Utils.tryStartActivityForResult(this, intent, REQUEST_CODE_RINGTONE)
             return true
         }
         if (NotificationSettings.KEY_CHANNELS == key) {
