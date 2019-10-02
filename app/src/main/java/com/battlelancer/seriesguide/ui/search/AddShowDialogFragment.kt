@@ -46,6 +46,7 @@ import com.uwetrottmann.androidutils.CheatSheet
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import timber.log.Timber
 
 /**
  * A [DialogFragment] allowing the user to decide whether to add a show to SeriesGuide.
@@ -95,7 +96,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
     private lateinit var unbinder: Unbinder
     private lateinit var addShowListener: OnAddShowListener
-    private lateinit var displayedShow: SearchResult
+    private var displayedShow: SearchResult? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -112,10 +113,13 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         val searchResultArg: SearchResult? = arguments!!.getParcelable(ARG_SEARCH_RESULT)
         if (searchResultArg == null || searchResultArg.tvdbid <= 0) {
             // Not a valid TVDb id or show.
+            displayedShow = null
+            Timber.e("Not a valid show, closing.")
             dismiss()
-            return
+            // Note: After dismiss still continues through lifecycle methods.
+        } else {
+            displayedShow = searchResultArg
         }
-        displayedShow = searchResultArg
 
         // hide title, use custom theme
         setStyle(DialogFragment.STYLE_NO_TITLE, 0)
@@ -162,15 +166,20 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        showProgressBar(true)
-
-        // Load show details.
-        val args = Bundle().apply {
-            putInt(KEY_SHOW_TVDBID, displayedShow.tvdbid)
-            putString(KEY_SHOW_LANGUAGE, displayedShow.language)
+        val displayedShow = this.displayedShow
+        if (displayedShow == null) {
+            // No progress, dialog will be dismissed.
+            showProgressBar(false)
+        } else {
+            // Load show details.
+            showProgressBar(true)
+            val args = Bundle().apply {
+                putInt(KEY_SHOW_TVDBID, displayedShow.tvdbid)
+                putString(KEY_SHOW_LANGUAGE, displayedShow.language)
+            }
+            LoaderManager.getInstance(this)
+                .initLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args, showLoaderCallbacks)
         }
-        LoaderManager.getInstance(this)
-            .initLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args, showLoaderCallbacks)
     }
 
     override fun onStart() {
@@ -190,12 +199,14 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
     @OnClick(R.id.buttonAddLanguage)
     fun onClickButtonLanguage() {
-        LanguageChoiceDialogFragment.show(
-            fragmentManager!!,
-            R.array.languageCodesShows,
-            displayedShow.language,
-            LanguageChoiceDialogFragment.TAG_ADD_DIALOG
-        )
+        displayedShow?.let {
+            LanguageChoiceDialogFragment.show(
+                fragmentManager!!,
+                R.array.languageCodesShows,
+                it.language,
+                LanguageChoiceDialogFragment.TAG_ADD_DIALOG
+            )
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -208,6 +219,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         showProgressBar(true)
         overview.visibility = View.INVISIBLE
 
+        val displayedShow = this.displayedShow!!
         displayedShow.language = event.selectedLanguageCode
         val args = Bundle().apply {
             putInt(KEY_SHOW_TVDBID, displayedShow.tvdbid)
@@ -218,6 +230,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
     }
 
     private fun populateShowViews(result: TvdbShowLoader.Result) {
+        val displayedShow = this.displayedShow!!
         val show = result.show
         if (show == null) {
             // Failed to load, can't be added.
