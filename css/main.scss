@@ -3,25 +3,43 @@
 ---
 @charset "utf-8";
 
-// Overriden Bootstrap settings
-// check _sass/bootstrap/_variables.scss for default values
+// Overriden Bootstrap settings.
+// Check _sass/bootstrap/_variables.scss for default values.
+// Copy and paste variables as needed, modify their values, and remove the !default flag.
+// https://getbootstrap.com/docs/4.3/getting-started/theming/#variable-defaults
 
-$primary: #6545a0 !default;
-$primary-light: #D1C4E9 !default;
+$primary: #6545a0;
+$primary-light: #D1C4E9;
 
-$link-color:                        $primary !default;
-$dropdown-bg:                       $primary !default;
+$link-color:                        $primary;
+$dropdown-bg:                       $primary;
 
 // Inverted navbar links
-$navbar-dark-color:                 #fff !default;
-$navbar-dark-hover-color:           $primary-light !default;
+$navbar-dark-color:                 #fff;
+$navbar-dark-hover-color:           $primary-light;
 
 // text
-$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !default;
-$headings-font-weight: 400 !default;
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$headings-font-weight: 400;
 
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import
-  "bootstrap/bootstrap",
+  "bootstrap/functions",
+  "bootstrap/variables",
+  "bootstrap/mixins",
+  "bootstrap/root",
+  "bootstrap/reboot",
+  "bootstrap/type",
+  "bootstrap/images",
+  "bootstrap/grid",
+  "bootstrap/tables",
+  "bootstrap/buttons",
+  "bootstrap/transitions",
+  "bootstrap/dropdown",
+  "bootstrap/nav",
+  "bootstrap/navbar",
+  "bootstrap/badge",
+  "bootstrap/list-group",
+  "bootstrap/utilities",
   "base"
 ;
