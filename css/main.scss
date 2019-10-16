@@ -22,6 +22,22 @@ $headings-font-weight: 400 !default;
 
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import
-  "bootstrap/bootstrap",
+  "bootstrap/functions",
+  "bootstrap/variables",
+  "bootstrap/mixins",
+  "bootstrap/root",
+  "bootstrap/reboot",
+  "bootstrap/type",
+  "bootstrap/images",
+  "bootstrap/grid",
+  "bootstrap/tables",
+  "bootstrap/buttons",
+  "bootstrap/transitions",
+  "bootstrap/dropdown",
+  "bootstrap/nav",
+  "bootstrap/navbar",
+  "bootstrap/badge",
+  "bootstrap/list-group",
+  "bootstrap/utilities",
   "base"
 ;

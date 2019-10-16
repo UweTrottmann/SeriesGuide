@@ -20,5 +20,5 @@ bundle exec jekyll serve
 
 * Clean `_sass\bootstrap` folder.
 * From `scss` folder copy into `_sass\bootstrap`.
-* Update `_sass\bootstrap.scss`.
+* Check `css\main.scss` if updates are required (e.g. names in `_sass\bootstrap\bootstrap.scss` have changed).
 * From `dist\js` folder copy `bootstrap.min.js` and `.map` into `javascripts`.
