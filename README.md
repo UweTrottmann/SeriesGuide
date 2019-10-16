@@ -14,3 +14,11 @@ bundle update
 # test locally
 bundle exec jekyll serve
 ```
+
+## Updating Bootstrap
+[Download source of latest release](https://github.com/twbs/bootstrap/releases).
+
+* Clean `_sass\bootstrap` folder.
+* From `scss` folder copy into `_sass\bootstrap`.
+* Update `_sass\bootstrap.scss`.
+* From `dist\js` folder copy `bootstrap.min.js` and `.map` into `javascripts`.
