@@ -104,7 +104,7 @@
     <!-- Flagging -->
     <string name="mark_all">எல்லாம் பார்த்த</string>
     <string name="unmark_all">இல்லை பார்த்த</string>
-    <string name="mark_untilhere">அமைக்க அனைத்து பழைய பார்த்த</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">எல்லாம் சேகரிக்கப்படும்</string>
     <string name="uncollect_all">யாரும் சேகரிக்கப்படும்</string>
     <string name="action_skip">புறக்கணி</string>

@@ -126,6 +126,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
     @BindView(R.id.dividerEpisodeButtons) View dividerEpisodeButtons;
     @BindView(R.id.buttonEpisodeCheckin) Button buttonCheckin;
+    @BindView(R.id.buttonEpisodeWatchedUpTo) Button buttonWatchedUpTo;
     @BindView(R.id.buttonEpisodeStreamingSearch) Button buttonStreamingSearch;
     @BindView(R.id.buttonEpisodeWatched) Button buttonWatch;
     @BindView(R.id.buttonEpisodeCollected) Button buttonCollect;
@@ -179,6 +180,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
         ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
         ViewTools.setVectorIconLeft(theme, buttonCheckin, R.drawable.ic_checkin_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonWatchedUpTo, R.drawable.ic_watch_all_black_24dp);
         ViewTools.setVectorIconLeft(theme, buttonStreamingSearch,
                 R.drawable.ic_play_arrow_black_24dp);
 
@@ -368,6 +370,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         buttonCollect.setEnabled(enabled);
         buttonSkip.setEnabled(enabled);
         buttonCheckin.setEnabled(enabled);
+        buttonWatchedUpTo.setEnabled(enabled);
         buttonStreamingSearch.setEnabled(enabled);
     }
 
@@ -515,26 +518,54 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         });
         loadImage(imagePath, hideDetails);
 
-        // check in button
+        // Buttons.
+        updatePrimaryButtons(cursor);
+        updateSecondaryButtons(cursor);
+
+        containerEpisode.setVisibility(View.VISIBLE);
+
+        loadDetails();
+    }
+
+    private void updatePrimaryButtons(Cursor cursor) {
+        // Check in button.
         buttonCheckin.setOnClickListener(
                 v -> CheckInDialogFragment.show(getContext(), getFragmentManager(), episodeTvdbId));
         CheatSheet.setup(buttonCheckin);
-
         // hide check-in if not connected to trakt or hexagon is enabled
         boolean isConnectedToTrakt = TraktCredentials.get(requireContext()).hasCredentials();
         boolean displayCheckIn = isConnectedToTrakt && !HexagonSettings.isEnabled(requireContext());
         buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
-        buttonStreamingSearch
+
+        // Watched up to button.
+        boolean isWatched = EpisodeTools.isWatched(episodeFlag);
+        boolean displayWatchedUpTo = !isWatched;
+        buttonWatchedUpTo.setVisibility(displayWatchedUpTo ? View.VISIBLE : View.GONE);
+        buttonWatchedUpTo
                 .setNextFocusUpId(displayCheckIn ? R.id.buttonCheckIn : R.id.buttonEpisodeWatched);
+        buttonWatchedUpTo.setOnClickListener(v -> EpisodeTools.episodeWatchedUpTo(
+                getContext(), showTvdbId, episodeReleaseTime, episodeNumber
+        ));
+
+        // Streaming search button.
+        int streamingSearchNextFocusUpId;
+        if (displayWatchedUpTo) {
+            streamingSearchNextFocusUpId = R.id.buttonEpisodeWatchedUpTo;
+        } else if (displayCheckIn) {
+            streamingSearchNextFocusUpId = R.id.buttonCheckIn;
+        } else {
+            streamingSearchNextFocusUpId = R.id.buttonEpisodeWatched;
+        }
+        buttonStreamingSearch.setNextFocusUpId(streamingSearchNextFocusUpId);
         // hide streaming search if turned off
         boolean displayStreamingSearch = !StreamingSearch.isTurnedOff(requireContext());
         buttonStreamingSearch.setVisibility(displayStreamingSearch ? View.VISIBLE : View.GONE);
+
         dividerEpisodeButtons.setVisibility(displayCheckIn || displayStreamingSearch
                 ? View.VISIBLE : View.GONE);
 
         // watched button
         Resources.Theme theme = requireActivity().getTheme();
-        boolean isWatched = EpisodeTools.isWatched(episodeFlag);
         if (isWatched) {
             ViewTools.setVectorDrawableTop(theme, buttonWatch, R.drawable.ic_watched_24dp);
         } else {
@@ -576,8 +607,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             CheatSheet.setup(buttonSkip,
                     isSkipped ? R.string.action_dont_skip : R.string.action_skip);
         }
+    }
 
-        // service buttons
+    private void updateSecondaryButtons(Cursor cursor) {
         // trakt
         String traktLink = TraktTools.buildEpisodeUrl(episodeTvdbId);
         ViewTools.openUriOnClick(traktButton, traktLink);
@@ -596,6 +628,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         String tvdbLink = TvdbLinks.episode(showTvdbSlug, showTvdbId, seasonTvdbId, episodeTvdbId);
         ViewTools.openUriOnClick(tvdbButton, tvdbLink);
         ClipboardTools.copyTextToClipboardOnLongClick(tvdbButton, tvdbLink);
+
         // trakt comments
         commentsButton.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), TraktCommentsActivity.class);
@@ -603,10 +636,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                     episodeTvdbId));
             Utils.startActivityWithAnimation(requireActivity(), intent, v);
         });
-
-        containerEpisode.setVisibility(View.VISIBLE);
-
-        loadDetails();
     }
 
     private void loadDetails() {

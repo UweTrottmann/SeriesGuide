@@ -106,7 +106,7 @@
     <!-- Flagging -->
     <string name="mark_all">Всі переглянуті</string>
     <string name="unmark_all">Жодна не переглянута</string>
-    <string name="mark_untilhere">Переглянуті всі що вийшли до цього</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Зібрано всі</string>
     <string name="uncollect_all">Жодної не зібрано</string>
     <string name="action_skip">Пропустити</string>

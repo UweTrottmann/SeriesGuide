@@ -103,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">모두 시청 완료</string>
     <string name="unmark_all">한 편도 안 본 것으로 설정</string>
-    <string name="mark_untilhere">이전 에피소드를 모두 시청으로 표시</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">수집 완료</string>
     <string name="uncollect_all">수집할 내용 없음</string>
     <string name="action_skip">건너뛰기</string>

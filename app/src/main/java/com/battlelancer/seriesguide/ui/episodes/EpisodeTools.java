@@ -5,7 +5,7 @@ import android.database.Cursor;
 import com.battlelancer.seriesguide.jobs.FlagJobAsyncTask;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeCollectedJob;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
-import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedPreviousJob;
+import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedUpToJob;
 import com.battlelancer.seriesguide.jobs.episodes.SeasonCollectedJob;
 import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob;
 import com.battlelancer.seriesguide.jobs.episodes.ShowCollectedJob;
@@ -78,13 +78,13 @@ public class EpisodeTools {
     }
 
     /**
-     * Flags all episodes released previous to this one as watched (excluding episodes with no
-     * release date).
+     * Flags all episodes released up to (== including) this one as watched
+     * excluding those with no release date.
      */
-    public static void episodeWatchedPrevious(Context context, int showTvdbId,
+    public static void episodeWatchedUpTo(Context context, int showTvdbId,
             long episodeFirstAired, int episodeNumber) {
         FlagJobAsyncTask.executeJob(context,
-                new EpisodeWatchedPreviousJob(showTvdbId, episodeFirstAired, episodeNumber));
+                new EpisodeWatchedUpToJob(showTvdbId, episodeFirstAired, episodeNumber));
     }
 
     public static void seasonWatched(Context context, int showTvdbId, int seasonTvdbId, int season,

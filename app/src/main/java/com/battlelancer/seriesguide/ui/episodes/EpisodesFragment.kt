@@ -234,6 +234,7 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                 val isWatched = EpisodeTools.isWatched(watchedFlag)
                 findItem(R.id.menu_action_episodes_watched).isVisible = !isWatched
                 findItem(R.id.menu_action_episodes_not_watched).isVisible = isWatched
+                findItem(R.id.menu_action_episodes_watched_up_to).isVisible = !isWatched
                 val isSkipped = EpisodeTools.isSkipped(watchedFlag)
                 findItem(R.id.menu_action_episodes_skip).isVisible = !isWatched && !isSkipped
                 findItem(R.id.menu_action_episodes_dont_skip).isVisible = isSkipped
@@ -264,8 +265,8 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                         onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, false)
                         true
                     }
-                    R.id.menu_action_episodes_watched_previous -> {
-                        EpisodeTools.episodeWatchedPrevious(
+                    R.id.menu_action_episodes_watched_up_to -> {
+                        EpisodeTools.episodeWatchedUpTo(
                             requireContext(),
                             showTvdbId,
                             releaseTimeMs,
