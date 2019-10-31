@@ -174,7 +174,7 @@ class CalendarFragment2 : ScopedFragment() {
         menu.findItem(R.id.menu_calendar_visibility).icon = visibilitySettingsIcon
 
         // set menu items to current values
-        val context = context
+        val context = context!!
         menu.findItem(R.id.menu_action_calendar_onlyfavorites).isChecked =
             CalendarSettings.isOnlyFavorites(context)
         menu.findItem(R.id.menu_action_calendar_onlycollected).isChecked =
