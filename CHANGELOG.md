@@ -5,6 +5,18 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 52
+----------
+*(in development)*
+
+#### 52-beta1
+*(2019-10-31)*
+
+* 🌟 Calendar: add option to only display premieres (first episodes).
+* 🔧 Show overview: if there is no next episode, suggest to look for similar shows.
+* 🔧 Episode details: button to set all episodes watched up to (including) the current one.
+* 📝 Latest translations from crowdin.
+
 Version 51
 ----------
 *(2019-10-02)*
