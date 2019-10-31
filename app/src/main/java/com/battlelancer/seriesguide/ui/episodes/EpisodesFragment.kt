@@ -264,8 +264,8 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                         onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, false)
                         true
                     }
-                    R.id.menu_action_episodes_watched_previous -> {
-                        EpisodeTools.episodeWatchedPrevious(
+                    R.id.menu_action_episodes_watched_up_to -> {
+                        EpisodeTools.episodeWatchedUpTo(
                             requireContext(),
                             showTvdbId,
                             releaseTimeMs,
