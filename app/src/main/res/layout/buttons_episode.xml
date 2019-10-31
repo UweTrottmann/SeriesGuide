@@ -82,6 +82,20 @@
         tools:drawableTint="?attr/sgColorIcon" />
 
     <Button
+        android:id="@+id/buttonEpisodeWatchedUpTo"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/padding_button"
+        android:layout_marginRight="@dimen/padding_button"
+        android:contentDescription="@string/action_watched_up_to"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical|start"
+        android:text="@string/action_watched_up_to"
+        tools:drawableLeft="@drawable/ic_watch_all_black_24dp"
+        tools:drawableTint="?attr/sgColorIcon" />
+
+    <Button
         android:id="@+id/buttonEpisodeStreamingSearch"
         style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
         android:layout_width="match_parent"
