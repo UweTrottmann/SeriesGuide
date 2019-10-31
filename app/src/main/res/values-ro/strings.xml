@@ -105,7 +105,7 @@
     <!-- Flagging -->
     <string name="mark_all">Toate au fost vizionate</string>
     <string name="unmark_all">Nici unul nu a fost vizionat</string>
-    <string name="mark_untilhere">Setați cele vechi ca vizionate</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Colectate toate</string>
     <string name="uncollect_all">Necolectate</string>
     <string name="action_skip">Omite</string>
