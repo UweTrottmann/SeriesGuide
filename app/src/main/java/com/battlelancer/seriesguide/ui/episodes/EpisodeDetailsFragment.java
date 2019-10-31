@@ -515,6 +515,16 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         });
         loadImage(imagePath, hideDetails);
 
+        // Buttons.
+        updatePrimaryButtons(cursor);
+        updateSecondaryButtons(cursor);
+
+        containerEpisode.setVisibility(View.VISIBLE);
+
+        loadDetails();
+    }
+
+    private void updatePrimaryButtons(Cursor cursor) {
         // check in button
         buttonCheckin.setOnClickListener(
                 v -> CheckInDialogFragment.show(getContext(), getFragmentManager(), episodeTvdbId));
@@ -576,8 +586,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             CheatSheet.setup(buttonSkip,
                     isSkipped ? R.string.action_dont_skip : R.string.action_skip);
         }
+    }
 
-        // service buttons
+    private void updateSecondaryButtons(Cursor cursor) {
         // trakt
         String traktLink = TraktTools.buildEpisodeUrl(episodeTvdbId);
         ViewTools.openUriOnClick(traktButton, traktLink);
@@ -596,6 +607,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         String tvdbLink = TvdbLinks.episode(showTvdbSlug, showTvdbId, seasonTvdbId, episodeTvdbId);
         ViewTools.openUriOnClick(tvdbButton, tvdbLink);
         ClipboardTools.copyTextToClipboardOnLongClick(tvdbButton, tvdbLink);
+
         // trakt comments
         commentsButton.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), TraktCommentsActivity.class);
@@ -603,10 +615,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                     episodeTvdbId));
             Utils.startActivityWithAnimation(requireActivity(), intent, v);
         });
-
-        containerEpisode.setVisibility(View.VISIBLE);
-
-        loadDetails();
     }
 
     private void loadDetails() {
