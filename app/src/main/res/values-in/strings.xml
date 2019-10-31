@@ -164,6 +164,7 @@
     <string name="calendar_settings">Pengaturan kalender</string>
     <string name="only_favorites">Hanya acara favorit</string>
     <string name="calendar_only_collected">Hanya episode yang terkumpul</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Kalender tidak terbatas</string>
     <!-- Updating -->
     <string name="update_scheduled">Memperbarui&#8230;</string>

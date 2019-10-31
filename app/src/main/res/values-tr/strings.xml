@@ -165,6 +165,7 @@
     <string name="calendar_settings">Takvim ayarları</string>
     <string name="only_favorites">Sadece favori diziler</string>
     <string name="calendar_only_collected">Sadece koleksiyonlanmış bölümler</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Sonsuz takvim</string>
     <!-- Updating -->
     <string name="update_scheduled">Güncelleniyor&#8230;</string>

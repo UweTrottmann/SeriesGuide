@@ -28,6 +28,7 @@ public class ListWidgetPreferenceFragment extends PreferenceFragmentCompat {
     private PreferenceScreen preferenceScreen;
     private ListPreference typePref;
     private ListPreference showsSortPref;
+    private CheckBoxPreference onlyPremieresPref;
     private CheckBoxPreference onlyCollectedPref;
     private CheckBoxPreference hideWatchedPreference;
     private CheckBoxPreference isInfinitePref;
@@ -87,6 +88,11 @@ public class ListWidgetPreferenceFragment extends PreferenceFragmentCompat {
                 R.string.only_favorites,
                 false
         );
+        onlyPremieresPref = checkBoxPref(
+                WidgetSettings.KEY_PREFIX_WIDGET_ONLY_PREMIERES + appWidgetId,
+                R.string.calendar_only_premieres,
+                false
+        );
         onlyCollectedPref = checkBoxPref(
                 WidgetSettings.KEY_PREFIX_WIDGET_ONLY_COLLECTED + appWidgetId,
                 R.string.calendar_only_collected,
@@ -118,6 +124,7 @@ public class ListWidgetPreferenceFragment extends PreferenceFragmentCompat {
         preferenceScreen.addPreference(typePref);
         preferenceScreen.addPreference(showsSortPref);
         preferenceScreen.addPreference(onlyFavoritesPref);
+        preferenceScreen.addPreference(onlyPremieresPref);
         preferenceScreen.addPreference(onlyCollectedPref);
         preferenceScreen.addPreference(hideWatchedPreference);
         preferenceScreen.addPreference(isInfinitePref);

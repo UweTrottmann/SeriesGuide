@@ -165,6 +165,7 @@
     <string name="calendar_settings">Настройки на календара</string>
     <string name="only_favorites">Само Любими сериали</string>
     <string name="calendar_only_collected">Само притежавани епизоди</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Безкраен календар</string>
     <!-- Updating -->
     <string name="update_scheduled">Обновяване&#8230;</string>

@@ -164,6 +164,7 @@
     <string name="calendar_settings">日历设置</string>
     <string name="only_favorites">仅显示喜爱节目</string>
     <string name="calendar_only_collected">仅已收藏剧集</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">无限的日历</string>
     <!-- Updating -->
     <string name="update_scheduled">正在更新&#8230;</string>

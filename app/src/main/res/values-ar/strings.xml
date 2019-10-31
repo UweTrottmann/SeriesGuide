@@ -169,6 +169,7 @@
     <string name="calendar_settings">إعدادات التقويم</string>
     <string name="only_favorites">فقط المسلسلات المفضلة</string>
     <string name="calendar_only_collected">الحلقات المجمعة فقط</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">رزنامة النهائية</string>
     <!-- Updating -->
     <string name="update_scheduled">جار التحديث&#8230;</string>

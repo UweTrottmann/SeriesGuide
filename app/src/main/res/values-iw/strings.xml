@@ -167,6 +167,7 @@
     <string name="calendar_settings">הגדרות לוח שידורים</string>
     <string name="only_favorites">סדרות מעודפות בלבד</string>
     <string name="calendar_only_collected">רק פרקים שנאספו</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">לוח שנה אינסופית</string>
     <!-- Updating -->
     <string name="update_scheduled">מעדכן&#8230;</string>

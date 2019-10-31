@@ -174,9 +174,11 @@ class CalendarFragment2 : ScopedFragment() {
         menu.findItem(R.id.menu_calendar_visibility).icon = visibilitySettingsIcon
 
         // set menu items to current values
-        val context = context
+        val context = context!!
         menu.findItem(R.id.menu_action_calendar_onlyfavorites).isChecked =
             CalendarSettings.isOnlyFavorites(context)
+        menu.findItem(R.id.menu_action_calendar_onlypremieres).isChecked =
+            CalendarSettings.isOnlyPremieres(context)
         menu.findItem(R.id.menu_action_calendar_onlycollected).isChecked =
             CalendarSettings.isOnlyCollected(context)
         menu.findItem(R.id.menu_action_calendar_nospecials).isChecked =
@@ -191,6 +193,10 @@ class CalendarFragment2 : ScopedFragment() {
         return when (item.itemId) {
             R.id.menu_action_calendar_onlyfavorites -> {
                 toggleFilterSetting(item, CalendarSettings.KEY_ONLY_FAVORITE_SHOWS)
+                true
+            }
+            R.id.menu_action_calendar_onlypremieres -> {
+                toggleFilterSetting(item, CalendarSettings.KEY_ONLY_PREMIERES)
                 true
             }
             R.id.menu_action_calendar_onlycollected -> {
@@ -222,12 +228,15 @@ class CalendarFragment2 : ScopedFragment() {
     }
 
     private val prefChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-        if (CalendarSettings.KEY_ONLY_FAVORITE_SHOWS == key
-            || CalendarSettings.KEY_ONLY_COLLECTED == key
-            || DisplaySettings.KEY_HIDE_SPECIALS == key
-            || CalendarSettings.KEY_HIDE_WATCHED_EPISODES == key
-            || CalendarSettings.KEY_INFINITE_SCROLLING_2 == key) {
-            updateCalendarQuery()
+        when (key) {
+            CalendarSettings.KEY_ONLY_FAVORITE_SHOWS,
+            CalendarSettings.KEY_ONLY_PREMIERES,
+            CalendarSettings.KEY_ONLY_COLLECTED,
+            DisplaySettings.KEY_HIDE_SPECIALS,
+            CalendarSettings.KEY_HIDE_WATCHED_EPISODES,
+            CalendarSettings.KEY_INFINITE_SCROLLING_2 -> {
+                updateCalendarQuery()
+            }
         }
     }
 

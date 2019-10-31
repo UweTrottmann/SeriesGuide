@@ -164,6 +164,7 @@
     <string name="calendar_settings">การตั้งค่าปฏิทิน</string>
     <string name="only_favorites">เฉพาะซีรีส์ที่ชื่นชอบ</string>
     <string name="calendar_only_collected">เฉพาะตอนที่เก็บไว้</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">ปฏิทินไม่สิ้นสุด</string>
     <!-- Updating -->
     <string name="update_scheduled">กำลังอัปเดต&#8230;</string>

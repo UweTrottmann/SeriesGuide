@@ -167,6 +167,7 @@
     <string name="calendar_settings">Calendar settings</string>
     <string name="only_favorites">Tik mėgstamiausi serialai</string>
     <string name="calendar_only_collected">Only collected episodes</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Visas kalendorius</string>
     <!-- Updating -->
     <string name="update_scheduled">Atnaujinimas&#8230;</string>

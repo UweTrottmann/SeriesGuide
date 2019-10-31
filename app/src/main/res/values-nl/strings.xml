@@ -165,6 +165,7 @@
     <string name="calendar_settings">Kalenderinstellingen</string>
     <string name="only_favorites">Alleen favoriete series</string>
     <string name="calendar_only_collected">Enkel verzamelde afleveringen</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Oneindige kalender</string>
     <!-- Updating -->
     <string name="update_scheduled">Bijwerken&#8230;</string>

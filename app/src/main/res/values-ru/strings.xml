@@ -167,6 +167,7 @@
     <string name="calendar_settings">Настройки календаря</string>
     <string name="only_favorites">Только избранные сериалы</string>
     <string name="calendar_only_collected">Только собранные эпизоды</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Бесконечный календарь</string>
     <!-- Updating -->
     <string name="update_scheduled">Обновление&#8230;</string>

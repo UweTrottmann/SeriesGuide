@@ -110,6 +110,11 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
                 query.append(" AND ").append(Episodes.SELECTION_COLLECTED)
             }
 
+            // Only premieres (first episodes).
+            if (CalendarSettings.isOnlyPremieres(getApplication())) {
+                query.append(" AND ").append(Episodes.SELECTION_ONLY_PREMIERES)
+            }
+
             // Post value because not on main thread + also avoids race condition if data is
             // delivered too early causing RecyclerView to jump to next page.
             // However, could not narrow down why that is an issue (it should not be?).
