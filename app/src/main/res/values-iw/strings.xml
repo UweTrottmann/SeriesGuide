@@ -106,7 +106,7 @@
     <!-- Flagging -->
     <string name="mark_all">הכל נצפה</string>
     <string name="unmark_all">סמן הכל כלא נצפה</string>
-    <string name="mark_untilhere">כל הפרקים ששודרו נצפו</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">אסוף הכול</string>
     <string name="uncollect_all">אל תאסוף כלום</string>
     <string name="action_skip">דלג</string>

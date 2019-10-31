@@ -103,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">全部已觀看</string>
     <string name="unmark_all">全部未觀看</string>
-    <string name="mark_untilhere">觀看所有已播出</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">將所有影集標示為已蒐藏</string>
     <string name="uncollect_all">取消所有影集蒐藏標示</string>
     <string name="action_skip">略過</string>

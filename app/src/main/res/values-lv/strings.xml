@@ -105,7 +105,7 @@
     <!-- Flagging -->
     <string name="mark_all">Redzējis visas</string>
     <string name="unmark_all">Redzējis nevienu</string>
-    <string name="mark_untilhere">Redzējis visas iepriekš raidītās</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Kolekcionējis visas</string>
     <string name="uncollect_all">Kolekcionējis nevienu</string>
     <string name="action_skip">Izlaist</string>

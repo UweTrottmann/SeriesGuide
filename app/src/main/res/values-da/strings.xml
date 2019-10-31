@@ -104,7 +104,7 @@
     <!-- Flagging -->
     <string name="mark_all">Alle set</string>
     <string name="unmark_all">Ingen set</string>
-    <string name="mark_untilhere">Markér alle tidligere sendte episoder som set</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Alle i samling</string>
     <string name="uncollect_all">Ingen i samling</string>
     <string name="action_skip">Spring over</string>
