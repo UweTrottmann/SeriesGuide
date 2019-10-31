@@ -16,6 +16,8 @@ object CalendarSettings {
 
     const val KEY_ONLY_FAVORITE_SHOWS = "com.battlelancer.seriesguide.onlyfavorites"
 
+    const val KEY_ONLY_PREMIERES = "com.battlelancer.seriesguide.calendar.onlypremieres"
+
     /**
      * Whether the calendar should not include watched episodes.
      */
@@ -50,6 +52,16 @@ object CalendarSettings {
     fun isOnlyFavorites(context: Context): Boolean {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
             KEY_ONLY_FAVORITE_SHOWS,
+            false
+        )
+    }
+
+    /**
+     * Whether the calendar should only include first episodes (premieres).
+     */
+    fun isOnlyPremieres(context: Context): Boolean {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+            KEY_ONLY_PREMIERES,
             false
         )
     }

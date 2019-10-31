@@ -17,6 +17,10 @@
                 android:checkable="true"
                 android:title="@string/only_favorites" />
             <item
+                android:id="@+id/menu_action_calendar_onlypremieres"
+                android:checkable="true"
+                android:title="@string/calendar_only_premieres" />
+            <item
                 android:id="@+id/menu_action_calendar_onlycollected"
                 android:checkable="true"
                 android:title="@string/calendar_only_collected" />
