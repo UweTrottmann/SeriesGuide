@@ -102,14 +102,47 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/larger_padding"
+                        android:paddingBottom="@dimen/larger_padding"
+                        android:id="@+id/episode_empty_container">
+
+                        <TextView
+                            android:id="@+id/textViewOverviewEmpty"
+                            style="@style/TextAppearance.Title.Dim"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_nextepisode"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/buttonOverviewSimilarShows"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/title_similar_shows"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewOverviewEmpty"
+                            tools:drawableStart="@drawable/ic_search_white_24dp"
+                            tools:drawableTint="?attr/sgColorIcon" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                     <androidx.cardview.widget.CardView
                         android:id="@+id/episode_primary_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/inline_padding"
                         android:layout_marginLeft="@dimen/large_padding"
-                        android:layout_marginRight="@dimen/large_padding"
                         android:layout_marginTop="@dimen/default_padding"
+                        android:layout_marginRight="@dimen/large_padding"
+                        android:layout_marginBottom="@dimen/inline_padding"
+                        android:focusable="true"
                         android:foreground="?attr/selectableItemBackground"
                         android:nextFocusDown="@+id/buttonEpisodeWatched"
                         app:cardBackgroundColor="?attr/sgColorBackgroundCard"
