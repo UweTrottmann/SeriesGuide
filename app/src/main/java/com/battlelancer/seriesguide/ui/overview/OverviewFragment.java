@@ -119,6 +119,7 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.containerRatings) View containerRatings;
     @BindView(R.id.dividerEpisodeButtons) View dividerEpisodeButtons;
     @BindView(R.id.buttonEpisodeCheckin) Button buttonCheckin;
+    @BindView(R.id.buttonEpisodeWatchedUpTo) Button buttonWatchedUpTo;
     @BindView(R.id.buttonEpisodeStreamingSearch) Button buttonStreamingSearch;
     @BindView(R.id.buttonEpisodeWatched) Button buttonWatch;
     @BindView(R.id.buttonEpisodeCollected) Button buttonCollect;
@@ -181,6 +182,7 @@ public class OverviewFragment extends Fragment implements
         containerEpisode.setVisibility(View.GONE);
 
         // episode buttons
+        buttonWatchedUpTo.setVisibility(View.GONE); // Unused.
         CheatSheet.setup(buttonCheckin);
         CheatSheet.setup(buttonWatch);
         CheatSheet.setup(buttonSkip);
