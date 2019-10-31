@@ -3,7 +3,8 @@ package com.battlelancer.seriesguide.util
 import android.content.Context
 import android.database.Cursor
 import android.text.format.DateUtils
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.shows.CalendarFragment2.CalendarType
 import com.battlelancer.seriesguide.ui.shows.CalendarQuery
@@ -13,37 +14,23 @@ object CalendarUtils {
     private const val ACTIVITY_DAY_LIMIT = 30
 
     /**
-     * @return Cursor with projection [CalendarQuery].
-     * @see buildCalendarQuery
-     */
-    @JvmStatic
-    fun calendarQuery(
-        context: Context, type: CalendarType,
-        isOnlyCollected: Boolean, isOnlyFavorites: Boolean, isOnlyUnwatched: Boolean,
-        isInfinite: Boolean
-    ): Cursor? {
-        val args = buildCalendarQuery(
-            context, type, isOnlyCollected, isOnlyFavorites, isOnlyUnwatched, isInfinite
-        )
-        return context.contentResolver.query(
-            SeriesGuideContract.Episodes.CONTENT_URI_WITHSHOW,
-            CalendarQuery.PROJECTION, args[0][0], args[1], args[2][0]
-        )
-    }
-
-    /**
      * Returns an array of size 3. The built query is stored in `[0][0]`, the built selection
      * args in `[1]` and the sort order in `[2][0]`.
      *
      * @param type A [CalendarType], defaults to UPCOMING.
-     * @param isInfinite If false, limits the release time range of returned episodes to [ ][ACTIVITY_DAY_LIMIT] days from today.
+     * @param isInfinite If false, limits the release time range of returned episodes to
+     * [ACTIVITY_DAY_LIMIT] days from today.
+     * @return Cursor with projection [CalendarQuery].
      */
-    private fun buildCalendarQuery(
-        context: Context,
-        type: CalendarType,
-        isOnlyCollected: Boolean, isOnlyFavorites: Boolean, isOnlyUnwatched: Boolean,
+    @JvmStatic
+    fun calendarQuery(
+        context: Context, type: CalendarType,
+        isOnlyPremieres: Boolean,
+        isOnlyCollected: Boolean,
+        isOnlyFavorites: Boolean,
+        isOnlyUnwatched: Boolean,
         isInfinite: Boolean
-    ): Array<Array<String>> {
+    ): Cursor? {
         // go an hour back in time, so episodes move to recent one hour late
         val recentThreshold = TimeTools.getCurrentTime(context) - DateUtils.HOUR_IN_MILLIS
 
@@ -78,30 +65,40 @@ object CalendarUtils {
 
         // append only favorites selection if necessary
         if (isOnlyFavorites) {
-            query.append(" AND ").append(SeriesGuideContract.Shows.SELECTION_FAVORITES)
+            query.append(" AND ").append(Shows.SELECTION_FAVORITES)
         }
 
         // append no specials selection if necessary
         val isNoSpecials = DisplaySettings.isHidingSpecials(context)
         if (isNoSpecials) {
-            query.append(" AND ").append(SeriesGuideContract.Episodes.SELECTION_NO_SPECIALS)
+            query.append(" AND ").append(Episodes.SELECTION_NO_SPECIALS)
         }
 
         // append unwatched selection if necessary
         if (isOnlyUnwatched) {
-            query.append(" AND ").append(SeriesGuideContract.Episodes.SELECTION_UNWATCHED)
+            query.append(" AND ").append(Episodes.SELECTION_UNWATCHED)
         }
 
         // only show collected episodes
         if (isOnlyCollected) {
-            query.append(" AND ").append(SeriesGuideContract.Episodes.SELECTION_COLLECTED)
+            query.append(" AND ").append(Episodes.SELECTION_COLLECTED)
+        }
+
+        // Only premieres (first episodes).
+        if (isOnlyPremieres) {
+            query.append(" AND ").append(Episodes.SELECTION_ONLY_PREMIERES)
         }
 
         // build result array
-        return arrayOf(
+        val args = arrayOf(
             arrayOf(query.toString()),
             selectionArgs,
             arrayOf(sortOrder)
+        )
+
+        return context.contentResolver.query(
+            Episodes.CONTENT_URI_WITHSHOW,
+            CalendarQuery.PROJECTION, args[0][0], args[1], args[2][0]
         )
     }
 

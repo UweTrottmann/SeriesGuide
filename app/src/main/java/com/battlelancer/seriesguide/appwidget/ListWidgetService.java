@@ -62,6 +62,7 @@ public class ListWidgetService extends RemoteViewsService {
             Timber.d("onQueryForData: %d", appWidgetId);
 
             int widgetType = WidgetSettings.getWidgetListType(context, appWidgetId);
+            boolean isOnlyPremieres = WidgetSettings.isOnlyPremieres(context, appWidgetId);
             boolean isOnlyCollected = WidgetSettings.isOnlyCollectedEpisodes(context, appWidgetId);
             boolean isOnlyFavorites = WidgetSettings.isOnlyFavoriteShows(context, appWidgetId);
             boolean isOnlyUnwatched = WidgetSettings.isHidingWatchedEpisodes(context, appWidgetId);
@@ -103,14 +104,27 @@ public class ListWidgetService extends RemoteViewsService {
                     );
                     break;
                 case WidgetSettings.Type.RECENT:
-                    newCursor = CalendarUtils.calendarQuery(context, CalendarType.RECENT,
-                            isOnlyCollected, isOnlyFavorites, isOnlyUnwatched, isInfinite);
+                    newCursor = CalendarUtils.calendarQuery(
+                            context,
+                            CalendarType.RECENT,
+                            isOnlyPremieres,
+                            isOnlyCollected,
+                            isOnlyFavorites,
+                            isOnlyUnwatched,
+                            isInfinite
+                    );
                     break;
                 case WidgetSettings.Type.UPCOMING:
                 default:
-                    newCursor = CalendarUtils.calendarQuery(context,
+                    newCursor = CalendarUtils.calendarQuery(
+                            context,
                             CalendarType.UPCOMING,
-                            isOnlyCollected, isOnlyFavorites, isOnlyUnwatched, isInfinite);
+                            isOnlyPremieres,
+                            isOnlyCollected,
+                            isOnlyFavorites,
+                            isOnlyUnwatched,
+                            isInfinite
+                    );
                     break;
             }
 
