@@ -7,7 +7,10 @@ import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 
-class EpisodeWatchedPreviousJob(
+/**
+ * Set episodes watched up to (== including) a specific one excluding those with no release date.
+ */
+class EpisodeWatchedUpToJob(
     showTvdbId: Int,
     private val episodeFirstAired: Long,
     private val episodeNumber: Int
@@ -18,13 +21,14 @@ class EpisodeWatchedPreviousJob(
     }
 
     public override fun getDatabaseSelection(): String {
-        // must
-        // - be released before current episode OR at the same time, but with lower number (Netflix)
+        // Must
+        // - be released before current episode,
+        // - OR at the same time, but with same (itself) or lower (all released at same time) number
         // - have a release date,
-        // - be unwatched or skipped
+        // - be unwatched or skipped.
         return ("(" + Episodes.FIRSTAIREDMS + "<" + episodeFirstAired + ")"
                 + " OR (" + Episodes.FIRSTAIREDMS + "=" + episodeFirstAired
-                + " AND " + Episodes.NUMBER + "<" + episodeNumber + ")"
+                + " AND " + Episodes.NUMBER + "<=" + episodeNumber + ")"
                 + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
                 + " AND " + Episodes.SELECTION_UNWATCHED_OR_SKIPPED)
     }
@@ -48,6 +52,6 @@ class EpisodeWatchedPreviousJob(
     }
 
     override fun getConfirmationText(context: Context): String {
-        return context.getString(R.string.mark_untilhere)
+        return context.getString(R.string.action_watched_up_to)
     }
 }
