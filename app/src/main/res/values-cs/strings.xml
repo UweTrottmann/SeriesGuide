@@ -167,6 +167,7 @@
     <string name="calendar_settings">Nastavení kalendáře</string>
     <string name="only_favorites">Pouze oblíbené seriály</string>
     <string name="calendar_only_collected">Pouze epizody ve sbírce</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Nekonečný kalendář</string>
     <!-- Updating -->
     <string name="update_scheduled">Probíhá aktualizace&#8230;</string>

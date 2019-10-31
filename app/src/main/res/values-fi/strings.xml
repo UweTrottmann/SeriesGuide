@@ -165,6 +165,7 @@
     <string name="calendar_settings">Kalenteriasetukset</string>
     <string name="only_favorites">Vain suosikkiohjelmat</string>
     <string name="calendar_only_collected">Vain kerätyt jaksot</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Päättymätön kalenteri</string>
     <!-- Updating -->
     <string name="update_scheduled">Päivitetään&#8230;</string>

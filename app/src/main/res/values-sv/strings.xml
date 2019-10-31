@@ -165,6 +165,7 @@
     <string name="calendar_settings">Kalenderinställningar</string>
     <string name="only_favorites">Endast favoritserier</string>
     <string name="calendar_only_collected">Endast avsnitt i samling</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Ändlös kalender</string>
     <!-- Updating -->
     <string name="update_scheduled">Uppdaterar&#8230;</string>

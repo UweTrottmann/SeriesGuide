@@ -165,6 +165,7 @@
     <string name="calendar_settings">நாள் மற்றும் தேதி அமைப்புக்கள்</string>
     <string name="only_favorites">பிடித்த காட்சிகள்</string>
     <string name="calendar_only_collected">Only collected episodes</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">முடிவிலா காலண்டர்</string>
     <!-- Updating -->
     <string name="update_scheduled">புதுப்பித்தல்&#8230;</string>

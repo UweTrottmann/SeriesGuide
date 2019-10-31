@@ -166,6 +166,7 @@
     <string name="calendar_settings">Setări calendar</string>
     <string name="only_favorites">Doar emisiunile preferate</string>
     <string name="calendar_only_collected">Doar episoadele colecționate</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Calendar infinit</string>
     <!-- Updating -->
     <string name="update_scheduled">Actualizare&#8230;</string>

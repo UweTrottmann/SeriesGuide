@@ -165,6 +165,7 @@
     <string name="calendar_settings">Configurações do calendário</string>
     <string name="only_favorites">Apenas séries favoritas</string>
     <string name="calendar_only_collected">Apenas episódios que possuo</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Calendário infinito</string>
     <!-- Updating -->
     <string name="update_scheduled">A Atualizar&#8230;</string>

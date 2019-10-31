@@ -165,6 +165,7 @@
     <string name="calendar_settings">Ajustaments de calendari</string>
     <string name="only_favorites">Només sèries preferides</string>
     <string name="calendar_only_collected">Només els episodis col·leccionats</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Calendari infinit</string>
     <!-- Updating -->
     <string name="update_scheduled">S\'està actualitzant&#8230;</string>

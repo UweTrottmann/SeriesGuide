@@ -165,6 +165,7 @@
     <string name="calendar_settings">تنظیمات تقویم</string>
     <string name="only_favorites">تنها نمایش های مورد علاقه</string>
     <string name="calendar_only_collected">فقط قسمت‌های ذخیره‌شده</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">تقویم بی‌پایان</string>
     <!-- Updating -->
     <string name="update_scheduled">به‌روز رسانی&#8230;</string>

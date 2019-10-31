@@ -164,6 +164,7 @@
     <string name="calendar_settings">캘린더 설정</string>
     <string name="only_favorites">즐겨찾기한 프로그램만 보이기</string>
     <string name="calendar_only_collected">수집한 에피소드만 보이기</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">무한 캘린더</string>
     <!-- Updating -->
     <string name="update_scheduled">업데이트 중&#8230;</string>

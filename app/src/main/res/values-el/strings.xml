@@ -165,6 +165,7 @@
     <string name="calendar_settings">Ρυθμίσεις ημερολογίου</string>
     <string name="only_favorites">Μόνο αγαπημένες σειρές</string>
     <string name="calendar_only_collected">Μόνο επεισόδια από την συλλογή</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Απεριόριστο ημερολόγιο</string>
     <!-- Updating -->
     <string name="update_scheduled">Ενημέρωση&#8230;</string>

@@ -166,6 +166,7 @@
     <string name="calendar_settings">Kalendar opcije</string>
     <string name="only_favorites">Само омиљене серије</string>
     <string name="calendar_only_collected">Samo kolektovane epizode</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Календар</string>
     <!-- Updating -->
     <string name="update_scheduled">Ажурирање&#8230;</string>
