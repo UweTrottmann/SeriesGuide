@@ -11,7 +11,7 @@
     <string name="help">Bantuan</string>
     <string name="help_and_feedback">Bantuan &amp; tanggapan</string>
     <string name="drawer_open">Buka drawer navigasi</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide tidak akan menerima pembaruan lagi untuk Android versi ini.</string>
     <!-- Media items -->
     <string name="show">Acara</string>
     <string name="episode">Episode</string>
@@ -200,7 +200,7 @@
     <string name="watchlist">Daftar tontonan</string>
     <!-- Similar shows -->
     <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="title_similar_shows">Acara Serupa</string>
     <!-- Lists -->
     <string name="first_list">Daftar pertama</string>
     <string name="list_add">Tambah daftar</string>
@@ -353,7 +353,7 @@
         <item quantity="other">%d menit sebelum</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy">Kebijakan Privasi</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Produk ini menggunakan TMDb API Tapi tidak disahkan atau disertifikasi oleh TMDb.</string>
     <string name="licence_trakt">Aplikasi ini menggunakan data dan gambar dari trakt.</string>
@@ -452,7 +452,7 @@
     <string name="billing_action_pass">Dapatkan X Pass</string>
     <string name="billing_price_subscribe">%1$s/tahun, coba gratis, batalkan Kapan saja melalui %2$s</string>
     <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_sub_description">Coba gratis, batalkan kapan saja.</string>
     <string name="billing_price_pass">pembelian satu kali</string>
     <string name="upgrade_description">Buka semua fitur termasuk pemberitahuan, tema dan lebih banyak pilihan daftar widget. Membantu saya membuat pembaruan di masa mendatang.</string>
     <string name="upgrade_success">Terima kasih telah mendukung SeriesGuide! Anda memiliki akses ke semua fitur.</string>

@@ -141,7 +141,7 @@
     <string name="action_shows_filter_unwatched">الغير مشاهدة</string>
     <string name="action_shows_filter_upcoming">القادم</string>
     <string name="action_shows_filter_hidden">المخفي</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="action_shows_make_all_visible">اظهار الجميع</string>
     <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">ترتيب المسلسلات</string>
     <string name="action_shows_sort_title">العنوان</string>
@@ -219,8 +219,8 @@
     <string name="shows_collection">مجموعة</string>
     <string name="watchlist">قائمة المشاهدة</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">لا توجد نتائج</string>
+    <string name="title_similar_shows">عروض مشابهة</string>
     <!-- Lists -->
     <string name="first_list">القائمة الأولى</string>
     <string name="list_add">إضافة قائمة</string>
@@ -485,8 +485,8 @@
     <string name="pref_notifications_treshold">موعد التنبيه</string>
     <string name="pref_notifications_select_shows">اختار العروض</string>
     <string name="pref_notifications_select_shows_summary">يظهر عدد الاشعارات المتاحه للعروض (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">تجاهل المسلسلات المخفيه</string>
+    <string name="pref_notifications_hidden_summary">حتي لو ان الأشعارات مفعلة, لا تبلغني عن المسلسلات المخفية</string>
     <string name="pref_notification_channel_errors">أخطاء</string>
     <!-- List Widget -->
     <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
@@ -506,8 +506,8 @@
     <string name="billing_action_manage_subscriptions">إدارة الإشتراكات</string>
     <string name="billing_action_pass">أحصل على X Pass</string>
     <string name="billing_price_subscribe">%1$s/سنة، جرب مجاناً، و قم بالإلغاء في أي وقت عبر %2$s</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_duration_format">%1$s/سنة</string>
+    <string name="billing_sub_description">جربه مجانا, الغ متى شئت.</string>
     <string name="billing_price_pass">الشراء يكون مرة واحدة</string>
     <string name="upgrade_description">فتح جميع الميزات بما في ذلك التنبيهات والتصميم والمزيد من الميزات. مساعدتي في التحديثات المستقبلية.</string>
     <string name="upgrade_success">شكرا لك لدعم SeriesGuide! . لديك حق الوصول إلى كافة الميزات .</string>

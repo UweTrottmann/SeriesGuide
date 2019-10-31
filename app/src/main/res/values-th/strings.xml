@@ -199,7 +199,7 @@
     <string name="shows_collection">คลังเก็บ</string>
     <string name="watchlist">อยากดู</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
+    <string name="empty_no_results">ไม่มีผลลัพธ์</string>
     <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">รายการแรก</string>

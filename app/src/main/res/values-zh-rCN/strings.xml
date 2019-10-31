@@ -435,8 +435,8 @@
     <string name="pref_notification_channel_errors">错误</string>
     <!-- List Widget -->
     <string name="hide_watched">隐藏已观看剧集</string>
-    <string name="pref_widget_opacity">小部件背景</string>
-    <string name="pref_widget_type">小部件类型</string>
+    <string name="pref_widget_opacity">微件背景</string>
+    <string name="pref_widget_type">微件类型</string>
     <string name="pref_large_font">使用大字体</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">100%</string>
@@ -454,7 +454,7 @@
     <string name="billing_duration_format">%1$s / 年</string>
     <string name="billing_sub_description">免费试用，随时取消。</string>
     <string name="billing_price_pass">一次性支付</string>
-    <string name="upgrade_description">解锁完整版应用程序，包括推送通知、主题、小部件等功能。\n您支付的费用将帮助作者开发和完善新功能。</string>
+    <string name="upgrade_description">解锁完整版应用程序，包括推送通知、主题、微件等功能。您支付的费用将帮助作者开发和完善新功能。</string>
     <string name="upgrade_success">恭喜，您已解锁全部高级功能！感谢您的支持！</string>
     <string name="billing_learn_more">升级为专业版有哪些优势？</string>
     <string name="subscription_expired">订阅已过期</string>
