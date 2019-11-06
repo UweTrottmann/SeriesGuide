@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -184,10 +185,15 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         }
     }
 
+    private void switchView(boolean isListView) {
+        containerList.setVisibility(isListView ? View.VISIBLE : View.GONE);
+        //noinspection ConstantConditions
+        containerPager.setVisibility(isListView ? View.GONE : View.VISIBLE);
+    }
+
     private void setupViews(Bundle savedInstanceState, SgShowMinimal show, int episodeId) {
         if (isSinglePaneView()) {
-            containerList.setVisibility(View.GONE);
-            containerPager.setVisibility(View.VISIBLE);
+            switchView(false);
         }
 
         // Set the image background.
@@ -254,6 +260,14 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (isSinglePaneView()) {
+            getMenuInflater().inflate(R.menu.episodes_menu, menu);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
@@ -261,20 +275,21 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
             upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(upIntent);
             return true;
+        } else if (itemId == R.id.menu_action_episodes_switch_view) {
+            switchView(containerList.getVisibility() == View.GONE);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     /**
-     * Switch to the given page, update the highlighted episode.
-     *
-     * <p> Only call this if the episode list and episode view pager are available.
+     * Switch to the episode at the given position.
      */
     public void setCurrentPage(int position) {
         episodeDetailsPager.setCurrentItem(position, true);
         if (isSinglePaneView()) {
-            containerList.setVisibility(View.GONE);
-            containerPager.setVisibility(View.VISIBLE);
+            switchView(false);
         }
     }
 
@@ -376,7 +391,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         episodeDetailsTabs.setViewPager(episodeDetailsPager);
 
         // scroll to previously selected episode
-        setCurrentPage(getPositionForEpisode(episodeId));
+        episodeDetailsPager.setCurrentItem(getPositionForEpisode(episodeId), false);
     }
 
     private int getPositionForEpisode(int episodeTvdbId) {
