@@ -92,6 +92,10 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         return containerPager != null;
     }
 
+    private boolean isListGone() {
+        return containerList.getVisibility() == View.GONE;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,15 +189,16 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         }
     }
 
-    private void switchView(boolean isListView) {
+    private void switchView(boolean isListView, boolean updateOptionsMenu) {
         containerList.setVisibility(isListView ? View.VISIBLE : View.GONE);
         //noinspection ConstantConditions
         containerPager.setVisibility(isListView ? View.GONE : View.VISIBLE);
+        if (updateOptionsMenu) invalidateOptionsMenu();
     }
 
     private void setupViews(Bundle savedInstanceState, SgShowMinimal show, int episodeId) {
         if (isSinglePaneView()) {
-            switchView(false);
+            switchView(false, false);
         }
 
         // Set the image background.
@@ -263,6 +268,11 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (isSinglePaneView()) {
             getMenuInflater().inflate(R.menu.episodes_menu, menu);
+            menu.findItem(R.id.menu_action_episodes_switch_view).setIcon(
+                    isListGone()
+                            ? R.drawable.ic_view_headline_white_24dp
+                            : R.drawable.ic_view_column_white_24dp
+            );
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -276,7 +286,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
             startActivity(upIntent);
             return true;
         } else if (itemId == R.id.menu_action_episodes_switch_view) {
-            switchView(containerList.getVisibility() == View.GONE);
+            switchView(isListGone(), true);
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -289,7 +299,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     public void setCurrentPage(int position) {
         episodeDetailsPager.setCurrentItem(position, true);
         if (isSinglePaneView()) {
-            switchView(false);
+            switchView(false, true);
         }
     }
 
