@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,9 +14,53 @@
         <include layout="@layout/toolbar" />
 
         <FrameLayout
-            android:id="@+id/fragment_episodes"
+            android:id="@+id/containerEpisodesContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageViewEpisodesBackground"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop" />
+
+            <FrameLayout
+                android:id="@+id/fragment_episodes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <FrameLayout
+                android:id="@+id/containerEpisodesPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
+                        android:id="@+id/tabsEpisodes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:layout_height="48dp" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="?attr/sgColorDivider" />
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/pagerEpisodes"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </FrameLayout>
 
     </LinearLayout>
 
