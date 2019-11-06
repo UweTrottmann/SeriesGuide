@@ -8,11 +8,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
@@ -36,16 +36,13 @@ import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.List;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import timber.log.Timber;
 
 /**
- * Hosts a fragment which displays episodes of a season. On larger screen hosts a {@link ViewPager}
- * displaying the episodes.
+ * Hosts a fragment which displays episodes of a season in a list and in a {@link ViewPager}.
+ * On small screens only one is visible at a time, on larger screens they are shown side-by-side.
  */
 public class EpisodesActivity extends BaseNavDrawerActivity {
 
@@ -53,13 +50,15 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     public static final int EPISODE_LOADER_ID = 101;
     public static final int ACTIONS_LOADER_ID = 102;
 
+    @BindView(R.id.fragment_episodes)
+    FrameLayout containerList;
     @Nullable
+    @BindView(R.id.containerEpisodesPager)
+    FrameLayout containerPager;
     @BindView(R.id.pagerEpisodes)
     ViewPager episodeDetailsPager;
-    @Nullable
     @BindView(R.id.tabsEpisodes)
     SlidingTabLayout episodeDetailsTabs;
-    @Nullable
     @BindView(R.id.imageViewEpisodesBackground)
     ImageView backgroundImageView;
     @Nullable
@@ -77,8 +76,6 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     private int seasonTvdbId;
     private int seasonNumber;
 
-    private boolean isDualPane;
-
     /**
      * All values have to be integer. Only one is required.
      */
@@ -87,6 +84,11 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         String SEASON_TVDBID = "season_tvdbid";
 
         String EPISODE_TVDBID = "episode_tvdbid";
+    }
+
+    /** If list and pager are displayed side-by-side, or toggleable one or the other. */
+    private boolean isSinglePaneView() {
+        return containerPager != null;
     }
 
     @Override
@@ -98,37 +100,28 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         // if coming from a notification, set last cleared time
         NotificationService.handleDeleteIntent(this, getIntent());
 
-        // check for dual pane layout
         ButterKnife.bind(this);
-        isDualPane = episodeDetailsPager != null;
 
         boolean isFinishing = false;
 
+        // TODO switch to ViewModel.
         // check if we have a certain episode to display
         final int episodeId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
         if (episodeId != 0) {
-            if (!isDualPane) {
-                // display just the episode pager in its own activity
-                Intent intent = new Intent(this, EpisodeDetailsActivity.class);
-                intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, episodeId);
-                startActivity(intent);
-                isFinishing = true;
+            // get season id
+            final Cursor episode = getContentResolver().query(
+                    Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[]{
+                            Episodes._ID, Seasons.REF_SEASON_ID
+                    }, null, null, null
+            );
+            if (episode != null && episode.moveToFirst()) {
+                seasonTvdbId = episode.getInt(1);
             } else {
-                // get season id
-                final Cursor episode = getContentResolver().query(
-                        Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[]{
-                                Episodes._ID, Seasons.REF_SEASON_ID
-                        }, null, null, null
-                );
-                if (episode != null && episode.moveToFirst()) {
-                    seasonTvdbId = episode.getInt(1);
-                } else {
-                    // could not get season id
-                    isFinishing = true;
-                }
-                if (episode != null) {
-                    episode.close();
-                }
+                // could not get season id
+                isFinishing = true;
+            }
+            if (episode != null) {
+                episode.close();
             }
         }
 
@@ -192,12 +185,17 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     }
 
     private void setupViews(Bundle savedInstanceState, SgShowMinimal show, int episodeId) {
-        // check if we should start with a specific episode
-        int startPosition = 0;
-        if (isDualPane) {
-            // also builds episode list for view pager
-            startPosition = updateEpisodeList(episodeId);
+        if (isSinglePaneView()) {
+            containerList.setVisibility(View.GONE);
+            containerPager.setVisibility(View.VISIBLE);
         }
+
+        // Set the image background.
+        TvdbImageTools.loadShowPosterAlpha(this, backgroundImageView, show.getPosterSmall());
+
+        // TODO Switch to ViewModel.
+        // Build episode list for view pager, determine start position if episode ID is given.
+        int startPosition = updateEpisodeList(episodeId);
 
         // set up the episode list fragment
         if (savedInstanceState == null) {
@@ -210,49 +208,32 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
                     "episodes");
         }
 
-        // if displaying details pane, set up the episode details pager
-        if (isDualPane) {
-            // set the pager background
-            //noinspection ConstantConditions
-            TvdbImageTools.loadShowPosterAlpha(this, backgroundImageView, show.getPosterSmall());
+        // pager setup
+        episodeDetailsAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),
+                episodes, true);
+        episodeDetailsPager.setAdapter(episodeDetailsAdapter);
 
-            // pager setup
-            episodeDetailsAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),
-                    episodes, true);
-            //noinspection ConstantConditions
-            episodeDetailsPager.setAdapter(episodeDetailsAdapter);
+        // tabs setup
+        episodeDetailsTabs.setCustomTabView(R.layout.tabstrip_item_transparent,
+                R.id.textViewTabStripItem);
+        episodeDetailsTabs.setSelectedIndicatorColors(ContextCompat.getColor(this,
+                SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue
+                        ? R.color.white
+                        : Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary)));
+        episodeDetailsTabs.setViewPager(episodeDetailsPager);
 
-            // tabs setup
-            //noinspection ConstantConditions
-            episodeDetailsTabs.setCustomTabView(R.layout.tabstrip_item_transparent,
-                    R.id.textViewTabStripItem);
-            //noinspection ResourceType
-            episodeDetailsTabs.setSelectedIndicatorColors(ContextCompat.getColor(this,
-                    SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue
-                            ? R.color.white
-                            : Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary)));
-            episodeDetailsTabs.setViewPager(episodeDetailsPager);
+        // set page listener afterwards to avoid null pointer for non-existing content view
+        episodeDetailsPager.setCurrentItem(startPosition, false);
+        episodeDetailsTabs.setOnPageChangeListener(onPageChangeListener);
 
-            // set page listener afterwards to avoid null pointer for non-existing content view
-            episodeDetailsPager.setCurrentItem(startPosition, false);
-            episodeDetailsTabs.setOnPageChangeListener(onPageChangeListener);
-
-            if (shadowStart != null) {
-                Shadows.getInstance().setShadowDrawable(this, shadowStart,
-                        GradientDrawable.Orientation.RIGHT_LEFT);
-            }
-            if (shadowEnd != null) {
-                Shadows.getInstance().setShadowDrawable(this, shadowEnd,
-                        GradientDrawable.Orientation.LEFT_RIGHT);
-            }
-        } else {
-            // Make sure no fragments are left over from a config change
-            for (Fragment fragment : getActiveFragments()) {
-                if (fragment.getTag() == null) {
-                    Timber.d("Removing a leftover fragment");
-                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                }
-            }
+        // Set drawables for visible shadows.
+        if (shadowStart != null) {
+            Shadows.getInstance().setShadowDrawable(this, shadowStart,
+                    GradientDrawable.Orientation.RIGHT_LEFT);
+        }
+        if (shadowEnd != null) {
+            Shadows.getInstance().setShadowDrawable(this, shadowEnd,
+                    GradientDrawable.Orientation.LEFT_RIGHT);
         }
     }
 
@@ -260,40 +241,16 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     protected void onStart() {
         super.onStart();
 
-        if (isDualPane) {
-            PreferenceManager.getDefaultSharedPreferences(this)
-                    .registerOnSharedPreferenceChangeListener(onSortOrderChangedListener);
-        }
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .registerOnSharedPreferenceChangeListener(onSortOrderChangedListener);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        if (isDualPane) {
-            PreferenceManager.getDefaultSharedPreferences(this)
-                    .unregisterOnSharedPreferenceChangeListener(onSortOrderChangedListener);
-        }
-    }
-
-    List<WeakReference<Fragment>> fragments = new ArrayList<>();
-
-    @Override
-    public void onAttachFragment(Fragment fragment) {
-        fragments.add(new WeakReference<>(fragment));
-    }
-
-    public ArrayList<Fragment> getActiveFragments() {
-        ArrayList<Fragment> ret = new ArrayList<>();
-        for (WeakReference<Fragment> ref : fragments) {
-            Fragment f = ref.get();
-            if (f != null) {
-                if (f.isAdded()) {
-                    ret.add(f);
-                }
-            }
-        }
-        return ret;
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(onSortOrderChangedListener);
     }
 
     @Override
@@ -314,8 +271,10 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
      * <p> Only call this if the episode list and episode view pager are available.
      */
     public void setCurrentPage(int position) {
-        if (episodeDetailsPager != null) {
-            episodeDetailsPager.setCurrentItem(position, true);
+        episodeDetailsPager.setCurrentItem(position, true);
+        if (isSinglePaneView()) {
+            containerList.setVisibility(View.GONE);
+            containerPager.setVisibility(View.VISIBLE);
         }
     }
 
@@ -389,9 +348,7 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseNavDrawerActivity.ServiceCompletedEvent event) {
-        if (isDualPane
-                && event.isSuccessful && event.flagJob != null
-                && event.flagJob instanceof BaseEpisodesJob) {
+        if (event.isSuccessful && event.flagJob instanceof BaseEpisodesJob) {
             // order can only change if sorted by unwatched first
             Constants.EpisodeSorting sortOrder = DisplaySettings.getEpisodeSortOrder(this);
             if (sortOrder == Constants.EpisodeSorting.UNWATCHED_FIRST
