@@ -19,7 +19,6 @@ import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.adapters.TabStripAdapter
 import com.battlelancer.seriesguide.settings.SearchSettings
-import com.battlelancer.seriesguide.ui.episodes.EpisodeDetailsActivity
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment
 import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment
@@ -47,7 +46,7 @@ import kotlin.coroutines.CoroutineContext
 
 /**
  * Handles search intents and displays a [EpisodeSearchFragment] when needed or redirects
- * directly to an [EpisodeDetailsActivity].
+ * directly to an [EpisodesActivity].
  */
 class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
     AddShowDialogFragment.OnAddShowListener, SearchTriggerListener {
