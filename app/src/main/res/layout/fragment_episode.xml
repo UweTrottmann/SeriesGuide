@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!-- Enable nested scrolling to work with CoordinatorLayout. -->
 <!-- Use native ScrollView as it behaves better than NestedScrollView when scrolling in view pager -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
