@@ -26,9 +26,11 @@ class EpisodeWatchedUpToJob(
         // - OR at the same time, but with same (itself) or lower (all released at same time) number
         // - have a release date,
         // - be unwatched or skipped.
-        return ("(" + Episodes.FIRSTAIREDMS + "<" + episodeFirstAired + ")"
+        return ("("
+                + Episodes.FIRSTAIREDMS + "<" + episodeFirstAired
                 + " OR (" + Episodes.FIRSTAIREDMS + "=" + episodeFirstAired
                 + " AND " + Episodes.NUMBER + "<=" + episodeNumber + ")"
+                + ")"
                 + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
                 + " AND " + Episodes.SELECTION_UNWATCHED_OR_SKIPPED)
     }
