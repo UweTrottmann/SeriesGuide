@@ -1,8 +1,10 @@
 package com.battlelancer.seriesguide.provider;
 
+import androidx.annotation.Nullable;
 import androidx.room.Dao;
 import androidx.room.Query;
 import com.battlelancer.seriesguide.model.SgSeason;
+import com.battlelancer.seriesguide.model.SgSeasonMinimal;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 
 /**
@@ -16,5 +18,9 @@ public interface SeasonHelper {
      */
     @Query("SELECT * FROM " + Tables.SEASONS + " LIMIT 1")
     SgSeason getSeason();
+
+    @Nullable
+    @Query("SELECT combinednr, series_id FROM seasons WHERE _id=:seasonTvdbId")
+    SgSeasonMinimal getSeasonMinimal(int seasonTvdbId);
 
 }

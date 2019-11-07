@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.episodes;
 
 import android.content.Intent;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.database.Cursor;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
 import butterknife.BindView;
@@ -23,10 +23,6 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.jobs.episodes.BaseEpisodesJob;
 import com.battlelancer.seriesguide.model.SgShowMinimal;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
@@ -72,13 +68,14 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     @BindView(R.id.viewEpisodesShadowEnd)
     View shadowEnd;
 
+    @Nullable
     private EpisodesFragment episodesListFragment;
+    @Nullable
     private EpisodePagerAdapter episodeDetailsAdapter;
-    private ArrayList<Episode> episodes;
 
+    private EpisodesActivityViewModel viewModel;
     private int showTvdbId;
     private int seasonTvdbId;
-    private int seasonNumber;
 
     /**
      * All values have to be integer. Only one is required.
@@ -90,7 +87,9 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         String EPISODE_TVDBID = "episode_tvdbid";
     }
 
-    /** If list and pager are displayed side-by-side, or toggleable one or the other. */
+    /**
+     * If list and pager are displayed side-by-side, or toggleable one or the other.
+     */
     private boolean isSinglePaneView() {
         return containerPager != null;
     }
@@ -104,89 +103,70 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_episodes);
         setupNavDrawer();
+        setupActionBar();
 
         // if coming from a notification, set last cleared time
         NotificationService.handleDeleteIntent(this, getIntent());
 
         ButterKnife.bind(this);
+        setupViews();
 
-        boolean isFinishing = false;
+        final int episodeTvdbId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
+        final int seasonTvdbId = getIntent().getIntExtra(InitBundle.SEASON_TVDBID, 0);
 
-        // TODO switch to ViewModel.
-        // check if we have a certain episode to display
-        final int episodeId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
-        if (episodeId != 0) {
-            // get season id
-            final Cursor episode = getContentResolver().query(
-                    Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[]{
-                            Episodes._ID, Seasons.REF_SEASON_ID
-                    }, null, null, null
-            );
-            if (episode != null && episode.moveToFirst()) {
-                seasonTvdbId = episode.getInt(1);
-            } else {
-                // could not get season id
-                isFinishing = true;
-            }
-            if (episode != null) {
-                episode.close();
-            }
-        }
-
-        if (isFinishing) {
-            finish();
-            return;
-        }
-
-        if (seasonTvdbId == 0) {
-            seasonTvdbId = getIntent().getIntExtra(InitBundle.SEASON_TVDBID, 0);
-        }
-
-        // get show id and season number
-        final Cursor season = getContentResolver().query(
-                Seasons.buildSeasonUri(String.valueOf(seasonTvdbId)), new String[]{
-                        Seasons._ID, Seasons.COMBINED, Shows.REF_SHOW_ID
-                }, null, null, null
+        EpisodesActivityViewModelFactory viewModelFactory = new EpisodesActivityViewModelFactory(
+                getApplication(),
+                episodeTvdbId,
+                seasonTvdbId
         );
-        if (season != null && season.moveToFirst()) {
-            seasonNumber = season.getInt(1);
-            showTvdbId = season.getInt(2);
-        } else {
-            isFinishing = true;
-        }
-        if (season != null) {
-            season.close();
-        }
+        viewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(EpisodesActivityViewModel.class);
+        viewModel.getSeasonAndShowInfoLiveData().observe(this, info -> {
+            if (info == null) {
+                finish(); // Missing required data.
+                return;
+            }
+            this.seasonTvdbId = info.getSeasonAndShowInfo().getSeasonTvdbId();
+            this.showTvdbId = info.getSeasonAndShowInfo().getShowTvdbId();
 
-        if (isFinishing) {
-            finish();
-            return;
-        }
+            updateActionBar(
+                    info.getSeasonAndShowInfo().getShow(),
+                    info.getSeasonAndShowInfo().getSeasonNumber()
+            );
 
-        final SgShowMinimal show = SgRoomDatabase.getInstance(this)
-                .showHelper().getShowMinimal(showTvdbId);
-        if (show == null) {
-            finish();
-            return;
-        }
+            // Set the image background.
+            TvdbImageTools.loadShowPosterAlpha(this, backgroundImageView,
+                    info.getSeasonAndShowInfo().getShow().getPosterSmall());
 
-        setupActionBar(show);
-        setupViews(savedInstanceState, show, episodeId);
+            updateViews(
+                    savedInstanceState,
+                    info.getSeasonAndShowInfo().getShowTvdbId(),
+                    info.getSeasonAndShowInfo().getSeasonTvdbId(),
+                    info.getSeasonAndShowInfo().getSeasonNumber(),
+                    info.getStartPosition(),
+                    info.getEpisodes()
+            );
 
-        updateShowDelayed(showTvdbId);
+            updateShowDelayed(info.getSeasonAndShowInfo().getShowTvdbId());
+        });
     }
 
-    private void setupActionBar(SgShowMinimal show) {
-        setupActionBar();
-        // setup ActionBar
+    @Override
+    protected void setupActionBar() {
+        super.setupActionBar();
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    private void updateActionBar(SgShowMinimal show, int seasonNumber) {
         String showTitle = show.getTitle();
         String seasonString = SeasonTools.getSeasonString(this, seasonNumber);
         setTitle(showTitle + " " + seasonString);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-
             actionBar.setTitle(showTitle);
             actionBar.setSubtitle(seasonString);
         }
@@ -200,49 +180,23 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         episodeDetailsTabs.setVisibility(visibilityPagerViews);
         //noinspection ConstantConditions
         dividerEpisodesTabs.setVisibility(visibilityPagerViews);
-        if (updateOptionsMenu) invalidateOptionsMenu();
+        if (updateOptionsMenu) {
+            invalidateOptionsMenu();
+        }
     }
 
-    private void setupViews(Bundle savedInstanceState, SgShowMinimal show, int episodeId) {
+    private void setupViews() {
         if (isSinglePaneView()) {
             switchView(false, false);
         }
 
-        // Set the image background.
-        TvdbImageTools.loadShowPosterAlpha(this, backgroundImageView, show.getPosterSmall());
-
-        // TODO Switch to ViewModel.
-        // Build episode list for view pager, determine start position if episode ID is given.
-        int startPosition = updateEpisodeList(episodeId);
-
-        // set up the episode list fragment
-        if (savedInstanceState == null) {
-            episodesListFragment = EpisodesFragment.newInstance(showTvdbId, seasonTvdbId,
-                    seasonNumber, startPosition);
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(R.id.fragment_episodes, episodesListFragment, "episodes").commit();
-        } else {
-            episodesListFragment = (EpisodesFragment) getSupportFragmentManager().findFragmentByTag(
-                    "episodes");
-        }
-
-        // pager setup
-        episodeDetailsAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),
-                episodes, true);
-        episodeDetailsPager.setAdapter(episodeDetailsAdapter);
-
-        // tabs setup
+        // Tabs setup.
         episodeDetailsTabs.setCustomTabView(R.layout.tabstrip_item_transparent,
                 R.id.textViewTabStripItem);
         episodeDetailsTabs.setSelectedIndicatorColors(ContextCompat.getColor(this,
                 SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue
                         ? R.color.white
                         : Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary)));
-        episodeDetailsTabs.setViewPager(episodeDetailsPager);
-
-        // set page listener afterwards to avoid null pointer for non-existing content view
-        episodeDetailsPager.setCurrentItem(startPosition, false);
-        episodeDetailsTabs.setOnPageChangeListener(onPageChangeListener);
 
         // Set drawables for visible shadows.
         if (shadowStart != null) {
@@ -253,6 +207,43 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
             Shadows.getInstance().setShadowDrawable(this, shadowEnd,
                     GradientDrawable.Orientation.LEFT_RIGHT);
         }
+    }
+
+    private void updateViews(
+            Bundle savedInstanceState,
+            int showTvdbId,
+            int seasonTvdbId,
+            int seasonNumber,
+            int startPosition,
+            ArrayList<Episode> episodes
+    ) {
+        // Episode list.
+        if (episodesListFragment == null) {
+            if (savedInstanceState == null) {
+                episodesListFragment = EpisodesFragment.newInstance(showTvdbId, seasonTvdbId,
+                        seasonNumber, startPosition);
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.add(R.id.fragment_episodes, episodesListFragment, "episodes").commit();
+            } else {
+                episodesListFragment = (EpisodesFragment) getSupportFragmentManager()
+                        .findFragmentByTag("episodes");
+            }
+        }
+
+        // Episode pager.
+        if (episodeDetailsAdapter == null) {
+            episodeDetailsAdapter = new EpisodePagerAdapter(this, getSupportFragmentManager(),
+                    episodes, true);
+            episodeDetailsPager.setAdapter(episodeDetailsAdapter);
+        } else {
+            episodeDetailsAdapter.updateEpisodeList(episodes);
+        }
+        // Refresh pager tab decoration.
+        episodeDetailsTabs.setViewPager(episodeDetailsPager);
+
+        episodeDetailsPager.setCurrentItem(startPosition, false);
+        // Set page listener after current item to avoid null pointer for non-existing content view.
+        episodeDetailsTabs.setOnPageChangeListener(onPageChangeListener);
     }
 
     @Override
@@ -310,49 +301,6 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
         }
     }
 
-    /**
-     * Updates the episode list, using the current sort order.
-     */
-    private void updateEpisodeList() {
-        updateEpisodeList(0);
-    }
-
-    /**
-     * Updates the episode list, using the current sorting. If a valid initial episode id is given
-     * it will return its position in the created list.
-     */
-    private int updateEpisodeList(int initialEpisodeId) {
-        Constants.EpisodeSorting sortOrder = DisplaySettings.getEpisodeSortOrder(this);
-
-        Cursor episodeCursor = getContentResolver().query(
-                Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(seasonTvdbId)),
-                new String[]{
-                        Episodes._ID, Episodes.NUMBER
-                }, null, null, sortOrder.query()
-        );
-
-        ArrayList<Episode> episodeList = new ArrayList<>();
-        int startPosition = 0;
-        if (episodeCursor != null) {
-            while (episodeCursor.moveToNext()) {
-                Episode ep = new Episode();
-                ep.episodeId = episodeCursor.getInt(0);
-                if (ep.episodeId == initialEpisodeId) {
-                    startPosition = episodeCursor.getPosition();
-                }
-                ep.episodeNumber = episodeCursor.getInt(1);
-                ep.seasonNumber = seasonNumber;
-                episodeList.add(ep);
-            }
-
-            episodeCursor.close();
-        }
-
-        episodes = episodeList;
-
-        return startPosition;
-    }
-
     private OnPageChangeListener onPageChangeListener = new OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -394,31 +342,18 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     }
 
     private void reorderAndUpdateTabs() {
-        if (episodeDetailsPager == null || episodeDetailsTabs == null) {
-            return;
-        }
-
-        // save currently selected episode
+        // Get currently selected episode
         int oldPosition = episodeDetailsPager.getCurrentItem();
-        int episodeId = episodes.get(oldPosition).episodeId;
-
-        // reorder and update tabs
-        updateEpisodeList();
-        episodeDetailsAdapter.updateEpisodeList(episodes);
-        episodeDetailsTabs.setViewPager(episodeDetailsPager);
-
-        // scroll to previously selected episode
-        episodeDetailsPager.setCurrentItem(getPositionForEpisode(episodeId), false);
-    }
-
-    private int getPositionForEpisode(int episodeTvdbId) {
-        // find page index for this episode
-        for (int position = 0; position < episodes.size(); position++) {
-            if (episodes.get(position).episodeId == episodeTvdbId) {
-                return position;
-            }
+        EpisodePagerAdapter adapter = episodeDetailsAdapter;
+        Integer episodeTvdbIdNullable;
+        if (adapter != null) {
+            episodeTvdbIdNullable = adapter.getItemEpisodeTvdbId(oldPosition);
+        } else {
+            episodeTvdbIdNullable = 0;
         }
+        int episodeTvdbId = episodeTvdbIdNullable != null ? episodeTvdbIdNullable : 0;
 
-        return 0;
+        // Launch update.
+        viewModel.updateEpisodesData(episodeTvdbId, seasonTvdbId);
     }
 }
