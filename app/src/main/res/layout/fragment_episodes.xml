@@ -11,8 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/keyline_minus_16"
-        android:background="?android:attr/windowBackground"
-        android:elevation="2dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,6 +43,15 @@
 
     </LinearLayout>
 
+    <View
+        android:id="@+id/dividerEpisodesToolbar"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?attr/sgColorDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutEpisodesToolbar" />
+
     <TextView
         android:id="@android:id/empty"
         android:layout_width="0dp"
@@ -55,20 +62,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutEpisodesToolbar"
+        app:layout_constraintTop_toBottomOf="@+id/dividerEpisodesToolbar"
         tools:text="Empty Text" />
 
+    <!-- Enable nested scrolling to work with CoordinatorLayout. -->
     <ListView
         android:id="@+id/listViewEpisodes"
         style="@style/DefaultPadding.List"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginLeft="@dimen/keyline_minus_16"
+        android:nestedScrollingEnabled="true"
         android:paddingTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutEpisodesToolbar"
+        app:layout_constraintTop_toBottomOf="@+id/dividerEpisodesToolbar"
         tools:listitem="@layout/item_episode" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

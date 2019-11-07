@@ -9,7 +9,7 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -52,14 +52,17 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
     public static final int ACTIONS_LOADER_ID = 102;
 
     @BindView(R.id.fragment_episodes)
-    FrameLayout containerList;
+    ViewGroup containerList;
     @Nullable
     @BindView(R.id.containerEpisodesPager)
-    FrameLayout containerPager;
+    ViewGroup containerPager;
     @BindView(R.id.pagerEpisodes)
     ViewPager episodeDetailsPager;
     @BindView(R.id.tabsEpisodes)
     SlidingTabLayout episodeDetailsTabs;
+    @Nullable
+    @BindView(R.id.dividerEpisodesTabs)
+    View dividerEpisodesTabs;
     @BindView(R.id.imageViewEpisodesBackground)
     ImageView backgroundImageView;
     @Nullable
@@ -191,8 +194,12 @@ public class EpisodesActivity extends BaseNavDrawerActivity {
 
     private void switchView(boolean isListView, boolean updateOptionsMenu) {
         containerList.setVisibility(isListView ? View.VISIBLE : View.GONE);
+        int visibilityPagerViews = isListView ? View.GONE : View.VISIBLE;
         //noinspection ConstantConditions
-        containerPager.setVisibility(isListView ? View.GONE : View.VISIBLE);
+        containerPager.setVisibility(visibilityPagerViews);
+        episodeDetailsTabs.setVisibility(visibilityPagerViews);
+        //noinspection ConstantConditions
+        dividerEpisodesTabs.setVisibility(visibilityPagerViews);
         if (updateOptionsMenu) invalidateOptionsMenu();
     }
 
