@@ -9,6 +9,16 @@ Version 52
 ----------
 *(in development)*
 
+#### 52-beta2
+*(2019-11-08)*
+
+* 🔧 On phones, combine episode list and page view into one.
+  Switch between them with a button in the top right.
+* 🔧 Move episode share, add to calendar and manage lists buttons to bottom of screen.
+* 🔨 Watched up to here no longer marks unreleased episodes watched.
+* 🔨 In debug mode, log show TheTVDB ID if it fails to update.
+* 📝 Latest translations from crowdin.
+
 #### 52-beta1
 *(2019-10-31)*
 
