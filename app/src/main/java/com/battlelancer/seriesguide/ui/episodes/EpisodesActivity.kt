@@ -78,17 +78,6 @@ class EpisodesActivity : BaseNavDrawerActivity() {
     private val isListGone: Boolean
         get() = containerList.visibility == View.GONE
 
-    /**
-     * All values have to be integer. Only one is required.
-     */
-    // TODO move to companion object.
-    interface InitBundle {
-        companion object {
-            const val SEASON_TVDBID = "season_tvdbid"
-            const val EPISODE_TVDBID = "episode_tvdbid"
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_episodes)
@@ -101,8 +90,8 @@ class EpisodesActivity : BaseNavDrawerActivity() {
         ButterKnife.bind(this)
         setupViews()
 
-        val episodeTvdbId = intent.getIntExtra(InitBundle.EPISODE_TVDBID, 0)
-        val seasonTvdbId = intent.getIntExtra(InitBundle.SEASON_TVDBID, 0)
+        val episodeTvdbId = intent.getIntExtra(EXTRA_EPISODE_TVDBID, 0)
+        val seasonTvdbId = intent.getIntExtra(EXTRA_SEASON_TVDBID, 0)
 
         val viewModelFactory = EpisodesActivityViewModelFactory(
             application,
@@ -360,6 +349,11 @@ class EpisodesActivity : BaseNavDrawerActivity() {
     }
 
     companion object {
+        /** Either this or [EXTRA_EPISODE_TVDBID] is required. */
+        const val EXTRA_SEASON_TVDBID = "season_tvdbid"
+        /** Either this or [EXTRA_SEASON_TVDBID] is required. */
+        const val EXTRA_EPISODE_TVDBID = "episode_tvdbid"
+
         const val EPISODES_LOADER_ID = 100
         const val EPISODE_LOADER_ID = 101
         const val ACTIONS_LOADER_ID = 102

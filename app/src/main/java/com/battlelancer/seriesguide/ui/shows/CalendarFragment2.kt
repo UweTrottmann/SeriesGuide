@@ -244,7 +244,7 @@ class CalendarFragment2 : ScopedFragment() {
         CalendarAdapter2.ItemClickListener {
         override fun onItemClick(episodeTvdbId: Int) {
             val intent = Intent(activity, EpisodesActivity::class.java)
-                .putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeTvdbId)
+                .putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, episodeTvdbId)
             Utils.startActivityWithAnimation(activity, intent, view)
         }
 
