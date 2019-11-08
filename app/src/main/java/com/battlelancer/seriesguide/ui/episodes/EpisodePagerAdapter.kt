@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui.episodes
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -7,11 +8,12 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.battlelancer.seriesguide.util.TextTools
 import java.util.ArrayList
 
+@SuppressLint("WrongConstant") // Behavior flag not recognized as valid.
 internal class EpisodePagerAdapter(
     private val context: Context,
     fm: FragmentManager,
     private val episodes: ArrayList<Episode>
-) : FragmentStatePagerAdapter(fm) {
+) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getCount(): Int {
         return episodes.size
