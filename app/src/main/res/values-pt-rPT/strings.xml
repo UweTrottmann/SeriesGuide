@@ -146,6 +146,7 @@
     <string name="action_shows_sort_favorites">Privilegiar Favoritos</string>
     <string name="context_updateshow">Atualizar</string>
     <string name="context_marknext">Marcar próximo episódio como visto</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Histórico</string>
     <string name="recently_watched">Visto recentemente</string>

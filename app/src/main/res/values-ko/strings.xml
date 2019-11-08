@@ -145,6 +145,7 @@
     <string name="action_shows_sort_favorites">즐겨찾기 먼저 표시</string>
     <string name="context_updateshow">업데이트</string>
     <string name="context_marknext">다음 에피소드 시청 완료</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">기록</string>
     <string name="recently_watched">최근 시청 항목</string>
