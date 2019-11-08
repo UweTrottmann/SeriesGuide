@@ -10,8 +10,7 @@ import java.util.ArrayList
 internal class EpisodePagerAdapter(
     private val context: Context,
     fm: FragmentManager,
-    private val episodes: ArrayList<Episode>,
-    private val isMultiPane: Boolean
+    private val episodes: ArrayList<Episode>
 ) : FragmentStatePagerAdapter(fm) {
 
     override fun getCount(): Int {
@@ -19,7 +18,7 @@ internal class EpisodePagerAdapter(
     }
 
     override fun getItem(position: Int): Fragment {
-        return EpisodeDetailsFragment.newInstance(episodes[position].episodeId, isMultiPane)
+        return EpisodeDetailsFragment.newInstance(episodes[position].episodeId)
     }
 
     override fun getItemPosition(`object`: Any): Int {
