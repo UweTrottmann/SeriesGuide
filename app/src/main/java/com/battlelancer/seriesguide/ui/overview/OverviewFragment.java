@@ -9,9 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
@@ -144,6 +141,9 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.buttonEpisodeImdb) Button buttonImdb;
     @BindView(R.id.buttonEpisodeTvdb) Button buttonTvdb;
     @BindView(R.id.buttonEpisodeTrakt) Button buttonTrakt;
+    @BindView(R.id.buttonEpisodeShare) Button buttonShare;
+    @BindView(R.id.buttonEpisodeCalendar) Button buttonAddToCalendar;
+    @BindView(R.id.buttonEpisodeLists) Button buttonManageLists;
     @BindView(R.id.buttonEpisodeComments) Button buttonComments;
 
     @BindView(R.id.containerEpisodeActions) LinearLayout containerActions;
@@ -184,13 +184,13 @@ public class OverviewFragment extends Fragment implements
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_overview, container, false);
-        unbinder = ButterKnife.bind(this, v);
-        return v;
+        return inflater.inflate(R.layout.fragment_overview, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        unbinder = ButterKnife.bind(this, view);
+
         containerEpisode.setVisibility(View.GONE);
         containerEpisodeEmpty.setVisibility(View.GONE);
 
@@ -234,6 +234,22 @@ public class OverviewFragment extends Fragment implements
         ViewTools.setVectorIconLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp);
         ViewTools.setVectorIconLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp);
         ViewTools.setVectorIconLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonShare, R.drawable.ic_share_white_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonAddToCalendar, R.drawable.ic_event_white_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonManageLists, R.drawable.ic_list_white_24dp);
+
+        buttonShare.setOnClickListener(v -> shareEpisode());
+        buttonAddToCalendar.setOnClickListener(v -> createCalendarEvent());
+        buttonManageLists.setOnClickListener(v -> {
+                    if (isEpisodeDataAvailable) {
+                        ManageListsDialogFragment.show(
+                                requireFragmentManager(),
+                                currentEpisodeCursor.getInt(EpisodeQuery._ID),
+                                ListItemTypes.EPISODE
+                        );
+                    }
+                }
+        );
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         ClipboardTools.copyTextToClipboardOnLongClick(textDescription);
@@ -256,8 +272,6 @@ public class OverviewFragment extends Fragment implements
         LoaderManager loaderManager = LoaderManager.getInstance(this);
         loaderManager.initLoader(OverviewActivity.OVERVIEW_SHOW_LOADER_ID, null, this);
         loaderManager.initLoader(OverviewActivity.OVERVIEW_EPISODE_LOADER_ID, null, this);
-
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -302,44 +316,6 @@ public class OverviewFragment extends Fragment implements
             ratingsTask.cancel(true);
             ratingsTask = null;
         }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.overview_fragment_menu, menu);
-
-        // enable/disable menu items
-        MenuItem itemShare = menu.findItem(R.id.menu_overview_share);
-        itemShare.setEnabled(isEpisodeDataAvailable);
-        itemShare.setVisible(isEpisodeDataAvailable);
-        MenuItem itemCalendar = menu.findItem(R.id.menu_overview_calendar);
-        itemCalendar.setEnabled(isEpisodeDataAvailable);
-        itemCalendar.setVisible(isEpisodeDataAvailable);
-        MenuItem itemManageLists = menu.findItem(R.id.menu_overview_manage_lists);
-        if (itemManageLists != null) {
-            itemManageLists.setEnabled(isEpisodeDataAvailable);
-            itemManageLists.setVisible(isEpisodeDataAvailable);
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.menu_overview_share) {
-            shareEpisode();
-            return true;
-        } else if (itemId == R.id.menu_overview_calendar) {
-            createCalendarEvent();
-            return true;
-        } else if (itemId == R.id.menu_overview_manage_lists) {
-            if (isEpisodeDataAvailable) {
-                ManageListsDialogFragment.show(getFragmentManager(),
-                        currentEpisodeCursor.getInt(EpisodeQuery._ID), ListItemTypes.EPISODE);
-            }
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void createCalendarEvent() {
@@ -692,9 +668,6 @@ public class OverviewFragment extends Fragment implements
             containerEpisodePrimary.setVisibility(View.GONE);
             containerEpisodeMeta.setVisibility(View.GONE);
         }
-
-        // enable/disable applicable menu items
-        getActivity().invalidateOptionsMenu();
 
         // animate view into visibility
         if (containerEpisode.getVisibility() == View.GONE) {
