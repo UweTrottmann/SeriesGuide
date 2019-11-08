@@ -147,6 +147,7 @@
     <string name="action_shows_sort_favorites">รายการโปรดก่อน</string>
     <string name="context_updateshow">อัปเดต</string>
     <string name="context_marknext">ดูตอนถัดไป</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">ประวัติ</string>
     <string name="recently_watched">เพิ่งดู</string>

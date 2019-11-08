@@ -150,6 +150,7 @@
     <string name="action_shows_sort_favorites">Mėgstamų sąrašas</string>
     <string name="context_updateshow">Atnaujinti</string>
     <string name="context_marknext">Pažiūrėta kita serija</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Istorija</string>
     <string name="recently_watched">Neseniai peržiūrėta</string>

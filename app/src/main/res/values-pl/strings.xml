@@ -150,6 +150,7 @@
     <string name="action_shows_sort_favorites">Najpierw ulubione</string>
     <string name="context_updateshow">Aktualizuj</string>
     <string name="context_marknext">Odcinek obejrzany</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Historia</string>
     <string name="recently_watched">Niedawno obejrzane</string>

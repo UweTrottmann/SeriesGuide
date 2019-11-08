@@ -147,6 +147,7 @@
     <string name="action_shows_sort_favorites">喜愛影集優先</string>
     <string name="context_updateshow">更新</string>
     <string name="context_marknext">觀看下一集</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">歴史紀錄</string>
     <string name="recently_watched">最近觀賞</string>

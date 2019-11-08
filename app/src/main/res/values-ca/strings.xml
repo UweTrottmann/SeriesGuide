@@ -148,6 +148,7 @@
     <string name="action_shows_sort_favorites">Preferits primer</string>
     <string name="context_updateshow">Actualitza</string>
     <string name="context_marknext">Següent episodi vist</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Històric</string>
     <string name="recently_watched">Vist Recentment</string>

@@ -148,6 +148,7 @@
     <string name="action_shows_sort_favorites">விருப்பங்களின் முதல்</string>
     <string name="context_updateshow">புதுப்பித்தல்</string>
     <string name="context_marknext">பார்த்த அடுத்த சம்பவம்</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">வரலாறு</string>
     <string name="recently_watched">சமீபத்தில் பார்த்த</string>
