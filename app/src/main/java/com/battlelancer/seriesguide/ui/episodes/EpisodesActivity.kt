@@ -300,9 +300,9 @@ class EpisodesActivity : BaseNavDrawerActivity() {
             menuInflater.inflate(R.menu.episodes_menu, menu)
             menu.findItem(R.id.menu_action_episodes_switch_view).setIcon(
                 if (isListGone) {
-                    R.drawable.ic_view_headline_white_24dp
+                    R.drawable.ic_view_headline_control_24dp
                 } else {
-                    R.drawable.ic_view_column_white_24dp
+                    R.drawable.ic_view_column_control_24dp
                 }
             )
         }
