@@ -8,6 +8,9 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.battlelancer.seriesguide.util.TextTools
 import java.util.ArrayList
 
+/**
+ * Maps [Episode] objects to [EpisodeDetailsFragment] pages.
+ */
 @SuppressLint("WrongConstant") // Behavior flag not recognized as valid.
 internal class EpisodePagerAdapter(
     private val context: Context,
