@@ -103,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">全部标记为已观看</string>
     <string name="unmark_all">全部标记为未观看</string>
-    <string name="action_watched_up_to">Watched up to here</string>
+    <string name="action_watched_up_to">已观看到这里</string>
     <string name="collect_all">全部标记为已收藏</string>
     <string name="uncollect_all">全部标记为未收藏</string>
     <string name="action_skip">标记为已跳过</string>
@@ -164,7 +164,7 @@
     <string name="calendar_settings">日历设置</string>
     <string name="only_favorites">仅显示喜爱节目</string>
     <string name="calendar_only_collected">仅已收藏剧集</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">仅首映</string>
     <string name="pref_infinite_scrolling">无限的日历</string>
     <!-- Updating -->
     <string name="update_scheduled">正在更新&#8230;</string>

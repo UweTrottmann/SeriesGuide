@@ -165,7 +165,7 @@
     <string name="calendar_settings">Naptár beállításai</string>
     <string name="only_favorites">Csak kedvenc sorozatok</string>
     <string name="calendar_only_collected">Csak begyűjtött epizódok</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">Csak premierek</string>
     <string name="pref_infinite_scrolling">Végtelen naptár</string>
     <!-- Updating -->
     <string name="update_scheduled">Frissítés&#8230;</string>

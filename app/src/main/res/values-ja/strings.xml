@@ -103,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">すべて視聴済</string>
     <string name="unmark_all">すべて未視聴</string>
-    <string name="action_watched_up_to">Watched up to here</string>
+    <string name="action_watched_up_to">ここまで視聴済</string>
     <string name="collect_all">すべてコレクション済</string>
     <string name="uncollect_all">すべて未コレクション</string>
     <string name="action_skip">スキップ</string>
@@ -164,7 +164,7 @@
     <string name="calendar_settings">カレンダー設定</string>
     <string name="only_favorites">お気に入りの番組のみ</string>
     <string name="calendar_only_collected">コレクション済のエピソードのみ</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">プレミアのみ</string>
     <string name="pref_infinite_scrolling">無限のカレンダー</string>
     <!-- Updating -->
     <string name="update_scheduled">更新中&#8230;</string>
