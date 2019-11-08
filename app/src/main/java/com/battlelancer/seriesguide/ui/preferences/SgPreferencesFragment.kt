@@ -22,6 +22,7 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
+import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
@@ -89,6 +90,13 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             }
 
             true
+        }
+
+        if (BuildConfig.DEBUG) {
+            findPreference<SwitchPreferenceCompat>(AppSettings.KEY_USER_DEBUG_MODE_ENBALED)!!.apply {
+                isEnabled = false
+                isChecked = true
+            }
         }
 
         // display version as About summary
