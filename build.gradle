@@ -65,7 +65,7 @@ apply plugin: 'com.github.ben-manes.versions'
 dependencyUpdates.resolutionStrategy = {
     componentSelection { rules ->
         rules.all { ComponentSelection selection ->
-            boolean rejected = ['alpha', 'beta', 'rc'].any { qualifier ->
+            boolean rejected = ['alpha', 'beta', 'rc', 'eap'].any { qualifier ->
                 selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
             }
             if (rejected) {
