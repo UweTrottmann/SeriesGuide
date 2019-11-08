@@ -69,6 +69,9 @@ class EpisodesActivity : BaseNavDrawerActivity() {
     private var showTvdbId: Int = 0
     private var seasonTvdbId: Int = 0
 
+    /** Keeps list visibility even in multi-pane view. */
+    private var isListVisibleInSinglePaneView: Boolean = false
+
     /**
      * If list and pager are displayed side-by-side, or toggleable one or the other.
      */
@@ -86,6 +89,8 @@ class EpisodesActivity : BaseNavDrawerActivity() {
 
         // if coming from a notification, set last cleared time
         NotificationService.handleDeleteIntent(this, intent)
+
+        isListVisibleInSinglePaneView = savedInstanceState?.getBoolean(STATE_IS_LIST_VISIBLE) ?: false
 
         ButterKnife.bind(this)
         setupViews()
@@ -151,9 +156,10 @@ class EpisodesActivity : BaseNavDrawerActivity() {
         }
     }
 
-    private fun switchView(isListView: Boolean, updateOptionsMenu: Boolean) {
-        containerList.visibility = if (isListView) View.VISIBLE else View.GONE
-        val visibilityPagerViews = if (isListView) View.GONE else View.VISIBLE
+    private fun switchView(makeListVisible: Boolean, updateOptionsMenu: Boolean) {
+        isListVisibleInSinglePaneView = makeListVisible
+        containerList.visibility = if (makeListVisible) View.VISIBLE else View.GONE
+        val visibilityPagerViews = if (makeListVisible) View.GONE else View.VISIBLE
         containerPager!!.visibility = visibilityPagerViews
         episodeDetailsTabs.visibility = visibilityPagerViews
         dividerEpisodesTabs!!.visibility = visibilityPagerViews
@@ -164,7 +170,7 @@ class EpisodesActivity : BaseNavDrawerActivity() {
 
     private fun setupViews() {
         if (isSinglePaneView) {
-            switchView(isListView = false, updateOptionsMenu = false)
+            switchView(isListVisibleInSinglePaneView, updateOptionsMenu = false)
         }
 
         // Tabs setup.
@@ -278,6 +284,11 @@ class EpisodesActivity : BaseNavDrawerActivity() {
             .registerOnSharedPreferenceChangeListener(onSortOrderChangedListener)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(STATE_IS_LIST_VISIBLE, isListVisibleInSinglePaneView)
+    }
+
     override fun onStop() {
         super.onStop()
 
@@ -321,7 +332,7 @@ class EpisodesActivity : BaseNavDrawerActivity() {
     fun setCurrentPage(position: Int) {
         episodeDetailsPager.setCurrentItem(position, true)
         if (isSinglePaneView) {
-            switchView(isListView = false, updateOptionsMenu = true)
+            switchView(makeListVisible = false, updateOptionsMenu = true)
         }
     }
 
@@ -353,6 +364,8 @@ class EpisodesActivity : BaseNavDrawerActivity() {
         const val EXTRA_SEASON_TVDBID = "season_tvdbid"
         /** Either this or [EXTRA_SEASON_TVDBID] is required. */
         const val EXTRA_EPISODE_TVDBID = "episode_tvdbid"
+
+        const val STATE_IS_LIST_VISIBLE = "STATE_IS_LIST_VISIBLE"
 
         const val EPISODES_LOADER_ID = 100
         const val EPISODE_LOADER_ID = 101
