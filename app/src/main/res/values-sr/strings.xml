@@ -149,6 +149,7 @@
     <string name="action_shows_sort_favorites">Прво омиљене</string>
     <string name="context_updateshow">Ажурирање</string>
     <string name="context_marknext">Погледана, следећа епизода</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Историјат</string>
     <string name="recently_watched">Недавно гледано</string>

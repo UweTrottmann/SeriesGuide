@@ -396,7 +396,7 @@ public class NotificationService {
             contentText = TextTools.dotSeparate(time, network); // switch on purpose
 
             Intent episodeDetailsIntent = new Intent(context, EpisodesActivity.class);
-            episodeDetailsIntent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
+            episodeDetailsIntent.putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID,
                     upcomingEpisodes.getInt(NotificationQuery._ID));
             episodeDetailsIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime);
 

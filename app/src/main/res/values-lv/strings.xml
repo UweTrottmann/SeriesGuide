@@ -149,6 +149,7 @@
     <string name="action_shows_sort_favorites">Sākot ar izlasi</string>
     <string name="context_updateshow">Atjaunināt</string>
     <string name="context_marknext">Nākamā epizode noskatīta</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Vēsture</string>
     <string name="recently_watched">Recently watched</string>

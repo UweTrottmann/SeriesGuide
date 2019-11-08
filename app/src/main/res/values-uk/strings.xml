@@ -150,6 +150,7 @@
     <string name="action_shows_sort_favorites">Улюблене спочатку</string>
     <string name="context_updateshow">Оновити</string>
     <string name="context_marknext">Переглянута наступна серія</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Історія</string>
     <string name="recently_watched">Недавно переглянуті</string>

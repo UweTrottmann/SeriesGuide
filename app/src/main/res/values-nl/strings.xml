@@ -148,6 +148,7 @@
     <string name="action_shows_sort_favorites">Favorieten eerst</string>
     <string name="context_updateshow">Bijwerken</string>
     <string name="context_marknext">Volgende aflevering bekeken</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Geschiedenis</string>
     <string name="recently_watched">Laatst gekeken</string>

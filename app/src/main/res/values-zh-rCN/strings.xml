@@ -147,6 +147,7 @@
     <string name="action_shows_sort_favorites">依据喜爱状态</string>
     <string name="context_updateshow">更新</string>
     <string name="context_marknext">标记本集为已观看</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">历史记录</string>
     <string name="recently_watched">最近观看</string>

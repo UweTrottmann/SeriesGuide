@@ -150,6 +150,7 @@
     <string name="action_shows_sort_favorites">מועדפים בהתחלה</string>
     <string name="context_updateshow">עדכן</string>
     <string name="context_marknext">צפה בפרק הבא</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">היסטוריה</string>
     <string name="recently_watched">נצפה לאחרונה</string>

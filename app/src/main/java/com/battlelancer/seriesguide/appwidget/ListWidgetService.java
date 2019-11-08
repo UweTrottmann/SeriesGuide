@@ -189,7 +189,7 @@ public class ListWidgetService extends RemoteViewsService {
 
             // set the fill-in intent for the collection item
             Bundle extras = new Bundle();
-            extras.putInt(EpisodesActivity.InitBundle.EPISODE_TVDBID,
+            extras.putInt(EpisodesActivity.EXTRA_EPISODE_TVDBID,
                     dataCursor.getInt(isShowQuery ?
                             ShowsQuery.SHOW_NEXT_EPISODE_ID : CalendarQuery.EPISODE_TVDB_ID));
             Intent fillInIntent = new Intent();
