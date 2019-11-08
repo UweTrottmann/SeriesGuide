@@ -320,7 +320,7 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
 
     private fun displayEpisode(episodeTvdbId: String) {
         val i = Intent(this, EpisodesActivity::class.java)
-        i.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, Integer.valueOf(episodeTvdbId))
+        i.putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, Integer.valueOf(episodeTvdbId))
         startActivity(i)
     }
 

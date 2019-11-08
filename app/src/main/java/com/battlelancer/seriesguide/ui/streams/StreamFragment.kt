@@ -148,7 +148,7 @@ abstract class StreamFragment : Fragment() {
      */
     protected fun showDetails(view: View, episodeId: Int) {
         val intent = Intent(activity!!, EpisodesActivity::class.java)
-            .putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId)
+            .putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, episodeId)
 
         ActivityCompat.startActivity(
             activity!!, intent,

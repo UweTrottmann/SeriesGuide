@@ -253,7 +253,7 @@ public class ShowsNowFragment extends Fragment {
     private void showDetails(View view, int episodeId) {
         Intent intent = new Intent();
         intent.setClass(getActivity(), EpisodesActivity.class);
-        intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
+        intent.putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, episodeId);
 
         ActivityCompat.startActivity(getActivity(), intent,
                 ActivityOptionsCompat

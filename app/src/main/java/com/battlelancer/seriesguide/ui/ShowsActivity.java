@@ -140,7 +140,7 @@ public class ShowsActivity extends BaseTopActivity implements
             if (episodeTvdbId > 0 && EpisodeTools.isEpisodeExists(this, episodeTvdbId)) {
                 // episode exists, display it
                 viewIntent = new Intent(this, EpisodesActivity.class)
-                        .putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeTvdbId);
+                        .putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, episodeTvdbId);
             } else {
                 // no such episode, offer to add show
                 int showTvdbId = intent.getIntExtra(Intents.EXTRA_SHOW_TVDBID, 0);

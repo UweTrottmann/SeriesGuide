@@ -973,7 +973,7 @@ public class OverviewFragment extends Fragment implements
             if (isEpisodeDataAvailable) {
                 // display episode details
                 Intent intent = new Intent(getActivity(), EpisodesActivity.class);
-                intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
+                intent.putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID,
                         currentEpisodeTvdbId);
                 Utils.startActivityWithAnimation(getActivity(), intent, view);
             }
