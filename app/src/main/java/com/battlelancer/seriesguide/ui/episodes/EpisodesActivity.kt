@@ -256,8 +256,7 @@ class EpisodesActivity : BaseNavDrawerActivity() {
             episodeDetailsAdapter = EpisodePagerAdapter(
                 this,
                 supportFragmentManager,
-                episodes,
-                true
+                episodes
             )
             episodeDetailsPager.adapter = episodeDetailsAdapter
         } else {

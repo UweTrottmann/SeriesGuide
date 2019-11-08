@@ -79,13 +79,11 @@ import timber.log.Timber;
 public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsContract {
 
     private static final String ARG_EPISODE_TVDBID = "episode_tvdbid";
-    private static final String ARG_IS_IN_MULTIPANE_LAYOUT = "multipane";
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
 
     private Handler handler = new Handler();
     private TraktRatingsTask ratingsTask;
 
-    private boolean isInMultipane;
     private int episodeTvdbId;
     private int showTvdbId;
     @Nullable private String showTvdbSlug;
@@ -139,13 +137,12 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
     private Unbinder unbinder;
 
-    public static EpisodeDetailsFragment newInstance(int episodeId, boolean isInMultiPaneLayout) {
+    public static EpisodeDetailsFragment newInstance(int episodeId) {
         EpisodeDetailsFragment f = new EpisodeDetailsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
         args.putInt(ARG_EPISODE_TVDBID, episodeId);
-        args.putBoolean(ARG_IS_IN_MULTIPANE_LAYOUT, isInMultiPaneLayout);
         f.setArguments(args);
 
         return f;
@@ -157,7 +154,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         Bundle args = getArguments();
         if (args != null) {
-            isInMultipane = args.getBoolean(ARG_IS_IN_MULTIPANE_LAYOUT);
             episodeTvdbId = args.getInt(ARG_EPISODE_TVDBID);
         } else {
             throw new IllegalArgumentException("Missing arguments");
