@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
@@ -215,7 +216,11 @@ class EpisodesActivity : BaseNavDrawerActivity() {
 
         override fun onPageSelected(position: Int) {
             // update currently checked episode
-            episodesListFragment?.setItemChecked(position)
+            episodesListFragment?.run {
+                if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                    setItemChecked(position)
+                }
+            }
         }
 
         override fun onPageScrollStateChanged(state: Int) {
