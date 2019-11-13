@@ -72,6 +72,8 @@ class EpisodesActivity : BaseNavDrawerActivity() {
 
     /** Keeps list visibility even in multi-pane view. */
     private var isListVisibleInSinglePaneView: Boolean = false
+    /** Remembers if pager was shown due to tap on list item. */
+    private var hasTappedItemInSinglePaneView: Boolean = false
 
     /**
      * If list and pager are displayed side-by-side, or toggleable one or the other.
@@ -91,7 +93,10 @@ class EpisodesActivity : BaseNavDrawerActivity() {
         // if coming from a notification, set last cleared time
         NotificationService.handleDeleteIntent(this, intent)
 
-        isListVisibleInSinglePaneView = savedInstanceState?.getBoolean(STATE_IS_LIST_VISIBLE) ?: false
+        isListVisibleInSinglePaneView = savedInstanceState?.
+            getBoolean(STATE_IS_LIST_VISIBLE) ?: false
+        hasTappedItemInSinglePaneView = savedInstanceState?.
+            getBoolean(STATE_HAS_TAPPED_ITEM_SINGLE_PANE) ?: false
 
         ButterKnife.bind(this)
         setupViews()
@@ -291,6 +296,7 @@ class EpisodesActivity : BaseNavDrawerActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putBoolean(STATE_IS_LIST_VISIBLE, isListVisibleInSinglePaneView)
+        outState.putBoolean(STATE_HAS_TAPPED_ITEM_SINGLE_PANE, hasTappedItemInSinglePaneView)
     }
 
     override fun onStop() {
@@ -323,11 +329,23 @@ class EpisodesActivity : BaseNavDrawerActivity() {
                 true
             }
             R.id.menu_action_episodes_switch_view -> {
+                hasTappedItemInSinglePaneView = false
                 switchView(isListGone, true)
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onBackPressed() {
+        // If single pane view and previously switched to pager by tapping on list item,
+        // go back to list first instead of finishing activity.
+        if (isSinglePaneView && isListGone && hasTappedItemInSinglePaneView) {
+            hasTappedItemInSinglePaneView = false
+            switchView(makeListVisible = true, updateOptionsMenu = true)
+            return
+        }
+        super.onBackPressed()
     }
 
     /**
@@ -336,6 +354,7 @@ class EpisodesActivity : BaseNavDrawerActivity() {
     fun setCurrentPage(position: Int) {
         episodeDetailsPager.setCurrentItem(position, true)
         if (isSinglePaneView) {
+            hasTappedItemInSinglePaneView = true
             switchView(makeListVisible = false, updateOptionsMenu = true)
         }
     }
@@ -370,6 +389,7 @@ class EpisodesActivity : BaseNavDrawerActivity() {
         const val EXTRA_EPISODE_TVDBID = "episode_tvdbid"
 
         const val STATE_IS_LIST_VISIBLE = "STATE_IS_LIST_VISIBLE"
+        const val STATE_HAS_TAPPED_ITEM_SINGLE_PANE = "STATE_HAS_TAPPED_ITEM_SINGLE_PANE"
 
         const val EPISODES_LOADER_ID = 100
         const val EPISODE_LOADER_ID = 101
