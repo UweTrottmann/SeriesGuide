@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -84,6 +85,9 @@ class EpisodesActivity : BaseNavDrawerActivity() {
     private val isListGone: Boolean
         get() = containerList.visibility == View.GONE
 
+    private val isViewingSeason: Boolean
+        get() = intent.hasExtra(EXTRA_SEASON_TVDBID)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_episodes)
@@ -93,8 +97,14 @@ class EpisodesActivity : BaseNavDrawerActivity() {
         // if coming from a notification, set last cleared time
         NotificationService.handleDeleteIntent(this, intent)
 
-        isListVisibleInSinglePaneView = savedInstanceState?.
-            getBoolean(STATE_IS_LIST_VISIBLE) ?: false
+        isListVisibleInSinglePaneView = savedInstanceState?.getBoolean(STATE_IS_LIST_VISIBLE)
+            ?: if (isViewingSeason) {
+                // When coming to view season, check if list is preferred.
+                PreferenceManager.getDefaultSharedPreferences(this)
+                    .getBoolean(PREF_PREFER_LIST_TO_VIEW_SEASON, false)
+            } else {
+                false
+            }
         hasTappedItemInSinglePaneView = savedInstanceState?.
             getBoolean(STATE_HAS_TAPPED_ITEM_SINGLE_PANE) ?: false
 
@@ -293,6 +303,15 @@ class EpisodesActivity : BaseNavDrawerActivity() {
             .registerOnSharedPreferenceChangeListener(onSortOrderChangedListener)
     }
 
+    override fun onPause() {
+        super.onPause()
+        if (isViewingSeason) {
+            PreferenceManager.getDefaultSharedPreferences(this).edit {
+                putBoolean(PREF_PREFER_LIST_TO_VIEW_SEASON, isListVisibleInSinglePaneView)
+            }
+        }
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putBoolean(STATE_IS_LIST_VISIBLE, isListVisibleInSinglePaneView)
@@ -388,8 +407,10 @@ class EpisodesActivity : BaseNavDrawerActivity() {
         /** Either this or [EXTRA_SEASON_TVDBID] is required. */
         const val EXTRA_EPISODE_TVDBID = "episode_tvdbid"
 
-        const val STATE_IS_LIST_VISIBLE = "STATE_IS_LIST_VISIBLE"
-        const val STATE_HAS_TAPPED_ITEM_SINGLE_PANE = "STATE_HAS_TAPPED_ITEM_SINGLE_PANE"
+        private const val PREF_PREFER_LIST_TO_VIEW_SEASON = "com.uwetrottmann.seriesguide.episodes.preferlist"
+
+        private const val STATE_IS_LIST_VISIBLE = "STATE_IS_LIST_VISIBLE"
+        private const val STATE_HAS_TAPPED_ITEM_SINGLE_PANE = "STATE_HAS_TAPPED_ITEM_SINGLE_PANE"
 
         const val EPISODES_LOADER_ID = 100
         const val EPISODE_LOADER_ID = 101
