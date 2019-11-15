@@ -9,6 +9,15 @@ Version 52
 ----------
 *(in development)*
 
+#### 52-beta3
+*(2019-11-15)*
+
+* 🔧 Episode view remembers if season was last viewed as list, goes back to list if page was shown
+  by tapping on list.
+* 🔨 Correctly tint switch view icon on light theme.
+* 🔨 Resolve crash when opening episodes view.
+* 📝 Latest translations from crowdin.
+
 #### 52-beta2
 *(2019-11-08)*
 
