@@ -7,18 +7,14 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
-import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.TmdbDate
-import com.uwetrottmann.trakt5.enums.Extended
 import timber.log.Timber
 import java.util.Calendar
 import java.util.Date
-import java.util.LinkedList
 
 class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveData.Result>() {
 
@@ -59,17 +55,11 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
 
         override fun doInBackground(vararg params: Void?): Result? {
             return if (query.isBlank()) {
-                // no query: load a list of shows with new episodes in the last 7 days
+                // No query: load a list of shows with new episodes in the last 7 days.
                 getShowsWithNewEpisodes()
             } else {
-                // have a query:
-                if (DisplaySettings.LANGUAGE_EN == language) {
-                    // search trakt (has better search) when using English
-                    searchShowsOnTrakt()
-                } else {
-                    // use TheTVDB search for all other (or any) languages
-                    searchShowsOnTvdb()
-                }
+                // Have a query: search using TheTVDB.
+                searchShowsOnTvdb()
             }
         }
 
@@ -151,36 +141,6 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
             }
 
             return buildResultFailure(R.string.tvdb, true)
-        }
-
-        private fun searchShowsOnTrakt(): Result? {
-            val traktSearch = SgApp.getServicesComponent(context).traktSearch()
-
-            val searchResults = SgTrakt.executeCall<List<com.uwetrottmann.trakt5.entities.SearchResult>>(
-                traktSearch.textQueryShow(query,
-                            null, null,
-                            null, null,
-                            null, null, null, null, null,
-                            Extended.FULL,
-                            1, 30),
-                    "search shows"
-            )
-            return if (searchResults != null) {
-                val shows = searchResults
-                        .asSequence()
-                        .filter {
-                            // skip shows without required TVDB id
-                            it.show?.ids?.tvdb != null
-                        }
-                        .mapTo(LinkedList()) { it.show!! }
-
-                // manually set the language to English
-                val results = TraktAddLoader.parseTraktShowsToSearchResults(context,
-                        shows, DisplaySettings.LANGUAGE_EN)
-                buildResultSuccess(results, R.string.no_results, true)
-            } else {
-                buildResultFailure(R.string.trakt, true)
-            }
         }
 
         private fun buildResultSuccess(results: List<SearchResult>?, @StringRes emptyTextResId: Int,
