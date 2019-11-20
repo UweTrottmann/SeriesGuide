@@ -15,7 +15,7 @@ import javax.crypto.spec.SecretKeySpec
 
 object TvdbImageTools {
 
-    private const val TVDB_MIRROR_BANNERS = "https://www.thetvdb.com/banners/"
+    private const val TVDB_MIRROR_BANNERS = "https://artworks.thetvdb.com/banners/"
     const val TVDB_CACHE_PREFIX = "_cache/"
     private var sha256_hmac: Mac? = null
 
