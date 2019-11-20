@@ -339,7 +339,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         ViewTools.setValueOrPlaceholder(genres, TextTools.splitAndKitTVDBStrings(show.genres))
 
         // Poster.
-        TvdbImageTools.loadShowPosterFitCrop(activity, poster, show.poster_small)
+        TvdbImageTools.loadShowPosterFitCrop(activity!!, poster, show.poster_small)
 
         // Enable adding of show, display views.
         buttonPositive.isEnabled = true
