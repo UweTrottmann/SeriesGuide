@@ -67,6 +67,12 @@ android {
         exclude '**/*.kotlin_module'
     }
 
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
     flavorDimensions "flavor"
 
     productFlavors {
@@ -253,6 +259,7 @@ dependencies {
         exclude group: 'org.checkerframework' // from guava, not needed at runtime
         exclude group: 'com.google.errorprone' // from guava, not needed at runtime
     }
+    testImplementation 'org.robolectric:robolectric:4.3'
 
 }
 
