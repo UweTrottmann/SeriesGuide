@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.TmdbDate
@@ -27,11 +26,10 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
 
     private var task: AsyncTask<Void, Void, Result?>? = null
     private var query: String = ""
-    private var language: String = context.getString(R.string.language_code_any)
-    private val languageCodeAny: String by lazy { context.getString(R.string.language_code_any) }
+    private var language: String = context.getString(R.string.show_default_language)
 
     /**
-     * Schedules loading, give two letter ISO 639-1 [language] code or 'xx' meaning any language.
+     * Schedules loading, give two letter ISO 639-1 [language] code.
      * Set [forceLoad] to load new set of results even if language has not changed.
      * Returns if it will load.
      */
@@ -64,7 +62,7 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
         }
 
         private fun getShowsWithNewEpisodes(): Result? {
-            val languageActual = TmdbTools2().getSafeLanguageCode(language, languageCodeAny)
+            val languageActual = language
 
             val tmdb = SgApp.getServicesComponent(context).tmdb()
             val call = tmdb.discoverTv()
@@ -128,12 +126,7 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
             val tvdbTools = SgApp.getServicesComponent(context).tvdbTools()
 
             try {
-                val results = if (language == languageCodeAny) {
-                    // use the v1 API to do an any language search not supported by v2
-                    tvdbTools.searchShow(query, null)
-                } else {
-                    tvdbTools.searchSeries(query, language)
-                }
+                val results = tvdbTools.searchSeries(query, language)
                 SearchTools().markLocalShowsAsAddedAndSetPosterPath(context, results)
                 return buildResultSuccess(results, R.string.no_results, true)
             } catch (e: TvdbException) {

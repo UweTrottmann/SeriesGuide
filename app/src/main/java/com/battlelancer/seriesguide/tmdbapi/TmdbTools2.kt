@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.tmdbapi
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.search.SearchResult
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.tmdb2.entities.BaseTvShow
@@ -73,15 +72,6 @@ class TmdbTools2 {
                     language = languageCode
                 }
             }
-        }
-    }
-
-    fun getSafeLanguageCode(languageCodeOrAny: String, anyCode: String): String {
-        return if (languageCodeOrAny == anyCode) {
-            // TMDB falls back to English if sending 'xx', so set to English beforehand.
-            DisplaySettings.LANGUAGE_EN
-        } else {
-            languageCodeOrAny
         }
     }
 

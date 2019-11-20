@@ -5,11 +5,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
-import android.sax.Element;
-import android.sax.RootElement;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.util.Xml;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
@@ -44,19 +41,10 @@ import com.uwetrottmann.trakt5.enums.IdType;
 import com.uwetrottmann.trakt5.enums.Type;
 import dagger.Lazy;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.SAXException;
 import timber.log.Timber;
 
 /**
@@ -65,19 +53,15 @@ import timber.log.Timber;
  */
 public class TvdbTools {
 
-    private static final String TVDB_API_URL = "https://www.thetvdb.com/api/";
-    private static final String TVDB_API_GETSERIES = TVDB_API_URL + "GetSeries.php?seriesname=";
-    private static final String TVDB_PARAM_LANGUAGE = "&language=";
     private static final String[] LANGUAGE_QUERY_PROJECTION = new String[]{Shows.LANGUAGE};
 
     private final Context context;
-    Lazy<HexagonTools> hexagonTools;
-    Lazy<ShowTools> showTools;
-    Lazy<TheTvdbSearch> tvdbSearch;
-    Lazy<TheTvdbSeries> tvdbSeries;
-    Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch;
-    Lazy<com.uwetrottmann.trakt5.services.Shows> traktShows;
-    Lazy<OkHttpClient> okHttpClient;
+    private Lazy<HexagonTools> hexagonTools;
+    private Lazy<ShowTools> showTools;
+    private Lazy<TheTvdbSearch> tvdbSearch;
+    private Lazy<TheTvdbSeries> tvdbSeries;
+    private Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch;
+    private Lazy<com.uwetrottmann.trakt5.services.Shows> traktShows;
 
     @Inject
     public TvdbTools(
@@ -87,8 +71,7 @@ public class TvdbTools {
             Lazy<TheTvdbSearch> tvdbSearch,
             Lazy<TheTvdbSeries> tvdbSeries,
             Lazy<com.uwetrottmann.trakt5.services.Search> traktSearch,
-            Lazy<com.uwetrottmann.trakt5.services.Shows> traktShows,
-            Lazy<OkHttpClient> okHttpClient
+            Lazy<com.uwetrottmann.trakt5.services.Shows> traktShows
     ) {
         this.context = context;
         this.hexagonTools = hexagonTools;
@@ -97,7 +80,6 @@ public class TvdbTools {
         this.tvdbSeries = tvdbSeries;
         this.traktSearch = traktSearch;
         this.traktShows = traktShows;
-        this.okHttpClient = okHttpClient;
     }
 
     /**
@@ -267,56 +249,6 @@ public class TvdbTools {
             results.add(result);
         }
         return results;
-    }
-
-    /**
-     * Search TheTVDB for shows which include a certain keyword in their title.
-     *
-     * @param language If not provided, will query for results in all languages.
-     * @return At most 100 results (limited by TheTVDB API).
-     */
-    @Nonnull
-    public List<SearchResult> searchShow(@NonNull String query, @Nullable final String language)
-            throws TvdbException {
-        final List<SearchResult> series = new ArrayList<>();
-        final SearchResult currentShow = new SearchResult();
-
-        RootElement root = new RootElement("Data");
-        Element item = root.getChild("Series");
-        // set handlers for elements we want to react to
-        item.setEndElementListener(() -> {
-            // only take results in the selected language
-            if (language == null || language.equals(currentShow.getLanguage())) {
-                series.add(currentShow.copy());
-            }
-        });
-        item.getChild("id").setEndTextElementListener(
-                body -> currentShow.setTvdbid(Integer.valueOf(body)));
-        item.getChild("language").setEndTextElementListener(
-                body -> currentShow.setLanguage(body.trim()));
-        item.getChild("SeriesName").setEndTextElementListener(
-                body -> currentShow.setTitle(body.trim()));
-        item.getChild("Overview").setEndTextElementListener(
-                body -> currentShow.setOverview(body.trim()));
-
-        // build search URL: encode query...
-        String url;
-        try {
-            url = TVDB_API_GETSERIES + URLEncoder.encode(query, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            Errors.logAndReport("searchShow", e);
-            throw new TvdbDataException("searchShow", e);
-        }
-        // ...and set language filter
-        if (language == null) {
-            url += TVDB_PARAM_LANGUAGE + "all";
-        } else {
-            url += TVDB_PARAM_LANGUAGE + language;
-        }
-
-        downloadAndParse(root.getContentHandler(), url);
-
-        return series;
     }
 
     /**
@@ -609,33 +541,5 @@ public class TvdbTools {
         }
         SeriesImageQueryResult image = posters.get(highestRatedIndex);
         return new TvdbPoster(image.fileName, image.thumbnail);
-    }
-
-    /**
-     * Downloads the XML from the given URL, passing a valid response to {@link
-     * Xml#parse(InputStream, android.util.Xml.Encoding, ContentHandler)} using the given {@link
-     * ContentHandler}.
-     */
-    private void downloadAndParse(ContentHandler handler, String urlString) throws TvdbException {
-        Request request = new Request.Builder().url(urlString).build();
-
-        Response response;
-        try {
-            response = okHttpClient.get().newCall(request).execute();
-        } catch (IOException e) {
-            Errors.logAndReport("searchShow", e);
-            throw new TvdbException("searchShow", e);
-        }
-
-        Errors.throwAndReportIfNotSuccessfulTvdb("searchShow", response);
-
-        try {
-            try (InputStream input = response.body().byteStream()) {
-                Xml.parse(input, Xml.Encoding.UTF_8, handler);
-            }
-        } catch (SAXException | IOException | AssertionError e) {
-            Errors.logAndReport("searchShow", e);
-            throw new TvdbDataException("searchShow", e);
-        }
     }
 }

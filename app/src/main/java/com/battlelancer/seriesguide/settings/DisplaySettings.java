@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -78,7 +79,8 @@ public class DisplaySettings {
      */
     public static String getShowsLanguageFallback(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_LANGUAGE_FALLBACK, LANGUAGE_EN);
+                .getString(KEY_LANGUAGE_FALLBACK,
+                        context.getString(R.string.show_default_language));
     }
 
     /**
@@ -107,28 +109,20 @@ public class DisplaySettings {
     }
 
     /**
-     * @return Two letter ISO 639-1 language code of the language the user prefers when searching or
-     * 'xx' if all languages should be searched. Defaults to all languages.
+     * @return Two letter ISO 639-1 language code of the language the user prefers when searching.
+     * Defaults to English.
      */
     public static String getSearchLanguage(Context context) {
-        String languageCode = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_LANGUAGE_SEARCH, context.getString(R.string.language_code_any));
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String languageCode = prefs.getString(KEY_LANGUAGE_SEARCH, null);
+        // For backwards compatibility: change "any language" code to not set.
+        if (languageCode != null
+                && context.getString(R.string.language_code_any).equals(languageCode)) {
+            prefs.edit().remove(KEY_LANGUAGE_SEARCH).apply();
+            languageCode = null;
+        }
         return TextUtils.isEmpty(languageCode)
-                ? context.getString(R.string.language_code_any)
-                : languageCode;
-    }
-
-    /**
-     * @return Two letter ISO 639-1 language code of the language the user prefers when searching or
-     * {@link #getShowsLanguageFallback(Context)} if all languages is selected. Defaults to
-     * {@link #getShowsLanguageFallback(Context)}.
-     */
-    public static String getSearchLanguageOrFallbackIfAny(Context context) {
-        String languageCode = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_LANGUAGE_SEARCH, null);
-        return TextUtils.isEmpty(languageCode)
-                || context.getString(R.string.language_code_any).equals(languageCode)
-                ? getShowsLanguageFallback(context)
+                ? context.getString(R.string.show_default_language)
                 : languageCode;
     }
 
