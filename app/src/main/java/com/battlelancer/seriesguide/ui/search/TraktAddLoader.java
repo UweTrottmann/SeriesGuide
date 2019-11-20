@@ -97,7 +97,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         }
 
         return buildResultSuccess(parseTraktShowsToSearchResults(getContext(), shows,
-                DisplaySettings.getSearchLanguageOrFallbackIfAny(getContext())));
+                DisplaySettings.getSearchLanguage(getContext())));
     }
 
     private void extractShows(List<BaseShow> watchedShows, List<Show> shows) {
