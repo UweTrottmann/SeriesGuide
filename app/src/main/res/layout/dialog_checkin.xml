@@ -82,7 +82,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_padding"
             android:contentDescription="@null"
-            android:src="@drawable/ic_trakt" />
+            android:src="@drawable/ic_trakt_icon_red" />
 
         <Button
             android:id="@+id/buttonCheckIn"
