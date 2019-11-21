@@ -9,6 +9,13 @@ Version 52
 ----------
 *(in development)*
 
+#### 52-beta4
+*(2019-11-21)*
+
+* 🔧 Switch English language show search to the new and improved search by TheTVDB.com.
+* 🔧 Also drop any languages option. Just enter a show title in any language to get a match.
+* 📝 Latest translations from crowdin. Now including Hindi thanks to a new translator!
+
 #### 52-beta3
 *(2019-11-15)*
 
