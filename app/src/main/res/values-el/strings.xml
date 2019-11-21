@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
     <string name="search_hint">Αναζήτηση επεισοδίων</string>
-    <string name="any_language">Οποιαδήποτε γλώσσα</string>
     <!-- Status messages -->
     <string name="updated">Ενημέρωση για την πιο πρόσφατη έκδοση.</string>
     <string name="norating">n/a</string>
@@ -187,7 +186,6 @@
     <string name="add_empty">Δεν υπάρχουν σειρές εδώ.</string>
     <string name="no_results">Κανένα αποτέλεσμα, δοκιμάστε ολόκληρες λέξεις.</string>
     <string name="empty_show_search">Δεν βρέθηκε στη λίστα σειρών σας</string>
-    <string name="action_try_any_language">Δοκιμάστε οποιαδήποτε γλώσσα</string>
     <string name="action_try_again">Δοκιμάσετε πάλι</string>
     <string name="tvdb_error_does_not_exist">Η σειρά δεν υπάρχει (ακόμη) στο TheTVDB. Δοκιμάστε ξανά αργότερα.</string>
     <string name="add_all">Προσθήκη όλων</string>

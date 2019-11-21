@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">נקה את היסטוריית החיפוש</string>
     <string name="search_hint">חפש פרקים</string>
-    <string name="any_language">כל שפה</string>
     <!-- Status messages -->
     <string name="updated">עדכן לגרסה האחרונה.</string>
     <string name="norating">לא ידוע</string>
@@ -195,7 +194,6 @@
     <string name="add_empty">אין סדרות כאן.</string>
     <string name="no_results">אין תוצאות, נסה ביטויים שלמים.</string>
     <string name="empty_show_search">Not found in your show list</string>
-    <string name="action_try_any_language">נסה בכל שפה</string>
     <string name="action_try_again">נסה שוב</string>
     <string name="tvdb_error_does_not_exist">הסדרה אינה קיימת (עדיין) ב-TheTVDB. נסה שוב מאוחר יותר.</string>
     <string name="add_all">הוסף הכל</string>

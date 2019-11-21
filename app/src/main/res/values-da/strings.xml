@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Ryd søgehistorik</string>
     <string name="search_hint">Søg episoder</string>
-    <string name="any_language">Ethvert sprog</string>
     <!-- Status messages -->
     <string name="updated">Opdateret til nyeste version.</string>
     <string name="norating">ikke tilgængelig</string>
@@ -187,7 +186,6 @@
     <string name="add_empty">Der er ingen serier her.</string>
     <string name="no_results">Ingen resultater. Angiv fuldstændige ord.</string>
     <string name="empty_show_search">Ikke fundet i din serieliste</string>
-    <string name="action_try_any_language">Prøv ethvert sprog</string>
     <string name="action_try_again">Prøv igen</string>
     <string name="tvdb_error_does_not_exist">Serien findes ikke på TheTVDB (endnu). Prøv igen senere.</string>
     <string name="add_all">Tilføj alle</string>

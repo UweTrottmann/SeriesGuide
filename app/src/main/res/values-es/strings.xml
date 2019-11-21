@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Limpiar historial de búsqueda</string>
     <string name="search_hint">Buscar episodios</string>
-    <string name="any_language">Cualquier idioma</string>
     <!-- Status messages -->
     <string name="updated">Actualizado a la última versión.</string>
     <string name="norating">n/a</string>
@@ -187,7 +186,6 @@
     <string name="add_empty">No hay series.</string>
     <string name="no_results">No hay resultados, pruebe con palabras completas.</string>
     <string name="empty_show_search">No encontrado en tu lista de visualización</string>
-    <string name="action_try_any_language">Proponer cualquier idioma</string>
     <string name="action_try_again">Intentar de nuevo</string>
     <string name="tvdb_error_does_not_exist">El show no existe (aún) en TheTVDB. Intenta más tarde.</string>
     <string name="add_all">Añadir todo</string>

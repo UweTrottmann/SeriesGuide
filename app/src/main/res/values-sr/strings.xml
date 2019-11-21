@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Обриши историју претраге</string>
     <string name="search_hint">Тражи епизоде</string>
-    <string name="any_language">Било који језик</string>
     <!-- Status messages -->
     <string name="updated">Ажурирано на последњу верзију.</string>
     <string name="norating">непознато</string>
@@ -191,7 +190,6 @@
     <string name="add_empty">Овде нема серија.</string>
     <string name="no_results">Нема резултата, покушајте са целим речима.</string>
     <string name="empty_show_search">Nije prenađeno u vašoj show listi</string>
-    <string name="action_try_any_language">Покушајте било који језик</string>
     <string name="action_try_again">Поушајте поново</string>
     <string name="tvdb_error_does_not_exist">Šou ne postoji (još uvek) na TheTVDB. Pokušajte kasnije.</string>
     <string name="add_all">Додај све</string>

@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Bersihkan riwayat pencarian</string>
     <string name="search_hint">Cari episode</string>
-    <string name="any_language">Bahasa apapun</string>
     <!-- Status messages -->
     <string name="updated">Diperbarui ke versi terbaru.</string>
     <string name="norating">n/a</string>
@@ -183,7 +182,6 @@
     <string name="add_empty">Tidak ada acara disini.</string>
     <string name="no_results">Tidak ada hasil, coba kata-kata lengkap.</string>
     <string name="empty_show_search">Tidak ditemukan di daftar acara anda</string>
-    <string name="action_try_any_language">Coba bahasa apa saja</string>
     <string name="action_try_again">Coba lagi</string>
     <string name="tvdb_error_does_not_exist">Acara tidak (belum) ada di TheTVDB. Coba lagi nanti.</string>
     <string name="add_all">Tambah semua</string>

@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Ștergere istoric căutare</string>
     <string name="search_hint">Căutaţi episoade</string>
-    <string name="any_language">Orice limbă</string>
     <!-- Status messages -->
     <string name="updated">Actualizat la ultima versiune.</string>
     <string name="norating">n/a</string>
@@ -191,7 +190,6 @@
     <string name="add_empty">Nu există emisiuni aici.</string>
     <string name="no_results">Nici un rezultat, încercaţi folosind cuvinte întregi.</string>
     <string name="empty_show_search">Nu a fost găsit in lista de dumneavoastră de showuri</string>
-    <string name="action_try_any_language">Încearcă orice limbă</string>
     <string name="action_try_again">Încearcă din nou</string>
     <string name="tvdb_error_does_not_exist">Acest serial nu există (încă) pe TheTVDB. Încercați mai târziu.</string>
     <string name="add_all">Adaugă-le pe toate</string>

@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Tyhjennä hakuhistoria</string>
     <string name="search_hint">Hae jaksoja</string>
-    <string name="any_language">Millä tahansa kielellä</string>
     <!-- Status messages -->
     <string name="updated">Päivitetty viimeisimpään versioon.</string>
     <string name="norating">puuttuu</string>
@@ -187,7 +186,6 @@
     <string name="add_empty">Ei ole yhtään ohjelmaa näytettävänä.</string>
     <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
     <string name="empty_show_search">Ei löytynyt ohjelmalistasta</string>
-    <string name="action_try_any_language">Kokeile mitä tahansa kieltä</string>
     <string name="action_try_again">Yritä uudelleen</string>
     <string name="tvdb_error_does_not_exist">Ohjelma ei ole (vielä) TheTVDB:ssä. Yritä myöhemmin uudelleen.</string>
     <string name="add_all">Lisää kaikki</string>

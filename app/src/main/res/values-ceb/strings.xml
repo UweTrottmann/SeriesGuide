@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Clear search history</string>
     <string name="search_hint">Search episodes</string>
-    <string name="any_language">Any language</string>
     <!-- Status messages -->
     <string name="updated">Updated to latest version</string>
     <string name="norating">n/a</string>
@@ -187,7 +186,6 @@
     <string name="add_empty">There are no shows here</string>
     <string name="no_results">No results, try complete words</string>
     <string name="empty_show_search">Not found in your show list</string>
-    <string name="action_try_any_language">Try any language</string>
     <string name="action_try_again">Try again</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
     <string name="add_all">Add all</string>

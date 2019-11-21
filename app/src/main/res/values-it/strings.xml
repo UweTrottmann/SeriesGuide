@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Cancella la cronologia di ricerca</string>
     <string name="search_hint">Cerca episodi</string>
-    <string name="any_language">Qualsiasi lingua</string>
     <!-- Status messages -->
     <string name="updated">Aggiornato all\'ultima versione.</string>
     <string name="norating">non disponibile</string>
@@ -187,7 +186,6 @@
     <string name="add_empty">Non ci sono serie qui.</string>
     <string name="no_results">Nessun risultato, prova parole complete.</string>
     <string name="empty_show_search">Non presente nella lista delle tue serie</string>
-    <string name="action_try_any_language">Prova in altre lingue</string>
     <string name="action_try_again">Riprova</string>
     <string name="tvdb_error_does_not_exist">La serie non esiste (ancora) su TheTVDB. Riprova più tardi.</string>
     <string name="add_all">Aggiungi tutto</string>
