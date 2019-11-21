@@ -12,6 +12,7 @@ import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.util.ViewTools
 
 class ShowsDiscoverAdapter(
         private val context: Context,
@@ -115,6 +116,18 @@ class ShowsDiscoverAdapter(
             is LinkViewHolder -> {
                 holder.link = links[position]
                 holder.title.text = context.getString(holder.link.titleRes)
+                // Add Trakt icon to highlight Trakt profile specific links.
+                if (holder.link != TraktShowsLink.POPULAR) {
+                    ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        holder.title,
+                        holder.title.context.getDrawable(R.drawable.ic_trakt_icon_primary),
+                        null,
+                        null,
+                        null
+                    )
+                } else {
+                    holder.title.setCompoundDrawables(null, null, null, null)
+                }
             }
             is HeaderViewHolder -> {
                 holder.header.setText(R.string.title_new_episodes)
