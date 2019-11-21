@@ -106,7 +106,7 @@
     <!-- Flagging -->
     <string name="mark_all">Oznacz jako obejrzane</string>
     <string name="unmark_all">Oznacz jako nieobejrzane</string>
-    <string name="action_watched_up_to">Watched up to here</string>
+    <string name="action_watched_up_to">Już obejrzane</string>
     <string name="collect_all">Wszystkie zebrane</string>
     <string name="uncollect_all">Brak zebranych</string>
     <string name="action_skip">Pomiń</string>
@@ -150,7 +150,7 @@
     <string name="action_shows_sort_favorites">Najpierw ulubione</string>
     <string name="context_updateshow">Aktualizuj</string>
     <string name="context_marknext">Odcinek obejrzany</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Przełącz widok</string>
     <!-- History -->
     <string name="user_stream">Historia</string>
     <string name="recently_watched">Niedawno obejrzane</string>
@@ -168,7 +168,7 @@
     <string name="calendar_settings">Ustawienia kalendarza</string>
     <string name="only_favorites">Tylko ulubione seriale</string>
     <string name="calendar_only_collected">Tylko odcinki w kolekcji</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">Tylko premierowe</string>
     <string name="pref_infinite_scrolling">Cały kalendarz</string>
     <!-- Updating -->
     <string name="update_scheduled">Aktualizowanie&#8230;</string>

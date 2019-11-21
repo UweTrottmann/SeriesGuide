@@ -147,7 +147,7 @@
     <string name="action_shows_sort_favorites">お気に入りを先頭に</string>
     <string name="context_updateshow">更新</string>
     <string name="context_marknext">視聴済次のエピソード</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">表示切替</string>
     <!-- History -->
     <string name="user_stream">履歴</string>
     <string name="recently_watched">最近観た作品</string>

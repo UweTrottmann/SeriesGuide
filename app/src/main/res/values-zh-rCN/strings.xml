@@ -147,7 +147,7 @@
     <string name="action_shows_sort_favorites">依据喜爱状态</string>
     <string name="context_updateshow">更新</string>
     <string name="context_marknext">标记本集为已观看</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">切换视图</string>
     <!-- History -->
     <string name="user_stream">历史记录</string>
     <string name="recently_watched">最近观看</string>
@@ -357,8 +357,8 @@
     <!-- About screen -->
     <string name="privacy_policy">隐私策略</string>
     <string name="licence_tvdb">此应用程序所使用的数据和图像由 TheTVDB 通过知识共享许可证授权提供。</string>
-    <string name="licence_themoviedb">此应用程序使用了 TMDb 应用程序接口，但与 TMDb 并无关联，且没有获得 TMDb 认证。</string>
-    <string name="licence_trakt">此应用程序使用了来自 trakt 的数据和图片。</string>
+    <string name="licence_themoviedb">此应用程序使用了 TMDb 的接口，但未被 TMDb 认可或认证。</string>
+    <string name="licence_trakt">此应用程序使用了 trakt 的数据和图像。</string>
     <string name="about_open_source">SeriesGuide 是采用开放源码软件编写的。</string>
     <string name="licences_and_credits">许可证与信用</string>
     <!-- Sort -->
