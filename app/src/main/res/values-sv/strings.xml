@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
     <string name="search_hint">Sök avsnitt</string>
-    <string name="any_language">Alla språk</string>
     <!-- Status messages -->
     <string name="updated">Uppdaterad till senaste versionen</string>
     <string name="norating">saknas</string>
@@ -191,7 +190,6 @@
     <string name="add_empty">Det finns inga serier här.</string>
     <string name="no_results">Inga resultat, försök med hela ord.</string>
     <string name="empty_show_search">Hittades inte i din serielista</string>
-    <string name="action_try_any_language">Testa alla språk</string>
     <string name="action_try_again">Försök igen</string>
     <string name="tvdb_error_does_not_exist">Serien finns inte (ännu) på TheTVDB. Försök igen senare.</string>
     <string name="add_all">Lägg till alla</string>

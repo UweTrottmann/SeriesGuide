@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>
-    <string name="any_language">Qualsevol idioma</string>
     <!-- Status messages -->
     <string name="updated">S\'ha actualitzat a la darrera versió.</string>
     <string name="norating">cap</string>
@@ -191,7 +190,6 @@
     <string name="add_empty">Aquí no hi ha series.</string>
     <string name="no_results">Cap resultat, proveu paraules senceres.</string>
     <string name="empty_show_search">No es troba a la llista</string>
-    <string name="action_try_any_language">Prova qualsevol idioma</string>
     <string name="action_try_again">Torneu-ho a intentar</string>
     <string name="tvdb_error_does_not_exist">La sèrie no existeix (encara) a TheTVDB. Torna-ho a intentar més tard.</string>
     <string name="add_all">Afegeix-ho tot</string>

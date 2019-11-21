@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Arama geçmişini temizle</string>
     <string name="search_hint">Bölüm ara</string>
-    <string name="any_language">Herhangi bir dil</string>
     <!-- Status messages -->
     <string name="updated">En son sürüme güncellendi.</string>
     <string name="norating">Geçersiz</string>
@@ -191,7 +190,6 @@
     <string name="add_empty">Burada dizi yok.</string>
     <string name="no_results">Sonuç bulunamadı, tam sözcüklerle deneyin.</string>
     <string name="empty_show_search">Listenizde bulunamadı</string>
-    <string name="action_try_any_language">Herhangi bir dil deneyin</string>
     <string name="action_try_again">Yeniden deneyin</string>
     <string name="tvdb_error_does_not_exist">TheTVDB üzerinde bu dizi/film (şimdilik) bulunamadı. Daha sonra tekrar deneyin.</string>
     <string name="add_all">Tümünü ekle</string>
