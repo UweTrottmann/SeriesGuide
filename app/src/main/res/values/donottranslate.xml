@@ -6,12 +6,12 @@
     <string name="imdb">IMDb</string>
     <string name="tvdb">TheTVDB</string>
     <string name="tmdb">TMDb</string>
-    <string name="trakt">trakt</string>
-    <string name="ontrakt">(trakt)</string>
+    <string name="trakt">Trakt</string>
+    <string name="ontrakt">(Trakt)</string>
     <string name="amazon">Amazon</string>
     <string name="google_play">Google Play</string>
     <string name="powered_by_ttt">powered by TMDb, TheTVDB.com</string>
-    <string name="powered_by_trakt">powered by trakt</string>
+    <string name="powered_by_trakt">powered by Trakt</string>
     <string name="powered_by_tmdb">powered by TMDb</string>
     <string name="placeholder_rating">--</string>
     <string name="rating_number_text_format">%1$d - %2$s</string>
@@ -44,7 +44,7 @@
     <string name="tvdb_terms">TheTVDB terms</string>
     <string name="tmdb_terms">TMDb terms</string>
     <string name="tmdb_api_terms">TMDb API terms</string>
-    <string name="trakt_terms">trakt terms</string>
+    <string name="trakt_terms">Trakt terms</string>
 
     <!-- Google Play links -->
     <string name="url_store_page">https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide</string>

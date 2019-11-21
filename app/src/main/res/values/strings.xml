@@ -164,11 +164,11 @@
     <!-- History -->
     <string name="user_stream">History</string>
     <string name="recently_watched">Recently watched</string>
-    <string name="friends_recently">Your trakt friends</string>
+    <string name="friends_recently">Your Trakt friends</string>
     <string name="now_empty">Nothing going on. Watch some shows!</string>
     <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
-    <string name="user_stream_empty">No history on trakt. Watch and check into some shows!</string>
-    <string name="user_movie_stream_empty">No history on trakt. Watch and check into some movies!</string>
+    <string name="user_stream_empty">No history on Trakt. Watch and check into some shows!</string>
+    <string name="user_movie_stream_empty">No history on Trakt. Watch and check into some movies!</string>
 
     <!-- Calendar -->
     <string name="upcoming">Upcoming</string>
@@ -301,7 +301,7 @@
     <!-- Hexagon -->
     <string name="hexagon_warning">Experimental</string>
     <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">Sign In</string>
     <string name="hexagon_signout">Sign Out</string>
     <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed</string>
@@ -315,28 +315,28 @@
     <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
 
     <!-- trakt -->
-    <string name="trakt_submitqueued">Sending to trakt.</string>
-    <string name="checkin_success_trakt">Checked into %s on trakt</string>
-    <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt</string>
+    <string name="trakt_submitqueued">Sending to Trakt.</string>
+    <string name="checkin_success_trakt">Checked into %s on Trakt</string>
+    <string name="checkin_canceled_success_trakt">Cancelled check-in on Trakt</string>
     <string name="traktcheckin_cancel">Override</string>
     <string name="traktcheckin_inprogress">You are already checked in. Override the check-in or wait %s and try again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
-    <string name="trakt_success">Sent to trakt</string>
-    <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
-    <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-    <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt</string>
+    <string name="trakt_success">Sent to Trakt</string>
+    <string name="trakt_error_credentials">Something went wrong. Check your Trakt credentials and try again.</string>
+    <string name="trakt_error_not_exists">Not (yet) available on Trakt. Try again later.</string>
+    <string name="trakt_notice_not_exists">Can not (yet) be tracked with Trakt</string>
 
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt account</string>
-    <string name="connect_trakt">Connect trakt</string>
-    <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
-    <string name="trakt_reconnect_details">Check your trakt credentials</string>
+    <string name="trakt_account">Trakt account</string>
+    <string name="connect_trakt">Connect Trakt</string>
+    <string name="trakt_reconnect">Connect SeriesGuide to Trakt</string>
+    <string name="trakt_reconnect_details">Check your Trakt credentials</string>
     <string name="waitplease">A moment, please…</string>
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
     <string name="use_integrated_browser">Use integrated browser</string>
-    <string name="show_library">Show your trakt library</string>
-    <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
+    <string name="show_library">Show your Trakt library</string>
+    <string name="about_trakt">Trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
 
     <!-- trakt ratings -->
     <string name="action_rate">Rate</string>
@@ -407,7 +407,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
-    <string name="licence_trakt">This app uses data and images by trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide is built using open source software.</string>
     <string name="licences_and_credits">Licences and credits</string>
 
