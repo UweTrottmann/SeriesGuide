@@ -14,6 +14,7 @@ Version 52
 
 * 🔧 Switch English language show search to the new and improved search by TheTVDB.com.
 * 🔧 Also drop any languages option. Just enter a show title in any language to get a match.
+* 🔧 Discover: add Trakt logo to links connected to current Trakt profile.
 * 📝 Latest translations from crowdin. Now including Hindi thanks to a new translator!
 
 #### 52-beta3
