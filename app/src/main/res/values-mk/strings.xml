@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Избриши историја на пребарување</string>
     <string name="search_hint">Пребарај епизоди</string>
-    <string name="any_language">Некoј јaзик</string>
     <!-- Status messages -->
     <string name="updated">Обнови во најнова верзија.</string>
     <string name="norating">Непознато</string>
@@ -191,7 +190,6 @@
     <string name="add_empty">Овде нема серија.</string>
     <string name="no_results">Нема резултати, обидете се со целосни зборови.</string>
     <string name="empty_show_search">Не е пронајдено во твојата прикажи листа</string>
-    <string name="action_try_any_language">Прoбaј билo кoј јaзик</string>
     <string name="action_try_again">Прoбaј пoвтoрнo</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
     <string name="add_all">Додај се</string>

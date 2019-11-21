@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
     <string name="search_hint">Szukaj odcinków</string>
-    <string name="any_language">Dowolny język</string>
     <!-- Status messages -->
     <string name="updated">Zaktualizowano do najnowszej wersji.</string>
     <string name="norating">brak danych</string>
@@ -199,7 +198,6 @@
     <string name="add_empty">Brak seriali.</string>
     <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
     <string name="empty_show_search">Nie znaleziono na liście seriali</string>
-    <string name="action_try_any_language">Szukaj w innych językach</string>
     <string name="action_try_again">Spróbuj ponownie</string>
     <string name="tvdb_error_does_not_exist">Serial nie istnieje (jeszcze) w TVDB. Spróbuj ponownie później.</string>
     <string name="add_all">Dodaj wszystkie</string>

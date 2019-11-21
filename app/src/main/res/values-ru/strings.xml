@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Очистить историю поиска</string>
     <string name="search_hint">Поиск эпизодов</string>
-    <string name="any_language">Любой язык</string>
     <!-- Status messages -->
     <string name="updated">Обновлено до последней версии.</string>
     <string name="norating">нет данных</string>
@@ -199,7 +198,6 @@
     <string name="add_empty">Здесь нет сериалов.</string>
     <string name="no_results">Результатов нет, попробуйте полное название.</string>
     <string name="empty_show_search">Не найдено в вашем списке</string>
-    <string name="action_try_any_language">Попробовать любой язык</string>
     <string name="action_try_again">Повторить попытку</string>
     <string name="tvdb_error_does_not_exist">Сериала не существует (пока) на TheTVDB. Попробуйте позже.</string>
     <string name="add_all">Добавить все</string>

@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Očisti povijest pretraživanja</string>
     <string name="search_hint">Pretraži epizode</string>
-    <string name="any_language">Bilo koji jezik</string>
     <!-- Status messages -->
     <string name="updated">Ažurirano u najnoviju verziju.</string>
     <string name="norating">nedostupno</string>
@@ -195,7 +194,6 @@
     <string name="add_empty">Ovdje ne postoje serije.</string>
     <string name="no_results">Nema rezultata, pokušajte cijele riječi.</string>
     <string name="empty_show_search">Nije pronađeno u vašem popisu serija</string>
-    <string name="action_try_any_language">Pokušajte bilo koji jezik</string>
     <string name="action_try_again">Pokušaj ponovno</string>
     <string name="tvdb_error_does_not_exist">Serija (još) ne postoji na TheTVDB. Pokušajte ponovno kasnije.</string>
     <string name="add_all">Dodaj sve</string>

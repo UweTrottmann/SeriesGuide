@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Izbriši zgodovino iskanja</string>
     <string name="search_hint">Iskanje epizode</string>
-    <string name="any_language">Katerikoli jezik</string>
     <!-- Status messages -->
     <string name="updated">Posodobljeno na najnovejšo verzijo.</string>
     <string name="norating">n/a</string>
@@ -199,7 +198,6 @@
     <string name="add_empty">Tukaj ni nobene oddaje.</string>
     <string name="no_results">Ni zadetkov. Poizkusi s celimi besedami.</string>
     <string name="empty_show_search">Not found in your show list</string>
-    <string name="action_try_any_language">Try any language</string>
     <string name="action_try_again">Try again</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
     <string name="add_all">Dodaj vse</string>

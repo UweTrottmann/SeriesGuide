@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Очистити історію пошуку</string>
     <string name="search_hint">Пошук серій</string>
-    <string name="any_language">Будь-яка мова</string>
     <!-- Status messages -->
     <string name="updated">Оновлено до останньої версії.</string>
     <string name="norating">Немає даних</string>
@@ -199,7 +198,6 @@
     <string name="add_empty">Тут немає жодного серіалу.</string>
     <string name="no_results">Немає результатів, спробуйте завершити слова.</string>
     <string name="empty_show_search">Не знайдено у вашому списку серіалів</string>
-    <string name="action_try_any_language">Виберіть будь-яку мову</string>
     <string name="action_try_again">Спробувати ще раз</string>
     <string name="tvdb_error_does_not_exist">Цей серіал відсутній (покищо) на TheTVDB. Спробуйте пізніше.</string>
     <string name="add_all">Додати усі</string>

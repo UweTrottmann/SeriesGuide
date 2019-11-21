@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Vymazat historii vyhledávání</string>
     <string name="search_hint">Hledat v epizodách</string>
-    <string name="any_language">Jakýkoliv jazyk</string>
     <!-- Status messages -->
     <string name="updated">Aktualizováno na nejnovější verzi.</string>
     <string name="norating">n/a</string>
@@ -199,7 +198,6 @@
     <string name="add_empty">Nejsou zde žádné seriály.</string>
     <string name="no_results">Bez výsledku, zkuste celá slova.</string>
     <string name="empty_show_search">Not found in your show list</string>
-    <string name="action_try_any_language">Zkuste jiný jazyk</string>
     <string name="action_try_again">Zkusit znovu</string>
     <string name="tvdb_error_does_not_exist">Tento seriál neexistuje (zatím) na TheTVDB. Zkuste prosím později.</string>
     <string name="add_all">Přidat vše</string>
