@@ -26,10 +26,7 @@
             app:summary="@string/pref_nospoilers_summary"
             app:title="@string/pref_nospoilers" />
 
-        <ListPreference
-            app:defaultValue="@string/show_default_language"
-            app:entries="@array/languagesShows"
-            app:entryValues="@array/languageCodesShows"
+        <Preference
             app:iconSpaceReserved="false"
             app:key="com.battlelancer.seriesguide.languageFallback"
             app:title="@string/pref_language_fallback" />
