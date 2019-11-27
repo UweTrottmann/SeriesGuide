@@ -104,31 +104,6 @@
 
     <!-- Content languages -->
     <string name="show_default_language">en</string>
-    <string-array name="languagesShows">
-        <item>English</item>
-        <item>čeština</item>
-        <item>Dansk</item>
-        <item>Deutsch</item>
-        <item>Ελληνικά</item>
-        <item>Español</item>
-        <item>Français</item>
-        <item>Hrvatski</item>
-        <item>Italiano</item>
-        <item>Magyar</item>
-        <item>Nederlands</item>
-        <item>Norsk</item>
-        <item>Polski</item>
-        <item>русский язык</item>
-        <item>Português</item>
-        <item>Slovenski</item>
-        <item>Suomeksi</item>
-        <item>Svenska</item>
-        <item>Türkçe</item>
-        <item>한국어 (Korean)</item>
-        <item>中文 (Chinese)</item>
-        <item> עברית</item>
-        <item>日本語 (Japanese)</item>
-    </string-array>
     <string-array name="languageCodesShows">
         <item>@string/show_default_language</item>
         <item>cs</item>
