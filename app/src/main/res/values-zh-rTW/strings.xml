@@ -265,7 +265,7 @@
     <!-- Hexagon -->
     <string name="hexagon_warning">實驗性</string>
     <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">登入</string>
     <string name="hexagon_signout">登出</string>
     <string name="hexagon_setup_incomplete">SeriesGuide Cloud未完成設置。</string>
@@ -356,7 +356,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">此應用程式使用基於 CC BY-NC 4.0 許可的 TheTVDB 提供的資料和圖像。</string>
     <string name="licence_themoviedb">此應用程式使用 TMDb 的 API ，但未被 TMDb 認可或認證。</string>
-    <string name="licence_trakt">此應用程式使用 trakt 的資料和圖像。</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide 是採用開放源碼軟體。</string>
     <string name="licences_and_credits">憑證及信用</string>
     <!-- Sort -->

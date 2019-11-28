@@ -367,7 +367,7 @@
     <string name="privacy_policy">Sekretesspolicy</string>
     <string name="licence_tvdb">Denna app använder data och avbildningar av TheTVDB licensierat under en Creative Commons-licens.</string>
     <string name="licence_themoviedb">Denna produkt använder TMDb:s API men är inte stödd eller certifierad av TMDb.</string>
-    <string name="licence_trakt">Den här appen använder data och bilder från trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide är byggt med öppen källkod.</string>
     <string name="licences_and_credits">Licenser och tillkännagivanden</string>
     <!-- Sort -->

@@ -286,7 +286,7 @@
     <!-- Hexagon -->
     <string name="hexagon_warning">Eksperimentinis</string>
     <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">Prisijungti</string>
     <string name="hexagon_signout">Atsijungti</string>
     <string name="hexagon_setup_incomplete">SeriesGuide Cloud nustatymas nebuvo baigtas.</string>
@@ -306,9 +306,9 @@
     <string name="traktcheckin_inprogress">You are already checked in. Override the check-in or wait %s and try again.</string>
     <string name="traktcheckin_wait">Palauksiu</string>
     <string name="trakt_success">Nusiųsta į trakt.</string>
-    <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
-    <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-    <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt</string>
+    <string name="trakt_error_credentials">Something went wrong. Check your Trakt credentials and try again.</string>
+    <string name="trakt_error_not_exists">Not (yet) available on Trakt. Try again later.</string>
+    <string name="trakt_notice_not_exists">Can not (yet) be tracked with Trakt</string>
     <!-- Connect trakt -->
     <string name="trakt_account">trakt paskyra</string>
     <string name="connect_trakt">Prisijungti prie trakt</string>
@@ -319,7 +319,7 @@
     <string name="disconnect">Atsijungti</string>
     <string name="use_integrated_browser">Use integrated browser</string>
     <string name="show_library">Rodyti biblioteką</string>
-    <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
+    <string name="about_trakt">Trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Įvertinti</string>
     <string name="your_rating">Jūsų reitingas</string>
@@ -389,7 +389,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
-    <string name="licence_trakt">This app uses data and images by trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide is built using open source software.</string>
     <string name="licences_and_credits">Licences and credits</string>
     <!-- Sort -->

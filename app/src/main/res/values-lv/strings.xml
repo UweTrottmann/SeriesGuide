@@ -279,7 +279,7 @@
     <!-- Hexagon -->
     <string name="hexagon_warning">Experimental</string>
     <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">Ielogojies</string>
     <string name="hexagon_signout">Izlogoties</string>
     <string name="hexagon_setup_incomplete">SeriesGuide mākoņa uzstādīšana netika pabeigta.</string>
@@ -298,15 +298,15 @@
     <string name="traktcheckin_cancel">Pārraksti</string>
     <string name="traktcheckin_inprogress">Tu jau esi iečekojies citā epizodē vai filmā. Pārraksti savu iepriekšējo izvēli vai arī gaidi %s un mēģini vēlreiz.</string>
     <string name="traktcheckin_wait">Es gaidīšu</string>
-    <string name="trakt_success">Sent to trakt</string>
+    <string name="trakt_success">Sent to Trakt</string>
     <string name="trakt_error_credentials">Kaut kas izgāzās. Lūdzu pārbaudi savus datus un mēģini vēlreiz.</string>
-    <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-    <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt</string>
+    <string name="trakt_error_not_exists">Not (yet) available on Trakt. Try again later.</string>
+    <string name="trakt_notice_not_exists">Can not (yet) be tracked with Trakt</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt account</string>
+    <string name="trakt_account">Trakt account</string>
     <string name="connect_trakt">Savieno trakt</string>
-    <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
-    <string name="trakt_reconnect_details">Check your trakt credentials</string>
+    <string name="trakt_reconnect">Connect SeriesGuide to Trakt</string>
+    <string name="trakt_reconnect_details">Check your Trakt credentials</string>
     <string name="waitplease">Vienu momentu, lūdzu&#8230;</string>
     <string name="connect">Savienot</string>
     <string name="disconnect">Atvienot</string>
@@ -378,7 +378,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
-    <string name="licence_trakt">This app uses data and images by trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide is built using open source software.</string>
     <string name="licences_and_credits">Licences and credits</string>
     <!-- Sort -->

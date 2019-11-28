@@ -147,7 +147,7 @@
     <string name="action_shows_sort_favorites">Favoritos primero</string>
     <string name="context_updateshow">Actualizar</string>
     <string name="context_marknext">Siguiente episodio visto</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Cambiar vista</string>
     <!-- History -->
     <string name="user_stream">Historial</string>
     <string name="recently_watched">Vistas recientemente</string>
@@ -165,7 +165,7 @@
     <string name="calendar_settings">ajustes del calendario</string>
     <string name="only_favorites">Solo series favoritas</string>
     <string name="calendar_only_collected">Solo episodios coleccionados</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">Estrenos</string>
     <string name="pref_infinite_scrolling">Calendario infinito</string>
     <!-- Updating -->
     <string name="update_scheduled">Actualizando&#8230;</string>
@@ -203,8 +203,8 @@
     <string name="shows_collection">Colección</string>
     <string name="watchlist">Lista de visualización</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">Sin resultados</string>
+    <string name="title_similar_shows">Series parecidas</string>
     <!-- Lists -->
     <string name="first_list">Primera lista</string>
     <string name="list_add">Añadir lista</string>
@@ -368,7 +368,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="privacy_policy">Política de privacidad</string>
     <string name="licence_tvdb">Esta aplicación utiliza datos e imágenes de TheTVDB bajo una licencia Creative Commons.</string>
     <string name="licence_themoviedb">Este producto utiliza la API de TMDb pero no está patrocinado ni certificado por TMDb.</string>
-    <string name="licence_trakt">Esta aplicación utiliza datos e imágenes de trakt.</string>
+    <string name="licence_trakt">Esta aplicación utiliza información e imágenes de Trakt.</string>
     <string name="about_open_source">SeriesGuide fue desarrollado usando software de código abierto.</string>
     <string name="licences_and_credits">Licencias y créditos</string>
     <!-- Sort -->

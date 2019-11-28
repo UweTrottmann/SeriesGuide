@@ -367,7 +367,7 @@
     <string name="privacy_policy">Adatvédelmi irányelvek</string>
     <string name="licence_tvdb">Ez az alkalmazás a TheTVDB, Creative Commons licenc alatt álló adatait és képeit használja.</string>
     <string name="licence_themoviedb">Ez a termék a TMDb API-t használja, de a TMDb hozzájárulása vagy minősítése nélkül.</string>
-    <string name="licence_trakt">Ez az applikáció a trakt adatait és képeit használja.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">A SeriesGuide nyílt forráskódú szoftverek használatával készül.</string>
     <string name="licences_and_credits">Engedélyek és készítők listája</string>
     <!-- Sort -->

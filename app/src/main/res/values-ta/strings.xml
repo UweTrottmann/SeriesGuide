@@ -272,7 +272,7 @@
     <!-- Hexagon -->
     <string name="hexagon_warning">பசோதனை</string>
     <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">உள்நுழைக</string>
     <string name="hexagon_signout">வெளியில் செல்லவும்</string>
     <string name="hexagon_setup_incomplete">SeriesGuide மேகம் அமைக்கிறது நிறைவடையவில்லை.</string>
@@ -367,7 +367,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">இந்த தயாரிப்பு TMDb API பயன்படுத்தும் ஆனால் இல்லை endorsed அல்லது TMDb மூலம் சான்றிதழ்.</string>
-    <string name="licence_trakt">இந்த பயன்பாட்டு பயன்படுத்தும் தரவு மற்றும் படிமங்கள் மூலம் trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">திறந்த மூல மென்பொருள் பயன்படுத்தி SeriesGuide இயக்கத்தினர் உள்ளது.</string>
     <string name="licences_and_credits">உரிமம் மற்றும் கிரெடிட்கள்</string>
     <!-- Sort -->

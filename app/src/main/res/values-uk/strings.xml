@@ -389,7 +389,7 @@
     <string name="privacy_policy">Політика приватності</string>
     <string name="licence_tvdb">Ця програма використовує дані та зображення з TheTVDB під ліцензією Creative Commons license.</string>
     <string name="licence_themoviedb">Цей продукт використовує TMDb API, але не підтримуваний та сертифікований TMDb.</string>
-    <string name="licence_trakt">Ця програма використовує дані та зображення сервісу trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide створена з використанням відкритого вихідного коду.</string>
     <string name="licences_and_credits">Ліцензії та кредити</string>
     <!-- Sort -->
