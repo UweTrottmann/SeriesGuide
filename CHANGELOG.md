@@ -9,6 +9,13 @@ Version 52
 ----------
 *(in development)*
 
+#### 52-beta5
+*(2019-11-28)*
+
+* 🔧 Add new languages supported by TheTVDB.com.
+* 📝 Add more translations of the new description on Play Store. Thanks to all translators!
+* 📝 Latest translations from crowdin.
+
 #### 52-beta4
 *(2019-11-21)*
 
