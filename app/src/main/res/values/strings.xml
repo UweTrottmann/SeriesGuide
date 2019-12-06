@@ -458,8 +458,8 @@
     <string name="pref_number">Number format</string>
     <string name="pref_offset">Manual time offset</string>
     <string name="pref_offsetsummary">Offset air times by %d hours</string>
-    <string name="clear_cache">Clear image caches</string>
-    <string name="clear_cache_summary">Remove all cached images from your device</string>
+    <string name="clear_cache">Clear cache</string>
+    <string name="clear_cache_summary">Go to storage settings to remove cached images and network responses</string>
 
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Include descriptions, details, ratings</string>
