@@ -7,7 +7,18 @@ All dates are in the European Central timezone.
 
 Version 52
 ----------
-*(in development)*
+*(2019-12-05)*
+
+* 🌟 Calendar: add option to only display premieres.
+* 🔧 Episodes: button to set all episodes watched up to (including) the current one.
+* 🔧 Episodes: on phones, combine list and page view, add switch view button.
+* 🔧 Discover: also use improved search by TheTVDB.com when set to English.
+* 🔧 Discover: drop any language option, just type a show title in any language to get a match.
+
+#### 52
+*(2019-12-05)*
+
+* 📝 Latest translations from crowdin.
 
 #### 52-beta5
 *(2019-11-28)*
