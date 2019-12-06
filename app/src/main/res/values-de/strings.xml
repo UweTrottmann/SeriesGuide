@@ -151,11 +151,11 @@
     <!-- History -->
     <string name="user_stream">Verlauf</string>
     <string name="recently_watched">Vor kurzem angesehen</string>
-    <string name="friends_recently">Ihre trakt Freunde</string>
+    <string name="friends_recently">Ihre Trakt Freunde</string>
     <string name="now_empty">Nichts los. Sehen Sie sich ein paar Serien an!</string>
     <string name="now_movies_empty">Nichts los. Sehen Sie sich ein paar Filme an!</string>
-    <string name="user_stream_empty">In letzter Zeit keine Aktivitäten auf trakt. Checken Sie in Serien ein!</string>
-    <string name="user_movie_stream_empty">In letzter Zeit keine Aktivitäten auf trakt. Checken Sie in Filme ein!</string>
+    <string name="user_stream_empty">Kein Verlauf auf Trakt. Sehen Sie ein paar Serien an!</string>
+    <string name="user_movie_stream_empty">Kein Verlauf auf Trakt. Sehen Sie ein paar Filme an!</string>
     <!-- Calendar -->
     <string name="upcoming">Demnächst</string>
     <string name="recent">Vor kurzem</string>
@@ -272,7 +272,7 @@
     <!-- Hexagon -->
     <string name="hexagon_warning">Experimentell</string>
     <string name="hexagon_description">SeriesGuide Cloud hilft Ihre Serien, Listen und Filme zu sichern und synchronisieren</string>
-    <string name="hexagon_warning_trakt">Während Sie bei SeriesGuide Cloud angemeldet sind, sind einige trakt Funktionen nicht verfügbar</string>
+    <string name="hexagon_warning_trakt">Während Sie bei SeriesGuide Cloud angemeldet sind, sind einige Trakt Funktionen nicht verfügbar</string>
     <string name="hexagon_signin">Anmelden</string>
     <string name="hexagon_signout">Abmelden</string>
     <string name="hexagon_setup_incomplete">Die Einrichtung von SeriesGuide Cloud wurde nicht abgeschlossen</string>
@@ -285,27 +285,27 @@
     <string name="hexagon_signed_out">Von SeriesGuide Cloud abgemeldet</string>
     <string name="hexagon_signin_fail_format">Fehler bei der Google-Anmeldung (%s)</string>
     <!-- trakt -->
-    <string name="trakt_submitqueued">Sende an trakt</string>
-    <string name="checkin_success_trakt">Auf trakt in %s eingecheckt</string>
-    <string name="checkin_canceled_success_trakt">Check-in bei trakt widerrufen</string>
+    <string name="trakt_submitqueued">Sende an Trakt.</string>
+    <string name="checkin_success_trakt">Auf Trakt in %s eingecheckt</string>
+    <string name="checkin_canceled_success_trakt">Check-in bei Trakt widerrufen</string>
     <string name="traktcheckin_cancel">Überschreiben</string>
     <string name="traktcheckin_inprogress">Sie sind bereits eingecheckt. Überschreiben Sie den Check-in oder warten Sie %s und versuchen es erneut.</string>
     <string name="traktcheckin_wait">Ich warte</string>
-    <string name="trakt_success">An trakt übermittelt.</string>
-    <string name="trakt_error_credentials">Etwas lief schief. Bitte prüfen Sie Ihre trakt-Anmeldeinformationen und versuchen Sie es erneut.</string>
-    <string name="trakt_error_not_exists">(Noch) nicht bei trakt verfügbar. Versuchen Sie es später erneut.</string>
-    <string name="trakt_notice_not_exists">Kann (noch) nicht mit trakt verwaltet werden</string>
+    <string name="trakt_success">An Trakt übermittelt</string>
+    <string name="trakt_error_credentials">Etwas lief schief. Bitte prüfen Sie Ihre Trakt-Zugangsdaten und versuchen Sie es erneut.</string>
+    <string name="trakt_error_not_exists">(Noch) nicht bei Trakt verfügbar. Versuchen Sie es später erneut.</string>
+    <string name="trakt_notice_not_exists">Kann (noch) nicht mit Trakt verwaltet werden</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt Konto</string>
+    <string name="trakt_account">Trakt Konto</string>
     <string name="connect_trakt">Mit Trakt verbinden</string>
-    <string name="trakt_reconnect">SeriesGuide mit trakt verbinden</string>
-    <string name="trakt_reconnect_details">Überprüfen Sie Ihre trakt-Anmeldeinformationen</string>
+    <string name="trakt_reconnect">SeriesGuide mit Trakt verbinden</string>
+    <string name="trakt_reconnect_details">Überprüfen Sie Ihre Trakt-Zugangsdaten</string>
     <string name="waitplease">Einen Augenblick, bitte&#8230;</string>
     <string name="connect">Verbinden</string>
     <string name="disconnect">Trennen</string>
     <string name="use_integrated_browser">Integrierten Browser verwenden</string>
-    <string name="show_library">Ihre Bibliothek anzeigen</string>
-    <string name="about_trakt">trakt hilft TV-Sendungen und Filme zu speichern, die Sie angesehen haben. <a href="http://trakt.tv">Mehr erfahren</a></string>
+    <string name="show_library">Ihre Trakt Bibliothek anzeigen</string>
+    <string name="about_trakt">Trakt hilft TV-Sendungen und Filme zu speichern, die Sie angesehen haben. <a href="http://trakt.tv">Mehr erfahren</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Bewerten</string>
     <string name="your_rating">Ihre Bewertung</string>
@@ -402,8 +402,8 @@
     <string name="pref_number">Zahlenformat</string>
     <string name="pref_offset">Manuelle Zeit-Verschiebung</string>
     <string name="pref_offsetsummary">Sendezeit um %d Stunden verschieben</string>
-    <string name="clear_cache">Bilder-Cache leeren</string>
-    <string name="clear_cache_summary">Alle zwischengespeicherten Bilder von Ihrem Gerät entfernen</string>
+    <string name="clear_cache">Cache leeren</string>
+    <string name="clear_cache_summary">Zu Speicher-Einstellungen gehen um zwischengesp. Bilder und Netzwerk-Antworten zu löschen</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Beschreibungen, Details, Bewertungen einschließen</string>
     <string name="backup_failed_file_access">Kann nicht sichern. Eine Sicherungs-Datei konnte nicht gefunden oder beschrieben werden.</string>
