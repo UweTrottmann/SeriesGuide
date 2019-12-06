@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Vymazať históriu vyhľadávania</string>
     <string name="search_hint">Hľadať epizódy</string>
-    <string name="any_language">Ľubovoľný jazyk</string>
     <!-- Status messages -->
     <string name="updated">Aktualizované na najnovšiu verziu.</string>
     <string name="norating">Nedostupné</string>
@@ -106,7 +105,7 @@
     <!-- Flagging -->
     <string name="mark_all">Videné všetky</string>
     <string name="unmark_all">Nevidená žiadna</string>
-    <string name="mark_untilhere">Všetky predchádzajúce videné</string>
+    <string name="action_watched_up_to">Videné až sem</string>
     <string name="collect_all">Pridať sériu do zbierky</string>
     <string name="uncollect_all">Odobrané zo zbierky</string>
     <string name="action_skip">Preskočiť</string>
@@ -150,6 +149,7 @@
     <string name="action_shows_sort_favorites">Uprednostniť obľúbené</string>
     <string name="context_updateshow">Aktualizovať</string>
     <string name="context_marknext">Označiť nasledujúcu ako videnú</string>
+    <string name="action_episodes_switch_view">Zmeniť zobrazenie</string>
     <!-- History -->
     <string name="user_stream">História</string>
     <string name="recently_watched">Nedávno videné</string>
@@ -167,6 +167,7 @@
     <string name="calendar_settings">Nastavenia kalendára</string>
     <string name="only_favorites">Iba obľúbené seriály</string>
     <string name="calendar_only_collected">Iba epizódy v zbierke</string>
+    <string name="calendar_only_premieres">Iba premiéry</string>
     <string name="pref_infinite_scrolling">Nekonečný kalendár</string>
     <!-- Updating -->
     <string name="update_scheduled">Aktualizuje sa&#8230;</string>
@@ -197,7 +198,6 @@
     <string name="add_empty">Nie sú tu žiadne seriály.</string>
     <string name="no_results">Žiadne výsledky, skúste celé slová.</string>
     <string name="empty_show_search">Nebolo nájdené vo vašich seriáloch</string>
-    <string name="action_try_any_language">Skúsiť ľubovoľný jazyk</string>
     <string name="action_try_again">Skúsiť znova</string>
     <string name="tvdb_error_does_not_exist">Seriál (momentálne) nie je dostupný na TheTVDB. Skúste to znova neskôr.</string>
     <string name="add_all">Pridať všetky</string>

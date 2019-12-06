@@ -31,6 +31,33 @@
         tools:drawableTint="?attr/sgColorIcon" />
 
     <Button
+        android:id="@+id/buttonEpisodeShare"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/share_episode"
+        tools:drawableLeft="@drawable/ic_share_white_24dp"
+        tools:drawableTint="?attr/sgColorIcon" />
+
+    <Button
+        android:id="@+id/buttonEpisodeCalendar"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/addtocalendar"
+        tools:drawableLeft="@drawable/ic_event_white_24dp"
+        tools:drawableTint="?attr/sgColorIcon" />
+
+    <Button
+        android:id="@+id/buttonEpisodeLists"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/list_item_manage"
+        tools:drawableLeft="@drawable/ic_list_white_24dp"
+        tools:drawableTint="?attr/sgColorIcon" />
+
+    <Button
         android:id="@+id/buttonEpisodeComments"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"

@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Izbriši zgodovino iskanja</string>
     <string name="search_hint">Iskanje epizode</string>
-    <string name="any_language">Katerikoli jezik</string>
     <!-- Status messages -->
     <string name="updated">Posodobljeno na najnovejšo verzijo.</string>
     <string name="norating">n/a</string>
@@ -106,7 +105,7 @@
     <!-- Flagging -->
     <string name="mark_all">Vse pogledane</string>
     <string name="unmark_all">Nobena pogledana</string>
-    <string name="mark_untilhere">Gledal(a) vse do sedaj objavljene</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Collected all</string>
     <string name="uncollect_all">Collected none</string>
     <string name="action_skip">Preskoči</string>
@@ -150,14 +149,15 @@
     <string name="action_shows_sort_favorites">Najprej priljubljene</string>
     <string name="context_updateshow">Posodobi</string>
     <string name="context_marknext">Pogledana naslednja epizoda</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Zgodovina</string>
     <string name="recently_watched">Recently watched</string>
     <string name="friends_recently">Vaši trakt prijatelji</string>
     <string name="now_empty">Nothing going on. Watch some shows!</string>
     <string name="now_movies_empty">Nothing going on. Watch some movies!</string>
-    <string name="user_stream_empty">No history on trakt. Watch and check into some shows!</string>
-    <string name="user_movie_stream_empty">No history on trakt. Watch and check into some movies!</string>
+    <string name="user_stream_empty">No history on Trakt. Watch and check into some shows!</string>
+    <string name="user_movie_stream_empty">No history on Trakt. Watch and check into some movies!</string>
     <!-- Calendar -->
     <string name="upcoming">Prihajajoče</string>
     <string name="recent">Nedavno</string>
@@ -167,6 +167,7 @@
     <string name="calendar_settings">Calendar settings</string>
     <string name="only_favorites">Samo priljubljene oddaje</string>
     <string name="calendar_only_collected">Only collected episodes</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Infinite calendar</string>
     <!-- Updating -->
     <string name="update_scheduled">Posodabljanje&#8230;</string>
@@ -197,7 +198,6 @@
     <string name="add_empty">Tukaj ni nobene oddaje.</string>
     <string name="no_results">Ni zadetkov. Poizkusi s celimi besedami.</string>
     <string name="empty_show_search">Not found in your show list</string>
-    <string name="action_try_any_language">Try any language</string>
     <string name="action_try_again">Try again</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
     <string name="add_all">Dodaj vse</string>
@@ -286,7 +286,7 @@
     <!-- Hexagon -->
     <string name="hexagon_warning">Preizkusno!</string>
     <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">Prijava</string>
     <string name="hexagon_signout">Izpis</string>
     <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed</string>
@@ -305,15 +305,15 @@
     <string name="traktcheckin_cancel">Razveljavi</string>
     <string name="traktcheckin_inprogress">Prijavljen si že v drugo epizodo ali film. Ali razveljavi prejšnji vnos ali pa počakaj %s in poizkusi ponovno.</string>
     <string name="traktcheckin_wait">Počakal bom</string>
-    <string name="trakt_success">Sent to trakt</string>
-    <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
-    <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-    <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt</string>
+    <string name="trakt_success">Sent to Trakt</string>
+    <string name="trakt_error_credentials">Something went wrong. Check your Trakt credentials and try again.</string>
+    <string name="trakt_error_not_exists">Not (yet) available on Trakt. Try again later.</string>
+    <string name="trakt_notice_not_exists">Can not (yet) be tracked with Trakt</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt account</string>
+    <string name="trakt_account">Trakt account</string>
     <string name="connect_trakt">Poveži trakt</string>
-    <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
-    <string name="trakt_reconnect_details">Check your trakt credentials</string>
+    <string name="trakt_reconnect">Connect SeriesGuide to Trakt</string>
+    <string name="trakt_reconnect_details">Check your Trakt credentials</string>
     <string name="waitplease">Trenutek, prosim&#8230;</string>
     <string name="connect">Poveži</string>
     <string name="disconnect">Odklopi</string>
@@ -389,7 +389,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
-    <string name="licence_trakt">This app uses data and images by trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide is built using open source software.</string>
     <string name="licences_and_credits">Licences and credits</string>
     <!-- Sort -->

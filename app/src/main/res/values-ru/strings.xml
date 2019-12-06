@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Очистить историю поиска</string>
     <string name="search_hint">Поиск эпизодов</string>
-    <string name="any_language">Любой язык</string>
     <!-- Status messages -->
     <string name="updated">Обновлено до последней версии.</string>
     <string name="norating">нет данных</string>
@@ -106,7 +105,7 @@
     <!-- Flagging -->
     <string name="mark_all">Просмотрено всё</string>
     <string name="unmark_all">Не просмотрено </string>
-    <string name="mark_untilhere">Вышедшие в эфир просмотрены </string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Собраны все</string>
     <string name="uncollect_all">Не собраны</string>
     <string name="action_skip">Пропустить</string>
@@ -150,6 +149,7 @@
     <string name="action_shows_sort_favorites">Сначала избранные</string>
     <string name="context_updateshow">Обновить</string>
     <string name="context_marknext">Смотреть следующий эпизод</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">История</string>
     <string name="recently_watched">Недавно просмотренные</string>
@@ -167,6 +167,7 @@
     <string name="calendar_settings">Настройки календаря</string>
     <string name="only_favorites">Только избранные сериалы</string>
     <string name="calendar_only_collected">Только собранные эпизоды</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Бесконечный календарь</string>
     <!-- Updating -->
     <string name="update_scheduled">Обновление&#8230;</string>
@@ -197,7 +198,6 @@
     <string name="add_empty">Здесь нет сериалов.</string>
     <string name="no_results">Результатов нет, попробуйте полное название.</string>
     <string name="empty_show_search">Не найдено в вашем списке</string>
-    <string name="action_try_any_language">Попробовать любой язык</string>
     <string name="action_try_again">Повторить попытку</string>
     <string name="tvdb_error_does_not_exist">Сериала не существует (пока) на TheTVDB. Попробуйте позже.</string>
     <string name="add_all">Добавить все</string>

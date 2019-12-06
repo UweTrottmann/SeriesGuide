@@ -303,6 +303,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             Timber.e(e, "JSON export failed.");
             errorCause = e.getMessage();
             return ERROR;
+        } catch (Exception e) {
+            Timber.e(e, "Backup failed.");
+            errorCause = e.getMessage();
+            return ERROR;
         } finally {
             data.close();
         }

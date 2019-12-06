@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Očisti povijest pretraživanja</string>
     <string name="search_hint">Pretraži epizode</string>
-    <string name="any_language">Bilo koji jezik</string>
     <!-- Status messages -->
     <string name="updated">Ažurirano u najnoviju verziju.</string>
     <string name="norating">nedostupno</string>
@@ -105,7 +104,7 @@
     <!-- Flagging -->
     <string name="mark_all">Sve pogledano</string>
     <string name="unmark_all">Ništa nije pogledano</string>
-    <string name="mark_untilhere">Pogledano sve prethodno emitirano</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Sve prikupljeno</string>
     <string name="uncollect_all">Ništa prikupljeno</string>
     <string name="action_skip">Preskoči</string>
@@ -149,6 +148,7 @@
     <string name="action_shows_sort_favorites">Lista favorita</string>
     <string name="context_updateshow">Ažuriraj</string>
     <string name="context_marknext">Pogledana sljedeća epizoda</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Povijest</string>
     <string name="recently_watched">Nedavno pogledano</string>
@@ -166,6 +166,7 @@
     <string name="calendar_settings">Postavke kalendara</string>
     <string name="only_favorites">Samo favoriti</string>
     <string name="calendar_only_collected">Samo prikupljene epizode</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Beskonačni kalendar</string>
     <!-- Updating -->
     <string name="update_scheduled">Ažuriranje&#8230;</string>
@@ -193,7 +194,6 @@
     <string name="add_empty">Ovdje ne postoje serije.</string>
     <string name="no_results">Nema rezultata, pokušajte cijele riječi.</string>
     <string name="empty_show_search">Nije pronađeno u vašem popisu serija</string>
-    <string name="action_try_any_language">Pokušajte bilo koji jezik</string>
     <string name="action_try_again">Pokušaj ponovno</string>
     <string name="tvdb_error_does_not_exist">Serija (još) ne postoji na TheTVDB. Pokušajte ponovno kasnije.</string>
     <string name="add_all">Dodaj sve</string>

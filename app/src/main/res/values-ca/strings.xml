@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>
-    <string name="any_language">Qualsevol idioma</string>
     <!-- Status messages -->
     <string name="updated">S\'ha actualitzat a la darrera versió.</string>
     <string name="norating">cap</string>
@@ -104,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">Tots vists</string>
     <string name="unmark_all">Cap episodi vist</string>
-    <string name="mark_untilhere">Vists tots els episodis estrenats</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Tots recopilats</string>
     <string name="uncollect_all">Cap recopilat</string>
     <string name="action_skip">Omet</string>
@@ -148,6 +147,7 @@
     <string name="action_shows_sort_favorites">Preferits primer</string>
     <string name="context_updateshow">Actualitza</string>
     <string name="context_marknext">Següent episodi vist</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Històric</string>
     <string name="recently_watched">Vist Recentment</string>
@@ -165,6 +165,7 @@
     <string name="calendar_settings">Ajustaments de calendari</string>
     <string name="only_favorites">Només sèries preferides</string>
     <string name="calendar_only_collected">Només els episodis col·leccionats</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Calendari infinit</string>
     <!-- Updating -->
     <string name="update_scheduled">S\'està actualitzant&#8230;</string>
@@ -189,7 +190,6 @@
     <string name="add_empty">Aquí no hi ha series.</string>
     <string name="no_results">Cap resultat, proveu paraules senceres.</string>
     <string name="empty_show_search">No es troba a la llista</string>
-    <string name="action_try_any_language">Prova qualsevol idioma</string>
     <string name="action_try_again">Torneu-ho a intentar</string>
     <string name="tvdb_error_does_not_exist">La sèrie no existeix (encara) a TheTVDB. Torna-ho a intentar més tard.</string>
     <string name="add_all">Afegeix-ho tot</string>
@@ -367,7 +367,7 @@
     <string name="privacy_policy">Política de Privacitat</string>
     <string name="licence_tvdb">Aquesta aplicació utilitza dades i imatges de TheTVDB llicenciades sota una llicència Creative Commons.</string>
     <string name="licence_themoviedb">Aquest producte fa servir l\'API de TMDb però no està reconeguda ni certificada per TMDb.</string>
-    <string name="licence_trakt">Aquesta aplicació fa servir dades i imatges de trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide s\'ha construït utilitzant programari de codi obert.</string>
     <string name="licences_and_credits">Llicències i credits</string>
     <!-- Sort -->

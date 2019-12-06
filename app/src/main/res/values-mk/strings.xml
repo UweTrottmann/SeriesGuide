@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Избриши историја на пребарување</string>
     <string name="search_hint">Пребарај епизоди</string>
-    <string name="any_language">Некoј јaзик</string>
     <!-- Status messages -->
     <string name="updated">Обнови во најнова верзија.</string>
     <string name="norating">Непознато</string>
@@ -104,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">Се изгледано</string>
     <string name="unmark_all">Ништо не гледано</string>
-    <string name="mark_untilhere">Означи сите постари за прегледани</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Се во колеција</string>
     <string name="uncollect_all">Ништо во колекција</string>
     <string name="action_skip">Прескокни</string>
@@ -148,6 +147,7 @@
     <string name="action_shows_sort_favorites">Листа на омилени</string>
     <string name="context_updateshow">Ажурирај</string>
     <string name="context_marknext">Гледај следна епизода</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Историја</string>
     <string name="recently_watched">Скоро гледана</string>
@@ -165,6 +165,7 @@
     <string name="calendar_settings">Календар опции</string>
     <string name="only_favorites">Само омилени серии</string>
     <string name="calendar_only_collected">Само собрани епизоди</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Бесконечни календар</string>
     <!-- Updating -->
     <string name="update_scheduled">Ажурирање&#8230;</string>
@@ -189,7 +190,6 @@
     <string name="add_empty">Овде нема серија.</string>
     <string name="no_results">Нема резултати, обидете се со целосни зборови.</string>
     <string name="empty_show_search">Не е пронајдено во твојата прикажи листа</string>
-    <string name="action_try_any_language">Прoбaј билo кoј јaзик</string>
     <string name="action_try_again">Прoбaј пoвтoрнo</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
     <string name="add_all">Додај се</string>
@@ -272,7 +272,7 @@
     <!-- Hexagon -->
     <string name="hexagon_warning">Експериментално!</string>
     <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">Пријави се</string>
     <string name="hexagon_signout">Одјави се</string>
     <string name="hexagon_setup_incomplete">Подесувањето на SeriesGuide Cloud не е завршено.</string>
@@ -367,7 +367,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Овој продукт користи TMDb API но не е одобрена или лиценцирана од TMDb.</string>
-    <string name="licence_trakt">Оваа апликација користи податоци и слики од trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide е направен користејќи софтвер со отворен код.</string>
     <string name="licences_and_credits">Лиценци и кредити</string>
     <!-- Sort -->

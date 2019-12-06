@@ -555,7 +555,7 @@ class ShowFragment : ScopedFragment() {
             containerPoster.isFocusable = false
         } else {
             // poster and fullscreen button
-            TvdbImageTools.loadShowPoster(activity, imageViewPoster, posterPathSmall)
+            TvdbImageTools.loadShowPoster(activity!!, imageViewPoster, posterPathSmall)
             containerPoster.isFocusable = true
             containerPoster.setOnClickListener { v ->
                 val intent = Intent(activity, FullscreenImageActivity::class.java)
@@ -571,7 +571,7 @@ class ShowFragment : ScopedFragment() {
             }
 
             // poster background
-            TvdbImageTools.loadShowPosterAlpha(activity, imageViewBackground, posterPathSmall)
+            TvdbImageTools.loadShowPosterAlpha(activity!!, imageViewBackground, posterPathSmall)
         }
 
         loadTraktRatings()

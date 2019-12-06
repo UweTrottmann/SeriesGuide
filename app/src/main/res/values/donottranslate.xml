@@ -6,12 +6,12 @@
     <string name="imdb">IMDb</string>
     <string name="tvdb">TheTVDB</string>
     <string name="tmdb">TMDb</string>
-    <string name="trakt">trakt</string>
-    <string name="ontrakt">(trakt)</string>
+    <string name="trakt">Trakt</string>
+    <string name="ontrakt">(Trakt)</string>
     <string name="amazon">Amazon</string>
     <string name="google_play">Google Play</string>
-    <string name="powered_by_ttt">powered by TMDb, TheTVDB, trakt</string>
-    <string name="powered_by_trakt">powered by trakt</string>
+    <string name="powered_by_ttt">powered by TMDb, TheTVDB.com</string>
+    <string name="powered_by_trakt">powered by Trakt</string>
     <string name="powered_by_tmdb">powered by TMDb</string>
     <string name="placeholder_rating">--</string>
     <string name="rating_number_text_format">%1$d - %2$s</string>
@@ -44,7 +44,7 @@
     <string name="tvdb_terms">TheTVDB terms</string>
     <string name="tmdb_terms">TMDb terms</string>
     <string name="tmdb_api_terms">TMDb API terms</string>
-    <string name="trakt_terms">trakt terms</string>
+    <string name="trakt_terms">Trakt terms</string>
 
     <!-- Google Play links -->
     <string name="url_store_page">https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide</string>
@@ -108,31 +108,6 @@
 
     <!-- Content languages -->
     <string name="show_default_language">en</string>
-    <string-array name="languagesShows">
-        <item>English</item>
-        <item>čeština</item>
-        <item>Dansk</item>
-        <item>Deutsch</item>
-        <item>Ελληνικά</item>
-        <item>Español</item>
-        <item>Français</item>
-        <item>Hrvatski</item>
-        <item>Italiano</item>
-        <item>Magyar</item>
-        <item>Nederlands</item>
-        <item>Norsk</item>
-        <item>Polski</item>
-        <item>русский язык</item>
-        <item>Português</item>
-        <item>Slovenski</item>
-        <item>Suomeksi</item>
-        <item>Svenska</item>
-        <item>Türkçe</item>
-        <item>한국어 (Korean)</item>
-        <item>中文 (Chinese)</item>
-        <item> עברית</item>
-        <item>日本語 (Japanese)</item>
-    </string-array>
     <string-array name="languageCodesShows">
         <item>@string/show_default_language</item>
         <item>cs</item>
@@ -156,35 +131,170 @@
         <item>ko</item>
         <item>zh</item>
         <item>he</item>
-        <item>ja</item>
+        <item>ja</item> <!-- Old languages up to here. -->
+        <item>aa</item>
+        <item>ab</item>
+        <item>af</item>
+        <item>ak</item>
+        <item>am</item>
+        <item>ar</item>
+        <item>an</item>
+        <item>as</item>
+        <item>av</item>
+        <item>ae</item>
+        <item>ay</item>
+        <item>az</item>
+        <item>ba</item>
+        <item>bm</item>
+        <item>be</item>
+        <item>bn</item>
+        <item>bh</item>
+        <item>bi</item>
+        <item>bo</item>
+        <item>bs</item>
+        <item>br</item>
+        <item>bg</item>
+        <item>ca</item>
+        <item>ch</item>
+        <item>ce</item>
+        <item>cu</item>
+        <item>cv</item>
+        <item>kw</item>
+        <item>co</item>
+        <item>cr</item>
+        <item>cy</item>
+        <item>dv</item>
+        <item>dz</item>
+        <item>eo</item>
+        <item>et</item>
+        <item>eu</item>
+        <item>ee</item>
+        <item>fo</item>
+        <item>fa</item>
+        <item>fj</item>
+        <item>fy</item>
+        <item>ff</item>
+        <item>gd</item>
+        <item>ga</item>
+        <item>gl</item>
+        <item>gv</item>
+        <item>gn</item>
+        <item>gu</item>
+        <item>ht</item>
+        <item>ha</item>
+        <item>hz</item>
+        <item>hi</item>
+        <item>ho</item>
+        <item>hy</item>
+        <item>ig</item>
+        <item>io</item>
+        <item>ii</item>
+        <item>iu</item>
+        <item>ie</item>
+        <item>ia</item>
+        <item>id</item>
+        <item>ik</item>
+        <item>is</item>
+        <item>jv</item>
+        <item>kl</item>
+        <item>kn</item>
+        <item>ks</item>
+        <item>ka</item>
+        <item>kr</item>
+        <item>kk</item>
+        <item>km</item>
+        <item>ki</item>
+        <item>rw</item>
+        <item>ky</item>
+        <item>kv</item>
+        <item>kg</item>
+        <item>kj</item>
+        <item>ku</item>
+        <item>lo</item>
+        <item>la</item>
+        <item>lv</item>
+        <item>li</item>
+        <item>ln</item>
+        <item>lt</item>
+        <item>lb</item>
+        <item>lu</item>
+        <item>lg</item>
+        <item>mh</item>
+        <item>ml</item>
+        <item>mr</item>
+        <item>mk</item>
+        <item>mg</item>
+        <item>mt</item>
+        <item>mn</item>
+        <item>mi</item>
+        <item>ms</item>
+        <item>my</item>
+        <item>na</item>
+        <item>nv</item>
+        <item>nr</item>
+        <item>nd</item>
+        <item>ng</item>
+        <item>ne</item>
+        <item>nn</item>
+        <item>nb</item>
+        <item>ny</item>
+        <item>oc</item>
+        <item>oj</item>
+        <item>or</item>
+        <item>om</item>
+        <item>os</item>
+        <item>pa</item>
+        <item>pi</item>
+        <item>ps</item>
+        <item>qu</item>
+        <item>rm</item>
+        <item>ro</item>
+        <item>rn</item>
+        <item>sg</item>
+        <item>sa</item>
+        <item>si</item>
+        <item>sk</item>
+        <item>se</item>
+        <item>sm</item>
+        <item>sn</item>
+        <item>sd</item>
+        <item>so</item>
+        <item>st</item>
+        <item>sq</item>
+        <item>sc</item>
+        <item>sr</item>
+        <item>ss</item>
+        <item>su</item>
+        <item>sw</item>
+        <item>ty</item>
+        <item>ta</item>
+        <item>tt</item>
+        <item>te</item>
+        <item>tg</item>
+        <item>tl</item>
+        <item>th</item>
+        <item>ti</item>
+        <item>to</item>
+        <item>tn</item>
+        <item>ts</item>
+        <item>tk</item>
+        <item>tw</item>
+        <item>ug</item>
+        <item>uk</item>
+        <item>ur</item>
+        <item>uz</item>
+        <item>ve</item>
+        <item>vi</item>
+        <item>vo</item>
+        <item>wa</item>
+        <item>wo</item>
+        <item>xh</item>
+        <item>yi</item>
+        <item>yo</item>
+        <item>za</item>
+        <item>zu</item>
     </string-array>
     <string name="language_code_any">xx</string>
-    <string-array name="languageCodesShowsWithAny">
-        <item>@string/language_code_any</item>
-        <item>@string/show_default_language</item>
-        <item>cs</item>
-        <item>da</item>
-        <item>de</item>
-        <item>el</item>
-        <item>es</item>
-        <item>fr</item>
-        <item>hr</item>
-        <item>it</item>
-        <item>hu</item>
-        <item>nl</item>
-        <item>no</item>
-        <item>pl</item>
-        <item>ru</item>
-        <item>pt</item>
-        <item>sl</item>
-        <item>fi</item>
-        <item>sv</item>
-        <item>tr</item>
-        <item>ko</item>
-        <item>zh</item>
-        <item>he</item>
-        <item>ja</item>
-    </string-array>
 
     <!-- Movie languages -->
     <string name="movie_default_language">en-US</string>

@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Keresési előzmények törlése</string>
     <string name="search_hint">Epizódok keresése</string>
-    <string name="any_language">Bármely nyelv</string>
     <!-- Status messages -->
     <string name="updated">Frissítve a legújabb verzióra.</string>
     <string name="norating">n/a</string>
@@ -104,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">Mind megnézve</string>
     <string name="unmark_all">Egyik sincs megnézve</string>
-    <string name="mark_untilhere">Minden korábban vetített megnézve</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Mind begyűjtve</string>
     <string name="uncollect_all">Nincs begyűjtött</string>
     <string name="action_skip">Kihagyás</string>
@@ -148,6 +147,7 @@
     <string name="action_shows_sort_favorites">Kedvencek előre</string>
     <string name="context_updateshow">Frissítés</string>
     <string name="context_marknext">Láttam a következő epizódot</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Előzmények</string>
     <string name="recently_watched">Nemrég megnézett</string>
@@ -165,6 +165,7 @@
     <string name="calendar_settings">Naptár beállításai</string>
     <string name="only_favorites">Csak kedvenc sorozatok</string>
     <string name="calendar_only_collected">Csak begyűjtött epizódok</string>
+    <string name="calendar_only_premieres">Csak premierek</string>
     <string name="pref_infinite_scrolling">Végtelen naptár</string>
     <!-- Updating -->
     <string name="update_scheduled">Frissítés&#8230;</string>
@@ -189,7 +190,6 @@
     <string name="add_empty">Nincsenek sorozatok.</string>
     <string name="no_results">Nincs találat, próbálkozz teljes szavakkal.</string>
     <string name="empty_show_search">Nem található a sorozat listádban</string>
-    <string name="action_try_any_language">Keresés bármely nyelven</string>
     <string name="action_try_again">Próbáld újra</string>
     <string name="tvdb_error_does_not_exist">A sorozat (még) nem létezik a TheTVDB adatbázisban. Próbálkozzon később.</string>
     <string name="add_all">Add hozzá mindet</string>
@@ -367,7 +367,7 @@
     <string name="privacy_policy">Adatvédelmi irányelvek</string>
     <string name="licence_tvdb">Ez az alkalmazás a TheTVDB, Creative Commons licenc alatt álló adatait és képeit használja.</string>
     <string name="licence_themoviedb">Ez a termék a TMDb API-t használja, de a TMDb hozzájárulása vagy minősítése nélkül.</string>
-    <string name="licence_trakt">Ez az applikáció a trakt adatait és képeit használja.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">A SeriesGuide nyílt forráskódú szoftverek használatával készül.</string>
     <string name="licences_and_credits">Engedélyek és készítők listája</string>
     <!-- Sort -->

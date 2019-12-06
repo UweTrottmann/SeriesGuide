@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">தேடல் வரலாற்றை நீக்கு</string>
     <string name="search_hint">தேடல் episodes</string>
-    <string name="any_language">எந்த மொழி</string>
     <!-- Status messages -->
     <string name="updated">சமீபத்திய பதிப்பை புதுப்பிக்கப்பட்டது.</string>
     <string name="norating">n/a</string>
@@ -104,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">எல்லாம் பார்த்த</string>
     <string name="unmark_all">இல்லை பார்த்த</string>
-    <string name="mark_untilhere">அமைக்க அனைத்து பழைய பார்த்த</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">எல்லாம் சேகரிக்கப்படும்</string>
     <string name="uncollect_all">யாரும் சேகரிக்கப்படும்</string>
     <string name="action_skip">புறக்கணி</string>
@@ -148,6 +147,7 @@
     <string name="action_shows_sort_favorites">விருப்பங்களின் முதல்</string>
     <string name="context_updateshow">புதுப்பித்தல்</string>
     <string name="context_marknext">பார்த்த அடுத்த சம்பவம்</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">வரலாறு</string>
     <string name="recently_watched">சமீபத்தில் பார்த்த</string>
@@ -165,6 +165,7 @@
     <string name="calendar_settings">நாள் மற்றும் தேதி அமைப்புக்கள்</string>
     <string name="only_favorites">பிடித்த காட்சிகள்</string>
     <string name="calendar_only_collected">Only collected episodes</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">முடிவிலா காலண்டர்</string>
     <!-- Updating -->
     <string name="update_scheduled">புதுப்பித்தல்&#8230;</string>
@@ -189,7 +190,6 @@
     <string name="add_empty">எந்த காட்சிகள் இங்கே உள்ளன.</string>
     <string name="no_results">முழு சொற்களை முடிவுகள், முயற்சிக்கவும்.</string>
     <string name="empty_show_search">Not found in your show list</string>
-    <string name="action_try_any_language">எந்த மொழி முயற்சிக்கவும்</string>
     <string name="action_try_again">மீண்டும் முயற்சி</string>
     <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
     <string name="add_all">எல்லாம் சேர்</string>
@@ -272,7 +272,7 @@
     <!-- Hexagon -->
     <string name="hexagon_warning">பசோதனை</string>
     <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">உள்நுழைக</string>
     <string name="hexagon_signout">வெளியில் செல்லவும்</string>
     <string name="hexagon_setup_incomplete">SeriesGuide மேகம் அமைக்கிறது நிறைவடையவில்லை.</string>
@@ -367,7 +367,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">இந்த தயாரிப்பு TMDb API பயன்படுத்தும் ஆனால் இல்லை endorsed அல்லது TMDb மூலம் சான்றிதழ்.</string>
-    <string name="licence_trakt">இந்த பயன்பாட்டு பயன்படுத்தும் தரவு மற்றும் படிமங்கள் மூலம் trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">திறந்த மூல மென்பொருள் பயன்படுத்தி SeriesGuide இயக்கத்தினர் உள்ளது.</string>
     <string name="licences_and_credits">உரிமம் மற்றும் கிரெடிட்கள்</string>
     <!-- Sort -->

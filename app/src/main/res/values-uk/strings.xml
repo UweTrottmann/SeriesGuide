@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Очистити історію пошуку</string>
     <string name="search_hint">Пошук серій</string>
-    <string name="any_language">Будь-яка мова</string>
     <!-- Status messages -->
     <string name="updated">Оновлено до останньої версії.</string>
     <string name="norating">Немає даних</string>
@@ -106,7 +105,7 @@
     <!-- Flagging -->
     <string name="mark_all">Всі переглянуті</string>
     <string name="unmark_all">Жодна не переглянута</string>
-    <string name="mark_untilhere">Переглянуті всі що вийшли до цього</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Зібрано всі</string>
     <string name="uncollect_all">Жодної не зібрано</string>
     <string name="action_skip">Пропустити</string>
@@ -150,6 +149,7 @@
     <string name="action_shows_sort_favorites">Улюблене спочатку</string>
     <string name="context_updateshow">Оновити</string>
     <string name="context_marknext">Переглянута наступна серія</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Історія</string>
     <string name="recently_watched">Недавно переглянуті</string>
@@ -167,6 +167,7 @@
     <string name="calendar_settings">Налаштування календаря</string>
     <string name="only_favorites">Лише улюблені серіали</string>
     <string name="calendar_only_collected">Тільки обрані серії</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Вічний календар</string>
     <!-- Updating -->
     <string name="update_scheduled">Оновлюється&#8230;</string>
@@ -197,7 +198,6 @@
     <string name="add_empty">Тут немає жодного серіалу.</string>
     <string name="no_results">Немає результатів, спробуйте завершити слова.</string>
     <string name="empty_show_search">Не знайдено у вашому списку серіалів</string>
-    <string name="action_try_any_language">Виберіть будь-яку мову</string>
     <string name="action_try_again">Спробувати ще раз</string>
     <string name="tvdb_error_does_not_exist">Цей серіал відсутній (покищо) на TheTVDB. Спробуйте пізніше.</string>
     <string name="add_all">Додати усі</string>
@@ -389,7 +389,7 @@
     <string name="privacy_policy">Політика приватності</string>
     <string name="licence_tvdb">Ця програма використовує дані та зображення з TheTVDB під ліцензією Creative Commons license.</string>
     <string name="licence_themoviedb">Цей продукт використовує TMDb API, але не підтримуваний та сертифікований TMDb.</string>
-    <string name="licence_trakt">Ця програма використовує дані та зображення сервісу trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide створена з використанням відкритого вихідного коду.</string>
     <string name="licences_and_credits">Ліцензії та кредити</string>
     <!-- Sort -->

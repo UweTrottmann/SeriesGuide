@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Limpar histórico de pesquisa</string>
     <string name="search_hint">Pesquisar episódios</string>
-    <string name="any_language">Qualquer idioma</string>
     <!-- Status messages -->
     <string name="updated">Atualizado para a versão mais recente.</string>
     <string name="norating">n/a</string>
@@ -104,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">Todos assistidos</string>
     <string name="unmark_all">Nenhum assistido</string>
-    <string name="mark_untilhere">Marcar anteriores como assistidos</string>
+    <string name="action_watched_up_to">Assistido até aqui</string>
     <string name="collect_all">Todos coletados</string>
     <string name="uncollect_all">Nenhum coletado</string>
     <string name="action_skip">Avançar</string>
@@ -148,6 +147,7 @@
     <string name="action_shows_sort_favorites">Favoritos primeiro</string>
     <string name="context_updateshow">Atualizar</string>
     <string name="context_marknext">Próximo episódio já assistido</string>
+    <string name="action_episodes_switch_view">Alterar visualização</string>
     <!-- History -->
     <string name="user_stream">Histórico</string>
     <string name="recently_watched">Recentemente assistido</string>
@@ -165,6 +165,7 @@
     <string name="calendar_settings">Configurações do calendário</string>
     <string name="only_favorites">Somente séries favoritas</string>
     <string name="calendar_only_collected">Somente episódios colecionados</string>
+    <string name="calendar_only_premieres">Somente estreias</string>
     <string name="pref_infinite_scrolling">Calendário infinito</string>
     <!-- Updating -->
     <string name="update_scheduled">Atualizando&#8230;</string>
@@ -189,7 +190,6 @@
     <string name="add_empty">Nenhuma série aqui.</string>
     <string name="no_results">Sem resultados, tente palavras completas.</string>
     <string name="empty_show_search">Nada encontrado em sua lista</string>
-    <string name="action_try_any_language">Tentar qualquer idioma</string>
     <string name="action_try_again">Tentar novamente</string>
     <string name="tvdb_error_does_not_exist">A série não existe (ainda) no TheTVDB. Tente mais tarde.</string>
     <string name="add_all">Adicionar tudo</string>
@@ -203,8 +203,8 @@
     <string name="shows_collection">Coleção</string>
     <string name="watchlist">Lista</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">Sem resultados</string>
+    <string name="title_similar_shows">Séries similares</string>
     <!-- Lists -->
     <string name="first_list">Primeira lista</string>
     <string name="list_add">Adicionar lista</string>

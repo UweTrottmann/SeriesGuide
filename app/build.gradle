@@ -45,6 +45,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     lintOptions {
         // for CI server: only check this module with dependencies instead of each module separately
         checkDependencies true
@@ -61,6 +65,12 @@ android {
         exclude '**/*.kotlin_builtins'
         exclude '**/*.kotlin_metadata'
         exclude '**/*.kotlin_module'
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 
     flavorDimensions "flavor"
@@ -208,7 +218,7 @@ dependencies {
 
     // App Engine
     // https://github.com/googleapis/google-api-java-client/releases
-    implementation('com.google.api-client:google-api-client-android:1.30.3') {
+    implementation('com.google.api-client:google-api-client-android:1.30.5') {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
         exclude group: 'org.checkerframework' // from guava, not needed at runtime
         exclude group: 'com.google.errorprone' // from guava, not needed at runtime
@@ -249,6 +259,7 @@ dependencies {
         exclude group: 'org.checkerframework' // from guava, not needed at runtime
         exclude group: 'com.google.errorprone' // from guava, not needed at runtime
     }
+    testImplementation 'org.robolectric:robolectric:4.3'
 
 }
 

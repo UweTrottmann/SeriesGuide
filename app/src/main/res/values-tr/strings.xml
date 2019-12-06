@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Arama geçmişini temizle</string>
     <string name="search_hint">Bölüm ara</string>
-    <string name="any_language">Herhangi bir dil</string>
     <!-- Status messages -->
     <string name="updated">En son sürüme güncellendi.</string>
     <string name="norating">Geçersiz</string>
@@ -104,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">Tümü izlendi</string>
     <string name="unmark_all">Hiçbiri izlenmedi</string>
-    <string name="mark_untilhere">Önceden yayınlananların tamamı izlendi</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Hepsi koleksiyonda</string>
     <string name="uncollect_all">Koleksiyonda yok</string>
     <string name="action_skip">Atla</string>
@@ -148,6 +147,7 @@
     <string name="action_shows_sort_favorites">Önce favoriler</string>
     <string name="context_updateshow">Güncelle</string>
     <string name="context_marknext">Sıradaki bölüm izlendi</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Geçmiş</string>
     <string name="recently_watched">Yakın zamanda izlenen</string>
@@ -165,6 +165,7 @@
     <string name="calendar_settings">Takvim ayarları</string>
     <string name="only_favorites">Sadece favori diziler</string>
     <string name="calendar_only_collected">Sadece koleksiyonlanmış bölümler</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Sonsuz takvim</string>
     <!-- Updating -->
     <string name="update_scheduled">Güncelleniyor&#8230;</string>
@@ -189,7 +190,6 @@
     <string name="add_empty">Burada dizi yok.</string>
     <string name="no_results">Sonuç bulunamadı, tam sözcüklerle deneyin.</string>
     <string name="empty_show_search">Listenizde bulunamadı</string>
-    <string name="action_try_any_language">Herhangi bir dil deneyin</string>
     <string name="action_try_again">Yeniden deneyin</string>
     <string name="tvdb_error_does_not_exist">TheTVDB üzerinde bu dizi/film (şimdilik) bulunamadı. Daha sonra tekrar deneyin.</string>
     <string name="add_all">Tümünü ekle</string>

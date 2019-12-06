@@ -762,6 +762,8 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_RELEASED_BEFORE_X = Episodes.FIRSTAIREDMS + "<=?";
 
+        public static final String SELECTION_ONLY_PREMIERES = Episodes.NUMBER + "=1";
+
         /**
          * Lower season or if season is equal has to have a lower episode number. Must be watched or
          * skipped, excludes special episodes (because their release times are spread over all

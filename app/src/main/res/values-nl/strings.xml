@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
     <string name="search_hint">Afleveringen zoeken</string>
-    <string name="any_language">Elke taal</string>
     <!-- Status messages -->
     <string name="updated">Bijgewerkt naar de nieuwste versie</string>
     <string name="norating">n.v.t.</string>
@@ -104,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">Alles bekeken</string>
     <string name="unmark_all">Niets bekeken</string>
-    <string name="mark_untilhere">Alle eerder uitgezonden bekijken</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Alles verzameld</string>
     <string name="uncollect_all">Niets verzameld</string>
     <string name="action_skip">Overslaan</string>
@@ -148,6 +147,7 @@
     <string name="action_shows_sort_favorites">Favorieten eerst</string>
     <string name="context_updateshow">Bijwerken</string>
     <string name="context_marknext">Volgende aflevering bekeken</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Geschiedenis</string>
     <string name="recently_watched">Laatst gekeken</string>
@@ -165,6 +165,7 @@
     <string name="calendar_settings">Kalenderinstellingen</string>
     <string name="only_favorites">Alleen favoriete series</string>
     <string name="calendar_only_collected">Enkel verzamelde afleveringen</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Oneindige kalender</string>
     <!-- Updating -->
     <string name="update_scheduled">Bijwerken&#8230;</string>
@@ -189,7 +190,6 @@
     <string name="add_empty">Er zijn hier geen series</string>
     <string name="no_results">Geen resultaten, probeer complete woorden.</string>
     <string name="empty_show_search">Niet gevonden in uw serielijst</string>
-    <string name="action_try_any_language">Elke taal proberen</string>
     <string name="action_try_again">Nogmaals proberen</string>
     <string name="tvdb_error_does_not_exist">Show bestaat (nog) niet op TheTVDB. Probeer later opnieuw.</string>
     <string name="add_all">Alles toevoegen</string>
@@ -203,8 +203,8 @@
     <string name="shows_collection">Collectie</string>
     <string name="watchlist">Watchlist</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">Geen resultaten</string>
+    <string name="title_similar_shows">Soortgelijke shows</string>
     <!-- Lists -->
     <string name="first_list">Eerste lijst</string>
     <string name="list_add">Lijst toevoegen</string>

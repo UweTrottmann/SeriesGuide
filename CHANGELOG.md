@@ -5,6 +5,64 @@ Release notes
 
 All dates are in the European Central timezone.
 
+Version 52
+----------
+*(2019-12-05)*
+
+* 🌟 Calendar: add option to only display premieres.
+* 🔧 Episodes: button to set all episodes watched up to (including) the current one.
+* 🔧 Episodes: on phones, combine list and page view, add switch view button.
+* 🔧 Discover: also use improved search by TheTVDB.com when set to English.
+* 🔧 Discover: drop any language option, just type a show title in any language to get a match.
+
+#### 52
+*(2019-12-05)*
+
+* 📝 Latest translations from crowdin.
+
+#### 52-beta5
+*(2019-11-28)*
+
+* 🔧 Add new languages supported by TheTVDB.com.
+* 📝 Add more translations of the new description on Play Store. Thanks to all translators!
+* 📝 Latest translations from crowdin.
+
+#### 52-beta4
+*(2019-11-21)*
+
+* 🔧 Switch English language show search to the new and improved search by TheTVDB.com.
+* 🔧 Also drop any languages option. Just enter a show title in any language to get a match.
+* 🔧 Discover: add Trakt logo to links connected to current Trakt profile.
+* 📝 Latest translations from crowdin. Now including Hindi thanks to a new translator!
+
+#### 52-beta3
+*(2019-11-15)*
+
+* 🔧 Episode view remembers if season was last viewed as list, goes back to list if page was shown
+  by tapping on list.
+* 🔨 Correctly tint switch view icon on light theme.
+* 🔨 Resolve crash when opening episodes view.
+* 📝 Latest translations from crowdin.
+
+#### 52-beta2
+*(2019-11-08)*
+
+* 🔧 On phones, combine episode list and page view into one.
+  Switch between them with a button in the top right.
+* 🔧 Move episode share, add to calendar and manage lists buttons to bottom of screen.
+* 🔨 Watched up to here no longer marks unreleased episodes watched.
+* 🔨 In debug mode, log show TheTVDB ID if it fails to update.
+* 🔨 Do not crash on backing up if file provider has issues.
+* 📝 Latest translations from crowdin.
+
+#### 52-beta1
+*(2019-10-31)*
+
+* 🌟 Calendar: add option to only display premieres (first episodes).
+* 🔧 Show overview: if there is no next episode, suggest to look for similar shows.
+* 🔧 Episode details: button to set all episodes watched up to (including) the current one.
+* 📝 Latest translations from crowdin.
+
 Version 51
 ----------
 *(2019-10-02)*
@@ -14,6 +72,13 @@ Version 51
 * 🔧 Move advanced settings up to the first settings section.
 * 🔧 Remove DashClock extension, DashClock has been unpublished for a long time.
 * 🔧 Allow users to enable debug mode, for example to share log output.
+
+#### 51
+*(2019-10-02)*
+
+* 🔨 Do not crash when trying to display details for a show not existing on TheTVDB.com.
+* 🔨 Do not crash if there is no app available to select notification sound.
+* 📝 Latest translations from crowdin.
 
 #### 51-beta6
 *(2019-09-26)*

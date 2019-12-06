@@ -22,6 +22,7 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
+import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
@@ -43,10 +44,12 @@ import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.ui.ShowsActivity
+import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.TimeOffsetDialogFragment
 import com.battlelancer.seriesguide.util.DBUtils
+import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Shadows
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
@@ -89,6 +92,13 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             }
 
             true
+        }
+
+        if (BuildConfig.DEBUG) {
+            findPreference<SwitchPreferenceCompat>(AppSettings.KEY_USER_DEBUG_MODE_ENBALED)!!.apply {
+                isEnabled = false
+                isChecked = true
+            }
         }
 
         // display version as About summary
@@ -228,8 +238,21 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     private fun setupBasicSettings() {
         // show currently set values for some prefs
         updateStreamSearchServiceSummary(findPreference(StreamingSearch.KEY_SETTING_SERVICE)!!)
-        setListPreferenceSummary(findPreference(DisplaySettings.KEY_LANGUAGE_FALLBACK))
         updateTimeOffsetSummary(findPreference(DisplaySettings.KEY_SHOWS_TIME_OFFSET)!!)
+
+        findPreference<Preference>(DisplaySettings.KEY_LANGUAGE_FALLBACK)!!.also {
+            updateFallbackLanguageSummary(it)
+            it.setOnPreferenceClickListener {
+                LanguageChoiceDialogFragment.show(
+                    fragmentManager!!,
+                    R.array.languageCodesShows,
+                    DisplaySettings.getShowsLanguageFallback(context),
+                    TAG_LANGUAGE_FALLBACK
+                )
+                true
+            }
+        }
+
     }
 
     override fun onStart() {
@@ -407,10 +430,12 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             BackupManager(pref.context).dataChanged()
 
             // update pref summary text
-            if (DisplaySettings.KEY_LANGUAGE_FALLBACK == key
-                || DisplaySettings.KEY_NUMBERFORMAT == key
+            if (DisplaySettings.KEY_NUMBERFORMAT == key
                 || DisplaySettings.KEY_THEME == key) {
                 setListPreferenceSummary(pref as ListPreference)
+            }
+            if (DisplaySettings.KEY_LANGUAGE_FALLBACK == key) {
+                updateFallbackLanguageSummary(pref)
             }
             if (DisplaySettings.KEY_SHOWS_TIME_OFFSET == key) {
                 updateTimeOffsetSummary(pref)
@@ -479,6 +504,15 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: LanguageChoiceDialogFragment.LanguageChangedEvent) {
+        if (event.tag == TAG_LANGUAGE_FALLBACK) {
+            PreferenceManager.getDefaultSharedPreferences(context).edit {
+                putString(DisplaySettings.KEY_LANGUAGE_FALLBACK, event.selectedLanguageCode)
+            }
+        }
+    }
+
     private fun setListPreferenceSummary(listPref: ListPreference?) {
         if (listPref == null) {
             return
@@ -522,6 +556,13 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         )
     }
 
+    private fun updateFallbackLanguageSummary(pref: Preference) {
+        pref.summary = LanguageTools.getShowLanguageStringFor(
+            context,
+            DisplaySettings.getShowsLanguageFallback(context)
+        )
+    }
+
     /**
      * Resets and runs the notification service to take care of potential time shifts when e.g.
      * changing the time offset.
@@ -553,6 +594,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         private const val KEY_SCREEN_NOTIFICATIONS = "screen_notifications"
 
         private const val REQUEST_CODE_RINGTONE = 0
+        private const val TAG_LANGUAGE_FALLBACK = "PREF_LANGUAGE_FALLBACK"
 
         private val sNoOpChangeListener =
             Preference.OnPreferenceChangeListener { preference: Preference, _: Any ->

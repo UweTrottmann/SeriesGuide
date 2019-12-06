@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
     <string name="search_hint">Sök avsnitt</string>
-    <string name="any_language">Alla språk</string>
     <!-- Status messages -->
     <string name="updated">Uppdaterad till senaste versionen</string>
     <string name="norating">saknas</string>
@@ -104,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">Sett alla</string>
     <string name="unmark_all">Inga sedda</string>
-    <string name="mark_untilhere">Sett alla sända avsnitt</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Samla alla</string>
     <string name="uncollect_all">Ingen hämtad</string>
     <string name="action_skip">Hoppa över</string>
@@ -148,6 +147,7 @@
     <string name="action_shows_sort_favorites">Favoriter först</string>
     <string name="context_updateshow">Uppdatera</string>
     <string name="context_marknext">Sett nästa avsnitt</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Historik</string>
     <string name="recently_watched">Nyligen sedda</string>
@@ -165,6 +165,7 @@
     <string name="calendar_settings">Kalenderinställningar</string>
     <string name="only_favorites">Endast favoritserier</string>
     <string name="calendar_only_collected">Endast avsnitt i samling</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Ändlös kalender</string>
     <!-- Updating -->
     <string name="update_scheduled">Uppdaterar&#8230;</string>
@@ -189,7 +190,6 @@
     <string name="add_empty">Det finns inga serier här.</string>
     <string name="no_results">Inga resultat, försök med hela ord.</string>
     <string name="empty_show_search">Hittades inte i din serielista</string>
-    <string name="action_try_any_language">Testa alla språk</string>
     <string name="action_try_again">Försök igen</string>
     <string name="tvdb_error_does_not_exist">Serien finns inte (ännu) på TheTVDB. Försök igen senare.</string>
     <string name="add_all">Lägg till alla</string>
@@ -367,7 +367,7 @@
     <string name="privacy_policy">Sekretesspolicy</string>
     <string name="licence_tvdb">Denna app använder data och avbildningar av TheTVDB licensierat under en Creative Commons-licens.</string>
     <string name="licence_themoviedb">Denna produkt använder TMDb:s API men är inte stödd eller certifierad av TMDb.</string>
-    <string name="licence_trakt">Den här appen använder data och bilder från trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide är byggt med öppen källkod.</string>
     <string name="licences_and_credits">Licenser och tillkännagivanden</string>
     <!-- Sort -->

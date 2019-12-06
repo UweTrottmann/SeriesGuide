@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Обриши историју претраге</string>
     <string name="search_hint">Тражи епизоде</string>
-    <string name="any_language">Било који језик</string>
     <!-- Status messages -->
     <string name="updated">Ажурирано на последњу верзију.</string>
     <string name="norating">непознато</string>
@@ -105,7 +104,7 @@
     <!-- Flagging -->
     <string name="mark_all">Све одгледано</string>
     <string name="unmark_all">Неодгледано</string>
-    <string name="mark_untilhere">Означи све погледане епизоде</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Пуна колекција</string>
     <string name="uncollect_all">Празна колекција</string>
     <string name="action_skip">Прескочи</string>
@@ -149,6 +148,7 @@
     <string name="action_shows_sort_favorites">Прво омиљене</string>
     <string name="context_updateshow">Ажурирање</string>
     <string name="context_marknext">Погледана, следећа епизода</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Историјат</string>
     <string name="recently_watched">Недавно гледано</string>
@@ -166,6 +166,7 @@
     <string name="calendar_settings">Kalendar opcije</string>
     <string name="only_favorites">Само омиљене серије</string>
     <string name="calendar_only_collected">Samo kolektovane epizode</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Календар</string>
     <!-- Updating -->
     <string name="update_scheduled">Ажурирање&#8230;</string>
@@ -193,7 +194,6 @@
     <string name="add_empty">Овде нема серија.</string>
     <string name="no_results">Нема резултата, покушајте са целим речима.</string>
     <string name="empty_show_search">Nije prenađeno u vašoj show listi</string>
-    <string name="action_try_any_language">Покушајте било који језик</string>
     <string name="action_try_again">Поушајте поново</string>
     <string name="tvdb_error_does_not_exist">Šou ne postoji (još uvek) na TheTVDB. Pokušajte kasnije.</string>
     <string name="add_all">Додај све</string>
@@ -301,12 +301,12 @@
     <string name="trakt_success">Пошаљу на Trakt.</string>
     <string name="trakt_error_credentials">Нешто није у реду. Молимо проверите Ваше акредитиве и покушајте поново.</string>
     <string name="trakt_error_not_exists">Није (још) доступно на Trakt-у. Покушајте поново касније.</string>
-    <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt</string>
+    <string name="trakt_notice_not_exists">Can not (yet) be tracked with Trakt</string>
     <!-- Connect trakt -->
     <string name="trakt_account">trakt налог</string>
     <string name="connect_trakt">Повежи trakt</string>
-    <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
-    <string name="trakt_reconnect_details">Check your trakt credentials</string>
+    <string name="trakt_reconnect">Connect SeriesGuide to Trakt</string>
+    <string name="trakt_reconnect_details">Check your Trakt credentials</string>
     <string name="waitplease">Тренутак, молим&#8230;</string>
     <string name="connect">Повежи</string>
     <string name="disconnect">Прекини везу</string>
@@ -378,7 +378,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
-    <string name="licence_trakt">This app uses data and images by trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide is built using open source software.</string>
     <string name="licences_and_credits">Licences and credits</string>
     <!-- Sort -->

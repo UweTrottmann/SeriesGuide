@@ -9,11 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
@@ -66,6 +62,7 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
+import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.ClipboardTools;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -96,29 +93,36 @@ public class OverviewFragment extends Fragment implements
     public static final String ARG_INT_SHOW_TVDBID = "show_tvdbid";
     private static final String ARG_EPISODE_TVDB_ID = "episodeTvdbId";
 
-    @BindView(R.id.containerOverviewShow) View containerShow;
+    @BindView(R.id.background) ImageView imageBackground;
+
     @Nullable
     @BindView(R.id.viewStubOverviewFeedback)
     ViewStub feedbackViewStub;
     @Nullable
     @BindView(R.id.feedbackViewOverview)
     FeedbackView feedbackView;
-    @BindView(R.id.imageButtonFavorite) ImageButton buttonFavorite;
-    @BindView(R.id.containerOverviewEpisode) View containerEpisode;
-    @BindView(R.id.containerEpisodeActions) LinearLayout containerActions;
-    @BindView(R.id.background) ImageView imageBackground;
-    @BindView(R.id.imageViewOverviewEpisode) ImageView imageEpisode;
 
+    @BindView(R.id.containerOverviewShow) View containerShow;
+    @BindView(R.id.imageButtonFavorite) ImageButton buttonFavorite;
+
+    @BindView(R.id.progress_container) View containerProgress;
+    @BindView(R.id.containerOverviewEpisode) View containerEpisode;
+
+    @BindView(R.id.episode_empty_container) View containerEpisodeEmpty;
+    @BindView(R.id.buttonOverviewSimilarShows) Button buttonSimilarShows;
+
+    @BindView(R.id.episode_primary_container) View containerEpisodePrimary;
+    @BindView(R.id.dividerHorizontalOverviewEpisodeMeta) View dividerEpisodeMeta;
+    @BindView(R.id.imageViewOverviewEpisode) ImageView imageEpisode;
     @BindView(R.id.episodeTitle) TextView textEpisodeTitle;
     @BindView(R.id.episodeTime) TextView textEpisodeTime;
     @BindView(R.id.episodeInfo) TextView textEpisodeNumbers;
-    @BindView(R.id.episode_primary_container) View containerEpisodePrimary;
+
     @BindView(R.id.episode_meta_container) View containerEpisodeMeta;
-    @BindView(R.id.dividerHorizontalOverviewEpisodeMeta) View dividerEpisodeMeta;
-    @BindView(R.id.progress_container) View containerProgress;
     @BindView(R.id.containerRatings) View containerRatings;
     @BindView(R.id.dividerEpisodeButtons) View dividerEpisodeButtons;
     @BindView(R.id.buttonEpisodeCheckin) Button buttonCheckin;
+    @BindView(R.id.buttonEpisodeWatchedUpTo) Button buttonWatchedUpTo;
     @BindView(R.id.buttonEpisodeStreamingSearch) Button buttonStreamingSearch;
     @BindView(R.id.buttonEpisodeWatched) Button buttonWatch;
     @BindView(R.id.buttonEpisodeCollected) Button buttonCollect;
@@ -137,7 +141,12 @@ public class OverviewFragment extends Fragment implements
     @BindView(R.id.buttonEpisodeImdb) Button buttonImdb;
     @BindView(R.id.buttonEpisodeTvdb) Button buttonTvdb;
     @BindView(R.id.buttonEpisodeTrakt) Button buttonTrakt;
+    @BindView(R.id.buttonEpisodeShare) Button buttonShare;
+    @BindView(R.id.buttonEpisodeCalendar) Button buttonAddToCalendar;
+    @BindView(R.id.buttonEpisodeLists) Button buttonManageLists;
     @BindView(R.id.buttonEpisodeComments) Button buttonComments;
+
+    @BindView(R.id.containerEpisodeActions) LinearLayout containerActions;
 
     private Handler handler = new Handler();
     private TraktRatingsTask ratingsTask;
@@ -175,16 +184,37 @@ public class OverviewFragment extends Fragment implements
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_overview, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        return inflater.inflate(R.layout.fragment_overview, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        unbinder = ButterKnife.bind(this, view);
 
         containerEpisode.setVisibility(View.GONE);
+        containerEpisodeEmpty.setVisibility(View.GONE);
+
+        containerEpisodePrimary.setOnClickListener(viewContainer -> {
+            if (isEpisodeDataAvailable) {
+                // display episode details
+                Intent intent = new Intent(getActivity(), EpisodesActivity.class);
+                intent.putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, currentEpisodeTvdbId);
+                Utils.startActivityWithAnimation(getActivity(), intent, viewContainer);
+            }
+        });
+
+        // Empty view buttons.
+        Resources.Theme theme = getActivity().getTheme();
+        ViewTools.setVectorIconLeft(theme, buttonSimilarShows, R.drawable.ic_search_white_24dp);
+        buttonSimilarShows.setOnClickListener(v ->
+                startActivity(SimilarShowsActivity.intent(getContext(), showTvdbId, showTitle))
+        );
 
         // episode buttons
+        buttonWatchedUpTo.setVisibility(View.GONE); // Unused.
         CheatSheet.setup(buttonCheckin);
         CheatSheet.setup(buttonWatch);
         CheatSheet.setup(buttonSkip);
-        Resources.Theme theme = getActivity().getTheme();
         ViewTools.setVectorIconTop(theme, buttonWatch, R.drawable.ic_watch_black_24dp);
         ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
         ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
@@ -203,13 +233,27 @@ public class OverviewFragment extends Fragment implements
         ViewTools.setVectorIconLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp);
         ViewTools.setVectorIconLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp);
         ViewTools.setVectorIconLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonShare, R.drawable.ic_share_white_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonAddToCalendar, R.drawable.ic_event_white_24dp);
+        ViewTools.setVectorIconLeft(theme, buttonManageLists, R.drawable.ic_list_white_24dp);
+
+        buttonShare.setOnClickListener(v -> shareEpisode());
+        buttonAddToCalendar.setOnClickListener(v -> createCalendarEvent());
+        buttonManageLists.setOnClickListener(v -> {
+                    if (isEpisodeDataAvailable) {
+                        ManageListsDialogFragment.show(
+                                requireFragmentManager(),
+                                currentEpisodeCursor.getInt(EpisodeQuery._ID),
+                                ListItemTypes.EPISODE
+                        );
+                    }
+                }
+        );
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         ClipboardTools.copyTextToClipboardOnLongClick(textDescription);
         ClipboardTools.copyTextToClipboardOnLongClick(textGuestStars);
         ClipboardTools.copyTextToClipboardOnLongClick(textDvdNumber);
-
-        return v;
     }
 
     @Override
@@ -227,8 +271,6 @@ public class OverviewFragment extends Fragment implements
         LoaderManager loaderManager = LoaderManager.getInstance(this);
         loaderManager.initLoader(OverviewActivity.OVERVIEW_SHOW_LOADER_ID, null, this);
         loaderManager.initLoader(OverviewActivity.OVERVIEW_EPISODE_LOADER_ID, null, this);
-
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -273,44 +315,6 @@ public class OverviewFragment extends Fragment implements
             ratingsTask.cancel(true);
             ratingsTask = null;
         }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.overview_fragment_menu, menu);
-
-        // enable/disable menu items
-        MenuItem itemShare = menu.findItem(R.id.menu_overview_share);
-        itemShare.setEnabled(isEpisodeDataAvailable);
-        itemShare.setVisible(isEpisodeDataAvailable);
-        MenuItem itemCalendar = menu.findItem(R.id.menu_overview_calendar);
-        itemCalendar.setEnabled(isEpisodeDataAvailable);
-        itemCalendar.setVisible(isEpisodeDataAvailable);
-        MenuItem itemManageLists = menu.findItem(R.id.menu_overview_manage_lists);
-        if (itemManageLists != null) {
-            itemManageLists.setEnabled(isEpisodeDataAvailable);
-            itemManageLists.setVisible(isEpisodeDataAvailable);
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.menu_overview_share) {
-            shareEpisode();
-            return true;
-        } else if (itemId == R.id.menu_overview_calendar) {
-            createCalendarEvent();
-            return true;
-        } else if (itemId == R.id.menu_overview_manage_lists) {
-            if (isEpisodeDataAvailable) {
-                ManageListsDialogFragment.show(getFragmentManager(),
-                        currentEpisodeCursor.getInt(EpisodeQuery._ID), ListItemTypes.EPISODE);
-            }
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void createCalendarEvent() {
@@ -569,7 +573,7 @@ public class OverviewFragment extends Fragment implements
                 isEpisodeDataAvailable = data != null && data.moveToFirst();
                 currentEpisodeCursor = data;
                 maybeAddFeedbackView();
-                setupEpisodeViews(data);
+                updateEpisodeViews(data);
                 break;
             case OverviewActivity.OVERVIEW_SHOW_LOADER_ID:
                 isShowDataAvailable = data != null && data.moveToFirst();
@@ -625,14 +629,10 @@ public class OverviewFragment extends Fragment implements
         buttonStreamingSearch.setEnabled(enabled);
     }
 
-    private void setupEpisodeViews(Cursor episode) {
+    private void updateEpisodeViews(Cursor episode) {
         if (isEpisodeDataAvailable) {
             // some episode properties
             currentEpisodeTvdbId = episode.getInt(EpisodeQuery._ID);
-
-            // make title and image clickable
-            containerEpisodePrimary.setOnClickListener(episodeClickListener);
-            containerEpisodePrimary.setFocusable(true);
 
             // hide check-in if not connected to trakt or hexagon is enabled
             boolean isConnectedToTrakt = TraktCredentials.get(getActivity()).hasCredentials();
@@ -656,22 +656,17 @@ public class OverviewFragment extends Fragment implements
             loadEpisodeImage(episode.getString(EpisodeQuery.IMAGE));
             loadEpisodeActionsDelayed();
 
+            containerEpisodeEmpty.setVisibility(View.GONE);
+            containerEpisodePrimary.setVisibility(View.VISIBLE);
             containerEpisodeMeta.setVisibility(View.VISIBLE);
         } else {
-            // no next episode: display single line info text, remove other views
+            // No next episode: display empty view with suggestion on what to do.
             currentEpisodeTvdbId = 0;
-            textEpisodeTitle.setText(R.string.no_nextepisode);
-            textEpisodeTime.setText(null);
-            textEpisodeNumbers.setText(null);
-            containerEpisodePrimary.setOnClickListener(null);
-            containerEpisodePrimary.setClickable(false);
-            containerEpisodePrimary.setFocusable(false);
-            containerEpisodeMeta.setVisibility(View.GONE);
-            loadEpisodeImage(null);
-        }
 
-        // enable/disable applicable menu items
-        getActivity().invalidateOptionsMenu();
+            containerEpisodeEmpty.setVisibility(View.VISIBLE);
+            containerEpisodePrimary.setVisibility(View.GONE);
+            containerEpisodeMeta.setVisibility(View.GONE);
+        }
 
         // animate view into visibility
         if (containerEpisode.getVisibility() == View.GONE) {
@@ -989,17 +984,4 @@ public class OverviewFragment extends Fragment implements
                             getActivity().getTheme(), containerActions, null);
                 }
             };
-
-    private OnClickListener episodeClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if (isEpisodeDataAvailable) {
-                // display episode details
-                Intent intent = new Intent(getActivity(), EpisodesActivity.class);
-                intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
-                        currentEpisodeTvdbId);
-                Utils.startActivityWithAnimation(getActivity(), intent, view);
-            }
-        }
-    };
 }

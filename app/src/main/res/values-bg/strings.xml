@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Изчисти историята на търсене</string>
     <string name="search_hint">Търсене на епизоди</string>
-    <string name="any_language">Който и да е език</string>
     <!-- Status messages -->
     <string name="updated">Актуализиран до последна версия.</string>
     <string name="norating">няма</string>
@@ -104,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">Всички са гледани</string>
     <string name="unmark_all">Никой не е гледан</string>
-    <string name="mark_untilhere">Всички излъчени до сега са гледани</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Всички са в колекцията</string>
     <string name="uncollect_all">Нито един не е в колекцията</string>
     <string name="action_skip">Пропусни</string>
@@ -148,6 +147,7 @@
     <string name="action_shows_sort_favorites">Първо Любими</string>
     <string name="context_updateshow">Актуализирай</string>
     <string name="context_marknext">Гледан следващ епизод</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">История</string>
     <string name="recently_watched">Наскоро гледан/и</string>
@@ -165,6 +165,7 @@
     <string name="calendar_settings">Настройки на календара</string>
     <string name="only_favorites">Само Любими сериали</string>
     <string name="calendar_only_collected">Само притежавани епизоди</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Безкраен календар</string>
     <!-- Updating -->
     <string name="update_scheduled">Обновяване&#8230;</string>
@@ -189,7 +190,6 @@
     <string name="add_empty">Няма ТВ предавания.</string>
     <string name="no_results">Няма резултати, опитайте търсене с цели думи.</string>
     <string name="empty_show_search">Не е намерено в твоя списък със сериали</string>
-    <string name="action_try_any_language">Опитай всеки език</string>
     <string name="action_try_again">Опитай отново</string>
     <string name="tvdb_error_does_not_exist">Шоуто не съществува (все още) на TheTVDB. Опитайте отново по-късно.</string>
     <string name="add_all">Добави всички</string>
@@ -367,7 +367,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Този продукт използва TMDb API, но не е сертифицирано от TMDb.</string>
-    <string name="licence_trakt">Това приложение използва данни и изображения от trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide е построена чрез използване на софтуер с отворен код.</string>
     <string name="licences_and_credits">Лицензии и кредити</string>
     <!-- Sort -->

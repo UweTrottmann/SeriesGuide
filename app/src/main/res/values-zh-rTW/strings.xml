@@ -11,7 +11,7 @@
     <string name="help">說明</string>
     <string name="help_and_feedback">幫助與意見反饋</string>
     <string name="drawer_open">開啟側邊選單</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">此版本的 Android 將不會收到 SeriesGuide 的任何更新。</string>
     <!-- Media items -->
     <string name="show">節目</string>
     <string name="episode">集數</string>
@@ -21,7 +21,7 @@
     <string name="season_number">第 %d 季</string>
     <string name="seasons">季數</string>
     <string name="specialseason">特集</string>
-    <string name="ratings">Ratings</string>
+    <string name="ratings">評分</string>
     <!-- Descriptions -->
     <string name="description_overview">簡介</string>
     <string name="description_poster">顯示海報</string>
@@ -33,17 +33,16 @@
     <string name="save_selection">儲存所選項目</string>
     <string name="action_display_all">顯示全部</string>
     <string name="web_search">網頁搜尋</string>
-    <string name="add_to_homescreen">Add to Home screen</string>
+    <string name="add_to_homescreen">新增至主螢幕</string>
     <string name="action_open">開啟</string>
     <string name="sync_manually">手動同步</string>
     <string name="sync_and_update">同步 &amp; 和更新</string>
     <string name="sync_and_download_all">同步&amp; 及下載</string>
-    <string name="action_turn_off">Turn off</string>
+    <string name="action_turn_off">關閉</string>
     <string name="action_stream">Stream or purchase</string>
     <!-- Search -->
     <string name="clear_search_history">清除搜尋記錄</string>
     <string name="search_hint">搜尋集數</string>
-    <string name="any_language">任何語言</string>
     <!-- Status messages -->
     <string name="updated">已更新到最新版本。</string>
     <string name="norating">無</string>
@@ -54,8 +53,8 @@
     <string name="database_error">無法修改資料。</string>
     <string name="reinstall_info">嘗試在設置中備份，然後重新安裝應用並恢復備份。</string>
     <string name="api_error_generic">無法移除節目%s。請稍後再試。</string>
-    <string name="api_failed">Failed: %s</string>
-    <string name="copy_to_clipboard">Copied to clipboard</string>
+    <string name="api_failed">失敗：%s</string>
+    <string name="copy_to_clipboard">已複製至剪貼簿</string>
     <!-- Sharing -->
     <string name="share">分享</string>
     <string name="share_show">分享節目</string>
@@ -93,8 +92,8 @@
     <string name="no_translation">%2$s沒有%1$s的翻譯說明。</string>
     <string name="no_translation_title">無翻譯</string>
     <string name="no_spoilers">一些細節已隱藏起來避免劇透，可前往設定關閉此功能。</string>
-    <string name="format_source">Source: %s</string>
-    <string name="format_last_edited">Last edited: %s</string>
+    <string name="format_source">來源：%s</string>
+    <string name="format_last_edited">上次編輯於：%s</string>
     <!-- Date and Time -->
     <string name="today">今天</string>
     <string name="now">目前</string>
@@ -103,7 +102,7 @@
     <!-- Flagging -->
     <string name="mark_all">全部已觀看</string>
     <string name="unmark_all">全部未觀看</string>
-    <string name="mark_untilhere">觀看所有已播出</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">將所有影集標示為已蒐藏</string>
     <string name="uncollect_all">取消所有影集蒐藏標示</string>
     <string name="action_skip">略過</string>
@@ -123,8 +122,8 @@
     <string name="context_unfavorite">自最愛移除</string>
     <string name="favorited">新增至我的最愛</string>
     <string name="unfavorited">從我的最愛中刪除</string>
-    <string name="action_episode_notifications_on">Turn on episode notifications</string>
-    <string name="action_episode_notifications_off">Turn off episode notifications</string>
+    <string name="action_episode_notifications_on">開啟新劇集通知</string>
+    <string name="action_episode_notifications_off">開啟新劇集通知</string>
     <string name="context_hide">隱藏</string>
     <string name="context_unhide">取消隱藏</string>
     <string name="hidden">隱藏影集</string>
@@ -147,6 +146,7 @@
     <string name="action_shows_sort_favorites">喜愛影集優先</string>
     <string name="context_updateshow">更新</string>
     <string name="context_marknext">觀看下一集</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">歴史紀錄</string>
     <string name="recently_watched">最近觀賞</string>
@@ -164,6 +164,7 @@
     <string name="calendar_settings">Calendar settings</string>
     <string name="only_favorites">僅顯示喜愛影集</string>
     <string name="calendar_only_collected">Only collected episodes</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">萬年曆</string>
     <!-- Updating -->
     <string name="update_scheduled">更新中......</string>
@@ -178,14 +179,13 @@
         <item quantity="other">%d to be released</item>
     </plurals>
     <plurals name="remaining_episodes_plural">
-        <item quantity="other">%d remaining</item>
+        <item quantity="other">剩餘 %d</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">輸入節目名稱</string>
     <string name="add_empty">無此節目</string>
     <string name="no_results">查無結果，請嘗試完整單字。</string>
-    <string name="empty_show_search">Not found in your show list</string>
-    <string name="action_try_any_language">嘗試其他種語言</string>
+    <string name="empty_show_search">節目單中未找到</string>
     <string name="action_try_again">再試一次</string>
     <string name="tvdb_error_does_not_exist">TheTVDB 上不存在。稍後再試。</string>
     <string name="add_all">全部加入</string>
@@ -193,14 +193,14 @@
     <string name="add_started">%s將會顯示在你的清單中。</string>
     <string name="add_error">無法新增%s</string>
     <string name="add_already_exists">%s已經在你的清單當中。</string>
-    <string name="title_new_episodes">New episodes</string>
+    <string name="title_new_episodes">新劇集</string>
     <string name="recommended">推薦</string>
     <string name="watched_shows">已看過</string>
     <string name="shows_collection">收藏</string>
     <string name="watchlist">待看清單</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">無結果</string>
+    <string name="title_similar_shows">類似節目</string>
     <!-- Lists -->
     <string name="first_list">第一個清單</string>
     <string name="list_add">新增清單</string>
@@ -217,7 +217,7 @@
     <string name="title_discover">探索</string>
     <string name="title_popular">熱門</string>
     <string name="title_digital_releases">數位發行</string>
-    <string name="title_disc_releases">Disc releases</string>
+    <string name="title_disc_releases">碟片版本</string>
     <string name="movies_in_theatres">上映中</string>
     <string name="movies_collection">收藏</string>
     <string name="movies_watchlist">待看清單</string>
@@ -265,7 +265,7 @@
     <!-- Hexagon -->
     <string name="hexagon_warning">實驗性</string>
     <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">登入</string>
     <string name="hexagon_signout">登出</string>
     <string name="hexagon_setup_incomplete">SeriesGuide Cloud未完成設置。</string>
@@ -354,9 +354,9 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
-    <string name="licence_themoviedb">此產品使用TMDb的API但並非尤其支持。</string>
-    <string name="licence_trakt">這個應用程式使用 trakt 的資料和圖像。</string>
+    <string name="licence_tvdb">此應用程式使用基於 CC BY-NC 4.0 許可的 TheTVDB 提供的資料和圖像。</string>
+    <string name="licence_themoviedb">此應用程式使用 TMDb 的 API ，但未被 TMDb 認可或認證。</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide 是採用開放源碼軟體。</string>
     <string name="licences_and_credits">憑證及信用</string>
     <!-- Sort -->
@@ -431,13 +431,13 @@
     <string name="pref_notifications_select_shows">Select shows</string>
     <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
     <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
-    <string name="pref_notification_channel_errors">Errors</string>
+    <string name="pref_notifications_hidden_summary">即使已啟用通知，也不要通知已隱藏節目</string>
+    <string name="pref_notification_channel_errors">錯誤</string>
     <!-- List Widget -->
     <string name="hide_watched">隱藏已看過集數</string>
     <string name="pref_widget_opacity">小工具背景</string>
     <string name="pref_widget_type">小工具類型</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">使用大的字型</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">透明度</string>
     <string name="widget_background_25">25%</string>
@@ -448,11 +448,11 @@
     <string name="onlyx">僅供贊助者</string>
     <string name="action_upgrade">解鎖所有功能</string>
     <string name="billing_action_subscribe">訂閱</string>
-    <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+    <string name="billing_action_manage_subscriptions">管理訂閱</string>
     <string name="billing_action_pass">取得 X Pass</string>
-    <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_price_subscribe">每年%1$s，免費試用，可在%2$s 內隨時取消。</string>
+    <string name="billing_duration_format">%1$s / 年</string>
+    <string name="billing_sub_description">免費試用，可隨時取消。</string>
     <string name="billing_price_pass">一次購買</string>
     <string name="upgrade_description">解鎖所有功能，包括通知、 主題和更多清單小部件。幫助我進行更多地更新。</string>
     <string name="upgrade_success">謝謝贊助SeriesGuide ！您可以使用的所有功能。</string>

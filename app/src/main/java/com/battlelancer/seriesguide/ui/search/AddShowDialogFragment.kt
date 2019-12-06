@@ -368,7 +368,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         ViewTools.setValueOrPlaceholder(genres, TextTools.splitAndKitTVDBStrings(show.genres))
 
         // Poster.
-        TvdbImageTools.loadShowPosterFitCrop(activity, poster, show.poster_small)
+        TvdbImageTools.loadShowPosterFitCrop(activity!!, poster, show.poster_small)
 
         // Enable adding of show, display views.
         buttonPositive.isEnabled = true
@@ -444,8 +444,8 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
         private fun newInstance(context: Context, show: SearchResult): AddShowDialogFragment {
             if (TextUtils.isEmpty(show.language)) {
-                // Use search or fall back language.
-                show.language = DisplaySettings.getSearchLanguageOrFallbackIfAny(context)
+                // Use search language.
+                show.language = DisplaySettings.getSearchLanguage(context)
             }
 
             return AddShowDialogFragment().apply { 

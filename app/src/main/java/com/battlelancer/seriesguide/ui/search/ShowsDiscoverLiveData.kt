@@ -7,18 +7,13 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
-import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.TmdbDate
-import com.uwetrottmann.trakt5.enums.Extended
 import timber.log.Timber
 import java.util.Calendar
 import java.util.Date
-import java.util.LinkedList
 
 class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveData.Result>() {
 
@@ -31,11 +26,10 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
 
     private var task: AsyncTask<Void, Void, Result?>? = null
     private var query: String = ""
-    private var language: String = context.getString(R.string.language_code_any)
-    private val languageCodeAny: String by lazy { context.getString(R.string.language_code_any) }
+    private var language: String = context.getString(R.string.show_default_language)
 
     /**
-     * Schedules loading, give two letter ISO 639-1 [language] code or 'xx' meaning any language.
+     * Schedules loading, give two letter ISO 639-1 [language] code.
      * Set [forceLoad] to load new set of results even if language has not changed.
      * Returns if it will load.
      */
@@ -59,22 +53,16 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
 
         override fun doInBackground(vararg params: Void?): Result? {
             return if (query.isBlank()) {
-                // no query: load a list of shows with new episodes in the last 7 days
+                // No query: load a list of shows with new episodes in the last 7 days.
                 getShowsWithNewEpisodes()
             } else {
-                // have a query:
-                if (DisplaySettings.LANGUAGE_EN == language) {
-                    // search trakt (has better search) when using English
-                    searchShowsOnTrakt()
-                } else {
-                    // use TheTVDB search for all other (or any) languages
-                    searchShowsOnTvdb()
-                }
+                // Have a query: search using TheTVDB.
+                searchShowsOnTvdb()
             }
         }
 
         private fun getShowsWithNewEpisodes(): Result? {
-            val languageActual = TmdbTools2().getSafeLanguageCode(language, languageCodeAny)
+            val languageActual = language
 
             val tmdb = SgApp.getServicesComponent(context).tmdb()
             val call = tmdb.discoverTv()
@@ -138,12 +126,7 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
             val tvdbTools = SgApp.getServicesComponent(context).tvdbTools()
 
             try {
-                val results = if (language == languageCodeAny) {
-                    // use the v1 API to do an any language search not supported by v2
-                    tvdbTools.searchShow(query, null)
-                } else {
-                    tvdbTools.searchSeries(query, language)
-                }
+                val results = tvdbTools.searchSeries(query, language)
                 SearchTools().markLocalShowsAsAddedAndSetPosterPath(context, results)
                 return buildResultSuccess(results, R.string.no_results, true)
             } catch (e: TvdbException) {
@@ -151,36 +134,6 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
             }
 
             return buildResultFailure(R.string.tvdb, true)
-        }
-
-        private fun searchShowsOnTrakt(): Result? {
-            val traktSearch = SgApp.getServicesComponent(context).traktSearch()
-
-            val searchResults = SgTrakt.executeCall<List<com.uwetrottmann.trakt5.entities.SearchResult>>(
-                traktSearch.textQueryShow(query,
-                            null, null,
-                            null, null,
-                            null, null, null, null, null,
-                            Extended.FULL,
-                            1, 30),
-                    "search shows"
-            )
-            return if (searchResults != null) {
-                val shows = searchResults
-                        .asSequence()
-                        .filter {
-                            // skip shows without required TVDB id
-                            it.show?.ids?.tvdb != null
-                        }
-                        .mapTo(LinkedList()) { it.show!! }
-
-                // manually set the language to English
-                val results = TraktAddLoader.parseTraktShowsToSearchResults(context,
-                        shows, DisplaySettings.LANGUAGE_EN)
-                buildResultSuccess(results, R.string.no_results, true)
-            } else {
-                buildResultFailure(R.string.trakt, true)
-            }
         }
 
         private fun buildResultSuccess(results: List<SearchResult>?, @StringRes emptyTextResId: Int,

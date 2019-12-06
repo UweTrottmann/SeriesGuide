@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui.episodes
 
-import android.content.Intent
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.database.Cursor
 import android.os.Bundle
@@ -33,7 +32,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.episodes.EpisodesAdapter.OnFlagEpisodeListener
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 
 /**
@@ -42,7 +40,6 @@ import com.battlelancer.seriesguide.util.ViewTools
 class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.PopupMenuClickListener {
 
     private lateinit var sortOrder: Constants.EpisodeSorting
-    private var isDualPane: Boolean = false
     private lateinit var adapter: EpisodesAdapter
     private lateinit var model: EpisodesViewModel
 
@@ -137,16 +134,7 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
             registerOnSharedPreferenceChangeListener(onSortOrderChangedListener)
         }
 
-        // Check to see if we have a frame in which to embed the details
-        // fragment directly in the containing UI.
-        val pager = requireActivity().findViewById<View>(R.id.pagerEpisodes)
-        isDualPane = pager != null && pager.visibility == View.VISIBLE
-
-        if (isDualPane) {
-            listViewEpisodes.choiceMode = ListView.CHOICE_MODE_SINGLE
-        } else {
-            startingPosition = -1 // overwrite starting position
-        }
+        listViewEpisodes.choiceMode = ListView.CHOICE_MODE_SINGLE
         lastCheckedItemId = -1
 
         adapter = EpisodesAdapter(requireActivity(), this, this)
@@ -167,28 +155,16 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
     }
 
     /**
-     * Display the episode at the given position in a detail pane or if not available in a new
-     * activity.
+     * Display the episode at the given position in the detail pane, highlight it in the list.
      */
-    private fun showDetails(view: View?, position: Int) {
-        if (isDualPane) {
-            val activity = requireActivity() as EpisodesActivity
-            activity.setCurrentPage(position)
-            setItemChecked(position)
-        } else {
-            val episodeId = listViewEpisodes.getItemIdAtPosition(position).toInt()
-
-            val intent = Intent().apply {
-                setClass(requireActivity(), EpisodesActivity::class.java)
-                putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId)
-            }
-
-            Utils.startActivityWithAnimation(requireActivity(), intent, view)
-        }
+    private fun showDetails(position: Int) {
+        val activity = requireActivity() as EpisodesActivity
+        activity.setCurrentPage(position)
+        setItemChecked(position)
     }
 
     private val listOnItemClickListener =
-        AdapterView.OnItemClickListener { _, view, position, _ -> showDetails(view, position) }
+        AdapterView.OnItemClickListener { _, _, position, _ -> showDetails(position) }
 
     override fun onResume() {
         super.onResume()
@@ -234,6 +210,7 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                 val isWatched = EpisodeTools.isWatched(watchedFlag)
                 findItem(R.id.menu_action_episodes_watched).isVisible = !isWatched
                 findItem(R.id.menu_action_episodes_not_watched).isVisible = isWatched
+                findItem(R.id.menu_action_episodes_watched_up_to).isVisible = !isWatched
                 val isSkipped = EpisodeTools.isSkipped(watchedFlag)
                 findItem(R.id.menu_action_episodes_skip).isVisible = !isWatched && !isSkipped
                 findItem(R.id.menu_action_episodes_dont_skip).isVisible = isSkipped
@@ -264,8 +241,8 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                         onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, false)
                         true
                     }
-                    R.id.menu_action_episodes_watched_previous -> {
-                        EpisodeTools.episodeWatchedPrevious(
+                    R.id.menu_action_episodes_watched_up_to -> {
+                        EpisodeTools.episodeWatchedUpTo(
                             requireContext(),
                             showTvdbId,
                             releaseTimeMs,

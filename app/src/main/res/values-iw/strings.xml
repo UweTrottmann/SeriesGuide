@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">נקה את היסטוריית החיפוש</string>
     <string name="search_hint">חפש פרקים</string>
-    <string name="any_language">כל שפה</string>
     <!-- Status messages -->
     <string name="updated">עדכן לגרסה האחרונה.</string>
     <string name="norating">לא ידוע</string>
@@ -106,7 +105,7 @@
     <!-- Flagging -->
     <string name="mark_all">הכל נצפה</string>
     <string name="unmark_all">סמן הכל כלא נצפה</string>
-    <string name="mark_untilhere">כל הפרקים ששודרו נצפו</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">אסוף הכול</string>
     <string name="uncollect_all">אל תאסוף כלום</string>
     <string name="action_skip">דלג</string>
@@ -150,6 +149,7 @@
     <string name="action_shows_sort_favorites">מועדפים בהתחלה</string>
     <string name="context_updateshow">עדכן</string>
     <string name="context_marknext">צפה בפרק הבא</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">היסטוריה</string>
     <string name="recently_watched">נצפה לאחרונה</string>
@@ -167,6 +167,7 @@
     <string name="calendar_settings">הגדרות לוח שידורים</string>
     <string name="only_favorites">סדרות מעודפות בלבד</string>
     <string name="calendar_only_collected">רק פרקים שנאספו</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">לוח שנה אינסופית</string>
     <!-- Updating -->
     <string name="update_scheduled">מעדכן&#8230;</string>
@@ -197,7 +198,6 @@
     <string name="add_empty">אין סדרות כאן.</string>
     <string name="no_results">אין תוצאות, נסה ביטויים שלמים.</string>
     <string name="empty_show_search">לא נמצא ברשימת הסדרות</string>
-    <string name="action_try_any_language">נסה בכל שפה</string>
     <string name="action_try_again">נסה שוב</string>
     <string name="tvdb_error_does_not_exist">הסדרה אינה קיימת (עדיין) ב-TheTVDB. נסה שוב מאוחר יותר.</string>
     <string name="add_all">הוסף הכל</string>
@@ -389,7 +389,7 @@
     <string name="privacy_policy">מדיניות פרטיות</string>
     <string name="licence_tvdb">יישום זה משתמש במידע ובתמונות מ TheTVDB תחת רישיון Creative Commons.</string>
     <string name="licence_themoviedb">מוצר זה עושה שימוש בממשק התכנות של TMDb, אך הוא אינו נתמך או מאושר על ידי TMDb.</string>
-    <string name="licence_trakt">יישום זה משתמש בנתונים ותמונות מאתר trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide בנוי באמצעות תוכנת קוד פתוח.</string>
     <string name="licences_and_credits">רישיונות ויוצרים</string>
     <!-- Sort -->

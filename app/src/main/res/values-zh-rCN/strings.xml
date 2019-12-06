@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">清空搜索历史</string>
     <string name="search_hint">搜索剧集</string>
-    <string name="any_language">所有语言</string>
     <!-- Status messages -->
     <string name="updated">已更新至最新版本。</string>
     <string name="norating">无评分</string>
@@ -103,7 +102,7 @@
     <!-- Flagging -->
     <string name="mark_all">全部标记为已观看</string>
     <string name="unmark_all">全部标记为未观看</string>
-    <string name="mark_untilhere">标记已播剧集为已观看</string>
+    <string name="action_watched_up_to">已观看到这里</string>
     <string name="collect_all">全部标记为已收藏</string>
     <string name="uncollect_all">全部标记为未收藏</string>
     <string name="action_skip">标记为已跳过</string>
@@ -147,6 +146,7 @@
     <string name="action_shows_sort_favorites">依据喜爱状态</string>
     <string name="context_updateshow">更新</string>
     <string name="context_marknext">标记本集为已观看</string>
+    <string name="action_episodes_switch_view">切换视图</string>
     <!-- History -->
     <string name="user_stream">历史记录</string>
     <string name="recently_watched">最近观看</string>
@@ -164,6 +164,7 @@
     <string name="calendar_settings">日历设置</string>
     <string name="only_favorites">仅显示喜爱节目</string>
     <string name="calendar_only_collected">仅已收藏剧集</string>
+    <string name="calendar_only_premieres">仅首映</string>
     <string name="pref_infinite_scrolling">无限的日历</string>
     <!-- Updating -->
     <string name="update_scheduled">正在更新&#8230;</string>
@@ -185,7 +186,6 @@
     <string name="add_empty">尚未添加任何节目</string>
     <string name="no_results">请键入完整的原始剧目名称\n暂时不提供译名或内容摘要搜索</string>
     <string name="empty_show_search">在您的节目列表中找不到</string>
-    <string name="action_try_any_language">尝试使用其它语言搜索</string>
     <string name="action_try_again">重试</string>
     <string name="tvdb_error_does_not_exist">此节目在 TheTVDB 上（尚）不存在。请稍后再试。</string>
     <string name="add_all">全部添加</string>
@@ -355,8 +355,8 @@
     <!-- About screen -->
     <string name="privacy_policy">隐私策略</string>
     <string name="licence_tvdb">此应用程序所使用的数据和图像由 TheTVDB 通过知识共享许可证授权提供。</string>
-    <string name="licence_themoviedb">此应用程序使用了 TMDb 应用程序接口，但与 TMDb 并无关联，且没有获得 TMDb 认证。</string>
-    <string name="licence_trakt">此应用程序使用了来自 trakt 的数据和图片。</string>
+    <string name="licence_themoviedb">此应用程序使用了 TMDb 的接口，但未被 TMDb 认可或认证。</string>
+    <string name="licence_trakt">此应用程序使用了 Trakt 的数据和图像。</string>
     <string name="about_open_source">SeriesGuide 是采用开放源码软件编写的。</string>
     <string name="licences_and_credits">许可证与信用</string>
     <!-- Sort -->
@@ -435,8 +435,8 @@
     <string name="pref_notification_channel_errors">错误</string>
     <!-- List Widget -->
     <string name="hide_watched">隐藏已观看剧集</string>
-    <string name="pref_widget_opacity">小部件背景</string>
-    <string name="pref_widget_type">小部件类型</string>
+    <string name="pref_widget_opacity">微件背景</string>
+    <string name="pref_widget_type">微件类型</string>
     <string name="pref_large_font">使用大字体</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">100%</string>
@@ -454,7 +454,7 @@
     <string name="billing_duration_format">%1$s / 年</string>
     <string name="billing_sub_description">免费试用，随时取消。</string>
     <string name="billing_price_pass">一次性支付</string>
-    <string name="upgrade_description">解锁完整版应用程序，包括推送通知、主题、小部件等功能。\n您支付的费用将帮助作者开发和完善新功能。</string>
+    <string name="upgrade_description">解锁完整版应用程序，包括推送通知、主题、微件等功能。您支付的费用将帮助作者开发和完善新功能。</string>
     <string name="upgrade_success">恭喜，您已解锁全部高级功能！感谢您的支持！</string>
     <string name="billing_learn_more">升级为专业版有哪些优势？</string>
     <string name="subscription_expired">订阅已过期</string>

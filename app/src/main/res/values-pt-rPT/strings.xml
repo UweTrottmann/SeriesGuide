@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Limpar histórico de pesquisa</string>
     <string name="search_hint">Procurar episódios</string>
-    <string name="any_language">Qualquer idioma</string>
     <!-- Status messages -->
     <string name="updated">Atualizado para a última versão.</string>
     <string name="norating">n/a</string>
@@ -104,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">Assisti a todos</string>
     <string name="unmark_all">Não assisti a nenhum</string>
-    <string name="mark_untilhere">Assisti a todos os episódios já exibidos</string>
+    <string name="action_watched_up_to">Assistiu até aqui</string>
     <string name="collect_all">Todos adquiridos</string>
     <string name="uncollect_all">Nenhum adquirido</string>
     <string name="action_skip">Avançar</string>
@@ -148,14 +147,15 @@
     <string name="action_shows_sort_favorites">Privilegiar Favoritos</string>
     <string name="context_updateshow">Atualizar</string>
     <string name="context_marknext">Marcar próximo episódio como visto</string>
+    <string name="action_episodes_switch_view">Alterar visualização</string>
     <!-- History -->
     <string name="user_stream">Histórico</string>
     <string name="recently_watched">Visto recentemente</string>
     <string name="friends_recently">Amigos do trakt</string>
     <string name="now_empty">Não tenho nada para te mostrar. Vai ver mas é algumas séries!</string>
     <string name="now_movies_empty">Não tenho nada para te mostrar, pá. Não tens filmes para ver?</string>
-    <string name="user_stream_empty">Parece que não usas o trakt há algum tempo. Procura por novas séries!</string>
-    <string name="user_movie_stream_empty">Parece que não usas o trakt há algum tempo. Procura por novos filmes!</string>
+    <string name="user_stream_empty">Parece que não usas o Trakt há algum tempo. Procura por novas séries!</string>
+    <string name="user_movie_stream_empty">Parece que não usas o Trakt há algum tempo. Procura por novos filmes!</string>
     <!-- Calendar -->
     <string name="upcoming">Próximos</string>
     <string name="recent">Recentes</string>
@@ -165,6 +165,7 @@
     <string name="calendar_settings">Configurações do calendário</string>
     <string name="only_favorites">Apenas séries favoritas</string>
     <string name="calendar_only_collected">Apenas episódios que possuo</string>
+    <string name="calendar_only_premieres">Apenas estreias</string>
     <string name="pref_infinite_scrolling">Calendário infinito</string>
     <!-- Updating -->
     <string name="update_scheduled">A Atualizar&#8230;</string>
@@ -189,7 +190,6 @@
     <string name="add_empty">Não existe nenhuma série.</string>
     <string name="no_results">Nenhum resultado, tenta palavras completas.</string>
     <string name="empty_show_search">Não foi encontrado na tua lista de séries</string>
-    <string name="action_try_any_language">Tentar em qualquer idioma</string>
     <string name="action_try_again">Tentar novamente</string>
     <string name="tvdb_error_does_not_exist">A série (ainda) não existe no TheTVDB. Tenta mais tarde.</string>
     <string name="add_all">Adicionar todas as séries</string>
@@ -203,8 +203,8 @@
     <string name="shows_collection">Coleção</string>
     <string name="watchlist">Desejo Ver</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">Sem resultados</string>
+    <string name="title_similar_shows">Séries semelhantes</string>
     <!-- Lists -->
     <string name="first_list">Lista Pessoal</string>
     <string name="list_add">Adicionar lista</string>
@@ -272,7 +272,7 @@
     <!-- Hexagon -->
     <string name="hexagon_warning">Experimental</string>
     <string name="hexagon_description">SeriesGuide Cloud ajuda-te fazendo uma cópia de segurança e a sincronizar as tuas séries, listas e filmes.</string>
-    <string name="hexagon_warning_trakt">Enquanto conectado ao SeriesGuide Cloud algumas funções do trakt não estarão disponíveis.</string>
+    <string name="hexagon_warning_trakt">Enquanto conectado ao SeriesGuide Cloud algumas funções do Trakt não estarão disponíveis</string>
     <string name="hexagon_signin">Conectar</string>
     <string name="hexagon_signout">Desconectar</string>
     <string name="hexagon_setup_incomplete">A configuração do SeriesGuide Cloud não foi concluída.</string>
@@ -285,27 +285,27 @@
     <string name="hexagon_signed_out">Desconectado do SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Erro ao Iniciar Sessão com o Google (%s)</string>
     <!-- trakt -->
-    <string name="trakt_submitqueued">A submeter ao trakt.</string>
-    <string name="checkin_success_trakt">Deu entrada a %s no trakt.</string>
-    <string name="checkin_canceled_success_trakt">Entrada cancelada no trakt.</string>
+    <string name="trakt_submitqueued">A submeter ao Trakt.</string>
+    <string name="checkin_success_trakt">Deu entrada a %s no Trakt</string>
+    <string name="checkin_canceled_success_trakt">Entrada cancelada no Trakt</string>
     <string name="traktcheckin_cancel">Substituir</string>
     <string name="traktcheckin_inprogress">Já deste entrada a outro episódio ou filme. Podes substituir a entrada anterior ou esperar %s e tentar novamente.</string>
     <string name="traktcheckin_wait">Prefiro esperar</string>
-    <string name="trakt_success">Submetido com sucesso ao trakt.</string>
+    <string name="trakt_success">Submetido com sucesso ao Trakt</string>
     <string name="trakt_error_credentials">Algo está errado. Certifica-te, por favor, que as tuas credenciais estão correctas e tenta de novo.</string>
-    <string name="trakt_error_not_exists">Não está (ainda) disponível no trakt. Tenta mais tarde.</string>
-    <string name="trakt_notice_not_exists">Não pode (ainda) ser seguido com o trakt.</string>
+    <string name="trakt_error_not_exists">Não está (ainda) disponível no Trakt. Tenta mais tarde.</string>
+    <string name="trakt_notice_not_exists">Não pode (ainda) ser seguido com o Trakt</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">Conta trakt</string>
-    <string name="connect_trakt">Conectar ao trakt</string>
+    <string name="trakt_account">Conta Trakt</string>
+    <string name="connect_trakt">Conectar ao Trakt</string>
     <string name="trakt_reconnect">Conectar SeriesGuide ao trakt</string>
-    <string name="trakt_reconnect_details">Verifica as tuas credenciais do trakt</string>
+    <string name="trakt_reconnect_details">Verifica as tuas credenciais do Trakt</string>
     <string name="waitplease">Um momento, por favor&#8230;</string>
     <string name="connect">Conectar</string>
     <string name="disconnect">Desconectar</string>
     <string name="use_integrated_browser">Usar navegador integrado</string>
-    <string name="show_library">Mostrar a tua biblioteca</string>
-    <string name="about_trakt">O trakt ajuda-te a manter a par da lista de séries e filmes que tu assistes. <a href="http://trakt.tv">Experimenta!</a></string>
+    <string name="show_library">Mostrar a tua biblioteca do Trakt</string>
+    <string name="about_trakt">O Trakt ajuda-te a manter a par da lista de séries e filmes que tu assistes. <a href="http://trakt.tv">Experimenta!</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Classificar</string>
     <string name="your_rating">A minha classificação</string>
@@ -367,7 +367,7 @@
     <string name="privacy_policy">Política de Privacidade</string>
     <string name="licence_tvdb">Esta aplicação faz uso de informação e imagens de TheTVDB licenciado sob uma licença Creative Commons.</string>
     <string name="licence_themoviedb">Este produto utiliza a API TMDb mas não foi aprovado ou certificado pelo TMDb.</string>
-    <string name="licence_trakt">Esta aplicação utiliza informação e imagens do trakt.</string>
+    <string name="licence_trakt">Esta aplicação utiliza informação e imagens do Trakt.</string>
     <string name="about_open_source">O SeriesGuide foi desenvolvido em software open source.</string>
     <string name="licences_and_credits">Licenças e créditos</string>
     <!-- Sort -->
@@ -405,7 +405,7 @@
     <string name="clear_cache">Apagar imagens da Cache</string>
     <string name="clear_cache_summary">Remove todas as imagens em cache do teu dispositivo</string>
     <!-- Backup and Restore -->
-    <string name="backup_full_dump">Include descriptions, details, ratings</string>
+    <string name="backup_full_dump">Incluir as descrições, os detalhes e as classificações</string>
     <string name="backup_failed_file_access">Cópia de segurança interrompida. Uma cópia de segurança não pôde ser encontrada ou acedida.</string>
     <string name="backup_success">Cópia de segurança bem sucedida.</string>
     <string name="backup_failed">A cópia de segurança não foi efectuada com sucesso.</string>
@@ -431,7 +431,7 @@
     <string name="upcoming_show">%s brevemente</string>
     <string name="upcoming_episodes">Novos episódios brevemente</string>
     <string name="upcoming_episodes_number">%s novos episódios</string>
-    <string name="more">%d mais</string>
+    <string name="more">e outros %d</string>
     <string name="upcoming_display">Seleciona para exibir as próximas séries</string>
     <string name="pref_notifications">Notificações</string>
     <string name="pref_notificationssummary">Notificar sobre novos episódios</string>
@@ -461,9 +461,9 @@
     <string name="billing_action_subscribe">Subscrever</string>
     <string name="billing_action_manage_subscriptions">Gerir Subscrições</string>
     <string name="billing_action_pass">Obter X Pass</string>
-    <string name="billing_price_subscribe">%1$s/ano, experimenta grátis, cancela a qualquer momento através de %2$s</string>
+    <string name="billing_price_subscribe">%1$s/ano, experimenta gratuitamente, cancela a qualquer momento através de %2$s</string>
     <string name="billing_duration_format">%1$s/ano</string>
-    <string name="billing_sub_description">Experimente gratuitamente, cancele a qualquer momento.</string>
+    <string name="billing_sub_description">Experimenta gratuitamente, cancela a qualquer momento.</string>
     <string name="billing_price_pass">compra única</string>
     <string name="upgrade_description">Desbloqueias todas as funcionalidades, incluindo notificações, temas e mais opções na lista de widgets. E ajudas-me a fazer atualizações futuras.</string>
     <string name="upgrade_success">Obrigado por apoiares o SeriesGuide! Tens agora acesso a todas as funcionalidades.</string>

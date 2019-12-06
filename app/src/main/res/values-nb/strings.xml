@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Tøm søkelogg</string>
     <string name="search_hint">Søk episoder</string>
-    <string name="any_language">Alle språk</string>
     <!-- Status messages -->
     <string name="updated">Oppdatert til nyeste versjon.</string>
     <string name="norating">n/a</string>
@@ -104,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">Sett alle</string>
     <string name="unmark_all">Ingen sett</string>
-    <string name="mark_untilhere">Sett alle tidligere vist</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Samlet alle</string>
     <string name="uncollect_all">Samlet ingen</string>
     <string name="action_skip">Hopp over</string>
@@ -148,6 +147,7 @@
     <string name="action_shows_sort_favorites">Favoritter først</string>
     <string name="context_updateshow">Oppdater</string>
     <string name="context_marknext">Sett neste episode</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Historikk</string>
     <string name="recently_watched">Nylig sett</string>
@@ -165,6 +165,7 @@
     <string name="calendar_settings">Kalenderinnstillinger</string>
     <string name="only_favorites">Bare favoritter</string>
     <string name="calendar_only_collected">Bare episoder i samling</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Uendelig kalender</string>
     <!-- Updating -->
     <string name="update_scheduled">Oppdaterer&#8230;</string>
@@ -189,7 +190,6 @@
     <string name="add_empty">Det er ingen serier her.</string>
     <string name="no_results">Ingen treff, prøv hele ord.</string>
     <string name="empty_show_search">Ikke funnet i listen over tv-serier</string>
-    <string name="action_try_any_language">Prøv alle språk</string>
     <string name="action_try_again">Prøv igjen</string>
     <string name="tvdb_error_does_not_exist">Serien finnes ikke (enda) på TheTVDB. Prøv igjen senere.</string>
     <string name="add_all">Legg til alle</string>
@@ -367,7 +367,7 @@
     <string name="privacy_policy">Personvern</string>
     <string name="licence_tvdb">Denne appen bruker data og bilder av TheTVDB lisensiert under CC BY-NC 4.0.</string>
     <string name="licence_themoviedb">Dette produktet bruker API\'en til TMDb men er ikke godkjent eller sertifisert av TMDb.</string>
-    <string name="licence_trakt">Denne appen bruker data og bilder fra trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide er laget med åpen kildekode.</string>
     <string name="licences_and_credits">Lisenser og anerkjennelser</string>
     <!-- Sort -->

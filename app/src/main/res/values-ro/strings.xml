@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Ștergere istoric căutare</string>
     <string name="search_hint">Căutaţi episoade</string>
-    <string name="any_language">Orice limbă</string>
     <!-- Status messages -->
     <string name="updated">Actualizat la ultima versiune.</string>
     <string name="norating">n/a</string>
@@ -105,7 +104,7 @@
     <!-- Flagging -->
     <string name="mark_all">Toate au fost vizionate</string>
     <string name="unmark_all">Nici unul nu a fost vizionat</string>
-    <string name="mark_untilhere">Setați cele vechi ca vizionate</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Colectate toate</string>
     <string name="uncollect_all">Necolectate</string>
     <string name="action_skip">Omite</string>
@@ -149,6 +148,7 @@
     <string name="action_shows_sort_favorites">Favoritele primele</string>
     <string name="context_updateshow">Actualizare</string>
     <string name="context_marknext">Episodul următor a fost vizionat</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Istoric</string>
     <string name="recently_watched">Recent vizionate</string>
@@ -166,6 +166,7 @@
     <string name="calendar_settings">Setări calendar</string>
     <string name="only_favorites">Doar emisiunile preferate</string>
     <string name="calendar_only_collected">Doar episoadele colecționate</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Calendar infinit</string>
     <!-- Updating -->
     <string name="update_scheduled">Actualizare&#8230;</string>
@@ -193,7 +194,6 @@
     <string name="add_empty">Nu există emisiuni aici.</string>
     <string name="no_results">Nici un rezultat, încercaţi folosind cuvinte întregi.</string>
     <string name="empty_show_search">Nu a fost găsit in lista de dumneavoastră de showuri</string>
-    <string name="action_try_any_language">Încearcă orice limbă</string>
     <string name="action_try_again">Încearcă din nou</string>
     <string name="tvdb_error_does_not_exist">Acest serial nu există (încă) pe TheTVDB. Încercați mai târziu.</string>
     <string name="add_all">Adaugă-le pe toate</string>
@@ -378,7 +378,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Acest produs utilizează API-ul TMDb, dar nu este aprobat sau certificată de TMDb.</string>
-    <string name="licence_trakt">Această aplicație foloseste date şi imagini ale trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide este dezvoltat folosind software open source.</string>
     <string name="licences_and_credits">Licențe și credite</string>
     <!-- Sort -->

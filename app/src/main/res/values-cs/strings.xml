@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Vymazat historii vyhledávání</string>
     <string name="search_hint">Hledat v epizodách</string>
-    <string name="any_language">Jakýkoliv jazyk</string>
     <!-- Status messages -->
     <string name="updated">Aktualizováno na nejnovější verzi.</string>
     <string name="norating">n/a</string>
@@ -106,7 +105,7 @@
     <!-- Flagging -->
     <string name="mark_all">Zhlédnuty všechny</string>
     <string name="unmark_all">Žádný zhlédnutý</string>
-    <string name="mark_untilhere">Zhlédnuto až sem</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Přidat sérii do sbírky</string>
     <string name="uncollect_all">Odebráno ze sbírky</string>
     <string name="action_skip">Přeskočit</string>
@@ -150,6 +149,7 @@
     <string name="action_shows_sort_favorites">Oblíbené předně</string>
     <string name="context_updateshow">Aktualizovat</string>
     <string name="context_marknext">Následujicí epizoda zhlédnuta</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Historie</string>
     <string name="recently_watched">Nedávno viděno</string>
@@ -167,6 +167,7 @@
     <string name="calendar_settings">Nastavení kalendáře</string>
     <string name="only_favorites">Pouze oblíbené seriály</string>
     <string name="calendar_only_collected">Pouze epizody ve sbírce</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Nekonečný kalendář</string>
     <!-- Updating -->
     <string name="update_scheduled">Probíhá aktualizace&#8230;</string>
@@ -197,7 +198,6 @@
     <string name="add_empty">Nejsou zde žádné seriály.</string>
     <string name="no_results">Bez výsledku, zkuste celá slova.</string>
     <string name="empty_show_search">Not found in your show list</string>
-    <string name="action_try_any_language">Zkuste jiný jazyk</string>
     <string name="action_try_again">Zkusit znovu</string>
     <string name="tvdb_error_does_not_exist">Tento seriál neexistuje (zatím) na TheTVDB. Zkuste prosím později.</string>
     <string name="add_all">Přidat vše</string>
@@ -389,7 +389,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Tento produkt používá TMDb API, ale není schválen nebo certifikován TMDb.</string>
-    <string name="licence_trakt">Tato aplikace využívá data a obrázky z webu Trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide je vytvořen pomocí otevřeného softwaru.</string>
     <string name="licences_and_credits">Zdroje a poděkování</string>
     <!-- Sort -->

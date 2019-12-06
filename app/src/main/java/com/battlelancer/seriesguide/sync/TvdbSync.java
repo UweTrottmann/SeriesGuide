@@ -71,7 +71,7 @@ public class TvdbSync {
             } catch (TvdbException e) {
                 // failed, continue with other shows
                 resultCode = SgSyncAdapter.UpdateResult.INCOMPLETE;
-                Timber.e(e, "Updating show failed");
+                Timber.e(e, "Failed to update show with TVDB id %s.", showTvdbId);
                 Throwable cause = e.getCause();
                 if (cause != null && cause instanceof SocketTimeoutException) {
                     consecutiveTimeouts++;

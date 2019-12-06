@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
     <string name="search_hint">Szukaj odcinków</string>
-    <string name="any_language">Dowolny język</string>
     <!-- Status messages -->
     <string name="updated">Zaktualizowano do najnowszej wersji.</string>
     <string name="norating">brak danych</string>
@@ -106,7 +105,7 @@
     <!-- Flagging -->
     <string name="mark_all">Oznacz jako obejrzane</string>
     <string name="unmark_all">Oznacz jako nieobejrzane</string>
-    <string name="mark_untilhere">Oznacz wcześniej wyemitowane odcinki jako obejrzane</string>
+    <string name="action_watched_up_to">Już obejrzane</string>
     <string name="collect_all">Wszystkie zebrane</string>
     <string name="uncollect_all">Brak zebranych</string>
     <string name="action_skip">Pomiń</string>
@@ -150,6 +149,7 @@
     <string name="action_shows_sort_favorites">Najpierw ulubione</string>
     <string name="context_updateshow">Aktualizuj</string>
     <string name="context_marknext">Odcinek obejrzany</string>
+    <string name="action_episodes_switch_view">Przełącz widok</string>
     <!-- History -->
     <string name="user_stream">Historia</string>
     <string name="recently_watched">Niedawno obejrzane</string>
@@ -167,6 +167,7 @@
     <string name="calendar_settings">Ustawienia kalendarza</string>
     <string name="only_favorites">Tylko ulubione seriale</string>
     <string name="calendar_only_collected">Tylko odcinki w kolekcji</string>
+    <string name="calendar_only_premieres">Tylko premierowe</string>
     <string name="pref_infinite_scrolling">Cały kalendarz</string>
     <!-- Updating -->
     <string name="update_scheduled">Aktualizowanie&#8230;</string>
@@ -197,7 +198,6 @@
     <string name="add_empty">Brak seriali.</string>
     <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
     <string name="empty_show_search">Nie znaleziono na liście seriali</string>
-    <string name="action_try_any_language">Szukaj w innych językach</string>
     <string name="action_try_again">Spróbuj ponownie</string>
     <string name="tvdb_error_does_not_exist">Serial nie istnieje (jeszcze) w TVDB. Spróbuj ponownie później.</string>
     <string name="add_all">Dodaj wszystkie</string>

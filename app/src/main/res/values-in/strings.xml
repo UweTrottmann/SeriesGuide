@@ -11,7 +11,7 @@
     <string name="help">Bantuan</string>
     <string name="help_and_feedback">Bantuan &amp; tanggapan</string>
     <string name="drawer_open">Buka drawer navigasi</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide tidak akan menerima pembaruan lagi untuk Android versi ini.</string>
     <!-- Media items -->
     <string name="show">Acara</string>
     <string name="episode">Episode</string>
@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Bersihkan riwayat pencarian</string>
     <string name="search_hint">Cari episode</string>
-    <string name="any_language">Bahasa apapun</string>
     <!-- Status messages -->
     <string name="updated">Diperbarui ke versi terbaru.</string>
     <string name="norating">n/a</string>
@@ -103,7 +102,7 @@
     <!-- Flagging -->
     <string name="mark_all">Ditonton semua</string>
     <string name="unmark_all">Belum nonton</string>
-    <string name="mark_untilhere">Atur semua tontonan terdahulu</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Terkumpul semua</string>
     <string name="uncollect_all">Tidak ada yang terkumpul</string>
     <string name="action_skip">Lewati</string>
@@ -147,6 +146,7 @@
     <string name="action_shows_sort_favorites">Favorite di awal</string>
     <string name="context_updateshow">Pembaruan</string>
     <string name="context_marknext">Episode selanjutnya ditonton</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Riwayat</string>
     <string name="recently_watched">Baru-baru ini ditonton</string>
@@ -164,6 +164,7 @@
     <string name="calendar_settings">Pengaturan kalender</string>
     <string name="only_favorites">Hanya acara favorit</string>
     <string name="calendar_only_collected">Hanya episode yang terkumpul</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Kalender tidak terbatas</string>
     <!-- Updating -->
     <string name="update_scheduled">Memperbarui&#8230;</string>
@@ -185,7 +186,6 @@
     <string name="add_empty">Tidak ada acara disini.</string>
     <string name="no_results">Tidak ada hasil, coba kata-kata lengkap.</string>
     <string name="empty_show_search">Tidak ditemukan di daftar acara anda</string>
-    <string name="action_try_any_language">Coba bahasa apa saja</string>
     <string name="action_try_again">Coba lagi</string>
     <string name="tvdb_error_does_not_exist">Acara tidak (belum) ada di TheTVDB. Coba lagi nanti.</string>
     <string name="add_all">Tambah semua</string>
@@ -200,7 +200,7 @@
     <string name="watchlist">Daftar tontonan</string>
     <!-- Similar shows -->
     <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="title_similar_shows">Acara Serupa</string>
     <!-- Lists -->
     <string name="first_list">Daftar pertama</string>
     <string name="list_add">Tambah daftar</string>
@@ -353,10 +353,10 @@
         <item quantity="other">%d menit sebelum</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy">Kebijakan Privasi</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Produk ini menggunakan TMDb API Tapi tidak disahkan atau disertifikasi oleh TMDb.</string>
-    <string name="licence_trakt">Aplikasi ini menggunakan data dan gambar dari trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide dibuat dengan menggunakan perangkat lunak open source.</string>
     <string name="licences_and_credits">Lisensi dan kredit</string>
     <!-- Sort -->
@@ -452,7 +452,7 @@
     <string name="billing_action_pass">Dapatkan X Pass</string>
     <string name="billing_price_subscribe">%1$s/tahun, coba gratis, batalkan Kapan saja melalui %2$s</string>
     <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_sub_description">Coba gratis, batalkan kapan saja.</string>
     <string name="billing_price_pass">pembelian satu kali</string>
     <string name="upgrade_description">Buka semua fitur termasuk pemberitahuan, tema dan lebih banyak pilihan daftar widget. Membantu saya membuat pembaruan di masa mendatang.</string>
     <string name="upgrade_success">Terima kasih telah mendukung SeriesGuide! Anda memiliki akses ke semua fitur.</string>

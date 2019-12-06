@@ -11,7 +11,7 @@ import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment.Lang
 import com.battlelancer.seriesguide.util.safeShow
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 
 /**
  * A dialog displaying a list of languages to choose from, posting a [LanguageChangedEvent] if
@@ -28,16 +28,11 @@ class LanguageChoiceDialogFragment : AppCompatDialogFragment() {
         val languageCodesArrayRes = arguments!!.getInt(ARG_ARRAY_LANGUAGE_CODES)
         languageCodes = resources.getStringArray(languageCodesArrayRes)
 
-        val languageCodeAny = getString(R.string.language_code_any)
         val languages = arrayOfNulls<String>(languageCodes.size)
         for (i in languageCodes.indices) {
             // example: "en" for shows or "en-US" for movies
             val languageCode = languageCodes[i]
-            if (languageCodeAny == languageCode) {
-                languages[i] = getString(R.string.any_language)
-            } else {
-                languages[i] = Locale(languageCode.substring(0, 2), "").displayName
-            }
+            languages[i] = Locale(languageCode.substring(0, 2), "").displayName
         }
 
         val currentLanguageCode = arguments!!.getString(ARG_SELECTED_LANGUAGE_CODE)
@@ -81,8 +76,8 @@ class LanguageChoiceDialogFragment : AppCompatDialogFragment() {
         private const val ARG_SELECTED_LANGUAGE_CODE = "selectedLanguageCode"
 
         /**
-         * @param selectedLanguageCode two letter ISO 639-1 language code or 'xx' meaning any
-         * language, if null selects first item of languageCodes.
+         * @param selectedLanguageCode two letter ISO 639-1 language code,
+         * if null selects first item of languageCodes.
          */
         @JvmStatic
         fun show(fragmentManager: FragmentManager, @ArrayRes languageCodes: Int,

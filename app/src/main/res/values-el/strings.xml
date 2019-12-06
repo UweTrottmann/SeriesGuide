@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
     <string name="search_hint">Αναζήτηση επεισοδίων</string>
-    <string name="any_language">Οποιαδήποτε γλώσσα</string>
     <!-- Status messages -->
     <string name="updated">Ενημέρωση για την πιο πρόσφατη έκδοση.</string>
     <string name="norating">n/a</string>
@@ -104,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">Έχουν παρακολουθηθεί όλα</string>
     <string name="unmark_all">Δεν έχει παρακολουθηθεί κανένα</string>
-    <string name="mark_untilhere">Έχουν παρακολουθηθεί όλα τα προβληθέντα μέχρι εδώ</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">Επιλογή όλων</string>
     <string name="uncollect_all">Αποεπιλογή όλων</string>
     <string name="action_skip">Παράλειψη</string>
@@ -148,6 +147,7 @@
     <string name="action_shows_sort_favorites">Αγαπημένα πρώτα</string>
     <string name="context_updateshow">Ενημέρωση</string>
     <string name="context_marknext">Το επόμενο επεισόδιο έχει παρακολουθηθεί</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Ιστορικό</string>
     <string name="recently_watched">Παρακολουθήσατε πρόσφατα</string>
@@ -165,6 +165,7 @@
     <string name="calendar_settings">Ρυθμίσεις ημερολογίου</string>
     <string name="only_favorites">Μόνο αγαπημένες σειρές</string>
     <string name="calendar_only_collected">Μόνο επεισόδια από την συλλογή</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">Απεριόριστο ημερολόγιο</string>
     <!-- Updating -->
     <string name="update_scheduled">Ενημέρωση&#8230;</string>
@@ -189,7 +190,6 @@
     <string name="add_empty">Δεν υπάρχουν σειρές εδώ.</string>
     <string name="no_results">Κανένα αποτέλεσμα, δοκιμάστε ολόκληρες λέξεις.</string>
     <string name="empty_show_search">Δεν βρέθηκε στη λίστα σειρών σας</string>
-    <string name="action_try_any_language">Δοκιμάστε οποιαδήποτε γλώσσα</string>
     <string name="action_try_again">Δοκιμάσετε πάλι</string>
     <string name="tvdb_error_does_not_exist">Η σειρά δεν υπάρχει (ακόμη) στο TheTVDB. Δοκιμάστε ξανά αργότερα.</string>
     <string name="add_all">Προσθήκη όλων</string>
@@ -367,7 +367,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Αυτό το προϊόν χρησιμοποιεί το API του TMDb, αλλά δεν είναι ούτε εγκεκριμένο ούτε πιστοποιημένο από το TMDb.</string>
-    <string name="licence_trakt">Αυτή η εφαρμογή χρησιμοποιεί δεδομένα και εικόνες από το trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">Το SeriesGuide έχει φτιαχτεί με τη χρήση λογισμικού ανοιχτού κώδικα.</string>
     <string name="licences_and_credits">Άδειες και ευχαριστίες</string>
     <!-- Sort -->

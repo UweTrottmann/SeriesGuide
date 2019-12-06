@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>
     <string name="search_hint">에피소드 검색</string>
-    <string name="any_language">모든 언어</string>
     <!-- Status messages -->
     <string name="updated">최신 버전으로 업데이트되었습니다.</string>
     <string name="norating">없음</string>
@@ -103,7 +102,7 @@
     <!-- Flagging -->
     <string name="mark_all">모두 시청 완료</string>
     <string name="unmark_all">한 편도 안 본 것으로 설정</string>
-    <string name="mark_untilhere">이전 에피소드를 모두 시청으로 표시</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">수집 완료</string>
     <string name="uncollect_all">수집할 내용 없음</string>
     <string name="action_skip">건너뛰기</string>
@@ -147,6 +146,7 @@
     <string name="action_shows_sort_favorites">즐겨찾기 먼저 표시</string>
     <string name="context_updateshow">업데이트</string>
     <string name="context_marknext">다음 에피소드 시청 완료</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">기록</string>
     <string name="recently_watched">최근 시청 항목</string>
@@ -164,6 +164,7 @@
     <string name="calendar_settings">캘린더 설정</string>
     <string name="only_favorites">즐겨찾기한 프로그램만 보이기</string>
     <string name="calendar_only_collected">수집한 에피소드만 보이기</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">무한 캘린더</string>
     <!-- Updating -->
     <string name="update_scheduled">업데이트 중&#8230;</string>
@@ -185,7 +186,6 @@
     <string name="add_empty">검색 결과가 없습니다.</string>
     <string name="no_results">결과가 없습니다. 완전한 단어를 입력하세요.</string>
     <string name="empty_show_search">프로그램 목록에서 찾을 수 없습니다</string>
-    <string name="action_try_any_language">모든 언어로 시도</string>
     <string name="action_try_again">재시도</string>
     <string name="tvdb_error_does_not_exist">아직 TheTVDB에 존재하지 않는 프로그램입니다. 나중에 다시 시도하세요.</string>
     <string name="add_all">모두 추가</string>
@@ -356,7 +356,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">이 프로그램은 TMDb API 를 사용하지만 TMDb에서 승인하거나 인증한 공식 앱이 아닙니다.</string>
-    <string name="licence_trakt">이 앱은 trakt 의 데이터와 이미지를 활용합니다.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide는 오픈소스 소프트웨어를 활용합니다.</string>
     <string name="licences_and_credits">라이센스 및 크레딧</string>
     <!-- Sort -->

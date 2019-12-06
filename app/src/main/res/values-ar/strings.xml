@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">إزالة تاريخ البحث</string>
     <string name="search_hint">البحث عن الحلقات</string>
-    <string name="any_language">أي لغة</string>
     <!-- Status messages -->
     <string name="updated">تم التحديث إلى الإصدار الأخير</string>
     <string name="norating">لا يوجد</string>
@@ -108,7 +107,7 @@
     <!-- Flagging -->
     <string name="mark_all">تعيين الجميع بمشاهد</string>
     <string name="unmark_all">تعيين الجميع بغير مشاهد</string>
-    <string name="mark_untilhere">تم مشاهدة جميع ما بُث سابقاً</string>
+    <string name="action_watched_up_to">Watched up to here</string>
     <string name="collect_all">جمع الكل</string>
     <string name="uncollect_all">لم يتم جمع شئ</string>
     <string name="action_skip">تخطي</string>
@@ -141,7 +140,7 @@
     <string name="action_shows_filter_unwatched">الغير مشاهدة</string>
     <string name="action_shows_filter_upcoming">القادم</string>
     <string name="action_shows_filter_hidden">المخفي</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="action_shows_make_all_visible">اظهار الجميع</string>
     <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">ترتيب المسلسلات</string>
     <string name="action_shows_sort_title">العنوان</string>
@@ -152,6 +151,7 @@
     <string name="action_shows_sort_favorites">المفضلة أولاً</string>
     <string name="context_updateshow">تحديث</string>
     <string name="context_marknext">تم مشاهدة الحلقة، الحلقة التالية</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">السجل</string>
     <string name="recently_watched">تم مشاهدته مؤخراً</string>
@@ -169,6 +169,7 @@
     <string name="calendar_settings">إعدادات التقويم</string>
     <string name="only_favorites">فقط المسلسلات المفضلة</string>
     <string name="calendar_only_collected">الحلقات المجمعة فقط</string>
+    <string name="calendar_only_premieres">Only premieres</string>
     <string name="pref_infinite_scrolling">رزنامة النهائية</string>
     <!-- Updating -->
     <string name="update_scheduled">جار التحديث&#8230;</string>
@@ -205,7 +206,6 @@
     <string name="add_empty">لا توجد مسلسلات هنا.</string>
     <string name="no_results">.لا نتائج, جرّب كلمات كاملة</string>
     <string name="empty_show_search">غير متوفر في قائمة العرض الخاصة بك</string>
-    <string name="action_try_any_language">حاول بأي لغة</string>
     <string name="action_try_again">حاول مرة أخرى</string>
     <string name="tvdb_error_does_not_exist">هذا المسلسل غير موجود (حتى الآن) على TheTVDB. الرجاء المحاولة لاحقا.</string>
     <string name="add_all">إضافة الكل </string>
@@ -219,8 +219,8 @@
     <string name="shows_collection">مجموعة</string>
     <string name="watchlist">قائمة المشاهدة</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">لا توجد نتائج</string>
+    <string name="title_similar_shows">عروض مشابهة</string>
     <!-- Lists -->
     <string name="first_list">القائمة الأولى</string>
     <string name="list_add">إضافة قائمة</string>
@@ -411,7 +411,7 @@
     <string name="privacy_policy">سياسة الخصوصية</string>
     <string name="licence_tvdb">هذا البرنامج يستخدم صور و بيانات من TheTVDB مرخصة من قبل Creative Commons.</string>
     <string name="licence_themoviedb">هذا البرنامج يستخدم وصلة TMDb ولكنه غير مدعوم ولامعتمد من TMDb.</string>
-    <string name="licence_trakt">هذا البرنامج يستخدم صور وبيانات من Trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">برنامج دليل المسلسلات بني باستخدام برمجيات المصدر المفتوح.</string>
     <string name="licences_and_credits">تراخيص مفتوحة المصدر</string>
     <!-- Sort -->
@@ -485,8 +485,8 @@
     <string name="pref_notifications_treshold">موعد التنبيه</string>
     <string name="pref_notifications_select_shows">اختار العروض</string>
     <string name="pref_notifications_select_shows_summary">يظهر عدد الاشعارات المتاحه للعروض (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">تجاهل المسلسلات المخفيه</string>
+    <string name="pref_notifications_hidden_summary">حتي لو ان الأشعارات مفعلة, لا تبلغني عن المسلسلات المخفية</string>
     <string name="pref_notification_channel_errors">أخطاء</string>
     <!-- List Widget -->
     <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
@@ -506,8 +506,8 @@
     <string name="billing_action_manage_subscriptions">إدارة الإشتراكات</string>
     <string name="billing_action_pass">أحصل على X Pass</string>
     <string name="billing_price_subscribe">%1$s/سنة، جرب مجاناً، و قم بالإلغاء في أي وقت عبر %2$s</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_duration_format">%1$s/سنة</string>
+    <string name="billing_sub_description">جربه مجانا, الغ متى شئت.</string>
     <string name="billing_price_pass">الشراء يكون مرة واحدة</string>
     <string name="upgrade_description">فتح جميع الميزات بما في ذلك التنبيهات والتصميم والمزيد من الميزات. مساعدتي في التحديثات المستقبلية.</string>
     <string name="upgrade_success">شكرا لك لدعم SeriesGuide! . لديك حق الوصول إلى كافة الميزات .</string>

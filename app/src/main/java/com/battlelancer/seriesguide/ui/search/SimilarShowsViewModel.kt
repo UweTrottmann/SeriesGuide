@@ -43,10 +43,7 @@ class SimilarShowsViewModel(
             }
 
             // Get similar shows.
-            val languageCode = tmdbTools.getSafeLanguageCode(
-                DisplaySettings.getSearchLanguage(getApplication()),
-                context.getString(R.string.language_code_any)
-            )
+            val languageCode = DisplaySettings.getSearchLanguage(getApplication())
             val page = try {
                 val response = SgApp.getServicesComponent(getApplication()).tmdb()
                     .tvService()

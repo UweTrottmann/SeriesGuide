@@ -9,6 +9,9 @@
         android:id="@+id/menu_action_episodes_not_watched"
         android:title="@string/action_unwatched" />
     <item
+        android:id="@+id/menu_action_episodes_watched_up_to"
+        android:title="@string/action_watched_up_to" />
+    <item
         android:id="@+id/menu_action_episodes_collection_add"
         android:title="@string/action_collection_add" />
     <item
@@ -20,9 +23,6 @@
     <item
         android:id="@+id/menu_action_episodes_dont_skip"
         android:title="@string/action_dont_skip" />
-    <item
-        android:id="@+id/menu_action_episodes_watched_previous"
-        android:title="@string/mark_untilhere" />
     <item
         android:id="@+id/menu_action_episodes_manage_lists"
         android:title="@string/list_item_manage" />

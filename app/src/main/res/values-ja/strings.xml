@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">検索履歴を削除</string>
     <string name="search_hint">エピソードを検索</string>
-    <string name="any_language">任意の言語</string>
     <!-- Status messages -->
     <string name="updated">最新バージョンに更新しました</string>
     <string name="norating">なし</string>
@@ -103,7 +102,7 @@
     <!-- Flagging -->
     <string name="mark_all">すべて視聴済</string>
     <string name="unmark_all">すべて未視聴</string>
-    <string name="mark_untilhere">古いものをすべて視聴済に設定</string>
+    <string name="action_watched_up_to">ここまで視聴済</string>
     <string name="collect_all">すべてコレクション済</string>
     <string name="uncollect_all">すべて未コレクション</string>
     <string name="action_skip">スキップ</string>
@@ -147,6 +146,7 @@
     <string name="action_shows_sort_favorites">お気に入りを先頭に</string>
     <string name="context_updateshow">更新</string>
     <string name="context_marknext">視聴済次のエピソード</string>
+    <string name="action_episodes_switch_view">表示切替</string>
     <!-- History -->
     <string name="user_stream">履歴</string>
     <string name="recently_watched">最近観た作品</string>
@@ -164,6 +164,7 @@
     <string name="calendar_settings">カレンダー設定</string>
     <string name="only_favorites">お気に入りの番組のみ</string>
     <string name="calendar_only_collected">コレクション済のエピソードのみ</string>
+    <string name="calendar_only_premieres">プレミアのみ</string>
     <string name="pref_infinite_scrolling">無限のカレンダー</string>
     <!-- Updating -->
     <string name="update_scheduled">更新中&#8230;</string>
@@ -185,7 +186,6 @@
     <string name="add_empty">番組がありません</string>
     <string name="no_results">検索結果はありません。完全な単語で試してください。</string>
     <string name="empty_show_search">番組リストにありません</string>
-    <string name="action_try_any_language">任意の言語を試してください</string>
     <string name="action_try_again">もう一度やり直してください</string>
     <string name="tvdb_error_does_not_exist">番組は TheTVDB に存在しません。後でもう一度試してください。</string>
     <string name="add_all">すべて追加</string>
