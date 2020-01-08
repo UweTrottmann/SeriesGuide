@@ -13,7 +13,7 @@ buildscript {
             'paging': '2.0.0',
             'room': '2.0.0',
 
-            'butterknife': '9.0.0-rc2', // github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
+            'butterknife': '10.2.0', // github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
             'crashlytics': '2.9.7', // docs.fabric.io/android/changelog.html
             'dagger': '2.19', // github.com/google/dagger/releases
             'gson': '2.8.5', // github.com/google/gson/blob/master/CHANGELOG.md
