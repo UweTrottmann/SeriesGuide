@@ -142,7 +142,6 @@ class EpisodesActivity : BaseNavDrawerActivity() {
             )
 
             updateViews(
-                savedInstanceState,
                 info.seasonAndShowInfo.showTvdbId,
                 info.seasonAndShowInfo.seasonTvdbId,
                 info.seasonAndShowInfo.seasonNumber,
@@ -244,7 +243,6 @@ class EpisodesActivity : BaseNavDrawerActivity() {
     }
 
     private fun updateViews(
-        savedInstanceState: Bundle?,
         showTvdbId: Int,
         seasonTvdbId: Int,
         seasonNumber: Int,
@@ -253,20 +251,17 @@ class EpisodesActivity : BaseNavDrawerActivity() {
     ) {
         // Episode list.
         if (episodesListFragment == null) {
-            episodesListFragment = if (savedInstanceState == null) {
-                EpisodesFragment.newInstance(
-                    showTvdbId,
-                    seasonTvdbId,
-                    seasonNumber,
-                    startPosition
-                ).also {
-                    supportFragmentManager.beginTransaction()
-                        .add(R.id.fragment_episodes, it, "episodes")
-                        .commit()
-                }
-            } else {
-                supportFragmentManager
-                    .findFragmentByTag("episodes") as EpisodesFragment
+            val existingFragment = supportFragmentManager
+                .findFragmentByTag("episodes") as EpisodesFragment?
+            episodesListFragment = existingFragment ?: EpisodesFragment.newInstance(
+                showTvdbId,
+                seasonTvdbId,
+                seasonNumber,
+                startPosition
+            ).also {
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.fragment_episodes, it, "episodes")
+                    .commit()
             }
         }
 
