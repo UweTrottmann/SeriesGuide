@@ -18,7 +18,7 @@ object TvdbImageTools {
 
     private const val TVDB_MIRROR_BANNERS = "https://artworks.thetvdb.com/banners/"
     const val TVDB_THUMBNAIL_POSTFIX = "_t.jpg"
-    const val TVDB_CACHE_PREFIX = "_cache/"
+    const val TVDB_LEGACY_CACHE_PREFIX = "_cache/"
     private var sha256_hmac: Mac? = null
 
     /**
