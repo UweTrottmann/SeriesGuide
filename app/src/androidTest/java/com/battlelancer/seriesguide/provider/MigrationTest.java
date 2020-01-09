@@ -164,7 +164,7 @@ public class MigrationTest {
         SgRoomDatabase database = getMigratedRoomDatabase();
         assertTestData(database);
         SgShow dbShow = database.showHelper().getShow();
-        assertThat(dbShow.posterSmall).isEqualTo(TvdbImageTools.TVDB_CACHE_PREFIX + dbShow.poster);
+        assertThat(dbShow.posterSmall).isEqualTo(TvdbImageTools.TVDB_LEGACY_CACHE_PREFIX + dbShow.poster);
     }
 
     private void assertTestData(SgRoomDatabase database) {

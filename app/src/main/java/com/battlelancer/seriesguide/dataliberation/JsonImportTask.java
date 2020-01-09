@@ -360,7 +360,8 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         // Construct missing small poster URL if there is a poster URL.
         if ((show.poster_small == null || show.poster_small.length() == 0)
                 && show.poster != null && show.poster.length() > 0) {
-            show.poster_small = TvdbImageTools.TVDB_CACHE_PREFIX + show.poster;
+            show.poster_small = show.poster
+                    .replace(".jpg", TvdbImageTools.TVDB_THUMBNAIL_POSTFIX);
         }
         // ensure a show will be updated (last_updated might be far into the future)
         if (show.last_updated > System.currentTimeMillis()) {

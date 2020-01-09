@@ -16,7 +16,9 @@ import javax.crypto.spec.SecretKeySpec
 object TvdbImageTools {
 
     private const val TVDB_MIRROR_BANNERS = "https://artworks.thetvdb.com/banners/"
-    const val TVDB_CACHE_PREFIX = "_cache/"
+    private const val TVDB_LEGACY_MIRROR_BANNERS = "https://www.thetvdb.com/banners/"
+    const val TVDB_THUMBNAIL_POSTFIX = "_t.jpg"
+    const val TVDB_LEGACY_CACHE_PREFIX = "_cache/"
     private var sha256_hmac: Mac? = null
 
     /**
@@ -27,7 +29,17 @@ object TvdbImageTools {
         return if (imagePath.isNullOrEmpty()) {
             null
         } else {
-            buildImageCacheUrl("$TVDB_MIRROR_BANNERS$imagePath")
+            // If the path contains the legacy cache prefix, use the www subdomain as it has
+            // a redirect to the new thumbnail URL set up (artworks subdomain + file name postfix).
+            // E.g. https://www.thetvdb.com/banners/_cache/posters/example.jpg redirects to
+            // https://artworks.thetvdb.com/banners/posters/example_t.jpg
+            // Using the artworks subdomain with the legacy cache prefix is not supported.
+            val imageUrl = if (imagePath.contains(TVDB_LEGACY_CACHE_PREFIX, false)) {
+                "$TVDB_LEGACY_MIRROR_BANNERS$imagePath"
+            } else {
+                "$TVDB_MIRROR_BANNERS$imagePath"
+            }
+            buildImageCacheUrl(imageUrl)
         }
     }
 
