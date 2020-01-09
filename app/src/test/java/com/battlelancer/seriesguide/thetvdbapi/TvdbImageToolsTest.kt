@@ -13,7 +13,7 @@ class TvdbImageToolsTest {
         val artworkUrl = TvdbImageTools.artworkUrl("example.jpg")
         println("Artwork URL: $artworkUrl")
         assertThat(artworkUrl).isNotEmpty()
-        assertThat(artworkUrl).endsWith("https://www.thetvdb.com/banners/example.jpg")
+        assertThat(artworkUrl).endsWith("https://artworks.thetvdb.com/banners/example.jpg")
     }
 
     @Test
