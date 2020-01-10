@@ -103,7 +103,7 @@
     <!-- Flagging -->
     <string name="mark_all">Sett alla</string>
     <string name="unmark_all">Inga sedda</string>
-    <string name="action_watched_up_to">Watched up to here</string>
+    <string name="action_watched_up_to">Sett så här långt</string>
     <string name="collect_all">Samla alla</string>
     <string name="uncollect_all">Ingen hämtad</string>
     <string name="action_skip">Hoppa över</string>
@@ -136,8 +136,8 @@
     <string name="action_shows_filter_unwatched">Osedda</string>
     <string name="action_shows_filter_upcoming">Kommande</string>
     <string name="action_shows_filter_hidden">Dolda</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="action_shows_make_all_visible">Gör alla gömda synliga</string>
+    <string name="description_make_all_visible_format">Göra alla gömda serier (%s) synliga igen?</string>
     <string name="action_shows_sort">Sortera serier</string>
     <string name="action_shows_sort_title">Titel</string>
     <string name="action_shows_sort_latest_episode">Senaste avsnitt</string>
@@ -147,7 +147,7 @@
     <string name="action_shows_sort_favorites">Favoriter först</string>
     <string name="context_updateshow">Uppdatera</string>
     <string name="context_marknext">Sett nästa avsnitt</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Ändra vy</string>
     <!-- History -->
     <string name="user_stream">Historik</string>
     <string name="recently_watched">Nyligen sedda</string>
@@ -165,7 +165,7 @@
     <string name="calendar_settings">Kalenderinställningar</string>
     <string name="only_favorites">Endast favoritserier</string>
     <string name="calendar_only_collected">Endast avsnitt i samling</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">Endast premiärer</string>
     <string name="pref_infinite_scrolling">Ändlös kalender</string>
     <!-- Updating -->
     <string name="update_scheduled">Uppdaterar&#8230;</string>
@@ -203,8 +203,8 @@
     <string name="shows_collection">Samling</string>
     <string name="watchlist">Bevakningslista</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">Inga resultat</string>
+    <string name="title_similar_shows">Liknande program</string>
     <!-- Lists -->
     <string name="first_list">Första listan</string>
     <string name="list_add">Lägg till lista</string>
@@ -367,7 +367,7 @@
     <string name="privacy_policy">Sekretesspolicy</string>
     <string name="licence_tvdb">Denna app använder data och avbildningar av TheTVDB licensierat under en Creative Commons-licens.</string>
     <string name="licence_themoviedb">Denna produkt använder TMDb:s API men är inte stödd eller certifierad av TMDb.</string>
-    <string name="licence_trakt">This app uses data and images by Trakt.</string>
+    <string name="licence_trakt">Denna app använder data och bilder från Trakt.</string>
     <string name="about_open_source">SeriesGuide är byggt med öppen källkod.</string>
     <string name="licences_and_credits">Licenser och tillkännagivanden</string>
     <!-- Sort -->
@@ -462,8 +462,8 @@
     <string name="billing_action_manage_subscriptions">Hantera prenumerationer</string>
     <string name="billing_action_pass">Skaffa X Pass</string>
     <string name="billing_price_subscribe">%1$s/år, prova gratis, avbryt när som helst genom %2$s</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_duration_format">%1$s/år</string>
+    <string name="billing_sub_description">Prova gratis, avbryt när som helst.</string>
     <string name="billing_price_pass">engångsköp</string>
     <string name="upgrade_description">Lås upp alla funktioner, inklusive aviseringar, teman och fler alternativ för widgets. Hjälp mig att göra framtida uppdateringar.</string>
     <string name="upgrade_success">Tack för att du stödjer SeriesGuide! Du har tillgång till alla funktioner.</string>
