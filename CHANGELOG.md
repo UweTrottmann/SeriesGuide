@@ -5,6 +5,23 @@ Release notes
 
 All dates are in the European Central timezone.
 
+🌟 = New.
+🔧 = Improved or tweaked.
+🔨 = Resolved or fixed.
+📝 = Notable change.
+
+Version 53
+----------
+*(in development)*
+
+#### 53-beta1
+*(2020-01-10)*
+
+* 🔧 Fetch images from new TheTVDB artworks subdomain, provide fall back for old image links.
+* 🔨 Episodes screen may crash in certain situations.
+* 🔨 Background work may crash on some devices in certain situations.
+* 📝 Latest translations from crowdin.
+
 Version 52
 ----------
 *(2019-12-05)*
