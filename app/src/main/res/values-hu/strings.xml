@@ -104,6 +104,7 @@
     <string name="mark_all">Mind megnézve</string>
     <string name="unmark_all">Egyik sincs megnézve</string>
     <string name="action_watched_up_to">Watched up to here</string>
+    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
     <string name="collect_all">Mind begyűjtve</string>
     <string name="uncollect_all">Nincs begyűjtött</string>
     <string name="action_skip">Kihagyás</string>
