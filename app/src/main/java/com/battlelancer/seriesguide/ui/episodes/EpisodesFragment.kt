@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.episodes.EpisodesAdapter.OnFlagEpisodeListener
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.safeShow
 
 /**
  * Displays a list of episodes of a season.
@@ -242,12 +243,11 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                         true
                     }
                     R.id.menu_action_episodes_watched_up_to -> {
-                        EpisodeTools.episodeWatchedUpTo(
-                            requireContext(),
+                        EpisodeWatchedUpToDialog.newInstance(
                             showTvdbId,
                             releaseTimeMs,
                             episodeNumber
-                        )
+                        ).safeShow(requireFragmentManager(), "EpisodeWatchedUpToDialog")
                         true
                     }
                     R.id.menu_action_episodes_manage_lists -> {
