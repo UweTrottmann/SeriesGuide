@@ -53,6 +53,7 @@ import com.battlelancer.seriesguide.ui.FullscreenImageActivity;
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.ClipboardTools;
+import com.battlelancer.seriesguide.util.DialogTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -533,8 +534,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         buttonWatchedUpTo.setVisibility(displayWatchedUpTo ? View.VISIBLE : View.GONE);
         buttonWatchedUpTo
                 .setNextFocusUpId(displayCheckIn ? R.id.buttonCheckIn : R.id.buttonEpisodeWatched);
-        buttonWatchedUpTo.setOnClickListener(v -> EpisodeTools.episodeWatchedUpTo(
-                getContext(), showTvdbId, episodeReleaseTime, episodeNumber
+        buttonWatchedUpTo.setOnClickListener(v -> DialogTools.safeShow(
+                EpisodeWatchedUpToDialog.newInstance(showTvdbId, episodeReleaseTime, episodeNumber),
+                requireFragmentManager(), "EpisodeWatchedUpToDialog"
         ));
 
         // Streaming search button.

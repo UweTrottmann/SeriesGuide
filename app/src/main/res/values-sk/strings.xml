@@ -106,6 +106,7 @@
     <string name="mark_all">Videné všetky</string>
     <string name="unmark_all">Nevidená žiadna</string>
     <string name="action_watched_up_to">Videné až sem</string>
+    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
     <string name="collect_all">Pridať sériu do zbierky</string>
     <string name="uncollect_all">Odobrané zo zbierky</string>
     <string name="action_skip">Preskočiť</string>

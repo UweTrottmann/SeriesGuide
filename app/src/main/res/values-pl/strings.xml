@@ -106,6 +106,7 @@
     <string name="mark_all">Oznacz jako obejrzane</string>
     <string name="unmark_all">Oznacz jako nieobejrzane</string>
     <string name="action_watched_up_to">Już obejrzane</string>
+    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
     <string name="collect_all">Wszystkie zebrane</string>
     <string name="uncollect_all">Brak zebranych</string>
     <string name="action_skip">Pomiń</string>
