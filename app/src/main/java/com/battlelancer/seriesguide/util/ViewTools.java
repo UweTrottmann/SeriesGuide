@@ -161,7 +161,7 @@ public class ViewTools {
     public static void setSwipeRefreshLayoutColors(Resources.Theme theme,
             SwipeRefreshLayout swipeRefreshLayout) {
         int accentColorResId = Utils.resolveAttributeToResourceId(theme, R.attr.colorAccent);
-        swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_500);
+        swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.sg_color_secondary);
     }
 
     public static void showSoftKeyboardOnSearchView(final Context context, final View searchView) {

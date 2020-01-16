@@ -18,11 +18,11 @@
         <item name="windowActionBar">false</item>
 
         <!--   your app's branding color (for the app bar) -->
-        <item name="colorPrimary">@color/accent_primary</item>
+        <item name="colorPrimary">@color/sg_color_primary</item>
         <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
-        <item name="colorPrimaryDark">@color/accent_primary_dark</item>
+        <item name="colorPrimaryDark">@color/sg_color_primary_dark</item>
         <!--   theme UI controls like checkboxes and text fields -->
-        <item name="colorAccent">@color/teal_500</item>
+        <item name="colorAccent">@color/sg_color_secondary</item>
 
         <!-- Special attributes -->
         <item name="sgActivatedItemBackgroundDrawer">@drawable/activated_background_drawer_sg</item>
@@ -47,7 +47,7 @@
         <item name="sgTextAppearanceBody2">@style/TextAppearance.SeriesGuide.Body2</item>
 
         <!-- Colors -->
-        <item name="sgTextColorGreen">@color/teal_500</item>
+        <item name="sgTextColorGreen">@color/sg_color_secondary</item>
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_dark</item>
         <item name="sgColorBackgroundCard">@color/background_card_dark</item>
         <item name="sgColorBackgroundDim">@color/black_38</item>
@@ -82,7 +82,7 @@
         <!--   your app's branding color (for the app bar) -->
         <item name="colorPrimary">@android:color/black</item>
         <!--   theme UI controls like checkboxes and text fields -->
-        <item name="colorAccent">@color/teal_500</item>
+        <item name="colorAccent">@color/sg_color_secondary</item>
 
         <!-- Special attributes -->
         <item name="sgActivatedItemBackgroundDrawer">@drawable/activated_background_drawer_sg</item>
@@ -103,7 +103,7 @@
         <item name="sgTextAppearanceBody2">@style/TextAppearance.SeriesGuide.Body2</item>
 
         <!-- Colors -->
-        <item name="sgTextColorGreen">@color/teal_500</item>
+        <item name="sgTextColorGreen">@color/sg_color_secondary</item>
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_dark</item>
         <item name="sgColorBackgroundCard">@color/background_card_dark</item>
         <item name="sgColorBackgroundDim">@color/black_38</item>
@@ -139,11 +139,11 @@
         <item name="windowActionBar">false</item>
 
         <!--   your app's branding color (for the app bar) -->
-        <item name="colorPrimary">@color/accent_primary</item>
+        <item name="colorPrimary">@color/sg_color_primary</item>
         <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
-        <item name="colorPrimaryDark">@color/accent_primary_dark</item>
+        <item name="colorPrimaryDark">@color/sg_color_primary_dark</item>
         <!--   theme UI controls like checkboxes and text fields -->
-        <item name="colorAccent">@color/teal_500</item>
+        <item name="colorAccent">@color/sg_color_secondary</item>
 
         <!-- Special attributes -->
         <item name="sgActivatedItemBackgroundDrawer">@drawable/activated_background_drawer_sg_light</item>
@@ -170,7 +170,7 @@
         <item name="sgTextAppearanceBody2">@style/TextAppearance.SeriesGuide.Body2</item>
 
         <!-- Colors -->
-        <item name="sgTextColorGreen">@color/teal_500</item>
+        <item name="sgTextColorGreen">@color/sg_color_secondary</item>
         <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_light</item>
         <item name="sgColorBackgroundCard">@color/background_card_light</item>
         <item name="sgColorBackgroundDim">@color/white_50</item>

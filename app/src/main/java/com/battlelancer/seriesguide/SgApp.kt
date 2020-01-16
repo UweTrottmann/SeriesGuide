@@ -216,7 +216,7 @@ class SgApp : Application() {
     private fun initializeNotificationChannels() {
         // note: sound is on by default
         val channels = ArrayList<NotificationChannel>()
-        val colorAccent = getColor(R.color.accent_primary)
+        val colorAccent = getColor(R.color.sg_color_primary)
 
         val channelEpisodes = NotificationChannel(NOTIFICATION_CHANNEL_EPISODES,
                 getString(R.string.episodes),

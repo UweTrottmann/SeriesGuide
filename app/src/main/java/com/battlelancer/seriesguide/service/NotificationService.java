@@ -541,7 +541,7 @@ public class NotificationService {
         nb.setContentText(contentText);
         nb.setContentIntent(contentIntent);
         nb.setSmallIcon(R.drawable.ic_notification);
-        nb.setColor(ContextCompat.getColor(context, R.color.accent_primary));
+        nb.setColor(ContextCompat.getColor(context, R.color.sg_color_primary));
         nb.setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         Intent i = new Intent(context, NotificationActionReceiver.class);

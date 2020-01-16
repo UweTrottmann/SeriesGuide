@@ -172,7 +172,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
         // ...the header
         boolean isDarkTheme = WidgetSettings.isDarkTheme(context, appWidgetId);
         rv.setInt(R.id.containerWidgetHeader, "setBackgroundColor", isDarkTheme ? Color.TRANSPARENT
-                : ContextCompat.getColor(context, R.color.accent_primary));
+                : ContextCompat.getColor(context, R.color.sg_color_primary));
         // ...the whole widget
         int bgColor = WidgetSettings.getWidgetBackgroundColor(context, appWidgetId, isLightTheme);
         rv.setInt(R.id.container, "setBackgroundColor", bgColor);

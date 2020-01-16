@@ -3,9 +3,9 @@
 
     <color name="transparent">#00000000</color>
 
-    <color name="accent_primary">#ff6545a0</color>
-    <color name="accent_primary_dark">#ff523991</color>
-    <color name="teal_500">#ff009688</color>
+    <color name="sg_color_primary">#ff6545a0</color>
+    <color name="sg_color_primary_dark">#ff523991</color>
+    <color name="sg_color_secondary">#ff009688</color>
     <color name="grey_50">#fffafafa</color>
     <color name="grey_850">#ff303030</color>
 
@@ -47,7 +47,7 @@
     <color name="protection_light">#12000000</color>
 
     <color name="sg_icon_blue">#ff33b5e5</color>
-    <color name="sg_icon_green">@color/teal_500</color>
+    <color name="sg_icon_green">@color/sg_color_secondary</color>
 
     <color name="sg_ripple_material_dark">#33ffffff</color>
     <color name="sg_ripple_material_light">#1f000000</color>
