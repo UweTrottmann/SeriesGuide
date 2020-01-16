@@ -138,12 +138,16 @@
         <!-- Explicitly add windowActionBar as some devices crash due to it missing -->
         <item name="windowActionBar">false</item>
 
-        <!--   your app's branding color (for the app bar) -->
+        <!-- The color displayed most frequently across your app’s screens and components. -->
         <item name="colorPrimary">@color/sg_color_primary</item>
-        <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
+        <!-- A dark variation of the primary color. -->
         <item name="colorPrimaryDark">@color/sg_color_primary_dark</item>
-        <!--   theme UI controls like checkboxes and text fields -->
-        <item name="colorAccent">@color/sg_color_secondary</item>
+        <!-- A tonal variation of the primary color. -->
+        <item name="colorPrimaryVariant">@color/sg_color_primary_dark</item>
+        <!-- The secondary branding color for the app, usually an accented complement to the primary branding color. -->
+        <item name="colorSecondary">@color/sg_color_secondary</item>
+        <!-- A color that passes accessibility guidelines for text/iconography when drawn on top of the secondary color. -->
+        <item name="colorOnSecondary">#ffffff</item>
 
         <!-- Special attributes -->
         <item name="sgActivatedItemBackgroundDrawer">@drawable/activated_background_drawer_sg_light</item>
