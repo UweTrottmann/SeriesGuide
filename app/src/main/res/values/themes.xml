@@ -124,6 +124,8 @@
 
         <!-- The color displayed most frequently across your app’s screens and components. -->
         <item name="colorPrimary">@color/sg_color_primary</item>
+        <!-- A color that passes accessibility guidelines for text/iconography when drawn on top of the primary color. -->
+        <item name="colorOnPrimary">#ffffff</item>
         <!-- A dark variation of the primary color. -->
         <item name="colorPrimaryDark">@color/sg_color_primary_dark</item>
         <!-- A tonal variation of the primary color. -->
