@@ -32,9 +32,6 @@
         <!-- Note: nav bar color needs to be opaque! -->
         <item name="android:navigationBarColor">@color/black_almost</item>
 
-        <!-- System widgets -->
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
-
         <!-- Action bar -->
         <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
 
@@ -86,9 +83,6 @@
         <item name="windowActionModeOverlay">true</item>
         <!-- Note: nav bar color needs to be opaque! -->
         <item name="android:navigationBarColor">@color/black_almost</item>
-
-        <!-- System widgets -->
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
 
         <!-- Text -->
         <item name="sgTextAppearanceBody1">@style/TextAppearance.SeriesGuide.Body1</item>
@@ -147,9 +141,6 @@
 
         <!-- Remove default window shadow -->
         <item name="android:windowContentOverlay">@null</item>
-
-        <!-- System widgets -->
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg_light</item>
 
         <!-- Action bar -->
         <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
