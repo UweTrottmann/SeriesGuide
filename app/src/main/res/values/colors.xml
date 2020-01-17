@@ -20,7 +20,6 @@
 
     <color name="activated_dark">#ff333333</color>
     <color name="activated_light">#ffe0e0e0</color>
-    <color name="activated_drawer_dark">#ff303030</color>
     <color name="separator">#ff1c1c1c</color>
     <color name="separator_inverse">#ffe9e9e9</color>
     <color name="divider">#26ffffff</color>
@@ -53,9 +52,5 @@
 
     <color name="sg_ripple_material_dark">#33ffffff</color>
     <color name="sg_ripple_material_light">#1f000000</color>
-    <color name="sg_primary_text_default_material_dark">#ffffffff</color>
-    <color name="sg_primary_text_default_material_light">#de000000</color>
-    <color name="sg_primary_text_disabled_material_dark">#4Dffffff</color>
-    <color name="sg_primary_text_disabled_material_light">#39000000</color>
 
 </resources>

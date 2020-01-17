@@ -17,7 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.battlelancer.seriesguide.R;
@@ -183,12 +182,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         if (!AppSettings.isUserDebugModeEnabled(this)) {
             navigationView.getMenu().removeItem(R.id.navigation_sub_item_debug);
         }
-        navigationView.setItemIconTintList(ContextCompat.getColorStateList(this,
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorNavDrawerIcon)));
-        navigationView.setItemTextColor(ContextCompat.getColorStateList(this,
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorNavDrawerText)));
-        navigationView.setItemBackgroundResource(Utils.resolveAttributeToResourceId(getTheme(),
-                R.attr.sgActivatedItemBackgroundDrawer));
         navigationView.setNavigationItemSelectedListener(
                 menuItem -> {
                     onNavItemClick(menuItem.getItemId());
