@@ -153,8 +153,8 @@
         <item name="sgActivatedItemBackgroundDrawer">@drawable/activated_background_drawer_sg_light</item>
 
         <!-- Windows -->
-        <item name="android:colorBackground">@color/background_inverse</item>
-        <item name="android:windowBackground">@color/background_inverse</item>
+        <item name="android:colorBackground">@color/sg_color_background</item>
+        <item name="android:windowBackground">@color/sg_color_background</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="windowActionModeOverlay">true</item>
 

@@ -6,6 +6,8 @@
     <color name="sg_color_primary">#ff6545a0</color>
     <color name="sg_color_primary_dark">#ff523991</color>
     <color name="sg_color_secondary">#ff00796b</color>
+    <color name="sg_color_background">#ffebebeb</color>
+
     <color name="grey_50">#fffafafa</color>
     <color name="grey_850">#ff303030</color>
 
