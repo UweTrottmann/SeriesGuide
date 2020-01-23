@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/keyline"
-                android:textAppearance="?attr/sgTextAppearanceBody1"
+                android:textAppearance="?attr/textAppearanceBody1"
                 tools:text="Kiefer Sutherland  (born 21 December 1966) is a British-Canadian actor" />
 
             <Button

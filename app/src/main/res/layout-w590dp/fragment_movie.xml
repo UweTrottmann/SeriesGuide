@@ -123,7 +123,7 @@
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
                         android:focusable="true"
-                        android:textAppearance="?attr/sgTextAppearanceBody2"
+                        android:textAppearance="?attr/textAppearanceBody2"
                         tools:text="Description for a super awesome movie..." />
 
                     <TextView

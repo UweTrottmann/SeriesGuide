@@ -37,8 +37,6 @@
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
-        <item name="sgTextAppearanceBody1">@style/TextAppearance.SeriesGuide.Body1</item>
-        <item name="sgTextAppearanceBody2">@style/TextAppearance.SeriesGuide.Body2</item>
 
         <!-- Colors -->
         <item name="sgTextColorGreen">@color/sg_color_secondary</item>
@@ -83,10 +81,6 @@
         <item name="windowActionModeOverlay">true</item>
         <!-- Note: nav bar color needs to be opaque! -->
         <item name="android:navigationBarColor">@color/black_almost</item>
-
-        <!-- Text -->
-        <item name="sgTextAppearanceBody1">@style/TextAppearance.SeriesGuide.Body1</item>
-        <item name="sgTextAppearanceBody2">@style/TextAppearance.SeriesGuide.Body2</item>
 
         <!-- Colors -->
         <item name="sgTextColorGreen">@color/sg_color_secondary</item>
@@ -143,11 +137,6 @@
 
         <!-- Remove default window shadow -->
         <item name="android:windowContentOverlay">@null</item>
-
-        <!-- Text -->
-        <item name="android:textAppearance">@style/TextAppearance</item>
-        <item name="sgTextAppearanceBody1">@style/TextAppearance.SeriesGuide.Body1</item>
-        <item name="sgTextAppearanceBody2">@style/TextAppearance.SeriesGuide.Body2</item>
 
         <!-- Colors -->
         <item name="sgTextColorGreen">@color/sg_color_secondary</item>
