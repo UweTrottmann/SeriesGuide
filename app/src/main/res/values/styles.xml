@@ -224,9 +224,7 @@
     </style>
 
     <!-- Action bar -->
-    <style name="Widget.SeriesGuide.ActionBar">
-        <item name="android:elevation">4dp</item>
-    </style>
+    <style name="Widget.SeriesGuide.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary" />
 
     <!-- Tabs -->
     <style name="Widget.SeriesGuide.TabLayout">
