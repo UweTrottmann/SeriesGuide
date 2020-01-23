@@ -16,5 +16,7 @@
     <color name="sg_background_gradient_end">#ff2a2a2a</color>
     <color name="sg_color_divider">#26ffffff</color>
     <color name="sg_color_shadow">#66000000</color>
+    <!-- 87% black -->
+    <color name="sg_color_status_bar_overlay">#de000000</color>
 
 </resources>

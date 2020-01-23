@@ -21,6 +21,8 @@
     <color name="sg_background_gradient_end">#ffffffff</color>
     <color name="sg_color_divider">#1A000000</color>
     <color name="sg_color_shadow">#12000000</color>
+    <!-- 87% white -->
+    <color name="sg_color_status_bar_overlay">#deffffff</color>
 
     <color name="grey_50">#fffafafa</color>
     <color name="grey_850">#ff303030</color>
