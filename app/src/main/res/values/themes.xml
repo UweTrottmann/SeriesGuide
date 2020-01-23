@@ -140,11 +140,11 @@
 
         <!-- Colors -->
         <item name="sgTextColorGreen">@color/sg_color_secondary</item>
-        <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_light</item>
-        <item name="sgColorBackgroundCard">@color/background_card_light</item>
-        <item name="sgColorBackgroundDim">@color/white_50</item>
-        <item name="sgColorIcon">@color/black_54</item>
-        <item name="sgColorIconInactive">@color/black_38</item>
+        <item name="sgTextColorSecondaryDim">@color/sg_text_color_secondary_dim</item>
+        <item name="sgColorBackgroundCard">@color/sg_card_background_color</item>
+        <item name="sgColorBackgroundDim">@color/sg_background_dim</item>
+        <item name="sgColorIcon">@color/sg_tint_icon</item>
+        <item name="sgColorIconInactive">@color/sg_tint_icon_inactive</item>
         <item name="sgColorSeparator">@color/separator_inverse</item>
         <item name="sgColorDivider">@color/divider_inverse</item>
         <item name="sgColorShadow">@color/protection_light</item>

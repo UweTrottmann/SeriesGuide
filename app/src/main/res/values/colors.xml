@@ -8,6 +8,16 @@
     <color name="sg_color_secondary">#ff00796b</color>
     <color name="sg_color_background">#ffebebeb</color>
 
+    <color name="sg_card_background_color">#ffffff</color>
+    <!-- 30% black -->
+    <color name="sg_text_color_secondary_dim">#66000000</color>
+    <!-- 50% white -->
+    <color name="sg_background_dim">#80ffffff</color>
+    <!-- 54% black -->
+    <color name="sg_tint_icon">#8a000000</color>
+    <!-- 38% black -->
+    <color name="sg_tint_icon_inactive">#60000000</color>
+
     <color name="grey_50">#fffafafa</color>
     <color name="grey_850">#ff303030</color>
 
@@ -38,7 +48,7 @@
     <color name="black_54">#8a000000</color> <!-- secondary text light -->
     <color name="black_38">#60000000</color> <!-- secondary text light -->
     <color name="text_secondary_disabled_dark">#66ffffff</color> <!-- 40% white -->
-    <color name="text_secondary_disabled_light">#66000000</color> <!-- 30% black -->
+    <color name="text_secondary_disabled_light">#66000000</color>
     <color name="text_red">#FFFF4444</color>
 
     <color name="black_11">#ffe3e3e3</color>
