@@ -138,7 +138,7 @@
         <item name="sgColorIcon">@color/sg_tint_icon</item>
         <item name="sgColorIconInactive">@color/sg_tint_icon_inactive</item>
         <item name="sgColorDivider">@color/sg_color_divider</item>
-        <item name="sgColorShadow">@color/protection_light</item>
+        <item name="sgColorShadow">@color/sg_color_shadow</item>
         <item name="sgColorStatusBarOverlay">@color/white_87</item>
 
     </style>
