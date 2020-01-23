@@ -45,7 +45,6 @@
         <item name="sgColorBackgroundDim">@color/black_38</item>
         <item name="sgColorIcon">@color/white</item>
         <item name="sgColorIconInactive">@color/white_50</item>
-        <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
         <item name="sgColorShadow">@color/protection_dark</item>
         <item name="sgColorStatusBarOverlay">@color/black_87</item>
@@ -86,7 +85,6 @@
         <item name="sgColorBackgroundDim">@color/black_38</item>
         <item name="sgColorIcon">@color/white</item>
         <item name="sgColorIconInactive">@color/white_50</item>
-        <item name="sgColorSeparator">@color/separator</item>
         <item name="sgColorDivider">@color/divider</item>
         <item name="sgColorShadow">@color/protection_dark</item>
         <item name="sgColorStatusBarOverlay">@color/black_87</item>
@@ -139,7 +137,6 @@
         <item name="sgColorBackgroundDim">@color/sg_background_dim</item>
         <item name="sgColorIcon">@color/sg_tint_icon</item>
         <item name="sgColorIconInactive">@color/sg_tint_icon_inactive</item>
-        <item name="sgColorSeparator">@color/separator_inverse</item>
         <item name="sgColorDivider">@color/divider_inverse</item>
         <item name="sgColorShadow">@color/protection_light</item>
         <item name="sgColorStatusBarOverlay">@color/white_87</item>

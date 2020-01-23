@@ -13,7 +13,6 @@
     <attr name="sgColorBackgroundDim" format="reference|color" />
     <attr name="sgColorIcon" format="reference|color" />
     <attr name="sgColorIconInactive" format="reference|color" />
-    <attr name="sgColorSeparator" format="reference|color" />
     <attr name="sgColorDivider" format="reference|color" />
     <attr name="sgColorShadow" format="reference|color" />
     <attr name="sgColorStatusBarOverlay" format="reference|color" />
