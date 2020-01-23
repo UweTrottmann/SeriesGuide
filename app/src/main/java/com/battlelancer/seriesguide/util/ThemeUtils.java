@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.util;
 
 import android.app.Activity;
+import androidx.appcompat.app.AppCompatDelegate;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 
@@ -13,16 +14,18 @@ public class ThemeUtils {
      * Sets the global app theme variable. Applied by all activities once they are created.
      */
     public static synchronized void updateTheme(String themeIndex) {
-        int theme = Integer.valueOf(themeIndex);
+        int theme = Integer.parseInt(themeIndex);
+        // The Light theme is a DayNight theme that can be toggled between light and dark.
+        SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide_Light;
         switch (theme) {
             case 1:
-                SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide_DarkBlue;
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 break;
             case 2:
-                SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide_Light;
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 break;
             default:
-                SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide;
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 break;
         }
     }

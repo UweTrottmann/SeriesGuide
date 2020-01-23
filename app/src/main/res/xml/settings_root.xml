@@ -75,7 +75,7 @@
             app:entries="@array/themeSelection"
             app:entryValues="@array/themeSelectionData"
             app:iconSpaceReserved="false"
-            app:key="com.battlelancer.seriesguide.theme"
+            app:key="com.uwetrottmann.seriesguide.theme"
             app:title="@string/pref_theme" />
 
         <ListPreference

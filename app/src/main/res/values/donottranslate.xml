@@ -71,11 +71,6 @@
     <string name="pref_user_debug_mode_summary">Allows to diagnose errors, but slows down the app.</string>
     <string name="pref_user_debug_mode_note">Now force stop and restart the app!</string>
 
-    <!-- Themes -->
-    <string name="theme_default">SeriesGuide</string>
-    <string name="theme_dark_alt">Android Dark</string>
-    <string name="theme_light">SeriesGuide Light</string>
-
     <!-- Season sort orders -->
     <string-array name="sesorting">
         <item>@string/sort_order_latest_first</item>
@@ -523,9 +518,9 @@
 
     <!-- Theme variants -->
     <string-array name="themeSelection">
-        <item>@string/theme_default</item>
-        <item>@string/theme_dark_alt</item>
-        <item>@string/theme_light</item>
+        <item>@string/theme_app_dark</item>
+        <item>@string/theme_app_auto</item>
+        <item>@string/theme_app_light</item>
     </string-array>
     <string-array name="themeSelectionData">
         <item>0</item>
@@ -581,10 +576,13 @@
     </string-array>
 
     <!-- Widget themes -->
+    <string name="theme_widget_dark">SeriesGuide</string>
+    <string name="theme_widget_dark_alt">Android Dark</string>
+    <string name="theme_widget_light">SeriesGuide Light</string>
     <string-array name="widgetTheme">
-        <item>@string/theme_default</item>
-        <item>@string/theme_light</item>
-        <item>@string/theme_dark_alt</item>
+        <item>@string/theme_widget_dark</item>
+        <item>@string/theme_widget_dark_alt</item>
+        <item>@string/theme_widget_light</item>
     </string-array>
     <string-array name="widgetThemeData">
         <item>0</item>
