@@ -223,10 +223,23 @@
         <item name="android:ellipsize">end</item>
     </style>
 
-    <!-- Action bar -->
+    <!-- Toolbar -->
     <style name="Widget.SeriesGuide.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary" />
     <style name="Widget.SeriesGuide.Toolbar.Transparent" parent="Widget.MaterialComponents.Toolbar.Surface">
         <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.Toolbar.Gradient" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="android:background">@drawable/background_actionbar_gradient</item>
+        <!-- Note: not overriding titleTextColor and subtitleTextColor as currently unused. -->
+        <!-- Note: this theme overlay will only work if the style is applied directly to a Toolbar. -->
+        <item name="android:theme">@style/ThemeOverlay.SeriesGuide.Toolbar.Gradient</item>
+    </style>
+
+    <style name="ThemeOverlay.SeriesGuide.Toolbar.Gradient" parent="ThemeOverlay.MaterialComponents.Toolbar.Surface">
+        <item name="colorControlNormal">@color/sg_on_dark_emphasis_medium</item>
+        <item name="colorControlHighlight">@color/sg_ripple_material_dark</item>
+        <item name="actionMenuTextColor">@color/sg_on_dark_emphasis_medium</item>
     </style>
 
     <!-- Tabs -->

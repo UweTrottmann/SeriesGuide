@@ -144,10 +144,6 @@
         <!-- Remove default window shadow -->
         <item name="android:windowContentOverlay">@null</item>
 
-        <!-- Action bar -->
-        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
-        <item name="actionBarPopupTheme">@style/ThemeOverlay.MaterialComponents.Light</item>
-
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
         <item name="sgTextAppearanceBody1">@style/TextAppearance.SeriesGuide.Body1</item>
