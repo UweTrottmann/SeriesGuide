@@ -50,9 +50,6 @@
         <item name="sgColorShadow">@color/protection_dark</item>
         <item name="sgColorStatusBarOverlay">@color/black_87</item>
 
-        <!-- Drawables -->
-        <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
-
     </style>
 
     <style name="Theme.BaseSeriesGuide.DarkBlue" parent="Theme.AppCompat.NoActionBar">
@@ -93,9 +90,6 @@
         <item name="sgColorDivider">@color/divider</item>
         <item name="sgColorShadow">@color/protection_dark</item>
         <item name="sgColorStatusBarOverlay">@color/black_87</item>
-
-        <!-- Drawables -->
-        <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
 
     </style>
 
@@ -149,9 +143,6 @@
         <item name="sgColorDivider">@color/divider_inverse</item>
         <item name="sgColorShadow">@color/protection_light</item>
         <item name="sgColorStatusBarOverlay">@color/white_87</item>
-
-        <!-- Drawables -->
-        <item name="drawableBackgroundGradient">@drawable/background_gradient_light</item>
 
     </style>
 

@@ -18,9 +18,6 @@
     <attr name="sgColorShadow" format="reference|color" />
     <attr name="sgColorStatusBarOverlay" format="reference|color" />
 
-    <!-- Drawables -->
-    <attr name="drawableBackgroundGradient" format="reference" />
-
     <!-- Custom view attributes -->
     <declare-styleable name="EmptyView">
         <attr name="emptyViewMessage" format="string" />
