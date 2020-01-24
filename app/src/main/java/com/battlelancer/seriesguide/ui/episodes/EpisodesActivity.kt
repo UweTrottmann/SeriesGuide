@@ -10,7 +10,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -28,10 +27,9 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.util.SeasonTools
 import com.battlelancer.seriesguide.util.Shadows
-import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -194,14 +192,7 @@ class EpisodesActivity : BaseNavDrawerActivity() {
             R.id.textViewTabStripItem
         )
         episodeDetailsTabs.setSelectedIndicatorColors(
-            ContextCompat.getColor(
-                this,
-                if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue) {
-                    R.color.white
-                } else {
-                    Utils.resolveAttributeToResourceId(theme, R.attr.colorPrimary)
-                }
-            )
+            ThemeUtils.getColorFromAttribute(episodeDetailsTabs.context, R.attr.colorPrimary)
         )
 
         // Set drawables for visible shadows.

@@ -9,11 +9,12 @@
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
     </style>
 
-    <style name="TextAppearance.Tab">
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
-        <item name="android:textSize">@dimen/text_size_default_sg</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+    <style name="TextAppearance.SeriesGuide.Tab" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textColor">?attr/colorOnPrimarySurface</item>
+    </style>
+
+    <style name="TextAppearance.SeriesGuide.Tab.Surface">
+        <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
     <style name="TextAppearance.Display3">

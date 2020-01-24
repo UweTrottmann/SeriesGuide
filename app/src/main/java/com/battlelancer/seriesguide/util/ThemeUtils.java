@@ -1,7 +1,10 @@
 package com.battlelancer.seriesguide.util;
 
 import android.app.Activity;
+import android.content.Context;
+import androidx.annotation.AttrRes;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 
@@ -41,5 +44,12 @@ public class ThemeUtils {
         } else {
             activity.setTheme(R.style.Theme_SeriesGuide_Immersive);
         }
+    }
+
+    public static int getColorFromAttribute(Context context, @AttrRes int attribute) {
+        return ContextCompat.getColor(
+                context,
+                Utils.resolveAttributeToResourceId(context.getTheme(), attribute)
+        );
     }
 }

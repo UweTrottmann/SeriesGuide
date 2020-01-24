@@ -148,7 +148,7 @@
     <!-- Special themes -->
     <!-- ####################################### -->
 
-    <style name="Theme.SeriesGuide.Dialog.Distillation" parent="ThemeOverlay.AppCompat.Dialog">
+    <style name="Theme.SeriesGuide.Dialog.Distillation" parent="ThemeOverlay.MaterialComponents.Dialog">
         <item name="android:windowBackground">@drawable/sg_distillation_dialog_background</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
