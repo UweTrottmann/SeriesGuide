@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Toolbar -->
+    <style name="Widget.SeriesGuide.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="android:elevation">4dp</item>
+        <item name="android:background">@color/sg_background_app_bar_dark</item>
+        <!-- Note: this theme overlay will only work if the style is applied directly to a Toolbar. -->
+        <item name="android:theme">@style/ThemeOverlay.SeriesGuide.Toolbar.Surface</item>
+    </style>
+
+    <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface" parent="ThemeOverlay.MaterialComponents.Toolbar.Surface">
+        <item name="colorOnSurface">?attr/colorPrimary</item>
+    </style>
+
+</resources>

@@ -52,6 +52,8 @@
     <color name="sg_color_shadow">#12000000</color>
     <!-- 87% white -->
     <color name="sg_color_status_bar_overlay">#deffffff</color>
+    <!-- 4dp elevation of night/sg_color_surface -->
+    <color name="sg_background_app_bar_dark">#241f2c</color>
 
     <color name="grey_50">#fffafafa</color>
     <color name="grey_850">#ff303030</color>
