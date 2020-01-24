@@ -1,12 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="sg_color_primary_50">#ece8f3</color>
+    <color name="sg_color_primary_100">#cfc6e2</color>
+    <color name="sg_color_primary_200">#b0a1cf</color>
+    <color name="sg_color_primary_300">#927bbc</color>
+    <color name="sg_color_primary_400">#7b5fae</color>
+    <color name="sg_color_primary_500">#6545a0</color>
+    <color name="sg_color_primary_600">#5d409a</color>
+    <color name="sg_color_primary_700">#523891</color>
+    <color name="sg_color_primary_800">#483287</color>
+    <color name="sg_color_primary_900">#382776</color>
+    <color name="sg_color_secondary_50">#e0f2f1</color>
+    <color name="sg_color_secondary_100">#b2dfdb</color>
+    <color name="sg_color_secondary_200">#80cbc3</color>
+    <color name="sg_color_secondary_300">#4db6ab</color>
+    <color name="sg_color_secondary_400">#26a699</color>
+    <color name="sg_color_secondary_500">#009688</color>
+    <color name="sg_color_secondary_600">#00897a</color>
+    <color name="sg_color_secondary_700">#00796a</color>
+    <color name="sg_color_secondary_800">#00695b</color>
+    <color name="sg_color_secondary_900">#004d3f</color>
+
     <color name="transparent">#00000000</color>
 
-    <color name="sg_color_primary">#ff6545a0</color>
-    <color name="sg_color_primary_dark">#ff523991</color>
-    <color name="sg_color_secondary">#ff00796b</color>
-    <color name="sg_color_background">#ffebebeb</color>
+    <color name="sg_color_primary">@color/sg_color_primary_500</color>
+    <color name="sg_color_primary_dark">@color/sg_color_primary_700</color>
+    <color name="sg_color_primary_variant">@color/sg_color_primary_700</color>
+    <color name="sg_color_secondary">@color/sg_color_secondary_700</color>
+    <color name="sg_color_secondary_variant">@color/sg_color_secondary_900</color>
+    <color name="sg_color_surface">#ffffff</color>
+    <color name="sg_color_background">#ebebeb</color>
+
+    <color name="sg_color_on_primary">#ffffff</color>
+    <color name="sg_color_on_secondary">#ffffff</color>
+    <color name="sg_color_on_surface">#000000</color>
+    <color name="sg_color_on_background">#000000</color>
 
     <color name="sg_card_background_color">#ffffff</color>
     <!-- 30% black -->

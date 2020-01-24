@@ -110,19 +110,20 @@
 
         <!-- The color displayed most frequently across your app’s screens and components. -->
         <item name="colorPrimary">@color/sg_color_primary</item>
-        <!-- A color that passes accessibility guidelines for text/iconography when drawn on top of the primary color. -->
-        <item name="colorOnPrimary">#ffffff</item>
-        <!-- A dark variation of the primary color. -->
         <item name="colorPrimaryDark">@color/sg_color_primary_dark</item>
-        <!-- A tonal variation of the primary color. -->
-        <item name="colorPrimaryVariant">@color/sg_color_primary_dark</item>
-        <!-- The secondary branding color for the app, usually an accented complement to the primary branding color. -->
+        <item name="colorPrimaryVariant">@color/sg_color_primary_variant</item>
         <item name="colorSecondary">@color/sg_color_secondary</item>
-        <!-- A color that passes accessibility guidelines for text/iconography when drawn on top of the secondary color. -->
-        <item name="colorOnSecondary">#ffffff</item>
+        <item name="colorSecondaryVariant">@color/sg_color_secondary_variant</item>
+        <item name="colorSurface">@color/sg_color_surface</item>
+        <item name="android:colorBackground">@color/sg_color_background</item>
+
+        <!-- Colors that pass accessibility guidelines for text/iconography when drawn on top of a color. -->
+        <item name="colorOnPrimary">@color/sg_color_on_primary</item>
+        <item name="colorOnSecondary">@color/sg_color_on_secondary</item>
+        <item name="colorOnSurface">@color/sg_color_on_surface</item>
+        <item name="colorOnBackground">@color/sg_color_on_background</item>
 
         <!-- Windows -->
-        <item name="android:colorBackground">@color/sg_color_background</item>
         <item name="android:windowBackground">@color/sg_color_background</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="windowActionModeOverlay">true</item>

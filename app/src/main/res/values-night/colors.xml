@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="sg_color_background">#ff222222</color>
+    <color name="sg_color_primary">@color/sg_color_primary_300</color>
+    <color name="sg_color_primary_dark">#121212</color>
+    <color name="sg_color_primary_variant">@color/sg_color_primary_700</color>
+    <color name="sg_color_secondary">@color/sg_color_secondary_500</color>
+    <color name="sg_color_secondary_variant">@color/sg_color_secondary_500</color>
+    <!-- 8% primary on top of #121212 -->
+    <color name="sg_color_surface">#19161e</color>
+    <color name="sg_color_background">#19161e</color>
+
+    <color name="sg_color_on_primary">#000000</color>
+    <color name="sg_color_on_secondary">#000000</color>
+    <color name="sg_color_on_surface">#ffffff</color>
+    <color name="sg_color_on_background">#ffffff</color>
 
     <color name="sg_card_background_color">#2a2a2a</color>
     <!-- 40% white -->
