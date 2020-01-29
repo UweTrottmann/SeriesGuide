@@ -7,6 +7,7 @@
     <!-- Search action of activity is left-most. -->
     <item
         android:id="@+id/menu_calendar_visibility"
+        android:icon="@drawable/ic_visibility_white_24dp"
         android:orderInCategory="1"
         android:title="@string/calendar_settings"
         app:showAsAction="ifRoom"

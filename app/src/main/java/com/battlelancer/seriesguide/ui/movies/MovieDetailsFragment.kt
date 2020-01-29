@@ -48,7 +48,6 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.ui.people.MovieCreditsLoader
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
@@ -293,12 +292,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         super.onCreateOptionsMenu(menu, inflater)
 
         movieDetails?.let {
-            // choose theme variant
-            val isLightTheme = SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light
-            inflater.inflate(
-                if (isLightTheme) R.menu.movie_details_menu_light else R.menu.movie_details_menu,
-                menu
-            )
+            inflater.inflate(R.menu.movie_details_menu, menu)
 
             // enable/disable actions
             val isEnableShare = !it.tmdbMovie()?.title.isNullOrEmpty()

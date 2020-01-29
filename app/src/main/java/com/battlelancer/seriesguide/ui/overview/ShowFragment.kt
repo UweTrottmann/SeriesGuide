@@ -438,7 +438,7 @@ class ShowFragment : ScopedFragment() {
                 if (isHidden) {
                     R.drawable.ic_visibility_off_black_24dp
                 } else {
-                    R.drawable.ic_visibility_black_24dp
+                    R.drawable.ic_visibility_white_24dp
                 }
             )
             isEnabled = true

@@ -49,6 +49,6 @@
         android:padding="8dp"
         android:text="@string/context_hide"
         tools:drawableTint="?attr/sgColorIcon"
-        tools:drawableTop="@drawable/ic_visibility_black_24dp" />
+        tools:drawableTop="@drawable/ic_visibility_white_24dp" />
 
 </LinearLayout>
