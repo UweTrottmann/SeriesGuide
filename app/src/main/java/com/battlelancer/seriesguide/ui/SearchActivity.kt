@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
@@ -35,6 +34,7 @@ import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.gms.actions.SearchIntents
+import com.google.android.material.textfield.TextInputLayout
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -58,10 +58,10 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
 
     @BindView(R.id.containerSearchBar)
     internal lateinit var searchContainer: View
-    @BindView(R.id.editTextSearchBar)
-    internal lateinit var searchView: AutoCompleteTextView
-    @BindView(R.id.imageButtonSearchClear)
-    internal lateinit var clearButton: View
+    @BindView(R.id.text_input_layout_toolbar)
+    internal lateinit var searchInputLayout: TextInputLayout
+    @BindView(R.id.auto_complete_view_toolbar)
+    internal lateinit var searchAutoCompleteView: AutoCompleteTextView
     @BindView(R.id.tabsSearch)
     internal lateinit var tabs: SlidingTabLayout
     @BindView(R.id.pagerSearch)
@@ -99,12 +99,8 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
 
     private fun setupViews(mayShowKeyboard: Boolean) {
         ButterKnife.bind(this)
-        clearButton.setOnClickListener {
-            searchView.text = null
-            searchView.requestFocus()
-        }
 
-        searchView.setOnEditorActionListener { _, actionId, event ->
+        searchAutoCompleteView.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH
                 || (event != null && event.action == KeyEvent.ACTION_DOWN
                         && event.keyCode == KeyEvent.KEYCODE_ENTER)) {
@@ -115,28 +111,12 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
             }
         }
 
-        // manually retrieve the auto complete view popup background to override the theme
-        val outValue = TypedValue()
-        theme.resolveAttribute(android.R.attr.autoCompleteTextViewStyle, outValue, true)
-        val attributes = intArrayOf(android.R.attr.popupBackground)
-        val a = theme.obtainStyledAttributes(outValue.data, attributes)
-        if (a.hasValue(0)) {
-            searchView.setDropDownBackgroundDrawable(a.getDrawable(0))
-        }
-        a.recycle()
-
         // setup search history (only used by TVDb search)
         searchHistory = SearchHistory(this, SearchSettings.KEY_SUFFIX_THETVDB)
         searchHistoryAdapter = ArrayAdapter(
-            this,
-            if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
-                R.layout.item_dropdown_light
-            } else {
-                R.layout.item_dropdown
-            },
-            searchHistory.searchHistory
+            this, R.layout.item_dropdown, searchHistory.searchHistory
         )
-        searchView.apply {
+        searchAutoCompleteView.apply {
             threshold = 1
             setOnClickListener { v -> (v as AutoCompleteTextView).showDropDown() }
             setOnItemClickListener { _, _, _, _ -> triggerTvdbSearch() }
@@ -170,11 +150,11 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
             }
             if (mayShowKeyboard &&
                 (defaultTab == TAB_POSITION_SHOWS || defaultTab == TAB_POSITION_EPISODES)) {
-                ViewTools.showSoftKeyboardOnSearchView(this, searchView)
+                ViewTools.showSoftKeyboardOnSearchView(this, searchAutoCompleteView)
             }
         } else if (mayShowKeyboard) {
             // also show keyboard when showing first tab (added tab)
-            ViewTools.showSoftKeyboardOnSearchView(this, searchView)
+            ViewTools.showSoftKeyboardOnSearchView(this, searchAutoCompleteView)
         }
     }
 
@@ -192,10 +172,9 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
             searchContainer.visibility = if (searchVisible) View.VISIBLE else View.GONE
             if (searchVisible) {
                 tvdbSearchVisible = position == TAB_POSITION_SEARCH
-                searchView.setAdapter<ArrayAdapter<String>>(if (tvdbSearchVisible) searchHistoryAdapter else null)
-                searchView.setHint(
-                    if (tvdbSearchVisible) R.string.checkin_searchhint else R.string.search
-                )
+                searchAutoCompleteView.setAdapter<ArrayAdapter<String>>(if (tvdbSearchVisible) searchHistoryAdapter else null)
+                searchInputLayout.hint =
+                    getString(if (tvdbSearchVisible) R.string.checkin_searchhint else R.string.search)
             }
         }
 
@@ -228,7 +207,7 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
             }
 
             val query = launchIntent.getStringExtra(SearchManager.QUERY)
-            searchView.setText(query)
+            searchAutoCompleteView.setText(query)
             triggerLocalSearch(query)
         } else if (Intent.ACTION_VIEW == action) {
             val data = intent.data
@@ -261,7 +240,7 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
             } else {
                 // no id, populate the search field instead
                 viewPager.currentItem = TAB_POSITION_SEARCH
-                searchView.setText(sharedText)
+                searchAutoCompleteView.setText(sharedText)
                 triggerTvdbSearch()
                 triggerLocalSearch(sharedText)
             }
@@ -272,12 +251,12 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
         super.onResume()
 
         // set after view states are restored to avoid triggering
-        searchView.addTextChangedListener(textWatcher)
+        searchAutoCompleteView.addTextChangedListener(textWatcher)
     }
 
     override fun onPause() {
         super.onPause()
-        searchView.removeTextChangedListener(textWatcher)
+        searchAutoCompleteView.removeTextChangedListener(textWatcher)
     }
 
     private val textWatcher = object : TextWatcher {
@@ -309,9 +288,9 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
 
     private fun triggerTvdbSearch() {
         if (tvdbSearchVisible) {
-            searchView.dismissDropDown()
+            searchAutoCompleteView.dismissDropDown()
             // extract and post query
-            val query = searchView.text.toString().trim()
+            val query = searchAutoCompleteView.text.toString().trim()
             EventBus.getDefault().postSticky(SearchQuerySubmitEvent(query))
             // update history
             if (query.isNotEmpty()) {
@@ -356,7 +335,7 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
         searchHistory.clearHistory()
         searchHistoryAdapter.clear()
         // setting text to null seems to fix the dropdown from not clearing
-        searchView.text = null
+        searchAutoCompleteView.text = null
     }
 
     override fun getSnackbarParentView(): View {
