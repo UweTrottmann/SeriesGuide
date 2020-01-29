@@ -195,8 +195,4 @@
 
     </style>
 
-    <style name="ThemeOverlay.WhiteAccent" parent="ThemeOverlay.MaterialComponents.Dark">
-        <item name="colorAccent">@color/white</item>
-    </style>
-
 </resources>
