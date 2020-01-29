@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/FirstRunColumn"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/default_padding"
-    cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
-    cardview:cardPreventCornerOverlap="false">
+    app:cardPreventCornerOverlap="false">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,10 +25,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
             android:layout_marginTop="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
             android:text="@string/get_started"
-            android:textAppearance="@style/TextAppearance.Headline" />
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5" />
 
         <RelativeLayout
             android:id="@+id/containerFirstRunNoSpoilers"
@@ -61,18 +60,18 @@
                 android:ellipsize="marquee"
                 android:maxLines="1"
                 android:text="@string/pref_nospoilers"
-                android:textAppearance="@style/TextAppearance.Subhead"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
                 tools:ignore="EllipsizeMaxLines" />
 
             <TextView
                 android:id="@+id/textViewFirstRunNoSpoilerSummary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/textViewFirstRunNoSpoilerText"
                 android:layout_below="@id/textViewFirstRunNoSpoilerText"
+                android:layout_alignLeft="@id/textViewFirstRunNoSpoilerText"
                 android:paddingBottom="@dimen/inline_padding"
                 android:text="@string/pref_nospoilers_summary"
-                android:textAppearance="@style/TextAppearance.Body.Secondary" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary" />
 
         </RelativeLayout>
 
@@ -105,18 +104,18 @@
                 android:ellipsize="marquee"
                 android:maxLines="1"
                 android:text="@string/pref_updatewifionly"
-                android:textAppearance="@style/TextAppearance.Subhead"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
                 tools:ignore="EllipsizeMaxLines" />
 
             <TextView
                 android:id="@+id/textViewFirstRunDataSaverSummary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/textViewFirstRunDataSaverText"
                 android:layout_below="@id/textViewFirstRunDataSaverText"
+                android:layout_alignLeft="@id/textViewFirstRunDataSaverText"
                 android:paddingBottom="@dimen/inline_padding"
                 android:text="@string/pref_updatewifionlysummary"
-                android:textAppearance="@style/TextAppearance.Body.Secondary" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary" />
 
         </RelativeLayout>
 
@@ -127,10 +126,10 @@
             android:layout_below="@id/containerFirstRunDataSaver"
             android:gravity="end"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/inline_padding"
             android:paddingLeft="@dimen/default_padding"
+            android:paddingTop="@dimen/large_padding"
             android:paddingRight="@dimen/default_padding"
-            android:paddingTop="@dimen/large_padding">
+            android:paddingBottom="@dimen/inline_padding">
 
             <Button
                 android:id="@+id/buttonFirstRunAddShow"
@@ -171,11 +170,11 @@
             android:layout_marginRight="@dimen/large_padding"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
-            android:paddingBottom="@dimen/default_padding"
             android:paddingTop="@dimen/default_padding"
+            android:paddingBottom="@dimen/default_padding"
             android:text="@string/privacy_policy"
-            android:textAppearance="@style/TextAppearance.Body.Green" />
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Accent" />
 
     </RelativeLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
