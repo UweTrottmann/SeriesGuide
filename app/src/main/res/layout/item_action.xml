@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <Button xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/textViewItemActionTitle"
     style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:drawableLeft="@drawable/ic_extension_black_24dp"
     android:ellipsize="end"
+    app:icon="@drawable/ic_extension_black_24dp"
+    app:iconGravity="start"
     tools:text="Some Extension Action" />

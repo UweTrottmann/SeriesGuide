@@ -165,18 +165,10 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // important action buttons
         containerMovieButtons.isGone = true
         containerRatings.isGone = true
-        val theme = activity!!.theme
-        ViewTools.setVectorIconLeft(theme, buttonMovieCheckIn, R.drawable.ic_checkin_black_24dp)
-        ViewTools.setVectorIconLeft(
-            theme,
-            buttonMovieStreamingSearch,
-            R.drawable.ic_play_arrow_black_24dp
-        )
         CheatSheet.setup(buttonMovieCheckIn)
 
         // language button
         buttonMovieLanguage.isGone = true
-        ViewTools.setVectorIconLeft(theme, buttonMovieLanguage, R.drawable.ic_language_white_24dp)
         CheatSheet.setup(buttonMovieLanguage, R.string.pref_language)
         buttonMovieLanguage.setOnClickListener {
             MovieLocalizationDialogFragment.show(fragmentManager)
@@ -184,7 +176,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // comments button
         buttonMovieComments.isGone = true
-        ViewTools.setVectorIconLeft(theme, buttonMovieComments, R.drawable.ic_forum_black_24dp)
 
         // cast and crew
         setCastVisibility(false)

@@ -40,9 +40,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/containerPersonHeadshot"
-            android:layout_marginBottom="8dp"
             android:layout_marginLeft="@dimen/keyline"
             android:layout_marginRight="@dimen/keyline"
+            android:layout_marginBottom="8dp"
             android:ellipsize="end"
             android:maxLines="2"
             android:shadowColor="@color/protection_dark"
@@ -61,8 +61,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/containerPersonHeadshot"
             android:layout_marginLeft="@dimen/keyline"
-            android:layout_marginRight="@dimen/keyline"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="@dimen/keyline"
             android:text="@string/person_biography"
             android:textAppearance="@style/TextAppearance.Title"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -75,8 +75,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/keyline"
-            android:layout_marginRight="@dimen/keyline"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="@dimen/keyline"
             android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -90,11 +90,11 @@
             android:layout_height="48dp"
             android:layout_marginTop="8dp"
             android:text="@string/tmdb"
+            app:icon="@drawable/ic_link_black_24dp"
+            app:iconGravity="start"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPersonBiography"
-            tools:drawableLeft="@drawable/ic_link_black_24dp"
-            tools:drawableTint="?attr/sgColorIcon" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewPersonBiography" />
 
         <Button
             android:id="@+id/buttonPersonWebSearch"
@@ -102,11 +102,11 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="@string/web_search"
+            app:icon="@drawable/ic_search_white_24dp"
+            app:iconGravity="start"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonPersonTmdbLink"
-            tools:drawableLeft="@drawable/ic_search_white_24dp"
-            tools:drawableTint="?attr/sgColorIcon" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonPersonTmdbLink" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

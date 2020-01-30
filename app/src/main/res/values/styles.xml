@@ -179,7 +179,7 @@
         <item name="android:textAppearance">@style/TextAppearance.Menu</item>
         <item name="android:paddingLeft">@dimen/large_padding</item>
         <item name="android:paddingRight">@dimen/large_padding</item>
-        <item name="android:drawablePadding">32dp</item>
+        <item name="iconPadding">32dp</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Accent">
