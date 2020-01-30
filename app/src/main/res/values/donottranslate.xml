@@ -518,8 +518,8 @@
 
     <!-- Theme variants -->
     <string-array name="themeSelection">
+        <item>@string/theme_app_auto_battery</item>
         <item>@string/theme_app_dark</item>
-        <item>@string/theme_app_auto</item>
         <item>@string/theme_app_light</item>
     </string-array>
     <string-array name="themeSelectionData">

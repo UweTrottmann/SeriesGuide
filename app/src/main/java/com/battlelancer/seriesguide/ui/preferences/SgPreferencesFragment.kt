@@ -142,25 +142,20 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
         // Theme switcher
         findPreference<ListPreference>(DisplaySettings.KEY_THEME)!!.apply {
-            if (hasAccessToX) {
-                setOnPreferenceChangeListener { preference, newValue ->
-                    if (DisplaySettings.KEY_THEME == preference.key) {
-                        ThemeUtils.updateTheme(newValue as String)
-                        Shadows.getInstance().resetShadowColor()
+            setOnPreferenceChangeListener { preference, newValue ->
+                if (DisplaySettings.KEY_THEME == preference.key) {
+                    ThemeUtils.updateTheme(newValue as String)
+                    Shadows.getInstance().resetShadowColor()
 
-                        // restart to apply new theme, go back to this settings screen
-                        TaskStackBuilder.create(activity!!)
-                            .addNextIntent(Intent(activity, ShowsActivity::class.java))
-                            .addNextIntent(activity!!.intent)
-                            .startActivities()
-                    }
-                    true
+                    // restart to apply new theme, go back to this settings screen
+                    TaskStackBuilder.create(activity!!)
+                        .addNextIntent(Intent(activity, ShowsActivity::class.java))
+                        .addNextIntent(activity!!.intent)
+                        .startActivities()
                 }
-                setListPreferenceSummary(this)
-            } else {
-                onPreferenceChangeListener = sNoOpChangeListener
-                setSummary(R.string.onlyx)
+                true
             }
+            setListPreferenceSummary(this)
         }
 
         // show currently set values for list prefs
