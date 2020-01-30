@@ -17,40 +17,31 @@
 
         <Button
             android:id="@+id/buttonEpisodeWatched"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+            style="@style/Widget.SeriesGuide.Button.MediaItem"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@string/action_watched"
             android:drawableTop="@drawable/ic_watch_black_24dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:padding="8dp"
             android:text="@string/action_watched" />
 
         <Button
             android:id="@+id/buttonEpisodeCollected"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+            style="@style/Widget.SeriesGuide.Button.MediaItem"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:drawableTop="@drawable/ic_collect_black_24dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:padding="8dp"
             android:text="@string/action_collection_add" />
 
         <Button
             android:id="@+id/buttonEpisodeSkip"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+            style="@style/Widget.SeriesGuide.Button.MediaItem"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@string/action_skip"
             android:drawableTop="@drawable/ic_skip_black_24dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:padding="8dp"
             android:text="@string/action_skip" />
 
     </LinearLayout>

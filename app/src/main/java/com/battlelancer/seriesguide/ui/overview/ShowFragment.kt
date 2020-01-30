@@ -378,8 +378,8 @@ class ShowFragment : ScopedFragment() {
         // favorite button
         val isFavorite = showCursor.getInt(ShowQuery.IS_FAVORITE) == 1
         buttonFavorite.apply {
-            ViewTools.setVectorIconTop(
-                activity!!.theme, this, if (isFavorite) {
+            ViewTools.setVectorDrawableTop(
+                this, if (isFavorite) {
                     R.drawable.ic_star_black_24dp
                 } else {
                     R.drawable.ic_star_border_black_24dp
@@ -408,8 +408,8 @@ class ShowFragment : ScopedFragment() {
                     R.string.action_episode_notifications_on
                 }
             )
-            ViewTools.setVectorIconTop(
-                activity!!.theme, this, if (notify) {
+            ViewTools.setVectorDrawableTop(
+                this, if (notify) {
                     R.drawable.ic_notifications_active_black_24dp
                 } else {
                     R.drawable.ic_notifications_off_black_24dp
@@ -433,8 +433,8 @@ class ShowFragment : ScopedFragment() {
         buttonHidden.apply {
             contentDescription = label
             text = label
-            ViewTools.setVectorIconTop(
-                activity!!.theme, this,
+            ViewTools.setVectorDrawableTop(
+                this,
                 if (isHidden) {
                     R.drawable.ic_visibility_off_black_24dp
                 } else {

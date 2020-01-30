@@ -166,9 +166,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         containerMovieButtons.isGone = true
         containerRatings.isGone = true
         val theme = activity!!.theme
-        ViewTools.setVectorIconTop(theme, buttonMovieWatched, R.drawable.ic_watch_black_24dp)
-        ViewTools.setVectorIconTop(theme, buttonMovieCollected, R.drawable.ic_collect_black_24dp)
-        ViewTools.setVectorIconTop(theme, buttonMovieWatchlisted, R.drawable.ic_list_add_white_24dp)
         ViewTools.setVectorIconLeft(theme, buttonMovieCheckIn, R.drawable.ic_checkin_black_24dp)
         ViewTools.setVectorIconLeft(
             theme,
@@ -386,9 +383,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             it.setText(textRes)
             CheatSheet.setup(it, textRes)
             if (isWatched) {
-                ViewTools.setVectorDrawableTop(theme, it, R.drawable.ic_watched_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_watched_24dp)
             } else {
-                ViewTools.setVectorIconTop(theme, it, R.drawable.ic_watch_black_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_watch_black_24dp)
             }
             it.setOnClickListener {
                 if (isWatched) {
@@ -402,9 +399,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // collected button
         buttonMovieCollected.also {
             if (inCollection) {
-                ViewTools.setVectorDrawableTop(theme, it, R.drawable.ic_collected_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_collected_24dp)
             } else {
-                ViewTools.setVectorIconTop(theme, it, R.drawable.ic_collect_black_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_collect_black_24dp)
             }
             val textRes =
                 if (inCollection) R.string.action_collection_remove else R.string.action_collection_add
@@ -422,9 +419,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // watchlist button
         buttonMovieWatchlisted.also {
             if (inWatchlist) {
-                ViewTools.setVectorDrawableTop(theme, it, R.drawable.ic_list_added_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_list_added_24dp)
             } else {
-                ViewTools.setVectorIconTop(theme, it, R.drawable.ic_list_add_white_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_list_add_white_24dp)
             }
             val textRes = if (inWatchlist) R.string.watchlist_remove else R.string.watchlist_add
             it.setText(textRes)

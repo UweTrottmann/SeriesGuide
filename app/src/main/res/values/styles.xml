@@ -192,9 +192,10 @@
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
-    <style name="Widget.SeriesGuide.Button.Borderless.Caption.Platform">
-        <item name="android:padding">4dp</item>
-        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    <style name="Widget.SeriesGuide.Button.MediaItem" parent="Widget.SeriesGuide.Button.Borderless.Caption">
+        <item name="android:ellipsize">end</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:maxLines">3</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Rating">

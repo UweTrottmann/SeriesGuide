@@ -11,44 +11,32 @@
 
     <Button
         android:id="@+id/buttonShowFavorite"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+        style="@style/Widget.SeriesGuide.Button.MediaItem"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:padding="8dp"
+        android:drawableTop="@drawable/ic_star_black_24dp"
         android:text="@string/context_favorite"
-        tools:drawableTint="?attr/sgColorIcon"
-        tools:drawableTop="@drawable/ic_star_black_24dp"
         tools:text="Remove from favorites" />
 
     <Button
         android:id="@+id/buttonShowNotify"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+        style="@style/Widget.SeriesGuide.Button.MediaItem"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/action_episode_notifications_off"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:padding="8dp"
-        android:text="@string/pref_notifications"
-        tools:drawableTint="?attr/sgColorIcon"
-        tools:drawableTop="@drawable/ic_notifications_active_black_24dp" />
+        android:drawableTop="@drawable/ic_notifications_active_black_24dp"
+        android:text="@string/pref_notifications" />
 
     <Button
         android:id="@+id/buttonShowHidden"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+        style="@style/Widget.SeriesGuide.Button.MediaItem"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/add_to_homescreen"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:padding="8dp"
-        android:text="@string/context_hide"
-        tools:drawableTint="?attr/sgColorIcon"
-        tools:drawableTop="@drawable/ic_visibility_white_24dp" />
+        android:drawableTop="@drawable/ic_visibility_white_24dp"
+        android:text="@string/context_hide" />
 
 </LinearLayout>
