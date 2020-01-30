@@ -30,6 +30,17 @@ public class ViewTools {
                 VectorDrawableCompat.create(textView.getResources(), vectorRes, theme));
     }
 
+    public static void setVectorDrawableTop(TextView textView, @DrawableRes int vectorRes) {
+        setCompoundDrawableTop(
+                textView,
+                VectorDrawableCompat.create(
+                        textView.getResources(),
+                        vectorRes,
+                        textView.getContext().getTheme()
+                )
+        );
+    }
+
     public static void setVectorIcon(Resources.Theme theme, ImageView button,
             @DrawableRes int vectorRes) {
         button.setImageDrawable(vectorIconActive(button.getContext(), theme, vectorRes));
@@ -83,6 +94,13 @@ public class ViewTools {
             drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         }
         textView.setCompoundDrawables(null, drawable, null, null);
+    }
+
+    public static void setCompoundDrawableTop(@NonNull TextView textView,
+            @DrawableRes int drawableRes) {
+        textView.setCompoundDrawables(null,
+                textView.getResources().getDrawable(drawableRes, textView.getContext().getTheme()),
+                null, null);
     }
 
     /**

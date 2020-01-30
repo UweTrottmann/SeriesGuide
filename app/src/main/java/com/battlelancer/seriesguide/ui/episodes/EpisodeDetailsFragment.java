@@ -174,27 +174,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         textViewRatingRange.setText(getString(R.string.format_rating_range, 10));
 
-        // episode buttons
-        Resources.Theme theme = requireActivity().getTheme();
-        ViewTools.setVectorIconTop(theme, buttonWatch, R.drawable.ic_watch_black_24dp);
-        ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
-        ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonCheckin, R.drawable.ic_checkin_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonWatchedUpTo, R.drawable.ic_watch_all_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonStreamingSearch,
-                R.drawable.ic_play_arrow_black_24dp);
-
-        // comments button
-        ViewTools.setVectorIconLeft(theme, commentsButton, R.drawable.ic_forum_black_24dp);
-
         // other bottom buttons
-        ViewTools.setVectorIconLeft(theme, imdbButton, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorIconLeft(theme, tvdbButton, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorIconLeft(theme, traktButton, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonShare, R.drawable.ic_share_white_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonAddToCalendar, R.drawable.ic_event_white_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonManageLists, R.drawable.ic_list_white_24dp);
-
         buttonShare.setOnClickListener(v -> shareEpisode());
         buttonAddToCalendar.setOnClickListener(v -> ShareUtils.suggestCalendarEvent(
                 getActivity(),
@@ -559,9 +539,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         // watched button
         Resources.Theme theme = requireActivity().getTheme();
         if (isWatched) {
-            ViewTools.setVectorDrawableTop(theme, buttonWatch, R.drawable.ic_watched_24dp);
+            ViewTools.setVectorDrawableTop(buttonWatch, R.drawable.ic_watched_24dp);
         } else {
-            ViewTools.setVectorIconTop(theme, buttonWatch, R.drawable.ic_watch_black_24dp);
+            ViewTools.setVectorDrawableTop(buttonWatch, R.drawable.ic_watch_black_24dp);
         }
         buttonWatch.setOnClickListener(v -> onToggleWatched());
         buttonWatch.setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
@@ -571,9 +551,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         // collected button
         collected = cursor.getInt(DetailsQuery.COLLECTED) == 1;
         if (collected) {
-            ViewTools.setVectorDrawableTop(theme, buttonCollect, R.drawable.ic_collected_24dp);
+            ViewTools.setVectorDrawableTop(buttonCollect, R.drawable.ic_collected_24dp);
         } else {
-            ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
+            ViewTools.setVectorDrawableTop(buttonCollect, R.drawable.ic_collect_black_24dp);
         }
         buttonCollect.setOnClickListener(v -> onToggleCollected());
         buttonCollect.setText(collected
@@ -590,9 +570,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
             boolean isSkipped = EpisodeTools.isSkipped(episodeFlag);
             if (isSkipped) {
-                ViewTools.setVectorDrawableTop(theme, buttonSkip, R.drawable.ic_skipped_24dp);
+                ViewTools.setVectorDrawableTop(buttonSkip, R.drawable.ic_skipped_24dp);
             } else {
-                ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
+                ViewTools.setVectorDrawableTop(buttonSkip, R.drawable.ic_skip_black_24dp);
             }
             buttonSkip.setOnClickListener(v -> onToggleSkipped());
             buttonSkip.setText(isSkipped ? R.string.action_dont_skip : R.string.action_skip);

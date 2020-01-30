@@ -160,7 +160,7 @@
     <style name="Widget.SeriesGuide.Button" parent="Widget.MaterialComponents.Button" />
     <style name="Widget.SeriesGuide.Button.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton" />
 
-    <style name="Widget.SeriesGuide.Button.Borderless" parent="android:Widget.Material.Button.Borderless">
+    <style name="Widget.SeriesGuide.Button.Borderless" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:maxLines">2</item>
     </style>
 

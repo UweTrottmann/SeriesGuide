@@ -1,69 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Button
         android:id="@+id/buttonEpisodeImdb"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="@string/imdb"
-        tools:drawableLeft="@drawable/ic_link_black_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        android:drawableLeft="@drawable/ic_link_black_24dp"
+        android:text="@string/imdb" />
 
     <Button
         android:id="@+id/buttonEpisodeTvdb"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="@string/tvdb"
-        tools:drawableLeft="@drawable/ic_link_black_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        android:drawableLeft="@drawable/ic_link_black_24dp"
+        android:text="@string/tvdb" />
 
     <Button
         android:id="@+id/buttonEpisodeTrakt"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="@string/trakt"
-        tools:drawableLeft="@drawable/ic_link_black_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        android:drawableLeft="@drawable/ic_link_black_24dp"
+        android:text="@string/trakt" />
 
     <Button
         android:id="@+id/buttonEpisodeShare"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="@string/share_episode"
-        tools:drawableLeft="@drawable/ic_share_white_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        android:drawableLeft="@drawable/ic_share_white_24dp"
+        android:text="@string/share_episode" />
 
     <Button
         android:id="@+id/buttonEpisodeCalendar"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="@string/addtocalendar"
-        tools:drawableLeft="@drawable/ic_event_white_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        android:drawableLeft="@drawable/ic_event_white_24dp"
+        android:text="@string/addtocalendar" />
 
     <Button
         android:id="@+id/buttonEpisodeLists"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="@string/list_item_manage"
-        tools:drawableLeft="@drawable/ic_list_white_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        android:drawableLeft="@drawable/ic_list_white_24dp"
+        android:text="@string/list_item_manage" />
 
     <Button
         android:id="@+id/buttonEpisodeComments"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="@string/comments"
-        tools:drawableLeft="@drawable/ic_forum_black_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        android:drawableLeft="@drawable/ic_forum_black_24dp"
+        android:text="@string/comments" />
 
 </merge>
