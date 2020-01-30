@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
@@ -55,7 +54,7 @@ public class ActionsHelper {
         }
 
         // link to extensions configuration
-        TextView configureView = (TextView) layoutInflater.inflate(R.layout.item_action_add,
+        Button configureView = (Button) layoutInflater.inflate(R.layout.item_action_add,
                 actionsContainer, false);
         configureView.setText(R.string.action_extensions_configure);
         configureView.setOnClickListener(v -> {

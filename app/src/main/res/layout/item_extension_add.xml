@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="48dp">
 
-    <TextView
-        android:id="@+id/textViewItemExtensionAddLabel"
+    <Button
+        android:id="@+id/button_item_extension_add"
+        style="@style/Widget.SeriesGuide.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:text="@string/action_extensions_add"
-        android:textAppearance="@style/TextAppearance.Menu"
-        tools:drawableLeft="@drawable/ic_add_white_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        app:icon="@drawable/ic_add_white_24dp"
+        app:iconGravity="start" />
 
 </FrameLayout>
