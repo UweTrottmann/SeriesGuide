@@ -18,7 +18,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.EpisodeSearchQu
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
-import com.battlelancer.seriesguide.util.ViewTools;
 
 /**
  * {@link CursorAdapter} displaying episode search results inside the {@link
@@ -58,8 +57,7 @@ class EpisodeResultsAdapter extends CursorAdapter {
         } else if (EpisodeTools.isSkipped(episodeFlag)) {
             viewHolder.watchedStatus.setImageResource(R.drawable.ic_skipped_24dp);
         } else {
-            ViewTools.setVectorIcon(theme, viewHolder.watchedStatus,
-                    R.drawable.ic_watch_black_24dp);
+            viewHolder.watchedStatus.setImageResource(R.drawable.ic_watch_black_24dp);
         }
 
         // ensure matched term is bold

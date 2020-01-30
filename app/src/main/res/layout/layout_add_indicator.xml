@@ -10,8 +10,7 @@
         android:contentDescription="@string/action_shows_add"
         android:focusable="false"
         android:scaleType="centerInside"
-        app:srcCompat="@drawable/ic_add_white_24dp"
-        app:tint="?attr/sgColorIcon" />
+        app:srcCompat="@drawable/ic_add_white_24dp" />
 
     <!-- Content description is set in code. -->
     <ImageView
