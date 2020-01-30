@@ -45,8 +45,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_star_black_24dp"
-        tools:tint="?attr/sgColorIcon" />
+        tools:src="@drawable/ic_star_black_24dp" />
 
     <!-- 20dp dense icon, though 48dp touch target -->
     <androidx.appcompat.widget.AppCompatImageView
@@ -59,7 +58,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@drawable/ic_more_vert_black_20dp"
-        app:tint="?attr/sgColorIcon"
         tools:ignore="ContentDescription" />
 
     <TextView

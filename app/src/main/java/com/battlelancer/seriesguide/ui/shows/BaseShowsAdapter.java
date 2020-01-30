@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.cursoradapter.widget.CursorAdapter;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.ViewTools;
 
 /**
  * Base adapter for the show item layout.
@@ -37,10 +36,11 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         this.onItemClickListener = listener;
 
         Resources.Theme theme = activity.getTheme();
-        drawableStar = ViewTools.vectorIconActive(activity, theme,
-                R.drawable.ic_star_black_24dp);
-        drawableStarZero = ViewTools.vectorIconActive(activity, theme,
-                R.drawable.ic_star_border_black_24dp);
+        Resources resources = activity.getResources();
+        drawableStar = VectorDrawableCompat
+                .create(resources, R.drawable.ic_star_black_24dp, theme);
+        drawableStarZero = VectorDrawableCompat
+                .create(resources, R.drawable.ic_star_border_black_24dp, theme);
     }
 
     @Override
