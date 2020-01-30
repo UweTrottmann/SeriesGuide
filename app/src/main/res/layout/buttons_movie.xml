@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -58,8 +59,8 @@
         android:layout_marginRight="@dimen/padding_button"
         android:contentDescription="@string/checkin"
         android:text="@string/checkin"
-        tools:drawableLeft="@drawable/ic_checkin_black_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        app:icon="@drawable/ic_checkin_black_24dp"
+        app:iconGravity="start" />
 
     <Button
         android:id="@+id/buttonMovieStreamingSearch"
@@ -70,7 +71,7 @@
         android:layout_marginRight="@dimen/padding_button"
         android:contentDescription="@string/action_stream"
         android:text="@string/action_stream"
-        tools:drawableLeft="@drawable/ic_play_arrow_black_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        app:icon="@drawable/ic_play_arrow_black_24dp"
+        app:iconGravity="start" />
 
 </LinearLayout>

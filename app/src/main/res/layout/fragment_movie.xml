@@ -111,6 +111,8 @@
                 android:layout_below="@+id/dividerMovie0"
                 android:layout_marginLeft="@dimen/padding_button"
                 android:layout_marginRight="@dimen/padding_button"
+                app:icon="@drawable/ic_language_white_24dp"
+                app:iconGravity="start"
                 tools:text="Deutsch" />
 
             <TextView
