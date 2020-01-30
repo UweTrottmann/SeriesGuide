@@ -50,8 +50,7 @@
         android:scaleType="centerInside"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_watch_black_24dp"
-        app:tint="?attr/sgColorIcon" />
+        app:srcCompat="@drawable/ic_watch_black_24dp" />
 
     <!-- 24dp dense icon, though 48dp touch target -->
     <androidx.appcompat.widget.AppCompatImageView
@@ -64,7 +63,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@drawable/ic_more_vert_black_20dp"
-        app:tint="?attr/sgColorIcon"
         tools:ignore="ContentDescription" />
 
     <TextView
