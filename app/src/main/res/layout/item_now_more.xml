@@ -16,8 +16,7 @@
         android:layout_marginLeft="@dimen/keyline"
         android:layout_marginRight="@dimen/default_padding"
         android:contentDescription="@null"
-        app:srcCompat="@drawable/ic_arrow_forward_black_24dp"
-        app:tint="?attr/sgColorIcon" />
+        app:srcCompat="@drawable/ic_arrow_forward_black_24dp" />
 
     <TextView
         android:id="@+id/textViewNowMoreText"
@@ -26,7 +25,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:paddingRight="@dimen/large_padding"
-        android:textAppearance="@style/TextAppearance.Button"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Button"
         android:textColor="?android:attr/textColorSecondary"
         tools:ignore="RtlSymmetry"
         tools:text="@string/user_stream" />

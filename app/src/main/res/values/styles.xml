@@ -137,6 +137,8 @@
         <item name="android:textStyle">italic</item>
     </style>
 
+    <style name="TextAppearance.SeriesGuide.Button" parent="TextAppearance.MaterialComponents.Button" />
+
     <style name="TextAppearance.SeriesGuide.Caption" parent="TextAppearance.MaterialComponents.Caption" />
 
     <style name="TextAppearance.SeriesGuide.Headline5" parent="TextAppearance.MaterialComponents.Headline5" />
