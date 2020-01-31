@@ -2,11 +2,11 @@ package com.battlelancer.seriesguide.streaming
 
 import android.app.Dialog
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.util.safeShow
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.greenrobot.eventbus.EventBus
 
 class StreamingSearchConfigureDialog : AppCompatDialogFragment() {
@@ -31,7 +31,7 @@ class StreamingSearchConfigureDialog : AppCompatDialogFragment() {
             }
         }
 
-        return AlertDialog.Builder(requireContext())
+        return MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.action_stream)
                 .setSingleChoiceItems(
                         items,

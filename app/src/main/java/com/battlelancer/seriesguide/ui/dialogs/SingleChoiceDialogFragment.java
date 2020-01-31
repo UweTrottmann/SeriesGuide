@@ -5,10 +5,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.FragmentManager;
 import com.battlelancer.seriesguide.util.DialogTools;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 /**
  * A dialog displaying a list of options to choose from, saving the selected option to the given
@@ -38,7 +38,7 @@ public class SingleChoiceDialogFragment extends AppCompatDialogFragment {
         final CharSequence[] items = getResources().getStringArray(
                 getArguments().getInt("itemarray"));
 
-        return new AlertDialog.Builder(getActivity())
+        return new MaterialAlertDialogBuilder(getActivity())
                 .setTitle(getString(getArguments().getInt("dialogtitle")))
                 .setSingleChoiceItems(items, getArguments().getInt("selected"),
                         (dialog, item) -> {

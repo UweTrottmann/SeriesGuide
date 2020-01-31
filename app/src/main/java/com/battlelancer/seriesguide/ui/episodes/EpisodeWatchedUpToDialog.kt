@@ -2,9 +2,9 @@ package com.battlelancer.seriesguide.ui.episodes
 
 import android.app.Dialog
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.battlelancer.seriesguide.R
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
  * Asks user to confirm before flagging all episodes
@@ -27,7 +27,7 @@ class EpisodeWatchedUpToDialog : AppCompatDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return AlertDialog.Builder(context!!)
+        return MaterialAlertDialogBuilder(context!!)
             .setTitle(R.string.confirmation_watched_up_to)
             .setPositiveButton(R.string.action_watched_up_to) { _, _ ->
                 EpisodeTools.episodeWatchedUpTo(
