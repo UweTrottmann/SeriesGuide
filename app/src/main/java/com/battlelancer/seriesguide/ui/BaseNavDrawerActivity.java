@@ -155,7 +155,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
      */
     public void setupNavDrawer() {
         drawerLayout = findViewById(R.id.drawer_layout);
-        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         actionBarToolbar = drawerLayout.findViewById(R.id.sgToolbar);
 
