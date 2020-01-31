@@ -140,19 +140,6 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         unbinder = ButterKnife.bind(this, view)
 
-        // Icons.
-        ViewTools.setVectorIconLeft(
-            activity!!.theme, buttonLanguage,
-            R.drawable.ic_language_white_24dp
-        )
-        ViewTools.setVectorIconLeft(
-            activity!!.theme, buttonDisplaySimilar,
-            R.drawable.ic_search_white_24dp
-        )
-        ViewTools.setVectorIconLeft(
-            activity!!.theme, buttonStreamingSearch,
-            R.drawable.ic_play_arrow_black_24dp
-        )
         // Long press hint.
         CheatSheet.setup(buttonLanguage, R.string.pref_language)
         // Buttons.

@@ -137,9 +137,13 @@
         <item name="android:textStyle">italic</item>
     </style>
 
+    <style name="TextAppearance.SeriesGuide.Caption" parent="TextAppearance.MaterialComponents.Caption" />
+
     <style name="TextAppearance.SeriesGuide.Headline5" parent="TextAppearance.MaterialComponents.Headline5" />
+    <style name="TextAppearance.SeriesGuide.Headline6" parent="TextAppearance.MaterialComponents.Headline6" />
 
     <style name="TextAppearance.SeriesGuide.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1" />
+    <style name="TextAppearance.SeriesGuide.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2" />
 
     <style name="TextAppearance.SeriesGuide.Tab" parent="TextAppearance.MaterialComponents.Button">
         <item name="android:textColor">?attr/colorOnPrimarySurface</item>
