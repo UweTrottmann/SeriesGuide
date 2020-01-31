@@ -147,6 +147,9 @@
         <item name="sgColorShadow">@color/sg_color_shadow</item>
         <item name="sgColorStatusBarOverlay">@color/sg_color_status_bar_overlay</item>
 
+        <!-- dialogTheme is used by AppCompatDialogFragment. -->
+        <item name="dialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog</item>
+
     </style>
 
     <style name="Theme.BaseSeriesGuide.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -198,6 +201,9 @@
         <item name="sgColorDivider">@color/sg_color_divider</item>
         <item name="sgColorShadow">@color/sg_color_shadow</item>
         <item name="sgColorStatusBarOverlay">@color/sg_color_status_bar_overlay</item>
+
+        <!-- dialogTheme is used by AppCompatDialogFragment. -->
+        <item name="dialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog</item>
 
     </style>
 
