@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Choose launch background based on system setting on Q+. -->
+    <color name="sg_color_background_launch">@color/sg_color_background</color>
+
+</resources>

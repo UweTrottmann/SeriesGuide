@@ -30,7 +30,11 @@
     <color name="sg_color_secondary">@color/sg_color_secondary_700</color>
     <color name="sg_color_secondary_variant">@color/sg_color_secondary_900</color>
     <color name="sg_color_surface">#ffffff</color>
-    <color name="sg_color_background">#ebebeb</color>
+    <color name="sg_color_background_dark">#19161e</color>
+    <color name="sg_color_background_light">#ebebeb</color>
+    <color name="sg_color_background">@color/sg_color_background_light</color>
+    <!-- Always use dark launch background on P-. -->
+    <color name="sg_color_background_launch">@color/sg_color_background_dark</color>
 
     <color name="sg_color_on_primary">#ffffff</color>
     <color name="sg_color_on_secondary">#ffffff</color>

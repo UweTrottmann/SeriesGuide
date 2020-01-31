@@ -7,8 +7,8 @@
     <color name="sg_color_secondary">@color/sg_color_secondary_500</color>
     <color name="sg_color_secondary_variant">@color/sg_color_secondary_500</color>
     <!-- 8% primary on top of #121212 -->
-    <color name="sg_color_surface">#19161e</color>
-    <color name="sg_color_background">#19161e</color>
+    <color name="sg_color_surface">@color/sg_color_background_dark</color>
+    <color name="sg_color_background">@color/sg_color_background_dark</color>
 
     <color name="sg_color_on_primary">#000000</color>
     <color name="sg_color_on_secondary">#000000</color>
