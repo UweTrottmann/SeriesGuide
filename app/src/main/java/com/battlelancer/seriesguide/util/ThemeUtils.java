@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import androidx.annotation.AttrRes;
@@ -18,9 +17,8 @@ public class ThemeUtils {
      * Sets the global app theme variable. Applied by all activities once they are created.
      */
     public static synchronized void updateTheme(String themeIndex) {
+        SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide_DayNight;
         int theme = Integer.parseInt(themeIndex);
-        // The Light theme is a DayNight theme that can be toggled between light and dark.
-        SeriesGuidePreferences.THEME = R.style.Theme_SeriesGuide_Light;
         switch (theme) {
             case 1:
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -36,19 +34,6 @@ public class ThemeUtils {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 }
                 break;
-        }
-    }
-
-    /**
-     * Applies an immersive theme (translucent status bar) to the given activity.
-     */
-    public static void setImmersiveTheme(Activity activity) {
-        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
-            activity.setTheme(R.style.Theme_SeriesGuide_Light_Immersive);
-        } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue) {
-            activity.setTheme(R.style.Theme_SeriesGuide_DarkBlue_Immersive);
-        } else {
-            activity.setTheme(R.style.Theme_SeriesGuide_Immersive);
         }
     }
 

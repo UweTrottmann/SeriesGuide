@@ -91,7 +91,63 @@
 
     </style>
 
-    <style name="Theme.BaseSeriesGuide.Light" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <!-- TODO Remove above themes and unused resources once migration finished. -->
+    <!-- ####################################### -->
+    <!-- DayNight themes -->
+    <!-- ####################################### -->
+
+    <style name="Theme.SeriesGuide.DayNight" parent="Theme.SeriesGuide.Light" />
+
+    <style name="Theme.BaseSeriesGuide.Dark" parent="Theme.MaterialComponents.NoActionBar">
+
+        <!-- All customizations that are SPECIFIC to API-level 21 go here. -->
+
+    </style>
+
+    <style name="Theme.SeriesGuide.Dark" parent="Theme.BaseSeriesGuide.Dark">
+
+        <!-- All customizations that are NOT specific to a supported API-level can go here. -->
+
+        <!-- Explicitly add windowActionBar as some devices crash due to it missing -->
+        <item name="windowActionBar">false</item>
+
+        <!-- The color displayed most frequently across your app’s screens and components. -->
+        <item name="colorPrimary">@color/sg_color_primary</item>
+        <item name="colorPrimaryDark">@color/sg_color_primary_dark</item>
+        <item name="colorPrimaryVariant">@color/sg_color_primary_variant</item>
+        <item name="colorSecondary">@color/sg_color_secondary</item>
+        <item name="colorSecondaryVariant">@color/sg_color_secondary_variant</item>
+        <item name="colorSurface">@color/sg_color_surface</item>
+        <item name="android:colorBackground">@color/sg_color_background</item>
+
+        <!-- Colors that pass accessibility guidelines for text/iconography when drawn on top of a color. -->
+        <item name="colorOnPrimary">@color/sg_color_on_primary</item>
+        <item name="colorOnSecondary">@color/sg_color_on_secondary</item>
+        <item name="colorOnSurface">@color/sg_color_on_surface</item>
+        <item name="colorOnBackground">@color/sg_color_on_background</item>
+
+        <!-- Windows -->
+        <item name="android:windowBackground">@color/sg_color_background</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="windowActionModeOverlay">true</item>
+
+        <!-- Remove default window shadow -->
+        <item name="android:windowContentOverlay">@null</item>
+
+        <!-- Colors -->
+        <item name="sgTextColorGreen">@color/sg_color_secondary</item>
+        <item name="sgTextColorSecondaryDim">@color/sg_text_color_secondary_dim</item>
+        <item name="sgColorBackgroundCard">@color/sg_card_background_color</item>
+        <item name="sgColorBackgroundDim">@color/sg_background_dim</item>
+        <item name="sgColorIcon">@color/sg_tint_icon</item>
+        <item name="sgColorIconInactive">@color/sg_tint_icon_inactive</item>
+        <item name="sgColorDivider">@color/sg_color_divider</item>
+        <item name="sgColorShadow">@color/sg_color_shadow</item>
+        <item name="sgColorStatusBarOverlay">@color/sg_color_status_bar_overlay</item>
+
+    </style>
+
+    <style name="Theme.BaseSeriesGuide.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 21 go here. -->
 
@@ -100,7 +156,6 @@
 
     </style>
 
-    <!-- SeriesGuide Light theme -->
     <style name="Theme.SeriesGuide.Light" parent="Theme.BaseSeriesGuide.Light">
 
         <!-- All customizations that are NOT specific to a supported API-level can go here. -->
@@ -148,6 +203,38 @@
     <!-- Special themes -->
     <!-- ####################################### -->
 
+    <!-- Drawer -->
+    <style name="Theme.SeriesGuide.DayNight.Drawer" parent="Theme.SeriesGuide.Light.Drawer" />
+    <style name="Theme.SeriesGuide.Dark.Drawer">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+    <style name="Theme.SeriesGuide.Light.Drawer">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <!-- Immersive -->
+    <style name="Theme.SeriesGuide.DayNight.Immersive" parent="Theme.SeriesGuide.Light.Immersive" />
+    <style name="Theme.SeriesGuide.Dark.Immersive">
+
+        <!-- Translucent navbar (native, v19+) -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+
+    </style>
+    <style name="Theme.SeriesGuide.Light.Immersive">
+
+        <!-- Translucent navbar (native, v19+) -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+
+    </style>
+
+    <!-- ####################################### -->
+    <!-- Theme overlays -->
+    <!-- ####################################### -->
+
     <style name="Theme.SeriesGuide.Dialog.Distillation" parent="ThemeOverlay.MaterialComponents.Dialog">
         <item name="android:windowBackground">@drawable/sg_distillation_dialog_background</item>
         <item name="android:backgroundDimEnabled">false</item>
@@ -155,44 +242,6 @@
 
     <style name="Theme.SeriesGuide.Dialog.CheckIn" parent="ThemeOverlay.AppCompat.Dialog">
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
-    </style>
-
-    <style name="Theme.SeriesGuide.Drawer">
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-    <style name="Theme.SeriesGuide.DarkBlue.Drawer">
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-
-    <style name="Theme.SeriesGuide.Light.Drawer">
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-
-    <style name="Theme.SeriesGuide.Immersive">
-
-        <!-- Translucent navbar (native, v19+) -->
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">false</item>
-
-    </style>
-
-    <style name="Theme.SeriesGuide.DarkBlue.Immersive">
-
-        <!-- Translucent navbar (native, v19+) -->
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">false</item>
-
-    </style>
-
-    <style name="Theme.SeriesGuide.Light.Immersive">
-
-        <!-- Translucent navbar (native, v19+) -->
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">false</item>
-
     </style>
 
 </resources>

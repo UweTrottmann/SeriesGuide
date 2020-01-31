@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.appcompat.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
-import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 /**
@@ -81,8 +80,7 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
 
     @Override
     protected void setCustomTheme() {
-        // use a special immersive theme
-        ThemeUtils.setImmersiveTheme(this);
+        setTheme(R.style.Theme_SeriesGuide_DayNight_Immersive);
     }
 
     @Override
