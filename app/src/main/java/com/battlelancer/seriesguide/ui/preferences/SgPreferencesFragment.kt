@@ -15,7 +15,6 @@ import android.provider.Settings
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.preference.ListPreference
@@ -43,7 +42,6 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
-import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment
@@ -144,12 +142,6 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             setOnPreferenceChangeListener { preference, newValue ->
                 if (DisplaySettings.KEY_THEME == preference.key) {
                     ThemeUtils.updateTheme(newValue as String)
-
-                    // restart to apply new theme, go back to this settings screen
-                    TaskStackBuilder.create(activity!!)
-                        .addNextIntent(Intent(activity, ShowsActivity::class.java))
-                        .addNextIntent(activity!!.intent)
-                        .startActivities()
                 }
                 true
             }
