@@ -68,13 +68,15 @@
                 <View
                     android:id="@+id/viewEpisodesShadowStart"
                     android:layout_width="4dp"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/sg_shadow_right_left" />
 
                 <View
                     android:id="@+id/viewEpisodesShadowEnd"
                     android:layout_width="4dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="end" />
+                    android:layout_gravity="end"
+                    android:background="@drawable/sg_shadow_left_right" />
 
             </FrameLayout>
 

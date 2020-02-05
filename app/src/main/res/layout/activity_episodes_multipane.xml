@@ -69,7 +69,8 @@
                 <View
                     android:id="@+id/viewEpisodesShadowStart"
                     android:layout_width="4dp"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/sg_shadow_right_left" />
 
             </FrameLayout>
 

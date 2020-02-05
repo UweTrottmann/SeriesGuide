@@ -50,7 +50,6 @@ import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragme
 import com.battlelancer.seriesguide.ui.dialogs.TimeOffsetDialogFragment
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.LanguageTools
-import com.battlelancer.seriesguide.util.Shadows
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
@@ -145,7 +144,6 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             setOnPreferenceChangeListener { preference, newValue ->
                 if (DisplaySettings.KEY_THEME == preference.key) {
                     ThemeUtils.updateTheme(newValue as String)
-                    Shadows.getInstance().resetShadowColor()
 
                     // restart to apply new theme, go back to this settings screen
                     TaskStackBuilder.create(activity!!)
