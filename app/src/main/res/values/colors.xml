@@ -35,6 +35,8 @@
     <color name="sg_color_background">@color/sg_color_background_light</color>
     <!-- Always use dark launch background on P-. -->
     <color name="sg_color_background_launch">@color/sg_color_background_dark</color>
+    <!-- 38% primary, not using color state list as using theme-dependant attribute is API 23+. -->
+    <color name="sg_color_control_activated">#606545a0</color>
 
     <color name="sg_color_on_primary">#ffffff</color>
     <color name="sg_color_on_secondary">#ffffff</color>
