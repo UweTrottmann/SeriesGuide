@@ -368,7 +368,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         dividerMovieButtons.isGone = hideCheckIn && hideStreamingSearch
 
         // watched button
-        val theme = activity!!.theme
         buttonMovieWatched.also {
             val textRes = if (isWatched) R.string.action_unwatched else R.string.action_watched
             it.setText(textRes)

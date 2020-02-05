@@ -167,7 +167,6 @@ class ShowFragment : ScopedFragment() {
         CheatSheet.setup(buttonHidden)
 
         // language button
-        val theme = activity!!.theme
         buttonLanguage.setOnClickListener { displayLanguageSettings() }
         CheatSheet.setup(buttonLanguage, R.string.pref_language)
 
