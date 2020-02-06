@@ -10,7 +10,6 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.util.ViewTools
 
 /**
  * Three state check box for filter being disabled, included or excluded.
@@ -53,7 +52,7 @@ class FilterBox @JvmOverloads constructor(
 
     private fun updateImage() {
         val vectorDrawable = when (state) {
-            null -> ViewTools.vectorIconActive(context, context.theme, R.drawable.ic_box_blank_white_24dp)
+            null -> VectorDrawableCompat.create(context.resources, R.drawable.ic_box_blank_white_24dp, context.theme)
             true -> VectorDrawableCompat.create(context.resources, R.drawable.ic_box_plus_green_24dp, context.theme)
             false -> VectorDrawableCompat.create(context.resources, R.drawable.ic_box_minus_red_24dp, context.theme)
         }
