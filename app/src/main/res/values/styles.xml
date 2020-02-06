@@ -186,6 +186,8 @@
         <item name="android:paddingLeft">@dimen/large_padding</item>
         <item name="android:paddingRight">@dimen/large_padding</item>
         <item name="iconPadding">32dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Accent">
