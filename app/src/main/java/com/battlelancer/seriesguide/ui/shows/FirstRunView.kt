@@ -4,11 +4,11 @@ import android.content.Context
 import android.preference.PreferenceManager
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.FrameLayout
 import android.widget.ImageButton
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.edit
 import com.battlelancer.seriesguide.R
@@ -37,11 +37,11 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        val noSpoilerView = findViewById<RelativeLayout>(R.id.containerFirstRunNoSpoilers)
+        val noSpoilerView = findViewById<ViewGroup>(R.id.containerFirstRunNoSpoilers)
         val noSpoilerCheckBox = noSpoilerView.findViewById<CheckBox>(
             R.id.checkboxFirstRunNoSpoilers
         )
-        val dataSaverContainer = findViewById<RelativeLayout>(R.id.containerFirstRunDataSaver)
+        val dataSaverContainer = findViewById<ViewGroup>(R.id.containerFirstRunDataSaver)
         val dataSaverCheckBox = findViewById<CheckBox>(R.id.checkboxFirstRunDataSaver)
         val buttonAddShow = findViewById<Button>(R.id.buttonFirstRunAddShow)
         val buttonSignIn = findViewById<Button>(R.id.buttonFirstRunSignIn)
