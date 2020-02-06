@@ -11,7 +11,6 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.ViewTools;
 
 public class FeatureStatusView extends LinearLayout {
 
@@ -48,8 +47,7 @@ public class FeatureStatusView extends LinearLayout {
         if (featureSupported) {
             setFeatureEnabled(true);
         } else {
-            ViewTools.setVectorIcon(getContext().getTheme(), imageViewStatus,
-                    R.drawable.ic_remove_circle_black_24dp);
+            imageViewStatus.setImageResource(R.drawable.ic_remove_circle_black_24dp);
             imageViewStatus.setContentDescription(
                     getContext().getString(R.string.feature_not_supported));
         }

@@ -129,6 +129,10 @@
         <item name="android:textColor">@color/sg_text_color_accent</item>
     </style>
 
+    <style name="TextAppearance.SeriesGuide.Body2.Error">
+        <item name="android:textColor">?attr/colorError</item>
+    </style>
+
     <style name="TextAppearance.SeriesGuide.Body2.Secondary">
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
