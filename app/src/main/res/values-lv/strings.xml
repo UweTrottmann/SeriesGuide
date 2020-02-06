@@ -404,6 +404,11 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Izskats</string>
     <string name="pref_theme">Theme</string>
+    <!-- Themes -->
+    <string name="theme_app_follow_system">Use system default</string>
+    <string name="theme_app_auto_battery">Set by Battery Saver</string>
+    <string name="theme_app_dark">Dark</string>
+    <string name="theme_app_light">Light</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Citi</string>
     <string name="pref_autoupdatesummary">Automatically sync and update content</string>
