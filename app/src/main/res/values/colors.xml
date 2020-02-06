@@ -64,7 +64,6 @@
     <color name="grey_50">#fffafafa</color>
     <color name="grey_850">#ff303030</color>
 
-    <color name="background">#ff222222</color>
     <color name="background_inverse">#ffebebeb</color>
     <color name="background_black">#ff000000</color>
     <color name="background_card_dark">#ff2a2a2a</color>
@@ -81,23 +80,15 @@
 
     <color name="white">#ffffffff</color> <!-- primary text dark -->
     <color name="white_70">#b3ffffff</color> <!-- secondary text dark -->
-    <color name="white_50">#80ffffff</color>
-    <color name="white_87">#deffffff</color>
     <!-- black_01 for nav bar: can not use pure black as e.g. OnePlus devices ignore it. -->
     <color name="black_almost">#ff000001</color>
     <color name="black_87">#de000000</color> <!-- primary text light -->
     <color name="black_54">#8a000000</color> <!-- secondary text light -->
     <color name="black_38">#60000000</color> <!-- secondary text light -->
-    <color name="text_secondary_disabled_dark">#66ffffff</color> <!-- 40% white -->
-    <color name="text_secondary_disabled_light">#66000000</color>
     <color name="text_red">#FFFF4444</color>
 
     <color name="black_11">#ffe3e3e3</color>
     <color name="protection_dark">#66000000</color>
-    <color name="protection_light">#12000000</color>
-
-    <color name="sg_icon_blue">#ff33b5e5</color>
-    <color name="sg_icon_green">@color/sg_color_secondary</color>
 
     <color name="sg_ripple_material_dark">#33ffffff</color>
     <color name="sg_ripple_material_light">#1f000000</color>
