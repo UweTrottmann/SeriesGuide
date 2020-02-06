@@ -175,8 +175,8 @@ dependencies {
     kapt "com.jakewharton:butterknife-compiler:${versions.butterknife}"
     implementation "com.google.dagger:dagger:${versions.dagger}"
     kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
-    implementation 'org.greenrobot:eventbus:3.1.1'
-    kapt 'org.greenrobot:eventbus-annotation-processor:3.1.1'
+    implementation 'org.greenrobot:eventbus:3.1.2-RC'
+    kapt 'org.greenrobot:eventbus-annotation-processor:3.1.2-RC'
 
     implementation 'com.google.flatbuffers:flatbuffers-java:1.10.0'
     implementation "com.google.code.gson:gson:${versions.gson}"
