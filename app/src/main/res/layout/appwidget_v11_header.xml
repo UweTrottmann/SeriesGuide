@@ -6,7 +6,7 @@
     android:id="@+id/containerWidgetHeader"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/accent_primary"
+    android:background="@color/sg_color_primary"
     android:baselineAligned="false"
     android:minHeight="48dp"
     android:orientation="horizontal"

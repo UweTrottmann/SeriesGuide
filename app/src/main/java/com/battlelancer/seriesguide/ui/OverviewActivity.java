@@ -3,17 +3,14 @@ package com.battlelancer.seriesguide.ui;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
@@ -25,7 +22,6 @@ import com.battlelancer.seriesguide.ui.overview.ShowFragment;
 import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment;
 import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.Shadows;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -48,10 +44,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
     private static final String EXTRA_BOOLEAN_DISPLAY_SEASONS = "EXTRA_DISPLAY_SEASONS";
 
     private int showTvdbId;
-
-    @Nullable @BindView(R.id.viewOverviewShadowStart) View shadowOverviewStart;
-    @Nullable @BindView(R.id.viewOverviewShadowEnd) View shadowOverviewEnd;
-    @Nullable @BindView(R.id.viewOverviewShadowBottom) View shadowShowBottom;
 
     /** After opening, switches to overview tab (only if not multi-pane). */
     public static Intent intentShow(Context context, int showTvdbId) {
@@ -118,19 +110,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
             if (savedInstanceState == null || isSwitchingLayouts) {
                 setupPanes();
             }
-        }
-
-        if (shadowOverviewStart != null) {
-            Shadows.getInstance().setShadowDrawable(this, shadowOverviewStart,
-                    GradientDrawable.Orientation.RIGHT_LEFT);
-        }
-        if (shadowOverviewEnd != null) {
-            Shadows.getInstance().setShadowDrawable(this, shadowOverviewEnd,
-                    GradientDrawable.Orientation.LEFT_RIGHT);
-        }
-        if (shadowShowBottom != null) {
-            Shadows.getInstance().setShadowDrawable(this, shadowShowBottom,
-                    GradientDrawable.Orientation.TOP_BOTTOM);
         }
     }
 

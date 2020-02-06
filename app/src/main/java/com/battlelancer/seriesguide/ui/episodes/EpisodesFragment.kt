@@ -20,7 +20,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
@@ -32,7 +31,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.episodes.EpisodesAdapter.OnFlagEpisodeListener
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
-import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.safeShow
 
 /**
@@ -59,9 +57,6 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
     @BindView(R.id.imageViewEpisodesWatchedToggle)
     lateinit var buttonWatchedAll: ImageView
     private lateinit var unbinder: Unbinder
-
-    private lateinit var drawableWatchAll: VectorDrawableCompat
-    private lateinit var drawableCollectAll: VectorDrawableCompat
 
     companion object {
 
@@ -105,14 +100,8 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
         val view = inflater.inflate(R.layout.fragment_episodes, container, false)
         unbinder = ButterKnife.bind(this, view)
 
-        drawableWatchAll = ViewTools.vectorIconActive(buttonWatchedAll.context,
-                buttonWatchedAll.context.theme, R.drawable.ic_watch_all_black_24dp).also {
-            buttonWatchedAll.setImageDrawable(it)
-        }
-        drawableCollectAll = ViewTools.vectorIconActive(buttonCollectedAll.context,
-                buttonCollectedAll.context.theme, R.drawable.ic_collect_all_black_24dp).also {
-            buttonCollectedAll.setImageDrawable(it)
-        }
+        buttonWatchedAll.setImageResource(R.drawable.ic_watch_all_black_24dp)
+        buttonCollectedAll.setImageResource(R.drawable.ic_collect_all_black_24dp)
 
         listViewEpisodes.onItemClickListener = listOnItemClickListener
 
@@ -329,7 +318,7 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                 setImageResource(R.drawable.ic_watched_all_24dp)
                 contentDescription = getString(R.string.unmark_all)
             } else {
-                setImageDrawable(drawableWatchAll)
+                setImageResource(R.drawable.ic_watch_all_black_24dp)
                 contentDescription = getString(R.string.mark_all)
             }
             // set onClick listener not before here to avoid unexpected actions
@@ -369,7 +358,7 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                 setImageResource(R.drawable.ic_collected_all_24dp)
                 contentDescription = getString(R.string.uncollect_all)
             } else {
-                setImageDrawable(drawableCollectAll)
+                setImageResource(R.drawable.ic_collect_all_black_24dp)
                 contentDescription = getString(R.string.collect_all)
             }
             // set onClick listener not before here to avoid unexpected actions

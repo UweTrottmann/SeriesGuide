@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,9 +27,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/imageViewPersonHeadshot"
-            android:layout_marginBottom="@dimen/default_padding"
             android:layout_marginLeft="@dimen/keyline"
             android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginBottom="@dimen/default_padding"
             android:ellipsize="end"
             android:maxLines="2"
             android:shadowColor="@color/protection_dark"
@@ -57,16 +58,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/large_padding"
-            android:paddingTop="@dimen/large_padding">
+            android:paddingTop="@dimen/large_padding"
+            android:paddingBottom="@dimen/large_padding">
 
             <TextView
                 android:id="@+id/textViewPersonBiographyHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_padding"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/keyline"
+                android:layout_marginBottom="@dimen/default_padding"
                 android:text="@string/person_biography"
                 android:textAppearance="@style/TextAppearance.Title" />
 
@@ -77,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/keyline"
-                android:textAppearance="?attr/sgTextAppearanceBody1"
+                android:textAppearance="?attr/textAppearanceBody1"
                 tools:text="Kiefer Sutherland  (born 21 December 1966) is a British-Canadian actor" />
 
             <Button
@@ -87,8 +88,8 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/tmdb"
-                tools:drawableLeft="@drawable/ic_link_black_24dp"
-                tools:drawableTint="?attr/sgColorIcon" />
+                app:icon="@drawable/ic_link_black_24dp"
+                app:iconGravity="start" />
 
             <Button
                 android:id="@+id/buttonPersonWebSearch"
@@ -96,8 +97,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:text="@string/web_search"
-                tools:drawableLeft="@drawable/ic_search_white_24dp"
-                tools:drawableTint="?attr/sgColorIcon" />
+                app:icon="@drawable/ic_search_white_24dp"
+                app:iconGravity="start" />
 
         </LinearLayout>
 

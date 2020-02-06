@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,42 +15,30 @@
 
         <Button
             android:id="@+id/buttonMovieWatched"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+            style="@style/Widget.SeriesGuide.Button.MediaItem"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:padding="8dp"
-            android:text="@string/action_watched"
-            tools:drawableTint="?attr/sgColorIcon"
-            tools:drawableTop="@drawable/ic_watch_black_24dp" />
+            android:drawableTop="@drawable/ic_watch_black_24dp"
+            android:text="@string/action_watched" />
 
         <Button
             android:id="@+id/buttonMovieWatchlisted"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+            style="@style/Widget.SeriesGuide.Button.MediaItem"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:padding="8dp"
-            android:text="@string/watchlist_add"
-            tools:drawableTint="?attr/sgColorIcon"
-            tools:drawableTop="@drawable/ic_list_add_white_24dp" />
+            android:drawableTop="@drawable/ic_list_add_white_24dp"
+            android:text="@string/watchlist_add" />
 
         <Button
             android:id="@+id/buttonMovieCollected"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+            style="@style/Widget.SeriesGuide.Button.MediaItem"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:padding="8dp"
-            android:text="@string/action_collection_add"
-            tools:drawableTint="?attr/sgColorIcon"
-            tools:drawableTop="@drawable/ic_collect_black_24dp" />
+            android:drawableTop="@drawable/ic_collect_black_24dp"
+            android:text="@string/action_collection_add" />
 
     </LinearLayout>
 
@@ -70,8 +59,8 @@
         android:layout_marginRight="@dimen/padding_button"
         android:contentDescription="@string/checkin"
         android:text="@string/checkin"
-        tools:drawableLeft="@drawable/ic_checkin_black_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        app:icon="@drawable/ic_checkin_black_24dp"
+        app:iconGravity="start" />
 
     <Button
         android:id="@+id/buttonMovieStreamingSearch"
@@ -82,7 +71,7 @@
         android:layout_marginRight="@dimen/padding_button"
         android:contentDescription="@string/action_stream"
         android:text="@string/action_stream"
-        tools:drawableLeft="@drawable/ic_play_arrow_black_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        app:icon="@drawable/ic_play_arrow_black_24dp"
+        app:iconGravity="start" />
 
 </LinearLayout>

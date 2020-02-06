@@ -15,7 +15,6 @@ import android.provider.Settings
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.preference.ListPreference
@@ -43,14 +42,12 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
-import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.TimeOffsetDialogFragment
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.LanguageTools
-import com.battlelancer.seriesguide.util.Shadows
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
@@ -142,25 +139,13 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
         // Theme switcher
         findPreference<ListPreference>(DisplaySettings.KEY_THEME)!!.apply {
-            if (hasAccessToX) {
-                setOnPreferenceChangeListener { preference, newValue ->
-                    if (DisplaySettings.KEY_THEME == preference.key) {
-                        ThemeUtils.updateTheme(newValue as String)
-                        Shadows.getInstance().resetShadowColor()
-
-                        // restart to apply new theme, go back to this settings screen
-                        TaskStackBuilder.create(activity!!)
-                            .addNextIntent(Intent(activity, ShowsActivity::class.java))
-                            .addNextIntent(activity!!.intent)
-                            .startActivities()
-                    }
-                    true
+            setOnPreferenceChangeListener { preference, newValue ->
+                if (DisplaySettings.KEY_THEME == preference.key) {
+                    ThemeUtils.updateTheme(newValue as String)
                 }
-                setListPreferenceSummary(this)
-            } else {
-                onPreferenceChangeListener = sNoOpChangeListener
-                setSummary(R.string.onlyx)
+                true
             }
+            setListPreferenceSummary(this)
         }
 
         // show currently set values for list prefs

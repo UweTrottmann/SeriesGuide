@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:cardview="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/FirstRunColumn"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/default_padding"
-    cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
-    cardview:cardPreventCornerOverlap="false">
+    app:cardPreventCornerOverlap="false">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,20 +17,19 @@
             android:layout_alignParentRight="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/dismiss"
-            tools:src="@drawable/ic_clear_24dp"
-            tools:tint="?attr/sgColorIcon" />
+            android:src="@drawable/ic_clear_24dp" />
 
         <TextView
             android:id="@+id/textViewFirstRunTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
             android:layout_marginTop="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
             android:text="@string/get_started"
-            android:textAppearance="@style/TextAppearance.Headline" />
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5" />
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/containerFirstRunNoSpoilers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,7 +37,6 @@
             android:layout_marginTop="@dimen/large_padding"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
-            android:gravity="center_vertical"
             android:minHeight="?android:attr/listPreferredItemHeight"
             android:paddingLeft="@dimen/large_padding"
             android:paddingRight="@dimen/large_padding">
@@ -51,40 +47,40 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:clickable="false"
-                android:focusable="false" />
+                android:focusable="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewFirstRunNoSpoilerText"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/checkboxFirstRunNoSpoilers"
-                android:layout_toRightOf="@id/checkboxFirstRunNoSpoilers"
-                android:ellipsize="marquee"
-                android:maxLines="1"
                 android:text="@string/pref_nospoilers"
-                android:textAppearance="@style/TextAppearance.Subhead"
-                tools:ignore="EllipsizeMaxLines" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+                app:layout_constraintBaseline_toBaselineOf="@id/checkboxFirstRunNoSpoilers"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/checkboxFirstRunNoSpoilers" />
 
             <TextView
                 android:id="@+id/textViewFirstRunNoSpoilerSummary"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/textViewFirstRunNoSpoilerText"
-                android:layout_below="@id/textViewFirstRunNoSpoilerText"
                 android:paddingBottom="@dimen/inline_padding"
                 android:text="@string/pref_nospoilers_summary"
-                android:textAppearance="@style/TextAppearance.Body.Secondary" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewFirstRunNoSpoilerText"
+                app:layout_constraintTop_toBottomOf="@id/textViewFirstRunNoSpoilerText" />
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/containerFirstRunDataSaver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/containerFirstRunNoSpoilers"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
-            android:gravity="center_vertical"
             android:minHeight="?android:attr/listPreferredItemHeight"
             android:paddingLeft="@dimen/large_padding"
             android:paddingRight="@dimen/large_padding">
@@ -95,31 +91,32 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:clickable="false"
-                android:focusable="false" />
+                android:focusable="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewFirstRunDataSaverText"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/checkboxFirstRunDataSaver"
-                android:layout_toRightOf="@id/checkboxFirstRunDataSaver"
-                android:ellipsize="marquee"
-                android:maxLines="1"
                 android:text="@string/pref_updatewifionly"
-                android:textAppearance="@style/TextAppearance.Subhead"
-                tools:ignore="EllipsizeMaxLines" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+                app:layout_constraintBaseline_toBaselineOf="@id/checkboxFirstRunDataSaver"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/checkboxFirstRunDataSaver" />
 
             <TextView
                 android:id="@+id/textViewFirstRunDataSaverSummary"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/textViewFirstRunDataSaverText"
-                android:layout_below="@id/textViewFirstRunDataSaverText"
                 android:paddingBottom="@dimen/inline_padding"
                 android:text="@string/pref_updatewifionlysummary"
-                android:textAppearance="@style/TextAppearance.Body.Secondary" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewFirstRunDataSaverText"
+                app:layout_constraintTop_toBottomOf="@id/textViewFirstRunDataSaverText" />
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/containerFirstRunButtons"
@@ -128,28 +125,28 @@
             android:layout_below="@id/containerFirstRunDataSaver"
             android:gravity="end"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/inline_padding"
             android:paddingLeft="@dimen/default_padding"
+            android:paddingTop="@dimen/large_padding"
             android:paddingRight="@dimen/default_padding"
-            android:paddingTop="@dimen/large_padding">
+            android:paddingBottom="@dimen/inline_padding">
 
             <Button
                 android:id="@+id/buttonFirstRunAddShow"
-                style="?attr/buttonBarButtonStyle"
+                style="@style/Widget.SeriesGuide.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_shows_add" />
 
             <Button
                 android:id="@+id/buttonFirstRunSignIn"
-                style="?attr/buttonBarButtonStyle"
+                style="@style/Widget.SeriesGuide.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hexagon_signin" />
 
             <Button
                 android:id="@+id/buttonFirstRunRestore"
-                style="?attr/buttonBarButtonStyle"
+                style="@style/Widget.SeriesGuide.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/import_button" />
@@ -172,11 +169,11 @@
             android:layout_marginRight="@dimen/large_padding"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
-            android:paddingBottom="@dimen/default_padding"
             android:paddingTop="@dimen/default_padding"
+            android:paddingBottom="@dimen/default_padding"
             android:text="@string/privacy_policy"
-            android:textAppearance="@style/TextAppearance.Body.Green" />
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Accent" />
 
     </RelativeLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

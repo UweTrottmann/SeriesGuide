@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -19,9 +18,8 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
-import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.safeShow
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 
@@ -64,13 +62,9 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
             R.id.textViewTabStripItem
         )
         tabLayout.setSelectedIndicatorColors(
-            ContextCompat.getColor(
-                context!!,
-                if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue) {
-                    R.color.white
-                } else {
-                    Utils.resolveAttributeToResourceId(context!!.theme, R.attr.colorAccent)
-                }
+            ThemeUtils.getColorFromAttribute(
+                tabLayout.context,
+                R.attr.colorPrimary
             )
         )
         tabLayout.setViewPager(viewPager)

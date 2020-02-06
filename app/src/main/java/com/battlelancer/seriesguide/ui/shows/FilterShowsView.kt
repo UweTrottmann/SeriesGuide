@@ -9,7 +9,6 @@ import android.widget.LinearLayout
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.FilterBox
 
 class FilterShowsView @JvmOverloads constructor(
@@ -24,12 +23,6 @@ class FilterShowsView @JvmOverloads constructor(
 
         // can't do in onFinishInflate as that is only called when inflating from XML
         ButterKnife.bind(this)
-
-        ViewTools.setVectorIcon(
-            context.theme,
-            buttonUpcomingRange,
-            R.drawable.ic_settings_white_24dp
-        )
 
         checkBoxFavorites.setOnClickListener { updateFilterListener() }
         checkBoxUnwatched.setOnClickListener { updateFilterListener() }

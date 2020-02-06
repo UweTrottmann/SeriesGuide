@@ -393,6 +393,11 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Erscheinungsbild</string>
     <string name="pref_theme">Design</string>
+    <!-- Themes -->
+    <string name="theme_app_follow_system">Systemstandard verwenden</string>
+    <string name="theme_app_auto_battery">Durch Energiesparmodus bestimmt</string>
+    <string name="theme_app_dark">Dunkel</string>
+    <string name="theme_app_light">Hell</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Anderes</string>
     <string name="pref_autoupdatesummary">Automatisch synchronisieren und Inhalte aktualisieren</string>

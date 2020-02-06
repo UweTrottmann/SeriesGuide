@@ -48,7 +48,6 @@
             app:layout_constraintRight_toLeftOf="@+id/addIndicatorAddShow"
             app:layout_constraintTop_toTopOf="@+id/cardViewAddPoster"
             app:srcCompat="@drawable/ic_more_vert_black_20dp"
-            app:tint="?attr/sgColorIcon"
             tools:ignore="MissingPrefix" />
 
         <com.battlelancer.seriesguide.ui.search.AddIndicator

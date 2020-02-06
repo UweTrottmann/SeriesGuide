@@ -46,6 +46,7 @@
             android:id="@+id/viewOverviewShadowBottom"
             android:layout_width="0dp"
             android:layout_height="4dp"
+            android:background="@drawable/sg_shadow_top_bottom"
             app:layout_constraintBottom_toTopOf="@+id/guidelineOverviewHorizontal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="@+id/fragment_show" />
@@ -73,6 +74,7 @@
             android:id="@+id/viewOverviewShadowStart"
             android:layout_width="4dp"
             android:layout_height="0dp"
+            android:background="@drawable/sg_shadow_right_left"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@+id/guidelineOverviewVertical"
             app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />

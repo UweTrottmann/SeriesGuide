@@ -18,7 +18,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:minHeight="48dp"
-        android:textAppearance="@style/TextAppearance.Menu"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
         tools:text="Filter option" />
 
 </merge>

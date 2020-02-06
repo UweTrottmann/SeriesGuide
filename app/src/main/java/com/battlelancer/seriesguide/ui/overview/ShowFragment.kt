@@ -167,8 +167,6 @@ class ShowFragment : ScopedFragment() {
         CheatSheet.setup(buttonHidden)
 
         // language button
-        val theme = activity!!.theme
-        ViewTools.setVectorIconLeft(theme, buttonLanguage, R.drawable.ic_language_white_24dp)
         buttonLanguage.setOnClickListener { displayLanguageSettings() }
         CheatSheet.setup(buttonLanguage, R.string.pref_language)
 
@@ -177,23 +175,10 @@ class ShowFragment : ScopedFragment() {
         CheatSheet.setup(buttonRate, R.string.action_rate)
         textViewRatingRange.text = getString(R.string.format_rating_range, 10)
 
-        // link, search and comments button
-        ViewTools.setVectorIconLeft(theme, buttonSimilar, R.drawable.ic_search_white_24dp)
-        ViewTools.setVectorIconLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp)
-        ViewTools.setVectorIconLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp)
-        ViewTools.setVectorIconLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp)
-        ViewTools.setVectorIconLeft(theme, buttonWebSearch, R.drawable.ic_search_white_24dp)
-        ViewTools.setVectorIconLeft(theme, buttonComments, R.drawable.ic_forum_black_24dp)
-
         // share button
-        ViewTools.setVectorIconLeft(theme, buttonShare, R.drawable.ic_share_white_24dp)
         buttonShare.setOnClickListener { shareShow() }
 
         // shortcut button
-        ViewTools.setVectorIconLeft(
-            theme, buttonShortcut,
-            R.drawable.ic_add_to_home_screen_black_24dp
-        )
         buttonShortcut.setOnClickListener { createShortcut() }
 
         setCastVisibility(false)
@@ -378,8 +363,8 @@ class ShowFragment : ScopedFragment() {
         // favorite button
         val isFavorite = showCursor.getInt(ShowQuery.IS_FAVORITE) == 1
         buttonFavorite.apply {
-            ViewTools.setVectorIconTop(
-                activity!!.theme, this, if (isFavorite) {
+            ViewTools.setVectorDrawableTop(
+                this, if (isFavorite) {
                     R.drawable.ic_star_black_24dp
                 } else {
                     R.drawable.ic_star_border_black_24dp
@@ -408,8 +393,8 @@ class ShowFragment : ScopedFragment() {
                     R.string.action_episode_notifications_on
                 }
             )
-            ViewTools.setVectorIconTop(
-                activity!!.theme, this, if (notify) {
+            ViewTools.setVectorDrawableTop(
+                this, if (notify) {
                     R.drawable.ic_notifications_active_black_24dp
                 } else {
                     R.drawable.ic_notifications_off_black_24dp
@@ -433,12 +418,12 @@ class ShowFragment : ScopedFragment() {
         buttonHidden.apply {
             contentDescription = label
             text = label
-            ViewTools.setVectorIconTop(
-                activity!!.theme, this,
+            ViewTools.setVectorDrawableTop(
+                this,
                 if (isHidden) {
                     R.drawable.ic_visibility_off_black_24dp
                 } else {
-                    R.drawable.ic_visibility_black_24dp
+                    R.drawable.ic_visibility_white_24dp
                 }
             )
             isEnabled = true

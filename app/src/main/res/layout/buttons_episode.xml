@@ -17,44 +17,32 @@
 
         <Button
             android:id="@+id/buttonEpisodeWatched"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+            style="@style/Widget.SeriesGuide.Button.MediaItem"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@string/action_watched"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:padding="8dp"
-            android:text="@string/action_watched"
-            tools:drawableTint="?attr/sgColorIcon"
-            tools:drawableTop="@drawable/ic_watch_black_24dp" />
+            android:drawableTop="@drawable/ic_watch_black_24dp"
+            android:text="@string/action_watched" />
 
         <Button
             android:id="@+id/buttonEpisodeCollected"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+            style="@style/Widget.SeriesGuide.Button.MediaItem"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:padding="8dp"
-            android:text="@string/action_collection_add"
-            tools:drawableTint="?attr/sgColorIcon"
-            tools:drawableTop="@drawable/ic_collect_black_24dp" />
+            android:drawableTop="@drawable/ic_collect_black_24dp"
+            android:text="@string/action_collection_add" />
 
         <Button
             android:id="@+id/buttonEpisodeSkip"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Caption.Platform"
+            style="@style/Widget.SeriesGuide.Button.MediaItem"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@string/action_skip"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:padding="8dp"
-            android:text="@string/action_skip"
-            tools:drawableTint="?attr/sgColorIcon"
-            tools:drawableTop="@drawable/ic_skip_black_24dp" />
+            android:drawableTop="@drawable/ic_skip_black_24dp"
+            android:text="@string/action_skip" />
 
     </LinearLayout>
 
@@ -74,12 +62,11 @@
         android:layout_marginLeft="@dimen/padding_button"
         android:layout_marginRight="@dimen/padding_button"
         android:contentDescription="@string/checkin"
+        android:drawableLeft="@drawable/ic_checkin_black_24dp"
         android:drawablePadding="8dp"
         android:gravity="center_vertical|start"
         android:nextFocusUp="@+id/buttonEpisodeWatched"
-        android:text="@string/checkin"
-        tools:drawableLeft="@drawable/ic_checkin_black_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        android:text="@string/checkin" />
 
     <Button
         android:id="@+id/buttonEpisodeWatchedUpTo"
@@ -89,11 +76,10 @@
         android:layout_marginLeft="@dimen/padding_button"
         android:layout_marginRight="@dimen/padding_button"
         android:contentDescription="@string/action_watched_up_to"
+        android:drawableLeft="@drawable/ic_watch_all_black_24dp"
         android:drawablePadding="8dp"
         android:gravity="center_vertical|start"
-        android:text="@string/action_watched_up_to"
-        tools:drawableLeft="@drawable/ic_watch_all_black_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        android:text="@string/action_watched_up_to" />
 
     <Button
         android:id="@+id/buttonEpisodeStreamingSearch"
@@ -103,10 +89,9 @@
         android:layout_marginLeft="@dimen/padding_button"
         android:layout_marginRight="@dimen/padding_button"
         android:contentDescription="@string/action_stream"
+        android:drawableLeft="@drawable/ic_play_arrow_black_24dp"
         android:drawablePadding="8dp"
         android:gravity="center_vertical|start"
-        android:text="@string/action_stream"
-        tools:drawableLeft="@drawable/ic_play_arrow_black_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        android:text="@string/action_stream" />
 
 </LinearLayout>

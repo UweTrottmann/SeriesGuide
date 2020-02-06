@@ -78,6 +78,6 @@ class SeriesGuidePreferences : AppCompatActivity() {
 
         @StyleRes
         @JvmField
-        var THEME = R.style.Theme_SeriesGuide
+        var THEME = R.style.Theme_SeriesGuide_DayNight
     }
 }

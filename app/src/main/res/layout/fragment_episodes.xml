@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:targetApi="lollipop">
 
+        <!-- Icon set in code. -->
         <ImageView
             android:id="@+id/imageViewEpisodesWatchedToggle"
             android:layout_width="48dp"
@@ -26,9 +27,9 @@
             android:contentDescription="@null"
             android:focusable="true"
             android:padding="@dimen/padding_button"
-            tools:src="@drawable/ic_watch_all_black_24dp"
-            tools:tint="?attr/sgColorIcon" />
+            tools:src="@drawable/ic_watch_all_black_24dp" />
 
+        <!-- Icon set in code. -->
         <ImageView
             android:id="@+id/imageViewEpisodesCollectedToggle"
             android:layout_width="48dp"
@@ -38,8 +39,7 @@
             android:focusable="true"
             android:padding="@dimen/padding_button"
             app:layout_constraintStart_toEndOf="@id/imageViewEpisodesWatchedToggle"
-            tools:src="@drawable/ic_collect_all_black_24dp"
-            tools:tint="?attr/sgColorIcon" />
+            tools:src="@drawable/ic_collect_all_black_24dp" />
 
     </LinearLayout>
 
@@ -74,6 +74,7 @@
         android:layout_marginLeft="@dimen/keyline_minus_16"
         android:nestedScrollingEnabled="true"
         android:paddingTop="0dp"
+        android:theme="@style/ThemeOverlay.SeriesGuide.EpisodeList"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

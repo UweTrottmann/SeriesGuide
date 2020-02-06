@@ -10,7 +10,6 @@
     android:ellipsize="end"
     android:gravity="center_vertical"
     android:minHeight="48dp"
-    android:paddingLeft="@dimen/default_padding"
-    android:paddingRight="@dimen/default_padding"
-    android:textAppearance="@style/TextAppearance.Menu"
+    android:padding="@dimen/large_padding"
+    android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
     tools:text="Sample Item" />

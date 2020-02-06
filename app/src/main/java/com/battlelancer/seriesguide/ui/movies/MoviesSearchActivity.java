@@ -1,8 +1,6 @@
 package com.battlelancer.seriesguide.ui.movies;
 
-import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +19,7 @@ import com.battlelancer.seriesguide.settings.SearchSettings;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.ViewTools;
+import com.google.android.material.textfield.TextInputLayout;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -31,8 +30,8 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
     private static final String STATE_SEARCH_VISIBLE = "searchVisible";
 
     @BindView(R.id.containerSearchBar) View containerSearchBar;
-    @BindView(R.id.editTextSearchBar) AutoCompleteTextView searchView;
-    @BindView(R.id.imageButtonSearchClear) View clearButton;
+    @BindView(R.id.text_input_layout_toolbar) TextInputLayout searchInputLayout;
+    @BindView(R.id.auto_complete_view_toolbar) AutoCompleteTextView searchView;
     @BindView(R.id.containerMoviesSearchFragment) View containerMoviesSearchFragment;
 
     private SearchHistory searchHistory;
@@ -95,19 +94,10 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
         searchView.setOnClickListener(searchViewClickListener);
         searchView.setOnItemClickListener(searchViewItemClickListener);
         searchView.setOnEditorActionListener(searchViewActionListener);
-        searchView.setHint(R.string.movies_search_hint);
+        searchInputLayout.setHint(getString(R.string.movies_search_hint));
         // set in code as XML is overridden
         searchView.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         searchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
-        // manually retrieve the auto complete view popup background to override the theme
-        TypedValue outValue = new TypedValue();
-        getTheme().resolveAttribute(android.R.attr.autoCompleteTextViewStyle, outValue, true);
-        int[] attributes = new int[] { android.R.attr.popupBackground };
-        TypedArray a = getTheme().obtainStyledAttributes(outValue.data, attributes);
-        if (a.hasValue(0)) {
-            searchView.setDropDownBackgroundDrawable(a.getDrawable(0));
-        }
-        a.recycle();
 
         // setup search history
         searchHistory = new SearchHistory(this, SearchSettings.KEY_SUFFIX_TMDB);
@@ -116,12 +106,6 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
         searchView.setAdapter(searchHistoryAdapter);
         // drop-down is auto-shown on config change, ensure it is hidden when recreating views
         searchView.dismissDropDown();
-
-        // setup clear button
-        clearButton.setOnClickListener(v -> {
-            searchView.setText(null);
-            searchView.requestFocus();
-        });
     }
 
     @Override

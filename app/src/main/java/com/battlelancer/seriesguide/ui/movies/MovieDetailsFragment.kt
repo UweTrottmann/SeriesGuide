@@ -48,7 +48,6 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.ui.people.MovieCreditsLoader
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
@@ -166,21 +165,10 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // important action buttons
         containerMovieButtons.isGone = true
         containerRatings.isGone = true
-        val theme = activity!!.theme
-        ViewTools.setVectorIconTop(theme, buttonMovieWatched, R.drawable.ic_watch_black_24dp)
-        ViewTools.setVectorIconTop(theme, buttonMovieCollected, R.drawable.ic_collect_black_24dp)
-        ViewTools.setVectorIconTop(theme, buttonMovieWatchlisted, R.drawable.ic_list_add_white_24dp)
-        ViewTools.setVectorIconLeft(theme, buttonMovieCheckIn, R.drawable.ic_checkin_black_24dp)
-        ViewTools.setVectorIconLeft(
-            theme,
-            buttonMovieStreamingSearch,
-            R.drawable.ic_play_arrow_black_24dp
-        )
         CheatSheet.setup(buttonMovieCheckIn)
 
         // language button
         buttonMovieLanguage.isGone = true
-        ViewTools.setVectorIconLeft(theme, buttonMovieLanguage, R.drawable.ic_language_white_24dp)
         CheatSheet.setup(buttonMovieLanguage, R.string.pref_language)
         buttonMovieLanguage.setOnClickListener {
             MovieLocalizationDialogFragment.show(fragmentManager)
@@ -188,7 +176,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // comments button
         buttonMovieComments.isGone = true
-        ViewTools.setVectorIconLeft(theme, buttonMovieComments, R.drawable.ic_forum_black_24dp)
 
         // cast and crew
         setCastVisibility(false)
@@ -293,12 +280,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         super.onCreateOptionsMenu(menu, inflater)
 
         movieDetails?.let {
-            // choose theme variant
-            val isLightTheme = SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light
-            inflater.inflate(
-                if (isLightTheme) R.menu.movie_details_menu_light else R.menu.movie_details_menu,
-                menu
-            )
+            inflater.inflate(R.menu.movie_details_menu, menu)
 
             // enable/disable actions
             val isEnableShare = !it.tmdbMovie()?.title.isNullOrEmpty()
@@ -386,15 +368,14 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         dividerMovieButtons.isGone = hideCheckIn && hideStreamingSearch
 
         // watched button
-        val theme = activity!!.theme
         buttonMovieWatched.also {
             val textRes = if (isWatched) R.string.action_unwatched else R.string.action_watched
             it.setText(textRes)
             CheatSheet.setup(it, textRes)
             if (isWatched) {
-                ViewTools.setVectorDrawableTop(theme, it, R.drawable.ic_watched_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_watched_24dp)
             } else {
-                ViewTools.setVectorIconTop(theme, it, R.drawable.ic_watch_black_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_watch_black_24dp)
             }
             it.setOnClickListener {
                 if (isWatched) {
@@ -408,9 +389,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // collected button
         buttonMovieCollected.also {
             if (inCollection) {
-                ViewTools.setVectorDrawableTop(theme, it, R.drawable.ic_collected_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_collected_24dp)
             } else {
-                ViewTools.setVectorIconTop(theme, it, R.drawable.ic_collect_black_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_collect_black_24dp)
             }
             val textRes =
                 if (inCollection) R.string.action_collection_remove else R.string.action_collection_add
@@ -428,9 +409,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // watchlist button
         buttonMovieWatchlisted.also {
             if (inWatchlist) {
-                ViewTools.setVectorDrawableTop(theme, it, R.drawable.ic_list_added_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_list_added_24dp)
             } else {
-                ViewTools.setVectorIconTop(theme, it, R.drawable.ic_list_add_white_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_list_add_white_24dp)
             }
             val textRes = if (inWatchlist) R.string.watchlist_remove else R.string.watchlist_add
             it.setText(textRes)

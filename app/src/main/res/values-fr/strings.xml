@@ -393,6 +393,11 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Apparence</string>
     <string name="pref_theme">Thème</string>
+    <!-- Themes -->
+    <string name="theme_app_follow_system">Use system default</string>
+    <string name="theme_app_auto_battery">Set by Battery Saver</string>
+    <string name="theme_app_dark">Dark</string>
+    <string name="theme_app_light">Light</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Autres</string>
     <string name="pref_autoupdatesummary">Synchroniser automatiquement et mettre à jour les données de SeriesGuide</string>

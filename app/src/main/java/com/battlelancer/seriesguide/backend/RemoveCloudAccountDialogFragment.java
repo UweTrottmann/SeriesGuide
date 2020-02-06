@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -18,6 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.uwetrottmann.seriesguide.backend.account.Account;
 import java.io.IOException;
 import org.greenrobot.eventbus.EventBus;
@@ -31,7 +31,7 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
         builder.setMessage(R.string.hexagon_remove_account_confirmation);
         builder.setPositiveButton(R.string.hexagon_remove_account,
                 (dialog, which) -> Utils.executeInOrder(new RemoveHexagonAccountTask(getContext()))

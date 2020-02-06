@@ -164,7 +164,7 @@ public class NotificationSettings {
 
     public static void setDefaultsForChannelErrors(Context context,
             NotificationCompat.Builder builder) {
-        builder.setColor(ContextCompat.getColor(context, R.color.accent_primary));
+        builder.setColor(ContextCompat.getColor(context, R.color.sg_color_primary));
         builder.setDefaults(NotificationCompat.DEFAULT_SOUND | NotificationCompat.DEFAULT_LIGHTS);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setCategory(NotificationCompat.CATEGORY_ERROR);

@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.episodes
 
 import android.content.Intent
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.Menu
@@ -10,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -28,10 +26,8 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.util.SeasonTools
-import com.battlelancer.seriesguide.util.Shadows
-import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -57,12 +53,6 @@ class EpisodesActivity : BaseNavDrawerActivity() {
     var dividerEpisodesTabs: View? = null
     @BindView(R.id.imageViewEpisodesBackground)
     lateinit var backgroundImageView: ImageView
-    @BindView(R.id.viewEpisodesShadowStart)
-    @JvmField
-    var shadowStart: View? = null
-    @BindView(R.id.viewEpisodesShadowEnd)
-    @JvmField
-    var shadowEnd: View? = null
 
     private var episodesListFragment: EpisodesFragment? = null
     private var episodeDetailsAdapter: EpisodePagerAdapter? = null
@@ -194,29 +184,8 @@ class EpisodesActivity : BaseNavDrawerActivity() {
             R.id.textViewTabStripItem
         )
         episodeDetailsTabs.setSelectedIndicatorColors(
-            ContextCompat.getColor(
-                this,
-                if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue) {
-                    R.color.white
-                } else {
-                    Utils.resolveAttributeToResourceId(theme, R.attr.colorPrimary)
-                }
-            )
+            ThemeUtils.getColorFromAttribute(episodeDetailsTabs.context, R.attr.colorPrimary)
         )
-
-        // Set drawables for visible shadows.
-        shadowStart?.let {
-            Shadows.getInstance().setShadowDrawable(
-                this, it,
-                GradientDrawable.Orientation.RIGHT_LEFT
-            )
-        }
-        shadowEnd?.let {
-            Shadows.getInstance().setShadowDrawable(
-                this, it,
-                GradientDrawable.Orientation.LEFT_RIGHT
-            )
-        }
     }
 
     private val onPageChangeListener = object : OnPageChangeListener {

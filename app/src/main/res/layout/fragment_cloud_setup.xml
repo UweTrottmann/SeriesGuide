@@ -15,42 +15,38 @@
             android:id="@+id/textViewCloudDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/hexagon_description"
-            android:textAppearance="@style/TextAppearance.Body"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/progressBarCloudAccount" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageViewCloudUser"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
             android:contentDescription="@null"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCloudDescription"
-            app:srcCompat="@drawable/ic_account_circle_black_24dp"
-            app:tint="?attr/sgColorIcon" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
         <TextView
             android:id="@+id/textViewCloudUser"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:textAppearance="@style/TextAppearance.Body"
-            app:layout_constraintBottom_toBottomOf="@+id/imageViewCloudUser"
-            app:layout_constraintLeft_toRightOf="@+id/imageViewCloudUser"
-            app:layout_constraintRight_toLeftOf="@+id/progressBarCloudAccount"
-            app:layout_constraintTop_toTopOf="@+id/imageViewCloudUser"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewCloudUser"
             tools:text="example@example.com" />
 
         <ProgressBar
@@ -58,59 +54,75 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/buttonCloudAction"
-            app:layout_constraintRight_toLeftOf="@+id/buttonCloudAction"
-            app:layout_constraintTop_toTopOf="@+id/buttonCloudAction" />
+            app:layout_constraintEnd_toEndOf="@+id/buttonCloudAction"
+            app:layout_constraintStart_toStartOf="@+id/buttonCloudAction"
+            app:layout_constraintTop_toBottomOf="@+id/buttonCloudAction" />
 
         <Button
             android:id="@+id/buttonCloudAction"
-            style="@style/Widget.AppCompat.Button.Colored"
+            style="@style/Widget.SeriesGuide.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:text="@string/hexagon_signin"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewCloudUser"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textViewCloudUser" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/syncStatusCloud" />
 
         <com.battlelancer.seriesguide.widgets.SyncStatusView
             android:id="@+id/syncStatusCloud"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewCloudUser" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewCloudUser" />
+
+        <com.battlelancer.seriesguide.widgets.FeatureStatusView
+            android:id="@+id/feature_status_cloud_supported"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            app:featureDescription="@string/feature_supported"
+            app:featureSupported="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCloudDescription"
+            app:layout_constraintWidth_max="150dp" />
+
+        <com.battlelancer.seriesguide.widgets.FeatureStatusView
+            android:id="@+id/feature_status_cloud_not_supported"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:featureDescription="@string/feature_not_supported"
+            app:featureSupported="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/feature_status_cloud_supported"
+            app:layout_constraintTop_toTopOf="@+id/feature_status_cloud_supported" />
 
         <com.battlelancer.seriesguide.widgets.FeatureStatusView
             android:id="@+id/featureStatusCloudSync"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
             app:featureDescription="@string/feature_sync"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/syncStatusCloud" />
+            app:layout_constraintTop_toBottomOf="@+id/feature_status_cloud_supported" />
 
         <com.battlelancer.seriesguide.widgets.FeatureStatusView
             android:id="@+id/featureStatusCloudSyncShows"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="40dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             app:featureDescription="@string/shows"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -120,11 +132,9 @@
             android:id="@+id/featureStatusCloudSyncLists"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="40dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             app:featureDescription="@string/lists"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -134,11 +144,9 @@
             android:id="@+id/featureStatusCloudSyncMovies"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="40dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             app:featureDescription="@string/movies"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -149,23 +157,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
             android:text="@string/hexagon_warning_trakt"
-            android:textAppearance="@style/TextAppearance.Body.Highlight.Red"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Error"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/featureStatusCloudSyncMovies" />
 
         <Button
             android:id="@+id/buttonCloudRemoveAccount"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+            style="@style/Widget.SeriesGuide.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/hexagon_remove_account"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewCloudWarnings" />

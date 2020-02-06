@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootLayoutMovie"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -112,8 +113,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/padding_button"
-                        android:layout_marginRight="@dimen/padding_button"
                         android:layout_marginTop="@dimen/inline_padding"
+                        android:layout_marginRight="@dimen/padding_button"
+                        app:icon="@drawable/ic_language_white_24dp"
+                        app:iconGravity="start"
                         tools:text="Deutsch" />
 
                     <TextView
@@ -123,7 +126,7 @@
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
                         android:focusable="true"
-                        android:textAppearance="?attr/sgTextAppearanceBody2"
+                        android:textAppearance="?attr/textAppearanceBody2"
                         tools:text="Description for a super awesome movie..." />
 
                     <TextView
@@ -170,13 +173,14 @@
                         android:background="?attr/sgColorDivider"
                         tools:ignore="UnknownIdInLayout" />
 
-                    <!-- Compound drawable set in code. -->
                     <Button
                         android:id="@+id/buttonMovieComments"
                         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/comments" />
+                        android:text="@string/comments"
+                        app:icon="@drawable/ic_forum_black_24dp"
+                        app:iconGravity="start" />
 
                     <View
                         android:id="@+id/dividerMovie3"

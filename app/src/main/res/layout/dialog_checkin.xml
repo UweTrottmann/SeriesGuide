@@ -14,7 +14,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/large_padding">
+            android:paddingTop="@dimen/default_padding">
 
             <Button
                 android:id="@+id/buttonCheckInPasteTitle"
@@ -35,20 +35,20 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayoutCheckIn"
-                android:layout_below="@id/buttonCheckInPasteTitle"
-                android:layout_marginLeft="@dimen/larger_padding"
-                android:layout_marginRight="@dimen/larger_padding"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/buttonCheckInPasteTitle"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/checkin_hint"
                     android:gravity="top"
+                    android:hint="@string/checkin_hint"
                     android:inputType="textMultiLine"
                     android:lines="3"
-                    android:maxLength="100"/>
+                    android:maxLength="100" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,11 +59,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/inline_padding"
         android:paddingLeft="@dimen/large_padding"
-        android:paddingRight="@dimen/default_padding"
-        android:paddingTop="@dimen/large_padding">
+        android:paddingTop="@dimen/default_padding"
+        android:paddingRight="@dimen/large_padding"
+        android:paddingBottom="@dimen/default_padding">
 
         <Space
             android:layout_width="0dp"
@@ -81,12 +82,13 @@
             android:layout_height="24dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_padding"
+            android:layout_marginRight="@dimen/default_padding"
             android:contentDescription="@null"
             android:src="@drawable/ic_trakt_icon_red" />
 
         <Button
             android:id="@+id/buttonCheckIn"
-            style="?attr/buttonBarPositiveButtonStyle"
+            style="@style/Widget.SeriesGuide.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkin" />

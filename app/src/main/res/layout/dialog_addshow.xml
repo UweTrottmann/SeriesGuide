@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -47,7 +48,7 @@
                     android:layout_marginRight="@dimen/large_padding"
                     android:layout_toRightOf="@id/imageViewAddPoster"
                     android:paddingTop="@dimen/default_padding"
-                    android:textAppearance="@style/TextAppearance.Title"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
                     tools:text="@string/action_shows_add" />
 
                 <TextView
@@ -59,7 +60,7 @@
                     android:layout_marginRight="@dimen/large_padding"
                     android:layout_toRightOf="@id/imageViewAddPoster"
                     android:paddingBottom="@dimen/default_padding"
-                    android:textAppearance="@style/TextAppearance.Body"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                     tools:text="2014 / Continuing" />
 
                 <TextView
@@ -71,7 +72,7 @@
                     android:layout_marginLeft="@dimen/large_padding"
                     android:layout_marginRight="@dimen/large_padding"
                     android:layout_toRightOf="@+id/imageViewAddPoster"
-                    android:textAppearance="@style/TextAppearance.Body"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                     tools:text="Mon 07:00 PM on Showtime\n60 min" />
 
             </RelativeLayout>
@@ -83,8 +84,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/containerShowInfo"
                 android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
                 android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                app:icon="@drawable/ic_language_white_24dp"
+                app:iconGravity="start"
                 tools:text="Deutsch" />
 
             <TextView
@@ -98,7 +101,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:focusable="true"
                 android:maxWidth="@dimen/max_width_text_size_body"
-                android:textAppearance="@style/TextAppearance.Body"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                 tools:text="@string/description_overview" />
 
             <TextView
@@ -110,20 +113,20 @@
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
                 android:text="@string/show_genres"
-                android:textAppearance="@style/TextAppearance.Body.Bold" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle2" />
 
             <TextView
                 android:id="@+id/textViewAddGenres"
                 style="@style/Block"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:layout_below="@+id/textViewAddGenresLabel"
+                android:layout_alignParentLeft="true"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
                 android:background="?attr/selectableItemBackground"
                 android:focusable="true"
-                android:textAppearance="@style/TextAppearance.Body"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                 tools:text="Comedy, Drama" />
 
             <TextView
@@ -134,7 +137,7 @@
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginTop="@dimen/large_padding"
                 android:text="@string/placeholder_rating"
-                android:textAppearance="@style/TextAppearance.Title"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
                 tools:text="9.6" />
 
             <TextView
@@ -145,17 +148,17 @@
                 android:layout_marginRight="@dimen/default_padding"
                 android:layout_toRightOf="@+id/textViewAddRatingValue"
                 android:text="@string/format_rating_range"
-                android:textAppearance="@style/TextAppearance.Caption" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Caption" />
 
             <TextView
                 android:id="@+id/textViewAddRatingLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/textViewAddRatingValue"
                 android:layout_below="@+id/textViewAddRatingValue"
+                android:layout_alignLeft="@+id/textViewAddRatingValue"
                 android:layout_marginTop="-4dp"
                 android:text="@string/trakt"
-                android:textAppearance="@style/TextAppearance.Caption" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Caption" />
 
             <Button
                 android:id="@+id/buttonAddDisplaySimilar"
@@ -168,8 +171,8 @@
                 android:layout_marginRight="@dimen/default_padding"
                 android:drawablePadding="@dimen/default_padding"
                 android:text="@string/title_similar_shows"
-                tools:drawableLeft="@drawable/ic_search_white_24dp"
-                tools:drawableTint="?attr/sgColorIcon" />
+                app:icon="@drawable/ic_search_white_24dp"
+                app:iconGravity="start" />
 
             <Button
                 android:id="@+id/buttonAddStreamingSearch"
@@ -181,8 +184,8 @@
                 android:layout_marginRight="@dimen/default_padding"
                 android:drawablePadding="@dimen/default_padding"
                 android:text="@string/action_stream"
-                tools:drawableLeft="@drawable/ic_play_arrow_black_24dp"
-                tools:drawableTint="?attr/sgColorIcon" />
+                app:icon="@drawable/ic_play_arrow_black_24dp"
+                app:iconGravity="start" />
 
         </RelativeLayout>
     </ScrollView>

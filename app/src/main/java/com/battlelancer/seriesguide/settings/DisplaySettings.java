@@ -17,7 +17,7 @@ public class DisplaySettings {
 
     public static final String LANGUAGE_EN = "en";
 
-    public static final String KEY_THEME = "com.battlelancer.seriesguide.theme";
+    public static final String KEY_THEME = "com.uwetrottmann.seriesguide.theme";
 
     @Deprecated // language is stored per show or defined by place of usage
     public static final String KEY_LANGUAGE_PREFERRED = "language";

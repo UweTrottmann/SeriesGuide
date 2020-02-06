@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -67,11 +68,8 @@ public class ExtensionsAdapter extends ArrayAdapter<Extension> {
                 convertView = LayoutInflater.from(parent.getContext())
                         .inflate(LAYOUT_ADD, parent, false);
             }
-            TextView textViewAdd = convertView.findViewById(R.id.textViewItemExtensionAddLabel);
-            ViewTools.setVectorIconLeft(getContext().getTheme(), textViewAdd,
-                    R.drawable.ic_add_white_24dp);
-            convertView
-                    .setOnClickListener(v -> onItemClickListener.onAddExtensionClick(textViewAdd));
+            Button buttonAdd = convertView.findViewById(R.id.button_item_extension_add);
+            buttonAdd.setOnClickListener(v -> onItemClickListener.onAddExtensionClick(buttonAdd));
             return convertView;
         }
 

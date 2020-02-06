@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="2dp"
-        android:textAppearance="@style/TextAppearance.Body"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
         tools:text="Personal and friend history Personal and friend history Personal and friend" />
 
 </merge>
