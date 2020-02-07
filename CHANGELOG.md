@@ -15,7 +15,7 @@ Version 53
 *(in development)*
 
 #### 53-beta2
-*(2020-02-06)*
+*(2020-02-07)*
 
 * 🌟 New Dark and Light theme replace old themes. By default theme is chosen by system setting
   (Android 10) or depending on Battery Saver being active (Android 9 and older). Set the theme
