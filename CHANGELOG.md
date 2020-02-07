@@ -20,8 +20,9 @@ Version 53
 * 🌟 New Dark and Light theme replace old themes. By default theme is chosen by system setting
   (Android 10) or depending on Battery Saver being active (Android 9 and older). Set the theme
   permanently to Dark or Light in Settings.
-* 📝 The theme update is still incomplete or might be broken on some devices. Let me know!
+* 📝 The theme update is still incomplete (e.g. widgets) or might be broken on some devices. Let me know!
 * 🔧 Confirm set all episodes up to here watched.
+* 🔧 On Android 6 and newer improve system app data backup by only including settings.
 * 📝 Latest translations from crowdin.
 
 #### 53-beta1
