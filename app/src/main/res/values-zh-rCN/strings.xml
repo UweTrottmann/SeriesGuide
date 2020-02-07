@@ -383,10 +383,10 @@
     <string name="pref_appearance">外观</string>
     <string name="pref_theme">主题</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">使用系统默认设置</string>
+    <string name="theme_app_auto_battery">由省电模式设置</string>
+    <string name="theme_app_dark">暗色</string>
+    <string name="theme_app_light">亮色</string>
     <!-- Other advanced settings -->
     <string name="pref_other">其它</string>
     <string name="pref_autoupdatesummary">自动同步并更新 SeriesGuide 数据</string>

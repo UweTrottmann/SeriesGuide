@@ -416,10 +416,10 @@
     <string name="pref_appearance">Wygląd</string>
     <string name="pref_theme">Motyw</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">Użyj ustawień systemowych</string>
+    <string name="theme_app_auto_battery">Ustawione przez Oszczędzanie baterii</string>
+    <string name="theme_app_dark">Ciemny</string>
+    <string name="theme_app_light">Jasny</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Inne</string>
     <string name="pref_autoupdatesummary">Automatycznie synchronizuje i aktualizuje dane SeriesGuide</string>

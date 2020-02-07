@@ -394,10 +394,10 @@
     <string name="pref_appearance">Aparência</string>
     <string name="pref_theme">Tema</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">Usar padrão do sistema</string>
+    <string name="theme_app_auto_battery">Definido pela economia de bateria</string>
+    <string name="theme_app_dark">Escuro</string>
+    <string name="theme_app_light">Claro</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Outro</string>
     <string name="pref_autoupdatesummary">Sincronizar e atualizar os dados automaticamente</string>
