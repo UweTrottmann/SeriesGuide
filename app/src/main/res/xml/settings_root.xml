@@ -113,7 +113,7 @@
             app:title="@string/pref_translate">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://crowdin.net/project/seriesguide-translations/invite" />
+                android:data="https://crowdin.com/project/seriesguide-translations" />
         </Preference>
 
         <Preference
