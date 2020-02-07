@@ -27,7 +27,8 @@
     <application
         android:name="com.battlelancer.seriesguide.SgApp"
         android:allowBackup="true"
-        android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
+        android:backupAgent="com.battlelancer.seriesguide.SgBackupAgent"
+        android:fullBackupContent="@xml/sg_full_backup_rules"
         android:fullBackupOnly="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -35,8 +36,7 @@
         android:restrictedAccountType="${applicationId}"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
-        android:theme="@style/Theme.SeriesGuide.Dark"
-        tools:ignore="AllowBackup,UnusedAttribute">
+        android:theme="@style/Theme.SeriesGuide.Dark">
 
         <!-- AndroidX testing, remove once minSdkVersion is 28 or higher. -->
         <uses-library

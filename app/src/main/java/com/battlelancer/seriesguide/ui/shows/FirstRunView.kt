@@ -94,13 +94,13 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     private fun setFirstRunDismissed() {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
-            putBoolean(FirstRunView.PREF_KEY_FIRSTRUN, true)
+            putBoolean(PREF_KEY_FIRSTRUN, true)
         }
     }
 
     companion object {
 
-        private const val PREF_KEY_FIRSTRUN = "accepted_eula"
+        const val PREF_KEY_FIRSTRUN = "accepted_eula"
 
         @JvmStatic
         fun hasSeenFirstRunFragment(context: Context): Boolean {
