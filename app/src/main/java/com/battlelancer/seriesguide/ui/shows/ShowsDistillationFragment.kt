@@ -149,7 +149,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
 
             if (showSortOrder.changedIgnoreArticles) {
                 // refresh all list widgets
-                ListWidgetProvider.notifyDataChanged(context)
+                ListWidgetProvider.notifyDataChanged(context!!)
             }
         }
 
