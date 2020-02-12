@@ -160,8 +160,10 @@ public class WidgetSettings {
         } catch (NumberFormatException ignored) {
         }
 
-        int baseColor = ContextCompat.getColor(context,
-                lightBackground ? R.color.grey_50 : R.color.grey_850);
+        int baseColor = ContextCompat.getColor(context, lightBackground
+                ? R.color.widget_default_background_light
+                : R.color.widget_default_background
+        );
         // strip alpha from base color
         baseColor = baseColor & 0xFFFFFF;
         // add new alpha
