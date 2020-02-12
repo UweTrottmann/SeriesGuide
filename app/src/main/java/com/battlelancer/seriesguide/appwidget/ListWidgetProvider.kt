@@ -7,7 +7,6 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -15,7 +14,6 @@ import android.os.SystemClock
 import android.text.format.DateUtils
 import android.widget.RemoteViews
 import androidx.core.app.TaskStackBuilder
-import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.WidgetSettings
@@ -181,18 +179,7 @@ class ListWidgetProvider : AppWidgetProvider() {
                 // should be a sibling of the collection view.
                 it.setEmptyView(R.id.list_view, R.id.empty_view)
 
-                // Set the background colors of the header...
-                val isDarkTheme = WidgetSettings.isDarkTheme(context, appWidgetId)
-                it.setInt(
-                    R.id.containerWidgetHeader,
-                    "setBackgroundColor",
-                    if (isDarkTheme) {
-                        Color.TRANSPARENT
-                    } else {
-                        ContextCompat.getColor(context, R.color.sg_color_primary)
-                    }
-                )
-                // ...and the whole widget.
+                // Set the background colors of the whole widget.
                 val bgColor =
                     WidgetSettings.getWidgetBackgroundColor(context, appWidgetId, isLightTheme)
                 it.setInt(R.id.container, "setBackgroundColor", bgColor)

@@ -96,9 +96,9 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
         val themePref = createListPref(
             WidgetSettings.KEY_PREFIX_WIDGET_THEME + appWidgetId,
             R.string.pref_theme,
-            R.array.widgetTheme,
-            R.array.widgetThemeData,
-            "0"
+            R.array.widget_themes,
+            R.array.widget_themes_data,
+            getString(R.string.widget_theme_dark)
         )
         val backgroundPref = createListPref(
             WidgetSettings.KEY_PREFIX_WIDGET_BACKGROUND_OPACITY + appWidgetId,

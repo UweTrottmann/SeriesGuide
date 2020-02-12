@@ -136,36 +136,12 @@ public class WidgetSettings {
     }
 
     /**
-     * Returns if this widget should use a light theme instead of the default one.
+     * Returns if this widget should use a light theme instead of the dark one.
      */
     public static boolean isLightTheme(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
-
-        boolean isLightTheme = false;
-        try {
-            isLightTheme =
-                    Integer.parseInt(prefs.getString(KEY_PREFIX_WIDGET_THEME + appWidgetId, "0"))
-                            == 1;
-        } catch (NumberFormatException ignored) {
-        }
-        return isLightTheme;
-    }
-
-    /**
-     * Returns if this widget should use a completely dark theme (header is not colored) instead of
-     * the regular one.
-     */
-    public static boolean isDarkTheme(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
-
-        boolean isDarkTheme = false;
-        try {
-            isDarkTheme =
-                    Integer.parseInt(prefs.getString(KEY_PREFIX_WIDGET_THEME + appWidgetId, "0"))
-                            == 2;
-        } catch (NumberFormatException ignored) {
-        }
-        return isDarkTheme;
+        String value = context.getSharedPreferences(SETTINGS_FILE, 0)
+                .getString(KEY_PREFIX_WIDGET_THEME + appWidgetId, null);
+        return context.getString(R.string.widget_theme_light).equals(value);
     }
 
     /**
