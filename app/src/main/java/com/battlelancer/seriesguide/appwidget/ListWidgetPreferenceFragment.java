@@ -267,6 +267,7 @@ public class ListWidgetPreferenceFragment extends PreferenceFragmentCompat {
                         boolean displayingShows = getString(R.string.widget_type_shows)
                                 .equals(newTypeValue);
                         showsSortPref.setEnabled(displayingShows);
+                        onlyPremieresPref.setEnabled(!displayingShows);
                         onlyCollectedPref.setEnabled(!displayingShows);
                         hideWatchedPreference.setEnabled(!displayingShows);
                         isInfinitePref.setEnabled(!displayingShows);
