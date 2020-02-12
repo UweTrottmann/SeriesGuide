@@ -321,7 +321,6 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
 
         private const val ARG_WIDGET_ID = "appWidgetId"
 
-        @JvmStatic
         fun newInstance(appWidgetId: Int): ListWidgetPreferenceFragment {
             return ListWidgetPreferenceFragment().apply {
                 arguments = bundleOf(ARG_WIDGET_ID to appWidgetId)
