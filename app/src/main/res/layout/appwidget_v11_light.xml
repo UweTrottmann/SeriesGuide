@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:background="@color/sg_color_primary_500"
             android:baselineAligned="false"
-            android:minHeight="48dp"
             android:orientation="horizontal">
 
             <FrameLayout
@@ -32,20 +31,21 @@
                 android:background="@drawable/list_selector_dark"
                 android:focusable="true"
                 android:paddingLeft="@dimen/widget_padding_default"
-                android:paddingTop="@dimen/default_padding"
+                android:paddingTop="@dimen/inline_padding"
                 android:paddingRight="@dimen/widget_padding_default"
-                android:paddingBottom="@dimen/default_padding">
+                android:paddingBottom="@dimen/inline_padding">
 
                 <TextView
                     android:id="@+id/widgetTitle"
-                    style="@style/TextAppearance.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|start"
                     android:ellipsize="end"
+                    android:fontFamily="sans-serif-medium"
                     android:maxLines="1"
                     android:text="@string/upcoming"
-                    android:textColor="@color/white" />
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
 
             </FrameLayout>
 
@@ -55,7 +55,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/list_selector_dark"
                 android:focusable="true"
-                android:paddingRight="@dimen/default_padding"
+                android:paddingRight="@dimen/inline_padding"
                 tools:ignore="RtlHardcoded,RtlSymmetry">
 
                 <ImageView
