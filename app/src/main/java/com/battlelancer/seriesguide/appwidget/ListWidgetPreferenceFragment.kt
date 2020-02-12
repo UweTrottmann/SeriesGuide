@@ -161,10 +161,6 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
                 onPreferenceChangeListener = onDisablePreferenceChangeListener
                 setSummary(R.string.onlyx)
             }
-            themePref.apply {
-                onPreferenceChangeListener = onDisablePreferenceChangeListener
-                setSummary(R.string.onlyx)
-            }
             backgroundPref.apply {
                 onPreferenceChangeListener = onDisablePreferenceChangeListener
                 setSummary(R.string.onlyx)
