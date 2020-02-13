@@ -8,7 +8,7 @@ buildscript {
             'targetSdk': 28,
 
             // https://developer.android.com/jetpack/androidx/releases
-            'core': '1.1.0',
+            'core': '1.2.0',
             'annotation': '1.1.0',
             'lifecycle': '2.1.0',
             'paging': '2.1.0',
