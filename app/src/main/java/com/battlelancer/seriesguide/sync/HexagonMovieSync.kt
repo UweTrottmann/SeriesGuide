@@ -95,6 +95,10 @@ internal class HexagonMovieSync(
             } catch (e: IOException) {
                 Errors.logAndReportHexagon("get movies", e)
                 return false
+            } catch (e: IllegalArgumentException) {
+                // Note: JSON parser may throw IllegalArgumentException.
+                Errors.logAndReportHexagon("get movies", e)
+                return false
             }
 
             if (movies == null || movies.isEmpty()) {

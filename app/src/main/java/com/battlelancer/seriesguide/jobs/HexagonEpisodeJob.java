@@ -69,7 +69,8 @@ public class HexagonEpisodeJob extends BaseNetworkEpisodeJob {
                 } else {
                     return buildResult(context, NetworkJob.ERROR_HEXAGON_SERVER);
                 }
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException e) {
+                // Note: JSON parser may throw IllegalArgumentException.
                 Errors.logAndReportHexagon("save episodes", e);
                 return buildResult(context, NetworkJob.ERROR_CONNECTION);
             }
