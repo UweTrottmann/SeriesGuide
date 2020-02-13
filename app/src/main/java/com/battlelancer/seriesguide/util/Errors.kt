@@ -6,7 +6,6 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.google.api.client.http.HttpResponseException
 import retrofit2.Response
 import timber.log.Timber
-import java.io.IOException
 import java.io.InterruptedIOException
 import java.net.UnknownHostException
 
@@ -68,7 +67,7 @@ class Errors {
          * site of this method. Then logs the exception and if it should be, reports it.
          */
         @JvmStatic
-        fun logAndReportHexagon(action: String, e: IOException) {
+        fun logAndReportHexagon(action: String, e: Throwable) {
             val throwable = if (e is HttpResponseException) {
                 val requestError = when {
                     e.isClientError() -> ClientError(action, e)

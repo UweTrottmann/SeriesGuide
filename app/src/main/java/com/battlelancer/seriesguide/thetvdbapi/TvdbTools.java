@@ -292,7 +292,8 @@ public class TvdbTools {
                 if (showsService != null) {
                     hexagonShow = showsService.getShow().setShowTvdbId(showTvdbId).execute();
                 }
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException e) {
+                // Note: JSON parser may throw IllegalArgumentException.
                 Errors.logAndReportHexagon("get show details", e);
                 throw new TvdbCloudException("getShowDetailsWithHexagon", e);
             }

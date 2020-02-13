@@ -73,7 +73,8 @@ public class HexagonListsSync {
 
                 cursor = response.getCursor();
                 lists = response.getLists();
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException e) {
+                // Note: JSON parser may throw IllegalArgumentException.
                 Errors.logAndReportHexagon("get lists", e);
                 return false;
             }
@@ -230,7 +231,8 @@ public class HexagonListsSync {
                 hexagonListIds.addAll(listIds);
 
                 cursor = response.getCursor();
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException e) {
+                // Note: JSON parser may throw IllegalArgumentException.
                 Errors.logAndReportHexagon("get list ids", e);
                 return false;
             }
