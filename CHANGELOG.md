@@ -14,6 +14,15 @@ Version 53
 ----------
 *(in development)*
 
+#### 53-beta3
+*(2020-02-13)*
+
+* 🌟 New Dark and Light widget themes replace old themes, with more compact and less colorful header.
+* 🔧 Widgets: prevent setting only premieres option if displaying shows, it has no effect.
+* 🔨 Crash when using the new backup agent.
+* 🔨 Crash when receiving malformed response from Cloud.
+* 📝 Latest translations from crowdin.
+
 #### 53-beta2
 *(2020-02-07)*
 
