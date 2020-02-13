@@ -36,15 +36,10 @@
 
                 <TextView
                     android:id="@+id/widgetTitle"
+                    style="@style/TextAppearance.SeriesGuide.Widget.Title.Dark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="sans-serif-medium"
-                    android:maxLines="1"
-                    android:text="@string/upcoming"
-                    android:textAllCaps="true"
-                    android:textColor="@color/sg_color_primary_300_emphasis_high"
-                    android:textSize="18sp" />
+                    android:text="@string/upcoming" />
 
             </FrameLayout>
 

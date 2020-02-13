@@ -40,7 +40,6 @@
         <LinearLayout
             android:layout_width="36dp"
             android:layout_height="match_parent"
-            android:background="@color/sg_color_primary_300"
             android:baselineAligned="false"
             android:orientation="vertical">
 

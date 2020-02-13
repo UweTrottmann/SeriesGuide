@@ -19,7 +19,6 @@
             android:id="@+id/containerWidgetHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/sg_color_primary_500"
             android:baselineAligned="false"
             android:orientation="horizontal">
 
@@ -37,15 +36,10 @@
 
                 <TextView
                     android:id="@+id/widgetTitle"
+                    style="@style/TextAppearance.SeriesGuide.Widget.Title.Light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="sans-serif-medium"
-                    android:maxLines="1"
-                    android:text="@string/upcoming"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:text="@string/upcoming" />
 
             </FrameLayout>
 
