@@ -236,7 +236,7 @@ class ListWidgetProvider : AppWidgetProvider() {
             }
 
             // Set up settings button.
-            Intent(context, ListWidgetConfigure::class.java).apply {
+            Intent(context, ListWidgetPreferenceActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             }.let {

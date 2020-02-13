@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 
 /**
- * Shows settings fragment for a specific app widget, hosted inside a [ListWidgetConfigure]
+ * Shows settings fragment for a specific app widget, hosted inside a [ListWidgetPreferenceActivity]
  * activity.
  */
 class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
@@ -189,7 +189,7 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
         return when (item.itemId) {
             R.id.menu_save -> {
                 saveAllPreferences() // Persistence is disabled, save manually.
-                (activity as ListWidgetConfigure).updateWidget()
+                (activity as ListWidgetPreferenceActivity).updateWidget()
                 true
             }
             else -> super.onOptionsItemSelected(item)
