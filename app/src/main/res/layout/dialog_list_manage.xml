@@ -8,8 +8,7 @@
     <FrameLayout
         style="@style/DefaultPadding.DialogContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minWidth="@dimen/dialog_min_width">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutListManageListName"
@@ -17,11 +16,13 @@
             android:layout_height="wrap_content">
 
             <!-- Set inputType as it does not default to (single-line) text like EditText. -->
+            <!-- Set minWidth on EditText so FrameLayout sizes correctly. -->
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/list_title_hint"
                 android:inputType="text"
-                android:hint="@string/list_title_hint" />
+                android:minWidth="@dimen/dialog_min_width" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
