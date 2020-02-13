@@ -103,8 +103,8 @@
     <!-- Flagging -->
     <string name="mark_all">Alles bekeken</string>
     <string name="unmark_all">Niets bekeken</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Tot hier bekeken</string>
+    <string name="confirmation_watched_up_to">Alle afleveringen tot aan hier markeren als bekeken?</string>
     <string name="collect_all">Alles verzameld</string>
     <string name="uncollect_all">Niets verzameld</string>
     <string name="action_skip">Overslaan</string>
@@ -148,7 +148,7 @@
     <string name="action_shows_sort_favorites">Favorieten eerst</string>
     <string name="context_updateshow">Bijwerken</string>
     <string name="context_marknext">Volgende aflevering bekeken</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Wissel weergave</string>
     <!-- History -->
     <string name="user_stream">Geschiedenis</string>
     <string name="recently_watched">Laatst gekeken</string>
@@ -166,7 +166,7 @@
     <string name="calendar_settings">Kalenderinstellingen</string>
     <string name="only_favorites">Alleen favoriete series</string>
     <string name="calendar_only_collected">Enkel verzamelde afleveringen</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">Alleen premières</string>
     <string name="pref_infinite_scrolling">Oneindige kalender</string>
     <!-- Updating -->
     <string name="update_scheduled">Bijwerken&#8230;</string>
