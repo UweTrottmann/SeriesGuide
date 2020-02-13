@@ -21,6 +21,7 @@ Version 53
 * 🔧 Widgets: prevent setting only premieres option if displaying shows, it has no effect.
 * 🔨 Crash when using the new backup agent.
 * 🔨 Crash when receiving malformed response from Cloud.
+* 🔨 List add and edit dialog text box not full width.
 * 📝 Latest translations from crowdin.
 
 #### 53-beta2
