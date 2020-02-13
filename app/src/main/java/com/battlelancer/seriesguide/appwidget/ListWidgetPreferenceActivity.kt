@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
  * Does specifically NOT extend [com.battlelancer.seriesguide.ui.BaseActivity] to avoid
  * triggering update and backup mechanisms.
  */
-class ListWidgetConfigure : AppCompatActivity() {
+class ListWidgetPreferenceActivity : AppCompatActivity() {
 
     private var appWidgetId = 0
 
