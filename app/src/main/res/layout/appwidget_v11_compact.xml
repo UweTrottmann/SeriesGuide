@@ -21,8 +21,8 @@
             android:layout_weight="1"
             android:clipToPadding="@bool/gridClipToPadding"
             android:divider="@null"
-            android:paddingBottom="@dimen/inline_padding"
             android:paddingTop="@dimen/inline_padding"
+            android:paddingBottom="@dimen/inline_padding"
             tools:listitem="@layout/appwidget_row" />
 
         <TextView
@@ -36,7 +36,7 @@
             tools:ignore="UnusedAttribute" />
 
         <LinearLayout
-            android:layout_width="40dp"
+            android:layout_width="36dp"
             android:layout_height="match_parent"
             android:baselineAligned="false"
             android:orientation="vertical">
@@ -71,7 +71,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:contentDescription="@string/preferences"
-                    android:src="@drawable/ic_more_vert_white_24dp" />
+                    android:src="@drawable/ic_settings_dark_24dp" />
             </FrameLayout>
         </LinearLayout>
     </LinearLayout>

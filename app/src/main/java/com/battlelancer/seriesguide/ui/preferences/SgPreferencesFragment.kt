@@ -452,7 +452,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             || DisplaySettings.KEY_DISPLAY_EXACT_DATE == key
             || DisplaySettings.KEY_PREVENT_SPOILERS == key) {
             // update any widgets
-            ListWidgetProvider.notifyDataChanged(activity)
+            ListWidgetProvider.notifyDataChanged(activity!!)
         }
 
         if (DisplaySettings.KEY_LANGUAGE_FALLBACK == key) {

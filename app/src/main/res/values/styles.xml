@@ -161,6 +161,21 @@
 
     <style name="TextAppearance.SeriesGuide.EmptyState" parent="TextAppearance.Title.Dim" />
 
+    <!-- Widgets are not part of the app, so app theme attributes can not be used. -->
+    <style name="TextAppearance.SeriesGuide.Widget.Title" parent="">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="TextAppearance.SeriesGuide.Widget.Title.Dark">
+        <item name="android:textColor">@color/sg_color_primary_300_emphasis_high</item>
+    </style>
+    <style name="TextAppearance.SeriesGuide.Widget.Title.Light">
+        <item name="android:textColor">@color/sg_color_primary_500</item>
+    </style>
+
     <!-- Widget styles -->
     <style name="Widget" />
 

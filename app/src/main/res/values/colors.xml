@@ -60,9 +60,13 @@
     <color name="sg_color_status_bar_overlay">#deffffff</color>
     <!-- 4dp elevation of night/sg_color_surface -->
     <color name="sg_background_app_bar_dark">#241f2c</color>
+    <!-- emphasis high = 87% -->
+    <color name="sg_color_primary_300_emphasis_high">#de927bbc</color>
 
     <color name="grey_50">#fffafafa</color>
     <color name="grey_850">#ff303030</color>
+    <color name="widget_default_background">@color/grey_850</color>
+    <color name="widget_default_background_light">@color/grey_50</color>
 
     <color name="background_inverse">#ffebebeb</color>
     <color name="background_black">#ff000000</color>
@@ -72,9 +76,6 @@
 
     <color name="divider">#26ffffff</color>
     <color name="divider_inverse">#1A000000</color>
-
-    <color name="widget_default_background">#80000000</color>
-    <color name="widget_default_background_light">#80ffffff</color>
 
     <color name="shortcut_background">#fff5f5f5</color>
 

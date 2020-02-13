@@ -576,18 +576,15 @@
     </string-array>
 
     <!-- Widget themes -->
-    <string name="theme_widget_dark">SeriesGuide</string>
-    <string name="theme_widget_dark_alt">Android Dark</string>
-    <string name="theme_widget_light">SeriesGuide Light</string>
-    <string-array name="widgetTheme">
-        <item>@string/theme_widget_dark</item>
-        <item>@string/theme_widget_dark_alt</item>
-        <item>@string/theme_widget_light</item>
+    <string-array name="widget_themes">
+        <item>@string/theme_app_dark</item>
+        <item>@string/theme_app_light</item>
     </string-array>
-    <string-array name="widgetThemeData">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
+    <string name="widget_theme_dark">0</string>
+    <string name="widget_theme_light">1</string>
+    <string-array name="widget_themes_data">
+        <item>@string/widget_theme_dark</item>
+        <item>@string/widget_theme_light</item>
     </string-array>
 
     <string-array name="amazonDomainsData">

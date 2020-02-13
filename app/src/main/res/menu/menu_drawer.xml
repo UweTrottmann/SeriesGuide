@@ -29,7 +29,7 @@
         android:checkableBehavior="none">
         <item
             android:id="@+id/navigation_sub_item_settings"
-            android:icon="@drawable/ic_settings_white_24dp"
+            android:icon="@drawable/ic_settings_control_24dp"
             android:title="@string/preferences" />
         <item
             android:id="@+id/navigation_sub_item_help"

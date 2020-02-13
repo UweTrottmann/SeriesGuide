@@ -29,7 +29,7 @@
             android:layout_gravity="center_vertical"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/pref_upcominglimit"
-            android:src="@drawable/ic_settings_white_24dp" />
+            android:src="@drawable/ic_settings_control_24dp" />
 
     </LinearLayout>
 
