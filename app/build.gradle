@@ -31,7 +31,8 @@ android {
             annotationProcessorOptions {
                 arguments = [
                         "eventBusIndex" : "com.battlelancer.seriesguide.SgEventBusIndex",
-                        "room.schemaLocation": "$projectDir/schemas".toString()
+                        "room.schemaLocation": "$projectDir/schemas".toString(),
+                        "room.incremental": "true"
                 ]
             }
         }
