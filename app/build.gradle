@@ -177,8 +177,9 @@ dependencies {
     kapt "com.jakewharton:butterknife-compiler:${versions.butterknife}"
     implementation "com.google.dagger:dagger:${versions.dagger}"
     kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
-    implementation 'org.greenrobot:eventbus:3.1.2-RC'
-    kapt 'org.greenrobot:eventbus-annotation-processor:3.1.2-RC'
+    def eventbus_version = '3.2.0'
+    implementation "org.greenrobot:eventbus:$eventbus_version"
+    kapt "org.greenrobot:eventbus-annotation-processor:$eventbus_version"
 
     implementation 'com.google.flatbuffers:flatbuffers-java:1.10.0'
     implementation 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
