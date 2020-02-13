@@ -16,15 +16,13 @@ import com.battlelancer.seriesguide.ui.shows.FirstRunView
  */
 class SgBackupAgent : BackupAgentHelper() {
 
-    // Name of the default preferences file for legacy key-value backup.
-    private val keyValueBackupFileName = "${this.packageName}_preferences"
-
     // A key to uniquely identify the set of backup data for legacy key-value backup.
     private val keyValueBackupKey = "prefs"
 
     override fun onCreate() {
         // Allocate a helper for legacy key-value backup and add it to the backup agent.
-        SharedPreferencesBackupHelper(this, keyValueBackupFileName).also {
+        // Note: packageName requires context, so do not access before here.
+        SharedPreferencesBackupHelper(this, "${packageName}_preferences").also {
             addHelper(keyValueBackupKey, it)
         }
     }
