@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
 import androidx.core.content.edit
@@ -19,7 +18,6 @@ import androidx.preference.PreferenceGroup
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.WidgetSettings
 import com.battlelancer.seriesguide.util.Utils
-import com.battlelancer.seriesguide.util.ViewTools
 
 /**
  * Shows settings fragment for a specific app widget, hosted inside a [ListWidgetPreferenceActivity]
@@ -174,15 +172,8 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
         preferenceChangeListener.onPreferenceChange(typePref, typePref.value)
     }
 
-    override fun onCreateOptionsMenu(
-        menu: Menu,
-        inflater: MenuInflater
-    ) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.widget_config_menu, menu)
-        ViewTools.tintMenuItem(
-            activity!!.findViewById<View>(R.id.sgToolbar).context,
-            menu.findItem(R.id.menu_save)
-        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
