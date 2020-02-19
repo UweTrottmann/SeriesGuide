@@ -161,6 +161,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         val thresholdPref: Preference = findPreference(NotificationSettings.KEY_THRESHOLD)!!
         val selectionPref: Preference = findPreference(NotificationSettings.KEY_SELECTION)!!
         val hiddenPref: Preference = findPreference(NotificationSettings.KEY_IGNORE_HIDDEN)!!
+        val onlyNextPref: Preference = findPreference(NotificationSettings.KEY_ONLY_NEXT_EPISODE)!!
         // only visible pre-O
         val vibratePref: Preference? = findPreference(NotificationSettings.KEY_VIBRATE)
         val ringtonePref: Preference? = findPreference(NotificationSettings.KEY_RINGTONE)
@@ -191,6 +192,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             thresholdPref.isEnabled = isNotificationsEnabled
             selectionPref.isEnabled = isNotificationsEnabled
             hiddenPref.isEnabled = isNotificationsEnabled
+            onlyNextPref.isEnabled = isNotificationsEnabled
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 channelsPref?.isEnabled = isNotificationsEnabled
             } else {
@@ -204,6 +206,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             thresholdPref.isEnabled = false
             selectionPref.isEnabled = false
             hiddenPref.isEnabled = false
+            onlyNextPref.isEnabled = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 channelsPref?.isEnabled = false
             } else {

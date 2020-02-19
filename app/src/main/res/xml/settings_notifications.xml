@@ -28,6 +28,13 @@
     <CheckBoxPreference
         app:defaultValue="false"
         app:iconSpaceReserved="false"
+        app:key="com.uwetrottmann.seriesguide.notifications.nextonly"
+        app:summary="@string/pref_notifications_next_episodes_only_summary"
+        app:title="@string/pref_notifications_next_episodes_only" />
+
+    <CheckBoxPreference
+        app:defaultValue="false"
+        app:iconSpaceReserved="false"
         app:key="com.battlelancer.seriesguide.notifications.vibrate"
         app:summary="@string/pref_vibratesummary"
         app:title="@string/pref_vibrate" />
