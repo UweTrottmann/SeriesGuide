@@ -25,6 +25,13 @@
         app:summary="@string/pref_notifications_hidden_summary"
         app:title="@string/pref_notifications_hidden" />
 
+    <CheckBoxPreference
+        app:defaultValue="false"
+        app:iconSpaceReserved="false"
+        app:key="com.uwetrottmann.seriesguide.notifications.nextonly"
+        app:summary="@string/pref_notifications_next_episodes_only_summary"
+        app:title="@string/pref_notifications_next_episodes_only" />
+
     <Preference
         app:iconSpaceReserved="false"
         app:key="com.battlelancer.seriesguide.notifications.channels"

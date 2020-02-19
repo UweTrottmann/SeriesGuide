@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
@@ -318,6 +319,13 @@ public class NotificationService {
         }
         if (NotificationSettings.isIgnoreHiddenShows(context)) {
             selection.append(" AND ").append(Shows.SELECTION_NO_HIDDEN);
+        }
+        if (NotificationSettings.isOnlyNextEpisodes(context)) {
+            selection.append(" AND (")
+                    .append(Shows.NEXTEPISODE + "=''")
+                    .append(" OR ")
+                    .append(Shows.NEXTEPISODE + "=" + Qualified.EPISODES_ID)
+                    .append(")");
         }
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
