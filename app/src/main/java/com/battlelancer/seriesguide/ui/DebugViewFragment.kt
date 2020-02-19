@@ -26,7 +26,7 @@ class DebugViewFragment : AppCompatDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Light)
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Theme_SeriesGuide_DebugDrawer)
     }
 
     override fun onCreateView(
