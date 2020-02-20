@@ -12,10 +12,10 @@ All dates are in the European Central timezone.
 
 Version 53
 ----------
-*(in development)*
+*in development*
 
 #### 53-beta4
-*(2020-02-20)*
+*2020-02-20*
 
 * 🌟 Notifications: option to only notify if the new episode is the next episode to watch.
 * 🔧 Add link to release announcements from app update notification.
@@ -23,7 +23,7 @@ Version 53
 * 📝 Latest translations from crowdin.
 
 #### 53-beta3
-*(2020-02-13)*
+*2020-02-13*
 
 * 🌟 New Dark and Light widget themes replace old themes, with more compact and less colorful header.
 * 🔧 Widgets: prevent setting only premieres option if displaying shows, it has no effect.
@@ -33,7 +33,7 @@ Version 53
 * 📝 Latest translations from crowdin.
 
 #### 53-beta2
-*(2020-02-07)*
+*2020-02-07*
 
 * 🌟 New Dark and Light theme replace old themes. By default theme is chosen by system setting
   (Android 10) or depending on Battery Saver being active (Android 9 and older). Set the theme
@@ -44,7 +44,7 @@ Version 53
 * 📝 Latest translations from crowdin.
 
 #### 53-beta1
-*(2020-01-10)*
+*2020-01-10*
 
 * 🔧 Fetch images from new TheTVDB artworks subdomain, provide fall back for old image links.
 * 🔨 Episodes screen may crash in certain situations.
@@ -53,7 +53,7 @@ Version 53
 
 Version 52
 ----------
-*(2019-12-05)*
+*2019-12-05*
 
 * 🌟 Calendar: add option to only display premieres.
 * 🔧 Episodes: button to set all episodes watched up to (including) the current one.
@@ -62,19 +62,19 @@ Version 52
 * 🔧 Discover: drop any language option, just type a show title in any language to get a match.
 
 #### 52
-*(2019-12-05)*
+*2019-12-05*
 
 * 📝 Latest translations from crowdin.
 
 #### 52-beta5
-*(2019-11-28)*
+*2019-11-28*
 
 * 🔧 Add new languages supported by TheTVDB.com.
 * 📝 Add more translations of the new description on Play Store. Thanks to all translators!
 * 📝 Latest translations from crowdin.
 
 #### 52-beta4
-*(2019-11-21)*
+*2019-11-21*
 
 * 🔧 Switch English language show search to the new and improved search by TheTVDB.com.
 * 🔧 Also drop any languages option. Just enter a show title in any language to get a match.
@@ -82,7 +82,7 @@ Version 52
 * 📝 Latest translations from crowdin. Now including Hindi thanks to a new translator!
 
 #### 52-beta3
-*(2019-11-15)*
+*2019-11-15*
 
 * 🔧 Episode view remembers if season was last viewed as list, goes back to list if page was shown
   by tapping on list.
@@ -91,7 +91,7 @@ Version 52
 * 📝 Latest translations from crowdin.
 
 #### 52-beta2
-*(2019-11-08)*
+*2019-11-08*
 
 * 🔧 On phones, combine episode list and page view into one.
   Switch between them with a button in the top right.
@@ -102,7 +102,7 @@ Version 52
 * 📝 Latest translations from crowdin.
 
 #### 52-beta1
-*(2019-10-31)*
+*2019-10-31*
 
 * 🌟 Calendar: add option to only display premieres (first episodes).
 * 🔧 Show overview: if there is no next episode, suggest to look for similar shows.
@@ -111,7 +111,7 @@ Version 52
 
 Version 51
 ----------
-*(2019-10-02)*
+*2019-10-02*
 
 * 🌟 Display similar shows from the show details dialog and screen. Powered by themoviedb.org!
 * 🔧 Display streaming search in show details dialog, if it was configured.
@@ -120,14 +120,14 @@ Version 51
 * 🔧 Allow users to enable debug mode, for example to share log output.
 
 #### 51
-*(2019-10-02)*
+*2019-10-02*
 
 * 🔨 Do not crash when trying to display details for a show not existing on TheTVDB.com.
 * 🔨 Do not crash if there is no app available to select notification sound.
 * 📝 Latest translations from crowdin.
 
 #### 51-beta6
-*(2019-09-26)*
+*2019-09-26*
 
 * 🔧 Show a close instead of an up button for screens that have no parent screen.
 * 🔧 Migrate widget settings and Amazon extension settings to new implementation.
@@ -137,14 +137,14 @@ Version 51
 * 📝 Latest translations from crowdin.
 
 #### 51-beta5
-*(2019-09-20)*
+*2019-09-20*
 
 * 🌟 Display similar shows from the show details dialog and screen. Powered by themoviedb.org!
 * 🔧 Display streaming search in show details dialog if it was configured.
 * 📝 Latest translations from crowdin.
 
 #### 51-beta4
-*(2019-09-14)*
+*2019-09-14*
 
 * 🔨 Add movies to watchlist, collection or watched in all cases when syncing with trakt or Cloud.
   On upgrading to this version the next sync will add missing movies.
@@ -153,17 +153,17 @@ Version 51
 * 🔧 Move basic settings link up to the first section, rename it to Advanced.
 
 #### 51-beta3
-*(2019-09-04)*
+*2019-09-04*
 
 * 🔨 Resolve connection issues with TheTVDB and trakt.
 
 #### 51-beta2
-*(2019-08-30)*
+*2019-08-30*
 
 * 🔨 Do not crash when viewing an episode and there is no show title or poster. 
 
 #### 51-beta1
-*(2019-08-29)*
+*2019-08-29*
 
 * 🔧 Fetch show small poster path instead of constructing it, to future proof for upcoming changes at TheTVDB.com.
 * 🔨 Fix discover screen displaying shows that can not be added.
@@ -171,7 +171,7 @@ Version 51
 
 Version 50
 ----------
-*(2019-08-16)*
+*2019-08-16*
 
 * 🌟 Add Sponsor and Supporter subscriptions. If you can or want to you can now make a more
   significant contribution to help me make future updates.
@@ -182,18 +182,18 @@ Version 50
   details views will start using it.
 
 #### 50.1
-*(2019-09-18)*
+*2019-09-18*
 
 * 🔨 Add movies to watchlist, collection or watched in all cases when syncing with trakt or Cloud.
   On updating to this version the next sync will add missing movies.
 
 #### 50
-*(2019-08-14)*
+*2019-08-14*
 
 * 📝 Latest translations from crowdin.
 
 #### 50-beta5
-*(2019-07-25)*
+*2019-07-25*
 
 * 🔧 The list of popular movies and movie search display release dates depending on the selected
   region.
@@ -205,14 +205,14 @@ Version 50
 * 📝 Latest translations from crowdin.
 
 #### 50-beta4
-*(2019-07-19)*
+*2019-07-19*
 
 * 🌟 Support upgrading subscription to new Sponsor and Supporter tiers.
 * 🔧 Show icon which subscription tier is active.
 * 📝 Latest translations from crowdin.
 
 #### 50-beta3
-*(2019-07-18)*
+*2019-07-18*
 
 * 🌟 Introduce Sponsor and Supporter subscriptions so people who can or want to can make a more
   significant contribution. This helps me make future updates.
@@ -222,7 +222,7 @@ Version 50
 * 📝 Latest translations from crowdin.
 
 #### 50-beta2
-*(2019-07-06)*
+*2019-07-06*
 
 * 🔧 Shows/Movies: move search action left-most as likely most used. Show refresh action on history tabs.
 * 🔧 Show overview: move share action to more options to reduce clutter.
@@ -230,14 +230,14 @@ Version 50
 * 🔨 Enable crash reporting.
 
 #### 50-beta1
-*(2019-07-05)*
+*2019-07-05*
 
 * 🔧 Restore infinite calendar option due to feedback. Defaults to enabled for new and existing users.
 * 🔨 Potential fixes for crashes due to extensions.
 
 Version 49
 ----------
-*(2019-06-28)*
+*2019-06-28*
 
 * 🔧 Calendar is always infinite, uses all available space on large screens, has larger fast 
   scroller that is easier to grab.
@@ -248,12 +248,12 @@ Version 49
 * 🔧 Movies: Add set watched option to more options (three dots) menu.
 
 #### 49
-*(2019-06-28)*
+*2019-06-28*
 
 * 📝 Latest translations from crowdin.
 
 #### 49-beta6
-*(2019-06-21)*
+*2019-06-21*
 
 * 🔨 When making all hidden shows visible also upload changes to Cloud.
 * 🔨 trakt sign-in: do not crash if WebView is currently unavailable (e.g. it is updated).
@@ -263,7 +263,7 @@ Version 49
 * 📝 Latest translations from crowdin.
 
 #### 49-beta5
-*(2019-06-07)*
+*2019-06-07*
 
 * 🌟 Add setting to ignore hidden shows for notifications (defaults to enabled).
 * 🌟 Filters: add option to make all hidden shows visible at once.
@@ -271,7 +271,7 @@ Version 49
 * 📝 Latest translations from crowdin.
 
 #### 49-beta4
-*(2019-05-31)*
+*2019-05-31*
 
 * 🔧 Streaming search: add JustWatch for Portugal (but appears to be broken) and Poland.
 * 🔧 Add set watched option to movie more options (three dots) menu.
@@ -281,21 +281,21 @@ Version 49
 * 📝 Latest translations from crowdin.
 
 #### 49-beta3
-*(2019-05-24)*
+*2019-05-24*
 
 * 🔧 Experimental internal improvements when changing favorite, notify or hidden state of a show.
 * 🔨 Potential fix for calendar jumping away from first item.
 * 📝 Latest translations from crowdin.
 
 #### 49-beta2
-*(2019-05-10)*
+*2019-05-10*
 
 * 🔧 The new calendar is now always infinite. If multiple columns are shown, groups are no longer 
   broken into a new row, instead using all available space.
 * 📝 Latest translations from crowdin.
 
 #### 49-beta1
-*(2019-05-10)*
+*2019-05-10*
 
 * 🔧 Add link to trakt history website on history screen. Show up to 50 items (was 25).
 * 🔧 If connected to trakt, show at most 10 recently watched episodes or movies on history tabs (was 25).
@@ -305,7 +305,7 @@ Version 49
 
 Version 48
 ----------
-*(2019-05-02)*
+*2019-05-02*
 
 * Support 'Upcoming' status for shows.
 * Add watched movies tab.
@@ -313,37 +313,37 @@ Version 48
 * Color navigation bar black for dark themes, white on light theme.
 
 #### 48
-*(2019-05-02)*
+*2019-05-02*
 
 * 🔨 Do not crash if updating security provider fails.
 * 📝 Latest translations from crowdin.
 
 #### 48-beta6
-*(2019-04-17)*
+*2019-04-17*
 
 * 🔧 Support 'Upcoming' status for shows.
 * 🔧 Ask Google Play Services (if available) to update security provider.
 * 🔨 Fix crashes in movie details view and when pinning shortcuts.
 
 #### 48-beta5
-*(2019-04-12)*
+*2019-04-12*
 
 * 🔧 Experiment: refresh season watched counts using new Worker API.
 * 📝 Latest translations from crowdin.
 
 #### 48-beta4
-*(2019-03-29)*
+*2019-03-29*
 
 * 🔧 Do not ask for storage permission in backup/restore tool (still required for auto-backup).
 * 📝 Latest translations from crowdin.
 
 #### 48-beta3
-*(2019-03-21)*
+*2019-03-21*
 
 * 🌟 Statistics: display number and run time of watched movies. Might be incorrect until movies are updated.
 
 #### 48-beta2
-*(2019-03-15)*
+*2019-03-15*
 
 * 🌟 Add watched movies tab. Might show blank items until movies are updated.
 * 🔧 Force black navigation bar on OnePlus devices as well.
@@ -351,7 +351,7 @@ Version 48
 * 📝 Latest translations from crowdin.
 
 #### 48-beta1
-*(2019-03-08)*
+*2019-03-08*
 
 * 🔧 Force black navigation bar.
 * 🔧 Use darker overlay action and status bar for better readability (movie details).
@@ -360,7 +360,7 @@ Version 48
 
 Version 47
 ----------
-*(2019-02-22)*
+*2019-02-22*
 
 * 🔧 Show list: replace favorite button with set watched button.
 * 🌟 Set movies watched (previously only when connected to trakt).
@@ -370,31 +370,31 @@ Version 47
 * 🔧 Sharing old TheTVDB links to SeriesGuide to add shows works again.
 
 #### 47
-*(2019-02-22)*
+*2019-02-22*
 
 * 🔧 Sharing old TheTVDB links to SeriesGuide to add shows works again.
 * 🔧 Switch to improved error reporting to better pinpoint issues.
 * 📝 Latest translations from crowdin.
 
 #### 47-beta7
-*(2019-02-16)*
+*2019-02-16*
 
 * 🔧 Experiment with improved error reporting to better pinpoint issues.
 * 🔨 Crashes and errors are reported again.
 
 #### 47-beta6
-*(2019-02-08)*
+*2019-02-08*
 
 * 🔨 Do not crash when loading show discover screen.
 
 #### 47-beta5
-*(2019-02-08)*
+*2019-02-08*
 
 * 🔨 Do not crash when opening movie with unknown running time.
 * 🔨 Do not crash when opening show sort options with deprecated sort order.
 
 #### 47-beta4
-*(2019-02-01)*
+*2019-02-01*
 
 * 🌟 Set movies watched (previously only when connected to trakt).
 * 🌟 Cloud: sync watched movies. If trakt is connected, too, will upload existing watched movies, 
@@ -402,7 +402,7 @@ Version 47
 * 📝 Latest translations from crowdin.
 
 #### 47-beta3
-*(2019-01-25)*
+*2019-01-25*
 
 * 🌟 New show list filters that can be set to include (+), exclude (-) or disabled.
 * 🌟 Added filter for continuing shows (exclude to display ended shows).
@@ -413,14 +413,14 @@ Version 47
 * 📝 Latest translations from crowdin.
 
 #### 47-beta2
-*(2019-01-18)*
+*2019-01-18*
 
 * 🔧 After changing the language of a show or the alternative language in Settings, episode descriptions are updated properly again.
 * 🔧 Combine show filter and sort options into single view. Stays visible until tap outside or back button press.
 * 📝 Latest translations from crowdin.
 
 #### 47-beta1
-*(2019-01-11)*
+*2019-01-11*
 
 * 🔧 Show list: replace favorite button with set watched button. Display an indicator if a show is a favorite instead.
 * 🔧 Cloud: update and improve Google Sign-In.
