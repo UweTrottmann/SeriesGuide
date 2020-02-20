@@ -44,6 +44,7 @@
     <string name="search_hint">Bölüm ara</string>
     <!-- Status messages -->
     <string name="updated">En son sürüme güncellendi.</string>
+    <string name="updated_details">Details</string>
     <string name="norating">Geçersiz</string>
     <string name="unknown">bilinmiyor</string>
     <string name="offline">Ağa bağlanın ve yeniden deneyin.</string>

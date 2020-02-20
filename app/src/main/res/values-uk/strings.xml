@@ -44,6 +44,7 @@
     <string name="search_hint">Пошук серій</string>
     <!-- Status messages -->
     <string name="updated">Оновлено до останньої версії.</string>
+    <string name="updated_details">Details</string>
     <string name="norating">Немає даних</string>
     <string name="unknown">Невідомо</string>
     <string name="offline">Перевірте підключення до мережі та повторіть спробу.</string>

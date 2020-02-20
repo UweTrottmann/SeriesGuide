@@ -44,6 +44,7 @@
     <string name="search_hint">Cerca episodis</string>
     <!-- Status messages -->
     <string name="updated">S\'ha actualitzat a la darrera versió.</string>
+    <string name="updated_details">Details</string>
     <string name="norating">cap</string>
     <string name="unknown">deconegut</string>
     <string name="offline">Conecteu-vos a la xarxa i torneu-ho a intentar.</string>

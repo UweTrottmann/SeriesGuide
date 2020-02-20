@@ -44,6 +44,7 @@
     <string name="search_hint">Epizódok keresése</string>
     <!-- Status messages -->
     <string name="updated">Frissítve a legújabb verzióra.</string>
+    <string name="updated_details">Details</string>
     <string name="norating">n/a</string>
     <string name="unknown">ismeretlen</string>
     <string name="offline">Csatlakozz a hálózathoz és próbáld újra.</string>

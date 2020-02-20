@@ -44,6 +44,7 @@
     <string name="search_hint">Search episodes</string>
     <!-- Status messages -->
     <string name="updated">Updated to latest version</string>
+    <string name="updated_details">Details</string>
     <string name="norating">n/a</string>
     <string name="unknown">अज्ञात</string>
     <string name="offline">Connect to a network, then try again</string>

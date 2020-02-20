@@ -44,6 +44,7 @@
     <string name="search_hint">Căutaţi episoade</string>
     <!-- Status messages -->
     <string name="updated">Actualizat la ultima versiune.</string>
+    <string name="updated_details">Details</string>
     <string name="norating">n/a</string>
     <string name="unknown">necunoscut</string>
     <string name="offline">Conectați-vă la o rețea, apoi încercați din nou.</string>
