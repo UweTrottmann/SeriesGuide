@@ -14,6 +14,14 @@ Version 53
 ----------
 *(in development)*
 
+#### 53-beta4
+*(2020-02-20)*
+
+* 🌟 Notifications: option to only notify if the new episode is the next episode to watch.
+* 🔧 Add link to release announcements from app update notification.
+* 🔨 Fix colors in debug view.
+* 📝 Latest translations from crowdin.
+
 #### 53-beta3
 *(2020-02-13)*
 
