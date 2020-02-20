@@ -415,10 +415,10 @@
     <string name="pref_appearance">Vzhľad</string>
     <string name="pref_theme">Téma</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">Použiť systémom predvolené</string>
+    <string name="theme_app_auto_battery">Podľa šetriča batérie</string>
+    <string name="theme_app_dark">Tmavá</string>
+    <string name="theme_app_light">Svetlá</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Ostatné</string>
     <string name="pref_autoupdatesummary">Automaticky synchronizovať a aktualizovať SeriesGuide dáta</string>

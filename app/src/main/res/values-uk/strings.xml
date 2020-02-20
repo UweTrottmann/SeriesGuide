@@ -104,8 +104,8 @@
     <!-- Flagging -->
     <string name="mark_all">Всі переглянуті</string>
     <string name="unmark_all">Жодна не переглянута</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Переглянуто досі</string>
+    <string name="confirmation_watched_up_to">Позначити всі епізоди досюди як переглянуті?</string>
     <string name="collect_all">Зібрано всі</string>
     <string name="uncollect_all">Жодної не зібрано</string>
     <string name="action_skip">Пропустити</string>
@@ -138,8 +138,8 @@
     <string name="action_shows_filter_unwatched">Непереглянуті</string>
     <string name="action_shows_filter_upcoming">Незабаром</string>
     <string name="action_shows_filter_hidden">Приховані</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="action_shows_make_all_visible">Зробити все приховане видимим</string>
+    <string name="description_make_all_visible_format">Зробити всі приховані серіали (%s) видимими знову?</string>
     <string name="action_shows_sort">Сортувати серіали за</string>
     <string name="action_shows_sort_title">Назвою</string>
     <string name="action_shows_sort_latest_episode">Найновішою серією</string>
@@ -149,7 +149,7 @@
     <string name="action_shows_sort_favorites">Улюблене спочатку</string>
     <string name="context_updateshow">Оновити</string>
     <string name="context_marknext">Переглянута наступна серія</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Змінити вигляд</string>
     <!-- History -->
     <string name="user_stream">Історія</string>
     <string name="recently_watched">Недавно переглянуті</string>
@@ -167,7 +167,7 @@
     <string name="calendar_settings">Налаштування календаря</string>
     <string name="only_favorites">Лише улюблені серіали</string>
     <string name="calendar_only_collected">Тільки обрані серії</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">Лише прем\'єри</string>
     <string name="pref_infinite_scrolling">Вічний календар</string>
     <!-- Updating -->
     <string name="update_scheduled">Оновлюється&#8230;</string>
@@ -211,8 +211,8 @@
     <string name="shows_collection">Колекція</string>
     <string name="watchlist">Список перегляду</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">Немає результатів</string>
+    <string name="title_similar_shows">Подібні серіали</string>
     <!-- Lists -->
     <string name="first_list">Перший список</string>
     <string name="list_add">Додати список</string>
@@ -389,7 +389,7 @@
     <string name="privacy_policy">Політика приватності</string>
     <string name="licence_tvdb">Ця програма використовує дані та зображення з TheTVDB під ліцензією Creative Commons license.</string>
     <string name="licence_themoviedb">Цей продукт використовує TMDb API, але не підтримуваний та сертифікований TMDb.</string>
-    <string name="licence_trakt">This app uses data and images by Trakt.</string>
+    <string name="licence_trakt">Ця програма використовує дані та зображення з Trakt.</string>
     <string name="about_open_source">SeriesGuide створена з використанням відкритого вихідного коду.</string>
     <string name="licences_and_credits">Ліцензії та кредити</string>
     <!-- Sort -->
@@ -415,10 +415,10 @@
     <string name="pref_appearance">Оформлення</string>
     <string name="pref_theme">Тема</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">Використати значення за замовчуванням</string>
+    <string name="theme_app_auto_battery">Увімкнути режим економії заряду акумулятора</string>
+    <string name="theme_app_dark">Темна</string>
+    <string name="theme_app_light">Світла</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Інші</string>
     <string name="pref_autoupdatesummary">Автоматично синхронізування та оновлення даних SeriesGuide</string>
@@ -468,11 +468,11 @@
     <string name="pref_notifications_treshold">Коли слід сповіщати</string>
     <string name="pref_notifications_select_shows">Виберіть серіали</string>
     <string name="pref_notifications_select_shows_summary">Серіалів зі включеним сповіщенням (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Ігнорувати приховані серіали</string>
+    <string name="pref_notifications_hidden_summary">Навіть якщо сповіщення увімкнено, не повідомляти про приховані серіали</string>
     <string name="pref_notification_channel_errors">Помилки</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Лише для серій що вийдуть</string>
+    <string name="pref_notifications_next_episodes_only_summary">Сповіщати лише якщо нова серія буде наступною для перегляду</string>
     <!-- List Widget -->
     <string name="hide_watched">Приховати переглянуті серії</string>
     <string name="pref_widget_opacity">Фон віджета</string>
@@ -491,8 +491,8 @@
     <string name="billing_action_manage_subscriptions">Впорядкувати підписки</string>
     <string name="billing_action_pass">Отримати X Pass</string>
     <string name="billing_price_subscribe">%1$s/рік, спробуйте безкоштовно, скасуйте у будь-який час через %2$s</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_duration_format">%1$s/рік</string>
+    <string name="billing_sub_description">Спробуйте безкоштовно, скасуйте в будь який час.</string>
     <string name="billing_price_pass">Одноразове замовлення</string>
     <string name="upgrade_description">Розблокуйте усі функції включно зі сповіщеннями, темами і більшою кількістю опцій для віджетів. Допоможіть випускати майбутні оновлення.</string>
     <string name="upgrade_success">Дякую за підтримку SeriesGuide! Тепер ви маєте доступ до всіх функцій.</string>

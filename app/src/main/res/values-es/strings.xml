@@ -102,8 +102,8 @@
     <!-- Flagging -->
     <string name="mark_all">Todos vistos</string>
     <string name="unmark_all">Ninguno visto</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Visto hasta aquí</string>
+    <string name="confirmation_watched_up_to">¿Marcar como vistos todos los episodios hasta aquí?</string>
     <string name="collect_all">Recopilados todos</string>
     <string name="uncollect_all">Recopilados ninguno</string>
     <string name="action_skip">Omitir</string>
@@ -165,7 +165,7 @@
     <string name="calendar_settings">ajustes del calendario</string>
     <string name="only_favorites">Solo series favoritas</string>
     <string name="calendar_only_collected">Solo episodios coleccionados</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">Solo estrenos</string>
     <string name="pref_infinite_scrolling">Calendario infinito</string>
     <!-- Updating -->
     <string name="update_scheduled">Actualizando&#8230;</string>
@@ -394,10 +394,10 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_appearance">Apariencia</string>
     <string name="pref_theme">Tema</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">Usar el predeterminado del sistema</string>
+    <string name="theme_app_auto_battery">Establecido por Ahorro de Batería</string>
+    <string name="theme_app_dark">Oscuro</string>
+    <string name="theme_app_light">Claro</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Otros</string>
     <string name="pref_autoupdatesummary">Sincronizar y actualizar automáticamente datos de SeriesGuide</string>
@@ -450,8 +450,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_notifications_hidden">Ignorar series ocultas</string>
     <string name="pref_notifications_hidden_summary">Incluso si las notificaciones están habilitadas, no notifique sobre las series ocultas</string>
     <string name="pref_notification_channel_errors">Errores</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Sólo para episodios siguientes para ver</string>
+    <string name="pref_notifications_next_episodes_only_summary">Solo notificar si el nuevo episodio es el siguiente para ver</string>
     <!-- List Widget -->
     <string name="hide_watched">Ocultar episodios vistos</string>
     <string name="pref_widget_opacity">Fondo de widget</string>

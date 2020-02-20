@@ -107,7 +107,7 @@
     <string name="mark_all">تعيين الجميع بمشاهد</string>
     <string name="unmark_all">تعيين الجميع بغير مشاهد</string>
     <string name="action_watched_up_to">تم المشاهدة إلى هنا</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="confirmation_watched_up_to">تعليم كل الحلقات إلى هذه الحلقة بتمت مشاهدتها؟</string>
     <string name="collect_all">جمع الكل</string>
     <string name="uncollect_all">لم يتم جمع شئ</string>
     <string name="action_skip">تخطي</string>
@@ -437,10 +437,10 @@
     <string name="pref_appearance">المظهر</string>
     <string name="pref_theme">التصميم</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">استخدام الإعداد التلقائي للنظام</string>
+    <string name="theme_app_auto_battery">تفعيل ميزة \"توفير شحن البطارية\"</string>
+    <string name="theme_app_dark">داكن</string>
+    <string name="theme_app_light">فاتح</string>
     <!-- Other advanced settings -->
     <string name="pref_other">أخرى</string>
     <string name="pref_autoupdatesummary">مزامنة وتحديث بيانات SeriesGuide تلقائيا</string>
@@ -493,8 +493,8 @@
     <string name="pref_notifications_hidden">تجاهل المسلسلات المخفيه</string>
     <string name="pref_notifications_hidden_summary">حتي لو ان الأشعارات مفعلة, لا تبلغني عن المسلسلات المخفية</string>
     <string name="pref_notification_channel_errors">أخطاء</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">فقط لمشاهدة الحلقات التالية</string>
+    <string name="pref_notifications_next_episodes_only_summary">تنبيه فقط اذا الحلقة الجديدة ستشاهد تالياً</string>
     <!-- List Widget -->
     <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
     <string name="pref_widget_opacity">خلفية القطعة العائمة</string>
