@@ -44,6 +44,7 @@
     <string name="search_hint">エピソードを検索</string>
     <!-- Status messages -->
     <string name="updated">最新バージョンに更新しました</string>
+    <string name="updated_details">Details</string>
     <string name="norating">なし</string>
     <string name="unknown">不明</string>
     <string name="offline">ネットワークに接続して、もう一度やり直してください</string>

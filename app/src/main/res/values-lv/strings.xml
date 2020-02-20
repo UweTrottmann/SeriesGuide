@@ -44,6 +44,7 @@
     <string name="search_hint">Meklēt epizodēs</string>
     <!-- Status messages -->
     <string name="updated">Atjaunināts uz jaunāko versiju.</string>
+    <string name="updated_details">Details</string>
     <string name="norating">n/a</string>
     <string name="unknown">nezināms</string>
     <string name="offline">Lūdzu pievienojies internetam, un tad mēģini vēlreiz.</string>

@@ -44,6 +44,7 @@
     <string name="search_hint">Hae jaksoja</string>
     <!-- Status messages -->
     <string name="updated">Päivitetty viimeisimpään versioon.</string>
+    <string name="updated_details">Details</string>
     <string name="norating">puuttuu</string>
     <string name="unknown">tuntematon</string>
     <string name="offline">Muodosta yhteys verkkoon ja yritä uudelleen.</string>

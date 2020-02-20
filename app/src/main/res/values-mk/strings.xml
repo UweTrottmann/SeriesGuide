@@ -44,6 +44,7 @@
     <string name="search_hint">Пребарај епизоди</string>
     <!-- Status messages -->
     <string name="updated">Обнови во најнова верзија.</string>
+    <string name="updated_details">Details</string>
     <string name="norating">Непознато</string>
     <string name="unknown">Непознато</string>
     <string name="offline">Поврзи се на интернет, после пробај повторно.</string>

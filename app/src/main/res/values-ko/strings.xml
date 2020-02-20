@@ -44,6 +44,7 @@
     <string name="search_hint">에피소드 검색</string>
     <!-- Status messages -->
     <string name="updated">최신 버전으로 업데이트되었습니다.</string>
+    <string name="updated_details">Details</string>
     <string name="norating">없음</string>
     <string name="unknown">알 수 없음</string>
     <string name="offline">네트워크에 연결한 후 다시 시도해주세요.</string>

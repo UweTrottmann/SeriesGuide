@@ -44,6 +44,7 @@
     <string name="search_hint">Sök avsnitt</string>
     <!-- Status messages -->
     <string name="updated">Uppdaterad till senaste versionen</string>
+    <string name="updated_details">Details</string>
     <string name="norating">saknas</string>
     <string name="unknown">okänd</string>
     <string name="offline">Ansluta till ett nätverk och försök igen.</string>
