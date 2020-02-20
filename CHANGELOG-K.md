@@ -3,8 +3,6 @@
 Release notes for version 46 and older
 =============
 
-All dates are in the European Central timezone.
-
 🌟 = New.
 🔧 = Improved or tweaked.
 🔨 = Resolved or fixed.

@@ -3,8 +3,6 @@
 Release notes
 =============
 
-All dates are in the European Central timezone.
-
 🌟 = New.
 🔧 = Improved or tweaked.
 🔨 = Resolved or fixed.
