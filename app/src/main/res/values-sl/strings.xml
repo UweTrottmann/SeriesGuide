@@ -44,6 +44,7 @@
     <string name="search_hint">Iskanje epizode</string>
     <!-- Status messages -->
     <string name="updated">Posodobljeno na najnovejšo verzijo.</string>
+    <string name="updated_details">Details</string>
     <string name="norating">n/a</string>
     <string name="unknown">neznano</string>
     <string name="offline">Vzpostavite povezavo z omrežjem in nato poskusite znova.</string>

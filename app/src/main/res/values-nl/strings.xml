@@ -44,6 +44,7 @@
     <string name="search_hint">Afleveringen zoeken</string>
     <!-- Status messages -->
     <string name="updated">Bijgewerkt naar de nieuwste versie</string>
+    <string name="updated_details">Details</string>
     <string name="norating">n.v.t.</string>
     <string name="unknown">onbekend</string>
     <string name="offline">Maak verbinding met een netwerk en probeer het opnieuw.</string>

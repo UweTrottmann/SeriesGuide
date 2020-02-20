@@ -44,6 +44,7 @@
     <string name="search_hint">جست‌وجوی قسمت‌ها</string>
     <!-- Status messages -->
     <string name="updated">به‌روز شده به جدیدترین نگارش.</string>
+    <string name="updated_details">Details</string>
     <string name="norating">ناموجود</string>
     <string name="unknown">نامعلوم</string>
     <string name="offline">به شبکه‌ای وصل شده، سپس دوباره تلاش کنید.</string>

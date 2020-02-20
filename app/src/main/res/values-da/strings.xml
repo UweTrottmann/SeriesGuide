@@ -44,6 +44,7 @@
     <string name="search_hint">Søg episoder</string>
     <!-- Status messages -->
     <string name="updated">Opdateret til nyeste version.</string>
+    <string name="updated_details">Details</string>
     <string name="norating">ikke tilgængelig</string>
     <string name="unknown">ukendt</string>
     <string name="offline">Forbind til et netværk, og prøv igen.</string>

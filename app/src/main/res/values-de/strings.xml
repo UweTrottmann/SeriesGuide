@@ -44,6 +44,7 @@
     <string name="search_hint">Suche Folgen</string>
     <!-- Status messages -->
     <string name="updated">Auf neueste Version aktualisiert</string>
+    <string name="updated_details">Details</string>
     <string name="norating">n/a</string>
     <string name="unknown">unbekannt</string>
     <string name="offline">Mit einem Netzwerk verbinden, dann erneut versuchen</string>

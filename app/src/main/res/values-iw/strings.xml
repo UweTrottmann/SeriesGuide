@@ -44,6 +44,7 @@
     <string name="search_hint">חפש פרקים</string>
     <!-- Status messages -->
     <string name="updated">עדכן לגרסה האחרונה.</string>
+    <string name="updated_details">Details</string>
     <string name="norating">לא ידוע</string>
     <string name="unknown">לא ידוע</string>
     <string name="offline">התחבר לרשת, ואז נסה שוב.</string>
