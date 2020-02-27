@@ -9,6 +9,11 @@ android {
 
     useLibrary 'android.test.base'
 
+    // https://developer.android.com/topic/libraries/view-binding
+    viewBinding {
+        enabled = true
+    }
+
     defaultConfig {
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
