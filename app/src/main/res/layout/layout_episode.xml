@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!-- Need to define root ID in include tag or view binding breaks. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/containerEpisode"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -11,7 +11,7 @@
 
     <!-- Text appearance set in code. -->
     <TextView
-        android:id="@+id/textViewEpisodeTitle"
+        android:id="@+id/textview_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/large_padding"
@@ -25,7 +25,7 @@
 
     <!-- Text appearance set in code. -->
     <TextView
-        android:id="@+id/textViewEpisodeReleaseTime"
+        android:id="@+id/textview_release_time"
         style="@style/Block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         tools:text="OCT 15, 2013 (TUE) · 52" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/containerEpisodeImage"
+        android:id="@+id/container_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/inline_padding"
@@ -52,7 +52,7 @@
         tools:ignore="Overdraw">
 
         <ImageView
-            android:id="@+id/imageViewEpisode"
+            android:id="@+id/imageview_screenshot"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:contentDescription="@string/description_image"
@@ -65,7 +65,9 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <include layout="@layout/buttons_episode" />
+    <include
+        android:id="@+id/include_buttons"
+        layout="@layout/buttons_episode" />
 
     <View
         android:layout_width="match_parent"
@@ -76,7 +78,7 @@
         android:background="?attr/sgColorDivider" />
 
     <TextView
-        android:id="@+id/textViewEpisodeDescription"
+        android:id="@+id/textview_description"
         style="@style/Block.FlowText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -93,7 +95,9 @@
         android:layout_marginRight="@dimen/large_padding"
         android:background="?attr/sgColorDivider" />
 
-    <include layout="@layout/ratings_shows" />
+    <include
+        android:id="@+id/include_ratings"
+        layout="@layout/ratings_shows" />
 
     <View
         android:layout_width="match_parent"
@@ -103,7 +107,7 @@
         android:background="?attr/sgColorDivider" />
 
     <TextView
-        android:id="@+id/labelEpisodeGuestStars"
+        android:id="@+id/textview_guest_stars_label"
         style="@style/Block.WithTopMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -111,7 +115,7 @@
         android:textAppearance="@style/TextAppearance.Body.Bold" />
 
     <TextView
-        android:id="@+id/textViewEpisodeGuestStars"
+        android:id="@+id/textview_guest_stars"
         style="@style/Block.FlowText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -121,7 +125,7 @@
         tools:text="Daniel Craig, Jaimie Alexander, Kiefer Sutherland, Stephanie Leonidas" />
 
     <TextView
-        android:id="@+id/labelEpisodeDirectors"
+        android:id="@+id/textview_directors_label"
         style="@style/Block.WithTopMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -129,7 +133,7 @@
         android:textAppearance="@style/TextAppearance.Body.Bold" />
 
     <TextView
-        android:id="@+id/textViewEpisodeDirectors"
+        android:id="@+id/textview_directors"
         style="@style/Block.FlowText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -139,7 +143,7 @@
         tools:text="Daniel Craig" />
 
     <TextView
-        android:id="@+id/labelEpisodeWriters"
+        android:id="@+id/textview_writers_label"
         style="@style/Block.WithTopMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -147,7 +151,7 @@
         android:textAppearance="@style/TextAppearance.Body.Bold" />
 
     <TextView
-        android:id="@+id/textViewEpisodeWriters"
+        android:id="@+id/textview_writers"
         style="@style/Block.FlowText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -157,7 +161,7 @@
         tools:text="Daniel Craig, Jaimie Alexander" />
 
     <TextView
-        android:id="@+id/labelEpisodeDvd"
+        android:id="@+id/textview_dvd_label"
         style="@style/Block.WithTopMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -165,7 +169,7 @@
         android:textAppearance="@style/TextAppearance.Body.Bold" />
 
     <TextView
-        android:id="@+id/textViewEpisodeDvd"
+        android:id="@+id/textview_dvd"
         style="@style/Block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -175,7 +179,7 @@
         tools:text="42.0" />
 
     <TextView
-        android:id="@+id/labelEpisodeReleaseDay"
+        android:id="@+id/textview_release_date_label"
         style="@style/Block.WithTopMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -183,7 +187,7 @@
         android:textAppearance="@style/TextAppearance.Body.Bold" />
 
     <TextView
-        android:id="@+id/textViewEpisodeReleaseDate"
+        android:id="@+id/textview_release_date"
         style="@style/Block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -199,8 +203,7 @@
         android:background="?attr/sgColorDivider" />
 
     <include
-        layout="@layout/buttons_services"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:id="@+id/include_services"
+        layout="@layout/buttons_services" />
 
 </LinearLayout>
