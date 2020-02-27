@@ -23,7 +23,7 @@ import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.databinding.ButtonsEpisodeBinding;
 import com.battlelancer.seriesguide.databinding.ButtonsEpisodeMoreBinding;
-import com.battlelancer.seriesguide.databinding.ButtonsServicesStackedBinding;
+import com.battlelancer.seriesguide.databinding.ButtonsServicesBinding;
 import com.battlelancer.seriesguide.databinding.FragmentEpisodeBinding;
 import com.battlelancer.seriesguide.databinding.LayoutEpisodeBinding;
 import com.battlelancer.seriesguide.databinding.RatingsShowsBinding;
@@ -98,7 +98,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private LayoutEpisodeBinding binding;
     private ButtonsEpisodeBinding bindingButtons;
     private RatingsShowsBinding bindingRatings;
-    private ButtonsServicesStackedBinding bindingActions;
+    private ButtonsServicesBinding bindingActions;
     private ButtonsEpisodeMoreBinding bindingBottom;
 
     public static EpisodeDetailsFragment newInstance(int episodeId) {
@@ -131,8 +131,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         binding = bindingRoot.includeEpisode;
         bindingButtons = binding.includeButtons;
         bindingRatings = binding.includeRatings;
-        // TODO Use same name and resource folders instead.
-        bindingActions = ButtonsServicesStackedBinding.bind(binding.includeServices);
+        bindingActions = binding.includeServices;
         bindingBottom = ButtonsEpisodeMoreBinding.bind(bindingActions.getRoot());
         return bindingRoot.getRoot();
     }
