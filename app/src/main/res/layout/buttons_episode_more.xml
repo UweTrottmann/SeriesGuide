@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<!-- Need to define root ID in include tag or view binding breaks. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:showIn="@layout/buttons_services">
 
     <Button
         android:id="@+id/buttonEpisodeImdb"
@@ -66,4 +72,4 @@
         app:icon="@drawable/ic_forum_black_24dp"
         app:iconGravity="start" />
 
-</merge>
+</LinearLayout>

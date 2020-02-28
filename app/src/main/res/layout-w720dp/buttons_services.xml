@@ -4,17 +4,15 @@
     android:layout_height="wrap_content"
     android:baselineAligned="false"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/large_padding"
-    android:paddingTop="@dimen/default_padding">
+    android:paddingTop="@dimen/default_padding"
+    android:paddingBottom="@dimen/large_padding">
 
-    <LinearLayout
+    <include
+        android:id="@+id/include_more"
+        layout="@layout/buttons_episode_more"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <include layout="@layout/buttons_episode_more" />
-    </LinearLayout>
+        android:layout_weight="1" />
 
     <LinearLayout
         android:id="@+id/containerEpisodeActions"
