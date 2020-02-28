@@ -175,24 +175,18 @@
                 android:textAppearance="@style/TextAppearance.Body"
                 tools:text="Action, Comedy, Drama" />
 
-            <LinearLayout
-                android:id="@+id/containerMoviePeople"
+            <include
+                android:id="@+id/moviePeople"
+                layout="@layout/cast_and_crew"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewMovieGenres"
-                android:orientation="vertical">
-
-                <include
-                    android:id="@+id/moviePeople"
-                    layout="@layout/cast_and_crew" />
-
-            </LinearLayout>
+                android:layout_below="@+id/textViewMovieGenres" />
 
             <View
                 android:id="@+id/dividerMovie3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@id/containerMoviePeople"
+                android:layout_below="@id/moviePeople"
                 android:layout_marginBottom="@dimen/default_padding"
                 android:layout_marginTop="@dimen/inline_padding"
                 android:background="?attr/sgColorDivider" />
