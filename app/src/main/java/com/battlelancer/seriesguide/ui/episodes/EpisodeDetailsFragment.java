@@ -132,7 +132,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         bindingButtons = binding.includeButtons;
         bindingRatings = binding.includeRatings;
         bindingActions = binding.includeServices;
-        bindingBottom = ButtonsEpisodeMoreBinding.bind(bindingActions.getRoot());
+        bindingBottom = bindingActions.includeMore;
         return bindingRoot.getRoot();
     }
 
