@@ -223,18 +223,13 @@
             android:paddingTop="?attr/actionBarSize"
             tools:ignore="InconsistentLayout">
 
-            <LinearLayout
+            <include
+                android:id="@+id/moviePeople"
+                layout="@layout/cast_and_crew"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/default_padding"
-                android:paddingTop="@dimen/default_padding">
-
-                <include
-                    android:id="@+id/moviePeople"
-                    layout="@layout/cast_and_crew" />
-
-            </LinearLayout>
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/default_padding" />
 
         </androidx.core.widget.NestedScrollView>
 
