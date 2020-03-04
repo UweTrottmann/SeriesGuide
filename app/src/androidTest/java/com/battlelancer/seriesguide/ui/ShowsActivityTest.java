@@ -125,7 +125,7 @@ public class ShowsActivityTest {
                         withContentDescription(R.string.action_watched),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.buttonbar),
+                                        withId(R.id.include_buttons),
                                         0),
                                 0),
                         isDisplayed()));

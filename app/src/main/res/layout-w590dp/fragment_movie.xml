@@ -200,20 +200,15 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <include
+                    android:id="@+id/moviePeople"
+                    layout="@layout/cast_and_crew"
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/containerMovieHeader"
                     android:layout_marginLeft="360dp"
-                    android:orientation="vertical"
-                    android:paddingBottom="@dimen/default_padding"
-                    android:paddingTop="@dimen/large_padding">
-
-                    <include
-                        android:id="@+id/moviePeople"
-                        layout="@layout/cast_and_crew" />
-
-                </LinearLayout>
+                    android:layout_marginTop="@dimen/large_padding"
+                    android:layout_marginBottom="@dimen/default_padding" />
 
             </RelativeLayout>
 

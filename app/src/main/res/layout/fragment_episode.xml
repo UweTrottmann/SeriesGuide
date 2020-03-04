@@ -10,6 +10,8 @@
     android:nestedScrollingEnabled="true"
     tools:ignore="UnusedAttribute">
 
-    <include layout="@layout/layout_episode" />
+    <include
+        android:id="@+id/include_episode"
+        layout="@layout/layout_episode" />
 
 </ScrollView>

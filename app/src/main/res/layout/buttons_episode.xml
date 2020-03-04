@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- Will never be a root layout, overdraw is expected -->
+<!-- Need to define root ID in include tag or view binding breaks. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/buttonbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
