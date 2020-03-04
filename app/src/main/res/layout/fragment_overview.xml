@@ -221,7 +221,9 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <include layout="@layout/buttons_episode" />
+                        <include
+                            android:id="@+id/include_buttons"
+                            layout="@layout/buttons_episode" />
 
                         <View
                             android:layout_width="match_parent"
