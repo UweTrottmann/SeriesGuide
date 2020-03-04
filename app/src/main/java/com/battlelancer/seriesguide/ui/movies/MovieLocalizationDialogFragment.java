@@ -92,8 +92,17 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
                         languageCodes.length);
                 for (String languageCode : languageCodes) {
                     // example: "en-US"
-                    String languageDisplayName = new Locale(languageCode.substring(0, 2),
-                            "").getDisplayName();
+                    String languageDisplayName;
+                    if ("pt-BR".equals(languageCode) || "pt-PT".equals(languageCode)) {
+                        // Display country only for Portuguese.
+                        // Most other TMDB region codes are superfluous or make no sense
+                        // (report to TMDB?).
+                        languageDisplayName = new Locale(languageCode.substring(0, 2),
+                                languageCode.substring(3, 5)).getDisplayName();
+                    } else {
+                        languageDisplayName = new Locale(languageCode.substring(0, 2),
+                                "").getDisplayName();
+                    }
                     items.add(new LocalizationAdapter.LocalizationItem(languageCode,
                             languageDisplayName));
                 }
