@@ -91,20 +91,8 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
                 List<LocalizationAdapter.LocalizationItem> items = new ArrayList<>(
                         languageCodes.length);
                 for (String languageCode : languageCodes) {
-                    // example: "en-US"
-                    String languageDisplayName;
-                    if ("pt-BR".equals(languageCode) || "pt-PT".equals(languageCode)) {
-                        // Display country only for Portuguese.
-                        // Most other TMDB region codes are superfluous or make no sense
-                        // (report to TMDB?).
-                        languageDisplayName = new Locale(languageCode.substring(0, 2),
-                                languageCode.substring(3, 5)).getDisplayName();
-                    } else {
-                        languageDisplayName = new Locale(languageCode.substring(0, 2),
-                                "").getDisplayName();
-                    }
                     items.add(new LocalizationAdapter.LocalizationItem(languageCode,
-                            languageDisplayName));
+                            buildLanguageDisplayName(languageCode)));
                 }
                 final Collator collator = Collator.getInstance();
                 Collections.sort(items,
@@ -190,10 +178,23 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
     private void updateButtonText() {
         // example: "en-US"
         String languageCode = DisplaySettings.getMoviesLanguage(getContext());
-        String languageDisplayName = new Locale(languageCode.substring(0, 2), "").getDisplayName();
-        buttonLanguage.setText(languageDisplayName);
+        buttonLanguage.setText(buildLanguageDisplayName(languageCode));
         String regionCode = DisplaySettings.getMoviesRegion(getContext());
         buttonRegion.setText(new Locale("", regionCode).getDisplayCountry());
+    }
+
+    private String buildLanguageDisplayName(String languageCode) {
+        // Example: "en-US".
+        if ("pt-BR".equals(languageCode) || "pt-PT".equals(languageCode)) {
+            // Display country only for Portuguese.
+            // Most other TMDB region codes are superfluous or make no sense
+            // (report to TMDB?).
+            return new Locale(languageCode.substring(0, 2), languageCode.substring(3, 5))
+                    .getDisplayName();
+        } else {
+            return new Locale(languageCode.substring(0, 2), "")
+                    .getDisplayName();
+        }
     }
 
     private void setListVisible(boolean visible) {
