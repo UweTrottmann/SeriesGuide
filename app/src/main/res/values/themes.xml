@@ -36,9 +36,7 @@
         <item name="colorOnBackground">@color/white</item>
 
         <!-- Windows -->
-        <!-- Note: explicitly setting dark windowBackground on P- to avoid launching with light one
-         as user might have enabled dark theme. -->
-        <item name="android:windowBackground">@color/sg_color_background_launch</item>
+        <item name="android:windowBackground">@color/sg_color_background_dark</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="windowActionModeOverlay">true</item>
 
@@ -119,6 +117,9 @@
     <!-- ####################################### -->
     <!-- Special themes -->
     <!-- ####################################### -->
+
+    <!-- Note: always launch with Dark on P- to avoid bright colors as user may have set Dark. -->
+    <style name="Theme.SeriesGuide.Launch" parent="Theme.SeriesGuide.Dark" />
 
     <!-- Drawer -->
     <style name="Theme.SeriesGuide.DayNight.Drawer" parent="Theme.SeriesGuide.Light.Drawer" />
