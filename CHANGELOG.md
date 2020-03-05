@@ -12,6 +12,16 @@ Version 53
 ----------
 *in development*
 
+#### 53-beta5
+*2020-03-05*
+
+* 🔧 Replace compass with link icon for movie links option.
+* 🔧 Display country for Portuguese variants when selecting movie language.
+* 🔨 Use less bright selected state for people list as well.
+* 🔨 Restore icon for add to home screen button.
+* 🔨 Crash when a movie result does not exist.
+* 📝 Latest translations from crowdin.
+
 #### 53-beta4
 *2020-02-20*
 
