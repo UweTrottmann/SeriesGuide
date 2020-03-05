@@ -145,6 +145,11 @@
 
     <style name="TextAppearance.SeriesGuide.Caption" parent="TextAppearance.MaterialComponents.Caption" />
 
+    <style name="TextAppearance.SeriesGuide.Headline4" parent="TextAppearance.MaterialComponents.Headline4" />
+    <style name="TextAppearance.SeriesGuide.Headline4.White">
+        <item name="android:textColor">@color/sg_white</item>
+    </style>
+
     <style name="TextAppearance.SeriesGuide.Headline5" parent="TextAppearance.MaterialComponents.Headline5" />
     <style name="TextAppearance.SeriesGuide.Headline6" parent="TextAppearance.MaterialComponents.Headline6" />
 

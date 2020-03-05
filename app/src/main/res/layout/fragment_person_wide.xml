@@ -36,7 +36,7 @@
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="4"
-            android:textAppearance="@style/TextAppearance.Display1.White"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline4.White"
             tools:text="Kiefer Sutherland" />
 
         <ProgressBar
@@ -69,7 +69,7 @@
                 android:layout_marginRight="@dimen/keyline"
                 android:layout_marginBottom="@dimen/default_padding"
                 android:text="@string/person_biography"
-                android:textAppearance="@style/TextAppearance.Title" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6" />
 
             <TextView
                 android:id="@+id/textViewPersonBiography"
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/keyline"
-                android:textAppearance="?attr/textAppearanceBody1"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body1"
                 tools:text="Kiefer Sutherland  (born 21 December 1966) is a British-Canadian actor" />
 
             <Button
