@@ -20,10 +20,9 @@
             android:scaleType="centerCrop"
             android:src="@color/protection_dark"
             app:layout_constraintDimensionRatio="w,1:1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:targetApi="lollipop" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
             android:id="@+id/progressBarPerson"
@@ -31,8 +30,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/imageViewPersonHeadshot"
-            app:layout_constraintLeft_toLeftOf="@+id/imageViewPersonHeadshot"
-            app:layout_constraintRight_toRightOf="@+id/imageViewPersonHeadshot"
+            app:layout_constraintEnd_toEndOf="@+id/imageViewPersonHeadshot"
+            app:layout_constraintStart_toStartOf="@+id/imageViewPersonHeadshot"
             app:layout_constraintTop_toTopOf="@+id/imageViewPersonHeadshot" />
 
         <TextView
@@ -40,8 +39,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/containerPersonHeadshot"
-            android:layout_marginLeft="@dimen/keyline"
-            android:layout_marginRight="@dimen/keyline"
+            android:layout_marginStart="@dimen/keyline"
+            android:layout_marginEnd="@dimen/keyline"
             android:layout_marginBottom="8dp"
             android:ellipsize="end"
             android:maxLines="2"
@@ -51,8 +50,8 @@
             android:shadowRadius="4"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Headline4.White"
             app:layout_constraintBottom_toBottomOf="@+id/imageViewPersonHeadshot"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             tools:text="Kiefer Sutherland" />
 
         <TextView
@@ -60,13 +59,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/containerPersonHeadshot"
-            android:layout_marginLeft="@dimen/keyline"
+            android:layout_marginStart="@dimen/keyline"
             android:layout_marginTop="8dp"
-            android:layout_marginRight="@dimen/keyline"
+            android:layout_marginEnd="@dimen/keyline"
             android:text="@string/person_biography"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewPersonHeadshot" />
 
         <TextView
@@ -74,12 +73,12 @@
             style="@style/Widget.SeriesGuide.TextView.Body"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/keyline"
+            android:layout_marginStart="@dimen/keyline"
             android:layout_marginTop="8dp"
-            android:layout_marginRight="@dimen/keyline"
+            android:layout_marginEnd="@dimen/keyline"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewPersonBiographyHeader"
             tools:text="Kiefer Sutherland  (born 21 December 1966) is a British-Canadian actor" />
 
