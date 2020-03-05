@@ -64,20 +64,20 @@
 
     <color name="shortcut_background">#fff5f5f5</color>
 
-    <color name="white">#ffffffff</color> <!-- primary text dark -->
+    <color name="sg_white">#ffffffff</color> <!-- primary text dark -->
     <color name="sg_white_87">#deffffff</color>
-    <color name="white_70">#b3ffffff</color> <!-- secondary text dark -->
+    <color name="sg_white_70">#b3ffffff</color> <!-- secondary text dark -->
     <color name="sg_white_50">#80ffffff</color>
     <color name="sg_white_40">#66ffffff</color>
     <color name="sg_white_15">#26ffffff</color>
 
     <color name="sg_black">#000000</color>
     <!-- black_almost for nav bar: can not use pure black as e.g. OnePlus devices ignore it. -->
-    <color name="black_almost">#ff000001</color>
-    <color name="black_87">#de000000</color> <!-- primary text light -->
-    <color name="black_54">#8a000000</color> <!-- secondary text light -->
+    <color name="sg_black_almost">#ff000001</color>
+    <color name="sg_black_87">#de000000</color> <!-- primary text light -->
+    <color name="sg_black_54">#8a000000</color> <!-- secondary text light -->
     <color name="sg_black_40">#66000000</color>
-    <color name="black_38">#60000000</color> <!-- secondary text light -->
+    <color name="sg_black_38">#60000000</color> <!-- secondary text light -->
     <color name="sg_black_10">#1A000000</color>
     <color name="sg_black_7">#12000000</color>
 

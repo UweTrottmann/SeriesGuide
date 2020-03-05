@@ -32,8 +32,8 @@
         <!-- Colors that pass accessibility guidelines for text/iconography when drawn on top of a color. -->
         <item name="colorOnPrimary">@color/sg_black</item>
         <item name="colorOnSecondary">@color/sg_black</item>
-        <item name="colorOnSurface">@color/white</item>
-        <item name="colorOnBackground">@color/white</item>
+        <item name="colorOnSurface">@color/sg_white</item>
+        <item name="colorOnBackground">@color/sg_white</item>
 
         <!-- Windows -->
         <item name="android:windowBackground">@color/sg_color_background_dark</item>
@@ -47,12 +47,12 @@
         <item name="sgTextColorGreen">@color/sg_color_secondary_dark</item>
         <item name="sgTextColorSecondaryDim">@color/sg_white_40</item>
         <item name="sgColorBackgroundCard">#2a2a2a</item>
-        <item name="sgColorBackgroundDim">@color/black_38</item>
-        <item name="sgColorIcon">@color/white</item>
+        <item name="sgColorBackgroundDim">@color/sg_black_38</item>
+        <item name="sgColorIcon">@color/sg_white</item>
         <item name="sgColorIconInactive">@color/sg_white_50</item>
         <item name="sgColorDivider">@color/sg_white_15</item>
         <item name="sgColorShadow">@color/sg_black_40</item>
-        <item name="sgColorStatusBarOverlay">@color/black_87</item>
+        <item name="sgColorStatusBarOverlay">@color/sg_black_87</item>
 
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
         <item name="dialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog</item>
@@ -64,7 +64,7 @@
         <!-- All customizations that are SPECIFIC to API-level 21 go here. -->
 
         <!-- Note: nav bar color needs to be opaque! -->
-        <item name="android:navigationBarColor">@color/black_almost</item>
+        <item name="android:navigationBarColor">@color/sg_black_almost</item>
 
     </style>
 
@@ -81,12 +81,12 @@
         <item name="colorPrimaryVariant">@color/sg_color_primary_700</item>
         <item name="colorSecondary">@color/sg_color_secondary_light</item>
         <item name="colorSecondaryVariant">@color/sg_color_secondary_900</item>
-        <item name="colorSurface">@color/white</item>
+        <item name="colorSurface">@color/sg_white</item>
         <item name="android:colorBackground">@color/sg_color_background_light</item>
 
         <!-- Colors that pass accessibility guidelines for text/iconography when drawn on top of a color. -->
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnPrimary">@color/sg_white</item>
+        <item name="colorOnSecondary">@color/sg_white</item>
         <item name="colorOnSurface">@color/sg_black</item>
         <item name="colorOnBackground">@color/sg_black</item>
 
@@ -101,10 +101,10 @@
         <!-- Custom color attributes -->
         <item name="sgTextColorGreen">@color/sg_color_secondary_light</item>
         <item name="sgTextColorSecondaryDim">@color/sg_black_40</item>
-        <item name="sgColorBackgroundCard">@color/white</item>
+        <item name="sgColorBackgroundCard">@color/sg_white</item>
         <item name="sgColorBackgroundDim">@color/sg_white_50</item>
-        <item name="sgColorIcon">@color/black_54</item>
-        <item name="sgColorIconInactive">@color/black_38</item>
+        <item name="sgColorIcon">@color/sg_black_54</item>
+        <item name="sgColorIconInactive">@color/sg_black_38</item>
         <item name="sgColorDivider">@color/sg_black_10</item>
         <item name="sgColorShadow">@color/sg_black_7</item>
         <item name="sgColorStatusBarOverlay">@color/sg_white_87</item>

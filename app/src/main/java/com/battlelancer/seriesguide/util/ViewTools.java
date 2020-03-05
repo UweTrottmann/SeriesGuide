@@ -74,7 +74,7 @@ public class ViewTools {
 
     public static VectorDrawableCompat vectorIconWhite(Context context,
             Resources.Theme theme, @DrawableRes int vectorRes) {
-        return createTintedVectorDrawable(context, theme, vectorRes, R.color.white);
+        return createTintedVectorDrawable(context, theme, vectorRes, R.color.sg_white);
     }
 
     private static VectorDrawableCompat createTintedVectorDrawable(Context context,

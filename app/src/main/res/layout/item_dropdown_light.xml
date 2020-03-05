@@ -14,5 +14,5 @@
     android:paddingLeft="@dimen/default_padding"
     android:paddingRight="@dimen/default_padding"
     android:textAppearance="@style/TextAppearance.Menu"
-    android:textColor="@color/black_87"
+    android:textColor="@color/sg_black_87"
     tools:text="Sample Item" />

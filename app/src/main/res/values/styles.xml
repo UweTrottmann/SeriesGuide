@@ -20,7 +20,7 @@
     </style>
 
     <style name="TextAppearance.Display1.White">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/sg_white</item>
     </style>
 
     <style name="TextAppearance.Headline">
@@ -228,7 +228,7 @@
     <style name="Widget.SeriesGuide.Button.Borderless.Rating">
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:padding">@dimen/default_padding</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/sg_white</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
     </style>
