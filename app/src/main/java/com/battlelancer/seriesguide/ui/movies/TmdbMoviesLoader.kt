@@ -83,7 +83,8 @@ class TmdbMoviesLoader(
         }
 
         return if (response.isSuccessful) {
-            Result(response.body()?.results, context.getString(R.string.no_results))
+            // Filter null items (a few users affected).
+            Result(response.body()?.results?.filterNotNull(), context.getString(R.string.no_results))
         } else {
             Errors.logAndReport(action, response)
             buildErrorResult()
