@@ -148,12 +148,6 @@
 
     </style>
 
-    <!-- Debug view: LogAdapter hard-coded to white background, so always use a light theme. -->
-    <style name="Theme.SeriesGuide.DebugDrawer" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/sg_color_primary_500</item>
-        <item name="colorSecondary">@color/sg_color_secondary_700</item>
-    </style>
-
     <!-- ####################################### -->
     <!-- Theme overlays -->
     <!-- ####################################### -->
