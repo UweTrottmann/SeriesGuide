@@ -44,7 +44,7 @@
     <string name="search_hint">Cerca episodi</string>
     <!-- Status messages -->
     <string name="updated">Aggiornato all\'ultima versione.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Dettagli</string>
     <string name="norating">non disponibile</string>
     <string name="unknown">sconosciuto</string>
     <string name="offline">Connettersi a una rete, quindi riprovare.</string>

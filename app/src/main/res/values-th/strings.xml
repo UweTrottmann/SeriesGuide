@@ -44,7 +44,7 @@
     <string name="search_hint">ค้นหาตอน</string>
     <!-- Status messages -->
     <string name="updated">อัปเดตเป็นเวอร์ชันล่าสุดแล้ว</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">รายละเอียด</string>
     <string name="norating">n/a</string>
     <string name="unknown">ไม่ทราบ</string>
     <string name="offline">เชื่อมต่อไปยังเครือข่าย, จากนั้นลองอีกครั้ง</string>

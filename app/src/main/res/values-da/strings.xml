@@ -44,7 +44,7 @@
     <string name="search_hint">Søg episoder</string>
     <!-- Status messages -->
     <string name="updated">Opdateret til nyeste version.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Detaljer</string>
     <string name="norating">ikke tilgængelig</string>
     <string name="unknown">ukendt</string>
     <string name="offline">Forbind til et netværk, og prøv igen.</string>
@@ -394,10 +394,10 @@
     <string name="pref_appearance">Udseende</string>
     <string name="pref_theme">Tema</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">Brug systemstandard</string>
+    <string name="theme_app_auto_battery">Indstillet af batterisparefunktion</string>
+    <string name="theme_app_dark">Mørk</string>
+    <string name="theme_app_light">Lys</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Øvrige</string>
     <string name="pref_autoupdatesummary">Synkronisér og opdatér SeriesGuide-data automatisk</string>
@@ -450,8 +450,8 @@
     <string name="pref_notifications_hidden">Ignorér skjulte serier</string>
     <string name="pref_notifications_hidden_summary">Selv hvis beskeder er aktiveret, giv ikke besked om skjulte serier</string>
     <string name="pref_notification_channel_errors">Fejl</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Kun for efterfølgende episoder på afspilningslisten</string>
+    <string name="pref_notifications_next_episodes_only_summary">Underret mig kun, hvis den nye episode er den næste på afspilningslisten</string>
     <!-- List Widget -->
     <string name="hide_watched">Skjul sete episoder</string>
     <string name="pref_widget_opacity">Widget-baggrund</string>

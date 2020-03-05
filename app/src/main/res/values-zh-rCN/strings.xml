@@ -44,7 +44,7 @@
     <string name="search_hint">搜索剧集</string>
     <!-- Status messages -->
     <string name="updated">已更新至最新版本。</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">详细信息</string>
     <string name="norating">无评分</string>
     <string name="unknown">未知</string>
     <string name="offline">请连接到可用网络后重试。</string>

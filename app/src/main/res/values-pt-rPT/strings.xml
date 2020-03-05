@@ -6,7 +6,7 @@
     <string name="movies">Filmes</string>
     <string name="statistics">Estatísticas</string>
     <string name="search">Procurar</string>
-    <string name="preferences">Configurações</string>
+    <string name="preferences">Definições</string>
     <string name="help">Ajuda</string>
     <string name="help_and_feedback">Ajuda &amp; Comentários</string>
     <string name="drawer_open">Abrir painel de navegação</string>
@@ -44,14 +44,14 @@
     <string name="search_hint">Procurar episódios</string>
     <!-- Status messages -->
     <string name="updated">Atualizado para a última versão.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Detalhes</string>
     <string name="norating">n/a</string>
     <string name="unknown">Desconhecido</string>
     <string name="offline">Liga-te a uma rede e tenta novamente.</string>
     <string name="app_not_available">Nenhuma aplicação disponível para lidar com isto.</string>
     <string name="people_empty">Ninguém aqui?! Toca no ecrã para atualizar.</string>
     <string name="database_error">Não foi possível modificar os dados.</string>
-    <string name="reinstall_info">Tenta fazer uma cópia de segurança nas Configurações, reinstalar e restaurar.</string>
+    <string name="reinstall_info">Tenta fazer uma cópia de segurança nas Definições, reinstalar e restaurar.</string>
     <string name="api_error_generic">Houve uma falha ao comunicar com o %s. Tenta mais tarde.</string>
     <string name="api_failed">Falhou: %s</string>
     <string name="copy_to_clipboard">Copiado para a área de transferência</string>
@@ -92,7 +92,7 @@
     <string name="show_isUpcoming">Próximos</string>
     <string name="no_translation">Não existe nenhuma descrição traduzida para %1$s disponível em %2$s.</string>
     <string name="no_translation_title">Por traduzir</string>
-    <string name="no_spoilers">Alguns detalhes estão ocultados para prevenir spoilers. Aceda às Configurações para desativar esta prevenção.</string>
+    <string name="no_spoilers">Alguns detalhes estão ocultados para prevenir spoilers. Aceda às Definições para desactivar esta prevenção.</string>
     <string name="format_source">Fonte: %s</string>
     <string name="format_last_edited">Última edição: %s</string>
     <!-- Date and Time -->
@@ -103,8 +103,8 @@
     <!-- Flagging -->
     <string name="mark_all">Assisti a todos</string>
     <string name="unmark_all">Não assisti a nenhum</string>
-    <string name="action_watched_up_to">Assistiu até aqui</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Visto até aqui</string>
+    <string name="confirmation_watched_up_to">Marcar como vistos todos os episódios até aqui?</string>
     <string name="collect_all">Todos adquiridos</string>
     <string name="uncollect_all">Nenhum adquirido</string>
     <string name="action_skip">Avançar</string>
@@ -163,7 +163,7 @@
     <string name="released_today">Exibido hoje</string>
     <string name="noupcoming">Não existem próximos episódios.</string>
     <string name="norecent">Não existem episódios recentes.</string>
-    <string name="calendar_settings">Configurações do calendário</string>
+    <string name="calendar_settings">Definições do calendário</string>
     <string name="only_favorites">Apenas séries favoritas</string>
     <string name="calendar_only_collected">Apenas episódios que possuo</string>
     <string name="calendar_only_premieres">Apenas estreias</string>
@@ -394,10 +394,10 @@
     <string name="pref_appearance">Aparência</string>
     <string name="pref_theme">Tema</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">Usar predefinição do sistema</string>
+    <string name="theme_app_auto_battery">Definido pela Poupança de Bateria</string>
+    <string name="theme_app_dark">Escuro</string>
+    <string name="theme_app_light">Claro</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Outro</string>
     <string name="pref_autoupdatesummary">Sincroniza e atualiza automaticamente os dados do SeriesGuide</string>
@@ -429,7 +429,7 @@
     <string name="autobackup_files_missing">Para usar a cópia de segurança automática, seleciona ficheiros de cópias de segurança válidos.</string>
     <string name="no_file_selected">Nenhum ficheiro selecionado</string>
     <string name="action_select_file">Selecionar ficheiro</string>
-    <string name="backup_use_default_files">Usar ficheiros de cópias de segurança originais</string>
+    <string name="backup_use_default_files">Usar ficheiros de cópias de segurança predefinidos</string>
     <!-- Welcome dialog -->
     <string name="get_started">Não deixes para amanhã!</string>
     <string name="dismiss">Dispensar</string>
@@ -450,8 +450,8 @@
     <string name="pref_notifications_hidden">Ignorar séries ocultas</string>
     <string name="pref_notifications_hidden_summary">Mesmo que as notificações estejam ativadas, não notifique sobre séries ocultas</string>
     <string name="pref_notification_channel_errors">Erros</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Apenas para os próximos episódios a serem vistos</string>
+    <string name="pref_notifications_next_episodes_only_summary">Notificar apenas se o novo episódio for o próximo a ser visto</string>
     <!-- List Widget -->
     <string name="hide_watched">Ocultar episódios vistos</string>
     <string name="pref_widget_opacity">Plano de fundo do widget</string>

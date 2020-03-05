@@ -44,7 +44,7 @@
     <string name="search_hint">البحث عن الحلقات</string>
     <!-- Status messages -->
     <string name="updated">تم التحديث إلى الإصدار الأخير</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">التفاصيل</string>
     <string name="norating">لا يوجد</string>
     <string name="unknown">غير معروف</string>
     <string name="offline">اتصل بالشبكة، ثم حاول مرة أخرى</string>
