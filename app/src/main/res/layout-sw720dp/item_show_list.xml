@@ -6,21 +6,20 @@
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
     android:clipToPadding="false"
-    android:focusable="true"
-    tools:ignore="RtlHardcoded">
+    android:focusable="true">
 
     <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="@dimen/show_poster_width_large"
         android:layout_height="@dimen/show_poster_height_large"
-        android:layout_marginLeft="@dimen/grid_leftright_padding"
+        android:layout_marginStart="@dimen/grid_leftright_padding"
         android:layout_marginTop="@dimen/grid_topbottom_padding"
         android:layout_marginBottom="@dimen/grid_topbottom_padding"
         app:cardBackgroundColor="?attr/sgColorBackgroundCard"
         app:cardPreventCornerOverlap="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
@@ -48,7 +47,7 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/action_watched"
         android:scaleType="centerInside"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_watch_black_24dp" />
 
@@ -61,7 +60,7 @@
         android:contentDescription="@string/description_menu_overflow"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_more_vert_black_20dp"
         tools:ignore="ContentDescription" />
 
@@ -69,15 +68,15 @@
         android:id="@+id/textViewShowsRemaining"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textAppearance="@style/TextAppearance.Body.Dim"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/cardView"
-        app:layout_constraintRight_toLeftOf="@+id/imageViewShowsContextMenu"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewShowsContextMenu"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/episodetime"
         app:layout_constraintVertical_bias="0.0"
         tools:text="42 remaining" />
@@ -87,14 +86,14 @@
         style="@style/Widget.SeriesGuide.TextView.SingleLine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginEnd="40dp"
         android:ellipsize="start"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.Body.Dim"
-        app:layout_constraintLeft_toRightOf="@+id/cardView"
-        app:layout_constraintRight_toRightOf="parent"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="Deprecated"
         tools:text="Showtime Network · Tue 08:00 PM" />
@@ -104,14 +103,14 @@
         android:id="@+id/seriesname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/grid_leftright_padding"
+        android:layout_marginStart="@dimen/grid_leftright_padding"
         android:layout_marginTop="4dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textAppearance="@style/TextAppearance.Subhead.Bold"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewShowsContextMenu"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toRightOf="@+id/cardView"
-        app:layout_constraintRight_toLeftOf="@+id/imageViewShowsContextMenu"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/textViewShowsTimeAndNetwork"
         tools:text="Some Show Title" />
 
@@ -119,14 +118,14 @@
         android:id="@+id/TextViewShowListNextEpisode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/grid_leftright_padding"
+        android:layout_marginStart="@dimen/grid_leftright_padding"
         android:layout_marginTop="4dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textAppearance="@style/TextAppearance.Subhead"
-        app:layout_constraintLeft_toRightOf="@+id/cardView"
-        app:layout_constraintRight_toRightOf="parent"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/seriesname"
         tools:text="10x456 Some Very Cool Episode Title Therefore" />
 
@@ -134,14 +133,14 @@
         android:id="@+id/episodetime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/grid_leftright_padding"
+        android:layout_marginStart="@dimen/grid_leftright_padding"
         android:layout_marginTop="4dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textAppearance="@style/TextAppearance.Body.Dim"
-        app:layout_constraintLeft_toRightOf="@+id/cardView"
-        app:layout_constraintRight_toRightOf="parent"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Dim"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/TextViewShowListNextEpisode"
         tools:text="Jan 8, 2009 (Thur)" />
 

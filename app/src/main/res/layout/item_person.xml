@@ -1,48 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootItemPerson"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_regular_height"
+    android:layout_height="wrap_content"
     android:background="?android:attr/activatedBackgroundIndicator">
 
     <ImageView
         android:id="@+id/imageViewPerson"
         android:layout_width="@dimen/icon_large_size"
         android:layout_height="@dimen/icon_large_size"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/large_padding"
-        android:layout_marginRight="@dimen/large_padding"
+        android:layout_marginStart="16dp"
         android:contentDescription="@null"
-        android:src="@color/protection_dark" />
+        android:src="@color/protection_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewPersonDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewPerson" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_toRightOf="@+id/imageViewPerson"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:paddingRight="@dimen/large_padding">
+    <TextView
+        android:id="@+id/textViewPerson"
+        style="@style/Widget.SeriesGuide.TextView.SingleLine"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewPerson"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Bryan Cranston" />
 
-        <TextView
-            android:id="@+id/textViewPerson"
-            style="@style/Widget.SeriesGuide.TextView.SingleLine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:textAppearance="@style/TextAppearance.Subhead"
-            tools:text="Bryan Cranston" />
-
-        <TextView
-            android:id="@+id/textViewPersonDescription"
-            style="@style/Widget.SeriesGuide.TextView.SingleLine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:textAppearance="@style/TextAppearance.Body"
-            tools:text="Walter White" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/textViewPersonDescription"
+        style="@style/Widget.SeriesGuide.TextView.SingleLine"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:ellipsize="end"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewPerson"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPerson"
+        tools:text="Walter White" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

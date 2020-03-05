@@ -37,7 +37,7 @@
                         android:layout_height="match_parent"
                         android:contentDescription="@string/description_poster"
                         android:scaleType="centerCrop"
-                        tools:src="@color/black_38" />
+                        tools:src="@color/sg_black_38" />
 
                 </FrameLayout>
 

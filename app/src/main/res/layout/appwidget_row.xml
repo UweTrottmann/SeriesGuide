@@ -24,7 +24,7 @@
         android:contentDescription="@null"
         android:scaleType="centerInside"
         android:src="@drawable/ic_photo_gray_24dp"
-        tools:src="@color/black_38" />
+        tools:src="@color/sg_black_38" />
 
     <!-- Wrap in LinearLayout to avoid text overlapping image if small. -->
     <RelativeLayout
@@ -44,7 +44,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.Body.Bold"
-            android:textColor="@color/white"
+            android:textColor="@color/sg_white"
             android:textSize="@dimen/widget_text_size"
             tools:ignore="RtlSymmetry"
             tools:text="Star Trek: Discovery" />
@@ -60,7 +60,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.Body"
-            android:textColor="@color/white"
+            android:textColor="@color/sg_white"
             android:textSize="@dimen/widget_text_size"
             tools:ignore="RtlSymmetry"
             tools:text="2x13 If The Time Ever Comes" />
@@ -75,7 +75,7 @@
             android:ellipsize="start"
             android:fontFamily="sans-serif-condensed"
             android:maxWidth="180dp"
-            android:textColor="@color/white_70"
+            android:textColor="@color/sg_white_70"
             android:textSize="@dimen/widget_text_size"
             tools:text="Showtime Network · 08:00 PM" />
 
@@ -87,7 +87,7 @@
             android:layout_below="@+id/widgetNetwork"
             android:fontFamily="sans-serif-condensed"
             android:maxLines="1"
-            android:textColor="@color/white_70"
+            android:textColor="@color/sg_white_70"
             android:textSize="@dimen/widget_text_size"
             tools:text="Mon yesterday" />
 

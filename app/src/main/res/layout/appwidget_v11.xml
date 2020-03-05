@@ -83,7 +83,7 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="@string/no_nextepisode"
-            android:textColor="@color/white"
+            android:textColor="@color/sg_white"
             tools:ignore="UnusedAttribute" />
     </LinearLayout>
 

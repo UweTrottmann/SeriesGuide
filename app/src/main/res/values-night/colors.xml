@@ -1,36 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="sg_color_primary">@color/sg_color_primary_300</color>
-    <color name="sg_color_primary_dark">#121212</color>
-    <color name="sg_color_primary_variant">@color/sg_color_primary_700</color>
-    <color name="sg_color_secondary">@color/sg_color_secondary_500</color>
-    <color name="sg_color_secondary_variant">@color/sg_color_secondary_500</color>
-    <!-- 8% primary on top of #121212 -->
-    <color name="sg_color_surface">@color/sg_color_background_dark</color>
+    <color name="sg_color_primary">@color/sg_color_primary_dark</color>
+    <color name="sg_color_secondary">@color/sg_color_secondary_dark</color>
     <color name="sg_color_background">@color/sg_color_background_dark</color>
     <!-- 38% primary -->
     <color name="sg_color_control_activated">#60927bbc</color>
 
-    <color name="sg_color_on_primary">#000000</color>
-    <color name="sg_color_on_secondary">#000000</color>
-    <color name="sg_color_on_surface">#ffffff</color>
-    <color name="sg_color_on_background">#ffffff</color>
-
-    <color name="sg_card_background_color">#2a2a2a</color>
-    <!-- 40% white -->
-    <color name="sg_text_color_secondary_dim">#66ffffff</color>
-    <!-- 38% black -->
-    <color name="sg_background_dim">#60000000</color>
-    <!-- white -->
-    <color name="sg_tint_icon">#ffffffff</color>
-    <!-- 50% white -->
-    <color name="sg_tint_icon_inactive">#80ffffff</color>
     <color name="sg_background_gradient_start">#aa2a2a2a</color>
     <color name="sg_background_gradient_end">#ff2a2a2a</color>
-    <color name="sg_color_divider">#26ffffff</color>
-    <color name="sg_color_shadow">#66000000</color>
-    <!-- 87% black -->
-    <color name="sg_color_status_bar_overlay">#de000000</color>
 
 </resources>

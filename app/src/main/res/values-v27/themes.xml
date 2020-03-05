@@ -6,7 +6,7 @@
         <!-- All customizations that are SPECIFIC to API-level 27 go here. -->
 
         <!-- Note: nav bar color needs to be opaque! -->
-        <item name="android:navigationBarColor">@color/black_almost</item>
+        <item name="android:navigationBarColor">@color/sg_black_almost</item>
 
     </style>
 
@@ -16,7 +16,7 @@
 
         <!-- Note: nav bar color needs to be opaque! -->
         <!-- Use white to reduce burn-in on OLED displays -->
-        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:navigationBarColor">@color/sg_white</item>
         <item name="android:windowLightNavigationBar">true</item>
 
     </style>

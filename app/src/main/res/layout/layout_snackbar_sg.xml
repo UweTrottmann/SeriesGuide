@@ -21,7 +21,7 @@
         android:paddingLeft="@dimen/keyline"
         android:paddingTop="@dimen/default_padding"
         android:textAppearance="@style/TextAppearance.Body"
-        android:textColor="@color/white"
+        android:textColor="@color/sg_white"
         tools:text="@string/offline" />
 
     <Button

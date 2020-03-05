@@ -20,7 +20,7 @@
     </style>
 
     <style name="TextAppearance.Display1.White">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/sg_white</item>
     </style>
 
     <style name="TextAppearance.Headline">
@@ -124,19 +124,22 @@
     <style name="TextAppearance.SeriesGuide.Body1" parent="TextAppearance.MaterialComponents.Body1" />
 
     <style name="TextAppearance.SeriesGuide.Body2" parent="TextAppearance.MaterialComponents.Body2" />
-
     <style name="TextAppearance.SeriesGuide.Body2.Accent">
         <item name="android:textColor">@color/sg_text_color_accent</item>
     </style>
-
+    <style name="TextAppearance.SeriesGuide.Body2.Dim">
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
+    </style>
     <style name="TextAppearance.SeriesGuide.Body2.Error">
         <item name="android:textColor">?attr/colorError</item>
     </style>
-
     <style name="TextAppearance.SeriesGuide.Body2.Secondary">
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
-
+    <style name="TextAppearance.SeriesGuide.Body2.Bold">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
     <style name="TextAppearance.SeriesGuide.Body2.Italics">
         <item name="android:textStyle">italic</item>
     </style>
@@ -144,11 +147,24 @@
     <style name="TextAppearance.SeriesGuide.Button" parent="TextAppearance.MaterialComponents.Button" />
 
     <style name="TextAppearance.SeriesGuide.Caption" parent="TextAppearance.MaterialComponents.Caption" />
+    <style name="TextAppearance.SeriesGuide.Caption.Dim">
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
+    </style>
+
+    <style name="TextAppearance.SeriesGuide.Headline4" parent="TextAppearance.MaterialComponents.Headline4" />
+    <style name="TextAppearance.SeriesGuide.Headline4.White">
+        <item name="android:textColor">@color/sg_white</item>
+    </style>
 
     <style name="TextAppearance.SeriesGuide.Headline5" parent="TextAppearance.MaterialComponents.Headline5" />
     <style name="TextAppearance.SeriesGuide.Headline6" parent="TextAppearance.MaterialComponents.Headline6" />
 
     <style name="TextAppearance.SeriesGuide.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1" />
+    <style name="TextAppearance.SeriesGuide.Subtitle1.Bold">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
     <style name="TextAppearance.SeriesGuide.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2" />
 
     <style name="TextAppearance.SeriesGuide.Tab" parent="TextAppearance.MaterialComponents.Button">
@@ -228,7 +244,7 @@
     <style name="Widget.SeriesGuide.Button.Borderless.Rating">
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:padding">@dimen/default_padding</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/sg_white</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
     </style>

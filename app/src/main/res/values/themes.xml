@@ -21,40 +21,38 @@
         <item name="windowActionBar">false</item>
 
         <!-- The color displayed most frequently across your app’s screens and components. -->
-        <item name="colorPrimary">@color/sg_color_primary</item>
-        <item name="colorPrimaryDark">@color/sg_color_primary_dark</item>
-        <item name="colorPrimaryVariant">@color/sg_color_primary_variant</item>
-        <item name="colorSecondary">@color/sg_color_secondary</item>
-        <item name="colorSecondaryVariant">@color/sg_color_secondary_variant</item>
-        <item name="colorSurface">@color/sg_color_surface</item>
-        <item name="android:colorBackground">@color/sg_color_background</item>
+        <item name="colorPrimary">@color/sg_color_primary_dark</item>
+        <item name="colorPrimaryDark">#121212</item>
+        <item name="colorPrimaryVariant">@color/sg_color_primary_700</item>
+        <item name="colorSecondary">@color/sg_color_secondary_dark</item>
+        <item name="colorSecondaryVariant">@color/sg_color_secondary_500</item>
+        <item name="colorSurface">@color/sg_color_background_dark</item>
+        <item name="android:colorBackground">@color/sg_color_background_dark</item>
 
         <!-- Colors that pass accessibility guidelines for text/iconography when drawn on top of a color. -->
-        <item name="colorOnPrimary">@color/sg_color_on_primary</item>
-        <item name="colorOnSecondary">@color/sg_color_on_secondary</item>
-        <item name="colorOnSurface">@color/sg_color_on_surface</item>
-        <item name="colorOnBackground">@color/sg_color_on_background</item>
+        <item name="colorOnPrimary">@color/sg_black</item>
+        <item name="colorOnSecondary">@color/sg_black</item>
+        <item name="colorOnSurface">@color/sg_white</item>
+        <item name="colorOnBackground">@color/sg_white</item>
 
         <!-- Windows -->
-        <!-- Note: explicitly setting dark windowBackground on P- to avoid launching with light one
-         as user might have enabled dark theme. -->
-        <item name="android:windowBackground">@color/sg_color_background_launch</item>
+        <item name="android:windowBackground">@color/sg_color_background_dark</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="windowActionModeOverlay">true</item>
 
         <!-- Remove default window shadow -->
         <item name="android:windowContentOverlay">@null</item>
 
-        <!-- Colors -->
-        <item name="sgTextColorGreen">@color/sg_color_secondary</item>
-        <item name="sgTextColorSecondaryDim">@color/sg_text_color_secondary_dim</item>
-        <item name="sgColorBackgroundCard">@color/sg_card_background_color</item>
-        <item name="sgColorBackgroundDim">@color/sg_background_dim</item>
-        <item name="sgColorIcon">@color/sg_tint_icon</item>
-        <item name="sgColorIconInactive">@color/sg_tint_icon_inactive</item>
-        <item name="sgColorDivider">@color/sg_color_divider</item>
-        <item name="sgColorShadow">@color/sg_color_shadow</item>
-        <item name="sgColorStatusBarOverlay">@color/sg_color_status_bar_overlay</item>
+        <!-- Custom color attributes -->
+        <item name="sgTextColorGreen">@color/sg_color_secondary_dark</item>
+        <item name="sgTextColorSecondaryDim">@color/sg_white_40</item>
+        <item name="sgColorBackgroundCard">#2a2a2a</item>
+        <item name="sgColorBackgroundDim">@color/sg_black_38</item>
+        <item name="sgColorIcon">@color/sg_white</item>
+        <item name="sgColorIconInactive">@color/sg_white_50</item>
+        <item name="sgColorDivider">@color/sg_white_15</item>
+        <item name="sgColorShadow">@color/sg_black_40</item>
+        <item name="sgColorStatusBarOverlay">@color/sg_black_87</item>
 
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
         <item name="dialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog</item>
@@ -66,7 +64,7 @@
         <!-- All customizations that are SPECIFIC to API-level 21 go here. -->
 
         <!-- Note: nav bar color needs to be opaque! -->
-        <item name="android:navigationBarColor">@color/black_almost</item>
+        <item name="android:navigationBarColor">@color/sg_black_almost</item>
 
     </style>
 
@@ -78,19 +76,19 @@
         <item name="windowActionBar">false</item>
 
         <!-- The color displayed most frequently across your app’s screens and components. -->
-        <item name="colorPrimary">@color/sg_color_primary</item>
-        <item name="colorPrimaryDark">@color/sg_color_primary_dark</item>
-        <item name="colorPrimaryVariant">@color/sg_color_primary_variant</item>
-        <item name="colorSecondary">@color/sg_color_secondary</item>
-        <item name="colorSecondaryVariant">@color/sg_color_secondary_variant</item>
-        <item name="colorSurface">@color/sg_color_surface</item>
-        <item name="android:colorBackground">@color/sg_color_background</item>
+        <item name="colorPrimary">@color/sg_color_primary_light</item>
+        <item name="colorPrimaryDark">@color/sg_color_primary_700</item>
+        <item name="colorPrimaryVariant">@color/sg_color_primary_700</item>
+        <item name="colorSecondary">@color/sg_color_secondary_light</item>
+        <item name="colorSecondaryVariant">@color/sg_color_secondary_900</item>
+        <item name="colorSurface">@color/sg_white</item>
+        <item name="android:colorBackground">@color/sg_color_background_light</item>
 
         <!-- Colors that pass accessibility guidelines for text/iconography when drawn on top of a color. -->
-        <item name="colorOnPrimary">@color/sg_color_on_primary</item>
-        <item name="colorOnSecondary">@color/sg_color_on_secondary</item>
-        <item name="colorOnSurface">@color/sg_color_on_surface</item>
-        <item name="colorOnBackground">@color/sg_color_on_background</item>
+        <item name="colorOnPrimary">@color/sg_white</item>
+        <item name="colorOnSecondary">@color/sg_white</item>
+        <item name="colorOnSurface">@color/sg_black</item>
+        <item name="colorOnBackground">@color/sg_black</item>
 
         <!-- Windows -->
         <item name="android:windowBackground">@color/sg_color_background</item>
@@ -100,16 +98,16 @@
         <!-- Remove default window shadow -->
         <item name="android:windowContentOverlay">@null</item>
 
-        <!-- Colors -->
-        <item name="sgTextColorGreen">@color/sg_color_secondary</item>
-        <item name="sgTextColorSecondaryDim">@color/sg_text_color_secondary_dim</item>
-        <item name="sgColorBackgroundCard">@color/sg_card_background_color</item>
-        <item name="sgColorBackgroundDim">@color/sg_background_dim</item>
-        <item name="sgColorIcon">@color/sg_tint_icon</item>
-        <item name="sgColorIconInactive">@color/sg_tint_icon_inactive</item>
-        <item name="sgColorDivider">@color/sg_color_divider</item>
-        <item name="sgColorShadow">@color/sg_color_shadow</item>
-        <item name="sgColorStatusBarOverlay">@color/sg_color_status_bar_overlay</item>
+        <!-- Custom color attributes -->
+        <item name="sgTextColorGreen">@color/sg_color_secondary_light</item>
+        <item name="sgTextColorSecondaryDim">@color/sg_black_40</item>
+        <item name="sgColorBackgroundCard">@color/sg_white</item>
+        <item name="sgColorBackgroundDim">@color/sg_white_50</item>
+        <item name="sgColorIcon">@color/sg_black_54</item>
+        <item name="sgColorIconInactive">@color/sg_black_38</item>
+        <item name="sgColorDivider">@color/sg_black_10</item>
+        <item name="sgColorShadow">@color/sg_black_7</item>
+        <item name="sgColorStatusBarOverlay">@color/sg_white_87</item>
 
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
         <item name="dialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog</item>
@@ -119,6 +117,9 @@
     <!-- ####################################### -->
     <!-- Special themes -->
     <!-- ####################################### -->
+
+    <!-- Note: always launch with Dark on P- to avoid bright colors as user may have set Dark. -->
+    <style name="Theme.SeriesGuide.Launch" parent="Theme.SeriesGuide.Dark" />
 
     <!-- Drawer -->
     <style name="Theme.SeriesGuide.DayNight.Drawer" parent="Theme.SeriesGuide.Light.Drawer" />
@@ -148,12 +149,6 @@
 
     </style>
 
-    <!-- Debug view: LogAdapter hard-coded to white background, so always use a light theme. -->
-    <style name="Theme.SeriesGuide.DebugDrawer" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/sg_color_primary_500</item>
-        <item name="colorSecondary">@color/sg_color_secondary_700</item>
-    </style>
-
     <!-- ####################################### -->
     <!-- Theme overlays -->
     <!-- ####################################### -->
@@ -167,7 +162,8 @@
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
-    <style name="ThemeOverlay.SeriesGuide.EpisodeList" parent="">
+    <!-- colorControlActivated is also used by controls like check boxes, so only override for lists. -->
+    <style name="ThemeOverlay.SeriesGuide.CheckableList" parent="">
         <item name="colorControlActivated">@color/sg_color_control_activated</item>
     </style>
 
