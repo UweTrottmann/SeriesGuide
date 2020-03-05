@@ -73,7 +73,7 @@
         android:layout_marginStart="@dimen/keyline_minus_16"
         android:nestedScrollingEnabled="true"
         android:paddingTop="0dp"
-        android:theme="@style/ThemeOverlay.SeriesGuide.EpisodeList"
+        android:theme="@style/ThemeOverlay.SeriesGuide.CheckableList"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

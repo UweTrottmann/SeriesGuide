@@ -162,7 +162,8 @@
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
-    <style name="ThemeOverlay.SeriesGuide.EpisodeList" parent="">
+    <!-- colorControlActivated is also used by controls like check boxes, so only override for lists. -->
+    <style name="ThemeOverlay.SeriesGuide.CheckableList" parent="">
         <item name="colorControlActivated">@color/sg_color_control_activated</item>
     </style>
 

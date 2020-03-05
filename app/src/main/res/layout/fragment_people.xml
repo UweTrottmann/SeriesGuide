@@ -26,11 +26,12 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:divider="@color/transparent"
-        android:paddingBottom="@dimen/default_padding"
         android:paddingLeft="@dimen/keyline_minus_16"
         android:paddingTop="@dimen/default_padding"
-        tools:listitem="@layout/item_person"
-        tools:ignore="RtlSymmetry" />
+        android:paddingBottom="@dimen/default_padding"
+        android:theme="@style/ThemeOverlay.SeriesGuide.CheckableList"
+        tools:ignore="RtlSymmetry"
+        tools:listitem="@layout/item_person" />
 
     <com.battlelancer.seriesguide.widgets.EmptyView
         android:id="@+id/emptyViewPeople"
