@@ -4,13 +4,11 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
-import android.preference.PreferenceManager;
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
@@ -26,7 +24,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
@@ -132,6 +129,18 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
+        // Auto backup mode.
+        if (isAutoBackupMode) {
+            AutoBackupTask.Result backupResult = new AutoBackupTask(this, context).run();
+            if (backupResult instanceof AutoBackupTask.Result.Error) {
+                Timber.e(((AutoBackupTask.Result.Error) backupResult).getReason());
+                return ERROR;
+            } else {
+                return SUCCESS;
+            }
+        }
+
+        // Manual backup mode.
         File exportPath = null;
         if (isUseDefaultFolders) {
             // Ensure external storage is available
@@ -179,14 +188,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             }
         }
         // no need to return early here if canceled, we are almost done anyhow
-
-        if (isAutoBackupMode) {
-            // store current time = last backup time
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            prefs.edit()
-                    .putLong(AdvancedSettings.KEY_LASTBACKUP, System.currentTimeMillis())
-                    .apply();
-        }
 
         return SUCCESS;
     }
@@ -321,7 +322,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     @Nullable
-    private Cursor getDataCursor(@BackupType int type) {
+    Cursor getDataCursor(@BackupType int type) {
         if (type == BACKUP_SHOWS) {
             return context.getContentResolver().query(
                     Shows.CONTENT_URI, ShowsQuery.PROJECTION_FULL,
@@ -377,7 +378,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         }
     }
 
-    private void writeJsonStreamShows(OutputStream out, Cursor shows) throws IOException {
+    void writeJsonStreamShows(OutputStream out, Cursor shows) throws IOException {
         int numTotal = shows.getCount();
         int numExported = 0;
 
@@ -503,7 +504,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         episodesCursor.close();
     }
 
-    private void writeJsonStreamLists(OutputStream out, Cursor lists) throws IOException {
+    void writeJsonStreamLists(OutputStream out, Cursor lists) throws IOException {
         int numTotal = lists.getCount();
         int numExported = 0;
 
@@ -567,7 +568,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         listItems.close();
     }
 
-    private void writeJsonStreamMovies(OutputStream out, Cursor movies) throws IOException {
+    void writeJsonStreamMovies(OutputStream out, Cursor movies) throws IOException {
         int numTotal = movies.getCount();
         int numExported = 0;
 
