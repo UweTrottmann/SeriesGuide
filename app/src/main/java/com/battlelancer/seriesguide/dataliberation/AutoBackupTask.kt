@@ -87,7 +87,10 @@ class AutoBackupTask(
             ?: return Result.Error("Querying for data failed.")
 
         // If there is no data, do nothing.
-        if (dataCursor.count == 0) return Result.Success
+        if (dataCursor.count == 0) {
+            dataCursor.close()
+            return Result.Success
+        }
 
         val fileName = "backup-${backup.name}-$timestamp.json"
         val backupFile = File(backupDirectory, fileName)
