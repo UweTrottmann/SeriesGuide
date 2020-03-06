@@ -11,13 +11,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NavUtils;
 import androidx.core.app.TaskStackBuilder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.traktapi.TraktTask;
 import com.battlelancer.seriesguide.ui.search.AddShowTask;
-import com.battlelancer.seriesguide.ui.shows.FirstRunView;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import org.greenrobot.eventbus.EventBus;
@@ -144,26 +141,23 @@ public abstract class BaseActivity extends AppCompatActivity {
             return false;
         }
 
-        if (DataLiberationTools.isAutoBackupPermissionMissing(this)) {
-            // only show warning if the user is done with first run
-            if (FirstRunView.hasSeenFirstRunFragment(this)) {
-                onShowAutoBackupPermissionWarning();
-            }
-            return false;
-        }
+        // TODO Only if user has specified custom files.
+//        // If user specified files are invalid, show a warning,
+//        // but only once first run is dismissed.
+//        if (FirstRunView.hasSeenFirstRunFragment(this)
+//                && DataLiberationTools.isAutoBackupPermissionMissing(this)) {
+//            onShowAutoBackupPermissionWarning();
+//        }
 
-        long now = System.currentTimeMillis();
-        long previousBackupTime = AdvancedSettings.getLastAutoBackupTime(this);
-        final boolean isTime = (now - previousBackupTime) > 7 * DateUtils.DAY_IN_MILLIS;
-
-        if (isTime) {
-            // if custom files are enabled, make sure they are configured
-            // note: backup task clears backup file setting if there was an issue with the file
-            if (!BackupSettings.isUseAutoBackupDefaultFiles(this)
-                    && BackupSettings.isMissingAutoBackupFile(this)) {
-                onShowAutoBackupMissingFilesWarning();
-                return false;
-            }
+        if (AdvancedSettings.isTimeForAutoBackup(this)) {
+            // FIXME
+//            // if custom files are enabled, make sure they are configured
+//            // note: backup task clears backup file setting if there was an issue with the file
+//            if (!BackupSettings.isUseAutoBackupDefaultFiles(this)
+//                    && BackupSettings.isMissingAutoBackupFile(this)) {
+//                onShowAutoBackupMissingFilesWarning();
+//                return false;
+//            }
 
             TaskManager.getInstance().tryBackupTask(this);
             return true;

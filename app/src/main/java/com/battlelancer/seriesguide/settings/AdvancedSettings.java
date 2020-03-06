@@ -4,6 +4,7 @@ package com.battlelancer.seriesguide.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 
 /**
  * Access advanced settings for auto backup and auto update.
@@ -28,6 +29,12 @@ public class AdvancedSettings {
     public static boolean isAutoBackupEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KEY_AUTOBACKUP,
                 true);
+    }
+
+    public static boolean isTimeForAutoBackup(Context context) {
+        long now = System.currentTimeMillis();
+        long previousBackupTime = AdvancedSettings.getLastAutoBackupTime(context);
+        return (now - previousBackupTime) > 7 * DateUtils.DAY_IN_MILLIS;
     }
 
     public static long getLastAutoBackupTime(Context context) {
