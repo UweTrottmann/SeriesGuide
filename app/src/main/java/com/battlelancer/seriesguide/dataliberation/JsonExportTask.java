@@ -7,7 +7,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
@@ -31,7 +30,6 @@ import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -53,8 +51,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         void onProgressUpdate(Integer... values);
     }
 
-    public static final String EXPORT_FOLDER = "SeriesGuide";
-    public static final String EXPORT_FOLDER_AUTO = "SeriesGuide" + File.separator + "AutoBackup";
     public static final String EXPORT_JSON_FILE_SHOWS = "sg-shows-export.json";
     public static final String EXPORT_JSON_FILE_LISTS = "sg-lists-export.json";
     public static final String EXPORT_JSON_FILE_MOVIES = "sg-movies-export.json";
@@ -98,12 +94,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     private boolean isAutoBackupMode;
     @Nullable private final Integer type;
     @Nullable private String errorCause;
-
-    public static File getExportPath(boolean isAutoBackupMode) {
-        return new File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                isAutoBackupMode ? EXPORT_FOLDER_AUTO : EXPORT_FOLDER);
-    }
 
     /**
      * Same as {@link JsonExportTask} but allows to set parameters.
