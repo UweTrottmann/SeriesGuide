@@ -194,12 +194,15 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
                 || requestCode == REQUEST_CODE_LISTS_EXPORT_URI
                 || requestCode == REQUEST_CODE_MOVIES_EXPORT_URI) {
             Uri uri = data.getData();
+            if (uri == null) return;
 
             // persist read and write permission for this URI across device reboots
             try {
-                getContext().getContentResolver()
-                        .takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
-                                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                requireContext().getContentResolver().takePersistableUriPermission(
+                        uri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION
+                                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                );
             } catch (SecurityException e) {
                 Timber.e(e, "Could not persist r/w permission for backup file URI.");
             }
@@ -214,6 +217,7 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
                 BackupSettings.storeFileUri(getContext(),
                         BackupSettings.KEY_AUTO_BACKUP_MOVIES_EXPORT_URI, uri);
             }
+
             updateFileViews();
         }
     }
