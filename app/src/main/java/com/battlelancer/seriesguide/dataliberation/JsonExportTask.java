@@ -31,7 +31,6 @@ import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonWriter;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -98,7 +97,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     private boolean isFullDump;
     private boolean isAutoBackupMode;
     @Nullable private final Integer type;
-    private boolean isUseDefaultFolders;
     @Nullable private String errorCause;
 
     public static File getExportPath(boolean isAutoBackupMode) {
@@ -121,16 +119,13 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         this.isFullDump = isFullDump;
         this.isAutoBackupMode = isAutoBackupMode;
         this.type = type;
-        // note: using Storage Access Framework on KitKat and up to select custom backup files,
-        // though auto backup by default uses default folders
-        isUseDefaultFolders =
-                isAutoBackupMode && BackupSettings.isUseAutoBackupDefaultFiles(context);
     }
 
     @Override
     protected Integer doInBackground(Void... params) {
-        // Auto backup mode.
         if (isAutoBackupMode) {
+            // Auto backup mode.
+
             AutoBackupTask.Result backupResult = new AutoBackupTask(this, context).run();
             if (backupResult instanceof AutoBackupTask.Result.Error) {
                 Timber.e(((AutoBackupTask.Result.Error) backupResult).getReason());
@@ -138,58 +133,40 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             } else {
                 return SUCCESS;
             }
-        }
+        } else {
+            // Manual backup mode.
 
-        // Manual backup mode.
-        File exportPath = null;
-        if (isUseDefaultFolders) {
-            // Ensure external storage is available
-            if (!AndroidUtils.isExtStorageAvailable()) {
-                return ERROR_FILE_ACCESS;
-            }
-
-            // Ensure the export directory exists
-            exportPath = getExportPath(isAutoBackupMode);
-            if (!exportPath.mkdirs() && !exportPath.isDirectory()) {
-                return ERROR_FILE_ACCESS;
-            }
-        }
-
-        // last chance to abort
-        if (isCancelled()) {
-            return ERROR;
-        }
-
-        int result;
-        if (type == null || type == BACKUP_SHOWS) {
-            result = exportData(exportPath, BACKUP_SHOWS);
-            if (result != SUCCESS) {
-                return result;
-            }
             if (isCancelled()) {
                 return ERROR;
             }
-        }
 
-        if (type == null || type == BACKUP_LISTS) {
-            result = exportData(exportPath, BACKUP_LISTS);
-            if (result != SUCCESS) {
-                return result;
+            int result = SUCCESS;
+            if (type == null || type == BACKUP_SHOWS) {
+                result = exportData(BACKUP_SHOWS);
+                if (result != SUCCESS) {
+                    return result;
+                }
+                if (isCancelled()) {
+                    return ERROR;
+                }
             }
-            if (isCancelled()) {
-                return ERROR;
-            }
-        }
 
-        if (type == null || type == BACKUP_MOVIES) {
-            result = exportData(exportPath, BACKUP_MOVIES);
-            if (result != SUCCESS) {
-                return result;
+            if (type == null || type == BACKUP_LISTS) {
+                result = exportData(BACKUP_LISTS);
+                if (result != SUCCESS) {
+                    return result;
+                }
+                if (isCancelled()) {
+                    return ERROR;
+                }
             }
-        }
-        // no need to return early here if canceled, we are almost done anyhow
 
-        return SUCCESS;
+            if (type == null || type == BACKUP_MOVIES) {
+                result = exportData(BACKUP_MOVIES);
+            }
+
+            return result;
+        }
     }
 
     @Override
@@ -228,7 +205,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         }
     }
 
-    private int exportData(File exportPath, @BackupType int type) {
+    private int exportData(@BackupType int type) {
         // check if there is any data to export
         Cursor data = getDataCursor(type);
         if (data == null) {
@@ -245,57 +222,35 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
         // try to export all data
         try {
-            if (!isUseDefaultFolders) {
-                // ensure the user has selected a backup file
-                Uri backupFileUri = getDataBackupFile(type);
-                if (backupFileUri == null) {
-                    return ERROR_FILE_ACCESS;
-                }
-
-                ParcelFileDescriptor pfd = context.getContentResolver()
-                        .openFileDescriptor(backupFileUri, "w");
-                if (pfd == null) {
-                    return ERROR_FILE_ACCESS;
-                }
-                FileOutputStream out = new FileOutputStream(pfd.getFileDescriptor());
-
-                // Even though using streams and FileOutputStream does not append by
-                // default, using Storage Access Framework just overwrites existing
-                // bytes, potentially leaving old bytes hanging over:
-                // so truncate the file first to clear any existing bytes.
-                out.getChannel().truncate(0);
-
-                if (type == BACKUP_SHOWS) {
-                    writeJsonStreamShows(out, data);
-                } else if (type == BACKUP_LISTS) {
-                    writeJsonStreamLists(out, data);
-                } else if (type == BACKUP_MOVIES) {
-                    writeJsonStreamMovies(out, data);
-                }
-
-                // let the document provider know we're done.
-                pfd.close();
-            } else {
-                File backupFile;
-                if (type == BACKUP_SHOWS) {
-                    backupFile = new File(exportPath, EXPORT_JSON_FILE_SHOWS);
-                } else if (type == BACKUP_LISTS) {
-                    backupFile = new File(exportPath, EXPORT_JSON_FILE_LISTS);
-                } else if (type == BACKUP_MOVIES) {
-                    backupFile = new File(exportPath, EXPORT_JSON_FILE_MOVIES);
-                } else {
-                    return ERROR;
-                }
-
-                OutputStream out = new FileOutputStream(backupFile);
-                if (type == BACKUP_SHOWS) {
-                    writeJsonStreamShows(out, data);
-                } else if (type == BACKUP_LISTS) {
-                    writeJsonStreamLists(out, data);
-                } else {
-                    writeJsonStreamMovies(out, data);
-                }
+            // ensure the user has selected a backup file
+            Uri backupFileUri = getDataBackupFile(type);
+            if (backupFileUri == null) {
+                return ERROR_FILE_ACCESS;
             }
+
+            ParcelFileDescriptor pfd = context.getContentResolver()
+                    .openFileDescriptor(backupFileUri, "w");
+            if (pfd == null) {
+                return ERROR_FILE_ACCESS;
+            }
+            FileOutputStream out = new FileOutputStream(pfd.getFileDescriptor());
+
+            // Even though using streams and FileOutputStream does not append by
+            // default, using Storage Access Framework just overwrites existing
+            // bytes, potentially leaving old bytes hanging over:
+            // so truncate the file first to clear any existing bytes.
+            out.getChannel().truncate(0);
+
+            if (type == BACKUP_SHOWS) {
+                writeJsonStreamShows(out, data);
+            } else if (type == BACKUP_LISTS) {
+                writeJsonStreamLists(out, data);
+            } else if (type == BACKUP_MOVIES) {
+                writeJsonStreamMovies(out, data);
+            }
+
+            // let the document provider know we're done.
+            pfd.close();
         } catch (FileNotFoundException e) {
             Timber.e(e, "Backup file not found.");
             removeBackupFileUri(type);
