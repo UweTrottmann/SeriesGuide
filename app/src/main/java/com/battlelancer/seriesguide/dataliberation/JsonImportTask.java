@@ -294,6 +294,12 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
     private void importFromJson(@JsonExportTask.BackupType int type, FileInputStream in)
             throws JsonParseException, IOException, IllegalArgumentException {
+        if (in.getChannel().size() == 0) {
+            Timber.i("Backup file is empty, nothing to import.");
+            in.close();
+            return; // File is empty, nothing to import.
+        }
+
         Gson gson = new Gson();
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
         reader.beginArray();
