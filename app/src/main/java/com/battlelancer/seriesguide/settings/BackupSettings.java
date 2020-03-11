@@ -52,8 +52,8 @@ public class BackupSettings {
     public @interface FileUriSettingsKey {
     }
 
-    public static boolean isUseAutoBackupDefaultFiles(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
+    public static boolean isCreateCopyOfAutoBackup(Context context) {
+        return !PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_AUTO_BACKUP_USE_DEFAULT_FILES, true);
     }
 

@@ -487,7 +487,7 @@
     <string name="autobackup_files_missing">To use auto backup, select valid backup files</string>
     <string name="no_file_selected">No file selected</string>
     <string name="action_select_file">Select file</string>
-    <string name="backup_use_default_files">Use default backup files</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
 
     <!-- Welcome dialog -->
     <string name="get_started">Get started</string>
