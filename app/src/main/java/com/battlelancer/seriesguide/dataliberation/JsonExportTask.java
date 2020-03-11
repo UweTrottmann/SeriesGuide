@@ -125,13 +125,12 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     protected Integer doInBackground(Void... params) {
         if (isAutoBackupMode) {
             // Auto backup mode.
-
-            AutoBackupTask.Result backupResult = new AutoBackupTask(this, context).run();
-            if (backupResult instanceof AutoBackupTask.Result.Error) {
-                Timber.e(((AutoBackupTask.Result.Error) backupResult).getReason());
-                return ERROR;
-            } else {
+            try {
+                new AutoBackupTask(this, context).run();
                 return SUCCESS;
+            } catch (Exception e) {
+                Timber.e(e, "Unable to auto backup.");
+                return ERROR;
             }
         } else {
             // Manual backup mode.
