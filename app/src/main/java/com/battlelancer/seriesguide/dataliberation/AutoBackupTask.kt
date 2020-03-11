@@ -154,8 +154,14 @@ class AutoBackupTask(
                         ?: throw AutoBackupException("Unable to open user backup file.")
 
                     outFile.use {
-                        FileOutputStream(outFile.fileDescriptor)
-                            .use { source.copyTo(it) }
+                        FileOutputStream(outFile.fileDescriptor).use {
+                            // Even though using streams and FileOutputStream does not append by
+                            // default, using Storage Access Framework just overwrites existing
+                            // bytes, potentially leaving old bytes hanging over:
+                            // so truncate the file first.
+                            it.channel.truncate(0)
+                            source.copyTo(it)
+                        }
                     }
                 } catch (e: FileNotFoundException) {
                     Timber.e("Backup file not found, removing from prefs.")
