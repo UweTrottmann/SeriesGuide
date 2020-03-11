@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
 import android.net.Uri
-import android.os.Environment
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BACKUP_LISTS
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BACKUP_MOVIES
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BACKUP_SHOWS
@@ -16,9 +15,10 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+
+class AutoBackupException(message: String) : IOException(message)
 
 /**
  * Backs up shows, lists and movies to timestamped files
@@ -35,24 +35,10 @@ class AutoBackupTask(
     private val context: Context
 ) {
 
-    class AutoBackupException(message: String) : IOException(message)
-
     sealed class Backup(val name: String, @BackupType val type: Int) {
         object Shows : Backup("seriesguide-shows", BACKUP_SHOWS)
         object Lists : Backup("seriesguide-lists", BACKUP_LISTS)
         object Movies : Backup("seriesguide-movies", BACKUP_MOVIES)
-    }
-
-    @Throws(AutoBackupException::class)
-    private fun getBackupDirectory(): File {
-        val storage = context.getExternalFilesDir(null)
-            ?: throw AutoBackupException("Storage not available.")
-
-        if (Environment.getExternalStorageState(storage) != Environment.MEDIA_MOUNTED) {
-            throw AutoBackupException("Storage not mounted.")
-        }
-
-        return File(storage, "Backups")
     }
 
     private fun getBackupFile(backup: Backup, timestamp: String, backupDirectory: File): File {
@@ -64,7 +50,7 @@ class AutoBackupTask(
     fun run() {
         Timber.i("Creating auto backup.")
 
-        val backupDirectory = getBackupDirectory()
+        val backupDirectory = AutoBackupTools.getBackupDirectory(context)
 
         if (!backupDirectory.exists()) {
             if (!backupDirectory.mkdirs()) {
@@ -95,7 +81,7 @@ class AutoBackupTask(
         copyBackupToUserFile(Backup.Lists, backupFileLists)
         copyBackupToUserFile(Backup.Movies, backupFileMovies)
 
-        deleteOldBackups()
+        AutoBackupTools.deleteOldBackups(context)
 
         AdvancedSettings.setLastAutoBackupTimeToNow(context)
     }
@@ -173,77 +159,6 @@ class AutoBackupTask(
                     throw e
                 }
             }
-    }
-
-    private fun deleteOldBackups() {
-        Timber.i("Deleting old backups.")
-        deleteOldBackups(Backup.Shows)
-        deleteOldBackups(Backup.Lists)
-        deleteOldBackups(Backup.Movies)
-    }
-
-    private fun deleteOldBackups(backup: Backup) {
-        val backups = try {
-            getAllBackupsNewestFirst(backup)
-        } catch (e: IOException) {
-            Timber.e(e, "Unable to delete old backups")
-            return
-        }
-
-        // Keep last 2 backups.
-        backups
-            .drop(2)
-            .forEach {
-                if (!it.file.delete()) {
-                    Timber.e("Unable to delete old backup file ${it.file}")
-                }
-            }
-    }
-
-    data class BackupFile(val file: File, val timestamp: Long)
-
-    private fun getAllBackupsNewestFirst(backup: Backup): List<BackupFile> {
-        val backupDirectory = getBackupDirectory()
-        val files = backupDirectory.listFiles()
-
-        val backups = files.mapNotNull { file ->
-            if (file.isFile && file.name.startsWith(backup.name)) {
-                getBackupTimestamp(file)
-                    ?.let { return@mapNotNull BackupFile(file, it) }
-            }
-            return@mapNotNull null
-        }
-
-        return backups.sortedByDescending { it.timestamp }
-    }
-
-    private fun getBackupTimestamp(file: File): Long? {
-        val nameAndExtension = file.name.split(".")
-
-        // <something>.json
-        if (nameAndExtension.size == 2) {
-            val nameParts = nameAndExtension[0].split("-")
-
-            // seriesguide-<type>-yyyy-MM-dd-HH-mm-ss
-            if (nameParts.size == 8) {
-                val cal = Calendar.getInstance()
-                try {
-                    cal.set(Calendar.YEAR, nameParts[2].toInt())
-                    cal.set(Calendar.MONTH, nameParts[3].toInt())
-                    cal.set(Calendar.DAY_OF_MONTH, nameParts[4].toInt())
-                    cal.set(Calendar.HOUR_OF_DAY, nameParts[5].toInt())
-                    cal.set(Calendar.MINUTE, nameParts[6].toInt())
-                    cal.set(Calendar.SECOND, nameParts[7].toInt())
-                    cal.set(Calendar.MILLISECOND, 0)
-
-                    return cal.timeInMillis
-                } catch (e: NumberFormatException) {
-                    // Return default value end of method.
-                }
-            }
-        }
-
-        return null
     }
 
     private fun Closeable.closeFinally() {
