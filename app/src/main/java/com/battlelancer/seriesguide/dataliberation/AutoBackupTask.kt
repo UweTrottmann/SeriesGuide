@@ -7,6 +7,7 @@ import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BACKUP_MOVIES
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BACKUP_SHOWS
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BackupType
 import com.battlelancer.seriesguide.settings.AdvancedSettings
+import com.battlelancer.seriesguide.settings.BackupSettings
 import timber.log.Timber
 import java.io.Closeable
 import java.io.File
@@ -76,10 +77,12 @@ class AutoBackupTask(
                 .also { backup(type, it) }
         }
 
-        // Copy to user files.
-        copyBackupToUserFile(Backup.Shows, backupFileShows)
-        copyBackupToUserFile(Backup.Lists, backupFileLists)
-        copyBackupToUserFile(Backup.Movies, backupFileMovies)
+        if (BackupSettings.isCreateCopyOfAutoBackup(context)) {
+            // Copy to user files.
+            copyBackupToUserFile(Backup.Shows, backupFileShows)
+            copyBackupToUserFile(Backup.Lists, backupFileLists)
+            copyBackupToUserFile(Backup.Movies, backupFileMovies)
+        }
 
         AutoBackupTools.deleteOldBackups(context)
 
