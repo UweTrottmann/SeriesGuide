@@ -32,7 +32,7 @@ import timber.log.Timber;
 /**
  * Configuration of auto backup, the backup files and restoring the last auto backup.
  */
-public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTaskProgressListener {
+public class AutoBackupFragment extends Fragment {
 
     private static final int REQUEST_CODE_ENABLE_AUTO_BACKUP = 1;
     private static final int REQUEST_CODE_IMPORT_AUTOBACKUP = 2;
@@ -164,16 +164,6 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
         importTask = null;
 
         super.onDestroy();
-    }
-
-    @Override
-    public void onProgressUpdate(Integer... values) {
-        if (binding.progressBarAutoBackup == null) {
-            return;
-        }
-        binding.progressBarAutoBackup.setIndeterminate(values[0].equals(values[1]));
-        binding.progressBarAutoBackup.setMax(values[0]);
-        binding.progressBarAutoBackup.setProgress(values[1]);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
