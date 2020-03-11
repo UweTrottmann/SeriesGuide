@@ -143,6 +143,8 @@ class AutoBackupTask(
         val outFileUri: Uri = jsonExportTask.getDataBackupFile(backup.type)
             ?: return
 
+        Timber.i("Copying ${backup.name} backup to user file.")
+
         // Do not guard against FileNotFoundException, backup file should exist.
         FileInputStream(sourceFile)
             .use { source ->
@@ -157,6 +159,10 @@ class AutoBackupTask(
                     }
                 } catch (e: FileNotFoundException) {
                     Timber.e("Backup file not found, removing from prefs.")
+                    jsonExportTask.removeBackupFileUri(backup.type)
+                    throw e
+                } catch (e: SecurityException) {
+                    Timber.e("Backup file not writable, removing from prefs.")
                     jsonExportTask.removeBackupFileUri(backup.type)
                     throw e
                 }
