@@ -1,7 +1,9 @@
 package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
+import android.net.Uri
 import android.os.Environment
+import android.os.ParcelFileDescriptor
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BACKUP_LISTS
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BACKUP_MOVIES
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BACKUP_SHOWS
@@ -10,6 +12,8 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings
 import timber.log.Timber
 import java.io.Closeable
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -33,7 +37,7 @@ class AutoBackupTask(
 ) {
 
     sealed class Result {
-        object Success : Result()
+        data class Success(val backupFile: File? = null) : Result()
         data class Error(val reason: String) : Result()
     }
 
@@ -72,22 +76,34 @@ class AutoBackupTask(
 
         val timestamp = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.US).format(Date())
 
-        backup(Backup.Shows, backupDirectory, timestamp)
+        // Create backup.
+        val resultShows = backup(Backup.Shows, backupDirectory, timestamp)
+            .let { if (it is Result.Success) it else return it }
+
+        val resultLists = backup(Backup.Lists, backupDirectory, timestamp)
+            .let { if (it is Result.Success) it else return it }
+
+        val resultMovies = backup(Backup.Movies, backupDirectory, timestamp)
+            .let { if (it is Result.Success) it else return it }
+
+        // Copy to user files.
+        resultShows.backupFile
+            ?.let { copyBackupToUserFile(Backup.Shows, it) }
             .let { if (it is Result.Error) return it }
 
-        backup(Backup.Lists, backupDirectory, timestamp)
+        resultLists.backupFile
+            ?.let { copyBackupToUserFile(Backup.Lists, it) }
             .let { if (it is Result.Error) return it }
 
-        backup(Backup.Movies, backupDirectory, timestamp)
+        resultMovies.backupFile
+            ?.let { copyBackupToUserFile(Backup.Movies, it) }
             .let { if (it is Result.Error) return it }
-
-        // TODO Copy to user backup files.
 
         deleteOldBackups()
 
         AdvancedSettings.setLastAutoBackupTimeToNow(context)
 
-        return Result.Success
+        return Result.Success()
     }
 
     private fun backup(
@@ -101,14 +117,16 @@ class AutoBackupTask(
         // If there is no data, do nothing.
         if (dataCursor.count == 0) {
             dataCursor.close()
-            return Result.Success
+            return Result.Success()
         }
 
         val fileName = "${backup.name}-$timestamp.json"
         val backupFile = File(backupDirectory, fileName)
-        val out = FileOutputStream(backupFile)
 
+        var out: FileOutputStream? = null
         try {
+            out = FileOutputStream(backupFile)
+
             when (backup) {
                 Backup.Shows -> jsonExportTask.writeJsonStreamShows(out, dataCursor)
                 Backup.Lists -> jsonExportTask.writeJsonStreamLists(out, dataCursor)
@@ -122,11 +140,43 @@ class AutoBackupTask(
             }
             return Result.Error(e.message ?: "Backup failed for unknown reason.")
         } finally {
-            out.closeFinally()
+            out?.closeFinally()
             dataCursor.closeFinally()
         }
 
-        return Result.Success
+        return Result.Success(backupFile)
+    }
+
+    private fun copyBackupToUserFile(backup: Backup, backupFileIn: File): Result {
+        // Skip if no custom backup file configured.
+        val backupFileOutUri: Uri = jsonExportTask.getDataBackupFile(backup.type)
+            ?: return Result.Success()
+
+        var backupFileOut: ParcelFileDescriptor? = null
+        var backupFileOutStream: FileOutputStream? = null
+        var backupFileInStream: FileInputStream? = null
+
+        try {
+            backupFileOut = context.contentResolver.openFileDescriptor(backupFileOutUri, "w")
+                ?: return Result.Error("Unable to open user backup file.")
+
+            backupFileOutStream = FileOutputStream(backupFileOut.fileDescriptor)
+            backupFileInStream = FileInputStream(backupFileIn)
+
+            backupFileInStream.copyTo(backupFileOutStream)
+        } catch (e: FileNotFoundException) {
+            jsonExportTask.removeBackupFileUri(backup.type)
+            return Result.Error("User backup file not found: " + e.message)
+        } catch (e: Exception) {
+            Timber.e(e, "Unable to copy backup to user file.")
+            return Result.Error("Unable to copy backup to user file: " + e.message)
+        } finally {
+            backupFileInStream?.closeFinally()
+            backupFileOutStream?.closeFinally()
+            backupFileOut?.closeFinally()
+        }
+
+        return Result.Success()
     }
 
     private fun deleteOldBackups() {

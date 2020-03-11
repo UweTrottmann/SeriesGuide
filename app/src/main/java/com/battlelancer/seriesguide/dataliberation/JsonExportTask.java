@@ -298,7 +298,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     @Nullable
-    private Uri getDataBackupFile(@BackupType int type) {
+    Uri getDataBackupFile(@BackupType int type) {
         if (type == BACKUP_SHOWS) {
             return BackupSettings.getFileUri(context,
                     isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_SHOWS_EXPORT_URI
@@ -317,7 +317,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         return null;
     }
 
-    private void removeBackupFileUri(@BackupType int type) {
+    void removeBackupFileUri(@BackupType int type) {
         if (type == BACKUP_SHOWS) {
             BackupSettings.storeFileUri(context,
                     isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_SHOWS_EXPORT_URI
