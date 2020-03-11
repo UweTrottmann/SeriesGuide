@@ -66,13 +66,13 @@ object AutoBackupTools {
         val backupDirectory = getBackupDirectory(context)
         val files = backupDirectory.listFiles()
 
-        val backups = files.mapNotNull { file ->
+        val backups = files?.mapNotNull { file ->
             if (file.isFile && file.name.startsWith(backup.name)) {
                 getBackupTimestamp(file)
                     ?.let { return@mapNotNull BackupFile(file, it) }
             }
             return@mapNotNull null
-        }
+        } ?: emptyList()
 
         return backups.sortedByDescending { it.timestamp }
     }
