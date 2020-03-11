@@ -12,6 +12,7 @@ import androidx.core.app.NavUtils;
 import androidx.core.app.TaskStackBuilder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
+import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.traktapi.TraktTask;
 import com.battlelancer.seriesguide.ui.search.AddShowTask;
@@ -141,29 +142,19 @@ public abstract class BaseActivity extends AppCompatActivity {
             return false;
         }
 
-        // TODO Only if user has specified custom files.
-//        // If user specified files are invalid, show a warning,
-//        // but only once first run is dismissed.
-//        if (FirstRunView.hasSeenFirstRunFragment(this)
-//                && DataLiberationTools.isAutoBackupPermissionMissing(this)) {
-//            onShowAutoBackupPermissionWarning();
-//        }
+        // If copies should be made, but the specified files are invalid,
+        // show a warning but run auto backup anyhow.
+        if (BackupSettings.isCreateCopyOfAutoBackup(this)
+                && BackupSettings.isMissingAutoBackupFile(this)) {
+            onShowAutoBackupMissingFilesWarning();
+        }
 
-        if (AdvancedSettings.isTimeForAutoBackup(this)) {
-            // FIXME
-//            // if custom files are enabled, make sure they are configured
-//            // note: backup task clears backup file setting if there was an issue with the file
-//            if (!BackupSettings.isUseAutoBackupDefaultFiles(this)
-//                    && BackupSettings.isMissingAutoBackupFile(this)) {
-//                onShowAutoBackupMissingFilesWarning();
-//                return false;
-//            }
-
-            TaskManager.getInstance().tryBackupTask(this);
-            return true;
-        } else {
+        if (!AdvancedSettings.isTimeForAutoBackup(this)) {
             return false;
         }
+
+        TaskManager.getInstance().tryBackupTask(this);
+        return true;
     }
 
     /**
@@ -171,14 +162,6 @@ public abstract class BaseActivity extends AppCompatActivity {
      * custom backup files are configured.
      */
     protected void onShowAutoBackupMissingFilesWarning() {
-        // do nothing
-    }
-
-    /**
-     * Implementers may choose to show a warning that auto backup can not complete because of
-     * missing permissions.
-     */
-    protected void onShowAutoBackupPermissionWarning() {
         // do nothing
     }
 

@@ -19,7 +19,6 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
-import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.google.android.material.snackbar.Snackbar;
 import timber.log.Timber;
@@ -140,48 +139,23 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
             return;
         }
 
-        Snackbar newSnackbar = Snackbar
-                .make(getSnackbarParentView(),
-                        R.string.autobackup_files_missing, Snackbar.LENGTH_LONG);
-        setUpAutoBackupSnackbar(newSnackbar);
-        newSnackbar.show();
-
-        snackbar = newSnackbar;
-    }
-
-    @Override
-    protected void onShowAutoBackupPermissionWarning() {
-        if (snackbar != null && snackbar.isShown()) {
-            Timber.d("NOT showing backup permission warning: existing snackbar.");
-            return;
-        }
-
-        Snackbar newSnackbar = Snackbar
-                .make(getSnackbarParentView(),
-                        R.string.autobackup_permission_missing, Snackbar.LENGTH_INDEFINITE);
-        setUpAutoBackupSnackbar(newSnackbar);
-        newSnackbar.show();
-
-        snackbar = newSnackbar;
-    }
-
-    private void setUpAutoBackupSnackbar(Snackbar snackbar) {
-        TextView textView = snackbar.getView().findViewById(
-                com.google.android.material.R.id.snackbar_text);
-        textView.setMaxLines(5);
-        snackbar.addCallback(new Snackbar.Callback() {
-            @Override
-            public void onDismissed(Snackbar snackbar, int event) {
-                if (event == Snackbar.Callback.DISMISS_EVENT_SWIPE) {
-                    // user has acknowledged warning
-                    // disable auto backup so warning is not shown again
-                    DataLiberationTools.setAutoBackupDisabled(BaseTopActivity.this);
-                }
-            }
-        }).setAction(R.string.preferences,
-                v -> startActivity(new Intent(BaseTopActivity.this, DataLiberationActivity.class)
-                        .putExtra(DataLiberationActivity.EXTRA_SHOW_AUTOBACKUP, true))
+        Snackbar newSnackbar = Snackbar.make(
+                getSnackbarParentView(),
+                R.string.autobackup_files_missing,
+                Snackbar.LENGTH_INDEFINITE
         );
+
+        // Manually increase max lines.
+        TextView textView = newSnackbar.getView()
+                .findViewById(com.google.android.material.R.id.snackbar_text);
+        textView.setMaxLines(5);
+
+        newSnackbar.setAction(R.string.preferences, v -> startActivity(
+                new Intent(this, DataLiberationActivity.class)
+                        .putExtra(DataLiberationActivity.EXTRA_SHOW_AUTOBACKUP, true)));
+        newSnackbar.show();
+
+        snackbar = newSnackbar;
     }
 
     @Override
