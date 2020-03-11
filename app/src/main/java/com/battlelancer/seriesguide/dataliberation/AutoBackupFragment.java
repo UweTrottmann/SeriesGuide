@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.core.widget.TextViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.battlelancer.seriesguide.R;
@@ -261,6 +262,11 @@ public class AutoBackupFragment extends Fragment implements JsonExportTask.OnTas
     }
 
     private void setUriOrPlaceholder(TextView textView, Uri uri) {
-        textView.setText(uri == null ? getString(R.string.no_file_selected) : uri.toString());
+        textView.setText(uri == null
+                ? getString(R.string.no_file_selected)
+                : uri.toString());
+        TextViewCompat.setTextAppearance(textView, uri == null
+                ? R.style.TextAppearance_SeriesGuide_Body2_Error
+                : R.style.TextAppearance_SeriesGuide_Body2_Dim);
     }
 }
