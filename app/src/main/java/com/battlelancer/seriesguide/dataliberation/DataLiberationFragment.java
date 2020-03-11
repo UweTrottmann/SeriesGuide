@@ -21,7 +21,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.snackbar.Snackbar;
 import org.greenrobot.eventbus.EventBus;

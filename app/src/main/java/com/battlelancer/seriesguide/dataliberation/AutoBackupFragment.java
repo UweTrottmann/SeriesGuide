@@ -16,8 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.databinding.FragmentAutoBackupBinding;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -60,10 +58,10 @@ public class AutoBackupFragment extends Fragment {
         // setup listeners
         binding.switchAutoBackup.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                DataLiberationTools.setAutoBackupEnabled(getContext());
+                BackupSettings.setAutoBackupEnabled(getContext());
                 setContainerSettingsVisible(true);
             } else {
-                DataLiberationTools.setAutoBackupDisabled(getContext());
+                BackupSettings.setAutoBackupDisabled(getContext());
                 setContainerSettingsVisible(false);
             }
         });
@@ -123,7 +121,7 @@ public class AutoBackupFragment extends Fragment {
         super.onStart();
 
         // update enabled state
-        boolean autoBackupEnabled = AdvancedSettings.isAutoBackupEnabled(getContext());
+        boolean autoBackupEnabled = BackupSettings.isAutoBackupEnabled(getContext());
         setContainerSettingsVisible(autoBackupEnabled);
         binding.switchAutoBackup.setChecked(autoBackupEnabled);
 

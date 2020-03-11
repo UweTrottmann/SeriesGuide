@@ -1,9 +1,10 @@
-package com.battlelancer.seriesguide.settings;
+package com.battlelancer.seriesguide.dataliberation;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringDef;
 import java.lang.annotation.Retention;
@@ -27,7 +28,16 @@ public class BackupSettings {
             = "com.battlelancer.seriesguide.backup.moviesExport";
     public static final String KEY_MOVIES_IMPORT_URI
             = "com.battlelancer.seriesguide.backup.moviesImport";
+
     // auto backup
+    /**
+     * Store last auto backup timestamp in separate settings file
+     * that is not backed up by Android auto backup.
+     */
+    private static final String PREFS_AUTOBACKUP = "autobackup";
+    public static final String KEY_AUTOBACKUP = "com.battlelancer.seriesguide.autobackup";
+    public static final String KEY_LASTBACKUP = "com.battlelancer.seriesguide.lastbackup";
+
     public static final String KEY_AUTO_BACKUP_USE_DEFAULT_FILES
             = "com.battlelancer.seriesguide.autobackup.defaultFiles";
     public static final String KEY_AUTO_BACKUP_SHOWS_EXPORT_URI
@@ -52,6 +62,50 @@ public class BackupSettings {
     public @interface FileUriSettingsKey {
     }
 
+    public static boolean isAutoBackupEnabled(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KEY_AUTOBACKUP,
+                true);
+    }
+
+    static void setAutoBackupEnabled(Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putBoolean(KEY_AUTOBACKUP, true)
+                .apply();
+    }
+
+    static void setAutoBackupDisabled(Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putBoolean(KEY_AUTOBACKUP, false)
+                .apply();
+    }
+
+    public static boolean isTimeForAutoBackup(Context context) {
+        long now = System.currentTimeMillis();
+        long previousBackupTime = getLastAutoBackupTime(context);
+        return (now - previousBackupTime) > 7 * DateUtils.DAY_IN_MILLIS;
+    }
+
+    private static long getLastAutoBackupTime(Context context) {
+        SharedPreferences prefs = context
+                .getSharedPreferences(PREFS_AUTOBACKUP, Context.MODE_PRIVATE);
+
+        long time = prefs.getLong(KEY_LASTBACKUP, 0);
+        if (time == 0) {
+            // For new installs set last time to now so backup will not run right away.
+            time = System.currentTimeMillis();
+            prefs.edit().putLong(KEY_LASTBACKUP, time).apply();
+        }
+
+        return time;
+    }
+
+    public static void setLastAutoBackupTimeToNow(Context context) {
+        context.getSharedPreferences(PREFS_AUTOBACKUP, Context.MODE_PRIVATE)
+                .edit()
+                .putLong(KEY_LASTBACKUP, System.currentTimeMillis())
+                .apply();
+    }
+
     public static boolean isCreateCopyOfAutoBackup(Context context) {
         return !PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_AUTO_BACKUP_USE_DEFAULT_FILES, true);
@@ -60,12 +114,12 @@ public class BackupSettings {
     /**
      * Store or remove (by setting it {@code null}) the URI to a backup file.
      */
-    public static boolean storeFileUri(Context context, @FileUriSettingsKey String key,
+    static void storeFileUri(Context context, @FileUriSettingsKey String key,
             @Nullable Uri uri) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
+        PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putString(key, uri == null ? null : uri.toString())
-                .commit();
+                .apply();
     }
 
     /**
@@ -73,7 +127,7 @@ public class BackupSettings {
      * get the export URI.
      */
     @Nullable
-    public static Uri getFileUri(Context context, @FileUriSettingsKey String key) {
+    static Uri getFileUri(Context context, @FileUriSettingsKey String key) {
         String uriString = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(key, null);
         if (uriString == null) {

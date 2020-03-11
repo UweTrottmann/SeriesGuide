@@ -1,29 +1,14 @@
 package com.battlelancer.seriesguide.dataliberation;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.Utils;
 
 public class DataLiberationTools {
-
-    public static void setAutoBackupEnabled(Context context) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
-                .putBoolean(AdvancedSettings.KEY_AUTOBACKUP, true)
-                .apply();
-    }
-
-    public static void setAutoBackupDisabled(Context context) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
-                .putBoolean(AdvancedSettings.KEY_AUTOBACKUP, false)
-                .apply();
-    }
 
     /**
      * Transform a string representation of {@link com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport}

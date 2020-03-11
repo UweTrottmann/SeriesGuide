@@ -11,8 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NavUtils;
 import androidx.core.app.TaskStackBuilder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.settings.BackupSettings;
+import com.battlelancer.seriesguide.dataliberation.BackupSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.traktapi.TraktTask;
 import com.battlelancer.seriesguide.ui.search.AddShowTask;
@@ -138,7 +137,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * Periodically do an automatic backup of the show database.
      */
     private boolean onAutoBackup() {
-        if (!AdvancedSettings.isAutoBackupEnabled(this)) {
+        if (!BackupSettings.isAutoBackupEnabled(this)) {
             return false;
         }
 
@@ -149,7 +148,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             onShowAutoBackupMissingFilesWarning();
         }
 
-        if (!AdvancedSettings.isTimeForAutoBackup(this)) {
+        if (!BackupSettings.isTimeForAutoBackup(this)) {
             return false;
         }
 

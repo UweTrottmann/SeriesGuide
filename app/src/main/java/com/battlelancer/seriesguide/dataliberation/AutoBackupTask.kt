@@ -6,8 +6,6 @@ import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BACKUP_LISTS
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BACKUP_MOVIES
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BACKUP_SHOWS
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BackupType
-import com.battlelancer.seriesguide.settings.AdvancedSettings
-import com.battlelancer.seriesguide.settings.BackupSettings
 import timber.log.Timber
 import java.io.Closeable
 import java.io.File
@@ -86,7 +84,7 @@ class AutoBackupTask(
 
         AutoBackupTools.deleteOldBackups(context)
 
-        AdvancedSettings.setLastAutoBackupTimeToNow(context)
+        BackupSettings.setLastAutoBackupTimeToNow(context)
     }
 
     @Throws(AutoBackupException::class)
