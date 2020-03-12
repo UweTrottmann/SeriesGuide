@@ -30,14 +30,8 @@ public class BackupSettings {
             = "com.battlelancer.seriesguide.backup.moviesImport";
 
     // auto backup
-    /**
-     * Store last auto backup timestamp in separate settings file
-     * that is not backed up by Android auto backup.
-     */
-    private static final String PREFS_AUTOBACKUP = "autobackup";
-    public static final String KEY_AUTOBACKUP = "com.battlelancer.seriesguide.autobackup";
-    public static final String KEY_LASTBACKUP = "com.battlelancer.seriesguide.lastbackup";
-
+    public static final String KEY_AUTOBACKUP
+            = "com.battlelancer.seriesguide.autobackup";
     public static final String KEY_AUTO_BACKUP_USE_DEFAULT_FILES
             = "com.battlelancer.seriesguide.autobackup.defaultFiles";
     public static final String KEY_AUTO_BACKUP_SHOWS_EXPORT_URI
@@ -46,6 +40,14 @@ public class BackupSettings {
             = "com.battlelancer.seriesguide.autobackup.listsExport";
     public static final String KEY_AUTO_BACKUP_MOVIES_EXPORT_URI
             = "com.battlelancer.seriesguide.autobackup.moviesExport";
+
+    /**
+     * Store some auto backup prefs in separate preference file
+     * that is not backed up by Android auto backup.
+     */
+    private static final String PREFS_AUTOBACKUP = "autobackup";
+    private static final String KEY_AUTOBACKUP_LAST_TIME
+            = "com.battlelancer.seriesguide.lastbackup";
 
     @Retention(RetentionPolicy.SOURCE)
     @StringDef({
@@ -89,11 +91,11 @@ public class BackupSettings {
         SharedPreferences prefs = context
                 .getSharedPreferences(PREFS_AUTOBACKUP, Context.MODE_PRIVATE);
 
-        long time = prefs.getLong(KEY_LASTBACKUP, 0);
+        long time = prefs.getLong(KEY_AUTOBACKUP_LAST_TIME, 0);
         if (time == 0) {
             // For new installs set last time to now so backup will not run right away.
             time = System.currentTimeMillis();
-            prefs.edit().putLong(KEY_LASTBACKUP, time).apply();
+            prefs.edit().putLong(KEY_AUTOBACKUP_LAST_TIME, time).apply();
         }
 
         return time;
@@ -102,7 +104,7 @@ public class BackupSettings {
     public static void setLastAutoBackupTimeToNow(Context context) {
         context.getSharedPreferences(PREFS_AUTOBACKUP, Context.MODE_PRIVATE)
                 .edit()
-                .putLong(KEY_LASTBACKUP, System.currentTimeMillis())
+                .putLong(KEY_AUTOBACKUP_LAST_TIME, System.currentTimeMillis())
                 .apply();
     }
 
