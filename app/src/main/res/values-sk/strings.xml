@@ -44,7 +44,7 @@
     <string name="search_hint">Hľadať epizódy</string>
     <!-- Status messages -->
     <string name="updated">Aktualizované na najnovšiu verziu.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Podrobnosti</string>
     <string name="norating">Nedostupné</string>
     <string name="unknown">neznámy</string>
     <string name="offline">Pripojte sa k sieti a skúste to znova.</string>
