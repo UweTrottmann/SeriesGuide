@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
     style="@style/FirstRunColumn"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/default_padding"
     app:cardPreventCornerOverlap="false">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containerCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -14,32 +16,37 @@
             android:id="@+id/buttonDismiss"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_alignParentEnd="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/dismiss"
-            android:src="@drawable/ic_clear_24dp" />
+            android:src="@drawable/ic_clear_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textViewTitle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/large_padding"
             android:layout_marginTop="@dimen/large_padding"
-            android:layout_marginEnd="@dimen/large_padding"
             android:text="@string/get_started"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5" />
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5"
+            app:layout_constraintEnd_toStartOf="@+id/buttonDismiss"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/containerNoSpoilers"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewTitle"
             android:layout_marginTop="@dimen/large_padding"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:minHeight="?android:attr/listPreferredItemHeight"
             android:paddingStart="@dimen/large_padding"
-            android:paddingEnd="@dimen/large_padding">
+            android:paddingEnd="@dimen/large_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle">
 
             <CheckBox
                 android:id="@+id/checkboxNoSpoilers"
@@ -76,14 +83,16 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/containerDataSaver"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/containerNoSpoilers"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:minHeight="?android:attr/listPreferredItemHeight"
             android:paddingStart="@dimen/large_padding"
-            android:paddingEnd="@dimen/large_padding">
+            android:paddingEnd="@dimen/large_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/containerNoSpoilers">
 
             <CheckBox
                 android:id="@+id/checkboxDataSaver"
@@ -118,53 +127,59 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:id="@+id/containerButtons"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/buttonAddShow"
+            style="@style/Widget.SeriesGuide.Button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/containerDataSaver"
-            android:gravity="end"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/default_padding"
-            android:paddingTop="@dimen/large_padding"
-            android:paddingEnd="@dimen/default_padding"
-            android:paddingBottom="@dimen/inline_padding">
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/action_shows_add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/containerDataSaver" />
 
-            <Button
-                android:id="@+id/buttonAddShow"
-                style="@style/Widget.SeriesGuide.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/action_shows_add" />
+        <Button
+            android:id="@+id/buttonSignIn"
+            style="@style/Widget.SeriesGuide.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/hexagon_signin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonAddShow" />
 
-            <Button
-                android:id="@+id/buttonSignIn"
-                style="@style/Widget.SeriesGuide.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hexagon_signin" />
-
-            <Button
-                android:id="@+id/buttonRestoreBackup"
-                style="@style/Widget.SeriesGuide.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/import_button" />
-
-        </LinearLayout>
+        <Button
+            android:id="@+id/buttonRestoreBackup"
+            style="@style/Widget.SeriesGuide.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/import_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonSignIn" />
 
         <include
             android:id="@+id/dividerBottom"
             layout="@layout/divider_horizontal"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/containerButtons" />
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonRestoreBackup" />
 
         <TextView
             android:id="@+id/textViewPolicyLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/dividerBottom"
             android:layout_marginStart="@dimen/large_padding"
             android:layout_marginEnd="@dimen/large_padding"
             android:background="?attr/selectableItemBackground"
@@ -172,8 +187,10 @@
             android:paddingTop="@dimen/default_padding"
             android:paddingBottom="@dimen/default_padding"
             android:text="@string/privacy_policy"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Accent" />
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Accent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dividerBottom" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>
