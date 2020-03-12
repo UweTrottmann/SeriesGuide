@@ -63,16 +63,6 @@ android {
         textOutput 'stdout'
     }
 
-    packagingOptions {
-        exclude '/firebase-*.properties'
-        exclude '/play-services-*.properties'
-        exclude '/META-INF/proguard/*.pro'
-        // exclude Kotlin files only required for reflection
-        exclude '**/*.kotlin_builtins'
-        exclude '**/*.kotlin_metadata'
-        exclude '**/*.kotlin_module'
-    }
-
     testOptions {
         unitTests {
             includeAndroidResources = true
