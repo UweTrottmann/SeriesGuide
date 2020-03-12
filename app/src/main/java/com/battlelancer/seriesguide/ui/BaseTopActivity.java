@@ -150,9 +150,8 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
                 .findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setMaxLines(5);
 
-        newSnackbar.setAction(R.string.preferences, v -> startActivity(
-                new Intent(this, DataLiberationActivity.class)
-                        .putExtra(DataLiberationActivity.EXTRA_SHOW_AUTOBACKUP, true)));
+        newSnackbar.setAction(R.string.preferences, v ->
+                startActivity(DataLiberationActivity.intentToShowAutoBackup(this)));
         newSnackbar.show();
 
         snackbar = newSnackbar;

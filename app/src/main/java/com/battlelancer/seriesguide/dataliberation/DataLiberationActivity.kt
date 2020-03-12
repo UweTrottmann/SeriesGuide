@@ -1,5 +1,7 @@
 package com.battlelancer.seriesguide.dataliberation
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
@@ -51,7 +53,13 @@ class DataLiberationActivity : BaseActivity() {
     }
 
     companion object {
-        const val EXTRA_SHOW_AUTOBACKUP = "EXTRA_SHOW_AUTOBACKUP"
+        private const val EXTRA_SHOW_AUTOBACKUP = "EXTRA_SHOW_AUTOBACKUP"
+
+        @JvmStatic
+        fun intentToShowAutoBackup(context: Context): Intent {
+            return Intent(context, DataLiberationActivity::class.java)
+                .putExtra(EXTRA_SHOW_AUTOBACKUP, true)
+        }
     }
 
 }
