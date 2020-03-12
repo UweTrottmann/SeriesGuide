@@ -6,8 +6,11 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.core.content.edit
+import androidx.core.view.isGone
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ViewFirstRunBinding
+import com.battlelancer.seriesguide.dataliberation.AutoBackupTools
+import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.util.TaskManager
@@ -31,6 +34,12 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     override fun onFinishInflate() {
         super.onFinishInflate()
+
+        binding.groupAutoBackupDetected.isGone =
+            !AutoBackupTools.isAutoBackupMaybeAvailable(context)
+        binding.buttonRestoreAutoBackup.setOnClickListener {
+            context.startActivity(DataLiberationActivity.intentToShowAutoBackup(context))
+        }
 
         binding.containerNoSpoilers.setOnClickListener { v ->
             // new state is inversion of current state

@@ -488,6 +488,7 @@
     <string name="restore_auto_backup">Restore Auto Backup</string>
     <string name="autobackup_files_missing">To use auto backup, select valid backup files</string>
     <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
 
     <!-- Welcome dialog -->
     <string name="get_started">Get started</string>

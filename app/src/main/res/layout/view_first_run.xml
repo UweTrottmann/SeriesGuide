@@ -34,6 +34,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/textViewAutoBackupDetected"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="@string/autobackup_restore_available"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Accent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+        <Button
+            android:id="@+id/buttonRestoreAutoBackup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/restore_auto_backup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAutoBackupDetected" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/containerNoSpoilers"
             android:layout_width="0dp"
@@ -46,7 +71,7 @@
             android:paddingEnd="@dimen/large_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTitle">
+            app:layout_constraintTop_toBottomOf="@+id/buttonRestoreAutoBackup">
 
             <CheckBox
                 android:id="@+id/checkboxNoSpoilers"
@@ -190,6 +215,12 @@
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Accent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dividerBottom" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupAutoBackupDetected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="textViewAutoBackupDetected,buttonRestoreAutoBackup" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

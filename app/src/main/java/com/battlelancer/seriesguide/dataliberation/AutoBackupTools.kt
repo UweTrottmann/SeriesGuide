@@ -50,6 +50,13 @@ object AutoBackupTools {
 
     data class BackupFile(val file: File, val timestamp: Long)
 
+    /**
+     * Only checks if an auto backup file for shows is available, likely others are then, too.
+     */
+    fun isAutoBackupMaybeAvailable(context: Context): Boolean {
+        return getLatestBackupOrNull(JsonExportTask.BACKUP_SHOWS, context) != null
+    }
+
     @JvmStatic
     fun getLatestBackupOrNull(@BackupType type: Int, context: Context): BackupFile? {
         val backup = when (type) {
