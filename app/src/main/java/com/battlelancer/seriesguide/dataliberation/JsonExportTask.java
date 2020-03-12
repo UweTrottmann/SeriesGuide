@@ -258,6 +258,12 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 }
                 FileOutputStream out = new FileOutputStream(pfd.getFileDescriptor());
 
+                // Even though using streams and FileOutputStream does not append by
+                // default, using Storage Access Framework just overwrites existing
+                // bytes, potentially leaving old bytes hanging over:
+                // so truncate the file first to clear any existing bytes.
+                out.getChannel().truncate(0);
+
                 if (type == BACKUP_SHOWS) {
                     writeJsonStreamShows(out, data);
                 } else if (type == BACKUP_LISTS) {

@@ -45,6 +45,7 @@
         android:id="@+id/viewPeopleShadowStart"
         android:layout_width="4dp"
         android:layout_height="0dp"
+        android:background="@drawable/sg_shadow_right_left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/guidelinePeople"
         app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />

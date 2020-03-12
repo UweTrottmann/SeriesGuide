@@ -32,7 +32,6 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.Utils
-import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.FastScrollerDecoration
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -167,11 +166,6 @@ class CalendarFragment2 : ScopedFragment() {
         super.onCreateOptionsMenu(menu, inflater)
 
         inflater.inflate(R.menu.calendar_menu, menu)
-
-        val visibilitySettingsIcon = ViewTools.vectorIconWhite(
-            activity, activity!!.theme, R.drawable.ic_visibility_black_24dp
-        )
-        menu.findItem(R.id.menu_calendar_visibility).icon = visibilitySettingsIcon
 
         // set menu items to current values
         val context = context!!

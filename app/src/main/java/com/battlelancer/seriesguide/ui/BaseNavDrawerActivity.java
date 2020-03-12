@@ -17,7 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.battlelancer.seriesguide.R;
@@ -116,13 +115,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
     @Override
     protected void setCustomTheme() {
-        if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light) {
-            setTheme(R.style.Theme_SeriesGuide_Light_Drawer);
-        } else if (SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_DarkBlue) {
-            setTheme(R.style.Theme_SeriesGuide_DarkBlue_Drawer);
-        } else {
-            setTheme(R.style.Theme_SeriesGuide_Drawer);
-        }
+        setTheme(R.style.Theme_SeriesGuide_DayNight_Drawer);
     }
 
     @Override
@@ -162,7 +155,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
      */
     public void setupNavDrawer() {
         drawerLayout = findViewById(R.id.drawer_layout);
-        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         actionBarToolbar = drawerLayout.findViewById(R.id.sgToolbar);
 
@@ -183,12 +175,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         if (!AppSettings.isUserDebugModeEnabled(this)) {
             navigationView.getMenu().removeItem(R.id.navigation_sub_item_debug);
         }
-        navigationView.setItemIconTintList(ContextCompat.getColorStateList(this,
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorNavDrawerIcon)));
-        navigationView.setItemTextColor(ContextCompat.getColorStateList(this,
-                Utils.resolveAttributeToResourceId(getTheme(), R.attr.sgColorNavDrawerText)));
-        navigationView.setItemBackgroundResource(Utils.resolveAttributeToResourceId(getTheme(),
-                R.attr.sgActivatedItemBackgroundDrawer));
         navigationView.setNavigationItemSelectedListener(
                 menuItem -> {
                     onNavItemClick(menuItem.getItemId());

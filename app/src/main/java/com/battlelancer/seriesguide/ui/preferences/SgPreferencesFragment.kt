@@ -15,7 +15,6 @@ import android.provider.Settings
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.preference.ListPreference
@@ -43,14 +42,12 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
-import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.TimeOffsetDialogFragment
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.LanguageTools
-import com.battlelancer.seriesguide.util.Shadows
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
@@ -142,25 +139,13 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
         // Theme switcher
         findPreference<ListPreference>(DisplaySettings.KEY_THEME)!!.apply {
-            if (hasAccessToX) {
-                setOnPreferenceChangeListener { preference, newValue ->
-                    if (DisplaySettings.KEY_THEME == preference.key) {
-                        ThemeUtils.updateTheme(newValue as String)
-                        Shadows.getInstance().resetShadowColor()
-
-                        // restart to apply new theme, go back to this settings screen
-                        TaskStackBuilder.create(activity!!)
-                            .addNextIntent(Intent(activity, ShowsActivity::class.java))
-                            .addNextIntent(activity!!.intent)
-                            .startActivities()
-                    }
-                    true
+            setOnPreferenceChangeListener { preference, newValue ->
+                if (DisplaySettings.KEY_THEME == preference.key) {
+                    ThemeUtils.updateTheme(newValue as String)
                 }
-                setListPreferenceSummary(this)
-            } else {
-                onPreferenceChangeListener = sNoOpChangeListener
-                setSummary(R.string.onlyx)
+                true
             }
+            setListPreferenceSummary(this)
         }
 
         // show currently set values for list prefs
@@ -176,6 +161,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         val thresholdPref: Preference = findPreference(NotificationSettings.KEY_THRESHOLD)!!
         val selectionPref: Preference = findPreference(NotificationSettings.KEY_SELECTION)!!
         val hiddenPref: Preference = findPreference(NotificationSettings.KEY_IGNORE_HIDDEN)!!
+        val onlyNextPref: Preference = findPreference(NotificationSettings.KEY_ONLY_NEXT_EPISODE)!!
         // only visible pre-O
         val vibratePref: Preference? = findPreference(NotificationSettings.KEY_VIBRATE)
         val ringtonePref: Preference? = findPreference(NotificationSettings.KEY_RINGTONE)
@@ -206,6 +192,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             thresholdPref.isEnabled = isNotificationsEnabled
             selectionPref.isEnabled = isNotificationsEnabled
             hiddenPref.isEnabled = isNotificationsEnabled
+            onlyNextPref.isEnabled = isNotificationsEnabled
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 channelsPref?.isEnabled = isNotificationsEnabled
             } else {
@@ -219,6 +206,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             thresholdPref.isEnabled = false
             selectionPref.isEnabled = false
             hiddenPref.isEnabled = false
+            onlyNextPref.isEnabled = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 channelsPref?.isEnabled = false
             } else {
@@ -467,7 +455,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             || DisplaySettings.KEY_DISPLAY_EXACT_DATE == key
             || DisplaySettings.KEY_PREVENT_SPOILERS == key) {
             // update any widgets
-            ListWidgetProvider.notifyDataChanged(activity)
+            ListWidgetProvider.notifyDataChanged(activity!!)
         }
 
         if (DisplaySettings.KEY_LANGUAGE_FALLBACK == key) {

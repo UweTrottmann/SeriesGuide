@@ -40,8 +40,7 @@
         android:contentDescription="@null"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_watch_black_24dp"
-        tools:tint="?attr/sgColorIcon" />
+        tools:src="@drawable/ic_watch_black_24dp" />
 
     <TextView
         android:id="@+id/textViewSearchShow"

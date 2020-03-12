@@ -11,7 +11,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import androidx.core.content.ContextCompat;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -29,6 +28,7 @@ import com.battlelancer.seriesguide.ui.lists.ListsPagerAdapter;
 import com.battlelancer.seriesguide.ui.lists.ListsReorderDialogFragment;
 import com.battlelancer.seriesguide.ui.lists.ListsTools;
 import com.battlelancer.seriesguide.util.DialogTools;
+import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
 import org.greenrobot.eventbus.EventBus;
@@ -72,7 +72,8 @@ public class ListsActivity extends BaseTopActivity {
         viewPager.setAdapter(listsAdapter);
 
         tabs.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
-        tabs.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.white));
+        tabs.setSelectedIndicatorColors(
+                ThemeUtils.getColorFromAttribute(tabs.getContext(), R.attr.colorOnPrimarySurface));
         tabs.setOnTabClickListener(position -> {
             if (viewPager.getCurrentItem() == position) {
                 showListManageDialog(position);

@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.people;
 
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,7 +10,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
-import com.battlelancer.seriesguide.util.Shadows;
 
 public class PeopleActivity extends BaseActivity implements PeopleFragment.OnShowPersonListener {
 
@@ -72,11 +70,6 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
 
         // if there is a pane shadow, we are in two pane layout
         isTwoPane = shadowPeoplePane != null;
-
-        if (shadowPeoplePane != null) {
-            Shadows.getInstance().setShadowDrawable(this, shadowPeoplePane,
-                    GradientDrawable.Orientation.RIGHT_LEFT);
-        }
 
         if (savedInstanceState == null) {
             // check if we should directly show a person

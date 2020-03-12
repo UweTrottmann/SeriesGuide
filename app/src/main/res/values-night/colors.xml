@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="sg_color_primary">@color/sg_color_primary_dark</color>
+    <color name="sg_color_secondary">@color/sg_color_secondary_dark</color>
+    <color name="sg_color_background">@color/sg_color_background_dark</color>
+    <!-- 38% primary -->
+    <color name="sg_color_control_activated">#60927bbc</color>
+
+    <color name="sg_background_gradient_start">#aa2a2a2a</color>
+    <color name="sg_background_gradient_end">#ff2a2a2a</color>
+
+</resources>

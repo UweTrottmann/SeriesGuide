@@ -3,12 +3,12 @@ package com.battlelancer.seriesguide.ui.dialogs
 import android.app.Dialog
 import android.os.Bundle
 import androidx.annotation.ArrayRes
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment.LanguageChangedEvent
 import com.battlelancer.seriesguide.util.safeShow
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import java.util.Locale
@@ -47,7 +47,7 @@ class LanguageChoiceDialogFragment : AppCompatDialogFragment() {
             }
         }
 
-        return AlertDialog.Builder(activity!!)
+        return MaterialAlertDialogBuilder(activity!!)
                 .setTitle(R.string.pref_language)
                 .setSingleChoiceItems(
                         languages,

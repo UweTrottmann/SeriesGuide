@@ -14,7 +14,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_movie_links"
-        android:icon="@drawable/ic_explore_white_24dp"
+        android:icon="@drawable/ic_link_black_24dp"
         android:title="@string/links"
         app:showAsAction="ifRoom">
         <menu>

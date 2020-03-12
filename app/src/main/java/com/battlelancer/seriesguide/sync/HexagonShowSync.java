@@ -93,7 +93,8 @@ public class HexagonShowSync {
                 } else {
                     hasMoreShows = false;
                 }
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException e) {
+                // Note: JSON parser may throw IllegalArgumentException.
                 Errors.logAndReportHexagon("get shows", e);
                 return false;
             }

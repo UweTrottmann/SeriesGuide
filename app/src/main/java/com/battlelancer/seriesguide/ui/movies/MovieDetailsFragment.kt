@@ -15,10 +15,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.collection.SparseArrayCompat
 import androidx.core.content.ContextCompat
@@ -29,13 +25,9 @@ import androidx.fragment.app.Fragment
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import androidx.palette.graphics.Palette
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
-import butterknife.OnLongClick
-import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.databinding.FragmentMovieBinding
 import com.battlelancer.seriesguide.extensions.ActionsHelper
 import com.battlelancer.seriesguide.extensions.ExtensionManager
 import com.battlelancer.seriesguide.extensions.MovieActionsContract
@@ -48,7 +40,6 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.ui.people.MovieCreditsLoader
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
@@ -78,72 +69,8 @@ import java.util.ArrayList
  */
 class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
-    private lateinit var unbinder: Unbinder
-    @BindView(R.id.rootLayoutMovie)
-    lateinit var rootLayoutMovie: FrameLayout
-    @BindView(R.id.progressBar)
-    lateinit var progressBar: View
-    @BindView(R.id.containerMovieButtons)
-    lateinit var containerMovieButtons: View
-    @BindView(R.id.dividerMovieButtons)
-    lateinit var dividerMovieButtons: View
-    @BindView(R.id.buttonMovieCheckIn)
-    lateinit var buttonMovieCheckIn: Button
-    @BindView(R.id.buttonMovieStreamingSearch)
-    lateinit var buttonMovieStreamingSearch: Button
-    @BindView(R.id.buttonMovieWatched)
-    lateinit var buttonMovieWatched: Button
-    @BindView(R.id.buttonMovieCollected)
-    lateinit var buttonMovieCollected: Button
-    @BindView(R.id.buttonMovieWatchlisted)
-    lateinit var buttonMovieWatchlisted: Button
-    @BindView(R.id.containerRatings)
-    lateinit var containerRatings: View
-    @BindView(R.id.textViewRatingsTmdbValue)
-    lateinit var textViewRatingsTmdbValue: TextView
-    @BindView(R.id.textViewRatingsTmdbVotes)
-    lateinit var textViewRatingsTmdbVotes: TextView
-    @BindView(R.id.textViewRatingsTraktVotes)
-    lateinit var textViewRatingsTraktVotes: TextView
-    @BindView(R.id.textViewRatingsTraktValue)
-    lateinit var textViewRatingsTraktValue: TextView
-    @BindView(R.id.textViewRatingsTraktUserLabel)
-    lateinit var textViewRatingsTraktUserLabel: TextView
-    @BindView(R.id.textViewRatingsTraktUser)
-    lateinit var textViewRatingsTraktUser: TextView
-    @BindView(R.id.contentContainerMovie)
-    lateinit var contentContainerMovie: NestedScrollView
-    @BindView(R.id.contentContainerMovieRight)
-    @JvmField
-    var contentContainerMovieRight: NestedScrollView? = null
-    @BindView(R.id.frameLayoutMoviePoster)
-    lateinit var frameLayoutMoviePoster: FrameLayout
-    @BindView(R.id.imageViewMoviePoster)
-    lateinit var imageViewMoviePoster: ImageView
-    @BindView(R.id.textViewMovieTitle)
-    lateinit var textViewMovieTitle: TextView
-    @BindView(R.id.textViewMovieDescription)
-    lateinit var textViewMovieDescription: TextView
-    @BindView(R.id.textViewMovieDate)
-    lateinit var textViewMovieDate: TextView
-    @BindView(R.id.textViewMovieGenresLabel)
-    lateinit var textViewMovieGenresLabel: View
-    @BindView(R.id.textViewMovieGenres)
-    lateinit var textViewMovieGenres: TextView
-    @BindView(R.id.containerCast)
-    lateinit var containerCast: ViewGroup
-    @BindView(R.id.labelCast)
-    lateinit var labelCast: View
-    @BindView(R.id.containerCrew)
-    lateinit var containerCrew: ViewGroup
-    @BindView(R.id.labelCrew)
-    lateinit var labelCrew: View
-    @BindView(R.id.buttonMovieLanguage)
-    lateinit var buttonMovieLanguage: Button
-    @BindView(R.id.buttonMovieComments)
-    lateinit var buttonMovieComments: Button
-    @BindView(R.id.containerMovieActions)
-    lateinit var containerMovieActions: ViewGroup
+    private var _binding: FragmentMovieBinding? = null
+    private val binding get() = _binding!!
 
     private var tmdbId: Int = 0
     private var movieDetails: MovieDetails? = MovieDetails()
@@ -154,51 +81,45 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     private var paletteAsyncTask: AsyncTask<Bitmap, Void, Palette>? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_movie, container, false)
-        unbinder = ButterKnife.bind(this, view)
+        _binding = FragmentMovieBinding.inflate(inflater, container, false)
+        val view = binding.root
 
-        progressBar.isGone = true
-        textViewMovieGenresLabel.isGone = true
+        binding.progressBar.isGone = true
+        binding.textViewMovieGenresLabel.isGone = true
 
         // important action buttons
-        containerMovieButtons.isGone = true
-        containerRatings.isGone = true
-        val theme = activity!!.theme
-        ViewTools.setVectorIconTop(theme, buttonMovieWatched, R.drawable.ic_watch_black_24dp)
-        ViewTools.setVectorIconTop(theme, buttonMovieCollected, R.drawable.ic_collect_black_24dp)
-        ViewTools.setVectorIconTop(theme, buttonMovieWatchlisted, R.drawable.ic_list_add_white_24dp)
-        ViewTools.setVectorIconLeft(theme, buttonMovieCheckIn, R.drawable.ic_checkin_black_24dp)
-        ViewTools.setVectorIconLeft(
-            theme,
-            buttonMovieStreamingSearch,
-            R.drawable.ic_play_arrow_black_24dp
-        )
-        CheatSheet.setup(buttonMovieCheckIn)
+        binding.containerMovieButtons.root.isGone = true
+        binding.containerMovieButtons.buttonMovieCheckIn.setOnClickListener { onButtonCheckInClick() }
+        binding.containerMovieButtons.buttonMovieStreamingSearch.apply {
+            setOnClickListener { onButtonStreamingSearchClick() }
+            setOnLongClickListener { onButtonStreamingSearchLongClick() }
+        }
+        binding.containerRatings.root.isGone = true
+        CheatSheet.setup(binding.containerMovieButtons.buttonMovieCheckIn)
 
         // language button
-        buttonMovieLanguage.isGone = true
-        ViewTools.setVectorIconLeft(theme, buttonMovieLanguage, R.drawable.ic_language_white_24dp)
-        CheatSheet.setup(buttonMovieLanguage, R.string.pref_language)
-        buttonMovieLanguage.setOnClickListener {
+        binding.buttonMovieLanguage.isGone = true
+        CheatSheet.setup(binding.buttonMovieLanguage, R.string.pref_language)
+        binding.buttonMovieLanguage.setOnClickListener {
             MovieLocalizationDialogFragment.show(fragmentManager)
         }
 
         // comments button
-        buttonMovieComments.isGone = true
-        ViewTools.setVectorIconLeft(theme, buttonMovieComments, R.drawable.ic_forum_black_24dp)
+        binding.buttonMovieComments.isGone = true
 
         // cast and crew
         setCastVisibility(false)
         setCrewVisibility(false)
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
-        textViewMovieTitle.copyTextToClipboardOnLongClick()
-        textViewMovieDate.copyTextToClipboardOnLongClick()
-        textViewMovieDescription.copyTextToClipboardOnLongClick()
-        textViewMovieGenres.copyTextToClipboardOnLongClick()
+        binding.textViewMovieTitle.copyTextToClipboardOnLongClick()
+        binding.textViewMovieDate.copyTextToClipboardOnLongClick()
+        binding.textViewMovieDescription.copyTextToClipboardOnLongClick()
+        binding.textViewMovieGenres.copyTextToClipboardOnLongClick()
 
         return view
     }
@@ -239,17 +160,17 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
 
         // action bar height is pre-set as top margin, add to it
-        val decorationHeightPx = pixelInsetTop + contentContainerMovie.paddingTop
-        contentContainerMovie.setPadding(0, decorationHeightPx, 0, 0)
+        val decorationHeightPx = pixelInsetTop + binding.contentContainerMovie.paddingTop
+        binding.contentContainerMovie.setPadding(0, decorationHeightPx, 0, 0)
 
         // dual pane layout?
-        contentContainerMovieRight?.setPadding(0, decorationHeightPx, 0, 0)
+        binding.contentContainerMovieRight?.setPadding(0, decorationHeightPx, 0, 0)
 
         // show toolbar title and background when scrolling
         val defaultPaddingPx = resources.getDimensionPixelSize(R.dimen.default_padding)
         val scrollChangeListener = ToolbarScrollChangeListener(defaultPaddingPx, decorationHeightPx)
-        contentContainerMovie.setOnScrollChangeListener(scrollChangeListener)
-        contentContainerMovieRight?.setOnScrollChangeListener(scrollChangeListener)
+        binding.contentContainerMovie.setOnScrollChangeListener(scrollChangeListener)
+        binding.contentContainerMovieRight?.setOnScrollChangeListener(scrollChangeListener)
     }
 
     override fun onStart() {
@@ -282,23 +203,18 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // This ensures that the anonymous callback we have does not prevent the fragment from
         // being garbage collected. It also prevents our callback from getting invoked even after the
         // fragment is destroyed.
-        Picasso.get().cancelRequest(imageViewMoviePoster)
+        Picasso.get().cancelRequest(binding.imageViewMoviePoster)
         // same for Palette task
         paletteAsyncTask?.cancel(true)
 
-        unbinder.unbind()
+        _binding = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
 
         movieDetails?.let {
-            // choose theme variant
-            val isLightTheme = SeriesGuidePreferences.THEME == R.style.Theme_SeriesGuide_Light
-            inflater.inflate(
-                if (isLightTheme) R.menu.movie_details_menu_light else R.menu.movie_details_menu,
-                menu
-            )
+            inflater.inflate(R.menu.movie_details_menu, menu)
 
             // enable/disable actions
             val isEnableShare = !it.tmdbMovie()?.title.isNullOrEmpty()
@@ -358,10 +274,10 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         val rating = movieDetails.userRating
 
         movieTitle = tmdbMovie.title
-        textViewMovieTitle.text = tmdbMovie.title
+        binding.textViewMovieTitle.text = tmdbMovie.title
         activity!!.title = tmdbMovie.title
-        textViewMovieDescription.text = TextTools.textWithTmdbSource(
-            textViewMovieDescription.context,
+        binding.textViewMovieDescription.text = TextTools.textWithTmdbSource(
+            binding.textViewMovieDescription.context,
             tmdbMovie.overview
         )
 
@@ -374,27 +290,26 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         tmdbMovie.runtime?.let {
             releaseAndRuntime.append(getString(R.string.runtime_minutes, it.toString()))
         }
-        textViewMovieDate.text = releaseAndRuntime.toString()
+        binding.textViewMovieDate.text = releaseAndRuntime.toString()
 
         // hide check-in if not connected to trakt or hexagon is enabled
         val isConnectedToTrakt = TraktCredentials.get(activity).hasCredentials()
         val hideCheckIn = !isConnectedToTrakt || HexagonSettings.isEnabled(activity)
-        buttonMovieCheckIn.isGone = hideCheckIn
+        binding.containerMovieButtons.buttonMovieCheckIn.isGone = hideCheckIn
         // hide streaming search if turned off
         val hideStreamingSearch = StreamingSearch.isTurnedOff(requireContext())
-        buttonMovieStreamingSearch.isGone = hideStreamingSearch
-        dividerMovieButtons.isGone = hideCheckIn && hideStreamingSearch
+        binding.containerMovieButtons.buttonMovieStreamingSearch.isGone = hideStreamingSearch
+        binding.containerMovieButtons.dividerMovieButtons.isGone = hideCheckIn && hideStreamingSearch
 
         // watched button
-        val theme = activity!!.theme
-        buttonMovieWatched.also {
+        binding.containerMovieButtons.buttonMovieWatched.also {
             val textRes = if (isWatched) R.string.action_unwatched else R.string.action_watched
             it.setText(textRes)
             CheatSheet.setup(it, textRes)
             if (isWatched) {
-                ViewTools.setVectorDrawableTop(theme, it, R.drawable.ic_watched_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_watched_24dp)
             } else {
-                ViewTools.setVectorIconTop(theme, it, R.drawable.ic_watch_black_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_watch_black_24dp)
             }
             it.setOnClickListener {
                 if (isWatched) {
@@ -406,11 +321,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
 
         // collected button
-        buttonMovieCollected.also {
+        binding.containerMovieButtons.buttonMovieCollected.also {
             if (inCollection) {
-                ViewTools.setVectorDrawableTop(theme, it, R.drawable.ic_collected_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_collected_24dp)
             } else {
-                ViewTools.setVectorIconTop(theme, it, R.drawable.ic_collect_black_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_collect_black_24dp)
             }
             val textRes =
                 if (inCollection) R.string.action_collection_remove else R.string.action_collection_add
@@ -426,11 +341,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
 
         // watchlist button
-        buttonMovieWatchlisted.also {
+        binding.containerMovieButtons.buttonMovieWatchlisted.also {
             if (inWatchlist) {
-                ViewTools.setVectorDrawableTop(theme, it, R.drawable.ic_list_added_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_list_added_24dp)
             } else {
-                ViewTools.setVectorIconTop(theme, it, R.drawable.ic_list_add_white_24dp)
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_list_add_white_24dp)
             }
             val textRes = if (inWatchlist) R.string.watchlist_remove else R.string.watchlist_add
             it.setText(textRes)
@@ -445,76 +360,76 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
 
         // show button bar
-        containerMovieButtons.isGone = false
+        binding.containerMovieButtons.root.isGone = false
 
         // language button
-        buttonMovieLanguage.also {
+        binding.buttonMovieLanguage.also {
             val languageData = LanguageTools.getMovieLanguageData(context)
             it.text = languageData?.languageString
             it.isGone = false
         }
 
         // ratings
-        textViewRatingsTmdbValue.text = TraktTools.buildRatingString(tmdbMovie.vote_average)
-        textViewRatingsTmdbVotes.text =
+        binding.containerRatings.textViewRatingsTmdbValue.text = TraktTools.buildRatingString(tmdbMovie.vote_average)
+        binding.containerRatings.textViewRatingsTmdbVotes.text =
             TraktTools.buildRatingVotesString(activity, tmdbMovie.vote_count)
         traktRatings?.let {
-            textViewRatingsTraktVotes.text =
+            binding.containerRatings.textViewRatingsTraktVotes.text =
                 TraktTools.buildRatingVotesString(activity, it.votes)
-            textViewRatingsTraktValue.text = TraktTools.buildRatingString(it.rating)
+            binding.containerRatings.textViewRatingsTraktValue.text = TraktTools.buildRatingString(it.rating)
         }
         // if movie is not in database, can't handle user ratings
         if (!inCollection && !inWatchlist && !isWatched) {
-            textViewRatingsTraktUserLabel.isGone = true
-            textViewRatingsTraktUser.isGone = true
-            containerRatings.isClickable = false
-            containerRatings.isLongClickable = false // cheat sheet
+            binding.containerRatings.textViewRatingsTraktUserLabel.isGone = true
+            binding.containerRatings.textViewRatingsTraktUser.isGone = true
+            binding.containerRatings.root.isClickable = false
+            binding.containerRatings.root.isLongClickable = false // cheat sheet
         } else {
-            textViewRatingsTraktUserLabel.isGone = false
-            textViewRatingsTraktUser.isGone = false
-            textViewRatingsTraktUser.text = TraktTools.buildUserRatingString(activity, rating)
-            containerRatings.setOnClickListener { rateMovie() }
-            CheatSheet.setup(containerRatings, R.string.action_rate)
+            binding.containerRatings.textViewRatingsTraktUserLabel.isGone = false
+            binding.containerRatings.textViewRatingsTraktUser.isGone = false
+            binding.containerRatings.textViewRatingsTraktUser.text = TraktTools.buildUserRatingString(activity, rating)
+            binding.containerRatings.root.setOnClickListener { rateMovie() }
+            CheatSheet.setup(binding.containerRatings.root, R.string.action_rate)
         }
-        containerRatings.isGone = false
+        binding.containerRatings.root.isGone = false
 
         // genres
-        textViewMovieGenresLabel.isGone = false
+        binding.textViewMovieGenresLabel.isGone = false
         ViewTools.setValueOrPlaceholder(
-            textViewMovieGenres, TmdbTools.buildGenresString(tmdbMovie.genres)
+            binding.textViewMovieGenres, TmdbTools.buildGenresString(tmdbMovie.genres)
         )
 
         // trakt comments link
-        buttonMovieComments.setOnClickListener { v ->
+        binding.buttonMovieComments.setOnClickListener { v ->
             val i = Intent(activity, TraktCommentsActivity::class.java)
             i.putExtras(TraktCommentsActivity.createInitBundleMovie(movieTitle, tmdbId))
             Utils.startActivityWithAnimation(activity, i, v)
         }
-        buttonMovieComments.isGone = false
+        binding.buttonMovieComments.isGone = false
 
         // load poster, cache on external storage
         if (tmdbMovie.poster_path.isNullOrEmpty()) {
-            frameLayoutMoviePoster.isClickable = false
-            frameLayoutMoviePoster.isFocusable = false
+            binding.frameLayoutMoviePoster.isClickable = false
+            binding.frameLayoutMoviePoster.isFocusable = false
         } else {
             val smallImageUrl = (TmdbSettings.getImageBaseUrl(activity)
                     + TmdbSettings.POSTER_SIZE_SPEC_W342 + tmdbMovie.poster_path)
             ServiceUtils.loadWithPicasso(activity, smallImageUrl)
-                .into(imageViewMoviePoster, object : Callback.EmptyCallback() {
+                .into(binding.imageViewMoviePoster, object : Callback.EmptyCallback() {
                     override fun onSuccess() {
-                        val bitmap = (imageViewMoviePoster.drawable as BitmapDrawable).bitmap
+                        val bitmap = (binding.imageViewMoviePoster.drawable as BitmapDrawable).bitmap
                         paletteAsyncTask = Palette.from(bitmap)
                             .generate { palette ->
                                 if (palette != null) {
                                     var color = palette.getVibrantColor(Color.WHITE)
                                     color = ColorUtils.setAlphaComponent(color, 50)
-                                    rootLayoutMovie.setBackgroundColor(color)
+                                    binding.rootLayoutMovie.setBackgroundColor(color)
                                 }
                             }
                     }
                 })
             // click listener for high resolution poster
-            frameLayoutMoviePoster.also {
+            binding.frameLayoutMoviePoster.also {
                 it.isFocusable = true
                 it.setOnClickListener { view ->
                     val largeImageUrl = (TmdbSettings.getImageBaseUrl(activity)
@@ -538,7 +453,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // cast members
         if (credits.cast?.size != 0
-            && PeopleListHelper.populateMovieCast(activity, containerCast, credits)) {
+            && PeopleListHelper.populateMovieCast(activity, binding.moviePeople.containerCast, credits)) {
             setCastVisibility(true)
         } else {
             setCastVisibility(false)
@@ -546,15 +461,14 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // crew members
         if (credits.crew?.size != 0
-            && PeopleListHelper.populateMovieCrew(activity, containerCrew, credits)) {
+            && PeopleListHelper.populateMovieCrew(activity, binding.moviePeople.containerCrew, credits)) {
             setCrewVisibility(true)
         } else {
             setCrewVisibility(false)
         }
     }
 
-    @OnClick(R.id.buttonMovieCheckIn)
-    fun onButtonCheckInClick() {
+    private fun onButtonCheckInClick() {
         movieTitle?.let {
             if (it.isEmpty()) {
                 return
@@ -563,8 +477,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
     }
 
-    @OnClick(R.id.buttonMovieStreamingSearch)
-    fun onButtonStreamingSearchClick() {
+    private fun onButtonStreamingSearchClick() {
         movieTitle?.let {
             if (it.isEmpty()) {
                 return
@@ -577,8 +490,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
     }
 
-    @OnLongClick(R.id.buttonMovieStreamingSearch)
-    fun onButtonStreamingSearchLongClick(): Boolean {
+    private fun onButtonStreamingSearchLongClick(): Boolean {
         showStreamingSearchConfigDialog()
         return true
     }
@@ -592,7 +504,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         event: StreamingSearchConfigureDialog.StreamingSearchConfiguredEvent
     ) {
         if (event.turnedOff) {
-            buttonMovieStreamingSearch.isGone = true
+            binding.containerMovieButtons.buttonMovieStreamingSearch.isGone = true
         } else {
             onButtonStreamingSearchClick()
         }
@@ -626,11 +538,13 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     private fun setMovieButtonsEnabled(enabled: Boolean) {
-        buttonMovieCheckIn.isEnabled = enabled
-        buttonMovieWatched.isEnabled = enabled
-        buttonMovieCollected.isEnabled = enabled
-        buttonMovieWatchlisted.isEnabled = enabled
-        buttonMovieStreamingSearch.isEnabled = enabled
+        binding.containerMovieButtons.apply {
+            buttonMovieCheckIn.isEnabled = enabled
+            buttonMovieWatched.isEnabled = enabled
+            buttonMovieCollected.isEnabled = enabled
+            buttonMovieWatchlisted.isEnabled = enabled
+            buttonMovieStreamingSearch.isEnabled = enabled
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -666,7 +580,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         Timber.d("loadMovieActions: received %s actions for %s", actions.size, tmdbId)
         ActionsHelper.populateActions(
-            activity!!.layoutInflater, activity!!.theme, containerMovieActions, actions
+            activity!!.layoutInflater, activity!!.theme, binding.containerMovieActions, actions
         )
     }
 
@@ -689,13 +603,13 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     private fun setCrewVisibility(visible: Boolean) {
-        labelCrew.isGone = !visible
-        containerCrew.isGone = !visible
+        binding.moviePeople.labelCrew.isGone = !visible
+        binding.moviePeople.containerCrew.isGone = !visible
     }
 
     private fun setCastVisibility(visible: Boolean) {
-        labelCast.isGone = !visible
-        containerCast.isGone = !visible
+        binding.moviePeople.labelCast.isGone = !visible
+        binding.moviePeople.containerCast.isGone = !visible
     }
 
     private fun restartMovieLoader() {
@@ -707,7 +621,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
     private val movieLoaderCallbacks = object : LoaderManager.LoaderCallbacks<MovieDetails> {
         override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<MovieDetails> {
-            progressBar.isGone = false
+            binding.progressBar.isGone = false
             return MovieLoader(context, args!!.getInt(ARG_TMDB_ID))
         }
 
@@ -716,7 +630,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 return
             }
             this@MovieDetailsFragment.movieDetails = movieDetails
-            progressBar.isGone = true
+            binding.progressBar.isGone = true
 
             // we need at least values from database or tmdb
             if (movieDetails.tmdbMovie() != null) {
@@ -725,7 +639,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 activity!!.invalidateOptionsMenu()
             } else {
                 // if there is no local data and loading from network failed
-                textViewMovieDescription.text = if (AndroidUtils.isNetworkConnected(context)) {
+                binding.textViewMovieDescription.text = if (AndroidUtils.isNetworkConnected(context)) {
                     getString(R.string.api_error_generic, getString(R.string.tmdb))
                 } else {
                     getString(R.string.offline)

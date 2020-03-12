@@ -1,8 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginRight="@dimen/large_padding"
+    android:layout_marginEnd="@dimen/large_padding"
     android:baselineAligned="false"
     android:orientation="horizontal"
     tools:context=".ui.people.PersonFragment">
@@ -18,24 +19,23 @@
             android:layout_height="match_parent"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
-            android:src="@color/protection_dark"
-            tools:targetApi="lollipop" />
+            android:src="@color/protection_dark" />
 
         <TextView
             android:id="@+id/textViewPersonName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/imageViewPersonHeadshot"
+            android:layout_marginStart="@dimen/keyline"
+            android:layout_marginEnd="@dimen/large_padding"
             android:layout_marginBottom="@dimen/default_padding"
-            android:layout_marginLeft="@dimen/keyline"
-            android:layout_marginRight="@dimen/large_padding"
             android:ellipsize="end"
             android:maxLines="2"
             android:shadowColor="@color/protection_dark"
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="4"
-            android:textAppearance="@style/TextAppearance.Display1.White"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline4.White"
             tools:text="Kiefer Sutherland" />
 
         <ProgressBar
@@ -57,27 +57,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/large_padding"
-            android:paddingTop="@dimen/large_padding">
+            android:paddingTop="@dimen/large_padding"
+            android:paddingBottom="@dimen/large_padding">
 
             <TextView
                 android:id="@+id/textViewPersonBiographyHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/large_padding"
+                android:layout_marginEnd="@dimen/keyline"
                 android:layout_marginBottom="@dimen/default_padding"
-                android:layout_marginLeft="@dimen/large_padding"
-                android:layout_marginRight="@dimen/keyline"
                 android:text="@string/person_biography"
-                android:textAppearance="@style/TextAppearance.Title" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6" />
 
             <TextView
                 android:id="@+id/textViewPersonBiography"
                 style="@style/Widget.SeriesGuide.TextView.Body"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/large_padding"
-                android:layout_marginRight="@dimen/keyline"
-                android:textAppearance="?attr/sgTextAppearanceBody1"
+                android:layout_marginStart="@dimen/large_padding"
+                android:layout_marginEnd="@dimen/keyline"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body1"
                 tools:text="Kiefer Sutherland  (born 21 December 1966) is a British-Canadian actor" />
 
             <Button
@@ -87,8 +87,8 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/tmdb"
-                tools:drawableLeft="@drawable/ic_link_black_24dp"
-                tools:drawableTint="?attr/sgColorIcon" />
+                app:icon="@drawable/ic_link_black_24dp"
+                app:iconGravity="start" />
 
             <Button
                 android:id="@+id/buttonPersonWebSearch"
@@ -96,8 +96,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:text="@string/web_search"
-                tools:drawableLeft="@drawable/ic_search_white_24dp"
-                tools:drawableTint="?attr/sgColorIcon" />
+                app:icon="@drawable/ic_search_white_24dp"
+                app:iconGravity="start" />
 
         </LinearLayout>
 

@@ -75,7 +75,7 @@
             app:entries="@array/themeSelection"
             app:entryValues="@array/themeSelectionData"
             app:iconSpaceReserved="false"
-            app:key="com.battlelancer.seriesguide.theme"
+            app:key="com.uwetrottmann.seriesguide.theme"
             app:title="@string/pref_theme" />
 
         <ListPreference
@@ -113,7 +113,7 @@
             app:title="@string/pref_translate">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://crowdin.net/project/seriesguide-translations/invite" />
+                android:data="https://crowdin.com/project/seriesguide-translations" />
         </Preference>
 
         <Preference

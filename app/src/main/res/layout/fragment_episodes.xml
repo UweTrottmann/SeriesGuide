@@ -10,25 +10,25 @@
         android:id="@+id/linearLayoutEpisodesToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/keyline_minus_16"
+        android:layout_marginStart="@dimen/keyline_minus_16"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:targetApi="lollipop">
+        app:layout_constraintTop_toTopOf="parent">
 
+        <!-- Icon set in code. -->
         <ImageView
             android:id="@+id/imageViewEpisodesWatchedToggle"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@null"
             android:focusable="true"
             android:padding="@dimen/padding_button"
-            tools:src="@drawable/ic_watch_all_black_24dp"
-            tools:tint="?attr/sgColorIcon" />
+            tools:src="@drawable/ic_watch_all_black_24dp" />
 
+        <!-- Icon set in code. -->
         <ImageView
             android:id="@+id/imageViewEpisodesCollectedToggle"
             android:layout_width="48dp"
@@ -38,8 +38,7 @@
             android:focusable="true"
             android:padding="@dimen/padding_button"
             app:layout_constraintStart_toEndOf="@id/imageViewEpisodesWatchedToggle"
-            tools:src="@drawable/ic_collect_all_black_24dp"
-            tools:tint="?attr/sgColorIcon" />
+            tools:src="@drawable/ic_collect_all_black_24dp" />
 
     </LinearLayout>
 
@@ -56,7 +55,7 @@
         android:id="@android:id/empty"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginLeft="@dimen/keyline_minus_16"
+        android:layout_marginStart="@dimen/keyline_minus_16"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -71,9 +70,10 @@
         style="@style/DefaultPadding.List"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginLeft="@dimen/keyline_minus_16"
+        android:layout_marginStart="@dimen/keyline_minus_16"
         android:nestedScrollingEnabled="true"
         android:paddingTop="0dp"
+        android:theme="@style/ThemeOverlay.SeriesGuide.CheckableList"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

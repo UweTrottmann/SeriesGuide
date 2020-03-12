@@ -136,36 +136,12 @@ public class WidgetSettings {
     }
 
     /**
-     * Returns if this widget should use a light theme instead of the default one.
+     * Returns if this widget should use a light theme instead of the dark one.
      */
     public static boolean isLightTheme(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
-
-        boolean isLightTheme = false;
-        try {
-            isLightTheme =
-                    Integer.parseInt(prefs.getString(KEY_PREFIX_WIDGET_THEME + appWidgetId, "0"))
-                            == 1;
-        } catch (NumberFormatException ignored) {
-        }
-        return isLightTheme;
-    }
-
-    /**
-     * Returns if this widget should use a completely dark theme (header is not colored) instead of
-     * the regular one.
-     */
-    public static boolean isDarkTheme(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
-
-        boolean isDarkTheme = false;
-        try {
-            isDarkTheme =
-                    Integer.parseInt(prefs.getString(KEY_PREFIX_WIDGET_THEME + appWidgetId, "0"))
-                            == 2;
-        } catch (NumberFormatException ignored) {
-        }
-        return isDarkTheme;
+        String value = context.getSharedPreferences(SETTINGS_FILE, 0)
+                .getString(KEY_PREFIX_WIDGET_THEME + appWidgetId, null);
+        return context.getString(R.string.widget_theme_light).equals(value);
     }
 
     /**
@@ -184,8 +160,10 @@ public class WidgetSettings {
         } catch (NumberFormatException ignored) {
         }
 
-        int baseColor = ContextCompat.getColor(context,
-                lightBackground ? R.color.grey_50 : R.color.grey_850);
+        int baseColor = ContextCompat.getColor(context, lightBackground
+                ? R.color.widget_default_background_light
+                : R.color.widget_default_background
+        );
         // strip alpha from base color
         baseColor = baseColor & 0xFFFFFF;
         // add new alpha

@@ -13,7 +13,15 @@ class TvdbImageToolsTest {
         val artworkUrl = TvdbImageTools.artworkUrl("example.jpg")
         println("Artwork URL: $artworkUrl")
         assertThat(artworkUrl).isNotEmpty()
-        assertThat(artworkUrl).endsWith("https://www.thetvdb.com/banners/example.jpg")
+        assertThat(artworkUrl).endsWith("https://artworks.thetvdb.com/banners/example.jpg")
+    }
+
+    @Test
+    fun artworkUrl_withLegacyCachePath() {
+        val url = TvdbImageTools.artworkUrl("_cache/posters/example.jpg")
+        println("Artwork URL: $url")
+        assertThat(url).isNotEmpty()
+        assertThat(url).endsWith("https://www.thetvdb.com/banners/_cache/posters/example.jpg")
     }
 
     @Test

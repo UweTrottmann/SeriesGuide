@@ -2,31 +2,20 @@
 <resources>
 
     <!-- Special drawables -->
-    <attr name="sgActivatedItemBackgroundDrawer" format="reference" />
     <attr name="sgBorderlessButtonBackground" format="reference" />
 
     <!-- Text colors -->
     <attr name="sgTextColorGreen" format="reference|color" />
     <attr name="sgTextColorSecondaryDim" format="reference|color" />
 
-    <!-- Text Appearances -->
-    <attr name="sgTextAppearanceBody1" format="reference" />
-    <attr name="sgTextAppearanceBody2" format="reference" />
-
     <!-- Other colors -->
     <attr name="sgColorBackgroundCard" format="reference|color" />
     <attr name="sgColorBackgroundDim" format="reference|color" />
     <attr name="sgColorIcon" format="reference|color" />
     <attr name="sgColorIconInactive" format="reference|color" />
-    <attr name="sgColorSeparator" format="reference|color" />
     <attr name="sgColorDivider" format="reference|color" />
-    <attr name="sgColorNavDrawerIcon" format="reference" />
-    <attr name="sgColorNavDrawerText" format="reference" />
     <attr name="sgColorShadow" format="reference|color" />
     <attr name="sgColorStatusBarOverlay" format="reference|color" />
-
-    <!-- Drawables -->
-    <attr name="drawableBackgroundGradient" format="reference" />
 
     <!-- Custom view attributes -->
     <declare-styleable name="EmptyView">

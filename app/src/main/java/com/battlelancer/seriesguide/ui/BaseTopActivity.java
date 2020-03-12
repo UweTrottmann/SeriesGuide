@@ -5,12 +5,15 @@ import android.accounts.Account;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SyncStatusObserver;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import androidx.annotation.IdRes;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatDelegate;
+import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
@@ -106,8 +109,26 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         }
     }
 
+    private static final int OPTIONS_SWITCH_THEME_ID = 0;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (BuildConfig.DEBUG) {
+            menu.add(0, 0, 0, "[Debug] Switch theme");
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == OPTIONS_SWITCH_THEME_ID) {
+            boolean isNightMode =
+                    AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
+            AppCompatDelegate.setDefaultNightMode(isNightMode
+                    ? AppCompatDelegate.MODE_NIGHT_NO
+                    : AppCompatDelegate.MODE_NIGHT_YES);
+            return true;
+        }
         // check if we should toggle the navigation drawer (app icon was touched)
         return toggleDrawer(item) || super.onOptionsItemSelected(item);
     }

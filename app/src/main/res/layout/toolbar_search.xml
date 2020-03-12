@@ -5,15 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sgToolbar"
-    style="@style/Widget.SeriesGuide.ActionBar"
+    style="@style/Widget.SeriesGuide.Toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary"
     android:minHeight="?attr/actionBarSize"
-    android:theme="?attr/actionBarTheme"
     app:contentInsetStartWithNavigation="0dp"
-    app:layout_scrollFlags="scroll|enterAlways|snap"
-    app:popupTheme="?attr/actionBarPopupTheme">
+    app:layout_scrollFlags="scroll|enterAlways|snap">
 
     <!-- focusableInTouchMode: prevent auto-focus on search text view. -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,26 +19,25 @@
         android:layout_height="wrap_content"
         android:focusableInTouchMode="true">
 
-        <AutoCompleteTextView
-            android:id="@+id/editTextSearchBar"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_toolbar"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/search"
             android:minWidth="250dp"
-            android:paddingRight="44dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="RtlSymmetry" />
+            app:endIconMode="clear_text"
 
-        <ImageButton
-            android:id="@+id/imageButtonSearchClear"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/clear"
-            android:src="@drawable/ic_clear_24dp"
-            app:layout_constraintRight_toRightOf="@+id/editTextSearchBar"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <AutoCompleteTextView
+                android:id="@+id/auto_complete_view_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="LabelFor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

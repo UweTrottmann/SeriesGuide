@@ -1,136 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Theme" />
+    <!-- ####################################### -->
+    <!-- DayNight themes -->
+    <!-- ####################################### -->
 
-    <style name="Theme.BaseSeriesGuide" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.SeriesGuide.DayNight" parent="Theme.SeriesGuide.Light" />
+
+    <style name="Theme.BaseSeriesGuide.Dark" parent="Theme.MaterialComponents.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 21 go here. -->
 
     </style>
 
-    <!-- SeriesGuides default theme -->
-    <style name="Theme.SeriesGuide" parent="Theme.BaseSeriesGuide">
+    <style name="Theme.SeriesGuide.Dark" parent="Theme.BaseSeriesGuide.Dark">
 
         <!-- All customizations that are NOT specific to a supported API-level can go here. -->
 
         <!-- Explicitly add windowActionBar as some devices crash due to it missing -->
         <item name="windowActionBar">false</item>
 
-        <!--   your app's branding color (for the app bar) -->
-        <item name="colorPrimary">@color/accent_primary</item>
-        <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
-        <item name="colorPrimaryDark">@color/accent_primary_dark</item>
-        <!--   theme UI controls like checkboxes and text fields -->
-        <item name="colorAccent">@color/teal_500</item>
+        <!-- The color displayed most frequently across your app’s screens and components. -->
+        <item name="colorPrimary">@color/sg_color_primary_dark</item>
+        <item name="colorPrimaryDark">#121212</item>
+        <item name="colorPrimaryVariant">@color/sg_color_primary_700</item>
+        <item name="colorSecondary">@color/sg_color_secondary_dark</item>
+        <item name="colorSecondaryVariant">@color/sg_color_secondary_500</item>
+        <item name="colorSurface">@color/sg_color_background_dark</item>
+        <item name="android:colorBackground">@color/sg_color_background_dark</item>
 
-        <!-- Special attributes -->
-        <item name="sgActivatedItemBackgroundDrawer">@drawable/activated_background_drawer_sg</item>
-
-        <!-- Windows -->
-        <item name="android:colorBackground">@color/background</item>
-        <item name="android:windowBackground">@color/background</item>
-        <item name="android:windowContentTransitions">true</item>
-        <item name="windowActionModeOverlay">true</item>
-        <!-- Note: nav bar color needs to be opaque! -->
-        <item name="android:navigationBarColor">@color/black_almost</item>
-
-        <!-- System widgets -->
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
-
-        <!-- Action bar -->
-        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
-
-        <!-- Text -->
-        <item name="android:textAppearance">@style/TextAppearance</item>
-        <item name="sgTextAppearanceBody1">@style/TextAppearance.SeriesGuide.Body1</item>
-        <item name="sgTextAppearanceBody2">@style/TextAppearance.SeriesGuide.Body2</item>
-
-        <!-- Colors -->
-        <item name="sgTextColorGreen">@color/teal_500</item>
-        <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_dark</item>
-        <item name="sgColorBackgroundCard">@color/background_card_dark</item>
-        <item name="sgColorBackgroundDim">@color/black_38</item>
-        <item name="sgColorIcon">@color/white</item>
-        <item name="sgColorIconInactive">@color/white_50</item>
-        <item name="sgColorSeparator">@color/separator</item>
-        <item name="sgColorDivider">@color/divider</item>
-        <item name="sgColorNavDrawerIcon">@color/nav_drawer_icon_sg</item>
-        <item name="sgColorNavDrawerText">@color/nav_drawer_text_sg</item>
-        <item name="sgColorShadow">@color/protection_dark</item>
-        <item name="sgColorStatusBarOverlay">@color/black_87</item>
-
-        <!-- Drawables -->
-        <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
-
-    </style>
-
-    <style name="Theme.BaseSeriesGuide.DarkBlue" parent="Theme.AppCompat.NoActionBar">
-
-        <!-- All customizations that are SPECIFIC to API-level 21 go here. -->
-
-    </style>
-
-    <!-- Dark Android theme -->
-    <style name="Theme.SeriesGuide.DarkBlue" parent="Theme.BaseSeriesGuide.DarkBlue">
-
-        <!-- All customizations that are NOT specific to a supported API-level can go here. -->
-
-        <!-- Explicitly add windowActionBar as some devices crash due to it missing -->
-        <item name="windowActionBar">false</item>
-
-        <!--   your app's branding color (for the app bar) -->
-        <item name="colorPrimary">@android:color/black</item>
-        <!--   theme UI controls like checkboxes and text fields -->
-        <item name="colorAccent">@color/teal_500</item>
-
-        <!-- Special attributes -->
-        <item name="sgActivatedItemBackgroundDrawer">@drawable/activated_background_drawer_sg</item>
+        <!-- Colors that pass accessibility guidelines for text/iconography when drawn on top of a color. -->
+        <item name="colorOnPrimary">@color/sg_black</item>
+        <item name="colorOnSecondary">@color/sg_black</item>
+        <item name="colorOnSurface">@color/sg_white</item>
+        <item name="colorOnBackground">@color/sg_white</item>
 
         <!-- Windows -->
-        <item name="android:colorBackground">@color/background</item>
-        <item name="android:windowBackground">@color/background</item>
+        <item name="android:windowBackground">@color/sg_color_background_dark</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="windowActionModeOverlay">true</item>
-        <!-- Note: nav bar color needs to be opaque! -->
-        <item name="android:navigationBarColor">@color/black_almost</item>
 
-        <!-- System widgets -->
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
+        <!-- Remove default window shadow -->
+        <item name="android:windowContentOverlay">@null</item>
 
-        <!-- Text -->
-        <item name="sgTextAppearanceBody1">@style/TextAppearance.SeriesGuide.Body1</item>
-        <item name="sgTextAppearanceBody2">@style/TextAppearance.SeriesGuide.Body2</item>
+        <!-- Custom color attributes -->
+        <item name="sgTextColorGreen">@color/sg_color_secondary_dark</item>
+        <item name="sgTextColorSecondaryDim">@color/sg_white_40</item>
+        <item name="sgColorBackgroundCard">#2a2a2a</item>
+        <item name="sgColorBackgroundDim">@color/sg_black_38</item>
+        <item name="sgColorIcon">@color/sg_white</item>
+        <item name="sgColorIconInactive">@color/sg_white_50</item>
+        <item name="sgColorDivider">@color/sg_white_15</item>
+        <item name="sgColorShadow">@color/sg_black_40</item>
+        <item name="sgColorStatusBarOverlay">@color/sg_black_87</item>
 
-        <!-- Colors -->
-        <item name="sgTextColorGreen">@color/teal_500</item>
-        <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_dark</item>
-        <item name="sgColorBackgroundCard">@color/background_card_dark</item>
-        <item name="sgColorBackgroundDim">@color/black_38</item>
-        <item name="sgColorIcon">@color/white</item>
-        <item name="sgColorIconInactive">@color/white_50</item>
-        <item name="sgColorSeparator">@color/separator</item>
-        <item name="sgColorDivider">@color/divider</item>
-        <item name="sgColorNavDrawerIcon">@color/nav_drawer_icon_dark</item>
-        <item name="sgColorNavDrawerText">@color/nav_drawer_text_dark</item>
-        <item name="sgColorShadow">@color/protection_dark</item>
-        <item name="sgColorStatusBarOverlay">@color/black_87</item>
-
-        <!-- Drawables -->
-        <item name="drawableBackgroundGradient">@drawable/background_gradient</item>
+        <!-- dialogTheme is used by AppCompatDialogFragment. -->
+        <item name="dialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog</item>
 
     </style>
 
-    <style name="Theme.BaseSeriesGuide.Light" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.BaseSeriesGuide.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
 
         <!-- All customizations that are SPECIFIC to API-level 21 go here. -->
 
         <!-- Note: nav bar color needs to be opaque! -->
-        <item name="android:navigationBarColor">@color/black_almost</item>
+        <item name="android:navigationBarColor">@color/sg_black_almost</item>
 
     </style>
 
-    <!-- SeriesGuide Light theme -->
     <style name="Theme.SeriesGuide.Light" parent="Theme.BaseSeriesGuide.Light">
 
         <!-- All customizations that are NOT specific to a supported API-level can go here. -->
@@ -138,53 +75,42 @@
         <!-- Explicitly add windowActionBar as some devices crash due to it missing -->
         <item name="windowActionBar">false</item>
 
-        <!--   your app's branding color (for the app bar) -->
-        <item name="colorPrimary">@color/accent_primary</item>
-        <!--   darker variant of colorPrimary (for status bar, contextual app bars) -->
-        <item name="colorPrimaryDark">@color/accent_primary_dark</item>
-        <!--   theme UI controls like checkboxes and text fields -->
-        <item name="colorAccent">@color/teal_500</item>
+        <!-- The color displayed most frequently across your app’s screens and components. -->
+        <item name="colorPrimary">@color/sg_color_primary_light</item>
+        <item name="colorPrimaryDark">@color/sg_color_primary_700</item>
+        <item name="colorPrimaryVariant">@color/sg_color_primary_700</item>
+        <item name="colorSecondary">@color/sg_color_secondary_light</item>
+        <item name="colorSecondaryVariant">@color/sg_color_secondary_900</item>
+        <item name="colorSurface">@color/sg_white</item>
+        <item name="android:colorBackground">@color/sg_color_background_light</item>
 
-        <!-- Special attributes -->
-        <item name="sgActivatedItemBackgroundDrawer">@drawable/activated_background_drawer_sg_light</item>
+        <!-- Colors that pass accessibility guidelines for text/iconography when drawn on top of a color. -->
+        <item name="colorOnPrimary">@color/sg_white</item>
+        <item name="colorOnSecondary">@color/sg_white</item>
+        <item name="colorOnSurface">@color/sg_black</item>
+        <item name="colorOnBackground">@color/sg_black</item>
 
         <!-- Windows -->
-        <item name="android:colorBackground">@color/background_inverse</item>
-        <item name="android:windowBackground">@color/background_inverse</item>
+        <item name="android:windowBackground">@color/sg_color_background</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="windowActionModeOverlay">true</item>
 
         <!-- Remove default window shadow -->
         <item name="android:windowContentOverlay">@null</item>
 
-        <!-- System widgets -->
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg_light</item>
+        <!-- Custom color attributes -->
+        <item name="sgTextColorGreen">@color/sg_color_secondary_light</item>
+        <item name="sgTextColorSecondaryDim">@color/sg_black_40</item>
+        <item name="sgColorBackgroundCard">@color/sg_white</item>
+        <item name="sgColorBackgroundDim">@color/sg_white_50</item>
+        <item name="sgColorIcon">@color/sg_black_54</item>
+        <item name="sgColorIconInactive">@color/sg_black_38</item>
+        <item name="sgColorDivider">@color/sg_black_10</item>
+        <item name="sgColorShadow">@color/sg_black_7</item>
+        <item name="sgColorStatusBarOverlay">@color/sg_white_87</item>
 
-        <!-- Action bar -->
-        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
-        <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
-
-        <!-- Text -->
-        <item name="android:textAppearance">@style/TextAppearance</item>
-        <item name="sgTextAppearanceBody1">@style/TextAppearance.SeriesGuide.Body1</item>
-        <item name="sgTextAppearanceBody2">@style/TextAppearance.SeriesGuide.Body2</item>
-
-        <!-- Colors -->
-        <item name="sgTextColorGreen">@color/teal_500</item>
-        <item name="sgTextColorSecondaryDim">@color/text_secondary_disabled_light</item>
-        <item name="sgColorBackgroundCard">@color/background_card_light</item>
-        <item name="sgColorBackgroundDim">@color/white_50</item>
-        <item name="sgColorIcon">@color/black_54</item>
-        <item name="sgColorIconInactive">@color/black_38</item>
-        <item name="sgColorSeparator">@color/separator_inverse</item>
-        <item name="sgColorDivider">@color/divider_inverse</item>
-        <item name="sgColorNavDrawerIcon">@color/nav_drawer_icon_sg_light</item>
-        <item name="sgColorNavDrawerText">@color/nav_drawer_text_sg_light</item>
-        <item name="sgColorShadow">@color/protection_light</item>
-        <item name="sgColorStatusBarOverlay">@color/white_87</item>
-
-        <!-- Drawables -->
-        <item name="drawableBackgroundGradient">@drawable/background_gradient_light</item>
+        <!-- dialogTheme is used by AppCompatDialogFragment. -->
+        <item name="dialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog</item>
 
     </style>
 
@@ -192,45 +118,29 @@
     <!-- Special themes -->
     <!-- ####################################### -->
 
-    <style name="Theme.SeriesGuide.Dialog.Distillation" parent="ThemeOverlay.AppCompat.Dialog">
-        <item name="android:windowBackground">@drawable/sg_distillation_dialog_background</item>
-        <item name="android:backgroundDimEnabled">false</item>
-    </style>
+    <!-- Note: always launch with Dark on P- to avoid bright colors as user may have set Dark. -->
+    <style name="Theme.SeriesGuide.Launch" parent="Theme.SeriesGuide.Dark" />
 
-    <style name="Theme.SeriesGuide.Dialog.CheckIn" parent="ThemeOverlay.AppCompat.Dialog">
-        <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
-    </style>
-
-    <style name="Theme.SeriesGuide.Drawer">
+    <!-- Drawer -->
+    <style name="Theme.SeriesGuide.DayNight.Drawer" parent="Theme.SeriesGuide.Light.Drawer" />
+    <style name="Theme.SeriesGuide.Dark.Drawer">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
-    <style name="Theme.SeriesGuide.DarkBlue.Drawer">
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-
     <style name="Theme.SeriesGuide.Light.Drawer">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="Theme.SeriesGuide.Immersive">
+    <!-- Immersive -->
+    <style name="Theme.SeriesGuide.DayNight.Immersive" parent="Theme.SeriesGuide.Light.Immersive" />
+    <style name="Theme.SeriesGuide.Dark.Immersive">
 
         <!-- Translucent navbar (native, v19+) -->
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">false</item>
 
     </style>
-
-    <style name="Theme.SeriesGuide.DarkBlue.Immersive">
-
-        <!-- Translucent navbar (native, v19+) -->
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">false</item>
-
-    </style>
-
     <style name="Theme.SeriesGuide.Light.Immersive">
 
         <!-- Translucent navbar (native, v19+) -->
@@ -239,8 +149,22 @@
 
     </style>
 
-    <style name="ThemeOverlay.WhiteAccent" parent="ThemeOverlay.AppCompat.Dark">
-        <item name="colorAccent">@color/white</item>
+    <!-- ####################################### -->
+    <!-- Theme overlays -->
+    <!-- ####################################### -->
+
+    <style name="Theme.SeriesGuide.Dialog.Distillation" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <item name="android:windowBackground">@drawable/sg_distillation_dialog_background</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="Theme.SeriesGuide.Dialog.CheckIn" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
+    </style>
+
+    <!-- colorControlActivated is also used by controls like check boxes, so only override for lists. -->
+    <style name="ThemeOverlay.SeriesGuide.CheckableList" parent="">
+        <item name="colorControlActivated">@color/sg_color_control_activated</item>
     </style>
 
 </resources>

@@ -205,7 +205,6 @@ public class OverviewFragment extends Fragment implements
 
         // Empty view buttons.
         Resources.Theme theme = getActivity().getTheme();
-        ViewTools.setVectorIconLeft(theme, buttonSimilarShows, R.drawable.ic_search_white_24dp);
         buttonSimilarShows.setOnClickListener(v ->
                 startActivity(SimilarShowsActivity.intent(getContext(), showTvdbId, showTitle))
         );
@@ -215,27 +214,10 @@ public class OverviewFragment extends Fragment implements
         CheatSheet.setup(buttonCheckin);
         CheatSheet.setup(buttonWatch);
         CheatSheet.setup(buttonSkip);
-        ViewTools.setVectorIconTop(theme, buttonWatch, R.drawable.ic_watch_black_24dp);
-        ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
-        ViewTools.setVectorIconTop(theme, buttonSkip, R.drawable.ic_skip_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonCheckin, R.drawable.ic_checkin_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonStreamingSearch,
-                R.drawable.ic_play_arrow_black_24dp);
 
         // ratings
         CheatSheet.setup(containerRatings, R.string.action_rate);
         textRatingRange.setText(getString(R.string.format_rating_range, 10));
-
-        // comments button
-        ViewTools.setVectorIconLeft(theme, buttonComments, R.drawable.ic_forum_black_24dp);
-
-        // other bottom buttons
-        ViewTools.setVectorIconLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonShare, R.drawable.ic_share_white_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonAddToCalendar, R.drawable.ic_event_white_24dp);
-        ViewTools.setVectorIconLeft(theme, buttonManageLists, R.drawable.ic_list_white_24dp);
 
         buttonShare.setOnClickListener(v -> shareEpisode());
         buttonAddToCalendar.setOnClickListener(v -> createCalendarEvent());
@@ -718,11 +700,10 @@ public class OverviewFragment extends Fragment implements
 
         // collected button
         boolean isCollected = episode.getInt(EpisodeQuery.COLLECTED) == 1;
-        Resources.Theme theme = getContext().getTheme();
         if (isCollected) {
-            ViewTools.setVectorDrawableTop(theme, buttonCollect, R.drawable.ic_collected_24dp);
+            ViewTools.setVectorDrawableTop(buttonCollect, R.drawable.ic_collected_24dp);
         } else {
-            ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
+            ViewTools.setVectorDrawableTop(buttonCollect, R.drawable.ic_collect_black_24dp);
         }
         buttonCollect.setText(isCollected ? R.string.action_collection_remove
                 : R.string.action_collection_add);
@@ -878,7 +859,7 @@ public class OverviewFragment extends Fragment implements
 
         // favorite
         boolean isFavorite = show.getInt(ShowQuery.SHOW_FAVORITE) == 1;
-        ViewTools.setVectorIcon(getActivity().getTheme(), buttonFavorite, isFavorite
+        buttonFavorite.setImageResource(isFavorite
                 ? R.drawable.ic_star_black_24dp
                 : R.drawable.ic_star_border_black_24dp);
         buttonFavorite.setContentDescription(getString(isFavorite ? R.string.context_unfavorite

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.FragmentManager;
 import com.battlelancer.seriesguide.R;
@@ -16,6 +15,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.traktapi.TraktTask.InitBundle;
 import com.battlelancer.seriesguide.util.DialogTools;
 import com.battlelancer.seriesguide.util.Errors;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.uwetrottmann.trakt5.services.Checkin;
 import org.greenrobot.eventbus.EventBus;
 
@@ -45,7 +45,7 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
             throw new IllegalArgumentException("Missing args");
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
 
         builder.setMessage(getString(R.string.traktcheckin_inprogress,
                 waitTimeMinutes < 0 ? getString(R.string.not_available)

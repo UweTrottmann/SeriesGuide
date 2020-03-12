@@ -173,7 +173,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:layout_marginBottom="4dp"
-                            android:background="?attr/drawableBackgroundGradient"
+                            android:background="@drawable/background_gradient"
                             android:paddingBottom="4dp"
                             android:paddingLeft="@dimen/default_padding"
                             android:paddingRight="@dimen/default_padding"
@@ -221,7 +221,9 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <include layout="@layout/buttons_episode" />
+                        <include
+                            android:id="@+id/include_buttons"
+                            layout="@layout/buttons_episode" />
 
                         <View
                             android:layout_width="match_parent"
@@ -239,7 +241,7 @@
                             android:layout_marginBottom="@dimen/large_padding"
                             android:background="?attr/selectableItemBackground"
                             android:focusable="true"
-                            android:textAppearance="?attr/sgTextAppearanceBody2"
+                            android:textAppearance="?attr/textAppearanceBody2"
                             tools:text="This is a sample description of what happens in this episode. A lot." />
 
                         <View
@@ -249,7 +251,9 @@
                             android:layout_marginRight="@dimen/large_padding"
                             android:background="?attr/sgColorDivider" />
 
-                        <include layout="@layout/ratings_shows" />
+                        <include
+                            android:id="@+id/containerRatings"
+                            layout="@layout/ratings_shows" />
 
                         <View
                             android:layout_width="match_parent"

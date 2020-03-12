@@ -22,8 +22,8 @@
             android:layout_weight="1"
             android:clipToPadding="@bool/gridClipToPadding"
             android:divider="@null"
-            android:paddingBottom="@dimen/inline_padding"
             android:paddingTop="@dimen/inline_padding"
+            android:paddingBottom="@dimen/inline_padding"
             tools:listitem="@layout/appwidget_row_light" />
 
         <TextView
@@ -34,11 +34,11 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="@string/no_nextepisode"
-            android:textColor="@color/black_87"
+            android:textColor="@color/sg_black_87"
             tools:ignore="UnusedAttribute" />
 
         <LinearLayout
-            android:layout_width="40dp"
+            android:layout_width="36dp"
             android:layout_height="match_parent"
             android:baselineAligned="false"
             android:orientation="vertical">
@@ -73,7 +73,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:contentDescription="@string/preferences"
-                    android:src="@drawable/ic_more_vert_gray_24dp" />
+                    android:src="@drawable/ic_settings_light_24dp" />
             </FrameLayout>
         </LinearLayout>
     </LinearLayout>

@@ -194,6 +194,18 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
             String currentShowName = nextShow.getTitle();
             int currentShowTvdbId = nextShow.getTvdbid();
 
+            if (currentShowTvdbId <= 0) {
+                // Invalid TheTVDB ID, should never have been passed, report.
+                // Background: Hexagon gets requests with ID 0.
+                TvdbException invalidIdException = new TvdbException(
+                        "Show id invalid: " + currentShowTvdbId
+                                + ", silentMode=" + isSilentMode
+                                + ", merging=" + isMergingShows
+                );
+                Errors.logAndReport("Add show", invalidIdException);
+                continue;
+            }
+
             if (!AndroidUtils.isNetworkConnected(context)) {
                 Timber.d("Finished. No connection.");
                 publishProgress(RESULT_OFFLINE, currentShowTvdbId, currentShowName);

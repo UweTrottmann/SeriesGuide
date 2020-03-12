@@ -47,6 +47,8 @@ public class NotificationSettings {
 
     public static final String KEY_IGNORE_HIDDEN = "com.battlelancer.seriesguide.notifications.hidden";
 
+    public static final String KEY_ONLY_NEXT_EPISODE = "com.uwetrottmann.seriesguide.notifications.nextonly";
+
     private static final int THRESHOLD_DEFAULT_MIN = 10;
 
     public static boolean isNotificationsEnabled(Context context) {
@@ -162,9 +164,17 @@ public class NotificationSettings {
                 .getBoolean(KEY_IGNORE_HIDDEN, true);
     }
 
+    /**
+     * Whether only notifications for a shows next episode should be shown.
+     */
+    public static boolean isOnlyNextEpisodes(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_ONLY_NEXT_EPISODE, false);
+    }
+
     public static void setDefaultsForChannelErrors(Context context,
             NotificationCompat.Builder builder) {
-        builder.setColor(ContextCompat.getColor(context, R.color.accent_primary));
+        builder.setColor(ContextCompat.getColor(context, R.color.sg_color_primary));
         builder.setDefaults(NotificationCompat.DEFAULT_SOUND | NotificationCompat.DEFAULT_LIGHTS);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setCategory(NotificationCompat.CATEGORY_ERROR);

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -29,7 +30,7 @@ class MakeAllVisibleDialogFragment : AppCompatDialogFragment(), CoroutineScope {
     private lateinit var dialog: AlertDialog
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        dialog = AlertDialog.Builder(context!!)
+        dialog = MaterialAlertDialogBuilder(context!!)
             .setMessage(getString(R.string.description_make_all_visible_format, "?"))
             .setPositiveButton(R.string.action_shows_make_all_visible) { _, _ ->
                 SgApp.getServicesComponent(context!!).showTools().storeAllHiddenVisible()

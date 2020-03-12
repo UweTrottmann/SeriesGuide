@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.sync;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -37,9 +38,15 @@ public class TvdbSync {
     /**
      * Update shows based on the sync type.
      */
+    @SuppressLint("TimberExceptionLogging")
     @Nullable
-    public SgSyncAdapter.UpdateResult sync(Context context, ContentResolver resolver,
-            Lazy<TvdbTools> tvdbTools, long currentTime) {
+    public SgSyncAdapter.UpdateResult sync(
+            Context context,
+            ContentResolver resolver,
+            Lazy<TvdbTools> tvdbTools,
+            long currentTime,
+            SyncProgress progress
+    ) {
         hasUpdatedShows = false;
 
         int[] showsToUpdate = getShowsToUpdate(context, resolver, currentTime);
@@ -71,7 +78,15 @@ public class TvdbSync {
             } catch (TvdbException e) {
                 // failed, continue with other shows
                 resultCode = SgSyncAdapter.UpdateResult.INCOMPLETE;
-                Timber.e(e, "Failed to update show with TVDB id %s.", showTvdbId);
+
+                String message = String
+                        .format("Failed to update show with TVDB id %s.", showTvdbId);
+                if (e.itemDoesNotExist()) {
+                    message += " It no longer exists.";
+                }
+                progress.setImportantErrorIfNone(message);
+                Timber.e(e, message);
+
                 Throwable cause = e.getCause();
                 if (cause != null && cause instanceof SocketTimeoutException) {
                     consecutiveTimeouts++;

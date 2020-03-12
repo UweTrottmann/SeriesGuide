@@ -110,6 +110,9 @@ Copyright JetBrains s.r.o.
 Kotlin Coroutines (https://github.com/Kotlin/kotlinx.coroutines)
 Copyright JetBrains s.r.o.
 
+Material Components for Android (https://github.com/material-components/material-components-android)
+Copyright The Android Open Source Project
+
 okhttp (https://github.com/square/okhttp)
 Copyright 2012 Square, Inc.
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.battlelancer.seriesguide.widgets.FilterBox
         android:id="@+id/checkbox_shows_filter_unwatched"
@@ -30,8 +29,7 @@
             android:layout_gravity="center_vertical"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/pref_upcominglimit"
-            tools:src="@drawable/ic_settings_white_24dp"
-            tools:tint="?attr/sgColorIcon" />
+            android:src="@drawable/ic_settings_control_24dp" />
 
     </LinearLayout>
 

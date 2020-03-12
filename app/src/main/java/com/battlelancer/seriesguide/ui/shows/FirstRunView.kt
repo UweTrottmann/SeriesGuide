@@ -4,11 +4,11 @@ import android.content.Context
 import android.preference.PreferenceManager
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.FrameLayout
 import android.widget.ImageButton
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.edit
 import com.battlelancer.seriesguide.R
@@ -16,7 +16,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.Utils
-import com.battlelancer.seriesguide.util.ViewTools
 import org.greenrobot.eventbus.EventBus
 
 class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
@@ -38,11 +37,11 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        val noSpoilerView = findViewById<RelativeLayout>(R.id.containerFirstRunNoSpoilers)
+        val noSpoilerView = findViewById<ViewGroup>(R.id.containerFirstRunNoSpoilers)
         val noSpoilerCheckBox = noSpoilerView.findViewById<CheckBox>(
             R.id.checkboxFirstRunNoSpoilers
         )
-        val dataSaverContainer = findViewById<RelativeLayout>(R.id.containerFirstRunDataSaver)
+        val dataSaverContainer = findViewById<ViewGroup>(R.id.containerFirstRunDataSaver)
         val dataSaverCheckBox = findViewById<CheckBox>(R.id.checkboxFirstRunDataSaver)
         val buttonAddShow = findViewById<Button>(R.id.buttonFirstRunAddShow)
         val buttonSignIn = findViewById<Button>(R.id.buttonFirstRunSignIn)
@@ -83,7 +82,6 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
             EventBus.getDefault()
                 .post(ButtonEvent(ButtonType.RESTORE_BACKUP))
         }
-        ViewTools.setVectorIcon(context.theme, buttonDismiss, R.drawable.ic_clear_24dp)
         buttonDismiss.setOnClickListener {
             setFirstRunDismissed()
             EventBus.getDefault().post(ButtonEvent(ButtonType.DISMISS))
@@ -96,13 +94,13 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     private fun setFirstRunDismissed() {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
-            putBoolean(FirstRunView.PREF_KEY_FIRSTRUN, true)
+            putBoolean(PREF_KEY_FIRSTRUN, true)
         }
     }
 
     companion object {
 
-        private const val PREF_KEY_FIRSTRUN = "accepted_eula"
+        const val PREF_KEY_FIRSTRUN = "accepted_eula"
 
         @JvmStatic
         fun hasSeenFirstRunFragment(context: Context): Boolean {

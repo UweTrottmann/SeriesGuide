@@ -41,7 +41,7 @@
                         android:layout_height="match_parent"
                         android:contentDescription="@string/description_poster"
                         android:scaleType="centerCrop"
-                        tools:src="@color/black_38" />
+                        tools:src="@color/sg_black_38" />
 
                 </FrameLayout>
 
@@ -110,7 +110,9 @@
             android:layout_marginRight="@dimen/large_padding"
             android:background="?attr/sgColorDivider" />
 
-        <include layout="@layout/ratings_shows" />
+        <include
+            android:id="@+id/containerRatings"
+            layout="@layout/ratings_shows" />
 
         <View
             android:layout_width="match_parent"

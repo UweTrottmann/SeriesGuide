@@ -37,6 +37,7 @@
     <string name="url_terms_tmdb">https://www.themoviedb.org/terms-of-use</string>
     <string name="url_terms_tmdb_api">https://www.themoviedb.org/documentation/api/terms-of-use</string>
     <string name="url_terms_trakt">https://trakt.tv/terms</string>
+    <string name="url_release_notes">https://discuss.seriesgui.de/c/announcements</string>
 
     <!-- About screen -->
     <string name="website">seriesgui.de</string>
@@ -70,11 +71,6 @@
     <string name="pref_user_debug_mode">Debug mode</string>
     <string name="pref_user_debug_mode_summary">Allows to diagnose errors, but slows down the app.</string>
     <string name="pref_user_debug_mode_note">Now force stop and restart the app!</string>
-
-    <!-- Themes -->
-    <string name="theme_default">SeriesGuide</string>
-    <string name="theme_dark_alt">Android Dark</string>
-    <string name="theme_light">SeriesGuide Light</string>
 
     <!-- Season sort orders -->
     <string-array name="sesorting">
@@ -523,9 +519,9 @@
 
     <!-- Theme variants -->
     <string-array name="themeSelection">
-        <item>@string/theme_default</item>
-        <item>@string/theme_dark_alt</item>
-        <item>@string/theme_light</item>
+        <item>@string/theme_app_auto_battery</item>
+        <item>@string/theme_app_dark</item>
+        <item>@string/theme_app_light</item>
     </string-array>
     <string-array name="themeSelectionData">
         <item>0</item>
@@ -581,15 +577,15 @@
     </string-array>
 
     <!-- Widget themes -->
-    <string-array name="widgetTheme">
-        <item>@string/theme_default</item>
-        <item>@string/theme_light</item>
-        <item>@string/theme_dark_alt</item>
+    <string-array name="widget_themes">
+        <item>@string/theme_app_dark</item>
+        <item>@string/theme_app_light</item>
     </string-array>
-    <string-array name="widgetThemeData">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
+    <string name="widget_theme_dark">0</string>
+    <string name="widget_theme_light">1</string>
+    <string-array name="widget_themes_data">
+        <item>@string/widget_theme_dark</item>
+        <item>@string/widget_theme_light</item>
     </string-array>
 
     <string-array name="amazonDomainsData">

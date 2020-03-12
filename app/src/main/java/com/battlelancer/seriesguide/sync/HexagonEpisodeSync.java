@@ -88,7 +88,8 @@ public class HexagonEpisodeSync {
                 } else {
                     hasMoreEpisodes = false;
                 }
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException e) {
+                // Note: JSON parser may throw IllegalArgumentException.
                 Errors.logAndReportHexagon("get updated episodes", e);
                 return false;
             }
@@ -209,7 +210,8 @@ public class HexagonEpisodeSync {
                 } else {
                     hasMoreEpisodes = false;
                 }
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException e) {
+                // Note: JSON parser may throw IllegalArgumentException.
                 Errors.logAndReportHexagon("get episodes of show", e);
                 return false;
             }

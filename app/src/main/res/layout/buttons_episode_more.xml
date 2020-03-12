@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<!-- Need to define root ID in include tag or view binding breaks. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:showIn="@layout/buttons_services">
 
     <Button
         android:id="@+id/buttonEpisodeImdb"
@@ -9,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/imdb"
-        tools:drawableLeft="@drawable/ic_link_black_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        app:icon="@drawable/ic_link_black_24dp"
+        app:iconGravity="start" />
 
     <Button
         android:id="@+id/buttonEpisodeTvdb"
@@ -18,8 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/tvdb"
-        tools:drawableLeft="@drawable/ic_link_black_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        app:icon="@drawable/ic_link_black_24dp"
+        app:iconGravity="start" />
 
     <Button
         android:id="@+id/buttonEpisodeTrakt"
@@ -27,8 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/trakt"
-        tools:drawableLeft="@drawable/ic_link_black_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        app:icon="@drawable/ic_link_black_24dp"
+        app:iconGravity="start" />
 
     <Button
         android:id="@+id/buttonEpisodeShare"
@@ -36,8 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/share_episode"
-        tools:drawableLeft="@drawable/ic_share_white_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        app:icon="@drawable/ic_share_white_24dp"
+        app:iconGravity="start" />
 
     <Button
         android:id="@+id/buttonEpisodeCalendar"
@@ -45,8 +51,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/addtocalendar"
-        tools:drawableLeft="@drawable/ic_event_white_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        app:icon="@drawable/ic_event_white_24dp"
+        app:iconGravity="start" />
 
     <Button
         android:id="@+id/buttonEpisodeLists"
@@ -54,8 +60,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/list_item_manage"
-        tools:drawableLeft="@drawable/ic_list_white_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        app:icon="@drawable/ic_list_white_24dp"
+        app:iconGravity="start" />
 
     <Button
         android:id="@+id/buttonEpisodeComments"
@@ -63,7 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/comments"
-        tools:drawableLeft="@drawable/ic_forum_black_24dp"
-        tools:drawableTint="?attr/sgColorIcon" />
+        app:icon="@drawable/ic_forum_black_24dp"
+        app:iconGravity="start" />
 
-</merge>
+</LinearLayout>

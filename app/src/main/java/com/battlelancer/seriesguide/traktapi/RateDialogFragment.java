@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.util.tasks.BaseRateItemTask;
 import com.battlelancer.seriesguide.util.tasks.RateEpisodeTask;
 import com.battlelancer.seriesguide.util.tasks.RateMovieTask;
 import com.battlelancer.seriesguide.util.tasks.RateShowTask;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.uwetrottmann.trakt5.enums.Rating;
 import java.util.List;
 
@@ -133,7 +134,7 @@ public class RateDialogFragment extends AppCompatDialogFragment {
         ratingButtons.get(8).setOnClickListener(v -> rate(Rating.SUPERB));
         ratingButtons.get(9).setOnClickListener(v -> rate(Rating.TOTALLYNINJA));
 
-        builder = new AlertDialog.Builder(getActivity());
+        builder = new MaterialAlertDialogBuilder(getActivity());
         builder.setView(layout);
 
         return builder.create();

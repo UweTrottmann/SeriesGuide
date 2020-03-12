@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Choose launch background based on system setting on Q+. -->
+    <style name="Theme.SeriesGuide.Launch" parent="Theme.SeriesGuide.DayNight" />
+
+</resources>

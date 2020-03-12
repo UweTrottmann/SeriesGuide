@@ -3,13 +3,13 @@ package com.battlelancer.seriesguide.adapters;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.StringRes;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -52,7 +52,8 @@ public class TabStripAdapter extends FragmentPagerAdapter {
         // setup tabs
         this.tabLayout = tabLayout;
         this.tabLayout.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
-        this.tabLayout.setSelectedIndicatorColors(ContextCompat.getColor(context, R.color.white));
+        this.tabLayout.setSelectedIndicatorColors(ThemeUtils
+                .getColorFromAttribute(tabLayout.getContext(), R.attr.colorOnPrimarySurface));
         this.tabLayout.setViewPager(viewPager);
     }
 

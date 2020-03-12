@@ -30,6 +30,17 @@ public class ViewTools {
                 VectorDrawableCompat.create(textView.getResources(), vectorRes, theme));
     }
 
+    public static void setVectorDrawableTop(TextView textView, @DrawableRes int vectorRes) {
+        setCompoundDrawableTop(
+                textView,
+                VectorDrawableCompat.create(
+                        textView.getResources(),
+                        vectorRes,
+                        textView.getContext().getTheme()
+                )
+        );
+    }
+
     public static void setVectorIcon(Resources.Theme theme, ImageView button,
             @DrawableRes int vectorRes) {
         button.setImageDrawable(vectorIconActive(button.getContext(), theme, vectorRes));
@@ -63,7 +74,7 @@ public class ViewTools {
 
     public static VectorDrawableCompat vectorIconWhite(Context context,
             Resources.Theme theme, @DrawableRes int vectorRes) {
-        return createTintedVectorDrawable(context, theme, vectorRes, R.color.white);
+        return createTintedVectorDrawable(context, theme, vectorRes, R.color.sg_white);
     }
 
     private static VectorDrawableCompat createTintedVectorDrawable(Context context,
@@ -83,6 +94,13 @@ public class ViewTools {
             drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         }
         textView.setCompoundDrawables(null, drawable, null, null);
+    }
+
+    public static void setCompoundDrawableTop(@NonNull TextView textView,
+            @DrawableRes int drawableRes) {
+        textView.setCompoundDrawables(null,
+                textView.getResources().getDrawable(drawableRes, textView.getContext().getTheme()),
+                null, null);
     }
 
     /**
@@ -161,7 +179,7 @@ public class ViewTools {
     public static void setSwipeRefreshLayoutColors(Resources.Theme theme,
             SwipeRefreshLayout swipeRefreshLayout) {
         int accentColorResId = Utils.resolveAttributeToResourceId(theme, R.attr.colorAccent);
-        swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.teal_500);
+        swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.sg_color_secondary);
     }
 
     public static void showSoftKeyboardOnSearchView(final Context context, final View searchView) {
