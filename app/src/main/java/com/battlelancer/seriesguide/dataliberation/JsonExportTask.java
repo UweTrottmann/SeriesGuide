@@ -36,6 +36,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
@@ -329,7 +330,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int numExported = 0;
 
         Gson gson = new Gson();
-        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
+        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
         writer.beginArray();
 
         while (shows.moveToNext()) {
@@ -455,7 +456,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int numExported = 0;
 
         Gson gson = new Gson();
-        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
+        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
         writer.beginArray();
 
         while (lists.moveToNext()) {
@@ -519,7 +520,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int numExported = 0;
 
         Gson gson = new Gson();
-        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
+        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
         writer.beginArray();
 
         while (movies.moveToNext()) {
