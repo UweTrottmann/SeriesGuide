@@ -114,7 +114,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         SyncProgress progress = new SyncProgress();
         progress.publish(SyncProgress.Step.TVDB);
         UpdateResult resultCode = tvdbSync.sync(getContext(), getContext().getContentResolver(),
-                tvdbTools, currentTime);
+                tvdbTools, currentTime, progress);
         if (resultCode == null || resultCode == UpdateResult.INCOMPLETE) {
             progress.recordError();
         }
@@ -137,7 +137,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 progress.recordError();
             }
             // update data of to be released movies
-            if (!tmdbSync.updateMovies()) {
+            if (!tmdbSync.updateMovies(progress)) {
                 progress.recordError();
             }
             Timber.d("Syncing: TMDB...DONE");
