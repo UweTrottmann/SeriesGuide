@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.dataliberation;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -116,6 +117,7 @@ public class AutoBackupFragment extends Fragment {
                 });
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onStart() {
         super.onStart();
@@ -124,6 +126,19 @@ public class AutoBackupFragment extends Fragment {
         boolean autoBackupEnabled = BackupSettings.isAutoBackupEnabled(getContext());
         setContainerSettingsVisible(autoBackupEnabled);
         binding.switchAutoBackup.setChecked(autoBackupEnabled);
+
+        // Update state.
+        String errorOrNull = BackupSettings.getAutoBackupErrorOrNull(requireContext());
+        if (errorOrNull == null) {
+            binding.imageViewBackupStatus.setImageResource(
+                    R.drawable.ic_check_circle_green_24dp);
+            binding.textViewBackupStatus.setText(R.string.backup_success);
+        } else {
+            binding.imageViewBackupStatus.setImageResource(
+                    R.drawable.ic_cancel_red_24dp);
+            binding.textViewBackupStatus.setText(
+                    getString(R.string.backup_failed) + " " + errorOrNull);
+        }
 
         // Update auto-backup availability.
         viewModel.updateAvailableBackupData();

@@ -116,9 +116,12 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             // Auto backup mode.
             try {
                 new AutoBackupTask(this, context).run();
+                BackupSettings.setAutoBackupErrorOrNull(context, null);
                 return SUCCESS;
             } catch (Exception e) {
                 Timber.e(e, "Unable to auto backup.");
+                BackupSettings.setAutoBackupErrorOrNull(context,
+                        e.getClass().getSimpleName() + ": " + e.getMessage());
                 return ERROR;
             }
         } else {

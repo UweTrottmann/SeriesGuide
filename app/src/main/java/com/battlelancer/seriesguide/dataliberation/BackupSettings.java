@@ -48,6 +48,8 @@ public class BackupSettings {
     private static final String PREFS_AUTOBACKUP = "autobackup";
     private static final String KEY_AUTOBACKUP_LAST_TIME
             = "com.battlelancer.seriesguide.lastbackup";
+    private static final String KEY_AUTOBACKUP_LAST_ERROR
+            = "com.uwetrottmann.seriesguide.autobackup.lasterror";
 
     @Retention(RetentionPolicy.SOURCE)
     @StringDef({
@@ -111,6 +113,19 @@ public class BackupSettings {
     public static boolean isCreateCopyOfAutoBackup(Context context) {
         return !PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_AUTO_BACKUP_USE_DEFAULT_FILES, true);
+    }
+
+    @Nullable
+    public static String getAutoBackupErrorOrNull(Context context) {
+        return context.getSharedPreferences(PREFS_AUTOBACKUP, Context.MODE_PRIVATE)
+                .getString(KEY_AUTOBACKUP_LAST_ERROR, null);
+    }
+
+    public static void setAutoBackupErrorOrNull(Context context, String errorOrNull) {
+        context.getSharedPreferences(PREFS_AUTOBACKUP, Context.MODE_PRIVATE)
+                .edit()
+                .putString(KEY_AUTOBACKUP_LAST_ERROR, errorOrNull)
+                .apply();
     }
 
     /**
