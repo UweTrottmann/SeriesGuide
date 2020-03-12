@@ -11,38 +11,38 @@
         android:layout_height="wrap_content">
 
         <ImageButton
-            android:id="@+id/buttonFirstRunDismiss"
+            android:id="@+id/buttonDismiss"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/dismiss"
             android:src="@drawable/ic_clear_24dp" />
 
         <TextView
-            android:id="@+id/textViewFirstRunTitle"
+            android:id="@+id/textViewTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginStart="@dimen/large_padding"
             android:layout_marginTop="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginEnd="@dimen/large_padding"
             android:text="@string/get_started"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/containerFirstRunNoSpoilers"
+            android:id="@+id/containerNoSpoilers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewFirstRunTitle"
+            android:layout_below="@+id/textViewTitle"
             android:layout_marginTop="@dimen/large_padding"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:minHeight="?android:attr/listPreferredItemHeight"
-            android:paddingLeft="@dimen/large_padding"
-            android:paddingRight="@dimen/large_padding">
+            android:paddingStart="@dimen/large_padding"
+            android:paddingEnd="@dimen/large_padding">
 
             <CheckBox
-                android:id="@+id/checkboxFirstRunNoSpoilers"
+                android:id="@+id/checkboxNoSpoilers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -52,41 +52,41 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewFirstRunNoSpoilerText"
+                android:id="@+id/textViewNoSpoilers"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/pref_nospoilers"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
-                app:layout_constraintBaseline_toBaselineOf="@id/checkboxFirstRunNoSpoilers"
+                app:layout_constraintBaseline_toBaselineOf="@id/checkboxNoSpoilers"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/checkboxFirstRunNoSpoilers" />
+                app:layout_constraintStart_toEndOf="@+id/checkboxNoSpoilers" />
 
             <TextView
-                android:id="@+id/textViewFirstRunNoSpoilerSummary"
+                android:id="@+id/textViewNoSpoilersSummary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/inline_padding"
                 android:text="@string/pref_nospoilers_summary"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textViewFirstRunNoSpoilerText"
-                app:layout_constraintTop_toBottomOf="@id/textViewFirstRunNoSpoilerText" />
+                app:layout_constraintStart_toStartOf="@+id/textViewNoSpoilers"
+                app:layout_constraintTop_toBottomOf="@id/textViewNoSpoilers" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/containerFirstRunDataSaver"
+            android:id="@+id/containerDataSaver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/containerFirstRunNoSpoilers"
+            android:layout_below="@+id/containerNoSpoilers"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:minHeight="?android:attr/listPreferredItemHeight"
-            android:paddingLeft="@dimen/large_padding"
-            android:paddingRight="@dimen/large_padding">
+            android:paddingStart="@dimen/large_padding"
+            android:paddingEnd="@dimen/large_padding">
 
             <CheckBox
-                android:id="@+id/checkboxFirstRunDataSaver"
+                android:id="@+id/checkboxDataSaver"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -96,56 +96,56 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewFirstRunDataSaverText"
+                android:id="@+id/textViewDataSaver"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/pref_updatewifionly"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
-                app:layout_constraintBaseline_toBaselineOf="@id/checkboxFirstRunDataSaver"
+                app:layout_constraintBaseline_toBaselineOf="@id/checkboxDataSaver"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/checkboxFirstRunDataSaver" />
+                app:layout_constraintStart_toEndOf="@+id/checkboxDataSaver" />
 
             <TextView
-                android:id="@+id/textViewFirstRunDataSaverSummary"
+                android:id="@+id/textViewDataSaverSummary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/inline_padding"
                 android:text="@string/pref_updatewifionlysummary"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textViewFirstRunDataSaverText"
-                app:layout_constraintTop_toBottomOf="@id/textViewFirstRunDataSaverText" />
+                app:layout_constraintStart_toStartOf="@+id/textViewDataSaver"
+                app:layout_constraintTop_toBottomOf="@id/textViewDataSaver" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-            android:id="@+id/containerFirstRunButtons"
+            android:id="@+id/containerButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/containerFirstRunDataSaver"
+            android:layout_below="@id/containerDataSaver"
             android:gravity="end"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/default_padding"
+            android:paddingStart="@dimen/default_padding"
             android:paddingTop="@dimen/large_padding"
-            android:paddingRight="@dimen/default_padding"
+            android:paddingEnd="@dimen/default_padding"
             android:paddingBottom="@dimen/inline_padding">
 
             <Button
-                android:id="@+id/buttonFirstRunAddShow"
+                android:id="@+id/buttonAddShow"
                 style="@style/Widget.SeriesGuide.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_shows_add" />
 
             <Button
-                android:id="@+id/buttonFirstRunSignIn"
+                android:id="@+id/buttonSignIn"
                 style="@style/Widget.SeriesGuide.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hexagon_signin" />
 
             <Button
-                android:id="@+id/buttonFirstRunRestore"
+                android:id="@+id/buttonRestoreBackup"
                 style="@style/Widget.SeriesGuide.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -154,19 +154,19 @@
         </LinearLayout>
 
         <include
-            android:id="@+id/dividerFirstRun"
+            android:id="@+id/dividerBottom"
             layout="@layout/divider_horizontal"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/containerFirstRunButtons" />
+            android:layout_below="@id/containerButtons" />
 
         <TextView
-            android:id="@+id/textViewFirstRunPrivacyLink"
+            android:id="@+id/textViewPolicyLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/dividerFirstRun"
-            android:layout_marginLeft="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
+            android:layout_below="@+id/dividerBottom"
+            android:layout_marginStart="@dimen/large_padding"
+            android:layout_marginEnd="@dimen/large_padding"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:paddingTop="@dimen/default_padding"
