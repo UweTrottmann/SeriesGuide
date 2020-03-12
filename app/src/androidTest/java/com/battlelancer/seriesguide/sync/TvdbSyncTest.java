@@ -87,6 +87,6 @@ public class TvdbSyncTest {
     @Nullable
     private SgSyncAdapter.UpdateResult sync(TvdbSync tvdbSync) {
         return tvdbSync.sync(ApplicationProvider.getApplicationContext(), resolver,
-                tvdbToolsLazy, System.currentTimeMillis());
+                tvdbToolsLazy, System.currentTimeMillis(), new SyncProgress());
     }
 }

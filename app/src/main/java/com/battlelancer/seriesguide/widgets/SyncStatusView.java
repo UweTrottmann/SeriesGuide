@@ -43,23 +43,22 @@ public class SyncStatusView extends LinearLayout {
      * View#GONE}.
      */
     public void setProgress(SyncProgress.SyncEvent event) {
-        if (event.step != null) {
-            // syncing
+        if (event.isSyncing()) {
             progressBar.setVisibility(View.VISIBLE);
             imageView.setVisibility(GONE);
             setVisibility(VISIBLE);
         } else {
-            // finished
+            // Finished.
             progressBar.setVisibility(View.GONE);
-            if (event.stepsWithError.size() > 0) {
-                // has errors
+
+            if (event.isFinishedWithError()) {
                 imageView.setVisibility(VISIBLE);
                 setVisibility(VISIBLE);
             } else {
-                // successful
+                // Successful.
                 imageView.setVisibility(GONE);
                 setVisibility(GONE);
-                return; // no need to update status text
+                return; // No need to update status text.
             }
         }
         textView.setText(event.getDescription(getContext()));

@@ -47,7 +47,7 @@ class TmdbSync internal constructor(
      * Regularly updates current and future movies (or those without a release date) with data from
      * themoviedb.org. All other movies are updated rarely.
      */
-    fun updateMovies(): Boolean {
+    fun updateMovies(progress: SyncProgress): Boolean {
         val currentTimeMillis = System.currentTimeMillis()
         // update movies released 6 months ago or newer, should cover most edits
         val releasedAfter = currentTimeMillis - RELEASED_AFTER_DAYS
@@ -78,8 +78,12 @@ class TmdbSync internal constructor(
                 // update local database
                 movieTools.updateMovie(details, movie.tmdbId)
             } else {
-                result = false // report failure if updating at least one fails
-                Timber.e("Failed to update movie with TMDB id %d", movie.tmdbId)
+                // Treat as failure if updating at least one fails.
+                result = false
+
+                val message = "Failed to update movie with TMDB id ${movie.tmdbId}."
+                progress.setImportantErrorIfNone(message)
+                Timber.e(message)
             }
         }
 

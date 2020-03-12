@@ -163,7 +163,7 @@ public class TmdbSyncTest {
     private void doUpdateAndAssertSuccess() {
         TmdbSync tmdbSync = new TmdbSync(ApplicationProvider.getApplicationContext(),
                 tmdbConfigService, movieTools);
-        boolean successful = tmdbSync.updateMovies();
+        boolean successful = tmdbSync.updateMovies(new SyncProgress());
         assertThat(successful).isTrue();
     }
 }
