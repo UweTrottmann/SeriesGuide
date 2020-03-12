@@ -10,7 +10,19 @@ Release notes
 
 Version 53
 ----------
-*in development*
+*2020-03-12*
+
+* New Dark and Light app and widget theme.
+* By default, set app theme based on system setting (Android 10) or by Battery Saver (Android 9 and older).
+* New notification option to only notify if the new episode is the next episode to watch.
+
+#### 53
+*2020-03-12*
+
+* 🔨 In some cases when backing up and the new backup is smaller,
+  the resulting JSON might be corrupted.
+* 🔧 If a show or movie failed to update, display which one (see Trakt/Cloud screens).
+* 📝 Latest translations from crowdin.
 
 #### 53-beta5
 *2020-03-05*
