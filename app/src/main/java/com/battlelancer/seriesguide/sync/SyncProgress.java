@@ -33,14 +33,26 @@ public class SyncProgress {
     }
 
     public static class SyncEvent {
-        /** If {@code null} syncing has finished. */
-        @Nullable public final Step step;
-        /** Contains any steps that had an error. */
-        @NonNull public final List<Step> stepsWithError;
+        @Nullable private final Step step;
+        @NonNull private final List<Step> stepsWithError;
+        @Nullable private String importantErrorOrNull;
 
-        public SyncEvent(@Nullable Step step, @NonNull List<Step> stepsWithError) {
+        SyncEvent(
+                @Nullable Step step,
+                @NonNull List<Step> stepsWithError,
+                @Nullable String importantErrorOrNull
+        ) {
             this.step = step;
             this.stepsWithError = stepsWithError;
+            this.importantErrorOrNull = importantErrorOrNull;
+        }
+
+        public boolean isSyncing() {
+            return step != null;
+        }
+
+        public boolean isFinishedWithError() {
+            return !stepsWithError.isEmpty();
         }
 
         public String getDescription(Context context) {
@@ -55,6 +67,10 @@ public class SyncProgress {
                     statusText.append(" - ");
                     statusText.append(context.getString(stepToDisplay.typeRes));
                 }
+            }
+
+            if (importantErrorOrNull != null) {
+                statusText.append(" - ").append(importantErrorOrNull);
             }
 
             return statusText.toString();
@@ -75,24 +91,33 @@ public class SyncProgress {
 
     @NonNull private final List<Step> stepsWithError = new LinkedList<>();
     @Nullable private Step currentStep;
+    @Nullable private String importantErrorOrNull;
 
-    public void publish(Step step) {
+    void publish(Step step) {
         currentStep = step;
-        EventBus.getDefault().postSticky(new SyncEvent(step, stepsWithError));
+        EventBus.getDefault().postSticky(
+                new SyncEvent(step, stepsWithError, importantErrorOrNull));
         Timber.d("Syncing: %s...", step.name());
     }
 
     /**
      * Record an error for the last published step.
      */
-    public void recordError() {
+    void recordError() {
         if (currentStep != null) {
             stepsWithError.add(currentStep);
             Timber.d("Syncing: %s...FAILED", currentStep.name());
         }
     }
 
-    public void publishFinished() {
-        EventBus.getDefault().postSticky(new SyncEvent(null, stepsWithError));
+    void setImportantErrorIfNone(@NonNull String message) {
+        if (importantErrorOrNull == null) {
+            importantErrorOrNull = message;
+        }
+    }
+
+    void publishFinished() {
+        EventBus.getDefault().postSticky(
+                new SyncEvent(null, stepsWithError, importantErrorOrNull));
     }
 }
