@@ -58,6 +58,12 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="AutoBackupException: something has gone terribly wrong" />
 
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/groupState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="imageViewBackupStatus,textViewBackupStatus" />
+
                 <CheckBox
                     android:id="@+id/checkBoxAutoBackupCreateCopy"
                     android:layout_width="wrap_content"

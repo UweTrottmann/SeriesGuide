@@ -89,12 +89,14 @@ public class AutoBackupFragment extends Fragment {
                 DataLiberationTools.selectExportFile(AutoBackupFragment.this,
                         JsonExportTask.EXPORT_JSON_FILE_MOVIES, REQUEST_CODE_MOVIES_EXPORT_URI));
 
+        binding.groupState.setVisibility(View.GONE);
         updateFileViews();
         setProgressLock(false); // Also disables import button if backup availability unknown.
 
         return binding.getRoot();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -114,10 +116,29 @@ public class AutoBackupFragment extends Fragment {
 
                     isBackupAvailableForImport = availableBackupTimeString != null;
                     updateImportButtonState();
+
+                    // Also update status of last backup attempt.
+                    String errorOrNull = BackupSettings.getAutoBackupErrorOrNull(requireContext());
+                    if (errorOrNull != null) {
+                        binding.groupState.setVisibility(View.VISIBLE);
+
+                        binding.imageViewBackupStatus.setImageResource(
+                                R.drawable.ic_cancel_red_24dp);
+                        binding.textViewBackupStatus.setText(
+                                getString(R.string.backup_failed) + " " + errorOrNull);
+                    } else if (isBackupAvailableForImport) {
+                        binding.groupState.setVisibility(View.VISIBLE);
+
+                        binding.imageViewBackupStatus.setImageResource(
+                                R.drawable.ic_check_circle_green_24dp);
+                        binding.textViewBackupStatus.setText(R.string.backup_success);
+                    } else {
+                        // No error + no backup files.
+                        binding.groupState.setVisibility(View.GONE);
+                    }
                 });
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onStart() {
         super.onStart();
@@ -126,19 +147,6 @@ public class AutoBackupFragment extends Fragment {
         boolean autoBackupEnabled = BackupSettings.isAutoBackupEnabled(getContext());
         setContainerSettingsVisible(autoBackupEnabled);
         binding.switchAutoBackup.setChecked(autoBackupEnabled);
-
-        // Update state.
-        String errorOrNull = BackupSettings.getAutoBackupErrorOrNull(requireContext());
-        if (errorOrNull == null) {
-            binding.imageViewBackupStatus.setImageResource(
-                    R.drawable.ic_check_circle_green_24dp);
-            binding.textViewBackupStatus.setText(R.string.backup_success);
-        } else {
-            binding.imageViewBackupStatus.setImageResource(
-                    R.drawable.ic_cancel_red_24dp);
-            binding.textViewBackupStatus.setText(
-                    getString(R.string.backup_failed) + " " + errorOrNull);
-        }
 
         // Update auto-backup availability.
         viewModel.updateAvailableBackupData();
