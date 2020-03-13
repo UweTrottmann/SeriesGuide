@@ -483,7 +483,8 @@
 
     <!-- Auto backup -->
     <string name="pref_autobackup">Auto Backup</string>
-    <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies to device storage</string>
+    <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies to device storage.</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
     <string name="last_auto_backup">Last Auto Backup: %s</string>
     <string name="restore_auto_backup">Restore Auto Backup</string>
     <string name="autobackup_files_missing">To use auto backup, select valid backup files</string>
