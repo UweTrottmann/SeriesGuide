@@ -41,15 +41,10 @@ public class BackupSettings {
     public static final String KEY_AUTO_BACKUP_MOVIES_EXPORT_URI
             = "com.battlelancer.seriesguide.autobackup.moviesExport";
 
-    /**
-     * Store some auto backup prefs in separate preference file
-     * that is not backed up by Android auto backup.
-     */
-    private static final String PREFS_AUTOBACKUP = "autobackup";
-    private static final String KEY_AUTOBACKUP_LAST_TIME
-            = "com.battlelancer.seriesguide.lastbackup";
-    private static final String KEY_AUTOBACKUP_LAST_ERROR
-            = "com.uwetrottmann.seriesguide.autobackup.lasterror";
+    // Store some auto backup prefs in separate preference file
+    // that is not backed up by Android auto backup.
+    private static final String KEY_AUTOBACKUP_LAST_TIME = "last_backup";
+    private static final String KEY_AUTOBACKUP_LAST_ERROR = "last_error";
 
     @Retention(RetentionPolicy.SOURCE)
     @StringDef({
@@ -89,9 +84,15 @@ public class BackupSettings {
         return (now - previousBackupTime) > 7 * DateUtils.DAY_IN_MILLIS;
     }
 
+    private static SharedPreferences getAutoBackupPrefs(Context context) {
+        return context.getSharedPreferences(
+                context.getPackageName() + "_autobackup",
+                Context.MODE_PRIVATE
+        );
+    }
+
     private static long getLastAutoBackupTime(Context context) {
-        SharedPreferences prefs = context
-                .getSharedPreferences(PREFS_AUTOBACKUP, Context.MODE_PRIVATE);
+        SharedPreferences prefs = getAutoBackupPrefs(context);
 
         long time = prefs.getLong(KEY_AUTOBACKUP_LAST_TIME, 0);
         if (time == 0) {
@@ -104,7 +105,7 @@ public class BackupSettings {
     }
 
     public static void setLastAutoBackupTimeToNow(Context context) {
-        context.getSharedPreferences(PREFS_AUTOBACKUP, Context.MODE_PRIVATE)
+        getAutoBackupPrefs(context)
                 .edit()
                 .putLong(KEY_AUTOBACKUP_LAST_TIME, System.currentTimeMillis())
                 .apply();
@@ -116,13 +117,13 @@ public class BackupSettings {
     }
 
     @Nullable
-    public static String getAutoBackupErrorOrNull(Context context) {
-        return context.getSharedPreferences(PREFS_AUTOBACKUP, Context.MODE_PRIVATE)
+    static String getAutoBackupErrorOrNull(Context context) {
+        return getAutoBackupPrefs(context)
                 .getString(KEY_AUTOBACKUP_LAST_ERROR, null);
     }
 
-    public static void setAutoBackupErrorOrNull(Context context, String errorOrNull) {
-        context.getSharedPreferences(PREFS_AUTOBACKUP, Context.MODE_PRIVATE)
+    static void setAutoBackupErrorOrNull(Context context, String errorOrNull) {
+        getAutoBackupPrefs(context)
                 .edit()
                 .putString(KEY_AUTOBACKUP_LAST_ERROR, errorOrNull)
                 .apply();
