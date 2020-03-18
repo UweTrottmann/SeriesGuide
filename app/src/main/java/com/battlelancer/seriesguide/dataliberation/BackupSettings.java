@@ -5,10 +5,8 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringDef;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 
 /**
  * Settings related to creating and restoring backups of the database.
@@ -16,50 +14,35 @@ import java.lang.annotation.RetentionPolicy;
 public class BackupSettings {
 
     // manual backup
-    public static final String KEY_SHOWS_EXPORT_URI
+    private static final String KEY_SHOWS_EXPORT_URI
             = "com.battlelancer.seriesguide.backup.showsExport";
-    public static final String KEY_SHOWS_IMPORT_URI
+    private static final String KEY_SHOWS_IMPORT_URI
             = "com.battlelancer.seriesguide.backup.showsImport";
-    public static final String KEY_LISTS_EXPORT_URI
+    private static final String KEY_LISTS_EXPORT_URI
             = "com.battlelancer.seriesguide.backup.listsExport";
-    public static final String KEY_LISTS_IMPORT_URI
+    private static final String KEY_LISTS_IMPORT_URI
             = "com.battlelancer.seriesguide.backup.listsImport";
-    public static final String KEY_MOVIES_EXPORT_URI
+    private static final String KEY_MOVIES_EXPORT_URI
             = "com.battlelancer.seriesguide.backup.moviesExport";
-    public static final String KEY_MOVIES_IMPORT_URI
+    private static final String KEY_MOVIES_IMPORT_URI
             = "com.battlelancer.seriesguide.backup.moviesImport";
 
     // auto backup
-    public static final String KEY_AUTOBACKUP
+    private static final String KEY_AUTOBACKUP
             = "com.battlelancer.seriesguide.autobackup";
-    public static final String KEY_AUTO_BACKUP_USE_DEFAULT_FILES
+    private static final String KEY_AUTO_BACKUP_USE_DEFAULT_FILES
             = "com.battlelancer.seriesguide.autobackup.defaultFiles";
-    public static final String KEY_AUTO_BACKUP_SHOWS_EXPORT_URI
+    private static final String KEY_AUTOBACKUP_SHOWS_EXPORT_URI
             = "com.battlelancer.seriesguide.autobackup.showsExport";
-    public static final String KEY_AUTO_BACKUP_LISTS_EXPORT_URI
+    private static final String KEY_AUTOBACKUP_LISTS_EXPORT_URI
             = "com.battlelancer.seriesguide.autobackup.listsExport";
-    public static final String KEY_AUTO_BACKUP_MOVIES_EXPORT_URI
+    private static final String KEY_AUTOBACKUP_MOVIES_EXPORT_URI
             = "com.battlelancer.seriesguide.autobackup.moviesExport";
 
     // Store some auto backup prefs in separate preference file
     // that is not backed up by Android auto backup.
     private static final String KEY_AUTOBACKUP_LAST_TIME = "last_backup";
     private static final String KEY_AUTOBACKUP_LAST_ERROR = "last_error";
-
-    @Retention(RetentionPolicy.SOURCE)
-    @StringDef({
-            KEY_SHOWS_EXPORT_URI,
-            KEY_SHOWS_IMPORT_URI,
-            KEY_LISTS_EXPORT_URI,
-            KEY_LISTS_IMPORT_URI,
-            KEY_MOVIES_EXPORT_URI,
-            KEY_MOVIES_IMPORT_URI,
-            KEY_AUTO_BACKUP_SHOWS_EXPORT_URI,
-            KEY_AUTO_BACKUP_LISTS_EXPORT_URI,
-            KEY_AUTO_BACKUP_MOVIES_EXPORT_URI
-    })
-    public @interface FileUriSettingsKey {
-    }
 
     public static boolean isAutoBackupEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KEY_AUTOBACKUP,
@@ -78,10 +61,21 @@ public class BackupSettings {
                 .apply();
     }
 
-    public static boolean isTimeForAutoBackup(Context context) {
-        long now = System.currentTimeMillis();
-        long previousBackupTime = getLastAutoBackupTime(context);
-        return (now - previousBackupTime) > 7 * DateUtils.DAY_IN_MILLIS;
+    public static boolean isCreateCopyOfAutoBackup(Context context) {
+        // Re-purposes the old default files pref,
+        // which if true meant to backup to the old default location,
+        // which if false meant users specified files to backup to.
+        // Now if true means to not create any copies,
+        // if false means to create a copy to the user specified files.
+        return !PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_AUTO_BACKUP_USE_DEFAULT_FILES, true);
+    }
+
+    static void setCreateCopyOfAutoBackup(Context context, boolean createCopy) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putBoolean(KEY_AUTO_BACKUP_USE_DEFAULT_FILES, !createCopy)
+                .apply();
     }
 
     private static SharedPreferences getAutoBackupPrefs(Context context) {
@@ -89,6 +83,12 @@ public class BackupSettings {
                 context.getPackageName() + "_autobackup",
                 Context.MODE_PRIVATE
         );
+    }
+
+    public static boolean isTimeForAutoBackup(Context context) {
+        long now = System.currentTimeMillis();
+        long previousBackupTime = getLastAutoBackupTime(context);
+        return (now - previousBackupTime) > 7 * DateUtils.DAY_IN_MILLIS;
     }
 
     private static long getLastAutoBackupTime(Context context) {
@@ -111,11 +111,6 @@ public class BackupSettings {
                 .apply();
     }
 
-    public static boolean isCreateCopyOfAutoBackup(Context context) {
-        return !PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_AUTO_BACKUP_USE_DEFAULT_FILES, true);
-    }
-
     @Nullable
     static String getAutoBackupErrorOrNull(Context context) {
         return getAutoBackupPrefs(context)
@@ -132,8 +127,16 @@ public class BackupSettings {
     /**
      * Store or remove (by setting it {@code null}) the URI to a backup file.
      */
-    static void storeFileUri(Context context, @FileUriSettingsKey String key,
-            @Nullable Uri uri) {
+    static void storeExportFileUri(
+            Context context,
+            @JsonExportTask.BackupType int type,
+            @Nullable Uri uri,
+            boolean isAutoBackup
+    ) {
+        String key = isAutoBackup
+                ? getAutoBackupFileKey(type)
+                : getExportFileKey(type);
+
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putString(key, uri == null ? null : uri.toString())
@@ -141,25 +144,95 @@ public class BackupSettings {
     }
 
     /**
+     * Store the URI to a backup file to import.
+     */
+    static void storeImportFileUri(
+            Context context,
+            @JsonExportTask.BackupType int type,
+            @NonNull Uri uri
+    ) {
+        String key = getImportFileKey(type);
+
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putString(key, uri.toString())
+                .apply();
+    }
+
+    @Nullable
+    static Uri getExportFileUri(
+            Context context,
+            @JsonExportTask.BackupType int type,
+            boolean isAutoBackup
+    ) {
+        String key = isAutoBackup
+                ? getAutoBackupFileKey(type)
+                : getExportFileKey(type);
+
+        String uriString = PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(key, null);
+        return uriString != null
+                ? Uri.parse(uriString)
+                : null;
+    }
+
+    /**
      * Retrieve a backup file URI. If looking for an import URI and there is none defined, tries to
      * get the export URI.
      */
     @Nullable
-    static Uri getFileUri(Context context, @FileUriSettingsKey String key) {
+    static Uri getImportFileUriOrExportFileUri(
+            Context context,
+            @JsonExportTask.BackupType int type
+    ) {
+        String key = getImportFileKey(type);
+
         String uriString = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(key, null);
         if (uriString == null) {
-            // if there is no import uri, try to fall back to the export file uri
-            if (KEY_SHOWS_IMPORT_URI.equals(key)) {
-                return getFileUri(context, KEY_SHOWS_EXPORT_URI);
-            } else if (KEY_LISTS_IMPORT_URI.equals(key)) {
-                return getFileUri(context, KEY_LISTS_EXPORT_URI);
-            } else if (KEY_MOVIES_IMPORT_URI.equals(key)) {
-                return getFileUri(context, KEY_MOVIES_EXPORT_URI);
-            }
-            return null;
+            // If there is no import uri, try to fall back to the export file uri.
+            return getExportFileUri(context, type, false);
         }
         return Uri.parse(uriString);
+    }
+
+    private static String getAutoBackupFileKey(@JsonExportTask.BackupType int type) {
+        switch (type) {
+            case JsonExportTask.BACKUP_SHOWS:
+                return KEY_AUTOBACKUP_SHOWS_EXPORT_URI;
+            case JsonExportTask.BACKUP_LISTS:
+                return KEY_AUTOBACKUP_LISTS_EXPORT_URI;
+            case JsonExportTask.BACKUP_MOVIES:
+                return KEY_AUTOBACKUP_MOVIES_EXPORT_URI;
+            default:
+                throw new IllegalArgumentException("Unknown backup type " + type);
+        }
+    }
+
+    private static String getExportFileKey(@JsonExportTask.BackupType int type) {
+        switch (type) {
+            case JsonExportTask.BACKUP_SHOWS:
+                return KEY_SHOWS_EXPORT_URI;
+            case JsonExportTask.BACKUP_LISTS:
+                return KEY_LISTS_EXPORT_URI;
+            case JsonExportTask.BACKUP_MOVIES:
+                return KEY_MOVIES_EXPORT_URI;
+            default:
+                throw new IllegalArgumentException("Unknown backup type " + type);
+        }
+    }
+
+    private static String getImportFileKey(@JsonExportTask.BackupType int type) {
+        switch (type) {
+            case JsonExportTask.BACKUP_SHOWS:
+                return KEY_SHOWS_IMPORT_URI;
+            case JsonExportTask.BACKUP_LISTS:
+                return KEY_LISTS_IMPORT_URI;
+            case JsonExportTask.BACKUP_MOVIES:
+                return KEY_MOVIES_IMPORT_URI;
+            default:
+                throw new IllegalArgumentException("Unknown backup type " + type);
+        }
     }
 
     /**
@@ -170,11 +243,11 @@ public class BackupSettings {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         boolean isMissingBackupFile = false;
-        if (prefs.getString(KEY_AUTO_BACKUP_SHOWS_EXPORT_URI, null) == null) {
+        if (prefs.getString(KEY_AUTOBACKUP_SHOWS_EXPORT_URI, null) == null) {
             isMissingBackupFile = true;
-        } else if (prefs.getString(KEY_AUTO_BACKUP_LISTS_EXPORT_URI, null) == null) {
+        } else if (prefs.getString(KEY_AUTOBACKUP_LISTS_EXPORT_URI, null) == null) {
             isMissingBackupFile = true;
-        } else if (prefs.getString(KEY_AUTO_BACKUP_MOVIES_EXPORT_URI, null) == null) {
+        } else if (prefs.getString(KEY_AUTOBACKUP_MOVIES_EXPORT_URI, null) == null) {
             isMissingBackupFile = true;
         }
         return isMissingBackupFile;

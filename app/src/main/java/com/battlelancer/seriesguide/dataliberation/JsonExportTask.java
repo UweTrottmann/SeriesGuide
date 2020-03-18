@@ -291,38 +291,11 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     @Nullable
     Uri getDataBackupFile(@BackupType int type) {
-        if (type == BACKUP_SHOWS) {
-            return BackupSettings.getFileUri(context,
-                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_SHOWS_EXPORT_URI
-                            : BackupSettings.KEY_SHOWS_EXPORT_URI);
-        }
-        if (type == BACKUP_LISTS) {
-            return BackupSettings.getFileUri(context,
-                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_LISTS_EXPORT_URI
-                            : BackupSettings.KEY_LISTS_EXPORT_URI);
-        }
-        if (type == BACKUP_MOVIES) {
-            return BackupSettings.getFileUri(context,
-                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_MOVIES_EXPORT_URI
-                            : BackupSettings.KEY_MOVIES_EXPORT_URI);
-        }
-        return null;
+        return BackupSettings.getExportFileUri(context, type, isAutoBackupMode);
     }
 
     void removeBackupFileUri(@BackupType int type) {
-        if (type == BACKUP_SHOWS) {
-            BackupSettings.storeFileUri(context,
-                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_SHOWS_EXPORT_URI
-                            : BackupSettings.KEY_SHOWS_EXPORT_URI, null);
-        } else if (type == BACKUP_LISTS) {
-            BackupSettings.storeFileUri(context,
-                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_LISTS_EXPORT_URI
-                            : BackupSettings.KEY_LISTS_EXPORT_URI, null);
-        } else if (type == BACKUP_MOVIES) {
-            BackupSettings.storeFileUri(context,
-                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_MOVIES_EXPORT_URI
-                            : BackupSettings.KEY_MOVIES_EXPORT_URI, null);
-        }
+        BackupSettings.storeExportFileUri(context, type, null, isAutoBackupMode);
     }
 
     void writeJsonStreamShows(OutputStream out, Cursor shows) throws IOException {

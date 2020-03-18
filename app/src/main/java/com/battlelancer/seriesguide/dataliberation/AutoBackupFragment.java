@@ -6,12 +6,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.widget.TextViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -72,10 +72,7 @@ public class AutoBackupFragment extends Fragment {
         binding.checkBoxAutoBackupCreateCopy.setChecked(
                 BackupSettings.isCreateCopyOfAutoBackup(getContext()));
         binding.checkBoxAutoBackupCreateCopy.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            PreferenceManager.getDefaultSharedPreferences(buttonView.getContext())
-                    .edit()
-                    .putBoolean(BackupSettings.KEY_AUTO_BACKUP_USE_DEFAULT_FILES, !isChecked)
-                    .apply();
+            BackupSettings.setCreateCopyOfAutoBackup(buttonView.getContext(), isChecked);
             updateFileViews();
         });
 
@@ -218,15 +215,19 @@ public class AutoBackupFragment extends Fragment {
                 Timber.e(e, "Could not persist r/w permission for backup file URI.");
             }
 
-            if (requestCode == REQUEST_CODE_SHOWS_EXPORT_URI) {
-                BackupSettings.storeFileUri(getContext(),
-                        BackupSettings.KEY_AUTO_BACKUP_SHOWS_EXPORT_URI, uri);
-            } else if (requestCode == REQUEST_CODE_LISTS_EXPORT_URI) {
-                BackupSettings.storeFileUri(getContext(),
-                        BackupSettings.KEY_AUTO_BACKUP_LISTS_EXPORT_URI, uri);
-            } else {
-                BackupSettings.storeFileUri(getContext(),
-                        BackupSettings.KEY_AUTO_BACKUP_MOVIES_EXPORT_URI, uri);
+            switch (requestCode) {
+                case REQUEST_CODE_SHOWS_EXPORT_URI:
+                    BackupSettings.storeExportFileUri(getContext(),
+                            JsonExportTask.BACKUP_SHOWS, uri, true);
+                    break;
+                case REQUEST_CODE_LISTS_EXPORT_URI:
+                    BackupSettings.storeExportFileUri(getContext(),
+                            JsonExportTask.BACKUP_LISTS, uri, true);
+                    break;
+                default:
+                    BackupSettings.storeExportFileUri(getContext(),
+                            JsonExportTask.BACKUP_MOVIES, uri, true);
+                    break;
             }
 
             updateFileViews();
@@ -255,20 +256,17 @@ public class AutoBackupFragment extends Fragment {
 
     private void updateFileViews() {
         if (BackupSettings.isCreateCopyOfAutoBackup(getContext())) {
-            setUriOrPlaceholder(
-                    binding.textViewAutoBackupShowsExportFile,
-                    BackupSettings.getFileUri(getContext(),
-                            BackupSettings.KEY_AUTO_BACKUP_SHOWS_EXPORT_URI));
+            setUriOrPlaceholder(binding.textViewAutoBackupShowsExportFile,
+                    BackupSettings.getExportFileUri(
+                            getContext(), JsonExportTask.BACKUP_SHOWS, true));
 
-            setUriOrPlaceholder(
-                    binding.textViewAutoBackupListsExportFile,
-                    BackupSettings.getFileUri(getContext(),
-                            BackupSettings.KEY_AUTO_BACKUP_LISTS_EXPORT_URI));
+            setUriOrPlaceholder(binding.textViewAutoBackupListsExportFile,
+                    BackupSettings.getExportFileUri(
+                            getContext(), JsonExportTask.BACKUP_LISTS, true));
 
-            setUriOrPlaceholder(
-                    binding.textViewAutoBackupMoviesExportFile,
-                    BackupSettings.getFileUri(getContext(),
-                            BackupSettings.KEY_AUTO_BACKUP_MOVIES_EXPORT_URI));
+            setUriOrPlaceholder(binding.textViewAutoBackupMoviesExportFile,
+                    BackupSettings.getExportFileUri(
+                            getContext(), JsonExportTask.BACKUP_MOVIES, true));
 
             binding.groupUserFiles.setVisibility(View.VISIBLE);
         } else {
@@ -276,7 +274,7 @@ public class AutoBackupFragment extends Fragment {
         }
     }
 
-    private void setUriOrPlaceholder(TextView textView, Uri uri) {
+    private void setUriOrPlaceholder(TextView textView, @Nullable Uri uri) {
         textView.setText(uri == null
                 ? getString(R.string.no_file_selected)
                 : uri.toString());

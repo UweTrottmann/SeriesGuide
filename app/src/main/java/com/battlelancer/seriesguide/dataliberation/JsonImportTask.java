@@ -242,25 +242,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
     @Nullable
     private Uri getDataBackupFile(@JsonExportTask.BackupType int type) {
-        // use import URIs
-        // if they are not set getFileUri will fall back to the export URI
-        // for auto backup always use the URI data is configured to be exported to
-        if (type == JsonExportTask.BACKUP_SHOWS) {
-            return BackupSettings.getFileUri(context,
-                    isImportingAutoBackup ? BackupSettings.KEY_AUTO_BACKUP_SHOWS_EXPORT_URI
-                            : BackupSettings.KEY_SHOWS_IMPORT_URI);
-        }
-        if (type == JsonExportTask.BACKUP_LISTS) {
-            return BackupSettings.getFileUri(context,
-                    isImportingAutoBackup ? BackupSettings.KEY_AUTO_BACKUP_LISTS_EXPORT_URI
-                            : BackupSettings.KEY_LISTS_IMPORT_URI);
-        }
-        if (type == JsonExportTask.BACKUP_MOVIES) {
-            return BackupSettings.getFileUri(context,
-                    isImportingAutoBackup ? BackupSettings.KEY_AUTO_BACKUP_MOVIES_EXPORT_URI
-                            : BackupSettings.KEY_MOVIES_IMPORT_URI);
-        }
-        return null;
+        return BackupSettings.getImportFileUriOrExportFileUri(context, type);
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
