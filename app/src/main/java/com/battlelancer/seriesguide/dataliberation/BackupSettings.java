@@ -28,8 +28,14 @@ public class BackupSettings {
             = "com.battlelancer.seriesguide.backup.moviesImport";
 
     // auto backup
+    // Previous auto backup preference key.
+    // Renamed (= reset) so on upgrade the new auto backup is turned on,
+    // as users might have dismissed the setup notification which
+    // turned off the old auto backup.
+//    private static final String KEY_AUTOBACKUP
+//            = "com.battlelancer.seriesguide.autobackup";
     private static final String KEY_AUTOBACKUP
-            = "com.battlelancer.seriesguide.autobackup";
+            = "autobackup";
     private static final String KEY_AUTO_BACKUP_USE_DEFAULT_FILES
             = "com.battlelancer.seriesguide.autobackup.defaultFiles";
     private static final String KEY_AUTOBACKUP_SHOWS_EXPORT_URI
