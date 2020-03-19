@@ -423,8 +423,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Inne</string>
     <string name="pref_autoupdatesummary">Automatycznie synchronizuje i aktualizuje dane SeriesGuide</string>
-    <string name="pref_autobackup">Automatyczna kopia zapasowa</string>
-    <string name="pref_autobackupsummary">Tworzy co tydzień kopię zapasową seriali, list i filmów</string>
     <string name="backup">Kopia zapasowa</string>
     <string name="backup_summary">Utwórz/Przywróć kopię bazy seriali</string>
     <string name="pref_number">Format numeracji</string>
@@ -444,14 +442,18 @@
     <string name="backup_button">Kontynuuj</string>
     <string name="import_button">Przywróć</string>
     <string name="import_warning">Rozumiem, że moje seriale, listy i filmy zostaną zastąpione!</string>
-    <string name="last_auto_backup">Ostatnia kopia zapasowa: %s</string>
-    <string name="restore_auto_backup">Przywróć kopię zapasową</string>
-    <string name="dataliberation_permission_missing">Umożliwia dostęp do plików, aby użyć tworzenia i przywracania kopii zapasowych.</string>
-    <string name="autobackup_permission_missing">Umożliwia dostęp do plików, aby użyć automatycznego tworzenia kopii zapasowych.</string>
-    <string name="autobackup_files_missing">Aby użyć automatycznego tworzenia kopii zapasowych, wybierz prawidłowe pliki kopii zapasowych.</string>
     <string name="no_file_selected">Nie wybrano pliku</string>
     <string name="action_select_file">Wybierz plik</string>
-    <string name="backup_use_default_files">Użyj domyślnych plików kopii zapasowej</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatyczna kopia zapasowa</string>
+    <string name="pref_autobackupsummary">Tworzy co tydzień kopię zapasową seriali, list i filmów</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Ostatnia kopia zapasowa: %s</string>
+    <string name="restore_auto_backup">Przywróć kopię zapasową</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">Aby użyć automatycznego tworzenia kopii zapasowych, wybierz prawidłowe pliki kopii zapasowych.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Wprowadzenie</string>
     <string name="dismiss">Zamknij</string>

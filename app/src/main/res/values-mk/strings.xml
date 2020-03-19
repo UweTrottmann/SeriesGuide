@@ -401,8 +401,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Друго</string>
     <string name="pref_autoupdatesummary">Автоматиско синхронизирање и абдејтирање опции</string>
-    <string name="pref_autobackup">Автoмaтски бекaп</string>
-    <string name="pref_autobackupsummary">Неделни бекупи од вашите серии, листи и филмови</string>
     <string name="backup">Backup/Restore</string>
     <string name="backup_summary">Backup или обновување на вашиите серии</string>
     <string name="pref_number">Формат бројки</string>
@@ -422,14 +420,18 @@
     <string name="backup_button">Архивирај</string>
     <string name="import_button">Restore backup</string>
     <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
-    <string name="last_auto_backup">Последен автоматски Backup: %s</string>
-    <string name="restore_auto_backup">Обнови автоматски Backup</string>
-    <string name="dataliberation_permission_missing">За да направите backup или restore, дозволете пристап до вашите фајлови.</string>
-    <string name="autobackup_permission_missing">За да можете да користите автоматски backup, овозможете пристап до вашите фајлови.</string>
-    <string name="autobackup_files_missing">За да користите автоматски бекап, селектирајте валиден бекап фајл.</string>
     <string name="no_file_selected">нема одбрано датотека</string>
     <string name="action_select_file">Изберете дадотека</string>
-    <string name="backup_use_default_files">Кoристи предефинирaни бекaп фaјлoви</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Автoмaтски бекaп</string>
+    <string name="pref_autobackupsummary">Неделни бекупи од вашите серии, листи и филмови</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Последен автоматски Backup: %s</string>
+    <string name="restore_auto_backup">Обнови автоматски Backup</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">За да користите автоматски бекап, селектирајте валиден бекап фајл.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Почни</string>
     <string name="dismiss">Откажи</string>

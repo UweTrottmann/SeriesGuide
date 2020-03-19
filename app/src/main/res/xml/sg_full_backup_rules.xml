@@ -4,4 +4,6 @@
     <!-- Not including the database, it likely exceeds the 25 MB limit. -->
     <!-- https://developer.android.com/guide/topics/data/autobackup -->
     <include domain="sharedpref" path="com.battlelancer.seriesguide_preferences.xml" />
+    <!-- Recent automatic backups. -->
+    <include domain="external" path="Backups/" />
 </full-backup-content>

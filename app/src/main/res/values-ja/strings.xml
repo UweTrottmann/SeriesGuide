@@ -390,8 +390,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">その他</string>
     <string name="pref_autoupdatesummary">SeriesGuide データを自動的に同期および更新します</string>
-    <string name="pref_autobackup">自動バックアップ</string>
-    <string name="pref_autobackupsummary">番組、リスト、映画を毎週バックアップ</string>
     <string name="backup">バックアップ/復元</string>
     <string name="backup_summary">番組をバックアップまたは復元します</string>
     <string name="pref_number">表示形式</string>
@@ -411,14 +409,18 @@
     <string name="backup_button">バックアップを作成</string>
     <string name="import_button">バックアップを復元</string>
     <string name="import_warning">あなたの現在の番組、リスト、映画がバックアップで置き換えられます</string>
-    <string name="last_auto_backup">最終の自動バックアップ: %s</string>
-    <string name="restore_auto_backup">自動バックアップを復元</string>
-    <string name="dataliberation_permission_missing">バックアップまたは復元するため、ファイルへのアクセスを許可してください。</string>
-    <string name="autobackup_permission_missing">自動バックアップを使用するため、ファイルへのアクセスを許可してください。</string>
-    <string name="autobackup_files_missing">自動バックアップを使用するため、有効なバックアップ ファイルを選択してください。</string>
     <string name="no_file_selected">ファイルが選択されていません</string>
     <string name="action_select_file">ファイルを選択</string>
-    <string name="backup_use_default_files">デフォルトのバックアップ ファイルを使用する</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">自動バックアップ</string>
+    <string name="pref_autobackupsummary">番組、リスト、映画を毎週バックアップ</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">最終の自動バックアップ: %s</string>
+    <string name="restore_auto_backup">自動バックアップを復元</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">自動バックアップを使用するため、有効なバックアップ ファイルを選択してください。</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">始めましょう</string>
     <string name="dismiss">中止</string>

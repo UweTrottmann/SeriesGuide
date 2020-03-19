@@ -401,8 +401,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Andere</string>
     <string name="pref_autoupdatesummary">Automatisch data synchroniseren en bijwerken</string>
-    <string name="pref_autobackup">Automatische back-up</string>
-    <string name="pref_autobackupsummary">Wekelijkse back-up van uw series, lijsten en films</string>
     <string name="backup">Back-up maken/herstellen</string>
     <string name="backup_summary">Back-up van series maken/herstellen</string>
     <string name="pref_number">Nummer opmaak</string>
@@ -422,14 +420,18 @@
     <string name="backup_button">Back-up maken</string>
     <string name="import_button">Herstellen</string>
     <string name="import_warning">Uw huidige series, lijsten en films worden vervangen door de back-up</string>
-    <string name="last_auto_backup">Laatste auto back-up: %s</string>
-    <string name="restore_auto_backup">Auto back-up terugzetten</string>
-    <string name="dataliberation_permission_missing">Geef toegang tot uw bestanden om back-ups te maken en te herstellen</string>
-    <string name="autobackup_permission_missing">Geef toegang tot uw bestanden om automatisch te back-uppen</string>
-    <string name="autobackup_files_missing">Selecteer geldige back-upbestanden om automatisch te back-uppen</string>
     <string name="no_file_selected">Geen bestand geselecteerd</string>
     <string name="action_select_file">Bestand selecteren</string>
-    <string name="backup_use_default_files">Standaardbestanden voor back-up gebruiken</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatische back-up</string>
+    <string name="pref_autobackupsummary">Wekelijkse back-up van uw series, lijsten en films</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Laatste auto back-up: %s</string>
+    <string name="restore_auto_backup">Auto back-up terugzetten</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">Selecteer geldige back-upbestanden om automatisch te back-uppen</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Aan de slag</string>
     <string name="dismiss">Afwijzen</string>

@@ -27,7 +27,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -35,7 +34,6 @@ import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -60,7 +58,6 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     @SuppressLint("StaticFieldLeak") private Context context;
     private String[] languageCodes;
     private boolean isImportingAutoBackup;
-    private boolean isUseDefaultFolders;
     private boolean isImportShows;
     private boolean isImportLists;
     private boolean isImportMovies;
@@ -74,16 +71,11 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         isImportShows = importShows;
         isImportLists = importLists;
         isImportMovies = importMovies;
-        // note: use Storage Access Framework on KitKat and up to select custom backup files
-        isUseDefaultFolders = false;
     }
 
     public JsonImportTask(Context context) {
         this(context, true, true, true);
         isImportingAutoBackup = true;
-        // note: use Storage Access Framework on KitKat and up to select custom backup files,
-        // though auto backup by default uses default folders
-        isUseDefaultFolders = BackupSettings.isUseAutoBackupDefaultFiles(context);
     }
 
     @Override
@@ -94,15 +86,6 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
             return ERROR_LARGE_DB_OP;
         }
 
-        File importPath = null;
-        if (isUseDefaultFolders) {
-            // Ensure external storage
-            if (!AndroidUtils.isExtStorageAvailable()) {
-                return ERROR_STORAGE_ACCESS;
-            }
-            importPath = JsonExportTask.getExportPath(isImportingAutoBackup);
-        }
-
         // last chance to abort
         if (isCancelled()) {
             return ERROR;
@@ -110,7 +93,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
         int result;
         if (isImportShows) {
-            result = importData(importPath, JsonExportTask.BACKUP_SHOWS);
+            result = importData(JsonExportTask.BACKUP_SHOWS);
             if (result != SUCCESS) {
                 return result;
             }
@@ -120,7 +103,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         if (isImportLists) {
-            result = importData(importPath, JsonExportTask.BACKUP_LISTS);
+            result = importData(JsonExportTask.BACKUP_LISTS);
             if (result != SUCCESS) {
                 return result;
             }
@@ -130,7 +113,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         if (isImportMovies) {
-            result = importData(importPath, JsonExportTask.BACKUP_MOVIES);
+            result = importData(JsonExportTask.BACKUP_MOVIES);
             if (result != SUCCESS) {
                 return result;
             }
@@ -176,11 +159,8 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                         context.getString(messageId), errorCause, showIndefinite));
     }
 
-    private int importData(File importPath, @JsonExportTask.BackupType int type) {
-        // if using default files or non-user custom files the backup task will not create a file
-        // if there is no data to export,
-        // so make sure to not fail just because a default folder file is missing
-        if (!isUseDefaultFolders) {
+    private int importData(@JsonExportTask.BackupType int type) {
+        if (!isImportingAutoBackup) {
             // make sure we have a file uri...
             Uri backupFileUri = getDataBackupFile(type);
             if (backupFileUri == null) {
@@ -218,32 +198,30 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                 return ERROR;
             }
         } else {
-            // make sure we can access the backup file
-            File backupFile = null;
-            if (type == JsonExportTask.BACKUP_SHOWS) {
-                backupFile = new File(importPath, JsonExportTask.EXPORT_JSON_FILE_SHOWS);
-            } else if (type == JsonExportTask.BACKUP_LISTS) {
-                backupFile = new File(importPath, JsonExportTask.EXPORT_JSON_FILE_LISTS);
-            } else if (type == JsonExportTask.BACKUP_MOVIES) {
-                backupFile = new File(importPath, JsonExportTask.EXPORT_JSON_FILE_MOVIES);
-            }
-            if (backupFile == null || !backupFile.canRead()) {
+            // Restoring latest auto backup.
+
+            AutoBackupTools.BackupFile backupFileOrNull =
+                    AutoBackupTools.getLatestBackupOrNull(type, context);
+
+            if (backupFileOrNull == null) {
+                // There is no backup file to restore from.
                 return ERROR_FILE_ACCESS;
             }
-            if (!backupFile.exists()) {
-                // no backup file, so nothing to restore, skip it
-                return SUCCESS;
-            }
 
-            FileInputStream in;
+            File backupFile = backupFileOrNull.getFile();
+            FileInputStream in; // Closed by reader after importing.
             try {
+                if (!backupFile.canRead()) {
+                    return ERROR_FILE_ACCESS;
+                }
                 in = new FileInputStream(backupFile);
-            } catch (FileNotFoundException e) {
-                Timber.e(e, "Backup file not found.");
+            } catch (Exception e) {
+                Timber.e(e, "Unable to open backup file.");
                 errorCause = e.getMessage();
                 return ERROR_FILE_ACCESS;
             }
 
+            // Only clear data after backup file could be opened.
             if (!clearExistingData(type)) {
                 return ERROR;
             }
@@ -264,25 +242,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
     @Nullable
     private Uri getDataBackupFile(@JsonExportTask.BackupType int type) {
-        // use import URIs
-        // if they are not set getFileUri will fall back to the export URI
-        // for auto backup always use the URI data is configured to be exported to
-        if (type == JsonExportTask.BACKUP_SHOWS) {
-            return BackupSettings.getFileUri(context,
-                    isImportingAutoBackup ? BackupSettings.KEY_AUTO_BACKUP_SHOWS_EXPORT_URI
-                            : BackupSettings.KEY_SHOWS_IMPORT_URI);
-        }
-        if (type == JsonExportTask.BACKUP_LISTS) {
-            return BackupSettings.getFileUri(context,
-                    isImportingAutoBackup ? BackupSettings.KEY_AUTO_BACKUP_LISTS_EXPORT_URI
-                            : BackupSettings.KEY_LISTS_IMPORT_URI);
-        }
-        if (type == JsonExportTask.BACKUP_MOVIES) {
-            return BackupSettings.getFileUri(context,
-                    isImportingAutoBackup ? BackupSettings.KEY_AUTO_BACKUP_MOVIES_EXPORT_URI
-                            : BackupSettings.KEY_MOVIES_IMPORT_URI);
-        }
-        return null;
+        return BackupSettings.getImportFileUriOrExportFileUri(context, type);
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -315,6 +275,12 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
     private void importFromJson(@JsonExportTask.BackupType int type, FileInputStream in)
             throws JsonParseException, IOException, IllegalArgumentException {
+        if (in.getChannel().size() == 0) {
+            Timber.i("Backup file is empty, nothing to import.");
+            in.close();
+            return; // File is empty, nothing to import.
+        }
+
         Gson gson = new Gson();
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
         reader.beginArray();

@@ -402,8 +402,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Otros</string>
     <string name="pref_autoupdatesummary">Sincronizar y actualizar automáticamente datos de SeriesGuide</string>
-    <string name="pref_autobackup">Copia de seguridad automática</string>
-    <string name="pref_autobackupsummary">Copia de seguridad semanal de tus series, listas y películas</string>
     <string name="backup">Respaldo/Restauración</string>
     <string name="backup_summary">Respaldar o restaurar sus programas</string>
     <string name="pref_number">Formato numérico</string>
@@ -423,14 +421,18 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="backup_button">Respaldo</string>
     <string name="import_button">Restaurar</string>
     <string name="import_warning">Entiendo que mis series, listas y películas actuales serán reemplazadas!</string>
-    <string name="last_auto_backup">Última copia de seguridad automática: %s</string>
-    <string name="restore_auto_backup">Restaurar la copia de seguridad automática</string>
-    <string name="dataliberation_permission_missing">Para crear o restaurar una copia de seguridad, permite el acceso a tus archivos.</string>
-    <string name="autobackup_permission_missing">Para utilizar la copia de seguridad automática, permite el acceso a tus archivos.</string>
-    <string name="autobackup_files_missing">Para utilizar la copia de seguridad automática, seleccione archivos de copia de seguridad válidos.</string>
     <string name="no_file_selected">No hay ningún archivo seleccionado</string>
     <string name="action_select_file">Seleccione un archivo</string>
-    <string name="backup_use_default_files">Utilizar archivos de copia de seguridad por defecto</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Copia de seguridad automática</string>
+    <string name="pref_autobackupsummary">Copia de seguridad semanal de tus series, listas y películas</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Última copia de seguridad automática: %s</string>
+    <string name="restore_auto_backup">Restaurar la copia de seguridad automática</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">Para utilizar la copia de seguridad automática, seleccione archivos de copia de seguridad válidos.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Empezar</string>
     <string name="dismiss">Descartar</string>

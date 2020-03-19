@@ -390,8 +390,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">其他</string>
     <string name="pref_autoupdatesummary">自動同步和更新 SeriesGuide 資料</string>
-    <string name="pref_autobackup">自動備份</string>
-    <string name="pref_autobackupsummary">每週備份你的節目，清單和電影</string>
     <string name="backup">備份/還原</string>
     <string name="backup_summary">備份或還原你的影集</string>
     <string name="pref_number">數字格式</string>
@@ -411,14 +409,18 @@
     <string name="backup_button">備份</string>
     <string name="import_button">還原</string>
     <string name="import_warning">我明白我目前的節目，及其他清單和電影將會被取代 ！</string>
-    <string name="last_auto_backup">剩餘自動備份︰ %s</string>
-    <string name="restore_auto_backup">還原自動備份</string>
-    <string name="dataliberation_permission_missing">若要備份或復原，請允許存取您的檔案。</string>
-    <string name="autobackup_permission_missing">若要自動備份，請允許存取您的檔案。</string>
-    <string name="autobackup_files_missing">為了備份，請選擇一可用備份資料夾。</string>
     <string name="no_file_selected">沒有選擇檔案</string>
     <string name="action_select_file">選擇檔案</string>
-    <string name="backup_use_default_files">使用預設備份檔案</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">自動備份</string>
+    <string name="pref_autobackupsummary">每週備份你的節目，清單和電影</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">剩餘自動備份︰ %s</string>
+    <string name="restore_auto_backup">還原自動備份</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">為了備份，請選擇一可用備份資料夾。</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">開始</string>
     <string name="dismiss">解除</string>

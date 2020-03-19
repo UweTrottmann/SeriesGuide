@@ -4,14 +4,13 @@ import android.content.Context
 import android.preference.PreferenceManager
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
 import android.widget.FrameLayout
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.core.content.edit
+import androidx.core.view.isGone
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.ViewFirstRunBinding
+import com.battlelancer.seriesguide.dataliberation.AutoBackupTools
+import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.util.TaskManager
@@ -30,28 +29,21 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     class ButtonEvent(val type: ButtonType)
 
-    init {
-        LayoutInflater.from(context).inflate(R.layout.view_first_run, this)
-    }
+    private val binding: ViewFirstRunBinding =
+        ViewFirstRunBinding.inflate(LayoutInflater.from(context), this, true)
 
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        val noSpoilerView = findViewById<ViewGroup>(R.id.containerFirstRunNoSpoilers)
-        val noSpoilerCheckBox = noSpoilerView.findViewById<CheckBox>(
-            R.id.checkboxFirstRunNoSpoilers
-        )
-        val dataSaverContainer = findViewById<ViewGroup>(R.id.containerFirstRunDataSaver)
-        val dataSaverCheckBox = findViewById<CheckBox>(R.id.checkboxFirstRunDataSaver)
-        val buttonAddShow = findViewById<Button>(R.id.buttonFirstRunAddShow)
-        val buttonSignIn = findViewById<Button>(R.id.buttonFirstRunSignIn)
-        val buttonRestoreBackup = findViewById<Button>(R.id.buttonFirstRunRestore)
-        val textViewPrivacyPolicy = findViewById<TextView>(R.id.textViewFirstRunPrivacyLink)
-        val buttonDismiss = findViewById<ImageButton>(R.id.buttonFirstRunDismiss)
+        binding.groupAutoBackupDetected.isGone =
+            !AutoBackupTools.isAutoBackupMaybeAvailable(context)
+        binding.buttonRestoreAutoBackup.setOnClickListener {
+            context.startActivity(DataLiberationActivity.intentToShowAutoBackup(context))
+        }
 
-        noSpoilerView.setOnClickListener { v ->
+        binding.containerNoSpoilers.setOnClickListener { v ->
             // new state is inversion of current state
-            val noSpoilers = !noSpoilerCheckBox.isChecked
+            val noSpoilers = !binding.checkboxNoSpoilers.isChecked
             // save
             PreferenceManager.getDefaultSharedPreferences(v.context).edit {
                 putBoolean(DisplaySettings.KEY_PREVENT_SPOILERS, noSpoilers)
@@ -59,34 +51,34 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
             // update next episode strings right away
             TaskManager.getInstance().tryNextEpisodeUpdateTask(v.context)
             // show
-            noSpoilerCheckBox.isChecked = noSpoilers
+            binding.checkboxNoSpoilers.isChecked = noSpoilers
         }
-        noSpoilerCheckBox.isChecked = DisplaySettings.preventSpoilers(context)
-        dataSaverContainer.setOnClickListener {
-            val isSaveData = !dataSaverCheckBox.isChecked
+        binding.checkboxNoSpoilers.isChecked = DisplaySettings.preventSpoilers(context)
+
+        binding.containerDataSaver.setOnClickListener {
+            val isSaveData = !binding.checkboxDataSaver.isChecked
             PreferenceManager.getDefaultSharedPreferences(it.context).edit {
                 putBoolean(UpdateSettings.KEY_ONLYWIFI, isSaveData)
             }
-            dataSaverCheckBox.isChecked = isSaveData
+            binding.checkboxDataSaver.isChecked = isSaveData
         }
-        dataSaverCheckBox.isChecked = UpdateSettings.isLargeDataOverWifiOnly(context)
-        buttonAddShow.setOnClickListener {
-            EventBus.getDefault()
-                .post(ButtonEvent(ButtonType.ADD_SHOW))
+        binding.checkboxDataSaver.isChecked = UpdateSettings.isLargeDataOverWifiOnly(context)
+
+        binding.buttonAddShow.setOnClickListener {
+            EventBus.getDefault().post(ButtonEvent(ButtonType.ADD_SHOW))
         }
-        buttonSignIn.setOnClickListener {
-            EventBus.getDefault()
-                .post(ButtonEvent(ButtonType.SIGN_IN))
+        binding.buttonSignIn.setOnClickListener {
+            EventBus.getDefault().post(ButtonEvent(ButtonType.SIGN_IN))
         }
-        buttonRestoreBackup.setOnClickListener {
-            EventBus.getDefault()
-                .post(ButtonEvent(ButtonType.RESTORE_BACKUP))
+        binding.buttonRestoreBackup.setOnClickListener {
+            EventBus.getDefault().post(ButtonEvent(ButtonType.RESTORE_BACKUP))
         }
-        buttonDismiss.setOnClickListener {
+        binding.buttonDismiss.setOnClickListener {
             setFirstRunDismissed()
             EventBus.getDefault().post(ButtonEvent(ButtonType.DISMISS))
         }
-        textViewPrivacyPolicy.setOnClickListener { v ->
+
+        binding.textViewPolicyLink.setOnClickListener { v ->
             val context = v.context
             Utils.launchWebsite(context, context.getString(R.string.url_privacy))
         }

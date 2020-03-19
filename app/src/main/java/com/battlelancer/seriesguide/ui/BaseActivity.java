@@ -11,13 +11,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NavUtils;
 import androidx.core.app.TaskStackBuilder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.dataliberation.DataLiberationTools;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.settings.BackupSettings;
+import com.battlelancer.seriesguide.dataliberation.BackupSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.traktapi.TraktTask;
 import com.battlelancer.seriesguide.ui.search.AddShowTask;
-import com.battlelancer.seriesguide.ui.shows.FirstRunView;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import org.greenrobot.eventbus.EventBus;
@@ -140,52 +137,42 @@ public abstract class BaseActivity extends AppCompatActivity {
      * Periodically do an automatic backup of the show database.
      */
     private boolean onAutoBackup() {
-        if (!AdvancedSettings.isAutoBackupEnabled(this)) {
+        if (!BackupSettings.isAutoBackupEnabled(this)) {
             return false;
         }
 
-        if (DataLiberationTools.isAutoBackupPermissionMissing(this)) {
-            // only show warning if the user is done with first run
-            if (FirstRunView.hasSeenFirstRunFragment(this)) {
-                onShowAutoBackupPermissionWarning();
-            }
+        // If last auto backup failed, show a warning, but run it (if it's time) anyhow.
+        if (BackupSettings.isWarnLastAutoBackupFailed(this)) {
+            onLastAutoBackupFailed();
+        }
+        // If copies should be made, but the specified files are invalid,
+        // show a warning but run auto backup (if it's time) anyhow.
+        else if (BackupSettings.isCreateCopyOfAutoBackup(this)
+                && BackupSettings.isMissingAutoBackupFile(this)) {
+            onAutoBackupMissingFiles();
+        }
+
+        if (!BackupSettings.isTimeForAutoBackup(this)) {
             return false;
         }
 
-        long now = System.currentTimeMillis();
-        long previousBackupTime = AdvancedSettings.getLastAutoBackupTime(this);
-        final boolean isTime = (now - previousBackupTime) > 7 * DateUtils.DAY_IN_MILLIS;
+        TaskManager.getInstance().tryBackupTask(this);
+        return true;
+    }
 
-        if (isTime) {
-            // if custom files are enabled, make sure they are configured
-            // note: backup task clears backup file setting if there was an issue with the file
-            if (!BackupSettings.isUseAutoBackupDefaultFiles(this)
-                    && BackupSettings.isMissingAutoBackupFile(this)) {
-                onShowAutoBackupMissingFilesWarning();
-                return false;
-            }
-
-            TaskManager.getInstance().tryBackupTask(this);
-            return true;
-        } else {
-            return false;
-        }
+    /**
+     * Implementers may choose to show a warning that the last auto backup has failed.
+     */
+    protected void onLastAutoBackupFailed() {
+        // Do nothing.
     }
 
     /**
      * Implementers may choose to show a warning that auto backup can not complete because not all
      * custom backup files are configured.
      */
-    protected void onShowAutoBackupMissingFilesWarning() {
-        // do nothing
-    }
-
-    /**
-     * Implementers may choose to show a warning that auto backup can not complete because of
-     * missing permissions.
-     */
-    protected void onShowAutoBackupPermissionWarning() {
-        // do nothing
+    protected void onAutoBackupMissingFiles() {
+        // Do nothing.
     }
 
     /**

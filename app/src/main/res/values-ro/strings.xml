@@ -412,8 +412,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Alte</string>
     <string name="pref_autoupdatesummary">Sincronizează automat și actualizează datele de pe SeriesGuide</string>
-    <string name="pref_autobackup">Backup automat</string>
-    <string name="pref_autobackupsummary">Backup săptămânal al serialelor, listelor si filmelor</string>
     <string name="backup">Arhivare/Restaurare</string>
     <string name="backup_summary">Arhivează sau restaurează emisiunile</string>
     <string name="pref_number">Format număr</string>
@@ -433,14 +431,18 @@
     <string name="backup_button">Arhivare</string>
     <string name="import_button">Restaurează</string>
     <string name="import_warning">Sunt de acord ca serialele, listele și filmele să fie înlocuite!</string>
-    <string name="last_auto_backup">Ultimul backup automat: %s</string>
-    <string name="restore_auto_backup">Restaurare arhivă automat</string>
-    <string name="dataliberation_permission_missing">Pentru backup sau recuperare, permite accesul la fișierele tale.</string>
-    <string name="autobackup_permission_missing">Pentru backup automat, permite accesul la fișierele tale.</string>
-    <string name="autobackup_files_missing">Pentru backup automat, selectează fișiere de backup valabile.</string>
     <string name="no_file_selected">Niciun fișier selectat</string>
     <string name="action_select_file">Selectează fișierul</string>
-    <string name="backup_use_default_files">Folosește fișierele de backup implicite</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Backup automat</string>
+    <string name="pref_autobackupsummary">Backup săptămânal al serialelor, listelor si filmelor</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Ultimul backup automat: %s</string>
+    <string name="restore_auto_backup">Restaurare arhivă automat</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">Pentru backup automat, selectează fișiere de backup valabile.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Cum să începeți</string>
     <string name="dismiss">Respingeți</string>

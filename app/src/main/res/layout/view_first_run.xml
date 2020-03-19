@@ -1,48 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
     style="@style/FirstRunColumn"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/default_padding"
     app:cardPreventCornerOverlap="false">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containerCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageButton
-            android:id="@+id/buttonFirstRunDismiss"
+            android:id="@+id/buttonDismiss"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_alignParentRight="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/dismiss"
-            android:src="@drawable/ic_clear_24dp" />
+            android:src="@drawable/ic_clear_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textViewFirstRunTitle"
-            android:layout_width="match_parent"
+            android:id="@+id/textViewTitle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginStart="@dimen/large_padding"
             android:layout_marginTop="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
             android:text="@string/get_started"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5" />
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5"
+            app:layout_constraintEnd_toStartOf="@+id/buttonDismiss"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewAutoBackupDetected"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="@string/autobackup_restore_available"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Accent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+        <Button
+            android:id="@+id/buttonRestoreAutoBackup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/restore_auto_backup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAutoBackupDetected" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/containerFirstRunNoSpoilers"
-            android:layout_width="match_parent"
+            android:id="@+id/containerNoSpoilers"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewFirstRunTitle"
             android:layout_marginTop="@dimen/large_padding"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:minHeight="?android:attr/listPreferredItemHeight"
-            android:paddingLeft="@dimen/large_padding"
-            android:paddingRight="@dimen/large_padding">
+            android:paddingStart="@dimen/large_padding"
+            android:paddingEnd="@dimen/large_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonRestoreAutoBackup">
 
             <CheckBox
-                android:id="@+id/checkboxFirstRunNoSpoilers"
+                android:id="@+id/checkboxNoSpoilers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -52,41 +84,43 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewFirstRunNoSpoilerText"
+                android:id="@+id/textViewNoSpoilers"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/pref_nospoilers"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
-                app:layout_constraintBaseline_toBaselineOf="@id/checkboxFirstRunNoSpoilers"
+                app:layout_constraintBaseline_toBaselineOf="@id/checkboxNoSpoilers"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/checkboxFirstRunNoSpoilers" />
+                app:layout_constraintStart_toEndOf="@+id/checkboxNoSpoilers" />
 
             <TextView
-                android:id="@+id/textViewFirstRunNoSpoilerSummary"
+                android:id="@+id/textViewNoSpoilersSummary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/inline_padding"
                 android:text="@string/pref_nospoilers_summary"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textViewFirstRunNoSpoilerText"
-                app:layout_constraintTop_toBottomOf="@id/textViewFirstRunNoSpoilerText" />
+                app:layout_constraintStart_toStartOf="@+id/textViewNoSpoilers"
+                app:layout_constraintTop_toBottomOf="@id/textViewNoSpoilers" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/containerFirstRunDataSaver"
-            android:layout_width="match_parent"
+            android:id="@+id/containerDataSaver"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/containerFirstRunNoSpoilers"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:minHeight="?android:attr/listPreferredItemHeight"
-            android:paddingLeft="@dimen/large_padding"
-            android:paddingRight="@dimen/large_padding">
+            android:paddingStart="@dimen/large_padding"
+            android:paddingEnd="@dimen/large_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/containerNoSpoilers">
 
             <CheckBox
-                android:id="@+id/checkboxFirstRunDataSaver"
+                android:id="@+id/checkboxDataSaver"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -96,84 +130,98 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewFirstRunDataSaverText"
+                android:id="@+id/textViewDataSaver"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/pref_updatewifionly"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
-                app:layout_constraintBaseline_toBaselineOf="@id/checkboxFirstRunDataSaver"
+                app:layout_constraintBaseline_toBaselineOf="@id/checkboxDataSaver"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/checkboxFirstRunDataSaver" />
+                app:layout_constraintStart_toEndOf="@+id/checkboxDataSaver" />
 
             <TextView
-                android:id="@+id/textViewFirstRunDataSaverSummary"
+                android:id="@+id/textViewDataSaverSummary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/inline_padding"
                 android:text="@string/pref_updatewifionlysummary"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textViewFirstRunDataSaverText"
-                app:layout_constraintTop_toBottomOf="@id/textViewFirstRunDataSaverText" />
+                app:layout_constraintStart_toStartOf="@+id/textViewDataSaver"
+                app:layout_constraintTop_toBottomOf="@id/textViewDataSaver" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:id="@+id/containerFirstRunButtons"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/buttonAddShow"
+            style="@style/Widget.SeriesGuide.Button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/containerFirstRunDataSaver"
-            android:gravity="end"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/default_padding"
-            android:paddingTop="@dimen/large_padding"
-            android:paddingRight="@dimen/default_padding"
-            android:paddingBottom="@dimen/inline_padding">
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/action_shows_add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/containerDataSaver" />
 
-            <Button
-                android:id="@+id/buttonFirstRunAddShow"
-                style="@style/Widget.SeriesGuide.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/action_shows_add" />
+        <Button
+            android:id="@+id/buttonSignIn"
+            style="@style/Widget.SeriesGuide.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/hexagon_signin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonAddShow" />
 
-            <Button
-                android:id="@+id/buttonFirstRunSignIn"
-                style="@style/Widget.SeriesGuide.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hexagon_signin" />
-
-            <Button
-                android:id="@+id/buttonFirstRunRestore"
-                style="@style/Widget.SeriesGuide.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/import_button" />
-
-        </LinearLayout>
+        <Button
+            android:id="@+id/buttonRestoreBackup"
+            style="@style/Widget.SeriesGuide.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/import_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonSignIn" />
 
         <include
-            android:id="@+id/dividerFirstRun"
+            android:id="@+id/dividerBottom"
             layout="@layout/divider_horizontal"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/containerFirstRunButtons" />
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonRestoreBackup" />
 
         <TextView
-            android:id="@+id/textViewFirstRunPrivacyLink"
+            android:id="@+id/textViewPolicyLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/dividerFirstRun"
-            android:layout_marginLeft="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginStart="@dimen/large_padding"
+            android:layout_marginEnd="@dimen/large_padding"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:paddingTop="@dimen/default_padding"
             android:paddingBottom="@dimen/default_padding"
             android:text="@string/privacy_policy"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Accent" />
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Accent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dividerBottom" />
 
-    </RelativeLayout>
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupAutoBackupDetected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="textViewAutoBackupDetected,buttonRestoreAutoBackup" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

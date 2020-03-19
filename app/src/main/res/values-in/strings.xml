@@ -390,8 +390,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Lainnya</string>
     <string name="pref_autoupdatesummary">Secara otomatis melakukan sinkronisasi dan memperbarui data SeriesGuide</string>
-    <string name="pref_autobackup">Cadangkan otomatis</string>
-    <string name="pref_autobackupsummary">Cadangkan mingguan acara, daftar dan film anda</string>
     <string name="backup">Cadangkan/Pulihkan</string>
     <string name="backup_summary">Cadangkan atau pulihkan acara anda</string>
     <string name="pref_number">Format nomor</string>
@@ -411,14 +409,18 @@
     <string name="backup_button">Buat cadangan</string>
     <string name="import_button">Pulihkan cadangan</string>
     <string name="import_warning">Saya mengerti acara, daftar dan film saya saat ini akan diganti!</string>
-    <string name="last_auto_backup">Pencadangan Otomatis Terakhir: %s</string>
-    <string name="restore_auto_backup">Pulihkan Cadangan Otomatis</string>
-    <string name="dataliberation_permission_missing">Untuk mencadangkan atau memulihkan, izinkan akses ke berkas Anda.</string>
-    <string name="autobackup_permission_missing">Untuk menggunakan cadangan otomatis, izinkan akses ke berkas Anda.</string>
-    <string name="autobackup_files_missing">Untuk menggunakan cadangan otomatis, pilih file cadangan yang benar.</string>
     <string name="no_file_selected">Tidak ada file terpilih</string>
     <string name="action_select_file">Pilih file</string>
-    <string name="backup_use_default_files">Gunakan cadangan file default</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Cadangkan otomatis</string>
+    <string name="pref_autobackupsummary">Cadangkan mingguan acara, daftar dan film anda</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Pencadangan Otomatis Terakhir: %s</string>
+    <string name="restore_auto_backup">Pulihkan Cadangan Otomatis</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">Untuk menggunakan cadangan otomatis, pilih file cadangan yang benar.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Mulai</string>
     <string name="dismiss">Bubar</string>

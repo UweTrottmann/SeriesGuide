@@ -1,51 +1,14 @@
 package com.battlelancer.seriesguide.dataliberation;
 
-import android.Manifest;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.Utils;
-import java.io.File;
 
 public class DataLiberationTools {
-
-    /**
-     * Returns if at least one auto backup file in the default folder exists and is readable.
-     */
-    public static boolean isAutoBackupDefaultFilesAvailable() {
-        File pathAutoBackup = JsonExportTask.getExportPath(true);
-        File backupShows = new File(pathAutoBackup, JsonExportTask.EXPORT_JSON_FILE_SHOWS);
-        File backupLists = new File(pathAutoBackup, JsonExportTask.EXPORT_JSON_FILE_LISTS);
-        File backupMovies = new File(pathAutoBackup, JsonExportTask.EXPORT_JSON_FILE_MOVIES);
-        return (backupShows.exists() && backupShows.canRead())
-                || (backupLists.exists() && backupLists.canRead()
-                || (backupMovies.exists() && backupMovies.canRead()));
-    }
-
-    public static boolean isAutoBackupPermissionMissing(Context context) {
-        return ContextCompat.checkSelfPermission(context,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
-    }
-
-    public static void setAutoBackupEnabled(Context context) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
-                .putBoolean(AdvancedSettings.KEY_AUTOBACKUP, true)
-                .apply();
-    }
-
-    public static void setAutoBackupDisabled(Context context) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
-                .putBoolean(AdvancedSettings.KEY_AUTOBACKUP, false)
-                .apply();
-    }
 
     /**
      * Transform a string representation of {@link com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport}

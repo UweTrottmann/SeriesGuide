@@ -401,8 +401,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Outro</string>
     <string name="pref_autoupdatesummary">Sincroniza e atualiza automaticamente os dados do SeriesGuide</string>
-    <string name="pref_autobackup">Cópia de Segurança Automática</string>
-    <string name="pref_autobackupsummary">Cópia de segurança semanal das tuas listas, séries e filmes</string>
     <string name="backup">Cópia de Segurança/Restaurar</string>
     <string name="backup_summary">Fazer uma cópia de segurança ou restaurar as tuas séries</string>
     <string name="pref_number">Formato numérico</string>
@@ -422,14 +420,18 @@
     <string name="backup_button">Criar cópia de segurança</string>
     <string name="import_button">Restaurar cópia de segurança</string>
     <string name="import_warning">Estou ciente que as minhas listas, séries e filmes serão substituídos!</string>
-    <string name="last_auto_backup">Última Cópia de Segurança Automática: %s</string>
-    <string name="restore_auto_backup">Restaurar Cópia de Segurança Automática</string>
-    <string name="dataliberation_permission_missing">Para fazeres uma cópia de segurança ou restaurares, permite o acesso aos teus ficheiros.</string>
-    <string name="autobackup_permission_missing">Para usar a cópia de segurança automática, permite o acesso aos teus ficheiros.</string>
-    <string name="autobackup_files_missing">Para usar a cópia de segurança automática, seleciona ficheiros de cópias de segurança válidos.</string>
     <string name="no_file_selected">Nenhum ficheiro selecionado</string>
     <string name="action_select_file">Selecionar ficheiro</string>
-    <string name="backup_use_default_files">Usar ficheiros de cópias de segurança predefinidos</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Cópia de Segurança Automática</string>
+    <string name="pref_autobackupsummary">Cópia de segurança semanal das tuas listas, séries e filmes</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Última Cópia de Segurança Automática: %s</string>
+    <string name="restore_auto_backup">Restaurar Cópia de Segurança Automática</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">Para usar a cópia de segurança automática, seleciona ficheiros de cópias de segurança válidos.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Não deixes para amanhã!</string>
     <string name="dismiss">Dispensar</string>

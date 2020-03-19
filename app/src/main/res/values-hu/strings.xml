@@ -401,8 +401,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Egyéb</string>
     <string name="pref_autoupdatesummary">SeriesGuide adatok automatikus szinkronizálása és frissítése</string>
-    <string name="pref_autobackup">Automatikus biztonsági másolat</string>
-    <string name="pref_autobackupsummary">Heti biztonsági másolat készítése a sorozatokról, listákról és filmekről</string>
     <string name="backup">Biztonsági Mentés/Visszaállítás</string>
     <string name="backup_summary">A sorozatokról biztonsági mentés készítése vagy annak visszaállítása</string>
     <string name="pref_number">Számozás formátuma</string>
@@ -422,14 +420,18 @@
     <string name="backup_button">Biztonsági Mentés</string>
     <string name="import_button">Visszaállítás</string>
     <string name="import_warning">Megértettem, hogy az aktuális sorozataim, listáim és filmjeim lecserélésre kerülnek!</string>
-    <string name="last_auto_backup">Utolsó automata mentés: %s</string>
-    <string name="restore_auto_backup">Automatikus mentés visszaállítása</string>
-    <string name="dataliberation_permission_missing">Biztonsági mentéshez vagy visszaállításhoz engedélyezd a fájljaidhoz való hozzáférést.</string>
-    <string name="autobackup_permission_missing">Az automatikus mentéshez engedélyezd a fájljaidhoz való hozzáférést.</string>
-    <string name="autobackup_files_missing">Az automatikus biztonsági másolat használatához válassz érvényes biztonsági másolat fájlokat.</string>
     <string name="no_file_selected">Nincs fájl  kijelölve</string>
     <string name="action_select_file">Fájl kiválasztása</string>
-    <string name="backup_use_default_files">Használja az alapértelmezett biztonsági mentés fájlokat</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatikus biztonsági másolat</string>
+    <string name="pref_autobackupsummary">Heti biztonsági másolat készítése a sorozatokról, listákról és filmekről</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Utolsó automata mentés: %s</string>
+    <string name="restore_auto_backup">Automatikus mentés visszaállítása</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">Az automatikus biztonsági másolat használatához válassz érvényes biztonsági másolat fájlokat.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Vágjunk bele!</string>
     <string name="dismiss">Mégsem</string>

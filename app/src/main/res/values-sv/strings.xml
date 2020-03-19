@@ -401,8 +401,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Övrigt</string>
     <string name="pref_autoupdatesummary">Automatiskt synkronisera och uppdatera SeriesGuide-data</string>
-    <string name="pref_autobackup">Automatisk säkerhetskopiering</string>
-    <string name="pref_autobackupsummary">Veckovis säkerhetskopiering av dina serier, listor och filmer</string>
     <string name="backup">Säkerhetskopiera/återställ</string>
     <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
     <string name="pref_number">Nummerformat</string>
@@ -422,14 +420,18 @@
     <string name="backup_button">Säkerhetskopiera</string>
     <string name="import_button">Återställ säkerhetskopia</string>
     <string name="import_warning">Jag förstår att mina nuvarande serier, listor och filmer kommer ersättas!</string>
-    <string name="last_auto_backup">Senaste automatiska säkerhetskopia: %s</string>
-    <string name="restore_auto_backup">Återställ automatisk säkerhetskopia</string>
-    <string name="dataliberation_permission_missing">För att säkerhetskopiera eller återställa måste du tillåta åtkomst till dina filer.</string>
-    <string name="autobackup_permission_missing">För att använda automatisk säkerhetskopiering måste du tillåta åtkomst till dina filer.</string>
-    <string name="autobackup_files_missing">För att använda automatisk säkerhetskopiering, välj giltiga filer för säkerhetskopiering.</string>
     <string name="no_file_selected">Ingen fil vald</string>
     <string name="action_select_file">Välj fil</string>
-    <string name="backup_use_default_files">Använd förvalda backupfiler</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatisk säkerhetskopiering</string>
+    <string name="pref_autobackupsummary">Veckovis säkerhetskopiering av dina serier, listor och filmer</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Senaste automatiska säkerhetskopia: %s</string>
+    <string name="restore_auto_backup">Återställ automatisk säkerhetskopia</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">För att använda automatisk säkerhetskopiering, välj giltiga filer för säkerhetskopiering.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Kom igång</string>
     <string name="dismiss">Avfärda</string>

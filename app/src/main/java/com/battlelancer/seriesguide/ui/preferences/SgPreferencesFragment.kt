@@ -301,11 +301,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 return true
             }
             LINK_KEY_AUTOBACKUP -> {
-                startActivity(
-                    Intent(activity, DataLiberationActivity::class.java).putExtra(
-                        DataLiberationActivity.EXTRA_SHOW_AUTOBACKUP, true
-                    )
-                )
+                startActivity(DataLiberationActivity.intentToShowAutoBackup(requireActivity()))
                 return true
             }
             LINK_KEY_DATALIBERATION -> {
