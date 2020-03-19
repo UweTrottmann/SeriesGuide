@@ -51,9 +51,9 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         void onProgressUpdate(Integer... values);
     }
 
-    public static final String EXPORT_JSON_FILE_SHOWS = "sg-shows-export.json";
-    public static final String EXPORT_JSON_FILE_LISTS = "sg-lists-export.json";
-    public static final String EXPORT_JSON_FILE_MOVIES = "sg-movies-export.json";
+    public static final String EXPORT_JSON_FILE_SHOWS = "seriesguide-shows-backup.json";
+    public static final String EXPORT_JSON_FILE_LISTS = "seriesguide-lists-backup.json";
+    public static final String EXPORT_JSON_FILE_MOVIES = "seriesguide-movies-backup.json";
 
     public static final int BACKUP_SHOWS = 1;
     public static final int BACKUP_LISTS = 2;
