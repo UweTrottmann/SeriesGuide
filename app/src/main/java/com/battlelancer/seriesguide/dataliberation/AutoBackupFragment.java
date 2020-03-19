@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.databinding.FragmentAutoBackupBinding;
+import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -67,7 +68,16 @@ public class AutoBackupFragment extends Fragment {
             }
         });
 
-        binding.buttonAutoBackupImport.setOnClickListener(view -> runAutoBackupImport());
+        binding.buttonAutoBackupNow.setOnClickListener(
+                view -> {
+                    if (TaskManager.getInstance().tryBackupTask(requireContext())) {
+                        setProgressLock(true);
+                    }
+                }
+        );
+        binding.buttonAutoBackupImport.setOnClickListener(
+                view -> runAutoBackupImport()
+        );
 
         binding.checkBoxAutoBackupCreateCopy.setChecked(
                 BackupSettings.isCreateCopyOfAutoBackup(getContext()));
@@ -181,6 +191,7 @@ public class AutoBackupFragment extends Fragment {
             // don't touch views if fragment is not added to activity any longer
             return;
         }
+        viewModel.updateAvailableBackupData();
         updateFileViews();
         setProgressLock(false);
     }
@@ -243,6 +254,7 @@ public class AutoBackupFragment extends Fragment {
     }
 
     private void setProgressLock(boolean isLocked) {
+        binding.buttonAutoBackupNow.setEnabled(!isLocked);
         if (!isBackupAvailableForImport || isLocked) {
             binding.buttonAutoBackupImport.setEnabled(false);
         } else {

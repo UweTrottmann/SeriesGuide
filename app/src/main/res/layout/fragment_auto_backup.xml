@@ -41,10 +41,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/autobackup_details"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/imageViewBackupStatus"
@@ -75,6 +75,15 @@
                     android:layout_height="wrap_content"
                     app:constraint_referenced_ids="imageViewBackupStatus,textViewBackupStatus" />
 
+                <Button
+                    android:id="@+id/buttonAutoBackupNow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/backup_button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewBackupStatus" />
+
                 <CheckBox
                     android:id="@+id/checkBoxAutoBackupCreateCopy"
                     android:layout_width="wrap_content"
@@ -84,7 +93,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewBackupStatus" />
+                    app:layout_constraintTop_toBottomOf="@+id/buttonAutoBackupNow" />
 
                 <TextView
                     android:id="@+id/textViewAutoBackupShows"

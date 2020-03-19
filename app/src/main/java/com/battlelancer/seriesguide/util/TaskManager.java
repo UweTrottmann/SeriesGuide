@@ -84,12 +84,14 @@ public class TaskManager {
      * {@link JsonExportTask} is scheduled in silent mode.
      */
     @MainThread
-    public synchronized void tryBackupTask(Context context) {
+    public synchronized boolean tryBackupTask(Context context) {
         if (!isAddTaskRunning()
                 && (backupTask == null || backupTask.getStatus() == AsyncTask.Status.FINISHED)) {
             backupTask = new JsonExportTask(context, null, false, true, null);
             backupTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            return true;
         }
+        return false;
     }
 
     public synchronized void releaseBackupTaskRef() {
