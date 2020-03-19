@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.ui.episodes
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.database.Cursor
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -20,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
+import androidx.preference.PreferenceManager
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import butterknife.BindView
 import butterknife.ButterKnife

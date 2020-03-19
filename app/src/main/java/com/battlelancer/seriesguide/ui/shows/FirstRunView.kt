@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.shows
 
 import android.content.Context
-import android.preference.PreferenceManager
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.Button
@@ -10,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.UpdateSettings

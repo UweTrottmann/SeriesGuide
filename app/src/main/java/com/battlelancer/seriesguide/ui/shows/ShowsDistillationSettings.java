@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.ui.shows;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 
 /**
  * Provides settings used to filter and sort displayed shows in {@link ShowsFragment}.

@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.ui.lists;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings;

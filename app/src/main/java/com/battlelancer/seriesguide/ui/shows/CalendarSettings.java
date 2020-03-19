@@ -2,7 +2,7 @@
 package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 
 /**
  * Access settings specifically related to the calendar views, e.g. upcoming and recent episodes.
