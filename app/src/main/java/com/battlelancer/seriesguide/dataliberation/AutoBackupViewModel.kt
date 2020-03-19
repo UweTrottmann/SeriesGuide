@@ -4,6 +4,7 @@ import android.app.Application
 import android.text.format.DateUtils
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -16,7 +17,7 @@ class AutoBackupViewModel(application: Application) : AndroidViewModel(applicati
     /** Time string of the available backup, or null if no backup is available. */
     val availableBackupLiveData = MutableLiveData<String?>()
 
-    fun updateAvailableBackupData() = GlobalScope.launch(Dispatchers.IO) {
+    fun updateAvailableBackupData() = viewModelScope.launch(Dispatchers.IO) {
         val backupShows = AutoBackupTools.getLatestBackupOrNull(
             JsonExportTask.BACKUP_SHOWS,
             getApplication()
