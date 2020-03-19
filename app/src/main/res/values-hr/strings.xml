@@ -412,8 +412,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Ostalo</string>
     <string name="pref_autoupdatesummary">Automatski sinkronizirajte i ažurirajte SeriesGuide podatke</string>
-    <string name="pref_autobackup">Automatska sigurnosna kopija</string>
-    <string name="pref_autobackupsummary">Tjedno sigurnosno kopiranje vaših serija, popisa i filmova</string>
     <string name="backup">Sigurnosno kopiranje/vraćanje</string>
     <string name="backup_summary">Napravi sigurnosnu kopiju ili obnovi svoje serije</string>
     <string name="pref_number">Format broja</string>
@@ -433,14 +431,18 @@
     <string name="backup_button">Stvori sigurnosnu kopiju</string>
     <string name="import_button">Obnovi</string>
     <string name="import_warning">Razumijem da će moje trenutačne serije i popisi biti zamijenjeni!</string>
-    <string name="last_auto_backup">Posljednja automatska Sigurnosna kopija: %s</string>
-    <string name="restore_auto_backup">Vrati automatsku sigurnosnu kopiju</string>
-    <string name="dataliberation_permission_missing">Kako bi stvarali sigur. kopije i vraćali ih, dopustite pristup vašim datotekama.</string>
-    <string name="autobackup_permission_missing">Kako bi koristili automatsko sigur. kopiranje, dopustite pristup vašim datotekama.</string>
-    <string name="autobackup_files_missing">Kako bi koristili automatsko sigur. kopiranje, odaberite valjane datoteke sigur. kopije.</string>
     <string name="no_file_selected">Nije odabrana niti jedna datoteka</string>
     <string name="action_select_file">Odaberi datoteku</string>
-    <string name="backup_use_default_files">Koristi zadane sigurnosne kopije</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatska sigurnosna kopija</string>
+    <string name="pref_autobackupsummary">Tjedno sigurnosno kopiranje vaših serija, popisa i filmova</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Posljednja automatska Sigurnosna kopija: %s</string>
+    <string name="restore_auto_backup">Vrati automatsku sigurnosnu kopiju</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">Kako bi koristili automatsko sigur. kopiranje, odaberite valjane datoteke sigur. kopije.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Prvi koraci</string>
     <string name="dismiss">Odbaci</string>

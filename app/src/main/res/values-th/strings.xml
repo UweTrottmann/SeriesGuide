@@ -390,8 +390,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">อื่นๆ</string>
     <string name="pref_autoupdatesummary">ซิงค์และอัปเดตข้อมูล SeriesGuide อัตโนมัติ</string>
-    <string name="pref_autobackup">สำรองอัตโนมัติ</string>
-    <string name="pref_autobackupsummary">สำรองข้อมูลซีรีส์, รายการ และภาพยนตร์รายสัปดาห์</string>
     <string name="backup">สำรอง/กู้คืน</string>
     <string name="backup_summary">สำรองหรือกู้คืนซีรีส์ของคุณ</string>
     <string name="pref_number">รูปแบบตัวเลข</string>
@@ -411,14 +409,18 @@
     <string name="backup_button">สร้างข้อมูลสำรอง</string>
     <string name="import_button">กู้คืนการสำรองข้อมูล</string>
     <string name="import_warning">ฉันเข้าใจว่าซีรีส์, รายการ และภาพยนตร์ปัจจุบันของฉันจะถูกแทนที่!</string>
-    <string name="last_auto_backup">สำรองข้อมูลอัตโนมัติล่าสุด: %s</string>
-    <string name="restore_auto_backup">กู้คืนการสำรองข้อมูลอัตโนมัติ</string>
-    <string name="dataliberation_permission_missing">ในการสำรองข้อมูลหรือกู้คืน, อนุญาตให้เข้าถึงไฟล์ของคุณ</string>
-    <string name="autobackup_permission_missing">ในการใช้การสำรองข้อมูลอัตโนมัติ, อนุญาตให้เข้าถึงไฟล์ของคุณ</string>
-    <string name="autobackup_files_missing">ในการใช้การสำรองข้อมูลอัตโนมัติ, เลือกไฟล์สำรองที่ถูกต้อง</string>
     <string name="no_file_selected">ไม่ได้เลือกไฟล์ใด</string>
     <string name="action_select_file">เลือกไฟล์</string>
-    <string name="backup_use_default_files">ใช้ไฟล์สำรองเริ่มต้น</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">สำรองอัตโนมัติ</string>
+    <string name="pref_autobackupsummary">สำรองข้อมูลซีรีส์, รายการ และภาพยนตร์รายสัปดาห์</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">สำรองข้อมูลอัตโนมัติล่าสุด: %s</string>
+    <string name="restore_auto_backup">กู้คืนการสำรองข้อมูลอัตโนมัติ</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">ในการใช้การสำรองข้อมูลอัตโนมัติ, เลือกไฟล์สำรองที่ถูกต้อง</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">เริ่มต้น</string>
     <string name="dismiss">ปิด</string>

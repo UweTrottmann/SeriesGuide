@@ -401,8 +401,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Anderes</string>
     <string name="pref_autoupdatesummary">Automatisch synchronisieren und Inhalte aktualisieren</string>
-    <string name="pref_autobackup">Automatische Sicherung</string>
-    <string name="pref_autobackupsummary">Wöchentliche Sicherung Ihrer Serien, Listen und Filme</string>
     <string name="backup">Sichern/Wiederherstellen</string>
     <string name="backup_summary">Sicherung aller Serien erstellen oder Sicherung wiederherstellen</string>
     <string name="pref_number">Zahlenformat</string>
@@ -422,14 +420,18 @@
     <string name="backup_button">Sicherung erstellen</string>
     <string name="import_button">Sicherung wiederherstellen</string>
     <string name="import_warning">Ihre aktuellen Serien, Listen oder Filme werden durch die Sicherung ersetzt</string>
-    <string name="last_auto_backup">Letzte Auto-Sicherung: %s</string>
-    <string name="restore_auto_backup">Auto-Sicherung wiederherstellen</string>
-    <string name="dataliberation_permission_missing">Um zu Sichern oder Wiederherzustellen, erlauben Sie Zugriff auf Ihre Dateien</string>
-    <string name="autobackup_permission_missing">Um die automatische Sicherung zu verwenden, erlauben Sie Zugriff auf Ihre Dateien</string>
-    <string name="autobackup_files_missing">Um die automatische Sicherung zu verwenden, wählen Sie gültige Sicherungsdateien</string>
     <string name="no_file_selected">Keine Datei ausgewählt</string>
     <string name="action_select_file">Datei auswählen</string>
-    <string name="backup_use_default_files">Standard-Sicherungsdateien verwenden</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatische Sicherung</string>
+    <string name="pref_autobackupsummary">Wöchentliche Sicherung Ihrer Serien, Listen und Filme im Gerätespeicher.</string>
+    <string name="autobackup_details">Diese Sicherungen sind nicht verfügbar, wenn die App neu installiert wird, es sei denn, die App-Daten-Sicherung ist für dieses Gerät aktiviert (Android 6+). Erstellen Sie ansonsten Kopien, um sie aufzubewahren.</string>
+    <string name="last_auto_backup">Letzte Auto-Sicherung: %s</string>
+    <string name="restore_auto_backup">Auto-Sicherung wiederherstellen</string>
+    <string name="autobackup_failed">Die letzte automatische Sicherung ist fehlgeschlagen</string>
+    <string name="autobackup_files_missing">Um die automatische Sicherung zu verwenden, wählen Sie gültige Sicherungsdateien</string>
+    <string name="autobackup_create_user_copy">Eine Kopie nach jeder Sicherung erstellen</string>
+    <string name="autobackup_restore_available">Eine automatische Sicherung könnte zum Wiederherstellen verfügbar sein.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Erste Schritte</string>
     <string name="dismiss">Schließen</string>

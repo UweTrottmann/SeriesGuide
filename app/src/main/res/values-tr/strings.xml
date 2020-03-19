@@ -401,8 +401,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Diğer</string>
     <string name="pref_autoupdatesummary">SeriesGuide verilerini otomatik olarak senkronize et ve güncelle</string>
-    <string name="pref_autobackup">Otomatik yedekleme</string>
-    <string name="pref_autobackupsummary">Şovlarınızın, listelerinizin ve filmlerinizin haftalık yedeği</string>
     <string name="backup">Yedekle/Geri Yükle</string>
     <string name="backup_summary">Dizilerinizi yedekleyin veya geri yükleyin</string>
     <string name="pref_number">Sayı biçimi</string>
@@ -422,14 +420,18 @@
     <string name="backup_button">Yedekle</string>
     <string name="import_button">Geri Yükle</string>
     <string name="import_warning">Mevcut şovlarımın, listelerimin ve filmlerimin silineceğini anlıyorum!</string>
-    <string name="last_auto_backup">Son Otomatik Yedekleme: %s</string>
-    <string name="restore_auto_backup">Otomatik Yedeklemeden Geri Yükle</string>
-    <string name="dataliberation_permission_missing">Yedeklemek veya geri yüklemek için dosyalarınıza erişime izin verin.</string>
-    <string name="autobackup_permission_missing">Otomatik yedekleme kullanmak için dosyalarınıza erişime izin verin.</string>
-    <string name="autobackup_files_missing">Otomatik yedeklemeyi kullanmak için geçerli yedekleme dosyaları seçin.</string>
     <string name="no_file_selected">Seçilmiş dosya yok</string>
     <string name="action_select_file">Dosya seçin</string>
-    <string name="backup_use_default_files">Varsayılan yedek dosyalarını kullan</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Otomatik yedekleme</string>
+    <string name="pref_autobackupsummary">Şovlarınızın, listelerinizin ve filmlerinizin haftalık yedeği</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Son Otomatik Yedekleme: %s</string>
+    <string name="restore_auto_backup">Otomatik Yedeklemeden Geri Yükle</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">Otomatik yedeklemeyi kullanmak için geçerli yedekleme dosyaları seçin.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Başlarken</string>
     <string name="dismiss">Kapat</string>

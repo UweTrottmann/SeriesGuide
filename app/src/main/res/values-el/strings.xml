@@ -401,8 +401,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Άλλα</string>
     <string name="pref_autoupdatesummary">Αυτόματος συγχρονισμός και ενημέρωση περιεχομένου</string>
-    <string name="pref_autobackup">Αυτόματο αντίγραφο ασφαλείας</string>
-    <string name="pref_autobackupsummary">Εβδομαδιαίο αντίγραφο ασφαλείας των σειρών, λιστών και ταινιών σας</string>
     <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
     <string name="backup_summary">Δημιουργία αντιγράφου ασφαλείας ή επαναφορά των σειρών</string>
     <string name="pref_number">Μορφή των αριθμών</string>
@@ -422,14 +420,18 @@
     <string name="backup_button">Δημιουργία αντιγράφων ασφαλείας</string>
     <string name="import_button">Επαναφορά</string>
     <string name="import_warning">Οι τρέχουσες σειρές, λίστες και ταινίες θα αντικατασταθούν από το αντίγραφο ασφαλείας</string>
-    <string name="last_auto_backup">Τελευταίο αυτόματο αντίγραφο ασφαλείας: %s</string>
-    <string name="restore_auto_backup">Επαναφορά αντιγράφου ασφαλείας στο αυτόματο</string>
-    <string name="dataliberation_permission_missing">Για λήψη ή επαναφορά αντιγράφων ασφαλείας, επιτρέψτε πρόσβαση στα αρχεία σας</string>
-    <string name="autobackup_permission_missing">Για τη χρήση της αυτόματης λήψης αντιγράφων ασφαλείας, επιτρέψτε πρόσβαση στα αρχεία σας</string>
-    <string name="autobackup_files_missing">Για τη χρήση της αυτόματης λήψης αντιγράφων ασφαλείας, επιλέξτε έγκυρα αρχεία αντιγράφων ασφαλείας</string>
     <string name="no_file_selected">Δεν επιλέχθηκε αρχείο</string>
     <string name="action_select_file">Επιλογή αρχείου</string>
-    <string name="backup_use_default_files">Χρησιμοποιήστε τα προεπιλεγμένα αρχεία αντιγράφων ασφαλείας</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Αυτόματο αντίγραφο ασφαλείας</string>
+    <string name="pref_autobackupsummary">Εβδομαδιαίο αντίγραφο ασφαλείας των σειρών, λιστών και ταινιών σας</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Τελευταίο αυτόματο αντίγραφο ασφαλείας: %s</string>
+    <string name="restore_auto_backup">Επαναφορά αντιγράφου ασφαλείας στο αυτόματο</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">Για τη χρήση της αυτόματης λήψης αντιγράφων ασφαλείας, επιλέξτε έγκυρα αρχεία αντιγράφων ασφαλείας</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Ξεκινήστε</string>
     <string name="dismiss">Απόρριψη</string>

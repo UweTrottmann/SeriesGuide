@@ -445,8 +445,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">أخرى</string>
     <string name="pref_autoupdatesummary">مزامنة وتحديث بيانات SeriesGuide تلقائيا</string>
-    <string name="pref_autobackup">نسخ احتياطي تلقائي</string>
-    <string name="pref_autobackupsummary">نسخ إحتياطي أسبوعي للمسلسلات، القوائم والأفلام</string>
     <string name="backup">النسخ الإحتياطي / الإستعادة</string>
     <string name="backup_summary">لعمل نسخ إحتياطي للمسلسلات أو إستعادتها</string>
     <string name="pref_number">تنسيق الأرقام</string>
@@ -466,14 +464,18 @@
     <string name="backup_button">نسخ احتياطي</string>
     <string name="import_button">استعادة</string>
     <string name="import_warning">أنا أفهم أن المسلسلات الحالية، القوائم والأفلام سوف تستبدل!</string>
-    <string name="last_auto_backup">آخر عملية نسخ تلقائية: %s</string>
-    <string name="restore_auto_backup">استعادة النسخ الاحتياطي التلقائي</string>
-    <string name="dataliberation_permission_missing">لعمل نسخ إحتياطي أو إستعادتها، وافق بالسماح للوصول إلى الملفات الخاصة بك.</string>
-    <string name="autobackup_permission_missing">لإستخدام النسخ الإحتياطي التلقائي، وافق بالسماح للوصول إلى الملفات الخاصة بك.</string>
-    <string name="autobackup_files_missing">لإستخدام النسخ الإحتياطي التلقائي، حدد ملفات النسخ الإحتياطية الصالحة.</string>
     <string name="no_file_selected">لم يتم إختيار أي ملف</string>
     <string name="action_select_file">حدد ملف</string>
-    <string name="backup_use_default_files">إستخدم النسخ الإحتياطي الإفتراضي</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">نسخ احتياطي تلقائي</string>
+    <string name="pref_autobackupsummary">نسخ إحتياطي أسبوعي للمسلسلات، القوائم والأفلام</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">آخر عملية نسخ تلقائية: %s</string>
+    <string name="restore_auto_backup">استعادة النسخ الاحتياطي التلقائي</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">لإستخدام النسخ الإحتياطي التلقائي، حدد ملفات النسخ الإحتياطية الصالحة.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">بدء</string>
     <string name="dismiss">إبعاد</string>

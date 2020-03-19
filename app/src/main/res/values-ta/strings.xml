@@ -401,8 +401,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">மற்ற</string>
     <string name="pref_autoupdatesummary">Automatically sync and update content</string>
-    <string name="pref_autobackup">தானியங்கு மறுபிரதி</string>
-    <string name="pref_autobackupsummary">உங்கள் காட்சிகள், பட்டியல்கள் மற்றும் திரைப்படங்கள் வார மறுபிரதி</string>
     <string name="backup">மறுபிரதி/மீட்டெடுத்தல்</string>
     <string name="backup_summary">மறுபிரதி எடு அல்லது மீட்டெடு உங்கள் காட்சிகள்</string>
     <string name="pref_number">எண் வடிவமைப்பு</string>
@@ -422,14 +420,18 @@
     <string name="backup_button">மறுபிரதி உருவாக்கு</string>
     <string name="import_button">மீட்டெடுக்க மறுபிரதி</string>
     <string name="import_warning">நான் எனது தற்போதைய காட்சிகள் புரிந்துகொள்ள, பட்டியல்கள் மற்றும் படங்கள் மாற்றப்படும்!</string>
-    <string name="last_auto_backup">கடைசி தானியங்கு மறுபிரதி: %s</string>
-    <string name="restore_auto_backup">தானியங்கு மறுபிரதி மீட்டெடு</string>
-    <string name="dataliberation_permission_missing">மறுபிரதி எடு அல்லது மீட்டெடு, உங்கள் கோப்புகளை பெற அனுமதி.</string>
-    <string name="autobackup_permission_missing">தானியங்கு மறுபிரதி பயன்படுத்த, உங்கள் கோப்புகளை பெற அனுமதி.</string>
-    <string name="autobackup_files_missing">தானியங்கு மறுபிரதி பயன்படுத்த, செல்லுபடியான மறுபிரதி கோப்புகளை தேர்ந்தெடுக்கவும்.</string>
     <string name="no_file_selected">தேர்ந்தெடுத்த கோப்பு இல்லை</string>
     <string name="action_select_file">கோப்பு தேர்ந்தெடு</string>
-    <string name="backup_use_default_files">மறுபிரதி கோப்புகளை இயல்புநிலை பயன்படுத்து</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">தானியங்கு மறுபிரதி</string>
+    <string name="pref_autobackupsummary">உங்கள் காட்சிகள், பட்டியல்கள் மற்றும் திரைப்படங்கள் வார மறுபிரதி</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">கடைசி தானியங்கு மறுபிரதி: %s</string>
+    <string name="restore_auto_backup">தானியங்கு மறுபிரதி மீட்டெடு</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">தானியங்கு மறுபிரதி பயன்படுத்த, செல்லுபடியான மறுபிரதி கோப்புகளை தேர்ந்தெடுக்கவும்.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">தொடங்குதல்</string>
     <string name="dismiss">நீக்கு</string>

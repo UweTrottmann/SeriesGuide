@@ -423,8 +423,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Ostatní</string>
     <string name="pref_autoupdatesummary">Automaticky synchronizuj a aktualizuj SeriesGuide data</string>
-    <string name="pref_autobackup">Automatická záloha</string>
-    <string name="pref_autobackupsummary">Týdenní záloha vašich seriálů, seznamů a filmů</string>
     <string name="backup">Zálohování/obnovení</string>
     <string name="backup_summary">Zálohování a obnovení Vašich pořadů</string>
     <string name="pref_number">Formát číslování</string>
@@ -444,14 +442,18 @@
     <string name="backup_button">Zálohovat</string>
     <string name="import_button">Obnovit</string>
     <string name="import_warning">Beru na vědomí, že mé aktuální seriály, seznamy a filmy budou přemazány!</string>
-    <string name="last_auto_backup">Poslední automatická záloha: %s</string>
-    <string name="restore_auto_backup">Obnovení automatické zálohy</string>
-    <string name="dataliberation_permission_missing">Pro zálohu nebo obnovení povolte přístup ke svým souborům.</string>
-    <string name="autobackup_permission_missing">Pro použití automatického zálohování povolte přístup ke svým souborům.</string>
-    <string name="autobackup_files_missing">Pro použití automatického zálohování vyberte platné záložní soubory.</string>
     <string name="no_file_selected">Nebyl vybrán žádný soubor</string>
     <string name="action_select_file">Vybrat soubor</string>
-    <string name="backup_use_default_files">Použít výchozí záložní soubory</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatická záloha</string>
+    <string name="pref_autobackupsummary">Týdenní záloha vašich seriálů, seznamů a filmů</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Poslední automatická záloha: %s</string>
+    <string name="restore_auto_backup">Obnovení automatické zálohy</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">Pro použití automatického zálohování vyberte platné záložní soubory.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Začněte</string>
     <string name="dismiss">Storno</string>

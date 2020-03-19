@@ -401,8 +401,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Outro</string>
     <string name="pref_autoupdatesummary">Sincronizar e atualizar os dados automaticamente</string>
-    <string name="pref_autobackup">Backup Automático</string>
-    <string name="pref_autobackupsummary">Backup semanal de suas séries, listas e filmes</string>
     <string name="backup">Backup/Restauração</string>
     <string name="backup_summary">Fazer backup ou restaurar as suas séries</string>
     <string name="pref_number">Formato de número</string>
@@ -422,14 +420,18 @@
     <string name="backup_button">Backup</string>
     <string name="import_button">Restaurar</string>
     <string name="import_warning">Suas séries, listas ou filmes atuais serão substituídos pelo backup</string>
-    <string name="last_auto_backup">Último backup automático: %s</string>
-    <string name="restore_auto_backup">Restaurar backup automático</string>
-    <string name="dataliberation_permission_missing">Para fazer backup ou restaurar, permita acesso a seus arquivos.</string>
-    <string name="autobackup_permission_missing">Para usar o backup automático, permita o acesso a seus arquivos.</string>
-    <string name="autobackup_files_missing">Para usar o backup automático, selecione os arquivos de backup válidos.</string>
     <string name="no_file_selected">Nenhum arquivo selecionado</string>
     <string name="action_select_file">Selecionar arquivo</string>
-    <string name="backup_use_default_files">Usar arquivos padrões para backup</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Backup Automático</string>
+    <string name="pref_autobackupsummary">Backup semanal de suas séries, listas e filmes</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Último backup automático: %s</string>
+    <string name="restore_auto_backup">Restaurar backup automático</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">Para usar o backup automático, selecione os arquivos de backup válidos.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Começar</string>
     <string name="dismiss">Dispensar</string>

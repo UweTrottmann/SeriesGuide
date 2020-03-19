@@ -423,8 +423,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">אחר</string>
     <string name="pref_autoupdatesummary">בצע סנכרון אוטומטי ועדכן נתונים של SeriesGuide</string>
-    <string name="pref_autobackup">גיבוי אוטומטי</string>
-    <string name="pref_autobackupsummary">גיבוי שבועי של הסדרות, רשימות והסרטים שלך</string>
     <string name="backup">גיבוי/שחזור</string>
     <string name="backup_summary">גבה או שחזר את סדרותיך</string>
     <string name="pref_number">תבנית מספרים</string>
@@ -444,14 +442,18 @@
     <string name="backup_button">גיבוי</string>
     <string name="import_button">שחזר</string>
     <string name="import_warning">אני מבין שהסדרות, רשימות והסרטים הנוכחיים שלי יוחלפו!</string>
-    <string name="last_auto_backup">גיבוי אוטומטי אחרון: %s</string>
-    <string name="restore_auto_backup">שחזור גיבוי אוטומטי</string>
-    <string name="dataliberation_permission_missing">כדי לגבות או לשחזר, אפשר גישה לקבצים שלך.</string>
-    <string name="autobackup_permission_missing">כדי להשתמש בגיבוי אוטומטי, אפשר גישה לקבצים שלך.</string>
-    <string name="autobackup_files_missing">כדי להשתמש בגיבוי אוטומטי, בחר קבצי גיבוי חוקיים.</string>
     <string name="no_file_selected">לא נבחר קובץ</string>
     <string name="action_select_file">בחר קובץ</string>
-    <string name="backup_use_default_files">השתמש בברירת מחדל של קבצי גיבוי</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">גיבוי אוטומטי</string>
+    <string name="pref_autobackupsummary">גיבוי שבועי של הסדרות, רשימות והסרטים שלך</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">גיבוי אוטומטי אחרון: %s</string>
+    <string name="restore_auto_backup">שחזור גיבוי אוטומטי</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">כדי להשתמש בגיבוי אוטומטי, בחר קבצי גיבוי חוקיים.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">התחל</string>
     <string name="dismiss">סגור</string>
