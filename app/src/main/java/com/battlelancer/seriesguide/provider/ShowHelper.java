@@ -31,6 +31,10 @@ public interface ShowHelper {
     @Query("SELECT seriestitle, series_poster_small FROM series WHERE _id = :tvdbId LIMIT 1")
     SgShowMinimal getShowMinimal(long tvdbId);
 
+    @Nullable
+    @Query("SELECT seriestitle FROM series WHERE _id = :tvdbId")
+    String getShowTitle(long tvdbId);
+
     @RawQuery(observedEntities = SgShow.class)
     LiveData<List<SgShow>> queryShows(SupportSQLiteQuery query);
 

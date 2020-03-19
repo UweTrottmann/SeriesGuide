@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.provider;
 
+import androidx.annotation.Nullable;
 import androidx.room.Dao;
 import androidx.room.Query;
 import com.battlelancer.seriesguide.model.SgMovie;
@@ -24,6 +25,10 @@ public interface MovieHelper {
             + ")")
     List<SgMovieTmdbId> getMoviesToUpdate(long releasedAfter, long updatedBeforeForReleasedAfter,
             long updatedBeforeAllOthers);
+
+    @Nullable
+    @Query("SELECT movies_title FROM movies WHERE movies_tmdbid=:tmdbId")
+    String getMovieTitle(int tmdbId);
 
     /** For testing. */
     @Query("SELECT * FROM " + Tables.MOVIES)

@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.text.format.DateUtils;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
@@ -79,8 +80,11 @@ public class TvdbSync {
                 // failed, continue with other shows
                 resultCode = SgSyncAdapter.UpdateResult.INCOMPLETE;
 
+                String showTitle = SgRoomDatabase.getInstance(context)
+                        .showHelper()
+                        .getShowTitle(showTvdbId);
                 String message = String
-                        .format("Failed to update show with TVDB id %s.", showTvdbId);
+                        .format("Failed to update show ('%s', TVDB id %s).", showTitle, showTvdbId);
                 if (e.itemDoesNotExist()) {
                     message += " It no longer exists.";
                 }
