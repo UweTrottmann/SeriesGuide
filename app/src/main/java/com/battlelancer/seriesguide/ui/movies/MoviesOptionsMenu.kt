@@ -2,10 +2,10 @@ package com.battlelancer.seriesguide.ui.movies
 
 import android.app.Activity
 import android.content.Context
-import android.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.movies.MoviesDistillationSettings.MoviesSortOrder

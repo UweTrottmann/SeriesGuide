@@ -14,7 +14,7 @@ fun copyTextToClipboard(context: Context, text: CharSequence): Boolean {
     val clip = ClipData.newPlainText("text", text)
     val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
     return if (clipboard != null) {
-        clipboard.primaryClip = clip
+        clipboard.setPrimaryClip(clip)
         Toast.makeText(context, R.string.copy_to_clipboard, Toast.LENGTH_SHORT).show()
         true
     } else {

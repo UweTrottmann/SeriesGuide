@@ -3,8 +3,8 @@ package com.battlelancer.seriesguide
 import android.app.backup.BackupAgent
 import android.app.backup.BackupAgentHelper
 import android.app.backup.SharedPreferencesBackupHelper
-import android.preference.PreferenceManager
 import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.ui.shows.FirstRunView
 

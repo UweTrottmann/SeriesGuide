@@ -10,7 +10,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Vibrator
-import android.preference.PreferenceManager
 import android.provider.Settings
 import android.text.TextUtils
 import android.widget.Toast
@@ -20,6 +19,7 @@ import androidx.core.content.getSystemService
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R

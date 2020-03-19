@@ -5,8 +5,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.OperationApplicationException
 import android.database.Cursor
-import android.preference.PreferenceManager
 import android.text.TextUtils
+import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.provider.SeriesGuideContract

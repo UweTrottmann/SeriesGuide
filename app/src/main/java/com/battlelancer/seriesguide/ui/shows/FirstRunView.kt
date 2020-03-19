@@ -1,12 +1,12 @@
 package com.battlelancer.seriesguide.ui.shows
 
 import android.content.Context
-import android.preference.PreferenceManager
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.core.content.edit
 import androidx.core.view.isGone
+import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ViewFirstRunBinding
 import com.battlelancer.seriesguide.dataliberation.AutoBackupTools
