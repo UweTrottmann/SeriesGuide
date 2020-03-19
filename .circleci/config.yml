@@ -26,14 +26,14 @@ jobs:
             chmod +x gradlew
             ./gradlew -version
 
-      # Reduce memory usage to avoid UnmarshalException of Kotlin daemon.
+      # Reduce memory usage to avoid UnmarshalException of Kotlin daemon (re-uses Gradle daemon heap size).
       - run:
           name: Assemble
-          command: ./gradlew assembleDebug -Dorg.gradle.jvmargs="-Xmx1024M -Dkotlin.daemon.jvm.options\=\"-Xmx1024M\""
+          command: ./gradlew assembleDebug -Dorg.gradle.jvmargs="-Xmx1024M"
 
       - run:
           name: Run Tests
-          command: ./gradlew :app:test -Dorg.gradle.jvmargs="-Xmx1024M -Dkotlin.daemon.jvm.options\=\"-Xmx1024M\""
+          command: ./gradlew :app:test -Dorg.gradle.jvmargs="-Xmx1024M"
       - store_test_results:
           path: app/build/test-results
 
@@ -42,7 +42,7 @@ jobs:
           # Note: the app module has lintOptions.checkDependencies true, so submodules will be checked
           # Source: https://groups.google.com/forum/#!topic/lint-dev/RGTvK_uHQGQ
           name: Run Lint
-          command: ./gradlew :app:lintPureRelease :app:lintAmazonRelease -Dorg.gradle.jvmargs="-Xmx1024M -Dkotlin.daemon.jvm.options\=\"-Xmx1024M\""
+          command: ./gradlew :app:lintPureRelease :app:lintAmazonRelease -Dorg.gradle.jvmargs="-Xmx1024M"
       - store_artifacts:
           path: app/build/reports/lint-results-pureRelease.html
           destination: lint-results-goog.html
