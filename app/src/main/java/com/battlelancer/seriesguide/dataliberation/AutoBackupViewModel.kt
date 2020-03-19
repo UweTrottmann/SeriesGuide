@@ -19,16 +19,13 @@ class AutoBackupViewModel(application: Application) : AndroidViewModel(applicati
 
     fun updateAvailableBackupData() = viewModelScope.launch(Dispatchers.IO) {
         val backupShows = AutoBackupTools.getLatestBackupOrNull(
-            JsonExportTask.BACKUP_SHOWS,
-            getApplication()
+            JsonExportTask.BACKUP_SHOWS, getApplication()
         )
         val backupLists = AutoBackupTools.getLatestBackupOrNull(
-            JsonExportTask.BACKUP_LISTS,
-            getApplication()
+            JsonExportTask.BACKUP_LISTS, getApplication()
         )
         val backupMovies = AutoBackupTools.getLatestBackupOrNull(
-            JsonExportTask.BACKUP_MOVIES,
-            getApplication()
+            JsonExportTask.BACKUP_MOVIES, getApplication()
         )
 
         // All three files required.
