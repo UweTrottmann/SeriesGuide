@@ -3,10 +3,10 @@ package com.battlelancer.seriesguide.dataliberation;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 
 /**
  * Settings related to creating and restoring backups of the database.

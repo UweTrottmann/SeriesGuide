@@ -1,9 +1,9 @@
 package com.battlelancer.seriesguide.ui.shows
 
 import android.content.Context
-import android.preference.PreferenceManager
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
+import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
 
 /**

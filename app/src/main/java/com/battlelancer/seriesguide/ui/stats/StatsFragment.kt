@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.stats
 
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.Menu
@@ -15,6 +14,7 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.preference.PreferenceManager
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
