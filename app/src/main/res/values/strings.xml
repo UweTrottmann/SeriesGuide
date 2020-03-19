@@ -487,6 +487,7 @@
     <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
     <string name="last_auto_backup">Last Auto Backup: %s</string>
     <string name="restore_auto_backup">Restore Auto Backup</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
     <string name="autobackup_files_missing">To use auto backup, select valid backup files</string>
     <string name="autobackup_create_user_copy">Create a copy after each backup</string>
     <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>

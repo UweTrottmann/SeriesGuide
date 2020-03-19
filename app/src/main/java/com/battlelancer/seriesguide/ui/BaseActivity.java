@@ -141,11 +141,15 @@ public abstract class BaseActivity extends AppCompatActivity {
             return false;
         }
 
+        // If last auto backup failed, show a warning, but run it (if it's time) anyhow.
+        if (BackupSettings.isWarnLastAutoBackupFailed(this)) {
+            onLastAutoBackupFailed();
+        }
         // If copies should be made, but the specified files are invalid,
-        // show a warning but run auto backup anyhow.
-        if (BackupSettings.isCreateCopyOfAutoBackup(this)
+        // show a warning but run auto backup (if it's time) anyhow.
+        else if (BackupSettings.isCreateCopyOfAutoBackup(this)
                 && BackupSettings.isMissingAutoBackupFile(this)) {
-            onShowAutoBackupMissingFilesWarning();
+            onAutoBackupMissingFiles();
         }
 
         if (!BackupSettings.isTimeForAutoBackup(this)) {
@@ -157,11 +161,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
+     * Implementers may choose to show a warning that the last auto backup has failed.
+     */
+    protected void onLastAutoBackupFailed() {
+        // Do nothing.
+    }
+
+    /**
      * Implementers may choose to show a warning that auto backup can not complete because not all
      * custom backup files are configured.
      */
-    protected void onShowAutoBackupMissingFilesWarning() {
-        // do nothing
+    protected void onAutoBackupMissingFiles() {
+        // Do nothing.
     }
 
     /**

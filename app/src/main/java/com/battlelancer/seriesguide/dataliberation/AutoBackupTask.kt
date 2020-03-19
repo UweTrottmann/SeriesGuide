@@ -22,9 +22,9 @@ class AutoBackupException(message: String) : IOException(message)
 /**
  * Backs up shows, lists and movies to timestamped files
  * in a [Context.getExternalFilesDir] subdirectory.
- * This directory is included in Google's full auto backup.
+ * This directory is included in Android's full auto backup (app data backup).
  *
- * Failures are silent.
+ * If the last backup attempt failed an error is recorded that can be shown in UI.
  *
  * If the user has specified auto backup files, copies the latest backups to them.
  * If the user specified files do not exist, their URI is purged from prefs.

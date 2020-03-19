@@ -46,9 +46,10 @@ public class BackupSettings {
             = "com.battlelancer.seriesguide.autobackup.moviesExport";
 
     // Store some auto backup prefs in separate preference file
-    // that is not backed up by Android auto backup.
+    // that is not backed up by Android app data backup.
     private static final String KEY_AUTOBACKUP_LAST_TIME = "last_backup";
     private static final String KEY_AUTOBACKUP_LAST_ERROR = "last_error";
+    private static final String KEY_AUTOBACKUP_LAST_ERROR_WARN = "last_error.warn";
 
     public static boolean isAutoBackupEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KEY_AUTOBACKUP,
@@ -123,10 +124,30 @@ public class BackupSettings {
                 .getString(KEY_AUTOBACKUP_LAST_ERROR, null);
     }
 
+    /**
+     * If error is not null, {@link #isWarnLastAutoBackupFailed(Context)}
+     * will return true afterwards. If it is null, it will return false.
+     */
     static void setAutoBackupErrorOrNull(Context context, String errorOrNull) {
         getAutoBackupPrefs(context)
                 .edit()
                 .putString(KEY_AUTOBACKUP_LAST_ERROR, errorOrNull)
+                .putBoolean(KEY_AUTOBACKUP_LAST_ERROR_WARN, errorOrNull != null)
+                .apply();
+    }
+
+    public static boolean isWarnLastAutoBackupFailed(Context context) {
+        return getAutoBackupPrefs(context)
+                .getBoolean(KEY_AUTOBACKUP_LAST_ERROR_WARN, false);
+    }
+
+    /**
+     * Afterwards {@link #isWarnLastAutoBackupFailed(Context)} returns false.
+     */
+    public static void setHasSeenLastAutoBackupFailed(Context context) {
+        getAutoBackupPrefs(context)
+                .edit()
+                .putBoolean(KEY_AUTOBACKUP_LAST_ERROR_WARN, false)
                 .apply();
     }
 
