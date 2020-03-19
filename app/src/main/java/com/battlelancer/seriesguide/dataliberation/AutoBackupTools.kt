@@ -48,8 +48,6 @@ object AutoBackupTools {
             }
     }
 
-    data class BackupFile(val file: File, val timestamp: Long)
-
     /**
      * Only checks if an auto backup file for shows is available, likely others are then, too.
      */
@@ -68,6 +66,8 @@ object AutoBackupTools {
         getAllBackupsNewestFirst(backup, context)
             .let { return if (it.isNotEmpty()) it[0] else null }
     }
+
+    data class BackupFile(val file: File, val timestamp: Long)
 
     private fun getAllBackupsNewestFirst(backup: Backup, context: Context): List<BackupFile> {
         val backupDirectory = getBackupDirectory(context)
