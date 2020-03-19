@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.provider;
 
+import androidx.annotation.Nullable;
 import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Query;
@@ -35,6 +36,10 @@ public interface MovieHelper {
     @Query("SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched "
             + "FROM movies WHERE movies_tmdbid=:tmdbId")
     SgMovieFlags getMovieFlags(int tmdbId);
+
+    @Nullable
+    @Query("SELECT movies_title FROM movies WHERE movies_tmdbid=:tmdbId")
+    String getMovieTitle(int tmdbId);
 
     @Query("DELETE FROM movies WHERE movies_tmdbid=:tmdbId")
     int deleteMovie(int tmdbId);
