@@ -16,9 +16,9 @@ Version 54
 *2020-03-20*
 
 * 🔧 Auto backups are now always created in an app specific directory on external storage, not
-  requiring a special permission or any setup. The last two backups are kept. The backups are
-  included in Android's app data backup (Android 6+, up to 25 MB total).
-* 🔧 After installing the app and an auto backup is detected, offer to restore it.
+  requiring a special permission or any setup. The last two backups are kept. They are not available
+  if the app is installed again, unless Android's app data backup has backed them up (Android 6+, up to 25 MB total).
+* 🔧 After installing the app and an auto backup is detected (e.g. Android has restored app data), offer to restore it.
 * 🔧 After creating a backup, auto backup can copy it to files you specify.
 * 🔧 Show a message if the last auto backup failed.
 * 🔧 Ability to run auto backup right away, e.g. to test if creating copies is successful.
