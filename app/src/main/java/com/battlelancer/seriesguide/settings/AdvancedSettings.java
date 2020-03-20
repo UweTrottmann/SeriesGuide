@@ -2,7 +2,7 @@
 package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 
 /**
  * Access advanced settings for auto backup and auto update.

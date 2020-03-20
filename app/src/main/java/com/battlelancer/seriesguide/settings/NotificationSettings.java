@@ -3,11 +3,11 @@ package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 

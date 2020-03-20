@@ -2,10 +2,10 @@ package com.battlelancer.seriesguide.backend;
 
 import android.content.Context;
 import android.os.SystemClock;
-import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor;

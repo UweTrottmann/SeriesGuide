@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.sync;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;

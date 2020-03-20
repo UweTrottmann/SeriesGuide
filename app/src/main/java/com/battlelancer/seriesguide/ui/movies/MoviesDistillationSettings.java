@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.ui.movies;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 
 /**

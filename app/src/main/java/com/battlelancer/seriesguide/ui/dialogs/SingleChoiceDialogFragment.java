@@ -3,10 +3,10 @@ package com.battlelancer.seriesguide.ui.dialogs;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.util.DialogTools;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
