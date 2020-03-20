@@ -100,7 +100,9 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
     private Handler handler;
     private Toolbar actionBarToolbar;
+    @Nullable // FIXME Temporary until bottom nav migration complete.
     private DrawerLayout drawerLayout;
+    @Nullable // FIXME Temporary until bottom nav migration complete.
     private NavigationView navigationView;
     private TextView textViewHeaderUserCloud;
     private TextView textViewHeaderUserTrakt;
@@ -111,11 +113,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         handler = new Handler();
-    }
-
-    @Override
-    protected void setCustomTheme() {
-        setTheme(R.style.Theme_SeriesGuide_DayNight_Drawer);
     }
 
     @Override
@@ -130,15 +127,17 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         }
 
         // update signed-in accounts
-        if (HexagonSettings.isEnabled(this)) {
-            textViewHeaderUserCloud.setText(HexagonSettings.getAccountName(this));
-        } else {
-            textViewHeaderUserCloud.setText(R.string.hexagon_signin);
-        }
-        if (TraktCredentials.get(this).hasCredentials()) {
-            textViewHeaderUserTrakt.setText(TraktCredentials.get(this).getUsername());
-        } else {
-            textViewHeaderUserTrakt.setText(R.string.connect_trakt);
+        if (drawerLayout != null) {
+            if (HexagonSettings.isEnabled(this)) {
+                textViewHeaderUserCloud.setText(HexagonSettings.getAccountName(this));
+            } else {
+                textViewHeaderUserCloud.setText(R.string.hexagon_signin);
+            }
+            if (TraktCredentials.get(this).hasCredentials()) {
+                textViewHeaderUserTrakt.setText(TraktCredentials.get(this).getUsername());
+            } else {
+                textViewHeaderUserTrakt.setText(R.string.connect_trakt);
+            }
         }
     }
 
@@ -153,6 +152,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
      * Initializes the navigation drawer. Overriding activities should call this in their {@link
      * #onCreate(android.os.Bundle)} after {@link #setContentView(int)}.
      */
+    @Deprecated
     public void setupNavDrawer() {
         drawerLayout = findViewById(R.id.drawer_layout);
 
@@ -303,10 +303,15 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
     /**
      * Returns true if the navigation drawer is open.
      */
+    @Deprecated
     public boolean isNavDrawerOpen() {
+        if (drawerLayout == null) {
+            return false;
+        }
         return drawerLayout.isDrawerOpen(navigationView);
     }
 
+    @Deprecated
     public void setDrawerIndicatorEnabled() {
         actionBarToolbar.setNavigationIcon(R.drawable.ic_menu_24dp);
         actionBarToolbar.setNavigationContentDescription(R.string.drawer_open);
@@ -316,19 +321,27 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
      * Highlights the given position in the drawer menu. Activities listed in the drawer should call
      * this in {@link #onStart()}.
      */
+    @Deprecated
     public void setDrawerSelectedItem(@IdRes int menuItemId) {
-        navigationView.setCheckedItem(menuItemId);
+        if (navigationView != null) {
+            navigationView.setCheckedItem(menuItemId);
+        }
     }
 
+    @Deprecated
     public void openNavDrawer() {
         drawerLayout.openDrawer(GravityCompat.START);
     }
 
+    @Deprecated
     public void closeNavDrawer() {
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
+    @Deprecated
     public boolean toggleDrawer(MenuItem item) {
+        if (drawerLayout == null) return false;
+
         if (item != null && item.getItemId() == android.R.id.home) {
             if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);

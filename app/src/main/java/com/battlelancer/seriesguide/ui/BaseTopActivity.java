@@ -21,6 +21,8 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.BackupSettings;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.sync.AccountUtils;
+import com.battlelancer.seriesguide.ui.stats.StatsActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import timber.log.Timber;
 
@@ -42,17 +44,69 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(false);
         }
     }
 
     @Override
     public void setupNavDrawer() {
-        super.setupNavDrawer();
+//        super.setupNavDrawer();
+//
+//        // show a drawer indicator
+//        setDrawerIndicatorEnabled();
+    }
 
-        // show a drawer indicator
-        setDrawerIndicatorEnabled();
+    public void setupBottomNavigation(@IdRes int selectedItemId) {
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
+        bottomNav.setSelectedItemId(selectedItemId);
+        bottomNav.setOnNavigationItemSelectedListener(item -> {
+            onNavItemClick(item.getItemId());
+            return false; // Do not change selected item.
+        });
+    }
+
+    private void onNavItemClick(int itemId) {
+        Intent launchIntent = null;
+
+        switch (itemId) {
+            case R.id.navigation_item_shows:
+                if (this instanceof ShowsActivity) {
+                    break;
+                }
+                launchIntent = new Intent(this, ShowsActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
+                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                break;
+            case R.id.navigation_item_lists:
+                if (this instanceof ListsActivity) {
+                    break;
+                }
+                launchIntent = new Intent(this, ListsActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                break;
+            case R.id.navigation_item_movies:
+                if (this instanceof MoviesActivity) {
+                    break;
+                }
+                launchIntent = new Intent(this, MoviesActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                break;
+            case R.id.navigation_item_stats:
+                if (this instanceof StatsActivity) {
+                    break;
+                }
+                launchIntent = new Intent(this, StatsActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                break;
+            case R.id.navigation_item_settings:
+                launchIntent = new Intent(this, SeriesGuidePreferences.class);
+                break;
+        }
+
+        if (launchIntent != null) {
+            startActivity(launchIntent);
+            overridePendingTransition(R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg);
+        }
     }
 
     /**

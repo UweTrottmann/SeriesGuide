@@ -86,7 +86,7 @@ public class ShowsActivity extends BaseTopActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shows);
         setupActionBar();
-        setupNavDrawer();
+        setupBottomNavigation(R.id.navigation_item_shows);
 
         // Set up a sync account if needed
         if (!AccountUtils.isAccountExists(this)) {

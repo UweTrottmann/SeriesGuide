@@ -121,17 +121,6 @@
     <!-- Note: always launch with Dark on P- to avoid bright colors as user may have set Dark. -->
     <style name="Theme.SeriesGuide.Launch" parent="Theme.SeriesGuide.Dark" />
 
-    <!-- Drawer -->
-    <style name="Theme.SeriesGuide.DayNight.Drawer" parent="Theme.SeriesGuide.Light.Drawer" />
-    <style name="Theme.SeriesGuide.Dark.Drawer">
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-    <style name="Theme.SeriesGuide.Light.Drawer">
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-
     <!-- Immersive -->
     <style name="Theme.SeriesGuide.DayNight.Immersive" parent="Theme.SeriesGuide.Light.Immersive" />
     <style name="Theme.SeriesGuide.Dark.Immersive">
