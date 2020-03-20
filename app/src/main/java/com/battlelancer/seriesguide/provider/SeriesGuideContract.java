@@ -1054,16 +1054,10 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_NOT_WATCHLIST = Movies.IN_WATCHLIST + "=0";
 
-        public static final String SELECTION_IN_LIST =
-                SeriesGuideContract.Movies.SELECTION_COLLECTION + " OR "
-                        + SeriesGuideContract.Movies.SELECTION_WATCHLIST;
-        public static final String[] PROJECTION_IN_LIST = {
-                TMDB_ID, // 0
-                IN_COLLECTION, // 1
-                IN_WATCHLIST // 2
-        };
-
-        public static final String SELECTION_IN_LIST_OR_WATCHED = SELECTION_IN_LIST + " OR " + Movies.WATCHED + "=1";
+        public static final String SELECTION_IN_LIST_OR_WATCHED =
+                Movies.SELECTION_COLLECTION
+                        + " OR " + Movies.SELECTION_WATCHLIST
+                        + " OR " + Movies.SELECTION_WATCHED;
         public static final String[] PROJECTION_IN_LIST_OR_WATCHED = {
                 TMDB_ID, // 0
                 IN_COLLECTION, // 1
