@@ -8,6 +8,28 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 54
+----------
+*in development*
+
+#### 54-beta1
+*2020-03-20*
+
+* 🔧 Auto backups are now always created in an app specific directory on external storage, not
+  requiring a special permission or any setup. The last two backups are kept. The backups are
+  included in Android's app data backup (Android 6+, up to 25 MB total).
+* 🔧 After installing the app and an auto backup is detected, offer to restore it.
+* 🔧 After creating a backup, auto backup can copy it to files you specify.
+* 🔧 Show a message if the last auto backup failed.
+* 🔧 Ability to run auto backup right away, e.g. to test if creating copies is successful.
+* 🔧 Suggest more recognizable names for backup files.
+* 🔧 If a show or movie failed to update, also display its title.
+* 📝 Auto backup will be turned on for all users. If you do not need auto backups,
+  you can turn it off again.
+* 📝 Auto backup will now create an empty file instead of none if there is no data to backup.
+* 📝 Importing an empty backup file will no longer fail and just remove existing data.
+* 📝 Support Android 10.
+
 Version 53
 ----------
 *2020-03-12*
