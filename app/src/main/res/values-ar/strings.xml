@@ -469,13 +469,13 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">نسخ احتياطي تلقائي</string>
     <string name="pref_autobackupsummary">نسخ إحتياطي أسبوعي للمسلسلات، القوائم والأفلام</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">هذه النسخ الإحتياطية غير متوفرة إذا تم تثبيت التطبيق مرة أخرى ما لم يتم تشغيل النسخ الإحتياطي لبيانات التطبيق لهذا الجهاز (أندرويد 6+). بالتالي قم بإنشاء نسخ للحفاظ عليها.</string>
     <string name="last_auto_backup">آخر عملية نسخ تلقائية: %s</string>
     <string name="restore_auto_backup">استعادة النسخ الاحتياطي التلقائي</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">تم فشل آخر عملية للنسخ الإحتياطي التلقائي</string>
     <string name="autobackup_files_missing">لإستخدام النسخ الإحتياطي التلقائي، حدد ملفات النسخ الإحتياطية الصالحة.</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_create_user_copy">أنشى نسخة بعد كل نسخة احتياطية</string>
+    <string name="autobackup_restore_available">قد تكون النسخة الاحتياطية التلقائية متاحة للاستعادة منها.</string>
     <!-- Welcome dialog -->
     <string name="get_started">بدء</string>
     <string name="dismiss">إبعاد</string>

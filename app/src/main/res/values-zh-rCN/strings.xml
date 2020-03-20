@@ -414,13 +414,13 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">自动备份</string>
     <string name="pref_autobackupsummary">每周定期备份剧集、列表和电影数据</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">如果再次安装应用程序，除非开启此设备的应用数据备份（Android 6+），否则这些备份将不可用。创建副本以便以其他方式保存它们。</string>
     <string name="last_auto_backup">上次自动备份时间：%s</string>
     <string name="restore_auto_backup">从自动备份恢复</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">最后一次自动备份失败</string>
     <string name="autobackup_files_missing">选择一个可用的备份文件以使用自动备份。</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_create_user_copy">每次备份后创建一个副本</string>
+    <string name="autobackup_restore_available">自动备份可能可用来还原。</string>
     <!-- Welcome dialog -->
     <string name="get_started">入门</string>
     <string name="dismiss">忽略</string>

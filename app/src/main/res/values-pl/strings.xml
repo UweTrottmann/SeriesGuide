@@ -447,13 +447,13 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatyczna kopia zapasowa</string>
     <string name="pref_autobackupsummary">Tworzy co tydzień kopię zapasową seriali, list i filmów</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">Te kopie zapasowe są niedostępne po reinstalacji aplikacji do czasu włączenia tworzenia kopii zapasowych aplikacji dla tego urządzenia (Android 6+). Utwórz kopie, aby je zachować w pozostałych przypadkach.</string>
     <string name="last_auto_backup">Ostatnia kopia zapasowa: %s</string>
     <string name="restore_auto_backup">Przywróć kopię zapasową</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">Ostatnia automatyczna kopia zapasowa nie powiodła się</string>
     <string name="autobackup_files_missing">Aby użyć automatycznego tworzenia kopii zapasowych, wybierz prawidłowe pliki kopii zapasowych.</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_create_user_copy">Utwórz kopię po każdej kopii zapasowej</string>
+    <string name="autobackup_restore_available">Możliwe, że jest dostępna automatyczna kopia zapasowa danych.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Wprowadzenie</string>
     <string name="dismiss">Zamknij</string>

@@ -450,10 +450,10 @@
     <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
     <string name="last_auto_backup">Posledná automatická záloha: %s</string>
     <string name="restore_auto_backup">Obnoviť automatickú zálohu</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">Posledná automatická záloha zlyhala</string>
     <string name="autobackup_files_missing">Ak chcete použiť automatické zálohovanie, vyberte platné záložné súbory.</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_create_user_copy">Vytvoriť kópiu po každej zálohe</string>
+    <string name="autobackup_restore_available">Môže byť dostupná automatická záloha pre obnovenie.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Začíname</string>
     <string name="dismiss">Zatvoriť</string>

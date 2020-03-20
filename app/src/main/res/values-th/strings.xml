@@ -414,13 +414,13 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">สำรองอัตโนมัติ</string>
     <string name="pref_autobackupsummary">สำรองข้อมูลซีรีส์, รายการ และภาพยนตร์รายสัปดาห์</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">ข้อมูลที่สำรองนี้จะไม่สามารถใช้งานได้หากแอปถูกติดตั้งใหม่ ยกเว้นหากเปิดใช้งานการสำรองข้อมูลแอปในอุปกรณ์นี้ (Android 6+) สร้างสำเนาเพื่อเก็บข้อมูลไว้อีกที</string>
     <string name="last_auto_backup">สำรองข้อมูลอัตโนมัติล่าสุด: %s</string>
     <string name="restore_auto_backup">กู้คืนการสำรองข้อมูลอัตโนมัติ</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">การสำรองข้อมูลอัตโนมัตฺล่าสุดล้มเหลว</string>
     <string name="autobackup_files_missing">ในการใช้การสำรองข้อมูลอัตโนมัติ, เลือกไฟล์สำรองที่ถูกต้อง</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_create_user_copy">สร้างสำเนาของทุกการสำรองข้อมูล</string>
+    <string name="autobackup_restore_available">ข้อมูลที่สำรองไว้อัตโนมัติอาจพร้อมให้คืนค่า</string>
     <!-- Welcome dialog -->
     <string name="get_started">เริ่มต้น</string>
     <string name="dismiss">ปิด</string>

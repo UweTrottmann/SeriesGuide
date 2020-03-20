@@ -425,13 +425,13 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Backup Automático</string>
     <string name="pref_autobackupsummary">Backup semanal de suas séries, listas e filmes</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">Esses backups estão indisponíveis se o app for reinstalado a menos que o backup de dados de aplicativo esteja ativo no dispositivo (Android 6+). Caso contrário, crie cópias para preservá-lo.</string>
     <string name="last_auto_backup">Último backup automático: %s</string>
     <string name="restore_auto_backup">Restaurar backup automático</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">Falha no último backup automático</string>
     <string name="autobackup_files_missing">Para usar o backup automático, selecione os arquivos de backup válidos.</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_create_user_copy">Crie uma cópia após cada backup</string>
+    <string name="autobackup_restore_available">Um backup automático pode estar disponível para restauração.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Começar</string>
     <string name="dismiss">Dispensar</string>
