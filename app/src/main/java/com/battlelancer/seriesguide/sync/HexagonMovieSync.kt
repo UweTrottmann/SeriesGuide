@@ -4,12 +4,12 @@ import android.content.ContentProviderOperation
 import android.content.ContentValues
 import android.content.Context
 import android.content.OperationApplicationException
-import android.database.Cursor
 import android.text.TextUtils
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.ui.movies.MovieTools
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.Errors
@@ -223,28 +223,20 @@ internal class HexagonMovieSync(
         val movies = ArrayList<Movie>()
 
         // query for movies in lists or that are watched
-        val moviesInListsOrWatched = context.contentResolver.query(
-            SeriesGuideContract.Movies.CONTENT_URI,
-            SeriesGuideContract.Movies.PROJECTION_IN_LIST_OR_WATCHED,
-            SeriesGuideContract.Movies.SELECTION_IN_LIST_OR_WATCHED, null, null
-        ) ?: return null
+        val moviesInListsOrWatched = SgRoomDatabase.getInstance(context)
+            .movieHelper()
+            .moviesOnListsOrWatched
 
-        while (moviesInListsOrWatched.moveToNext()) {
-            val movie = Movie()
-            movie.tmdbId = moviesInListsOrWatched.getInt(0)
-            movie.isInCollection = moviesInListsOrWatched.getIntAsBoolean(1)
-            movie.isInWatchlist = moviesInListsOrWatched.getIntAsBoolean(2)
-            movie.isWatched = moviesInListsOrWatched.getIntAsBoolean(3)
-            movies.add(movie)
+        for (movie in moviesInListsOrWatched) {
+            val movieToUpload = Movie()
+            movieToUpload.tmdbId = movie.tmdbId
+            movieToUpload.isInCollection = movie.inCollection
+            movieToUpload.isInWatchlist = movie.inWatchlist
+            movieToUpload.isWatched = movie.watched
+            movies.add(movieToUpload)
         }
 
-        moviesInListsOrWatched.close()
-
         return movies
-    }
-
-    private fun Cursor.getIntAsBoolean(columnIndex: Int): Boolean {
-        return getInt(columnIndex) == 1
     }
 
 }

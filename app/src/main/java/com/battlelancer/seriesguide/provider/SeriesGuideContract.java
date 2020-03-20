@@ -1054,17 +1054,6 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_NOT_WATCHLIST = Movies.IN_WATCHLIST + "=0";
 
-        public static final String SELECTION_IN_LIST_OR_WATCHED =
-                Movies.SELECTION_COLLECTION
-                        + " OR " + Movies.SELECTION_WATCHLIST
-                        + " OR " + Movies.SELECTION_WATCHED;
-        public static final String[] PROJECTION_IN_LIST_OR_WATCHED = {
-                TMDB_ID, // 0
-                IN_COLLECTION, // 1
-                IN_WATCHLIST, // 2
-                WATCHED // 3
-        };
-
         public static final String SELECTION_WATCHED = Movies.WATCHED + "=1";
         public static final String SELECTION_UNWATCHED = Movies.WATCHED + "=0";
 
