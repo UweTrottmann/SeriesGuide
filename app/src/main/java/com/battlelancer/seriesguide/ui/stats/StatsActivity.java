@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.ui.stats;
 
 import android.os.Bundle;
+import android.view.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.FragmentTransaction;
 import com.battlelancer.seriesguide.R;
@@ -14,9 +15,9 @@ public class StatsActivity extends BaseTopActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_singlepane_drawer);
+        setContentView(R.layout.activity_stats);
         setupActionBar();
-        setupNavDrawer();
+        setupBottomNavigation(R.id.navigation_item_stats);
 
         if (savedInstanceState == null) {
             StatsFragment f = new StatsFragment();
@@ -36,10 +37,8 @@ public class StatsActivity extends BaseTopActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        setDrawerSelectedItem(R.id.navigation_item_stats);
+    protected View getSnackbarParentView() {
+        return findViewById(R.id.coordinatorLayoutStats);
     }
 
     @Override
