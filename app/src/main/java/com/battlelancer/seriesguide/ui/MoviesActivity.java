@@ -63,7 +63,7 @@ public class MoviesActivity extends BaseTopActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs_drawer);
         setupActionBar();
-        setupNavDrawer();
+        setupBottomNavigation(R.id.navigation_item_movies);
 
         setupViews(savedInstanceState);
         setupSyncProgressBar(R.id.progressBarTabs);
@@ -110,8 +110,6 @@ public class MoviesActivity extends BaseTopActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        setDrawerSelectedItem(R.id.navigation_item_movies);
 
         // Broken: tabs will update, but view pager does not use correct fragments.
         // add trakt-only tab if user just signed in
