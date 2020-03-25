@@ -98,7 +98,8 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
                 launchIntent = new Intent(this, StatsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 break;
-            case R.id.navigation_item_settings:
+            case R.id.navigation_item_more:
+                // TODO Replace with MoreOptionsActivity.
                 launchIntent = new Intent(this, SeriesGuidePreferences.class);
                 break;
         }

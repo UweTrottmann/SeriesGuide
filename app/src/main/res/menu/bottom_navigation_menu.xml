@@ -18,8 +18,8 @@
         android:icon="@drawable/ic_stats_white_24dp"
         android:title="@string/statistics" />
     <item
-        android:id="@+id/navigation_item_settings"
-        android:icon="@drawable/ic_settings_control_24dp"
-        android:title="@string/preferences" />
+        android:id="@+id/navigation_item_more"
+        android:icon="@drawable/ic_menu_24dp"
+        android:title="@string/navigation_more" />
 
 </menu>
