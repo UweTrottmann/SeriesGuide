@@ -106,17 +106,41 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/buttonSettings"
+                    android:id="@+id/buttonSupportTheApp"
                     style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
                     android:layout_width="0dp"
                     android:layout_height="48dp"
                     android:layout_marginTop="16dp"
+                    android:text="@string/action_upgrade"
+                    app:icon="@drawable/ic_star_black_24dp"
+                    app:iconGravity="start"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/containerCloud" />
+
+                <TextView
+                    android:id="@+id/textViewThankYouSupporters"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="72dp"
+                    android:paddingBottom="@dimen/inline_padding"
+                    android:text="@string/upgrade_success"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold.Accent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonSupportTheApp" />
+
+                <Button
+                    android:id="@+id/buttonSettings"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
                     android:text="@string/preferences"
                     app:icon="@drawable/ic_settings_dark_24dp"
                     app:iconGravity="start"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/containerCloud" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewThankYouSupporters" />
 
                 <Button
                     android:id="@+id/buttonHelp"

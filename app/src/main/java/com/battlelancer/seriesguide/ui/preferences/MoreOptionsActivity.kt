@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.CloudSetupActivity
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
@@ -43,6 +44,9 @@ class MoreOptionsActivity : BaseTopActivity() {
         binding.containerTrakt.setOnClickListener {
             startActivity(Intent(this, ConnectTraktActivity::class.java))
         }
+        binding.buttonSupportTheApp.setOnClickListener {
+            startActivity(Utils.getBillingActivityIntent(this))
+        }
         binding.buttonSettings.setOnClickListener {
             startActivity(Intent(this, SeriesGuidePreferences::class.java))
         }
@@ -55,8 +59,12 @@ class MoreOptionsActivity : BaseTopActivity() {
             } else {
                 val builder = CustomTabsIntent.Builder()
                 builder.setShowTitle(true)
-                builder.setToolbarColor(ContextCompat.getColor(this,
-                    Utils.resolveAttributeToResourceId(theme, R.attr.colorPrimary)))
+                builder.setToolbarColor(
+                    ContextCompat.getColor(
+                        this,
+                        Utils.resolveAttributeToResourceId(theme, R.attr.colorPrimary)
+                    )
+                )
 
                 builder.build().intent.apply {
                     setPackage(packageName)
@@ -88,6 +96,9 @@ class MoreOptionsActivity : BaseTopActivity() {
                 setText(R.string.connect_trakt)
             }
         }
+
+        // Update supporter status.
+        binding.textViewThankYouSupporters.isGone = !Utils.hasAccessToX(this)
     }
 
     override fun getSnackbarParentView(): View {
