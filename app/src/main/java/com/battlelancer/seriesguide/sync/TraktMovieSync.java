@@ -106,9 +106,9 @@ public class TraktMovieSync {
             return false;
         }
 
-        Set<Integer> moviesNotOnTraktCollection = new HashSet<>(); // only when merging
-        Set<Integer> moviesNotOnTraktWatchlist = new HashSet<>(); // only when merging
-        Set<Integer> moviesNotWatchedOnTrakt = new HashSet<>(); // only when merging
+        Set<Integer> toCollectOnTrakt = new HashSet<>(); // only when merging
+        Set<Integer> toWatchlistOnTrakt = new HashSet<>(); // only when merging
+        Set<Integer> toSetWatchedOnTrakt = new HashSet<>(); // only when merging
         ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
         for (SgMovieFlags localMovie : localMovies) {
@@ -119,17 +119,18 @@ public class TraktMovieSync {
             boolean isWatchedOnTrakt = watched.remove(tmdbId);
 
             if (merging) {
-                // Maybe upload movie if missing from Trakt collection or watchlist
+                // Mark movie for upload if missing from Trakt collection or watchlist
                 // or if not watched on Trakt.
-                if (!inCollectionOnTrakt) {
-                    moviesNotOnTraktCollection.add(tmdbId);
+                if (localMovie.getInCollection() && !inCollectionOnTrakt) {
+                    toCollectOnTrakt.add(tmdbId);
                 }
-                if (!inWatchlistOnTrakt) {
-                    moviesNotOnTraktWatchlist.add(tmdbId);
+                if (localMovie.getInWatchlist() && !inWatchlistOnTrakt) {
+                    toWatchlistOnTrakt.add(tmdbId);
                 }
-                if (!isWatchedOnTrakt) {
-                    moviesNotWatchedOnTrakt.add(tmdbId);
+                if (localMovie.getWatched() && !isWatchedOnTrakt) {
+                    toSetWatchedOnTrakt.add(tmdbId);
                 }
+
                 // Add to local collection or watchlist, but do NOT remove.
                 // Mark as watched, but do NOT remove watched flag.
                 // Will take care of removing unneeded (not watched or in any list) movies
@@ -179,11 +180,11 @@ public class TraktMovieSync {
 
         // merge on first run
         if (merging) {
-            // upload movies not in trakt collection or watchlist
-            if (uploadLists(
-                    moviesNotOnTraktCollection,
-                    moviesNotOnTraktWatchlist,
-                    moviesNotWatchedOnTrakt
+            // Upload movies not in Trakt collection, watchlist or watched history.
+            if (uploadFlagsNotOnTrakt(
+                    toCollectOnTrakt,
+                    toWatchlistOnTrakt,
+                    toSetWatchedOnTrakt
             )) {
                 // set merge successful
                 PreferenceManager.getDefaultSharedPreferences(context)
@@ -293,54 +294,30 @@ public class TraktMovieSync {
     }
 
     /**
-     * Checks if the given movies are in the local collection or watchlist or are watched,
-     * then uploads them to the appropriate list(s) on Trakt.
+     * Uploads the given movies to the appropriate list(s)/history on Trakt.
      */
-    private boolean uploadLists(
-            Set<Integer> moviesNotOnTraktCollection,
-            Set<Integer> moviesNotOnTraktWatchlist,
-            Set<Integer> moviesNotWatchedOnTrakt
+    private boolean uploadFlagsNotOnTrakt(
+            Set<Integer> toCollectOnTrakt,
+            Set<Integer> toWatchlistOnTrakt,
+            Set<Integer> toSetWatchedOnTrakt
     ) {
-        if (moviesNotOnTraktCollection.size() == 0
-                && moviesNotOnTraktWatchlist.size() == 0
-                && moviesNotWatchedOnTrakt.size() == 0) {
-            // nothing to upload
-            Timber.d("uploadLists: nothing to uploadLists");
+        if (toCollectOnTrakt.size() == 0
+                && toWatchlistOnTrakt.size() == 0
+                && toSetWatchedOnTrakt.size() == 0) {
+            Timber.d("uploadLists: nothing to upload");
             return true;
         }
 
-        // return if connectivity is lost
         if (!AndroidUtils.isNetworkConnected(context)) {
-            return false;
+            return false; // Fail, no connection is available.
         }
-
-        List<SgMovieFlags> moviesOnListsOrWatched = SgRoomDatabase.getInstance(context)
-                .movieHelper().getMoviesOnListsOrWatched();
 
         // Build list of collected, watchlisted or watched movies to upload.
-        List<SyncMovie> moviesToCollect = new LinkedList<>();
-        List<SyncMovie> moviesToWatchlist = new LinkedList<>();
-        List<SyncMovie> moviesToSetWatched = new LinkedList<>();
+        List<SyncMovie> moviesToCollect = convertToSyncMovieList(toCollectOnTrakt);
+        List<SyncMovie> moviesToWatchlist = convertToSyncMovieList(toWatchlistOnTrakt);
+        List<SyncMovie> moviesToSetWatched = convertToSyncMovieList(toSetWatchedOnTrakt);
 
-        for (SgMovieFlags movie : moviesOnListsOrWatched) {
-            int tmdbId = movie.getTmdbId();
-            SyncMovie syncMovie = new SyncMovie().id(MovieIds.tmdb(tmdbId));
-
-            if (movie.getInCollection()
-                    && moviesNotOnTraktCollection.contains(tmdbId)) {
-                moviesToCollect.add(syncMovie);
-            }
-            if (movie.getInWatchlist()
-                    && moviesNotOnTraktWatchlist.contains(tmdbId)) {
-                moviesToWatchlist.add(syncMovie);
-            }
-            if (movie.getWatched()
-                    && moviesNotWatchedOnTrakt.contains(tmdbId)) {
-                moviesToSetWatched.add(syncMovie);
-            }
-        }
-
-        // upload
+        // Upload.
         String action = "";
         SyncItems items = new SyncItems();
         Response<SyncResponse> response = null;
@@ -381,5 +358,13 @@ public class TraktMovieSync {
         Timber.d("uploadLists: success, uploaded %s to collection, %s to watchlist, %s set watched",
                 moviesToCollect.size(), moviesToWatchlist.size(), moviesToSetWatched.size());
         return true;
+    }
+
+    private List<SyncMovie> convertToSyncMovieList(Set<Integer> movieTmdbIds) {
+        List<SyncMovie> syncMovies = new LinkedList<>();
+        for (Integer tmdbId : movieTmdbIds) {
+            syncMovies.add(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
+        }
+        return syncMovies;
     }
 }
