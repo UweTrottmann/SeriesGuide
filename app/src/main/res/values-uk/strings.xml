@@ -9,7 +9,6 @@
     <string name="search">Пошук</string>
     <string name="preferences">Налаштування</string>
     <string name="help">Допомога</string>
-    <string name="help_and_feedback">Довідка &amp; Відгук</string>
     <string name="no_more_updates">SeriesGuide не буде отримувати більше оновлень для цієї версії Android.</string>
     <!-- Media items -->
     <string name="show">Серіал</string>
@@ -351,7 +350,6 @@
     <string name="action_open_in_browser">Відкрити в браузері</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Основні</string>
-    <string name="prefs_category_sharing">Послуги</string>
     <string name="prefs_category_advanced">Додатково</string>
     <string name="prefs_category_about">Про</string>
     <string name="pref_onlyfuture">Немає серій що вийшли</string>

@@ -9,7 +9,6 @@
     <string name="search">Szukaj</string>
     <string name="preferences">Ustawienia</string>
     <string name="help">Pomoc</string>
-    <string name="help_and_feedback">Pomoc i opinie</string>
     <string name="no_more_updates">Na tej wersji systemu Android, SeriesGuide nie będzie już otrzymywał aktualizacji.</string>
     <!-- Media items -->
     <string name="show">Serial</string>
@@ -351,7 +350,6 @@
     <string name="action_open_in_browser">Otwórz w przeglądarce</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Podstawowe</string>
-    <string name="prefs_category_sharing">Usługi</string>
     <string name="prefs_category_advanced">Zaawansowane</string>
     <string name="prefs_category_about">O programie</string>
     <string name="pref_onlyfuture">Bez wyemitowanych</string>

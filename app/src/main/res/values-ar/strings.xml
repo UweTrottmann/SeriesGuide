@@ -9,7 +9,6 @@
     <string name="search">بحث</string>
     <string name="preferences">الإعدادات</string>
     <string name="help">مساعدة</string>
-    <string name="help_and_feedback">مساعدة واقتراحات</string>
     <string name="no_more_updates">SeriesGuide لن يتحصل على المزيد من التحديثات على نسخة الأندرويد الحالية.</string>
     <!-- Media items -->
     <string name="show">العرض</string>
@@ -367,7 +366,6 @@
     <string name="action_open_in_browser">فتح في المتصفح</string>
     <!-- Settings -->
     <string name="prefs_category_basic">أساسي</string>
-    <string name="prefs_category_sharing">خدمات</string>
     <string name="prefs_category_advanced">متقدم</string>
     <string name="prefs_category_about">حول</string>
     <string name="pref_onlyfuture">عدم إظهار الحلقات التي تم عرضها</string>

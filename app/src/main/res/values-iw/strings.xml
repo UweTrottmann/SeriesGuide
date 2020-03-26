@@ -9,7 +9,6 @@
     <string name="search">חפש</string>
     <string name="preferences">הגדרות</string>
     <string name="help">עזרה</string>
-    <string name="help_and_feedback">עזרה &amp; משוב</string>
     <string name="no_more_updates">SeriesGuide לא תקבל יותר עדכונים עבור גרסת האנדרואיד הנוכחית.</string>
     <!-- Media items -->
     <string name="show">סדרה</string>
@@ -351,7 +350,6 @@
     <string name="action_open_in_browser">פתח בדפדפן</string>
     <!-- Settings -->
     <string name="prefs_category_basic">בסיסי</string>
-    <string name="prefs_category_sharing">שירותים</string>
     <string name="prefs_category_advanced">מתקדם</string>
     <string name="prefs_category_about">אודות</string>
     <string name="pref_onlyfuture">אין פרקים ששודרו</string>

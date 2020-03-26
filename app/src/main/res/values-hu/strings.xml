@@ -9,7 +9,6 @@
     <string name="search">Keresés</string>
     <string name="preferences">Beállítások</string>
     <string name="help">Súgó</string>
-    <string name="help_and_feedback">Súgó &amp; Visszajelzés</string>
     <string name="no_more_updates">Ehhez az android verzióhoz nem készül több SeriesGuide frissítés.</string>
     <!-- Media items -->
     <string name="show">Műsor</string>
@@ -335,7 +334,6 @@
     <string name="action_open_in_browser">Megnyitás böngészőben</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Alap beállítások</string>
-    <string name="prefs_category_sharing">Szolgáltatások</string>
     <string name="prefs_category_advanced">Haladó beállítások</string>
     <string name="prefs_category_about">A programról</string>
     <string name="pref_onlyfuture">Leadott epizódok nélkül</string>

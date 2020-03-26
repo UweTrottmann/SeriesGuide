@@ -9,7 +9,6 @@
     <string name="search">搜索</string>
     <string name="preferences">设置</string>
     <string name="help">帮助</string>
-    <string name="help_and_feedback">帮助 &amp; 反馈</string>
     <string name="no_more_updates">此版本的 Android 将不会收到更多 SeriesGuide 的更新。</string>
     <!-- Media items -->
     <string name="show">节目</string>
@@ -327,7 +326,6 @@
     <string name="action_open_in_browser">在浏览器中打开</string>
     <!-- Settings -->
     <string name="prefs_category_basic">基本</string>
-    <string name="prefs_category_sharing">服务</string>
     <string name="prefs_category_advanced">高级</string>
     <string name="prefs_category_about">关于</string>
     <string name="pref_onlyfuture">不显示已播剧集</string>

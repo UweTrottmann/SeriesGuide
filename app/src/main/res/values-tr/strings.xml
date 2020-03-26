@@ -9,7 +9,6 @@
     <string name="search">Ara</string>
     <string name="preferences">Ayarlar</string>
     <string name="help">Yardım</string>
-    <string name="help_and_feedback">Yardım ve Geribildirim</string>
     <string name="no_more_updates">SeriesGuide, Androidin bu versiyonu için güncelleme almayacak.</string>
     <!-- Media items -->
     <string name="show">Dizi</string>
@@ -335,7 +334,6 @@
     <string name="action_open_in_browser">Tarayıcıda aç</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Temel Ayarlar</string>
-    <string name="prefs_category_sharing">Servisler</string>
     <string name="prefs_category_advanced">Gelişmiş</string>
     <string name="prefs_category_about">Hakkında</string>
     <string name="pref_onlyfuture">Yayınlanan bölüm yok</string>

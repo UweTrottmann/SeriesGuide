@@ -9,7 +9,6 @@
     <string name="search">Pencarian</string>
     <string name="preferences">Pengaturan</string>
     <string name="help">Bantuan</string>
-    <string name="help_and_feedback">Bantuan &amp; tanggapan</string>
     <string name="no_more_updates">SeriesGuide tidak akan menerima pembaruan lagi untuk Android versi ini.</string>
     <!-- Media items -->
     <string name="show">Acara</string>
@@ -327,7 +326,6 @@
     <string name="action_open_in_browser">Buka di browser</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Dasar</string>
-    <string name="prefs_category_sharing">Layanan</string>
     <string name="prefs_category_advanced">Tingkat Lanjut</string>
     <string name="prefs_category_about">Tentang</string>
     <string name="pref_onlyfuture">Tidak Ada episode yang sudah ditayangkan</string>

@@ -9,7 +9,6 @@
     <string name="search">ค้นหา</string>
     <string name="preferences">การตั้งค่า</string>
     <string name="help">ช่วยเหลือ</string>
-    <string name="help_and_feedback">ช่วยเหลือ &amp; ความคิดเห็น</string>
     <string name="no_more_updates">SeriesGuide จะไม่ออกอัปเดตสำหรับ Android เวอร์ชันนี้อีก</string>
     <!-- Media items -->
     <string name="show">ซีรีส์</string>
@@ -327,7 +326,6 @@
     <string name="action_open_in_browser">เปิดในเบราว์เซอร์</string>
     <!-- Settings -->
     <string name="prefs_category_basic">ทั่วไป</string>
-    <string name="prefs_category_sharing">บริการ</string>
     <string name="prefs_category_advanced">ขั้นสูง</string>
     <string name="prefs_category_about">เกี่ยวกับ</string>
     <string name="pref_onlyfuture">ซ่อนตอนที่ออกอากาศแล้ว</string>

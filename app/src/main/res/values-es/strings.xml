@@ -9,7 +9,6 @@
     <string name="search">Buscar</string>
     <string name="preferences">Configuración</string>
     <string name="help">Ayuda</string>
-    <string name="help_and_feedback">Ayuda y comentarios</string>
     <string name="no_more_updates">SeriesGuide no recibirá más actualizaciones para esta versión de Android.</string>
     <!-- Media items -->
     <string name="show">Serie</string>
@@ -336,7 +335,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="action_open_in_browser">Abrir en el navegador</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Básicos</string>
-    <string name="prefs_category_sharing">Servicios</string>
     <string name="prefs_category_advanced">Avanzado</string>
     <string name="prefs_category_about">Acerca de</string>
     <string name="pref_onlyfuture">No hay episodios emitidos</string>

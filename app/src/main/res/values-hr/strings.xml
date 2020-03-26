@@ -9,7 +9,6 @@
     <string name="search">Traži</string>
     <string name="preferences">Postavke</string>
     <string name="help">Pomoć</string>
-    <string name="help_and_feedback">Pomoć i povratne informacije</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">Serija</string>
@@ -343,7 +342,6 @@
     <string name="action_open_in_browser">Otvori u pregledniku</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Osnovno</string>
-    <string name="prefs_category_sharing">Usluge</string>
     <string name="prefs_category_advanced">Napredno</string>
     <string name="prefs_category_about">O aplikaciji</string>
     <string name="pref_onlyfuture">Nema emitiranih epizoda</string>
