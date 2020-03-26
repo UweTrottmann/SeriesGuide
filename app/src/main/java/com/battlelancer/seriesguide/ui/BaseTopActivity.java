@@ -49,14 +49,6 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         }
     }
 
-    @Override
-    public void setupNavDrawer() {
-//        super.setupNavDrawer();
-//
-//        // show a drawer indicator
-//        setDrawerIndicatorEnabled();
-    }
-
     public void setupBottomNavigation(@IdRes int selectedItemId) {
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
         bottomNav.setSelectedItemId(selectedItemId);
@@ -188,8 +180,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
                     : AppCompatDelegate.MODE_NIGHT_YES);
             return true;
         }
-        // check if we should toggle the navigation drawer (app icon was touched)
-        return toggleDrawer(item) || super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

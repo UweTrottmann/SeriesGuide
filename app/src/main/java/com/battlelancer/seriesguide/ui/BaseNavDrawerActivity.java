@@ -1,42 +1,15 @@
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.SuppressLint;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.billing.BillingActivity;
-import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
 import com.battlelancer.seriesguide.jobs.FlagJob;
-import com.battlelancer.seriesguide.service.FeedbackBroadcastReceiver;
-import com.battlelancer.seriesguide.settings.AppSettings;
-import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.ui.stats.StatsActivity;
-import com.battlelancer.seriesguide.util.DialogTools;
-import com.battlelancer.seriesguide.util.DrawableTools;
 import com.battlelancer.seriesguide.util.Utils;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.uwetrottmann.seriesguide.customtabs.CustomTabsHelper;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -94,26 +67,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         }
     }
 
-    private static final int NAVDRAWER_CLOSE_DELAY = 250;
-    private static final int NAV_ITEM_ACCOUNT_CLOUD_ID = -1;
-    private static final int NAV_ITEM_ACCOUNT_TRAKT_ID = -2;
-
-    private Handler handler;
-    private Toolbar actionBarToolbar;
-    @Nullable // FIXME Temporary until bottom nav migration complete.
-    private DrawerLayout drawerLayout;
-    @Nullable // FIXME Temporary until bottom nav migration complete.
-    private NavigationView navigationView;
-    private TextView textViewHeaderUserCloud;
-    private TextView textViewHeaderUserTrakt;
     private Snackbar snackbarProgress;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        handler = new Handler();
-    }
 
     @Override
     protected void onStart() {
@@ -122,22 +76,9 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         ServiceActiveEvent event = EventBus.getDefault().getStickyEvent(ServiceActiveEvent.class);
         handleServiceActiveEvent(event);
 
+        // TODO Move to BaseTopActivity?
         if (Utils.hasAccessToX(this) && HexagonSettings.shouldValidateAccount(this)) {
             onShowCloudAccountWarning();
-        }
-
-        // update signed-in accounts
-        if (drawerLayout != null) {
-            if (HexagonSettings.isEnabled(this)) {
-                textViewHeaderUserCloud.setText(HexagonSettings.getAccountName(this));
-            } else {
-                textViewHeaderUserCloud.setText(R.string.hexagon_signin);
-            }
-            if (TraktCredentials.get(this).hasCredentials()) {
-                textViewHeaderUserTrakt.setText(TraktCredentials.get(this).getUsername());
-            } else {
-                textViewHeaderUserTrakt.setText(R.string.connect_trakt);
-            }
         }
     }
 
@@ -146,211 +87,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
      */
     protected void onShowCloudAccountWarning() {
         // do nothing
-    }
-
-    /**
-     * Initializes the navigation drawer. Overriding activities should call this in their {@link
-     * #onCreate(android.os.Bundle)} after {@link #setContentView(int)}.
-     */
-    @Deprecated
-    public void setupNavDrawer() {
-        drawerLayout = findViewById(R.id.drawer_layout);
-
-        actionBarToolbar = drawerLayout.findViewById(R.id.sgToolbar);
-
-        navigationView = drawerLayout.findViewById(R.id.navigation);
-
-        // setup nav drawer account header
-        View headerView = navigationView.getHeaderView(0);
-        headerView.findViewById(R.id.containerDrawerAccountCloud).setOnClickListener(
-                accountClickListener);
-        headerView.findViewById(R.id.containerDrawerAccountTrakt).setOnClickListener(
-                accountClickListener);
-        textViewHeaderUserCloud = headerView.findViewById(R.id.textViewDrawerUserCloud);
-        textViewHeaderUserTrakt = headerView.findViewById(R.id.textViewDrawerUserTrakt);
-        maybeShowNoMoreUpdatesNotice(headerView);
-
-        // setup nav drawer items
-        navigationView.inflateMenu(R.menu.menu_drawer);
-        if (!AppSettings.isUserDebugModeEnabled(this)) {
-            navigationView.getMenu().removeItem(R.id.navigation_sub_item_debug);
-        }
-        navigationView.setNavigationItemSelectedListener(
-                menuItem -> {
-                    onNavItemClick(menuItem.getItemId());
-                    return false;
-                });
-    }
-
-    /**
-     * Shows a no updates info text in the drawer if the device is running a version of Android
-     * that will not be supported by a future version of this app.
-     */
-    @SuppressLint("ObsoleteSdkInt")
-    private void maybeShowNoMoreUpdatesNotice(View headerView) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            headerView.findViewById(R.id.textViewDrawerNoMoreUpdates).setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (isNavDrawerOpen()) {
-            closeNavDrawer();
-            return;
-        }
-        super.onBackPressed();
-    }
-
-    private void onNavItemClick(int itemId) {
-        Intent launchIntent = null;
-
-        switch (itemId) {
-            case NAV_ITEM_ACCOUNT_CLOUD_ID: {
-                launchIntent = new Intent(this, CloudSetupActivity.class);
-                break;
-            }
-            case NAV_ITEM_ACCOUNT_TRAKT_ID: {
-                launchIntent = new Intent(this, ConnectTraktActivity.class);
-                break;
-            }
-            case R.id.navigation_item_shows:
-                if (this instanceof ShowsActivity) {
-                    break;
-                }
-                launchIntent = new Intent(this, ShowsActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
-                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                break;
-            case R.id.navigation_item_lists:
-                if (this instanceof ListsActivity) {
-                    break;
-                }
-                launchIntent = new Intent(this, ListsActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                break;
-            case R.id.navigation_item_movies:
-                if (this instanceof MoviesActivity) {
-                    break;
-                }
-                launchIntent = new Intent(this, MoviesActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                break;
-            case R.id.navigation_item_stats:
-                if (this instanceof StatsActivity) {
-                    break;
-                }
-                launchIntent = new Intent(this, StatsActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                break;
-            case R.id.navigation_sub_item_settings:
-                launchIntent = new Intent(this, SeriesGuidePreferences.class);
-                break;
-            case R.id.navigation_sub_item_help:
-                // if we cant find a package name, it means there is no browser that supports
-                // Chrome Custom Tabs installed. So, we fallback to the webview activity.
-                String packageName = CustomTabsHelper.getPackageNameToUse(this);
-                if (packageName == null) {
-                    launchIntent = new Intent(this, HelpActivity.class);
-                } else {
-                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                    builder.setShowTitle(true);
-                    builder.setToolbarColor(getResources().getColor(
-                            Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary)));
-                    Bitmap icon = DrawableTools
-                            .getBitmapFromVectorDrawable(this, R.drawable.ic_checkin_black_24dp);
-                    builder.setActionButton(icon,
-                            getString(R.string.feedback),
-                            PendingIntent.getBroadcast(getApplicationContext(), 0,
-                                    new Intent(getApplicationContext(),
-                                            FeedbackBroadcastReceiver.class), 0),
-                            true);
-                    CustomTabsIntent customTabsIntent = builder.build();
-                    customTabsIntent.intent.setPackage(packageName);
-                    customTabsIntent.intent.setData(Uri.parse(getString(R.string.help_url)));
-                    launchIntent = customTabsIntent.intent;
-                }
-                break;
-            case R.id.navigation_sub_item_unlock:
-                if (Utils.isAmazonVersion()) {
-                    launchIntent = new Intent(this, AmazonBillingActivity.class);
-                } else {
-                    launchIntent = new Intent(this, BillingActivity.class);
-                }
-                break;
-            case R.id.navigation_sub_item_debug:
-                if (AppSettings.isUserDebugModeEnabled(this)) {
-                    DialogTools.safeShow(new DebugViewFragment(), getSupportFragmentManager(),
-                            "debugViewDialog");
-                }
-                break;
-        }
-
-        // already displaying correct screen
-        if (launchIntent != null) {
-            final Intent finalLaunchIntent = launchIntent;
-            handler.postDelayed(() -> goToNavDrawerItem(finalLaunchIntent), NAVDRAWER_CLOSE_DELAY);
-        }
-
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
-
-    private void goToNavDrawerItem(Intent intent) {
-        startActivity(intent);
-        overridePendingTransition(R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg);
-    }
-
-    /**
-     * Returns true if the navigation drawer is open.
-     */
-    @Deprecated
-    public boolean isNavDrawerOpen() {
-        if (drawerLayout == null) {
-            return false;
-        }
-        return drawerLayout.isDrawerOpen(navigationView);
-    }
-
-    @Deprecated
-    public void setDrawerIndicatorEnabled() {
-        actionBarToolbar.setNavigationIcon(R.drawable.ic_menu_24dp);
-        actionBarToolbar.setNavigationContentDescription(R.string.drawer_open);
-    }
-
-    /**
-     * Highlights the given position in the drawer menu. Activities listed in the drawer should call
-     * this in {@link #onStart()}.
-     */
-    @Deprecated
-    public void setDrawerSelectedItem(@IdRes int menuItemId) {
-        if (navigationView != null) {
-            navigationView.setCheckedItem(menuItemId);
-        }
-    }
-
-    @Deprecated
-    public void openNavDrawer() {
-        drawerLayout.openDrawer(GravityCompat.START);
-    }
-
-    @Deprecated
-    public void closeNavDrawer() {
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
-
-    @Deprecated
-    public boolean toggleDrawer(MenuItem item) {
-        if (drawerLayout == null) return false;
-
-        if (item != null && item.getItemId() == android.R.id.home) {
-            if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-            } else {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-            return true;
-        }
-        return false;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -394,12 +130,4 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
             snackbarProgress.dismiss();
         }
     }
-
-    private View.OnClickListener accountClickListener = v -> {
-        if (v.getId() == R.id.containerDrawerAccountCloud) {
-            onNavItemClick(NAV_ITEM_ACCOUNT_CLOUD_ID);
-        } else if (v.getId() == R.id.containerDrawerAccountTrakt) {
-            onNavItemClick(NAV_ITEM_ACCOUNT_TRAKT_ID);
-        }
-    };
 }
