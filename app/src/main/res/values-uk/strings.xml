@@ -447,13 +447,13 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Автоматичне резервне копіювання</string>
     <string name="pref_autobackupsummary">Щотижневе резервне копіювання ваших серіалів, списків та фільмів</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">Ці резервні копії будуть недоступні, якщо додаток буде повторно інстальований, хіба що для цього пристрою буде ввімкнуто резервне копіювання даних додатку (Андроїд 6 та вище).  В такому випадку, для збереження даних, створюйте їх копії.</string>
     <string name="last_auto_backup">Останній авто Бекап: %s</string>
     <string name="restore_auto_backup">Відновити з авто Бекапу</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">Останній бекап не вдався.</string>
     <string name="autobackup_files_missing">Щоб використати автоматичну резервну копію, виберіть дійсні файли бекапу.</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_create_user_copy">Створити копію після кожного бекапу.</string>
+    <string name="autobackup_restore_available">Авторезервування може бути доступне для відновлення.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Початок роботи</string>
     <string name="dismiss">Відхилити</string>

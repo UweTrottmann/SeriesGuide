@@ -44,7 +44,7 @@
     <string name="search_hint">Epizódok keresése</string>
     <!-- Status messages -->
     <string name="updated">Frissítve a legújabb verzióra.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Részletek</string>
     <string name="norating">n/a</string>
     <string name="unknown">ismeretlen</string>
     <string name="offline">Csatlakozz a hálózathoz és próbáld újra.</string>
@@ -148,7 +148,7 @@
     <string name="action_shows_sort_favorites">Kedvencek előre</string>
     <string name="context_updateshow">Frissítés</string>
     <string name="context_marknext">Láttam a következő epizódot</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Nézet váltása</string>
     <!-- History -->
     <string name="user_stream">Előzmények</string>
     <string name="recently_watched">Nemrég megnézett</string>
@@ -368,7 +368,7 @@
     <string name="privacy_policy">Adatvédelmi irányelvek</string>
     <string name="licence_tvdb">Ez az alkalmazás a TheTVDB, Creative Commons licenc alatt álló adatait és képeit használja.</string>
     <string name="licence_themoviedb">Ez a termék a TMDb API-t használja, de a TMDb hozzájárulása vagy minősítése nélkül.</string>
-    <string name="licence_trakt">This app uses data and images by Trakt.</string>
+    <string name="licence_trakt">Ez az alkalmazás a Trakt adatait és képeit használja.</string>
     <string name="about_open_source">A SeriesGuide nyílt forráskódú szoftverek használatával készül.</string>
     <string name="licences_and_credits">Engedélyek és készítők listája</string>
     <!-- Sort -->
@@ -428,9 +428,9 @@
     <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
     <string name="last_auto_backup">Utolsó automata mentés: %s</string>
     <string name="restore_auto_backup">Automatikus mentés visszaállítása</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">A legutóbbi automatikus mentés nem sikerült</string>
     <string name="autobackup_files_missing">Az automatikus biztonsági másolat használatához válassz érvényes biztonsági másolat fájlokat.</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_create_user_copy">Másolat létrehozása minden biztonsági mentés után</string>
     <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Vágjunk bele!</string>

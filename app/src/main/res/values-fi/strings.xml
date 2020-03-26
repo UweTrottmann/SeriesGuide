@@ -431,7 +431,7 @@
     <string name="autobackup_failed">Viimeisin automaattinen varmuuskopiointi epäonnistui</string>
     <string name="autobackup_files_missing">Käyttääksesi automaattista varmuuskopiota, valitse kelvolliset varmuuskopiotiedostot.</string>
     <string name="autobackup_create_user_copy">Luo kopio jokaisen varmuuskopion jälkeen</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_restore_available">Automaattinen varmuuskopio saattaa olla käytettävissä palautusta varten.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Aloita</string>
     <string name="dismiss">Hylkää</string>

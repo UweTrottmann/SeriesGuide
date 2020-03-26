@@ -425,13 +425,13 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatisk sikkerhedskopiering</string>
     <string name="pref_autobackupsummary">Ugentlig sikkerhedskopiering af dine serier, lister og film</string>
-    <string name="autobackup_details">Disse sikkerhedskopier er ikke tilgængelige, hvis appen bliver installeret igen, medmindre appdata-sikkerhedskopi er slået til for denne enhed (Android 6+). Opret kopier for at bevare dem alternativt.</string>
+    <string name="autobackup_details">Disse sikkerhedskopier er ikke tilgængelige, hvis appen bliver installeret igen, medmindre sikkerhedskopiering af appdata er slået til for denne enhed (Android 6+). Ellers skal du oprette kopier for at beholde dem.</string>
     <string name="last_auto_backup">Seneste auto-sikkerhedskopiering: %s</string>
     <string name="restore_auto_backup">Gendan auto-sikkerhedskopi</string>
-    <string name="autobackup_failed">Den sidste backup er fejlet</string>
+    <string name="autobackup_failed">Fejl ved seneste sikkerhedskopiering</string>
     <string name="autobackup_files_missing">Vælg gyldige sikkerhedskopifiler for at benytte auto-sikkerhedskopiering.</string>
-    <string name="autobackup_create_user_copy">Opret et kopi efter hver backup</string>
-    <string name="autobackup_restore_available">En automatisk backup er muligvis tilgængelig at gendanne fra.</string>
+    <string name="autobackup_create_user_copy">Opret et kopi efter hver sikkerhedskopiering</string>
+    <string name="autobackup_restore_available">Du kan muligvis genoprette dine data fra en automatisk sikkerhedskopi.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Kom i gang</string>
     <string name="dismiss">Ignorér</string>

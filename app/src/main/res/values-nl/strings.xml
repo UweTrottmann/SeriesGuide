@@ -453,7 +453,7 @@
     <string name="pref_notifications_hidden_summary">Geen melding sturen over verborgen series, zelfs als meldingen ingeschakeld zijn</string>
     <string name="pref_notification_channel_errors">Fouten</string>
     <string name="pref_notifications_next_episodes_only">Alleen voor eerstvolgende afleveringen</string>
-    <string name="pref_notifications_next_episodes_only_summary">Meldt alleen als de nieuwe aflevering de eerstvolgende is om te kijken</string>
+    <string name="pref_notifications_next_episodes_only_summary">Meld alleen als de nieuwe aflevering de eerstvolgende is om te kijken</string>
     <!-- List Widget -->
     <string name="hide_watched">Bekeken afleveringen verbergen</string>
     <string name="pref_widget_opacity">Widget achtergrond</string>
