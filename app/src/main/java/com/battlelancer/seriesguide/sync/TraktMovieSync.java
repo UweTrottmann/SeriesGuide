@@ -349,6 +349,8 @@ public class TraktMovieSync {
             }
             if (response == null || response.isSuccessful()) {
                 if (moviesToSetWatched.size() > 0) {
+                    // Note: not setting a watched date (because not having one),
+                    // so Trakt will use the movie release date.
                     action = "add movies to watched history";
                     items.movies(moviesToSetWatched);
                     response = traktSync.addItemsToWatchedHistory(items).execute();
