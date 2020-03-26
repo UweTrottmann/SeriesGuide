@@ -136,18 +136,27 @@ public class TraktMovieSync {
                 // Will take care of removing unneeded (not watched or in any list) movies
                 // in later sync step.
                 if (inCollectionOnTrakt || inWatchlistOnTrakt || isWatchedOnTrakt) {
+
                     ContentProviderOperation.Builder builder = ContentProviderOperation
                             .newUpdate(Movies.buildMovieUri(tmdbId));
-                    if (inCollectionOnTrakt) {
+                    boolean changed = false;
+
+                    if (!localMovie.getInCollection() && inCollectionOnTrakt) {
                         builder.withValue(Movies.IN_COLLECTION, true);
+                        changed = true;
                     }
-                    if (inWatchlistOnTrakt) {
+                    if (!localMovie.getInWatchlist() && inWatchlistOnTrakt) {
                         builder.withValue(Movies.IN_WATCHLIST, true);
+                        changed = true;
                     }
-                    if (isWatchedOnTrakt) {
+                    if (!localMovie.getWatched() && isWatchedOnTrakt) {
                         builder.withValue(Movies.WATCHED, true);
+                        changed = true;
                     }
-                    batch.add(builder.build());
+
+                    if (changed) {
+                        batch.add(builder.build());
+                    }
                 }
             } else {
                 // Performance: only add op if any flag differs.
