@@ -255,13 +255,6 @@ public class ShowsActivity extends BaseTopActivity implements
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        setDrawerSelectedItem(R.id.navigation_item_shows);
-    }
-
-    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
