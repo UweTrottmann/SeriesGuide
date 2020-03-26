@@ -16,14 +16,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.SearchSettings;
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
+import com.battlelancer.seriesguide.ui.BaseMessageActivity;
 import com.battlelancer.seriesguide.util.SearchHistory;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.google.android.material.textfield.TextInputLayout;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class MoviesSearchActivity extends BaseNavDrawerActivity implements
+public class MoviesSearchActivity extends BaseMessageActivity implements
         MoviesSearchFragment.OnSearchClickListener {
 
     static final String EXTRA_ID_LINK = "idLink";

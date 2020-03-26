@@ -29,7 +29,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
+import com.battlelancer.seriesguide.ui.BaseMessageActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
@@ -297,7 +297,7 @@ public class ShowsNowFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventEpisodeTask(BaseNavDrawerActivity.ServiceCompletedEvent event) {
+    public void onEventEpisodeTask(BaseMessageActivity.ServiceCompletedEvent event) {
         if (event.flagJob == null || !event.isSuccessful) {
             return; // no changes applied
         }

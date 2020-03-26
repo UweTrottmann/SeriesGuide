@@ -13,9 +13,16 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 /**
- * Adds onto {@link BaseActivity} by attaching a navigation drawer.
+ * A {@link BaseActivity} that displays a permanent snack bar
+ * if a service action is running (e.g. any Cloud or Trakt action).
+ * <p>
+ * Service state is determined by the {@link ServiceActiveEvent}
+ * and {@link ServiceCompletedEvent} events.
+ * <p>
+ * Implementers should override {@link #getSnackbarParentView()} and at best
+ * supply a CoordinatorLayout to attach it to.
  */
-public abstract class BaseNavDrawerActivity extends BaseActivity {
+public abstract class BaseMessageActivity extends BaseActivity {
 
     /**
      * Posted sticky while a service task is running.

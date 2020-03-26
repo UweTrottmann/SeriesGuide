@@ -24,7 +24,7 @@ import com.battlelancer.seriesguide.model.SgShowMinimal
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity
+import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.util.SeasonTools
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -37,7 +37,7 @@ import java.util.ArrayList
  * Hosts a fragment which displays episodes of a season in a list and in a [ViewPager].
  * On small screens only one is visible at a time, on larger screens they are shown side-by-side.
  */
-class EpisodesActivity : BaseNavDrawerActivity() {
+class EpisodesActivity : BaseMessageActivity() {
 
     @BindView(R.id.fragment_episodes)
     lateinit var containerList: ViewGroup

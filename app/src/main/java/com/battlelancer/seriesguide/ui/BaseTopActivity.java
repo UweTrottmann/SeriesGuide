@@ -39,7 +39,7 @@ import timber.log.Timber;
  * Also provides support for an optional sync progress bar (see {@link
  * #setupSyncProgressBar(int)}).
  */
-public abstract class BaseTopActivity extends BaseNavDrawerActivity {
+public abstract class BaseTopActivity extends BaseMessageActivity {
 
     private View syncProgressBar;
     private Object syncObserverHandle;

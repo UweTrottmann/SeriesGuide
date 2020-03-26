@@ -32,7 +32,7 @@ import org.greenrobot.eventbus.ThreadMode;
 /**
  * Hosts an {@link OverviewFragment}.
  */
-public class OverviewActivity extends BaseNavDrawerActivity {
+public class OverviewActivity extends BaseMessageActivity {
 
     public static final int SHOW_LOADER_ID = 100;
     public static final int SHOW_CREDITS_LOADER_ID = 101;

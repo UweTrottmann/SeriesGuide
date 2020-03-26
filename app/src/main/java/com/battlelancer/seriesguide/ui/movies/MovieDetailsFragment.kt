@@ -38,7 +38,7 @@ import com.battlelancer.seriesguide.traktapi.MovieCheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTools
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity
+import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.ui.people.MovieCreditsLoader
@@ -177,7 +177,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         super.onStart()
 
         val event = EventBus.getDefault()
-            .getStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent::class.java)
+            .getStickyEvent(BaseMessageActivity.ServiceActiveEvent::class.java)
         setMovieButtonsEnabled(event == null)
 
         EventBus.getDefault().register(this)
@@ -528,12 +528,12 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventEpisodeTask(@Suppress("UNUSED_PARAMETER") event: BaseNavDrawerActivity.ServiceActiveEvent) {
+    fun onEventEpisodeTask(@Suppress("UNUSED_PARAMETER") event: BaseMessageActivity.ServiceActiveEvent) {
         setMovieButtonsEnabled(false)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventEpisodeTask(@Suppress("UNUSED_PARAMETER") event: BaseNavDrawerActivity.ServiceCompletedEvent) {
+    fun onEventEpisodeTask(@Suppress("UNUSED_PARAMETER") event: BaseMessageActivity.ServiceCompletedEvent) {
         setMovieButtonsEnabled(true)
     }
 
