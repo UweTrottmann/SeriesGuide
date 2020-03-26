@@ -18,20 +18,25 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.dataliberation.BackupSettings;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
 import com.battlelancer.seriesguide.ui.stats.StatsActivity;
+import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import timber.log.Timber;
 
 /**
- * Activities at the top of the navigation hierarchy, display the nav drawer upon pressing the
- * up/home action bar button.
- *
- * <p>Also provides support for an optional sync progress bar (see {@link
+ * Activities at the top of the navigation hierarchy, displaying a bottom navigation bar.
+ * Implementers must set it up with {@link #setupBottomNavigation(int)}.
+ * <p>
+ * They should also override {@link #getSnackbarParentView()} and supply a CoordinatorLayout.
+ * It is used to show snack bars for important warnings (e.g. auto backup failed, Cloud signed out).
+ * <p>
+ * Also provides support for an optional sync progress bar (see {@link
  * #setupSyncProgressBar(int)}).
  */
 public abstract class BaseTopActivity extends BaseNavDrawerActivity {
@@ -113,6 +118,15 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     protected void setupSyncProgressBar(@IdRes int progressBarId) {
         syncProgressBar = findViewById(progressBarId);
         syncProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (Utils.hasAccessToX(this) && HexagonSettings.shouldValidateAccount(this)) {
+            onShowCloudAccountWarning();
+        }
     }
 
     @Override
@@ -244,7 +258,6 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         snackbar = newSnackbar;
     }
 
-    @Override
     protected void onShowCloudAccountWarning() {
         if (snackbar != null && snackbar.isShown()) {
             Timber.d("NOT showing Cloud account warning: existing snackbar.");

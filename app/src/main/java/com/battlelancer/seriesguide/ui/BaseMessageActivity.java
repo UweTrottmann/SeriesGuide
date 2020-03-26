@@ -5,9 +5,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.jobs.FlagJob;
-import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import org.greenrobot.eventbus.EventBus;
@@ -75,18 +73,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
         ServiceActiveEvent event = EventBus.getDefault().getStickyEvent(ServiceActiveEvent.class);
         handleServiceActiveEvent(event);
-
-        // TODO Move to BaseTopActivity?
-        if (Utils.hasAccessToX(this) && HexagonSettings.shouldValidateAccount(this)) {
-            onShowCloudAccountWarning();
-        }
-    }
-
-    /**
-     * Implementers may choose to show a warning that Cloud is not signed in.
-     */
-    protected void onShowCloudAccountWarning() {
-        // do nothing
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
