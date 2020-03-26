@@ -181,6 +181,12 @@ class TvdbEpisodeTools constructor(
             throw TvdbException("getEpisodes", e)
         }
 
+        if (response.code() == 404) {
+            // Special case for TheTVDB: no results.
+            return EpisodesResponse()
+                .also { it.data = emptyList() }
+        }
+
         Errors.throwAndReportIfNotSuccessfulTvdb("getEpisodes", response.raw())
 
         return response.body()!!
