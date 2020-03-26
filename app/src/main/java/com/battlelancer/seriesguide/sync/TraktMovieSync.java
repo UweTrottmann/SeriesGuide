@@ -325,30 +325,34 @@ public class TraktMovieSync {
             return false; // Fail, no connection is available.
         }
 
-        // Build list of collected, watchlisted or watched movies to upload.
-        List<SyncMovie> moviesToCollect = convertToSyncMovieList(toCollectOnTrakt);
-        List<SyncMovie> moviesToWatchlist = convertToSyncMovieList(toWatchlistOnTrakt);
-        List<SyncMovie> moviesToSetWatched = convertToSyncMovieList(toSetWatchedOnTrakt);
-
         // Upload.
         String action = "";
         SyncItems items = new SyncItems();
         Response<SyncResponse> response = null;
+
         try {
-            if (moviesToCollect.size() > 0) {
+            if (toCollectOnTrakt.size() > 0) {
+                List<SyncMovie> moviesToCollect =
+                        convertToSyncMovieList(toCollectOnTrakt);
                 action = "add movies to collection";
                 items.movies(moviesToCollect);
                 response = traktSync.addItemsToCollection(items).execute();
             }
+
             if (response == null || response.isSuccessful()) {
-                if (moviesToWatchlist.size() > 0) {
+                if (toWatchlistOnTrakt.size() > 0) {
+                    List<SyncMovie> moviesToWatchlist =
+                            convertToSyncMovieList(toWatchlistOnTrakt);
                     action = "add movies to watchlist";
                     items.movies(moviesToWatchlist);
                     response = traktSync.addItemsToWatchlist(items).execute();
                 }
             }
+
             if (response == null || response.isSuccessful()) {
-                if (moviesToSetWatched.size() > 0) {
+                if (toSetWatchedOnTrakt.size() > 0) {
+                    List<SyncMovie> moviesToSetWatched =
+                            convertToSyncMovieList(toSetWatchedOnTrakt);
                     // Note: not setting a watched date (because not having one),
                     // so Trakt will use the movie release date.
                     action = "add movies to watched history";
@@ -369,7 +373,7 @@ public class TraktMovieSync {
         }
 
         Timber.d("uploadLists: success, uploaded %s to collection, %s to watchlist, %s set watched",
-                moviesToCollect.size(), moviesToWatchlist.size(), moviesToSetWatched.size());
+                toCollectOnTrakt.size(), toWatchlistOnTrakt.size(), toSetWatchedOnTrakt.size());
         return true;
     }
 
