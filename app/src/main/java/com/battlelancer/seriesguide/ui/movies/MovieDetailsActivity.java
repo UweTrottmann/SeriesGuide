@@ -41,7 +41,6 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
 
         setContentView(R.layout.activity_movie);
         setupActionBar();
-        setupNavDrawer();
 
         if (getIntent().getExtras() == null) {
             finish();
