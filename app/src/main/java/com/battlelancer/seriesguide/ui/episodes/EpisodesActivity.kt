@@ -81,7 +81,6 @@ class EpisodesActivity : BaseNavDrawerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_episodes)
-        setupNavDrawer()
         setupActionBar()
 
         // if coming from a notification, set last cleared time
