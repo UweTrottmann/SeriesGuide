@@ -121,6 +121,10 @@ public class TraktMovieSync {
             if (merging) {
                 // Mark movie for upload if missing from Trakt collection or watchlist
                 // or if not watched on Trakt.
+                // Note: If watches were removed on Trakt in the meanwhile, this would re-add them.
+                // But this should be the exception and not losing watches should be the
+                // desired behavior for most users.
+
                 if (localMovie.getInCollection() && !inCollectionOnTrakt) {
                     toCollectOnTrakt.add(tmdbId);
                 }
