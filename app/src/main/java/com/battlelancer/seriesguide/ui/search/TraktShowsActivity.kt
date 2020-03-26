@@ -13,7 +13,6 @@ class TraktShowsActivity : BaseNavDrawerActivity(), AddShowDialogFragment.OnAddS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trakt_shows)
-        setupNavDrawer()
 
         val link = TraktShowsLink.fromId(intent.getIntExtra(EXTRA_LINK, -1))
 
