@@ -38,6 +38,10 @@ public interface MovieHelper {
     List<SgMovieFlags> getMoviesOnListsOrWatched();
 
     @Query("SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched "
+            + "FROM movies")
+    List<SgMovieFlags> getMovieFlags();
+
+    @Query("SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched "
             + "FROM movies WHERE movies_tmdbid=:tmdbId")
     SgMovieFlags getMovieFlags(int tmdbId);
 
