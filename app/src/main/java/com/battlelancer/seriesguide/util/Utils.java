@@ -153,7 +153,16 @@ public class Utils {
      * Check if this is a build for the Amazon app store.
      */
     public static boolean isAmazonVersion() {
+        //noinspection ConstantConditions Changes depending on flavor build.
         return "amazon".equals(BuildConfig.FLAVOR);
+    }
+
+    public static Intent getBillingActivityIntent(Context context) {
+        if (Utils.isAmazonVersion()) {
+           return new Intent(context, AmazonBillingActivity.class);
+        } else {
+            return new Intent(context, BillingActivity.class);
+        }
     }
 
     /**

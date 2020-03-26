@@ -27,11 +27,11 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager;
+import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.ViewTools;
@@ -249,7 +249,10 @@ public class ShowsFragment extends Fragment {
                 break;
             }
             case SIGN_IN: {
-                ((BaseNavDrawerActivity) getActivity()).openNavDrawer();
+                startActivity(new Intent(getActivity(), MoreOptionsActivity.class));
+                // Launching a top activity, adjust animation to match.
+                requireActivity().overridePendingTransition(
+                        R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg);
                 break;
             }
             case RESTORE_BACKUP: {

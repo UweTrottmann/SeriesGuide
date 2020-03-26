@@ -55,7 +55,7 @@ public class ListsActivity extends BaseTopActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs_drawer);
         setupActionBar();
-        setupNavDrawer();
+        setupBottomNavigation(R.id.navigation_item_lists);
 
         setupViews(savedInstanceState);
         setupSyncProgressBar(R.id.progressBarTabs);
@@ -84,13 +84,6 @@ public class ListsActivity extends BaseTopActivity {
         if (savedInstanceState == null) {
             viewPager.setCurrentItem(DisplaySettings.getLastListsTabPosition(this), false);
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        setDrawerSelectedItem(R.id.navigation_item_lists);
     }
 
     @Override

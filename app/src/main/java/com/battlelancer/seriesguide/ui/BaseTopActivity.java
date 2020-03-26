@@ -18,20 +18,28 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.backend.HexagonTools;
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.dataliberation.BackupSettings;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.sync.AccountUtils;
+import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
+import com.battlelancer.seriesguide.ui.stats.StatsActivity;
+import com.battlelancer.seriesguide.util.Utils;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import timber.log.Timber;
 
 /**
- * Activities at the top of the navigation hierarchy, display the nav drawer upon pressing the
- * up/home action bar button.
- *
- * <p>Also provides support for an optional sync progress bar (see {@link
+ * Activities at the top of the navigation hierarchy, displaying a bottom navigation bar.
+ * Implementers must set it up with {@link #setupBottomNavigation(int)}.
+ * <p>
+ * They should also override {@link #getSnackbarParentView()} and supply a CoordinatorLayout.
+ * It is used to show snack bars for important warnings (e.g. auto backup failed, Cloud signed out).
+ * <p>
+ * Also provides support for an optional sync progress bar (see {@link
  * #setupSyncProgressBar(int)}).
  */
-public abstract class BaseTopActivity extends BaseNavDrawerActivity {
+public abstract class BaseTopActivity extends BaseMessageActivity {
 
     private View syncProgressBar;
     private Object syncObserverHandle;
@@ -42,17 +50,65 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(false);
         }
     }
 
-    @Override
-    public void setupNavDrawer() {
-        super.setupNavDrawer();
+    public void setupBottomNavigation(@IdRes int selectedItemId) {
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
+        bottomNav.setSelectedItemId(selectedItemId);
+        bottomNav.setOnNavigationItemSelectedListener(item -> {
+            onNavItemClick(item.getItemId());
+            return false; // Do not change selected item.
+        });
+    }
 
-        // show a drawer indicator
-        setDrawerIndicatorEnabled();
+    private void onNavItemClick(int itemId) {
+        Intent launchIntent = null;
+
+        switch (itemId) {
+            case R.id.navigation_item_shows:
+                if (this instanceof ShowsActivity) {
+                    break;
+                }
+                launchIntent = new Intent(this, ShowsActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
+                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                break;
+            case R.id.navigation_item_lists:
+                if (this instanceof ListsActivity) {
+                    break;
+                }
+                launchIntent = new Intent(this, ListsActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                break;
+            case R.id.navigation_item_movies:
+                if (this instanceof MoviesActivity) {
+                    break;
+                }
+                launchIntent = new Intent(this, MoviesActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                break;
+            case R.id.navigation_item_stats:
+                if (this instanceof StatsActivity) {
+                    break;
+                }
+                launchIntent = new Intent(this, StatsActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                break;
+            case R.id.navigation_item_more:
+                if (this instanceof MoreOptionsActivity) {
+                    break;
+                }
+                launchIntent = new Intent(this, MoreOptionsActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                break;
+        }
+
+        if (launchIntent != null) {
+            startActivity(launchIntent);
+            overridePendingTransition(R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg);
+        }
     }
 
     /**
@@ -62,6 +118,15 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
     protected void setupSyncProgressBar(@IdRes int progressBarId) {
         syncProgressBar = findViewById(progressBarId);
         syncProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (Utils.hasAccessToX(this) && HexagonSettings.shouldValidateAccount(this)) {
+            onShowCloudAccountWarning();
+        }
     }
 
     @Override
@@ -129,8 +194,7 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
                     : AppCompatDelegate.MODE_NIGHT_YES);
             return true;
         }
-        // check if we should toggle the navigation drawer (app icon was touched)
-        return toggleDrawer(item) || super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -194,7 +258,6 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
         snackbar = newSnackbar;
     }
 
-    @Override
     protected void onShowCloudAccountWarning() {
         if (snackbar != null && snackbar.isShown()) {
             Timber.d("NOT showing Cloud account warning: existing snackbar.");

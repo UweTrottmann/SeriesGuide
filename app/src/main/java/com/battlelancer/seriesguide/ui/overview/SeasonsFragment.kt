@@ -32,7 +32,7 @@ import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity
+import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
@@ -169,7 +169,7 @@ class SeasonsFragment : Fragment() {
      * Updates the total remaining episodes counter, updates season counters after episode actions.
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event: BaseNavDrawerActivity.ServiceCompletedEvent) {
+    fun onEvent(event: BaseMessageActivity.ServiceCompletedEvent) {
         if (event.flagJob == null || !event.isSuccessful) {
             return  // no changes applied
         }

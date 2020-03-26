@@ -152,6 +152,8 @@
 
         <!-- Settings -->
         <activity
+            android:name="com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity" />
+        <activity
             android:name="com.battlelancer.seriesguide.ui.SeriesGuidePreferences"
             android:label="@string/preferences">
             <intent-filter>
@@ -220,9 +222,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
-        <!-- Chrome custom tabs -->
-        <receiver android:name="com.battlelancer.seriesguide.service.FeedbackBroadcastReceiver" />
 
         <!-- List widget configuration -->
         <activity

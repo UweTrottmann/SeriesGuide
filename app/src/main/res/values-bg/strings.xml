@@ -5,11 +5,10 @@
     <string name="lists">Списъци</string>
     <string name="movies">Филми</string>
     <string name="statistics">Статистика</string>
+    <string name="navigation_more">More</string>
     <string name="search">Търсене</string>
     <string name="preferences">Настройки</string>
     <string name="help">Помощ</string>
-    <string name="help_and_feedback">Помощ &amp; Обратна връзка</string>
-    <string name="drawer_open">Отвори навигационния панел</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">ТВ предаване</string>
@@ -335,7 +334,6 @@
     <string name="action_open_in_browser">Отвори в браузър</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Основни</string>
-    <string name="prefs_category_sharing">Услуги</string>
     <string name="prefs_category_advanced">Разширени</string>
     <string name="prefs_category_about">Относно</string>
     <string name="pref_onlyfuture">Няма излъчени епизоди</string>

@@ -5,15 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity
+import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.util.TaskManager
 
-class TraktShowsActivity : BaseNavDrawerActivity(), AddShowDialogFragment.OnAddShowListener {
+class TraktShowsActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trakt_shows)
-        setupNavDrawer()
 
         val link = TraktShowsLink.fromId(intent.getIntExtra(EXTRA_LINK, -1))
 

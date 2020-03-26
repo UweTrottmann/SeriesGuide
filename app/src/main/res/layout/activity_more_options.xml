@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.preferences.MoreOptionsActivity">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayoutMoreOptions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/toolbar" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            style="@style/Page.Centered"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textViewNoMoreUpdates"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/no_more_updates"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold.Accent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/containerTrakt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:focusable="true"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/large_padding"
+                    android:paddingTop="@dimen/default_padding"
+                    android:paddingEnd="@dimen/large_padding"
+                    android:paddingBottom="@dimen/default_padding"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewNoMoreUpdates">
+
+                    <TextView
+                        android:id="@+id/textViewTrakt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/trakt"
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle2" />
+
+                    <TextView
+                        android:id="@+id/textViewTraktAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                        tools:text="@string/connect_trakt" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/containerCloud"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:focusable="true"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/large_padding"
+                    android:paddingTop="@dimen/default_padding"
+                    android:paddingEnd="@dimen/large_padding"
+                    android:paddingBottom="@dimen/default_padding"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/containerTrakt">
+
+                    <TextView
+                        android:id="@+id/textViewCloud"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hexagon"
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle2" />
+
+                    <TextView
+                        android:id="@+id/textViewCloudAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                        tools:text="@string/hexagon_signin" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/buttonSupportTheApp"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/action_upgrade"
+                    app:icon="@drawable/ic_star_black_24dp"
+                    app:iconGravity="start"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/containerCloud" />
+
+                <TextView
+                    android:id="@+id/textViewThankYouSupporters"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="72dp"
+                    android:paddingBottom="@dimen/inline_padding"
+                    android:text="@string/upgrade_success"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold.Accent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonSupportTheApp" />
+
+                <Button
+                    android:id="@+id/buttonSettings"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:text="@string/preferences"
+                    app:icon="@drawable/ic_settings_dark_24dp"
+                    app:iconGravity="start"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewThankYouSupporters" />
+
+                <Button
+                    android:id="@+id/buttonHelp"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:text="@string/help"
+                    app:icon="@drawable/ic_help_white_24dp"
+                    app:iconGravity="start"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonSettings" />
+
+                <Button
+                    android:id="@+id/buttonFeedback"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:text="@string/feedback"
+                    app:icon="@drawable/ic_checkin_black_24dp"
+                    app:iconGravity="start"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonHelp" />
+
+                <Button
+                    android:id="@+id/buttonDebugView"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:text="@string/debug_view"
+                    app:icon="@drawable/ic_extension_black_24dp"
+                    app:iconGravity="start"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonFeedback" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_navigation_menu" />
+
+</LinearLayout>
+

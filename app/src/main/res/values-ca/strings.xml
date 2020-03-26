@@ -5,11 +5,10 @@
     <string name="lists">Llistes</string>
     <string name="movies">Peŀlícules</string>
     <string name="statistics">Estadístiques</string>
+    <string name="navigation_more">More</string>
     <string name="search">Cerca</string>
     <string name="preferences">Configuració</string>
     <string name="help">Ajuda</string>
-    <string name="help_and_feedback">Ajuda i comentaris</string>
-    <string name="drawer_open">Obre el calaix de navegació</string>
     <string name="no_more_updates">SeriesGuide no rebrà més actualitzacions per aquesta versió d\'Android.</string>
     <!-- Media items -->
     <string name="show">Sèrie</string>
@@ -335,7 +334,6 @@
     <string name="action_open_in_browser">Obre al navegador</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Bàsics</string>
-    <string name="prefs_category_sharing">Serveis</string>
     <string name="prefs_category_advanced">Avançat</string>
     <string name="prefs_category_about">Quant a</string>
     <string name="pref_onlyfuture">Amaga episodis emesos</string>

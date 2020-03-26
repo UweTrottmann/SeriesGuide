@@ -2,7 +2,6 @@
 <resources>
 
     <style name="Theme.SeriesGuide.DayNight" parent="Theme.SeriesGuide.Dark" />
-    <style name="Theme.SeriesGuide.DayNight.Drawer" parent="Theme.SeriesGuide.Dark.Drawer" />
     <style name="Theme.SeriesGuide.DayNight.Immersive" parent="Theme.SeriesGuide.Dark.Immersive" />
 
 </resources>

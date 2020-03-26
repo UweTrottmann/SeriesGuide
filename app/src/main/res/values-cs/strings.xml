@@ -5,11 +5,10 @@
     <string name="lists">Seznamy</string>
     <string name="movies">Filmy</string>
     <string name="statistics">Statistiky</string>
+    <string name="navigation_more">More</string>
     <string name="search">Hledat</string>
     <string name="preferences">Nastavení</string>
     <string name="help">Nápověda</string>
-    <string name="help_and_feedback">Pomoc a připomínky</string>
-    <string name="drawer_open">Otevřít záložky aplikace</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">Seriál</string>
@@ -351,7 +350,6 @@
     <string name="action_open_in_browser">Otevřít v prohlížečí</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Základní</string>
-    <string name="prefs_category_sharing">Služby</string>
     <string name="prefs_category_advanced">Pokročilé</string>
     <string name="prefs_category_about">O aplikaci</string>
     <string name="pref_onlyfuture">Žádné odvysílané epizody</string>

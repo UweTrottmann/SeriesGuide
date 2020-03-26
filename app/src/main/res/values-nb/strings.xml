@@ -5,11 +5,10 @@
     <string name="lists">Lister</string>
     <string name="movies">Filmer</string>
     <string name="statistics">Statistikk</string>
+    <string name="navigation_more">More</string>
     <string name="search">Søk</string>
     <string name="preferences">Innstillinger</string>
     <string name="help">Hjelp</string>
-    <string name="help_and_feedback">Hjelp og tilbakemelding</string>
-    <string name="drawer_open">Åpne navigasjonsskuff</string>
     <string name="no_more_updates">SeriesGuide vil ikke motta flere oppdateringer for denne versjonen av Android.</string>
     <!-- Media items -->
     <string name="show">Serie</string>
@@ -335,7 +334,6 @@
     <string name="action_open_in_browser">Åpne i nettleser</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Grunnleggende</string>
-    <string name="prefs_category_sharing">Tjenester</string>
     <string name="prefs_category_advanced">Avansert</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Ingen sendte episoder</string>

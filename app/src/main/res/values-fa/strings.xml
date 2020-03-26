@@ -5,11 +5,10 @@
     <string name="lists">فهرست‌ها</string>
     <string name="movies">فیلم‌ها</string>
     <string name="statistics">آمار</string>
+    <string name="navigation_more">More</string>
     <string name="search">جستجو</string>
     <string name="preferences">تنظیمات</string>
     <string name="help">راه‌نما</string>
-    <string name="help_and_feedback">راه‌نما و بازخورد</string>
-    <string name="drawer_open">باز کردن کشو ی ناوبری</string>
     <string name="no_more_updates">SeriesGuide بیشتر برای این نسخه از آندروید به روز رسانی را دریافت خواهید کرد.</string>
     <!-- Media items -->
     <string name="show">نمایش</string>
@@ -335,7 +334,6 @@
     <string name="action_open_in_browser">گشودن در مرورگر</string>
     <!-- Settings -->
     <string name="prefs_category_basic">پایه‌ها</string>
-    <string name="prefs_category_sharing">خدمات</string>
     <string name="prefs_category_advanced">پیش‌رفته</string>
     <string name="prefs_category_about">درباره ما</string>
     <string name="pref_onlyfuture">نادیده گرفتن قسمت‌های پخش شده</string>

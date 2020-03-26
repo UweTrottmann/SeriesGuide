@@ -6,11 +6,10 @@
     <string name="lists">Lists</string>
     <string name="movies">Movies</string>
     <string name="statistics">Statistics</string>
+    <string name="navigation_more">More</string>
     <string name="search">Search</string>
     <string name="preferences">Settings</string>
     <string name="help">Help</string>
-    <string name="help_and_feedback">Help &amp; Feedback</string>
-    <string name="drawer_open">Open navigation drawer</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
 
     <!-- Media items -->
@@ -385,7 +384,6 @@
 
     <!-- Settings -->
     <string name="prefs_category_basic">Basics</string>
-    <string name="prefs_category_sharing">Services</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">About</string>
     <string name="pref_onlyfuture">No aired episodes</string>

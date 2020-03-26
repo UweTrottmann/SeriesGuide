@@ -46,7 +46,7 @@ import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktRatingsTask;
 import com.battlelancer.seriesguide.traktapi.TraktTools;
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
+import com.battlelancer.seriesguide.ui.BaseMessageActivity;
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity;
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
@@ -193,8 +193,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     public void onResume() {
         super.onResume();
 
-        BaseNavDrawerActivity.ServiceActiveEvent event = EventBus.getDefault()
-                .getStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent.class);
+        BaseMessageActivity.ServiceActiveEvent event = EventBus.getDefault()
+                .getStickyEvent(BaseMessageActivity.ServiceActiveEvent.class);
         setEpisodeButtonsEnabled(event == null);
 
         EventBus.getDefault().register(this);
@@ -303,12 +303,12 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventEpisodeTask(BaseNavDrawerActivity.ServiceActiveEvent event) {
+    public void onEventEpisodeTask(BaseMessageActivity.ServiceActiveEvent event) {
         setEpisodeButtonsEnabled(false);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventEpisodeTask(BaseNavDrawerActivity.ServiceCompletedEvent event) {
+    public void onEventEpisodeTask(BaseMessageActivity.ServiceCompletedEvent event) {
         setEpisodeButtonsEnabled(true);
     }
 

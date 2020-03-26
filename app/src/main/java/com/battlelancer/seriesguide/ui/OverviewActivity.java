@@ -32,7 +32,7 @@ import org.greenrobot.eventbus.ThreadMode;
 /**
  * Hosts an {@link OverviewFragment}.
  */
-public class OverviewActivity extends BaseNavDrawerActivity {
+public class OverviewActivity extends BaseMessageActivity {
 
     public static final int SHOW_LOADER_ID = 100;
     public static final int SHOW_CREDITS_LOADER_ID = 101;
@@ -62,7 +62,6 @@ public class OverviewActivity extends BaseNavDrawerActivity {
         setContentView(R.layout.activity_overview);
         ButterKnife.bind(this);
         setupActionBar();
-        setupNavDrawer();
 
         showTvdbId = getIntent().getIntExtra(EXTRA_INT_SHOW_TVDBID, -1);
         if (showTvdbId < 0 || !DBUtils.isShowExists(this, showTvdbId)) {

@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.cloud.tools.endpoints-framework-client'
 apply plugin: 'io.fabric'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -31,9 +32,9 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [
-                        "eventBusIndex" : "com.battlelancer.seriesguide.SgEventBusIndex",
+                        "eventBusIndex"      : "com.battlelancer.seriesguide.SgEventBusIndex",
                         "room.schemaLocation": "$projectDir/schemas".toString(),
-                        "room.incremental": "true"
+                        "room.incremental"   : "true"
                 ]
             }
         }
@@ -91,7 +92,7 @@ android {
 
     signingConfigs {
         release {
-            if(rootProject.file('keystore.properties').exists()) {
+            if (rootProject.file('keystore.properties').exists()) {
                 def props = new Properties()
                 props.load(new FileInputStream(rootProject.file('keystore.properties')))
 
@@ -113,7 +114,7 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            if(rootProject.file('keystore.properties').exists()) {
+            if (rootProject.file('keystore.properties').exists()) {
                 signingConfig signingConfigs.release
             }
         }
@@ -192,12 +193,12 @@ dependencies {
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-    implementation ("com.uwetrottmann.androidutils:androidutils:${versions.androidUtils}") {
+    implementation("com.uwetrottmann.androidutils:androidutils:${versions.androidUtils}") {
         exclude group: 'com.android.support'
     }
     implementation 'com.uwetrottmann.photoview:library:1.2.4'
     implementation "com.uwetrottmann.thetvdb-java:thetvdb-java:${versions.thetvdb}"
-    implementation ("com.uwetrottmann.trakt5:trakt-java:${versions.trakt}") {
+    implementation("com.uwetrottmann.trakt5:trakt-java:${versions.trakt}") {
         exclude group: 'org.threeten', module: 'threetenbp' // using ThreeTenABP instead
     }
 
@@ -242,10 +243,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
     // Assertions
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation ('androidx.test.ext:truth:1.2.0') {
+    androidTestImplementation('androidx.test.ext:truth:1.2.0') {
         exclude group: 'com.google.truth' // include manually to control conflicting deps
     }
-    androidTestImplementation ("com.google.truth:truth:${versions.truth}") {
+    androidTestImplementation("com.google.truth:truth:${versions.truth}") {
         exclude group: 'org.checkerframework' // from guava, not needed at runtime
         exclude group: 'com.google.errorprone' // from guava, not needed at runtime
     }

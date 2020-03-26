@@ -5,11 +5,10 @@
     <string name="lists">सूचियाँ</string>
     <string name="movies">फ़िल्में</string>
     <string name="statistics">आंकड़े</string>
+    <string name="navigation_more">More</string>
     <string name="search">खोजें</string>
     <string name="preferences">सेटिंग्स</string>
     <string name="help">सहायता</string>
-    <string name="help_and_feedback">सहायता और सुझाव</string>
-    <string name="drawer_open">नेविगेशन ड्रावर खोले</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">धारावाहिक</string>
@@ -335,7 +334,6 @@
     <string name="action_open_in_browser">Open in browser</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Basics</string>
-    <string name="prefs_category_sharing">Services</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">About</string>
     <string name="pref_onlyfuture">No aired episodes</string>

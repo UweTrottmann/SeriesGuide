@@ -5,11 +5,10 @@
     <string name="lists">清單</string>
     <string name="movies">電影</string>
     <string name="statistics">統計</string>
+    <string name="navigation_more">More</string>
     <string name="search">搜尋</string>
     <string name="preferences">設置</string>
     <string name="help">說明</string>
-    <string name="help_and_feedback">幫助與意見反饋</string>
-    <string name="drawer_open">開啟側邊選單</string>
     <string name="no_more_updates">此版本的 Android 將不會收到 SeriesGuide 的任何更新。</string>
     <!-- Media items -->
     <string name="show">節目</string>
@@ -327,7 +326,6 @@
     <string name="action_open_in_browser">於瀏覽器中開啟</string>
     <!-- Settings -->
     <string name="prefs_category_basic">基本資料</string>
-    <string name="prefs_category_sharing">服務</string>
     <string name="prefs_category_advanced">進階</string>
     <string name="prefs_category_about">關於本軟體</string>
     <string name="pref_onlyfuture">無已播出集數</string>

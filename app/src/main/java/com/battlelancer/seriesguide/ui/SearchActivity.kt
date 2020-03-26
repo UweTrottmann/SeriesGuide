@@ -49,7 +49,7 @@ import kotlin.coroutines.CoroutineContext
  * Handles search intents and displays a [EpisodeSearchFragment] when needed or redirects
  * directly to an [EpisodesActivity].
  */
-class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
+class SearchActivity : BaseMessageActivity(), CoroutineScope,
     AddShowDialogFragment.OnAddShowListener, SearchTriggerListener {
 
     private lateinit var job: Job
@@ -78,7 +78,6 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
         job = Job()
 
         setupActionBar()
-        setupNavDrawer()
 
         setupViews(savedInstanceState == null)
 

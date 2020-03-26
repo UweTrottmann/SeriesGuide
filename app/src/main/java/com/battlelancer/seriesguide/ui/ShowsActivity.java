@@ -86,7 +86,7 @@ public class ShowsActivity extends BaseTopActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shows);
         setupActionBar();
-        setupNavDrawer();
+        setupBottomNavigation(R.id.navigation_item_shows);
 
         // Set up a sync account if needed
         if (!AccountUtils.isAccountExists(this)) {
@@ -252,13 +252,6 @@ public class ShowsActivity extends BaseTopActivity implements
         BillingViewModel billingViewModel = ViewModelProviders.of(this).get(BillingViewModel.class);
         billingViewModel.getEntitlementRevokedEvent()
                 .observe(this, aVoid -> BillingActivity.showExpiredNotification(this));
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        setDrawerSelectedItem(R.id.navigation_item_shows);
     }
 
     @Override
