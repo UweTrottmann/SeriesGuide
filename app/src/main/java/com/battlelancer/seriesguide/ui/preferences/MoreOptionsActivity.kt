@@ -11,12 +11,15 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.CloudSetupActivity
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.databinding.ActivityMoreOptionsBinding
+import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.BaseTopActivity
+import com.battlelancer.seriesguide.ui.DebugViewFragment
 import com.battlelancer.seriesguide.ui.HelpActivity
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.safeShow
 import com.uwetrottmann.seriesguide.customtabs.CustomTabsHelper
 
 /**
@@ -76,6 +79,11 @@ class MoreOptionsActivity : BaseTopActivity() {
         binding.buttonFeedback.setOnClickListener {
             startActivity(HelpActivity.getFeedbackEmailIntent(this))
         }
+        binding.buttonDebugView.setOnClickListener {
+            if (AppSettings.isUserDebugModeEnabled(this)) {
+                DebugViewFragment().safeShow(supportFragmentManager, "debugViewDialog")
+            }
+        }
     }
 
     override fun onStart() {
@@ -99,6 +107,9 @@ class MoreOptionsActivity : BaseTopActivity() {
 
         // Update supporter status.
         binding.textViewThankYouSupporters.isGone = !Utils.hasAccessToX(this)
+
+        // Show debug view button if debug mode is on.
+        binding.buttonDebugView.isGone = !AppSettings.isUserDebugModeEnabled(this)
     }
 
     override fun getSnackbarParentView(): View {

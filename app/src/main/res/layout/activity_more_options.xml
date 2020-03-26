@@ -166,6 +166,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonHelp" />
 
+                <Button
+                    android:id="@+id/buttonDebugView"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:text="@string/debug_view"
+                    app:icon="@drawable/ic_extension_black_24dp"
+                    app:iconGravity="start"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonFeedback" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
