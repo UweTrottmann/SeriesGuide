@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.dataliberation.BackupSettings;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.sync.AccountUtils;
+import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
 import com.battlelancer.seriesguide.ui.stats.StatsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -99,8 +100,11 @@ public abstract class BaseTopActivity extends BaseNavDrawerActivity {
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 break;
             case R.id.navigation_item_more:
-                // TODO Replace with MoreOptionsActivity.
-                launchIntent = new Intent(this, SeriesGuidePreferences.class);
+                if (this instanceof MoreOptionsActivity) {
+                    break;
+                }
+                launchIntent = new Intent(this, MoreOptionsActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 break;
         }
 

@@ -152,6 +152,8 @@
 
         <!-- Settings -->
         <activity
+            android:name="com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity" />
+        <activity
             android:name="com.battlelancer.seriesguide.ui.SeriesGuidePreferences"
             android:label="@string/preferences">
             <intent-filter>
