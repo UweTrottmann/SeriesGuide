@@ -78,7 +78,6 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
         job = Job()
 
         setupActionBar()
-        setupNavDrawer()
 
         setupViews(savedInstanceState == null)
 
