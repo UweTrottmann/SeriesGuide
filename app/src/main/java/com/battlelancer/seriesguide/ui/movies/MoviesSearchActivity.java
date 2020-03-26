@@ -42,7 +42,6 @@ public class MoviesSearchActivity extends BaseNavDrawerActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies_search);
-        setupNavDrawer();
 
         int linkId = getIntent().getIntExtra(EXTRA_ID_LINK,
                 MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT.id);
