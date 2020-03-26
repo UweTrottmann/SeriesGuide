@@ -1,7 +1,9 @@
 package com.battlelancer.seriesguide.ui.preferences
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.browser.customtabs.CustomTabsIntent
@@ -40,7 +42,12 @@ class MoreOptionsActivity : BaseTopActivity() {
         configureViews()
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     private fun configureViews() {
+        // Shows a no updates info text if the device is running a version of Android
+        // that will not be supported by a future version of this app.
+        binding.textViewNoMoreUpdates.isGone = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+
         binding.containerCloud.setOnClickListener {
             startActivity(Intent(this, CloudSetupActivity::class.java))
         }
