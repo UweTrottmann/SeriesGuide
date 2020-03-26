@@ -12,6 +12,17 @@ Version 54
 ----------
 *in development*
 
+#### 54-beta2
+*2020-03-26*
+
+* 🌟 Replaced the navigation drawer with an easier to use and discover bottom navigation bar.
+* 🔧 Removed unlock and services settings that are now shown under More.
+* 🔧 When connecting Trakt, do not clear movies that are only watched on the device, instead upload
+  them. Trakt will set them as watched on their release date.
+* 🔨 Support adding and updating shows without episodes (e.g. upcoming shows).
+* 🔨 The last auto backup date was off by a month.
+* 📝 Latest translations from crowdin.
+
 #### 54-beta1
 *2020-03-20*
 
