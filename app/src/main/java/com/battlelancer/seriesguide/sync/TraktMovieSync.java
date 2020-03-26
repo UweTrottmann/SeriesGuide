@@ -3,10 +3,11 @@ package com.battlelancer.seriesguide.sync;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
-import android.database.Cursor;
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.model.SgMovieFlags;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
@@ -51,8 +52,7 @@ public class TraktMovieSync {
      * removed afterwards.
      *
      * <p> When syncing the first time, will upload any local movies missing from trakt collection
-     * or watchlist instead of removing them locally. Does NOT upload watched movies missing from
-     * trakt (trakt is considered the truth).
+     * or watchlist or are not watched on Trakt instead of removing them locally.
      *
      * <p> Performs <b>synchronous network access</b>, make sure to run this on a background
      * thread.
@@ -105,6 +105,7 @@ public class TraktMovieSync {
         }
         Set<Integer> moviesNotOnTraktCollection = new HashSet<>(); // only when merging
         Set<Integer> moviesNotOnTraktWatchlist = new HashSet<>(); // only when merging
+        Set<Integer> moviesNotWatchedOnTrakt = new HashSet<>(); // only when merging
         ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         for (Integer tmdbId : localMovies) {
             // is local movie in trakt collection, watchlist or watched?
@@ -113,39 +114,44 @@ public class TraktMovieSync {
             boolean isWatched = watched.remove(tmdbId);
 
             if (merging) {
-                // maybe upload movie if missing from trakt collection or watchlist
-                // but not if watched (considering trakt truth on watched state)
+                // Maybe upload movie if missing from Trakt collection or watchlist
+                // or if not watched on Trakt.
                 if (!inCollection) {
                     moviesNotOnTraktCollection.add(tmdbId);
                 }
                 if (!inWatchlist) {
                     moviesNotOnTraktWatchlist.add(tmdbId);
                 }
-                // add to local collection or watchlist, but do NOT remove
-                ContentProviderOperation.Builder builder = ContentProviderOperation
-                        .newUpdate(SeriesGuideContract.Movies.buildMovieUri(tmdbId));
-                if (inCollection || inWatchlist) {
+                if (!isWatched) {
+                    moviesNotWatchedOnTrakt.add(tmdbId);
+                }
+                // Add to local collection or watchlist, but do NOT remove.
+                // Mark as watched, but do NOT remove watched flag.
+                // Will take care of removing unneeded (not watched or in any list) movies
+                // in later sync step.
+                if (inCollection || inWatchlist || isWatched) {
+                    ContentProviderOperation.Builder builder = ContentProviderOperation
+                            .newUpdate(Movies.buildMovieUri(tmdbId));
                     if (inCollection) {
-                        builder.withValue(SeriesGuideContract.Movies.IN_COLLECTION, true);
+                        builder.withValue(Movies.IN_COLLECTION, true);
                     }
                     if (inWatchlist) {
-                        builder.withValue(SeriesGuideContract.Movies.IN_WATCHLIST, true);
+                        builder.withValue(Movies.IN_WATCHLIST, true);
                     }
+                    if (isWatched) {
+                        builder.withValue(Movies.WATCHED, true);
+                    }
+                    batch.add(builder.build());
                 }
-                // update watched state
-                // will take care of removing unneeded (not watched or in any list) movies
-                // in later sync step
-                builder.withValue(SeriesGuideContract.Movies.WATCHED, isWatched);
-                batch.add(builder.build());
             } else {
                 // mirror trakt collection, watchlist and watched flag
                 // will take care of removing unneeded (not watched or in any list) movies
                 // in later sync step
                 ContentProviderOperation op = ContentProviderOperation
-                        .newUpdate(SeriesGuideContract.Movies.buildMovieUri(tmdbId))
-                        .withValue(SeriesGuideContract.Movies.IN_COLLECTION, inCollection)
-                        .withValue(SeriesGuideContract.Movies.IN_WATCHLIST, inWatchlist)
-                        .withValue(SeriesGuideContract.Movies.WATCHED, isWatched)
+                        .newUpdate(Movies.buildMovieUri(tmdbId))
+                        .withValue(Movies.IN_COLLECTION, inCollection)
+                        .withValue(Movies.IN_WATCHLIST, inWatchlist)
+                        .withValue(Movies.WATCHED, isWatched)
                         .build();
                 batch.add(op);
             }
@@ -164,14 +170,18 @@ public class TraktMovieSync {
         // merge on first run
         if (merging) {
             // upload movies not in trakt collection or watchlist
-            if (!uploadLists(moviesNotOnTraktCollection, moviesNotOnTraktWatchlist)) {
-                return false;
-            } else {
+            if (uploadLists(
+                    moviesNotOnTraktCollection,
+                    moviesNotOnTraktWatchlist,
+                    moviesNotWatchedOnTrakt
+            )) {
                 // set merge successful
                 PreferenceManager.getDefaultSharedPreferences(context)
                         .edit()
                         .putBoolean(TraktSettings.KEY_HAS_MERGED_MOVIES, true)
                         .apply();
+            } else {
+                return false;
             }
         }
 
@@ -273,12 +283,17 @@ public class TraktMovieSync {
     }
 
     /**
-     * Checks if the given movies are in the local collection or watchlist, then uploads them to the
-     * appropriate list(s) on trakt.
+     * Checks if the given movies are in the local collection or watchlist or are watched,
+     * then uploads them to the appropriate list(s) on Trakt.
      */
-    private boolean uploadLists(Set<Integer> moviesNotOnTraktCollection,
-            Set<Integer> moviesNotOnTraktWatchlist) {
-        if (moviesNotOnTraktCollection.size() == 0 && moviesNotOnTraktWatchlist.size() == 0) {
+    private boolean uploadLists(
+            Set<Integer> moviesNotOnTraktCollection,
+            Set<Integer> moviesNotOnTraktWatchlist,
+            Set<Integer> moviesNotWatchedOnTrakt
+    ) {
+        if (moviesNotOnTraktCollection.size() == 0
+                && moviesNotOnTraktWatchlist.size() == 0
+                && moviesNotWatchedOnTrakt.size() == 0) {
             // nothing to upload
             Timber.d("uploadLists: nothing to uploadLists");
             return true;
@@ -289,37 +304,34 @@ public class TraktMovieSync {
             return false;
         }
 
-        // query for movies in lists (excluding movies that are only watched)
-        Cursor moviesInLists = context.getContentResolver()
-                .query(SeriesGuideContract.Movies.CONTENT_URI,
-                        SeriesGuideContract.Movies.PROJECTION_IN_LIST,
-                        SeriesGuideContract.Movies.SELECTION_IN_LIST, null, null);
-        if (moviesInLists == null) {
-            Timber.e("uploadLists: query failed");
-            return false;
-        }
+        List<SgMovieFlags> moviesOnListsOrWatched = SgRoomDatabase.getInstance(context)
+                .movieHelper().getMoviesOnListsOrWatched();
 
-        // build list of collected, watchlisted movies to upload
+        // Build list of collected, watchlisted or watched movies to upload.
         List<SyncMovie> moviesToCollect = new LinkedList<>();
         List<SyncMovie> moviesToWatchlist = new LinkedList<>();
-        while (moviesInLists.moveToNext()) {
-            int tmdbId = moviesInLists.getInt(0);
+        List<SyncMovie> moviesToSetWatched = new LinkedList<>();
 
-            // in local collection, but not on trakt?
-            if (moviesInLists.getInt(1) == 1 && moviesNotOnTraktCollection.contains(tmdbId)) {
-                moviesToCollect.add(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
+        for (SgMovieFlags movie : moviesOnListsOrWatched) {
+            int tmdbId = movie.getTmdbId();
+            SyncMovie syncMovie = new SyncMovie().id(MovieIds.tmdb(tmdbId));
+
+            if (movie.getInCollection()
+                    && moviesNotOnTraktCollection.contains(tmdbId)) {
+                moviesToCollect.add(syncMovie);
             }
-            // in local watchlist, but not on trakt?
-            if (moviesInLists.getInt(2) == 1 && moviesNotOnTraktWatchlist.contains(tmdbId)) {
-                moviesToWatchlist.add(new SyncMovie().id(MovieIds.tmdb(tmdbId)));
+            if (movie.getInWatchlist()
+                    && moviesNotOnTraktWatchlist.contains(tmdbId)) {
+                moviesToWatchlist.add(syncMovie);
+            }
+            if (movie.getWatched()
+                    && moviesNotWatchedOnTrakt.contains(tmdbId)) {
+                moviesToSetWatched.add(syncMovie);
             }
         }
 
-        // clean up
-        moviesInLists.close();
-
         // upload
-        String action = null;
+        String action = "";
         SyncItems items = new SyncItems();
         Response<SyncResponse> response = null;
         try {
@@ -335,6 +347,15 @@ public class TraktMovieSync {
                     response = traktSync.addItemsToWatchlist(items).execute();
                 }
             }
+            if (response == null || response.isSuccessful()) {
+                if (moviesToSetWatched.size() > 0) {
+                    // Note: not setting a watched date (because not having one),
+                    // so Trakt will use the movie release date.
+                    action = "add movies to watched history";
+                    items.movies(moviesToSetWatched);
+                    response = traktSync.addItemsToWatchedHistory(items).execute();
+                }
+            }
         } catch (Exception e) {
             Errors.logAndReport(action, e);
             return false;
@@ -347,8 +368,8 @@ public class TraktMovieSync {
             return false;
         }
 
-        Timber.d("uploadLists: success, uploaded %s to collection, %s to watchlist",
-                moviesToCollect.size(), moviesToWatchlist.size());
+        Timber.d("uploadLists: success, uploaded %s to collection, %s to watchlist, %s set watched",
+                moviesToCollect.size(), moviesToWatchlist.size(), moviesToSetWatched.size());
         return true;
     }
 }
