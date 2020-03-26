@@ -181,7 +181,12 @@ dependencies {
     implementation "com.jakewharton.timber:timber:${versions.timber}"
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.4'
 
+    // Use latest OkHttp.
     implementation "com.squareup.okhttp3:okhttp:${versions.okhttp}"
+    // Use latest retrofit.
+    implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
+
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation ("com.uwetrottmann.androidutils:androidutils:${versions.androidUtils}") {

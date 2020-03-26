@@ -29,5 +29,10 @@ dependencies {
     implementation "com.google.dagger:dagger:${versions.dagger}"
     kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
 
+    // Use latest OkHttp.
+    implementation "com.squareup.okhttp3:okhttp:${versions.okhttp}"
+    // Use latest retrofit.
+    implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
     api "com.uwetrottmann.tmdb2:tmdb-java:${versions.tmdb}"
 }
