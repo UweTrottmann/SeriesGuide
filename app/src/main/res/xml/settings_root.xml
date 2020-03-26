@@ -3,11 +3,6 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Preference
-        app:iconSpaceReserved="false"
-        app:key="com.battlelancer.seriesguide.settings.upgrade"
-        app:title="@string/action_upgrade" />
-
     <SwitchPreferenceCompat
         app:defaultValue="True"
         app:iconSpaceReserved="false"
@@ -31,22 +26,6 @@
         app:iconSpaceReserved="false"
         app:key="screen_basic"
         app:title="@string/prefs_category_advanced" />
-
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="@string/prefs_category_sharing">
-
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="com.battlelancer.seriesguide.settings.cloud"
-            app:title="@string/hexagon" />
-
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="com.battlelancer.seriesguide.settings.trakt"
-            app:title="@string/trakt" />
-
-    </PreferenceCategory>
 
     <PreferenceCategory
         app:iconSpaceReserved="false"

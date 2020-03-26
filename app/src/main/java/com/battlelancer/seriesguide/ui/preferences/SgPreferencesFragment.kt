@@ -25,10 +25,6 @@ import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
-import com.battlelancer.seriesguide.backend.CloudSetupActivity
-import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.billing.BillingActivity
-import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.service.NotificationService
@@ -39,8 +35,6 @@ import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
-import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
-import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragment
@@ -105,35 +99,12 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     private fun updateRootSettings() {
         val hasAccessToX = Utils.hasAccessToX(activity)
 
-        // unlock all link
-        findPreference<Preference>(LINK_KEY_UPGRADE)!!.apply {
-            summary = if (hasAccessToX) getString(R.string.upgrade_success) else null
-        }
-
         // notifications link
         findPreference<Preference>(KEY_SCREEN_NOTIFICATIONS)!!.apply {
             if (hasAccessToX && NotificationSettings.isNotificationsEnabled(activity)) {
                 summary = NotificationSettings.getLatestToIncludeTresholdValue(activity)
             } else {
                 setSummary(R.string.pref_notificationssummary)
-            }
-        }
-
-        // SeriesGuide Cloud link
-        findPreference<Preference>(LINK_KEY_CLOUD)!!.apply {
-            if (hasAccessToX && HexagonSettings.isEnabled(activity)) {
-                summary = HexagonSettings.getAccountName(activity)
-            } else {
-                setSummary(R.string.hexagon_description)
-            }
-        }
-
-        // trakt link
-        findPreference<Preference>(LINK_KEY_TRAKT)!!.apply {
-            if (TraktCredentials.get(activity).hasCredentials()) {
-                summary = TraktCredentials.get(activity).username
-            } else {
-                summary = null
             }
         }
 
@@ -280,26 +251,6 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
         // links
         when (key) {
-            LINK_KEY_UPGRADE -> {
-                startActivity(
-                    Intent(
-                        activity, if (Utils.isAmazonVersion()) {
-                            AmazonBillingActivity::class.java
-                        } else {
-                            BillingActivity::class.java
-                        }
-                    )
-                )
-                return true
-            }
-            LINK_KEY_CLOUD -> {
-                startActivity(Intent(activity, CloudSetupActivity::class.java))
-                return true
-            }
-            LINK_KEY_TRAKT -> {
-                startActivity(Intent(activity, ConnectTraktActivity::class.java))
-                return true
-            }
             LINK_KEY_AUTOBACKUP -> {
                 startActivity(DataLiberationActivity.intentToShowAutoBackup(requireActivity()))
                 return true
@@ -568,9 +519,6 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
         // links
         private const val LINK_BASE_KEY = "com.battlelancer.seriesguide.settings."
-        private const val LINK_KEY_UPGRADE = LINK_BASE_KEY + "upgrade"
-        private const val LINK_KEY_CLOUD = LINK_BASE_KEY + "cloud"
-        private const val LINK_KEY_TRAKT = LINK_BASE_KEY + "trakt"
         private const val LINK_KEY_AUTOBACKUP = LINK_BASE_KEY + "autobackup"
         private const val LINK_KEY_DATALIBERATION = LINK_BASE_KEY + "dataliberation"
 
