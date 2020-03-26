@@ -5,11 +5,11 @@
     <string name="lists">Listas</string>
     <string name="movies">Películas</string>
     <string name="statistics">Estadísticas</string>
+    <string name="navigation_more">More</string>
     <string name="search">Buscar</string>
     <string name="preferences">Configuración</string>
     <string name="help">Ayuda</string>
     <string name="help_and_feedback">Ayuda y comentarios</string>
-    <string name="drawer_open">Abrir menú lateral</string>
     <string name="no_more_updates">SeriesGuide no recibirá más actualizaciones para esta versión de Android.</string>
     <!-- Media items -->
     <string name="show">Serie</string>

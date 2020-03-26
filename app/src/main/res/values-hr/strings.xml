@@ -5,11 +5,11 @@
     <string name="lists">Popisi</string>
     <string name="movies">Filmovi</string>
     <string name="statistics">Statistike</string>
+    <string name="navigation_more">More</string>
     <string name="search">Traži</string>
     <string name="preferences">Postavke</string>
     <string name="help">Pomoć</string>
     <string name="help_and_feedback">Pomoć i povratne informacije</string>
-    <string name="drawer_open">Otvori navigacijsku ladicu</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">Serija</string>

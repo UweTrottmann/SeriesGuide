@@ -5,11 +5,11 @@
     <string name="lists">Listák</string>
     <string name="movies">Filmek</string>
     <string name="statistics">Statisztika</string>
+    <string name="navigation_more">More</string>
     <string name="search">Keresés</string>
     <string name="preferences">Beállítások</string>
     <string name="help">Súgó</string>
     <string name="help_and_feedback">Súgó &amp; Visszajelzés</string>
-    <string name="drawer_open">Navigációs fiók megnyitása</string>
     <string name="no_more_updates">Ehhez az android verzióhoz nem készül több SeriesGuide frissítés.</string>
     <!-- Media items -->
     <string name="show">Műsor</string>

@@ -5,11 +5,11 @@
     <string name="lists">Daftar</string>
     <string name="movies">Film</string>
     <string name="statistics">Statistik</string>
+    <string name="navigation_more">More</string>
     <string name="search">Pencarian</string>
     <string name="preferences">Pengaturan</string>
     <string name="help">Bantuan</string>
     <string name="help_and_feedback">Bantuan &amp; tanggapan</string>
-    <string name="drawer_open">Buka drawer navigasi</string>
     <string name="no_more_updates">SeriesGuide tidak akan menerima pembaruan lagi untuk Android versi ini.</string>
     <!-- Media items -->
     <string name="show">Acara</string>

@@ -5,11 +5,11 @@
     <string name="lists">Listeler</string>
     <string name="movies">Filmler</string>
     <string name="statistics">İstatistikler</string>
+    <string name="navigation_more">More</string>
     <string name="search">Ara</string>
     <string name="preferences">Ayarlar</string>
     <string name="help">Yardım</string>
     <string name="help_and_feedback">Yardım ve Geribildirim</string>
-    <string name="drawer_open">Navigasyon çekmecesini aç</string>
     <string name="no_more_updates">SeriesGuide, Androidin bu versiyonu için güncelleme almayacak.</string>
     <!-- Media items -->
     <string name="show">Dizi</string>

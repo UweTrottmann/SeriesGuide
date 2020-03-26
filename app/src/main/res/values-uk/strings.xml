@@ -5,11 +5,11 @@
     <string name="lists">Списки</string>
     <string name="movies">Фільми</string>
     <string name="statistics">Статистика</string>
+    <string name="navigation_more">More</string>
     <string name="search">Пошук</string>
     <string name="preferences">Налаштування</string>
     <string name="help">Допомога</string>
     <string name="help_and_feedback">Довідка &amp; Відгук</string>
-    <string name="drawer_open">Відкрити вікно навігації</string>
     <string name="no_more_updates">SeriesGuide не буде отримувати більше оновлень для цієї версії Android.</string>
     <!-- Media items -->
     <string name="show">Серіал</string>

@@ -5,11 +5,11 @@
     <string name="lists">Listat</string>
     <string name="movies">Elokuvat</string>
     <string name="statistics">Tilastot</string>
+    <string name="navigation_more">More</string>
     <string name="search">Hae</string>
     <string name="preferences">Asetukset</string>
     <string name="help">Ohjeet</string>
     <string name="help_and_feedback">Ohje ja palaute</string>
-    <string name="drawer_open">Avaa vetopaneeli</string>
     <string name="no_more_updates">SeriesGuide ei vastaanota enää päivityksiä tästä Android-versiosta.</string>
     <!-- Media items -->
     <string name="show">Ohjelma</string>

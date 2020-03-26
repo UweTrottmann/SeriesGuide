@@ -5,11 +5,11 @@
     <string name="lists">Listor</string>
     <string name="movies">Filmer</string>
     <string name="statistics">Statistik</string>
+    <string name="navigation_more">More</string>
     <string name="search">Sök</string>
     <string name="preferences">Inställningar</string>
     <string name="help">Hjälp</string>
     <string name="help_and_feedback">Hjälp &amp; feedback</string>
-    <string name="drawer_open">Öppna navigeringslåda</string>
     <string name="no_more_updates">SeriesGuide kommer inte att mottaga fler uppdateringar för den här versionen av Android.</string>
     <!-- Media items -->
     <string name="show">Serie</string>

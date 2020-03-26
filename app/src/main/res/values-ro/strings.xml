@@ -5,11 +5,11 @@
     <string name="lists">Liste</string>
     <string name="movies">Filme</string>
     <string name="statistics">Statistici</string>
+    <string name="navigation_more">More</string>
     <string name="search">Căutare</string>
     <string name="preferences">Setări</string>
     <string name="help">Ajutor</string>
     <string name="help_and_feedback">Ajutor și feedback</string>
-    <string name="drawer_open">Deschide sertarul de navigare</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">Emisiune</string>

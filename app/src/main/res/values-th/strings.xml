@@ -5,11 +5,11 @@
     <string name="lists">รายการ</string>
     <string name="movies">ภาพยนตร์</string>
     <string name="statistics">สถิติ</string>
+    <string name="navigation_more">More</string>
     <string name="search">ค้นหา</string>
     <string name="preferences">การตั้งค่า</string>
     <string name="help">ช่วยเหลือ</string>
     <string name="help_and_feedback">ช่วยเหลือ &amp; ความคิดเห็น</string>
-    <string name="drawer_open">เปิดแถบนำทาง</string>
     <string name="no_more_updates">SeriesGuide จะไม่ออกอัปเดตสำหรับ Android เวอร์ชันนี้อีก</string>
     <!-- Media items -->
     <string name="show">ซีรีส์</string>

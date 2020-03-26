@@ -5,11 +5,11 @@
     <string name="lists">பட்டியல்கள்</string>
     <string name="movies">திரைப்படங்கள்</string>
     <string name="statistics">புள்ளிவிவரம்</string>
+    <string name="navigation_more">More</string>
     <string name="search">தேடு</string>
     <string name="preferences">அமைப்புகள்</string>
     <string name="help">உதவி</string>
     <string name="help_and_feedback">உதவி &amp; பின்னூட்டம்</string>
-    <string name="drawer_open">திறந்த ஊடாடுதல் drawer</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">காண்பி</string>

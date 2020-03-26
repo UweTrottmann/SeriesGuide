@@ -5,11 +5,11 @@
     <string name="lists">القوائم</string>
     <string name="movies">الأفلام</string>
     <string name="statistics">الإحصائيات</string>
+    <string name="navigation_more">More</string>
     <string name="search">بحث</string>
     <string name="preferences">الإعدادات</string>
     <string name="help">مساعدة</string>
     <string name="help_and_feedback">مساعدة واقتراحات</string>
-    <string name="drawer_open">فتح قائمة التنقل</string>
     <string name="no_more_updates">SeriesGuide لن يتحصل على المزيد من التحديثات على نسخة الأندرويد الحالية.</string>
     <!-- Media items -->
     <string name="show">العرض</string>

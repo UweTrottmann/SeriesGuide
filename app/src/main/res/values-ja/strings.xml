@@ -5,11 +5,11 @@
     <string name="lists">リスト</string>
     <string name="movies">映画</string>
     <string name="statistics">統計</string>
+    <string name="navigation_more">More</string>
     <string name="search">検索</string>
     <string name="preferences">設定</string>
     <string name="help">ヘルプ</string>
     <string name="help_and_feedback">ヘルプ &amp; フィードバック</string>
-    <string name="drawer_open">ナビゲーションドロワーを開く</string>
     <string name="no_more_updates">SeriesGuide は、このバージョンの Android の更新をもう受け取りません。</string>
     <!-- Media items -->
     <string name="show">番組</string>
