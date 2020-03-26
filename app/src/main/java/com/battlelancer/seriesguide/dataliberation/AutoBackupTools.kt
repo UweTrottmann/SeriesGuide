@@ -96,7 +96,7 @@ object AutoBackupTools {
                 val cal = Calendar.getInstance()
                 try {
                     cal.set(Calendar.YEAR, nameParts[2].toInt())
-                    cal.set(Calendar.MONTH, nameParts[3].toInt())
+                    cal.set(Calendar.MONTH, nameParts[3].toInt() - 1)
                     cal.set(Calendar.DAY_OF_MONTH, nameParts[4].toInt())
                     cal.set(Calendar.HOUR_OF_DAY, nameParts[5].toInt())
                     cal.set(Calendar.MINUTE, nameParts[6].toInt())
