@@ -27,9 +27,8 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/CenteredScrollingPage"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/large_padding">
+                style="@style/Page.Centered"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/textViewNoMoreUpdates"

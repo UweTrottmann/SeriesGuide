@@ -396,12 +396,8 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <!-- Note: for child of ScrollView override layout_height to wrap_content. -->
     <style name="Page.Centered"/>
-
-    <!-- ViewGroup that is the main child of a ScrollView that should not exceed a readable width. -->
-    <style name="CenteredScrollingPage">
-        <item name="android:layout_width">match_parent</item>
-    </style>
 
     <style name="FirstRunColumn">
         <item name="android:layout_width">match_parent</item>
