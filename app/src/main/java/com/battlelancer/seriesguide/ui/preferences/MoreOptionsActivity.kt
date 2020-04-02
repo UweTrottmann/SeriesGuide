@@ -83,8 +83,14 @@ class MoreOptionsActivity : BaseTopActivity() {
             }
             startActivity(intent)
         }
+        binding.buttonCommunity.setOnClickListener {
+            Utils.launchWebsite(this, getString(R.string.url_community))
+        }
         binding.buttonFeedback.setOnClickListener {
             startActivity(HelpActivity.getFeedbackEmailIntent(this))
+        }
+        binding.buttonTranslations.setOnClickListener {
+            Utils.launchWebsite(this, getString(R.string.url_translations))
         }
         binding.buttonDebugView.setOnClickListener {
             if (AppSettings.isUserDebugModeEnabled(this)) {

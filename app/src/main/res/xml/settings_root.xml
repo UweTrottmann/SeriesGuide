@@ -79,24 +79,6 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:summary="@string/pref_communitysummary"
-            app:title="@string/pref_community">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="https://discuss.seriesgui.de" />
-        </Preference>
-
-        <Preference
-            app:iconSpaceReserved="false"
-            app:summary="@string/pref_translatesummary"
-            app:title="@string/pref_translate">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="https://crowdin.com/project/seriesguide-translations" />
-        </Preference>
-
-        <Preference
-            app:iconSpaceReserved="false"
             app:key="aboutPref"
             app:title="@string/prefs_category_about" />
 

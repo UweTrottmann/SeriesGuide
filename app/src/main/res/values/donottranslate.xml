@@ -37,7 +37,9 @@
     <string name="url_terms_tmdb">https://www.themoviedb.org/terms-of-use</string>
     <string name="url_terms_tmdb_api">https://www.themoviedb.org/documentation/api/terms-of-use</string>
     <string name="url_terms_trakt">https://trakt.tv/terms</string>
+    <string name="url_community">https://discuss.seriesgui.de</string>
     <string name="url_release_notes">https://discuss.seriesgui.de/c/announcements</string>
+    <string name="url_translations">https://crowdin.com/project/seriesguide-translations</string>
 
     <!-- About screen -->
     <string name="website">seriesgui.de</string>
