@@ -5,7 +5,7 @@
     <string name="lists">リスト</string>
     <string name="movies">映画</string>
     <string name="statistics">統計</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">さらに</string>
     <string name="search">検索</string>
     <string name="preferences">設定</string>
     <string name="help">ヘルプ</string>
@@ -412,13 +412,13 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">自動バックアップ</string>
     <string name="pref_autobackupsummary">番組、リスト、映画を毎週バックアップ</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">このデバイス (Android 6以降) は、アプリデータのバックアップがオンになっていない限り、アプリを再度インストールした場合は、これらのバックアップは利用できません。 それ以外の場合、保存するにはコピーを作成してください。</string>
     <string name="last_auto_backup">最終の自動バックアップ: %s</string>
     <string name="restore_auto_backup">自動バックアップを復元</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">前回の自動バックアップが失敗しました</string>
     <string name="autobackup_files_missing">自動バックアップを使用するため、有効なバックアップ ファイルを選択してください。</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_create_user_copy">各バックアップ後にコピーを作成する</string>
+    <string name="autobackup_restore_available">自動バックアップが復元に利用可能な場合があります。</string>
     <!-- Welcome dialog -->
     <string name="get_started">始めましょう</string>
     <string name="dismiss">中止</string>
