@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui.shows
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,25 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.coroutines.CoroutineContext
 
 /**
  * Confirms before making all hidden shows visible again.
  */
-class MakeAllVisibleDialogFragment : AppCompatDialogFragment(), CoroutineScope {
-
-    private lateinit var job: Job
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
+class MakeAllVisibleDialogFragment : AppCompatDialogFragment() {
 
     private lateinit var dialog: AlertDialog
 
@@ -46,13 +41,13 @@ class MakeAllVisibleDialogFragment : AppCompatDialogFragment(), CoroutineScope {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        job = Job()
-        launch {
+        lifecycleScope.launch {
             updateHiddenShowCountAsync()
         }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
+    @SuppressLint("StringFormatMatches") // Int as format arg is intentional.
     private suspend fun updateHiddenShowCountAsync() {
         val count = withContext(Dispatchers.IO) {
             SgRoomDatabase.getInstance(requireContext()).showHelper().countHiddenShows()
@@ -60,11 +55,6 @@ class MakeAllVisibleDialogFragment : AppCompatDialogFragment(), CoroutineScope {
         withContext(Dispatchers.Main) {
             dialog.setMessage(getString(R.string.description_make_all_visible_format, count))
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        job.cancel()
     }
 
 }

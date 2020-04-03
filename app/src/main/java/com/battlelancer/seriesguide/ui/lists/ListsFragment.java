@@ -62,8 +62,7 @@ public class ListsFragment extends Fragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         emptyView = view.findViewById(R.id.emptyViewList);
-        ViewTools.setVectorIconTop(emptyView.getContext().getTheme(), emptyView,
-                R.drawable.ic_list_white_24dp);
+        ViewTools.setVectorDrawableTop(emptyView, R.drawable.ic_list_white_24dp);
         return view;
     }
 

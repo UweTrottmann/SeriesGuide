@@ -14,8 +14,10 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.core.content.edit
 import androidx.core.view.isGone
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
@@ -24,7 +26,6 @@ import com.battlelancer.seriesguide.model.EpisodeWithShow
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.ui.ScopedFragment
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
@@ -38,7 +39,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class CalendarFragment2 : ScopedFragment() {
+class CalendarFragment2 : Fragment() {
 
     enum class CalendarType(val id: Int) {
         UPCOMING(1),
@@ -132,7 +133,7 @@ class CalendarFragment2 : ScopedFragment() {
     }
 
     private fun updateCalendarQuery() {
-        launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.updateCalendarQuery(type)
         }
     }
