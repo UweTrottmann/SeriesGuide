@@ -15,6 +15,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.app.LoaderManager.LoaderCallbacks
 import androidx.loader.content.CursorLoader
@@ -33,7 +35,6 @@ import com.battlelancer.seriesguide.traktapi.TraktRatingsTask
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
-import com.battlelancer.seriesguide.ui.ScopedFragment
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
@@ -62,7 +63,7 @@ import timber.log.Timber
  * Displays extended information (poster, release info, description, ...) and actions (favoriting,
  * shortcut) for a particular show.
  */
-class ShowFragment : ScopedFragment() {
+class ShowFragment : Fragment() {
 
     @BindView(R.id.imageViewShowPosterBackground)
     internal lateinit var imageViewBackground: ImageView
@@ -666,7 +667,7 @@ class ShowFragment : ScopedFragment() {
             currentPosterPath,
             currentShowTvdbId
         )
-        launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             shortcutLiveData.prepareAndPinShortcut()
         }
     }
