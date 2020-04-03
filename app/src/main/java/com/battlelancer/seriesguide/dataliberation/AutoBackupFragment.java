@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.TextViewCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.databinding.FragmentAutoBackupBinding;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -113,7 +113,7 @@ public class AutoBackupFragment extends Fragment {
             setProgressLock(true);
         }
 
-        viewModel = ViewModelProviders.of(this).get(AutoBackupViewModel.class);
+        viewModel = new ViewModelProvider(this).get(AutoBackupViewModel.class);
         viewModel.getAvailableBackupLiveData()
                 .observe(getViewLifecycleOwner(), availableBackupTimeString -> {
                     String lastBackupTimeString = availableBackupTimeString != null
@@ -213,7 +213,9 @@ public class AutoBackupFragment extends Fragment {
                 || requestCode == REQUEST_CODE_LISTS_EXPORT_URI
                 || requestCode == REQUEST_CODE_MOVIES_EXPORT_URI) {
             Uri uri = data.getData();
-            if (uri == null) return;
+            if (uri == null) {
+                return;
+            }
 
             // persist read and write permission for this URI across device reboots
             try {

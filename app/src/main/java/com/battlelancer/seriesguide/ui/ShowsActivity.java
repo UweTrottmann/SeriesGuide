@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 import com.battlelancer.seriesguide.BuildConfig;
@@ -249,7 +249,7 @@ public class ShowsActivity extends BaseTopActivity implements
         }
         // Automatically starts checking all access status.
         // Ends connection if activity is finished (and was not ended elsewhere already).
-        BillingViewModel billingViewModel = ViewModelProviders.of(this).get(BillingViewModel.class);
+        BillingViewModel billingViewModel = new ViewModelProvider(this).get(BillingViewModel.class);
         billingViewModel.getEntitlementRevokedEvent()
                 .observe(this, aVoid -> BillingActivity.showExpiredNotification(this));
     }

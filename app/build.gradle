@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.cloud.tools.endpoints-framework-client'
 apply plugin: 'io.fabric'
-apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -151,7 +150,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.browser:browser:1.2.0'
-    implementation 'androidx.fragment:fragment-ktx:1.1.0'
+    implementation 'androidx.fragment:fragment-ktx:1.2.4'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.palette:palette:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
@@ -159,7 +158,7 @@ dependencies {
     implementation 'androidx.preference:preference:1.1.0'
 
     // ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:${versions.paging}"
@@ -179,9 +178,9 @@ dependencies {
     implementation 'com.google.flatbuffers:flatbuffers-java:1.10.0'
     implementation "com.google.code.gson:gson:${versions.gson}"
     // github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
-    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.2'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.3'
     // make sure to update TZDB.dat as well (see SgApp), ensure compat with ThreeTenABP
-    implementation group: 'org.threeten', name: 'threetenbp', version: '1.4.1', classifier: 'no-tzdb'
+    implementation group: 'org.threeten', name: 'threetenbp', version: '1.4.2', classifier: 'no-tzdb'
     implementation "com.jakewharton.timber:timber:${versions.timber}"
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.4'
 
@@ -217,11 +216,11 @@ dependencies {
 
     // Google Play Services
     // https://developers.google.com/android/guides/releases
-    implementation "com.google.android.gms:play-services-auth:17.0.0"
+    implementation "com.google.android.gms:play-services-auth:18.0.0"
 
     // App Engine
     // https://github.com/googleapis/google-api-java-client/releases
-    implementation('com.google.api-client:google-api-client-android:1.30.8') {
+    implementation('com.google.api-client:google-api-client-android:1.30.9') {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
         exclude group: 'org.checkerframework' // from guava, not needed at runtime
         exclude group: 'com.google.errorprone' // from guava, not needed at runtime
@@ -256,7 +255,7 @@ dependencies {
     androidTestImplementation "androidx.room:room-testing:${versions.room}"
 
     // Local unit tests
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     testImplementation "androidx.annotation:annotation:${versions.annotation}"
     testImplementation("com.google.truth:truth:${versions.truth}") {
         exclude group: 'org.checkerframework' // from guava, not needed at runtime

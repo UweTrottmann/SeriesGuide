@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -48,7 +48,7 @@ class MoviesWatchedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = MoviesWatchedAdapter(context!!, MovieClickListener(context!!))
+        adapter = MoviesWatchedAdapter(requireContext(), MovieClickListener(requireContext()))
 
         recyclerView.also {
             it.setHasFixedSize(true)
@@ -68,8 +68,8 @@ class MoviesWatchedFragment : Fragment() {
     // note: can not use onCreate, causes issues with ViewPager this tab is in
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MoviesWatchedViewModel::class.java)
-        viewModel.movieList.observe(this, Observer {
+        viewModel = ViewModelProvider(this).get(MoviesWatchedViewModel::class.java)
+        viewModel.movieList.observe(viewLifecycleOwner, Observer {
             textViewEmpty.isGone = it.size > 0
             adapter.submitList(it)
         })
@@ -79,11 +79,11 @@ class MoviesWatchedFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        MoviesOptionsMenu(context!!).create(menu, inflater)
+        MoviesOptionsMenu(requireContext()).create(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (MoviesOptionsMenu(context!!).onItemSelected(item, activity!!)) {
+        return if (MoviesOptionsMenu(requireContext()).onItemSelected(item, requireActivity())) {
             true
         } else {
             super.onOptionsItemSelected(item)

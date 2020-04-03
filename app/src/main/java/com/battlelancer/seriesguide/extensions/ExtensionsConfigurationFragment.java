@@ -92,7 +92,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         if (BuildConfig.DEBUG) {
             // add debug options to enable/disable all extensions
@@ -104,21 +104,21 @@ public class ExtensionsConfigurationFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_extensions_enable) {
-            List<Extension> extensions = ExtensionManager.get(getContext())
-                    .queryAllAvailableExtensions(getContext());
+            List<Extension> extensions = ExtensionManager.get(requireContext())
+                    .queryAllAvailableExtensions(requireContext());
             List<ComponentName> enabledExtensions = new ArrayList<>();
             for (Extension extension : extensions) {
                 enabledExtensions.add(extension.componentName);
             }
-            ExtensionManager.get(getContext())
-                    .setEnabledExtensions(getContext(), enabledExtensions);
+            ExtensionManager.get(requireContext())
+                    .setEnabledExtensions(requireContext(), enabledExtensions);
             Toast.makeText(getActivity(), "Enabled all available extensions", Toast.LENGTH_LONG)
                     .show();
             return true;
         }
         if (itemId == R.id.menu_action_extensions_disable) {
-            ExtensionManager.get(getContext())
-                    .setEnabledExtensions(getContext(), new ArrayList<>());
+            ExtensionManager.get(requireContext())
+                    .setEnabledExtensions(requireContext(), new ArrayList<>());
             Toast.makeText(getActivity(), "Disabled all available extensions", Toast.LENGTH_LONG)
                     .show();
             return true;

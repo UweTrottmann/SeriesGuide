@@ -27,7 +27,7 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
     private var showTitle: String? = null
 
     private val similarShowsViewModel: SimilarShowsViewModel by viewModels {
-        SimilarShowsViewModelFactory(activity!!.application, showTvdbId)
+        SimilarShowsViewModelFactory(requireActivity().application, showTvdbId)
     }
 
     private lateinit var swipeRefreshLayout: EmptyViewSwipeRefreshLayout
@@ -39,8 +39,8 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        showTvdbId = arguments!!.getInt(ARG_SHOW_TVDB_ID)
-        showTitle = arguments!!.getString(ARG_SHOW_TITLE)
+        showTvdbId = requireArguments().getInt(ARG_SHOW_TVDB_ID)
+        showTitle = requireArguments().getString(ARG_SHOW_TITLE)
 
         setHasOptionsMenu(true)
     }
@@ -59,7 +59,7 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         swipeRefreshLayout.apply {
-            ViewTools.setSwipeRefreshLayoutColors(activity!!.theme, this)
+            ViewTools.setSwipeRefreshLayoutColors(requireActivity().theme, this)
             setOnRefreshListener { loadSimilarShows() }
         }
         emptyView.setButtonClickListener {
@@ -86,7 +86,7 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        similarShowsViewModel.resultLiveData.observe(this, Observer {
+        similarShowsViewModel.resultLiveData.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.results)
             emptyView.setMessage(it.emptyMessage)
             recyclerView.isGone = it.results.isNullOrEmpty()

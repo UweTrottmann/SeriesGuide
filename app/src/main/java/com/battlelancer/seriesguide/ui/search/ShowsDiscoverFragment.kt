@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.core.content.edit
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -133,7 +133,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                     startActivity(OverviewActivity.intentShow(context, item.tvdbid))
                 } else {
                     // display more details in a dialog
-                    AddShowDialogFragment.show(context!!, fragmentManager!!, item)
+                    AddShowDialogFragment.show(context!!, parentFragmentManager, item)
                 }
             }
         }
@@ -164,8 +164,8 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         languageCode = DisplaySettings.getSearchLanguage(context)
 
         // observe and load results
-        model = ViewModelProviders.of(this).get(ShowsDiscoverViewModel::class.java)
-        model.data.observe(this, Observer { handleResultsUpdate(it) })
+        model = ViewModelProvider(this).get(ShowsDiscoverViewModel::class.java)
+        model.data.observe(viewLifecycleOwner, Observer { handleResultsUpdate(it) })
         loadResults()
     }
 
@@ -214,9 +214,12 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     }
 
     private fun displayLanguageSettings() {
-        LanguageChoiceDialogFragment.show(fragmentManager!!,
-                R.array.languageCodesShows, languageCode,
-                LanguageChoiceDialogFragment.TAG_DISCOVER)
+        LanguageChoiceDialogFragment.show(
+            parentFragmentManager,
+            R.array.languageCodesShows,
+            languageCode,
+            LanguageChoiceDialogFragment.TAG_DISCOVER
+        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

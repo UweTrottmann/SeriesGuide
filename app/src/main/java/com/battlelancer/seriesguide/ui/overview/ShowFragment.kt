@@ -148,7 +148,7 @@ class ShowFragment : ScopedFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        showTools = SgApp.getServicesComponent(context!!).showTools()
+        showTools = SgApp.getServicesComponent(requireContext()).showTools()
         arguments?.let {
             showTvdbId = it.getInt(ARG_SHOW_TVDBID)
         } ?: throw IllegalArgumentException("Missing arguments")
@@ -232,7 +232,7 @@ class ShowFragment : ScopedFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_show_manage_lists -> {
-                ManageListsDialogFragment.show(fragmentManager, showTvdbId, ListItemTypes.SHOW)
+                ManageListsDialogFragment.show(parentFragmentManager, showTvdbId, ListItemTypes.SHOW)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -338,7 +338,7 @@ class ShowFragment : ScopedFragment() {
         if (releaseTime != -1) {
             val weekDay = showCursor.getInt(ShowQuery.RELEASE_WEEKDAY)
             val release = TimeTools.getShowReleaseDateTime(
-                context!!,
+                requireContext(),
                 releaseTime,
                 weekDay,
                 showCursor.getString(ShowQuery.RELEASE_TIMEZONE),
@@ -501,7 +501,7 @@ class ShowFragment : ScopedFragment() {
 
         // Similar shows button.
         buttonSimilar.setOnClickListener {
-            startActivity(SimilarShowsActivity.intent(context!!, showTvdbId, showTitle))
+            startActivity(SimilarShowsActivity.intent(requireContext(), showTvdbId, showTitle))
         }
 
         // IMDb button
@@ -540,7 +540,7 @@ class ShowFragment : ScopedFragment() {
             containerPoster.isFocusable = false
         } else {
             // poster and fullscreen button
-            TvdbImageTools.loadShowPoster(activity!!, imageViewPoster, posterPathSmall)
+            TvdbImageTools.loadShowPoster(requireActivity(), imageViewPoster, posterPathSmall)
             containerPoster.isFocusable = true
             containerPoster.setOnClickListener { v ->
                 val intent = Intent(activity, FullscreenImageActivity::class.java)
@@ -556,7 +556,11 @@ class ShowFragment : ScopedFragment() {
             }
 
             // poster background
-            TvdbImageTools.loadShowPosterAlpha(activity!!, imageViewBackground, posterPathSmall)
+            TvdbImageTools.loadShowPosterAlpha(
+                requireActivity(),
+                imageViewBackground,
+                posterPathSmall
+            )
         }
 
         loadTraktRatings()
@@ -611,7 +615,7 @@ class ShowFragment : ScopedFragment() {
     }
 
     private fun rateShow() {
-        RateDialogFragment.newInstanceShow(showTvdbId).safeShow(context, fragmentManager)
+        RateDialogFragment.newInstanceShow(showTvdbId).safeShow(context, parentFragmentManager)
     }
 
     private fun loadTraktRatings() {
@@ -625,7 +629,7 @@ class ShowFragment : ScopedFragment() {
 
     private fun displayLanguageSettings() {
         LanguageChoiceDialogFragment.show(
-            fragmentManager!!,
+            parentFragmentManager,
             R.array.languageCodesShows, languageCode, "showLanguageDialog"
         )
     }
@@ -656,8 +660,12 @@ class ShowFragment : ScopedFragment() {
         }
 
         // create the shortcut
-        val shortcutLiveData =
-            ShortcutCreator(context!!, currentShowTitle, currentPosterPath, currentShowTvdbId)
+        val shortcutLiveData = ShortcutCreator(
+            requireContext(),
+            currentShowTitle,
+            currentPosterPath,
+            currentShowTvdbId
+        )
         launch {
             shortcutLiveData.prepareAndPinShortcut()
         }

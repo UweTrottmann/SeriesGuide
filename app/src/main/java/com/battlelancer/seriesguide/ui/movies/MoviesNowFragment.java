@@ -104,7 +104,7 @@ public class MoviesNowFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ViewTools.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
+        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(), swipeRefreshLayout);
 
         // define dataset
         adapter = new MoviesNowAdapter(getContext(), itemClickListener);
@@ -163,7 +163,7 @@ public class MoviesNowFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
         // guard against not attached to activity
@@ -291,7 +291,7 @@ public class MoviesNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoadFinished(Loader<TraktRecentMovieHistoryLoader.Result> loader,
+        public void onLoadFinished(@NonNull Loader<TraktRecentMovieHistoryLoader.Result> loader,
                 TraktRecentMovieHistoryLoader.Result data) {
             if (!isAdded()) {
                 return;
@@ -303,7 +303,7 @@ public class MoviesNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<TraktRecentMovieHistoryLoader.Result> loader) {
+        public void onLoaderReset(@NonNull Loader<TraktRecentMovieHistoryLoader.Result> loader) {
             if (!isVisible()) {
                 return;
             }
@@ -320,7 +320,7 @@ public class MoviesNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoadFinished(Loader<List<NowAdapter.NowItem>> loader,
+        public void onLoadFinished(@NonNull Loader<List<NowAdapter.NowItem>> loader,
                 List<NowAdapter.NowItem> data) {
             if (!isAdded()) {
                 return;
@@ -331,7 +331,7 @@ public class MoviesNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<List<NowAdapter.NowItem>> loader) {
+        public void onLoaderReset(@NonNull Loader<List<NowAdapter.NowItem>> loader) {
             if (!isVisible()) {
                 return;
             }

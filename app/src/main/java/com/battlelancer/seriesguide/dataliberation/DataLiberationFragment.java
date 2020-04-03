@@ -252,13 +252,13 @@ public class DataLiberationFragment extends Fragment implements
         if (requestCode == REQUEST_CODE_EXPORT) {
             setProgressLock(true);
 
-            dataLibTask = new JsonExportTask(getContext(), DataLiberationFragment.this,
+            dataLibTask = new JsonExportTask(requireContext(), DataLiberationFragment.this,
                     checkBoxFullDump.isChecked(), false, type);
             dataLibTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else if (requestCode == REQUEST_CODE_IMPORT) {
             setProgressLock(true);
 
-            dataLibTask = new JsonImportTask(getContext(),
+            dataLibTask = new JsonImportTask(requireContext(),
                     checkBoxShows.isChecked(), checkBoxLists.isChecked(),
                     checkBoxMovies.isChecked());
             Utils.executeInOrder(dataLibTask);
@@ -284,7 +284,7 @@ public class DataLiberationFragment extends Fragment implements
 
             // try to persist read and write permission for this URI across device reboots
             try {
-                getContext().getContentResolver()
+                requireContext().getContentResolver()
                         .takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
                                 | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             } catch (SecurityException e) {

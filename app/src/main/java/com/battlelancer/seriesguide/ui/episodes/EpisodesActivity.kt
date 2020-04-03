@@ -11,7 +11,7 @@ import android.widget.ImageView
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
@@ -108,7 +108,7 @@ class EpisodesActivity : BaseMessageActivity() {
             episodeTvdbId,
             seasonTvdbId
         )
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
+        viewModel = ViewModelProvider(this, viewModelFactory)
             .get(EpisodesActivityViewModel::class.java)
         viewModel.seasonAndShowInfoLiveData.observe(this, Observer { info ->
             if (info == null) {

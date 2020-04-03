@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
@@ -42,7 +42,7 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         swipeRefreshLayout.apply {
-            ViewTools.setSwipeRefreshLayoutColors(activity!!.theme, this)
+            ViewTools.setSwipeRefreshLayoutColors(requireActivity().theme, this)
             setOnRefreshListener { model.refresh() }
         }
 
@@ -61,11 +61,11 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        model = ViewModelProviders.of(this).get(ShowsPopularViewModel::class.java)
-        model.items.observe(this, Observer {
+        model = ViewModelProvider(this).get(ShowsPopularViewModel::class.java)
+        model.items.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
-        model.networkState.observe(this, Observer {
+        model.networkState.observe(viewLifecycleOwner, Observer {
             swipeRefreshLayout.isRefreshing = it == NetworkState.LOADING
             if (it?.status == Status.ERROR) {
                 snackbar.setText(it.message!!)

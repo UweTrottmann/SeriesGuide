@@ -55,7 +55,7 @@ public class MoviesSearchFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
         try {
@@ -69,7 +69,7 @@ public class MoviesSearchFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        link = MoviesDiscoverLink.fromId(getArguments().getInt(ARG_ID_LINK));
+        link = MoviesDiscoverLink.fromId(requireArguments().getInt(ARG_ID_LINK));
     }
 
     @Override
@@ -81,7 +81,7 @@ public class MoviesSearchFragment extends Fragment {
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewMoviesSearch,
                 R.id.recyclerViewMoviesSearch);
         swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
-        ViewTools.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
+        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(), swipeRefreshLayout);
 
         // setup grid view
         AutoGridLayoutManager layoutManager = new AutoGridLayoutManager(getContext(),
@@ -100,7 +100,7 @@ public class MoviesSearchFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // setup adapter
-        adapter = new MoviesAdapter(getContext(), new MovieClickListener(getActivity()));
+        adapter = new MoviesAdapter(requireContext(), new MovieClickListener(requireContext()));
         recyclerView.setAdapter(adapter);
 
         swipeRefreshLayout.setRefreshing(true);
@@ -143,11 +143,11 @@ public class MoviesSearchFragment extends Fragment {
                 link = MoviesDiscoverLink.fromId(args.getInt(ARG_ID_LINK));
                 query = args.getString(ARG_SEARCH_QUERY);
             }
-            return new TmdbMoviesLoader(getContext(), link, query);
+            return new TmdbMoviesLoader(requireContext(), link, query);
         }
 
         @Override
-        public void onLoadFinished(Loader<TmdbMoviesLoader.Result> loader,
+        public void onLoadFinished(@NonNull Loader<TmdbMoviesLoader.Result> loader,
                 TmdbMoviesLoader.Result data) {
             if (!isAdded()) {
                 return;
@@ -161,7 +161,7 @@ public class MoviesSearchFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<TmdbMoviesLoader.Result> loader) {
+        public void onLoaderReset(@NonNull Loader<TmdbMoviesLoader.Result> loader) {
             adapter.updateMovies(null);
         }
     };

@@ -28,8 +28,8 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
      */
     protected void checkInTrakt(String message) {
         new TraktTask(getContext()).checkInMovie(
-                getArguments().getInt(InitBundle.MOVIE_TMDB_ID),
-                getArguments().getString(InitBundle.ITEM_TITLE),
+                requireArguments().getInt(InitBundle.MOVIE_TMDB_ID),
+                requireArguments().getString(InitBundle.ITEM_TITLE),
                 message).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }

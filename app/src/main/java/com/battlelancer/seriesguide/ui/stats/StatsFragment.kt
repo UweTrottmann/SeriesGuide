@@ -13,7 +13,7 @@ import android.widget.TextView
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -124,8 +124,8 @@ class StatsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
 
-        model = ViewModelProviders.of(this).get(StatsViewModel::class.java)
-        model.statsData.observe(this, Observer { this.handleStatsUpdate(it) })
+        model = ViewModelProvider(this).get(StatsViewModel::class.java)
+        model.statsData.observe(viewLifecycleOwner, Observer { this.handleStatsUpdate(it) })
         loadStats()
     }
 
@@ -160,7 +160,7 @@ class StatsFragment : Fragment() {
                 .putBoolean(DisplaySettings.KEY_HIDE_SPECIALS, !item.isChecked)
                 .apply()
 
-            activity!!.invalidateOptionsMenu()
+            requireActivity().invalidateOptionsMenu()
             loadStats()
             return true
         }

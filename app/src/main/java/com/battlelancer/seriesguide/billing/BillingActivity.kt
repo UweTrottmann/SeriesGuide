@@ -14,7 +14,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.view.isGone
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.BuildConfig
@@ -54,7 +54,7 @@ class BillingActivity : BaseActivity() {
 
         // Always get subscription SKU info.
         // Users might want to support even if unlock app is installed.
-        billingViewModel = ViewModelProviders.of(this)
+        billingViewModel = ViewModelProvider(this)
             .get(BillingViewModel::class.java).also {
                 it.subsSkuDetailsListLiveData.observe(this, Observer { skuDetails ->
                     adapter.setSkuDetailsList(skuDetails)

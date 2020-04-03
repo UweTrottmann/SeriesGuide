@@ -75,7 +75,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         findPreference<Preference>(KEY_CLEAR_CACHE)!!.setOnPreferenceClickListener {
             // try to open app info where user can clear app cache folders
             var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-            intent.data = Uri.parse("package:" + activity!!.packageName)
+            intent.data = Uri.parse("package:" + requireActivity().packageName)
             if (!Utils.tryStartActivity(activity, intent, false)) {
                 // try to open all apps view if detail view not available
                 intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
@@ -203,7 +203,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             updateFallbackLanguageSummary(it)
             it.setOnPreferenceClickListener {
                 LanguageChoiceDialogFragment.show(
-                    fragmentManager!!,
+                    parentFragmentManager,
                     R.array.languageCodesShows,
                     DisplaySettings.getShowsLanguageFallback(context),
                     TAG_LANGUAGE_FALLBACK
@@ -314,7 +314,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
                     .putExtra(Settings.EXTRA_CHANNEL_ID, SgApp.NOTIFICATION_CHANNEL_EPISODES)
-                    .putExtra(Settings.EXTRA_APP_PACKAGE, activity!!.packageName)
+                    .putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
                 // at least NVIDIA Shield (8.0.0) can not handle this, so guard
                 Utils.tryStartActivity(activity, intent, true)
             }
@@ -327,7 +327,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             return false // Let the pref handle the click (and change its value).
         }
         if (KEY_ABOUT == key) {
-            val ft = fragmentManager!!.beginTransaction()
+            val ft = parentFragmentManager.beginTransaction()
             ft.replace(R.id.containerSettings, AboutPreferencesFragment())
             ft.addToBackStack(null)
             ft.commit()
@@ -381,7 +381,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             if (NotificationSettings.KEY_VIBRATE == key
                 && NotificationSettings.isNotificationVibrating(pref.context)) {
                 // demonstrate vibration pattern used by SeriesGuide
-                val vibrator = activity!!.getSystemService<Vibrator>()
+                val vibrator = requireActivity().getSystemService<Vibrator>()
                 @Suppress("DEPRECATION") // Not visible on O+, no need to use new API.
                 vibrator?.vibrate(NotificationService.VIBRATION_PATTERN, -1)
             }
@@ -393,7 +393,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         // pref changes that require the notification service to be reset
         if (DisplaySettings.KEY_SHOWS_TIME_OFFSET == key
             || NotificationSettings.KEY_THRESHOLD == key) {
-            resetAndRunNotificationsService(activity!!)
+            resetAndRunNotificationsService(requireActivity())
         }
 
         // pref changes that require the widgets to be updated
@@ -402,7 +402,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             || DisplaySettings.KEY_DISPLAY_EXACT_DATE == key
             || DisplaySettings.KEY_PREVENT_SPOILERS == key) {
             // update any widgets
-            ListWidgetProvider.notifyDataChanged(activity!!)
+            ListWidgetProvider.notifyDataChanged(requireActivity())
         }
 
         if (DisplaySettings.KEY_LANGUAGE_FALLBACK == key) {
@@ -413,7 +413,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
                 val values = ContentValues()
                 values.put(SeriesGuideContract.Episodes.LAST_UPDATED, 0)
-                activity!!.contentResolver
+                requireActivity().contentResolver
                     .update(SeriesGuideContract.Episodes.CONTENT_URI, values, null, null)
             }.start()
         }
@@ -465,7 +465,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
     private fun updateSelectionSummary(selectionPref: Preference) {
         val countOfShowsNotifyOn = DBUtils.getCountOf(
-            activity!!.contentResolver,
+            requireActivity().contentResolver,
             SeriesGuideContract.Shows.CONTENT_URI,
             SeriesGuideContract.Shows.SELECTION_NOTIFY, null, 0
         )
@@ -476,7 +476,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     }
 
     private fun updateStreamSearchServiceSummary(pref: Preference) {
-        val serviceOrEmptyOrNull = StreamingSearch.getServiceOrEmptyOrNull(activity!!)
+        val serviceOrEmptyOrNull = StreamingSearch.getServiceOrEmptyOrNull(requireActivity())
         when {
             serviceOrEmptyOrNull == null -> pref.summary = null
             serviceOrEmptyOrNull.isEmpty() -> pref.setSummary(R.string.action_turn_off)
