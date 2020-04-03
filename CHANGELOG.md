@@ -12,6 +12,16 @@ Version 54
 ----------
 *in development*
 
+#### 54-beta3
+*2020-04-03*
+
+* 🔧 Move community and translation links to More from Settings.
+* 🔧 Less bright empty message icons on dark theme.
+* 🔨 Fix conflict that prevented side-by-side installation of the Amazon and Play Store version.
+* 🔨 Correctly color add all icon on Trakt lists screens.
+* 🔧 A bunch of internal improvements.
+* 📝 Latest translations from crowdin.
+
 #### 54-beta2
 *2020-03-26*
 
