@@ -52,7 +52,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.1' // libraries, SeriesGuide
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.27.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.28.0'
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:2.0.1' // SeriesGuide
         // https://docs.fabric.io/android/changelog.html#fabric-gradle-plugin
         classpath 'io.fabric.tools:gradle:1.31.2' // SeriesGuide
@@ -63,7 +63,7 @@ buildscript {
 apply plugin: 'com.github.ben-manes.versions'
 
 // reject preview releases for dependencyUpdates task
-dependencyUpdates.resolutionStrategy = {
+dependencyUpdates.resolutionStrategy {
     componentSelection { rules ->
         rules.all { ComponentSelection selection ->
             boolean rejected = ['alpha', 'beta', 'rc', 'eap'].any { qualifier ->
