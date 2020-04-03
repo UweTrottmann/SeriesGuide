@@ -5,18 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.content.edit
+import androidx.core.view.isGone
 import androidx.fragment.app.FragmentManager
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.DialogLocalizationBinding
+import com.battlelancer.seriesguide.databinding.ItemDropdownBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.movies.MovieLocalizationDialogFragment.LocalizationAdapter.LocalizationItem
 import com.battlelancer.seriesguide.util.safeShow
@@ -45,25 +43,8 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
         val type: CodeType
     )
 
-    private var unbinder: Unbinder? = null
-
-    @BindView(R.id.buttonPositive)
-    var buttonOk: Button? = null
-
-    @BindView(R.id.recyclerViewLocalization)
-    var recyclerView: RecyclerView? = null
-
-    @BindView(R.id.textViewLocalizationLanguage)
-    var textViewLanguage: TextView? = null
-
-    @BindView(R.id.textViewLocalizationRegion)
-    var textViewRegion: TextView? = null
-
-    @BindView(R.id.buttonLocalizationLanguage)
-    var buttonLanguage: Button? = null
-
-    @BindView(R.id.buttonLocalizationRegion)
-    var buttonRegion: Button? = null
+    private var _binding: DialogLocalizationBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var adapter: LocalizationAdapter
     private var currentCodeType: CodeType = CodeType.Language
@@ -73,19 +54,18 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.dialog_localization, container, false)
-        unbinder = ButterKnife.bind(this, view)
+        _binding = DialogLocalizationBinding.inflate(inflater, container, false)
 
-        buttonOk!!.setText(android.R.string.ok)
-        buttonOk!!.setOnClickListener { dismiss() }
+        binding.buttons.buttonPositive.setText(android.R.string.ok)
+        binding.buttons.buttonPositive.setOnClickListener { dismiss() }
 
         adapter = LocalizationAdapter(onItemClickListener)
-        recyclerView!!.adapter = adapter
-        recyclerView!!.layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewLocalization.adapter = adapter
+        binding.recyclerViewLocalization.layoutManager = LinearLayoutManager(context)
 
         updateButtonText()
 
-        buttonLanguage!!.setOnClickListener {
+        binding.buttonLocalizationLanguage.setOnClickListener {
             setListVisible(true)
             Thread(Runnable {
                 val languageCodes = requireContext().resources
@@ -103,7 +83,7 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
                 EventBus.getDefault().postSticky(ItemsLoadedEvent(items, CodeType.Language))
             }).run()
         }
-        buttonRegion!!.setOnClickListener {
+        binding.buttonLocalizationRegion.setOnClickListener {
             setListVisible(true)
             Thread(Runnable {
                 val regionCodes = Locale.getISOCountries()
@@ -123,7 +103,7 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
             }).run()
         }
 
-        return view
+        return binding.root
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -159,13 +139,13 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
         super.onSaveInstanceState(outState)
         outState.putBoolean(
             STATE_LIST_VISIBLE,
-            recyclerView!!.visibility == View.VISIBLE
+            binding.recyclerViewLocalization.visibility == View.VISIBLE
         )
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        unbinder!!.unbind()
+        _binding = null
     }
 
     override fun onDismiss(dialog: DialogInterface) {
@@ -175,7 +155,7 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventItemsLoaded(event: ItemsLoadedEvent) {
-        recyclerView!!.scrollToPosition(0)
+        binding.recyclerViewLocalization.scrollToPosition(0)
         currentCodeType = event.type
         adapter.updateItems(event.items)
     }
@@ -183,9 +163,9 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
     private fun updateButtonText() {
         // example: "en-US"
         val languageCode = DisplaySettings.getMoviesLanguage(context)
-        buttonLanguage!!.text = buildLanguageDisplayName(languageCode)
+        binding.buttonLocalizationLanguage.text = buildLanguageDisplayName(languageCode)
         val regionCode = DisplaySettings.getMoviesRegion(context)
-        buttonRegion!!.text = Locale("", regionCode).displayCountry
+        binding.buttonLocalizationRegion.text = Locale("", regionCode).displayCountry
     }
 
     private fun buildLanguageDisplayName(languageCode: String): String {
@@ -202,13 +182,13 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
         }
     }
 
-    private fun setListVisible(visible: Boolean) {
-        recyclerView!!.visibility = if (visible) View.VISIBLE else View.GONE
-        val visibility = if (visible) View.GONE else View.VISIBLE
-        buttonLanguage!!.visibility = visibility
-        textViewLanguage!!.visibility = visibility
-        buttonRegion!!.visibility = visibility
-        textViewRegion!!.visibility = visibility
+    private fun setListVisible(listIsVisible: Boolean) {
+        binding.recyclerViewLocalization.isGone = !listIsVisible
+
+        binding.buttonLocalizationLanguage.isGone = listIsVisible
+        binding.textViewLocalizationLanguage.isGone = listIsVisible
+        binding.buttonLocalizationRegion.isGone = listIsVisible
+        binding.textViewLocalizationRegion.isGone = listIsVisible
     }
 
     private val onItemClickListener: LocalizationAdapter.OnItemClickListener =
@@ -255,9 +235,13 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
             parent: ViewGroup,
             viewType: Int
         ): RecyclerView.ViewHolder {
-            return LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_dropdown, parent, false)
-                .let { ViewHolder(it, onItemClickListener) }
+            return ViewHolder(
+                ItemDropdownBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                ), onItemClickListener
+            )
         }
 
         override fun onBindViewHolder(
@@ -267,23 +251,20 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
             if (holder is ViewHolder) {
                 val item = items[position]
                 holder.code = item.code
-                holder.title!!.text = item.displayText
+                holder.binding.text1.text = item.displayText
             }
         }
 
         override fun getItemCount(): Int = items.size
 
         class ViewHolder(
-            itemView: View,
+            val binding: ItemDropdownBinding,
             onItemClickListener: OnItemClickListener
-        ) : RecyclerView.ViewHolder(itemView) {
+        ) : RecyclerView.ViewHolder(binding.root) {
 
-            @BindView(android.R.id.text1)
-            var title: TextView? = null
             var code: String? = null
 
             init {
-                ButterKnife.bind(this, itemView)
                 itemView.setOnClickListener {
                     onItemClickListener.onItemClick(code)
                 }
