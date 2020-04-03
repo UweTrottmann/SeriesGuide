@@ -255,7 +255,7 @@ dependencies {
     androidTestImplementation "androidx.room:room-testing:${versions.room}"
 
     // Local unit tests
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     testImplementation "androidx.annotation:annotation:${versions.annotation}"
     testImplementation("com.google.truth:truth:${versions.truth}") {
         exclude group: 'org.checkerframework' // from guava, not needed at runtime
