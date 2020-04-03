@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -68,7 +68,7 @@ class MoviesWatchedFragment : Fragment() {
     // note: can not use onCreate, causes issues with ViewPager this tab is in
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MoviesWatchedViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MoviesWatchedViewModel::class.java)
         viewModel.movieList.observe(this, Observer {
             textViewEmpty.isGone = it.size > 0
             adapter.submitList(it)

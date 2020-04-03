@@ -15,7 +15,7 @@ import android.widget.TextView
 import androidx.core.content.edit
 import androidx.core.view.isGone
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
@@ -113,7 +113,7 @@ class CalendarFragment2 : ScopedFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(CalendarFragment2ViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(CalendarFragment2ViewModel::class.java)
         viewModel.upcomingEpisodesLiveData.observe(this, Observer {
             adapter.submitList(it)
             updateEmptyView(it.isEmpty())

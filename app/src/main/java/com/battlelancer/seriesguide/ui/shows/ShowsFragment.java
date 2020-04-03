@@ -19,7 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -118,7 +118,7 @@ public class ShowsFragment extends Fragment {
         }
         recyclerView.setAdapter(adapter);
 
-        model = ViewModelProviders.of(this).get(ShowsViewModel.class);
+        model = new ViewModelProvider(this).get(ShowsViewModel.class);
         model.getShowItemsLiveData().observe(this, showItems -> {
             adapter.submitList(showItems);
             // note: header is added later, but if it is shown should not treat as empty
