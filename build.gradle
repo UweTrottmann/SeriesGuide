@@ -56,7 +56,7 @@ buildscript {
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:2.0.1' // SeriesGuide
         // https://docs.fabric.io/android/changelog.html#fabric-gradle-plugin
         classpath 'io.fabric.tools:gradle:1.31.2' // SeriesGuide
-        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.1' // api
+        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.2' // api
     }
 }
 
