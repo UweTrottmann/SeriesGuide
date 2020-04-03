@@ -156,7 +156,7 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
     // ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}"
     // Paging
     implementation "androidx.paging:paging-runtime:${versions.paging}"
 

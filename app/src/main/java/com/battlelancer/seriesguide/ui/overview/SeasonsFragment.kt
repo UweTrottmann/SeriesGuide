@@ -19,7 +19,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
@@ -99,7 +99,7 @@ class SeasonsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        model = ViewModelProviders.of(this).get(SeasonsViewModel::class.java).also {
+        model = ViewModelProvider(this).get(SeasonsViewModel::class.java).also {
             it.remainingCountData.observe(this,
                     Observer { result -> handleRemainingCountUpdate(result) })
         }

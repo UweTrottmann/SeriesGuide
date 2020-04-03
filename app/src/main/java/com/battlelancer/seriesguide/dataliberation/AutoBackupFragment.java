@@ -247,7 +247,9 @@ public class AutoBackupFragment extends Fragment {
                 || requestCode == REQUEST_CODE_LISTS_EXPORT_URI
                 || requestCode == REQUEST_CODE_MOVIES_EXPORT_URI) {
             Uri uri = data.getData();
-            if (uri == null) return;
+            if (uri == null) {
+                return;
+            }
 
             // persist read and write permission for this URI across device reboots
             try {
