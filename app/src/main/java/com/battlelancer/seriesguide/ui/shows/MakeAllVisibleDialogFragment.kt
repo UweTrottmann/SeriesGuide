@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui.shows
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -46,6 +47,7 @@ class MakeAllVisibleDialogFragment : AppCompatDialogFragment() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
+    @SuppressLint("StringFormatMatches") // Int as format arg is intentional.
     private suspend fun updateHiddenShowCountAsync() {
         val count = withContext(Dispatchers.IO) {
             SgRoomDatabase.getInstance(requireContext()).showHelper().countHiddenShows()
