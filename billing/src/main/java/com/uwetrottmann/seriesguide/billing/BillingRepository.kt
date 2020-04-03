@@ -159,12 +159,12 @@ class BillingRepository(private val applicationContext: Context) {
         Timber.d("queryPurchasesAsync called")
         val purchasesResult = HashSet<Purchase>()
         var result = playStoreBillingClient.queryPurchases(BillingClient.SkuType.INAPP)
-        Timber.d("queryPurchasesAsync INAPP results: ${result?.purchasesList?.size}")
-        result?.purchasesList?.apply { purchasesResult.addAll(this) }
+        Timber.d("queryPurchasesAsync INAPP results: ${result.purchasesList?.size}")
+        result.purchasesList?.apply { purchasesResult.addAll(this) }
         if (isSubscriptionSupported()) {
             result = playStoreBillingClient.queryPurchases(BillingClient.SkuType.SUBS)
-            result?.purchasesList?.apply { purchasesResult.addAll(this) }
-            Timber.d("queryPurchasesAsync SUBS results: ${result?.purchasesList?.size}")
+            result.purchasesList?.apply { purchasesResult.addAll(this) }
+            Timber.d("queryPurchasesAsync SUBS results: ${result.purchasesList?.size}")
         }
         processPurchases(purchasesResult)
     }
