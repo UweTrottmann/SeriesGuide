@@ -18,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/larger_padding"
-            android:paddingRight="@dimen/larger_padding"
             android:paddingTop="@dimen/larger_padding"
+            android:paddingRight="@dimen/larger_padding"
             android:text="@string/pref_language"
             android:textAppearance="@style/TextAppearance.Caption" />
 
@@ -63,6 +63,8 @@
 
     </LinearLayout>
 
-    <include layout="@layout/dialog_buttons_divided" />
+    <include
+        android:id="@+id/buttons"
+        layout="@layout/dialog_buttons_divided" />
 
 </LinearLayout>
