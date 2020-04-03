@@ -12,7 +12,7 @@ buildscript {
             'annotation': '1.1.0',
             'lifecycle': '2.1.0',
             'paging': '2.1.0',
-            'room': '2.2.1',
+            'room': '2.2.5',
 
             'butterknife': '10.2.0', // github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
             'crashlytics': '2.10.1', // docs.fabric.io/android/changelog.html
