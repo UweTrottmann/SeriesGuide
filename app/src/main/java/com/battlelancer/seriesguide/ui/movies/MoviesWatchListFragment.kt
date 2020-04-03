@@ -32,7 +32,7 @@ class MoviesWatchListFragment : MoviesBaseFragment() {
 
     override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<Cursor> {
         return CursorLoader(
-            context!!, Movies.CONTENT_URI,
+            requireContext(), Movies.CONTENT_URI,
             MoviesCursorAdapter.MoviesQuery.PROJECTION, Movies.SELECTION_WATCHLIST, null,
             MoviesDistillationSettings.getSortQuery(context)
         )

@@ -137,9 +137,13 @@ class ShowSearchFragment : BaseSearchFragment() {
                     findItem(R.id.menu_action_shows_watched_next).isVisible = false
                 }
                 setOnMenuItemClickListener(
-                        ShowMenuItemClickListener(context,
-                                fragmentManager, viewHolder.showTvdbId, viewHolder.episodeTvdbId
-                        ))
+                    ShowMenuItemClickListener(
+                        context,
+                        parentFragmentManager,
+                        viewHolder.showTvdbId,
+                        viewHolder.episodeTvdbId
+                    )
+                )
             }.show()
         }
 

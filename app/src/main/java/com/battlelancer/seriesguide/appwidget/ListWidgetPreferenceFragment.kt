@@ -41,7 +41,7 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
         savedInstanceState: Bundle?,
         rootKey: String?
     ) {
-        val appWidgetId = arguments!!.getInt(ARG_WIDGET_ID)
+        val appWidgetId = requireArguments().getInt(ARG_WIDGET_ID)
 
         // Type.
         typePref = createListPref(

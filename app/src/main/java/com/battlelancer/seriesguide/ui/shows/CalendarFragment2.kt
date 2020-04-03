@@ -55,7 +55,7 @@ class CalendarFragment2 : ScopedFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val argType = arguments!!.getInt(ARG_CALENDAR_TYPE)
+        val argType = requireArguments().getInt(ARG_CALENDAR_TYPE)
         type = when (argType) {
             CalendarType.UPCOMING.id -> CalendarType.UPCOMING
             CalendarType.RECENT.id -> CalendarType.RECENT
@@ -78,7 +78,7 @@ class CalendarFragment2 : ScopedFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = CalendarAdapter2(context!!, calendarItemClickListener)
+        adapter = CalendarAdapter2(requireContext(), calendarItemClickListener)
 
         val layoutManager = AutoGridLayoutManager(
             context,
@@ -91,8 +91,8 @@ class CalendarFragment2 : ScopedFragment() {
             it.layoutManager = layoutManager
             it.adapter = adapter
         }
-        val thumbDrawable = context!!.getDrawable(R.drawable.fast_scroll_thumb) as StateListDrawable
-        val trackDrawable = context!!.getDrawable(R.drawable.fast_scroll_track)
+        val thumbDrawable = requireContext().getDrawable(R.drawable.fast_scroll_thumb) as StateListDrawable
+        val trackDrawable = requireContext().getDrawable(R.drawable.fast_scroll_track)
         FastScrollerDecoration(
             recyclerView, thumbDrawable, trackDrawable, thumbDrawable, trackDrawable,
             resources.getDimensionPixelSize(R.dimen.sg_fastscroll_default_thickness),
@@ -114,7 +114,7 @@ class CalendarFragment2 : ScopedFragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(CalendarFragment2ViewModel::class.java)
-        viewModel.upcomingEpisodesLiveData.observe(this, Observer {
+        viewModel.upcomingEpisodesLiveData.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
             updateEmptyView(it.isEmpty())
         })
@@ -168,7 +168,7 @@ class CalendarFragment2 : ScopedFragment() {
         inflater.inflate(R.menu.calendar_menu, menu)
 
         // set menu items to current values
-        val context = context!!
+        val context = requireContext()
         menu.findItem(R.id.menu_action_calendar_onlyfavorites).isChecked =
             CalendarSettings.isOnlyFavorites(context)
         menu.findItem(R.id.menu_action_calendar_onlypremieres).isChecked =
@@ -218,7 +218,7 @@ class CalendarFragment2 : ScopedFragment() {
             putBoolean(key, !item.isChecked)
         }
         // refresh filter icon state
-        activity!!.invalidateOptionsMenu()
+        requireActivity().invalidateOptionsMenu()
     }
 
     private val prefChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
@@ -273,8 +273,8 @@ class CalendarFragment2 : ScopedFragment() {
                 when (item.itemId) {
                     CONTEXT_CHECKIN_ID -> {
                         CheckInDialogFragment.show(
-                            getContext()!!,
-                            fragmentManager,
+                            requireContext(),
+                            parentFragmentManager,
                             episode.episodeTvdbId
                         )
                         return@setOnMenuItemClickListener true

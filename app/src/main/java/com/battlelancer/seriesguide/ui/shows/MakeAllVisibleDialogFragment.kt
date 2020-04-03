@@ -30,10 +30,10 @@ class MakeAllVisibleDialogFragment : AppCompatDialogFragment(), CoroutineScope {
     private lateinit var dialog: AlertDialog
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        dialog = MaterialAlertDialogBuilder(context!!)
+        dialog = MaterialAlertDialogBuilder(requireContext())
             .setMessage(getString(R.string.description_make_all_visible_format, "?"))
             .setPositiveButton(R.string.action_shows_make_all_visible) { _, _ ->
-                SgApp.getServicesComponent(context!!).showTools().storeAllHiddenVisible()
+                SgApp.getServicesComponent(requireContext()).showTools().storeAllHiddenVisible()
                 dismiss()
             }
             .setNegativeButton(android.R.string.cancel) { _, _ -> dismiss() }
@@ -55,7 +55,7 @@ class MakeAllVisibleDialogFragment : AppCompatDialogFragment(), CoroutineScope {
 
     private suspend fun updateHiddenShowCountAsync() {
         val count = withContext(Dispatchers.IO) {
-            SgRoomDatabase.getInstance(context!!).showHelper().countHiddenShows()
+            SgRoomDatabase.getInstance(requireContext()).showHelper().countHiddenShows()
         }
         withContext(Dispatchers.Main) {
             dialog.setMessage(getString(R.string.description_make_all_visible_format, count))

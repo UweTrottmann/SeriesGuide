@@ -42,7 +42,7 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         swipeRefreshLayout.apply {
-            ViewTools.setSwipeRefreshLayoutColors(activity!!.theme, this)
+            ViewTools.setSwipeRefreshLayoutColors(requireActivity().theme, this)
             setOnRefreshListener { model.refresh() }
         }
 
@@ -62,10 +62,10 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
         super.onActivityCreated(savedInstanceState)
 
         model = ViewModelProvider(this).get(ShowsPopularViewModel::class.java)
-        model.items.observe(this, Observer {
+        model.items.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
-        model.networkState.observe(this, Observer {
+        model.networkState.observe(viewLifecycleOwner, Observer {
             swipeRefreshLayout.isRefreshing = it == NetworkState.LOADING
             if (it?.status == Status.ERROR) {
                 snackbar.setText(it.message!!)

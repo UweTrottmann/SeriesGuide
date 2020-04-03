@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui.streams;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.ListAdapter;
+import androidx.annotation.NonNull;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -15,6 +16,7 @@ public class UserEpisodeStreamFragment extends StreamFragment {
 
     private EpisodeHistoryAdapter adapter;
 
+    @NonNull
     @Override
     protected ListAdapter getListAdapter() {
         if (adapter == null) {
@@ -47,7 +49,7 @@ public class UserEpisodeStreamFragment extends StreamFragment {
             return;
         }
 
-        Cursor episodeQuery = getActivity().getContentResolver().query(
+        Cursor episodeQuery = requireContext().getContentResolver().query(
                 SeriesGuideContract.Episodes.buildEpisodesOfShowUri(item.show.ids.tvdb),
                 new String[]{
                         SeriesGuideContract.Episodes._ID
@@ -65,7 +67,7 @@ public class UserEpisodeStreamFragment extends StreamFragment {
             showDetails(view, episodeQuery.getInt(0));
         } else {
             // offer to add the show if it's not in the show database yet
-            AddShowDialogFragment.show(getContext(), getFragmentManager(),
+            AddShowDialogFragment.show(requireContext(), getParentFragmentManager(),
                     item.show.ids.tvdb);
         }
 
@@ -82,7 +84,7 @@ public class UserEpisodeStreamFragment extends StreamFragment {
                 }
 
                 @Override
-                public void onLoadFinished(Loader<TraktEpisodeHistoryLoader.Result> loader,
+                public void onLoadFinished(@NonNull Loader<TraktEpisodeHistoryLoader.Result> loader,
                         TraktEpisodeHistoryLoader.Result data) {
                     if (!isAdded()) {
                         return;
@@ -93,7 +95,7 @@ public class UserEpisodeStreamFragment extends StreamFragment {
                 }
 
                 @Override
-                public void onLoaderReset(Loader<TraktEpisodeHistoryLoader.Result> loader) {
+                public void onLoaderReset(@NonNull Loader<TraktEpisodeHistoryLoader.Result> loader) {
                     // keep current data
                 }
             };

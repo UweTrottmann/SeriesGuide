@@ -50,10 +50,10 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
 
 
         val tabsAdapter = ShowsDistillationPageAdapter(
-            context!!,
-            FilterShowsView.ShowFilter.fromSettings(context!!),
+            requireContext(),
+            FilterShowsView.ShowFilter.fromSettings(requireContext()),
             filterListener,
-            SortShowsView.ShowSortOrder.fromSettings(context!!),
+            SortShowsView.ShowSortOrder.fromSettings(requireContext()),
             sortOrderListener
         )
         viewPager.adapter = tabsAdapter
@@ -112,7 +112,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
             }
 
             SingleChoiceDialogFragment.show(
-                fragmentManager,
+                parentFragmentManager,
                 R.array.upcominglimit,
                 R.array.upcominglimitData,
                 selectedIndex,
@@ -124,7 +124,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
 
         override fun onMakeAllHiddenVisibleClick() {
             dismiss()
-            MakeAllVisibleDialogFragment().safeShow(fragmentManager!!, "makeAllVisibleDialog")
+            MakeAllVisibleDialogFragment().safeShow(parentFragmentManager, "makeAllVisibleDialog")
         }
 
     }

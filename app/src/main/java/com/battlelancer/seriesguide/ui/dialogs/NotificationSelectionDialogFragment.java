@@ -69,7 +69,7 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
     }
 
     @Override
-    public void onDismiss(DialogInterface dialog) {
+    public void onDismiss(@NonNull DialogInterface dialog) {
         super.onDismiss(dialog);
         EventBus.getDefault().post(new SeriesGuidePreferences.UpdateSummariesEvent());
     }
@@ -78,7 +78,7 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
             = new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            return new CursorLoader(getContext(), SeriesGuideContract.Shows.CONTENT_URI,
+            return new CursorLoader(requireContext(), SeriesGuideContract.Shows.CONTENT_URI,
                     new String[] {
                             SeriesGuideContract.Shows._ID, // 0
                             SeriesGuideContract.Shows.TITLE, // 1
@@ -90,7 +90,7 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
         }
 
         @Override
-        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
             boolean hasNoData = data == null || data.getCount() == 0;
             textViewEmpty.setVisibility(hasNoData ? View.VISIBLE : View.GONE);
             recyclerView.setVisibility(hasNoData ? View.GONE : View.VISIBLE);
@@ -98,13 +98,13 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
         }
 
         @Override
-        public void onLoaderReset(Loader<Cursor> loader) {
+        public void onLoaderReset(@NonNull Loader<Cursor> loader) {
             adapter.swapCursor(null);
         }
     };
 
     private SelectionAdapter.OnItemClickListener onItemClickListener
-            = (showTvdbId, notify) -> SgApp.getServicesComponent(getContext()).showTools()
+            = (showTvdbId, notify) -> SgApp.getServicesComponent(requireContext()).showTools()
             .storeNotify(showTvdbId, notify);
 
     public static class SelectionAdapter extends
@@ -121,6 +121,7 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
             this.onItemClickListener = onItemClickListener;
         }
 
+        @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())

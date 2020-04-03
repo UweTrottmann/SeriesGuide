@@ -134,14 +134,14 @@ public class RateDialogFragment extends AppCompatDialogFragment {
         ratingButtons.get(8).setOnClickListener(v -> rate(Rating.SUPERB));
         ratingButtons.get(9).setOnClickListener(v -> rate(Rating.TOTALLYNINJA));
 
-        builder = new MaterialAlertDialogBuilder(getActivity());
+        builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setView(layout);
 
         return builder.create();
     }
 
     private void rate(Rating rating) {
-        Bundle args = getArguments();
+        Bundle args = requireArguments();
 
         String itemType = args.getString(InitBundle.ITEM_TYPE);
         if (itemType == null) {

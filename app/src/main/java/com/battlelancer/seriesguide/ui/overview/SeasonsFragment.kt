@@ -90,7 +90,7 @@ class SeasonsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         model = ViewModelProvider(this).get(SeasonsViewModel::class.java).also {
-            it.remainingCountData.observe(this,
+            it.remainingCountData.observe(viewLifecycleOwner,
                     Observer { result -> handleRemainingCountUpdate(result) })
         }
 
@@ -180,7 +180,7 @@ class SeasonsFragment : Fragment() {
         if (event.flagJob is SeasonWatchedJob) {
             // If we can narrow it down to just one season...
             UnwatchedUpdateWorker.updateUnwatchedCountFor(
-                context!!,
+                requireContext(),
                 showId,
                 event.flagJob.seasonTvdbId
             )
@@ -230,7 +230,7 @@ class SeasonsFragment : Fragment() {
      * notifies provider causing the loader to reload.
      */
     private fun updateUnwatchedCounts() {
-        UnwatchedUpdateWorker.updateUnwatchedCountFor(context!!, showId)
+        UnwatchedUpdateWorker.updateUnwatchedCountFor(requireContext(), showId)
     }
 
     private fun handleRemainingCountUpdate(result: RemainingCountLiveData.Result?) {
@@ -326,7 +326,7 @@ class SeasonsFragment : Fragment() {
 
     private fun showSortDialog() {
         val sortOrder = DisplaySettings.getSeasonSortOrder(activity)
-        SingleChoiceDialogFragment.show(fragmentManager,
+        SingleChoiceDialogFragment.show(parentFragmentManager,
                 R.array.sesorting,
                 R.array.sesortingData, sortOrder.index(),
                 DisplaySettings.KEY_SEASON_SORT_ORDER, R.string.pref_seasonsorting,
@@ -393,7 +393,7 @@ class SeasonsFragment : Fragment() {
                     }
                     R.id.menu_action_seasons_manage_lists -> {
                         ManageListsDialogFragment.show(
-                            fragmentManager,
+                            parentFragmentManager,
                             seasonTvdbId,
                             ListItemTypes.SEASON
                         )

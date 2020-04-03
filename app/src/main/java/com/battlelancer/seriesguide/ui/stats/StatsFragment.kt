@@ -125,7 +125,7 @@ class StatsFragment : Fragment() {
         setHasOptionsMenu(true)
 
         model = ViewModelProvider(this).get(StatsViewModel::class.java)
-        model.statsData.observe(this, Observer { this.handleStatsUpdate(it) })
+        model.statsData.observe(viewLifecycleOwner, Observer { this.handleStatsUpdate(it) })
         loadStats()
     }
 
@@ -160,7 +160,7 @@ class StatsFragment : Fragment() {
                 .putBoolean(DisplaySettings.KEY_HIDE_SPECIALS, !item.isChecked)
                 .apply()
 
-            activity!!.invalidateOptionsMenu()
+            requireActivity().invalidateOptionsMenu()
             loadStats()
             return true
         }

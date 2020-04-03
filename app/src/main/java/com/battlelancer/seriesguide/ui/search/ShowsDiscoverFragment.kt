@@ -133,7 +133,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                     startActivity(OverviewActivity.intentShow(context, item.tvdbid))
                 } else {
                     // display more details in a dialog
-                    AddShowDialogFragment.show(context!!, fragmentManager!!, item)
+                    AddShowDialogFragment.show(context!!, parentFragmentManager, item)
                 }
             }
         }
@@ -165,7 +165,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
         // observe and load results
         model = ViewModelProvider(this).get(ShowsDiscoverViewModel::class.java)
-        model.data.observe(this, Observer { handleResultsUpdate(it) })
+        model.data.observe(viewLifecycleOwner, Observer { handleResultsUpdate(it) })
         loadResults()
     }
 
@@ -214,9 +214,12 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     }
 
     private fun displayLanguageSettings() {
-        LanguageChoiceDialogFragment.show(fragmentManager!!,
-                R.array.languageCodesShows, languageCode,
-                LanguageChoiceDialogFragment.TAG_DISCOVER)
+        LanguageChoiceDialogFragment.show(
+            parentFragmentManager,
+            R.array.languageCodesShows,
+            languageCode,
+            LanguageChoiceDialogFragment.TAG_DISCOVER
+        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
