@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.content.edit
 import androidx.core.view.isGone
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,7 @@ import com.battlelancer.seriesguide.databinding.ItemDropdownBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.movies.MovieLocalizationDialogFragment.LocalizationAdapter.LocalizationItem
 import com.battlelancer.seriesguide.util.safeShow
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -56,8 +58,10 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
     ): View? {
         _binding = DialogLocalizationBinding.inflate(inflater, container, false)
 
-        binding.buttons.buttonPositive.setText(android.R.string.ok)
-        binding.buttons.buttonPositive.setOnClickListener { dismiss() }
+        binding.buttonDismiss.apply {
+            setText(R.string.dismiss)
+            setOnClickListener { dismiss() }
+        }
 
         adapter = LocalizationAdapter(onItemClickListener)
         binding.recyclerViewLocalization.adapter = adapter
@@ -66,41 +70,51 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
         updateButtonText()
 
         binding.buttonLocalizationLanguage.setOnClickListener {
+            adapter.updateItems(emptyList())
             setListVisible(true)
-            Thread(Runnable {
+            viewLifecycleOwner.lifecycleScope.launch {
                 val languageCodes = requireContext().resources
                     .getStringArray(R.array.languageCodesMovies)
                 val items: MutableList<LocalizationItem> = ArrayList(languageCodes.size)
+
                 for (languageCode in languageCodes) {
                     items.add(
                         LocalizationItem(languageCode, buildLanguageDisplayName(languageCode))
                     )
                 }
+
                 val collator = Collator.getInstance()
                 items.sortWith(Comparator { left: LocalizationItem, right: LocalizationItem ->
                     collator.compare(left.displayText, right.displayText)
                 })
+
                 EventBus.getDefault().postSticky(ItemsLoadedEvent(items, CodeType.Language))
-            }).run()
+            }
         }
         binding.buttonLocalizationRegion.setOnClickListener {
+            adapter.updateItems(emptyList())
             setListVisible(true)
-            Thread(Runnable {
+            viewLifecycleOwner.lifecycleScope.launch {
                 val regionCodes = Locale.getISOCountries()
                 val items: MutableList<LocalizationItem> = ArrayList(regionCodes.size)
+
                 for (regionCode in regionCodes) {
                     // example: "en-US"
-                    val displayCountry = Locale("", regionCode).displayCountry
                     items.add(
-                        LocalizationItem(regionCode, displayCountry)
+                        LocalizationItem(
+                            regionCode,
+                            Locale("", regionCode).displayCountry
+                        )
                     )
                 }
+
                 val collator = Collator.getInstance()
                 items.sortWith(Comparator { left: LocalizationItem, right: LocalizationItem ->
                     collator.compare(left.displayText, right.displayText)
                 })
+
                 EventBus.getDefault().postSticky(ItemsLoadedEvent(items, CodeType.Region))
-            }).run()
+            }
         }
 
         return binding.root
