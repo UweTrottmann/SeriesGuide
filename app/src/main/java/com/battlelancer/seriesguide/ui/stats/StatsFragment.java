@@ -98,7 +98,7 @@ public class StatsFragment extends Fragment {
         setHasOptionsMenu(true);
 
         model = new ViewModelProvider(this).get(StatsViewModel.class);
-        model.getStatsData().observe(this, this::handleStatsUpdate);
+        model.getStatsData().observe(getViewLifecycleOwner(), this::handleStatsUpdate);
         loadStats();
     }
 

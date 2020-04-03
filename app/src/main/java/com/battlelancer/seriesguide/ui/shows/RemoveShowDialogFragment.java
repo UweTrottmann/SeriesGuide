@@ -67,7 +67,7 @@ public class RemoveShowDialogFragment extends AppCompatDialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        showTvdbId = getArguments().getInt(KEY_SHOW_TVDB_ID);
+        showTvdbId = requireArguments().getInt(KEY_SHOW_TVDB_ID);
         if (showTvdbId <= 0) {
             dismiss();
         }
@@ -96,7 +96,7 @@ public class RemoveShowDialogFragment extends AppCompatDialogFragment {
 
         EventBus.getDefault().register(this);
 
-        new GetShowTitleTask(getActivity())
+        new GetShowTitleTask(requireContext())
                 .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, showTvdbId);
     }
 

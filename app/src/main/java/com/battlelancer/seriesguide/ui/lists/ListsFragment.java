@@ -114,7 +114,7 @@ public class ListsFragment extends Fragment {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
             String listId = args.getString(InitBundle.LIST_ID);
-            return new CursorLoader(getActivity(), ListItems.CONTENT_WITH_DETAILS_URI,
+            return new CursorLoader(requireContext(), ListItems.CONTENT_WITH_DETAILS_URI,
                     ListItemsAdapter.Query.PROJECTION,
                     // items of this list, but exclude any if show was removed from the database
                     // (the join on show data will fail, hence the show id will be 0/null)
@@ -126,12 +126,12 @@ public class ListsFragment extends Fragment {
         }
 
         @Override
-        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
             adapter.swapCursor(data);
         }
 
         @Override
-        public void onLoaderReset(Loader<Cursor> loader) {
+        public void onLoaderReset(@NonNull Loader<Cursor> loader) {
             adapter.swapCursor(null);
         }
     };
@@ -178,7 +178,7 @@ public class ListsFragment extends Fragment {
                 PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
                 popupMenu.inflate(R.menu.lists_popup_menu);
                 popupMenu.setOnMenuItemClickListener(
-                        new PopupMenuItemClickListener(getContext(), getFragmentManager(),
+                        new PopupMenuItemClickListener(getContext(), getParentFragmentManager(),
                                 viewHolderActual.itemId, viewHolderActual.itemTvdbId,
                                 viewHolderActual.itemType));
                 popupMenu.show();
@@ -187,7 +187,7 @@ public class ListsFragment extends Fragment {
 
         @Override
         public void onFavoriteClick(int showTvdbId, boolean isFavorite) {
-            SgApp.getServicesComponent(getContext()).showTools()
+            SgApp.getServicesComponent(requireContext()).showTools()
                     .storeIsFavorite(showTvdbId, isFavorite);
         }
     };

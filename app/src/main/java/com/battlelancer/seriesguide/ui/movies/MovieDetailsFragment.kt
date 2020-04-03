@@ -119,7 +119,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         ViewTools.setVectorIconLeft(theme, binding.buttonMovieLanguage, R.drawable.ic_language_white_24dp)
         CheatSheet.setup(binding.buttonMovieLanguage, R.string.pref_language)
         binding.buttonMovieLanguage.setOnClickListener {
-            MovieLocalizationDialogFragment.show(fragmentManager)
+            MovieLocalizationDialogFragment.show(parentFragmentManager)
         }
 
         // comments button
@@ -142,9 +142,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        tmdbId = arguments!!.getInt(ARG_TMDB_ID)
+        tmdbId = requireArguments().getInt(ARG_TMDB_ID)
         if (tmdbId <= 0) {
-            fragmentManager!!.popBackStack()
+            parentFragmentManager.popBackStack()
             return
         }
 
@@ -301,7 +301,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         movieTitle = tmdbMovie.title
         binding.textViewMovieTitle.text = tmdbMovie.title
-        activity!!.title = tmdbMovie.title
+        requireActivity().title = tmdbMovie.title
         binding.textViewMovieDescription.text = TextTools.textWithTmdbSource(
             binding.textViewMovieDescription.context,
             tmdbMovie.overview
@@ -328,7 +328,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         binding.containerMovieButtons.dividerMovieButtons.isGone = hideCheckIn && hideStreamingSearch
 
         // watched button (only supported when connected to trakt)
-        val theme = activity!!.theme
+        val theme = requireActivity().theme
         binding.containerMovieButtons.buttonMovieWatched.also {
             if (isConnectedToTrakt) {
                 val textRes = if (isWatched) R.string.action_unwatched else R.string.action_watched
@@ -505,7 +505,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             if (it.isEmpty()) {
                 return
             }
-            MovieCheckInDialogFragment.show(fragmentManager, tmdbId, it)
+            MovieCheckInDialogFragment.show(parentFragmentManager, tmdbId, it)
         }
     }
 
@@ -528,7 +528,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     private fun showStreamingSearchConfigDialog() {
-        StreamingSearchConfigureDialog.show(requireFragmentManager())
+        StreamingSearchConfigureDialog.show(parentFragmentManager)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -611,9 +611,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
 
         Timber.d("loadMovieActions: received %s actions for %s", actions.size, tmdbId)
-        ActionsHelper.populateActions(
-            activity!!.layoutInflater, activity!!.theme, binding.containerMovieActions, actions
-        )
+        requireActivity().run {
+            ActionsHelper.populateActions(
+                layoutInflater, theme, binding.containerMovieActions, actions
+            )
+        }
     }
 
     private val movieActionsRunnable = Runnable {
@@ -631,7 +633,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     private fun rateMovie() {
-        RateDialogFragment.newInstanceMovie(tmdbId).safeShow(context, fragmentManager)
+        RateDialogFragment.newInstanceMovie(tmdbId).safeShow(context, parentFragmentManager)
     }
 
     private fun setCrewVisibility(visible: Boolean) {

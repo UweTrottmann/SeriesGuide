@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.app.Dialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -35,21 +34,21 @@ public class SingleChoiceDialogFragment extends AppCompatDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final CharSequence[] items = getResources().getStringArray(
-                getArguments().getInt("itemarray"));
+        Bundle args = requireArguments();
 
-        return new AlertDialog.Builder(getActivity())
-                .setTitle(getString(getArguments().getInt("dialogtitle")))
-                .setSingleChoiceItems(items, getArguments().getInt("selected"),
-                        (dialog, item) -> {
-                            final SharedPreferences.Editor editor = PreferenceManager
-                                    .getDefaultSharedPreferences(getActivity()).edit();
-                            editor.putString(
-                                    getArguments().getString("prefkey"),
-                                    (getResources().getStringArray(getArguments().getInt(
-                                            "itemdata")))[item]);
-                            editor.apply();
-                            dismiss();
-                        }).create();
+        final CharSequence[] items = getResources().getStringArray(args.getInt("itemarray"));
+
+        return new AlertDialog.Builder(requireContext())
+                .setTitle(getString(args.getInt("dialogtitle")))
+                .setSingleChoiceItems(items, args.getInt("selected"), (dialog, item) -> {
+                    String value = (getResources()
+                            .getStringArray(args.getInt("itemdata")))[item];
+                    PreferenceManager.getDefaultSharedPreferences(requireContext())
+                            .edit()
+                            .putString(args.getString("prefkey"), value)
+                            .apply();
+                    dismiss();
+                })
+                .create();
     }
 }

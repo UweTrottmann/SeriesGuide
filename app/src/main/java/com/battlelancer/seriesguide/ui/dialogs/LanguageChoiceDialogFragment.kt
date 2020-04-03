@@ -25,7 +25,7 @@ class LanguageChoiceDialogFragment : AppCompatDialogFragment() {
     private var currentLanguagePosition: Int = 0
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val languageCodesArrayRes = arguments!!.getInt(ARG_ARRAY_LANGUAGE_CODES)
+        val languageCodesArrayRes = requireArguments().getInt(ARG_ARRAY_LANGUAGE_CODES)
         languageCodes = resources.getStringArray(languageCodesArrayRes)
 
         val languages = arrayOfNulls<String>(languageCodes.size)
@@ -35,7 +35,7 @@ class LanguageChoiceDialogFragment : AppCompatDialogFragment() {
             languages[i] = Locale(languageCode.substring(0, 2), "").displayName
         }
 
-        val currentLanguageCode = arguments!!.getString(ARG_SELECTED_LANGUAGE_CODE)
+        val currentLanguageCode = requireArguments().getString(ARG_SELECTED_LANGUAGE_CODE)
 
         currentLanguagePosition = 0
         if (currentLanguageCode != null) {
@@ -47,7 +47,7 @@ class LanguageChoiceDialogFragment : AppCompatDialogFragment() {
             }
         }
 
-        return AlertDialog.Builder(activity!!)
+        return AlertDialog.Builder(requireContext())
                 .setTitle(R.string.pref_language)
                 .setSingleChoiceItems(
                         languages,

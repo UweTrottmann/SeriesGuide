@@ -77,11 +77,11 @@ public class ShowsFragment extends Fragment {
 
         recyclerView = v.findViewById(R.id.recyclerViewShows);
         emptyView = v.findViewById(R.id.emptyViewShows);
-        ViewTools.setVectorIconTop(getActivity().getTheme(), emptyView,
+        ViewTools.setVectorIconTop(requireActivity().getTheme(), emptyView,
                 R.drawable.ic_add_white_24dp);
         emptyView.setOnClickListener(view -> startActivityAddShows());
         emptyViewFilter = v.findViewById(R.id.emptyViewShowsFilter);
-        ViewTools.setVectorIconTop(getActivity().getTheme(), emptyViewFilter,
+        ViewTools.setVectorIconTop(requireActivity().getTheme(), emptyViewFilter,
                 R.drawable.ic_filter_white_24dp);
         emptyViewFilter.setOnClickListener(view -> {
             isFilterFavorites = isFilterUnwatched = isFilterUpcoming = isFilterHidden = false;
@@ -129,14 +129,14 @@ public class ShowsFragment extends Fragment {
         getSortAndFilterSettings();
 
         // prepare view adapter
-        adapter = new ShowsAdapter(getContext(), getActivity().getTheme(), onItemClickListener);
-        if (!FirstRunView.hasSeenFirstRunFragment(getContext())) {
+        adapter = new ShowsAdapter(requireContext(), getActivity().getTheme(), onItemClickListener);
+        if (!FirstRunView.hasSeenFirstRunFragment(requireContext())) {
             adapter.setDisplayFirstRunHeader(true);
         }
         recyclerView.setAdapter(adapter);
 
         model = new ViewModelProvider(this).get(ShowsViewModel.class);
-        model.getShowItemsLiveData().observe(this, showItems -> {
+        model.getShowItemsLiveData().observe(getViewLifecycleOwner(), showItems -> {
             adapter.submitList(showItems);
             // note: use adapter count, may display header
             boolean isEmpty = adapter.getItemCount() == 0;
@@ -145,12 +145,12 @@ public class ShowsFragment extends Fragment {
         updateShowsQuery();
 
         // hide floating action button when scrolling shows
-        FloatingActionButton buttonAddShow = getActivity().findViewById(R.id.buttonShowsAdd);
+        FloatingActionButton buttonAddShow = requireActivity().findViewById(R.id.buttonShowsAdd);
         recyclerView.addOnScrollListener(new FabRecyclerViewScrollDetector(buttonAddShow));
 
         // listen for some settings changes
         PreferenceManager
-                .getDefaultSharedPreferences(getActivity())
+                .getDefaultSharedPreferences(requireActivity())
                 .registerOnSharedPreferenceChangeListener(onPreferenceChangeListener);
 
         setHasOptionsMenu(true);
@@ -222,12 +222,12 @@ public class ShowsFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
         prefs.unregisterOnSharedPreferenceChangeListener(onPreferenceChangeListener);
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.shows_menu, menu);
 
@@ -333,7 +333,7 @@ public class ShowsFragment extends Fragment {
                 }
             }
 
-            SingleChoiceDialogFragment.show(getFragmentManager(),
+            SingleChoiceDialogFragment.show(getParentFragmentManager(),
                     R.array.upcominglimit,
                     R.array.upcominglimitData,
                     selectedIndex,
@@ -467,8 +467,8 @@ public class ShowsFragment extends Fragment {
         @Override
         public void onItemClick(@NotNull View anchor, int showTvdbId) {
             // display overview for this show
-            Intent intent = OverviewActivity.intentShow(getContext(), showTvdbId);
-            ActivityCompat.startActivity(getContext(), intent,
+            Intent intent = OverviewActivity.intentShow(requireContext(), showTvdbId);
+            ActivityCompat.startActivity(requireContext(), intent,
                     ActivityOptionsCompat
                             .makeScaleUpAnimation(anchor, 0, 0, anchor.getWidth(),
                                     anchor.getHeight())
@@ -489,7 +489,7 @@ public class ShowsFragment extends Fragment {
             menu.findItem(R.id.menu_action_shows_unhide).setVisible(show.isHidden());
 
             popupMenu.setOnMenuItemClickListener(
-                    new ShowMenuItemClickListener(getContext(), getFragmentManager(),
+                    new ShowMenuItemClickListener(getContext(), getParentFragmentManager(),
                             show.getShowTvdbId(), show.getEpisodeTvdbId()));
             popupMenu.show();
         }
@@ -506,7 +506,7 @@ public class ShowsFragment extends Fragment {
         if (key.equals(AdvancedSettings.KEY_UPCOMING_LIMIT)) {
             updateShowsQuery();
             // refresh all list widgets
-            ListWidgetProvider.notifyDataChanged(getContext());
+            ListWidgetProvider.notifyDataChanged(requireContext());
         }
     };
 }

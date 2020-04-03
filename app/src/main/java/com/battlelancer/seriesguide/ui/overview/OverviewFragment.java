@@ -170,7 +170,7 @@ public class OverviewFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        showTvdbId = getArguments().getInt(ARG_INT_SHOW_TVDBID);
+        showTvdbId = requireArguments().getInt(ARG_INT_SHOW_TVDBID);
     }
 
     @Override
@@ -218,7 +218,7 @@ public class OverviewFragment extends Fragment implements
         buttonManageLists.setOnClickListener(v -> {
                     if (isEpisodeDataAvailable) {
                         ManageListsDialogFragment.show(
-                                requireFragmentManager(),
+                                getParentFragmentManager(),
                                 currentEpisodeCursor.getInt(EpisodeQuery._ID),
                                 ListItemTypes.EPISODE
                         );
@@ -237,7 +237,7 @@ public class OverviewFragment extends Fragment implements
         super.onActivityCreated(savedInstanceState);
 
         // Are we in a multi-pane layout?
-        View seasonsFragment = getActivity().findViewById(R.id.fragment_seasons);
+        View seasonsFragment = requireActivity().findViewById(R.id.fragment_seasons);
         boolean multiPane = seasonsFragment != null
                 && seasonsFragment.getVisibility() == View.VISIBLE;
 
@@ -319,7 +319,7 @@ public class OverviewFragment extends Fragment implements
 
         // store new value
         boolean isFavorite = (Boolean) view.getTag();
-        SgApp.getServicesComponent(getContext()).showTools()
+        SgApp.getServicesComponent(requireContext()).showTools()
                 .storeIsFavorite(showTvdbId, !isFavorite);
     }
 
@@ -330,7 +330,7 @@ public class OverviewFragment extends Fragment implements
         }
         int episodeTvdbId = currentEpisodeCursor.getInt(EpisodeQuery._ID);
         // check in
-        CheckInDialogFragment.show(getActivity(), getFragmentManager(), episodeTvdbId);
+        CheckInDialogFragment.show(requireContext(), getParentFragmentManager(), episodeTvdbId);
     }
 
     @OnClick(R.id.buttonEpisodeStreamingSearch)
@@ -349,7 +349,7 @@ public class OverviewFragment extends Fragment implements
     }
 
     private void showStreamingSearchConfigDialog() {
-        StreamingSearchConfigureDialog.show(requireFragmentManager());
+        StreamingSearchConfigureDialog.show(getParentFragmentManager());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -401,7 +401,7 @@ public class OverviewFragment extends Fragment implements
             return;
         }
         RateDialogFragment.newInstanceEpisode(currentEpisodeTvdbId)
-                .safeShow(getContext(), getFragmentManager());
+                .safeShow(getContext(), getParentFragmentManager());
     }
 
     @OnClick(R.id.buttonEpisodeComments)
@@ -527,6 +527,7 @@ public class OverviewFragment extends Fragment implements
         int SHOW_SLUG = 13;
     }
 
+    @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
@@ -534,13 +535,13 @@ public class OverviewFragment extends Fragment implements
             default:
                 return new EpisodeLoader(getActivity(), showTvdbId);
             case OverviewActivity.OVERVIEW_SHOW_LOADER_ID:
-                return new CursorLoader(getActivity(), Shows.buildShowUri(String
+                return new CursorLoader(requireContext(), Shows.buildShowUri(String
                         .valueOf(showTvdbId)), ShowQuery.PROJECTION, null, null, null);
         }
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         if (!isAdded()) {
             return;
         }
@@ -809,7 +810,7 @@ public class OverviewFragment extends Fragment implements
             imageEpisode.setImageResource(R.drawable.ic_image_missing);
         } else {
             // try loading image
-            ServiceUtils.loadWithPicasso(getActivity(), TvdbImageTools.artworkUrl(imagePath))
+            ServiceUtils.loadWithPicasso(requireContext(), TvdbImageTools.artworkUrl(imagePath))
                     .error(R.drawable.ic_image_missing)
                     .into(imageEpisode,
                             new Callback() {
@@ -835,7 +836,7 @@ public class OverviewFragment extends Fragment implements
         if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {
             int seasonNumber = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
             int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-            ratingsTask = new TraktRatingsTask(getContext(), showTvdbId,
+            ratingsTask = new TraktRatingsTask(requireContext(), showTvdbId,
                     currentEpisodeTvdbId, seasonNumber, episodeNumber);
             ratingsTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
@@ -844,10 +845,10 @@ public class OverviewFragment extends Fragment implements
     private void populateShowViews(@NonNull Cursor show) {
         // set show title in action bar
         showTitle = show.getString(ShowQuery.SHOW_TITLE);
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(showTitle);
-            getActivity().setTitle(getString(R.string.description_overview) + showTitle);
+            requireActivity().setTitle(getString(R.string.description_overview) + showTitle);
         }
 
         if (getView() == null) {
@@ -869,7 +870,7 @@ public class OverviewFragment extends Fragment implements
         buttonFavorite.setTag(isFavorite);
 
         // poster background
-        TvdbImageTools.loadShowPosterAlpha(getActivity(), imageBackground,
+        TvdbImageTools.loadShowPosterAlpha(requireContext(), imageBackground,
                 show.getString(ShowQuery.SHOW_POSTER_SMALL));
 
         // regular network and time
@@ -878,14 +879,14 @@ public class OverviewFragment extends Fragment implements
         int releaseTime = show.getInt(ShowQuery.SHOW_RELEASE_TIME);
         if (releaseTime != -1) {
             int weekDay = show.getInt(ShowQuery.SHOW_RELEASE_WEEKDAY);
-            Date release = TimeTools.getShowReleaseDateTime(getActivity(),
+            Date release = TimeTools.getShowReleaseDateTime(requireContext(),
                     releaseTime,
                     weekDay,
                     show.getString(ShowQuery.SHOW_RELEASE_TIMEZONE),
                     show.getString(ShowQuery.SHOW_RELEASE_COUNTRY),
                     network);
-            String dayString = TimeTools.formatToLocalDayOrDaily(getActivity(), release, weekDay);
-            String timeString = TimeTools.formatToLocalTime(getActivity(), release);
+            String dayString = TimeTools.formatToLocalDayOrDaily(requireContext(), release, weekDay);
+            String timeString = TimeTools.formatToLocalTime(requireContext(), release);
             // "Mon 08:30"
             time = dayString + " " + timeString;
         }
@@ -916,8 +917,8 @@ public class OverviewFragment extends Fragment implements
 
                 @Override
                 public void onFeedback() {
-                    if (Utils.tryStartActivity(getContext(),
-                            HelpActivity.getFeedbackEmailIntent(getContext()), true)) {
+                    if (Utils.tryStartActivity(requireContext(),
+                            HelpActivity.getFeedbackEmailIntent(requireContext()), true)) {
                         removeFeedbackView();
                     }
                 }
@@ -947,7 +948,7 @@ public class OverviewFragment extends Fragment implements
                 }
 
                 @Override
-                public void onLoadFinished(Loader<List<Action>> loader, List<Action> data) {
+                public void onLoadFinished(@NonNull Loader<List<Action>> loader, List<Action> data) {
                     if (!isAdded()) {
                         return;
                     }
@@ -956,14 +957,14 @@ public class OverviewFragment extends Fragment implements
                     } else {
                         Timber.d("onLoadFinished: received %s actions", data.size());
                     }
-                    ActionsHelper.populateActions(getActivity().getLayoutInflater(),
-                            getActivity().getTheme(), containerActions, data);
+                    ActionsHelper.populateActions(requireActivity().getLayoutInflater(),
+                            requireActivity().getTheme(), containerActions, data);
                 }
 
                 @Override
-                public void onLoaderReset(Loader<List<Action>> loader) {
-                    ActionsHelper.populateActions(getActivity().getLayoutInflater(),
-                            getActivity().getTheme(), containerActions, null);
+                public void onLoaderReset(@NonNull Loader<List<Action>> loader) {
+                    ActionsHelper.populateActions(requireActivity().getLayoutInflater(),
+                            requireActivity().getTheme(), containerActions, null);
                 }
             };
 

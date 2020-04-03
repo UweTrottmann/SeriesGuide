@@ -126,9 +126,9 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
                 }
             }
 
-            int itemTvdbId = getArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
-            int itemType = getArguments().getInt(InitBundle.INT_ITEM_TYPE);
-            ListsTools.changeListsOfItem(getContext(), itemTvdbId, itemType,
+            int itemTvdbId = requireArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
+            int itemType = requireArguments().getInt(InitBundle.INT_ITEM_TYPE);
+            ListsTools.changeListsOfItem(requireContext(), itemTvdbId, itemType,
                     addToTheseLists, removeFromTheseLists);
 
             dismiss();
@@ -150,8 +150,8 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
         super.onActivityCreated(args);
 
         // display item title
-        final int itemTvdbId = getArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
-        final int itemType = getArguments().getInt(InitBundle.INT_ITEM_TYPE);
+        final int itemTvdbId = requireArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
+        final int itemType = requireArguments().getInt(InitBundle.INT_ITEM_TYPE);
         //noinspection ConstantConditions // fragment has a view
         final TextView itemTitle = getView().findViewById(R.id.item);
         Uri uri = null;
@@ -181,7 +181,7 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
         }
         //noinspection ConstantConditions // itemType might not match
         if (uri != null && projection != null) {
-            Cursor item = getActivity().getContentResolver().query(uri, projection, null, null,
+            Cursor item = requireContext().getContentResolver().query(uri, projection, null, null,
                     null);
             if (item != null && item.moveToFirst()) {
                 if (itemType == 2) {
@@ -211,28 +211,29 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
         adapter.setItemChecked(position, checkable.isChecked());
     }
 
+    @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         // filter for this item, but keep other lists
         int itemTvdbId = args.getInt(InitBundle.INT_ITEM_TVDB_ID);
         int itemType = args.getInt(InitBundle.INT_ITEM_TYPE);
 
-        return new CursorLoader(getActivity(), Lists.buildListsWithListItemUri(ListItems
+        return new CursorLoader(requireContext(), Lists.buildListsWithListItemUri(ListItems
                 .generateListItemIdWildcard(itemTvdbId, itemType)),
                 ListsQuery.PROJECTION, null, null, Lists.SORT_ORDER_THEN_NAME);
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         adapter.swapCursor(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         adapter.swapCursor(null);
     }
 
-    private class ListsAdapter extends CursorAdapter {
+    private static class ListsAdapter extends CursorAdapter {
 
         private LayoutInflater layoutInflater;
         private SparseBooleanArray checkedItems;

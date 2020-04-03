@@ -93,7 +93,7 @@ class CloudSetupFragment : Fragment() {
 
         buttonRemoveAccount.setOnClickListener {
             if (RemoveCloudAccountDialogFragment().safeShow(
-                    fragmentManager!!,
+                    parentFragmentManager,
                     "remove-cloud-account"
                 )) {
                 setProgressVisible(true)
@@ -110,9 +110,9 @@ class CloudSetupFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        hexagonTools = SgApp.getServicesComponent(context!!).hexagonTools()
+        hexagonTools = SgApp.getServicesComponent(requireContext()).hexagonTools()
         googleSignInClient = GoogleSignIn
-            .getClient(activity!!, HexagonTools.getGoogleSignInOptions())
+            .getClient(requireActivity(), HexagonTools.getGoogleSignInOptions())
     }
 
     override fun onStart() {
@@ -353,7 +353,7 @@ class CloudSetupFragment : Fragment() {
 
     private fun showSnackbar(message: CharSequence) {
         dismissSnackbar()
-        snackbar = Snackbar.make(view!!, message, Snackbar.LENGTH_INDEFINITE).also {
+        snackbar = Snackbar.make(requireView(), message, Snackbar.LENGTH_INDEFINITE).also {
             it.show()
         }
     }

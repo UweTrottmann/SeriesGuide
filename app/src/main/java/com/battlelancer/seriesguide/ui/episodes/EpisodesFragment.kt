@@ -123,7 +123,7 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
         super.onActivityCreated(savedInstanceState)
 
         model = ViewModelProvider(this).get(EpisodesViewModel::class.java).also {
-            it.episodeCountLiveData.observe(this, Observer { result ->
+            it.episodeCountLiveData.observe(viewLifecycleOwner, Observer { result ->
                 handleCountUpdate(result)
             })
         }
@@ -247,12 +247,12 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                             showTvdbId,
                             releaseTimeMs,
                             episodeNumber
-                        ).safeShow(requireFragmentManager(), "EpisodeWatchedUpToDialog")
+                        ).safeShow(parentFragmentManager, "EpisodeWatchedUpToDialog")
                         true
                     }
                     R.id.menu_action_episodes_manage_lists -> {
                         ManageListsDialogFragment.show(
-                            fragmentManager,
+                            parentFragmentManager,
                             episodeTvdbId,
                             ListItemTypes.EPISODE
                         )
@@ -287,7 +287,7 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
     }
 
     private fun showSortDialog() {
-        SingleChoiceDialogFragment.show(fragmentManager,
+        SingleChoiceDialogFragment.show(parentFragmentManager,
                 R.array.epsorting,
                 R.array.epsortingData, sortOrder.index(),
                 DisplaySettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting,

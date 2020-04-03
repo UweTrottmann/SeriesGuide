@@ -145,7 +145,7 @@ class ShowFragment : ScopedFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        showTools = SgApp.getServicesComponent(context!!).showTools()
+        showTools = SgApp.getServicesComponent(requireContext()).showTools()
         arguments?.let {
             showTvdbId = it.getInt(ARG_SHOW_TVDBID)
         } ?: throw IllegalArgumentException("Missing arguments")
@@ -164,7 +164,7 @@ class ShowFragment : ScopedFragment() {
         CheatSheet.setup(buttonHidden)
 
         // language button
-        val theme = activity!!.theme
+        val theme = requireActivity().theme
         ViewTools.setVectorIconLeft(theme, buttonLanguage, R.drawable.ic_language_white_24dp)
         buttonLanguage.setOnClickListener { displayLanguageSettings() }
         CheatSheet.setup(buttonLanguage, R.string.pref_language)
@@ -243,7 +243,7 @@ class ShowFragment : ScopedFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_show_manage_lists -> {
-                ManageListsDialogFragment.show(fragmentManager, showTvdbId, ListItemTypes.SHOW)
+                ManageListsDialogFragment.show(parentFragmentManager, showTvdbId, ListItemTypes.SHOW)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -349,7 +349,7 @@ class ShowFragment : ScopedFragment() {
         if (releaseTime != -1) {
             val weekDay = showCursor.getInt(ShowQuery.RELEASE_WEEKDAY)
             val release = TimeTools.getShowReleaseDateTime(
-                context!!,
+                requireContext(),
                 releaseTime,
                 weekDay,
                 showCursor.getString(ShowQuery.RELEASE_TIMEZONE),
@@ -375,7 +375,7 @@ class ShowFragment : ScopedFragment() {
         val isFavorite = showCursor.getInt(ShowQuery.IS_FAVORITE) == 1
         buttonFavorite.apply {
             ViewTools.setVectorIconTop(
-                activity!!.theme, this, if (isFavorite) {
+                requireActivity().theme, this, if (isFavorite) {
                     R.drawable.ic_star_black_24dp
                 } else {
                     R.drawable.ic_star_border_black_24dp
@@ -405,7 +405,7 @@ class ShowFragment : ScopedFragment() {
                 }
             )
             ViewTools.setVectorIconTop(
-                activity!!.theme, this, if (notify) {
+                requireActivity().theme, this, if (notify) {
                     R.drawable.ic_notifications_active_black_24dp
                 } else {
                     R.drawable.ic_notifications_off_black_24dp
@@ -430,7 +430,7 @@ class ShowFragment : ScopedFragment() {
             contentDescription = label
             text = label
             ViewTools.setVectorIconTop(
-                activity!!.theme, this,
+                requireActivity().theme, this,
                 if (isHidden) {
                     R.drawable.ic_visibility_off_black_24dp
                 } else {
@@ -546,7 +546,7 @@ class ShowFragment : ScopedFragment() {
             containerPoster.isFocusable = false
         } else {
             // poster and fullscreen button
-            TvdbImageTools.loadShowPoster(activity!!, imageViewPoster, posterPathSmall)
+            TvdbImageTools.loadShowPoster(requireActivity(), imageViewPoster, posterPathSmall)
             containerPoster.isFocusable = true
             containerPoster.setOnClickListener { v ->
                 val intent = Intent(activity, FullscreenImageActivity::class.java)
@@ -562,7 +562,11 @@ class ShowFragment : ScopedFragment() {
             }
 
             // poster background
-            TvdbImageTools.loadShowPosterAlpha(activity!!, imageViewBackground, posterPathSmall)
+            TvdbImageTools.loadShowPosterAlpha(
+                requireActivity(),
+                imageViewBackground,
+                posterPathSmall
+            )
         }
 
         loadTraktRatings()
@@ -617,7 +621,7 @@ class ShowFragment : ScopedFragment() {
     }
 
     private fun rateShow() {
-        RateDialogFragment.newInstanceShow(showTvdbId).safeShow(context, fragmentManager)
+        RateDialogFragment.newInstanceShow(showTvdbId).safeShow(context, parentFragmentManager)
     }
 
     private fun loadTraktRatings() {
@@ -631,7 +635,7 @@ class ShowFragment : ScopedFragment() {
 
     private fun displayLanguageSettings() {
         LanguageChoiceDialogFragment.show(
-            fragmentManager!!,
+            parentFragmentManager,
             R.array.languageCodesShows, languageCode, "showLanguageDialog"
         )
     }
@@ -662,8 +666,12 @@ class ShowFragment : ScopedFragment() {
         }
 
         // create the shortcut
-        val shortcutLiveData =
-            ShortcutCreator(context!!, currentShowTitle, currentPosterPath, currentShowTvdbId)
+        val shortcutLiveData = ShortcutCreator(
+            requireContext(),
+            currentShowTitle,
+            currentPosterPath,
+            currentShowTvdbId
+        )
         launch {
             shortcutLiveData.prepareAndPinShortcut()
         }
