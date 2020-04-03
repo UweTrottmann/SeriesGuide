@@ -69,12 +69,10 @@ public class ShowsFragment extends Fragment {
 
         recyclerView = v.findViewById(R.id.recyclerViewShows);
         emptyView = v.findViewById(R.id.emptyViewShows);
-        ViewTools.setVectorIconTop(requireActivity().getTheme(), emptyView,
-                R.drawable.ic_add_white_24dp);
+        ViewTools.setVectorDrawableTop(emptyView, R.drawable.ic_add_white_24dp);
         emptyView.setOnClickListener(view -> startActivityAddShows());
         emptyViewFilter = v.findViewById(R.id.emptyViewShowsFilter);
-        ViewTools.setVectorIconTop(requireActivity().getTheme(), emptyViewFilter,
-                R.drawable.ic_filter_white_24dp);
+        ViewTools.setVectorDrawableTop(emptyViewFilter, R.drawable.ic_filter_white_24dp);
         emptyViewFilter.setOnClickListener(view -> {
             ShowsDistillationSettings.filterLiveData
                     .setValue(FilterShowsView.ShowFilter.allDisabled());
