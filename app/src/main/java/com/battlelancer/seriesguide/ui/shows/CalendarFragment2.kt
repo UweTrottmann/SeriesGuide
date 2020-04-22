@@ -133,6 +133,7 @@ class CalendarFragment2 : Fragment() {
     }
 
     private fun updateCalendarQuery() {
+        if (view == null) return
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.updateCalendarQuery(type)
         }
