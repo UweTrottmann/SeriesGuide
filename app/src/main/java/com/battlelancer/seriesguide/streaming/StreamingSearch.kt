@@ -44,6 +44,7 @@ object StreamingSearch {
             "jp" to "検索",
             "kr" to "검색",
             "th" to "search",
+            "tr" to "arama",
             "my" to "search",
             "ph" to "search",
             "sg" to "search",
