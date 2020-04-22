@@ -225,7 +225,7 @@ class ListWidgetRemoteViewsFactory(
         }
 
         // Set show poster.
-        val posterPath = dataCursor.getString(
+        val posterPath: String? = dataCursor.getString(
             if (isShowQuery) ShowsQuery.SHOW_POSTER_SMALL else CalendarQuery.SHOW_POSTER_SMALL
         )
         maybeSetPoster(rv, posterPath)
@@ -233,7 +233,7 @@ class ListWidgetRemoteViewsFactory(
         return rv
     }
 
-    private fun maybeSetPoster(rv: RemoteViews, posterPath: String) {
+    private fun maybeSetPoster(rv: RemoteViews, posterPath: String?) {
         val poster = try {
             ServiceUtils.loadWithPicasso(context, TvdbImageTools.artworkUrl(posterPath))
                 .centerCrop()
