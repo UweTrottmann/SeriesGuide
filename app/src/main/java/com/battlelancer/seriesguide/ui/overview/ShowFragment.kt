@@ -17,6 +17,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.whenStarted
 import androidx.loader.app.LoaderManager
 import androidx.loader.app.LoaderManager.LoaderCallbacks
 import androidx.loader.content.CursorLoader
@@ -668,7 +669,9 @@ class ShowFragment : Fragment() {
             currentShowTvdbId
         )
         viewLifecycleOwner.lifecycleScope.launch {
-            shortcutLiveData.prepareAndPinShortcut()
+            whenStarted {
+                shortcutLiveData.prepareAndPinShortcut()
+            }
         }
     }
 
