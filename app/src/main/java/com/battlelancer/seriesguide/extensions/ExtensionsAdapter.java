@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.extensions;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
+import androidx.appcompat.content.res.AppCompatResources;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
@@ -33,13 +34,10 @@ public class ExtensionsAdapter extends ArrayAdapter<Extension> {
     private static final int VIEW_TYPE_ADD = 1;
 
     private final OnItemClickListener onItemClickListener;
-    private final VectorDrawableCompat iconExtension;
 
     ExtensionsAdapter(Context context, OnItemClickListener onItemClickListener) {
         super(context, 0);
         this.onItemClickListener = onItemClickListener;
-        iconExtension = ViewTools.vectorIconActive(context,
-                context.getTheme(), R.drawable.ic_extension_black_24dp);
     }
 
     @Override
@@ -87,13 +85,14 @@ public class ExtensionsAdapter extends ArrayAdapter<Extension> {
 
         final Extension extension = getItem(position);
         if (extension != null) {
-            viewHolder.bindTo(extension, iconExtension, position);
+            viewHolder.bindTo(extension, position);
         }
 
         return convertView;
     }
 
     static class ViewHolder {
+        private final Drawable drawableIcon;
         @BindView(R.id.imageViewItemExtensionIcon) ImageView icon;
         @BindView(R.id.textViewItemExtensionTitle) TextView title;
         @BindView(R.id.textViewItemExtensionDescription) TextView description;
@@ -105,9 +104,11 @@ public class ExtensionsAdapter extends ArrayAdapter<Extension> {
             ButterKnife.bind(this, view);
             settings.setOnClickListener(v -> onItemClickListener
                     .onExtensionMenuButtonClick(settings, extension, position));
+            drawableIcon = AppCompatResources
+                    .getDrawable(view.getContext(), R.drawable.ic_extension_black_24dp);
         }
 
-        void bindTo(Extension extension, VectorDrawableCompat iconExtension, int position) {
+        void bindTo(Extension extension, int position) {
             this.extension = extension;
             this.position = position;
 
@@ -116,7 +117,7 @@ public class ExtensionsAdapter extends ArrayAdapter<Extension> {
             if (extension.icon != null) {
                 icon.setImageDrawable(extension.icon);
             } else {
-                icon.setImageDrawable(iconExtension);
+                icon.setImageDrawable(drawableIcon);
             }
         }
     }
