@@ -7,14 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.databinding.ItemExtensionBinding;
 
 /**
  * Creates views for a list of {@link Extension}.
@@ -26,9 +23,6 @@ public class ExtensionsAdapter extends ArrayAdapter<Extension> {
 
         void onAddExtensionClick(View anchor);
     }
-
-    private static final int LAYOUT_EXTENSION = R.layout.item_extension;
-    private static final int LAYOUT_ADD = R.layout.item_extension_add;
 
     private static final int VIEW_TYPE_EXTENSION = 0;
     private static final int VIEW_TYPE_ADD = 1;
@@ -63,7 +57,7 @@ public class ExtensionsAdapter extends ArrayAdapter<Extension> {
         if (getItemViewType(position) == VIEW_TYPE_ADD) {
             if (convertView == null) {
                 convertView = LayoutInflater.from(parent.getContext())
-                        .inflate(LAYOUT_ADD, parent, false);
+                        .inflate(R.layout.item_extension_add, parent, false);
             }
             Button buttonAdd = convertView.findViewById(R.id.button_item_extension_add);
             buttonAdd.setOnClickListener(v -> onItemClickListener.onAddExtensionClick(buttonAdd));
@@ -72,9 +66,10 @@ public class ExtensionsAdapter extends ArrayAdapter<Extension> {
 
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext())
-                    .inflate(LAYOUT_EXTENSION, parent, false);
-            viewHolder = new ViewHolder(convertView, onItemClickListener);
+            ItemExtensionBinding binding = ItemExtensionBinding
+                    .inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            convertView = binding.getRoot();
+            viewHolder = new ViewHolder(binding, onItemClickListener);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -89,32 +84,30 @@ public class ExtensionsAdapter extends ArrayAdapter<Extension> {
     }
 
     static class ViewHolder {
+        private final ItemExtensionBinding binding;
         private final Drawable drawableIcon;
-        @BindView(R.id.imageViewItemExtensionIcon) ImageView icon;
-        @BindView(R.id.textViewItemExtensionTitle) TextView title;
-        @BindView(R.id.textViewItemExtensionDescription) TextView description;
-        @BindView(R.id.imageViewItemExtensionSettings) ImageView settings;
         @Nullable private Extension extension;
         int position;
 
-        public ViewHolder(View view, OnItemClickListener onItemClickListener) {
-            ButterKnife.bind(this, view);
-            settings.setOnClickListener(v -> onItemClickListener
-                    .onExtensionMenuButtonClick(settings, extension, position));
-            drawableIcon = AppCompatResources
-                    .getDrawable(view.getContext(), R.drawable.ic_extension_black_24dp);
+        ViewHolder(ItemExtensionBinding binding, OnItemClickListener onItemClickListener) {
+            this.binding = binding;
+            binding.imageViewSettings.setOnClickListener(v ->
+                    onItemClickListener.onExtensionMenuButtonClick(
+                            binding.imageViewSettings, extension, position));
+            drawableIcon = AppCompatResources.getDrawable(
+                    binding.getRoot().getContext(), R.drawable.ic_extension_black_24dp);
         }
 
         void bindTo(Extension extension, int position) {
             this.extension = extension;
             this.position = position;
 
-            title.setText(extension.label);
-            description.setText(extension.description);
+            binding.textViewTitle.setText(extension.label);
+            binding.textViewDescription.setText(extension.description);
             if (extension.icon != null) {
-                icon.setImageDrawable(extension.icon);
+                binding.imageViewIcon.setImageDrawable(extension.icon);
             } else {
-                icon.setImageDrawable(drawableIcon);
+                binding.imageViewIcon.setImageDrawable(drawableIcon);
             }
         }
     }

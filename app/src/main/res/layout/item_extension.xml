@@ -12,7 +12,7 @@
         android:minHeight="72dp">
 
         <ImageView
-            android:id="@+id/imageViewItemExtensionIcon"
+            android:id="@+id/imageViewIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_centerVertical="true"
@@ -23,7 +23,7 @@
             tools:src="@mipmap/ic_app" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imageViewItemExtensionSettings"
+            android:id="@+id/imageViewSettings"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentRight="true"
@@ -39,24 +39,24 @@
             tools:ignore="RtlSymmetry" />
 
         <TextView
-            android:id="@+id/textViewItemExtensionTitle"
+            android:id="@+id/textViewTitle"
             style="@style/Widget.SeriesGuide.TextView.SingleLine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/imageViewItemExtensionSettings"
-            android:layout_toRightOf="@+id/imageViewItemExtensionIcon"
+            android:layout_toLeftOf="@+id/imageViewSettings"
+            android:layout_toRightOf="@+id/imageViewIcon"
             android:ellipsize="end"
             android:paddingTop="20dp"
             android:textAppearance="@style/TextAppearance.Subhead"
             tools:text="Sample Extension" />
 
         <TextView
-            android:id="@+id/textViewItemExtensionDescription"
+            android:id="@+id/textViewDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewItemExtensionTitle"
-            android:layout_toLeftOf="@+id/imageViewItemExtensionSettings"
-            android:layout_toRightOf="@+id/imageViewItemExtensionIcon"
+            android:layout_below="@+id/textViewTitle"
+            android:layout_toLeftOf="@+id/imageViewSettings"
+            android:layout_toRightOf="@+id/imageViewIcon"
             android:ellipsize="end"
             android:maxLines="2"
             android:paddingBottom="20dp"
