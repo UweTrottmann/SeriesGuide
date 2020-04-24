@@ -12,6 +12,16 @@ Version 54
 ----------
 *in development*
 
+#### 54-beta4
+*2020-04-24*
+
+* 🔧 Add JustWatch Turkey to streaming search links.
+* 🔧 Tapping a bottom nav item now scrolls the visible list to the top.
+* 🔨 Fix widget crashing if an item has no poster.
+* 🔨 Fix crash when changing calendar settings in some situations.
+* 🔨 Fix crash when pinning shortcut in some situations.
+* 🔨 Fix crash if external storage is not available to read auto backups from.
+
 #### 54-beta3
 *2020-04-03*
 
