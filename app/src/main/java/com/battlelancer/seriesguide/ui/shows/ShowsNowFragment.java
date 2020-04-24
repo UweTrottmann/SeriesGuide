@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -34,7 +35,6 @@ import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.streams.HistoryActivity;
-import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import java.util.List;
@@ -100,6 +100,15 @@ public class ShowsNowFragment extends Fragment {
         });
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+
+        new ViewModelProvider(requireActivity()).get(ShowsActivityViewModel.class)
+                .getScrollTabToTopLiveData()
+                .observe(getViewLifecycleOwner(), tabPosition -> {
+                    if (tabPosition != null
+                            && tabPosition == ShowsActivity.InitBundle.INDEX_TAB_NOW) {
+                        recyclerView.smoothScrollToPosition(0);
+                    }
+                });
 
         return view;
     }
@@ -312,13 +321,6 @@ public class ShowsNowFragment extends Fragment {
             LoaderManager.getInstance(this)
                     .restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
                             recentlyLocalCallbacks);
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventTabClick(TabClickEvent event) {
-        if (event.position == ShowsActivity.InitBundle.INDEX_TAB_NOW) {
-            recyclerView.smoothScrollToPosition(0);
         }
     }
 

@@ -33,7 +33,6 @@ import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager;
 import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.greenrobot.eventbus.EventBus;
@@ -99,6 +98,15 @@ public class ShowsFragment extends Fragment {
             }
         });
         recyclerView.setLayoutManager(layoutManager);
+
+        new ViewModelProvider(requireActivity()).get(ShowsActivityViewModel.class)
+                .getScrollTabToTopLiveData()
+                .observe(getViewLifecycleOwner(), tabPosition -> {
+                    if (tabPosition != null
+                            && tabPosition == ShowsActivity.InitBundle.INDEX_TAB_SHOWS) {
+                        recyclerView.smoothScrollToPosition(0);
+                    }
+                });
     }
 
     @Override
@@ -263,13 +271,6 @@ public class ShowsFragment extends Fragment {
                 model.reRunQuery();
                 break;
             }
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventTabClick(TabClickEvent event) {
-        if (event.position == ShowsActivity.InitBundle.INDEX_TAB_SHOWS) {
-            recyclerView.smoothScrollToPosition(0);
         }
     }
 

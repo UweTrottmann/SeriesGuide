@@ -40,18 +40,17 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.ui.shows.CalendarFragment2;
+import com.battlelancer.seriesguide.ui.shows.ShowsActivityViewModel;
 import com.battlelancer.seriesguide.ui.shows.ShowsFragment;
 import com.battlelancer.seriesguide.ui.shows.ShowsNowFragment;
 import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.uwetrottmann.seriesguide.billing.BillingViewModel;
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * Provides the apps main screen, displaying a list of shows and their next episodes.
@@ -69,6 +68,8 @@ public class ShowsActivity extends BaseTopActivity implements
 
     private ShowsTabPageAdapter tabsAdapter;
     private ViewPager viewPager;
+
+    private ShowsActivityViewModel viewModel;
 
     @SuppressWarnings("unused")
     public interface InitBundle {
@@ -103,6 +104,8 @@ public class ShowsActivity extends BaseTopActivity implements
             finish();
             return;
         }
+
+        viewModel = new ViewModelProvider(this).get(ShowsActivityViewModel.class);
 
         // setup all the views!
         setupViews();
@@ -195,7 +198,7 @@ public class ShowsActivity extends BaseTopActivity implements
         SlidingTabLayout tabs = findViewById(R.id.tabLayoutTabs);
         tabs.setOnTabClickListener(position -> {
             if (viewPager.getCurrentItem() == position) {
-                EventBus.getDefault().post(new TabClickEvent(position));
+                viewModel.scrollTabToTop(position);
             }
         });
         tabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(), this, viewPager,

@@ -17,6 +17,7 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,13 +32,9 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
-import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.widgets.FastScrollerDecoration
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 class CalendarFragment2 : Fragment() {
 
@@ -112,6 +109,22 @@ class CalendarFragment2 : Fragment() {
                 R.string.norecent
             }
         )
+
+        ViewModelProvider(requireActivity()).get(ShowsActivityViewModel::class.java)
+            .scrollTabToTopLiveData
+            .observe(
+                viewLifecycleOwner,
+                Observer { tabPosition: Int? ->
+                    if (tabPosition != null) {
+                        if (CalendarType.UPCOMING == type
+                            && tabPosition == ShowsActivity.InitBundle.INDEX_TAB_UPCOMING
+                            || CalendarType.RECENT == type
+                            && tabPosition == ShowsActivity.InitBundle.INDEX_TAB_RECENT) {
+                            recyclerView.smoothScrollToPosition(0)
+                        }
+                    }
+                }
+            )
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -137,28 +150,10 @@ class CalendarFragment2 : Fragment() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         PreferenceManager.getDefaultSharedPreferences(activity)
             .unregisterOnSharedPreferenceChangeListener(prefChangeListener)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventTabClick(event: TabClickEvent) {
-        if (CalendarType.UPCOMING == type && event.position == ShowsActivity.InitBundle.INDEX_TAB_UPCOMING
-            || CalendarType.RECENT == type && event.position == ShowsActivity.InitBundle.INDEX_TAB_RECENT) {
-            recyclerView.smoothScrollToPosition(0)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
