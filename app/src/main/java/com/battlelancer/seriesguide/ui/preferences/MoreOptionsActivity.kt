@@ -6,7 +6,10 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK
+import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import com.battlelancer.seriesguide.R
@@ -23,6 +26,7 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
 import com.uwetrottmann.seriesguide.customtabs.CustomTabsHelper
+
 
 /**
  * Displays accounts, links to unlock all features, settings and help
@@ -67,19 +71,22 @@ class MoreOptionsActivity : BaseTopActivity() {
             val intent = if (packageName == null) {
                 Intent(this, HelpActivity::class.java)
             } else {
-                val builder = CustomTabsIntent.Builder()
-                builder.setShowTitle(true)
-                builder.setToolbarColor(
-                    ContextCompat.getColor(
-                        this,
-                        Utils.resolveAttributeToResourceId(theme, R.attr.colorPrimary)
+                val darkParams = CustomTabColorSchemeParams.Builder()
+                    .setToolbarColor(
+                        ContextCompat.getColor(this, R.color.sg_background_app_bar_dark)
                     )
-                )
-
-                builder.build().intent.apply {
-                    setPackage(packageName)
-                    data = Uri.parse(getString(R.string.help_url))
-                }
+                    .build()
+                CustomTabsIntent.Builder()
+                    .setShowTitle(true)
+                    .setToolbarColor(
+                        ContextCompat.getColor(this, R.color.sg_color_primary_light)
+                    )
+                    .setColorScheme(COLOR_SCHEME_SYSTEM)
+                    .setColorSchemeParams(COLOR_SCHEME_DARK, darkParams)
+                    .build().intent.apply {
+                        setPackage(packageName)
+                        data = Uri.parse(getString(R.string.help_url))
+                    }
             }
             startActivity(intent)
         }
