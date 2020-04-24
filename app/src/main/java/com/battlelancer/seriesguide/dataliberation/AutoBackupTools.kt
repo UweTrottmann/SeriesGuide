@@ -63,12 +63,18 @@ object AutoBackupTools {
             Backup.Movies.type -> Backup.Movies
             else -> throw IllegalArgumentException("Unknown backup type $type")
         }
-        getAllBackupsNewestFirst(backup, context)
-            .let { return if (it.isNotEmpty()) it[0] else null }
+        try {
+            getAllBackupsNewestFirst(backup, context)
+                .let { return if (it.isNotEmpty()) it[0] else null }
+        } catch (e: IOException) {
+            Timber.e(e, "Unable to get latest backup.")
+            return null
+        }
     }
 
     data class BackupFile(val file: File, val timestamp: Long)
 
+    @Throws(IOException::class)
     private fun getAllBackupsNewestFirst(backup: Backup, context: Context): List<BackupFile> {
         val backupDirectory = getBackupDirectory(context)
         val files = backupDirectory.listFiles()
