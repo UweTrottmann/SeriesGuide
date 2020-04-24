@@ -12,6 +12,8 @@ import android.widget.GridView
 import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
@@ -48,6 +50,23 @@ abstract class MoviesBaseFragment : Fragment(), LoaderManager.LoaderCallbacks<Cu
         gridView.emptyView = emptyView
 
         return v
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        ViewModelProvider(requireActivity()).get(MoviesActivityViewModel::class.java)
+            .scrollTabToTopLiveData
+            .observe(
+                viewLifecycleOwner,
+                Observer {
+                    if (it != null) {
+                        if (it.tabPosition == getTabPosition(it.isShowingNowTab)) {
+                            gridView.smoothScrollToPosition(0)
+                        }
+                    }
+                }
+            )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -106,13 +125,6 @@ abstract class MoviesBaseFragment : Fragment(), LoaderManager.LoaderCallbacks<Cu
      * @see MoviesActivity
      */
     internal abstract fun getTabPosition(showingNowTab: Boolean): Int
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventTabClick(event: MoviesActivity.MoviesTabClickEvent) {
-        if (event.position == getTabPosition(event.showingNowTab)) {
-            gridView.smoothScrollToPosition(0)
-        }
-    }
 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor) {
         adapter.swapCursor(data)

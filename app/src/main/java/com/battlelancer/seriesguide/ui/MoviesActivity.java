@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
@@ -13,6 +14,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
+import com.battlelancer.seriesguide.ui.movies.MoviesActivityViewModel;
 import com.battlelancer.seriesguide.ui.movies.MoviesCollectionFragment;
 import com.battlelancer.seriesguide.ui.movies.MoviesDiscoverFragment;
 import com.battlelancer.seriesguide.ui.movies.MoviesNowFragment;
@@ -20,22 +22,11 @@ import com.battlelancer.seriesguide.ui.movies.MoviesSearchActivity;
 import com.battlelancer.seriesguide.ui.movies.MoviesWatchListFragment;
 import com.battlelancer.seriesguide.ui.movies.MoviesWatchedFragment;
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * Movie section of the app, displays various movie tabs.
  */
 public class MoviesActivity extends BaseTopActivity {
-
-    public class MoviesTabClickEvent {
-        public final int position;
-        public final boolean showingNowTab;
-
-        public MoviesTabClickEvent(int position, boolean showingNowTab) {
-            this.position = position;
-            this.showingNowTab = showingNowTab;
-        }
-    }
 
     public static final int SEARCH_LOADER_ID = 100;
     public static final int NOW_TRAKT_USER_LOADER_ID = 101;
@@ -58,12 +49,16 @@ public class MoviesActivity extends BaseTopActivity {
     private TabStripAdapter tabsAdapter;
     private boolean showNowTab;
 
+    private MoviesActivityViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs_drawer);
         setupActionBar();
         setupBottomNavigation(R.id.navigation_item_movies);
+
+        viewModel = new ViewModelProvider(this).get(MoviesActivityViewModel.class);
 
         setupViews(savedInstanceState);
         setupSyncProgressBar(R.id.progressBarTabs);
@@ -83,7 +78,7 @@ public class MoviesActivity extends BaseTopActivity {
         showNowTab = TraktCredentials.get(this).hasCredentials();
         tabs.setOnTabClickListener(position -> {
             if (viewPager.getCurrentItem() == position) {
-                EventBus.getDefault().post(new MoviesTabClickEvent(position, showNowTab));
+                scrollSelectedTabToTop();
             }
         });
         tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, viewPager, tabs);
@@ -105,6 +100,15 @@ public class MoviesActivity extends BaseTopActivity {
         if (savedInstanceState == null) {
             viewPager.setCurrentItem(DisplaySettings.getLastMoviesTabPosition(this), false);
         }
+    }
+
+    private void scrollSelectedTabToTop() {
+        viewModel.scrollTabToTop(viewPager.getCurrentItem(), showNowTab);
+    }
+
+    @Override
+    protected void onSelectedCurrentNavItem() {
+        scrollSelectedTabToTop();
     }
 
     @Override

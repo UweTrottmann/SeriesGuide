@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -32,9 +33,6 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import java.util.List;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Displays recently watched movies, today's releases and recent watches from trakt friends (if
@@ -97,6 +95,15 @@ public class MoviesNowFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
+        new ViewModelProvider(requireActivity()).get(MoviesActivityViewModel.class)
+                .getScrollTabToTopLiveData()
+                .observe(getViewLifecycleOwner(), event -> {
+                    if (event != null
+                            && event.getTabPosition() == MoviesActivity.TAB_POSITION_NOW) {
+                        recyclerView.smoothScrollToPosition(0);
+                    }
+                });
+
         return view;
     }
 
@@ -139,20 +146,6 @@ public class MoviesNowFragment extends Fragment {
         }
 
         setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -239,13 +232,6 @@ public class MoviesNowFragment extends Fragment {
             }
         }
         swipeRefreshLayout.setRefreshing(show);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventTabClick(MoviesActivity.MoviesTabClickEvent event) {
-        if (event.position == MoviesActivity.TAB_POSITION_NOW) {
-            recyclerView.smoothScrollToPosition(0);
-        }
     }
 
     private void updateEmptyState() {

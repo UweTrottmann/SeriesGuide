@@ -57,6 +57,24 @@ class MoviesWatchedFragment : Fragment() {
             )
             it.adapter = adapter
         }
+
+        ViewModelProvider(requireActivity()).get(MoviesActivityViewModel::class.java)
+            .scrollTabToTopLiveData
+            .observe(
+                viewLifecycleOwner,
+                Observer {
+                    if (it != null) {
+                        val positionOfThisTab = if (it.isShowingNowTab) {
+                            MoviesActivity.TAB_POSITION_WATCHED_WITH_NOW
+                        } else {
+                            MoviesActivity.TAB_POSITION_WATCHED_DEFAULT
+                        }
+                        if (it.tabPosition == positionOfThisTab) {
+                            recyclerView.scrollToPosition(0)
+                        }
+                    }
+                }
+            )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,18 +116,6 @@ class MoviesWatchedFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         EventBus.getDefault().unregister(this)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventTabClick(event: MoviesActivity.MoviesTabClickEvent) {
-        val positionOfThisTab = if (event.showingNowTab) {
-            MoviesActivity.TAB_POSITION_WATCHED_WITH_NOW
-        } else {
-            MoviesActivity.TAB_POSITION_WATCHED_DEFAULT
-        }
-        if (event.position == positionOfThisTab) {
-            recyclerView.scrollToPosition(0)
-        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

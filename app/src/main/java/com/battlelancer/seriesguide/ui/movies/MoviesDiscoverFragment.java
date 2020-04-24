@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -82,6 +83,15 @@ public class MoviesDiscoverFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
+        new ViewModelProvider(requireActivity()).get(MoviesActivityViewModel.class)
+                .getScrollTabToTopLiveData()
+                .observe(getViewLifecycleOwner(), event -> {
+                    if (event != null
+                            && event.getTabPosition() == MoviesActivity.TAB_POSITION_DISCOVER) {
+                        recyclerView.smoothScrollToPosition(0);
+                    }
+                });
+
         return view;
     }
 
@@ -130,13 +140,6 @@ public class MoviesDiscoverFragment extends Fragment {
     public void onEventLanguageChanged(
             MovieLocalizationDialogFragment.LocalizationChangedEvent event) {
         LoaderManager.getInstance(this).restartLoader(0, null, nowPlayingLoaderCallbacks);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventTabClick(MoviesActivity.MoviesTabClickEvent event) {
-        if (event.position == MoviesActivity.TAB_POSITION_DISCOVER) {
-            recyclerView.smoothScrollToPosition(0);
-        }
     }
 
     private static class MovieItemClickListener extends MovieClickListener
