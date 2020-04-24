@@ -198,7 +198,7 @@ public class ShowsActivity extends BaseTopActivity implements
         SlidingTabLayout tabs = findViewById(R.id.tabLayoutTabs);
         tabs.setOnTabClickListener(position -> {
             if (viewPager.getCurrentItem() == position) {
-                viewModel.scrollTabToTop(position);
+                scrollSelectedTabToTop();
             }
         });
         tabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(), this, viewPager,
@@ -222,6 +222,15 @@ public class ShowsActivity extends BaseTopActivity implements
 
         // display new tabs
         tabsAdapter.notifyTabsChanged();
+    }
+
+    private void scrollSelectedTabToTop() {
+        viewModel.scrollTabToTop(viewPager.getCurrentItem());
+    }
+
+    @Override
+    protected void onSelectedCurrentNavItem() {
+        scrollSelectedTabToTop();
     }
 
     /**

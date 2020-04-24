@@ -69,7 +69,8 @@ public abstract class BaseTopActivity extends BaseMessageActivity {
         switch (itemId) {
             case R.id.navigation_item_shows:
                 if (this instanceof ShowsActivity) {
-                    break;
+                    onSelectedCurrentNavItem();
+                    return;
                 }
                 launchIntent = new Intent(this, ShowsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
@@ -77,28 +78,32 @@ public abstract class BaseTopActivity extends BaseMessageActivity {
                 break;
             case R.id.navigation_item_lists:
                 if (this instanceof ListsActivity) {
-                    break;
+                    onSelectedCurrentNavItem();
+                    return;
                 }
                 launchIntent = new Intent(this, ListsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 break;
             case R.id.navigation_item_movies:
                 if (this instanceof MoviesActivity) {
-                    break;
+                    onSelectedCurrentNavItem();
+                    return;
                 }
                 launchIntent = new Intent(this, MoviesActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 break;
             case R.id.navigation_item_stats:
                 if (this instanceof StatsActivity) {
-                    break;
+                    onSelectedCurrentNavItem();
+                    return;
                 }
                 launchIntent = new Intent(this, StatsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 break;
             case R.id.navigation_item_more:
                 if (this instanceof MoreOptionsActivity) {
-                    break;
+                    onSelectedCurrentNavItem();
+                    return;
                 }
                 launchIntent = new Intent(this, MoreOptionsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -109,6 +114,14 @@ public abstract class BaseTopActivity extends BaseMessageActivity {
             startActivity(launchIntent);
             overridePendingTransition(R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg);
         }
+    }
+
+    /**
+     * Called if the currently active nav item was clicked.
+     * Implementing activities might want to use this to scroll contents to the top.
+     */
+    protected void onSelectedCurrentNavItem() {
+        // Do nothing by default.
     }
 
     /**
