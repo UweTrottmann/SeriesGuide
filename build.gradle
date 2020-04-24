@@ -16,7 +16,7 @@ buildscript {
 
             'butterknife': '10.2.0', // github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
             'crashlytics': '2.10.1', // docs.fabric.io/android/changelog.html
-            'dagger': '2.26', // github.com/google/dagger/releases
+            'dagger': '2.27', // github.com/google/dagger/releases
             'gson': '2.8.6', // github.com/google/gson/blob/master/CHANGELOG.md
             'okhttp': '4.4.1', // github.com/square/okhttp/blob/master/CHANGELOG.md
             'retrofit': '2.8.1', // github.com/square/retrofit/blob/master/CHANGELOG.md
