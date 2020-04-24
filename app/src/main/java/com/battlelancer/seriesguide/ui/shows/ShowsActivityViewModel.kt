@@ -5,13 +5,13 @@ import androidx.lifecycle.ViewModel
 
 class ShowsActivityViewModel : ViewModel() {
 
-    val scrollTabToTopLiveData = MutableLiveData<Int>()
+    val scrollTabToTopLiveData = MutableLiveData<Int?>()
 
     /**
-     * For [tabIndex] use ShowsActivity.InitBundle.
+     * For [tabPosition] use ShowsActivity.InitBundle.
      */
-    fun scrollTabToTop(tabIndex: Int) {
-        scrollTabToTopLiveData.value = tabIndex
+    fun scrollTabToTop(tabPosition: Int) {
+        scrollTabToTopLiveData.value = tabPosition
         // Clear value so on config change tab does not scroll up again.
         scrollTabToTopLiveData.postValue(null)
     }
