@@ -118,13 +118,7 @@ class ShowsDiscoverAdapter(
                 holder.title.text = context.getString(holder.link.titleRes)
                 // Add Trakt icon to highlight Trakt profile specific links.
                 if (holder.link != TraktShowsLink.POPULAR) {
-                    ViewTools.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                        holder.title,
-                        holder.title.context.getDrawable(R.drawable.ic_trakt_icon_primary),
-                        null,
-                        null,
-                        null
-                    )
+                    ViewTools.setVectorDrawableLeft(holder.title, R.drawable.ic_trakt_icon_primary)
                 } else {
                     holder.title.setCompoundDrawables(null, null, null, null)
                 }

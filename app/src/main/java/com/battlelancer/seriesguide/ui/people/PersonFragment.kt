@@ -25,7 +25,6 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TmdbTools
-import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboard
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.Person
@@ -62,11 +61,6 @@ class PersonFragment : Fragment() {
             savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_person, container, false)
         unbinder = ButterKnife.bind(this, rootView)
-
-        val theme = requireActivity().theme
-        ViewTools.setVectorIconLeft(theme, buttonTmdbLink, R.drawable.ic_link_black_24dp)
-        ViewTools.setVectorIconLeft(theme, buttonWebSearch, R.drawable.ic_search_white_24dp)
-
         return rootView
     }
 

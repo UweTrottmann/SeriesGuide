@@ -7,14 +7,12 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import com.battlelancer.seriesguide.R;
@@ -24,40 +22,32 @@ public class ViewTools {
     private ViewTools() {
     }
 
-    public static void setVectorDrawableTop(Resources.Theme theme, TextView textView,
-            @DrawableRes int vectorRes) {
-        setCompoundDrawableTop(textView,
-                VectorDrawableCompat.create(textView.getResources(), vectorRes, theme));
-    }
-
+    // Note: VectorDrawableCompat has features/fixes backported to API 21-23.
+    // https://medium.com/androiddevelopers/using-vector-assets-in-android-apps-4318fd662eb9
     public static void setVectorDrawableTop(TextView textView, @DrawableRes int vectorRes) {
-        setCompoundDrawableTop(
-                textView,
-                VectorDrawableCompat.create(
-                        textView.getResources(),
-                        vectorRes,
-                        textView.getContext().getTheme()
-                )
-        );
+        Drawable drawable = AppCompatResources.getDrawable(textView.getContext(), vectorRes);
+        setCompoundDrawablesWithIntrinsicBounds(textView, null, drawable);
     }
 
-    public static void setVectorIcon(Resources.Theme theme, ImageView button,
-            @DrawableRes int vectorRes) {
-        button.setImageDrawable(vectorIconActive(button.getContext(), theme, vectorRes));
+    public static void setVectorDrawableLeft(TextView textView, @DrawableRes int vectorRes) {
+        Drawable drawable = AppCompatResources.getDrawable(textView.getContext(), vectorRes);
+        setCompoundDrawablesWithIntrinsicBounds(textView, drawable, null);
     }
 
-    public static void setVectorIconLeft(Resources.Theme theme, TextView textView,
-            @DrawableRes int vectorRes) {
-        VectorDrawableCompat drawable = vectorIconActive(textView.getContext(), theme, vectorRes);
-        if (drawable != null) {
-            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+    /**
+     * Sets the Drawables (if any) to appear to the start of, above, to the end of, and below the
+     * text. Use null if you do not want a Drawable there. The Drawables' bounds will be set to
+     * their intrinsic bounds.
+     */
+    private static void setCompoundDrawablesWithIntrinsicBounds(TextView textView,
+            Drawable left, Drawable top) {
+        if (left != null) {
+            left.setBounds(0, 0, left.getIntrinsicWidth(), left.getIntrinsicHeight());
         }
-        textView.setCompoundDrawables(drawable, null, null, null);
-    }
-
-    public static void setVectorIconTop(Resources.Theme theme, TextView textView,
-            @DrawableRes int vectorRes) {
-        setCompoundDrawableTop(textView, vectorIconActive(textView.getContext(), theme, vectorRes));
+        if (top != null) {
+            top.setBounds(0, 0, top.getIntrinsicWidth(), top.getIntrinsicHeight());
+        }
+        textView.setCompoundDrawables(left, top, null, null);
     }
 
     public static VectorDrawableCompat vectorIconActive(Context context,
@@ -72,11 +62,6 @@ public class ViewTools {
         return createTintedVectorDrawable(context, theme, vectorRes, colorRes);
     }
 
-    public static VectorDrawableCompat vectorIconWhite(Context context,
-            Resources.Theme theme, @DrawableRes int vectorRes) {
-        return createTintedVectorDrawable(context, theme, vectorRes, R.color.sg_white);
-    }
-
     private static VectorDrawableCompat createTintedVectorDrawable(Context context,
             Resources.Theme theme, @DrawableRes int vectorRes, @ColorRes int colorRes) {
         VectorDrawableCompat drawable = VectorDrawableCompat.create(context.getResources(),
@@ -86,43 +71,6 @@ public class ViewTools {
             drawable.setTint(ContextCompat.getColor(context, colorRes));
         }
         return drawable;
-    }
-
-    private static void setCompoundDrawableTop(@NonNull TextView textView,
-            @Nullable Drawable drawable) {
-        if (drawable != null) {
-            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-        }
-        textView.setCompoundDrawables(null, drawable, null, null);
-    }
-
-    public static void setCompoundDrawableTop(@NonNull TextView textView,
-            @DrawableRes int drawableRes) {
-        textView.setCompoundDrawables(null,
-                textView.getResources().getDrawable(drawableRes, textView.getContext().getTheme()),
-                null, null);
-    }
-
-    /**
-     * Sets the Drawables (if any) to appear to the start of, above, to the end of, and below the
-     * text. Use null if you do not want a Drawable there. The Drawables' bounds will be set to
-     * their intrinsic bounds.
-     */
-    public static void setCompoundDrawablesRelativeWithIntrinsicBounds(TextView textView,
-            Drawable left, Drawable top, Drawable right, Drawable bottom) {
-        if (left != null) {
-            left.setBounds(0, 0, left.getIntrinsicWidth(), left.getIntrinsicHeight());
-        }
-        if (right != null) {
-            right.setBounds(0, 0, right.getIntrinsicWidth(), right.getIntrinsicHeight());
-        }
-        if (top != null) {
-            top.setBounds(0, 0, top.getIntrinsicWidth(), top.getIntrinsicHeight());
-        }
-        if (bottom != null) {
-            bottom.setBounds(0, 0, bottom.getIntrinsicWidth(), bottom.getIntrinsicHeight());
-        }
-        textView.setCompoundDrawables(left, top, right, bottom);
     }
 
     public static void setValueOrPlaceholder(View view, final String value) {
@@ -192,15 +140,6 @@ public class ViewTools {
                 }
             }
         }, 200); // have to add a little delay (http://stackoverflow.com/a/27540921/1000543)
-    }
-
-    public static void tintMenuItem(Context context, MenuItem item) {
-        int color = ContextCompat.getColor(context,
-                Utils.resolveAttributeToResourceId(context.getTheme(), R.attr.colorControlNormal));
-        Drawable wrapped = DrawableCompat.wrap(item.getIcon());
-        wrapped.mutate(); // avoid tinting for whole app
-        DrawableCompat.setTint(wrapped, color);
-        item.setIcon(wrapped);
     }
 
     public static void openUriOnClick(View button, final String uri) {
