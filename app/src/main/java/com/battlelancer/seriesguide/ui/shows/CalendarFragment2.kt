@@ -15,8 +15,8 @@ import android.widget.TextView
 import androidx.core.content.edit
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
@@ -48,7 +48,7 @@ class CalendarFragment2 : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var textViewEmpty: TextView
-    private lateinit var viewModel: CalendarFragment2ViewModel
+    private val viewModel: CalendarFragment2ViewModel by viewModels()
 
     private lateinit var adapter: CalendarAdapter2
     private lateinit var type: CalendarType
@@ -78,6 +78,9 @@ class CalendarFragment2 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        PreferenceManager.getDefaultSharedPreferences(activity)
+            .registerOnSharedPreferenceChangeListener(prefChangeListener)
 
         adapter = CalendarAdapter2(requireContext(), calendarItemClickListener)
 
@@ -114,15 +117,11 @@ class CalendarFragment2 : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(CalendarFragment2ViewModel::class.java)
         viewModel.upcomingEpisodesLiveData.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
             updateEmptyView(it.isEmpty())
         })
         updateCalendarQuery()
-
-        PreferenceManager.getDefaultSharedPreferences(activity)
-            .registerOnSharedPreferenceChangeListener(prefChangeListener)
 
         setHasOptionsMenu(true)
     }
@@ -133,7 +132,6 @@ class CalendarFragment2 : Fragment() {
     }
 
     private fun updateCalendarQuery() {
-        if (view == null) return
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.updateCalendarQuery(type)
         }
@@ -149,9 +147,8 @@ class CalendarFragment2 : Fragment() {
         EventBus.getDefault().unregister(this)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
+    override fun onDestroyView() {
+        super.onDestroyView()
         PreferenceManager.getDefaultSharedPreferences(activity)
             .unregisterOnSharedPreferenceChangeListener(prefChangeListener)
     }
