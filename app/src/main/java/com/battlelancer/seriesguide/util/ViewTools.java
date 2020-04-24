@@ -50,12 +50,6 @@ public class ViewTools {
         textView.setCompoundDrawables(left, top, null, null);
     }
 
-    public static VectorDrawableCompat vectorIconActive(Context context,
-            Resources.Theme theme, @DrawableRes int vectorRes) {
-        int colorRes = Utils.resolveAttributeToResourceId(theme, R.attr.sgColorIcon);
-        return createTintedVectorDrawable(context, theme, vectorRes, colorRes);
-    }
-
     public static VectorDrawableCompat vectorIconInactive(Context context,
             Resources.Theme theme, @DrawableRes int vectorRes) {
         int colorRes = Utils.resolveAttributeToResourceId(theme, R.attr.sgColorIconInactive);
