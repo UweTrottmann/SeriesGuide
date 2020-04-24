@@ -85,7 +85,7 @@
             app:layout_constraintLeft_toRightOf="@+id/textViewHistoryInfo"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textViewHistoryInfo"
-            tools:src="@drawable/ic_watch_black_16dp"
+            tools:src="@drawable/ic_watch_16dp"
             tools:tint="?attr/sgColorIconInactive" />
 
         <TextView

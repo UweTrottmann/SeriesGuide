@@ -8,13 +8,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import com.battlelancer.seriesguide.R;
 
 public class ViewTools {
@@ -48,23 +45,6 @@ public class ViewTools {
             top.setBounds(0, 0, top.getIntrinsicWidth(), top.getIntrinsicHeight());
         }
         textView.setCompoundDrawables(left, top, null, null);
-    }
-
-    public static VectorDrawableCompat vectorIconInactive(Context context,
-            Resources.Theme theme, @DrawableRes int vectorRes) {
-        int colorRes = Utils.resolveAttributeToResourceId(theme, R.attr.sgColorIconInactive);
-        return createTintedVectorDrawable(context, theme, vectorRes, colorRes);
-    }
-
-    private static VectorDrawableCompat createTintedVectorDrawable(Context context,
-            Resources.Theme theme, @DrawableRes int vectorRes, @ColorRes int colorRes) {
-        VectorDrawableCompat drawable = VectorDrawableCompat.create(context.getResources(),
-                vectorRes, theme);
-        if (drawable != null) {
-            drawable.mutate();
-            drawable.setTint(ContextCompat.getColor(context, colorRes));
-        }
-        return drawable;
     }
 
     public static void setValueOrPlaceholder(View view, final String value) {

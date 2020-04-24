@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
@@ -18,7 +19,6 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.ViewTools;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
@@ -101,8 +101,8 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context context;
     private final ItemClickListener listener;
-    private final VectorDrawableCompat drawableWatched;
-    private final VectorDrawableCompat drawableCheckin;
+    private final Drawable drawableWatched;
+    private final Drawable drawableCheckin;
 
     private List<NowItem> dataset;
     private List<NowItem> recentlyWatched;
@@ -178,12 +178,10 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.context = context;
         this.listener = listener;
         this.dataset = new ArrayList<>();
-        this.drawableWatched = ViewTools.vectorIconInactive(getContext(),
-                getContext().getTheme(),
-                R.drawable.ic_watch_black_16dp);
-        this.drawableCheckin = ViewTools.vectorIconInactive(getContext(),
-                getContext().getTheme(),
-                R.drawable.ic_checkin_black_16dp);
+        this.drawableWatched = AppCompatResources.getDrawable(getContext(),
+                R.drawable.ic_watch_16dp);
+        this.drawableCheckin = AppCompatResources.getDrawable(getContext(),
+                R.drawable.ic_checkin_16dp);
     }
 
     @Override
@@ -251,7 +249,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             // action type indicator (only if showing trakt history)
             if (TRAKT_ACTION_WATCH.equals(item.action)) {
                 holder.type.setImageDrawable(getDrawableWatched());
-                holder.type.setVisibility(View.VISIBLE);
+                holder.type.setEnabled(false);
             } else if (item.action != null) {
                 // check-in, scrobble
                 holder.type.setImageDrawable(getDrawableCheckin());
@@ -259,6 +257,8 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             } else {
                 holder.type.setVisibility(View.GONE);
             }
+            // Set disabled for darker icon (non-interactive).
+            holder.type.setEnabled(false);
         }
     }
 
@@ -286,11 +286,11 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return context;
     }
 
-    protected VectorDrawableCompat getDrawableWatched() {
+    protected Drawable getDrawableWatched() {
         return drawableWatched;
     }
 
-    protected VectorDrawableCompat getDrawableCheckin() {
+    protected Drawable getDrawableCheckin() {
         return drawableCheckin;
     }
 
