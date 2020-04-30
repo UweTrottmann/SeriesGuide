@@ -133,11 +133,7 @@ class SgApp : Application() {
         // set up logging first so crashes during initialization are caught
         initializeLogging()
 
-        // get latest TZDB.dat from
-        // https://github.com/ThreeTen/threetenbp/blob/master/src/main/resources/org/threeten/bp/TZDB.dat
-        // (switch to tagged version!)
-        // current version: v1.4.1
-        AndroidThreeTen.init(this, "org/threeten/bp/TZDB.dat")
+        AndroidThreeTen.init(this)
         initializeEventBus()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             initializeNotificationChannels()
