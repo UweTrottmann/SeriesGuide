@@ -5,7 +5,7 @@
     <string name="lists">רשימות</string>
     <string name="movies">סרטים</string>
     <string name="statistics">סטטיסטיקה</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">עוד</string>
     <string name="search">חפש</string>
     <string name="preferences">הגדרות</string>
     <string name="help">עזרה</string>
@@ -43,7 +43,7 @@
     <string name="search_hint">חפש פרקים</string>
     <!-- Status messages -->
     <string name="updated">עדכן לגרסה האחרונה.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">פרטים נוספים</string>
     <string name="norating">לא ידוע</string>
     <string name="unknown">לא ידוע</string>
     <string name="offline">התחבר לרשת, ואז נסה שוב.</string>
@@ -211,8 +211,8 @@
     <string name="shows_collection">אוסף</string>
     <string name="watchlist">רשימת מעקב</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">אין תוצאות</string>
+    <string name="title_similar_shows">סדרות דומות</string>
     <!-- Lists -->
     <string name="first_list">הרשימה הראשונה</string>
     <string name="list_add">הוסף רשימה</string>
@@ -388,7 +388,7 @@
     <string name="privacy_policy">מדיניות פרטיות</string>
     <string name="licence_tvdb">יישום זה משתמש במידע ובתמונות מ TheTVDB תחת רישיון Creative Commons.</string>
     <string name="licence_themoviedb">מוצר זה עושה שימוש בממשק התכנות של TMDb, אך הוא אינו נתמך או מאושר על ידי TMDb.</string>
-    <string name="licence_trakt">This app uses data and images by Trakt.</string>
+    <string name="licence_trakt">יישום זה משתמש בנתונים ותמונות מהאתר Trakt.</string>
     <string name="about_open_source">SeriesGuide בנוי באמצעות תוכנת קוד פתוח.</string>
     <string name="licences_and_credits">רישיונות ויוצרים</string>
     <!-- Sort -->
@@ -414,10 +414,10 @@
     <string name="pref_appearance">תצוגה</string>
     <string name="pref_theme">ערכת נושא</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">השתמש בברירת המחדל של המערכת</string>
+    <string name="theme_app_auto_battery">שימוש במצב חיסכון בסוללה</string>
+    <string name="theme_app_dark">כהה</string>
+    <string name="theme_app_light">בהיר</string>
     <!-- Other advanced settings -->
     <string name="pref_other">אחר</string>
     <string name="pref_autoupdatesummary">בצע סנכרון אוטומטי ועדכן נתונים של SeriesGuide</string>
@@ -448,10 +448,10 @@
     <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
     <string name="last_auto_backup">גיבוי אוטומטי אחרון: %s</string>
     <string name="restore_auto_backup">שחזור גיבוי אוטומטי</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">הגיבוי האוטומטי האחרון נכשל</string>
     <string name="autobackup_files_missing">כדי להשתמש בגיבוי אוטומטי, בחר קבצי גיבוי חוקיים.</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_create_user_copy">צור העתק אחרי גיבוי</string>
+    <string name="autobackup_restore_available">יתכן וניתן לבצע שחזור מגיבוי אוטומטי</string>
     <!-- Welcome dialog -->
     <string name="get_started">התחל</string>
     <string name="dismiss">סגור</string>

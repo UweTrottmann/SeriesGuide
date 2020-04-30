@@ -5,7 +5,7 @@
     <string name="lists">Listeler</string>
     <string name="movies">Filmler</string>
     <string name="statistics">İstatistikler</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">Daha fazla</string>
     <string name="search">Ara</string>
     <string name="preferences">Ayarlar</string>
     <string name="help">Yardım</string>
@@ -30,20 +30,20 @@
     <string name="discard">Yoksay</string>
     <string name="save_selection">Seçimi kaydet</string>
     <string name="action_display_all">Tümünü göster</string>
-    <string name="web_search">Web araması</string>
+    <string name="web_search">Web\'de ara</string>
     <string name="add_to_homescreen">Ana ekrana ekle</string>
     <string name="action_open">Açın</string>
     <string name="sync_manually">Manuel senkronizasyon</string>
     <string name="sync_and_update">Senkronize Et &amp; Güncelle</string>
     <string name="sync_and_download_all">Senkronize Et &amp; Tümünü İndir</string>
-    <string name="action_turn_off">Bir özelliği devre dışı hale getir</string>
+    <string name="action_turn_off">Bir özelliği kapat</string>
     <string name="action_stream">Online izle veya satın al</string>
     <!-- Search -->
     <string name="clear_search_history">Arama geçmişini temizle</string>
     <string name="search_hint">Bölüm ara</string>
     <!-- Status messages -->
     <string name="updated">En son sürüme güncellendi.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Detaylar</string>
     <string name="norating">Geçersiz</string>
     <string name="unknown">bilinmiyor</string>
     <string name="offline">Ağa bağlanın ve yeniden deneyin.</string>
@@ -68,7 +68,7 @@
     <string name="shout_invalid">Yorumun kurallara uygun değil!</string>
     <string name="action_post">Gönder</string>
     <string name="isspoiler">Spoiler Uyarısı!</string>
-    <string name="no_shouts">İlk not yazan ol!</string>
+    <string name="no_shouts">İlk yorumu sen yap!</string>
     <string name="refresh">Yenile</string>
     <plurals name="replies_plural">
         <item quantity="one">%d yorum</item>
@@ -82,7 +82,7 @@
     <string name="original_release">Orjinal Yayınlanma</string>
     <string name="show_genres">Türler</string>
     <string name="show_contentrating">İçerik Derecelendirmesi</string>
-    <string name="show_release_times">Yayın zamanı</string>
+    <string name="show_release_times">Yayınlandığı Ülke</string>
     <string name="episode_directors">Yönetmen</string>
     <string name="episode_gueststars">Konuk Oyuncular</string>
     <string name="episode_writers">Yazarlar</string>
@@ -103,7 +103,7 @@
     <string name="mark_all">Tümü izlendi</string>
     <string name="unmark_all">Hiçbiri izlenmedi</string>
     <string name="action_watched_up_to">Buraya kadar izlendi</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="confirmation_watched_up_to">Buraya kadar tüm bölümleri izlenmiş olarak ayarla?</string>
     <string name="collect_all">Hepsi koleksiyonda</string>
     <string name="uncollect_all">Koleksiyonda yok</string>
     <string name="action_skip">Atla</string>
@@ -127,7 +127,7 @@
     <string name="action_episode_notifications_off">Bölüm bildirimlerini kapat</string>
     <string name="context_hide">Gizle</string>
     <string name="context_unhide">Göster</string>
-    <string name="hidden">Gizli dizi</string>
+    <string name="hidden">Gizlendi</string>
     <string name="unhidden">Gizlenmemiş dizi</string>
     <string name="action_shows_add">Dizi ekle</string>
     <string name="action_shows_filter">Dizileri filtrele</string>
@@ -154,13 +154,13 @@
     <string name="friends_recently">trakt arkadaşların</string>
     <string name="now_empty">Buralar boş. Biraz dizi izle!</string>
     <string name="now_movies_empty">Buralar boş. Biraz film izle!</string>
-    <string name="user_stream_empty">Yakın zamanda bir trakt aktiviteniz yok. Birkaç diziye check-in yapın!</string>
-    <string name="user_movie_stream_empty">Yakın zamanda bir trakt aktiviteniz yok. Birkaç filme check-in yapın!</string>
+    <string name="user_stream_empty">Hiçbir Trakt etkinliğiniz yok. Birkaç diziyi \"izlendi\" yapın!</string>
+    <string name="user_movie_stream_empty">Hiçbir Trakt etkinliğiniz yok. Birkaç filmi \"izlendi\" yapın!</string>
     <!-- Calendar -->
     <string name="upcoming">Yaklaşan</string>
     <string name="recent">En Yeni</string>
     <string name="released_today">Bugün yayınlanan</string>
-    <string name="noupcoming">Yaklaşan bölüm yok.</string>
+    <string name="noupcoming">Yaklaşan bölüm yok</string>
     <string name="norecent">Yeni tarihli bölüm yok.</string>
     <string name="calendar_settings">Takvim ayarları</string>
     <string name="only_favorites">Sadece favori diziler</string>
@@ -286,11 +286,11 @@
     <string name="hexagon_signin_fail_format">Google ile Giriş hatası (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">trakt\'e gönderiliyor.</string>
-    <string name="checkin_success_trakt">trakt üzerinden %s girişi yapıldı.</string>
-    <string name="checkin_canceled_success_trakt">trakt üzerinden giriş iptal edildi.</string>
+    <string name="checkin_success_trakt">%s Trakt üzerinde \"izliyorum\" yapıldı</string>
+    <string name="checkin_canceled_success_trakt">Trakt üzerindeki \"izliyorum\" durumu iptal edildi</string>
     <string name="traktcheckin_cancel">Geçersiz Kıl</string>
-    <string name="traktcheckin_inprogress">Başka bir bölüm veya filme giriş yapmış durumdasınız. Ya önceki girişinizi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
-    <string name="traktcheckin_wait">Bekleyin</string>
+    <string name="traktcheckin_inprogress">Zaten \"izliyorum\" demiştiniz. Ya önceki girişi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
+    <string name="traktcheckin_wait">Bekle</string>
     <string name="trakt_success">Trakt\'a gönder.</string>
     <string name="trakt_error_credentials">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
     <string name="trakt_error_not_exists">Trakt (henüz) mevcut değil. Daha sonra yeniden deneyin.</string>
@@ -324,11 +324,11 @@
         <item quantity="other">%d oy</item>
     </plurals>
     <!-- Check Ins -->
-    <string name="checkin">Giriş yap</string>
+    <string name="checkin">İzliyorum</string>
     <string name="checkin_hint">Bir mesaj yazın (isteğe bağlı)</string>
     <string name="paste_title">Başlığı yapıştır</string>
-    <string name="pref_quick_checkin">Hızlıca check-in yap</string>
-    <string name="pref_quick_checkin_summary">Check-in mesajı sorma</string>
+    <string name="pref_quick_checkin">Hızlıca \"izliyorum\" yap</string>
+    <string name="pref_quick_checkin_summary">\"İzliyorum\" mesajı gösterme</string>
     <!-- Help -->
     <string name="feedback">Geribildirim Gönder</string>
     <string name="action_open_in_browser">Tarayıcıda aç</string>
@@ -343,7 +343,7 @@
     <string name="pref_exactdates">Kesinleşmiş tarihleri göster</string>
     <string name="pref_exactdates_summary">\"3 gün içinde\" yerine \"31 Ekim\"</string>
     <string name="pref_nospoilers">Spoiler önle</string>
-    <string name="pref_nospoilers_summary">Bölümü izlenene kadar detayları gizle</string>
+    <string name="pref_nospoilers_summary">İzlenene kadar bölüm ayrıntılarını gizle</string>
     <string name="pref_seasonsorting">Sezonları sırala&#8230;</string>
     <string name="pref_episodesorting">Bölümleri sırala&#8230;</string>
     <string name="pref_language">Tercih edilen içerik dili</string>
@@ -371,7 +371,7 @@
     <string name="licences_and_credits">Lisanslar ve Bilgiler</string>
     <!-- Sort -->
     <string name="sort">Sırala</string>
-    <string name="action_sort_ignore_articles">Metinleri yoksay</string>
+    <string name="action_sort_ignore_articles">Sıfatları yoksay (the/a/an)</string>
     <!-- Sort orders -->
     <string name="sort_order_latest_first">Önce en yenisi</string>
     <string name="sort_order_oldest_first">Önce en eskisi</string>
@@ -392,13 +392,13 @@
     <string name="pref_appearance">Görünüm</string>
     <string name="pref_theme">Tema</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">Sistem varsayılanını kullan</string>
+    <string name="theme_app_auto_battery">Pil Tasarrufu ile ayarla</string>
+    <string name="theme_app_dark">Karanlık</string>
+    <string name="theme_app_light">Aydınlık</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Diğer</string>
-    <string name="pref_autoupdatesummary">SeriesGuide verilerini otomatik olarak senkronize et ve güncelle</string>
+    <string name="pref_autoupdatesummary">İçeriği otomatik olarak senkronize et ve güncelle</string>
     <string name="backup">Yedekle/Geri Yükle</string>
     <string name="backup_summary">Dizilerinizi yedekleyin veya geri yükleyin</string>
     <string name="pref_number">Sayı biçimi</string>
@@ -417,19 +417,19 @@
     <string name="import_failed">Yedek geri yükleme başarısız oldu.</string>
     <string name="backup_button">Yedekle</string>
     <string name="import_button">Geri Yükle</string>
-    <string name="import_warning">Mevcut şovlarımın, listelerimin ve filmlerimin silineceğini anlıyorum!</string>
+    <string name="import_warning">Mevcut dizileriniz, listeleriniz ve filmleriniz silinerek, yedek ile değiştirilecek</string>
     <string name="no_file_selected">Seçilmiş dosya yok</string>
     <string name="action_select_file">Dosya seçin</string>
     <!-- Auto backup -->
-    <string name="pref_autobackup">Otomatik yedekleme</string>
-    <string name="pref_autobackupsummary">Şovlarınızın, listelerinizin ve filmlerinizin haftalık yedeği</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
-    <string name="last_auto_backup">Son Otomatik Yedekleme: %s</string>
-    <string name="restore_auto_backup">Otomatik Yedeklemeden Geri Yükle</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
-    <string name="autobackup_files_missing">Otomatik yedeklemeyi kullanmak için geçerli yedekleme dosyaları seçin.</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="pref_autobackup">Otomatik Yedekle</string>
+    <string name="pref_autobackupsummary">Haftalık olarak diziler, listeler ve filmler cihaz belleğine yedeklenir.</string>
+    <string name="autobackup_details">Eğer data yedekleme açık değilse (Android 6+) ve uygulama yeniden yüklenirse, bu yedekler kayıp olur. Yedeklerin kopyasını oluşturarak koruyabilirsiniz.</string>
+    <string name="last_auto_backup">Son Otomatik Yedek: %s</string>
+    <string name="restore_auto_backup">Otomatik Yedeklemeyi Geri Yükle</string>
+    <string name="autobackup_failed">Son otomatik yedekleme başarısız oldu</string>
+    <string name="autobackup_files_missing">Otomatik yedeklemeyi kullanmak için geçerli yedekleme dosyalarını seçin.</string>
+    <string name="autobackup_create_user_copy">Her yedekleme sonrasında kopya oluştur</string>
+    <string name="autobackup_restore_available">Geri yükleme için bir yedek mevcut olabilir.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Başlarken</string>
     <string name="dismiss">Kapat</string>
@@ -450,8 +450,8 @@
     <string name="pref_notifications_hidden">Gizli programları yoksay</string>
     <string name="pref_notifications_hidden_summary">Bildirimler etkin olsa bile, gizli programlar hakkında bildirimde bulunmayın</string>
     <string name="pref_notification_channel_errors">Hatalar</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Sadece bir sonraki bölümler için</string>
+    <string name="pref_notifications_next_episodes_only_summary">Sadece yeni bölüm bir sonraki izlenecek ise uyarı gönder</string>
     <!-- List Widget -->
     <string name="hide_watched">İzlenmiş bölümleri gizle</string>
     <string name="pref_widget_opacity">Widget arka planı</string>
@@ -494,8 +494,8 @@
     <string name="extension_google_play">Google Play\'de ara</string>
     <string name="description_extension_google_play">Google Play Store\'da ara</string>
     <string name="extension_youtube">YouTube\'da ara</string>
-    <string name="description_extension_youtube">YouTube videolarını ara</string>
-    <string name="description_extension_web_search">Websiteler ve resimlerde ara</string>
+    <string name="description_extension_youtube">YouTube\'da videoları ara</string>
+    <string name="description_extension_web_search">Web siteleri ve resimlerde ara</string>
     <!-- People -->
     <string name="person_biography">Biyografi</string>
     <!-- Feedback -->

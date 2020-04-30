@@ -5,7 +5,7 @@
     <string name="lists">Λίστες</string>
     <string name="movies">Ταινίες</string>
     <string name="statistics">Στατιστικά</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">Περισσότερα</string>
     <string name="search">Αναζήτηση</string>
     <string name="preferences">Ρυθμίσεις</string>
     <string name="help">Βοήθεια</string>
@@ -423,13 +423,13 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Αυτόματο αντίγραφο ασφαλείας</string>
     <string name="pref_autobackupsummary">Εβδομαδιαίο αντίγραφο ασφαλείας των σειρών, λιστών και ταινιών σας</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">Αυτά τα αντίγραφα ασφαλείας δεν είναι διαθέσιμα αν η εφαρμογή εγκατασταθεί ξανά, εκτός αν τα αντίγραφα ασφαλείας των δεδομένων της εφαρμογής είναι ενεργά για αυτή τη συσκευή (Android 6+). Αλλιώς κάντε αντίγραφά τους για να τα διατηρήσετε.  </string>
     <string name="last_auto_backup">Τελευταίο αυτόματο αντίγραφο ασφαλείας: %s</string>
     <string name="restore_auto_backup">Επαναφορά αντιγράφου ασφαλείας στο αυτόματο</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">Το τελευταίο αυτόματο αντίγραφο ασφαλείας απέτυχε</string>
     <string name="autobackup_files_missing">Για τη χρήση της αυτόματης λήψης αντιγράφων ασφαλείας, επιλέξτε έγκυρα αρχεία αντιγράφων ασφαλείας</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_create_user_copy">Δημιουργία αντιγράφου μετά από κάθε αντίγραφο ασφαλείας</string>
+    <string name="autobackup_restore_available">Μπορεί να υπάρχει διαθέσιμο κάποιο αυτόματο αντίγραφο ασφαλείας για να κάνετε επαναφορά.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Ξεκινήστε</string>
     <string name="dismiss">Απόρριψη</string>

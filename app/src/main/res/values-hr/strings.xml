@@ -5,11 +5,11 @@
     <string name="lists">Popisi</string>
     <string name="movies">Filmovi</string>
     <string name="statistics">Statistike</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">Više</string>
     <string name="search">Traži</string>
     <string name="preferences">Postavke</string>
     <string name="help">Pomoć</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide neće dobivati više ažuriranja za ovu verziju Andriod-a</string>
     <!-- Media items -->
     <string name="show">Serija</string>
     <string name="episode">Epizoda</string>
@@ -43,7 +43,7 @@
     <string name="search_hint">Pretraži epizode</string>
     <!-- Status messages -->
     <string name="updated">Ažurirano u najnoviju verziju.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Detalji</string>
     <string name="norating">nedostupno</string>
     <string name="unknown">nepoznato</string>
     <string name="offline">Spojite se na mrežu i probajte ponovno.</string>
@@ -103,8 +103,8 @@
     <!-- Flagging -->
     <string name="mark_all">Sve pogledano</string>
     <string name="unmark_all">Ništa nije pogledano</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Pogledano do ovdje</string>
+    <string name="confirmation_watched_up_to">Postavi sve epizode do ove kao pogledane?</string>
     <string name="collect_all">Sve prikupljeno</string>
     <string name="uncollect_all">Ništa prikupljeno</string>
     <string name="action_skip">Preskoči</string>
@@ -137,7 +137,7 @@
     <string name="action_shows_filter_unwatched">Nije pogledano</string>
     <string name="action_shows_filter_upcoming">Nadolazeće</string>
     <string name="action_shows_filter_hidden">Skriveno</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="action_shows_make_all_visible">Postavi sve skrivene kao vidljive</string>
     <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">Sortiraj serije</string>
     <string name="action_shows_sort_title">Naslov</string>
@@ -148,7 +148,7 @@
     <string name="action_shows_sort_favorites">Lista favorita</string>
     <string name="context_updateshow">Ažuriraj</string>
     <string name="context_marknext">Pogledana sljedeća epizoda</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Promijeni pogled</string>
     <!-- History -->
     <string name="user_stream">Povijest</string>
     <string name="recently_watched">Nedavno pogledano</string>
@@ -166,7 +166,7 @@
     <string name="calendar_settings">Postavke kalendara</string>
     <string name="only_favorites">Samo favoriti</string>
     <string name="calendar_only_collected">Samo prikupljene epizode</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">Samo premijere</string>
     <string name="pref_infinite_scrolling">Beskonačni kalendar</string>
     <!-- Updating -->
     <string name="update_scheduled">Ažuriranje&#8230;</string>
@@ -207,8 +207,8 @@
     <string name="shows_collection">Zbirka</string>
     <string name="watchlist">Popis gledanja</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">Nema rezultata</string>
+    <string name="title_similar_shows">Slične serije</string>
     <!-- Lists -->
     <string name="first_list">Prvi popis</string>
     <string name="list_add">Dodaj popis</string>
@@ -374,8 +374,8 @@
         <item quantity="other">%d minuta prije</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">Pravila privatnosti</string>
+    <string name="licence_tvdb">Ova aplikacija koristi podatake i slike sa TheTVDB koje su licencirane pod Creative Commons licencom</string>
     <string name="licence_themoviedb">Ovaj proizvod koristi TMDb API, ali nije odobrenio ili ovjeren od strane TMDb.</string>
     <string name="licence_trakt">Ova aplikacija koristi podatke i slike sa trakt-a.</string>
     <string name="about_open_source">SeriesGuide je izgrađen korištenjem softvera otvorenog koda.</string>

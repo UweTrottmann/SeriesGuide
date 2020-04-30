@@ -225,7 +225,7 @@
     <string name="movies_in_theatres">Nos Cinemas</string>
     <string name="movies_collection">Coleção</string>
     <string name="movies_watchlist">Desejo Ver</string>
-    <string name="movies_watched">Vistas</string>
+    <string name="movies_watched">Vistos</string>
     <string name="watchlist_add">Adicionar aos que desejo ver</string>
     <string name="watchlist_remove">Remover dos que desejo ver</string>
     <string name="watchlist_added">Adicionado aos que desejo ver</string>
@@ -423,7 +423,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Cópia de Segurança Automática</string>
     <string name="pref_autobackupsummary">Cópia de segurança semanal das tuas listas, séries e filmes</string>
-    <string name="autobackup_details">Essas cópias de segurança não estarão disponíveis se a aplicação for reinstalada novamente, a menos que a cópia de segurança da aplicação esteja ativada para este dispositivo (Android 6+). Cria cópias para preservá-las de outra forma.</string>
+    <string name="autobackup_details">Essas cópias de segurança não estarão disponíveis se a aplicação for reinstalada novamente, a menos que a cópia de segurança da aplicação esteja ativada para este dispositivo (Android 6+). Casio contrário, crie cópias para preservá-las.</string>
     <string name="last_auto_backup">Última Cópia de Segurança Automática: %s</string>
     <string name="restore_auto_backup">Restaurar Cópia de Segurança Automática</string>
     <string name="autobackup_failed">A última cópia de segurança automática não foi efectuada com sucesso</string>
@@ -465,7 +465,7 @@
     <string name="widget_background_opaque">Opaco</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Apenas para apoiantes</string>
-    <string name="action_upgrade">Desbloquear funcionalidades</string>
+    <string name="action_upgrade">Desbloquear Todas as Funcionalidades</string>
     <string name="billing_action_subscribe">Subscrever</string>
     <string name="billing_action_manage_subscriptions">Gerir Subscrições</string>
     <string name="billing_action_pass">Obter X Pass</string>

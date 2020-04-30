@@ -5,7 +5,7 @@
     <string name="lists">Списки</string>
     <string name="movies">Фильмы</string>
     <string name="statistics">Статистика</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">Больше</string>
     <string name="search">Поиск</string>
     <string name="preferences">Настройки</string>
     <string name="help">Помощь</string>
@@ -43,7 +43,7 @@
     <string name="search_hint">Поиск эпизодов</string>
     <!-- Status messages -->
     <string name="updated">Обновлено до последней версии.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Детали</string>
     <string name="norating">нет данных</string>
     <string name="unknown">Неизвестно</string>
     <string name="offline">Подключитесь к сети и повторите попытку.</string>
@@ -104,8 +104,8 @@
     <!-- Flagging -->
     <string name="mark_all">Просмотрено всё</string>
     <string name="unmark_all">Не просмотрено </string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Просмотрено до сюда</string>
+    <string name="confirmation_watched_up_to">Определить все эпизоды до сюда как просмотренные?</string>
     <string name="collect_all">Собраны все</string>
     <string name="uncollect_all">Не собраны</string>
     <string name="action_skip">Пропустить</string>
@@ -138,7 +138,7 @@
     <string name="action_shows_filter_unwatched">Непросмотренные</string>
     <string name="action_shows_filter_upcoming">Следующие эпизоды</string>
     <string name="action_shows_filter_hidden">Скрытые</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="action_shows_make_all_visible">Сделать всё скрытое видимым</string>
     <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">Сортировать сериалы</string>
     <string name="action_shows_sort_title">Название</string>
@@ -149,7 +149,7 @@
     <string name="action_shows_sort_favorites">Сначала избранные</string>
     <string name="context_updateshow">Обновить</string>
     <string name="context_marknext">Смотреть следующий эпизод</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Изменить вид</string>
     <!-- History -->
     <string name="user_stream">История</string>
     <string name="recently_watched">Недавно просмотренные</string>
@@ -167,7 +167,7 @@
     <string name="calendar_settings">Настройки календаря</string>
     <string name="only_favorites">Только избранные сериалы</string>
     <string name="calendar_only_collected">Только собранные эпизоды</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">Только премьеры</string>
     <string name="pref_infinite_scrolling">Бесконечный календарь</string>
     <!-- Updating -->
     <string name="update_scheduled">Обновление&#8230;</string>
@@ -211,8 +211,8 @@
     <string name="shows_collection">Коллекция</string>
     <string name="watchlist">Список просмотра</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">Нет результатов</string>
+    <string name="title_similar_shows">Похожие сериалы</string>
     <!-- Lists -->
     <string name="first_list">Первый список</string>
     <string name="list_add">Добавить список</string>
@@ -414,10 +414,10 @@
     <string name="pref_appearance">Оформление</string>
     <string name="pref_theme">Тема</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">Использовать системные настройки</string>
+    <string name="theme_app_auto_battery">Настроить режим энергосбережения</string>
+    <string name="theme_app_dark">Тёмная</string>
+    <string name="theme_app_light">Светлая</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Другое</string>
     <string name="pref_autoupdatesummary">Автоматически синхронизировать и обновлять данные SeriesGuide</string>
@@ -445,12 +445,12 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Автоматическое резервное копирование</string>
     <string name="pref_autobackupsummary">Еженедельное резервное копирование ваших сериалов, списков и фильмов</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">Эти резервные копии будут недоступны, наши приложение будет повторно установлено, разве что для этого устройства будет включено резервное копирование данных приложения (Андроид 6 и выше). В таком случае, для сохранения данных, создавайте из копии.</string>
     <string name="last_auto_backup">Последнее автоматическое резервное копирование: %s</string>
     <string name="restore_auto_backup">Восстановить автоматическую резервную копию</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">Последний автоматический бэкап не удался</string>
     <string name="autobackup_files_missing">Чтобы использовать автоматическое резервное копирование, выберите допустимые файлы резервных копий.</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_create_user_copy">Создавать копию после каждого бэкапа</string>
     <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Начать</string>
@@ -469,7 +469,7 @@
     <string name="pref_notifications_treshold">Когда уведомлять</string>
     <string name="pref_notifications_select_shows">Выбрать сериалы</string>
     <string name="pref_notifications_select_shows_summary">Сериалы с включенными уведомлениями (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
+    <string name="pref_notifications_hidden">Игнорировать скрытые сериалы</string>
     <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
     <string name="pref_notification_channel_errors">Ошибки</string>
     <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
@@ -492,8 +492,8 @@
     <string name="billing_action_manage_subscriptions">Управление подписками</string>
     <string name="billing_action_pass">Получить X Pass</string>
     <string name="billing_price_subscribe">%1$s/год, попробуйте бесплатно, можно отменить в любой момент до %2$s</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_duration_format">%1$s/год</string>
+    <string name="billing_sub_description">Попробуйте бесплатно, отмените в любое время.</string>
     <string name="billing_price_pass">Единоразовая покупка</string>
     <string name="upgrade_description">Разблокируйте все возможности, включая уведомления, темы и расширенные настройки виджета. Помогите мне выпускать будущие обновления.</string>
     <string name="upgrade_success">Спасибо за поддержку SeriesGuide! У вас есть доступ ко всем расширенным возможностям.</string>
