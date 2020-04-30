@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_item_shows"
+        android:icon="@drawable/ic_tv_white_24dp"
+        android:title="@string/shows" />
+    <item
+        android:id="@+id/navigation_item_lists"
+        android:icon="@drawable/ic_list_white_24dp"
+        android:title="@string/lists" />
+    <item
+        android:id="@+id/navigation_item_movies"
+        android:icon="@drawable/ic_movie_white_24dp"
+        android:title="@string/movies" />
+    <item
+        android:id="@+id/navigation_item_stats"
+        android:icon="@drawable/ic_stats_white_24dp"
+        android:title="@string/statistics" />
+    <item
+        android:id="@+id/navigation_item_more"
+        android:icon="@drawable/ic_menu_24dp"
+        android:title="@string/navigation_more" />
+
+</menu>

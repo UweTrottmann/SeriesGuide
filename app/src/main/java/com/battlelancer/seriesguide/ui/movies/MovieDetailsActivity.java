@@ -8,14 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.appcompat.app.ActionBar;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
+import com.battlelancer.seriesguide.ui.BaseMessageActivity;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 /**
  * Hosts a {@link MovieDetailsFragment} displaying details about the movie defined by the given TMDb
  * id intent extra.
  */
-public class MovieDetailsActivity extends BaseNavDrawerActivity {
+public class MovieDetailsActivity extends BaseMessageActivity {
 
     // loader ids for this activity (mostly used by fragments)
     public static int LOADER_ID_MOVIE = 100;
@@ -41,7 +41,6 @@ public class MovieDetailsActivity extends BaseNavDrawerActivity {
 
         setContentView(R.layout.activity_movie);
         setupActionBar();
-        setupNavDrawer();
 
         if (getIntent().getExtras() == null) {
             finish();

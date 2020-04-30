@@ -5,11 +5,10 @@
     <string name="lists">Списъци</string>
     <string name="movies">Филми</string>
     <string name="statistics">Статистика</string>
+    <string name="navigation_more">More</string>
     <string name="search">Търсене</string>
     <string name="preferences">Настройки</string>
     <string name="help">Помощ</string>
-    <string name="help_and_feedback">Помощ &amp; Обратна връзка</string>
-    <string name="drawer_open">Отвори навигационния панел</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">ТВ предаване</string>
@@ -335,7 +334,6 @@
     <string name="action_open_in_browser">Отвори в браузър</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Основни</string>
-    <string name="prefs_category_sharing">Услуги</string>
     <string name="prefs_category_advanced">Разширени</string>
     <string name="prefs_category_about">Относно</string>
     <string name="pref_onlyfuture">Няма излъчени епизоди</string>
@@ -401,8 +399,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Други</string>
     <string name="pref_autoupdatesummary">Автоматично синхронизиране и актуализиране данните на SeriesGuide</string>
-    <string name="pref_autobackup">Автоматично създаване на резервно копие</string>
-    <string name="pref_autobackupsummary">Седмичен архив на вашите предавания, списъци и филми</string>
     <string name="backup">Архивиране/Възстановяване</string>
     <string name="backup_summary">Архивиране или възстановяване на вашите сериали</string>
     <string name="pref_number">Формат на числата</string>
@@ -422,14 +418,18 @@
     <string name="backup_button">Създаване на архив</string>
     <string name="import_button">Възстанови архив</string>
     <string name="import_warning">Разбирам моите текущи предавания, списъци и филми ще бъдат заменени!</string>
-    <string name="last_auto_backup">Последно автоматично архивиране: %s</string>
-    <string name="restore_auto_backup">Възстанови автоматично архивиране</string>
-    <string name="dataliberation_permission_missing">За да архивирате или възстановите, позволете достъп до вашите файлове.</string>
-    <string name="autobackup_permission_missing">За да използвате автоматичното архивиране, позволете достъп до вашите файлове.</string>
-    <string name="autobackup_files_missing">За да използвате автоматично архивиране, изберете валиден архивн файл.</string>
     <string name="no_file_selected">Няма избран файл</string>
     <string name="action_select_file">Избор на файл</string>
-    <string name="backup_use_default_files">Използвайте файловете подразбиране за архивиране</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Автоматично създаване на резервно копие</string>
+    <string name="pref_autobackupsummary">Седмичен архив на вашите предавания, списъци и филми</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Последно автоматично архивиране: %s</string>
+    <string name="restore_auto_backup">Възстанови автоматично архивиране</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">За да използвате автоматично архивиране, изберете валиден архивн файл.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Начало</string>
     <string name="dismiss">Отхвърли</string>

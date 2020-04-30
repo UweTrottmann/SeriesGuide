@@ -5,11 +5,10 @@
     <string name="lists">Listat</string>
     <string name="movies">Elokuvat</string>
     <string name="statistics">Tilastot</string>
+    <string name="navigation_more">Lisää</string>
     <string name="search">Hae</string>
     <string name="preferences">Asetukset</string>
     <string name="help">Ohjeet</string>
-    <string name="help_and_feedback">Ohje ja palaute</string>
-    <string name="drawer_open">Avaa vetopaneeli</string>
     <string name="no_more_updates">SeriesGuide ei vastaanota enää päivityksiä tästä Android-versiosta.</string>
     <!-- Media items -->
     <string name="show">Ohjelma</string>
@@ -335,7 +334,6 @@
     <string name="action_open_in_browser">Avaa selaimessa</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Yleiset</string>
-    <string name="prefs_category_sharing">Palvelut</string>
     <string name="prefs_category_advanced">Edistyneet</string>
     <string name="prefs_category_about">Tietoja</string>
     <string name="pref_onlyfuture">Ei esitettyjä jaksoja</string>
@@ -401,8 +399,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Muu</string>
     <string name="pref_autoupdatesummary">Synkronoi ja päivitä sisältö automaattisesti</string>
-    <string name="pref_autobackup">Automaattinen varmuuskopiointi</string>
-    <string name="pref_autobackupsummary">Viikoittainen varmuuskopio ohjelmistasi, listoistasi ja elokuvistasi</string>
     <string name="backup">Varmuuskopioi/Palauta</string>
     <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
     <string name="pref_number">Lukumuoto</string>
@@ -422,14 +418,18 @@
     <string name="backup_button">Varmuuskopioi</string>
     <string name="import_button">Palauta</string>
     <string name="import_warning">Ymmärrän, että nykyiset ohjelmani, listani ja elokuvani korvataan!</string>
-    <string name="last_auto_backup">Viimeisin automaattinen varmuuskopiointi: %s</string>
-    <string name="restore_auto_backup">Palauta automaattinen varmuuskopio</string>
-    <string name="dataliberation_permission_missing">Varmuuskopiointi ja palautus edellyttää pääsyä tiedostoihin.</string>
-    <string name="autobackup_permission_missing">Automaattinen varmuuskopiointi edellyttää pääsyä tiedostoihin.</string>
-    <string name="autobackup_files_missing">Käyttääksesi automaattista varmuuskopiota, valitse kelvolliset varmuuskopiotiedostot.</string>
     <string name="no_file_selected">Tiedostoa ei ole valittu</string>
     <string name="action_select_file">Valitse tiedosto</string>
-    <string name="backup_use_default_files">Käytä oletusvarmuuskopiotiedostoja</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automaattinen varmuuskopiointi</string>
+    <string name="pref_autobackupsummary">Viikoittainen varmuuskopio ohjelmistasi, listoistasi ja elokuvistasi</string>
+    <string name="autobackup_details">Nämä varmuuskopiot eivät ole käytettävissä, jos sovellus asennetaan uudelleen, ellei sovelluksen tietojen varmuuskopiointia ole otettu käyttöön tällä laitteella (Android 6+). Luo kopioita säilyttääksesi ne muuten.</string>
+    <string name="last_auto_backup">Viimeisin automaattinen varmuuskopiointi: %s</string>
+    <string name="restore_auto_backup">Palauta automaattinen varmuuskopio</string>
+    <string name="autobackup_failed">Viimeisin automaattinen varmuuskopiointi epäonnistui</string>
+    <string name="autobackup_files_missing">Käyttääksesi automaattista varmuuskopiota, valitse kelvolliset varmuuskopiotiedostot.</string>
+    <string name="autobackup_create_user_copy">Luo kopio jokaisen varmuuskopion jälkeen</string>
+    <string name="autobackup_restore_available">Automaattinen varmuuskopio saattaa olla käytettävissä palautusta varten.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Aloita</string>
     <string name="dismiss">Hylkää</string>

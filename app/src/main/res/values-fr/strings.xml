@@ -5,11 +5,10 @@
     <string name="lists">Listes</string>
     <string name="movies">Films</string>
     <string name="statistics">Statistiques</string>
+    <string name="navigation_more">Plus</string>
     <string name="search">Rechercher</string>
     <string name="preferences">Paramètres</string>
     <string name="help">Aide</string>
-    <string name="help_and_feedback">Aide &amp; commentaire</string>
-    <string name="drawer_open">Ouvrir le tiroir de navigation</string>
     <string name="no_more_updates">SeriesGuide recevrez pas plus de mises à jour pour cette version d’Android.</string>
     <!-- Media items -->
     <string name="show">Série</string>
@@ -335,7 +334,6 @@
     <string name="action_open_in_browser">Ouvrir dans le navigateur</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Paramètres de base</string>
-    <string name="prefs_category_sharing">Services</string>
     <string name="prefs_category_advanced">Avancé</string>
     <string name="prefs_category_about">A propos</string>
     <string name="pref_onlyfuture">Pas d\'épisodes diffusés</string>
@@ -401,8 +399,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Autres</string>
     <string name="pref_autoupdatesummary">Synchroniser automatiquement et mettre à jour les données de SeriesGuide</string>
-    <string name="pref_autobackup">Sauvegarde automatique</string>
-    <string name="pref_autobackupsummary">Sauvegarde hebdomadaire de vos émissions, vos listes et vos films</string>
     <string name="backup">Sauvegarde/Restauration</string>
     <string name="backup_summary">Sauvegarder ou restaurer vos séries</string>
     <string name="pref_number">Format de nombre</string>
@@ -422,14 +418,18 @@
     <string name="backup_button">Sauvegarder</string>
     <string name="import_button">Restaurer</string>
     <string name="import_warning">Je comprends que mes séries, listes et films actuels seront remplacés !</string>
-    <string name="last_auto_backup">Dernière sauvegarde auto : %s</string>
-    <string name="restore_auto_backup">Restaurer la sauvegarde automatique</string>
-    <string name="dataliberation_permission_missing">Pour sauvegarder ou restaurer, permettez l’accès à vos fichiers.</string>
-    <string name="autobackup_permission_missing">Pour utiliser la sauvegarde automatique, permettez l’accès à vos fichiers.</string>
-    <string name="autobackup_files_missing">Pour utiliser la sauvegarde automatique, sélectionnez un fichier de sauvegarde valides.</string>
     <string name="no_file_selected">Aucun fichier sélectionné</string>
     <string name="action_select_file">Choisir un fichier</string>
-    <string name="backup_use_default_files">Utiliser le fichier de sauvegarde par défaut</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Sauvegarde automatique</string>
+    <string name="pref_autobackupsummary">Sauvegarde hebdomadaire de vos émissions, vos listes et vos films</string>
+    <string name="autobackup_details">Ces sauvegardes ne sont pas disponibles si l\'application est réinstallée sauf si la sauvegarde des données de l\'application est activée pour cet appareil (Android 6+). Créez des copies pour les préserver.</string>
+    <string name="last_auto_backup">Dernière sauvegarde auto : %s</string>
+    <string name="restore_auto_backup">Restaurer la sauvegarde automatique</string>
+    <string name="autobackup_failed">La dernière sauvegarde automatique a échoué</string>
+    <string name="autobackup_files_missing">Pour utiliser la sauvegarde automatique, sélectionnez un fichier de sauvegarde valides.</string>
+    <string name="autobackup_create_user_copy">Créer une copie après chaque sauvegarde</string>
+    <string name="autobackup_restore_available">Une sauvegarde automatique peut être disponible pour la restauration.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Commencer</string>
     <string name="dismiss">Passer</string>

@@ -5,11 +5,10 @@
     <string name="lists">Listor</string>
     <string name="movies">Filmer</string>
     <string name="statistics">Statistik</string>
+    <string name="navigation_more">More</string>
     <string name="search">Sök</string>
     <string name="preferences">Inställningar</string>
     <string name="help">Hjälp</string>
-    <string name="help_and_feedback">Hjälp &amp; feedback</string>
-    <string name="drawer_open">Öppna navigeringslåda</string>
     <string name="no_more_updates">SeriesGuide kommer inte att mottaga fler uppdateringar för den här versionen av Android.</string>
     <!-- Media items -->
     <string name="show">Serie</string>
@@ -44,7 +43,7 @@
     <string name="search_hint">Sök avsnitt</string>
     <!-- Status messages -->
     <string name="updated">Uppdaterad till senaste versionen</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Detaljer</string>
     <string name="norating">saknas</string>
     <string name="unknown">okänd</string>
     <string name="offline">Ansluta till ett nätverk och försök igen.</string>
@@ -104,7 +103,7 @@
     <string name="mark_all">Sett alla</string>
     <string name="unmark_all">Inga sedda</string>
     <string name="action_watched_up_to">Sett så här långt</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="confirmation_watched_up_to">Markera alla avsnitt upp till det här sedda?</string>
     <string name="collect_all">Samla alla</string>
     <string name="uncollect_all">Ingen hämtad</string>
     <string name="action_skip">Hoppa över</string>
@@ -335,7 +334,6 @@
     <string name="action_open_in_browser">Öppna i webbläsare</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Grunder</string>
-    <string name="prefs_category_sharing">Tjänster</string>
     <string name="prefs_category_advanced">Avancerat</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Inga sända avsnitt</string>
@@ -394,15 +392,13 @@
     <string name="pref_appearance">Utseende</string>
     <string name="pref_theme">Tema</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">Använd systemstandard</string>
+    <string name="theme_app_auto_battery">Ställ in efter batterisparläge</string>
+    <string name="theme_app_dark">Mörk</string>
+    <string name="theme_app_light">Ljust</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Övrigt</string>
     <string name="pref_autoupdatesummary">Automatiskt synkronisera och uppdatera SeriesGuide-data</string>
-    <string name="pref_autobackup">Automatisk säkerhetskopiering</string>
-    <string name="pref_autobackupsummary">Veckovis säkerhetskopiering av dina serier, listor och filmer</string>
     <string name="backup">Säkerhetskopiera/återställ</string>
     <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
     <string name="pref_number">Nummerformat</string>
@@ -422,14 +418,18 @@
     <string name="backup_button">Säkerhetskopiera</string>
     <string name="import_button">Återställ säkerhetskopia</string>
     <string name="import_warning">Jag förstår att mina nuvarande serier, listor och filmer kommer ersättas!</string>
-    <string name="last_auto_backup">Senaste automatiska säkerhetskopia: %s</string>
-    <string name="restore_auto_backup">Återställ automatisk säkerhetskopia</string>
-    <string name="dataliberation_permission_missing">För att säkerhetskopiera eller återställa måste du tillåta åtkomst till dina filer.</string>
-    <string name="autobackup_permission_missing">För att använda automatisk säkerhetskopiering måste du tillåta åtkomst till dina filer.</string>
-    <string name="autobackup_files_missing">För att använda automatisk säkerhetskopiering, välj giltiga filer för säkerhetskopiering.</string>
     <string name="no_file_selected">Ingen fil vald</string>
     <string name="action_select_file">Välj fil</string>
-    <string name="backup_use_default_files">Använd förvalda backupfiler</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatisk säkerhetskopiering</string>
+    <string name="pref_autobackupsummary">Veckovis säkerhetskopiering av dina serier, listor och filmer</string>
+    <string name="autobackup_details">Dessa säkerhetskopior är inte tillgängliga om appen är installerad igen såvida inte app-säkerhetskopiering är påslagen för den här enheten (Android 6+). Skapa kopior för att bevara dem annars.</string>
+    <string name="last_auto_backup">Senaste automatiska säkerhetskopia: %s</string>
+    <string name="restore_auto_backup">Återställ automatisk säkerhetskopia</string>
+    <string name="autobackup_failed">Den senaste automatiska säkerhetskopieringen misslyckades</string>
+    <string name="autobackup_files_missing">För att använda automatisk säkerhetskopiering, välj giltiga filer för säkerhetskopiering.</string>
+    <string name="autobackup_create_user_copy">Skapa en kopia efter varje säkerhetskopia</string>
+    <string name="autobackup_restore_available">En automatisk säkerhetskopiering kan vara tillgänglig att återställa från.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Kom igång</string>
     <string name="dismiss">Avfärda</string>
@@ -450,8 +450,8 @@
     <string name="pref_notifications_hidden">Ignorera dolda serier</string>
     <string name="pref_notifications_hidden_summary">Blockera aviseringar för dolda serier även när aviseringar är aktiverade</string>
     <string name="pref_notification_channel_errors">Fel</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Endast för avsnitt att titta på härnäst</string>
+    <string name="pref_notifications_next_episodes_only_summary">Meddela bara om det nya avsnittet är det nästa att titta på</string>
     <!-- List Widget -->
     <string name="hide_watched">Dölj sedda avsnitt</string>
     <string name="pref_widget_opacity">Widgetbakgrund </string>

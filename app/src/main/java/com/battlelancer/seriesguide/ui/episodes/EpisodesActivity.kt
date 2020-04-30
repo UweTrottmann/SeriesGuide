@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.ui.episodes
 import android.content.Intent
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -12,7 +11,8 @@ import android.widget.ImageView
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import butterknife.BindView
@@ -24,7 +24,7 @@ import com.battlelancer.seriesguide.model.SgShowMinimal
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity
+import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.util.SeasonTools
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -37,7 +37,7 @@ import java.util.ArrayList
  * Hosts a fragment which displays episodes of a season in a list and in a [ViewPager].
  * On small screens only one is visible at a time, on larger screens they are shown side-by-side.
  */
-class EpisodesActivity : BaseNavDrawerActivity() {
+class EpisodesActivity : BaseMessageActivity() {
 
     @BindView(R.id.fragment_episodes)
     lateinit var containerList: ViewGroup
@@ -81,7 +81,6 @@ class EpisodesActivity : BaseNavDrawerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_episodes)
-        setupNavDrawer()
         setupActionBar()
 
         // if coming from a notification, set last cleared time
@@ -109,7 +108,7 @@ class EpisodesActivity : BaseNavDrawerActivity() {
             episodeTvdbId,
             seasonTvdbId
         )
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
+        viewModel = ViewModelProvider(this, viewModelFactory)
             .get(EpisodesActivityViewModel::class.java)
         viewModel.seasonAndShowInfoLiveData.observe(this, Observer { info ->
             if (info == null) {

@@ -5,11 +5,10 @@
     <string name="lists">목록</string>
     <string name="movies">영화</string>
     <string name="statistics">통계</string>
+    <string name="navigation_more">More</string>
     <string name="search">검색</string>
     <string name="preferences">설정</string>
     <string name="help">도움말</string>
-    <string name="help_and_feedback">도움말 및 의견</string>
-    <string name="drawer_open">내비게이션 서랍 열기</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">TV 프로그램</string>
@@ -327,7 +326,6 @@
     <string name="action_open_in_browser">브라우저에서 열기</string>
     <!-- Settings -->
     <string name="prefs_category_basic">기본</string>
-    <string name="prefs_category_sharing">서비스</string>
     <string name="prefs_category_advanced">고급</string>
     <string name="prefs_category_about">정보</string>
     <string name="pref_onlyfuture">방영된 에피소드 보이지 않기</string>
@@ -390,8 +388,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">기타</string>
     <string name="pref_autoupdatesummary">자동으로 콘텐츠 동기화 및 업데이트</string>
-    <string name="pref_autobackup">자동 백업</string>
-    <string name="pref_autobackupsummary">매주 프로그램, 목록, 영화를 백업합니다.</string>
     <string name="backup">백업/복원</string>
     <string name="backup_summary">프로그램 목록을 백업학거나 복원합니다</string>
     <string name="pref_number">에피소드 표시 형식</string>
@@ -411,14 +407,18 @@
     <string name="backup_button">백업</string>
     <string name="import_button">복원</string>
     <string name="import_warning">현재 앱에 저장한 프로그램 목록이 교체됩니다</string>
-    <string name="last_auto_backup">최근 자동 백업: %s</string>
-    <string name="restore_auto_backup">자동 백업 복원</string>
-    <string name="dataliberation_permission_missing">백업 및 복원하기 위해서는 파일 액세스를 허용해야 합니다.</string>
-    <string name="autobackup_permission_missing">자동 백업을 하기위해서는 파일 액세스를 허용해야 합니다.</string>
-    <string name="autobackup_files_missing">자동백업을 하기 위해서 유효한 백업파일을 선택하세요.</string>
     <string name="no_file_selected">선택된 파일을 찾을 수 없습니다.</string>
     <string name="action_select_file">파일 선택</string>
-    <string name="backup_use_default_files">기본 백업 파일 사용</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">자동 백업</string>
+    <string name="pref_autobackupsummary">매주 프로그램, 목록, 영화를 백업합니다.</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">최근 자동 백업: %s</string>
+    <string name="restore_auto_backup">자동 백업 복원</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">자동백업을 하기 위해서 유효한 백업파일을 선택하세요.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">시작하기</string>
     <string name="dismiss">취소</string>

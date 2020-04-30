@@ -140,6 +140,9 @@
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
+    <style name="TextAppearance.SeriesGuide.Body2.Bold.Accent">
+        <item name="android:textColor">@color/sg_text_color_accent</item>
+    </style>
     <style name="TextAppearance.SeriesGuide.Body2.Italics">
         <item name="android:textStyle">italic</item>
     </style>
@@ -393,6 +396,7 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <!-- Note: for child of ScrollView override layout_height to wrap_content. -->
     <style name="Page.Centered"/>
 
     <style name="FirstRunColumn">

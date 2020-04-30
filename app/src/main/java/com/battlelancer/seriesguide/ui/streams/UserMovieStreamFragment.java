@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui.streams;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListAdapter;
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.loader.app.LoaderManager;
@@ -16,6 +17,7 @@ public class UserMovieStreamFragment extends StreamFragment {
 
     private MovieHistoryAdapter adapter;
 
+    @NonNull
     @Override
     protected ListAdapter getListAdapter() {
         if (adapter == null) {
@@ -47,7 +49,7 @@ public class UserMovieStreamFragment extends StreamFragment {
         }
         Intent i = MovieDetailsActivity.intentMovie(getActivity(), item.movie.ids.tmdb);
 
-        ActivityCompat.startActivity(getActivity(), i, ActivityOptionsCompat
+        ActivityCompat.startActivity(requireContext(), i, ActivityOptionsCompat
                 .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
                 .toBundle()
         );
@@ -62,7 +64,7 @@ public class UserMovieStreamFragment extends StreamFragment {
                 }
 
                 @Override
-                public void onLoadFinished(Loader<TraktMovieHistoryLoader.Result> loader,
+                public void onLoadFinished(@NonNull Loader<TraktMovieHistoryLoader.Result> loader,
                         TraktMovieHistoryLoader.Result data) {
                     if (!isAdded()) {
                         return;
@@ -73,7 +75,7 @@ public class UserMovieStreamFragment extends StreamFragment {
                 }
 
                 @Override
-                public void onLoaderReset(Loader<TraktMovieHistoryLoader.Result> loader) {
+                public void onLoaderReset(@NonNull Loader<TraktMovieHistoryLoader.Result> loader) {
                     // keep current data
                 }
             };

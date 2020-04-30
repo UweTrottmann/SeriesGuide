@@ -5,11 +5,10 @@
     <string name="lists">列表</string>
     <string name="movies">电影</string>
     <string name="statistics">统计</string>
+    <string name="navigation_more">更多</string>
     <string name="search">搜索</string>
     <string name="preferences">设置</string>
     <string name="help">帮助</string>
-    <string name="help_and_feedback">帮助 &amp; 反馈</string>
-    <string name="drawer_open">打开导航栏</string>
     <string name="no_more_updates">此版本的 Android 将不会收到更多 SeriesGuide 的更新。</string>
     <!-- Media items -->
     <string name="show">节目</string>
@@ -327,7 +326,6 @@
     <string name="action_open_in_browser">在浏览器中打开</string>
     <!-- Settings -->
     <string name="prefs_category_basic">基本</string>
-    <string name="prefs_category_sharing">服务</string>
     <string name="prefs_category_advanced">高级</string>
     <string name="prefs_category_about">关于</string>
     <string name="pref_onlyfuture">不显示已播剧集</string>
@@ -390,8 +388,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">其它</string>
     <string name="pref_autoupdatesummary">自动同步并更新 SeriesGuide 数据</string>
-    <string name="pref_autobackup">自动备份</string>
-    <string name="pref_autobackupsummary">每周定期备份剧集、列表和电影数据</string>
     <string name="backup">备份与还原</string>
     <string name="backup_summary">备份或还原节目单</string>
     <string name="pref_number">序号格式</string>
@@ -411,14 +407,18 @@
     <string name="backup_button">备份</string>
     <string name="import_button">还原</string>
     <string name="import_warning">我已了解当前所有剧集、列表和电影数据将被替换。</string>
-    <string name="last_auto_backup">上次自动备份时间：%s</string>
-    <string name="restore_auto_backup">从自动备份恢复</string>
-    <string name="dataliberation_permission_missing">若要备份或恢复，允许访问您的文件。</string>
-    <string name="autobackup_permission_missing">若要使用自动备份，请允许访问您的文件。</string>
-    <string name="autobackup_files_missing">选择一个可用的备份文件以使用自动备份。</string>
     <string name="no_file_selected">没有选择的文件</string>
     <string name="action_select_file">选择文件</string>
-    <string name="backup_use_default_files">使用默认备份文件</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">自动备份</string>
+    <string name="pref_autobackupsummary">每周定期备份剧集、列表和电影数据</string>
+    <string name="autobackup_details">如果再次安装应用程序，除非开启此设备的应用数据备份（Android 6+），否则这些备份将不可用。创建副本以便以其他方式保存它们。</string>
+    <string name="last_auto_backup">上次自动备份时间：%s</string>
+    <string name="restore_auto_backup">从自动备份恢复</string>
+    <string name="autobackup_failed">最后一次自动备份失败</string>
+    <string name="autobackup_files_missing">选择一个可用的备份文件以使用自动备份。</string>
+    <string name="autobackup_create_user_copy">每次备份后创建一个副本</string>
+    <string name="autobackup_restore_available">自动备份可能可用来还原。</string>
     <!-- Welcome dialog -->
     <string name="get_started">入门</string>
     <string name="dismiss">忽略</string>

@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
@@ -15,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.preference.PreferenceManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -120,7 +120,7 @@ public class TimeOffsetDialogFragment extends AppCompatDialogFragment {
     private void saveAndDismiss() {
         int hours = this.hours;
 
-        PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
                 .putString(DisplaySettings.KEY_SHOWS_TIME_OFFSET, String.valueOf(hours))
                 .apply();
         Timber.i("Time offset set to %d hours", hours);

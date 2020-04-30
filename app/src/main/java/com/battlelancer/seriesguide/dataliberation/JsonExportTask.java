@@ -4,13 +4,10 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.os.ParcelFileDescriptor;
-import android.preference.PreferenceManager;
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
@@ -26,16 +23,12 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonWriter;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -43,6 +36,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
@@ -57,11 +51,9 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         void onProgressUpdate(Integer... values);
     }
 
-    public static final String EXPORT_FOLDER = "SeriesGuide";
-    public static final String EXPORT_FOLDER_AUTO = "SeriesGuide" + File.separator + "AutoBackup";
-    public static final String EXPORT_JSON_FILE_SHOWS = "sg-shows-export.json";
-    public static final String EXPORT_JSON_FILE_LISTS = "sg-lists-export.json";
-    public static final String EXPORT_JSON_FILE_MOVIES = "sg-movies-export.json";
+    public static final String EXPORT_JSON_FILE_SHOWS = "seriesguide-shows-backup.json";
+    public static final String EXPORT_JSON_FILE_LISTS = "seriesguide-lists-backup.json";
+    public static final String EXPORT_JSON_FILE_MOVIES = "seriesguide-movies-backup.json";
 
     public static final int BACKUP_SHOWS = 1;
     public static final int BACKUP_LISTS = 2;
@@ -101,14 +93,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     private boolean isFullDump;
     private boolean isAutoBackupMode;
     @Nullable private final Integer type;
-    private boolean isUseDefaultFolders;
     @Nullable private String errorCause;
-
-    public static File getExportPath(boolean isAutoBackupMode) {
-        return new File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                isAutoBackupMode ? EXPORT_FOLDER_AUTO : EXPORT_FOLDER);
-    }
 
     /**
      * Same as {@link JsonExportTask} but allows to set parameters.
@@ -124,71 +109,56 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         this.isFullDump = isFullDump;
         this.isAutoBackupMode = isAutoBackupMode;
         this.type = type;
-        // note: using Storage Access Framework on KitKat and up to select custom backup files,
-        // though auto backup by default uses default folders
-        isUseDefaultFolders =
-                isAutoBackupMode && BackupSettings.isUseAutoBackupDefaultFiles(context);
     }
 
     @Override
     protected Integer doInBackground(Void... params) {
-        File exportPath = null;
-        if (isUseDefaultFolders) {
-            // Ensure external storage is available
-            if (!AndroidUtils.isExtStorageAvailable()) {
-                return ERROR_FILE_ACCESS;
-            }
-
-            // Ensure the export directory exists
-            exportPath = getExportPath(isAutoBackupMode);
-            if (!exportPath.mkdirs() && !exportPath.isDirectory()) {
-                return ERROR_FILE_ACCESS;
-            }
-        }
-
-        // last chance to abort
-        if (isCancelled()) {
-            return ERROR;
-        }
-
-        int result;
-        if (type == null || type == BACKUP_SHOWS) {
-            result = exportData(exportPath, BACKUP_SHOWS);
-            if (result != SUCCESS) {
-                return result;
-            }
-            if (isCancelled()) {
-                return ERROR;
-            }
-        }
-
-        if (type == null || type == BACKUP_LISTS) {
-            result = exportData(exportPath, BACKUP_LISTS);
-            if (result != SUCCESS) {
-                return result;
-            }
-            if (isCancelled()) {
-                return ERROR;
-            }
-        }
-
-        if (type == null || type == BACKUP_MOVIES) {
-            result = exportData(exportPath, BACKUP_MOVIES);
-            if (result != SUCCESS) {
-                return result;
-            }
-        }
-        // no need to return early here if canceled, we are almost done anyhow
-
         if (isAutoBackupMode) {
-            // store current time = last backup time
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            prefs.edit()
-                    .putLong(AdvancedSettings.KEY_LASTBACKUP, System.currentTimeMillis())
-                    .apply();
-        }
+            // Auto backup mode.
+            try {
+                new AutoBackupTask(this, context).run();
+                BackupSettings.setAutoBackupErrorOrNull(context, null);
+                return SUCCESS;
+            } catch (Exception e) {
+                Timber.e(e, "Unable to auto backup.");
+                BackupSettings.setAutoBackupErrorOrNull(context,
+                        e.getClass().getSimpleName() + ": " + e.getMessage());
+                return ERROR;
+            }
+        } else {
+            // Manual backup mode.
 
-        return SUCCESS;
+            if (isCancelled()) {
+                return ERROR;
+            }
+
+            int result = SUCCESS;
+            if (type == null || type == BACKUP_SHOWS) {
+                result = exportData(BACKUP_SHOWS);
+                if (result != SUCCESS) {
+                    return result;
+                }
+                if (isCancelled()) {
+                    return ERROR;
+                }
+            }
+
+            if (type == null || type == BACKUP_LISTS) {
+                result = exportData(BACKUP_LISTS);
+                if (result != SUCCESS) {
+                    return result;
+                }
+                if (isCancelled()) {
+                    return ERROR;
+                }
+            }
+
+            if (type == null || type == BACKUP_MOVIES) {
+                result = exportData(BACKUP_MOVIES);
+            }
+
+            return result;
+        }
     }
 
     @Override
@@ -227,7 +197,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         }
     }
 
-    private int exportData(File exportPath, @BackupType int type) {
+    private int exportData(@BackupType int type) {
         // check if there is any data to export
         Cursor data = getDataCursor(type);
         if (data == null) {
@@ -244,57 +214,35 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
         // try to export all data
         try {
-            if (!isUseDefaultFolders) {
-                // ensure the user has selected a backup file
-                Uri backupFileUri = getDataBackupFile(type);
-                if (backupFileUri == null) {
-                    return ERROR_FILE_ACCESS;
-                }
-
-                ParcelFileDescriptor pfd = context.getContentResolver()
-                        .openFileDescriptor(backupFileUri, "w");
-                if (pfd == null) {
-                    return ERROR_FILE_ACCESS;
-                }
-                FileOutputStream out = new FileOutputStream(pfd.getFileDescriptor());
-
-                // Even though using streams and FileOutputStream does not append by
-                // default, using Storage Access Framework just overwrites existing
-                // bytes, potentially leaving old bytes hanging over:
-                // so truncate the file first to clear any existing bytes.
-                out.getChannel().truncate(0);
-
-                if (type == BACKUP_SHOWS) {
-                    writeJsonStreamShows(out, data);
-                } else if (type == BACKUP_LISTS) {
-                    writeJsonStreamLists(out, data);
-                } else if (type == BACKUP_MOVIES) {
-                    writeJsonStreamMovies(out, data);
-                }
-
-                // let the document provider know we're done.
-                pfd.close();
-            } else {
-                File backupFile;
-                if (type == BACKUP_SHOWS) {
-                    backupFile = new File(exportPath, EXPORT_JSON_FILE_SHOWS);
-                } else if (type == BACKUP_LISTS) {
-                    backupFile = new File(exportPath, EXPORT_JSON_FILE_LISTS);
-                } else if (type == BACKUP_MOVIES) {
-                    backupFile = new File(exportPath, EXPORT_JSON_FILE_MOVIES);
-                } else {
-                    return ERROR;
-                }
-
-                OutputStream out = new FileOutputStream(backupFile);
-                if (type == BACKUP_SHOWS) {
-                    writeJsonStreamShows(out, data);
-                } else if (type == BACKUP_LISTS) {
-                    writeJsonStreamLists(out, data);
-                } else {
-                    writeJsonStreamMovies(out, data);
-                }
+            // ensure the user has selected a backup file
+            Uri backupFileUri = getDataBackupFile(type);
+            if (backupFileUri == null) {
+                return ERROR_FILE_ACCESS;
             }
+
+            ParcelFileDescriptor pfd = context.getContentResolver()
+                    .openFileDescriptor(backupFileUri, "w");
+            if (pfd == null) {
+                return ERROR_FILE_ACCESS;
+            }
+            FileOutputStream out = new FileOutputStream(pfd.getFileDescriptor());
+
+            // Even though using streams and FileOutputStream does not append by
+            // default, using Storage Access Framework just overwrites existing
+            // bytes, potentially leaving old bytes hanging over:
+            // so truncate the file first to clear any existing bytes.
+            out.getChannel().truncate(0);
+
+            if (type == BACKUP_SHOWS) {
+                writeJsonStreamShows(out, data);
+            } else if (type == BACKUP_LISTS) {
+                writeJsonStreamLists(out, data);
+            } else if (type == BACKUP_MOVIES) {
+                writeJsonStreamMovies(out, data);
+            }
+
+            // let the document provider know we're done.
+            pfd.close();
         } catch (FileNotFoundException e) {
             Timber.e(e, "Backup file not found.");
             removeBackupFileUri(type);
@@ -321,7 +269,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     @Nullable
-    private Cursor getDataCursor(@BackupType int type) {
+    Cursor getDataCursor(@BackupType int type) {
         if (type == BACKUP_SHOWS) {
             return context.getContentResolver().query(
                     Shows.CONTENT_URI, ShowsQuery.PROJECTION_FULL,
@@ -342,47 +290,20 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     @Nullable
-    private Uri getDataBackupFile(@BackupType int type) {
-        if (type == BACKUP_SHOWS) {
-            return BackupSettings.getFileUri(context,
-                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_SHOWS_EXPORT_URI
-                            : BackupSettings.KEY_SHOWS_EXPORT_URI);
-        }
-        if (type == BACKUP_LISTS) {
-            return BackupSettings.getFileUri(context,
-                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_LISTS_EXPORT_URI
-                            : BackupSettings.KEY_LISTS_EXPORT_URI);
-        }
-        if (type == BACKUP_MOVIES) {
-            return BackupSettings.getFileUri(context,
-                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_MOVIES_EXPORT_URI
-                            : BackupSettings.KEY_MOVIES_EXPORT_URI);
-        }
-        return null;
+    Uri getDataBackupFile(@BackupType int type) {
+        return BackupSettings.getExportFileUri(context, type, isAutoBackupMode);
     }
 
-    private void removeBackupFileUri(@BackupType int type) {
-        if (type == BACKUP_SHOWS) {
-            BackupSettings.storeFileUri(context,
-                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_SHOWS_EXPORT_URI
-                            : BackupSettings.KEY_SHOWS_EXPORT_URI, null);
-        } else if (type == BACKUP_LISTS) {
-            BackupSettings.storeFileUri(context,
-                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_LISTS_EXPORT_URI
-                            : BackupSettings.KEY_LISTS_EXPORT_URI, null);
-        } else if (type == BACKUP_MOVIES) {
-            BackupSettings.storeFileUri(context,
-                    isAutoBackupMode ? BackupSettings.KEY_AUTO_BACKUP_MOVIES_EXPORT_URI
-                            : BackupSettings.KEY_MOVIES_EXPORT_URI, null);
-        }
+    void removeBackupFileUri(@BackupType int type) {
+        BackupSettings.storeExportFileUri(context, type, null, isAutoBackupMode);
     }
 
-    private void writeJsonStreamShows(OutputStream out, Cursor shows) throws IOException {
+    void writeJsonStreamShows(OutputStream out, Cursor shows) throws IOException {
         int numTotal = shows.getCount();
         int numExported = 0;
 
         Gson gson = new Gson();
-        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
+        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
         writer.beginArray();
 
         while (shows.moveToNext()) {
@@ -503,12 +424,12 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         episodesCursor.close();
     }
 
-    private void writeJsonStreamLists(OutputStream out, Cursor lists) throws IOException {
+    void writeJsonStreamLists(OutputStream out, Cursor lists) throws IOException {
         int numTotal = lists.getCount();
         int numExported = 0;
 
         Gson gson = new Gson();
-        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
+        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
         writer.beginArray();
 
         while (lists.moveToNext()) {
@@ -567,12 +488,12 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         listItems.close();
     }
 
-    private void writeJsonStreamMovies(OutputStream out, Cursor movies) throws IOException {
+    void writeJsonStreamMovies(OutputStream out, Cursor movies) throws IOException {
         int numTotal = movies.getCount();
         int numExported = 0;
 
         Gson gson = new Gson();
-        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
+        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
         writer.beginArray();
 
         while (movies.moveToNext()) {

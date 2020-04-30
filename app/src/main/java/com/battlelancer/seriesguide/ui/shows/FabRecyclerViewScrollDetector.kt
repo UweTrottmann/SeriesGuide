@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui.shows
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlin.math.abs
 
 /**
  * Hides the floating action button when scrolling down, shows it when scrolling up. If the view can
@@ -17,18 +18,13 @@ internal class FabRecyclerViewScrollDetector(private val button: FloatingActionB
         button.context.resources.getDimensionPixelOffset(R.dimen.fab_scroll_threshold)
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-        // no action if RecyclerView is no longer visible, such as its tab was swiped away
-        if (!recyclerView.hasFocus()) {
-            return
-        }
-
         // always show if scrolled to bottom
         if (!recyclerView.canScrollVertically(1 /* down */)) {
             button.show()
             return
         }
 
-        val isSignificantDelta = Math.abs(dy) > scrollThreshold
+        val isSignificantDelta = abs(dy) > scrollThreshold
         if (isSignificantDelta) {
             if (dy > 0) {
                 onScrollDown()

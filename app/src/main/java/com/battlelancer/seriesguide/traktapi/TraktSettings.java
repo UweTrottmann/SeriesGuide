@@ -1,8 +1,8 @@
 package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
+import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.util.TimeTools;
 import org.threeten.bp.OffsetDateTime;
 

@@ -12,9 +12,11 @@ import android.widget.GridView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -38,20 +40,18 @@ public class ListsFragment extends Fragment {
 
     /** LoaderManager is created unique to fragment, so use same id for all of them */
     private static final int LOADER_ID = 1;
+    private static final String ARG_LIST_ID = "LIST_ID";
+    private static final String ARG_LIST_POSITION = "LIST_POSITION";
 
-    public static ListsFragment newInstance(String list_id) {
+    public static ListsFragment newInstance(String listId, int listPosition) {
         ListsFragment f = new ListsFragment();
 
         Bundle args = new Bundle();
-        args.putString(InitBundle.LIST_ID, list_id);
+        args.putString(ARG_LIST_ID, listId);
+        args.putInt(ARG_LIST_POSITION, listPosition);
         f.setArguments(args);
 
         return f;
-    }
-
-    interface InitBundle {
-
-        String LIST_ID = "list_id";
     }
 
     private ListItemsAdapter adapter;
@@ -62,28 +62,35 @@ public class ListsFragment extends Fragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         emptyView = view.findViewById(R.id.emptyViewList);
-        ViewTools.setVectorIconTop(emptyView.getContext().getTheme(), emptyView,
-                R.drawable.ic_list_white_24dp);
+        ViewTools.setVectorDrawableTop(emptyView, R.drawable.ic_list_white_24dp);
         return view;
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         adapter = new ListItemsAdapter(getActivity(), onItemClickListener);
 
-        if (getView() == null) {
-            return;
-        }
-
-        // setup grid view
-        GridView gridView = getView().findViewById(R.id.gridViewList);
+        GridView gridView = view.findViewById(R.id.gridViewList);
         // enable app bar scrolling out of view
         ViewCompat.setNestedScrollingEnabled(gridView, true);
         gridView.setAdapter(adapter);
         gridView.setEmptyView(emptyView);
 
+        new ViewModelProvider(requireActivity()).get(ListsActivityViewModel.class)
+                .getScrollTabToTopLiveData()
+                .observe(getViewLifecycleOwner(), tabPosition -> {
+                    if (tabPosition != null
+                            && tabPosition == requireArguments().getInt(ARG_LIST_POSITION)) {
+                        gridView.smoothScrollToPosition(0);
+                    }
+                });
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         LoaderManager.getInstance(this).initLoader(LOADER_ID, getArguments(), loaderCallbacks);
     }
 
@@ -112,8 +119,8 @@ public class ListsFragment extends Fragment {
             = new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            String listId = args.getString(InitBundle.LIST_ID);
-            return new CursorLoader(getActivity(), ListItems.CONTENT_WITH_DETAILS_URI,
+            String listId = args.getString(ARG_LIST_ID);
+            return new CursorLoader(requireContext(), ListItems.CONTENT_WITH_DETAILS_URI,
                     ListItemsAdapter.Query.PROJECTION,
                     // items of this list, but exclude any if show was removed from the database
                     // (the join on show data will fail, hence the show id will be 0/null)
@@ -125,12 +132,12 @@ public class ListsFragment extends Fragment {
         }
 
         @Override
-        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
             adapter.swapCursor(data);
         }
 
         @Override
-        public void onLoaderReset(Loader<Cursor> loader) {
+        public void onLoaderReset(@NonNull Loader<Cursor> loader) {
             adapter.swapCursor(null);
         }
     };
@@ -177,7 +184,7 @@ public class ListsFragment extends Fragment {
                 PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
                 popupMenu.inflate(R.menu.lists_popup_menu);
                 popupMenu.setOnMenuItemClickListener(
-                        new PopupMenuItemClickListener(getContext(), getFragmentManager(),
+                        new PopupMenuItemClickListener(getContext(), getParentFragmentManager(),
                                 viewHolderActual.itemId, viewHolderActual.itemTvdbId,
                                 viewHolderActual.itemType));
                 popupMenu.show();
@@ -186,7 +193,7 @@ public class ListsFragment extends Fragment {
 
         @Override
         public void onFavoriteClick(int showTvdbId, boolean isFavorite) {
-            SgApp.getServicesComponent(getContext()).showTools()
+            SgApp.getServicesComponent(requireContext()).showTools()
                     .storeIsFavorite(showTvdbId, isFavorite);
         }
     };

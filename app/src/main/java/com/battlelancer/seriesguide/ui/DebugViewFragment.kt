@@ -62,15 +62,11 @@ class DebugViewFragment : AppCompatDialogFragment() {
                 buttonInvalidateTraktRefreshToken,
                 buttonTriggerJobProcessor
             ),
-            TimberModule(FILE_PROVIDER_AUTHORITY),
+            TimberModule("${requireContext().packageName}.fileprovider"),
             DeviceModule()
         )
 
         return view
-    }
-
-    companion object {
-        private const val FILE_PROVIDER_AUTHORITY = "com.uwetrottmann.seriesguide.fileprovider"
     }
 
 }

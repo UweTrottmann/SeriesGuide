@@ -42,13 +42,14 @@ public class ListsPagerAdapter extends MultiPagerAdapter {
         }
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         if (cursorLists == null || !dataValid) {
             return null;
         }
         cursorLists.moveToPosition(position);
-        return ListsFragment.newInstance(cursorLists.getString(0));
+        return ListsFragment.newInstance(cursorLists.getString(0), position);
     }
 
     @Override

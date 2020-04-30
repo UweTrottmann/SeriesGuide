@@ -64,7 +64,7 @@ public abstract class GenericCheckInDialogFragment extends AppCompatDialogFragme
         unbinder = ButterKnife.bind(this, view);
 
         // Paste episode button
-        final String itemTitle = getArguments().getString(InitBundle.ITEM_TITLE);
+        final String itemTitle = requireArguments().getString(InitBundle.ITEM_TITLE);
         final EditText editTextMessage = textInputLayout.getEditText();
         if (!TextUtils.isEmpty(itemTitle)) {
             buttonPasteTitle.setOnClickListener(v -> {
@@ -119,7 +119,7 @@ public abstract class GenericCheckInDialogFragment extends AppCompatDialogFragme
     }
 
     @Override
-    public void onDismiss(DialogInterface dialog) {
+    public void onDismiss(@NonNull DialogInterface dialog) {
         super.onDismiss(dialog);
 
         EventBus.getDefault().post(new CheckInDialogDismissedEvent());
@@ -149,7 +149,7 @@ public abstract class GenericCheckInDialogFragment extends AppCompatDialogFragme
     public void onEvent(TraktTask.TraktCheckInBlockedEvent event) {
         // launch a check-in override dialog
         TraktCancelCheckinDialogFragment
-                .show(getFragmentManager(), event.traktTaskArgs, event.waitMinutes);
+                .show(getParentFragmentManager(), event.traktTaskArgs, event.waitMinutes);
     }
 
     private void checkIn() {

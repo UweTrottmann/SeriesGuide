@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -32,9 +33,6 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import java.util.List;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Displays recently watched movies, today's releases and recent watches from trakt friends (if
@@ -97,6 +95,15 @@ public class MoviesNowFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
+        new ViewModelProvider(requireActivity()).get(MoviesActivityViewModel.class)
+                .getScrollTabToTopLiveData()
+                .observe(getViewLifecycleOwner(), event -> {
+                    if (event != null
+                            && event.getTabPosition() == MoviesActivity.TAB_POSITION_NOW) {
+                        recyclerView.smoothScrollToPosition(0);
+                    }
+                });
+
         return view;
     }
 
@@ -104,7 +111,7 @@ public class MoviesNowFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ViewTools.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
+        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(), swipeRefreshLayout);
 
         // define dataset
         adapter = new MoviesNowAdapter(getContext(), itemClickListener);
@@ -142,20 +149,6 @@ public class MoviesNowFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
@@ -163,7 +156,7 @@ public class MoviesNowFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
         // guard against not attached to activity
@@ -241,13 +234,6 @@ public class MoviesNowFragment extends Fragment {
         swipeRefreshLayout.setRefreshing(show);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventTabClick(MoviesActivity.MoviesTabClickEvent event) {
-        if (event.position == MoviesActivity.TAB_POSITION_NOW) {
-            recyclerView.smoothScrollToPosition(0);
-        }
-    }
-
     private void updateEmptyState() {
         boolean isEmpty = adapter.getItemCount() == 0;
         recyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
@@ -291,7 +277,7 @@ public class MoviesNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoadFinished(Loader<TraktRecentMovieHistoryLoader.Result> loader,
+        public void onLoadFinished(@NonNull Loader<TraktRecentMovieHistoryLoader.Result> loader,
                 TraktRecentMovieHistoryLoader.Result data) {
             if (!isAdded()) {
                 return;
@@ -303,7 +289,7 @@ public class MoviesNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<TraktRecentMovieHistoryLoader.Result> loader) {
+        public void onLoaderReset(@NonNull Loader<TraktRecentMovieHistoryLoader.Result> loader) {
             if (!isVisible()) {
                 return;
             }
@@ -320,7 +306,7 @@ public class MoviesNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoadFinished(Loader<List<NowAdapter.NowItem>> loader,
+        public void onLoadFinished(@NonNull Loader<List<NowAdapter.NowItem>> loader,
                 List<NowAdapter.NowItem> data) {
             if (!isAdded()) {
                 return;
@@ -331,7 +317,7 @@ public class MoviesNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<List<NowAdapter.NowItem>> loader) {
+        public void onLoaderReset(@NonNull Loader<List<NowAdapter.NowItem>> loader) {
             if (!isVisible()) {
                 return;
             }

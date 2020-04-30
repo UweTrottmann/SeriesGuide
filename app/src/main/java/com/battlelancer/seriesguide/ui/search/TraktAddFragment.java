@@ -98,10 +98,10 @@ public class TraktAddFragment extends AddFragment {
             if (item != null && item.getState() != SearchResult.STATE_ADDING) {
                 if (item.getState() == SearchResult.STATE_ADDED) {
                     // already in library, open it
-                    startActivity(OverviewActivity.intentShow(getContext(), item.getTvdbid()));
+                    startActivity(OverviewActivity.intentShow(requireContext(), item.getTvdbid()));
                 } else {
                     // display more details in a dialog
-                    AddShowDialogFragment.show(getContext(), requireFragmentManager(), item);
+                    AddShowDialogFragment.show(requireContext(), getParentFragmentManager(), item);
                 }
             }
         }
@@ -109,7 +109,7 @@ public class TraktAddFragment extends AddFragment {
         @Override
         public void onAddClick(SearchResult item) {
             EventBus.getDefault().post(new OnAddingShowEvent(item.getTvdbid()));
-            TaskManager.getInstance().performAddTask(getContext(), item);
+            TaskManager.getInstance().performAddTask(requireContext(), item);
         }
 
         @Override
@@ -123,7 +123,7 @@ public class TraktAddFragment extends AddFragment {
             }
 
             popupMenu.setOnMenuItemClickListener(
-                    new AddItemMenuItemClickListener(getContext(), showTvdbId));
+                    new AddItemMenuItemClickListener(requireContext(), showTvdbId));
             popupMenu.show();
         }
     };
@@ -154,7 +154,7 @@ public class TraktAddFragment extends AddFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.trakt_library_menu, menu);
     }

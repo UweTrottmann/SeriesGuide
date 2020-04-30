@@ -2,8 +2,8 @@ package com.battlelancer.seriesguide.streaming
 
 import android.content.Context
 import android.net.Uri
-import android.preference.PreferenceManager
 import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.util.Utils
 import java.util.Locale
 
@@ -44,6 +44,7 @@ object StreamingSearch {
             "jp" to "検索",
             "kr" to "검색",
             "th" to "search",
+            "tr" to "arama",
             "my" to "search",
             "ph" to "search",
             "sg" to "search",

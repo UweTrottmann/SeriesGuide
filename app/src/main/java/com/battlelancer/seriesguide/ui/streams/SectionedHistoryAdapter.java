@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.ui.streams;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.collection.LongSparseArray;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.shows.HeaderData;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.seriesguide.widgets.gridheaderview.StickyGridHeadersBaseAdapter;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import java.util.ArrayList;
@@ -35,8 +35,8 @@ abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry> implem
     }
 
     protected final OnItemClickListener itemClickListener;
-    private final VectorDrawableCompat drawableWatched;
-    private final VectorDrawableCompat drawableCheckin;
+    private final Drawable drawableWatched;
+    private final Drawable drawableCheckin;
     private List<HeaderData> headers;
     private Calendar calendar;
 
@@ -44,12 +44,10 @@ abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry> implem
         super(context, 0);
         this.itemClickListener = itemClickListener;
         calendar = Calendar.getInstance();
-        drawableWatched = ViewTools.vectorIconInactive(getContext(),
-                getContext().getTheme(),
-                R.drawable.ic_watch_black_16dp);
-        drawableCheckin = ViewTools.vectorIconInactive(getContext(),
-                getContext().getTheme(),
-                R.drawable.ic_checkin_black_16dp);
+        drawableWatched = AppCompatResources.getDrawable(getContext(),
+                R.drawable.ic_watch_16dp);
+        drawableCheckin = AppCompatResources.getDrawable(getContext(),
+                R.drawable.ic_checkin_16dp);
     }
 
     void setData(List<HistoryEntry> data) {
@@ -59,11 +57,11 @@ abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry> implem
         }
     }
 
-    private VectorDrawableCompat getDrawableWatched() {
+    private Drawable getDrawableWatched() {
         return drawableWatched;
     }
 
-    private VectorDrawableCompat getDrawableCheckin() {
+    private Drawable getDrawableCheckin() {
         return drawableCheckin;
     }
 
@@ -113,6 +111,8 @@ abstract class SectionedHistoryAdapter extends ArrayAdapter<HistoryEntry> implem
             // check-in, scrobble
             holder.type.setImageDrawable(getDrawableCheckin());
         }
+        // Set disabled for darker icon (non-interactive).
+        holder.type.setEnabled(false);
 
         bindViewHolder(holder, item);
 

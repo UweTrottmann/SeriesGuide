@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.shows
 
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +9,7 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -50,10 +50,10 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
 
 
         val tabsAdapter = ShowsDistillationPageAdapter(
-            context!!,
-            FilterShowsView.ShowFilter.fromSettings(context!!),
+            requireContext(),
+            FilterShowsView.ShowFilter.fromSettings(requireContext()),
             filterListener,
-            SortShowsView.ShowSortOrder.fromSettings(context!!),
+            SortShowsView.ShowSortOrder.fromSettings(requireContext()),
             sortOrderListener
         )
         viewPager.adapter = tabsAdapter
@@ -112,7 +112,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
             }
 
             SingleChoiceDialogFragment.show(
-                fragmentManager,
+                parentFragmentManager,
                 R.array.upcominglimit,
                 R.array.upcominglimitData,
                 selectedIndex,
@@ -124,7 +124,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
 
         override fun onMakeAllHiddenVisibleClick() {
             dismiss()
-            MakeAllVisibleDialogFragment().safeShow(fragmentManager!!, "makeAllVisibleDialog")
+            MakeAllVisibleDialogFragment().safeShow(parentFragmentManager, "makeAllVisibleDialog")
         }
 
     }

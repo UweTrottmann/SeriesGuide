@@ -5,11 +5,10 @@
     <string name="lists">Списки</string>
     <string name="movies">Фільми</string>
     <string name="statistics">Статистика</string>
+    <string name="navigation_more">More</string>
     <string name="search">Пошук</string>
     <string name="preferences">Налаштування</string>
     <string name="help">Допомога</string>
-    <string name="help_and_feedback">Довідка &amp; Відгук</string>
-    <string name="drawer_open">Відкрити вікно навігації</string>
     <string name="no_more_updates">SeriesGuide не буде отримувати більше оновлень для цієї версії Android.</string>
     <!-- Media items -->
     <string name="show">Серіал</string>
@@ -351,7 +350,6 @@
     <string name="action_open_in_browser">Відкрити в браузері</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Основні</string>
-    <string name="prefs_category_sharing">Послуги</string>
     <string name="prefs_category_advanced">Додатково</string>
     <string name="prefs_category_about">Про</string>
     <string name="pref_onlyfuture">Немає серій що вийшли</string>
@@ -423,8 +421,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Інші</string>
     <string name="pref_autoupdatesummary">Автоматично синхронізування та оновлення даних SeriesGuide</string>
-    <string name="pref_autobackup">Автоматичне резервне копіювання</string>
-    <string name="pref_autobackupsummary">Щотижневе резервне копіювання ваших серіалів, списків та фільмів</string>
     <string name="backup">Бекап/Відновлення</string>
     <string name="backup_summary">Резервна копія або відновлення ваших серіалів</string>
     <string name="pref_number">Формат цифр</string>
@@ -444,14 +440,18 @@
     <string name="backup_button">Бекап</string>
     <string name="import_button">Відновити</string>
     <string name="import_warning">Я розумію, що мої поточні серіали, списки та фільми будуть замінені!</string>
-    <string name="last_auto_backup">Останній авто Бекап: %s</string>
-    <string name="restore_auto_backup">Відновити з авто Бекапу</string>
-    <string name="dataliberation_permission_missing">Щоб зберегти або відновити резервну копію дозвольте доступ до ваших файлів.</string>
-    <string name="autobackup_permission_missing">Щоб застосувати автоматичне резервне копіювання, дозвольте доступ до ваших файлів.</string>
-    <string name="autobackup_files_missing">Щоб використати автоматичну резервну копію, виберіть дійсні файли бекапу.</string>
     <string name="no_file_selected">Не вибрано жодного файлу</string>
     <string name="action_select_file">Виберіть файл</string>
-    <string name="backup_use_default_files">Використовувати резервну копію за замовчуванням</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Автоматичне резервне копіювання</string>
+    <string name="pref_autobackupsummary">Щотижневе резервне копіювання ваших серіалів, списків та фільмів</string>
+    <string name="autobackup_details">Ці резервні копії будуть недоступні, якщо додаток буде повторно інстальований, хіба що для цього пристрою буде ввімкнуто резервне копіювання даних додатку (Андроїд 6 та вище).  В такому випадку, для збереження даних, створюйте їх копії.</string>
+    <string name="last_auto_backup">Останній авто Бекап: %s</string>
+    <string name="restore_auto_backup">Відновити з авто Бекапу</string>
+    <string name="autobackup_failed">Останній бекап не вдався.</string>
+    <string name="autobackup_files_missing">Щоб використати автоматичну резервну копію, виберіть дійсні файли бекапу.</string>
+    <string name="autobackup_create_user_copy">Створити копію після кожного бекапу.</string>
+    <string name="autobackup_restore_available">Авторезервування може бути доступне для відновлення.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Початок роботи</string>
     <string name="dismiss">Відхилити</string>

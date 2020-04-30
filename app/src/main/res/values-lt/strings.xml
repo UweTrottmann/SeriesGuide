@@ -5,11 +5,10 @@
     <string name="lists">Sąrašai</string>
     <string name="movies">Filmai</string>
     <string name="statistics">Statistika</string>
+    <string name="navigation_more">More</string>
     <string name="search">Paieška</string>
     <string name="preferences">Nustatymai</string>
     <string name="help">Pagalba</string>
-    <string name="help_and_feedback">Pagalba &amp; atsiliepimai</string>
-    <string name="drawer_open">Atidaryti navigacijos meniu</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
     <string name="show">Serialas</string>
@@ -351,7 +350,6 @@
     <string name="action_open_in_browser">Atidaryti naršyklėje</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Pagrindai</string>
-    <string name="prefs_category_sharing">Paslaugos</string>
     <string name="prefs_category_advanced">Išplėstinė</string>
     <string name="prefs_category_about">Apie</string>
     <string name="pref_onlyfuture">Neparodytos serijos</string>
@@ -423,8 +421,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Kita</string>
     <string name="pref_autoupdatesummary">Automatically sync and update content</string>
-    <string name="pref_autobackup">Auto Backup</string>
-    <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
     <string name="backup">Atsarginė kopija/atstatymas</string>
     <string name="backup_summary">Padaryti atsarginę kopiją arba atkurti serialus</string>
     <string name="pref_number">Skaičių formatas</string>
@@ -444,14 +440,18 @@
     <string name="backup_button">Create backup</string>
     <string name="import_button">Restore backup</string>
     <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
-    <string name="last_auto_backup">Last Auto Backup: %s</string>
-    <string name="restore_auto_backup">Restore Auto Backup</string>
-    <string name="dataliberation_permission_missing">To backup or restore, allow access to your files</string>
-    <string name="autobackup_permission_missing">To use auto backup, allow access to your files</string>
-    <string name="autobackup_files_missing">To use auto backup, select valid backup files</string>
     <string name="no_file_selected">No file selected</string>
     <string name="action_select_file">Pasirinkite failą</string>
-    <string name="backup_use_default_files">Use default backup files</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Auto Backup</string>
+    <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies to device storage.</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Last Auto Backup: %s</string>
+    <string name="restore_auto_backup">Restore Auto Backup</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">To use auto backup, select valid backup files</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Get started</string>
     <string name="dismiss">Dismiss</string>

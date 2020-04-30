@@ -5,11 +5,10 @@
     <string name="lists">リスト</string>
     <string name="movies">映画</string>
     <string name="statistics">統計</string>
+    <string name="navigation_more">さらに</string>
     <string name="search">検索</string>
     <string name="preferences">設定</string>
     <string name="help">ヘルプ</string>
-    <string name="help_and_feedback">ヘルプ &amp; フィードバック</string>
-    <string name="drawer_open">ナビゲーションドロワーを開く</string>
     <string name="no_more_updates">SeriesGuide は、このバージョンの Android の更新をもう受け取りません。</string>
     <!-- Media items -->
     <string name="show">番組</string>
@@ -327,7 +326,6 @@
     <string name="action_open_in_browser">ブラウザーで開く</string>
     <!-- Settings -->
     <string name="prefs_category_basic">基本</string>
-    <string name="prefs_category_sharing">サービス</string>
     <string name="prefs_category_advanced">高度</string>
     <string name="prefs_category_about">について</string>
     <string name="pref_onlyfuture">未放映のエピソード</string>
@@ -390,8 +388,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">その他</string>
     <string name="pref_autoupdatesummary">SeriesGuide データを自動的に同期および更新します</string>
-    <string name="pref_autobackup">自動バックアップ</string>
-    <string name="pref_autobackupsummary">番組、リスト、映画を毎週バックアップ</string>
     <string name="backup">バックアップ/復元</string>
     <string name="backup_summary">番組をバックアップまたは復元します</string>
     <string name="pref_number">表示形式</string>
@@ -411,14 +407,18 @@
     <string name="backup_button">バックアップを作成</string>
     <string name="import_button">バックアップを復元</string>
     <string name="import_warning">あなたの現在の番組、リスト、映画がバックアップで置き換えられます</string>
-    <string name="last_auto_backup">最終の自動バックアップ: %s</string>
-    <string name="restore_auto_backup">自動バックアップを復元</string>
-    <string name="dataliberation_permission_missing">バックアップまたは復元するため、ファイルへのアクセスを許可してください。</string>
-    <string name="autobackup_permission_missing">自動バックアップを使用するため、ファイルへのアクセスを許可してください。</string>
-    <string name="autobackup_files_missing">自動バックアップを使用するため、有効なバックアップ ファイルを選択してください。</string>
     <string name="no_file_selected">ファイルが選択されていません</string>
     <string name="action_select_file">ファイルを選択</string>
-    <string name="backup_use_default_files">デフォルトのバックアップ ファイルを使用する</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">自動バックアップ</string>
+    <string name="pref_autobackupsummary">番組、リスト、映画を毎週バックアップ</string>
+    <string name="autobackup_details">このデバイス (Android 6以降) は、アプリデータのバックアップがオンになっていない限り、アプリを再度インストールした場合は、これらのバックアップは利用できません。 それ以外の場合、保存するにはコピーを作成してください。</string>
+    <string name="last_auto_backup">最終の自動バックアップ: %s</string>
+    <string name="restore_auto_backup">自動バックアップを復元</string>
+    <string name="autobackup_failed">前回の自動バックアップが失敗しました</string>
+    <string name="autobackup_files_missing">自動バックアップを使用するため、有効なバックアップ ファイルを選択してください。</string>
+    <string name="autobackup_create_user_copy">各バックアップ後にコピーを作成する</string>
+    <string name="autobackup_restore_available">自動バックアップが復元に利用可能な場合があります。</string>
     <!-- Welcome dialog -->
     <string name="get_started">始めましょう</string>
     <string name="dismiss">中止</string>

@@ -10,7 +10,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Vibrator
-import android.preference.PreferenceManager
 import android.provider.Settings
 import android.text.TextUtils
 import android.widget.Toast
@@ -20,15 +19,12 @@ import androidx.core.content.getSystemService
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
-import com.battlelancer.seriesguide.backend.CloudSetupActivity
-import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.billing.BillingActivity
-import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.service.NotificationService
@@ -39,8 +35,6 @@ import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
-import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
-import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragment
@@ -81,7 +75,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         findPreference<Preference>(KEY_CLEAR_CACHE)!!.setOnPreferenceClickListener {
             // try to open app info where user can clear app cache folders
             var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-            intent.data = Uri.parse("package:" + activity!!.packageName)
+            intent.data = Uri.parse("package:" + requireActivity().packageName)
             if (!Utils.tryStartActivity(activity, intent, false)) {
                 // try to open all apps view if detail view not available
                 intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
@@ -105,35 +99,12 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     private fun updateRootSettings() {
         val hasAccessToX = Utils.hasAccessToX(activity)
 
-        // unlock all link
-        findPreference<Preference>(LINK_KEY_UPGRADE)!!.apply {
-            summary = if (hasAccessToX) getString(R.string.upgrade_success) else null
-        }
-
         // notifications link
         findPreference<Preference>(KEY_SCREEN_NOTIFICATIONS)!!.apply {
             if (hasAccessToX && NotificationSettings.isNotificationsEnabled(activity)) {
                 summary = NotificationSettings.getLatestToIncludeTresholdValue(activity)
             } else {
                 setSummary(R.string.pref_notificationssummary)
-            }
-        }
-
-        // SeriesGuide Cloud link
-        findPreference<Preference>(LINK_KEY_CLOUD)!!.apply {
-            if (hasAccessToX && HexagonSettings.isEnabled(activity)) {
-                summary = HexagonSettings.getAccountName(activity)
-            } else {
-                setSummary(R.string.hexagon_description)
-            }
-        }
-
-        // trakt link
-        findPreference<Preference>(LINK_KEY_TRAKT)!!.apply {
-            if (TraktCredentials.get(activity).hasCredentials()) {
-                summary = TraktCredentials.get(activity).username
-            } else {
-                summary = null
             }
         }
 
@@ -232,7 +203,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             updateFallbackLanguageSummary(it)
             it.setOnPreferenceClickListener {
                 LanguageChoiceDialogFragment.show(
-                    fragmentManager!!,
+                    parentFragmentManager,
                     R.array.languageCodesShows,
                     DisplaySettings.getShowsLanguageFallback(context),
                     TAG_LANGUAGE_FALLBACK
@@ -280,32 +251,8 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
         // links
         when (key) {
-            LINK_KEY_UPGRADE -> {
-                startActivity(
-                    Intent(
-                        activity, if (Utils.isAmazonVersion()) {
-                            AmazonBillingActivity::class.java
-                        } else {
-                            BillingActivity::class.java
-                        }
-                    )
-                )
-                return true
-            }
-            LINK_KEY_CLOUD -> {
-                startActivity(Intent(activity, CloudSetupActivity::class.java))
-                return true
-            }
-            LINK_KEY_TRAKT -> {
-                startActivity(Intent(activity, ConnectTraktActivity::class.java))
-                return true
-            }
             LINK_KEY_AUTOBACKUP -> {
-                startActivity(
-                    Intent(activity, DataLiberationActivity::class.java).putExtra(
-                        DataLiberationActivity.EXTRA_SHOW_AUTOBACKUP, true
-                    )
-                )
+                startActivity(DataLiberationActivity.intentToShowAutoBackup(requireActivity()))
                 return true
             }
             LINK_KEY_DATALIBERATION -> {
@@ -367,7 +314,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
                     .putExtra(Settings.EXTRA_CHANNEL_ID, SgApp.NOTIFICATION_CHANNEL_EPISODES)
-                    .putExtra(Settings.EXTRA_APP_PACKAGE, activity!!.packageName)
+                    .putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
                 // at least NVIDIA Shield (8.0.0) can not handle this, so guard
                 Utils.tryStartActivity(activity, intent, true)
             }
@@ -380,7 +327,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             return false // Let the pref handle the click (and change its value).
         }
         if (KEY_ABOUT == key) {
-            val ft = fragmentManager!!.beginTransaction()
+            val ft = parentFragmentManager.beginTransaction()
             ft.replace(R.id.containerSettings, AboutPreferencesFragment())
             ft.addToBackStack(null)
             ft.commit()
@@ -434,7 +381,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             if (NotificationSettings.KEY_VIBRATE == key
                 && NotificationSettings.isNotificationVibrating(pref.context)) {
                 // demonstrate vibration pattern used by SeriesGuide
-                val vibrator = activity!!.getSystemService<Vibrator>()
+                val vibrator = requireActivity().getSystemService<Vibrator>()
                 @Suppress("DEPRECATION") // Not visible on O+, no need to use new API.
                 vibrator?.vibrate(NotificationService.VIBRATION_PATTERN, -1)
             }
@@ -446,7 +393,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         // pref changes that require the notification service to be reset
         if (DisplaySettings.KEY_SHOWS_TIME_OFFSET == key
             || NotificationSettings.KEY_THRESHOLD == key) {
-            resetAndRunNotificationsService(activity!!)
+            resetAndRunNotificationsService(requireActivity())
         }
 
         // pref changes that require the widgets to be updated
@@ -455,7 +402,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             || DisplaySettings.KEY_DISPLAY_EXACT_DATE == key
             || DisplaySettings.KEY_PREVENT_SPOILERS == key) {
             // update any widgets
-            ListWidgetProvider.notifyDataChanged(activity!!)
+            ListWidgetProvider.notifyDataChanged(requireActivity())
         }
 
         if (DisplaySettings.KEY_LANGUAGE_FALLBACK == key) {
@@ -466,7 +413,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
                 val values = ContentValues()
                 values.put(SeriesGuideContract.Episodes.LAST_UPDATED, 0)
-                activity!!.contentResolver
+                requireActivity().contentResolver
                     .update(SeriesGuideContract.Episodes.CONTENT_URI, values, null, null)
             }.start()
         }
@@ -518,7 +465,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
     private fun updateSelectionSummary(selectionPref: Preference) {
         val countOfShowsNotifyOn = DBUtils.getCountOf(
-            activity!!.contentResolver,
+            requireActivity().contentResolver,
             SeriesGuideContract.Shows.CONTENT_URI,
             SeriesGuideContract.Shows.SELECTION_NOTIFY, null, 0
         )
@@ -529,7 +476,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     }
 
     private fun updateStreamSearchServiceSummary(pref: Preference) {
-        val serviceOrEmptyOrNull = StreamingSearch.getServiceOrEmptyOrNull(activity!!)
+        val serviceOrEmptyOrNull = StreamingSearch.getServiceOrEmptyOrNull(requireActivity())
         when {
             serviceOrEmptyOrNull == null -> pref.summary = null
             serviceOrEmptyOrNull.isEmpty() -> pref.setSummary(R.string.action_turn_off)
@@ -572,9 +519,6 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
         // links
         private const val LINK_BASE_KEY = "com.battlelancer.seriesguide.settings."
-        private const val LINK_KEY_UPGRADE = LINK_BASE_KEY + "upgrade"
-        private const val LINK_KEY_CLOUD = LINK_BASE_KEY + "cloud"
-        private const val LINK_KEY_TRAKT = LINK_BASE_KEY + "trakt"
         private const val LINK_KEY_AUTOBACKUP = LINK_BASE_KEY + "autobackup"
         private const val LINK_KEY_DATALIBERATION = LINK_BASE_KEY + "dataliberation"
 

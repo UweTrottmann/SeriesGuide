@@ -5,11 +5,10 @@
     <string name="lists">Listák</string>
     <string name="movies">Filmek</string>
     <string name="statistics">Statisztika</string>
+    <string name="navigation_more">More</string>
     <string name="search">Keresés</string>
     <string name="preferences">Beállítások</string>
     <string name="help">Súgó</string>
-    <string name="help_and_feedback">Súgó &amp; Visszajelzés</string>
-    <string name="drawer_open">Navigációs fiók megnyitása</string>
     <string name="no_more_updates">Ehhez az android verzióhoz nem készül több SeriesGuide frissítés.</string>
     <!-- Media items -->
     <string name="show">Műsor</string>
@@ -44,7 +43,7 @@
     <string name="search_hint">Epizódok keresése</string>
     <!-- Status messages -->
     <string name="updated">Frissítve a legújabb verzióra.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Részletek</string>
     <string name="norating">n/a</string>
     <string name="unknown">ismeretlen</string>
     <string name="offline">Csatlakozz a hálózathoz és próbáld újra.</string>
@@ -148,7 +147,7 @@
     <string name="action_shows_sort_favorites">Kedvencek előre</string>
     <string name="context_updateshow">Frissítés</string>
     <string name="context_marknext">Láttam a következő epizódot</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Nézet váltása</string>
     <!-- History -->
     <string name="user_stream">Előzmények</string>
     <string name="recently_watched">Nemrég megnézett</string>
@@ -335,7 +334,6 @@
     <string name="action_open_in_browser">Megnyitás böngészőben</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Alap beállítások</string>
-    <string name="prefs_category_sharing">Szolgáltatások</string>
     <string name="prefs_category_advanced">Haladó beállítások</string>
     <string name="prefs_category_about">A programról</string>
     <string name="pref_onlyfuture">Leadott epizódok nélkül</string>
@@ -368,7 +366,7 @@
     <string name="privacy_policy">Adatvédelmi irányelvek</string>
     <string name="licence_tvdb">Ez az alkalmazás a TheTVDB, Creative Commons licenc alatt álló adatait és képeit használja.</string>
     <string name="licence_themoviedb">Ez a termék a TMDb API-t használja, de a TMDb hozzájárulása vagy minősítése nélkül.</string>
-    <string name="licence_trakt">This app uses data and images by Trakt.</string>
+    <string name="licence_trakt">Ez az alkalmazás a Trakt adatait és képeit használja.</string>
     <string name="about_open_source">A SeriesGuide nyílt forráskódú szoftverek használatával készül.</string>
     <string name="licences_and_credits">Engedélyek és készítők listája</string>
     <!-- Sort -->
@@ -401,8 +399,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Egyéb</string>
     <string name="pref_autoupdatesummary">SeriesGuide adatok automatikus szinkronizálása és frissítése</string>
-    <string name="pref_autobackup">Automatikus biztonsági másolat</string>
-    <string name="pref_autobackupsummary">Heti biztonsági másolat készítése a sorozatokról, listákról és filmekről</string>
     <string name="backup">Biztonsági Mentés/Visszaállítás</string>
     <string name="backup_summary">A sorozatokról biztonsági mentés készítése vagy annak visszaállítása</string>
     <string name="pref_number">Számozás formátuma</string>
@@ -422,14 +418,18 @@
     <string name="backup_button">Biztonsági Mentés</string>
     <string name="import_button">Visszaállítás</string>
     <string name="import_warning">Megértettem, hogy az aktuális sorozataim, listáim és filmjeim lecserélésre kerülnek!</string>
-    <string name="last_auto_backup">Utolsó automata mentés: %s</string>
-    <string name="restore_auto_backup">Automatikus mentés visszaállítása</string>
-    <string name="dataliberation_permission_missing">Biztonsági mentéshez vagy visszaállításhoz engedélyezd a fájljaidhoz való hozzáférést.</string>
-    <string name="autobackup_permission_missing">Az automatikus mentéshez engedélyezd a fájljaidhoz való hozzáférést.</string>
-    <string name="autobackup_files_missing">Az automatikus biztonsági másolat használatához válassz érvényes biztonsági másolat fájlokat.</string>
     <string name="no_file_selected">Nincs fájl  kijelölve</string>
     <string name="action_select_file">Fájl kiválasztása</string>
-    <string name="backup_use_default_files">Használja az alapértelmezett biztonsági mentés fájlokat</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatikus biztonsági másolat</string>
+    <string name="pref_autobackupsummary">Heti biztonsági másolat készítése a sorozatokról, listákról és filmekről</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Utolsó automata mentés: %s</string>
+    <string name="restore_auto_backup">Automatikus mentés visszaállítása</string>
+    <string name="autobackup_failed">A legutóbbi automatikus mentés nem sikerült</string>
+    <string name="autobackup_files_missing">Az automatikus biztonsági másolat használatához válassz érvényes biztonsági másolat fájlokat.</string>
+    <string name="autobackup_create_user_copy">Másolat létrehozása minden biztonsági mentés után</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Vágjunk bele!</string>
     <string name="dismiss">Mégsem</string>

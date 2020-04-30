@@ -3,8 +3,8 @@ package com.battlelancer.seriesguide.backend.settings;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.Utils;
 

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -15,8 +14,12 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.core.content.edit
 import androidx.core.view.isGone
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
@@ -24,21 +27,16 @@ import com.battlelancer.seriesguide.model.EpisodeWithShow
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.ui.ScopedFragment
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
-import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.widgets.FastScrollerDecoration
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
-class CalendarFragment2 : ScopedFragment() {
+class CalendarFragment2 : Fragment() {
 
     enum class CalendarType(val id: Int) {
         UPCOMING(1),
@@ -47,7 +45,7 @@ class CalendarFragment2 : ScopedFragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var textViewEmpty: TextView
-    private lateinit var viewModel: CalendarFragment2ViewModel
+    private val viewModel: CalendarFragment2ViewModel by viewModels()
 
     private lateinit var adapter: CalendarAdapter2
     private lateinit var type: CalendarType
@@ -55,7 +53,7 @@ class CalendarFragment2 : ScopedFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val argType = arguments!!.getInt(ARG_CALENDAR_TYPE)
+        val argType = requireArguments().getInt(ARG_CALENDAR_TYPE)
         type = when (argType) {
             CalendarType.UPCOMING.id -> CalendarType.UPCOMING
             CalendarType.RECENT.id -> CalendarType.RECENT
@@ -78,7 +76,10 @@ class CalendarFragment2 : ScopedFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = CalendarAdapter2(context!!, calendarItemClickListener)
+        PreferenceManager.getDefaultSharedPreferences(activity)
+            .registerOnSharedPreferenceChangeListener(prefChangeListener)
+
+        adapter = CalendarAdapter2(requireContext(), calendarItemClickListener)
 
         val layoutManager = AutoGridLayoutManager(
             context,
@@ -91,8 +92,8 @@ class CalendarFragment2 : ScopedFragment() {
             it.layoutManager = layoutManager
             it.adapter = adapter
         }
-        val thumbDrawable = context!!.getDrawable(R.drawable.fast_scroll_thumb) as StateListDrawable
-        val trackDrawable = context!!.getDrawable(R.drawable.fast_scroll_track)
+        val thumbDrawable = requireContext().getDrawable(R.drawable.fast_scroll_thumb) as StateListDrawable
+        val trackDrawable = requireContext().getDrawable(R.drawable.fast_scroll_track)
         FastScrollerDecoration(
             recyclerView, thumbDrawable, trackDrawable, thumbDrawable, trackDrawable,
             resources.getDimensionPixelSize(R.dimen.sg_fastscroll_default_thickness),
@@ -108,20 +109,32 @@ class CalendarFragment2 : ScopedFragment() {
                 R.string.norecent
             }
         )
+
+        ViewModelProvider(requireActivity()).get(ShowsActivityViewModel::class.java)
+            .scrollTabToTopLiveData
+            .observe(
+                viewLifecycleOwner,
+                Observer { tabPosition: Int? ->
+                    if (tabPosition != null) {
+                        if (CalendarType.UPCOMING == type
+                            && tabPosition == ShowsActivity.InitBundle.INDEX_TAB_UPCOMING
+                            || CalendarType.RECENT == type
+                            && tabPosition == ShowsActivity.InitBundle.INDEX_TAB_RECENT) {
+                            recyclerView.smoothScrollToPosition(0)
+                        }
+                    }
+                }
+            )
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(CalendarFragment2ViewModel::class.java)
-        viewModel.upcomingEpisodesLiveData.observe(this, Observer {
+        viewModel.upcomingEpisodesLiveData.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
             updateEmptyView(it.isEmpty())
         })
         updateCalendarQuery()
-
-        PreferenceManager.getDefaultSharedPreferences(activity)
-            .registerOnSharedPreferenceChangeListener(prefChangeListener)
 
         setHasOptionsMenu(true)
     }
@@ -132,34 +145,15 @@ class CalendarFragment2 : ScopedFragment() {
     }
 
     private fun updateCalendarQuery() {
-        launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.updateCalendarQuery(type)
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
+    override fun onDestroyView() {
+        super.onDestroyView()
         PreferenceManager.getDefaultSharedPreferences(activity)
             .unregisterOnSharedPreferenceChangeListener(prefChangeListener)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventTabClick(event: TabClickEvent) {
-        if (CalendarType.UPCOMING == type && event.position == ShowsActivity.InitBundle.INDEX_TAB_UPCOMING
-            || CalendarType.RECENT == type && event.position == ShowsActivity.InitBundle.INDEX_TAB_RECENT) {
-            recyclerView.smoothScrollToPosition(0)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -168,7 +162,7 @@ class CalendarFragment2 : ScopedFragment() {
         inflater.inflate(R.menu.calendar_menu, menu)
 
         // set menu items to current values
-        val context = context!!
+        val context = requireContext()
         menu.findItem(R.id.menu_action_calendar_onlyfavorites).isChecked =
             CalendarSettings.isOnlyFavorites(context)
         menu.findItem(R.id.menu_action_calendar_onlypremieres).isChecked =
@@ -218,7 +212,7 @@ class CalendarFragment2 : ScopedFragment() {
             putBoolean(key, !item.isChecked)
         }
         // refresh filter icon state
-        activity!!.invalidateOptionsMenu()
+        requireActivity().invalidateOptionsMenu()
     }
 
     private val prefChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
@@ -273,8 +267,8 @@ class CalendarFragment2 : ScopedFragment() {
                 when (item.itemId) {
                     CONTEXT_CHECKIN_ID -> {
                         CheckInDialogFragment.show(
-                            getContext()!!,
-                            fragmentManager,
+                            requireContext(),
+                            parentFragmentManager,
                             episode.episodeTvdbId
                         )
                         return@setOnMenuItemClickListener true

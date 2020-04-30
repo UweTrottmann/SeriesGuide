@@ -81,7 +81,10 @@ class TmdbSync internal constructor(
                 // Treat as failure if updating at least one fails.
                 result = false
 
-                val message = "Failed to update movie with TMDB id ${movie.tmdbId}."
+                val movieTitle = SgRoomDatabase.getInstance(context)
+                    .movieHelper()
+                    .getMovieTitle(movie.tmdbId)
+                val message = "Failed to update movie ('${movieTitle}', TMDB id ${movie.tmdbId})."
                 progress.setImportantErrorIfNone(message)
                 Timber.e(message)
             }

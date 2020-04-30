@@ -31,10 +31,10 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setMessage(R.string.hexagon_remove_account_confirmation);
         builder.setPositiveButton(R.string.hexagon_remove_account,
-                (dialog, which) -> Utils.executeInOrder(new RemoveHexagonAccountTask(getContext()))
+                (dialog, which) -> Utils.executeInOrder(new RemoveHexagonAccountTask(requireContext()))
         );
         builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> sendCanceledEvent());
 
@@ -42,7 +42,7 @@ public class RemoveCloudAccountDialogFragment extends AppCompatDialogFragment {
     }
 
     @Override
-    public void onCancel(DialogInterface dialog) {
+    public void onCancel(@NonNull DialogInterface dialog) {
         super.onCancel(dialog);
         sendCanceledEvent();
     }

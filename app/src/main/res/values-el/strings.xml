@@ -5,11 +5,10 @@
     <string name="lists">Λίστες</string>
     <string name="movies">Ταινίες</string>
     <string name="statistics">Στατιστικά</string>
+    <string name="navigation_more">Περισσότερα</string>
     <string name="search">Αναζήτηση</string>
     <string name="preferences">Ρυθμίσεις</string>
     <string name="help">Βοήθεια</string>
-    <string name="help_and_feedback">Βοήθεια &amp; Σχόλια</string>
-    <string name="drawer_open">Συρτάρι ανοιχτό</string>
     <string name="no_more_updates">Το SeriesGuide δεν θα λάβει άλλες ενημερώσεις για αυτή την έκδοση Android.</string>
     <!-- Media items -->
     <string name="show">Σειρά</string>
@@ -335,7 +334,6 @@
     <string name="action_open_in_browser">Άνοιγμα σε πρόγραμμα περιήγησης</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Βασικά</string>
-    <string name="prefs_category_sharing">Υπηρεσίες</string>
     <string name="prefs_category_advanced">Για προχωρημένους</string>
     <string name="prefs_category_about">Σχετικά</string>
     <string name="pref_onlyfuture">Επεισόδια που δεν έχουν προβληθεί</string>
@@ -401,8 +399,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Άλλα</string>
     <string name="pref_autoupdatesummary">Αυτόματος συγχρονισμός και ενημέρωση περιεχομένου</string>
-    <string name="pref_autobackup">Αυτόματο αντίγραφο ασφαλείας</string>
-    <string name="pref_autobackupsummary">Εβδομαδιαίο αντίγραφο ασφαλείας των σειρών, λιστών και ταινιών σας</string>
     <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
     <string name="backup_summary">Δημιουργία αντιγράφου ασφαλείας ή επαναφορά των σειρών</string>
     <string name="pref_number">Μορφή των αριθμών</string>
@@ -422,14 +418,18 @@
     <string name="backup_button">Δημιουργία αντιγράφων ασφαλείας</string>
     <string name="import_button">Επαναφορά</string>
     <string name="import_warning">Οι τρέχουσες σειρές, λίστες και ταινίες θα αντικατασταθούν από το αντίγραφο ασφαλείας</string>
-    <string name="last_auto_backup">Τελευταίο αυτόματο αντίγραφο ασφαλείας: %s</string>
-    <string name="restore_auto_backup">Επαναφορά αντιγράφου ασφαλείας στο αυτόματο</string>
-    <string name="dataliberation_permission_missing">Για λήψη ή επαναφορά αντιγράφων ασφαλείας, επιτρέψτε πρόσβαση στα αρχεία σας</string>
-    <string name="autobackup_permission_missing">Για τη χρήση της αυτόματης λήψης αντιγράφων ασφαλείας, επιτρέψτε πρόσβαση στα αρχεία σας</string>
-    <string name="autobackup_files_missing">Για τη χρήση της αυτόματης λήψης αντιγράφων ασφαλείας, επιλέξτε έγκυρα αρχεία αντιγράφων ασφαλείας</string>
     <string name="no_file_selected">Δεν επιλέχθηκε αρχείο</string>
     <string name="action_select_file">Επιλογή αρχείου</string>
-    <string name="backup_use_default_files">Χρησιμοποιήστε τα προεπιλεγμένα αρχεία αντιγράφων ασφαλείας</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Αυτόματο αντίγραφο ασφαλείας</string>
+    <string name="pref_autobackupsummary">Εβδομαδιαίο αντίγραφο ασφαλείας των σειρών, λιστών και ταινιών σας</string>
+    <string name="autobackup_details">Αυτά τα αντίγραφα ασφαλείας δεν είναι διαθέσιμα αν η εφαρμογή εγκατασταθεί ξανά, εκτός αν τα αντίγραφα ασφαλείας των δεδομένων της εφαρμογής είναι ενεργά για αυτή τη συσκευή (Android 6+). Αλλιώς κάντε αντίγραφά τους για να τα διατηρήσετε.  </string>
+    <string name="last_auto_backup">Τελευταίο αυτόματο αντίγραφο ασφαλείας: %s</string>
+    <string name="restore_auto_backup">Επαναφορά αντιγράφου ασφαλείας στο αυτόματο</string>
+    <string name="autobackup_failed">Το τελευταίο αυτόματο αντίγραφο ασφαλείας απέτυχε</string>
+    <string name="autobackup_files_missing">Για τη χρήση της αυτόματης λήψης αντιγράφων ασφαλείας, επιλέξτε έγκυρα αρχεία αντιγράφων ασφαλείας</string>
+    <string name="autobackup_create_user_copy">Δημιουργία αντιγράφου μετά από κάθε αντίγραφο ασφαλείας</string>
+    <string name="autobackup_restore_available">Μπορεί να υπάρχει διαθέσιμο κάποιο αυτόματο αντίγραφο ασφαλείας για να κάνετε επαναφορά.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Ξεκινήστε</string>
     <string name="dismiss">Απόρριψη</string>

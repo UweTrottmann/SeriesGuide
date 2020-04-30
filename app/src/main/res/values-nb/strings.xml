@@ -5,11 +5,10 @@
     <string name="lists">Lister</string>
     <string name="movies">Filmer</string>
     <string name="statistics">Statistikk</string>
+    <string name="navigation_more">More</string>
     <string name="search">Søk</string>
     <string name="preferences">Innstillinger</string>
     <string name="help">Hjelp</string>
-    <string name="help_and_feedback">Hjelp og tilbakemelding</string>
-    <string name="drawer_open">Åpne navigasjonsskuff</string>
     <string name="no_more_updates">SeriesGuide vil ikke motta flere oppdateringer for denne versjonen av Android.</string>
     <!-- Media items -->
     <string name="show">Serie</string>
@@ -335,7 +334,6 @@
     <string name="action_open_in_browser">Åpne i nettleser</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Grunnleggende</string>
-    <string name="prefs_category_sharing">Tjenester</string>
     <string name="prefs_category_advanced">Avansert</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Ingen sendte episoder</string>
@@ -401,8 +399,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Annet</string>
     <string name="pref_autoupdatesummary">Synkroniser automatisk og oppdater SeriesGuide data</string>
-    <string name="pref_autobackup">Automatisk sikkerhetskopiering</string>
-    <string name="pref_autobackupsummary">Ukentlig sikkerhetskopiering av dine serier, lister og filmer</string>
     <string name="backup">Sikkerhetskopiering/gjenoppretting</string>
     <string name="backup_summary">Sikkerhetskopier eller gjenopprett dine serier</string>
     <string name="pref_number">Nummerering</string>
@@ -422,14 +418,18 @@
     <string name="backup_button">Opprett sikkerhetskopi</string>
     <string name="import_button">Gjenopprett</string>
     <string name="import_warning">Jeg forstår at mine valgte serier, lister og filmer vil bli erstattet.</string>
-    <string name="last_auto_backup">Siste automatiske sikkerhetskopiering: %s</string>
-    <string name="restore_auto_backup">Gjenopprett fra automatisk sikkerhetskopiering</string>
-    <string name="dataliberation_permission_missing">For å sikkerhetskopiere eller gjenopprette, gi tilgang til filene.</string>
-    <string name="autobackup_permission_missing">For å bruke automatisk sikkerhetskopiering, må du gi tilgang til filene dine.</string>
-    <string name="autobackup_files_missing">Bruke automatisk sikkerhetskopiering, må du velge gyldige sikkerhetskopifiler.</string>
     <string name="no_file_selected">Ingen fil valgt</string>
     <string name="action_select_file">Velg fil</string>
-    <string name="backup_use_default_files">Bruk standard sikkerhetskopifiler</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatisk sikkerhetskopiering</string>
+    <string name="pref_autobackupsummary">Ukentlig sikkerhetskopiering av dine serier, lister og filmer</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Siste automatiske sikkerhetskopiering: %s</string>
+    <string name="restore_auto_backup">Gjenopprett fra automatisk sikkerhetskopiering</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">Bruke automatisk sikkerhetskopiering, må du velge gyldige sikkerhetskopifiler.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Kom i gang</string>
     <string name="dismiss">Avvis</string>

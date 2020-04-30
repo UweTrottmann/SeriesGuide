@@ -5,11 +5,10 @@
     <string name="lists">Listy</string>
     <string name="movies">Filmy</string>
     <string name="statistics">Statystyki</string>
+    <string name="navigation_more">Więcej</string>
     <string name="search">Szukaj</string>
     <string name="preferences">Ustawienia</string>
     <string name="help">Pomoc</string>
-    <string name="help_and_feedback">Pomoc i opinie</string>
-    <string name="drawer_open">Otwórz szufladę nawigacji</string>
     <string name="no_more_updates">Na tej wersji systemu Android, SeriesGuide nie będzie już otrzymywał aktualizacji.</string>
     <!-- Media items -->
     <string name="show">Serial</string>
@@ -351,7 +350,6 @@
     <string name="action_open_in_browser">Otwórz w przeglądarce</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Podstawowe</string>
-    <string name="prefs_category_sharing">Usługi</string>
     <string name="prefs_category_advanced">Zaawansowane</string>
     <string name="prefs_category_about">O programie</string>
     <string name="pref_onlyfuture">Bez wyemitowanych</string>
@@ -423,8 +421,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Inne</string>
     <string name="pref_autoupdatesummary">Automatycznie synchronizuje i aktualizuje dane SeriesGuide</string>
-    <string name="pref_autobackup">Automatyczna kopia zapasowa</string>
-    <string name="pref_autobackupsummary">Tworzy co tydzień kopię zapasową seriali, list i filmów</string>
     <string name="backup">Kopia zapasowa</string>
     <string name="backup_summary">Utwórz/Przywróć kopię bazy seriali</string>
     <string name="pref_number">Format numeracji</string>
@@ -444,14 +440,18 @@
     <string name="backup_button">Kontynuuj</string>
     <string name="import_button">Przywróć</string>
     <string name="import_warning">Rozumiem, że moje seriale, listy i filmy zostaną zastąpione!</string>
-    <string name="last_auto_backup">Ostatnia kopia zapasowa: %s</string>
-    <string name="restore_auto_backup">Przywróć kopię zapasową</string>
-    <string name="dataliberation_permission_missing">Umożliwia dostęp do plików, aby użyć tworzenia i przywracania kopii zapasowych.</string>
-    <string name="autobackup_permission_missing">Umożliwia dostęp do plików, aby użyć automatycznego tworzenia kopii zapasowych.</string>
-    <string name="autobackup_files_missing">Aby użyć automatycznego tworzenia kopii zapasowych, wybierz prawidłowe pliki kopii zapasowych.</string>
     <string name="no_file_selected">Nie wybrano pliku</string>
     <string name="action_select_file">Wybierz plik</string>
-    <string name="backup_use_default_files">Użyj domyślnych plików kopii zapasowej</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatyczna kopia zapasowa</string>
+    <string name="pref_autobackupsummary">Tworzy co tydzień kopię zapasową seriali, list i filmów</string>
+    <string name="autobackup_details">Te kopie zapasowe są niedostępne po reinstalacji aplikacji do czasu włączenia tworzenia kopii zapasowych aplikacji dla tego urządzenia (Android 6+). Utwórz kopie, aby je zachować w pozostałych przypadkach.</string>
+    <string name="last_auto_backup">Ostatnia kopia zapasowa: %s</string>
+    <string name="restore_auto_backup">Przywróć kopię zapasową</string>
+    <string name="autobackup_failed">Ostatnia automatyczna kopia zapasowa nie powiodła się</string>
+    <string name="autobackup_files_missing">Aby użyć automatycznego tworzenia kopii zapasowych, wybierz prawidłowe pliki kopii zapasowych.</string>
+    <string name="autobackup_create_user_copy">Utwórz kopię po każdej kopii zapasowej</string>
+    <string name="autobackup_restore_available">Możliwe, że jest dostępna automatyczna kopia zapasowa danych.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Wprowadzenie</string>
     <string name="dismiss">Zamknij</string>

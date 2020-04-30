@@ -5,11 +5,10 @@
     <string name="lists">Llistes</string>
     <string name="movies">Peŀlícules</string>
     <string name="statistics">Estadístiques</string>
+    <string name="navigation_more">Més</string>
     <string name="search">Cerca</string>
     <string name="preferences">Configuració</string>
     <string name="help">Ajuda</string>
-    <string name="help_and_feedback">Ajuda i comentaris</string>
-    <string name="drawer_open">Obre el calaix de navegació</string>
     <string name="no_more_updates">SeriesGuide no rebrà més actualitzacions per aquesta versió d\'Android.</string>
     <!-- Media items -->
     <string name="show">Sèrie</string>
@@ -44,7 +43,7 @@
     <string name="search_hint">Cerca episodis</string>
     <!-- Status messages -->
     <string name="updated">S\'ha actualitzat a la darrera versió.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Detalls</string>
     <string name="norating">cap</string>
     <string name="unknown">deconegut</string>
     <string name="offline">Conecteu-vos a la xarxa i torneu-ho a intentar.</string>
@@ -103,7 +102,7 @@
     <!-- Flagging -->
     <string name="mark_all">Tots vists</string>
     <string name="unmark_all">Cap episodi vist</string>
-    <string name="action_watched_up_to">Watched up to here</string>
+    <string name="action_watched_up_to">Vist fins aquí</string>
     <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
     <string name="collect_all">Tots recopilats</string>
     <string name="uncollect_all">Cap recopilat</string>
@@ -137,7 +136,7 @@
     <string name="action_shows_filter_unwatched">No vist</string>
     <string name="action_shows_filter_upcoming">Propers</string>
     <string name="action_shows_filter_hidden">Ocults</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="action_shows_make_all_visible">Fes tot els ocults visibles</string>
     <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">Ordena sèries</string>
     <string name="action_shows_sort_title">Títol</string>
@@ -148,7 +147,7 @@
     <string name="action_shows_sort_favorites">Preferits primer</string>
     <string name="context_updateshow">Actualitza</string>
     <string name="context_marknext">Següent episodi vist</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Canvia la vista</string>
     <!-- History -->
     <string name="user_stream">Històric</string>
     <string name="recently_watched">Vist Recentment</string>
@@ -166,7 +165,7 @@
     <string name="calendar_settings">Ajustaments de calendari</string>
     <string name="only_favorites">Només sèries preferides</string>
     <string name="calendar_only_collected">Només els episodis col·leccionats</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">Només estrenes</string>
     <string name="pref_infinite_scrolling">Calendari infinit</string>
     <!-- Updating -->
     <string name="update_scheduled">S\'està actualitzant&#8230;</string>
@@ -204,8 +203,8 @@
     <string name="shows_collection">Coŀlecció</string>
     <string name="watchlist">Llista de seguiment</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">Cap resultat</string>
+    <string name="title_similar_shows">Sèries similars</string>
     <!-- Lists -->
     <string name="first_list">Primera llista</string>
     <string name="list_add">Afegeix llista</string>
@@ -335,7 +334,6 @@
     <string name="action_open_in_browser">Obre al navegador</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Bàsics</string>
-    <string name="prefs_category_sharing">Serveis</string>
     <string name="prefs_category_advanced">Avançat</string>
     <string name="prefs_category_about">Quant a</string>
     <string name="pref_onlyfuture">Amaga episodis emesos</string>
@@ -368,7 +366,7 @@
     <string name="privacy_policy">Política de Privacitat</string>
     <string name="licence_tvdb">Aquesta aplicació utilitza dades i imatges de TheTVDB llicenciades sota una llicència Creative Commons.</string>
     <string name="licence_themoviedb">Aquest producte fa servir l\'API de TMDb però no està reconeguda ni certificada per TMDb.</string>
-    <string name="licence_trakt">This app uses data and images by Trakt.</string>
+    <string name="licence_trakt">Aquesta app fa servir dades i imatges de Trakt</string>
     <string name="about_open_source">SeriesGuide s\'ha construït utilitzant programari de codi obert.</string>
     <string name="licences_and_credits">Llicències i credits</string>
     <!-- Sort -->
@@ -394,15 +392,13 @@
     <string name="pref_appearance">Aparença</string>
     <string name="pref_theme">Tema</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">Utilitza el valor per defecte del sistema</string>
+    <string name="theme_app_auto_battery">Activa l\'estalvi de bateria</string>
+    <string name="theme_app_dark">Fosc</string>
+    <string name="theme_app_light">Clar</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Altres</string>
     <string name="pref_autoupdatesummary">Sincronitzar i actualitzar les dades de SeriesGuide automàticament</string>
-    <string name="pref_autobackup">Còpies de seguretat automàtiques</string>
-    <string name="pref_autobackupsummary">Còpia de seguretat setmanal de les teves sèries, llistes i pel·lícules</string>
     <string name="backup">Còpies de seguretat</string>
     <string name="backup_summary">Creeu una còpia de seguretat de les vostres sèries o restaureu-ne alguna d\'existent</string>
     <string name="pref_number">Format de número</string>
@@ -422,14 +418,19 @@
     <string name="backup_button">Crea còpia de seg.</string>
     <string name="import_button">Restaura</string>
     <string name="import_warning">Entenc que les meves sèries, llistes i pel·lícules actuals seran reemplaçades</string>
-    <string name="last_auto_backup">Darrera còpia de seguretat automàtica: %s</string>
-    <string name="restore_auto_backup">Restaura la còpia de seguretat automàtica</string>
-    <string name="dataliberation_permission_missing">Per fer còpies de seguretat o restaurar, permet l\'accés als teus arxius.</string>
-    <string name="autobackup_permission_missing">Per utilitzar la còpia de seguretat automàtica, permet l\'accés als teus arxius.</string>
-    <string name="autobackup_files_missing">Per utilitzar la còpia de seguretat automàtica, selecciona arxius de còpia de seguretat vàlids.</string>
     <string name="no_file_selected">Cap arxiu seleccionat</string>
     <string name="action_select_file">Seleccionar arxiu</string>
-    <string name="backup_use_default_files">Utilitzar arxius de còpia de seguretat per defecte</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Còpies de seguretat automàtiques</string>
+    <string name="pref_autobackupsummary">Còpia de seguretat setmanal de les teves sèries, llistes i pel·lícules</string>
+    <string name="autobackup_details">Aquestes còpies de seguretat seran innaccesibles si l\'app s\'instal·la de nou excepte si la còpia s\'activa en aquest dispositiu (Android 6+). 
+Creeu còpies per preservar-les d\'una altra manera</string>
+    <string name="last_auto_backup">Darrera còpia de seguretat automàtica: %s</string>
+    <string name="restore_auto_backup">Restaura la còpia de seguretat automàtica</string>
+    <string name="autobackup_failed">Ha fallat l\'última còpia de seguretat automàtica</string>
+    <string name="autobackup_files_missing">Per utilitzar la còpia de seguretat automàtica, selecciona arxius de còpia de seguretat vàlids.</string>
+    <string name="autobackup_create_user_copy">Creeu una còpia després de cada còpia de seguretat</string>
+    <string name="autobackup_restore_available">Per restaurar pot estar disponible una còpia de seguretat automàtica </string>
     <!-- Welcome dialog -->
     <string name="get_started">Inici</string>
     <string name="dismiss">Omet</string>
@@ -447,11 +448,11 @@
     <string name="pref_notifications_treshold">Moment per notificar</string>
     <string name="pref_notifications_select_shows">Seleccionar sèries</string>
     <string name="pref_notifications_select_shows_summary">Sèries que tenen notificacions habilitades (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Ignora les sèries ocultes</string>
+    <string name="pref_notifications_hidden_summary">Fins i tot si les notificacions estan habilitades, no notifiqueu sobre les sèries ocultes</string>
     <string name="pref_notification_channel_errors">Errors</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Només per a episodis per veure a continuació</string>
+    <string name="pref_notifications_next_episodes_only_summary">Notifiqueu només si el nou episodi és el següent que es pugui veure</string>
     <!-- List Widget -->
     <string name="hide_watched">Amaga els episodis vistos</string>
     <string name="pref_widget_opacity">Fons del widget</string>
@@ -470,8 +471,8 @@
     <string name="billing_action_manage_subscriptions">Gestionar subscripcions</string>
     <string name="billing_action_pass">Obtenir un «X Pass»</string>
     <string name="billing_price_subscribe">%1$s/any, prova de forma gratuïta, cancel·la en qualsevol moment mitjançant %2$s</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_duration_format">%1$s l\'any</string>
+    <string name="billing_sub_description">Proveu gratuïtament, cancel·leu en qualsevol moment.</string>
     <string name="billing_price_pass">compra única</string>
     <string name="upgrade_description">Desbloqueja totes les opcions, incloent\'hi notificacions, temes i més opcions de llista de widget. Ajuda\'m a fer futures actualitzacions.</string>
     <string name="upgrade_success">Gràcies per donar support a SeriesGuide! Tens accés a totes les opcions.</string>

@@ -5,12 +5,11 @@
     <string name="lists">Popisi</string>
     <string name="movies">Filmovi</string>
     <string name="statistics">Statistike</string>
+    <string name="navigation_more">Više</string>
     <string name="search">Traži</string>
     <string name="preferences">Postavke</string>
     <string name="help">Pomoć</string>
-    <string name="help_and_feedback">Pomoć i povratne informacije</string>
-    <string name="drawer_open">Otvori navigacijsku ladicu</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide neće dobivati više ažuriranja za ovu verziju Andriod-a</string>
     <!-- Media items -->
     <string name="show">Serija</string>
     <string name="episode">Epizoda</string>
@@ -44,7 +43,7 @@
     <string name="search_hint">Pretraži epizode</string>
     <!-- Status messages -->
     <string name="updated">Ažurirano u najnoviju verziju.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Detalji</string>
     <string name="norating">nedostupno</string>
     <string name="unknown">nepoznato</string>
     <string name="offline">Spojite se na mrežu i probajte ponovno.</string>
@@ -104,8 +103,8 @@
     <!-- Flagging -->
     <string name="mark_all">Sve pogledano</string>
     <string name="unmark_all">Ništa nije pogledano</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Pogledano do ovdje</string>
+    <string name="confirmation_watched_up_to">Postavi sve epizode do ove kao pogledane?</string>
     <string name="collect_all">Sve prikupljeno</string>
     <string name="uncollect_all">Ništa prikupljeno</string>
     <string name="action_skip">Preskoči</string>
@@ -138,7 +137,7 @@
     <string name="action_shows_filter_unwatched">Nije pogledano</string>
     <string name="action_shows_filter_upcoming">Nadolazeće</string>
     <string name="action_shows_filter_hidden">Skriveno</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="action_shows_make_all_visible">Postavi sve skrivene kao vidljive</string>
     <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">Sortiraj serije</string>
     <string name="action_shows_sort_title">Naslov</string>
@@ -149,7 +148,7 @@
     <string name="action_shows_sort_favorites">Lista favorita</string>
     <string name="context_updateshow">Ažuriraj</string>
     <string name="context_marknext">Pogledana sljedeća epizoda</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Promijeni pogled</string>
     <!-- History -->
     <string name="user_stream">Povijest</string>
     <string name="recently_watched">Nedavno pogledano</string>
@@ -167,7 +166,7 @@
     <string name="calendar_settings">Postavke kalendara</string>
     <string name="only_favorites">Samo favoriti</string>
     <string name="calendar_only_collected">Samo prikupljene epizode</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">Samo premijere</string>
     <string name="pref_infinite_scrolling">Beskonačni kalendar</string>
     <!-- Updating -->
     <string name="update_scheduled">Ažuriranje&#8230;</string>
@@ -208,8 +207,8 @@
     <string name="shows_collection">Zbirka</string>
     <string name="watchlist">Popis gledanja</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">Nema rezultata</string>
+    <string name="title_similar_shows">Slične serije</string>
     <!-- Lists -->
     <string name="first_list">Prvi popis</string>
     <string name="list_add">Dodaj popis</string>
@@ -343,7 +342,6 @@
     <string name="action_open_in_browser">Otvori u pregledniku</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Osnovno</string>
-    <string name="prefs_category_sharing">Usluge</string>
     <string name="prefs_category_advanced">Napredno</string>
     <string name="prefs_category_about">O aplikaciji</string>
     <string name="pref_onlyfuture">Nema emitiranih epizoda</string>
@@ -376,8 +374,8 @@
         <item quantity="other">%d minuta prije</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">Pravila privatnosti</string>
+    <string name="licence_tvdb">Ova aplikacija koristi podatake i slike sa TheTVDB koje su licencirane pod Creative Commons licencom</string>
     <string name="licence_themoviedb">Ovaj proizvod koristi TMDb API, ali nije odobrenio ili ovjeren od strane TMDb.</string>
     <string name="licence_trakt">Ova aplikacija koristi podatke i slike sa trakt-a.</string>
     <string name="about_open_source">SeriesGuide je izgrađen korištenjem softvera otvorenog koda.</string>
@@ -412,8 +410,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Ostalo</string>
     <string name="pref_autoupdatesummary">Automatski sinkronizirajte i ažurirajte SeriesGuide podatke</string>
-    <string name="pref_autobackup">Automatska sigurnosna kopija</string>
-    <string name="pref_autobackupsummary">Tjedno sigurnosno kopiranje vaših serija, popisa i filmova</string>
     <string name="backup">Sigurnosno kopiranje/vraćanje</string>
     <string name="backup_summary">Napravi sigurnosnu kopiju ili obnovi svoje serije</string>
     <string name="pref_number">Format broja</string>
@@ -433,14 +429,18 @@
     <string name="backup_button">Stvori sigurnosnu kopiju</string>
     <string name="import_button">Obnovi</string>
     <string name="import_warning">Razumijem da će moje trenutačne serije i popisi biti zamijenjeni!</string>
-    <string name="last_auto_backup">Posljednja automatska Sigurnosna kopija: %s</string>
-    <string name="restore_auto_backup">Vrati automatsku sigurnosnu kopiju</string>
-    <string name="dataliberation_permission_missing">Kako bi stvarali sigur. kopije i vraćali ih, dopustite pristup vašim datotekama.</string>
-    <string name="autobackup_permission_missing">Kako bi koristili automatsko sigur. kopiranje, dopustite pristup vašim datotekama.</string>
-    <string name="autobackup_files_missing">Kako bi koristili automatsko sigur. kopiranje, odaberite valjane datoteke sigur. kopije.</string>
     <string name="no_file_selected">Nije odabrana niti jedna datoteka</string>
     <string name="action_select_file">Odaberi datoteku</string>
-    <string name="backup_use_default_files">Koristi zadane sigurnosne kopije</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatska sigurnosna kopija</string>
+    <string name="pref_autobackupsummary">Tjedno sigurnosno kopiranje vaših serija, popisa i filmova</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Posljednja automatska Sigurnosna kopija: %s</string>
+    <string name="restore_auto_backup">Vrati automatsku sigurnosnu kopiju</string>
+    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_files_missing">Kako bi koristili automatsko sigur. kopiranje, odaberite valjane datoteke sigur. kopije.</string>
+    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Prvi koraci</string>
     <string name="dismiss">Odbaci</string>

@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.settings;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 
 public class UpdateSettings {
 

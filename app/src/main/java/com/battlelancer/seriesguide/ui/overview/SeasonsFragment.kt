@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.database.Cursor
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -20,10 +19,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
+import androidx.preference.PreferenceManager
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
@@ -32,7 +32,7 @@ import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity
+import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
@@ -89,8 +89,8 @@ class SeasonsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        model = ViewModelProviders.of(this).get(SeasonsViewModel::class.java).also {
-            it.remainingCountData.observe(this,
+        model = ViewModelProvider(this).get(SeasonsViewModel::class.java).also {
+            it.remainingCountData.observe(viewLifecycleOwner,
                     Observer { result -> handleRemainingCountUpdate(result) })
         }
 
@@ -169,7 +169,7 @@ class SeasonsFragment : Fragment() {
      * Updates the total remaining episodes counter, updates season counters after episode actions.
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event: BaseNavDrawerActivity.ServiceCompletedEvent) {
+    fun onEvent(event: BaseMessageActivity.ServiceCompletedEvent) {
         if (event.flagJob == null || !event.isSuccessful) {
             return  // no changes applied
         }
@@ -180,7 +180,7 @@ class SeasonsFragment : Fragment() {
         if (event.flagJob is SeasonWatchedJob) {
             // If we can narrow it down to just one season...
             UnwatchedUpdateWorker.updateUnwatchedCountFor(
-                context!!,
+                requireContext(),
                 showId,
                 event.flagJob.seasonTvdbId
             )
@@ -230,7 +230,7 @@ class SeasonsFragment : Fragment() {
      * notifies provider causing the loader to reload.
      */
     private fun updateUnwatchedCounts() {
-        UnwatchedUpdateWorker.updateUnwatchedCountFor(context!!, showId)
+        UnwatchedUpdateWorker.updateUnwatchedCountFor(requireContext(), showId)
     }
 
     private fun handleRemainingCountUpdate(result: RemainingCountLiveData.Result?) {
@@ -326,7 +326,7 @@ class SeasonsFragment : Fragment() {
 
     private fun showSortDialog() {
         val sortOrder = DisplaySettings.getSeasonSortOrder(activity)
-        SingleChoiceDialogFragment.show(fragmentManager,
+        SingleChoiceDialogFragment.show(parentFragmentManager,
                 R.array.sesorting,
                 R.array.sesortingData, sortOrder.index(),
                 DisplaySettings.KEY_SEASON_SORT_ORDER, R.string.pref_seasonsorting,
@@ -393,7 +393,7 @@ class SeasonsFragment : Fragment() {
                     }
                     R.id.menu_action_seasons_manage_lists -> {
                         ManageListsDialogFragment.show(
-                            fragmentManager,
+                            parentFragmentManager,
                             seasonTvdbId,
                             ListItemTypes.SEASON
                         )

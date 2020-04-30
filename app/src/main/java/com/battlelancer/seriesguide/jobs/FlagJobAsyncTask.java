@@ -7,7 +7,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
+import com.battlelancer.seriesguide.ui.BaseMessageActivity;
 import org.greenrobot.eventbus.EventBus;
 
 public class FlagJobAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -38,16 +38,16 @@ public class FlagJobAsyncTask extends AsyncTask<Void, Void, Void> {
         boolean requiresNetworkJob = shouldSendToHexagon || shouldSendToTrakt;
 
         // set send flags to false to avoid showing 'Sending to...' message
-        EventBus.getDefault().postSticky(new BaseNavDrawerActivity.ServiceActiveEvent(
+        EventBus.getDefault().postSticky(new BaseMessageActivity.ServiceActiveEvent(
                 false, false));
 
         // update local database and possibly prepare network job
         boolean isSuccessful = job.applyLocalChanges(context, requiresNetworkJob);
 
-        EventBus.getDefault().removeStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent.class);
+        EventBus.getDefault().removeStickyEvent(BaseMessageActivity.ServiceActiveEvent.class);
 
         EventBus.getDefault().post(
-                new BaseNavDrawerActivity.ServiceCompletedEvent(isSuccessful
+                new BaseMessageActivity.ServiceCompletedEvent(isSuccessful
                         ? job.getConfirmationText(context)
                         : context.getString(R.string.database_error),
                         isSuccessful, job));

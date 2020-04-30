@@ -5,11 +5,10 @@
     <string name="lists">รายการ</string>
     <string name="movies">ภาพยนตร์</string>
     <string name="statistics">สถิติ</string>
+    <string name="navigation_more">เพิ่มเติม</string>
     <string name="search">ค้นหา</string>
     <string name="preferences">การตั้งค่า</string>
     <string name="help">ช่วยเหลือ</string>
-    <string name="help_and_feedback">ช่วยเหลือ &amp; ความคิดเห็น</string>
-    <string name="drawer_open">เปิดแถบนำทาง</string>
     <string name="no_more_updates">SeriesGuide จะไม่ออกอัปเดตสำหรับ Android เวอร์ชันนี้อีก</string>
     <!-- Media items -->
     <string name="show">ซีรีส์</string>
@@ -327,7 +326,6 @@
     <string name="action_open_in_browser">เปิดในเบราว์เซอร์</string>
     <!-- Settings -->
     <string name="prefs_category_basic">ทั่วไป</string>
-    <string name="prefs_category_sharing">บริการ</string>
     <string name="prefs_category_advanced">ขั้นสูง</string>
     <string name="prefs_category_about">เกี่ยวกับ</string>
     <string name="pref_onlyfuture">ซ่อนตอนที่ออกอากาศแล้ว</string>
@@ -390,8 +388,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">อื่นๆ</string>
     <string name="pref_autoupdatesummary">ซิงค์และอัปเดตข้อมูล SeriesGuide อัตโนมัติ</string>
-    <string name="pref_autobackup">สำรองอัตโนมัติ</string>
-    <string name="pref_autobackupsummary">สำรองข้อมูลซีรีส์, รายการ และภาพยนตร์รายสัปดาห์</string>
     <string name="backup">สำรอง/กู้คืน</string>
     <string name="backup_summary">สำรองหรือกู้คืนซีรีส์ของคุณ</string>
     <string name="pref_number">รูปแบบตัวเลข</string>
@@ -411,14 +407,18 @@
     <string name="backup_button">สร้างข้อมูลสำรอง</string>
     <string name="import_button">กู้คืนการสำรองข้อมูล</string>
     <string name="import_warning">ฉันเข้าใจว่าซีรีส์, รายการ และภาพยนตร์ปัจจุบันของฉันจะถูกแทนที่!</string>
-    <string name="last_auto_backup">สำรองข้อมูลอัตโนมัติล่าสุด: %s</string>
-    <string name="restore_auto_backup">กู้คืนการสำรองข้อมูลอัตโนมัติ</string>
-    <string name="dataliberation_permission_missing">ในการสำรองข้อมูลหรือกู้คืน, อนุญาตให้เข้าถึงไฟล์ของคุณ</string>
-    <string name="autobackup_permission_missing">ในการใช้การสำรองข้อมูลอัตโนมัติ, อนุญาตให้เข้าถึงไฟล์ของคุณ</string>
-    <string name="autobackup_files_missing">ในการใช้การสำรองข้อมูลอัตโนมัติ, เลือกไฟล์สำรองที่ถูกต้อง</string>
     <string name="no_file_selected">ไม่ได้เลือกไฟล์ใด</string>
     <string name="action_select_file">เลือกไฟล์</string>
-    <string name="backup_use_default_files">ใช้ไฟล์สำรองเริ่มต้น</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">สำรองอัตโนมัติ</string>
+    <string name="pref_autobackupsummary">สำรองข้อมูลซีรีส์, รายการ และภาพยนตร์รายสัปดาห์</string>
+    <string name="autobackup_details">ข้อมูลที่สำรองนี้จะไม่สามารถใช้งานได้หากแอปถูกติดตั้งใหม่ ยกเว้นหากเปิดใช้งานการสำรองข้อมูลแอปในอุปกรณ์นี้ (Android 6+) สร้างสำเนาเพื่อเก็บข้อมูลไว้อีกที</string>
+    <string name="last_auto_backup">สำรองข้อมูลอัตโนมัติล่าสุด: %s</string>
+    <string name="restore_auto_backup">กู้คืนการสำรองข้อมูลอัตโนมัติ</string>
+    <string name="autobackup_failed">การสำรองข้อมูลอัตโนมัตฺล่าสุดล้มเหลว</string>
+    <string name="autobackup_files_missing">ในการใช้การสำรองข้อมูลอัตโนมัติ, เลือกไฟล์สำรองที่ถูกต้อง</string>
+    <string name="autobackup_create_user_copy">สร้างสำเนาของทุกการสำรองข้อมูล</string>
+    <string name="autobackup_restore_available">ข้อมูลที่สำรองไว้อัตโนมัติอาจพร้อมให้คืนค่า</string>
     <!-- Welcome dialog -->
     <string name="get_started">เริ่มต้น</string>
     <string name="dismiss">ปิด</string>

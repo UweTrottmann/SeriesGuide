@@ -21,7 +21,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.snackbar.Snackbar;
 import org.greenrobot.eventbus.EventBus;
@@ -253,13 +252,13 @@ public class DataLiberationFragment extends Fragment implements
         if (requestCode == REQUEST_CODE_EXPORT) {
             setProgressLock(true);
 
-            dataLibTask = new JsonExportTask(getContext(), DataLiberationFragment.this,
+            dataLibTask = new JsonExportTask(requireContext(), DataLiberationFragment.this,
                     checkBoxFullDump.isChecked(), false, type);
             dataLibTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else if (requestCode == REQUEST_CODE_IMPORT) {
             setProgressLock(true);
 
-            dataLibTask = new JsonImportTask(getContext(),
+            dataLibTask = new JsonImportTask(requireContext(),
                     checkBoxShows.isChecked(), checkBoxLists.isChecked(),
                     checkBoxMovies.isChecked());
             Utils.executeInOrder(dataLibTask);
@@ -285,51 +284,66 @@ public class DataLiberationFragment extends Fragment implements
 
             // try to persist read and write permission for this URI across device reboots
             try {
-                getContext().getContentResolver()
+                requireContext().getContentResolver()
                         .takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
                                 | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             } catch (SecurityException e) {
                 Timber.e(e, "Could not persist r/w permission for backup file URI.");
             }
 
-            if (requestCode == REQUEST_CODE_SHOWS_EXPORT_URI) {
-                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_SHOWS_EXPORT_URI, uri);
-                type = JsonExportTask.BACKUP_SHOWS;
-                doDataLiberationAction(REQUEST_CODE_EXPORT);
-            } else if (requestCode == REQUEST_CODE_LISTS_EXPORT_URI) {
-                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_LISTS_EXPORT_URI, uri);
-                type = JsonExportTask.BACKUP_LISTS;
-                doDataLiberationAction(REQUEST_CODE_EXPORT);
-            } else if (requestCode == REQUEST_CODE_MOVIES_EXPORT_URI) {
-                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_MOVIES_EXPORT_URI,
-                        uri);
-                type = JsonExportTask.BACKUP_MOVIES;
-                doDataLiberationAction(REQUEST_CODE_EXPORT);
-            } else if (requestCode == REQUEST_CODE_SHOWS_IMPORT_URI) {
-                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_SHOWS_IMPORT_URI, uri);
-            } else if (requestCode == REQUEST_CODE_LISTS_IMPORT_URI) {
-                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_LISTS_IMPORT_URI, uri);
-            } else {
-                BackupSettings.storeFileUri(getContext(), BackupSettings.KEY_MOVIES_IMPORT_URI,
-                        uri);
+            switch (requestCode) {
+                case REQUEST_CODE_SHOWS_EXPORT_URI:
+                    type = JsonExportTask.BACKUP_SHOWS;
+                    BackupSettings.storeExportFileUri(getContext(), type, uri, false);
+                    doDataLiberationAction(REQUEST_CODE_EXPORT);
+                    break;
+                case REQUEST_CODE_LISTS_EXPORT_URI:
+                    type = JsonExportTask.BACKUP_LISTS;
+                    BackupSettings.storeExportFileUri(getContext(), type, uri, false);
+                    doDataLiberationAction(REQUEST_CODE_EXPORT);
+                    break;
+                case REQUEST_CODE_MOVIES_EXPORT_URI:
+                    type = JsonExportTask.BACKUP_MOVIES;
+                    BackupSettings.storeExportFileUri(getContext(), type, uri, false);
+                    doDataLiberationAction(REQUEST_CODE_EXPORT);
+                    break;
+                case REQUEST_CODE_SHOWS_IMPORT_URI:
+                    BackupSettings.storeImportFileUri(getContext(),
+                            JsonExportTask.BACKUP_SHOWS, uri);
+                    break;
+                case REQUEST_CODE_LISTS_IMPORT_URI:
+                    BackupSettings.storeImportFileUri(getContext(),
+                            JsonExportTask.BACKUP_LISTS, uri);
+                    break;
+                default:
+                    BackupSettings.storeImportFileUri(getContext(),
+                            JsonExportTask.BACKUP_MOVIES, uri);
+                    break;
             }
             updateFileViews();
         }
     }
 
     private void updateFileViews() {
-        setUriOrPlaceholder(textShowsExportFile, BackupSettings.getFileUri(getContext(),
-                BackupSettings.KEY_SHOWS_EXPORT_URI));
-        setUriOrPlaceholder(textShowsImportFile, BackupSettings.getFileUri(getContext(),
-                BackupSettings.KEY_SHOWS_IMPORT_URI));
-        setUriOrPlaceholder(textListsExportFile, BackupSettings.getFileUri(getContext(),
-                BackupSettings.KEY_LISTS_EXPORT_URI));
-        setUriOrPlaceholder(textListsImportFile, BackupSettings.getFileUri(getContext(),
-                BackupSettings.KEY_LISTS_IMPORT_URI));
-        setUriOrPlaceholder(textMoviesExportFile, BackupSettings.getFileUri(getContext(),
-                BackupSettings.KEY_MOVIES_EXPORT_URI));
-        setUriOrPlaceholder(textMoviesImportFile, BackupSettings.getFileUri(getContext(),
-                BackupSettings.KEY_MOVIES_IMPORT_URI));
+        setUriOrPlaceholder(textShowsExportFile,
+                BackupSettings.getExportFileUri(
+                        getContext(), JsonExportTask.BACKUP_SHOWS, false));
+        setUriOrPlaceholder(textListsExportFile,
+                BackupSettings.getExportFileUri(
+                        getContext(), JsonExportTask.BACKUP_LISTS, false));
+        setUriOrPlaceholder(textMoviesExportFile,
+                BackupSettings.getExportFileUri(
+                        getContext(), JsonExportTask.BACKUP_MOVIES, false));
+
+        setUriOrPlaceholder(textShowsImportFile,
+                BackupSettings.getImportFileUriOrExportFileUri(
+                        getContext(), JsonExportTask.BACKUP_SHOWS));
+        setUriOrPlaceholder(textListsImportFile,
+                BackupSettings.getImportFileUriOrExportFileUri(
+                        getContext(), JsonExportTask.BACKUP_LISTS));
+        setUriOrPlaceholder(textMoviesImportFile,
+                BackupSettings.getImportFileUriOrExportFileUri(
+                        getContext(), JsonExportTask.BACKUP_MOVIES));
     }
 
     private void setUriOrPlaceholder(TextView textView, Uri uri) {

@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.ui.episodes
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.database.Cursor
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -16,10 +15,11 @@ import android.widget.ListView
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
+import androidx.preference.PreferenceManager
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
@@ -111,8 +111,8 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        model = ViewModelProviders.of(this).get(EpisodesViewModel::class.java).also {
-            it.episodeCountLiveData.observe(this, Observer { result ->
+        model = ViewModelProvider(this).get(EpisodesViewModel::class.java).also {
+            it.episodeCountLiveData.observe(viewLifecycleOwner, Observer { result ->
                 handleCountUpdate(result)
             })
         }
@@ -236,12 +236,12 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                             showTvdbId,
                             releaseTimeMs,
                             episodeNumber
-                        ).safeShow(requireFragmentManager(), "EpisodeWatchedUpToDialog")
+                        ).safeShow(parentFragmentManager, "EpisodeWatchedUpToDialog")
                         true
                     }
                     R.id.menu_action_episodes_manage_lists -> {
                         ManageListsDialogFragment.show(
-                            fragmentManager,
+                            parentFragmentManager,
                             episodeTvdbId,
                             ListItemTypes.EPISODE
                         )
@@ -276,7 +276,7 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
     }
 
     private fun showSortDialog() {
-        SingleChoiceDialogFragment.show(fragmentManager,
+        SingleChoiceDialogFragment.show(parentFragmentManager,
                 R.array.epsorting,
                 R.array.epsortingData, sortOrder.index(),
                 DisplaySettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting,

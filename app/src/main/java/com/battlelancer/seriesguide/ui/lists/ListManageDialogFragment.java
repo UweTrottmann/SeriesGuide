@@ -66,7 +66,7 @@ public class ListManageDialogFragment extends AppCompatDialogFragment {
         // hide title, use custom theme
         setStyle(STYLE_NO_TITLE, 0);
 
-        listId = getArguments().getString(ARG_LIST_ID);
+        listId = requireArguments().getString(ARG_LIST_ID);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class ListManageDialogFragment extends AppCompatDialogFragment {
         buttonNegative.setText(R.string.list_remove);
         buttonNegative.setOnClickListener(v -> {
             // remove list and items
-            ListsTools.removeList(getContext(), listId);
+            ListsTools.removeList(requireContext(), listId);
 
             dismiss();
         });
@@ -94,7 +94,7 @@ public class ListManageDialogFragment extends AppCompatDialogFragment {
 
             // update title
             String listName = editTextName.getText().toString().trim();
-            ListsTools.renameList(getContext(), listId, listName);
+            ListsTools.renameList(requireContext(), listId, listName);
 
             dismiss();
         });
@@ -107,7 +107,7 @@ public class ListManageDialogFragment extends AppCompatDialogFragment {
         super.onActivityCreated(arg0);
 
         // pre-populate list title
-        final Cursor list = getActivity().getContentResolver()
+        final Cursor list = requireContext().getContentResolver()
                 .query(Lists.buildListUri(listId), new String[] {
                         Lists.NAME
                 }, null, null, null);
@@ -126,11 +126,11 @@ public class ListManageDialogFragment extends AppCompatDialogFragment {
         list.close();
         editTextName.setText(listName);
         editTextName.addTextChangedListener(
-                new AddListDialogFragment.ListNameTextWatcher(getContext(), textInputLayoutName,
+                new AddListDialogFragment.ListNameTextWatcher(requireContext(), textInputLayoutName,
                         buttonPositive, listName));
 
         // do only allow removing if this is NOT the last list
-        Cursor lists = getActivity().getContentResolver().query(Lists.CONTENT_URI,
+        Cursor lists = requireContext().getContentResolver().query(Lists.CONTENT_URI,
                 new String[] {
                         Lists._ID
                 }, null, null, null);

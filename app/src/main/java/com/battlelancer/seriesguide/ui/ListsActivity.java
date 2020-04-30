@@ -6,14 +6,16 @@ import static com.battlelancer.seriesguide.ui.lists.ListsDistillationSettings.Li
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
+import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +25,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.lists.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.lists.ListManageDialogFragment;
+import com.battlelancer.seriesguide.ui.lists.ListsActivityViewModel;
 import com.battlelancer.seriesguide.ui.lists.ListsDistillationSettings;
 import com.battlelancer.seriesguide.ui.lists.ListsPagerAdapter;
 import com.battlelancer.seriesguide.ui.lists.ListsReorderDialogFragment;
@@ -50,12 +53,16 @@ public class ListsActivity extends BaseTopActivity {
     @BindView(R.id.tabLayoutTabs) SlidingTabLayout tabs;
     private ListsPagerAdapter listsAdapter;
 
+    private ListsActivityViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs_drawer);
         setupActionBar();
-        setupNavDrawer();
+        setupBottomNavigation(R.id.navigation_item_lists);
+
+        viewModel = new ViewModelProvider(this).get(ListsActivityViewModel.class);
 
         setupViews(savedInstanceState);
         setupSyncProgressBar(R.id.progressBarTabs);
@@ -84,13 +91,6 @@ public class ListsActivity extends BaseTopActivity {
         if (savedInstanceState == null) {
             viewPager.setCurrentItem(DisplaySettings.getLastListsTabPosition(this), false);
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        setDrawerSelectedItem(R.id.navigation_item_lists);
     }
 
     @Override
@@ -191,6 +191,11 @@ public class ListsActivity extends BaseTopActivity {
         }
     }
 
+    @Override
+    protected void onSelectedCurrentNavItem() {
+        viewModel.scrollTabToTop(viewPager.getCurrentItem());
+    }
+
     @SuppressWarnings("UnusedParameters")
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ListsChangedEvent event) {
@@ -243,7 +248,7 @@ public class ListsActivity extends BaseTopActivity {
         }
 
         @Override
-        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
             // precreate first list
             if (data != null && data.getCount() == 0) {
                 String listName = getString(R.string.first_list);
@@ -255,7 +260,7 @@ public class ListsActivity extends BaseTopActivity {
         }
 
         @Override
-        public void onLoaderReset(Loader<Cursor> loader) {
+        public void onLoaderReset(@NonNull Loader<Cursor> loader) {
             listsAdapter.swapCursor(null);
         }
     };

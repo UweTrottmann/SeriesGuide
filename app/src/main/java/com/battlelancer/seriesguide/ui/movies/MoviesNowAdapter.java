@@ -58,6 +58,8 @@ class MoviesNowAdapter extends NowAdapter {
             } else {
                 holder.type.setVisibility(View.GONE);
             }
+            // Set disabled for darker icon (non-interactive).
+            holder.type.setEnabled(false);
         } else {
             super.onBindViewHolder(viewHolder, position);
         }

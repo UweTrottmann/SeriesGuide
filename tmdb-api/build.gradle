@@ -19,12 +19,22 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     implementation "androidx.annotation:annotation:${versions.annotation}"
-    api "com.uwetrottmann.tmdb2:tmdb-java:${versions.tmdb}"
     implementation "com.google.dagger:dagger:${versions.dagger}"
+
+    // Use latest OkHttp.
+    implementation "com.squareup.okhttp3:okhttp:${versions.okhttp}"
+    // Use latest retrofit.
+    implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
+    api "com.uwetrottmann.tmdb2:tmdb-java:${versions.tmdb}"
 }

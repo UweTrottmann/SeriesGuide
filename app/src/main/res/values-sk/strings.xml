@@ -5,11 +5,10 @@
     <string name="lists">Zoznamy</string>
     <string name="movies">Filmy</string>
     <string name="statistics">Štatistiky</string>
+    <string name="navigation_more">More</string>
     <string name="search">Hľadať</string>
     <string name="preferences">Nastavenia</string>
     <string name="help">Pomoc</string>
-    <string name="help_and_feedback">Pomoc a spätná väzba</string>
-    <string name="drawer_open">Otvoriť navigačný panel</string>
     <string name="no_more_updates">Pre túto verziu Androidu aplikácia SeriesGuide už nebude aktualizovaná.</string>
     <!-- Media items -->
     <string name="show">Seriál</string>
@@ -351,7 +350,6 @@
     <string name="action_open_in_browser">Otvoriť v prehliadači</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Základné</string>
-    <string name="prefs_category_sharing">Služby</string>
     <string name="prefs_category_advanced">Pokročilé</string>
     <string name="prefs_category_about">O aplikácii</string>
     <string name="pref_onlyfuture">Nezobrazovať odvysielané epizódy</string>
@@ -423,8 +421,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Ostatné</string>
     <string name="pref_autoupdatesummary">Automaticky synchronizovať a aktualizovať SeriesGuide dáta</string>
-    <string name="pref_autobackup">Automatické zálohovanie</string>
-    <string name="pref_autobackupsummary">Týždenné zálohovanie vašich seriálov, zoznamov a filmov</string>
     <string name="backup">Zálohovanie / obnovenie</string>
     <string name="backup_summary">Zálohovanie alebo obnovenie vašich seriálov</string>
     <string name="pref_number">Formát číslovania</string>
@@ -444,14 +440,18 @@
     <string name="backup_button">Zálohovať</string>
     <string name="import_button">Obnoviť</string>
     <string name="import_warning">Rozumiem, moje aktuálne seriály, zoznamy a filmy budú nahradené zálohou!</string>
-    <string name="last_auto_backup">Posledná automatická záloha: %s</string>
-    <string name="restore_auto_backup">Obnoviť automatickú zálohu</string>
-    <string name="dataliberation_permission_missing">Pre zálohovanie alebo obnovenie, povoľte prístup k vašim súborom.</string>
-    <string name="autobackup_permission_missing">Ak chcete použiť automatické zálohovanie, povoľte prístup k vašim súborom.</string>
-    <string name="autobackup_files_missing">Ak chcete použiť automatické zálohovanie, vyberte platné záložné súbory.</string>
     <string name="no_file_selected">Nebol vybratý žiadny súbor</string>
     <string name="action_select_file">Vyberte súbor</string>
-    <string name="backup_use_default_files">Použiť predvolené záložné súbory</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatické zálohovanie</string>
+    <string name="pref_autobackupsummary">Týždenné zálohovanie vašich seriálov, zoznamov a filmov</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Posledná automatická záloha: %s</string>
+    <string name="restore_auto_backup">Obnoviť automatickú zálohu</string>
+    <string name="autobackup_failed">Posledná automatická záloha zlyhala</string>
+    <string name="autobackup_files_missing">Ak chcete použiť automatické zálohovanie, vyberte platné záložné súbory.</string>
+    <string name="autobackup_create_user_copy">Vytvoriť kópiu po každej zálohe</string>
+    <string name="autobackup_restore_available">Môže byť dostupná automatická záloha pre obnovenie.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Začíname</string>
     <string name="dismiss">Zatvoriť</string>

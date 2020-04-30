@@ -7,7 +7,7 @@ import androidx.annotation.CallSuper;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
+import com.battlelancer.seriesguide.ui.BaseMessageActivity;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,7 +36,7 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
         isSendingToTrakt = TraktCredentials.get(context).hasCredentials();
 
         // show message to which service we send
-        EventBus.getDefault().postSticky(new BaseNavDrawerActivity.ServiceActiveEvent(
+        EventBus.getDefault().postSticky(new BaseMessageActivity.ServiceActiveEvent(
                 isSendingToHexagon(), isSendingToTrakt()));
     }
 
@@ -61,7 +61,7 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
     @CallSuper
     @Override
     protected void onPostExecute(Integer result) {
-        EventBus.getDefault().removeStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent.class);
+        EventBus.getDefault().removeStickyEvent(BaseMessageActivity.ServiceActiveEvent.class);
 
         boolean displaySuccess;
         String confirmationText;
@@ -101,7 +101,7 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
             }
         }
         EventBus.getDefault()
-                .post(new BaseNavDrawerActivity.ServiceCompletedEvent(confirmationText,
+                .post(new BaseMessageActivity.ServiceCompletedEvent(confirmationText,
                         displaySuccess, null));
     }
 

@@ -8,6 +8,73 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 54
+----------
+*2020-04-30*
+
+* 🌟 Switch to bottom navigation bar.
+* 🔧 Auto backups are created in an app specific directory, no longer requiring any setup. For most
+  users it will be backed up by Android (Android 6+, up to 25 MB total) and can be restored from
+  after re-installing the app.
+* 🔧 When connecting Trakt, do not clear movies that are only watched on the device. Instead upload
+  them. Trakt will set them as watched on their release date.
+* 🔨 Support adding and updating shows without episodes (e.g. upcoming shows).
+* 🔧 Add JustWatch Turkey to streaming search links.
+
+#### 54
+*2020-04-30*
+
+* 📝 Latest translations from crowdin.
+
+#### 54-beta4
+*2020-04-24*
+
+* 🔧 Add JustWatch Turkey to streaming search links.
+* 🔧 Tapping a bottom nav item now scrolls the visible list to the top.
+* 🔨 Fix widget crashing if an item has no poster.
+* 🔨 Fix crash when changing calendar settings in some situations.
+* 🔨 Fix crash when pinning shortcut in some situations.
+* 🔨 Fix crash if external storage is not available to read auto backups from.
+
+#### 54-beta3
+*2020-04-03*
+
+* 🔧 Move community and translation links to More from Settings.
+* 🔧 Less bright empty message icons on dark theme.
+* 🔨 Fix conflict that prevented side-by-side installation of the Amazon and Play Store version.
+* 🔨 Correctly color add all icon on Trakt lists screens.
+* 🔧 A bunch of internal improvements.
+* 📝 Latest translations from crowdin.
+
+#### 54-beta2
+*2020-03-26*
+
+* 🌟 Replaced the navigation drawer with an easier to use and discover bottom navigation bar.
+* 🔧 Removed unlock and services settings that are now shown under More.
+* 🔧 When connecting Trakt, do not clear movies that are only watched on the device, instead upload
+  them. Trakt will set them as watched on their release date.
+* 🔨 Support adding and updating shows without episodes (e.g. upcoming shows).
+* 🔨 The last auto backup date was off by a month.
+* 📝 Latest translations from crowdin.
+
+#### 54-beta1
+*2020-03-20*
+
+* 🔧 Auto backups are now always created in an app specific directory on external storage, not
+  requiring a special permission or any setup. The last two backups are kept. They are not available
+  if the app is installed again, unless Android's app data backup has backed them up (Android 6+, up to 25 MB total).
+* 🔧 After installing the app and an auto backup is detected (e.g. Android has restored app data), offer to restore it.
+* 🔧 After creating a backup, auto backup can copy it to files you specify.
+* 🔧 Show a message if the last auto backup failed.
+* 🔧 Ability to run auto backup right away, e.g. to test if creating copies is successful.
+* 🔧 Suggest more recognizable names for backup files.
+* 🔧 If a show or movie failed to update, also display its title.
+* 📝 Auto backup will be turned on for all users. If you do not need auto backups,
+  you can turn it off again.
+* 📝 Auto backup will now create an empty file instead of none if there is no data to backup.
+* 📝 Importing an empty backup file will no longer fail and just remove existing data.
+* 📝 Support Android 10.
+
 Version 53
 ----------
 *2020-03-12*

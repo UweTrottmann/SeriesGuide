@@ -5,11 +5,10 @@
     <string name="lists">Lijsten</string>
     <string name="movies">Films</string>
     <string name="statistics">Statistieken</string>
+    <string name="navigation_more">Meer</string>
     <string name="search">Zoeken</string>
     <string name="preferences">Instellingen</string>
     <string name="help">Help</string>
-    <string name="help_and_feedback">Help &amp; feedback</string>
-    <string name="drawer_open">Navigatiemenu openen</string>
     <string name="no_more_updates">SeriesGuide zal geen updates meer uitbrengen voor deze versie van Android.</string>
     <!-- Media items -->
     <string name="show">Serie</string>
@@ -335,7 +334,6 @@
     <string name="action_open_in_browser">Openen in browser</string>
     <!-- Settings -->
     <string name="prefs_category_basic">Basis</string>
-    <string name="prefs_category_sharing">Diensten</string>
     <string name="prefs_category_advanced">Geavanceerd</string>
     <string name="prefs_category_about">Over</string>
     <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
@@ -401,8 +399,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Andere</string>
     <string name="pref_autoupdatesummary">Automatisch data synchroniseren en bijwerken</string>
-    <string name="pref_autobackup">Automatische back-up</string>
-    <string name="pref_autobackupsummary">Wekelijkse back-up van uw series, lijsten en films</string>
     <string name="backup">Back-up maken/herstellen</string>
     <string name="backup_summary">Back-up van series maken/herstellen</string>
     <string name="pref_number">Nummer opmaak</string>
@@ -422,14 +418,18 @@
     <string name="backup_button">Back-up maken</string>
     <string name="import_button">Herstellen</string>
     <string name="import_warning">Uw huidige series, lijsten en films worden vervangen door de back-up</string>
-    <string name="last_auto_backup">Laatste auto back-up: %s</string>
-    <string name="restore_auto_backup">Auto back-up terugzetten</string>
-    <string name="dataliberation_permission_missing">Geef toegang tot uw bestanden om back-ups te maken en te herstellen</string>
-    <string name="autobackup_permission_missing">Geef toegang tot uw bestanden om automatisch te back-uppen</string>
-    <string name="autobackup_files_missing">Selecteer geldige back-upbestanden om automatisch te back-uppen</string>
     <string name="no_file_selected">Geen bestand geselecteerd</string>
     <string name="action_select_file">Bestand selecteren</string>
-    <string name="backup_use_default_files">Standaardbestanden voor back-up gebruiken</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatische back-up</string>
+    <string name="pref_autobackupsummary">Wekelijkse back-up van uw series, lijsten en films</string>
+    <string name="autobackup_details">Deze back-ups zijn niet beschikbaar als de app opnieuw wordt geïnstalleerd, tenzij gegevensback-up is ingeschakeld voor dit apparaat (Android 6+). Maak kopieën om ze anders te behouden.</string>
+    <string name="last_auto_backup">Laatste auto back-up: %s</string>
+    <string name="restore_auto_backup">Auto back-up terugzetten</string>
+    <string name="autobackup_failed">De laatste automatische back-up is mislukt</string>
+    <string name="autobackup_files_missing">Selecteer geldige back-upbestanden om automatisch te back-uppen</string>
+    <string name="autobackup_create_user_copy">Maak een kopie na elke back-up</string>
+    <string name="autobackup_restore_available">Er kan een automatische back-up beschikbaar zijn om vanuit te herstellen.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Aan de slag</string>
     <string name="dismiss">Afwijzen</string>
@@ -451,7 +451,7 @@
     <string name="pref_notifications_hidden_summary">Geen melding sturen over verborgen series, zelfs als meldingen ingeschakeld zijn</string>
     <string name="pref_notification_channel_errors">Fouten</string>
     <string name="pref_notifications_next_episodes_only">Alleen voor eerstvolgende afleveringen</string>
-    <string name="pref_notifications_next_episodes_only_summary">Meldt alleen als de nieuwe aflevering de eerstvolgende is om te kijken</string>
+    <string name="pref_notifications_next_episodes_only_summary">Meld alleen als de nieuwe aflevering de eerstvolgende is om te kijken</string>
     <!-- List Widget -->
     <string name="hide_watched">Bekeken afleveringen verbergen</string>
     <string name="pref_widget_opacity">Widget achtergrond</string>

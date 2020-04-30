@@ -39,8 +39,8 @@ class SimilarShowsActivity : BaseActivity(), AddShowDialogFragment.OnAddShowList
         setTitle(R.string.title_similar_shows)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             android.R.id.home -> {
                 // Go to the last activity.
                 finish()

@@ -38,7 +38,7 @@ import com.battlelancer.seriesguide.traktapi.MovieCheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTools
-import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity
+import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.ui.people.MovieCreditsLoader
@@ -105,7 +105,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         binding.buttonMovieLanguage.isGone = true
         CheatSheet.setup(binding.buttonMovieLanguage, R.string.pref_language)
         binding.buttonMovieLanguage.setOnClickListener {
-            MovieLocalizationDialogFragment.show(fragmentManager)
+            MovieLocalizationDialogFragment.show(parentFragmentManager)
         }
 
         // comments button
@@ -127,9 +127,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        tmdbId = arguments!!.getInt(ARG_TMDB_ID)
+        tmdbId = requireArguments().getInt(ARG_TMDB_ID)
         if (tmdbId <= 0) {
-            fragmentManager!!.popBackStack()
+            parentFragmentManager.popBackStack()
             return
         }
 
@@ -177,7 +177,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         super.onStart()
 
         val event = EventBus.getDefault()
-            .getStickyEvent(BaseNavDrawerActivity.ServiceActiveEvent::class.java)
+            .getStickyEvent(BaseMessageActivity.ServiceActiveEvent::class.java)
         setMovieButtonsEnabled(event == null)
 
         EventBus.getDefault().register(this)
@@ -275,7 +275,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         movieTitle = tmdbMovie.title
         binding.textViewMovieTitle.text = tmdbMovie.title
-        activity!!.title = tmdbMovie.title
+        requireActivity().title = tmdbMovie.title
         binding.textViewMovieDescription.text = TextTools.textWithTmdbSource(
             binding.textViewMovieDescription.context,
             tmdbMovie.overview
@@ -473,7 +473,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             if (it.isEmpty()) {
                 return
             }
-            MovieCheckInDialogFragment.show(fragmentManager, tmdbId, it)
+            MovieCheckInDialogFragment.show(parentFragmentManager, tmdbId, it)
         }
     }
 
@@ -496,7 +496,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     private fun showStreamingSearchConfigDialog() {
-        StreamingSearchConfigureDialog.show(requireFragmentManager())
+        StreamingSearchConfigureDialog.show(parentFragmentManager)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -528,12 +528,12 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventEpisodeTask(@Suppress("UNUSED_PARAMETER") event: BaseNavDrawerActivity.ServiceActiveEvent) {
+    fun onEventEpisodeTask(@Suppress("UNUSED_PARAMETER") event: BaseMessageActivity.ServiceActiveEvent) {
         setMovieButtonsEnabled(false)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventEpisodeTask(@Suppress("UNUSED_PARAMETER") event: BaseNavDrawerActivity.ServiceCompletedEvent) {
+    fun onEventEpisodeTask(@Suppress("UNUSED_PARAMETER") event: BaseMessageActivity.ServiceCompletedEvent) {
         setMovieButtonsEnabled(true)
     }
 
@@ -579,9 +579,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
 
         Timber.d("loadMovieActions: received %s actions for %s", actions.size, tmdbId)
-        ActionsHelper.populateActions(
-            activity!!.layoutInflater, activity!!.theme, binding.containerMovieActions, actions
-        )
+        requireActivity().run {
+            ActionsHelper.populateActions(
+                layoutInflater, theme, binding.containerMovieActions, actions
+            )
+        }
     }
 
     private val movieActionsRunnable = Runnable {
@@ -599,7 +601,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     private fun rateMovie() {
-        RateDialogFragment.newInstanceMovie(tmdbId).safeShow(context, fragmentManager)
+        RateDialogFragment.newInstanceMovie(tmdbId).safeShow(context, parentFragmentManager)
     }
 
     private fun setCrewVisibility(visible: Boolean) {

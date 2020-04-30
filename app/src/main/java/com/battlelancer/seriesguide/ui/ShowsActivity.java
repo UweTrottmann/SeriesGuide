@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -15,7 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
@@ -40,18 +40,17 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.ui.shows.CalendarFragment2;
+import com.battlelancer.seriesguide.ui.shows.ShowsActivityViewModel;
 import com.battlelancer.seriesguide.ui.shows.ShowsFragment;
 import com.battlelancer.seriesguide.ui.shows.ShowsNowFragment;
 import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.uwetrottmann.seriesguide.billing.BillingViewModel;
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * Provides the apps main screen, displaying a list of shows and their next episodes.
@@ -70,6 +69,8 @@ public class ShowsActivity extends BaseTopActivity implements
     private ShowsTabPageAdapter tabsAdapter;
     private ViewPager viewPager;
 
+    private ShowsActivityViewModel viewModel;
+
     @SuppressWarnings("unused")
     public interface InitBundle {
 
@@ -86,7 +87,7 @@ public class ShowsActivity extends BaseTopActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shows);
         setupActionBar();
-        setupNavDrawer();
+        setupBottomNavigation(R.id.navigation_item_shows);
 
         // Set up a sync account if needed
         if (!AccountUtils.isAccountExists(this)) {
@@ -103,6 +104,8 @@ public class ShowsActivity extends BaseTopActivity implements
             finish();
             return;
         }
+
+        viewModel = new ViewModelProvider(this).get(ShowsActivityViewModel.class);
 
         // setup all the views!
         setupViews();
@@ -195,7 +198,7 @@ public class ShowsActivity extends BaseTopActivity implements
         SlidingTabLayout tabs = findViewById(R.id.tabLayoutTabs);
         tabs.setOnTabClickListener(position -> {
             if (viewPager.getCurrentItem() == position) {
-                EventBus.getDefault().post(new TabClickEvent(position));
+                scrollSelectedTabToTop();
             }
         });
         tabsAdapter = new ShowsTabPageAdapter(getSupportFragmentManager(), this, viewPager,
@@ -219,6 +222,15 @@ public class ShowsActivity extends BaseTopActivity implements
 
         // display new tabs
         tabsAdapter.notifyTabsChanged();
+    }
+
+    private void scrollSelectedTabToTop() {
+        viewModel.scrollTabToTop(viewPager.getCurrentItem());
+    }
+
+    @Override
+    protected void onSelectedCurrentNavItem() {
+        scrollSelectedTabToTop();
     }
 
     /**
@@ -249,16 +261,9 @@ public class ShowsActivity extends BaseTopActivity implements
         }
         // Automatically starts checking all access status.
         // Ends connection if activity is finished (and was not ended elsewhere already).
-        BillingViewModel billingViewModel = ViewModelProviders.of(this).get(BillingViewModel.class);
+        BillingViewModel billingViewModel = new ViewModelProvider(this).get(BillingViewModel.class);
         billingViewModel.getEntitlementRevokedEvent()
                 .observe(this, aVoid -> BillingActivity.showExpiredNotification(this));
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        setDrawerSelectedItem(R.id.navigation_item_shows);
     }
 
     @Override
