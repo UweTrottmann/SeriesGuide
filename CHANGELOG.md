@@ -10,7 +10,21 @@ Release notes
 
 Version 54
 ----------
-*in development*
+*2020-04-30*
+
+* 🌟 Switch to bottom navigation bar.
+* 🔧 Auto backups are created in an app specific directory, no longer requiring any setup. For most
+  users it will be backed up by Android (Android 6+, up to 25 MB total) and can be restored from
+  after re-installing the app.
+* 🔧 When connecting Trakt, do not clear movies that are only watched on the device. Instead upload
+  them. Trakt will set them as watched on their release date.
+* 🔨 Support adding and updating shows without episodes (e.g. upcoming shows).
+* 🔧 Add JustWatch Turkey to streaming search links.
+
+#### 54
+*2020-04-30*
+
+* 📝 Latest translations from crowdin.
 
 #### 54-beta4
 *2020-04-24*
