@@ -11,16 +11,11 @@ import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.databinding.FragmentMoviesSearchBinding;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
 import com.battlelancer.seriesguide.util.ViewTools;
-import com.battlelancer.seriesguide.widgets.EmptyView;
-import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 
 /**
  * Integrates with a search interface and displays movies based on query results. Can pre-populate
@@ -35,14 +30,11 @@ public class MoviesSearchFragment extends Fragment {
     private static final String ARG_SEARCH_QUERY = "search_query";
     private static final String ARG_ID_LINK = "linkId";
 
-    @BindView(R.id.swipeRefreshLayoutMoviesSearch) EmptyViewSwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.recyclerViewMoviesSearch) RecyclerView recyclerView;
-    @BindView(R.id.emptyViewMoviesSearch) EmptyView emptyView;
+    private FragmentMoviesSearchBinding binding;
 
     @Nullable private MoviesDiscoverLink link;
     private OnSearchClickListener searchClickListener;
     private MoviesAdapter adapter;
-    private Unbinder unbinder;
 
     static MoviesSearchFragment newInstance(@NonNull MoviesDiscoverLink link) {
         MoviesSearchFragment f = new MoviesSearchFragment();
@@ -73,26 +65,28 @@ public class MoviesSearchFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_movies_search, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        binding = FragmentMoviesSearchBinding.inflate(inflater, container, false);
 
-        swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewMoviesSearch,
-                R.id.recyclerViewMoviesSearch);
-        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
-        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(), swipeRefreshLayout);
+        binding.swipeRefreshLayoutMoviesSearch
+                .setSwipeableChildren(R.id.scrollViewMoviesSearch, R.id.recyclerViewMoviesSearch);
+        binding.swipeRefreshLayoutMoviesSearch
+                .setOnRefreshListener(onRefreshListener);
+        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(),
+                binding.swipeRefreshLayoutMoviesSearch);
 
         // setup grid view
         AutoGridLayoutManager layoutManager = new AutoGridLayoutManager(getContext(),
                 R.dimen.movie_grid_columnWidth, 1, 1);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
+        binding.recyclerViewMoviesSearch.setHasFixedSize(true);
+        binding.recyclerViewMoviesSearch.setLayoutManager(layoutManager);
 
         // setup empty view button
-        emptyView.setButtonClickListener(v -> searchClickListener.onSearchClick());
+        binding.emptyViewMoviesSearch
+                .setButtonClickListener(v -> searchClickListener.onSearchClick());
 
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -101,9 +95,9 @@ public class MoviesSearchFragment extends Fragment {
 
         // setup adapter
         adapter = new MoviesAdapter(requireContext(), new MovieClickListener(requireContext()));
-        recyclerView.setAdapter(adapter);
+        binding.recyclerViewMoviesSearch.setAdapter(adapter);
 
-        swipeRefreshLayout.setRefreshing(true);
+        binding.swipeRefreshLayoutMoviesSearch.setRefreshing(true);
         LoaderManager.getInstance(this)
                 .initLoader(MoviesActivity.SEARCH_LOADER_ID, buildLoaderArgs(null),
                         searchLoaderCallbacks);
@@ -112,8 +106,7 @@ public class MoviesSearchFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        unbinder.unbind();
+        binding = null;
     }
 
     @NonNull
@@ -125,8 +118,8 @@ public class MoviesSearchFragment extends Fragment {
     }
 
     void search(String query) {
-        if (!swipeRefreshLayout.isRefreshing()) {
-            swipeRefreshLayout.setRefreshing(true);
+        if (!binding.swipeRefreshLayoutMoviesSearch.isRefreshing()) {
+            binding.swipeRefreshLayoutMoviesSearch.setRefreshing(true);
         }
         LoaderManager.getInstance(this)
                 .restartLoader(MoviesActivity.SEARCH_LOADER_ID, buildLoaderArgs(query),
@@ -152,12 +145,12 @@ public class MoviesSearchFragment extends Fragment {
             if (!isAdded()) {
                 return;
             }
-            emptyView.setMessage(data.getEmptyText());
+            binding.emptyViewMoviesSearch.setMessage(data.getEmptyText());
             boolean hasNoResults = data.getResults() == null || data.getResults().size() == 0;
-            emptyView.setVisibility(hasNoResults ? View.VISIBLE : View.GONE);
-            recyclerView.setVisibility(hasNoResults ? View.GONE : View.VISIBLE);
+            binding.emptyViewMoviesSearch.setVisibility(hasNoResults ? View.VISIBLE : View.GONE);
+            binding.recyclerViewMoviesSearch.setVisibility(hasNoResults ? View.GONE : View.VISIBLE);
             adapter.updateMovies(data.getResults());
-            swipeRefreshLayout.setRefreshing(false);
+            binding.swipeRefreshLayoutMoviesSearch.setRefreshing(false);
         }
 
         @Override
