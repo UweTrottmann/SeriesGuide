@@ -360,7 +360,7 @@ class StatsFragment : Fragment() {
                 // showing minimum (= not the final value)
                 watchedDuration = "> $watchedDuration"
             }
-            statsString.append("$watchedDuration ${getString(R.string.runtime_all_episodes)}\n")
+            statsString.append("$watchedDuration\n")
         }
 
         statsString.append("\n")
@@ -379,10 +379,10 @@ class StatsFragment : Fragment() {
         val moviesWatchedRuntime = getTimeDuration(currentStats.moviesWatchedRuntime)
 
         val movieStats = "$movies ${getString(R.string.statistics_movies)}\n" +
-                "$moviesWatchlist\n" +
                 "$moviesWatched\n" +
-                "$moviesWatchlistRuntime ${getString(R.string.runtime_movies_watchlist)}\n" +
-                "$moviesWatchedRuntime ${getString(R.string.movies_watched)}"
+                "$moviesWatchedRuntime\n" +
+                "$moviesWatchlist\n" +
+                "$moviesWatchlistRuntime\n"
 
         statsString.append(movieStats)
 

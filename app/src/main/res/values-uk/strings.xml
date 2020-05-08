@@ -255,10 +255,8 @@
     <string name="shows_with_next">%s з новою серією</string>
     <string name="shows_continuing">%s продовжуються</string>
     <string name="episodes_watched">%s переглянуто</string>
-    <string name="runtime_all_episodes">Тривалість всіх переглянутих серій</string>
     <string name="movies_on_watchlist">%s в списку спостереження</string>
     <string name="movies_watched_format">%s переглянуто</string>
-    <string name="runtime_movies_watchlist">Тривалість фільмів у списку переглядів</string>
     <plurals name="days_plural">
         <item quantity="one">%d день</item>
         <item quantity="few">%d дні</item>

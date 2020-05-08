@@ -247,10 +247,8 @@
     <string name="shows_with_next">%s amb episodis següents</string>
     <string name="shows_continuing">%s en progrés</string>
     <string name="episodes_watched">%s mirats</string>
-    <string name="runtime_all_episodes">Durada de tots els episodis vists</string>
     <string name="movies_on_watchlist">%s a la llista de seguiment</string>
     <string name="movies_watched_format">%s mirats</string>
-    <string name="runtime_movies_watchlist">Durada de la llista de peŀlícules</string>
     <plurals name="days_plural">
         <item quantity="one">%d dia</item>
         <item quantity="other">%d dies</item>

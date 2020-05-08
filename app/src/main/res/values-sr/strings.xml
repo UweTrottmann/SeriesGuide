@@ -251,10 +251,8 @@
     <string name="shows_with_next">%s са следећим епизодама</string>
     <string name="shows_continuing">%s се наставља</string>
     <string name="episodes_watched">%s погледано</string>
-    <string name="runtime_all_episodes">Трајање свих погледаних епизода</string>
     <string name="movies_on_watchlist">%s у листи</string>
     <string name="movies_watched_format">%s погледано</string>
-    <string name="runtime_movies_watchlist">Трајање филмова у листи</string>
     <plurals name="days_plural">
         <item quantity="one">%d dan</item>
         <item quantity="few">%d dana</item>

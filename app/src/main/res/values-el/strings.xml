@@ -247,10 +247,8 @@
     <string name="shows_with_next">%s με τα επόμενα επεισόδια</string>
     <string name="shows_continuing">%s συνεχίζονται</string>
     <string name="episodes_watched">%s παρακολουθήθηκαν</string>
-    <string name="runtime_all_episodes">Συνολικός χρόνος όλων των επεισοδίων που έχετε παρακολουθήσει</string>
     <string name="movies_on_watchlist">%s στην λίστα παρακολούθησης</string>
     <string name="movies_watched_format">%s παρακολουθήθηκαν</string>
-    <string name="runtime_movies_watchlist">Συνολικός χρόνος όλων των επεισοδίων που παρακολούθησες</string>
     <plurals name="days_plural">
         <item quantity="one">%d ημέρα</item>
         <item quantity="other">%d ημέρες</item>

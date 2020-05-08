@@ -247,10 +247,8 @@
     <string name="shows_with_next">%s com próximos episódios</string>
     <string name="shows_continuing">%s em exibição</string>
     <string name="episodes_watched">%s assistidos</string>
-    <string name="runtime_all_episodes">tempo de execução dos episódios assistidos</string>
     <string name="movies_on_watchlist">%s na lista</string>
     <string name="movies_watched_format">%s assistidos</string>
-    <string name="runtime_movies_watchlist">tempo de execução dos filmes da lista</string>
     <plurals name="days_plural">
         <item quantity="one">%d dia</item>
         <item quantity="other">%d dias</item>

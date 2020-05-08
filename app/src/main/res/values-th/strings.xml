@@ -243,10 +243,8 @@
     <string name="shows_with_next">%s เรื่องมีตอนถัดไป</string>
     <string name="shows_continuing">%s เรื่องยังไม่จบ</string>
     <string name="episodes_watched">ดูแล้ว %s ตอน</string>
-    <string name="runtime_all_episodes">ระยะเวลารวมตอนที่ดูแล้วทั้งหมด</string>
     <string name="movies_on_watchlist">%s เรื่องที่อยากดู</string>
     <string name="movies_watched_format">ดูแล้ว %s ตอน</string>
-    <string name="runtime_movies_watchlist">ระยะเวลารวมของภาพยนตร์ที่อยากดู</string>
     <plurals name="days_plural">
         <item quantity="other">%d วัน</item>
     </plurals>

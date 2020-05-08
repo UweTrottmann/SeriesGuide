@@ -247,10 +247,8 @@
     <string name="shows_with_next">%s med neste episoder</string>
     <string name="shows_continuing">%s fortsetter</string>
     <string name="episodes_watched">%s sett</string>
-    <string name="runtime_all_episodes">Visningstid for alle sette episoder</string>
     <string name="movies_on_watchlist">%s i overvåkningslisten</string>
     <string name="movies_watched_format">%s sett</string>
-    <string name="runtime_movies_watchlist">Total tid fra film-overvåkningslisten</string>
     <plurals name="days_plural">
         <item quantity="one">%d dag</item>
         <item quantity="other">%d dager</item>

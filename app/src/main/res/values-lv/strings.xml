@@ -251,10 +251,8 @@
     <string name="shows_with_next">%s ar nākamām epizodēm</string>
     <string name="shows_continuing">%s kuras turpinājas</string>
     <string name="episodes_watched">%s noskatītas</string>
-    <string name="runtime_all_episodes">Visu noskatīto epizožu kopējais garums</string>
     <string name="movies_on_watchlist">%s vočlistā</string>
     <string name="movies_watched_format">%s noskatītas</string>
-    <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
     <plurals name="days_plural">
         <item quantity="one">%d day</item>
         <item quantity="zero">%d days</item>

@@ -247,10 +247,8 @@
     <string name="shows_with_next">%s on seuraavia jaksoja</string>
     <string name="shows_continuing">%s jatkuvaa</string>
     <string name="episodes_watched">%s katsottu</string>
-    <string name="runtime_all_episodes">kaikkien katsottujen jaksojen kesto</string>
     <string name="movies_on_watchlist">%s seurantalistalla</string>
     <string name="movies_watched_format">%s katsottu</string>
-    <string name="runtime_movies_watchlist">seurantalistan elokuvien kesto</string>
     <plurals name="days_plural">
         <item quantity="one">%d päivä</item>
         <item quantity="other">%d päivää</item>
