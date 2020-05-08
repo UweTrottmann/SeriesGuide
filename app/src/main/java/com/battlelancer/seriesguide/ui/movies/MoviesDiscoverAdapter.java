@@ -8,8 +8,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
@@ -67,14 +65,10 @@ class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_LINK) {
-            View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(VIEW_TYPE_LINK, parent, false);
-            return new LinkViewHolder(itemView, itemClickListener);
+            return LinkViewHolder.inflate(parent, itemClickListener);
         }
         if (viewType == VIEW_TYPE_HEADER) {
-            View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(VIEW_TYPE_HEADER, parent, false);
-            return new HeaderViewHolder(itemView);
+            return HeaderViewHolder.inflate(parent);
         }
         if (viewType == VIEW_TYPE_MOVIE) {
             View itemView = LayoutInflater.from(parent.getContext())
@@ -128,28 +122,45 @@ class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.textViewDiscoverHeader) TextView header;
+        TextView header;
 
         HeaderViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            header = itemView.findViewById(R.id.textViewDiscoverHeader);
+        }
+
+        public static HeaderViewHolder inflate(ViewGroup parent) {
+            return new HeaderViewHolder(
+                    LayoutInflater.from(parent.getContext())
+                            .inflate(R.layout.item_discover_header, parent, false)
+            );
         }
     }
 
     static class LinkViewHolder extends RecyclerView.ViewHolder {
 
         MoviesDiscoverLink link;
-        @BindView(R.id.textViewDiscoverLink) TextView title;
+        TextView title;
 
-        LinkViewHolder(View itemView, final ItemClickListener itemClickListener) {
+        private LinkViewHolder(View itemView, final ItemClickListener itemClickListener) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
-
+            title = itemView.findViewById(R.id.textViewDiscoverLink);
             itemView.setOnClickListener(v -> {
                 if (itemClickListener != null) {
                     itemClickListener.onClickLink(link, LinkViewHolder.this.itemView);
                 }
             });
+        }
+
+        public static LinkViewHolder inflate(
+                ViewGroup parent,
+                final ItemClickListener itemClickListener
+        ) {
+            return new LinkViewHolder(
+                    LayoutInflater.from(parent.getContext())
+                            .inflate(R.layout.item_discover_link, parent, false),
+                    itemClickListener
+            );
         }
     }
 }
