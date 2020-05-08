@@ -272,10 +272,8 @@
     <string name="shows_with_next">%s with next episodes</string>
     <string name="shows_continuing">%s continuing</string>
     <string name="episodes_watched">%s watched</string>
-    <string name="runtime_all_episodes">runtime of all watched episodes</string>
     <string name="movies_on_watchlist">%s on watchlist</string>
     <string name="movies_watched_format">%s watched</string>
-    <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
 
     <plurals name="days_plural">
         <item quantity="one">%d day</item>

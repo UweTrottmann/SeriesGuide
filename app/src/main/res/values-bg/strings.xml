@@ -247,10 +247,8 @@
     <string name="shows_with_next">%s със предстоящите епизоди</string>
     <string name="shows_continuing">%s продължаващи</string>
     <string name="episodes_watched">%s гледани</string>
-    <string name="runtime_all_episodes">Продължителност на всички гледани епизоди</string>
     <string name="movies_on_watchlist">%s в плейлистата</string>
     <string name="movies_watched_format">%s гледани</string>
-    <string name="runtime_movies_watchlist">Обща продължителност на гледаните филми</string>
     <plurals name="days_plural">
         <item quantity="one">%d ден</item>
         <item quantity="other">%d дни</item>

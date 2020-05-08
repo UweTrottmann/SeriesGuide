@@ -243,10 +243,8 @@
     <string name="shows_with_next">%s 部节目仍有未观看剧集</string>
     <string name="shows_continuing">%s 部节目仍在连载</string>
     <string name="episodes_watched">%s 集已观看</string>
-    <string name="runtime_all_episodes">所有已看剧集的总时间</string>
     <string name="movies_on_watchlist">%s 部待看电影</string>
     <string name="movies_watched_format">%s 集已观看</string>
-    <string name="runtime_movies_watchlist">所有待看电影的总时间</string>
     <plurals name="days_plural">
         <item quantity="other">%d 天</item>
     </plurals>

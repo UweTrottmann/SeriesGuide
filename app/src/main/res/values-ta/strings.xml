@@ -247,10 +247,8 @@
     <string name="shows_with_next">அடுத்த episodes உடன் %s</string>
     <string name="shows_continuing">%s தொடரும்</string>
     <string name="episodes_watched">%s பார்த்த</string>
-    <string name="runtime_all_episodes">அனைத்து பார்த்த episodes இயங்குநேர</string>
     <string name="movies_on_watchlist">watchlist %s</string>
     <string name="movies_watched_format">%s பார்த்த</string>
-    <string name="runtime_movies_watchlist">திரைப்படம் watchlist இயங்குநேர</string>
     <plurals name="days_plural">
         <item quantity="one">%d நாள்</item>
         <item quantity="other">%d நாட்கள்</item>
