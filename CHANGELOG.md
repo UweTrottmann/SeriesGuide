@@ -8,6 +8,17 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 55
+----------
+*in development*
+
+#### 55-beta1
+*2020-05-08*
+
+* 🌟 Movie search results, popular, digital and disc release lists are now (almost) endless.
+* 🔧 More compact and cleaner statistics.
+* 📝 Latest translations from crowdin.
+
 Version 54
 ----------
 *2020-04-30*
