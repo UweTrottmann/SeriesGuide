@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:nestedScrollingEnabled="true">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relativeLayout"
         style="@style/Page.Centered"
         android:animateLayoutChanges="true">
 
@@ -16,49 +17,56 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/large_padding"
             app:emptyViewButtonText="@string/action_try_again"
-            app:emptyViewMessage="@string/statistics_failed" />
+            app:emptyViewMessage="@string/statistics_failed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textViewStatsShows"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/emptyViewStats"
-            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/large_padding"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:gravity="center"
             android:text="@string/norating"
             android:textAppearance="@style/TextAppearance.Display3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/emptyViewStats"
             tools:text="42" />
 
         <TextView
             android:id="@+id/labelStatsShows"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewStatsShows"
-            android:layout_centerHorizontal="true"
             android:text="@string/statistics_shows"
             android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.Caption" />
+            android:textAppearance="@style/TextAppearance.Caption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewStatsShows" />
 
         <ProgressBar
             android:id="@+id/progressBarStatsShowsWithNext"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/labelStatsShows"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/default_padding" />
+            android:layout_marginTop="@dimen/default_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelStatsShows" />
 
         <TextView
             android:id="@+id/textViewStatsShowsWithNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/progressBarStatsShowsWithNext"
             android:layout_alignParentStart="true"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:textAppearance="@style/TextAppearance.Caption"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBarStatsShowsWithNext"
             tools:text="29 WITH NEXT EPISODES" />
 
         <ProgressBar
@@ -66,70 +74,74 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewStatsShowsWithNext"
-            android:layout_centerHorizontal="true" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewStatsShowsWithNext" />
 
         <TextView
             android:id="@+id/textViewStatsShowsContinuing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/progressBarStatsShowsContinuing"
             android:layout_alignParentStart="true"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:textAppearance="@style/TextAppearance.Caption"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBarStatsShowsContinuing"
             tools:text="10 CONTINUING" />
 
         <TextView
             android:id="@+id/textViewStatsEpisodes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewStatsShowsContinuing"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:gravity="center"
             android:text="@string/norating"
             android:textAppearance="@style/TextAppearance.Display3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewStatsShowsContinuing"
             tools:text="5260" />
 
         <TextView
             android:id="@+id/labelStatsEpisodes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewStatsEpisodes"
-            android:layout_centerHorizontal="true"
             android:text="@string/statistics_episodes"
             android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.Caption" />
+            android:textAppearance="@style/TextAppearance.Caption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewStatsEpisodes" />
 
         <ProgressBar
             android:id="@+id/progressBarStatsEpisodesWatched"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/labelStatsEpisodes"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/default_padding" />
+            android:layout_marginTop="@dimen/default_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelStatsEpisodes" />
 
         <TextView
             android:id="@+id/textViewStatsEpisodesWatched"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/progressBarStatsEpisodesWatched"
             android:layout_alignParentStart="true"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:textAppearance="@style/TextAppearance.Caption"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBarStatsEpisodesWatched"
             tools:text="1803 WATCHED" />
 
         <TextView
             android:id="@+id/textViewStatsEpisodesRuntime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewStatsEpisodesWatched"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/large_padding"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
@@ -138,6 +150,9 @@
             android:text="@string/norating"
             android:textAppearance="@style/TextAppearance.Headline"
             android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewStatsEpisodesWatched"
             tools:ignore="UnusedAttribute"
             tools:text="61 days 13 hours 29 minutes" />
 
@@ -145,62 +160,68 @@
             android:id="@+id/labelStatsEpisodesRuntime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewStatsEpisodesRuntime"
-            android:layout_centerHorizontal="true"
             android:text="@string/runtime_all_episodes"
             android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.Caption" />
+            android:textAppearance="@style/TextAppearance.Caption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewStatsEpisodesRuntime" />
 
         <ProgressBar
             android:id="@+id/progressBarStatsEpisodesRuntime"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_below="@id/labelStatsEpisodesRuntime"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/inline_padding" />
+            android:layout_marginTop="@dimen/inline_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelStatsEpisodesRuntime" />
 
         <TextView
             android:id="@+id/textViewStatsMovies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/labelStatsEpisodesRuntime"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:gravity="center"
             android:text="@string/norating"
             android:textAppearance="@style/TextAppearance.Display3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelStatsEpisodesRuntime"
             tools:text="250" />
 
         <TextView
             android:id="@+id/labelMovies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewStatsMovies"
-            android:layout_centerHorizontal="true"
             android:text="@string/statistics_movies"
             android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.Caption" />
+            android:textAppearance="@style/TextAppearance.Caption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewStatsMovies" />
 
         <ProgressBar
             android:id="@+id/progressBarStatsMoviesWatchlist"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/labelMovies"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/default_padding" />
+            android:layout_marginTop="@dimen/default_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelMovies" />
 
         <TextView
             android:id="@+id/textViewStatsMoviesWatchlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/progressBarStatsMoviesWatchlist"
             android:layout_alignParentStart="true"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:textAppearance="@style/TextAppearance.Caption"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBarStatsMoviesWatchlist"
             tools:text="1803 WATCHLIST" />
 
         <ProgressBar
@@ -208,27 +229,27 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewStatsMoviesWatchlist"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/default_padding" />
+            android:layout_marginTop="@dimen/default_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewStatsMoviesWatchlist" />
 
         <TextView
             android:id="@+id/textViewStatsMoviesWatched"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/progressBarStatsMoviesWatched"
             android:layout_alignParentStart="true"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
             android:textAppearance="@style/TextAppearance.Caption"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBarStatsMoviesWatched"
             tools:text="1803 WATCHED" />
 
         <TextView
             android:id="@+id/textViewStatsMoviesWatchlistRuntime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewStatsMoviesWatched"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/large_padding"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
@@ -237,6 +258,9 @@
             android:text="@string/norating"
             android:textAppearance="@style/TextAppearance.Headline"
             android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewStatsMoviesWatched"
             tools:ignore="UnusedAttribute"
             tools:text="61 days 13 hours 29 minutes" />
 
@@ -244,18 +268,17 @@
             android:id="@+id/labelStatsMoviesWatchlistRuntime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewStatsMoviesWatchlistRuntime"
-            android:layout_centerHorizontal="true"
             android:text="@string/runtime_movies_watchlist"
             android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.Caption" />
+            android:textAppearance="@style/TextAppearance.Caption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewStatsMoviesWatchlistRuntime" />
 
         <TextView
             android:id="@+id/textViewStatsMoviesWatchedRuntime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/labelStatsMoviesWatchlistRuntime"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/large_padding"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
@@ -264,6 +287,9 @@
             android:text="@string/norating"
             android:textAppearance="@style/TextAppearance.Headline"
             android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelStatsMoviesWatchlistRuntime"
             tools:ignore="UnusedAttribute"
             tools:text="61 days 13 hours 29 minutes" />
 
@@ -271,11 +297,12 @@
             android:id="@+id/labelStatsMoviesWatchedRuntime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewStatsMoviesWatchedRuntime"
-            android:layout_centerHorizontal="true"
             android:text="@string/movies_watched"
             android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.Caption" />
-    </RelativeLayout>
+            android:textAppearance="@style/TextAppearance.Caption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewStatsMoviesWatchedRuntime" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
