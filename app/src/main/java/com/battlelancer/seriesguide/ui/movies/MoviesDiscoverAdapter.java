@@ -11,19 +11,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-class MoviesDiscoverAdapter extends MoviesAdapter {
+class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     static final int VIEW_TYPE_LINK = R.layout.item_discover_link;
     static final int VIEW_TYPE_HEADER = R.layout.item_discover_header;
     static final int VIEW_TYPE_MOVIE = R.layout.item_discover_movie;
 
-    interface ItemClickListener extends MoviesAdapter.ItemClickListener {
+    interface ItemClickListener extends MovieClickListener {
         void onClickLink(MoviesDiscoverLink link, View anchor);
     }
+
+    private final Context context;
+    private final ItemClickListener itemClickListener;
+    private final DateFormat dateFormatMovieReleaseDate;
+    private final String posterBaseUrl;
+    private final List<BaseMovie> movies;
 
     static final MoviesDiscoverLink DISCOVER_LINK_DEFAULT = MoviesDiscoverLink.IN_THEATERS;
     @NonNull private static final List<MoviesDiscoverLink> links;
@@ -35,11 +43,12 @@ class MoviesDiscoverAdapter extends MoviesAdapter {
         links.add(MoviesDiscoverLink.DISC);
     }
 
-    private final ItemClickListener itemClickListener;
-
     MoviesDiscoverAdapter(Context context, @Nullable ItemClickListener itemClickListener) {
-        super(context, null);
+        this.context = context;
         this.itemClickListener = itemClickListener;
+        this.dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat();
+        this.posterBaseUrl = TmdbSettings.getPosterBaseUrl(context);
+        this.movies = new ArrayList<>();
     }
 
     @Override
@@ -54,8 +63,9 @@ class MoviesDiscoverAdapter extends MoviesAdapter {
         return VIEW_TYPE_MOVIE;
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_LINK) {
             View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(VIEW_TYPE_LINK, parent, false);
@@ -71,11 +81,11 @@ class MoviesDiscoverAdapter extends MoviesAdapter {
                     .inflate(VIEW_TYPE_MOVIE, parent, false);
             return new MovieViewHolder(itemView, itemClickListener);
         }
-        return null;
+        throw new IllegalArgumentException("Unknown view type " + viewType);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof LinkViewHolder) {
             LinkViewHolder holderActual = (LinkViewHolder) holder;
             MoviesDiscoverLink link = getLink(position);
@@ -84,9 +94,19 @@ class MoviesDiscoverAdapter extends MoviesAdapter {
         } else if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder holderActual = (HeaderViewHolder) holder;
             holderActual.header.setText(DISCOVER_LINK_DEFAULT.titleRes);
-        } else {
-            super.onBindViewHolder(holder, position);
+        } else if (holder instanceof MovieViewHolder) {
+            MovieViewHolder holderActual = (MovieViewHolder) holder;
+            BaseMovie movie = getMovie(position);
+            holderActual.bindTo(movie, context, dateFormatMovieReleaseDate, posterBaseUrl);
         }
+    }
+
+    void updateMovies(@Nullable List<BaseMovie> newMovies) {
+        movies.clear();
+        if (newMovies != null) {
+            movies.addAll(newMovies);
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -98,15 +118,8 @@ class MoviesDiscoverAdapter extends MoviesAdapter {
         return links.get(position);
     }
 
-    @Override
-    BaseMovie getMovie(int position) {
+    private BaseMovie getMovie(int position) {
         return movies.get(position - links.size() - 1 /* header */);
-    }
-
-    @NonNull
-    @Override
-    String getTransitionNamePrefix() {
-        return "moviesDiscoverAdapterPoster_";
     }
 
     private int positionHeader() {
@@ -117,7 +130,7 @@ class MoviesDiscoverAdapter extends MoviesAdapter {
 
         @BindView(R.id.textViewDiscoverHeader) TextView header;
 
-        public HeaderViewHolder(View itemView) {
+        HeaderViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -128,7 +141,7 @@ class MoviesDiscoverAdapter extends MoviesAdapter {
         MoviesDiscoverLink link;
         @BindView(R.id.textViewDiscoverLink) TextView title;
 
-        public LinkViewHolder(View itemView, final ItemClickListener itemClickListener) {
+        LinkViewHolder(View itemView, final ItemClickListener itemClickListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 

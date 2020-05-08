@@ -79,7 +79,7 @@ abstract class MoviesBaseFragment : Fragment(), LoaderManager.LoaderCallbacks<Cu
         super.onActivityCreated(savedInstanceState)
 
         adapter = MoviesCursorAdapter(
-            context, MovieClickListener(requireContext()),
+            context, MovieClickListenerImpl(requireContext()),
             loaderId
         )
         gridView.adapter = adapter

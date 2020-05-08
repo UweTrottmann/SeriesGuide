@@ -26,9 +26,9 @@ class MoviesCursorAdapter extends CursorAdapter {
 
     private final DateFormat dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat();
 
-    private final MovieClickListener movieClickListener;
+    private final MovieClickListenerImpl movieClickListener;
 
-    MoviesCursorAdapter(Context context, MovieClickListener movieClickListener, int uniqueId) {
+    MoviesCursorAdapter(Context context, MovieClickListenerImpl movieClickListener, int uniqueId) {
         super(context, null, 0);
         this.movieClickListener = movieClickListener;
         this.uniqueId = uniqueId;
@@ -66,7 +66,7 @@ class MoviesCursorAdapter extends CursorAdapter {
 
         private int movieTmdbId;
 
-        public ViewHolder(View itemView, MovieClickListener clickListener) {
+        public ViewHolder(View itemView, MovieClickListenerImpl clickListener) {
             itemView.setTag(this);
 
             this.title = itemView.findViewById(R.id.textViewMovieTitle);

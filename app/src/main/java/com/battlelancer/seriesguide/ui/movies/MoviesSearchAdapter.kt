@@ -13,7 +13,7 @@ import com.uwetrottmann.tmdb2.entities.BaseMovie
 
 internal class MoviesSearchAdapter(
     private val context: Context,
-    private val itemClickListener: MoviesAdapter.ItemClickListener
+    private val itemClickListener: MovieClickListener
 ) : PagedListAdapter<BaseMovie, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     private val dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat()

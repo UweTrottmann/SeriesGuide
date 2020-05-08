@@ -16,7 +16,7 @@ import java.text.DateFormat
 
 internal class MovieViewHolder(
     itemView: View,
-    itemClickListener: MoviesAdapter.ItemClickListener?
+    itemClickListener: MovieClickListener?
 ) : RecyclerView.ViewHolder(itemView) {
 
     @JvmField

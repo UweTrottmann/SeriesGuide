@@ -12,7 +12,7 @@ import java.text.DateFormat
 
 internal class MoviesWatchedAdapter(
     context: Context,
-    val itemClickListener: MoviesAdapter.ItemClickListener
+    val itemClickListener: MovieClickListener
 ) : PagedListAdapter<SgMovie, MovieViewHolder>(DIFF_CALLBACK) {
 
     private val dateFormatMovieReleaseDate: DateFormat = MovieTools.getMovieShortDateFormat()

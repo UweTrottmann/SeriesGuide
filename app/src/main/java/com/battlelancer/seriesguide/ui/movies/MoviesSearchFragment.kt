@@ -76,7 +76,7 @@ class MoviesSearchFragment : Fragment() {
             layoutManager = AutoGridLayoutManager(context, R.dimen.movie_grid_columnWidth, 1, 1)
         }
 
-        adapter = MoviesSearchAdapter(requireContext(), MovieClickListener(requireContext()))
+        adapter = MoviesSearchAdapter(requireContext(), MovieClickListenerImpl(requireContext()))
         binding.recyclerViewMoviesSearch.adapter = adapter
     }
 

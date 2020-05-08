@@ -58,7 +58,7 @@ public class MoviesDiscoverFragment extends Fragment {
         ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(), swipeRefreshLayout);
 
         adapter = new MoviesDiscoverAdapter(requireContext(),
-                new MovieItemClickListener(requireContext()));
+                new DiscoverItemClickListener(requireContext()));
 
         layoutManager = new AutoGridLayoutManager(getContext(),
                 R.dimen.movie_grid_columnWidth, 2, 6);
@@ -142,10 +142,10 @@ public class MoviesDiscoverFragment extends Fragment {
         LoaderManager.getInstance(this).restartLoader(0, null, nowPlayingLoaderCallbacks);
     }
 
-    private static class MovieItemClickListener extends MovieClickListener
+    private static class DiscoverItemClickListener extends MovieClickListenerImpl
             implements MoviesDiscoverAdapter.ItemClickListener {
 
-        MovieItemClickListener(Context context) {
+        DiscoverItemClickListener(Context context) {
             super(context);
         }
 

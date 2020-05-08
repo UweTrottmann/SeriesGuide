@@ -48,7 +48,7 @@ class MoviesWatchedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = MoviesWatchedAdapter(requireContext(), MovieClickListener(requireContext()))
+        adapter = MoviesWatchedAdapter(requireContext(), MovieClickListenerImpl(requireContext()))
 
         recyclerView.also {
             it.setHasFixedSize(true)
