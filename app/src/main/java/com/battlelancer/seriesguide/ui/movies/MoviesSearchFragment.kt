@@ -107,6 +107,9 @@ class MoviesSearchFragment : Fragment() {
     }
 
     fun search(query: String?) {
+        // Data source is a PageKeyedDataSource which does not support in-place refresh,
+        // so clear existing list first.
+        adapter.submitList(null)
         model.updateQuery(query)
     }
 

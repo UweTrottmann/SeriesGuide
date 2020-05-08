@@ -33,6 +33,8 @@ class ShowsPopularViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun refresh() {
+        // TODO: PageKeyedDataSource does not really support in-place refresh,
+        // should probably switch to empty view and submit null list before invalidating.
         dataSourceLiveData.value?.invalidate()
     }
 
