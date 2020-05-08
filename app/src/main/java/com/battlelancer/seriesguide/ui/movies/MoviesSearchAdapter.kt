@@ -1,13 +1,10 @@
 package com.battlelancer.seriesguide.ui.movies
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.TmdbSettings
 import com.uwetrottmann.tmdb2.entities.BaseMovie
 
@@ -20,9 +17,7 @@ internal class MoviesSearchAdapter(
     private val posterBaseUrl = TmdbSettings.getPosterBaseUrl(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_discover_movie, parent, false)
-        return MovieViewHolder(view, itemClickListener)
+        return MovieViewHolder.inflate(parent, itemClickListener)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

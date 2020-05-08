@@ -1,11 +1,9 @@
 package com.battlelancer.seriesguide.ui.movies
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.model.SgMovie
 import com.battlelancer.seriesguide.settings.TmdbSettings
 import java.text.DateFormat
@@ -18,13 +16,8 @@ internal class MoviesWatchedAdapter(
     private val dateFormatMovieReleaseDate: DateFormat = MovieTools.getMovieShortDateFormat()
     private val posterBaseUrl = TmdbSettings.getPosterBaseUrl(context)
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): MovieViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_discover_movie, parent, false)
-        return MovieViewHolder(itemView, itemClickListener)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+        return MovieViewHolder.inflate(parent, itemClickListener)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {

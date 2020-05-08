@@ -1,13 +1,11 @@
 package com.battlelancer.seriesguide.ui.movies
 
 import android.content.Context
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.ItemDiscoverMovieBinding
 import com.battlelancer.seriesguide.model.SgMovie
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.squareup.picasso.Picasso
@@ -15,28 +13,18 @@ import com.uwetrottmann.tmdb2.entities.BaseMovie
 import java.text.DateFormat
 
 internal class MovieViewHolder(
-    itemView: View,
+    val binding: ItemDiscoverMovieBinding,
     itemClickListener: MovieClickListener?
-) : RecyclerView.ViewHolder(itemView) {
+) : RecyclerView.ViewHolder(binding.root) {
 
-    @JvmField
-    var movieTmdbId: Int = 0
+    private var movieTmdbId: Int = 0
 
-    @BindView(R.id.textViewMovieTitle)
-    lateinit var title: TextView
-
-    @BindView(R.id.textViewMovieDate)
-    lateinit var date: TextView
-
-    @BindView(R.id.imageViewMoviePoster)
-    lateinit var poster: ImageView
-
-    @BindView(R.id.imageViewMovieItemContextMenu)
-    lateinit var contextMenu: ImageView
+    private val title = binding.includeMovie.textViewMovieTitle
+    private val date = binding.includeMovie.textViewMovieDate
+    private val poster = binding.includeMovie.imageViewMoviePoster
+    private val contextMenu = binding.includeMovie.imageViewMovieItemContextMenu
 
     init {
-        ButterKnife.bind(this, itemView)
-
         itemView.setOnClickListener {
             itemClickListener?.onClickMovie(movieTmdbId, poster)
         }
@@ -101,6 +89,16 @@ internal class MovieViewHolder(
     }
 
     companion object {
+        @JvmStatic
+        fun inflate(parent: ViewGroup, itemClickListener: MovieClickListener?): MovieViewHolder {
+            return MovieViewHolder(
+                ItemDiscoverMovieBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                ),
+                itemClickListener
+            )
+        }
+
         fun areContentsTheSame(oldItem: BaseMovie, newItem: BaseMovie): Boolean =
             oldItem.title == newItem.title
                     && oldItem.release_date == newItem.release_date

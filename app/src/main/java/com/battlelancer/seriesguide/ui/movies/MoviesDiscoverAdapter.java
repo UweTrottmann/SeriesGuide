@@ -71,9 +71,7 @@ class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return HeaderViewHolder.inflate(parent);
         }
         if (viewType == VIEW_TYPE_MOVIE) {
-            View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(VIEW_TYPE_MOVIE, parent, false);
-            return new MovieViewHolder(itemView, itemClickListener);
+            return MovieViewHolder.inflate(parent, itemClickListener);
         }
         throw new IllegalArgumentException("Unknown view type " + viewType);
     }
