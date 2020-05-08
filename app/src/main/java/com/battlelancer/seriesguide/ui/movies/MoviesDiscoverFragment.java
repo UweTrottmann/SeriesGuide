@@ -157,17 +157,16 @@ public class MoviesDiscoverFragment extends Fragment {
         }
     }
 
-    private LoaderManager.LoaderCallbacks<TmdbMoviesLoader.Result> nowPlayingLoaderCallbacks
-            = new LoaderManager.LoaderCallbacks<TmdbMoviesLoader.Result>() {
+    private LoaderManager.LoaderCallbacks<MoviesDiscoverLoader.Result> nowPlayingLoaderCallbacks
+            = new LoaderManager.LoaderCallbacks<MoviesDiscoverLoader.Result>() {
         @Override
-        public Loader<TmdbMoviesLoader.Result> onCreateLoader(int id, Bundle args) {
-            return new TmdbMoviesLoader(requireContext(),
-                    MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT, null);
+        public Loader<MoviesDiscoverLoader.Result> onCreateLoader(int id, Bundle args) {
+            return new MoviesDiscoverLoader(requireContext());
         }
 
         @Override
-        public void onLoadFinished(@NonNull Loader<TmdbMoviesLoader.Result> loader,
-                TmdbMoviesLoader.Result data) {
+        public void onLoadFinished(@NonNull Loader<MoviesDiscoverLoader.Result> loader,
+                MoviesDiscoverLoader.Result data) {
             if (!isAdded()) {
                 return;
             }
@@ -176,7 +175,7 @@ public class MoviesDiscoverFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(@NonNull Loader<TmdbMoviesLoader.Result> loader) {
+        public void onLoaderReset(@NonNull Loader<MoviesDiscoverLoader.Result> loader) {
             adapter.updateMovies(null);
         }
     };
