@@ -24,7 +24,6 @@ import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.widgets.EmptyView
 import java.text.NumberFormat
-import java.util.Locale
 
 /**
  * Displays some statistics about the users show database, e.g. number of shows, episodes, share of
@@ -203,7 +202,7 @@ class StatsFragment : Fragment() {
             text = getString(
                 R.string.shows_with_next,
                 format.format(stats.showsWithNextEpisodes.toLong())
-            ).toUpperCase(Locale.getDefault())
+            )
             visibility = View.VISIBLE
         }
 
@@ -217,7 +216,7 @@ class StatsFragment : Fragment() {
         textViewShowsContinuing.text = getString(
             R.string.shows_continuing,
             format.format(stats.showsContinuing.toLong())
-        ).toUpperCase(Locale.getDefault())
+        )
         textViewShowsContinuing.visibility = View.VISIBLE
 
         // all episodes
@@ -231,7 +230,7 @@ class StatsFragment : Fragment() {
         textViewEpisodesWatched.text = getString(
             R.string.episodes_watched,
             format.format(stats.episodesWatched.toLong())
-        ).toUpperCase(Locale.getDefault())
+        )
         textViewEpisodesWatched.visibility = View.VISIBLE
 
         // episode runtime
@@ -258,7 +257,7 @@ class StatsFragment : Fragment() {
         textViewMoviesWatchlist.text = getString(
             R.string.movies_on_watchlist,
             format.format(stats.moviesWatchlist.toLong())
-        ).toUpperCase(Locale.getDefault())
+        )
         textViewMoviesWatchlist.visibility = View.VISIBLE
 
         // watched movies
@@ -269,7 +268,7 @@ class StatsFragment : Fragment() {
         textViewMoviesWatched.text = getString(
             R.string.movies_watched_format,
             format.format(stats.moviesWatched.toLong())
-        ).toUpperCase(Locale.getDefault())
+        )
         textViewMoviesWatched.visibility = View.VISIBLE
 
         // runtime of movie watchlist
