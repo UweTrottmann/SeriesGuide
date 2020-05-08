@@ -290,7 +290,7 @@
     <string name="hexagon_remove_account_confirmation">Uklanjanjem svog računa će te izbrisati sve serije i filmove sa SeriesGuide Oblaka. Ne zaboravite ih ukloniti i sa ostalih povezanih uređaja.</string>
     <string name="hexagon_api_queued">Slanje na SeriesGuide oblak.</string>
     <string name="hexagon_signed_out">Odjavljeni ste sa SeriesGuide oblaka.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Problem s prijavom u Google (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Poslano na trakt.</string>
     <string name="checkin_success_trakt">Prijavljen u %s na traktu.</string>
@@ -403,10 +403,10 @@
     <string name="pref_appearance">Izgled</string>
     <string name="pref_theme">Tema</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">Koristi sustavski zadano</string>
+    <string name="theme_app_auto_battery">Postavi s Štednjom Baterije</string>
+    <string name="theme_app_dark">Tamna</string>
+    <string name="theme_app_light">Svijetla</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Ostalo</string>
     <string name="pref_autoupdatesummary">Automatski sinkronizirajte i ažurirajte SeriesGuide podatke</string>
@@ -434,13 +434,13 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatska sigurnosna kopija</string>
     <string name="pref_autobackupsummary">Tjedno sigurnosno kopiranje vaših serija, popisa i filmova</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">Ove sigurnosne kopije su nedostupne ako se aplikacija ponovo instalira, osim ako je sigurnosna kopija aplikacije uključena za ovaj uređaj (Android 6+). Uprotivnom napravite kopije kako bi ste ih sačuvali.</string>
     <string name="last_auto_backup">Posljednja automatska Sigurnosna kopija: %s</string>
     <string name="restore_auto_backup">Vrati automatsku sigurnosnu kopiju</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">Zadnja automatska sigurnosna kopija je neuspješna.</string>
     <string name="autobackup_files_missing">Kako bi koristili automatsko sigur. kopiranje, odaberite valjane datoteke sigur. kopije.</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_create_user_copy">Napravi kopiju poslije svake sigurnosne kopije</string>
+    <string name="autobackup_restore_available">Možda je dostupna automatska sigurnosna kopija iz koje se može vratit</string>
     <!-- Welcome dialog -->
     <string name="get_started">Prvi koraci</string>
     <string name="dismiss">Odbaci</string>
@@ -458,16 +458,16 @@
     <string name="pref_notifications_treshold">Kada obavijestiti</string>
     <string name="pref_notifications_select_shows">Odaberi serije</string>
     <string name="pref_notifications_select_shows_summary">Serije za koje su obavijesti omogućene (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Ignoriraj skrivene shows</string>
+    <string name="pref_notifications_hidden_summary">Nemoj obaviještavati o skrivenim shows čak i ako su obavijesti omogućene</string>
     <string name="pref_notification_channel_errors">Pogreške</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Samo za episodes koje se slijedće gledaju</string>
+    <string name="pref_notifications_next_episodes_only_summary">Obavijesti samo ako je nova episode sljedeća za gledanje</string>
     <!-- List Widget -->
     <string name="hide_watched">Sakrij pogledane epizode</string>
     <string name="pref_widget_opacity">Pozadina widgeta</string>
     <string name="pref_widget_type">Tip widgeta</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Koristi veliki font</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Prozirno</string>
     <string name="widget_background_25">25%</string>
@@ -481,8 +481,8 @@
     <string name="billing_action_manage_subscriptions">Upravljanje pretplatama</string>
     <string name="billing_action_pass">Nabavi X Pass</string>
     <string name="billing_price_subscribe">%1$s/godina, isprobajte besplatno, otkažite bilo kad kroz %2$s</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_duration_format">%1$s/godišnje</string>
+    <string name="billing_sub_description">Probaj besplatno, otkaži u bilo kojem trenutku.</string>
     <string name="billing_price_pass">Jednokratna kupnja</string>
     <string name="upgrade_description">Otključajte sve značajke uključujući obavijesti, teme i više opcija widgeta s popisom. Pomozite mi napraviti buduća ažuriranja.</string>
     <string name="upgrade_success">Hvala vam što podržavate SeriesGuide! Sada imate pristup svim značajkama.</string>

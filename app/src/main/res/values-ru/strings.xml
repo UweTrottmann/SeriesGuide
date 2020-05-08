@@ -139,7 +139,7 @@
     <string name="action_shows_filter_upcoming">Следующие эпизоды</string>
     <string name="action_shows_filter_hidden">Скрытые</string>
     <string name="action_shows_make_all_visible">Сделать всё скрытое видимым</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="description_make_all_visible_format">Сделать все скрытые сериалы (%s) снова видимыми?</string>
     <string name="action_shows_sort">Сортировать сериалы</string>
     <string name="action_shows_sort_title">Название</string>
     <string name="action_shows_sort_latest_episode">Последний эпизод</string>
@@ -451,7 +451,7 @@
     <string name="autobackup_failed">Последний автоматический бэкап не удался</string>
     <string name="autobackup_files_missing">Чтобы использовать автоматическое резервное копирование, выберите допустимые файлы резервных копий.</string>
     <string name="autobackup_create_user_copy">Создавать копию после каждого бэкапа</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_restore_available">Автоматическое резервное копирование доступно для восстановления.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Начать</string>
     <string name="dismiss">Отменить</string>
@@ -470,10 +470,10 @@
     <string name="pref_notifications_select_shows">Выбрать сериалы</string>
     <string name="pref_notifications_select_shows_summary">Сериалы с включенными уведомлениями (%d)</string>
     <string name="pref_notifications_hidden">Игнорировать скрытые сериалы</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden_summary">Даже если уведомления включены, не уведомлять о скрытых сериалах</string>
     <string name="pref_notification_channel_errors">Ошибки</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Только для следующих серий</string>
+    <string name="pref_notifications_next_episodes_only_summary">Уведомлять только если новая серия следующая для просмотра</string>
     <!-- List Widget -->
     <string name="hide_watched">Скрывать просмотренные эпизоды</string>
     <string name="pref_widget_opacity">Фон виджета</string>

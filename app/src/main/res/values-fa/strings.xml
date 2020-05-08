@@ -5,7 +5,7 @@
     <string name="lists">فهرست‌ها</string>
     <string name="movies">فیلم‌ها</string>
     <string name="statistics">آمار</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">بیش‌تر</string>
     <string name="search">جستجو</string>
     <string name="preferences">تنظیمات</string>
     <string name="help">راه‌نما</string>
@@ -43,7 +43,7 @@
     <string name="search_hint">جست‌وجوی قسمت‌ها</string>
     <!-- Status messages -->
     <string name="updated">به‌روز شده به جدیدترین نگارش.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">جزییات</string>
     <string name="norating">ناموجود</string>
     <string name="unknown">نامعلوم</string>
     <string name="offline">به شبکه‌ای وصل شده، سپس دوباره تلاش کنید.</string>
@@ -88,7 +88,7 @@
     <string name="episode_writers">نویسندگان</string>
     <string name="show_isalive">در حال پخش</string>
     <string name="show_isnotalive">به پایان رسیده</string>
-    <string name="show_isUpcoming">بزودی</string>
+    <string name="show_isUpcoming">پیش رو</string>
     <string name="no_translation">هیج توضیحی برای %2$s به %1$s وجود ندارد.</string>
     <string name="no_translation_title">ترجمه نشده</string>
     <string name="no_spoilers">به‌منظور جلوگیری از لو رفتن، برخی جزئیات نهفته‌اند. برای خاموش کردن این ویژگی به تنظیمات بروید.</string>
@@ -102,8 +102,8 @@
     <!-- Flagging -->
     <string name="mark_all">همه تماشا شدن</string>
     <string name="unmark_all">هیچکدام تماشا نشدن</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">تا این‌جا تماشا شده</string>
+    <string name="confirmation_watched_up_to">تنطیم همهٔ قسمت‌ها به تماشا شده؟</string>
     <string name="collect_all">همه به کلکسیون افزوده شده</string>
     <string name="uncollect_all">هیچ کدام به کلکسیون افزوده نشده</string>
     <string name="action_skip">رد کردن</string>
@@ -140,14 +140,14 @@
     <string name="description_make_all_visible_format">آشکارسازی مجدد همه‌ی (%s) برنامه‌ی تلویزیونی?</string>
     <string name="action_shows_sort">چینش آثار نمایشی</string>
     <string name="action_shows_sort_title">عنوان</string>
-    <string name="action_shows_sort_latest_episode">آخرین قسمت</string>
+    <string name="action_shows_sort_latest_episode">جدیدترین قسمت</string>
     <string name="action_shows_sort_oldest_episode">قدیمی‌ترین قسمت</string>
     <string name="action_shows_sort_last_watched">آخرین تماشا شده</string>
     <string name="action_shows_sort_remaining">قسمت‌های باقی مانده</string>
     <string name="action_shows_sort_favorites">نخست برگزیده‌ها</string>
     <string name="context_updateshow">به‌روز رسانی</string>
-    <string name="context_marknext">قسمت بعدی تماشا شده</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="context_marknext">قسمت بعدی تماشا شد</string>
+    <string name="action_episodes_switch_view">تعویض نما</string>
     <!-- History -->
     <string name="user_stream">تاریخچه</string>
     <string name="recently_watched">به‌تازگی تماشا شده</string>
@@ -157,7 +157,7 @@
     <string name="user_stream_empty">هیچ تاریخچه ای در trakt یافت نشد. چند اثری نمایشی را مشاهده کنید و سپس علامت بزنید!</string>
     <string name="user_movie_stream_empty">هیچ فعالیت اخیری در trakt  نیست. تعدادی فیلم را علامت بزنید!</string>
     <!-- Calendar -->
-    <string name="upcoming">بزودی</string>
+    <string name="upcoming">پیش رو</string>
     <string name="recent">اخیر</string>
     <string name="released_today">امروز منتشر شد</string>
     <string name="noupcoming">هیچ قسمت آینده ای وجود ندارد.</string>
@@ -165,7 +165,7 @@
     <string name="calendar_settings">تنظیمات تقویم</string>
     <string name="only_favorites">تنها نمایش های مورد علاقه</string>
     <string name="calendar_only_collected">فقط قسمت‌های ذخیره‌شده</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">فقط آغازین‌ها</string>
     <string name="pref_infinite_scrolling">تقویم بی‌پایان</string>
     <!-- Updating -->
     <string name="update_scheduled">به‌روز رسانی&#8230;</string>
@@ -203,8 +203,8 @@
     <string name="shows_collection">مجموعه</string>
     <string name="watchlist">فهرست تماشا</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">بدون نتیجه</string>
+    <string name="title_similar_shows">سریال‌های مشابه</string>
     <!-- Lists -->
     <string name="first_list">فهرست نخست</string>
     <string name="list_add">افزودن فهرست</string>
@@ -241,7 +241,7 @@
     <string name="action_movies_sort_release">تاریخ انتشار</string>
     <!-- Statistics -->
     <string name="statistics_failed">نمی‌توان آمار را محاسبه کرد.</string>
-    <string name="statistics_shows">نمایش</string>
+    <string name="statistics_shows">سریال‌ها</string>
     <string name="statistics_episodes">قسمت</string>
     <string name="statistics_movies">فیلم</string>
     <string name="shows_with_next">%s با قسمت‌های بعدی</string>
@@ -392,10 +392,10 @@
     <string name="pref_appearance">ظاهر</string>
     <string name="pref_theme">زمینه</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">استفاده از پیش‌گزیدهٔ سامانه</string>
+    <string name="theme_app_auto_battery">تنطیم به دست ذخیره‌ساز باتری</string>
+    <string name="theme_app_dark">تاریک</string>
+    <string name="theme_app_light">روشن</string>
     <!-- Other advanced settings -->
     <string name="pref_other">سایر موارد</string>
     <string name="pref_autoupdatesummary">به صورت خودکار داده های SeriesGuide را همگام سازی و بروزرسانی کن</string>
@@ -426,9 +426,9 @@
     <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
     <string name="last_auto_backup">آخرین پشتیبان خودکار: %s</string>
     <string name="restore_auto_backup">بازگردانی پشتیبان خودکار</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">آخرین پشتیبان خودکار شکست خورد</string>
     <string name="autobackup_files_missing">برای استفاده از پشتیبان گیری خودکار، پرونده‌های پشتیبان معتبر را برگزینید.</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
+    <string name="autobackup_create_user_copy">ایجاد یک رونوشت پس از هر پشتیبان</string>
     <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
     <!-- Welcome dialog -->
     <string name="get_started">شروع به کار</string>
