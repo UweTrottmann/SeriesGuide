@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:ellipsize="end"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
                 app:layout_constraintTop_toTopOf="@+id/containerShowPoster"
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:ellipsize="end"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
                 app:layout_constraintTop_toBottomOf="@+id/textViewShowStatus"
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:ellipsize="end"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
                 app:layout_constraintTop_toBottomOf="@+id/textViewShowReleaseTime"
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:ellipsize="end"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
                 app:layout_constraintTop_toBottomOf="@+id/textViewShowNetwork"
@@ -104,7 +104,34 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <include layout="@layout/buttons_show" />
+        <Button
+            android:id="@+id/buttonShowFavorite"
+            style="@style/Widget.SeriesGuide.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|start"
+            android:text="@string/context_favorite"
+            app:icon="@drawable/ic_star_black_24dp"
+            tools:text="Remove from favorites" />
+
+        <Button
+            android:id="@+id/buttonShowNotify"
+            style="@style/Widget.SeriesGuide.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_episode_notifications_off"
+            android:gravity="center_vertical|start"
+            android:text="@string/pref_notifications"
+            app:icon="@drawable/ic_notifications_active_black_24dp" />
+
+        <Button
+            android:id="@+id/buttonShowHidden"
+            style="@style/Widget.SeriesGuide.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|start"
+            android:text="@string/context_hide"
+            app:icon="@drawable/ic_visibility_white_24dp" />
 
         <View
             android:layout_width="match_parent"
