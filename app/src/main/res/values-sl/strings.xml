@@ -12,13 +12,12 @@
     <string name="drawer_open">Odpri navigacijsko okno</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
-    <string name="show">Prikaži</string>
+    <string name="show_details">Details</string>
     <string name="episode">Epizoda</string>
     <string name="episode_number">Epizoda %d</string>
     <string name="episodes">Epizode</string>
     <string name="season">Sezona</string>
     <string name="season_number">Sezona %d</string>
-    <string name="seasons">Sezone</string>
     <string name="specialseason">Posebne epizode</string>
     <string name="ratings">Ocene</string>
     <!-- Descriptions -->

@@ -12,13 +12,12 @@
     <string name="drawer_open">Öppna navigeringslåda</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
-    <string name="show">Serie</string>
+    <string name="show_details">Detaljer</string>
     <string name="episode">Avsnitt</string>
     <string name="episode_number">Avsnitt %d</string>
     <string name="episodes">Avsnitt</string>
     <string name="season">Säsong</string>
     <string name="season_number">Säsong %d</string>
-    <string name="seasons">Säsonger</string>
     <string name="specialseason">Specialavsnitt</string>
     <string name="ratings">Betyg</string>
     <!-- Descriptions -->

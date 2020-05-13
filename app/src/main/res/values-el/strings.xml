@@ -12,13 +12,12 @@
     <string name="drawer_open">Συρτάρι ανοιχτό</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
-    <string name="show">Σειρά</string>
+    <string name="show_details">Λεπτομέρειες</string>
     <string name="episode">Επεισόδιο</string>
     <string name="episode_number">Επεισόδιο %d</string>
     <string name="episodes">Επεισόδια</string>
     <string name="season">Σεζόν</string>
     <string name="season_number">Κύκλος %d</string>
-    <string name="seasons">Σεζόν</string>
     <string name="specialseason">Ειδικά Επεισόδια</string>
     <string name="ratings">Βαθμολογίες</string>
     <!-- Descriptions -->

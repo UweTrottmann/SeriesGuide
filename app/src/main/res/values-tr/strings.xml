@@ -12,13 +12,12 @@
     <string name="drawer_open">Navigasyon çekmecesini aç</string>
     <string name="no_more_updates">SeriesGuide, Androidin bu versiyonu için güncelleme almayacak.</string>
     <!-- Media items -->
-    <string name="show">Dizi</string>
+    <string name="show_details">Detaylar</string>
     <string name="episode">Bölüm</string>
     <string name="episode_number">Bölüm %d</string>
     <string name="episodes">Bölümler</string>
     <string name="season">Sezon</string>
     <string name="season_number">Sezon %d</string>
-    <string name="seasons">Sezonlar</string>
     <string name="specialseason">Özel Bölümler</string>
     <string name="ratings">Puanlar</string>
     <!-- Descriptions -->

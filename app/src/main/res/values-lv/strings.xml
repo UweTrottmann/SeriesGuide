@@ -12,13 +12,12 @@
     <string name="drawer_open">Atvērt navigācijas atvilktni</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
-    <string name="show">Seriāls</string>
+    <string name="show_details">Details</string>
     <string name="episode">Epizode</string>
     <string name="episode_number">Epizode %d</string>
     <string name="episodes">Epizodes</string>
     <string name="season">Sezona</string>
     <string name="season_number">Sezona %d</string>
-    <string name="seasons">Sezonas</string>
     <string name="specialseason">Speciālas epizodes</string>
     <string name="ratings">Ratings</string>
     <!-- Descriptions -->

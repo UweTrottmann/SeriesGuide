@@ -12,13 +12,12 @@
     <string name="drawer_open">Obre el calaix de navegació</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
-    <string name="show">Sèrie</string>
+    <string name="show_details">Detalls</string>
     <string name="episode">Episodi</string>
     <string name="episode_number">Episodi %d</string>
     <string name="episodes">Episodis</string>
     <string name="season">Temporada</string>
     <string name="season_number">Temporada %d</string>
-    <string name="seasons">Temporades</string>
     <string name="specialseason">Episodis especials</string>
     <string name="ratings">Valoracions</string>
     <!-- Descriptions -->

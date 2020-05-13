@@ -12,13 +12,12 @@
     <string name="drawer_open">Buka drawer navigasi</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
-    <string name="show">Acara</string>
+    <string name="show_details">Rincian</string>
     <string name="episode">Episode</string>
     <string name="episode_number">Episode %d</string>
     <string name="episodes">Episode</string>
     <string name="season">Musim</string>
     <string name="season_number">Musim %d</string>
-    <string name="seasons">Musim</string>
     <string name="specialseason">Episode Khusus</string>
     <string name="ratings">Peringkat</string>
     <!-- Descriptions -->

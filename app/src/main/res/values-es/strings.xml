@@ -12,13 +12,12 @@
     <string name="drawer_open">Abrir menú lateral</string>
     <string name="no_more_updates">SeriesGuide no recibirá más actualizaciones para esta versión de Android.</string>
     <!-- Media items -->
-    <string name="show">Serie</string>
+    <string name="show_details">Detalles</string>
     <string name="episode">Episodio</string>
     <string name="episode_number">Episodio %d</string>
     <string name="episodes">Episodios</string>
     <string name="season">Temporada</string>
     <string name="season_number">Temporada %d</string>
-    <string name="seasons">Temporadas</string>
     <string name="specialseason">Episodios especiales</string>
     <string name="ratings">Valoraciones</string>
     <!-- Descriptions -->

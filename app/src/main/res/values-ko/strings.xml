@@ -12,13 +12,12 @@
     <string name="drawer_open">내비게이션 서랍 열기</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
-    <string name="show">TV 프로그램</string>
+    <string name="show_details">Details</string>
     <string name="episode">에피소드</string>
     <string name="episode_number">%d화</string>
     <string name="episodes">에피소드</string>
     <string name="season">시즌</string>
     <string name="season_number">시즌 %d</string>
-    <string name="seasons">시즌</string>
     <string name="specialseason">스페셜 에피소드</string>
     <string name="ratings">평점</string>
     <!-- Descriptions -->

@@ -12,13 +12,12 @@
     <string name="drawer_open">Відкрити вікно навігації</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
-    <string name="show">Серіал</string>
+    <string name="show_details">Details</string>
     <string name="episode">Серія</string>
     <string name="episode_number">Серія %d</string>
     <string name="episodes">Серії</string>
     <string name="season">Сезон</string>
     <string name="season_number">Сезон %d</string>
-    <string name="seasons">Сезони</string>
     <string name="specialseason">Спец. епізоди</string>
     <string name="ratings">Рейтинг</string>
     <!-- Descriptions -->

@@ -12,13 +12,12 @@
     <string name="drawer_open">ナビゲーションドロワーを開く</string>
     <string name="no_more_updates">SeriesGuide は、このバージョンの Android の更新をもう受け取りません。</string>
     <!-- Media items -->
-    <string name="show">番組</string>
+    <string name="show_details">詳細</string>
     <string name="episode">エピソード</string>
     <string name="episode_number">エピソード %d</string>
     <string name="episodes">エピソード</string>
     <string name="season">シーズン</string>
     <string name="season_number">シーズン %d</string>
-    <string name="seasons">シーズン</string>
     <string name="specialseason">特別編</string>
     <string name="ratings">評価</string>
     <!-- Descriptions -->
