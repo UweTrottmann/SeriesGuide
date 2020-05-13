@@ -12,89 +12,97 @@
         android:orientation="vertical"
         android:paddingBottom="@dimen/large_padding">
 
-        <androidx.cardview.widget.CardView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
-            android:layout_marginTop="@dimen/large_padding"
-            cardview:cardBackgroundColor="?attr/sgColorBackgroundCard"
-            cardview:cardPreventCornerOverlap="false">
+            android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imageViewShowPosterBackground"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                cardview:layout_constraintBottom_toBottomOf="parent"
+                cardview:layout_constraintEnd_toEndOf="parent"
+                cardview:layout_constraintStart_toStartOf="parent"
+                cardview:layout_constraintTop_toTopOf="parent"
+                tools:src="#66ff0099" />
 
-                <FrameLayout
-                    android:id="@+id/containerShowPoster"
-                    android:layout_width="@dimen/show_poster_width_default"
-                    android:layout_height="@dimen/show_poster_height_default"
-                    android:foreground="?attr/selectableItemBackground">
-
-                    <ImageView
-                        android:id="@+id/imageViewShowPoster"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:contentDescription="@string/description_poster"
-                        android:scaleType="centerCrop"
-                        tools:src="@color/sg_black_38" />
-
-                </FrameLayout>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/containerShowPoster"
+                android:layout_width="@dimen/show_poster_width_default"
+                android:layout_height="@dimen/show_poster_height_default"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:foreground="?attr/selectableItemBackground"
+                cardview:layout_constraintBottom_toBottomOf="parent"
+                cardview:layout_constraintStart_toStartOf="parent"
+                cardview:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/imageViewShowPosterBackground"
+                    android:id="@+id/imageViewShowPoster"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/show_poster_height_default"
-                    android:layout_toRightOf="@+id/containerShowPoster"
-                    android:contentDescription="@null"
-                    android:scaleType="centerCrop" />
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/description_poster"
+                    android:scaleType="centerCrop"
+                    tools:src="@color/sg_black_38" />
 
-                <TextView
-                    android:id="@+id/textViewShowStatus"
-                    style="@style/Widget.SeriesGuide.TextView.ShowLabels"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/containerShowPoster"
-                    android:paddingTop="@dimen/default_padding"
-                    android:textAppearance="@style/TextAppearance.Body"
-                    tools:text="Continuing" />
+            </com.google.android.material.card.MaterialCardView>
 
-                <TextView
-                    android:id="@+id/textViewShowReleaseTime"
-                    style="@style/Widget.SeriesGuide.TextView.ShowLabels"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewShowStatus"
-                    android:layout_toRightOf="@+id/containerShowPoster"
-                    android:paddingTop="@dimen/inline_padding"
-                    android:textAppearance="@style/TextAppearance.Body"
-                    tools:text="Sat 08:00 PM" />
+            <TextView
+                android:id="@+id/textViewShowStatus"
+                style="@style/Widget.SeriesGuide.TextView.ShowLabels"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:ellipsize="end"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                cardview:layout_constraintEnd_toEndOf="parent"
+                cardview:layout_constraintStart_toEndOf="@+id/containerShowPoster"
+                cardview:layout_constraintTop_toTopOf="@+id/containerShowPoster"
+                tools:text="Continuing" />
 
-                <TextView
-                    android:id="@+id/textViewShowNetwork"
-                    style="@style/Widget.SeriesGuide.TextView.ShowLabels"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewShowReleaseTime"
-                    android:layout_toRightOf="@+id/containerShowPoster"
-                    android:paddingTop="@dimen/inline_padding"
-                    android:textAppearance="@style/TextAppearance.Body"
-                    tools:text="YouTube" />
+            <TextView
+                android:id="@+id/textViewShowReleaseTime"
+                style="@style/Widget.SeriesGuide.TextView.ShowLabels"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:ellipsize="end"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                cardview:layout_constraintEnd_toEndOf="parent"
+                cardview:layout_constraintStart_toEndOf="@+id/containerShowPoster"
+                cardview:layout_constraintTop_toBottomOf="@+id/textViewShowStatus"
+                tools:text="Sat 08:00 PM" />
 
-                <TextView
-                    android:id="@+id/textViewShowRuntime"
-                    style="@style/Widget.SeriesGuide.TextView.ShowLabels"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewShowNetwork"
-                    android:layout_toRightOf="@+id/containerShowPoster"
-                    android:paddingTop="@dimen/inline_padding"
-                    android:textAppearance="@style/TextAppearance.Body"
-                    tools:text="60 min" />
+            <TextView
+                android:id="@+id/textViewShowNetwork"
+                style="@style/Widget.SeriesGuide.TextView.ShowLabels"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:ellipsize="end"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                cardview:layout_constraintEnd_toEndOf="parent"
+                cardview:layout_constraintStart_toEndOf="@+id/containerShowPoster"
+                cardview:layout_constraintTop_toBottomOf="@+id/textViewShowReleaseTime"
+                tools:text="YouTube" />
 
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/textViewShowRuntime"
+                style="@style/Widget.SeriesGuide.TextView.ShowLabels"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:ellipsize="end"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                cardview:layout_constraintEnd_toEndOf="parent"
+                cardview:layout_constraintStart_toEndOf="@+id/containerShowPoster"
+                cardview:layout_constraintTop_toBottomOf="@+id/textViewShowNetwork"
+                tools:text="60 min" />
 
-        </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include layout="@layout/buttons_show" />
 
@@ -112,9 +120,9 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/inline_padding"
             android:layout_marginLeft="@dimen/large_padding"
             android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginBottom="@dimen/inline_padding"
             android:background="?attr/sgColorDivider" />
 
         <include layout="@layout/fragment_show_meta" />
