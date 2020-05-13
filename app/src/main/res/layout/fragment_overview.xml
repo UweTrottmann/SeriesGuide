@@ -63,7 +63,7 @@
                         android:background="?attr/selectableItemBackground"
                         android:focusable="true"
                         android:textAppearance="@style/TextAppearance.Body"
-                        tools:text="Tue 5:00 AM on CBS" />
+                        tools:text="XYZ . Tue 5:00 AM . 60 min" />
                 </RelativeLayout>
 
                 <ImageButton

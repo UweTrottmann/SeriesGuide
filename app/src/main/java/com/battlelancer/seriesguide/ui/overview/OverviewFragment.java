@@ -240,13 +240,9 @@ public class OverviewFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Are we in a multi-pane layout?
-        View seasonsFragment = requireActivity().findViewById(R.id.fragment_seasons);
-        boolean multiPane = seasonsFragment != null
-                && seasonsFragment.getVisibility() == View.VISIBLE;
-
-        // do not display show info header in multi pane layout
-        containerShow.setVisibility(multiPane ? View.GONE : View.VISIBLE);
+        // Hide show info if it is displayed in show fragment.
+        boolean isDisplayShowInfo = !getResources().getBoolean(R.bool.isFragmentShowNarrow);
+        containerShow.setVisibility(isDisplayShowInfo ? View.VISIBLE : View.GONE);
 
         LoaderManager loaderManager = LoaderManager.getInstance(this);
         loaderManager.initLoader(OverviewActivity.OVERVIEW_SHOW_LOADER_ID, null, this);
@@ -870,7 +866,7 @@ public class OverviewFragment extends Fragment implements
         TvdbImageTools.loadShowPosterAlpha(requireContext(), imageBackground,
                 show.getString(ShowQuery.SHOW_POSTER_SMALL));
 
-        // regular network and time
+        // Regular network, release time and length.
         String network = show.getString(ShowQuery.SHOW_NETWORK);
         String time = null;
         int releaseTime = show.getInt(ShowQuery.SHOW_RELEASE_TIME);
@@ -887,8 +883,13 @@ public class OverviewFragment extends Fragment implements
             // "Mon 08:30"
             time = dayString + " " + timeString;
         }
+        String runtime = getString(
+                R.string.runtime_minutes,
+                String.valueOf(showCursor.getInt(ShowQuery.SHOW_RUNTIME))
+        );
+        String combinedString = TextTools.dotSeparate(TextTools.dotSeparate(network, time), runtime);
         TextView textViewNetworkAndTime = getView().findViewById(R.id.showmeta);
-        textViewNetworkAndTime.setText(TextTools.dotSeparate(network, time));
+        textViewNetworkAndTime.setText(combinedString);
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         ClipboardTools.copyTextToClipboardOnLongClick(textViewNetworkAndTime);
 
