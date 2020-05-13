@@ -62,6 +62,7 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity;
+import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.ClipboardTools;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -109,6 +110,7 @@ public class OverviewFragment extends Fragment implements
 
     @BindView(R.id.episode_empty_container) View containerEpisodeEmpty;
     @BindView(R.id.buttonOverviewSimilarShows) Button buttonSimilarShows;
+    @BindView(R.id.buttonOverviewRemoveShow) Button buttonRemoveShow;
 
     @BindView(R.id.episode_primary_container) View containerEpisodePrimary;
     @BindView(R.id.dividerHorizontalOverviewEpisodeMeta) View dividerEpisodeMeta;
@@ -205,6 +207,10 @@ public class OverviewFragment extends Fragment implements
         // Empty view buttons.
         buttonSimilarShows.setOnClickListener(v ->
                 startActivity(SimilarShowsActivity.intent(requireContext(), showTvdbId, showTitle))
+        );
+        buttonRemoveShow.setOnClickListener(v ->
+                RemoveShowDialogFragment
+                        .show(requireContext(), getParentFragmentManager(), showTvdbId)
         );
 
         // episode buttons
