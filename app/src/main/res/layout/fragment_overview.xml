@@ -63,7 +63,7 @@
                         android:background="?attr/selectableItemBackground"
                         android:focusable="true"
                         android:textAppearance="@style/TextAppearance.Body"
-                        tools:text="Tue 5:00 AM on CBS" />
+                        tools:text="XYZ . Tue 5:00 AM . 60 min" />
                 </RelativeLayout>
 
                 <ImageButton
@@ -125,10 +125,20 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:text="@string/title_similar_shows"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewOverviewEmpty" />
+
+                        <Button
+                            android:id="@+id/buttonOverviewRemoveShow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/delete_show"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textViewOverviewEmpty"
+                            app:layout_constraintTop_toBottomOf="@+id/buttonOverviewSimilarShows"
                             tools:drawableStart="@drawable/ic_search_white_24dp"
                             tools:drawableTint="?attr/sgColorIcon" />
 

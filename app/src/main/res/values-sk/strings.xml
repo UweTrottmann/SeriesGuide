@@ -11,13 +11,12 @@
     <string name="help">Pomoc</string>
     <string name="no_more_updates">Pre túto verziu Androidu aplikácia SeriesGuide už nebude aktualizovaná.</string>
     <!-- Media items -->
-    <string name="show">Seriál</string>
+    <string name="show_details">Podrobnosti</string>
     <string name="episode">Epizóda</string>
     <string name="episode_number">Epizóda %d</string>
     <string name="episodes">Epizódy</string>
     <string name="season">Séria</string>
     <string name="season_number">Séria %d</string>
-    <string name="seasons">Série</string>
     <string name="specialseason">Bonusové epizódy</string>
     <string name="ratings">Hodnotenia</string>
     <!-- Descriptions -->

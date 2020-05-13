@@ -1,71 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<!-- Need to define root ID in include tag or view binding breaks. -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:background="?attr/selectableItemBackground"
-    android:focusable="true"
-    android:padding="@dimen/large_padding">
+    android:focusable="true">
 
-    <!-- ratings layout for narrow show details, currently only smaller font sizes -->
+    <ImageView
+        android:id="@+id/imageViewRatingsIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:contentDescription="@string/ratings"
+        android:src="@drawable/ic_trakt_icon_control"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewRatingsValue"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:text="@string/placeholder_rating"
-        android:textAppearance="@style/TextAppearance.Title"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+        app:layout_constraintStart_toEndOf="@+id/imageViewRatingsIcon"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="9.6" />
 
     <TextView
         android:id="@+id/textViewRatingsRange"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewRatingsValue"
-        android:layout_marginRight="@dimen/default_padding"
-        android:layout_toRightOf="@+id/textViewRatingsValue"
         android:text="@string/format_rating_range"
-        android:textAppearance="@style/TextAppearance.Caption" />
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewRatingsValue"
+        app:layout_constraintStart_toEndOf="@+id/textViewRatingsValue"
+        tools:text="/10" />
 
     <TextView
         android:id="@+id/textViewRatingsVotes"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewRatingsValue"
-        android:layout_toRightOf="@id/textViewRatingsRange"
         android:ellipsize="end"
         android:maxLines="2"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.Caption"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
+        app:layout_constraintStart_toStartOf="@+id/textViewRatingsValue"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRatingsValue"
         tools:text="1234 votes" />
 
     <TextView
-        android:id="@+id/textViewRatingsLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewRatingsValue"
-        android:layout_marginTop="-4dp"
-        android:text="@string/trakt"
-        android:textAppearance="@style/TextAppearance.Caption" />
-
-    <TextView
         android:id="@+id/textViewRatingsUser"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewRatingsLabel"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/large_padding"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
         android:text="@string/action_rate"
-        android:textAppearance="@style/TextAppearance.Button" />
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textViewRatingsValue"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRatingsVotes" />
 
     <TextView
         android:id="@+id/textViewRatingsUserLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewRatingsUser"
-        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:ellipsize="end"
         android:text="@string/your_rating"
-        android:textAppearance="@style/TextAppearance.Caption" />
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textViewRatingsValue"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRatingsUser"
+        app:layout_constraintVertical_bias="0.0" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,13 +11,12 @@
     <string name="help">說明</string>
     <string name="no_more_updates">此版本的 Android 將不會收到 SeriesGuide 的任何更新。</string>
     <!-- Media items -->
-    <string name="show">節目</string>
+    <string name="show_details">Details</string>
     <string name="episode">集數</string>
     <string name="episode_number">第 %d 集</string>
     <string name="episodes">集數</string>
     <string name="season">季</string>
     <string name="season_number">第 %d 季</string>
-    <string name="seasons">季數</string>
     <string name="specialseason">特集</string>
     <string name="ratings">評分</string>
     <!-- Descriptions -->

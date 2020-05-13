@@ -11,13 +11,12 @@
     <string name="help">Guida</string>
     <string name="no_more_updates">SeriesGuide non riceverà più aggiornamenti per questa versione di Android.</string>
     <!-- Media items -->
-    <string name="show">Descrizione</string>
+    <string name="show_details">Dettagli</string>
     <string name="episode">Episodio</string>
     <string name="episode_number">Episodio %d</string>
     <string name="episodes">Episodi</string>
     <string name="season">Stagione</string>
     <string name="season_number">Stagione %d</string>
-    <string name="seasons">Stagioni</string>
     <string name="specialseason">Episodi Speciali</string>
     <string name="ratings">Valutazioni</string>
     <!-- Descriptions -->

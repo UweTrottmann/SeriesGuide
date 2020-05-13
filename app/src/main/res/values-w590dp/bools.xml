@@ -2,5 +2,6 @@
 <resources>
 
     <bool name="isSinglePane">false</bool>
+    <bool name="isFragmentShowNarrow">true</bool>
 
 </resources>

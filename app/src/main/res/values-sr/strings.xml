@@ -11,13 +11,12 @@
     <string name="help">Помоћ</string>
     <string name="no_more_updates">SeriesGuide neće više dobijati unapređenja za ovu verziju Androida.</string>
     <!-- Media items -->
-    <string name="show">Серија</string>
+    <string name="show_details">Details</string>
     <string name="episode">Епизода</string>
     <string name="episode_number">Епизода %d</string>
     <string name="episodes">Епизоде</string>
     <string name="season">Сезона</string>
     <string name="season_number">Сезона %d</string>
-    <string name="seasons">Сезоне</string>
     <string name="specialseason">Специјалне епизоде</string>
     <string name="ratings">Rejtinzi</string>
     <!-- Descriptions -->

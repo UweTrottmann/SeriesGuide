@@ -11,13 +11,12 @@
     <string name="help">Nápověda</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
-    <string name="show">Seriál</string>
+    <string name="show_details">Details</string>
     <string name="episode">Epizoda</string>
     <string name="episode_number">Epizoda %d</string>
     <string name="episodes">Epizody</string>
     <string name="season">Série</string>
     <string name="season_number">Série %d</string>
-    <string name="seasons">Série</string>
     <string name="specialseason">Bonusové Epizody</string>
     <string name="ratings">Hodnocení</string>
     <!-- Descriptions -->
