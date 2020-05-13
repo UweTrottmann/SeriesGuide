@@ -11,13 +11,12 @@
     <string name="help">सहायता</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
-    <string name="show">धारावाहिक</string>
+    <string name="show_details">Details</string>
     <string name="episode">एपिसोड</string>
     <string name="episode_number">एपिसोड %d</string>
     <string name="episodes">एपिसोड</string>
     <string name="season">सीज़न</string>
     <string name="season_number">सीज़न %d</string>
-    <string name="seasons">सीज़न</string>
     <string name="specialseason">विशेष एपिसोड</string>
     <string name="ratings">रेटिंग</string>
     <!-- Descriptions -->

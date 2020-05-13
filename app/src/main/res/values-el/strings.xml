@@ -11,13 +11,12 @@
     <string name="help">Βοήθεια</string>
     <string name="no_more_updates">Το SeriesGuide δεν θα λάβει άλλες ενημερώσεις για αυτή την έκδοση Android.</string>
     <!-- Media items -->
-    <string name="show">Σειρά</string>
+    <string name="show_details">Λεπτομέρειες</string>
     <string name="episode">Επεισόδιο</string>
     <string name="episode_number">Επεισόδιο %d</string>
     <string name="episodes">Επεισόδια</string>
     <string name="season">Σεζόν</string>
     <string name="season_number">Κύκλος %d</string>
-    <string name="seasons">Σεζόν</string>
     <string name="specialseason">Ειδικά Επεισόδια</string>
     <string name="ratings">Βαθμολογίες</string>
     <!-- Descriptions -->

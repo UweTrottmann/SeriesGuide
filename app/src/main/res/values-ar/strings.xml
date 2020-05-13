@@ -11,13 +11,12 @@
     <string name="help">مساعدة</string>
     <string name="no_more_updates">SeriesGuide لن يتحصل على المزيد من التحديثات على نسخة الأندرويد الحالية.</string>
     <!-- Media items -->
-    <string name="show">العرض</string>
+    <string name="show_details">التفاصيل</string>
     <string name="episode">الحلقة</string>
     <string name="episode_number">الحلقة %d</string>
     <string name="episodes">الحلقات</string>
     <string name="season">الموسم</string>
     <string name="season_number">الموسم %d</string>
-    <string name="seasons">المواسم</string>
     <string name="specialseason">حلقات خاصة</string>
     <string name="ratings">التقييم</string>
     <!-- Descriptions -->

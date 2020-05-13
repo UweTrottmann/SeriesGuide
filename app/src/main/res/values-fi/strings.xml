@@ -11,13 +11,12 @@
     <string name="help">Ohjeet</string>
     <string name="no_more_updates">SeriesGuide ei enää vastaanota päivityksiä tälle Android-versiolle.</string>
     <!-- Media items -->
-    <string name="show">Ohjelma</string>
+    <string name="show_details">Tiedot</string>
     <string name="episode">Jakso</string>
     <string name="episode_number">Jakso %d</string>
     <string name="episodes">Jaksot</string>
     <string name="season">Kausi</string>
     <string name="season_number">Kausi %d</string>
-    <string name="seasons">Kaudet</string>
     <string name="specialseason">Erikoisjaksot</string>
     <string name="ratings">Arvosanat</string>
     <!-- Descriptions -->
