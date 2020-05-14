@@ -28,7 +28,7 @@ import androidx.room.TypeConverters
         CachedPurchase::class,
         GoldStatus::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(PurchaseTypeConverter::class)

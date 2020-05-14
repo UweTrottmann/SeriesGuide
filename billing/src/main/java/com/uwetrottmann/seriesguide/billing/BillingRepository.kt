@@ -253,7 +253,7 @@ class BillingRepository(private val applicationContext: Context) {
                 SeriesGuideSku.X_SUB_SPONSOR -> {
                     val isSub = SeriesGuideSku.X_PASS_IN_APP != purchaseSku
 
-                    val goldStatus = GoldStatus(true, isSub, purchaseSku)
+                    val goldStatus = GoldStatus(true, isSub, purchaseSku, purchase.purchaseToken)
                     insert(goldStatus)
 
                     // You can only have one subscription. Prevent re-purchase of active one.
@@ -288,7 +288,7 @@ class BillingRepository(private val applicationContext: Context) {
             val wasEntitled =
                 localCacheBillingClient.entitlementsDao().getGoldStatus()?.entitled ?: false
 
-            val goldStatus = GoldStatus(false, isSub = true, sku = null)
+            val goldStatus = GoldStatus(false, isSub = true, sku = null, purchaseToken = null)
             insert(goldStatus)
             /* Enable all available subscriptions. */
             SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE.forEach { sku ->
@@ -349,9 +349,12 @@ class BillingRepository(private val applicationContext: Context) {
         val skuDetails = SkuDetails(augmentedSkuDetails.originalJson)
 
         // Check if this is a subscription up- or downgrade.
-        val oldSku = localCacheBillingClient.entitlementsDao().getGoldStatus()?.let {
+        val goldStatusOrNull = localCacheBillingClient.entitlementsDao().getGoldStatus()
+        val oldSku = goldStatusOrNull?.let {
             if (it.isSub) it.sku else null
         }
+        val purchaseToken = goldStatusOrNull?.purchaseToken
+
         val prorationMode = if (
             oldSku == SeriesGuideSku.X_SUB_SPONSOR
             || (oldSku == SeriesGuideSku.X_SUB_SUPPORTER && skuDetails.sku == SeriesGuideSku.X_SUB_ALL_ACCESS)
@@ -366,7 +369,7 @@ class BillingRepository(private val applicationContext: Context) {
         val purchaseParams = BillingFlowParams.newBuilder().apply {
             setSkuDetails(skuDetails)
             if (oldSku != null) {
-                setOldSku(oldSku)
+                setOldSku(oldSku, purchaseToken)
                 setReplaceSkusProrationMode(prorationMode)
             }
         }.build()
