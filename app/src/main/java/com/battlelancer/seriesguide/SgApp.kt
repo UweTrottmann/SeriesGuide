@@ -22,12 +22,10 @@ import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.crashlytics.android.core.CrashlyticsCore
 import com.google.android.gms.security.ProviderInstaller
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
-import io.fabric.sdk.android.Fabric
 import io.palaima.debugdrawer.timber.data.LumberYard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -162,11 +160,7 @@ class SgApp : Application() {
     }
 
     private fun initializeLogging() {
-        // set up reporting tools first
-        if (!Fabric.isInitialized()) {
-            // use core kit only, Crashlytics kit also adds Answers and Beta kit
-            Fabric.with(this, CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-        }
+        // Note: Firebase Crashlytics is automatically initialized using content provider.
 
         if (AppSettings.isUserDebugModeEnabled(this)) {
             // debug drawer logging
