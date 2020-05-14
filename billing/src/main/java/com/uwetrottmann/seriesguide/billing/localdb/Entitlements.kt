@@ -41,7 +41,12 @@ abstract class Entitlement {
  * to gold status or s/he doesn't. For more on subscriptions, see the Classy Taxi sample app.
  */
 @Entity(tableName = "gold_status")
-data class GoldStatus(val entitled: Boolean, val isSub: Boolean, val sku: String?) : Entitlement() {
+data class GoldStatus(
+    val entitled: Boolean,
+    val isSub: Boolean,
+    val sku: String?,
+    val purchaseToken: String?
+) : Entitlement() {
     override fun mayPurchase(): Boolean = !entitled
 }
 
