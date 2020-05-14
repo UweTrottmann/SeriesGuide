@@ -15,7 +15,7 @@ buildscript {
             'room': '2.2.5',
 
             'butterknife': '10.2.0', // github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
-            'crashlytics': '2.9.7', // docs.fabric.io/android/changelog.html
+            'crashlytics': '17.0.0', // https://firebase.google.com/support/release-notes/android
             'dagger': '2.23.1', // github.com/google/dagger/releases
             'gson': '2.8.5', // github.com/google/gson/blob/master/CHANGELOG.md
             'okhttp': '3.12.12', // github.com/square/okhttp/blob/master/CHANGELOG.md
@@ -46,16 +46,17 @@ buildscript {
         google()
         mavenCentral()
         jcenter()
-//        maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.0' // libraries, SeriesGuide
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.21.0'
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:2.0.1' // SeriesGuide
-//        classpath 'io.fabric.tools:gradle:1.27.0' // SeriesGuide
-        //noinspection GradleDependency
         classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.10.0' // api
+        // Firebase Crashlytics
+        // https://firebase.google.com/support/release-notes/android
+        classpath 'com.google.gms:google-services:4.3.3'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.0'
     }
 }
 
@@ -80,7 +81,6 @@ allprojects {
         google()
         mavenCentral()
         jcenter()
-//        maven { url 'https://maven.fabric.io/public' }
     }
 }
 

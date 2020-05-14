@@ -1,9 +1,12 @@
 package com.battlelancer.seriesguide.util
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.google.api.client.http.HttpResponseException
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import retrofit2.Response
 import timber.log.Timber
 import java.io.InterruptedIOException
@@ -14,6 +17,25 @@ class Errors {
     companion object {
 
         /**
+         * Returns null instead of crashing when Firebase is not configured, e.g. for vanilla debug
+         * builds and CI builds.
+         */
+        @SuppressLint("LogNotTimber")
+        fun getReporter() : FirebaseCrashlytics? {
+            return try {
+                FirebaseCrashlytics.getInstance()
+            } catch (e: Exception) {
+                // Not using Timber, would cause an endless loop.
+                Log.w(
+                    Errors::class.java.simpleName,
+                    "FirebaseCrashlytics not available, is it configured correctly?",
+                    e
+                )
+                return null
+            }
+        }
+
+        /**
          * Logs the exception and if it should be, reports it. Adds action as key to report.
          */
         @JvmStatic
@@ -22,8 +44,8 @@ class Errors {
 
             if (!throwable.shouldReport()) return
 
-//            CrashlyticsCore.getInstance().setString("action", action)
-//            CrashlyticsCore.getInstance().logException(throwable)
+            getReporter()?.setCustomKey("action", action)
+            getReporter()?.recordException(throwable)
         }
 
         /**
@@ -38,8 +60,8 @@ class Errors {
 
             bendCauseStackTrace(throwable)
 
-//            CrashlyticsCore.getInstance().setString("action", action)
-//            CrashlyticsCore.getInstance().logException(throwable)
+            getReporter()?.setCustomKey("action", action)
+            getReporter()?.recordException(throwable)
         }
 
         /**
@@ -85,8 +107,8 @@ class Errors {
 
             if (!throwable.shouldReport()) return
 
-//            CrashlyticsCore.getInstance().setString("action", action)
-//            CrashlyticsCore.getInstance().logException(throwable)
+            getReporter()?.setCustomKey("action", action)
+            getReporter()?.recordException(throwable)
         }
 
         /**
@@ -120,8 +142,8 @@ class Errors {
 
             if (response.code() == 404) return // do not send 404 to Crashlytics
 
-//            CrashlyticsCore.getInstance().setString("action", action)
-//            CrashlyticsCore.getInstance().logException(throwable)
+            getReporter()?.setCustomKey("action", action)
+            getReporter()?.recordException(throwable)
         }
 
         /**
