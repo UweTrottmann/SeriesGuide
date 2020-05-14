@@ -2,6 +2,8 @@
 
 package com.battlelancer.seriesguide.jobs;
 
+import com.google.flatbuffers.BaseVector;
+import com.google.flatbuffers.Constants;
 import com.google.flatbuffers.FlatBufferBuilder;
 import com.google.flatbuffers.Table;
 import java.nio.ByteBuffer;
@@ -9,9 +11,10 @@ import java.nio.ByteOrder;
 
 @SuppressWarnings("unused")
 public final class EpisodeInfo extends Table {
+  public static void ValidateVersion() { Constants.FLATBUFFERS_1_12_0(); }
   public static EpisodeInfo getRootAsEpisodeInfo(ByteBuffer _bb) { return getRootAsEpisodeInfo(_bb, new EpisodeInfo()); }
   public static EpisodeInfo getRootAsEpisodeInfo(ByteBuffer _bb, EpisodeInfo obj) { _bb.order(ByteOrder.LITTLE_ENDIAN); return (obj.__assign(_bb.getInt(_bb.position()) + _bb.position(), _bb)); }
-  public void __init(int _i, ByteBuffer _bb) { bb_pos = _i; bb = _bb; }
+  public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
   public EpisodeInfo __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public int season() { int o = __offset(4); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
@@ -20,18 +23,25 @@ public final class EpisodeInfo extends Table {
   public static int createEpisodeInfo(FlatBufferBuilder builder,
       int season,
       int number) {
-    builder.startObject(2);
+    builder.startTable(2);
     EpisodeInfo.addNumber(builder, number);
     EpisodeInfo.addSeason(builder, season);
     return EpisodeInfo.endEpisodeInfo(builder);
   }
 
-  public static void startEpisodeInfo(FlatBufferBuilder builder) { builder.startObject(2); }
+  public static void startEpisodeInfo(FlatBufferBuilder builder) { builder.startTable(2); }
   public static void addSeason(FlatBufferBuilder builder, int season) { builder.addInt(0, season, 0); }
   public static void addNumber(FlatBufferBuilder builder, int number) { builder.addInt(1, number, 0); }
   public static int endEpisodeInfo(FlatBufferBuilder builder) {
-    int o = builder.endObject();
+    int o = builder.endTable();
     return o;
+  }
+
+  public static final class Vector extends BaseVector {
+    public Vector __assign(int _vector, int _element_size, ByteBuffer _bb) { __reset(_vector, _element_size, _bb); return this; }
+
+    public EpisodeInfo get(int j) { return get(new EpisodeInfo(), j); }
+    public EpisodeInfo get(EpisodeInfo obj, int j) {  return obj.__assign(__indirect(__element(j), bb), bb); }
   }
 }
 
