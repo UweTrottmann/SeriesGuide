@@ -30,7 +30,7 @@
     <string name="save_selection">Tallenna valinta</string>
     <string name="action_display_all">Näytä kaikki</string>
     <string name="web_search">Verkkohaku</string>
-    <string name="add_to_homescreen">Lisää kotinäytölle</string>
+    <string name="add_to_homescreen">Lisää aloitusnäytölle</string>
     <string name="action_open">Avaa</string>
     <string name="sync_manually">Synkronoi manuaalisesti</string>
     <string name="sync_and_update">Synkronoi ja päivitä</string>
@@ -59,7 +59,7 @@
     <string name="share_episode">Jaa jakso</string>
     <string name="share_movie">Jaa elokuva</string>
     <string name="addtocalendar">Lisää kalenteriin</string>
-    <string name="addtocalendar_failed">Kalenteritapahtumaa ei voitu luoda.</string>
+    <string name="addtocalendar_failed">Ei voitu luoda kalenteritapahtumaa.</string>
     <string name="links">Linkit</string>
     <!-- Comments -->
     <string name="comments">Kommentit</string>
@@ -149,16 +149,16 @@
     <string name="action_episodes_switch_view">Vaihda näkymä</string>
     <!-- History -->
     <string name="user_stream">Historia</string>
-    <string name="recently_watched">Viimeksi katsottu</string>
+    <string name="recently_watched">Äskettäin katsotut</string>
     <string name="friends_recently">Trakt-ystäväsi</string>
     <string name="now_empty">Mitään ei ole meneillään. Katso joitakin ohjelmia!</string>
     <string name="now_movies_empty">Mitään ei ole meneillään. Katso joitakin elokuvia!</string>
-    <string name="user_stream_empty">Ei historiaa Traktissa. Katso ja ilmoittaudu joihinkin ohjelmiin!</string>
-    <string name="user_movie_stream_empty">Ei historiaa Traktissa. Katso ja ilmoittaudu joihinkin elokuviin!</string>
+    <string name="user_stream_empty">Ei historiaa Traktissa. Katso ja kuittaa joihinkin ohjelmiin!</string>
+    <string name="user_movie_stream_empty">Ei historiaa Traktissa. Katso ja kuittaa joihinkin elokuviin!</string>
     <!-- Calendar -->
     <string name="upcoming">Tulevat</string>
     <string name="recent">Viimeisimmät</string>
-    <string name="released_today">Julkaistu tänään</string>
+    <string name="released_today">Tulossa tänään</string>
     <string name="noupcoming">Ei tulevia jaksoja.</string>
     <string name="norecent">Ei viimeaikaisia jaksoja.</string>
     <string name="calendar_settings">Kalenteriasetukset</string>
@@ -192,8 +192,8 @@
     <string name="action_try_again">Yritä uudelleen</string>
     <string name="tvdb_error_does_not_exist">Ohjelma ei ole (vielä) TheTVDB:ssä. Yritä myöhemmin uudelleen.</string>
     <string name="add_all">Lisää kaikki</string>
-    <string name="add_multiple">Kaikki ohjelmat ilmestyvät pian ohjelmalistaasi.</string>
-    <string name="add_started">%s ilmestyy pian ohjelmalistaasi.</string>
+    <string name="add_multiple">Kaikki ohjelmat ilmestyvät pian ohjelmalistaasi</string>
+    <string name="add_started">%s ilmestyy pian ohjelmalistallesi</string>
     <string name="add_error">Ei voitu lisätä ohjelmaa %s.</string>
     <string name="add_already_exists">%s on jo ohjelmalistallasi.</string>
     <string name="title_new_episodes">Uusia jaksoja</string>
@@ -220,7 +220,7 @@
     <string name="title_discover">Tutustu</string>
     <string name="title_popular">Suositut</string>
     <string name="title_digital_releases">Digitaaliset julkaisut</string>
-    <string name="title_disc_releases">Levyjen julkaisut</string>
+    <string name="title_disc_releases">Levyjulkaisut</string>
     <string name="movies_in_theatres">Teattereissa</string>
     <string name="movies_collection">Kokoelma</string>
     <string name="movies_watchlist">Seurantalista</string>
@@ -244,7 +244,7 @@
     <string name="statistics_episodes">jaksoa</string>
     <string name="statistics_movies">elokuvaa</string>
     <string name="shows_with_next">%s on seuraavia jaksoja</string>
-    <string name="shows_continuing">%s jatkuvaa</string>
+    <string name="shows_continuing">%s jatkuu</string>
     <string name="episodes_watched">%s katsottu</string>
     <string name="movies_on_watchlist">%s seurantalistalla</string>
     <string name="movies_watched_format">%s katsottu</string>
@@ -277,27 +277,27 @@
     <string name="hexagon_remove_account">Poista tili</string>
     <string name="hexagon_remove_account_success">Tili poistettu.</string>
     <string name="hexagon_remove_account_failure">Tiliä ei voitu poistaa.</string>
-    <string name="hexagon_remove_account_confirmation">Tämä poistaa ohjelmasi, listasi ja elokuvasi SeriesGuide Cloudista.</string>
+    <string name="hexagon_remove_account_confirmation">Tämä poistaa ohjelmasi, listasi ja elokuvasi SeriesGuide Cloudista</string>
     <string name="hexagon_api_queued">Lähetetään SeriesGuide Cloudiin.</string>
     <string name="hexagon_signed_out">Kirjauduttu ulos SeriesGuide Cloudista.</string>
     <string name="hexagon_signin_fail_format">Virhe Google-kirjautumisessa (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Lähetetään Traktiin.</string>
-    <string name="checkin_success_trakt">Ilmoittauduttu kohteeseen %s Traktissa.</string>
-    <string name="checkin_canceled_success_trakt">Ilmoittautuminen peruttu Traktissa.</string>
+    <string name="checkin_success_trakt">Kuitattu kohteeseen %s Traktissa</string>
+    <string name="checkin_canceled_success_trakt">Kuittaus peruttu Traktissa</string>
     <string name="traktcheckin_cancel">Korvaa</string>
-    <string name="traktcheckin_inprogress">Olet jo ilmoittautunut. Korvaa edellinen ilmoittautuminen, tai odota %s ja yritä uudelleen.</string>
+    <string name="traktcheckin_inprogress">Olet jo kuitannut toiseen kohteeseen. Korvaa edellinen kuittaus tai odota %s ja yritä uudelleen.</string>
     <string name="traktcheckin_wait">Odotetaan</string>
-    <string name="trakt_success">Lähetetty Traktiin.</string>
+    <string name="trakt_success">Lähetetty Traktiin</string>
     <string name="trakt_error_credentials">Jokin meni pieleen. Tarkista Trakt-tunnuksesi ja yritä uudelleen.</string>
     <string name="trakt_error_not_exists">Ei (vielä) saatavilla Traktissa. Yritä myöhemmin uudelleen.</string>
-    <string name="trakt_notice_not_exists">Ei voida (vielä) seurata Traktissa.</string>
+    <string name="trakt_notice_not_exists">Ei voida (vielä) seurata Traktissa</string>
     <!-- Connect trakt -->
     <string name="trakt_account">Trakt-tili</string>
     <string name="connect_trakt">Yhdistä Traktiin</string>
     <string name="trakt_reconnect">Yhdistä SeriesGuide Traktiin</string>
     <string name="trakt_reconnect_details">Tarkista Trakt-tunnuksesi</string>
-    <string name="waitplease">Hetkinen, kiitos...</string>
+    <string name="waitplease">Hetkinen, kiitos…</string>
     <string name="connect">Yhdistä</string>
     <string name="disconnect">Katkaise yhteys</string>
     <string name="use_integrated_browser">Käytä sisäistä selainta</string>
@@ -311,7 +311,7 @@
     <string name="rating2">Kauhea</string>
     <string name="rating3">Huono</string>
     <string name="rating4">Heikko</string>
-    <string name="rating5">Pyh</string>
+    <string name="rating5">Pöh</string>
     <string name="rating6">Kohtalainen</string>
     <string name="rating7">Hyvä</string>
     <string name="rating8">Upea</string>
@@ -321,11 +321,11 @@
         <item quantity="other">%d ääntä</item>
     </plurals>
     <!-- Check Ins -->
-    <string name="checkin">Ilmoittaudu</string>
+    <string name="checkin">Kuittaa</string>
     <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>
     <string name="paste_title">Liitä nimi</string>
-    <string name="pref_quick_checkin">Nopea ilmoittautuminen</string>
-    <string name="pref_quick_checkin_summary">Älä kysy ilmoittautumisviestiä</string>
+    <string name="pref_quick_checkin">Nopea kuittaus</string>
+    <string name="pref_quick_checkin_summary">Älä kysy kuittausviestiä</string>
     <!-- Help -->
     <string name="feedback">Lähetä palautetta</string>
     <string name="action_open_in_browser">Avaa selaimessa</string>
@@ -378,7 +378,7 @@
     <string name="sort_order_latest_first_dvd">Uusin ensin (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Vanhin ensin (DVD)</string>
     <!-- Upcoming thresholds -->
-    <string name="pref_upcominglimit">Tulevien vaihteluväli</string>
+    <string name="pref_upcominglimit">Tulevien rajaus</string>
     <string name="upcoming_upto_now">nyt</string>
     <string name="upcoming_upto_one_day">1 päivän ajalta</string>
     <string name="upcoming_upto_three_days">3 päivän ajalta</string>
@@ -409,12 +409,12 @@
     <string name="backup_success">Varmuuskopiointi onnistui.</string>
     <string name="backup_failed">Varmuuskopiointi epäonnistui.</string>
     <string name="import_failed_nosd">Varmuuskopion palautus epäonnistui. Varmuuskopiokansio ei ole saatavilla.</string>
-    <string name="import_failed_nofile">Luettavaa varmuuskopiotiedostoa ei ole.</string>
+    <string name="import_failed_nofile">Luettavaa varmuuskopiotiedostoa ei ole</string>
     <string name="import_success">Varmuuskopio palautettu onnistuneesti.</string>
     <string name="import_failed">Varmuuskopion palauttaminen epäonnistui.</string>
     <string name="backup_button">Luo varmuuskopio</string>
     <string name="import_button">Palauta varmuuskopio</string>
-    <string name="import_warning">Nykyiset ohjelmasi, listasi ja elokuvasi korvataan varmuuskopioilla.</string>
+    <string name="import_warning">Nykyiset ohjelmasi, listasi ja elokuvasi korvataan varmuuskopioilla</string>
     <string name="no_file_selected">Tiedostoa ei ole valittu</string>
     <string name="action_select_file">Valitse tiedosto</string>
     <!-- Auto backup -->
@@ -443,11 +443,11 @@
     <string name="pref_vibratesummary">Värise ilmoitusta näytettäessä</string>
     <string name="pref_notifications_treshold">Milloin ilmoitetaan</string>
     <string name="pref_notifications_select_shows">Valitse ohjelmat</string>
-    <string name="pref_notifications_select_shows_summary">Ohjelmat, joissa ilmoitukset ovat käytössä (%d)</string>
+    <string name="pref_notifications_select_shows_summary">Ohjelmat, joiden ilmoitukset ovat käytössä (%d)</string>
     <string name="pref_notifications_hidden">Ohita piilotetut ohjelmat</string>
     <string name="pref_notifications_hidden_summary">Älä ilmoita piilotetuista ohjelmista, vaikka ilmoitukset olisivat käytössä</string>
     <string name="pref_notification_channel_errors">Virheet</string>
-    <string name="pref_notifications_next_episodes_only">Vain seuraavaksi katsottavista jaksoista</string>
+    <string name="pref_notifications_next_episodes_only">Vain seuraavaksi katsottavat jaksot</string>
     <string name="pref_notifications_next_episodes_only_summary">Ilmoita vain, jos uusi jakso on seuraavaksi katsottavana</string>
     <!-- List Widget -->
     <string name="hide_watched">Piilota katsotut jaksot</string>

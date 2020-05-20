@@ -137,7 +137,7 @@
     <string name="action_shows_filter_upcoming">Nadolazeće</string>
     <string name="action_shows_filter_hidden">Skriveno</string>
     <string name="action_shows_make_all_visible">Postavi sve skrivene kao vidljive</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="description_make_all_visible_format">Prikaži ponovno sve (%s) skrivene serije?</string>
     <string name="action_shows_sort">Sortiraj serije</string>
     <string name="action_shows_sort_title">Naslov</string>
     <string name="action_shows_sort_latest_episode">Zadnja epizoda</string>

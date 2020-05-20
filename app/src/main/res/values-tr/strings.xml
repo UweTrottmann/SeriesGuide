@@ -11,7 +11,7 @@
     <string name="help">Yardım</string>
     <string name="no_more_updates">SeriesGuide, Androidin bu versiyonu için güncelleme almayacak.</string>
     <!-- Media items -->
-    <string name="show_details">Detaylar</string>
+    <string name="show_details">Ayrıntılar</string>
     <string name="episode">Bölüm</string>
     <string name="episode_number">Bölüm %d</string>
     <string name="episodes">Bölümler</string>
@@ -286,7 +286,7 @@
     <string name="checkin_success_trakt">%s Trakt üzerinde \"izliyorum\" yapıldı</string>
     <string name="checkin_canceled_success_trakt">Trakt üzerindeki \"izliyorum\" durumu iptal edildi</string>
     <string name="traktcheckin_cancel">Geçersiz Kıl</string>
-    <string name="traktcheckin_inprogress">Zaten \"izliyorum\" demiştiniz. Ya önceki girişi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
+    <string name="traktcheckin_inprogress">Zaten \"şu anda izliyorum\" demiştiniz. Ya önceki girişi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
     <string name="traktcheckin_wait">Bekle</string>
     <string name="trakt_success">Trakt\'a gönder.</string>
     <string name="trakt_error_credentials">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
@@ -321,11 +321,11 @@
         <item quantity="other">%d oy</item>
     </plurals>
     <!-- Check Ins -->
-    <string name="checkin">İzliyorum</string>
+    <string name="checkin">Şu anda izliyorum</string>
     <string name="checkin_hint">Bir mesaj yazın (isteğe bağlı)</string>
     <string name="paste_title">Başlığı yapıştır</string>
     <string name="pref_quick_checkin">Hızlıca \"izliyorum\" yap</string>
-    <string name="pref_quick_checkin_summary">\"İzliyorum\" mesajı gösterme</string>
+    <string name="pref_quick_checkin_summary">\"Şu anda izliyorum\" mesajı gösterme</string>
     <!-- Help -->
     <string name="feedback">Geribildirim Gönder</string>
     <string name="action_open_in_browser">Tarayıcıda aç</string>

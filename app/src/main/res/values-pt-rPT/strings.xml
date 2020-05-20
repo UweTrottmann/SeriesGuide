@@ -16,7 +16,7 @@
     <string name="episode_number">Episódio %d</string>
     <string name="episodes">Episódios</string>
     <string name="season">Temporada</string>
-    <string name="season_number">%dª Temporada</string>
+    <string name="season_number">Temporada %d</string>
     <string name="specialseason">Episódios Especiais</string>
     <string name="ratings">Classificações</string>
     <!-- Descriptions -->

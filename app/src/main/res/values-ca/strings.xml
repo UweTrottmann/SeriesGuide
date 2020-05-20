@@ -102,7 +102,7 @@
     <string name="mark_all">Tots vists</string>
     <string name="unmark_all">Cap episodi vist</string>
     <string name="action_watched_up_to">Vist fins aquí</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="confirmation_watched_up_to">Voleu marcar tots els episodis fins aquí com a vists?</string>
     <string name="collect_all">Tots recopilats</string>
     <string name="uncollect_all">Cap recopilat</string>
     <string name="action_skip">Omet</string>
@@ -136,7 +136,7 @@
     <string name="action_shows_filter_upcoming">Propers</string>
     <string name="action_shows_filter_hidden">Ocults</string>
     <string name="action_shows_make_all_visible">Fes tot els ocults visibles</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="description_make_all_visible_format">Fer de tots les sèries amagades (%s) visibles un altre cop?</string>
     <string name="action_shows_sort">Ordena sèries</string>
     <string name="action_shows_sort_title">Títol</string>
     <string name="action_shows_sort_latest_episode">Últim episodi</string>
