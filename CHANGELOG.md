@@ -12,6 +12,15 @@ Version 55
 ----------
 *in development*
 
+#### 55-beta2
+*2020-05-20*
+
+* 🔧 Refreshed show info layout, more compact ratings display.
+* 🔧 Add remove action if there are no more episodes.
+* 🔧 Drop sometimes misleading subscription expired notification, sometimes it is just a temporary
+  error with Google Play.
+* 🔨 Don't say sending to Cloud when changing a (Trakt) rating.
+
 #### 55-beta1
 *2020-05-08*
 
