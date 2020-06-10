@@ -209,6 +209,7 @@ dependencies {
     implementation "io.palaima.debugdrawer:debugdrawer-timber:$debugDrawerVersion"
 
     // Crashlytics
+    // https://firebase.google.com/support/release-notes/android
     implementation "com.google.firebase:firebase-crashlytics:${versions.crashlytics}"
 
     // Google Play Services
