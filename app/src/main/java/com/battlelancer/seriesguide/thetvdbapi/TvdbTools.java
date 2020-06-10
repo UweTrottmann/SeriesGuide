@@ -478,11 +478,13 @@ public class TvdbTools {
                     DisplaySettings.getShowsLanguageFallback(context));
         }
 
-        if (posterResponse.isSuccessful() && posterResponse.body() != null
-                && posterResponse.body().data != null) {
-            TvdbPoster poster = getHighestRatedPoster(posterResponse.body().data);
-            result.poster = poster.fullSize;
-            result.poster_small = poster.smallSize;
+        if (posterResponse.isSuccessful() && posterResponse.body() != null) {
+            List<SeriesImageQueryResult> data = posterResponse.body().data;
+            if (data != null && !data.isEmpty()) {
+                TvdbPoster poster = getHighestRatedPoster(data);
+                result.poster = poster.fullSize;
+                result.poster_small = poster.smallSize;
+            }
         }
 
         return result;
@@ -526,21 +528,25 @@ public class TvdbTools {
         }
     }
 
+    /**
+     * Returns the first poster in the list with the highest number of favorites.
+     * Assumes the given list is not empty.
+     */
     public static TvdbPoster getHighestRatedPoster(List<SeriesImageQueryResult> posters) {
-        int highestRatedIndex = 0;
-        double highestRating = 0.0;
+        int mostFavsIndex = 0;
+        int mostFavs = 0;
         for (int i = 0; i < posters.size(); i++) {
             SeriesImageQueryResult poster = posters.get(i);
-            if (poster.ratingsInfo == null || poster.ratingsInfo.average == null) {
+            if (poster.ratingsInfo == null || poster.ratingsInfo.count == null) {
                 continue;
             }
-            double rating = poster.ratingsInfo.average;
-            if (rating >= highestRating) {
-                highestRating = poster.ratingsInfo.average;
-                highestRatedIndex = i;
+            int favs = poster.ratingsInfo.count;
+            if (favs > mostFavs) {
+                mostFavs = favs;
+                mostFavsIndex = i;
             }
         }
-        SeriesImageQueryResult image = posters.get(highestRatedIndex);
+        SeriesImageQueryResult image = posters.get(mostFavsIndex);
         return new TvdbPoster(image.fileName, image.thumbnail);
     }
 }
