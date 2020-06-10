@@ -15,7 +15,7 @@ buildscript {
             'room': '2.2.5',
 
             'butterknife': '10.2.0', // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
-            'crashlytics': '17.0.0', // https://firebase.google.com/support/release-notes/android
+            'crashlytics': '17.0.1', // https://firebase.google.com/support/release-notes/android
             'dagger': '2.27', // https://github.com/google/dagger/releases
             'gson': '2.8.6', // https://github.com/google/gson/blob/master/CHANGELOG.md
             'okhttp': '4.7.2', // https://github.com/square/okhttp/blob/master/CHANGELOG.md
@@ -57,7 +57,7 @@ buildscript {
         // Firebase Crashlytics
         // https://firebase.google.com/support/release-notes/android
         classpath 'com.google.gms:google-services:4.3.3'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.0'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.1'
     }
 }
 
