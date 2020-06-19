@@ -297,7 +297,7 @@
     <string name="connect_trakt">Yhdistä Traktiin</string>
     <string name="trakt_reconnect">Yhdistä SeriesGuide Traktiin</string>
     <string name="trakt_reconnect_details">Tarkista Trakt-tunnuksesi</string>
-    <string name="waitplease">Hetkinen, kiitos…</string>
+    <string name="waitplease">Hetkinen, kiitos&#8230;</string>
     <string name="connect">Yhdistä</string>
     <string name="disconnect">Katkaise yhteys</string>
     <string name="use_integrated_browser">Käytä sisäistä selainta</string>

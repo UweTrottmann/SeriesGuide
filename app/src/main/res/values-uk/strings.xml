@@ -5,13 +5,13 @@
     <string name="lists">Списки</string>
     <string name="movies">Фільми</string>
     <string name="statistics">Статистика</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">Більше</string>
     <string name="search">Пошук</string>
     <string name="preferences">Налаштування</string>
     <string name="help">Допомога</string>
     <string name="no_more_updates">SeriesGuide не буде отримувати більше оновлень для цієї версії Android.</string>
     <!-- Media items -->
-    <string name="show_details">Details</string>
+    <string name="show_details">Подробиці</string>
     <string name="episode">Серія</string>
     <string name="episode_number">Серія %d</string>
     <string name="episodes">Серії</string>
@@ -42,7 +42,7 @@
     <string name="search_hint">Пошук серій</string>
     <!-- Status messages -->
     <string name="updated">Оновлено до останньої версії.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Подробиці</string>
     <string name="norating">Немає даних</string>
     <string name="unknown">Невідомо</string>
     <string name="offline">Перевірте підключення до мережі та повторіть спробу.</string>
