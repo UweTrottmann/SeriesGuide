@@ -24,7 +24,7 @@
                 android:layout_alignParentTop="true"
                 android:paddingBottom="@dimen/inline_padding"
                 android:text="@string/action_upgrade"
-                android:textAppearance="@style/TextAppearance.Headline" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5" />
 
             <TextView
                 android:id="@+id/textViewAmazonBillingDescription"

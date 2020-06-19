@@ -73,7 +73,7 @@
                         android:layout_toRightOf="@id/frameLayoutMoviePoster"
                         android:background="?attr/selectableItemBackground"
                         android:focusable="true"
-                        android:textAppearance="@style/TextAppearance.Headline"
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5"
                         tools:text="Awesome Movie Title" />
 
                     <TextView

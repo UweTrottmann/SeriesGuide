@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/inline_padding"
                     android:text="@string/action_upgrade"
-                    android:textAppearance="@style/TextAppearance.Headline" />
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5" />
 
                 <TextView
                     android:id="@+id/textViewBillingDescription"
