@@ -34,46 +34,6 @@
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
-    <style name="TextAppearance.Body">
-        <item name="android:textSize">@dimen/text_size_default_sg</item>
-    </style>
-
-    <style name="TextAppearance.Body.Bold">
-        <item name="android:fontFamily">sans-serif-medium</item>
-    </style>
-
-    <style name="TextAppearance.Body.Bold.Accent">
-        <item name="android:textColor">?attr/colorAccent</item>
-    </style>
-
-    <style name="TextAppearance.Body.Bold.Dim">
-        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
-    </style>
-
-    <style name="TextAppearance.Body.Dim">
-        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
-    </style>
-
-    <style name="TextAppearance.Body.Secondary">
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
-    </style>
-
-    <style name="TextAppearance.Body.Secondary.Narrow">
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
-    </style>
-
-    <style name="TextAppearance.Body.Green">
-        <item name="android:textColor">?attr/sgTextColorGreen</item>
-    </style>
-
-    <style name="TextAppearance.Body.Highlight">
-        <item name="android:textStyle">italic</item>
-    </style>
-
-    <style name="TextAppearance.Body.Highlight.Red">
-        <item name="android:textColor">@color/text_red</item>
-    </style>
-
     <style name="TextAppearance.Caption">
         <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">@dimen/text_size_caption_sg</item>
@@ -108,6 +68,10 @@
     <style name="TextAppearance.SeriesGuide.Body2.Secondary">
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
+    <style name="TextAppearance.SeriesGuide.Body2.Secondary.Narrow">
+        <item name="fontFamily">sans-serif-condensed</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
     <style name="TextAppearance.SeriesGuide.Body2.Bold">
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -115,7 +79,10 @@
     <style name="TextAppearance.SeriesGuide.Body2.Bold.Accent">
         <item name="android:textColor">@color/sg_text_color_accent</item>
     </style>
-    <style name="TextAppearance.SeriesGuide.Body2.Italics">
+    <style name="TextAppearance.SeriesGuide.Body2.Bold.Dim">
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
+    </style>
+    <style name="TextAppearance.SeriesGuide.Body2.Italic">
         <item name="android:textStyle">italic</item>
     </style>
 

@@ -50,7 +50,7 @@
         android:layout_marginBottom="@dimen/default_padding"
         android:layout_marginRight="@dimen/large_padding"
         android:layout_toRightOf="@+id/imageViewCommentAvatar"
-        android:textAppearance="@style/TextAppearance.Body"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
         tools:text="Some comment describing how the user felt or not felt about the watched media item..." />
 
     <TextView

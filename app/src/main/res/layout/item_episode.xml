@@ -57,7 +57,7 @@
             android:layout_toRightOf="@id/watchedBoxEpisode"
             android:ellipsize="end"
             android:paddingTop="@dimen/inline_padding"
-            android:textAppearance="@style/TextAppearance.Body.Secondary"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
             tools:text="in 2 days" />
 
         <TextView

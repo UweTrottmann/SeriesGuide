@@ -52,7 +52,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:textAppearance="@style/TextAppearance.Body"
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                         tools:text="@string/show_isalive" />
 
                     <TextView
@@ -62,7 +62,7 @@
                         android:layout_below="@id/showStatus"
                         android:background="?attr/selectableItemBackground"
                         android:focusable="true"
-                        android:textAppearance="@style/TextAppearance.Body"
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                         tools:text="XYZ . Tue 5:00 AM . 60 min" />
                 </RelativeLayout>
 
@@ -278,7 +278,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/episode_gueststars"
-                            android:textAppearance="@style/TextAppearance.Body.Bold" />
+                            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold" />
 
                         <TextView
                             android:id="@+id/TextViewEpisodeGuestStars"
@@ -287,7 +287,7 @@
                             android:layout_height="wrap_content"
                             android:background="?attr/selectableItemBackground"
                             android:focusable="true"
-                            android:textAppearance="@style/TextAppearance.Body" />
+                            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2" />
 
                         <TextView
                             android:id="@+id/labelDvd"
@@ -295,7 +295,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/episode_dvdnumber"
-                            android:textAppearance="@style/TextAppearance.Body.Bold" />
+                            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold" />
 
                         <TextView
                             android:id="@+id/textViewEpisodeDVDnumber"
@@ -304,7 +304,7 @@
                             android:layout_height="wrap_content"
                             android:background="?attr/selectableItemBackground"
                             android:focusable="true"
-                            android:textAppearance="@style/TextAppearance.Body" />
+                            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2" />
 
                         <View
                             android:id="@+id/dividerHorizontalOverviewEpisodeMeta"

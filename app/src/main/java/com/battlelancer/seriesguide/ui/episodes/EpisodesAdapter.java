@@ -149,7 +149,8 @@ class EpisodesAdapter extends CursorAdapter {
         TextViewCompat.setTextAppearance(viewHolder.episodeTitle, isReleased
                 ? R.style.TextAppearance_Subhead : R.style.TextAppearance_Subhead_Dim);
         TextViewCompat.setTextAppearance(viewHolder.episodeAirdate, isReleased
-                ? R.style.TextAppearance_Body_Secondary : R.style.TextAppearance_Body_Dim);
+                ? R.style.TextAppearance_SeriesGuide_Body2_Secondary
+                : R.style.TextAppearance_SeriesGuide_Body2_Dim);
 
         // context menu
         viewHolder.contextMenu.setOnClickListener(v -> {

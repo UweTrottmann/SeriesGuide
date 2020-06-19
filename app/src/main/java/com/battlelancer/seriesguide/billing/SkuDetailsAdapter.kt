@@ -90,19 +90,19 @@ open class SkuDetailsAdapter : RecyclerView.Adapter<SkuDetailsAdapter.SkuDetails
                 itemView.apply {
                     // Subscription for purchase.
                     skuImage.isGone = true
-                    TextViewCompat.setTextAppearance(skuTitle, R.style.TextAppearance_Body_Bold)
-                    TextViewCompat.setTextAppearance(skuPrice, R.style.TextAppearance_Body_Bold)
-                    TextViewCompat.setTextAppearance(skuDescription, R.style.TextAppearance_Body)
+                    TextViewCompat.setTextAppearance(skuTitle, R.style.TextAppearance_SeriesGuide_Body2_Bold)
+                    TextViewCompat.setTextAppearance(skuPrice, R.style.TextAppearance_SeriesGuide_Body2_Bold)
+                    TextViewCompat.setTextAppearance(skuDescription, R.style.TextAppearance_SeriesGuide_Body2)
                 }
             } else {
                 itemView.apply {
                     // Subscription is active.
                     skuImage.isGone = false
-                    TextViewCompat.setTextAppearance(skuTitle, R.style.TextAppearance_Body_Bold_Dim)
-                    TextViewCompat.setTextAppearance(skuPrice, R.style.TextAppearance_Body_Bold_Dim)
+                    TextViewCompat.setTextAppearance(skuTitle, R.style.TextAppearance_SeriesGuide_Body2_Bold_Dim)
+                    TextViewCompat.setTextAppearance(skuPrice, R.style.TextAppearance_SeriesGuide_Body2_Bold_Dim)
                     TextViewCompat.setTextAppearance(
                         skuDescription,
-                        R.style.TextAppearance_Body_Dim
+                        R.style.TextAppearance_SeriesGuide_Body2_Dim
                     )
                 }
             }

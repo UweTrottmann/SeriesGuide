@@ -309,9 +309,9 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
                     // If continuing, paint status green.
                     val style = if (encodedStatus == ShowTools.Status.CONTINUING) {
-                        R.style.TextAppearance_Body_Green
+                        R.style.TextAppearance_SeriesGuide_Body2_Accent
                     } else {
-                        R.style.TextAppearance_Body_Secondary
+                        R.style.TextAppearance_SeriesGuide_Body2_Secondary
                     }
                     statusText.setSpan(
                         TextAppearanceSpan(activity, style),

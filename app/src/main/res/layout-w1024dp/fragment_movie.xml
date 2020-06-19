@@ -159,7 +159,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/textViewMovieDescription"
                         android:text="@string/show_genres"
-                        android:textAppearance="@style/TextAppearance.Body.Bold" />
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold" />
 
                     <TextView
                         android:id="@+id/textViewMovieGenres"
@@ -169,7 +169,7 @@
                         android:layout_below="@+id/textViewMovieGenresLabel"
                         android:background="?attr/selectableItemBackground"
                         android:focusable="true"
-                        android:textAppearance="@style/TextAppearance.Body"
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                         tools:text="Action, Comedy, Drama" />
 
                     <View

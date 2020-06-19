@@ -39,7 +39,7 @@
             android:layout_marginLeft="@dimen/larger_padding"
             android:layout_marginRight="@dimen/larger_padding"
             android:layout_marginTop="@dimen/default_padding"
-            android:textAppearance="@style/TextAppearance.Body"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
             tools:text="@string/pref_offsetsummary" />
 
         <TextView
@@ -49,7 +49,7 @@
             android:layout_marginBottom="@dimen/large_padding"
             android:layout_marginLeft="@dimen/larger_padding"
             android:layout_marginRight="@dimen/larger_padding"
-            android:textAppearance="@style/TextAppearance.Body"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
             tools:text="20:00 -> 22:00" />
 
         <include layout="@layout/dialog_buttons_divided" />

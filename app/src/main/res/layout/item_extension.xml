@@ -60,7 +60,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:paddingBottom="20dp"
-            android:textAppearance="@style/TextAppearance.Body.Secondary"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
             tools:text="Displays some important information about episodes" />
 
     </RelativeLayout>

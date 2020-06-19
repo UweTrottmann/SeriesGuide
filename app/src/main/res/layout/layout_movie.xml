@@ -36,7 +36,7 @@
         android:layout_marginTop="4dp"
         android:ellipsize="end"
         android:lines="2"
-        android:textAppearance="@style/TextAppearance.Body.Bold"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
         tools:text="Awesome Movie Title" />
 
     <TextView

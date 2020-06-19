@@ -112,7 +112,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/episode_gueststars"
-        android:textAppearance="@style/TextAppearance.Body.Bold" />
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold" />
 
     <TextView
         android:id="@+id/textview_guest_stars"
@@ -121,7 +121,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:focusable="true"
-        android:textAppearance="@style/TextAppearance.Body"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
         tools:text="Daniel Craig, Jaimie Alexander, Kiefer Sutherland, Stephanie Leonidas" />
 
     <TextView
@@ -130,7 +130,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/episode_directors"
-        android:textAppearance="@style/TextAppearance.Body.Bold" />
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold" />
 
     <TextView
         android:id="@+id/textview_directors"
@@ -139,7 +139,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:focusable="true"
-        android:textAppearance="@style/TextAppearance.Body"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
         tools:text="Daniel Craig" />
 
     <TextView
@@ -148,7 +148,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/episode_writers"
-        android:textAppearance="@style/TextAppearance.Body.Bold" />
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold" />
 
     <TextView
         android:id="@+id/textview_writers"
@@ -157,7 +157,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:focusable="true"
-        android:textAppearance="@style/TextAppearance.Body"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
         tools:text="Daniel Craig, Jaimie Alexander" />
 
     <TextView
@@ -166,7 +166,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/episode_dvdnumber"
-        android:textAppearance="@style/TextAppearance.Body.Bold" />
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold" />
 
     <TextView
         android:id="@+id/textview_dvd"
@@ -175,7 +175,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:focusable="true"
-        android:textAppearance="@style/TextAppearance.Body"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
         tools:text="42.0" />
 
     <TextView
@@ -184,7 +184,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/episode_firstaired"
-        android:textAppearance="@style/TextAppearance.Body.Bold" />
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold" />
 
     <TextView
         android:id="@+id/textview_release_date"
@@ -193,7 +193,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:focusable="true"
-        android:textAppearance="@style/TextAppearance.Body"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
         tools:text="2014/07/25 CEST (Fri)" />
 
     <View
