@@ -3,6 +3,7 @@
 <!-- Will never be a root layout, overdraw is expected -->
 <!-- Need to define root ID in include tag or view binding breaks. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -62,11 +63,10 @@
         android:layout_marginLeft="@dimen/padding_button"
         android:layout_marginRight="@dimen/padding_button"
         android:contentDescription="@string/checkin"
-        android:drawableLeft="@drawable/ic_checkin_black_24dp"
-        android:drawablePadding="8dp"
         android:gravity="center_vertical|start"
         android:nextFocusUp="@+id/buttonEpisodeWatched"
-        android:text="@string/checkin" />
+        android:text="@string/checkin"
+        app:icon="@drawable/ic_checkin_black_24dp" />
 
     <Button
         android:id="@+id/buttonEpisodeWatchedUpTo"
@@ -76,10 +76,9 @@
         android:layout_marginLeft="@dimen/padding_button"
         android:layout_marginRight="@dimen/padding_button"
         android:contentDescription="@string/action_watched_up_to"
-        android:drawableLeft="@drawable/ic_watch_all_black_24dp"
-        android:drawablePadding="8dp"
         android:gravity="center_vertical|start"
-        android:text="@string/action_watched_up_to" />
+        android:text="@string/action_watched_up_to"
+        app:icon="@drawable/ic_watch_all_black_24dp" />
 
     <Button
         android:id="@+id/buttonEpisodeStreamingSearch"
@@ -89,9 +88,8 @@
         android:layout_marginLeft="@dimen/padding_button"
         android:layout_marginRight="@dimen/padding_button"
         android:contentDescription="@string/action_stream"
-        android:drawableLeft="@drawable/ic_play_arrow_black_24dp"
-        android:drawablePadding="8dp"
         android:gravity="center_vertical|start"
-        android:text="@string/action_stream" />
+        android:text="@string/action_stream"
+        app:icon="@drawable/ic_play_arrow_black_24dp" />
 
 </LinearLayout>

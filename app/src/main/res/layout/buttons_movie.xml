@@ -52,26 +52,26 @@
 
     <Button
         android:id="@+id/buttonMovieCheckIn"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/padding_button"
         android:layout_marginRight="@dimen/padding_button"
         android:contentDescription="@string/checkin"
+        android:gravity="center_vertical|start"
         android:text="@string/checkin"
-        app:icon="@drawable/ic_checkin_black_24dp"
-        app:iconGravity="start" />
+        app:icon="@drawable/ic_checkin_black_24dp" />
 
     <Button
         android:id="@+id/buttonMovieStreamingSearch"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/padding_button"
         android:layout_marginRight="@dimen/padding_button"
         android:contentDescription="@string/action_stream"
+        android:gravity="center_vertical|start"
         android:text="@string/action_stream"
-        app:icon="@drawable/ic_play_arrow_black_24dp"
-        app:iconGravity="start" />
+        app:icon="@drawable/ic_play_arrow_black_24dp" />
 
 </LinearLayout>
