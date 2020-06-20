@@ -559,7 +559,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         }
         bindingButtons.buttonEpisodeWatched.setOnClickListener(v -> onToggleWatched());
         bindingButtons.buttonEpisodeWatched
-                .setText(isWatched ? R.string.action_unwatched : R.string.action_watched);
+                .setText(isWatched ? R.string.state_watched : R.string.action_watched);
         CheatSheet.setup(bindingButtons.buttonEpisodeWatched, isWatched ? R.string.action_unwatched
                 : R.string.action_watched);
 
@@ -574,7 +574,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         }
         bindingButtons.buttonEpisodeCollected.setOnClickListener(v -> onToggleCollected());
         bindingButtons.buttonEpisodeCollected.setText(collected
-                ? R.string.action_collection_remove : R.string.action_collection_add);
+                ? R.string.state_in_collection : R.string.action_collection_add);
         CheatSheet.setup(bindingButtons.buttonEpisodeCollected, collected
                 ? R.string.action_collection_remove : R.string.action_collection_add);
 
@@ -595,7 +595,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             }
             bindingButtons.buttonEpisodeSkip.setOnClickListener(v -> onToggleSkipped());
             bindingButtons.buttonEpisodeSkip
-                    .setText(isSkipped ? R.string.action_dont_skip : R.string.action_skip);
+                    .setText(isSkipped ? R.string.state_skipped : R.string.action_skip);
             CheatSheet.setup(bindingButtons.buttonEpisodeSkip,
                     isSkipped ? R.string.action_dont_skip : R.string.action_skip);
         }
