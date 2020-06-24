@@ -114,6 +114,11 @@
     <string name="action_collection_removed">Καταργήθηκε από τη συλλογή</string>
     <string name="action_watched">Έχει παρακολουθηθεί </string>
     <string name="action_unwatched">Δεν παρακολούθησα</string>
+    <string name="state_watched">Είδατε</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Θέλετε πράγματι να αφαιρέσετε %s?</string>
     <string name="delete_error">Δεν ήταν δυνατή η αφαίρεση της σειράς. Προσπαθήστε ξανά αργότερα.</string>

@@ -114,6 +114,11 @@
     <string name="action_collection_removed">Eliminado de la colección</string>
     <string name="action_watched">Visto</string>
     <string name="action_unwatched">No visto</string>
+    <string name="state_watched">Visto</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">¿Realmente desea eliminar %s?</string>
     <string name="delete_error">No se pudo borrar la serie. Inténtalo más tarde.</string>

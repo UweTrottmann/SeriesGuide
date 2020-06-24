@@ -113,6 +113,11 @@
     <string name="action_collection_removed">컬렉션에서 제거됨</string>
     <string name="action_watched">시청함</string>
     <string name="action_unwatched">시청하지 않음</string>
+    <string name="state_watched">시청한 목록</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">%s을(를) 제거 하시겠습니까?</string>
     <string name="delete_error">프로그램을 제거하지 못했습니다. 나중에 다시 시도해주세요.</string>
