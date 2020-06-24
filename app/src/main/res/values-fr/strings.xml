@@ -113,6 +113,11 @@
     <string name="action_collection_removed">Retiré de la collection</string>
     <string name="action_watched">Vu</string>
     <string name="action_unwatched">Pas vu</string>
+    <string name="state_watched">Vu</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Voulez-vous vraiment supprimer %s?</string>
     <string name="delete_error">Impossible de retirer la série. Réessayez plus tard.</string>

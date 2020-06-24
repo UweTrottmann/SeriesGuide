@@ -112,6 +112,11 @@
     <string name="action_collection_removed">自收藏移除</string>
     <string name="action_watched">設為已觀看</string>
     <string name="action_unwatched">設為尚未觀看</string>
+    <string name="state_watched">已看過</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">確定要移除%s嗎？</string>
     <string name="delete_error">無法移除節目。請稍後再試。</string>

@@ -115,6 +115,11 @@
     <string name="action_collection_removed">Pašalinti iš kolekcijos</string>
     <string name="action_watched">Nustatyti kaip matytą</string>
     <string name="action_unwatched">Nustatyti kaip nematytą</string>
+    <string name="state_watched">Matyti</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Ar tikrai norite pašalinti %s?</string>
     <string name="delete_error">Nepavyko pašalinti serialo. Pabandykite vėliau.</string>

@@ -113,6 +113,11 @@
     <string name="action_collection_removed">Eltávolítva a gyűjteményből</string>
     <string name="action_watched">Megnézve</string>
     <string name="action_unwatched">Még nem láttam</string>
+    <string name="state_watched">Megnézve</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Biztosan törlöd a következőt: %s?</string>
     <string name="delete_error">Nem lehet eltávolítani. Próbáld később.</string>
