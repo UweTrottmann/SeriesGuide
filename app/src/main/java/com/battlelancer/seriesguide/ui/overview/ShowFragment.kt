@@ -380,6 +380,12 @@ class ShowFragment : Fragment() {
         // favorite button
         val isFavorite = showCursor.getInt(ShowQuery.IS_FAVORITE) == 1
         buttonFavorite.apply {
+            text = getString(
+                if (isFavorite) R.string.state_favorite else R.string.context_favorite
+            )
+            contentDescription = getString(
+                if (isFavorite) R.string.context_unfavorite else R.string.context_favorite
+            )
             ViewTools.setVectorIconTop(
                 requireActivity().theme, this, if (isFavorite) {
                     R.drawable.ic_star_black_24dp
@@ -387,11 +393,6 @@ class ShowFragment : Fragment() {
                     R.drawable.ic_star_border_black_24dp
                 }
             )
-            val labelFavorite = getString(
-                if (isFavorite) R.string.context_unfavorite else R.string.context_favorite
-            )
-            text = labelFavorite
-            contentDescription = labelFavorite
             isEnabled = true
             setOnClickListener { v ->
                 // disable until action is complete
@@ -431,10 +432,13 @@ class ShowFragment : Fragment() {
 
         // hidden button
         val isHidden = showCursor.getInt(ShowQuery.HIDDEN) == 1
-        val label = getString(if (isHidden) R.string.context_unhide else R.string.context_hide)
         buttonHidden.apply {
-            contentDescription = label
-            text = label
+            text = getString(
+                if (isHidden) R.string.action_shows_filter_hidden else R.string.context_hide
+            )
+            contentDescription = getString(
+                if (isHidden) R.string.context_unhide else R.string.context_hide
+            )
             ViewTools.setVectorIconTop(
                 requireActivity().theme, this,
                 if (isHidden) {

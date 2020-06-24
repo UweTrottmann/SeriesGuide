@@ -118,6 +118,7 @@
     <string name="state_skipped">Übersprungen</string>
     <string name="state_in_collection">In Sammlung</string>
     <string name="state_on_watchlist">Auf Merkliste</string>
+    <string name="state_favorite">Favorit</string>
     <!-- Shows -->
     <string name="confirm_delete">%s entfernen?</string>
     <string name="delete_error">Serie konnte nicht entfernt werden. Versuchen Sie es später erneut.</string>
