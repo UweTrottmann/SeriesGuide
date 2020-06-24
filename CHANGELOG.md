@@ -12,6 +12,14 @@ Version 55
 ----------
 *in development*
 
+#### 55-beta3
+*2020-06-25*
+
+* 🔧 Update more text styles.
+* 🔧 Episode, show and movie button text displays state instead of action. To display the action tap and hold the buttons as usual.
+* 🔨 Fix and update style of some buttons.
+* 📝 Latest translations from crowdin.
+
 #### 55-beta2
 *2020-05-20*
 
