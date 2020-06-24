@@ -112,6 +112,11 @@
     <string name="action_collection_removed">Dihapus dari koleksi</string>
     <string name="action_watched">Ubah ditonton</string>
     <string name="action_unwatched">Ubah belum ditonton</string>
+    <string name="state_watched">Ditonton</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Apakah kau benar-benar ingin menghapus %s?</string>
     <string name="delete_error">Tidak dapat menghapus acara. Coba lagi nanti.</string>

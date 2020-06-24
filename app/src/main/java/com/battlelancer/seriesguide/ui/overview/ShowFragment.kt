@@ -372,11 +372,12 @@ class ShowFragment : Fragment() {
         // favorite button
         val isFavorite = showCursor.getInt(ShowQuery.IS_FAVORITE) == 1
         buttonFavorite.apply {
-            val labelFavorite = getString(
+            text = getString(
+                if (isFavorite) R.string.state_favorite else R.string.context_favorite
+            )
+            contentDescription = getString(
                 if (isFavorite) R.string.context_unfavorite else R.string.context_favorite
             )
-            text = labelFavorite
-            contentDescription = labelFavorite
             setIconResource(
                 if (isFavorite) {
                     R.drawable.ic_star_black_24dp
@@ -423,10 +424,13 @@ class ShowFragment : Fragment() {
 
         // hidden button
         val isHidden = showCursor.getInt(ShowQuery.HIDDEN) == 1
-        val label = getString(if (isHidden) R.string.context_unhide else R.string.context_hide)
         buttonHidden.apply {
-            contentDescription = label
-            text = label
+            text = getString(
+                if (isHidden) R.string.action_shows_filter_hidden else R.string.context_hide
+            )
+            contentDescription = getString(
+                if (isHidden) R.string.context_unhide else R.string.context_hide
+            )
             setIconResource(
                 if (isHidden) {
                     R.drawable.ic_visibility_off_black_24dp

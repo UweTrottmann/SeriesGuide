@@ -113,6 +113,11 @@
     <string name="action_collection_removed">Van je collectie verwijderd</string>
     <string name="action_watched">Bekeken</string>
     <string name="action_unwatched">Niet bekeken</string>
+    <string name="state_watched">Bekeken</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Wilt u %s echt verwijderen?</string>
     <string name="delete_error">Kan show niet verwijderen. Probeer later opnieuw.</string>

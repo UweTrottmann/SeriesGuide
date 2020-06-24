@@ -112,6 +112,11 @@
     <string name="action_collection_removed">已从收藏列表移除</string>
     <string name="action_watched">标记为已观看</string>
     <string name="action_unwatched">标记为未观看</string>
+    <string name="state_watched">已观看</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">您要删除 %s 节目吗？</string>
     <string name="delete_error">无法移除此节目</string>

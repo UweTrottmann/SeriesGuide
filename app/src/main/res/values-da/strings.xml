@@ -113,6 +113,11 @@
     <string name="action_collection_removed">Fjernet fra samling</string>
     <string name="action_watched">Markér som set</string>
     <string name="action_unwatched">Markér som ikke set</string>
+    <string name="state_watched">Set</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Sikker på, at du vil fjerne %s?</string>
     <string name="delete_error">Kunne ikke fjerne serie. Prøv igen senere.</string>

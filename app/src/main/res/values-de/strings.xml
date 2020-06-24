@@ -113,6 +113,11 @@
     <string name="action_collection_removed">Aus Sammlung entfernt</string>
     <string name="action_watched">Angesehen markieren</string>
     <string name="action_unwatched">Nicht angesehen markieren</string>
+    <string name="state_watched">Angesehen</string>
+    <string name="state_skipped">Übersprungen</string>
+    <string name="state_in_collection">In Sammlung</string>
+    <string name="state_on_watchlist">Auf Merkliste</string>
+    <string name="state_favorite">Favorit</string>
     <!-- Shows -->
     <string name="confirm_delete">%s entfernen?</string>
     <string name="delete_error">Serie konnte nicht entfernt werden. Versuchen Sie es später erneut.</string>
@@ -200,7 +205,7 @@
     <string name="recommended">Empfehlungen</string>
     <string name="watched_shows">Angesehen</string>
     <string name="shows_collection">Sammlung</string>
-    <string name="watchlist">Ansehen-Liste</string>
+    <string name="watchlist">Merkliste</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Keine Ergebnisse</string>
     <string name="title_similar_shows">Ähnliche Serien</string>
@@ -223,15 +228,15 @@
     <string name="title_disc_releases">Neues auf Disc</string>
     <string name="movies_in_theatres">Im Kino</string>
     <string name="movies_collection">Sammlung</string>
-    <string name="movies_watchlist">Ansehen-Liste</string>
+    <string name="movies_watchlist">Merkliste</string>
     <string name="movies_watched">Angesehen</string>
-    <string name="watchlist_add">Zur Ansehen-Liste hinzufügen</string>
-    <string name="watchlist_remove">Aus Ansehen-Liste entfernen</string>
-    <string name="watchlist_added">Zur Ansehen-Liste hinzugefügt</string>
-    <string name="watchlist_removed">Aus Ansehen-Liste entfernt</string>
+    <string name="watchlist_add">Zur Merkliste hinzufügen</string>
+    <string name="watchlist_remove">Aus Merkliste entfernen</string>
+    <string name="watchlist_added">Zur Merkliste hinzugefügt</string>
+    <string name="watchlist_removed">Aus Merkliste entfernt</string>
     <string name="movies_search_hint">Filmtitel eingeben</string>
     <string name="movies_collection_empty">Sie haben Ihrer Sammlung noch keine Filme hinzugefügt</string>
-    <string name="movies_watchlist_empty">Sie haben Ihrer Ansehen-Liste noch keine Filme hinzugefügt</string>
+    <string name="movies_watchlist_empty">Sie haben Ihrer Merkliste noch keine Filme hinzugefügt</string>
     <string name="trailer">Trailer</string>
     <string name="movie_cast">Besetzung</string>
     <string name="movie_crew">Crew</string>
@@ -246,7 +251,7 @@
     <string name="shows_with_next">%s mit nächsten Folgen</string>
     <string name="shows_continuing">%s werden fortgesetzt</string>
     <string name="episodes_watched">%s angesehen</string>
-    <string name="movies_on_watchlist">%s auf Ansehen-Liste</string>
+    <string name="movies_on_watchlist">%s auf Merkliste</string>
     <string name="movies_watched_format">%s angesehen</string>
     <plurals name="days_plural">
         <item quantity="one">%d Tag</item>
