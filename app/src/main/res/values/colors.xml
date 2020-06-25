@@ -53,14 +53,8 @@
     <color name="widget_default_background">@color/grey_850</color>
     <color name="widget_default_background_light">@color/grey_50</color>
 
-    <color name="background_inverse">#ffebebeb</color>
     <color name="background_black">#ff000000</color>
-    <color name="background_card_dark">#ff2a2a2a</color>
-    <color name="background_card_light">#ffffffff</color>
     <color name="background_snackbar">#ff323232</color>
-
-    <color name="divider">#26ffffff</color>
-    <color name="divider_inverse">#1A000000</color>
 
     <color name="shortcut_background">#fff5f5f5</color>
 
@@ -84,8 +78,6 @@
     <color name="black_11">#ffe3e3e3</color>
 
     <color name="protection_dark">#66000000</color>
-
-    <color name="text_red">#FFFF4444</color>
 
     <color name="sg_ripple_material_dark">#33ffffff</color>
     <color name="sg_ripple_material_light">#1f000000</color>
