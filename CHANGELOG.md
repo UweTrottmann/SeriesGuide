@@ -16,8 +16,9 @@ Version 55
 *2020-06-25*
 
 * 🔧 Update more text styles.
-* 🔧 Episode, show and movie button text displays state instead of action. To display the action tap and hold the buttons as usual.
+* 🔧 Episode, show and movie buttons display state if enabled instead of action. To display the action tap and hold the buttons as usual.
 * 🔨 Fix and update style of some buttons.
+* 🔨 Fix the app not respecting system font size on Android 7 and older.
 * 📝 Latest translations from crowdin.
 
 #### 55-beta2
