@@ -119,7 +119,7 @@
     <string name="state_skipped">Pominięty</string>
     <string name="state_in_collection">W kolekcji</string>
     <string name="state_on_watchlist">Na liście do obejrzenia</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_favorite">Ulubione</string>
     <!-- Shows -->
     <string name="confirm_delete">Czy na pewno chcesz usunąć %s?</string>
     <string name="delete_error">Nie można usunąć serialu. Spróbuj ponownie później.</string>

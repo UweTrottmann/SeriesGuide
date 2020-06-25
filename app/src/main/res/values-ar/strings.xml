@@ -118,9 +118,9 @@
     <string name="action_watched">تعيين كمشاهد</string>
     <string name="action_unwatched">تعيين كغير مشاهد</string>
     <string name="state_watched">تمت مشاهدتها</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_skipped">تم تخطيه</string>
+    <string name="state_in_collection">قيد التحصيل</string>
+    <string name="state_on_watchlist">في قائمة المراقبة</string>
     <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">هل تريد فعلاً إزالة %s؟</string>

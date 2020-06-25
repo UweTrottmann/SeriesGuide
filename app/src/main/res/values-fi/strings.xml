@@ -113,11 +113,11 @@
     <string name="action_collection_removed">Poistettu kokoelmasta</string>
     <string name="action_watched">Aseta katsotuksi</string>
     <string name="action_unwatched">Aseta katsomattomaksi</string>
-    <string name="state_watched">Katsotut</string>
+    <string name="state_watched">Katsottu</string>
     <string name="state_skipped">Ohitettu</string>
     <string name="state_in_collection">Kokoelmassa</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_on_watchlist"> Seurantalistalla</string>
+    <string name="state_favorite">Suosikki</string>
     <!-- Shows -->
     <string name="confirm_delete">Poista %s?</string>
     <string name="delete_error">Ohjelman poistaminen ei onnistunut. Yritä myöhemmin uudelleen.</string>

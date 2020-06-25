@@ -113,10 +113,10 @@
     <string name="action_watched">ดูแล้ว</string>
     <string name="action_unwatched">ยังไม่ได้ดู</string>
     <string name="state_watched">ดูแล้ว</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_skipped">ข้ามแล้ว</string>
+    <string name="state_in_collection">ในคลังเก็บ</string>
+    <string name="state_on_watchlist">ในรายการที่อยากดู</string>
+    <string name="state_favorite">รายการโปรด</string>
     <!-- Shows -->
     <string name="confirm_delete">คุณแน่ใจหรือว่าต้องลบ %s?</string>
     <string name="delete_error">ไม่สามารถลบซีรีส์ ลองอีกครั้งในภายหลัง</string>

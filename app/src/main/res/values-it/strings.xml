@@ -114,10 +114,10 @@
     <string name="action_watched">Visto</string>
     <string name="action_unwatched">Non visto</string>
     <string name="state_watched">Visti</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_skipped">Saltato</string>
+    <string name="state_in_collection">In collezione</string>
+    <string name="state_on_watchlist">Da vedere</string>
+    <string name="state_favorite">Preferito</string>
     <!-- Shows -->
     <string name="confirm_delete">Vuoi davvero rimuovere %s?</string>
     <string name="delete_error">Impossibile rimuovere la serie. Riprova più tardi.</string>

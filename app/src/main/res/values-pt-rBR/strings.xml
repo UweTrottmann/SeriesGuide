@@ -105,8 +105,8 @@
     <string name="confirmation_watched_up_to">Definir todos os episódios aqui assistidos?</string>
     <string name="collect_all">Todos coletados</string>
     <string name="uncollect_all">Nenhum coletado</string>
-    <string name="action_skip">Avançar</string>
-    <string name="action_dont_skip">Não avançar</string>
+    <string name="action_skip">Ignorar</string>
+    <string name="action_dont_skip">Não ignorar</string>
     <string name="action_collection_add">Adicionar à coleção</string>
     <string name="action_collection_remove">Remover da coleção</string>
     <string name="action_collection_added">Adicionado à coleção</string>
@@ -117,7 +117,7 @@
     <string name="state_skipped">Ignorado</string>
     <string name="state_in_collection">Na coleção</string>
     <string name="state_on_watchlist">Na lista</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_favorite">Favorito</string>
     <!-- Shows -->
     <string name="confirm_delete">Você quer mesmo remover %s?</string>
     <string name="delete_error">Não foi possível remover a série. Tente novamente mais tarde.</string>
