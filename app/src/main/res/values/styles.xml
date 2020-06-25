@@ -86,6 +86,13 @@
         <item name="android:textStyle">italic</item>
     </style>
 
+    <style name="TextAppearance.SeriesGuide.Widget" parent="TextAppearance.SeriesGuide.Body2">
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.SeriesGuide.Widget.Bold" parent="TextAppearance.SeriesGuide.Body2.Bold">
+        <item name="android:letterSpacing">0</item>
+    </style>
+
     <style name="TextAppearance.SeriesGuide.Button" parent="TextAppearance.MaterialComponents.Button" />
 
     <style name="TextAppearance.SeriesGuide.Caption" parent="TextAppearance.MaterialComponents.Caption" />
@@ -174,7 +181,7 @@
     <style name="Widget.SeriesGuide.Button.Borderless.Caption">
         <item name="android:textSize">@dimen/text_size_caption_sg</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
-        <item name="android:letterSpacing">0.0333333333</item>
+        <item name="android:letterSpacing">0</item>
         <item name="iconTint">?android:textColorSecondary</item>
     </style>
 
