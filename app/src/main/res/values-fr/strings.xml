@@ -115,7 +115,7 @@
     <string name="action_unwatched">Pas vu</string>
     <string name="state_watched">Vu</string>
     <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
+    <string name="state_in_collection">Collection</string>
     <string name="state_on_watchlist">On watchlist</string>
     <string name="state_favorite">Favorite</string>
     <!-- Shows -->
