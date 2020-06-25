@@ -47,7 +47,7 @@
             android:layout_toRightOf="@+id/imageViewIcon"
             android:ellipsize="end"
             android:paddingTop="20dp"
-            android:textAppearance="@style/TextAppearance.Subhead"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
             tools:text="Sample Extension" />
 
         <TextView

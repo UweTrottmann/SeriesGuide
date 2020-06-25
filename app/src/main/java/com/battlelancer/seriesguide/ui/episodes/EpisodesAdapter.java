@@ -147,7 +147,8 @@ class EpisodesAdapter extends CursorAdapter {
 
         // dim text color if not released
         TextViewCompat.setTextAppearance(viewHolder.episodeTitle, isReleased
-                ? R.style.TextAppearance_Subhead : R.style.TextAppearance_Subhead_Dim);
+                ? R.style.TextAppearance_SeriesGuide_Subtitle1
+                : R.style.TextAppearance_SeriesGuide_Subtitle1_Dim);
         TextViewCompat.setTextAppearance(viewHolder.episodeAirdate, isReleased
                 ? R.style.TextAppearance_SeriesGuide_Body2_Secondary
                 : R.style.TextAppearance_SeriesGuide_Body2_Dim);

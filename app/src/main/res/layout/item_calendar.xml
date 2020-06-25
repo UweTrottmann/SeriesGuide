@@ -15,7 +15,7 @@
         android:paddingTop="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:paddingBottom="0dp"
-        android:textAppearance="@style/TextAppearance.Subhead.Bold"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
         tools:text="Recently Watched" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

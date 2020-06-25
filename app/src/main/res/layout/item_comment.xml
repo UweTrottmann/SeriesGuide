@@ -31,14 +31,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textAppearance="@style/TextAppearance.Subhead"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
             tools:text="sgtest" />
 
         <TextView
             android:id="@+id/textViewCommentTimestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Caption.Dim"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
             tools:text="Dec 28, 2013" />
     </LinearLayout>
 
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewComment"
         android:layout_toRightOf="@+id/imageViewCommentAvatar"
-        android:textAppearance="@style/TextAppearance.Caption"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
         tools:text="3 replies" />
 
     <View

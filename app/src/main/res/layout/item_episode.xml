@@ -32,7 +32,7 @@
             android:layout_toRightOf="@id/watchedBoxEpisode"
             android:ellipsize="end"
             android:paddingTop="16dp"
-            android:textAppearance="@style/TextAppearance.Subhead"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
             tools:text="Episode Title" />
 
         <TextView
@@ -43,7 +43,7 @@
             android:layout_marginLeft="@dimen/default_padding"
             android:paddingTop="16dp"
             android:paddingRight="@dimen/large_padding"
-            android:textAppearance="@style/TextAppearance.Subhead.Secondary"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Secondary"
             tools:ignore="RtlSymmetry"
             tools:text="23" />
 
@@ -71,7 +71,7 @@
             android:ellipsize="end"
             android:paddingTop="@dimen/inline_padding"
             android:paddingBottom="@dimen/large_padding"
-            android:textAppearance="@style/TextAppearance.Caption.Dim"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Dim"
             tools:text="42 · DVD 2.0" />
 
         <ImageView

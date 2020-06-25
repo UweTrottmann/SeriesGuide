@@ -16,7 +16,7 @@
         android:layout_toLeftOf="@+id/textViewSeasonProgress"
         android:ellipsize="end"
         android:paddingTop="@dimen/large_padding"
-        android:textAppearance="@style/TextAppearance.Subhead"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
         tools:text="@string/season_number" />
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -38,7 +38,7 @@
         android:layout_toLeftOf="@id/imageViewContextMenu"
         android:paddingTop="@dimen/large_padding"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.Subhead.Secondary"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Secondary"
         tools:text="3/24" />
 
     <ProgressBar
