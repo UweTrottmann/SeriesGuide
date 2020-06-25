@@ -21,7 +21,7 @@
             android:paddingLeft="@dimen/larger_padding"
             android:paddingRight="@dimen/larger_padding"
             android:text="@string/action_lists_reorder"
-            android:textAppearance="@style/TextAppearance.Title" />
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6" />
 
         <include layout="@layout/divider_horizontal" />
 

@@ -21,7 +21,7 @@
             android:paddingLeft="@dimen/larger_padding"
             android:paddingRight="@dimen/larger_padding"
             android:text="@string/list_item_manage"
-            android:textAppearance="@style/TextAppearance.Title" />
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6" />
 
         <TextView
             android:id="@+id/item"
@@ -30,7 +30,7 @@
             android:layout_marginBottom="@dimen/large_padding"
             android:paddingLeft="@dimen/larger_padding"
             android:paddingRight="@dimen/larger_padding"
-            android:textAppearance="@style/TextAppearance.Caption"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
             tools:text="Defiance" />
 
         <include layout="@layout/divider_horizontal" />

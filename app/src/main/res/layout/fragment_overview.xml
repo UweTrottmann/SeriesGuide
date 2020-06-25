@@ -111,7 +111,7 @@
 
                         <TextView
                             android:id="@+id/textViewOverviewEmpty"
-                            style="@style/TextAppearance.Title.Dim"
+                            style="@style/TextAppearance.SeriesGuide.EmptyState"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/no_nextepisode"
@@ -195,7 +195,7 @@
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
                                 android:maxLines="2"
-                                android:textAppearance="@style/TextAppearance.Title"
+                                android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
                                 tools:text="Episode Title Of Episode" />
 
                             <TextView
@@ -205,7 +205,7 @@
                                 android:layout_below="@+id/episodeTitle"
                                 android:layout_marginRight="@dimen/default_padding"
                                 android:textAllCaps="true"
-                                android:textAppearance="@style/TextAppearance.Caption"
+                                android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
                                 tools:text="OCT 15, 2013 (TUE)" />
 
                             <TextView
@@ -217,7 +217,7 @@
                                 android:ellipsize="marquee"
                                 android:maxLines="1"
                                 android:textAllCaps="true"
-                                android:textAppearance="@style/TextAppearance.Caption.Dim"
+                                android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Dim"
                                 tools:ignore="EllipsizeMaxLines"
                                 tools:text="Season 3 Episode 3 (51)" />
 

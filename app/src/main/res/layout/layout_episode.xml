@@ -20,7 +20,7 @@
         android:background="?attr/selectableItemBackground"
         android:focusable="true"
         android:nextFocusDown="@+id/textViewEpisodeReleaseTime"
-        android:textAppearance="@style/TextAppearance.Title"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
         tools:text="Episode Title Of Episode" />
 
     <!-- Text appearance set in code. -->
@@ -34,7 +34,7 @@
         android:focusable="true"
         android:nextFocusDown="@+id/containerEpisodeImage"
         android:nextFocusUp="@+id/textViewEpisodeTitle"
-        android:textAppearance="@style/TextAppearance.Caption"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
         tools:text="OCT 15, 2013 (TUE) · 52" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

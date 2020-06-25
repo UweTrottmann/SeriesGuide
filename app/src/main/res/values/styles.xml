@@ -9,15 +9,6 @@
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
     </style>
 
-    <style name="TextAppearance.Title">
-        <item name="android:textSize">20sp</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-    </style>
-
-    <style name="TextAppearance.Title.Dim">
-        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
-    </style>
-
     <style name="TextAppearance.Subhead">
         <item name="android:textSize">16sp</item>
     </style>
@@ -107,6 +98,9 @@
 
     <style name="TextAppearance.SeriesGuide.Headline5" parent="TextAppearance.MaterialComponents.Headline5" />
     <style name="TextAppearance.SeriesGuide.Headline6" parent="TextAppearance.MaterialComponents.Headline6" />
+    <style name="TextAppearance.SeriesGuide.Headline6.Dim">
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
+    </style>
 
     <style name="TextAppearance.SeriesGuide.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1" />
     <style name="TextAppearance.SeriesGuide.Subtitle1.Bold">
@@ -124,7 +118,7 @@
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
-    <style name="TextAppearance.SeriesGuide.EmptyState" parent="TextAppearance.Title.Dim" />
+    <style name="TextAppearance.SeriesGuide.EmptyState" parent="TextAppearance.SeriesGuide.Headline6.Dim" />
 
     <!-- Widgets are not part of the app, so app theme attributes can not be used. -->
     <style name="TextAppearance.SeriesGuide.Widget.Title" parent="">

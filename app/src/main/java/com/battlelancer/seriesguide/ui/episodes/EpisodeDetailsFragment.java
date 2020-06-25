@@ -420,7 +420,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         // dim text color for title if not released
         TextViewCompat.setTextAppearance(binding.textviewTitle, isReleased
-                ? R.style.TextAppearance_Title : R.style.TextAppearance_Title_Dim);
+                ? R.style.TextAppearance_SeriesGuide_Headline6
+                : R.style.TextAppearance_SeriesGuide_Headline6_Dim);
         if (!isReleased) {
             TextViewCompat.setTextAppearance(binding.textviewReleaseTime,
                     R.style.TextAppearance_Caption_Dim);
