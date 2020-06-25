@@ -110,8 +110,6 @@
     <string name="action_dont_skip">Nu săriţi peste</string>
     <string name="action_collection_add">Adaugă la colecţie</string>
     <string name="action_collection_remove">Ștergeți din colecție</string>
-    <string name="action_collection_added">Adăugat la colecţie</string>
-    <string name="action_collection_removed">Șters din colecție</string>
     <string name="action_watched">Vizionat</string>
     <string name="action_unwatched">Marchează nevizionat</string>
     <string name="state_watched">Vizionat</string>
@@ -206,7 +204,6 @@
     <string name="add_error">Nu s-a putut adăuga %s.</string>
     <string name="add_already_exists">%s este deja în lista de emisiuni.</string>
     <string name="title_new_episodes">Episoade noi</string>
-    <string name="recommended">Recomandat</string>
     <string name="watched_shows">Vizionat</string>
     <string name="shows_collection">Colecție</string>
     <string name="watchlist">Listă vizionate</string>
@@ -305,7 +302,6 @@
     <string name="trakt_error_not_exists">Nu este (încă) disponibil pe trakt. Încearcă mai târziu.</string>
     <string name="trakt_notice_not_exists">Nu poate (încă) fi urmărit cu trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">Cont trakt</string>
     <string name="connect_trakt">Conectaţi trakt</string>
     <string name="trakt_reconnect">Conectează SeriesGuide cu trakt</string>
     <string name="trakt_reconnect_details">Verifică certificările trakt</string>
@@ -343,7 +339,6 @@
     <string name="feedback">Trimiteţi feedback</string>
     <string name="action_open_in_browser">Deschide în browser</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Elemente de bază</string>
     <string name="prefs_category_advanced">Avansate</string>
     <string name="prefs_category_about">Despre</string>
     <string name="pref_onlyfuture">Nici un episod difuzat</string>

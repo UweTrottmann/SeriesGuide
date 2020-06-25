@@ -80,7 +80,7 @@
             android:layout_height="14dp"
             android:layout_below="@+id/watchedBoxEpisode"
             android:layout_marginLeft="29dp"
-            android:contentDescription="@string/action_collection_added"
+            android:contentDescription="@string/state_in_collection"
             app:srcCompat="@drawable/ic_collected_24dp" />
 
         <androidx.appcompat.widget.AppCompatImageView

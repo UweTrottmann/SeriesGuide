@@ -109,8 +109,6 @@
     <string name="action_dont_skip">No ometis</string>
     <string name="action_collection_add">Afegir a la coŀlecció</string>
     <string name="action_collection_remove">Elimina de la coŀlecció</string>
-    <string name="action_collection_added">S\'ha afegit a la coŀlecció</string>
-    <string name="action_collection_removed">S\'ha eliminat de la coŀlecció</string>
     <string name="action_watched">Vist</string>
     <string name="action_unwatched">No vist</string>
     <string name="state_watched">Vist</string>
@@ -202,7 +200,6 @@
     <string name="add_error">No es pot afegir %s.</string>
     <string name="add_already_exists">%s ja és a la vostra llista de sèries.</string>
     <string name="title_new_episodes">Nous episodis</string>
-    <string name="recommended">Recomanat</string>
     <string name="watched_shows">Vist</string>
     <string name="shows_collection">Coŀlecció</string>
     <string name="watchlist">Llista de seguiment</string>
@@ -298,7 +295,6 @@
     <string name="trakt_error_not_exists">No disponible (encara) a trakt. Prova més tard.</string>
     <string name="trakt_notice_not_exists">No pot ser registrada (encara) a trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">Compte de trakt</string>
     <string name="connect_trakt">Connecta\'t al trakt</string>
     <string name="trakt_reconnect">Connecta SeriesGuide a trakt</string>
     <string name="trakt_reconnect_details">Comprova les credencials de trakt</string>
@@ -335,7 +331,6 @@
     <string name="feedback">Envia comentaris</string>
     <string name="action_open_in_browser">Obre al navegador</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Bàsics</string>
     <string name="prefs_category_advanced">Avançat</string>
     <string name="prefs_category_about">Quant a</string>
     <string name="pref_onlyfuture">Amaga episodis emesos</string>

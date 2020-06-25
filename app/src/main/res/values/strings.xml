@@ -124,8 +124,6 @@
     <string name="action_dont_skip">Don\'t skip</string>
     <string name="action_collection_add">Add to collection</string>
     <string name="action_collection_remove">Remove from collection</string>
-    <string name="action_collection_added">Added to collection</string>
-    <string name="action_collection_removed">Removed from collection</string>
     <string name="action_watched">Set watched</string>
     <string name="action_unwatched">Set not watched</string>
     <string name="state_watched">Watched</string>
@@ -223,7 +221,6 @@
     <string name="add_error">Could not add %s</string>
     <string name="add_already_exists">%s is already in your show list</string>
     <string name="title_new_episodes">New episodes</string>
-    <string name="recommended">Recommended</string>
     <string name="watched_shows">Watched</string>
     <string name="shows_collection">Collection</string>
     <string name="watchlist">Watchlist</string>
@@ -340,7 +337,6 @@
     <string name="trakt_notice_not_exists">Can not (yet) be tracked with Trakt</string>
 
     <!-- Connect trakt -->
-    <string name="trakt_account">Trakt account</string>
     <string name="connect_trakt">Connect Trakt</string>
     <string name="trakt_reconnect">Connect SeriesGuide to Trakt</string>
     <string name="trakt_reconnect_details">Check your Trakt credentials</string>
@@ -385,7 +381,6 @@
     <string name="action_open_in_browser">Open in browser</string>
 
     <!-- Settings -->
-    <string name="prefs_category_basic">Basics</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">About</string>
     <string name="pref_onlyfuture">No aired episodes</string>

@@ -109,8 +109,6 @@
     <string name="action_dont_skip">Atlama</string>
     <string name="action_collection_add">Koleksiyona ekle</string>
     <string name="action_collection_remove">Koleksiyondan kaldır</string>
-    <string name="action_collection_added">Koleksiyona eklendi</string>
-    <string name="action_collection_removed">Koleksiyondan kaldırıldı</string>
     <string name="action_watched">İzlendi yap</string>
     <string name="action_unwatched">İzlenmedi yap</string>
     <string name="state_watched">İzlenmiş</string>
@@ -202,7 +200,6 @@
     <string name="add_error">%s eklenemedi.</string>
     <string name="add_already_exists">%s zaten dizi listenizde mevcut.</string>
     <string name="title_new_episodes">Yeni bölümler</string>
-    <string name="recommended">Önerilen</string>
     <string name="watched_shows">İzlenmiş</string>
     <string name="shows_collection">Koleksiyon</string>
     <string name="watchlist">İzleme listesi</string>
@@ -298,7 +295,6 @@
     <string name="trakt_error_not_exists">Trakt (henüz) mevcut değil. Daha sonra yeniden deneyin.</string>
     <string name="trakt_notice_not_exists">(Şimdilik) trakt ile ilişkilendirilememektedir.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt hesabı</string>
     <string name="connect_trakt">trakt\'e bağlan</string>
     <string name="trakt_reconnect">SeriesGuide ile trakt\'a bağlan</string>
     <string name="trakt_reconnect_details">Trakt giriş bilgilerinizi kontrol edin</string>
@@ -335,7 +331,6 @@
     <string name="feedback">Geribildirim Gönder</string>
     <string name="action_open_in_browser">Tarayıcıda aç</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Temel Ayarlar</string>
     <string name="prefs_category_advanced">Gelişmiş</string>
     <string name="prefs_category_about">Hakkında</string>
     <string name="pref_onlyfuture">Yayınlanan bölüm yok</string>

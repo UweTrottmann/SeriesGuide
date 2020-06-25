@@ -109,8 +109,6 @@
     <string name="action_dont_skip">Ne hagyd ki</string>
     <string name="action_collection_add">Gyűjteményhez ad</string>
     <string name="action_collection_remove">Eltávolítás a gyűjteményből</string>
-    <string name="action_collection_added">Hozzáadva a gyűjteményhez</string>
-    <string name="action_collection_removed">Eltávolítva a gyűjteményből</string>
     <string name="action_watched">Megnézve</string>
     <string name="action_unwatched">Még nem láttam</string>
     <string name="state_watched">Megnézve</string>
@@ -202,7 +200,6 @@
     <string name="add_error">Nem lehetett hozzáadni a(z) %s-t.</string>
     <string name="add_already_exists">A(z) %s már a listádon van.</string>
     <string name="title_new_episodes">Új epizódok</string>
-    <string name="recommended">Ajánlott</string>
     <string name="watched_shows">Megnézve</string>
     <string name="shows_collection">Gyűjtemény</string>
     <string name="watchlist">Figyelőlista</string>
@@ -298,7 +295,6 @@
     <string name="trakt_error_not_exists">(Még) nem található a trakton. Próbálkozz később.</string>
     <string name="trakt_notice_not_exists">(Még) nem követhető nyomon a trakttal.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt fiók</string>
     <string name="connect_trakt">Trakt csatlakozás</string>
     <string name="trakt_reconnect">A SeriesGuide csatlakoztatása a trakthoz</string>
     <string name="trakt_reconnect_details">Ellenőrizd a trakt engedélyeket</string>
@@ -335,7 +331,6 @@
     <string name="feedback">Visszajelzés küldése</string>
     <string name="action_open_in_browser">Megnyitás böngészőben</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Alap beállítások</string>
     <string name="prefs_category_advanced">Haladó beállítások</string>
     <string name="prefs_category_about">A programról</string>
     <string name="pref_onlyfuture">Leadott epizódok nélkül</string>

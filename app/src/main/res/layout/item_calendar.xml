@@ -28,7 +28,7 @@
             android:id="@+id/imageViewActivityCollected"
             android:layout_width="14dp"
             android:layout_height="14dp"
-            android:contentDescription="@string/action_collection_added"
+            android:contentDescription="@string/state_in_collection"
             app:layout_constraintLeft_toLeftOf="@+id/watchedBoxActivity"
             app:layout_constraintRight_toRightOf="@+id/watchedBoxActivity"
             app:layout_constraintTop_toBottomOf="@+id/watchedBoxActivity"

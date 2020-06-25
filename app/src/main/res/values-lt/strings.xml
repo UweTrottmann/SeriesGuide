@@ -111,8 +111,6 @@
     <string name="action_dont_skip">Nepraleisti</string>
     <string name="action_collection_add">Įtraukti į kolekciją</string>
     <string name="action_collection_remove">Pašalinti iš kolekcijos</string>
-    <string name="action_collection_added">Įtraukti į kolekciją</string>
-    <string name="action_collection_removed">Pašalinti iš kolekcijos</string>
     <string name="action_watched">Nustatyti kaip matytą</string>
     <string name="action_unwatched">Nustatyti kaip nematytą</string>
     <string name="state_watched">Matyti</string>
@@ -210,7 +208,6 @@
     <string name="add_error">Nepavyko pridėti %s.</string>
     <string name="add_already_exists">%s jau yra sąraše.</string>
     <string name="title_new_episodes">New episodes</string>
-    <string name="recommended">Rekomenduojami</string>
     <string name="watched_shows">Matyti</string>
     <string name="shows_collection">Kolekcija</string>
     <string name="watchlist">Stebimi</string>
@@ -312,7 +309,6 @@
     <string name="trakt_error_not_exists">Not (yet) available on Trakt. Try again later.</string>
     <string name="trakt_notice_not_exists">Can not (yet) be tracked with Trakt</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt paskyra</string>
     <string name="connect_trakt">Prisijungti prie trakt</string>
     <string name="trakt_reconnect">Susieti SeriesGuide su trakt</string>
     <string name="trakt_reconnect_details">Patikrinti trakt prisijungimo duomenis</string>
@@ -351,7 +347,6 @@
     <string name="feedback">Siųsti atsiliepimą</string>
     <string name="action_open_in_browser">Atidaryti naršyklėje</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Pagrindai</string>
     <string name="prefs_category_advanced">Išplėstinė</string>
     <string name="prefs_category_about">Apie</string>
     <string name="pref_onlyfuture">Neparodytos serijos</string>

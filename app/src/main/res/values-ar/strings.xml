@@ -113,8 +113,6 @@
     <string name="action_dont_skip">عدم التخطي</string>
     <string name="action_collection_add">إضافة إلى مجموعة</string>
     <string name="action_collection_remove">إزالة من المجموعة</string>
-    <string name="action_collection_added">تمت الإضافة إلى مجموعة</string>
-    <string name="action_collection_removed">تمت الإزالة من المجموعة</string>
     <string name="action_watched">تعيين كمشاهد</string>
     <string name="action_unwatched">تعيين كغير مشاهد</string>
     <string name="state_watched">تمت مشاهدتها</string>
@@ -218,7 +216,6 @@
     <string name="add_error">تعذر إضافة %s.</string>
     <string name="add_already_exists">%s موجود بالفعل في قائمة العرض الخاصة بك.</string>
     <string name="title_new_episodes">حلقات جديدة</string>
-    <string name="recommended">يُنصح به</string>
     <string name="watched_shows">تمت مشاهدتها</string>
     <string name="shows_collection">مجموعة</string>
     <string name="watchlist">قائمة المشاهدة</string>
@@ -326,7 +323,6 @@
     <string name="trakt_error_not_exists">غير متوفر (حتى الآن) على trakt. حاول مرة أخرى.</string>
     <string name="trakt_notice_not_exists">لا يمكن تتبعه بواسطة trakt بعد.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">حساب Trak</string>
     <string name="connect_trakt">الإتصال بموقع Trakt</string>
     <string name="trakt_reconnect">ربط برنامج دليل المسلسلات بحساب Trak</string>
     <string name="trakt_reconnect_details">تحقق من بيانات الأعتماد الخاصة بك في trakt</string>
@@ -367,7 +363,6 @@
     <string name="feedback">أرسل ملاحظاتك</string>
     <string name="action_open_in_browser">فتح في المتصفح</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">أساسي</string>
     <string name="prefs_category_advanced">متقدم</string>
     <string name="prefs_category_about">حول</string>
     <string name="pref_onlyfuture">عدم إظهار الحلقات التي تم عرضها</string>

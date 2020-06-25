@@ -109,8 +109,6 @@
     <string name="action_dont_skip">No omitir</string>
     <string name="action_collection_add">Añadir a la colección</string>
     <string name="action_collection_remove">Eliminar de la colección</string>
-    <string name="action_collection_added">Añadido a la colección</string>
-    <string name="action_collection_removed">Eliminado de la colección</string>
     <string name="action_watched">Visto</string>
     <string name="action_unwatched">No visto</string>
     <string name="state_watched">Visto</string>
@@ -202,7 +200,6 @@
     <string name="add_error">No se pudo añadir %s.</string>
     <string name="add_already_exists">%s ya está en tu lista de visualización.</string>
     <string name="title_new_episodes">Nuevos episodios</string>
-    <string name="recommended">Recomendado</string>
     <string name="watched_shows">Visto</string>
     <string name="shows_collection">Colección</string>
     <string name="watchlist">Lista de visualización</string>
@@ -299,7 +296,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="trakt_error_not_exists">No disponible (todavía) en trakt. Prueba más tarde.</string>
     <string name="trakt_notice_not_exists">No puede ser seguido (todavía) con trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">Cuenta Trakt</string>
     <string name="connect_trakt">Conectar a trakt</string>
     <string name="trakt_reconnect">Conectar SeriesGuide a trakt</string>
     <string name="trakt_reconnect_details">Compruebe sus credenciales trakt</string>
@@ -336,7 +332,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="feedback">Enviar comentarios</string>
     <string name="action_open_in_browser">Abrir en el navegador</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Básicos</string>
     <string name="prefs_category_advanced">Avanzado</string>
     <string name="prefs_category_about">Acerca de</string>
     <string name="pref_onlyfuture">No hay episodios emitidos</string>

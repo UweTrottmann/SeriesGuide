@@ -109,8 +109,6 @@
     <string name="action_dont_skip">Не пропускай</string>
     <string name="action_collection_add">Добави в колекция</string>
     <string name="action_collection_remove">Премахни от колекция</string>
-    <string name="action_collection_added">Добавено в колекцията</string>
-    <string name="action_collection_removed">Премахнато от колекцията</string>
     <string name="action_watched">Гледано</string>
     <string name="action_unwatched">Негледан</string>
     <string name="state_watched">Гледано</string>
@@ -202,7 +200,6 @@
     <string name="add_error">Неуспешно добавяне на %s.</string>
     <string name="add_already_exists">%s вече е в списъка със сериали.</string>
     <string name="title_new_episodes">Нови епизоди</string>
-    <string name="recommended">Препоръчани</string>
     <string name="watched_shows">Гледано</string>
     <string name="shows_collection">Колекция</string>
     <string name="watchlist">Списък за гледане</string>
@@ -298,7 +295,6 @@
     <string name="trakt_error_not_exists">Няма (все още) в trakt. Опитайте отново по-късно.</string>
     <string name="trakt_notice_not_exists">Не може (все още) да се проследи от trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt профил</string>
     <string name="connect_trakt">Свържете се с trakt</string>
     <string name="trakt_reconnect">Свържете SeriesGuide с trakt</string>
     <string name="trakt_reconnect_details">Проверете идентификацията си в trakt</string>
@@ -335,7 +331,6 @@
     <string name="feedback">Обратна връзка</string>
     <string name="action_open_in_browser">Отвори в браузър</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Основни</string>
     <string name="prefs_category_advanced">Разширени</string>
     <string name="prefs_category_about">Относно</string>
     <string name="pref_onlyfuture">Няма излъчени епизоди</string>

@@ -109,8 +109,6 @@
     <string name="action_dont_skip">புறக்கணிக்க வேண்டாம்</string>
     <string name="action_collection_add">தொகுப்பில் சேர்க்க</string>
     <string name="action_collection_remove">தொகுப்பை நீக்கு</string>
-    <string name="action_collection_added">தொகுப்பில் சேர்க்க</string>
-    <string name="action_collection_removed">தொகுப்பில் இருந்து நீக்கப்பட்டது</string>
     <string name="action_watched">பார்த்த அமை</string>
     <string name="action_unwatched">இல்லை பார்த்த அமை</string>
     <string name="state_watched">பார்த்த</string>
@@ -202,7 +200,6 @@
     <string name="add_error">%s சேர்க்க முடியவில்லை.</string>
     <string name="add_already_exists">%s உங்கள் காட்சி பட்டியலில் ஏற்கனவே உள்ளது.</string>
     <string name="title_new_episodes">New episodes</string>
-    <string name="recommended">பரிந்துரைக்கப்பட்டது</string>
     <string name="watched_shows">பார்த்த</string>
     <string name="shows_collection">தொகுப்பு</string>
     <string name="watchlist">Watchlist</string>
@@ -298,7 +295,6 @@
     <string name="trakt_error_not_exists">(இதுவரை) இல்லை அன்று trakt. பின்னர் மீண்டும் முயற்சிக்கவும்.</string>
     <string name="trakt_notice_not_exists">இல்லை முடியும் (இதுவரை) குறியிட்ட கொண்டு trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt கணக்கு</string>
     <string name="connect_trakt">Trakt இணை</string>
     <string name="trakt_reconnect">Trakt SeriesGuide இணைக்க</string>
     <string name="trakt_reconnect_details">Trakt அறிமுகங்களை சரிபார்க்கவும்</string>
@@ -335,7 +331,6 @@
     <string name="feedback">பின்னூட்டங்களை அனுப்பு</string>
     <string name="action_open_in_browser">மேய்வானில் திற</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">அடிப்படைகள்</string>
     <string name="prefs_category_advanced">மேம்பட்ட</string>
     <string name="prefs_category_about">பற்றி</string>
     <string name="pref_onlyfuture">எந்த aired episodes</string>

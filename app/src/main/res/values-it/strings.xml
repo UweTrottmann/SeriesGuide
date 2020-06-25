@@ -109,8 +109,6 @@
     <string name="action_dont_skip">Non saltare</string>
     <string name="action_collection_add">Aggiungere alla collezione</string>
     <string name="action_collection_remove">Rimuovi dalla collezione</string>
-    <string name="action_collection_added">Aggiunto alla collezione</string>
-    <string name="action_collection_removed">Rimosso dalla collezione</string>
     <string name="action_watched">Visto</string>
     <string name="action_unwatched">Non visto</string>
     <string name="state_watched">Visti</string>
@@ -202,7 +200,6 @@
     <string name="add_error">Impossibile aggiungere %s.</string>
     <string name="add_already_exists">%s è già nella lista delle tue serie.</string>
     <string name="title_new_episodes">Nuovi episodi</string>
-    <string name="recommended">Consigliati</string>
     <string name="watched_shows">Visti</string>
     <string name="shows_collection">Collezione</string>
     <string name="watchlist">Da vedere</string>
@@ -298,7 +295,6 @@
     <string name="trakt_error_not_exists">Non (ancora) disponibile su trakt. Riprova più tardi.</string>
     <string name="trakt_notice_not_exists">Non è (ancora) possibile monitorarlo con trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">Account trakt</string>
     <string name="connect_trakt">Collegati a trakt</string>
     <string name="trakt_reconnect">Collega SeriesGuide a trakt</string>
     <string name="trakt_reconnect_details">Controlla le tue credenziali trakt</string>
@@ -335,7 +331,6 @@
     <string name="feedback">Invia feedback</string>
     <string name="action_open_in_browser">Apri nel browser</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Base</string>
     <string name="prefs_category_advanced">Avanzate</string>
     <string name="prefs_category_about">Info su</string>
     <string name="pref_onlyfuture">Nessun episodio in onda</string>

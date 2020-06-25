@@ -108,8 +108,6 @@
     <string name="action_dont_skip">标记为未跳过</string>
     <string name="action_collection_add">加入收藏列表</string>
     <string name="action_collection_remove">移出收藏列表</string>
-    <string name="action_collection_added">已添加到收藏列表</string>
-    <string name="action_collection_removed">已从收藏列表移除</string>
     <string name="action_watched">标记为已观看</string>
     <string name="action_unwatched">标记为未观看</string>
     <string name="state_watched">已观看</string>
@@ -198,7 +196,6 @@
     <string name="add_error">无法将 %s 加入节目单。</string>
     <string name="add_already_exists">%s 已存在于您的节目单中</string>
     <string name="title_new_episodes">新的剧集</string>
-    <string name="recommended">推荐</string>
     <string name="watched_shows">已观看</string>
     <string name="shows_collection">收藏</string>
     <string name="watchlist">待看列表</string>
@@ -291,7 +288,6 @@
     <string name="trakt_error_not_exists">trakt 上尚无相关信息，请稍后重试。</string>
     <string name="trakt_notice_not_exists">无法在 trakt 上追剧。</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt 帐户</string>
     <string name="connect_trakt">关联 trakt 帐户</string>
     <string name="trakt_reconnect">关联 SeriesGuide 与 trakt</string>
     <string name="trakt_reconnect_details">请检查 trakt 授权信息。</string>
@@ -327,7 +323,6 @@
     <string name="feedback">发送反馈报告</string>
     <string name="action_open_in_browser">在浏览器中打开</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">基本</string>
     <string name="prefs_category_advanced">高级</string>
     <string name="prefs_category_about">关于</string>
     <string name="pref_onlyfuture">不显示已播剧集</string>

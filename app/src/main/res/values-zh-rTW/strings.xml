@@ -108,8 +108,6 @@
     <string name="action_dont_skip">取消略過</string>
     <string name="action_collection_add">添加到收藏</string>
     <string name="action_collection_remove">從收藏移除</string>
-    <string name="action_collection_added">加入收藏</string>
-    <string name="action_collection_removed">自收藏移除</string>
     <string name="action_watched">設為已觀看</string>
     <string name="action_unwatched">設為尚未觀看</string>
     <string name="state_watched">已看過</string>
@@ -198,7 +196,6 @@
     <string name="add_error">無法新增%s</string>
     <string name="add_already_exists">%s已經在你的清單當中。</string>
     <string name="title_new_episodes">新劇集</string>
-    <string name="recommended">推薦</string>
     <string name="watched_shows">已看過</string>
     <string name="shows_collection">收藏</string>
     <string name="watchlist">待看清單</string>
@@ -291,7 +288,6 @@
     <string name="trakt_error_not_exists">Trakt還無法使用，稍後再試。</string>
     <string name="trakt_notice_not_exists">還不能使用trakt追蹤。</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt 帳戶</string>
     <string name="connect_trakt">連接 trakt</string>
     <string name="trakt_reconnect">連結SeriesGuide與trakt</string>
     <string name="trakt_reconnect_details">檢查您的 trakt 憑證</string>
@@ -327,7 +323,6 @@
     <string name="feedback">傳送反饋意見</string>
     <string name="action_open_in_browser">於瀏覽器中開啟</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">基本資料</string>
     <string name="prefs_category_advanced">進階</string>
     <string name="prefs_category_about">關於本軟體</string>
     <string name="pref_onlyfuture">無已播出集數</string>

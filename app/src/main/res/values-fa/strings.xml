@@ -109,8 +109,6 @@
     <string name="action_dont_skip">رد نشو</string>
     <string name="action_collection_add">افزودن به مجموعه</string>
     <string name="action_collection_remove">برداشتن از مجموعه</string>
-    <string name="action_collection_added">به مجموعه افزوده شد</string>
-    <string name="action_collection_removed">از مجموعه برداشته شد</string>
     <string name="action_watched">تنظیم به تماشا شده</string>
     <string name="action_unwatched">تنظیم به تماشا نشده</string>
     <string name="state_watched">تماشا شده</string>
@@ -202,7 +200,6 @@
     <string name="add_error">قادر به افزودن %s نمی باشد.</string>
     <string name="add_already_exists">%s هم‌اکنون در فهرست نمایشتان هست.</string>
     <string name="title_new_episodes">قسمت‌های جدید</string>
-    <string name="recommended">توصیه می شود</string>
     <string name="watched_shows">تماشا شده</string>
     <string name="shows_collection">مجموعه</string>
     <string name="watchlist">فهرست تماشا</string>
@@ -298,7 +295,6 @@
     <string name="trakt_error_not_exists">(هنوز) روی trakt موجود نیست. بعداً دوباره تلاش کنید.</string>
     <string name="trakt_notice_not_exists">(هنوز) نمی‌توان با trakt ردیابی کرد.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">حساب trakt</string>
     <string name="connect_trakt">اتصال به ترکت</string>
     <string name="trakt_reconnect">اتصال SeriesGuide به trakt</string>
     <string name="trakt_reconnect_details">اعتبارنامهٔ trakt را بررسی کنید</string>
@@ -335,7 +331,6 @@
     <string name="feedback">ارسال بازخورد</string>
     <string name="action_open_in_browser">گشودن در مرورگر</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">پایه‌ها</string>
     <string name="prefs_category_advanced">پیش‌رفته</string>
     <string name="prefs_category_about">درباره ما</string>
     <string name="pref_onlyfuture">نادیده گرفتن قسمت‌های پخش شده</string>

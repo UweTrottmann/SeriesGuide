@@ -108,8 +108,6 @@
     <string name="action_dont_skip">スキップしない</string>
     <string name="action_collection_add">コレクションに追加</string>
     <string name="action_collection_remove">コレクションから削除</string>
-    <string name="action_collection_added">コレクションに追加</string>
-    <string name="action_collection_removed">コレクションから削除しました</string>
     <string name="action_watched">視聴済に設定</string>
     <string name="action_unwatched">未視聴に設定</string>
     <string name="state_watched">視聴済</string>
@@ -198,7 +196,6 @@
     <string name="add_error">%s を追加できませんでした。</string>
     <string name="add_already_exists">%s はすでに番組リストにあります</string>
     <string name="title_new_episodes">新しいエピソード</string>
-    <string name="recommended">おすすめ</string>
     <string name="watched_shows">視聴済</string>
     <string name="shows_collection">コレクション</string>
     <string name="watchlist">ウォッチリスト</string>
@@ -291,7 +288,6 @@
     <string name="trakt_error_not_exists">Trakt では利用できません。後でもう一度やり直してください。</string>
     <string name="trakt_notice_not_exists">Trakt では追跡できません。</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">Trakt アカウント</string>
     <string name="connect_trakt">Trakt に接続</string>
     <string name="trakt_reconnect">SeriesGuide を Trakt に接続</string>
     <string name="trakt_reconnect_details">Trakt の認証情報を確認してください</string>
@@ -327,7 +323,6 @@
     <string name="feedback">フィードバックを送信</string>
     <string name="action_open_in_browser">ブラウザーで開く</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">基本</string>
     <string name="prefs_category_advanced">高度</string>
     <string name="prefs_category_about">について</string>
     <string name="pref_onlyfuture">未放映のエピソード</string>

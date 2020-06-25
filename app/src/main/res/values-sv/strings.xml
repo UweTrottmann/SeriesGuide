@@ -109,8 +109,6 @@
     <string name="action_dont_skip">Hoppa inte över</string>
     <string name="action_collection_add">Lägg till i samling</string>
     <string name="action_collection_remove">Ta bort från samling</string>
-    <string name="action_collection_added">Tillagd i samling</string>
-    <string name="action_collection_removed">Borttagen från samling</string>
     <string name="action_watched">Sett</string>
     <string name="action_unwatched">Markera som osedd</string>
     <string name="state_watched">Sedda</string>
@@ -202,7 +200,6 @@
     <string name="add_error">Kunde inte lägga till %s.</string>
     <string name="add_already_exists">%s finns redan i din serielista.</string>
     <string name="title_new_episodes">Nya avsnitt</string>
-    <string name="recommended">Rekommenderade</string>
     <string name="watched_shows">Sedda</string>
     <string name="shows_collection">Samling</string>
     <string name="watchlist">Bevakningslista</string>
@@ -298,7 +295,6 @@
     <string name="trakt_error_not_exists">Inte (än) tillgänglig på trakt. Försök igen senare.</string>
     <string name="trakt_notice_not_exists">Kan inte (ännu) följas med trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt-konto</string>
     <string name="connect_trakt">Anslut till trakt</string>
     <string name="trakt_reconnect">Anslut SeriesGuide till trakt</string>
     <string name="trakt_reconnect_details">Kontrollera dina inloggningsuppgifter för trakt</string>
@@ -335,7 +331,6 @@
     <string name="feedback">Skicka feedback</string>
     <string name="action_open_in_browser">Öppna i webbläsare</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Grunder</string>
     <string name="prefs_category_advanced">Avancerat</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Inga sända avsnitt</string>

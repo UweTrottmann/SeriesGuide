@@ -111,8 +111,6 @@
     <string name="action_dont_skip">Не пропускать</string>
     <string name="action_collection_add">Добавить в коллекцию</string>
     <string name="action_collection_remove">Удалить из коллекции</string>
-    <string name="action_collection_added">Добавлено в коллекцию</string>
-    <string name="action_collection_removed">Удалено из коллекции</string>
     <string name="action_watched">Просмотрен</string>
     <string name="action_unwatched">Не просмотрено</string>
     <string name="state_watched">Просмотрено</string>
@@ -210,7 +208,6 @@
     <string name="add_error">Не удалось добавить %s.</string>
     <string name="add_already_exists">%s уже есть в вашем списке.</string>
     <string name="title_new_episodes">Новые эпизоды</string>
-    <string name="recommended">Рекомендуемые</string>
     <string name="watched_shows">Просмотрено</string>
     <string name="shows_collection">Коллекция</string>
     <string name="watchlist">Список просмотра</string>
@@ -312,7 +309,6 @@
     <string name="trakt_error_not_exists">На данный момент недоступен на trakt. Попробуйте позже.</string>
     <string name="trakt_notice_not_exists">На данный не может быть отслежен с помощью trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">Аккаунт trakt</string>
     <string name="connect_trakt">Подключение trakt</string>
     <string name="trakt_reconnect">Подключите SeriesGuide к trakt</string>
     <string name="trakt_reconnect_details">Проверте учетные данные в trakt</string>
@@ -351,7 +347,6 @@
     <string name="feedback">Отправить отзыв</string>
     <string name="action_open_in_browser">Открыть в браузере</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Основные</string>
     <string name="prefs_category_advanced">Дополнительно</string>
     <string name="prefs_category_about">О программе</string>
     <string name="pref_onlyfuture">Скрыть вышедшие эпизоды</string>

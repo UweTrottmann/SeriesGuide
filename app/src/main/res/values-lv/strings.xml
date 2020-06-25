@@ -110,8 +110,6 @@
     <string name="action_dont_skip">Neizlaist</string>
     <string name="action_collection_add">Pievienot kolekcijai</string>
     <string name="action_collection_remove">Noņemt no kolekcijas</string>
-    <string name="action_collection_added">Pievienot kolekcijai</string>
-    <string name="action_collection_removed">Noņemta(-s) no kolekcijas</string>
     <string name="action_watched">Redzēta</string>
     <string name="action_unwatched">Set not watched</string>
     <string name="state_watched">Watched</string>
@@ -206,7 +204,6 @@
     <string name="add_error">%s pievienošana bija neveiksmīga.</string>
     <string name="add_already_exists">%s jau ir tavā šovu sarakstā.</string>
     <string name="title_new_episodes">New episodes</string>
-    <string name="recommended">Ieteikumi</string>
     <string name="watched_shows">Watched</string>
     <string name="shows_collection">Kolekcija</string>
     <string name="watchlist">Redzamo filmu saraksts</string>
@@ -305,7 +302,6 @@
     <string name="trakt_error_not_exists">Not (yet) available on Trakt. Try again later.</string>
     <string name="trakt_notice_not_exists">Can not (yet) be tracked with Trakt</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">Trakt account</string>
     <string name="connect_trakt">Savieno trakt</string>
     <string name="trakt_reconnect">Connect SeriesGuide to Trakt</string>
     <string name="trakt_reconnect_details">Check your Trakt credentials</string>
@@ -343,7 +339,6 @@
     <string name="feedback">Nosūtīt savas domas par aplikāciju</string>
     <string name="action_open_in_browser">Open in browser</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Pamati</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">Par</string>
     <string name="pref_onlyfuture">Nepastāv neraidītas epizodes</string>

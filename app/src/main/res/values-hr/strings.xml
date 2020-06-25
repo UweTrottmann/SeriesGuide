@@ -110,8 +110,6 @@
     <string name="action_dont_skip">Nemoj preskočiti</string>
     <string name="action_collection_add">Dodaj u kolekciju</string>
     <string name="action_collection_remove">Ukloni iz kolekcije</string>
-    <string name="action_collection_added">Dodano u kolekciju</string>
-    <string name="action_collection_removed">Uklonjeno iz kolekcije</string>
     <string name="action_watched">Pogledano</string>
     <string name="action_unwatched">Nije pogledano</string>
     <string name="state_watched">Pogledano</string>
@@ -206,7 +204,6 @@
     <string name="add_error">Neuspješno dodavanje %s.</string>
     <string name="add_already_exists">%s je već u vašoj listi serija.</string>
     <string name="title_new_episodes">Nove epizode</string>
-    <string name="recommended">Preporučeno</string>
     <string name="watched_shows">Pogledano</string>
     <string name="shows_collection">Zbirka</string>
     <string name="watchlist">Popis gledanja</string>
@@ -305,7 +302,6 @@
     <string name="trakt_error_not_exists">Nije dostupno na trakt (još). Pokušajte ponovno kasnije.</string>
     <string name="trakt_notice_not_exists">Nije moguće povezivanje sa trakt-om (još).</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt račun</string>
     <string name="connect_trakt">Poveži trakt</string>
     <string name="trakt_reconnect">Poveži SeriesGuide sa trakt-om</string>
     <string name="trakt_reconnect_details">Provjerite svoje trakt podatke</string>
@@ -343,7 +339,6 @@
     <string name="feedback">Pošalji povratne informacije</string>
     <string name="action_open_in_browser">Otvori u pregledniku</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Osnovno</string>
     <string name="prefs_category_advanced">Napredno</string>
     <string name="prefs_category_about">O aplikaciji</string>
     <string name="pref_onlyfuture">Nema emitiranih epizoda</string>

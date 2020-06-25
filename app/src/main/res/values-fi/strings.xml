@@ -109,8 +109,6 @@
     <string name="action_dont_skip">Älä ohita</string>
     <string name="action_collection_add">Lisää kokoelmaan</string>
     <string name="action_collection_remove">Poista kokoelmasta</string>
-    <string name="action_collection_added">Lisätty kokoelmaan</string>
-    <string name="action_collection_removed">Poistettu kokoelmasta</string>
     <string name="action_watched">Aseta katsotuksi</string>
     <string name="action_unwatched">Aseta katsomattomaksi</string>
     <string name="state_watched">Katsottu</string>
@@ -202,7 +200,6 @@
     <string name="add_error">Ei voitu lisätä ohjelmaa %s.</string>
     <string name="add_already_exists">%s on jo ohjelmalistallasi.</string>
     <string name="title_new_episodes">Uusia jaksoja</string>
-    <string name="recommended">Suositellut</string>
     <string name="watched_shows">Katsotut</string>
     <string name="shows_collection">Kokoelma</string>
     <string name="watchlist">Seurantalista</string>
@@ -298,7 +295,6 @@
     <string name="trakt_error_not_exists">Ei (vielä) saatavilla Traktissa. Yritä myöhemmin uudelleen.</string>
     <string name="trakt_notice_not_exists">Ei voida (vielä) seurata Traktissa</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">Trakt-tili</string>
     <string name="connect_trakt">Yhdistä Traktiin</string>
     <string name="trakt_reconnect">Yhdistä SeriesGuide Traktiin</string>
     <string name="trakt_reconnect_details">Tarkista Trakt-tunnuksesi</string>
@@ -335,7 +331,6 @@
     <string name="feedback">Lähetä palautetta</string>
     <string name="action_open_in_browser">Avaa selaimessa</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Perusasetukset</string>
     <string name="prefs_category_advanced">Edistyneet</string>
     <string name="prefs_category_about">Tietoja</string>
     <string name="pref_onlyfuture">Ei esitettyjä jaksoja</string>

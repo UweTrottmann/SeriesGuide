@@ -108,8 +108,6 @@
     <string name="action_dont_skip">ไม่ข้าม</string>
     <string name="action_collection_add">เพิ่มเข้าคลังเก็บ</string>
     <string name="action_collection_remove">ลบออกจากคลังเก็บ</string>
-    <string name="action_collection_added">เพิ่มเข้าคลังเก็บแล้ว</string>
-    <string name="action_collection_removed">ลบออกจากคลังเก็บแล้ว</string>
     <string name="action_watched">ดูแล้ว</string>
     <string name="action_unwatched">ยังไม่ได้ดู</string>
     <string name="state_watched">ดูแล้ว</string>
@@ -198,7 +196,6 @@
     <string name="add_error">ไม่สามารถเพิ่ม %s</string>
     <string name="add_already_exists">%s อยู่ในรายการซีรีส์ของคุณอยู่แล้ว</string>
     <string name="title_new_episodes">ตอนใหม่</string>
-    <string name="recommended">แนะนำ</string>
     <string name="watched_shows">ดูแล้ว</string>
     <string name="shows_collection">คลังเก็บ</string>
     <string name="watchlist">อยากดู</string>
@@ -291,7 +288,6 @@
     <string name="trakt_error_not_exists">(ยัง)ไม่พร้อมใช้งานบน trakt ลองอีกครั้งในภายหลัง</string>
     <string name="trakt_notice_not_exists">(ยัง)ไม่สามารถติดตามด้วย trakt</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">บัญชี trakt</string>
     <string name="connect_trakt">เชื่อมต่อ trakt</string>
     <string name="trakt_reconnect">เชื่อมต่อ SeriesGuide กับ trakt</string>
     <string name="trakt_reconnect_details">ตรวจสอบข้อมูล trakt ของคุณ</string>
@@ -327,7 +323,6 @@
     <string name="feedback">ส่งความคิดเห็น</string>
     <string name="action_open_in_browser">เปิดในเบราว์เซอร์</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">ทั่วไป</string>
     <string name="prefs_category_advanced">ขั้นสูง</string>
     <string name="prefs_category_about">เกี่ยวกับ</string>
     <string name="pref_onlyfuture">ซ่อนตอนที่ออกอากาศแล้ว</string>

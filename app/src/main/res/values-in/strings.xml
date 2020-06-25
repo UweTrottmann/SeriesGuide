@@ -108,8 +108,6 @@
     <string name="action_dont_skip">Jangan lewati</string>
     <string name="action_collection_add">Tambah ke koleksi</string>
     <string name="action_collection_remove">Hapus dari koleksi</string>
-    <string name="action_collection_added">Ditambahkan ke koleksi</string>
-    <string name="action_collection_removed">Dihapus dari koleksi</string>
     <string name="action_watched">Ubah ditonton</string>
     <string name="action_unwatched">Ubah belum ditonton</string>
     <string name="state_watched">Ditonton</string>
@@ -198,7 +196,6 @@
     <string name="add_error">Tidak dapat menambah %s.</string>
     <string name="add_already_exists">%s sudah ada di daftar acara anda.</string>
     <string name="title_new_episodes">Episode baru</string>
-    <string name="recommended">Disarankan</string>
     <string name="watched_shows">Ditonton</string>
     <string name="shows_collection">Koleksi</string>
     <string name="watchlist">Daftar tontonan</string>
@@ -291,7 +288,6 @@
     <string name="trakt_error_not_exists">Tidak (belum) tersedia pada trakt. Coba lagi nanti.</string>
     <string name="trakt_notice_not_exists">Tidak bisa (Belum) dilacak dengan trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">akun trakt</string>
     <string name="connect_trakt">Sambungkan trakt</string>
     <string name="trakt_reconnect">Sambungkan SeriesGuide ke trakt</string>
     <string name="trakt_reconnect_details">Periksa kredensial trakt Anda</string>
@@ -327,7 +323,6 @@
     <string name="feedback">Kirim tanggapan</string>
     <string name="action_open_in_browser">Buka di browser</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Dasar</string>
     <string name="prefs_category_advanced">Tingkat Lanjut</string>
     <string name="prefs_category_about">Tentang</string>
     <string name="pref_onlyfuture">Tidak Ada episode yang sudah ditayangkan</string>

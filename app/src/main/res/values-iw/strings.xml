@@ -111,8 +111,6 @@
     <string name="action_dont_skip">לא לדלג</string>
     <string name="action_collection_add">הוסף לאוסף</string>
     <string name="action_collection_remove">הסר מאוסף</string>
-    <string name="action_collection_added">נוסף לאוסף</string>
-    <string name="action_collection_removed">הוסר מהאוסף</string>
     <string name="action_watched">נצפה</string>
     <string name="action_unwatched">לא נצפה</string>
     <string name="state_watched">נצפה</string>
@@ -210,7 +208,6 @@
     <string name="add_error">לא יכול להוסיף %s.</string>
     <string name="add_already_exists">%s כבר נמצא ברשימה שלך.</string>
     <string name="title_new_episodes">פרקים חדשים</string>
-    <string name="recommended">מומלץ</string>
     <string name="watched_shows">נצפה</string>
     <string name="shows_collection">אוסף</string>
     <string name="watchlist">רשימת מעקב</string>
@@ -312,7 +309,6 @@
     <string name="trakt_error_not_exists">לא זמין (עדיין) ב-trakt. נסה שוב מאוחר יותר.</string>
     <string name="trakt_notice_not_exists">לא ניתן (עדיין) לעקוב עם trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">חשבון trakt</string>
     <string name="connect_trakt">התחבר trakt</string>
     <string name="trakt_reconnect">חבר את SeriesGuide ל trakt</string>
     <string name="trakt_reconnect_details">בדוק את פרטי ההתחברות שלך ל trakt</string>
@@ -351,7 +347,6 @@
     <string name="feedback">שלח משוב</string>
     <string name="action_open_in_browser">פתח בדפדפן</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">בסיסי</string>
     <string name="prefs_category_advanced">מתקדם</string>
     <string name="prefs_category_about">אודות</string>
     <string name="pref_onlyfuture">אין פרקים ששודרו</string>

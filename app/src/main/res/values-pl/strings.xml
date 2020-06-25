@@ -111,8 +111,6 @@
     <string name="action_dont_skip">Nie pomijaj</string>
     <string name="action_collection_add">Dodaj do kolekcji</string>
     <string name="action_collection_remove">Usuń z kolekcji</string>
-    <string name="action_collection_added">Dodano do kolekcji</string>
-    <string name="action_collection_removed">Usunięto z kolekcji</string>
     <string name="action_watched">Ust. obejrzane</string>
     <string name="action_unwatched">Ust. nieobejrzane</string>
     <string name="state_watched">Obejrzane</string>
@@ -210,7 +208,6 @@
     <string name="add_error">Nie można dodać %s.</string>
     <string name="add_already_exists">%s jest już na liście seriali.</string>
     <string name="title_new_episodes">Nowe odcinki</string>
-    <string name="recommended">Zalecane</string>
     <string name="watched_shows">Obejrzane</string>
     <string name="shows_collection">Kolekcja</string>
     <string name="watchlist">Do obejrzenia</string>
@@ -312,7 +309,6 @@
     <string name="trakt_error_not_exists">Jeszcze niedostępne na trakt. Spróbuj ponownie później.</string>
     <string name="trakt_notice_not_exists">Nie może być jeszcze śledzone na trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">Konto trakt</string>
     <string name="connect_trakt">Połącz z trakt</string>
     <string name="trakt_reconnect">Połącz SeriesGuide z trakt</string>
     <string name="trakt_reconnect_details">Sprawdź swoje poświadczenia trakt</string>
@@ -351,7 +347,6 @@
     <string name="feedback">Wyślij opinię</string>
     <string name="action_open_in_browser">Otwórz w przeglądarce</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Podstawowe</string>
     <string name="prefs_category_advanced">Zaawansowane</string>
     <string name="prefs_category_about">O programie</string>
     <string name="pref_onlyfuture">Bez wyemitowanych</string>

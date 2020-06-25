@@ -110,8 +110,6 @@
     <string name="action_dont_skip">Немој прескочити</string>
     <string name="action_collection_add">Додај у колекцију</string>
     <string name="action_collection_remove">Уклони из колекције</string>
-    <string name="action_collection_added">Додато у колекцију</string>
-    <string name="action_collection_removed">Уклоњено из колекције</string>
     <string name="action_watched">Одгледано</string>
     <string name="action_unwatched">Није одгледано</string>
     <string name="state_watched">Одгледано</string>
@@ -206,7 +204,6 @@
     <string name="add_error">Немогуће додати %s.</string>
     <string name="add_already_exists">%s је већ на вашој листи.</string>
     <string name="title_new_episodes">Nove epizode</string>
-    <string name="recommended">Препоручене</string>
     <string name="watched_shows">Одгледано</string>
     <string name="shows_collection">Колекција</string>
     <string name="watchlist">Листа за гледање</string>
@@ -305,7 +302,6 @@
     <string name="trakt_error_not_exists">Није (још) доступно на Trakt-у. Покушајте поново касније.</string>
     <string name="trakt_notice_not_exists">Can not (yet) be tracked with Trakt</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt налог</string>
     <string name="connect_trakt">Повежи trakt</string>
     <string name="trakt_reconnect">Connect SeriesGuide to Trakt</string>
     <string name="trakt_reconnect_details">Check your Trakt credentials</string>
@@ -343,7 +339,6 @@
     <string name="feedback">Пошаљи повратне информације</string>
     <string name="action_open_in_browser">Open in browser</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Основно</string>
     <string name="prefs_category_advanced">Напредно</string>
     <string name="prefs_category_about">О апликацији</string>
     <string name="pref_onlyfuture">Нема емитованих епизода</string>

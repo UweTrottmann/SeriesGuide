@@ -111,8 +111,6 @@
     <string name="action_dont_skip">Nepreskakovať</string>
     <string name="action_collection_add">Pridať do zbierky</string>
     <string name="action_collection_remove">Odstrániť zo zbierky</string>
-    <string name="action_collection_added">Pridané do zbierky</string>
-    <string name="action_collection_removed">Odstránené zo zbierky</string>
     <string name="action_watched">Označiť ako videné</string>
     <string name="action_unwatched">Označiť ako nevidené</string>
     <string name="state_watched">Videné</string>
@@ -210,7 +208,6 @@
     <string name="add_error">Nemožno pridať %s.</string>
     <string name="add_already_exists">%s už je vo vašich seriáloch.</string>
     <string name="title_new_episodes">Nové epizódy</string>
-    <string name="recommended">Odporúčané</string>
     <string name="watched_shows">Videné</string>
     <string name="shows_collection">Zbierka</string>
     <string name="watchlist">Chcem vidieť</string>
@@ -312,7 +309,6 @@
     <string name="trakt_error_not_exists">Nie je (zatiaľ) dostupné na trakt. Skúste to znova neskôr.</string>
     <string name="trakt_notice_not_exists">Nie je (zatiaľ) možné sledovať na trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt účet</string>
     <string name="connect_trakt">Pripojiť na trakt</string>
     <string name="trakt_reconnect">Pripojiť SeriesGuide k trakt</string>
     <string name="trakt_reconnect_details">Skontrolujte užívateľské meno/heslo trakt</string>
@@ -351,7 +347,6 @@
     <string name="feedback">Poslať reakciu</string>
     <string name="action_open_in_browser">Otvoriť v prehliadači</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Základné</string>
     <string name="prefs_category_advanced">Pokročilé</string>
     <string name="prefs_category_about">O aplikácii</string>
     <string name="pref_onlyfuture">Nezobrazovať odvysielané epizódy</string>
