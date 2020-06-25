@@ -19,7 +19,7 @@
             android:layout_marginRight="@dimen/larger_padding"
             android:layout_marginTop="@dimen/larger_padding"
             android:text="@string/format_time_offset_range"
-            android:textAppearance="@style/TextAppearance.Caption" />
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Caption" />
 
         <EditText
             android:id="@+id/editTextOffsetValue"

@@ -50,7 +50,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:paddingBottom="@dimen/default_padding"
-        android:textAppearance="@style/TextAppearance.Caption.Dim"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Dim"
         tools:text="13.11.2013" />
 
     <androidx.appcompat.widget.AppCompatImageView

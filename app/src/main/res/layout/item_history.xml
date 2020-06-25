@@ -61,7 +61,7 @@
             android:layout_marginTop="16dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.Caption.Dim"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Dim"
             app:layout_constraintLeft_toRightOf="@+id/imageViewHistoryAvatar"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_goneMarginLeft="8dp"

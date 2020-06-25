@@ -2,32 +2,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Text styles -->
-    <style name="TextAppearance" parent="@android:style/TextAppearance">
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:textSize">@dimen/text_size_default_sg</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
-    </style>
-
-    <style name="TextAppearance.Caption">
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
-        <item name="android:textSize">@dimen/text_size_caption_sg</item>
-    </style>
-
-    <style name="TextAppearance.Caption.Dim">
-        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
-    </style>
-
-    <style name="TextAppearance.Caption.Narrow">
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
-    </style>
-
-    <style name="TextAppearance.Caption.Narrow.Dim">
-        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
-    </style>
-
-    <style name="TextAppearance.SeriesGuide" />
-
     <style name="TextAppearance.SeriesGuide.Body1" parent="TextAppearance.MaterialComponents.Body1" />
 
     <style name="TextAppearance.SeriesGuide.Body2" parent="TextAppearance.MaterialComponents.Body2" />
@@ -72,6 +46,13 @@
 
     <style name="TextAppearance.SeriesGuide.Caption" parent="TextAppearance.MaterialComponents.Caption" />
     <style name="TextAppearance.SeriesGuide.Caption.Dim">
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
+    </style>
+    <style name="TextAppearance.SeriesGuide.Caption.Narrow">
+        <item name="fontFamily">sans-serif-condensed</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+    <style name="TextAppearance.SeriesGuide.Caption.Narrow.Dim">
         <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
 
@@ -163,7 +144,7 @@
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Caption">
-        <item name="android:textSize">@dimen/text_size_caption_sg</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:letterSpacing">0</item>
         <item name="iconTint">?android:textColorSecondary</item>

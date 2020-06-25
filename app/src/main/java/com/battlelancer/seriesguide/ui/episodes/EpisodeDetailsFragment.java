@@ -424,7 +424,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 : R.style.TextAppearance_SeriesGuide_Headline6_Dim);
         if (!isReleased) {
             TextViewCompat.setTextAppearance(binding.textviewReleaseTime,
-                    R.style.TextAppearance_Caption_Dim);
+                    R.style.TextAppearance_SeriesGuide_Caption_Dim);
         }
 
         // guest stars
