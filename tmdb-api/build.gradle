@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -30,6 +31,7 @@ dependencies {
 
     implementation "androidx.annotation:annotation:${versions.annotation}"
     implementation "com.google.dagger:dagger:${versions.dagger}"
+    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
 
     // Use latest OkHttp.
     implementation "com.squareup.okhttp3:okhttp:${versions.okhttp}"
