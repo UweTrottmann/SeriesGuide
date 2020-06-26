@@ -468,11 +468,11 @@
     <string name="billing_action_pass">X Pass holen</string>
     <string name="billing_price_subscribe">%1$s/Jahr, kostenlos testen, bei %2$s jederzeit kündbar</string>
     <string name="billing_duration_format">%1$s/Jahr</string>
-    <string name="billing_sub_description">Kostenlos testen, jederzeit kündigen.</string>
+    <string name="billing_sub_description">30 Tage kostenlos testen, jederzeit kündigen.</string>
     <string name="billing_price_pass">einmaliger Kauf</string>
-    <string name="upgrade_description">Schalten Sie alle Funktionen wie Benachrichtigungen, Designs und weitere Optionen für das Listen-Widget frei. Unterstützen Sie mich bei der Entwicklung weiterer Updates.</string>
+    <string name="upgrade_description">Jedes Abo schaltet alle Funktionen frei und unterstützt zukünftige Updates. Ein Abo wird nicht benötigt um diese App zu nutzen.</string>
     <string name="upgrade_success">Danke für die Unterstützung von SeriesGuide! Sie haben Zugriff auf alle Funktionen.</string>
-    <string name="billing_learn_more">Warum bezahlen? Mehr Infos</string>
+    <string name="billing_learn_more">Mehr Infos und Hilfe</string>
     <string name="subscription_expired">Abonnement abgelaufen</string>
     <string name="subscription_expired_details">Ihr SeriesGuide Abonnement ist abgelaufen</string>
     <!-- Amazon In-App Billing -->
