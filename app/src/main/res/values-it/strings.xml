@@ -111,7 +111,7 @@
     <string name="action_collection_remove">Rimuovi dalla collezione</string>
     <string name="action_watched">Visto</string>
     <string name="action_unwatched">Non visto</string>
-    <string name="state_watched">Visti</string>
+    <string name="state_watched">Visto</string>
     <string name="state_skipped">Saltato</string>
     <string name="state_in_collection">In collezione</string>
     <string name="state_on_watchlist">Da vedere</string>
