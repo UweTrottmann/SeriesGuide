@@ -12,6 +12,11 @@ Version 55
 ----------
 *in development*
 
+#### 55-beta4
+*2020-06-26*
+
+* 📝 Make adjustments to meet Google Play requirements.
+
 #### 55-beta3
 *2020-06-25*
 
