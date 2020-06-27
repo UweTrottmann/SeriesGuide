@@ -99,6 +99,9 @@ class MoreOptionsActivity : BaseTopActivity() {
         binding.buttonTranslations.setOnClickListener {
             Utils.launchWebsite(this, getString(R.string.url_translations))
         }
+        binding.buttonContributeContent.setOnClickListener {
+            Utils.launchWebsite(this, getString(R.string.url_contribute_content))
+        }
         binding.buttonDebugView.setOnClickListener {
             if (AppSettings.isUserDebugModeEnabled(this)) {
                 DebugViewFragment().safeShow(supportFragmentManager, "debugViewDialog")

@@ -381,6 +381,8 @@
     <string name="action_open_in_browser">Open in browser</string>
 
     <!-- Settings -->
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">About</string>
     <string name="pref_onlyfuture">No aired episodes</string>

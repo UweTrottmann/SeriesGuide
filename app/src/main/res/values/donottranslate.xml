@@ -39,6 +39,7 @@
     <string name="url_community">https://discuss.seriesgui.de</string>
     <string name="url_release_notes">https://discuss.seriesgui.de/c/announcements</string>
     <string name="url_translations">https://crowdin.com/project/seriesguide-translations</string>
+    <string name="url_contribute_content">https://seriesgui.de/help#sources</string>
 
     <!-- About screen -->
     <string name="website">seriesgui.de</string>
@@ -63,10 +64,7 @@
 
     <!-- Settings -->
     <string name="pref_key_notifications_hidden">com.battlelancer.seriesguide.notifications.hidden</string>
-    <string name="pref_translate">Translate SeriesGuide</string>
-    <string name="pref_translatesummary">Translate or proofread for this app (English)</string>
     <string name="pref_community">SeriesGuide Community</string>
-    <string name="pref_communitysummary">Ask for help, discuss ideas or report problems (English)</string>
     <string name="pref_category_danger">Danger Zone</string>
     <string name="pref_user_debug_mode">Debug mode</string>
     <string name="pref_user_debug_mode_summary">Allows to diagnose errors, but slows down the app.</string>
