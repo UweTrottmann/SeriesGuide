@@ -468,7 +468,7 @@
     <string name="billing_action_pass">Купи X Pass</string>
     <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
     <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">еднократно купување</string>
     <string name="upgrade_description">Отклучување на сите функционалности, вклучувајќи нотификации, теми и повеќе опции за листата со widget. Помогнете да се направат нови надградби.</string>
     <string name="upgrade_success">Ви благодариме за поддршката SeriesGuide! Вие имате пристап до сите функции.</string>

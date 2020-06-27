@@ -479,7 +479,7 @@
     <string name="billing_action_pass">Obțineți abonamentul X</string>
     <string name="billing_price_subscribe">%1$s/ an, testează gratuit, anuleaza oricand prin%2$s</string>
     <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">plată unică</string>
     <string name="upgrade_description">Deblocați toate opțiunile, inclusiv notificări, teme si mai multe opțiuni widget-uri liste. Ajută-mă să fac actualizări viitoare.</string>
     <string name="upgrade_success">Mulțumim pentru suportul SeriesGuide! Ai access la toate opțiunile.</string>
