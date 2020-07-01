@@ -274,6 +274,7 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
                 || mRecyclerViewHeight != mRecyclerView.getHeight()) {
             mRecyclerViewWidth = mRecyclerView.getWidth();
             mRecyclerViewHeight = mRecyclerView.getHeight();
+
             // This is due to the different events ordering when keyboard is opened or
             // retracted vs rotate. Hence to avoid corner cases we just disable the
             // scroller when size changed, and wait until the scroll position is recomputed
@@ -488,9 +489,15 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
             return 0;
         }
         float percentage = ((newDragPos - oldDragPos) / (float) scrollbarLength);
-        int totalPossibleOffset = scrollRange - viewLength;
+        // FIXME: This is too small, likely missing bottom/end padding.
+        // Using scrollRange to compute scrollingBy also makes thumb track offset exactly.
+//        int totalPossibleOffset = scrollRange - viewLength;
+        //noinspection UnnecessaryLocalVariable
+        int totalPossibleOffset = scrollRange;
         int scrollingBy = (int) (percentage * totalPossibleOffset);
         int absoluteOffset = scrollOffset + scrollingBy;
+        // Note: it's fine to return a value even if scrolling is not possible,
+        // RecyclerView.scrollBy just won't scroll then.
         if (absoluteOffset < totalPossibleOffset && absoluteOffset >= 0) {
             return scrollingBy;
         } else {
