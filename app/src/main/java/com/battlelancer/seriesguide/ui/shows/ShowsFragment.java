@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager;
 import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ViewTools;
+import com.battlelancer.seriesguide.widgets.SgFastScroller;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -67,6 +68,8 @@ public class ShowsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_shows, container, false);
 
         recyclerView = v.findViewById(R.id.recyclerViewShows);
+        new SgFastScroller(requireContext(), recyclerView);
+
         emptyView = v.findViewById(R.id.emptyViewShows);
         ViewTools.setVectorDrawableTop(emptyView, R.drawable.ic_add_white_24dp);
         emptyView.setOnClickListener(view -> startActivityAddShows());

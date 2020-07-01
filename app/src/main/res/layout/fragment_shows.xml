@@ -41,8 +41,6 @@
         android:clipToPadding="false"
         android:paddingTop="8dp"
         android:paddingBottom="88dp"
-        android:scrollbarStyle="outsideOverlay"
-        android:scrollbars="vertical"
         tools:listitem="@layout/item_show" />
 
 </FrameLayout>

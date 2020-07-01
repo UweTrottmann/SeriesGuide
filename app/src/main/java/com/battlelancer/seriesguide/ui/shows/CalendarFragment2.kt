@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.shows
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -33,7 +32,7 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.Utils
-import com.battlelancer.seriesguide.widgets.FastScrollerDecoration
+import com.battlelancer.seriesguide.widgets.SgFastScroller
 import kotlinx.coroutines.launch
 
 class CalendarFragment2 : Fragment() {
@@ -92,15 +91,7 @@ class CalendarFragment2 : Fragment() {
             it.layoutManager = layoutManager
             it.adapter = adapter
         }
-        val thumbDrawable = requireContext().getDrawable(R.drawable.fast_scroll_thumb) as StateListDrawable
-        val trackDrawable = requireContext().getDrawable(R.drawable.fast_scroll_track)
-        FastScrollerDecoration(
-            recyclerView, thumbDrawable, trackDrawable, thumbDrawable, trackDrawable,
-            resources.getDimensionPixelSize(R.dimen.sg_fastscroll_default_thickness),
-            resources.getDimensionPixelSize(R.dimen.sg_fastscroll_minimum_height),
-            resources.getDimensionPixelSize(R.dimen.sg_fastscroll_minimum_range),
-            resources.getDimensionPixelOffset(R.dimen.sg_fastscroll_margin)
-        )
+        SgFastScroller(requireContext(), recyclerView)
 
         textViewEmpty.setText(
             if (type == CalendarType.UPCOMING) {
