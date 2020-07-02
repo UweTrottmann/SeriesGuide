@@ -323,6 +323,8 @@
     <string name="feedback">フィードバックを送信</string>
     <string name="action_open_in_browser">ブラウザーで開く</string>
     <!-- Settings -->
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">高度</string>
     <string name="prefs_category_about">について</string>
     <string name="pref_onlyfuture">未放映のエピソード</string>
@@ -457,11 +459,11 @@
     <string name="billing_action_pass">X Pass を入手</string>
     <string name="billing_price_subscribe">%1$s/年、無料でお試しください、%2$s からいつでもキャンセルできます</string>
     <string name="billing_duration_format">%1$s/年</string>
-    <string name="billing_sub_description">無料でお試しください。いつでもキャンセルできます。</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">一回限りの支払</string>
-    <string name="upgrade_description">通知、テーマ、および多くのリスト ウィジェットのオプションを含む、すべての機能のロックを解除します。将来の更新に役立ちます。</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">SeriesGuide のサポートをありがとうございます! すべての機能にアクセスすることができます。</string>
-    <string name="billing_learn_more">なぜ支払? 詳細情報。</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">サブスクリプションの有効期限が切れました</string>
     <string name="subscription_expired_details">SeriesGuide サブスクリプションの有効期限が切れています。</string>
     <!-- Amazon In-App Billing -->

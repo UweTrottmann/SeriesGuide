@@ -331,6 +331,8 @@
     <string name="feedback">Envoyez vos commentaires</string>
     <string name="action_open_in_browser">Ouvrir dans le navigateur</string>
     <!-- Settings -->
+    <string name="action_translate">Traduisez cette application</string>
+    <string name="action_contribute_content">Traduisez et améliorerez le contenu</string>
     <string name="prefs_category_advanced">Avancé</string>
     <string name="prefs_category_about">A propos</string>
     <string name="pref_onlyfuture">Pas d\'épisodes diffusés</string>
@@ -468,11 +470,11 @@
     <string name="billing_action_pass">Obtenir X Pass</string>
     <string name="billing_price_subscribe">%1$s/an, faites l’essai gratuitement, annulez à tout moment via %2$s</string>
     <string name="billing_duration_format">%1$s/an</string>
-    <string name="billing_sub_description">Essayez gratuitement, annulez à tout moment.</string>
+    <string name="billing_sub_description">Essayez 30 jours gratuitement, annulez à tout moment.</string>
     <string name="billing_price_pass">Achat à vie</string>
-    <string name="upgrade_description">Déverrouille toutes les fonctionnalités dont les notifications, les thèmes et des options supplémentaires pour le widget. Cela m\'aide à réaliser de nouvelles fonctionnalités.</string>
+    <string name="upgrade_description">Chaque abonnement débloque toutes les fonctionnalités et prend en charge les mises à jour futures. Un abonnement n\'est pas nécessaire pour utiliser cette application.</string>
     <string name="upgrade_success">Merci de supporter SeriesGuide ! Vous avez maintenant accès à toutes les fonctionnalités.</string>
-    <string name="billing_learn_more">Pourquoi payer ? En savoir plus.</string>
+    <string name="billing_learn_more">Plus d\'infos et d\'aide</string>
     <string name="subscription_expired">Abonnement expiré</string>
     <string name="subscription_expired_details">Votre abonnement aux fonctionnalités X a expiré.</string>
     <!-- Amazon In-App Billing -->

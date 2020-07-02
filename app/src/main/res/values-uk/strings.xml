@@ -347,6 +347,8 @@
     <string name="feedback">Відправити відгук</string>
     <string name="action_open_in_browser">Відкрити в браузері</string>
     <!-- Settings -->
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Додатково</string>
     <string name="prefs_category_about">Про</string>
     <string name="pref_onlyfuture">Немає серій що вийшли</string>
@@ -490,11 +492,11 @@
     <string name="billing_action_pass">Отримати X Pass</string>
     <string name="billing_price_subscribe">%1$s/рік, спробуйте безкоштовно, скасуйте у будь-який час через %2$s</string>
     <string name="billing_duration_format">%1$s/рік</string>
-    <string name="billing_sub_description">Спробуйте безкоштовно, скасуйте в будь який час.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">Одноразове замовлення</string>
-    <string name="upgrade_description">Розблокуйте усі функції включно зі сповіщеннями, темами і більшою кількістю опцій для віджетів. Допоможіть випускати майбутні оновлення.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Дякую за підтримку SeriesGuide! Тепер ви маєте доступ до всіх функцій.</string>
-    <string name="billing_learn_more">Навіщо платити? Дізнатися більше.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Закінчився термін дії підписки</string>
     <string name="subscription_expired_details">Підписка функцій X минула.</string>
     <!-- Amazon In-App Billing -->

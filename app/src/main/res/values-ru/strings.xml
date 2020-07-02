@@ -347,6 +347,8 @@
     <string name="feedback">Отправить отзыв</string>
     <string name="action_open_in_browser">Открыть в браузере</string>
     <!-- Settings -->
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Дополнительно</string>
     <string name="prefs_category_about">О программе</string>
     <string name="pref_onlyfuture">Скрыть вышедшие эпизоды</string>
@@ -490,11 +492,11 @@
     <string name="billing_action_pass">Получить X Pass</string>
     <string name="billing_price_subscribe">%1$s/год, попробуйте бесплатно, можно отменить в любой момент до %2$s</string>
     <string name="billing_duration_format">%1$s/год</string>
-    <string name="billing_sub_description">Попробуйте бесплатно, отмените в любое время.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">Единоразовая покупка</string>
-    <string name="upgrade_description">Разблокируйте все возможности, включая уведомления, темы и расширенные настройки виджета. Помогите мне выпускать будущие обновления.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Спасибо за поддержку SeriesGuide! У вас есть доступ ко всем расширенным возможностям.</string>
-    <string name="billing_learn_more">Зачем платить?</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Срок действия подписки истек</string>
     <string name="subscription_expired_details">Подписка X функции истекла.</string>
     <!-- Amazon In-App Billing -->

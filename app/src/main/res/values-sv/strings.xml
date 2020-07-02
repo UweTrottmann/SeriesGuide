@@ -331,6 +331,8 @@
     <string name="feedback">Skicka feedback</string>
     <string name="action_open_in_browser">Öppna i webbläsare</string>
     <!-- Settings -->
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Avancerat</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Inga sända avsnitt</string>
@@ -468,11 +470,11 @@
     <string name="billing_action_pass">Skaffa X Pass</string>
     <string name="billing_price_subscribe">%1$s/år, prova gratis, avbryt när som helst genom %2$s</string>
     <string name="billing_duration_format">%1$s/år</string>
-    <string name="billing_sub_description">Prova gratis, avbryt när som helst.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">engångsköp</string>
-    <string name="upgrade_description">Lås upp alla funktioner, inklusive aviseringar, teman och fler alternativ för widgets. Hjälp mig att göra framtida uppdateringar.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Tack för att du stödjer SeriesGuide! Du har tillgång till alla funktioner.</string>
-    <string name="billing_learn_more">Varför betala? Få mer information.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Prenumerationen har gått ut</string>
     <string name="subscription_expired_details">Dina X-funktioners prenumeration har gått ut.</string>
     <!-- Amazon In-App Billing -->

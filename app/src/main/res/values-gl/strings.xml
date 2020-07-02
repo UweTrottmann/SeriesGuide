@@ -331,6 +331,8 @@
     <string name="feedback">Enviar comentarios</string>
     <string name="action_open_in_browser">Abrir no navegador</string>
     <!-- Settings -->
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">Sobre</string>
     <string name="pref_onlyfuture">Ocultar episodios exibidos</string>
@@ -468,11 +470,11 @@
     <string name="billing_action_pass">Obter X Pass</string>
     <string name="billing_price_subscribe">%1$s/ano, proba de balde, cancela en calquera momento a través de %2$s</string>
     <string name="billing_duration_format">%1$s/ano</string>
-    <string name="billing_sub_description">Proba de balde, cancélaa en calquera momento</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">Compra única</string>
-    <string name="upgrade_description">Desbloquea todas as funcións incluindo notificacións, temas e máis opcións para os widgets. Axúdame a facer futuras actualizacións</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Grazas por soportar SeriesGuide! Tes acceso a todas as funcións</string>
-    <string name="billing_learn_more">Por que pagar? Ver máis</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">A subscripción rematou</string>
     <string name="subscription_expired_details">A túa subscrición de SeriesGuide rematou</string>
     <!-- Amazon In-App Billing -->

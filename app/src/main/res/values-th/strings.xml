@@ -323,6 +323,8 @@
     <string name="feedback">ส่งความคิดเห็น</string>
     <string name="action_open_in_browser">เปิดในเบราว์เซอร์</string>
     <!-- Settings -->
+    <string name="action_translate">แปลแอปนี้</string>
+    <string name="action_contribute_content">แปลหรือปรับปรุงเนื้อหาให้ดีขึ้น</string>
     <string name="prefs_category_advanced">ขั้นสูง</string>
     <string name="prefs_category_about">เกี่ยวกับ</string>
     <string name="pref_onlyfuture">ซ่อนตอนที่ออกอากาศแล้ว</string>
@@ -457,11 +459,11 @@
     <string name="billing_action_pass">รับ X Pass</string>
     <string name="billing_price_subscribe">%1$s/ปี, ลองใช้ฟรี, ยกเลิกได้ทุกเวลาผ่าน %2$s</string>
     <string name="billing_duration_format">%1$s/ปี</string>
-    <string name="billing_sub_description">ลองใช้ฟรี, ยกเลิกได้ทุกเมื่อ</string>
+    <string name="billing_sub_description">ลองใช้ฟรี 30 วัน ยกเลิกได้ทุกเมื่อ</string>
     <string name="billing_price_pass">จ่ายครั้งเดียว</string>
-    <string name="upgrade_description">ปลดล็อกคุณสมบัติทั้งหมด รวมทั้งการแจ้งเตือน, ธีม และตัวเลือกวิตเจ็ตเพิ่มเติม ช่วยให้เราสร้างการอัปเดตในอนาคต</string>
+    <string name="upgrade_description">ทุกการสมัครสมาชิกจะปลดล็อกทุกคุณสมบัติและช่วยสนับสนุนอัปเดตในอนาคต ไม่จำเป็นต้องสมัครสมาชิกเพื่อใช้งานแอปนี้</string>
     <string name="upgrade_success">ขอบคุณสำหรับการสนับสนุน SeriesGuide! คุณสามารถเข้าถึงคุณสมบัติทั้งหมดได้แล้ว</string>
-    <string name="billing_learn_more">ทำไมต้องจ่าย? เรียนรู้เพิ่มเติม</string>
+    <string name="billing_learn_more">ข้อมูลเพิ่มเติมและช่วยเหลือ</string>
     <string name="subscription_expired">การสมัครสมาชิกหมดอายุแล้ว</string>
     <string name="subscription_expired_details">การสมัครสมาชิก SeriesGuide ของคุณหมดอายุแล้ว</string>
     <!-- Amazon In-App Billing -->

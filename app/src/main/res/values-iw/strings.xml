@@ -114,10 +114,10 @@
     <string name="action_watched">נצפה</string>
     <string name="action_unwatched">לא נצפה</string>
     <string name="state_watched">נצפה</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_skipped">דילוג</string>
+    <string name="state_in_collection">באוסף</string>
+    <string name="state_on_watchlist">ברשימת הצפייה</string>
+    <string name="state_favorite">מועדפים</string>
     <!-- Shows -->
     <string name="confirm_delete">בטוח שאתה רוצה להסיר את %s?</string>
     <string name="delete_error">הסרת הסדרה נכשלה. נסה שוב מאוחר יותר.</string>
@@ -347,6 +347,8 @@
     <string name="feedback">שלח משוב</string>
     <string name="action_open_in_browser">פתח בדפדפן</string>
     <!-- Settings -->
+    <string name="action_translate">תרגם את האפליקציה</string>
+    <string name="action_contribute_content">תרגום או שיפור תוכן</string>
     <string name="prefs_category_advanced">מתקדם</string>
     <string name="prefs_category_about">אודות</string>
     <string name="pref_onlyfuture">אין פרקים ששודרו</string>
@@ -442,7 +444,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">גיבוי אוטומטי</string>
     <string name="pref_autobackupsummary">גיבוי שבועי של הסדרות, רשימות והסרטים שלך</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">גיבויים אלה אינם זמינים אם האפליקציה מותקנת שוב אלא אם האופצייה לגיבוי המכשיר פועלת (אנדרויד 6+), אחרת יש ליצור עותקים כדי שישמרו.</string>
     <string name="last_auto_backup">גיבוי אוטומטי אחרון: %s</string>
     <string name="restore_auto_backup">שחזור גיבוי אוטומטי</string>
     <string name="autobackup_failed">הגיבוי האוטומטי האחרון נכשל</string>
@@ -469,8 +471,8 @@
     <string name="pref_notifications_hidden">התעלם מסדרות מוסתרות</string>
     <string name="pref_notifications_hidden_summary">לא להציג התראות על סדרות נסתרות, גם אם התראות פועלות</string>
     <string name="pref_notification_channel_errors">שגיאות</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">רק לפרקים לצפייה בקרוב</string>
+    <string name="pref_notifications_next_episodes_only_summary">התראה רק אם הפרק החדש הוא הבא לצפייה</string>
     <!-- List Widget -->
     <string name="hide_watched">הסתר פרקים שנצפו</string>
     <string name="pref_widget_opacity">רקע ווידג\'ט</string>
@@ -490,11 +492,11 @@
     <string name="billing_action_pass">קבל את X Pass</string>
     <string name="billing_price_subscribe">%1$s לשנה, נסה בחינם, בטל בכל עת באמצעות %2$s</string>
     <string name="billing_duration_format">%1$s/שנה</string>
-    <string name="billing_sub_description">הנסיון בחינם, ניתן לבטל בכל זמן שתרצו.</string>
+    <string name="billing_sub_description">נסו 30 יום בחינם, בטלו מתי שתרצו. </string>
     <string name="billing_price_pass">רכישה חד פעמית</string>
-    <string name="upgrade_description">פתח את כל האפשרויות, כולל התראות, ערכות נושא ואפשרויות נוספות בווידג\'ט הרשימה. עזור לי לפתח עדכונים עתידיים.</string>
+    <string name="upgrade_description">המינוי נותן את כל האפשרויות ותורם לעדכונים עתידיים. מינוי לא דרוש בשביל שימוש באפליקציה.</string>
     <string name="upgrade_success">תודה על תמיכתך ב-SeriesGuide! יש לך גישה לכל האפשרויות.</string>
-    <string name="billing_learn_more">למה לשלם? למד עוד.</string>
+    <string name="billing_learn_more">עוד מידע ועזרה</string>
     <string name="subscription_expired">פג תוקף המנוי</string>
     <string name="subscription_expired_details">פג מנוי ה-SeriesGuide שלך.</string>
     <!-- Amazon In-App Billing -->

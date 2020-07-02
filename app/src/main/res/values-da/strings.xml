@@ -112,10 +112,10 @@
     <string name="action_watched">Markér som set</string>
     <string name="action_unwatched">Markér som ikke set</string>
     <string name="state_watched">Set</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_skipped">Sprunget over</string>
+    <string name="state_in_collection">I samling</string>
+    <string name="state_on_watchlist">På overvågningsliste</string>
+    <string name="state_favorite">Favorit</string>
     <!-- Shows -->
     <string name="confirm_delete">Sikker på, at du vil fjerne %s?</string>
     <string name="delete_error">Kunne ikke fjerne serie. Prøv igen senere.</string>
@@ -331,6 +331,8 @@
     <string name="feedback">Send feedback</string>
     <string name="action_open_in_browser">Åbn i browser</string>
     <!-- Settings -->
+    <string name="action_translate">Oversæt denne app</string>
+    <string name="action_contribute_content">Oversæt eller forbedr indhold</string>
     <string name="prefs_category_advanced">Avanceret</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Ingen sendte episoder</string>
@@ -468,11 +470,11 @@
     <string name="billing_action_pass">Få X Pass</string>
     <string name="billing_price_subscribe">%1$s/år, prøv gratis, afmeld når som helst via %2$s</string>
     <string name="billing_duration_format">%1$s/år</string>
-    <string name="billing_sub_description">Prøv gratis, opsig når som helst.</string>
+    <string name="billing_sub_description">Prøv 30 dage gratis, opsig når som helst.</string>
     <string name="billing_price_pass">engangskøb</string>
-    <string name="upgrade_description">Oplås alle funktioner, herunder meddelelser, temaer og flere widget-indstillinger. Hjælp os med at udvikle fremtidige opdateringer.</string>
+    <string name="upgrade_description">Hver type abonnement oplåser alle funktioner og støtter fremtidige opdateringer. Et abonnement er ikke påkrævet for at benytte denne app.</string>
     <string name="upgrade_success">Tak for din støtte til SeriesGuide! Du har nu adgang til alle funktioner.</string>
-    <string name="billing_learn_more">Hvorfor betale? Læs mere.</string>
+    <string name="billing_learn_more">Flere oplysninger og hjælp</string>
     <string name="subscription_expired">Abonnement udløbet</string>
     <string name="subscription_expired_details">Dit abonnement på X funktioner er udløbet.</string>
     <!-- Amazon In-App Billing -->

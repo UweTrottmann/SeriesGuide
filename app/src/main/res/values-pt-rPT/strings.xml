@@ -105,24 +105,24 @@
     <string name="confirmation_watched_up_to">Marcar como vistos todos os episódios até aqui?</string>
     <string name="collect_all">Todos adquiridos</string>
     <string name="uncollect_all">Nenhum adquirido</string>
-    <string name="action_skip">Avançar</string>
+    <string name="action_skip">Ignorar</string>
     <string name="action_dont_skip">Não avançar</string>
     <string name="action_collection_add">Adicionar à coleção</string>
     <string name="action_collection_remove">Remover da coleção</string>
     <string name="action_watched">Marcar como visto</string>
-    <string name="action_unwatched">Marcar como não visto</string>
-    <string name="state_watched">Vistas</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="action_unwatched">Marcado como não visto</string>
+    <string name="state_watched">Visto</string>
+    <string name="state_skipped">Ignorado</string>
+    <string name="state_in_collection">Na Coleção</string>
+    <string name="state_on_watchlist">Na Lista dos que Desejo Ver</string>
+    <string name="state_favorite">Favorito</string>
     <!-- Shows -->
     <string name="confirm_delete">Tens a certeza que desejas remover %s?</string>
     <string name="delete_error">Não foi possível remover a série. Tenta mais tarde.</string>
     <string name="delete_show">Remover</string>
     <string name="no_nextepisode">Não há mais episódios</string>
-    <string name="context_favorite">Adicionar aos Favoritos</string>
-    <string name="context_unfavorite">Remover dos Favoritos</string>
+    <string name="context_favorite">Adicionar aos favoritos</string>
+    <string name="context_unfavorite">Remover dos favoritos</string>
     <string name="favorited">Adicionado aos favoritos</string>
     <string name="unfavorited">Removido dos favoritos</string>
     <string name="action_episode_notifications_on">Ativar notificações do episódio</string>
@@ -146,7 +146,7 @@
     <string name="action_shows_sort_oldest_episode">Episódios mais antigos</string>
     <string name="action_shows_sort_last_watched">Últimos vistos</string>
     <string name="action_shows_sort_remaining">Episódios por ver</string>
-    <string name="action_shows_sort_favorites">Privilegiar Favoritos</string>
+    <string name="action_shows_sort_favorites">Privilegiar favoritos</string>
     <string name="context_updateshow">Atualizar</string>
     <string name="context_marknext">Marcar próximo episódio como visto</string>
     <string name="action_episodes_switch_view">Alterar visualização</string>
@@ -331,6 +331,8 @@
     <string name="feedback">Enviar comentários</string>
     <string name="action_open_in_browser">Abrir no navegador</string>
     <!-- Settings -->
+    <string name="action_translate">Traduz esta App</string>
+    <string name="action_contribute_content">Traduz ou melhora o conteúdo</string>
     <string name="prefs_category_advanced">Avançado</string>
     <string name="prefs_category_about">Sobre</string>
     <string name="pref_onlyfuture">Nenhum episódio em exibição</string>
@@ -420,7 +422,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Cópia de Segurança Automática</string>
     <string name="pref_autobackupsummary">Cópia de segurança semanal das tuas listas, séries e filmes</string>
-    <string name="autobackup_details">Essas cópias de segurança não estarão disponíveis se a aplicação for reinstalada novamente, a menos que a cópia de segurança da aplicação esteja ativada para este dispositivo (Android 6+). Casio contrário, crie cópias para preservá-las.</string>
+    <string name="autobackup_details">Essas cópias de segurança não estarão disponíveis se a aplicação for reinstalada novamente, a menos que a cópia de segurança da aplicação esteja ativada para este dispositivo (Android 6+). Caso contrário, crie cópias para preservá-las.</string>
     <string name="last_auto_backup">Última Cópia de Segurança Automática: %s</string>
     <string name="restore_auto_backup">Restaurar Cópia de Segurança Automática</string>
     <string name="autobackup_failed">A última cópia de segurança automática não foi efectuada com sucesso</string>
@@ -428,7 +430,7 @@
     <string name="autobackup_create_user_copy">Cria uma cópia após cada cópia de segurança</string>
     <string name="autobackup_restore_available">Uma cópia de segurança automática pode estar disponível para ser restaurada.</string>
     <!-- Welcome dialog -->
-    <string name="get_started">Não deixes para amanhã!</string>
+    <string name="get_started">Começar</string>
     <string name="dismiss">Dispensar</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s brevemente</string>
@@ -468,11 +470,11 @@
     <string name="billing_action_pass">Obter X Pass</string>
     <string name="billing_price_subscribe">%1$s/ano, experimenta gratuitamente, cancela a qualquer momento através de %2$s</string>
     <string name="billing_duration_format">%1$s/ano</string>
-    <string name="billing_sub_description">Experimenta gratuitamente, cancela a qualquer momento.</string>
+    <string name="billing_sub_description">Experimenta gratuitamente durante 30 dias, cancela a qualquer momento.</string>
     <string name="billing_price_pass">compra única</string>
-    <string name="upgrade_description">Desbloqueias todas as funcionalidades, incluindo notificações, temas e mais opções na lista de widgets. E ajudas-me a fazer atualizações futuras.</string>
+    <string name="upgrade_description">Cada subscrição desbloqueia todas as funcionalidades e suporta atualizações futuras. Não é necessário subscrever para usar a aplicação.</string>
     <string name="upgrade_success">Obrigado por apoiares o SeriesGuide! Tens agora acesso a todas as funcionalidades.</string>
-    <string name="billing_learn_more">Porquê pagar? Saiba mais.</string>
+    <string name="billing_learn_more">Mais Informações e Ajuda</string>
     <string name="subscription_expired">Subscrição expirada</string>
     <string name="subscription_expired_details">A tua subscrição no SeriesGuide expirou.</string>
     <!-- Amazon In-App Billing -->

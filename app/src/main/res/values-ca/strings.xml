@@ -331,6 +331,8 @@
     <string name="feedback">Envia comentaris</string>
     <string name="action_open_in_browser">Obre al navegador</string>
     <!-- Settings -->
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Avançat</string>
     <string name="prefs_category_about">Quant a</string>
     <string name="pref_onlyfuture">Amaga episodis emesos</string>
@@ -469,11 +471,11 @@ Creeu còpies per preservar-les d\'una altra manera</string>
     <string name="billing_action_pass">Obtenir un «X Pass»</string>
     <string name="billing_price_subscribe">%1$s/any, prova de forma gratuïta, cancel·la en qualsevol moment mitjançant %2$s</string>
     <string name="billing_duration_format">%1$s l\'any</string>
-    <string name="billing_sub_description">Proveu gratuïtament, cancel·leu en qualsevol moment.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">compra única</string>
-    <string name="upgrade_description">Desbloqueja totes les opcions, incloent\'hi notificacions, temes i més opcions de llista de widget. Ajuda\'m a fer futures actualitzacions.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Gràcies per donar support a SeriesGuide! Tens accés a totes les opcions.</string>
-    <string name="billing_learn_more">Per què pagar? Vegeu més informació.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">La subscripció ha caducat</string>
     <string name="subscription_expired_details">La subscripció a les característiques X ha caducat.</string>
     <!-- Amazon In-App Billing -->

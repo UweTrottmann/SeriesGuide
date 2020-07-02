@@ -331,6 +331,8 @@
     <string name="feedback">Enviar comentários</string>
     <string name="action_open_in_browser">Abrir no navegador</string>
     <!-- Settings -->
+    <string name="action_translate">Traduza este aplicativo</string>
+    <string name="action_contribute_content">Traduza ou melhore o conteúdo</string>
     <string name="prefs_category_advanced">Avançado</string>
     <string name="prefs_category_about">Sobre</string>
     <string name="pref_onlyfuture">Ocultar episódios exibidos</string>
@@ -468,11 +470,11 @@
     <string name="billing_action_pass">Adquira o X Pass</string>
     <string name="billing_price_subscribe">%1$s/ano, teste gratuitamente, cancele a qualquer momento até %2$s</string>
     <string name="billing_duration_format">%1$s/ano</string>
-    <string name="billing_sub_description">Teste grátis, cancele a qualquer momento.</string>
+    <string name="billing_sub_description">Teste grátis por 30 dias, cancele a qualquer momento</string>
     <string name="billing_price_pass">Compra única</string>
-    <string name="upgrade_description">Desbloqueie todos os recursos incluindo notificações, temas e mais opções de widget. Me ajude a trazer as futuras atualizações.</string>
+    <string name="upgrade_description">Toda assinatura desbloqueia os recursos e apoia atualizações futuras. Uma assinatura não é necessária para usar o aplicativo.</string>
     <string name="upgrade_success">Obrigado por apoiar o SeriesGuide! Você agora tem acesso a todos os recursos.</string>
-    <string name="billing_learn_more">Por que pagar? Saiba mais</string>
+    <string name="billing_learn_more">Mais informações e ajuda</string>
     <string name="subscription_expired">Assinatura expirada</string>
     <string name="subscription_expired_details">Sua assinatura do SeriesGuide expirou</string>
     <!-- Amazon In-App Billing -->

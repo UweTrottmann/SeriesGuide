@@ -112,10 +112,10 @@
     <string name="action_watched">Visto</string>
     <string name="action_unwatched">No visto</string>
     <string name="state_watched">Visto</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_skipped">Omitido</string>
+    <string name="state_in_collection">En colección</string>
+    <string name="state_on_watchlist">En la lista de visualización</string>
+    <string name="state_favorite">Favorito</string>
     <!-- Shows -->
     <string name="confirm_delete">¿Realmente desea eliminar %s?</string>
     <string name="delete_error">No se pudo borrar la serie. Inténtalo más tarde.</string>
@@ -332,6 +332,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="feedback">Enviar comentarios</string>
     <string name="action_open_in_browser">Abrir en el navegador</string>
     <!-- Settings -->
+    <string name="action_translate">Traducir esta aplicación</string>
+    <string name="action_contribute_content">Traducir o mejorar el contenido</string>
     <string name="prefs_category_advanced">Avanzado</string>
     <string name="prefs_category_about">Acerca de</string>
     <string name="pref_onlyfuture">No hay episodios emitidos</string>
@@ -469,11 +471,11 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="billing_action_pass">Obtener X Pass</string>
     <string name="billing_price_subscribe">%1$s/año, prueba gratuita, cancela en cualquier momento mediante %2$s</string>
     <string name="billing_duration_format">%1$s/año</string>
-    <string name="billing_sub_description">Pruebe gratis, cancele en cualquier momento.</string>
+    <string name="billing_sub_description">Pruebe 30 días gratis. Cancela cuando quieras.</string>
     <string name="billing_price_pass">Compra por única vez</string>
-    <string name="upgrade_description">Desbloquea todas las funciones incluyendo notificaciones, temas y mas opciones para los widgets. Ayudame a hacer futuras actualizaciones.</string>
+    <string name="upgrade_description">Cada suscripción desbloquea todas las funciones y soporta actualizaciones futuras. No se requiere una suscripción para usar esta aplicación.</string>
     <string name="upgrade_success">Gracias por apoyar a SeriesGuide! Tienes acceso a todas las funciones.</string>
-    <string name="billing_learn_more">¿Por qué deberías pagar? Lee más.</string>
+    <string name="billing_learn_more">Más información y ayuda.</string>
     <string name="subscription_expired">Suscripción caducada</string>
     <string name="subscription_expired_details">Tu suscripción a las características X ha caducado.</string>
     <!-- Amazon In-App Billing -->

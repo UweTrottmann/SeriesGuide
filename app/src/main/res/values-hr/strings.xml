@@ -339,6 +339,8 @@
     <string name="feedback">Pošalji povratne informacije</string>
     <string name="action_open_in_browser">Otvori u pregledniku</string>
     <!-- Settings -->
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Napredno</string>
     <string name="prefs_category_about">O aplikaciji</string>
     <string name="pref_onlyfuture">Nema emitiranih epizoda</string>
@@ -479,11 +481,11 @@
     <string name="billing_action_pass">Nabavi X Pass</string>
     <string name="billing_price_subscribe">%1$s/godina, isprobajte besplatno, otkažite bilo kad kroz %2$s</string>
     <string name="billing_duration_format">%1$s/godišnje</string>
-    <string name="billing_sub_description">Probaj besplatno, otkaži u bilo kojem trenutku.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">Jednokratna kupnja</string>
-    <string name="upgrade_description">Otključajte sve značajke uključujući obavijesti, teme i više opcija widgeta s popisom. Pomozite mi napraviti buduća ažuriranja.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Hvala vam što podržavate SeriesGuide! Sada imate pristup svim značajkama.</string>
-    <string name="billing_learn_more">Zašto platiti? Saznajte više.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Pretplata istekla</string>
     <string name="subscription_expired_details">Tvoja pretplata na X mogućnosti je istekla.</string>
     <!-- Amazon In-App Billing -->

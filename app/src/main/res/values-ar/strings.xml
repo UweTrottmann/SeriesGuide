@@ -363,6 +363,8 @@
     <string name="feedback">أرسل ملاحظاتك</string>
     <string name="action_open_in_browser">فتح في المتصفح</string>
     <!-- Settings -->
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">متقدم</string>
     <string name="prefs_category_about">حول</string>
     <string name="pref_onlyfuture">عدم إظهار الحلقات التي تم عرضها</string>
@@ -512,11 +514,11 @@
     <string name="billing_action_pass">أحصل على X Pass</string>
     <string name="billing_price_subscribe">%1$s/سنة، جرب مجاناً، و قم بالإلغاء في أي وقت عبر %2$s</string>
     <string name="billing_duration_format">%1$s/سنة</string>
-    <string name="billing_sub_description">جربه مجانا, الغ متى شئت.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">الشراء يكون مرة واحدة</string>
-    <string name="upgrade_description">فتح جميع الميزات بما في ذلك التنبيهات والتصميم والمزيد من الميزات. مساعدتي في التحديثات المستقبلية.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">شكرا لك لدعم SeriesGuide! . لديك حق الوصول إلى كافة الميزات .</string>
-    <string name="billing_learn_more">لماذا تدفع؟ إعرف أكثر.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">انتهت مدة الإشتراك</string>
     <string name="subscription_expired_details">انتهت مدة اشتراك في البرنامج المدفوع.</string>
     <!-- Amazon In-App Billing -->

@@ -347,6 +347,8 @@
     <string name="feedback">Wyślij opinię</string>
     <string name="action_open_in_browser">Otwórz w przeglądarce</string>
     <!-- Settings -->
+    <string name="action_translate">Przetłumacz aplikację</string>
+    <string name="action_contribute_content">Przetłumacz lub ulepsz tłumaczenie</string>
     <string name="prefs_category_advanced">Zaawansowane</string>
     <string name="prefs_category_about">O programie</string>
     <string name="pref_onlyfuture">Bez wyemitowanych</string>
@@ -490,11 +492,11 @@
     <string name="billing_action_pass">Kup X Pass</string>
     <string name="billing_price_subscribe">%1$s na rok. Wypróbuj za darmo. Anuluj w każdym momencie przy użyciu %2$s</string>
     <string name="billing_duration_format">%1$s/rok</string>
-    <string name="billing_sub_description">Wypróbuj za darmo. Anuluj w każdym momencie.</string>
+    <string name="billing_sub_description">Wypróbuj przez 30 dni. Anuluj w dowolnym momencie.</string>
     <string name="billing_price_pass">jednorazowy zakup</string>
-    <string name="upgrade_description">Odblokowuje pełną funkcjonalność: powiadomienia, skórki oraz więcej opcji widżetu. Dzięki temu wspomagasz przyszłe aktualizacje.</string>
+    <string name="upgrade_description">Każda subskrypcja odblokowuje wszystkie funkcje i wspiera kolejne aktualizacje. Subskrypcja nie jest wymagana do korzystania z tej aplikacji.</string>
     <string name="upgrade_success">Dziękujemy za wsparcie SeriesGuide! Masz dostęp do wszystkich funkcji.</string>
-    <string name="billing_learn_more">Po co płacić? Dowiedz się więcej.</string>
+    <string name="billing_learn_more">Więcej informacji i pomoc</string>
     <string name="subscription_expired">Subskrypcja wygasła</string>
     <string name="subscription_expired_details">Twoje funkcję X wygasły.</string>
     <!-- Amazon In-App Billing -->

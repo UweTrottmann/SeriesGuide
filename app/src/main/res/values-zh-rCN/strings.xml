@@ -323,6 +323,8 @@
     <string name="feedback">发送反馈报告</string>
     <string name="action_open_in_browser">在浏览器中打开</string>
     <!-- Settings -->
+    <string name="action_translate">翻译此应用</string>
+    <string name="action_contribute_content">翻译或改进内容</string>
     <string name="prefs_category_advanced">高级</string>
     <string name="prefs_category_about">关于</string>
     <string name="pref_onlyfuture">不显示已播剧集</string>
@@ -457,11 +459,11 @@
     <string name="billing_action_pass">购买 SeriesGuide X</string>
     <string name="billing_price_subscribe">%1$s 每年，免费试用，通过 %2$s 随时取消订阅</string>
     <string name="billing_duration_format">%1$s / 年</string>
-    <string name="billing_sub_description">免费试用，随时取消。</string>
+    <string name="billing_sub_description">免费试用 30 天，随时取消。</string>
     <string name="billing_price_pass">一次性支付</string>
-    <string name="upgrade_description">解锁完整版应用程序，包括推送通知、主题、微件等功能。您支付的费用将帮助作者开发和完善新功能。</string>
+    <string name="upgrade_description">每种订阅都会解锁所有功能并支持未来的更新。使用此应用程序无需订阅。</string>
     <string name="upgrade_success">恭喜，您已解锁全部高级功能！感谢您的支持！</string>
-    <string name="billing_learn_more">升级为专业版有哪些优势？</string>
+    <string name="billing_learn_more">更多信息与帮助</string>
     <string name="subscription_expired">订阅已过期</string>
     <string name="subscription_expired_details">您的专业版订阅已过期。</string>
     <!-- Amazon In-App Billing -->

@@ -5,7 +5,7 @@
     <string name="lists">Listeler</string>
     <string name="movies">Filmler</string>
     <string name="statistics">İstatistikler</string>
-    <string name="navigation_more">Daha fazla</string>
+    <string name="navigation_more">Daha Fazla</string>
     <string name="search">Ara</string>
     <string name="preferences">Ayarlar</string>
     <string name="help">Yardım</string>
@@ -115,7 +115,7 @@
     <string name="state_skipped">Skipped</string>
     <string name="state_in_collection">In collection</string>
     <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_favorite">Favori</string>
     <!-- Shows -->
     <string name="confirm_delete">%s öğesini silmek istediğinize emin misiniz?</string>
     <string name="delete_error">Dizi kaldırılamadı. Sonra tekrar deneyin.</string>
@@ -331,6 +331,8 @@
     <string name="feedback">Geribildirim Gönder</string>
     <string name="action_open_in_browser">Tarayıcıda aç</string>
     <!-- Settings -->
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Gelişmiş</string>
     <string name="prefs_category_about">Hakkında</string>
     <string name="pref_onlyfuture">Yayınlanan bölüm yok</string>
@@ -468,11 +470,11 @@
     <string name="billing_action_pass">X Pass alın</string>
     <string name="billing_price_subscribe">%1$s/yıl, ücretsiz dene, %2$s üzerinden istediğin zaman iptal et</string>
     <string name="billing_duration_format">%1$s/yıl</string>
-    <string name="billing_sub_description">Ücretsiz dene, istediğin zaman vazgeç.</string>
+    <string name="billing_sub_description">30 gün ücretsiz dene, istediğin zaman iptal et</string>
     <string name="billing_price_pass">tek seferlik ödeme</string>
-    <string name="upgrade_description">Bildirimler, temalar, daha fazla widgetlar gibi özellikleri acın ve uygulamayı geliştirmeme yardım edin.</string>
+    <string name="upgrade_description">Her abonelik, tüm özelliklerin kilidini açar ve gelecekteki güncellemeleri destekler. Bu uygulamayı kullanmak için herhangi bir abonelik gerekli değildir.</string>
     <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>
-    <string name="billing_learn_more">Neden ödeme yapasınız? Daha fazla bilgi edinin.</string>
+    <string name="billing_learn_more">Daha fazla bilgi ve yardım</string>
     <string name="subscription_expired">Abonelik sona erdi</string>
     <string name="subscription_expired_details">X özellikleri abonelik süresi doldu.</string>
     <!-- Amazon In-App Billing -->

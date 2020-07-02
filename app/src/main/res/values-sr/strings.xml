@@ -339,6 +339,8 @@
     <string name="feedback">Пошаљи повратне информације</string>
     <string name="action_open_in_browser">Open in browser</string>
     <!-- Settings -->
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Напредно</string>
     <string name="prefs_category_about">О апликацији</string>
     <string name="pref_onlyfuture">Нема емитованих епизода</string>
@@ -481,9 +483,9 @@
     <string name="billing_duration_format">%1$s/year</string>
     <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">доживотна куповина</string>
-    <string name="upgrade_description">Откључај све опције укључујући нотификације, теме и више опција за листе. Помозите ми са будућим унапређењима.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Хвала што сте подржали SeriesGuide! Омогућен вам је приступ свим опцијама.</string>
-    <string name="billing_learn_more">Зашто се претплатити? Сазнај више.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Претплата је истекла</string>
     <string name="subscription_expired_details">Ваша претплата за Х опције је истекла.</string>
     <!-- Amazon In-App Billing -->

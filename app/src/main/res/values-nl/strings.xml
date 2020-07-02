@@ -331,6 +331,8 @@
     <string name="feedback">Reactie verzenden</string>
     <string name="action_open_in_browser">Openen in browser</string>
     <!-- Settings -->
+    <string name="action_translate">Deze app vertalen</string>
+    <string name="action_contribute_content">Inhoud vertalen of verbeteren</string>
     <string name="prefs_category_advanced">Geavanceerd</string>
     <string name="prefs_category_about">Over</string>
     <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
@@ -468,11 +470,11 @@
     <string name="billing_action_pass">Neem X Pass</string>
     <string name="billing_price_subscribe">%1$s/jaar, probeer gratis, annuleer op elk moment via %2$s</string>
     <string name="billing_duration_format">%1$s/jaar</string>
-    <string name="billing_sub_description">Probeer het gratis uit, annuleer op elk moment.</string>
+    <string name="billing_sub_description">30 dagen gratis proberen, annuleren op elk moment.</string>
     <string name="billing_price_pass">eenmalige aankoop</string>
-    <string name="upgrade_description">Ontgrendel alle functies, inclusief meldingen, thema\'s en meer lijstopties voor widgets. Help me toekomstige updates te maken.</string>
+    <string name="upgrade_description">Elk abonnement ontgrendelt alle functies en ondersteunt toekomstige updates. Een abonnement is niet vereist om deze app te gebruiken.</string>
     <string name="upgrade_success">Bedankt om SeriesGuide te steunen! U heeft toegang tot alle functies.</string>
-    <string name="billing_learn_more">Waarom betalen? Lees meer.</string>
+    <string name="billing_learn_more">Meer informatie en ondersteuning</string>
     <string name="subscription_expired">Abonnement verlopen</string>
     <string name="subscription_expired_details">Uw abonnement voor SeriesGuide is verlopen</string>
     <!-- Amazon In-App Billing -->

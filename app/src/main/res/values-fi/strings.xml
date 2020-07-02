@@ -331,6 +331,8 @@
     <string name="feedback">Lähetä palautetta</string>
     <string name="action_open_in_browser">Avaa selaimessa</string>
     <!-- Settings -->
+    <string name="action_translate">Käännä tämä sovellus</string>
+    <string name="action_contribute_content">Käännä tai paranna sisältöä</string>
     <string name="prefs_category_advanced">Edistyneet</string>
     <string name="prefs_category_about">Tietoja</string>
     <string name="pref_onlyfuture">Ei esitettyjä jaksoja</string>
@@ -468,11 +470,11 @@
     <string name="billing_action_pass">Hanki X Pass</string>
     <string name="billing_price_subscribe">%1$s/vuosi, kokeile ilmaiseksi, peruuta milloin tahansa %2$s Kaupan kautta</string>
     <string name="billing_duration_format">%1$s/vuosi</string>
-    <string name="billing_sub_description">Kokeile ilmaiseksi, peruuta milloin tahansa.</string>
+    <string name="billing_sub_description">Kokeile 30 päivää ilmaiseksi, peruuta milloin tahansa.</string>
     <string name="billing_price_pass">kertaluontoinen osto</string>
-    <string name="upgrade_description">Avaa kaikki ominaisuudet, kuten ilmoitukset, teemat ja lisää listawidgetin vaihtoehtoja. Auta minua tekemään tulevia päivityksiä.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Kiitos SeriesGuiden tukemisesta! Voit käyttää kaikkia ominaisuuksia.</string>
-    <string name="billing_learn_more">Miksi maksaisit? Lue lisää.</string>
+    <string name="billing_learn_more">Lisätietoja ja apua</string>
     <string name="subscription_expired">Tilaus vanhentunut</string>
     <string name="subscription_expired_details">SeriesGuide-tilauksesi on vanhentunut.</string>
     <!-- Amazon In-App Billing -->

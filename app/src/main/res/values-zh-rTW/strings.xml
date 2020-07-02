@@ -323,6 +323,8 @@
     <string name="feedback">傳送反饋意見</string>
     <string name="action_open_in_browser">於瀏覽器中開啟</string>
     <!-- Settings -->
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">進階</string>
     <string name="prefs_category_about">關於本軟體</string>
     <string name="pref_onlyfuture">無已播出集數</string>
@@ -457,11 +459,11 @@
     <string name="billing_action_pass">取得 X Pass</string>
     <string name="billing_price_subscribe">每年%1$s，免費試用，可在%2$s 內隨時取消。</string>
     <string name="billing_duration_format">%1$s / 年</string>
-    <string name="billing_sub_description">免費試用，可隨時取消。</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">一次購買</string>
-    <string name="upgrade_description">解鎖所有功能，包括通知、 主題和更多清單小部件。幫助我進行更多地更新。</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">謝謝贊助SeriesGuide ！您可以使用的所有功能。</string>
-    <string name="billing_learn_more">為什麼要付錢？瞭解更多資訊。</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">訂閱已過期</string>
     <string name="subscription_expired_details">您的 SeriesGuide 訂閱已過期。</string>
     <!-- Amazon In-App Billing -->

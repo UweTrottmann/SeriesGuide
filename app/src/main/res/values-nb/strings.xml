@@ -331,6 +331,8 @@
     <string name="feedback">Gi tilbakemelding</string>
     <string name="action_open_in_browser">Åpne i nettleser</string>
     <!-- Settings -->
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Avansert</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Ingen sendte episoder</string>
@@ -470,9 +472,9 @@
     <string name="billing_duration_format">%1$s/year</string>
     <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">engangskjøp</string>
-    <string name="upgrade_description">Lås opp alle funksjonene inkludert varslinger, temaer og flere alternativer for modulen. Hjelp meg å lage fremtidige oppdateringer.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Takk for at du støtter SeriesGuide! Du har nå tilgang til alle funksjonene.</string>
-    <string name="billing_learn_more">Fordeler med å betale</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Abonnement utløpt</string>
     <string name="subscription_expired_details">X Pass-abonnementet har utløpt.</string>
     <!-- Amazon In-App Billing -->

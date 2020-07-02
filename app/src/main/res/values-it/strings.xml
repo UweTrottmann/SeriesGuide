@@ -331,6 +331,8 @@
     <string name="feedback">Invia feedback</string>
     <string name="action_open_in_browser">Apri nel browser</string>
     <!-- Settings -->
+    <string name="action_translate">Traduci l\'app</string>
+    <string name="action_contribute_content">Traduci o migliora i contenuti</string>
     <string name="prefs_category_advanced">Avanzate</string>
     <string name="prefs_category_about">Info su</string>
     <string name="pref_onlyfuture">Nessun episodio in onda</string>
@@ -468,11 +470,11 @@
     <string name="billing_action_pass">Ottieni X Pass</string>
     <string name="billing_price_subscribe">%1$s/anno, prova gratuita, annulla in qualsiasi momento tramite %2$s</string>
     <string name="billing_duration_format">%1$s/anno</string>
-    <string name="billing_sub_description">Prova gratis, annulla in qualsiasi momento.</string>
+    <string name="billing_sub_description">Prova 30 giorni gratis, annulla in qualsiasi momento.</string>
     <string name="billing_price_pass">paga una sola volta</string>
-    <string name="upgrade_description">Sblocca tutte le funzionalità, incluse le notifiche, i temi e maggiori opzioni per i widget delle liste. Aiutami a rendere possibile i futuri aggiornamenti.</string>
+    <string name="upgrade_description">Ogni abbonamento sblocca tutte le funzionalità e supporta gli aggiornamenti futuri. Non è necessario un abbonamento per utilizzare questa app.</string>
     <string name="upgrade_success">Grazie per il sostegno a SeriesGuide! Hai accesso a tutte le funzionalità.</string>
-    <string name="billing_learn_more">Perché pagare? Scopri di più.</string>
+    <string name="billing_learn_more">Più informazioni e aiuto</string>
     <string name="subscription_expired">Abbonamento scaduto</string>
     <string name="subscription_expired_details">Il tuo abbonamento alle funzioni X è scaduto.</string>
     <!-- Amazon In-App Billing -->

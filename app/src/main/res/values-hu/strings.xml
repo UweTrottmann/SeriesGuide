@@ -331,6 +331,8 @@
     <string name="feedback">Visszajelzés küldése</string>
     <string name="action_open_in_browser">Megnyitás böngészőben</string>
     <!-- Settings -->
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Haladó beállítások</string>
     <string name="prefs_category_about">A programról</string>
     <string name="pref_onlyfuture">Leadott epizódok nélkül</string>
@@ -468,11 +470,11 @@
     <string name="billing_action_pass">X Pass beszerzése</string>
     <string name="billing_price_subscribe">%1$s/év, próbálja ki ingyen, bármikor kiléphet a %2$s segítségével</string>
     <string name="billing_duration_format">%1$s/év</string>
-    <string name="billing_sub_description">Próbáld ki ingyen, lépj ki bármikor.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">Egyszeri fizetés</string>
-    <string name="upgrade_description">Old fel a összes funkciót, beleértve az értesítéseket, témákat és a több widget lista lehetőséget. Segíts, hogy frissíthessem a programot a jövőben is.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Köszönöm a támogatást. Most már hozzáférsz az összes funkcióhoz.</string>
-    <string name="billing_learn_more">Miért fizessek? Tudj meg többet.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Lejárt az előfizetés</string>
     <string name="subscription_expired_details">Lejárt a SeriesGuide előfizetésed.</string>
     <!-- Amazon In-App Billing -->
