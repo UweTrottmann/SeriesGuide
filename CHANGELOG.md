@@ -12,6 +12,14 @@ Version 55
 ----------
 *in development*
 
+#### 55-beta5
+*2020-07-02*
+
+* 🔧 Added fast scroller back to shows tab.
+* 🔧 Fast scroller indicator should track finger position more closely, feel more precise.
+* 📝 Latest translations from crowdin. Dropped Hindi, Latvian, Lithuanian and Slovenian due to
+  largely incomplete translation.
+
 #### 55-beta4
 *2020-06-26*
 
