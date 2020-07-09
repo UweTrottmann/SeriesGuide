@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.streams;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.ListAdapter;
 import androidx.annotation.NonNull;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
@@ -18,9 +17,9 @@ public class UserEpisodeStreamFragment extends StreamFragment {
 
     @NonNull
     @Override
-    protected ListAdapter getListAdapter() {
+    protected BaseHistoryAdapter getListAdapter() {
         if (adapter == null) {
-            adapter = new EpisodeHistoryAdapter(getActivity(), itemClickListener);
+            adapter = new EpisodeHistoryAdapter(requireContext(), itemClickListener);
         }
         return adapter;
     }
@@ -39,10 +38,6 @@ public class UserEpisodeStreamFragment extends StreamFragment {
     }
 
     private EpisodeHistoryAdapter.OnItemClickListener itemClickListener = (view, item) -> {
-        if (item == null) {
-            return;
-        }
-
         if (item.episode == null || item.episode.season == null || item.episode.number == null
                 || item.show == null || item.show.ids == null || item.show.ids.tvdb == null) {
             // no episode or show? give up
@@ -89,9 +84,7 @@ public class UserEpisodeStreamFragment extends StreamFragment {
                     if (!isAdded()) {
                         return;
                     }
-                    adapter.setData(data.results);
-                    setEmptyMessage(data.emptyText);
-                    showProgressBar(false);
+                    setListData(data.results, data.emptyText);
                 }
 
                 @Override

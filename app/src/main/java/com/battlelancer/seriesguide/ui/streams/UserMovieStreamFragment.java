@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.streams;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ListAdapter;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
@@ -19,9 +18,9 @@ public class UserMovieStreamFragment extends StreamFragment {
 
     @NonNull
     @Override
-    protected ListAdapter getListAdapter() {
+    protected BaseHistoryAdapter getListAdapter() {
         if (adapter == null) {
-            adapter = new MovieHistoryAdapter(getActivity(), itemClickListener);
+            adapter = new MovieHistoryAdapter(requireContext(), itemClickListener);
         }
         return adapter;
     }
@@ -39,12 +38,8 @@ public class UserMovieStreamFragment extends StreamFragment {
     }
 
     private MovieHistoryAdapter.OnItemClickListener itemClickListener = (view, item) -> {
-        if (item == null) {
-            return;
-        }
-
         // display movie details
-        if (item.movie == null || item.movie.ids == null) {
+        if (item.movie == null || item.movie.ids == null || item.movie.ids.tmdb == null) {
             return;
         }
         Intent i = MovieDetailsActivity.intentMovie(getActivity(), item.movie.ids.tmdb);
@@ -69,9 +64,7 @@ public class UserMovieStreamFragment extends StreamFragment {
                     if (!isAdded()) {
                         return;
                     }
-                    adapter.setData(data.results);
-                    setEmptyMessage(data.emptyText);
-                    showProgressBar(false);
+                    setListData(data.results, data.emptyText);
                 }
 
                 @Override

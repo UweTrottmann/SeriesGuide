@@ -25,19 +25,20 @@
 
         </ScrollView>
 
-        <com.uwetrottmann.seriesguide.widgets.gridheaderview.StickyGridHeadersGridView
-            android:id="@+id/gridViewStream"
-            style="@style/Widget.SeriesGuide.Grid"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewStream"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:columnWidth="@dimen/showgrid_columnWidth"
-            android:numColumns="auto_fit" />
+            android:clipToPadding="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            tools:listitem="@layout/item_history" />
 
         <TextView
             android:id="@+id/poweredby"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="bottom|end"
             android:background="@color/protection_dark"
             android:padding="@dimen/default_padding"
             android:text="@string/powered_by_trakt"
