@@ -6,36 +6,58 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.collection.SparseArrayCompat
 import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.databinding.ItemHistoryBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
+import com.battlelancer.seriesguide.ui.streams.TraktEpisodeHistoryLoader.HistoryItem
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.trakt5.entities.HistoryEntry
+import java.util.Date
 
 class HistoryItemViewHolder(
     val binding: ItemHistoryBinding,
     itemClickListener: BaseHistoryAdapter.OnItemClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private var item: HistoryEntry? = null
+    private var historyEntry: HistoryEntry? = null
 
     init {
         binding.imageViewHistoryAvatar.isGone = true
-        binding.root.setOnClickListener { view ->
-            item?.let { itemClickListener.onItemClick(view, it) }
+        binding.constaintLayoutHistory.setOnClickListener { view ->
+            historyEntry?.let { itemClickListener.onItemClick(view, it) }
         }
     }
 
     fun bindCommon(
-        item: HistoryEntry,
+        item: HistoryItem,
+        previousItem: HistoryItem?,
         drawableWatched: Drawable,
-        drawableCheckIn: Drawable
+        drawableCheckIn: Drawable,
+        isMultiColumn: Boolean
     ) {
-        this.item = item
+        this.historyEntry = item.historyEntry
+
+        // optional header
+        val isShowingHeader = previousItem == null || previousItem.headerTime != item.headerTime
+        if (isMultiColumn) {
+            // In a multi-column layout it looks nicer if all items are inset by header height.
+            binding.textViewHistoryHeader.isInvisible = !isShowingHeader
+        } else {
+            binding.textViewHistoryHeader.isGone = !isShowingHeader
+        }
+        binding.textViewHistoryHeader.text = if (isShowingHeader) {
+            // display headers like "Mon in 3 days", also "today" when applicable
+            val context = binding.root.context.applicationContext
+            TimeTools.formatToLocalDayAndRelativeTime(context, Date(item.headerTime))
+        } else {
+            null
+        }
 
         // action type indicator
-        if ("watch" == item.action) {
+        if ("watch" == item.historyEntry.action) {
             // marked watched
             binding.imageViewHistoryType.setImageDrawable(drawableWatched)
         } else {
@@ -46,7 +68,7 @@ class HistoryItemViewHolder(
         binding.imageViewHistoryType.isEnabled = false
 
         // timestamp
-        val watchedAt = item.watched_at
+        val watchedAt = item.historyEntry.watched_at
         if (watchedAt != null) {
             val timestamp =
                 DateUtils.getRelativeTimeSpanString(
@@ -128,12 +150,14 @@ class HistoryItemViewHolder(
             )
         }
 
-        fun areContentsTheSame(oldItem: HistoryEntry, newItem: HistoryEntry): Boolean {
-            return oldItem.watched_at == newItem.watched_at
-                    && oldItem.action == newItem.action
-                    && oldItem.show?.title == newItem.show?.title
-                    && oldItem.episode?.title == newItem.episode?.title
-                    && oldItem.movie?.title == newItem.movie?.title
+        fun areContentsTheSame(oldItem: HistoryItem, newItem: HistoryItem): Boolean {
+            val old = oldItem.historyEntry
+            val new = newItem.historyEntry
+            return old.watched_at == new.watched_at
+                    && old.action == new.action
+                    && old.show?.title == new.show?.title
+                    && old.episode?.title == new.episode?.title
+                    && old.movie?.title == new.movie?.title
         }
     }
 

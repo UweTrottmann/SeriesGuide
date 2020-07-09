@@ -1,27 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayoutHistory"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:focusable="true"
-    android:foreground="?attr/selectableItemBackground">
+    android:orientation="vertical">
 
-    <!-- Add FrameLayout parent so we can set a selectable foreground that works on pre-M. -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/textViewHistoryHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="UselessParent">
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingTop="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:paddingBottom="0dp"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
+        tools:text="Recently Watched" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constaintLayoutHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true">
 
         <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewHistory"
             android:layout_width="@dimen/show_poster_width_default"
             android:layout_height="@dimen/show_poster_height_default"
-            android:layout_marginBottom="@dimen/grid_topbottom_padding"
-            android:layout_marginLeft="@dimen/grid_leftright_padding"
             android:layout_marginStart="@dimen/grid_leftright_padding"
+            android:layout_marginLeft="@dimen/grid_leftright_padding"
             android:layout_marginTop="@dimen/grid_topbottom_padding"
+            android:layout_marginBottom="@dimen/grid_topbottom_padding"
             app:cardBackgroundColor="?attr/sgColorBackgroundCard"
             app:cardPreventCornerOverlap="false"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -42,10 +54,10 @@
             android:id="@+id/imageViewHistoryAvatar"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
             android:contentDescription="@null"
             app:layout_constraintBottom_toBottomOf="@+id/textViewHistoryInfo"
             app:layout_constraintLeft_toRightOf="@+id/cardViewHistory"
@@ -56,8 +68,8 @@
             android:id="@+id/textViewHistoryInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
             android:layout_marginTop="16dp"
             android:ellipsize="end"
             android:maxLines="1"
@@ -72,12 +84,12 @@
             android:id="@+id/imageViewHistoryType"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="0dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="4dp"
-            android:layout_marginRight="8dp"
             android:layout_marginTop="0dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="0dp"
             android:contentDescription="@null"
             android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="@+id/textViewHistoryInfo"
@@ -92,11 +104,11 @@
             android:id="@+id/textViewHistoryShow"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
@@ -110,11 +122,11 @@
             android:id="@+id/textViewHistoryEpisode"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
@@ -127,4 +139,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</LinearLayout>

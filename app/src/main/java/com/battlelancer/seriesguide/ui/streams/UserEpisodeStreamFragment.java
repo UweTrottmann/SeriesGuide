@@ -75,7 +75,7 @@ public class UserEpisodeStreamFragment extends StreamFragment {
                 @Override
                 public Loader<TraktEpisodeHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
                     showProgressBar(true);
-                    return new TraktEpisodeHistoryLoader(getActivity());
+                    return new TraktEpisodeHistoryLoader(requireContext());
                 }
 
                 @Override
@@ -84,7 +84,7 @@ public class UserEpisodeStreamFragment extends StreamFragment {
                     if (!isAdded()) {
                         return;
                     }
-                    setListData(data.results, data.emptyText);
+                    setListData(data.getResults(), data.getEmptyText());
                 }
 
                 @Override

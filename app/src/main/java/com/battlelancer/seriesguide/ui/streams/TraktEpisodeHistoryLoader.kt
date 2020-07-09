@@ -13,16 +13,19 @@ import com.uwetrottmann.trakt5.entities.HistoryEntry
 import com.uwetrottmann.trakt5.entities.UserSlug
 import com.uwetrottmann.trakt5.enums.HistoryType
 import retrofit2.Call
+import java.util.Calendar
 
 /**
  * Loads the last few episodes watched on Trakt.
  */
-internal open class TraktEpisodeHistoryLoader(context: Context)
-    : GenericSimpleLoader<TraktEpisodeHistoryLoader.Result>(context) {
+open class TraktEpisodeHistoryLoader(context: Context) :
+    GenericSimpleLoader<TraktEpisodeHistoryLoader.Result>(context) {
 
-    class Result(
-        var results: List<HistoryEntry?>?,
-        var emptyText: String
+    data class HistoryItem(val headerTime: Long, val historyEntry: HistoryEntry)
+
+    data class Result(
+        val results: List<HistoryItem> = emptyList(),
+        val emptyText: String
     )
 
     override fun loadInBackground(): Result {
@@ -53,8 +56,16 @@ internal open class TraktEpisodeHistoryLoader(context: Context)
         return if (history == null) {
             buildResultFailure()
         } else {
+            val calendar = Calendar.getInstance()
             Result(
-                history,
+                history.mapNotNull { entry ->
+                    entry?.watched_at?.let {
+                        HistoryItem(
+                            calculateHeaderTime(calendar, it.toInstant().toEpochMilli()),
+                            entry
+                        )
+                    }
+                },
                 context.getString(emptyText)
             )
         }
@@ -80,9 +91,22 @@ internal open class TraktEpisodeHistoryLoader(context: Context)
         )
     }
 
+    /**
+     * Takes the action timestamp and "rounds" it down to shortly after midnight in the current
+     * device time zone.
+     */
+    private fun calculateHeaderTime(calendar: Calendar, timestampMs: Long): Long {
+        calendar.timeInMillis = timestampMs
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 1)
+        return calendar.timeInMillis
+    }
+
     private fun buildResultFailure(): Result {
         return Result(
-            null, context.getString(
+            emptyText = context.getString(
                 R.string.api_error_generic,
                 context.getString(R.string.trakt)
             )
@@ -91,8 +115,7 @@ internal open class TraktEpisodeHistoryLoader(context: Context)
 
     private fun buildResultFailure(@StringRes emptyTextResId: Int): Result {
         return Result(
-            null,
-            context.getString(emptyTextResId)
+            emptyText = context.getString(emptyTextResId)
         )
     }
 

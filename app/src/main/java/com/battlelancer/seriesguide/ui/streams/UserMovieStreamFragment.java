@@ -55,7 +55,7 @@ public class UserMovieStreamFragment extends StreamFragment {
                 @Override
                 public Loader<TraktMovieHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
                     showProgressBar(true);
-                    return new TraktMovieHistoryLoader(getActivity());
+                    return new TraktMovieHistoryLoader(requireContext());
                 }
 
                 @Override
@@ -64,7 +64,7 @@ public class UserMovieStreamFragment extends StreamFragment {
                     if (!isAdded()) {
                         return;
                     }
-                    setListData(data.results, data.emptyText);
+                    setListData(data.getResults(), data.getEmptyText());
                 }
 
                 @Override

@@ -9,12 +9,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.streams.TraktEpisodeHistoryLoader.HistoryItem
 import com.uwetrottmann.trakt5.entities.HistoryEntry
 
 abstract class BaseHistoryAdapter(
     val context: Context,
     val itemClickListener: OnItemClickListener
-) : ListAdapter<HistoryEntry, RecyclerView.ViewHolder>(
+) : ListAdapter<HistoryItem, RecyclerView.ViewHolder>(
     DIFF_CALLBACK
 ), AutoGridLayoutManager.SpanCountListener {
 
@@ -27,7 +28,6 @@ abstract class BaseHistoryAdapter(
     private var drawableCheckIn =
         AppCompatResources.getDrawable(context, R.drawable.ic_checkin_16dp)!!
 
-    // TODO
     private var isMultiColumn: Boolean = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -36,14 +36,23 @@ abstract class BaseHistoryAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is HistoryItemViewHolder) {
-            holder.bindCommon(getItem(position), drawableWatched, drawableCheckIn)
+            val currentItem = getItem(position)
+            val previousPosition = position - 1
+            val previousItem = if (previousPosition >= 0) getItem(previousPosition) else null
+            holder.bindCommon(
+                currentItem,
+                previousItem,
+                drawableWatched,
+                drawableCheckIn,
+                isMultiColumn
+            )
             onBindHistoryItemViewHolder(holder, getItem(position))
         }
     }
 
     abstract fun onBindHistoryItemViewHolder(
         holder: HistoryItemViewHolder,
-        item: HistoryEntry
+        item: HistoryItem
     )
 
     override fun onSetSpanCount(spanCount: Int) {
@@ -51,11 +60,11 @@ abstract class BaseHistoryAdapter(
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HistoryEntry>() {
-            override fun areItemsTheSame(oldItem: HistoryEntry, newItem: HistoryEntry) =
-                oldItem.id == newItem.id
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HistoryItem>() {
+            override fun areItemsTheSame(oldItem: HistoryItem, newItem: HistoryItem) =
+                oldItem.historyEntry.id == newItem.historyEntry.id
 
-            override fun areContentsTheSame(oldItem: HistoryEntry, newItem: HistoryEntry): Boolean =
+            override fun areContentsTheSame(oldItem: HistoryItem, newItem: HistoryItem): Boolean =
                 HistoryItemViewHolder.areContentsTheSame(oldItem, newItem)
         }
     }

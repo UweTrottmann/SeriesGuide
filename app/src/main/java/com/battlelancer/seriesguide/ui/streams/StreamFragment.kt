@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.databinding.FragmentStreamBinding
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.streams.TraktEpisodeHistoryLoader.HistoryItem
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.SgFastScroller
@@ -135,7 +136,7 @@ abstract class StreamFragment : Fragment() {
     /**
      * Submits data and an sets empty message to be shown if the data list is empty.
      */
-    fun setListData(data: List<HistoryEntry>, emptyMessage: String) {
+    fun setListData(data: List<HistoryItem>, emptyMessage: String) {
         listAdapter.submitList(data)
         setEmptyMessage(emptyMessage)
         showProgressBar(false)
