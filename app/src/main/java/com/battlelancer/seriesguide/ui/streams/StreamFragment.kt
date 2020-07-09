@@ -24,7 +24,6 @@ import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.SgFastScroller
 import com.uwetrottmann.androidutils.AndroidUtils
-import com.uwetrottmann.trakt5.entities.HistoryEntry
 
 /**
  * Displays a stream of activities that can be refreshed by the user via a swipe gesture (or an
@@ -49,6 +48,10 @@ abstract class StreamFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.floatingActionButtonStream.setOnClickListener {
+            Utils.launchWebsite(context, TRAKT_HISTORY_URL)
+        }
+
         binding.swipeRefreshLayoutStream.apply {
             setSwipeableChildren(R.id.scrollViewStream, R.id.recyclerViewStream)
             setOnRefreshListener { refreshStreamWithNetworkCheck() }
@@ -62,7 +65,6 @@ abstract class StreamFragment : Fragment() {
             )
         }
 
-        // TODO recycler view
         val layoutManager = AutoGridLayoutManager(
             context,
             R.dimen.showgrid_columnWidth, 1, 1,
@@ -75,7 +77,6 @@ abstract class StreamFragment : Fragment() {
             it.adapter = listAdapter
         }
         SgFastScroller(requireContext(), binding.recyclerViewStream)
-        // TODO empty view
 
         // set initial view states
         showProgressBar(true)
@@ -102,10 +103,6 @@ abstract class StreamFragment : Fragment() {
         return when (item.itemId) {
             R.id.menu_action_stream_refresh -> {
                 refreshStreamWithNetworkCheck()
-                true
-            }
-            R.id.menu_action_stream_web -> {
-                Utils.launchWebsite(context, TRAKT_HISTORY_URL)
                 true
             }
             else -> super.onOptionsItemSelected(item)
