@@ -8,21 +8,22 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListAdapter
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.FragmentStreamBinding
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
+import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.streams.TraktEpisodeHistoryLoader.HistoryItem
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.widgets.SgFastScroller
 import com.uwetrottmann.androidutils.AndroidUtils
-import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
-import com.uwetrottmann.seriesguide.widgets.gridheaderview.StickyGridHeadersGridView
 
 /**
  * Displays a stream of activities that can be refreshed by the user via a swipe gesture (or an
@@ -30,31 +31,29 @@ import com.uwetrottmann.seriesguide.widgets.gridheaderview.StickyGridHeadersGrid
  */
 abstract class StreamFragment : Fragment() {
 
-    private lateinit var contentContainer: EmptyViewSwipeRefreshLayout
-    private lateinit var gridView: StickyGridHeadersGridView
-    private lateinit var emptyView: TextView
-
-    private var adapter: ListAdapter? = null
+    private var _binding: FragmentStreamBinding? = null
+    private val binding get() = _binding!!
 
     /**
-     * Implementers should create their grid view adapter here.
+     * Implementers should create their history adapter here.
      */
-    protected abstract val listAdapter: ListAdapter
+    protected abstract val listAdapter: BaseHistoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_stream, container, false)
-        contentContainer = view.findViewById(R.id.swipeRefreshLayoutStream)
-        gridView = view.findViewById(R.id.gridViewStream)
-        emptyView = view.findViewById(R.id.emptyViewStream)
-        return view
+        _binding = FragmentStreamBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        contentContainer.apply {
-            setSwipeableChildren(R.id.scrollViewStream, R.id.gridViewStream)
+        binding.floatingActionButtonStream.setOnClickListener {
+            Utils.launchWebsite(context, TRAKT_HISTORY_URL)
+        }
+
+        binding.swipeRefreshLayoutStream.apply {
+            setSwipeableChildren(R.id.scrollViewStream, R.id.recyclerViewStream)
             setOnRefreshListener { refreshStreamWithNetworkCheck() }
             setProgressViewOffset(
                 false, resources.getDimensionPixelSize(
@@ -66,10 +65,18 @@ abstract class StreamFragment : Fragment() {
             )
         }
 
-        gridView.also {
-            it.emptyView = emptyView
-            it.setAreHeadersSticky(false)
+        val layoutManager = AutoGridLayoutManager(
+            context,
+            R.dimen.showgrid_columnWidth, 1, 1,
+            listAdapter
+        )
+
+        binding.recyclerViewStream.also {
+            it.setHasFixedSize(true)
+            it.layoutManager = layoutManager
+            it.adapter = listAdapter
         }
+        SgFastScroller(requireContext(), binding.recyclerViewStream)
 
         // set initial view states
         showProgressBar(true)
@@ -78,12 +85,10 @@ abstract class StreamFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        ViewTools.setSwipeRefreshLayoutColors(requireActivity().theme, contentContainer)
-
-        if (adapter == null) {
-            adapter = listAdapter
-        }
-        gridView.adapter = adapter
+        ViewTools.setSwipeRefreshLayoutColors(
+            requireActivity().theme,
+            binding.swipeRefreshLayoutStream
+        )
 
         initializeStream()
 
@@ -98,10 +103,6 @@ abstract class StreamFragment : Fragment() {
         return when (item.itemId) {
             R.id.menu_action_stream_refresh -> {
                 refreshStreamWithNetworkCheck()
-                true
-            }
-            R.id.menu_action_stream_web -> {
-                Utils.launchWebsite(context, TRAKT_HISTORY_URL)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -124,11 +125,24 @@ abstract class StreamFragment : Fragment() {
         refreshStream()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     /**
-     * Changes the empty message.
+     * Submits data and an sets empty message to be shown if the data list is empty.
      */
-    protected fun setEmptyMessage(emptyMessage: String) {
-        emptyView.text = emptyMessage
+    fun setListData(data: List<HistoryItem>, emptyMessage: String) {
+        listAdapter.submitList(data)
+        setEmptyMessage(emptyMessage)
+        showProgressBar(false)
+        binding.recyclerViewStream.isGone = data.isEmpty()
+        binding.emptyViewStream.isGone = data.isNotEmpty()
+    }
+
+    private fun setEmptyMessage(emptyMessage: String) {
+        binding.emptyViewStream.text = emptyMessage
     }
 
     /**
@@ -163,7 +177,7 @@ abstract class StreamFragment : Fragment() {
      * wrapping the stream view.
      */
     protected fun showProgressBar(isShowing: Boolean) {
-        contentContainer.isRefreshing = isShowing
+        binding.swipeRefreshLayoutStream.isRefreshing = isShowing
     }
 
     companion object {

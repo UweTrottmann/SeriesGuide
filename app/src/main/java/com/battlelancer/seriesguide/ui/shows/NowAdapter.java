@@ -38,6 +38,8 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     protected static class HistoryViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.textViewHistoryHeader) public TextView header;
+        @BindView(R.id.constaintLayoutHistory) public ViewGroup containerItem;
         @BindView(R.id.textViewHistoryShow) public TextView show;
         @BindView(R.id.textViewHistoryEpisode) public TextView episode;
         @BindView(R.id.imageViewHistoryPoster) public ImageView poster;
@@ -48,12 +50,13 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public HistoryViewHolder(View itemView, final ItemClickListener listener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(v -> {
+            containerItem.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION && listener != null) {
                     listener.onItemClick(v, position);
                 }
             });
+            header.setVisibility(View.GONE); // Only used in history-only view.
         }
     }
 
