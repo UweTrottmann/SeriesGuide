@@ -41,6 +41,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <com.battlelancer.seriesguide.widgets.SyncStatusView
+                    android:id="@+id/syncStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/large_padding"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:layout_marginEnd="@dimen/large_padding"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewNoMoreUpdates" />
+
                 <LinearLayout
                     android:id="@+id/containerTrakt"
                     android:layout_width="0dp"
@@ -55,7 +66,7 @@
                     android:paddingBottom="@dimen/default_padding"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewNoMoreUpdates">
+                    app:layout_constraintTop_toBottomOf="@+id/syncStatus">
 
                     <TextView
                         android:id="@+id/textViewTrakt"
