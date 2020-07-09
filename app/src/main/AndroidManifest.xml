@@ -24,6 +24,14 @@
         android:name="android.hardware.touchscreen"
         android:required="false" />
 
+    <!-- On Android 11 (SDK 30), allow SeriesGuide to see apps providing extensions. -->
+    <!-- https://developer.android.com/preview/privacy/package-visibility -->
+    <queries>
+        <intent>
+            <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
+        </intent>
+    </queries>
+
     <application
         android:name="com.battlelancer.seriesguide.SgApp"
         android:allowBackup="true"
