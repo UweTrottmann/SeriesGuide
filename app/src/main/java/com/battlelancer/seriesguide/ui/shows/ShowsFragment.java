@@ -40,6 +40,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
+import timber.log.Timber;
 
 /**
  * Displays the list of shows in a users local library with sorting and filtering abilities. The
@@ -134,6 +135,10 @@ public class ShowsFragment extends Fragment {
             boolean isEmpty = !adapter.getDisplayFirstRunHeader()
                     && (showItems == null || showItems.isEmpty());
             updateEmptyView(isEmpty);
+
+            // Once latest data loaded, schedule next refresh.
+            // Only while resumed (onResume/onPause also schedule/un-schedule refresh).
+            scheduleQueryUpdate(true);
         });
         updateShowsQuery();
 
@@ -167,6 +172,7 @@ public class ShowsFragment extends Fragment {
     }
 
     private void updateShowsQuery() {
+        Timber.d("Running query update.");
         model.updateQuery(showFilter, ShowsDistillationSettings
                 .getSortQuery(showSortOrder.getSortOrderId(), showSortOrder.isSortFavoritesFirst(),
                         showSortOrder.isSortIgnoreArticles()));
@@ -200,21 +206,21 @@ public class ShowsFragment extends Fragment {
         super.onResume();
 
         // keep unwatched and upcoming shows from becoming stale
-        schedulePeriodicDataRefresh(true);
+//        scheduleDataRefresh(true);
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
-        // avoid CPU activity
-        schedulePeriodicDataRefresh(false);
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
+        // avoid CPU activity
+        scheduleQueryUpdate(false);
         EventBus.getDefault().unregister(this);
     }
 
@@ -271,7 +277,7 @@ public class ShowsFragment extends Fragment {
             }
             case DISMISS: {
                 adapter.setDisplayFirstRunHeader(false);
-                model.reRunQuery();
+                updateShowsQuery();
                 break;
             }
         }
@@ -284,22 +290,19 @@ public class ShowsFragment extends Fragment {
      * underlying data, but because time has passed (e.g. relative time displays, release time has
      * passed).
      */
-    private void schedulePeriodicDataRefresh(boolean enableRefresh) {
+    private void scheduleQueryUpdate(boolean isPostNotRemove) {
+        Timber.d(isPostNotRemove ? "Scheduling query update." : "Removing planned query update.");
         if (handler == null) {
             handler = new Handler();
         }
         handler.removeCallbacks(dataRefreshRunnable);
-        if (enableRefresh) {
+        if (isPostNotRemove) {
             handler.postDelayed(dataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
         }
     }
 
-    private Runnable dataRefreshRunnable = new Runnable() {
-        @Override
-        public void run() {
-            model.reRunQuery();
-        }
-    };
+    // Note: do not just re-run existing query, make sure timestamps in query are updated.
+    private Runnable dataRefreshRunnable = this::updateShowsQuery;
 
     private void startActivityAddShows() {
         startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
