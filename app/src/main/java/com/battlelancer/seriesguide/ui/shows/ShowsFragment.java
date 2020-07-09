@@ -147,7 +147,6 @@ public class ShowsFragment extends Fragment {
             // Only while resumed (onResume/onPause also schedule/un-schedule refresh).
             scheduleQueryUpdate(true);
         });
-        updateShowsQuery();
 
         // hide floating action button when scrolling shows
         FloatingActionButton buttonAddShow = requireActivity().findViewById(R.id.buttonShowsAdd);
@@ -206,8 +205,9 @@ public class ShowsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        // keep unwatched and upcoming shows from becoming stale
-//        scheduleDataRefresh(true);
+        // Run query every time resuming to get latest data
+        // (e.g. displaying unwatched/upcoming shows depends on current time).
+        updateShowsQuery();
     }
 
     @Override
