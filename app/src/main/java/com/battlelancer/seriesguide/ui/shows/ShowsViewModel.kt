@@ -101,8 +101,4 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
                 " ORDER BY $orderClause"
     }
 
-    fun reRunQuery() {
-        queryString.value = queryString.value
-    }
-
 }
