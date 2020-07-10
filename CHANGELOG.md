@@ -12,6 +12,14 @@ Version 55
 ----------
 *in development*
 
+#### 55-beta6
+*2020-07-10*
+
+* 🔧 Internal updates to Trakt history page, resolves rare crash.
+* 🔧 Add more prominent link to full history, fast scroller to Trakt history page.
+* 🔧 Display sync status and errors directly under More.
+* 🔨 Shows list did not update despite next episodes changing.
+
 #### 55-beta5
 *2020-07-02*
 
