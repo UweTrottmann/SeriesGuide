@@ -10,7 +10,18 @@ Release notes
 
 Version 55
 ----------
-*in development*
+*2020-07-16*
+
+* 🌟 Movie search results, popular, digital and disc release lists now display all items.
+* 🔧 More compact and cleaner statistics.
+* 🔧 Small design and layout tweaks.
+* 🔨 The app respects the system font size on Android 7 and older again.
+* 🔨 Removed subscription expired notification.
+
+#### 55
+*2020-07-16*
+
+* No changes.
 
 #### 55-beta6
 *2020-07-10*
