@@ -11,13 +11,12 @@
     <string name="help">Bantuan</string>
     <string name="no_more_updates">SeriesGuide tidak akan menerima pembaruan lagi untuk Android versi ini.</string>
     <!-- Media items -->
-    <string name="show">Acara</string>
+    <string name="show_details">Rincian</string>
     <string name="episode">Episode</string>
     <string name="episode_number">Episode %d</string>
     <string name="episodes">Episode</string>
     <string name="season">Musim</string>
     <string name="season_number">Musim %d</string>
-    <string name="seasons">Musim</string>
     <string name="specialseason">Episode Khusus</string>
     <string name="ratings">Peringkat</string>
     <!-- Descriptions -->
@@ -109,10 +108,13 @@
     <string name="action_dont_skip">Jangan lewati</string>
     <string name="action_collection_add">Tambah ke koleksi</string>
     <string name="action_collection_remove">Hapus dari koleksi</string>
-    <string name="action_collection_added">Ditambahkan ke koleksi</string>
-    <string name="action_collection_removed">Dihapus dari koleksi</string>
     <string name="action_watched">Ubah ditonton</string>
     <string name="action_unwatched">Ubah belum ditonton</string>
+    <string name="state_watched">Ditonton</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Apakah kau benar-benar ingin menghapus %s?</string>
     <string name="delete_error">Tidak dapat menghapus acara. Coba lagi nanti.</string>
@@ -194,7 +196,6 @@
     <string name="add_error">Tidak dapat menambah %s.</string>
     <string name="add_already_exists">%s sudah ada di daftar acara anda.</string>
     <string name="title_new_episodes">Episode baru</string>
-    <string name="recommended">Disarankan</string>
     <string name="watched_shows">Ditonton</string>
     <string name="shows_collection">Koleksi</string>
     <string name="watchlist">Daftar tontonan</string>
@@ -243,10 +244,8 @@
     <string name="shows_with_next">%s dengan episode berikutnya</string>
     <string name="shows_continuing">%s berlanjut</string>
     <string name="episodes_watched">%s ditonton</string>
-    <string name="runtime_all_episodes">lamanya semua episode yang sudah ditonton</string>
     <string name="movies_on_watchlist">%s di daftar tonton</string>
     <string name="movies_watched_format">%s ditonton</string>
-    <string name="runtime_movies_watchlist">lamanya daftar tonton film</string>
     <plurals name="days_plural">
         <item quantity="other">%d hari</item>
     </plurals>
@@ -289,7 +288,6 @@
     <string name="trakt_error_not_exists">Tidak (belum) tersedia pada trakt. Coba lagi nanti.</string>
     <string name="trakt_notice_not_exists">Tidak bisa (Belum) dilacak dengan trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">akun trakt</string>
     <string name="connect_trakt">Sambungkan trakt</string>
     <string name="trakt_reconnect">Sambungkan SeriesGuide ke trakt</string>
     <string name="trakt_reconnect_details">Periksa kredensial trakt Anda</string>
@@ -325,7 +323,8 @@
     <string name="feedback">Kirim tanggapan</string>
     <string name="action_open_in_browser">Buka di browser</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Dasar</string>
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Tingkat Lanjut</string>
     <string name="prefs_category_about">Tentang</string>
     <string name="pref_onlyfuture">Tidak Ada episode yang sudah ditayangkan</string>
@@ -460,11 +459,11 @@
     <string name="billing_action_pass">Dapatkan X Pass</string>
     <string name="billing_price_subscribe">%1$s/tahun, coba gratis, batalkan Kapan saja melalui %2$s</string>
     <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Coba gratis, batalkan kapan saja.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">pembelian satu kali</string>
-    <string name="upgrade_description">Buka semua fitur termasuk pemberitahuan, tema dan lebih banyak pilihan daftar widget. Membantu saya membuat pembaruan di masa mendatang.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Terima kasih telah mendukung SeriesGuide! Anda memiliki akses ke semua fitur.</string>
-    <string name="billing_learn_more">Mengapa membayar? Pelajari lebih lanjut.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Langganan berakhir</string>
     <string name="subscription_expired_details">Langganan SeriesGuide anda telah berakhir.</string>
     <!-- Amazon In-App Billing -->

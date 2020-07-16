@@ -17,9 +17,11 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Request;
 import com.squareup.picasso.RequestHandler;
+import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResult;
 import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResultResponse;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.io.IOException;
+import java.util.List;
 import okhttp3.CacheControl;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -68,13 +70,15 @@ public class SgPicassoRequestHandler extends RequestHandler {
                     // no posters for this language, fall back to default
                     posterResponse = tvdbTools.getSeriesPosters(showTvdbId, null);
                 }
-                if (posterResponse.isSuccessful() && posterResponse.body() != null && posterResponse.body().data != null) {
-                    String imagePath = TvdbTools.getHighestRatedPoster(
-                            posterResponse.body().data
-                    ).smallSize;
-                    String imageUrl = TvdbImageTools.artworkUrl(imagePath);
-                    if (imageUrl != null) {
-                        return loadFromNetwork(Uri.parse(imageUrl), networkPolicy);
+                if (posterResponse.isSuccessful() && posterResponse.body() != null) {
+                    List<SeriesImageQueryResult> data = posterResponse.body().data;
+                    if (data != null && !data.isEmpty()) {
+
+                        String imagePath = TvdbTools.getHighestRatedPoster(data).smallSize;
+                        String imageUrl = TvdbImageTools.artworkUrl(imagePath);
+                        if (imageUrl != null) {
+                            return loadFromNetwork(Uri.parse(imageUrl), networkPolicy);
+                        }
                     }
                 }
             } catch (TvdbException ignored) {

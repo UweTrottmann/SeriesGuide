@@ -11,13 +11,12 @@
     <string name="help">Помош</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
-    <string name="show">Серии</string>
+    <string name="show_details">Details</string>
     <string name="episode">Епизода</string>
     <string name="episode_number">Епизода %d</string>
     <string name="episodes">Епизоди</string>
     <string name="season">Сезона</string>
     <string name="season_number">Сезона %d</string>
-    <string name="seasons">Сезони</string>
     <string name="specialseason">Специјални епизоди</string>
     <string name="ratings">Оцени</string>
     <!-- Descriptions -->
@@ -110,10 +109,13 @@
     <string name="action_dont_skip">Не прескокнувај</string>
     <string name="action_collection_add">Додади во колекција</string>
     <string name="action_collection_remove">Одстрани од колекција</string>
-    <string name="action_collection_added">Додадено во колекција</string>
-    <string name="action_collection_removed">Избришано од колекција</string>
     <string name="action_watched">Гледано</string>
     <string name="action_unwatched">Негледано</string>
+    <string name="state_watched">Гледано</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Навистина ли сакате да ја избришете %s?</string>
     <string name="delete_error">Неможе да се избрише серијата. Пробајте повторно подоцна.</string>
@@ -198,7 +200,6 @@
     <string name="add_error">Неуспешно додавање на %s.</string>
     <string name="add_already_exists">%s веќе се наоѓа во вачата листа од серии.</string>
     <string name="title_new_episodes">Нови епизоди</string>
-    <string name="recommended">Препорачани</string>
     <string name="watched_shows">Гледано</string>
     <string name="shows_collection">Колекција</string>
     <string name="watchlist">Листа за гледање</string>
@@ -247,10 +248,8 @@
     <string name="shows_with_next">%s со следните епизоди</string>
     <string name="shows_continuing">%s продолжува</string>
     <string name="episodes_watched">%s гледано</string>
-    <string name="runtime_all_episodes">Време траење на сите гледани епизоди</string>
     <string name="movies_on_watchlist">%s во листа за гледање</string>
     <string name="movies_watched_format">%s гледано</string>
-    <string name="runtime_movies_watchlist">Траење на филмови во листа</string>
     <plurals name="days_plural">
         <item quantity="one">%d ден</item>
         <item quantity="other">%d денови</item>
@@ -296,7 +295,6 @@
     <string name="trakt_error_not_exists">Не е (сеуште) достапно на trakt. Пробајте подоцна.</string>
     <string name="trakt_notice_not_exists">Не може (сеуште) да бидат тракирани со trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt акаунт</string>
     <string name="connect_trakt">Поврзи trakt</string>
     <string name="trakt_reconnect">Конектирај SeriesGuide со trakt</string>
     <string name="trakt_reconnect_details">Провери го trakt профилот</string>
@@ -333,7 +331,8 @@
     <string name="feedback">Прати повратна информација</string>
     <string name="action_open_in_browser">Отвори browser</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Основи</string>
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Напредно</string>
     <string name="prefs_category_about">За</string>
     <string name="pref_onlyfuture">Не емитувани епизоди</string>
@@ -471,11 +470,11 @@
     <string name="billing_action_pass">Купи X Pass</string>
     <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
     <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">еднократно купување</string>
-    <string name="upgrade_description">Отклучување на сите функционалности, вклучувајќи нотификации, теми и повеќе опции за листата со widget. Помогнете да се направат нови надградби.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Ви благодариме за поддршката SeriesGuide! Вие имате пристап до сите функции.</string>
-    <string name="billing_learn_more">Зашто да платиш? Дознај повеќе.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Претплата истече</string>
     <string name="subscription_expired_details">Вашата SeriesGuide претплата истече.</string>
     <!-- Amazon In-App Billing -->

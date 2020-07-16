@@ -11,13 +11,12 @@
     <string name="help">帮助</string>
     <string name="no_more_updates">此版本的 Android 将不会收到更多 SeriesGuide 的更新。</string>
     <!-- Media items -->
-    <string name="show">节目</string>
+    <string name="show_details">详细信息</string>
     <string name="episode">剧集</string>
     <string name="episode_number">第 %d 集</string>
     <string name="episodes">剧集</string>
     <string name="season">季</string>
     <string name="season_number">第 %d 季</string>
-    <string name="seasons">季</string>
     <string name="specialseason">特别篇</string>
     <string name="ratings">评分</string>
     <!-- Descriptions -->
@@ -109,10 +108,13 @@
     <string name="action_dont_skip">标记为未跳过</string>
     <string name="action_collection_add">加入收藏列表</string>
     <string name="action_collection_remove">移出收藏列表</string>
-    <string name="action_collection_added">已添加到收藏列表</string>
-    <string name="action_collection_removed">已从收藏列表移除</string>
     <string name="action_watched">标记为已观看</string>
     <string name="action_unwatched">标记为未观看</string>
+    <string name="state_watched">已观看</string>
+    <string name="state_skipped">已跳过</string>
+    <string name="state_in_collection">在收藏中</string>
+    <string name="state_on_watchlist">在待看列表中</string>
+    <string name="state_favorite">收藏</string>
     <!-- Shows -->
     <string name="confirm_delete">您要删除 %s 节目吗？</string>
     <string name="delete_error">无法移除此节目</string>
@@ -194,7 +196,6 @@
     <string name="add_error">无法将 %s 加入节目单。</string>
     <string name="add_already_exists">%s 已存在于您的节目单中</string>
     <string name="title_new_episodes">新的剧集</string>
-    <string name="recommended">推荐</string>
     <string name="watched_shows">已观看</string>
     <string name="shows_collection">收藏</string>
     <string name="watchlist">待看列表</string>
@@ -243,10 +244,8 @@
     <string name="shows_with_next">%s 部节目仍有未观看剧集</string>
     <string name="shows_continuing">%s 部节目仍在连载</string>
     <string name="episodes_watched">%s 集已观看</string>
-    <string name="runtime_all_episodes">所有已看剧集的总时间</string>
     <string name="movies_on_watchlist">%s 部待看电影</string>
     <string name="movies_watched_format">%s 集已观看</string>
-    <string name="runtime_movies_watchlist">所有待看电影的总时间</string>
     <plurals name="days_plural">
         <item quantity="other">%d 天</item>
     </plurals>
@@ -289,7 +288,6 @@
     <string name="trakt_error_not_exists">trakt 上尚无相关信息，请稍后重试。</string>
     <string name="trakt_notice_not_exists">无法在 trakt 上追剧。</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt 帐户</string>
     <string name="connect_trakt">关联 trakt 帐户</string>
     <string name="trakt_reconnect">关联 SeriesGuide 与 trakt</string>
     <string name="trakt_reconnect_details">请检查 trakt 授权信息。</string>
@@ -325,7 +323,8 @@
     <string name="feedback">发送反馈报告</string>
     <string name="action_open_in_browser">在浏览器中打开</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">基本</string>
+    <string name="action_translate">翻译此应用</string>
+    <string name="action_contribute_content">翻译或改进内容</string>
     <string name="prefs_category_advanced">高级</string>
     <string name="prefs_category_about">关于</string>
     <string name="pref_onlyfuture">不显示已播剧集</string>
@@ -460,11 +459,11 @@
     <string name="billing_action_pass">购买 SeriesGuide X</string>
     <string name="billing_price_subscribe">%1$s 每年，免费试用，通过 %2$s 随时取消订阅</string>
     <string name="billing_duration_format">%1$s / 年</string>
-    <string name="billing_sub_description">免费试用，随时取消。</string>
+    <string name="billing_sub_description">免费试用 30 天，随时取消。</string>
     <string name="billing_price_pass">一次性支付</string>
-    <string name="upgrade_description">解锁完整版应用程序，包括推送通知、主题、微件等功能。您支付的费用将帮助作者开发和完善新功能。</string>
+    <string name="upgrade_description">每种订阅都会解锁所有功能并支持未来的更新。使用此应用程序无需订阅。</string>
     <string name="upgrade_success">恭喜，您已解锁全部高级功能！感谢您的支持！</string>
-    <string name="billing_learn_more">升级为专业版有哪些优势？</string>
+    <string name="billing_learn_more">更多信息与帮助</string>
     <string name="subscription_expired">订阅已过期</string>
     <string name="subscription_expired_details">您的专业版订阅已过期。</string>
     <!-- Amazon In-App Billing -->

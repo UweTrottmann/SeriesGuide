@@ -11,13 +11,12 @@
     <string name="help">Hjælp</string>
     <string name="no_more_updates">SeriesGuide modtager ikke flere opdateringer til denne version af Android.</string>
     <!-- Media items -->
-    <string name="show">Vis</string>
+    <string name="show_details">Detaljer</string>
     <string name="episode">Episode</string>
     <string name="episode_number">Episode %d</string>
     <string name="episodes">Episoder</string>
     <string name="season">Sæson</string>
     <string name="season_number">Sæson %d</string>
-    <string name="seasons">Sæsoner</string>
     <string name="specialseason">Særlige episoder</string>
     <string name="ratings">Bedømmelser</string>
     <!-- Descriptions -->
@@ -110,10 +109,13 @@
     <string name="action_dont_skip">Spring ikke over</string>
     <string name="action_collection_add">Føj til samling</string>
     <string name="action_collection_remove">Fjern fra samling</string>
-    <string name="action_collection_added">Føjet til samling</string>
-    <string name="action_collection_removed">Fjernet fra samling</string>
     <string name="action_watched">Markér som set</string>
     <string name="action_unwatched">Markér som ikke set</string>
+    <string name="state_watched">Set</string>
+    <string name="state_skipped">Sprunget over</string>
+    <string name="state_in_collection">I samling</string>
+    <string name="state_on_watchlist">På overvågningsliste</string>
+    <string name="state_favorite">Favorit</string>
     <!-- Shows -->
     <string name="confirm_delete">Sikker på, at du vil fjerne %s?</string>
     <string name="delete_error">Kunne ikke fjerne serie. Prøv igen senere.</string>
@@ -198,7 +200,6 @@
     <string name="add_error">Kunne ikke tilføje %s.</string>
     <string name="add_already_exists">%s er allerede på din serieliste.</string>
     <string name="title_new_episodes">Nye episoder</string>
-    <string name="recommended">Anbefalet</string>
     <string name="watched_shows">Set</string>
     <string name="shows_collection">Samling</string>
     <string name="watchlist">Overvågningsliste</string>
@@ -247,10 +248,8 @@
     <string name="shows_with_next">%s med kommende episoder</string>
     <string name="shows_continuing">%s fortsætter</string>
     <string name="episodes_watched">%s set</string>
-    <string name="runtime_all_episodes">varighed af alle sete episoder</string>
     <string name="movies_on_watchlist">%s på overvågningsliste</string>
     <string name="movies_watched_format">%s set</string>
-    <string name="runtime_movies_watchlist">varighed af film på overvågningsliste</string>
     <plurals name="days_plural">
         <item quantity="one">%d dag</item>
         <item quantity="other">%d dage</item>
@@ -296,7 +295,6 @@
     <string name="trakt_error_not_exists">Ikke tilgængelig på trakt (endnu). Prøv igen senere.</string>
     <string name="trakt_notice_not_exists">Kan ikke spores med trakt (endnu).</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt-konto</string>
     <string name="connect_trakt">Forbind til trakt</string>
     <string name="trakt_reconnect">Forbind SeriesGuide til trakt</string>
     <string name="trakt_reconnect_details">Kontrollér dine trakt-brugeroplysninger</string>
@@ -333,7 +331,8 @@
     <string name="feedback">Send feedback</string>
     <string name="action_open_in_browser">Åbn i browser</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Grundlæggende</string>
+    <string name="action_translate">Oversæt denne app</string>
+    <string name="action_contribute_content">Oversæt eller forbedr indhold</string>
     <string name="prefs_category_advanced">Avanceret</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Ingen sendte episoder</string>
@@ -471,11 +470,11 @@
     <string name="billing_action_pass">Få X Pass</string>
     <string name="billing_price_subscribe">%1$s/år, prøv gratis, afmeld når som helst via %2$s</string>
     <string name="billing_duration_format">%1$s/år</string>
-    <string name="billing_sub_description">Prøv gratis, opsig når som helst.</string>
+    <string name="billing_sub_description">Prøv 30 dage gratis, opsig når som helst.</string>
     <string name="billing_price_pass">engangskøb</string>
-    <string name="upgrade_description">Oplås alle funktioner, herunder meddelelser, temaer og flere widget-indstillinger. Hjælp os med at udvikle fremtidige opdateringer.</string>
+    <string name="upgrade_description">Hver type abonnement oplåser alle funktioner og støtter fremtidige opdateringer. Et abonnement er ikke påkrævet for at benytte denne app.</string>
     <string name="upgrade_success">Tak for din støtte til SeriesGuide! Du har nu adgang til alle funktioner.</string>
-    <string name="billing_learn_more">Hvorfor betale? Læs mere.</string>
+    <string name="billing_learn_more">Flere oplysninger og hjælp</string>
     <string name="subscription_expired">Abonnement udløbet</string>
     <string name="subscription_expired_details">Dit abonnement på X funktioner er udløbet.</string>
     <!-- Amazon In-App Billing -->

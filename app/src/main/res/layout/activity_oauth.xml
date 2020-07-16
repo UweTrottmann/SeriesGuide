@@ -32,7 +32,7 @@
 
             <TextView
                 android:id="@+id/textViewOauthMessage"
-                style="@style/TextAppearance.Body"
+                style="@style/TextAppearance.SeriesGuide.Body2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="@dimen/empty_view_width"
@@ -47,7 +47,7 @@
 
             <Button
                 android:id="@+id/buttonOauthWebView"
-                style="?android:attr/borderlessButtonStyle"
+                style="?attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"

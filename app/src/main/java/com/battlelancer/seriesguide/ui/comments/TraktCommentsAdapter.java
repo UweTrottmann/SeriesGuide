@@ -77,10 +77,10 @@ class TraktCommentsAdapter extends ArrayAdapter<Comment> {
         if (comment.spoiler) {
             holder.comment.setText(R.string.isspoiler);
             TextViewCompat.setTextAppearance(holder.comment,
-                    R.style.TextAppearance_Body_Highlight_Red);
+                    R.style.TextAppearance_SeriesGuide_Body2_Error);
         } else {
             holder.comment.setText(comment.comment);
-            TextViewCompat.setTextAppearance(holder.comment, R.style.TextAppearance_Body);
+            TextViewCompat.setTextAppearance(holder.comment, R.style.TextAppearance_SeriesGuide_Body2);
         }
 
         String timestamp = (String) DateUtils.getRelativeTimeSpanString(

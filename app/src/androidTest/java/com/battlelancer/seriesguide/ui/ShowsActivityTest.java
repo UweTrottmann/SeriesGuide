@@ -70,10 +70,7 @@ public class ShowsActivityTest {
         ViewInteraction floatingActionButton = onView(
                 allOf(withId(R.id.buttonShowsAdd), withContentDescription(R.string.action_shows_add),
                         childAtPosition(
-                                allOf(withId(R.id.rootLayoutShows),
-                                        childAtPosition(
-                                                withId(R.id.drawer_layout),
-                                                0)),
+                                withId(R.id.rootLayoutShows),
                                 2),
                         isDisplayed()));
         floatingActionButton.perform(click());

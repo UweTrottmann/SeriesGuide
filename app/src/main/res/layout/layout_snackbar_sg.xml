@@ -20,7 +20,7 @@
         android:paddingBottom="@dimen/default_padding"
         android:paddingLeft="@dimen/keyline"
         android:paddingTop="@dimen/default_padding"
-        android:textAppearance="@style/TextAppearance.Body"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
         android:textColor="@color/sg_white"
         tools:text="@string/offline" />
 
@@ -32,7 +32,7 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:paddingLeft="@dimen/keyline"
         android:paddingRight="@dimen/keyline"
-        android:textAppearance="@style/TextAppearance.Button"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Button"
         android:textColor="?attr/colorAccent"
         tools:text="@string/refresh" />
 </LinearLayout>

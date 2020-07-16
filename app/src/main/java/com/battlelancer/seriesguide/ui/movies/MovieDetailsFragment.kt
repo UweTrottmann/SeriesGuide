@@ -303,9 +303,12 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // watched button
         binding.containerMovieButtons.buttonMovieWatched.also {
-            val textRes = if (isWatched) R.string.action_unwatched else R.string.action_watched
-            it.setText(textRes)
-            CheatSheet.setup(it, textRes)
+            it.setText(
+                if (isWatched) R.string.state_watched else R.string.action_watched
+            )
+            CheatSheet.setup(
+                it, if (isWatched) R.string.action_unwatched else R.string.action_watched
+            )
             if (isWatched) {
                 ViewTools.setVectorDrawableTop(it, R.drawable.ic_watched_24dp)
             } else {
@@ -327,10 +330,13 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             } else {
                 ViewTools.setVectorDrawableTop(it, R.drawable.ic_collect_black_24dp)
             }
-            val textRes =
+            it.setText(
+                if (inCollection) R.string.state_in_collection else R.string.action_collection_add
+            )
+            CheatSheet.setup(
+                it,
                 if (inCollection) R.string.action_collection_remove else R.string.action_collection_add
-            it.setText(textRes)
-            CheatSheet.setup(it, textRes)
+            )
             it.setOnClickListener {
                 if (inCollection) {
                     MovieTools.removeFromCollection(context, tmdbId)
@@ -347,9 +353,12 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             } else {
                 ViewTools.setVectorDrawableTop(it, R.drawable.ic_list_add_white_24dp)
             }
-            val textRes = if (inWatchlist) R.string.watchlist_remove else R.string.watchlist_add
-            it.setText(textRes)
-            CheatSheet.setup(it, textRes)
+            it.setText(
+                if (inWatchlist) R.string.state_on_watchlist else R.string.watchlist_add
+            )
+            CheatSheet.setup(
+                it, if (inWatchlist) R.string.watchlist_remove else R.string.watchlist_add
+            )
             it.setOnClickListener {
                 if (inWatchlist) {
                     MovieTools.removeFromWatchlist(context, tmdbId)

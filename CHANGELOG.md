@@ -8,6 +8,67 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 55
+----------
+*2020-07-16*
+
+* 🌟 Movie search results, popular, digital and disc release lists now display all items.
+* 🔧 More compact and cleaner statistics.
+* 🔧 Small design and layout tweaks.
+* 🔨 The app respects the system font size on Android 7 and older again.
+* 🔨 Removed subscription expired notification.
+
+#### 55
+*2020-07-16*
+
+* No changes.
+
+#### 55-beta6
+*2020-07-10*
+
+* 🔧 Internal updates to Trakt history page, resolves rare crash.
+* 🔧 Add more prominent link to full history, fast scroller to Trakt history page.
+* 🔧 Display sync status and errors directly under More.
+* 🔨 Shows list did not update despite next episodes changing.
+
+#### 55-beta5
+*2020-07-02*
+
+* 🔧 Added fast scroller back to shows tab.
+* 🔧 Fast scroller indicator should track finger position more closely, feel more precise.
+* 📝 Latest translations from crowdin. Dropped Hindi, Latvian, Lithuanian and Slovenian due to
+  largely incomplete translation.
+
+#### 55-beta4
+*2020-06-26*
+
+* 📝 Make adjustments to meet Google Play requirements.
+
+#### 55-beta3
+*2020-06-25*
+
+* 🔧 Update more text styles.
+* 🔧 Episode, show and movie buttons display state if enabled instead of action. To display the action tap and hold the buttons as usual.
+* 🔨 Fix and update style of some buttons.
+* 🔨 Fix the app not respecting system font size on Android 7 and older.
+* 📝 Latest translations from crowdin.
+
+#### 55-beta2
+*2020-05-20*
+
+* 🔧 Refreshed show info layout, more compact ratings display.
+* 🔧 Add remove action if there are no more episodes.
+* 🔧 Drop sometimes misleading subscription expired notification, sometimes it is just a temporary
+  error with Google Play.
+* 🔨 Don't say sending to Cloud when changing a (Trakt) rating.
+
+#### 55-beta1
+*2020-05-08*
+
+* 🌟 Movie search results, popular, digital and disc release lists are now (almost) endless.
+* 🔧 More compact and cleaner statistics.
+* 📝 Latest translations from crowdin.
+
 Version 54
 ----------
 *2020-04-30*

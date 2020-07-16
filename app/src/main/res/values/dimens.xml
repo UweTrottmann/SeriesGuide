@@ -10,12 +10,6 @@
     <dimen name="keyline">16dp</dimen>
     <dimen name="keyline_minus_16">0dp</dimen>
     <dimen name="icon_large_size">40dp</dimen>
-    <dimen name="item_regular_height">56dp</dimen>
-
-    <!-- Text -->
-    <dimen name="text_size_menu_sg">16sp</dimen>
-    <dimen name="text_size_default_sg">14sp</dimen>
-    <dimen name="text_size_caption_sg">12sp</dimen>
 
     <!-- List widget -->
     <dimen name="widget_item_width">27dp</dimen>

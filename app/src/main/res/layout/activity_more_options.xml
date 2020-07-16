@@ -41,6 +41,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <com.battlelancer.seriesguide.widgets.SyncStatusView
+                    android:id="@+id/syncStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/large_padding"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:layout_marginEnd="@dimen/large_padding"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewNoMoreUpdates" />
+
                 <LinearLayout
                     android:id="@+id/containerTrakt"
                     android:layout_width="0dp"
@@ -55,7 +66,7 @@
                     android:paddingBottom="@dimen/default_padding"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewNoMoreUpdates">
+                    app:layout_constraintTop_toBottomOf="@+id/syncStatus">
 
                     <TextView
                         android:id="@+id/textViewTrakt"
@@ -177,14 +188,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonFeedback" />
 
-                <TextView
-                    android:id="@+id/textViewCommunityDescription"
+                <Button
+                    android:id="@+id/buttonContributeContent"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="72dp"
-                    android:paddingBottom="@dimen/inline_padding"
-                    android:text="@string/pref_communitysummary"
-                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
+                    android:layout_height="48dp"
+                    android:text="@string/action_contribute_content"
+                    app:icon="@drawable/ic_link_black_24dp"
+                    app:iconGravity="start"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonCommunity" />
@@ -194,24 +205,12 @@
                     style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
                     android:layout_width="0dp"
                     android:layout_height="48dp"
-                    android:text="@string/pref_translate"
+                    android:text="@string/action_translate"
                     app:icon="@drawable/ic_link_black_24dp"
                     app:iconGravity="start"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewCommunityDescription" />
-
-                <TextView
-                    android:id="@+id/textViewTranslationsDescription"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="72dp"
-                    android:paddingBottom="@dimen/inline_padding"
-                    android:text="@string/pref_translatesummary"
-                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/buttonTranslations" />
+                    app:layout_constraintTop_toBottomOf="@+id/buttonContributeContent" />
 
                 <Button
                     android:id="@+id/buttonDebugView"
@@ -223,7 +222,7 @@
                     app:iconGravity="start"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewTranslationsDescription" />
+                    app:layout_constraintTop_toBottomOf="@+id/buttonTranslations" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

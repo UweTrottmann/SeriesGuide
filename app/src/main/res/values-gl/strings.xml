@@ -5,19 +5,18 @@
     <string name="lists">Listas</string>
     <string name="movies">Filmes</string>
     <string name="statistics">Estatísticas</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">Máis</string>
     <string name="search">Procurar</string>
     <string name="preferences">Axustes</string>
     <string name="help">Axuda</string>
     <string name="no_more_updates">SeriesGuide non recibirá atualizacións para esta versión de Android.</string>
     <!-- Media items -->
-    <string name="show">Serie</string>
+    <string name="show_details">Detalles</string>
     <string name="episode">Episodio</string>
     <string name="episode_number">Episodio %d</string>
     <string name="episodes">Episodios</string>
     <string name="season">Temporada</string>
     <string name="season_number">Temporada %d</string>
-    <string name="seasons">Temporadas</string>
     <string name="specialseason">Episodios Especiais</string>
     <string name="ratings">Clasificacións</string>
     <!-- Descriptions -->
@@ -43,7 +42,7 @@
     <string name="search_hint">Procurar episodios</string>
     <!-- Status messages -->
     <string name="updated">Atualizado para a última versión</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Detalles</string>
     <string name="norating">n/d</string>
     <string name="unknown">descoñecido</string>
     <string name="offline">Conéctate a unha rede e tenta de novo</string>
@@ -110,10 +109,13 @@
     <string name="action_dont_skip">Non omitir</string>
     <string name="action_collection_add">Engadir á coleción</string>
     <string name="action_collection_remove">Eliminar da coleción</string>
-    <string name="action_collection_added">Engadida á coleción</string>
-    <string name="action_collection_removed">Eliminada da coleción</string>
     <string name="action_watched">Marcar como visto</string>
     <string name="action_unwatched">Marcar como non visto</string>
+    <string name="state_watched">Vistas</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Queres eliminar %s?</string>
     <string name="delete_error">Non se puido eliminar a serie. Téntao máis tarde.</string>
@@ -147,7 +149,7 @@
     <string name="action_shows_sort_favorites">Favoritos primeiro</string>
     <string name="context_updateshow">Atualizar</string>
     <string name="context_marknext">Próximo episodio visto</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Cambiar vista</string>
     <!-- History -->
     <string name="user_stream">Histórico</string>
     <string name="recently_watched">Visto recentemente</string>
@@ -198,12 +200,11 @@
     <string name="add_error">Non foi posíbel engadir %s</string>
     <string name="add_already_exists">%s xa se atopa na súa lista de series</string>
     <string name="title_new_episodes">Novos episodios</string>
-    <string name="recommended">Recomendadas</string>
     <string name="watched_shows">Vistas</string>
     <string name="shows_collection">Coleción</string>
     <string name="watchlist">Por ver</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
+    <string name="empty_no_results">Sen resultados</string>
     <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Primeira lista</string>
@@ -247,10 +248,8 @@
     <string name="shows_with_next">%s con episodios por ver</string>
     <string name="shows_continuing">%s continuando</string>
     <string name="episodes_watched">%s vistos</string>
-    <string name="runtime_all_episodes">duración de todos os episodios vistos</string>
     <string name="movies_on_watchlist">%s na lista de visualización</string>
     <string name="movies_watched_format">%s vistos</string>
-    <string name="runtime_movies_watchlist">duración das películas en lista de visualización</string>
     <plurals name="days_plural">
         <item quantity="one">%d día</item>
         <item quantity="other">%d días</item>
@@ -296,7 +295,6 @@
     <string name="trakt_error_not_exists">Non dispoñible (aínda) en trakt. Proba mais tarde.</string>
     <string name="trakt_notice_not_exists">Non se pode seguir (aínda) con trakt</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">conta trakt</string>
     <string name="connect_trakt">Conectar trakt</string>
     <string name="trakt_reconnect">Conectar SeriesGuide a trakt</string>
     <string name="trakt_reconnect_details">Verifica as túas credenciais de trakt</string>
@@ -333,7 +331,8 @@
     <string name="feedback">Enviar comentarios</string>
     <string name="action_open_in_browser">Abrir no navegador</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Básico</string>
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">Sobre</string>
     <string name="pref_onlyfuture">Ocultar episodios exibidos</string>
@@ -365,8 +364,8 @@
     <!-- About screen -->
     <string name="privacy_policy">Política de privacidade</string>
     <string name="licence_tvdb">Esta aplicación emprega datos e imaxes de TheTVDB licenciadas baixo unha licenza Creative Commons.</string>
-    <string name="licence_themoviedb">Este producto emprega a API de TMDb pero non está patrocinado nin certificado por TMDb.</string>
-    <string name="licence_trakt">This app uses data and images by Trakt.</string>
+    <string name="licence_themoviedb">Este producto emprega a API de TMDb pero non está avalado nin certificado por TMDb.</string>
+    <string name="licence_trakt">Esta aplicación emprega datos e imaxes de Trakt.</string>
     <string name="about_open_source">SeriesGuide desenvolveuse empregando software de código aberto.</string>
     <string name="licences_and_credits">Licenzas e créditos</string>
     <!-- Sort -->
@@ -394,8 +393,8 @@
     <!-- Themes -->
     <string name="theme_app_follow_system">Use system default</string>
     <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_dark">Escuro</string>
+    <string name="theme_app_light">Claro</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Outros</string>
     <string name="pref_autoupdatesummary">Sincronizar e actualizar os datos automaticamente</string>
@@ -451,38 +450,38 @@
     <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
     <string name="pref_notification_channel_errors">Erros</string>
     <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only_summary">Só notificar se o novo episodio é o seguinte a ver</string>
     <!-- List Widget -->
-    <string name="hide_watched">Hide watched episodes</string>
-    <string name="pref_widget_opacity">Widget background</string>
-    <string name="pref_widget_type">Widget type</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="hide_watched">Agochar episodios vistos</string>
+    <string name="pref_widget_opacity">Fondo do widget</string>
+    <string name="pref_widget_type">Tipo de widget</string>
+    <string name="pref_large_font">Usar fonte grande</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparente</string>
     <string name="widget_background_25">25%</string>
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
-    <string name="widget_background_opaque">Opaque</string>
+    <string name="widget_background_opaque">opaco</string>
     <!-- Google In-App Billing -->
-    <string name="onlyx">Only for supporters</string>
-    <string name="action_upgrade">Unlock all features</string>
-    <string name="billing_action_subscribe">Subscribe</string>
-    <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+    <string name="onlyx">Só para colaboradores</string>
+    <string name="action_upgrade">Desbloquear todas as funcións</string>
+    <string name="billing_action_subscribe">Subscribir</string>
+    <string name="billing_action_manage_subscriptions">Xestionar subscricións</string>
     <string name="billing_action_pass">Obter X Pass</string>
-    <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
-    <string name="billing_price_pass">one-time purchase</string>
-    <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
-    <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
-    <string name="billing_learn_more">Why pay? Learn more</string>
-    <string name="subscription_expired">Subscription expired</string>
-    <string name="subscription_expired_details">Your SeriesGuide subscription has expired</string>
+    <string name="billing_price_subscribe">%1$s/ano, proba de balde, cancela en calquera momento a través de %2$s</string>
+    <string name="billing_duration_format">%1$s/ano</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
+    <string name="billing_price_pass">Compra única</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
+    <string name="upgrade_success">Grazas por soportar SeriesGuide! Tes acceso a todas as funcións</string>
+    <string name="billing_learn_more">More info and help</string>
+    <string name="subscription_expired">A subscripción rematou</string>
+    <string name="subscription_expired_details">A túa subscrición de SeriesGuide rematou</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Sign into your Amazon account</string>
-    <string name="subscription_unavailable">The subscription is currently not available</string>
-    <string name="subscription_failed">Purchase not completed</string>
-    <string name="pass_unavailable">X Pass is currently not available</string>
+    <string name="subscription_not_signed_in">Iniciar sesión coa túa conta de Amazon</string>
+    <string name="subscription_unavailable">A subscrición non está dispoñible nestes momentos</string>
+    <string name="subscription_failed">Compra non completada</string>
+    <string name="pass_unavailable">X Pass non dispoñible agora mesmo</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Personalizar extensións</string>
     <string name="action_extensions_add">Engadir extensión</string>

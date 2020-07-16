@@ -14,9 +14,6 @@ bundletool
 ### Firebase
 google-services.json
 
-### Crashlytics
-fabric.properties
-
 ### Linux
 !.gitignore
 *~

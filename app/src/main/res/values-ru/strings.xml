@@ -11,13 +11,12 @@
     <string name="help">Помощь</string>
     <string name="no_more_updates">SeriesGuide больше не будет получать обновления для этой версии Android.</string>
     <!-- Media items -->
-    <string name="show">Инфо</string>
+    <string name="show_details">Детали</string>
     <string name="episode">Эпизод</string>
     <string name="episode_number">Эпизод %d</string>
     <string name="episodes">Эпизоды</string>
     <string name="season">Сезон</string>
     <string name="season_number">Сезон %d</string>
-    <string name="seasons">Сезоны</string>
     <string name="specialseason">Особые выпуски</string>
     <string name="ratings">Оценки</string>
     <!-- Descriptions -->
@@ -112,10 +111,13 @@
     <string name="action_dont_skip">Не пропускать</string>
     <string name="action_collection_add">Добавить в коллекцию</string>
     <string name="action_collection_remove">Удалить из коллекции</string>
-    <string name="action_collection_added">Добавлено в коллекцию</string>
-    <string name="action_collection_removed">Удалено из коллекции</string>
     <string name="action_watched">Просмотрен</string>
     <string name="action_unwatched">Не просмотрено</string>
+    <string name="state_watched">Просмотрено</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Вы действительно хотите удалить %s?</string>
     <string name="delete_error">Невозможно удалить сериал. Повторите попытку позже.</string>
@@ -139,7 +141,7 @@
     <string name="action_shows_filter_upcoming">Следующие эпизоды</string>
     <string name="action_shows_filter_hidden">Скрытые</string>
     <string name="action_shows_make_all_visible">Сделать всё скрытое видимым</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="description_make_all_visible_format">Сделать все скрытые сериалы (%s) снова видимыми?</string>
     <string name="action_shows_sort">Сортировать сериалы</string>
     <string name="action_shows_sort_title">Название</string>
     <string name="action_shows_sort_latest_episode">Последний эпизод</string>
@@ -206,7 +208,6 @@
     <string name="add_error">Не удалось добавить %s.</string>
     <string name="add_already_exists">%s уже есть в вашем списке.</string>
     <string name="title_new_episodes">Новые эпизоды</string>
-    <string name="recommended">Рекомендуемые</string>
     <string name="watched_shows">Просмотрено</string>
     <string name="shows_collection">Коллекция</string>
     <string name="watchlist">Список просмотра</string>
@@ -255,10 +256,8 @@
     <string name="shows_with_next">%s новых эпизодов</string>
     <string name="shows_continuing">%s продолжается</string>
     <string name="episodes_watched">%s просмотрено</string>
-    <string name="runtime_all_episodes">Общее время всех просмотренных эпизодов</string>
     <string name="movies_on_watchlist">%s в списке просмотра</string>
     <string name="movies_watched_format">%s просмотрено</string>
-    <string name="runtime_movies_watchlist">Общее время в списке просмотра</string>
     <plurals name="days_plural">
         <item quantity="one">%d день</item>
         <item quantity="few">%d дня</item>
@@ -310,7 +309,6 @@
     <string name="trakt_error_not_exists">На данный момент недоступен на trakt. Попробуйте позже.</string>
     <string name="trakt_notice_not_exists">На данный не может быть отслежен с помощью trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">Аккаунт trakt</string>
     <string name="connect_trakt">Подключение trakt</string>
     <string name="trakt_reconnect">Подключите SeriesGuide к trakt</string>
     <string name="trakt_reconnect_details">Проверте учетные данные в trakt</string>
@@ -349,7 +347,8 @@
     <string name="feedback">Отправить отзыв</string>
     <string name="action_open_in_browser">Открыть в браузере</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Основные</string>
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Дополнительно</string>
     <string name="prefs_category_about">О программе</string>
     <string name="pref_onlyfuture">Скрыть вышедшие эпизоды</string>
@@ -451,7 +450,7 @@
     <string name="autobackup_failed">Последний автоматический бэкап не удался</string>
     <string name="autobackup_files_missing">Чтобы использовать автоматическое резервное копирование, выберите допустимые файлы резервных копий.</string>
     <string name="autobackup_create_user_copy">Создавать копию после каждого бэкапа</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_restore_available">Автоматическое резервное копирование доступно для восстановления.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Начать</string>
     <string name="dismiss">Отменить</string>
@@ -470,10 +469,10 @@
     <string name="pref_notifications_select_shows">Выбрать сериалы</string>
     <string name="pref_notifications_select_shows_summary">Сериалы с включенными уведомлениями (%d)</string>
     <string name="pref_notifications_hidden">Игнорировать скрытые сериалы</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden_summary">Даже если уведомления включены, не уведомлять о скрытых сериалах</string>
     <string name="pref_notification_channel_errors">Ошибки</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Только для следующих серий</string>
+    <string name="pref_notifications_next_episodes_only_summary">Уведомлять только если новая серия следующая для просмотра</string>
     <!-- List Widget -->
     <string name="hide_watched">Скрывать просмотренные эпизоды</string>
     <string name="pref_widget_opacity">Фон виджета</string>
@@ -493,11 +492,11 @@
     <string name="billing_action_pass">Получить X Pass</string>
     <string name="billing_price_subscribe">%1$s/год, попробуйте бесплатно, можно отменить в любой момент до %2$s</string>
     <string name="billing_duration_format">%1$s/год</string>
-    <string name="billing_sub_description">Попробуйте бесплатно, отмените в любое время.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">Единоразовая покупка</string>
-    <string name="upgrade_description">Разблокируйте все возможности, включая уведомления, темы и расширенные настройки виджета. Помогите мне выпускать будущие обновления.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Спасибо за поддержку SeriesGuide! У вас есть доступ ко всем расширенным возможностям.</string>
-    <string name="billing_learn_more">Зачем платить?</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Срок действия подписки истек</string>
     <string name="subscription_expired_details">Подписка X функции истекла.</string>
     <!-- Amazon In-App Billing -->

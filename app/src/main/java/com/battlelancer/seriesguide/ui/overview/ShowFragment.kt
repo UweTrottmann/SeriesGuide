@@ -52,6 +52,7 @@ import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
+import com.google.android.material.button.MaterialButton
 import com.uwetrottmann.androidutils.CheatSheet
 import com.uwetrottmann.tmdb2.entities.Credits
 import kotlinx.coroutines.launch
@@ -74,13 +75,17 @@ class ShowFragment : Fragment() {
     @BindView(R.id.imageViewShowPoster)
     internal lateinit var imageViewPoster: ImageView
     @BindView(R.id.textViewShowStatus)
-    internal lateinit var textViewStatus: TextView
+    @JvmField
+    internal var textViewStatus: TextView? = null
     @BindView(R.id.textViewShowReleaseTime)
-    internal lateinit var textViewReleaseTime: TextView
+    @JvmField
+    internal var textViewReleaseTime: TextView? = null
     @BindView(R.id.textViewShowRuntime)
-    internal lateinit var textViewRuntime: TextView
+    @JvmField
+    internal var textViewRuntime: TextView? = null
     @BindView(R.id.textViewShowNetwork)
-    internal lateinit var textViewNetwork: TextView
+    @JvmField
+    internal var textViewNetwork: TextView? = null
     @BindView(R.id.textViewShowOverview)
     internal lateinit var textViewOverview: TextView
     @BindView(R.id.textViewShowReleaseCountry)
@@ -101,11 +106,11 @@ class ShowFragment : Fragment() {
     internal lateinit var textViewRatingUser: TextView
 
     @BindView(R.id.buttonShowFavorite)
-    internal lateinit var buttonFavorite: Button
+    internal lateinit var buttonFavorite: MaterialButton
     @BindView(R.id.buttonShowNotify)
-    internal lateinit var buttonNotify: Button
+    internal lateinit var buttonNotify: MaterialButton
     @BindView(R.id.buttonShowHidden)
-    internal lateinit var buttonHidden: Button
+    internal lateinit var buttonHidden: MaterialButton
     @BindView(R.id.buttonShowShortcut)
     internal lateinit var buttonShortcut: Button
     @BindView(R.id.buttonShowLanguage)
@@ -331,7 +336,9 @@ class ShowFragment : Fragment() {
         posterPathSmall = showCursor.getString(ShowQuery.POSTER_SMALL)
 
         // status
-        ShowTools.setStatusAndColor(textViewStatus, showCursor.getInt(ShowQuery.STATUS))
+        textViewStatus?.let {
+            ShowTools.setStatusAndColor(it, showCursor.getInt(ShowQuery.STATUS))
+        }
 
         // next release day and time
         val releaseCountry = showCursor.getString(ShowQuery.RELEASE_COUNTRY)
@@ -348,35 +355,36 @@ class ShowFragment : Fragment() {
             )
             val dayString = TimeTools.formatToLocalDayOrDaily(activity, release, weekDay)
             val timeString = TimeTools.formatToLocalTime(activity, release)
-            textViewReleaseTime.text = String.format("%s %s", dayString, timeString)
+            textViewReleaseTime?.text = String.format("%s %s", dayString, timeString)
         } else {
-            textViewReleaseTime.text = null
+            textViewReleaseTime?.text = null
         }
 
         // runtime
-        textViewRuntime.text = getString(
+        textViewRuntime?.text = getString(
             R.string.runtime_minutes,
             showCursor.getInt(ShowQuery.RUNTIME).toString()
         )
 
         // network
-        textViewNetwork.text = network
+        textViewNetwork?.text = network
 
         // favorite button
         val isFavorite = showCursor.getInt(ShowQuery.IS_FAVORITE) == 1
         buttonFavorite.apply {
-            ViewTools.setVectorDrawableTop(
-                this, if (isFavorite) {
+            text = getString(
+                if (isFavorite) R.string.state_favorite else R.string.context_favorite
+            )
+            contentDescription = getString(
+                if (isFavorite) R.string.context_unfavorite else R.string.context_favorite
+            )
+            setIconResource(
+                if (isFavorite) {
                     R.drawable.ic_star_black_24dp
                 } else {
                     R.drawable.ic_star_border_black_24dp
                 }
             )
-            val labelFavorite = getString(
-                if (isFavorite) R.string.context_unfavorite else R.string.context_favorite
-            )
-            text = labelFavorite
-            contentDescription = labelFavorite
             isEnabled = true
             setOnClickListener { v ->
                 // disable until action is complete
@@ -395,8 +403,8 @@ class ShowFragment : Fragment() {
                     R.string.action_episode_notifications_on
                 }
             )
-            ViewTools.setVectorDrawableTop(
-                this, if (notify) {
+            setIconResource(
+                if (notify) {
                     R.drawable.ic_notifications_active_black_24dp
                 } else {
                     R.drawable.ic_notifications_off_black_24dp
@@ -416,12 +424,14 @@ class ShowFragment : Fragment() {
 
         // hidden button
         val isHidden = showCursor.getInt(ShowQuery.HIDDEN) == 1
-        val label = getString(if (isHidden) R.string.context_unhide else R.string.context_hide)
         buttonHidden.apply {
-            contentDescription = label
-            text = label
-            ViewTools.setVectorDrawableTop(
-                this,
+            text = getString(
+                if (isHidden) R.string.action_shows_filter_hidden else R.string.context_hide
+            )
+            contentDescription = getString(
+                if (isHidden) R.string.context_unhide else R.string.context_hide
+            )
+            setIconResource(
                 if (isHidden) {
                     R.drawable.ic_visibility_off_black_24dp
                 } else {

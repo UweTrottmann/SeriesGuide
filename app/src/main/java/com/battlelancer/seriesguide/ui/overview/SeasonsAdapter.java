@@ -90,7 +90,7 @@ class SeasonsAdapter extends CursorAdapter {
         if (watchable > 0) {
             // some released or other episodes left to watch
             TextViewCompat.setTextAppearance(viewHolder.seasonWatchCount,
-                    R.style.TextAppearance_Caption_Narrow);
+                    R.style.TextAppearance_SeriesGuide_Caption_Narrow);
             if (released > 0) {
                 countText.append(
                         res.getQuantityString(R.plurals.remaining_episodes_plural, released,
@@ -98,7 +98,7 @@ class SeasonsAdapter extends CursorAdapter {
             }
         } else {
             TextViewCompat.setTextAppearance(viewHolder.seasonWatchCount,
-                    R.style.TextAppearance_Caption_Narrow_Dim);
+                    R.style.TextAppearance_SeriesGuide_Caption_Narrow_Dim);
             // ensure at least 1 watched episode by comparing amount of unwatched to total
             if (notReleased + noReleaseDate != max) {
                 // all watched

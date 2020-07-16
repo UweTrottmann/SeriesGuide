@@ -14,7 +14,7 @@
         android:paddingBottom="@dimen/large_padding"
         android:paddingLeft="40dp"
         android:paddingTop="@dimen/large_padding"
-        android:textAppearance="@style/TextAppearance.Subhead"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
         tools:ignore="RtlSymmetry"
         tools:text="Sample List Name" />
 

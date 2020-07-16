@@ -40,7 +40,7 @@
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.Body.Secondary.Narrow"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary.Narrow"
         tools:text="199 remaining" />
 
     <!-- Enable nested scrolling for Lollipop and up to scroll app bar. -->

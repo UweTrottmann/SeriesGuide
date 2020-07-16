@@ -13,13 +13,12 @@
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
 
     <!-- Media items -->
-    <string name="show">Show</string>
+    <string name="show_details">Details</string>
     <string name="episode">Episode</string>
     <string name="episode_number">Episode %d</string>
     <string name="episodes">Episodes</string>
     <string name="season">Season</string>
     <string name="season_number">Season %d</string>
-    <string name="seasons">Seasons</string>
     <string name="specialseason">Special Episodes</string>
     <string name="ratings">Ratings</string>
 
@@ -125,10 +124,13 @@
     <string name="action_dont_skip">Don\'t skip</string>
     <string name="action_collection_add">Add to collection</string>
     <string name="action_collection_remove">Remove from collection</string>
-    <string name="action_collection_added">Added to collection</string>
-    <string name="action_collection_removed">Removed from collection</string>
     <string name="action_watched">Set watched</string>
     <string name="action_unwatched">Set not watched</string>
+    <string name="state_watched">Watched</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
 
     <!-- Shows -->
     <string name="confirm_delete">Remove %s?</string>
@@ -219,7 +221,6 @@
     <string name="add_error">Could not add %s</string>
     <string name="add_already_exists">%s is already in your show list</string>
     <string name="title_new_episodes">New episodes</string>
-    <string name="recommended">Recommended</string>
     <string name="watched_shows">Watched</string>
     <string name="shows_collection">Collection</string>
     <string name="watchlist">Watchlist</string>
@@ -272,10 +273,8 @@
     <string name="shows_with_next">%s with next episodes</string>
     <string name="shows_continuing">%s continuing</string>
     <string name="episodes_watched">%s watched</string>
-    <string name="runtime_all_episodes">runtime of all watched episodes</string>
     <string name="movies_on_watchlist">%s on watchlist</string>
     <string name="movies_watched_format">%s watched</string>
-    <string name="runtime_movies_watchlist">runtime of movie watchlist</string>
 
     <plurals name="days_plural">
         <item quantity="one">%d day</item>
@@ -338,7 +337,6 @@
     <string name="trakt_notice_not_exists">Can not (yet) be tracked with Trakt</string>
 
     <!-- Connect trakt -->
-    <string name="trakt_account">Trakt account</string>
     <string name="connect_trakt">Connect Trakt</string>
     <string name="trakt_reconnect">Connect SeriesGuide to Trakt</string>
     <string name="trakt_reconnect_details">Check your Trakt credentials</string>
@@ -383,7 +381,8 @@
     <string name="action_open_in_browser">Open in browser</string>
 
     <!-- Settings -->
-    <string name="prefs_category_basic">Basics</string>
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">About</string>
     <string name="pref_onlyfuture">No aired episodes</string>
@@ -535,11 +534,11 @@
     <string name="billing_action_pass">Get X Pass</string>
     <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
     <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">one-time purchase</string>
-    <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
-    <string name="billing_learn_more">Why pay? Learn more</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Subscription expired</string>
     <string name="subscription_expired_details">Your SeriesGuide subscription has expired</string>
 

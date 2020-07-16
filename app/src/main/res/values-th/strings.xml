@@ -11,13 +11,12 @@
     <string name="help">ช่วยเหลือ</string>
     <string name="no_more_updates">SeriesGuide จะไม่ออกอัปเดตสำหรับ Android เวอร์ชันนี้อีก</string>
     <!-- Media items -->
-    <string name="show">ซีรีส์</string>
+    <string name="show_details">รายละเอียด</string>
     <string name="episode">ตอน</string>
     <string name="episode_number">ตอน %d</string>
     <string name="episodes">ตอน</string>
     <string name="season">ซีซั่น</string>
     <string name="season_number">ซีซั่น %d</string>
-    <string name="seasons">ซีซั่น</string>
     <string name="specialseason">ตอนพิเศษ</string>
     <string name="ratings">คะแนน</string>
     <!-- Descriptions -->
@@ -109,10 +108,13 @@
     <string name="action_dont_skip">ไม่ข้าม</string>
     <string name="action_collection_add">เพิ่มเข้าคลังเก็บ</string>
     <string name="action_collection_remove">ลบออกจากคลังเก็บ</string>
-    <string name="action_collection_added">เพิ่มเข้าคลังเก็บแล้ว</string>
-    <string name="action_collection_removed">ลบออกจากคลังเก็บแล้ว</string>
     <string name="action_watched">ดูแล้ว</string>
     <string name="action_unwatched">ยังไม่ได้ดู</string>
+    <string name="state_watched">ดูแล้ว</string>
+    <string name="state_skipped">ข้ามแล้ว</string>
+    <string name="state_in_collection">ในคลังเก็บ</string>
+    <string name="state_on_watchlist">ในรายการที่อยากดู</string>
+    <string name="state_favorite">รายการโปรด</string>
     <!-- Shows -->
     <string name="confirm_delete">คุณแน่ใจหรือว่าต้องลบ %s?</string>
     <string name="delete_error">ไม่สามารถลบซีรีส์ ลองอีกครั้งในภายหลัง</string>
@@ -194,7 +196,6 @@
     <string name="add_error">ไม่สามารถเพิ่ม %s</string>
     <string name="add_already_exists">%s อยู่ในรายการซีรีส์ของคุณอยู่แล้ว</string>
     <string name="title_new_episodes">ตอนใหม่</string>
-    <string name="recommended">แนะนำ</string>
     <string name="watched_shows">ดูแล้ว</string>
     <string name="shows_collection">คลังเก็บ</string>
     <string name="watchlist">อยากดู</string>
@@ -243,10 +244,8 @@
     <string name="shows_with_next">%s เรื่องมีตอนถัดไป</string>
     <string name="shows_continuing">%s เรื่องยังไม่จบ</string>
     <string name="episodes_watched">ดูแล้ว %s ตอน</string>
-    <string name="runtime_all_episodes">ระยะเวลารวมตอนที่ดูแล้วทั้งหมด</string>
     <string name="movies_on_watchlist">%s เรื่องที่อยากดู</string>
     <string name="movies_watched_format">ดูแล้ว %s ตอน</string>
-    <string name="runtime_movies_watchlist">ระยะเวลารวมของภาพยนตร์ที่อยากดู</string>
     <plurals name="days_plural">
         <item quantity="other">%d วัน</item>
     </plurals>
@@ -289,7 +288,6 @@
     <string name="trakt_error_not_exists">(ยัง)ไม่พร้อมใช้งานบน trakt ลองอีกครั้งในภายหลัง</string>
     <string name="trakt_notice_not_exists">(ยัง)ไม่สามารถติดตามด้วย trakt</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">บัญชี trakt</string>
     <string name="connect_trakt">เชื่อมต่อ trakt</string>
     <string name="trakt_reconnect">เชื่อมต่อ SeriesGuide กับ trakt</string>
     <string name="trakt_reconnect_details">ตรวจสอบข้อมูล trakt ของคุณ</string>
@@ -325,7 +323,8 @@
     <string name="feedback">ส่งความคิดเห็น</string>
     <string name="action_open_in_browser">เปิดในเบราว์เซอร์</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">ทั่วไป</string>
+    <string name="action_translate">แปลแอปนี้</string>
+    <string name="action_contribute_content">แปลหรือปรับปรุงเนื้อหาให้ดีขึ้น</string>
     <string name="prefs_category_advanced">ขั้นสูง</string>
     <string name="prefs_category_about">เกี่ยวกับ</string>
     <string name="pref_onlyfuture">ซ่อนตอนที่ออกอากาศแล้ว</string>
@@ -460,11 +459,11 @@
     <string name="billing_action_pass">รับ X Pass</string>
     <string name="billing_price_subscribe">%1$s/ปี, ลองใช้ฟรี, ยกเลิกได้ทุกเวลาผ่าน %2$s</string>
     <string name="billing_duration_format">%1$s/ปี</string>
-    <string name="billing_sub_description">ลองใช้ฟรี, ยกเลิกได้ทุกเมื่อ</string>
+    <string name="billing_sub_description">ลองใช้ฟรี 30 วัน ยกเลิกได้ทุกเมื่อ</string>
     <string name="billing_price_pass">จ่ายครั้งเดียว</string>
-    <string name="upgrade_description">ปลดล็อกคุณสมบัติทั้งหมด รวมทั้งการแจ้งเตือน, ธีม และตัวเลือกวิตเจ็ตเพิ่มเติม ช่วยให้เราสร้างการอัปเดตในอนาคต</string>
+    <string name="upgrade_description">ทุกการสมัครสมาชิกจะปลดล็อกทุกคุณสมบัติและช่วยสนับสนุนอัปเดตในอนาคต ไม่จำเป็นต้องสมัครสมาชิกเพื่อใช้งานแอปนี้</string>
     <string name="upgrade_success">ขอบคุณสำหรับการสนับสนุน SeriesGuide! คุณสามารถเข้าถึงคุณสมบัติทั้งหมดได้แล้ว</string>
-    <string name="billing_learn_more">ทำไมต้องจ่าย? เรียนรู้เพิ่มเติม</string>
+    <string name="billing_learn_more">ข้อมูลเพิ่มเติมและช่วยเหลือ</string>
     <string name="subscription_expired">การสมัครสมาชิกหมดอายุแล้ว</string>
     <string name="subscription_expired_details">การสมัครสมาชิก SeriesGuide ของคุณหมดอายุแล้ว</string>
     <!-- Amazon In-App Billing -->

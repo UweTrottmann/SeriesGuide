@@ -24,7 +24,6 @@ import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.api.Intents;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -70,6 +69,7 @@ public class ShowsActivity extends BaseTopActivity implements
     private ViewPager viewPager;
 
     private ShowsActivityViewModel viewModel;
+    private BillingViewModel billingViewModel;
 
     @SuppressWarnings("unused")
     public interface InitBundle {
@@ -261,9 +261,13 @@ public class ShowsActivity extends BaseTopActivity implements
         }
         // Automatically starts checking all access status.
         // Ends connection if activity is finished (and was not ended elsewhere already).
-        BillingViewModel billingViewModel = new ViewModelProvider(this).get(BillingViewModel.class);
+        billingViewModel = new ViewModelProvider(this).get(BillingViewModel.class);
         billingViewModel.getEntitlementRevokedEvent()
-                .observe(this, aVoid -> BillingActivity.showExpiredNotification(this));
+                .observe(this, aVoid -> {
+                    // TODO Replace notification with less disturbing in-app info.
+                    // Sometimes sub is not really expired, only billing API not returning purchase.
+                    // BillingActivity.showExpiredNotification(this)
+                });
     }
 
     @Override

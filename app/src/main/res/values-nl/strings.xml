@@ -11,13 +11,12 @@
     <string name="help">Help</string>
     <string name="no_more_updates">SeriesGuide zal geen updates meer uitbrengen voor deze versie van Android.</string>
     <!-- Media items -->
-    <string name="show">Serie</string>
+    <string name="show_details">Details</string>
     <string name="episode">Aflevering</string>
     <string name="episode_number">Aflevering %d</string>
     <string name="episodes">Afleveringen</string>
     <string name="season">Seizoen</string>
     <string name="season_number">Seizoen %d</string>
-    <string name="seasons">Seizoenen</string>
     <string name="specialseason">Speciale afleveringen</string>
     <string name="ratings">Beoordelingen</string>
     <!-- Descriptions -->
@@ -103,17 +102,20 @@
     <string name="mark_all">Alles bekeken</string>
     <string name="unmark_all">Niets bekeken</string>
     <string name="action_watched_up_to">Tot hier bekeken</string>
-    <string name="confirmation_watched_up_to">Alle afleveringen tot aan hier markeren als bekeken?</string>
+    <string name="confirmation_watched_up_to">Alle afleveringen tot hier markeren als bekeken?</string>
     <string name="collect_all">Alles verzameld</string>
     <string name="uncollect_all">Niets verzameld</string>
     <string name="action_skip">Overslaan</string>
     <string name="action_dont_skip">Niet overslaan</string>
     <string name="action_collection_add">Aan je collectie toevoegen</string>
     <string name="action_collection_remove">Van je collectie verwijderen</string>
-    <string name="action_collection_added">Aan je collectie toegevoegd</string>
-    <string name="action_collection_removed">Van je collectie verwijderd</string>
     <string name="action_watched">Bekeken</string>
     <string name="action_unwatched">Niet bekeken</string>
+    <string name="state_watched">Bekeken</string>
+    <string name="state_skipped">Overgeslagen</string>
+    <string name="state_in_collection">In collectie</string>
+    <string name="state_on_watchlist">Op volglijst</string>
+    <string name="state_favorite">Favoriet</string>
     <!-- Shows -->
     <string name="confirm_delete">Wilt u %s echt verwijderen?</string>
     <string name="delete_error">Kan show niet verwijderen. Probeer later opnieuw.</string>
@@ -198,7 +200,6 @@
     <string name="add_error">Kon %s niet toevoegen</string>
     <string name="add_already_exists">%s staat al in uw serielijst</string>
     <string name="title_new_episodes">Nieuwe afleveringen</string>
-    <string name="recommended">Aanbevolen</string>
     <string name="watched_shows">Bekeken</string>
     <string name="shows_collection">Collectie</string>
     <string name="watchlist">Watchlist</string>
@@ -247,10 +248,8 @@
     <string name="shows_with_next">%s met de volgende afleveringen</string>
     <string name="shows_continuing">%s lopende</string>
     <string name="episodes_watched">%s bekeken</string>
-    <string name="runtime_all_episodes">Speelduur van alle bekeken afleveringen</string>
     <string name="movies_on_watchlist">%s op watchlist</string>
     <string name="movies_watched_format">%s bekeken</string>
-    <string name="runtime_movies_watchlist">looptijd van te bekijken films</string>
     <plurals name="days_plural">
         <item quantity="one">%d dag</item>
         <item quantity="other">%d dagen</item>
@@ -296,7 +295,6 @@
     <string name="trakt_error_not_exists">Nog (niet) beschikbaar op trakt. Probeer het later nog eens.</string>
     <string name="trakt_notice_not_exists">Kan (nog) niet gevolgd worden via trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt-account</string>
     <string name="connect_trakt">Verbinden met trakt</string>
     <string name="trakt_reconnect">Verbind SeriesGuide met trakt</string>
     <string name="trakt_reconnect_details">Controleer uw trakt-inloggegevens</string>
@@ -333,7 +331,8 @@
     <string name="feedback">Reactie verzenden</string>
     <string name="action_open_in_browser">Openen in browser</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Basis</string>
+    <string name="action_translate">Deze app vertalen</string>
+    <string name="action_contribute_content">Inhoud vertalen of verbeteren</string>
     <string name="prefs_category_advanced">Geavanceerd</string>
     <string name="prefs_category_about">Over</string>
     <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
@@ -471,11 +470,11 @@
     <string name="billing_action_pass">Neem X Pass</string>
     <string name="billing_price_subscribe">%1$s/jaar, probeer gratis, annuleer op elk moment via %2$s</string>
     <string name="billing_duration_format">%1$s/jaar</string>
-    <string name="billing_sub_description">Probeer het gratis uit, annuleer op elk moment.</string>
+    <string name="billing_sub_description">30 dagen gratis proberen, annuleren op elk moment.</string>
     <string name="billing_price_pass">eenmalige aankoop</string>
-    <string name="upgrade_description">Ontgrendel alle functies, inclusief meldingen, thema\'s en meer lijstopties voor widgets. Help me toekomstige updates te maken.</string>
+    <string name="upgrade_description">Elk abonnement ontgrendelt alle functies en ondersteunt toekomstige updates. Een abonnement is niet vereist om deze app te gebruiken.</string>
     <string name="upgrade_success">Bedankt om SeriesGuide te steunen! U heeft toegang tot alle functies.</string>
-    <string name="billing_learn_more">Waarom betalen? Lees meer.</string>
+    <string name="billing_learn_more">Meer informatie en ondersteuning</string>
     <string name="subscription_expired">Abonnement verlopen</string>
     <string name="subscription_expired_details">Uw abonnement voor SeriesGuide is verlopen</string>
     <!-- Amazon In-App Billing -->

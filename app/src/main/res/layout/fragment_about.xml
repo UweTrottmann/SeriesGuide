@@ -24,39 +24,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
-                android:textAppearance="@style/TextAppearance.Title" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Headline4" />
 
             <TextView
                 android:id="@+id/textViewAboutVersion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.Body.Bold"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body1"
                 tools:text="v42 (Database v42)" />
 
             <Button
                 android:id="@+id/buttonAboutWebsite"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                style="@style/Widget.SeriesGuide.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/website" />
 
             <Button
                 android:id="@+id/buttonAboutPrivacy"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                style="@style/Widget.SeriesGuide.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/large_padding"
+                android:layout_marginBottom="@dimen/larger_padding"
                 android:text="@string/privacy_policy" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/about_open_source"
-                android:textAppearance="@style/TextAppearance.Body.Bold" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body1" />
 
             <Button
                 android:id="@+id/buttonAboutCredits"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                style="@style/Widget.SeriesGuide.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/larger_padding"
@@ -66,18 +66,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/licence_tvdb"
-                android:textAppearance="@style/TextAppearance.Body.Bold" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body1" />
 
             <Button
                 android:id="@+id/buttonAboutTvdbTerms"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                style="@style/Widget.SeriesGuide.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tvdb_terms" />
 
             <Button
                 android:id="@+id/buttonAboutCreativeCommons"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                style="@style/Widget.SeriesGuide.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/larger_padding"
@@ -87,18 +87,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/licence_themoviedb"
-                android:textAppearance="@style/TextAppearance.Body.Bold" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body1" />
 
             <Button
                 android:id="@+id/buttonAboutTmdbTerms"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                style="@style/Widget.SeriesGuide.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tmdb_terms" />
 
             <Button
                 android:id="@+id/buttonAboutTmdbApiTerms"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                style="@style/Widget.SeriesGuide.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/larger_padding"
@@ -108,11 +108,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/licence_trakt"
-                android:textAppearance="@style/TextAppearance.Body.Bold" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body1" />
 
             <Button
                 android:id="@+id/buttonAboutTraktTerms"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                style="@style/Widget.SeriesGuide.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/larger_padding"

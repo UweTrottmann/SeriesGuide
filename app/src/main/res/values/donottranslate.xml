@@ -9,7 +9,6 @@
     <string name="trakt">Trakt</string>
     <string name="ontrakt">(Trakt)</string>
     <string name="amazon">Amazon</string>
-    <string name="google_play">Google Play</string>
     <string name="powered_by_ttt">powered by TMDb, TheTVDB.com</string>
     <string name="powered_by_trakt">powered by Trakt</string>
     <string name="powered_by_tmdb">powered by TMDb</string>
@@ -40,6 +39,7 @@
     <string name="url_community">https://discuss.seriesgui.de</string>
     <string name="url_release_notes">https://discuss.seriesgui.de/c/announcements</string>
     <string name="url_translations">https://crowdin.com/project/seriesguide-translations</string>
+    <string name="url_contribute_content">https://seriesgui.de/help#sources</string>
 
     <!-- About screen -->
     <string name="website">seriesgui.de</string>
@@ -51,7 +51,6 @@
 
     <!-- Google Play links -->
     <string name="url_store_page">https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide</string>
-    <string name="url_x_pass">https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide.x</string>
     <string name="url_extensions_search">https://play.google.com/store/search?q=SeriesGuide%20Extension&amp;c=apps</string>
     <string name="url_movies_search">https://play.google.com/store/search?q=%s&amp;c=movies</string>
 
@@ -65,10 +64,7 @@
 
     <!-- Settings -->
     <string name="pref_key_notifications_hidden">com.battlelancer.seriesguide.notifications.hidden</string>
-    <string name="pref_translate">Translate SeriesGuide</string>
-    <string name="pref_translatesummary">Translate or proofread for this app (English)</string>
     <string name="pref_community">SeriesGuide Community</string>
-    <string name="pref_communitysummary">Ask for help, discuss ideas or report problems (English)</string>
     <string name="pref_category_danger">Danger Zone</string>
     <string name="pref_user_debug_mode">Debug mode</string>
     <string name="pref_user_debug_mode_summary">Allows to diagnose errors, but slows down the app.</string>

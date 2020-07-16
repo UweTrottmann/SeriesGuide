@@ -32,7 +32,7 @@
             android:layout_toRightOf="@id/watchedBoxEpisode"
             android:ellipsize="end"
             android:paddingTop="16dp"
-            android:textAppearance="@style/TextAppearance.Subhead"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
             tools:text="Episode Title" />
 
         <TextView
@@ -43,7 +43,7 @@
             android:layout_marginLeft="@dimen/default_padding"
             android:paddingTop="16dp"
             android:paddingRight="@dimen/large_padding"
-            android:textAppearance="@style/TextAppearance.Subhead.Secondary"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Secondary"
             tools:ignore="RtlSymmetry"
             tools:text="23" />
 
@@ -57,7 +57,7 @@
             android:layout_toRightOf="@id/watchedBoxEpisode"
             android:ellipsize="end"
             android:paddingTop="@dimen/inline_padding"
-            android:textAppearance="@style/TextAppearance.Body.Secondary"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
             tools:text="in 2 days" />
 
         <TextView
@@ -71,7 +71,7 @@
             android:ellipsize="end"
             android:paddingTop="@dimen/inline_padding"
             android:paddingBottom="@dimen/large_padding"
-            android:textAppearance="@style/TextAppearance.Caption.Dim"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Dim"
             tools:text="42 · DVD 2.0" />
 
         <ImageView
@@ -80,7 +80,7 @@
             android:layout_height="14dp"
             android:layout_below="@+id/watchedBoxEpisode"
             android:layout_marginLeft="29dp"
-            android:contentDescription="@string/action_collection_added"
+            android:contentDescription="@string/state_in_collection"
             app:srcCompat="@drawable/ic_collected_24dp" />
 
         <androidx.appcompat.widget.AppCompatImageView

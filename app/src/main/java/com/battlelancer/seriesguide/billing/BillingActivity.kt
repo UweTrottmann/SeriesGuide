@@ -35,7 +35,6 @@ class BillingActivity : BaseActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SkuDetailsAdapter
     private lateinit var buttonManageSubs: Button
-    private lateinit var buttonPass: Button
     private lateinit var textViewHasUpgrade: View
     private lateinit var textViewBillingError: TextView
 
@@ -119,13 +118,6 @@ class BillingActivity : BaseActivity() {
             }
         }
 
-        buttonPass = findViewById(R.id.buttonBillingGetPass)
-        buttonPass.setOnClickListener {
-            Utils.launchWebsite(
-                this@BillingActivity, getString(R.string.url_x_pass)
-            )
-        }
-
         progressScreen = findViewById(R.id.progressBarBilling)
         contentContainer = findViewById(R.id.containerBilling)
 
@@ -156,17 +148,7 @@ class BillingActivity : BaseActivity() {
     }
 
     private fun updateViewStates(hasUpgrade: Boolean) {
-        // Only enable key app button if the user does not have all access yet.
-        buttonPass.isEnabled = !hasUpgrade
         textViewHasUpgrade.isGone = !hasUpgrade
-    }
-
-    /**
-     * Disables the purchase button and hides the subscribed message.
-     */
-    private fun enableFallBackMode() {
-        buttonPass.isEnabled = true
-        textViewHasUpgrade.visibility = View.GONE
     }
 
     private fun setWaitMode(isActive: Boolean) {

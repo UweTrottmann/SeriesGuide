@@ -5,19 +5,18 @@
     <string name="lists">Listeler</string>
     <string name="movies">Filmler</string>
     <string name="statistics">İstatistikler</string>
-    <string name="navigation_more">Daha fazla</string>
+    <string name="navigation_more">Daha Fazla</string>
     <string name="search">Ara</string>
     <string name="preferences">Ayarlar</string>
     <string name="help">Yardım</string>
     <string name="no_more_updates">SeriesGuide, Androidin bu versiyonu için güncelleme almayacak.</string>
     <!-- Media items -->
-    <string name="show">Dizi</string>
+    <string name="show_details">Ayrıntılar</string>
     <string name="episode">Bölüm</string>
     <string name="episode_number">Bölüm %d</string>
     <string name="episodes">Bölümler</string>
     <string name="season">Sezon</string>
     <string name="season_number">Sezon %d</string>
-    <string name="seasons">Sezonlar</string>
     <string name="specialseason">Özel Bölümler</string>
     <string name="ratings">Puanlar</string>
     <!-- Descriptions -->
@@ -110,10 +109,13 @@
     <string name="action_dont_skip">Atlama</string>
     <string name="action_collection_add">Koleksiyona ekle</string>
     <string name="action_collection_remove">Koleksiyondan kaldır</string>
-    <string name="action_collection_added">Koleksiyona eklendi</string>
-    <string name="action_collection_removed">Koleksiyondan kaldırıldı</string>
     <string name="action_watched">İzlendi yap</string>
     <string name="action_unwatched">İzlenmedi yap</string>
+    <string name="state_watched">İzlenmiş</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favori</string>
     <!-- Shows -->
     <string name="confirm_delete">%s öğesini silmek istediğinize emin misiniz?</string>
     <string name="delete_error">Dizi kaldırılamadı. Sonra tekrar deneyin.</string>
@@ -198,7 +200,6 @@
     <string name="add_error">%s eklenemedi.</string>
     <string name="add_already_exists">%s zaten dizi listenizde mevcut.</string>
     <string name="title_new_episodes">Yeni bölümler</string>
-    <string name="recommended">Önerilen</string>
     <string name="watched_shows">İzlenmiş</string>
     <string name="shows_collection">Koleksiyon</string>
     <string name="watchlist">İzleme listesi</string>
@@ -247,10 +248,8 @@
     <string name="shows_with_next">%s yeni bölümü olan dizi</string>
     <string name="shows_continuing">%s devam ediyor</string>
     <string name="episodes_watched">%s izlendi</string>
-    <string name="runtime_all_episodes">İzlenen tüm bölümlerin toplam süresi</string>
     <string name="movies_on_watchlist">%s İzleme listesi</string>
     <string name="movies_watched_format">%s izlendi</string>
-    <string name="runtime_movies_watchlist">Film izleme listesinin toplam süresi</string>
     <plurals name="days_plural">
         <item quantity="one">%d gün</item>
         <item quantity="other">%d gün</item>
@@ -289,14 +288,13 @@
     <string name="checkin_success_trakt">%s Trakt üzerinde \"izliyorum\" yapıldı</string>
     <string name="checkin_canceled_success_trakt">Trakt üzerindeki \"izliyorum\" durumu iptal edildi</string>
     <string name="traktcheckin_cancel">Geçersiz Kıl</string>
-    <string name="traktcheckin_inprogress">Zaten \"izliyorum\" demiştiniz. Ya önceki girişi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
+    <string name="traktcheckin_inprogress">Zaten \"şu anda izliyorum\" demiştiniz. Ya önceki girişi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
     <string name="traktcheckin_wait">Bekle</string>
     <string name="trakt_success">Trakt\'a gönder.</string>
     <string name="trakt_error_credentials">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
     <string name="trakt_error_not_exists">Trakt (henüz) mevcut değil. Daha sonra yeniden deneyin.</string>
     <string name="trakt_notice_not_exists">(Şimdilik) trakt ile ilişkilendirilememektedir.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt hesabı</string>
     <string name="connect_trakt">trakt\'e bağlan</string>
     <string name="trakt_reconnect">SeriesGuide ile trakt\'a bağlan</string>
     <string name="trakt_reconnect_details">Trakt giriş bilgilerinizi kontrol edin</string>
@@ -324,16 +322,17 @@
         <item quantity="other">%d oy</item>
     </plurals>
     <!-- Check Ins -->
-    <string name="checkin">İzliyorum</string>
+    <string name="checkin">Şu anda izliyorum</string>
     <string name="checkin_hint">Bir mesaj yazın (isteğe bağlı)</string>
     <string name="paste_title">Başlığı yapıştır</string>
     <string name="pref_quick_checkin">Hızlıca \"izliyorum\" yap</string>
-    <string name="pref_quick_checkin_summary">\"İzliyorum\" mesajı gösterme</string>
+    <string name="pref_quick_checkin_summary">\"Şu anda izliyorum\" mesajı gösterme</string>
     <!-- Help -->
     <string name="feedback">Geribildirim Gönder</string>
     <string name="action_open_in_browser">Tarayıcıda aç</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Temel Ayarlar</string>
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Gelişmiş</string>
     <string name="prefs_category_about">Hakkında</string>
     <string name="pref_onlyfuture">Yayınlanan bölüm yok</string>
@@ -471,11 +470,11 @@
     <string name="billing_action_pass">X Pass alın</string>
     <string name="billing_price_subscribe">%1$s/yıl, ücretsiz dene, %2$s üzerinden istediğin zaman iptal et</string>
     <string name="billing_duration_format">%1$s/yıl</string>
-    <string name="billing_sub_description">Ücretsiz dene, istediğin zaman vazgeç.</string>
+    <string name="billing_sub_description">30 gün ücretsiz dene, istediğin zaman iptal et</string>
     <string name="billing_price_pass">tek seferlik ödeme</string>
-    <string name="upgrade_description">Bildirimler, temalar, daha fazla widgetlar gibi özellikleri acın ve uygulamayı geliştirmeme yardım edin.</string>
+    <string name="upgrade_description">Her abonelik, tüm özelliklerin kilidini açar ve gelecekteki güncellemeleri destekler. Bu uygulamayı kullanmak için herhangi bir abonelik gerekli değildir.</string>
     <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>
-    <string name="billing_learn_more">Neden ödeme yapasınız? Daha fazla bilgi edinin.</string>
+    <string name="billing_learn_more">Daha fazla bilgi ve yardım</string>
     <string name="subscription_expired">Abonelik sona erdi</string>
     <string name="subscription_expired_details">X özellikleri abonelik süresi doldu.</string>
     <!-- Amazon In-App Billing -->

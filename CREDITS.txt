@@ -127,9 +127,6 @@ Copyright 2011, 2012 Chris Banes
 retrofit (https://github.com/square/retrofit)
 Copyright 2013 Square, Inc.
 
-StickyGridHeaders (https://github.com/TonicArtos/StickyGridHeaders)
-Copyright 2013 Tonic Artos
-
 SystemBarTint (https://github.com/jgilfelt/SystemBarTint)
 Copyright 2013 readyState Software Limited
 

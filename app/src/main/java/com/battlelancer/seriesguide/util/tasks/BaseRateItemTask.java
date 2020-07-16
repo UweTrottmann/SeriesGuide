@@ -25,6 +25,12 @@ public abstract class BaseRateItemTask extends BaseActionTask {
     }
 
     @Override
+    protected boolean isSendingToHexagon() {
+        // Hexagon does not support ratings.
+        return false;
+    }
+
+    @Override
     protected Integer doBackgroundAction(Void... params) {
         if (isSendingToTrakt()) {
             if (!TraktCredentials.get(getContext()).hasCredentials()) {

@@ -36,7 +36,7 @@
                 android:layout_marginLeft="@dimen/larger_padding"
                 android:layout_marginRight="@dimen/larger_padding"
                 android:minHeight="48dp"
-                android:textAppearance="@style/TextAppearance.Menu"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
                 tools:text="30 minutes" />
 
             <RadioButton
@@ -46,7 +46,7 @@
                 android:layout_marginLeft="@dimen/larger_padding"
                 android:layout_marginRight="@dimen/larger_padding"
                 android:minHeight="48dp"
-                android:textAppearance="@style/TextAppearance.Menu"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
                 tools:text="30 hours" />
 
             <RadioButton
@@ -56,7 +56,7 @@
                 android:layout_marginLeft="@dimen/larger_padding"
                 android:layout_marginRight="@dimen/larger_padding"
                 android:minHeight="48dp"
-                android:textAppearance="@style/TextAppearance.Menu"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
                 tools:text="30 days" />
 
         </RadioGroup>

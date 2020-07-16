@@ -28,7 +28,7 @@ patches or translations the following applies:
 ## Building
 
 - `dev` is the main development and [test release](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) branch.
-- `master` has always the latest [stable version](https://seriesgui.de).
+- `main` has always the latest [stable version](https://seriesgui.de).
 
 To get started:
 
@@ -69,12 +69,5 @@ SONATYPE_NEXUS_PASSWORD=<your sonatype password>
 
 #### Crashlytics
 
-To use [Crashlytics](https://get.fabric.io/crashlytics) create `app/fabric.properties` and 
-add your [API key and secret](https://docs.fabric.io/android/fabric/settings/api-keys.html):
-
-```
-# app/fabric.properties
-apiSecret=<secret>
-apiKey=<key>
-```
- 
+To use [Crashlytics](https://firebase.google.com/docs/crashlytics) download and
+add your `app/google-services.json`.

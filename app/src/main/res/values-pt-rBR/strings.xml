@@ -11,13 +11,12 @@
     <string name="help">Ajuda</string>
     <string name="no_more_updates">O SeriesGuide não receberá mais atualizações para esta versão do Android.</string>
     <!-- Media items -->
-    <string name="show">Série</string>
+    <string name="show_details">Detalhes</string>
     <string name="episode">Episódio</string>
     <string name="episode_number">Episódio %d</string>
     <string name="episodes">Episódios</string>
     <string name="season">Temporada</string>
-    <string name="season_number">%dª Temporada</string>
-    <string name="seasons">Temporadas</string>
+    <string name="season_number">Temporada %d</string>
     <string name="specialseason">Episódios Especiais</string>
     <string name="ratings">Classificações</string>
     <!-- Descriptions -->
@@ -106,14 +105,17 @@
     <string name="confirmation_watched_up_to">Definir todos os episódios aqui assistidos?</string>
     <string name="collect_all">Todos coletados</string>
     <string name="uncollect_all">Nenhum coletado</string>
-    <string name="action_skip">Avançar</string>
-    <string name="action_dont_skip">Não avançar</string>
+    <string name="action_skip">Ignorar</string>
+    <string name="action_dont_skip">Não ignorar</string>
     <string name="action_collection_add">Adicionar à coleção</string>
     <string name="action_collection_remove">Remover da coleção</string>
-    <string name="action_collection_added">Adicionado à coleção</string>
-    <string name="action_collection_removed">Removido da coleção</string>
     <string name="action_watched">Marcar como assistido</string>
     <string name="action_unwatched">Marcar como não assistido</string>
+    <string name="state_watched">Assistido</string>
+    <string name="state_skipped">Ignorado</string>
+    <string name="state_in_collection">Na coleção</string>
+    <string name="state_on_watchlist">Na lista</string>
+    <string name="state_favorite">Favorito</string>
     <!-- Shows -->
     <string name="confirm_delete">Você quer mesmo remover %s?</string>
     <string name="delete_error">Não foi possível remover a série. Tente novamente mais tarde.</string>
@@ -198,7 +200,6 @@
     <string name="add_error">Não foi possível adicionar %s.</string>
     <string name="add_already_exists">%s já está na sua lista de séries.</string>
     <string name="title_new_episodes">Novos episódios</string>
-    <string name="recommended">Recomendado</string>
     <string name="watched_shows">Assistido</string>
     <string name="shows_collection">Coleção</string>
     <string name="watchlist">Lista</string>
@@ -247,10 +248,8 @@
     <string name="shows_with_next">%s com próximos episódios</string>
     <string name="shows_continuing">%s em exibição</string>
     <string name="episodes_watched">%s assistidos</string>
-    <string name="runtime_all_episodes">tempo de execução dos episódios assistidos</string>
     <string name="movies_on_watchlist">%s na lista</string>
     <string name="movies_watched_format">%s assistidos</string>
-    <string name="runtime_movies_watchlist">tempo de execução dos filmes da lista</string>
     <plurals name="days_plural">
         <item quantity="one">%d dia</item>
         <item quantity="other">%d dias</item>
@@ -296,7 +295,6 @@
     <string name="trakt_error_not_exists">Não disponível (ainda) no trakt. Tente novamente mais tarde.</string>
     <string name="trakt_notice_not_exists">Não pode (ainda) ser rastreado com trakt</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">Conta trakt</string>
     <string name="connect_trakt">Conectar trakt</string>
     <string name="trakt_reconnect">Conecte o SeriesGuide ao trakt</string>
     <string name="trakt_reconnect_details">Verifique suas credenciais do trakt</string>
@@ -333,7 +331,8 @@
     <string name="feedback">Enviar comentários</string>
     <string name="action_open_in_browser">Abrir no navegador</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Básico</string>
+    <string name="action_translate">Traduza este aplicativo</string>
+    <string name="action_contribute_content">Traduza ou melhore o conteúdo</string>
     <string name="prefs_category_advanced">Avançado</string>
     <string name="prefs_category_about">Sobre</string>
     <string name="pref_onlyfuture">Ocultar episódios exibidos</string>
@@ -423,7 +422,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Backup Automático</string>
     <string name="pref_autobackupsummary">Backup semanal de suas séries, listas e filmes</string>
-    <string name="autobackup_details">Esses backups não estão disponíveis se o app for reinstalado, a menos que o backup de dados de aplicativo esteja ativo no dispositivo (Android 6+). Caso contrário, crie cópias para preservá-lo.</string>
+    <string name="autobackup_details">Esses backups não estarão disponíveis se o app for reinstalado, a menos que o backup de dados de aplicativo esteja ativo no dispositivo (Android 6+). Caso contrário, crie cópias para preservá-lo.</string>
     <string name="last_auto_backup">Último backup automático: %s</string>
     <string name="restore_auto_backup">Restaurar backup automático</string>
     <string name="autobackup_failed">Falha no último backup automático</string>
@@ -471,11 +470,11 @@
     <string name="billing_action_pass">Adquira o X Pass</string>
     <string name="billing_price_subscribe">%1$s/ano, teste gratuitamente, cancele a qualquer momento até %2$s</string>
     <string name="billing_duration_format">%1$s/ano</string>
-    <string name="billing_sub_description">Teste grátis, cancele a qualquer momento.</string>
+    <string name="billing_sub_description">Teste grátis por 30 dias, cancele a qualquer momento</string>
     <string name="billing_price_pass">Compra única</string>
-    <string name="upgrade_description">Desbloqueie todos os recursos incluindo notificações, temas e mais opções de widget. Me ajude a trazer as futuras atualizações.</string>
+    <string name="upgrade_description">Toda assinatura desbloqueia os recursos e apoia atualizações futuras. Uma assinatura não é necessária para usar o aplicativo.</string>
     <string name="upgrade_success">Obrigado por apoiar o SeriesGuide! Você agora tem acesso a todos os recursos.</string>
-    <string name="billing_learn_more">Por que pagar? Saiba mais</string>
+    <string name="billing_learn_more">Mais informações e ajuda</string>
     <string name="subscription_expired">Assinatura expirada</string>
     <string name="subscription_expired_details">Sua assinatura do SeriesGuide expirou</string>
     <!-- Amazon In-App Billing -->

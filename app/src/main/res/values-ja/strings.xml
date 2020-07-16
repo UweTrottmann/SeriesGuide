@@ -11,13 +11,12 @@
     <string name="help">ヘルプ</string>
     <string name="no_more_updates">SeriesGuide は、このバージョンの Android の更新をもう受け取りません。</string>
     <!-- Media items -->
-    <string name="show">番組</string>
+    <string name="show_details">詳細</string>
     <string name="episode">エピソード</string>
     <string name="episode_number">エピソード %d</string>
     <string name="episodes">エピソード</string>
     <string name="season">シーズン</string>
     <string name="season_number">シーズン %d</string>
-    <string name="seasons">シーズン</string>
     <string name="specialseason">特別編</string>
     <string name="ratings">評価</string>
     <!-- Descriptions -->
@@ -109,10 +108,13 @@
     <string name="action_dont_skip">スキップしない</string>
     <string name="action_collection_add">コレクションに追加</string>
     <string name="action_collection_remove">コレクションから削除</string>
-    <string name="action_collection_added">コレクションに追加</string>
-    <string name="action_collection_removed">コレクションから削除しました</string>
     <string name="action_watched">視聴済に設定</string>
     <string name="action_unwatched">未視聴に設定</string>
+    <string name="state_watched">視聴済</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">%s を削除してもよろしいですか？</string>
     <string name="delete_error">番組を削除できませんでした。後でもう一度やり直してください。</string>
@@ -194,7 +196,6 @@
     <string name="add_error">%s を追加できませんでした。</string>
     <string name="add_already_exists">%s はすでに番組リストにあります</string>
     <string name="title_new_episodes">新しいエピソード</string>
-    <string name="recommended">おすすめ</string>
     <string name="watched_shows">視聴済</string>
     <string name="shows_collection">コレクション</string>
     <string name="watchlist">ウォッチリスト</string>
@@ -243,10 +244,8 @@
     <string name="shows_with_next">次のエピソードがある番組 %s</string>
     <string name="shows_continuing">継続中 %s</string>
     <string name="episodes_watched">%s 視聴済</string>
-    <string name="runtime_all_episodes">すべての視聴済エピソードのランタイム</string>
     <string name="movies_on_watchlist">%s ウォッチリスト内</string>
     <string name="movies_watched_format">%s 視聴済</string>
-    <string name="runtime_movies_watchlist">映画ウォッチリストのランタイム</string>
     <plurals name="days_plural">
         <item quantity="other">%d 日</item>
     </plurals>
@@ -289,7 +288,6 @@
     <string name="trakt_error_not_exists">Trakt では利用できません。後でもう一度やり直してください。</string>
     <string name="trakt_notice_not_exists">Trakt では追跡できません。</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">Trakt アカウント</string>
     <string name="connect_trakt">Trakt に接続</string>
     <string name="trakt_reconnect">SeriesGuide を Trakt に接続</string>
     <string name="trakt_reconnect_details">Trakt の認証情報を確認してください</string>
@@ -325,7 +323,8 @@
     <string name="feedback">フィードバックを送信</string>
     <string name="action_open_in_browser">ブラウザーで開く</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">基本</string>
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">高度</string>
     <string name="prefs_category_about">について</string>
     <string name="pref_onlyfuture">未放映のエピソード</string>
@@ -460,11 +459,11 @@
     <string name="billing_action_pass">X Pass を入手</string>
     <string name="billing_price_subscribe">%1$s/年、無料でお試しください、%2$s からいつでもキャンセルできます</string>
     <string name="billing_duration_format">%1$s/年</string>
-    <string name="billing_sub_description">無料でお試しください。いつでもキャンセルできます。</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">一回限りの支払</string>
-    <string name="upgrade_description">通知、テーマ、および多くのリスト ウィジェットのオプションを含む、すべての機能のロックを解除します。将来の更新に役立ちます。</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">SeriesGuide のサポートをありがとうございます! すべての機能にアクセスすることができます。</string>
-    <string name="billing_learn_more">なぜ支払? 詳細情報。</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">サブスクリプションの有効期限が切れました</string>
     <string name="subscription_expired_details">SeriesGuide サブスクリプションの有効期限が切れています。</string>
     <!-- Amazon In-App Billing -->

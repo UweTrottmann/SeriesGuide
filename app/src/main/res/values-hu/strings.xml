@@ -11,13 +11,12 @@
     <string name="help">Súgó</string>
     <string name="no_more_updates">Ehhez az android verzióhoz nem készül több SeriesGuide frissítés.</string>
     <!-- Media items -->
-    <string name="show">Műsor</string>
+    <string name="show_details">Részletek</string>
     <string name="episode">Epizód</string>
     <string name="episode_number">Epizód %d</string>
     <string name="episodes">Epizódok</string>
     <string name="season">Évad</string>
     <string name="season_number">Évad %d</string>
-    <string name="seasons">Évadok</string>
     <string name="specialseason">Extra epizódok</string>
     <string name="ratings">Értékelések</string>
     <!-- Descriptions -->
@@ -110,10 +109,13 @@
     <string name="action_dont_skip">Ne hagyd ki</string>
     <string name="action_collection_add">Gyűjteményhez ad</string>
     <string name="action_collection_remove">Eltávolítás a gyűjteményből</string>
-    <string name="action_collection_added">Hozzáadva a gyűjteményhez</string>
-    <string name="action_collection_removed">Eltávolítva a gyűjteményből</string>
     <string name="action_watched">Megnézve</string>
     <string name="action_unwatched">Még nem láttam</string>
+    <string name="state_watched">Megnézve</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Biztosan törlöd a következőt: %s?</string>
     <string name="delete_error">Nem lehet eltávolítani. Próbáld később.</string>
@@ -198,7 +200,6 @@
     <string name="add_error">Nem lehetett hozzáadni a(z) %s-t.</string>
     <string name="add_already_exists">A(z) %s már a listádon van.</string>
     <string name="title_new_episodes">Új epizódok</string>
-    <string name="recommended">Ajánlott</string>
     <string name="watched_shows">Megnézve</string>
     <string name="shows_collection">Gyűjtemény</string>
     <string name="watchlist">Figyelőlista</string>
@@ -247,10 +248,8 @@
     <string name="shows_with_next">%s új epizóddal</string>
     <string name="shows_continuing">%s folytatódik</string>
     <string name="episodes_watched">%s megnézve</string>
-    <string name="runtime_all_episodes">Összes epizód műsorideje</string>
     <string name="movies_on_watchlist">%s a figyelőlistában</string>
     <string name="movies_watched_format">%s megnézve</string>
-    <string name="runtime_movies_watchlist">LEJÁTSZÁSI LISTA TELJES JÁTÉKIDEJE</string>
     <plurals name="days_plural">
         <item quantity="one">%d nap</item>
         <item quantity="other">%d nap</item>
@@ -296,7 +295,6 @@
     <string name="trakt_error_not_exists">(Még) nem található a trakton. Próbálkozz később.</string>
     <string name="trakt_notice_not_exists">(Még) nem követhető nyomon a trakttal.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt fiók</string>
     <string name="connect_trakt">Trakt csatlakozás</string>
     <string name="trakt_reconnect">A SeriesGuide csatlakoztatása a trakthoz</string>
     <string name="trakt_reconnect_details">Ellenőrizd a trakt engedélyeket</string>
@@ -333,7 +331,8 @@
     <string name="feedback">Visszajelzés küldése</string>
     <string name="action_open_in_browser">Megnyitás böngészőben</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Alap beállítások</string>
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Haladó beállítások</string>
     <string name="prefs_category_about">A programról</string>
     <string name="pref_onlyfuture">Leadott epizódok nélkül</string>
@@ -471,11 +470,11 @@
     <string name="billing_action_pass">X Pass beszerzése</string>
     <string name="billing_price_subscribe">%1$s/év, próbálja ki ingyen, bármikor kiléphet a %2$s segítségével</string>
     <string name="billing_duration_format">%1$s/év</string>
-    <string name="billing_sub_description">Próbáld ki ingyen, lépj ki bármikor.</string>
+    <string name="billing_sub_description">Próbáld ki 30 napig ingyen, bármikor visszavonható.</string>
     <string name="billing_price_pass">Egyszeri fizetés</string>
-    <string name="upgrade_description">Old fel a összes funkciót, beleértve az értesítéseket, témákat és a több widget lista lehetőséget. Segíts, hogy frissíthessem a programot a jövőben is.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Köszönöm a támogatást. Most már hozzáférsz az összes funkcióhoz.</string>
-    <string name="billing_learn_more">Miért fizessek? Tudj meg többet.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Lejárt az előfizetés</string>
     <string name="subscription_expired_details">Lejárt a SeriesGuide előfizetésed.</string>
     <!-- Amazon In-App Billing -->

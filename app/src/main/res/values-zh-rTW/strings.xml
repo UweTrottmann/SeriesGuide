@@ -11,13 +11,12 @@
     <string name="help">說明</string>
     <string name="no_more_updates">此版本的 Android 將不會收到 SeriesGuide 的任何更新。</string>
     <!-- Media items -->
-    <string name="show">節目</string>
+    <string name="show_details">Details</string>
     <string name="episode">集數</string>
     <string name="episode_number">第 %d 集</string>
     <string name="episodes">集數</string>
     <string name="season">季</string>
     <string name="season_number">第 %d 季</string>
-    <string name="seasons">季數</string>
     <string name="specialseason">特集</string>
     <string name="ratings">評分</string>
     <!-- Descriptions -->
@@ -109,10 +108,13 @@
     <string name="action_dont_skip">取消略過</string>
     <string name="action_collection_add">添加到收藏</string>
     <string name="action_collection_remove">從收藏移除</string>
-    <string name="action_collection_added">加入收藏</string>
-    <string name="action_collection_removed">自收藏移除</string>
     <string name="action_watched">設為已觀看</string>
     <string name="action_unwatched">設為尚未觀看</string>
+    <string name="state_watched">已看過</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">確定要移除%s嗎？</string>
     <string name="delete_error">無法移除節目。請稍後再試。</string>
@@ -194,7 +196,6 @@
     <string name="add_error">無法新增%s</string>
     <string name="add_already_exists">%s已經在你的清單當中。</string>
     <string name="title_new_episodes">新劇集</string>
-    <string name="recommended">推薦</string>
     <string name="watched_shows">已看過</string>
     <string name="shows_collection">收藏</string>
     <string name="watchlist">待看清單</string>
@@ -243,10 +244,8 @@
     <string name="shows_with_next">%s 影集有新的集數</string>
     <string name="shows_continuing">%s部影集仍在連載</string>
     <string name="episodes_watched">%s 集已看</string>
-    <string name="runtime_all_episodes">所有看過影集的時數總計</string>
     <string name="movies_on_watchlist">%s於待看清單中。</string>
     <string name="movies_watched_format">%s 集已看</string>
-    <string name="runtime_movies_watchlist">待看清單之總播放時間</string>
     <plurals name="days_plural">
         <item quantity="other">%d 天</item>
     </plurals>
@@ -289,7 +288,6 @@
     <string name="trakt_error_not_exists">Trakt還無法使用，稍後再試。</string>
     <string name="trakt_notice_not_exists">還不能使用trakt追蹤。</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt 帳戶</string>
     <string name="connect_trakt">連接 trakt</string>
     <string name="trakt_reconnect">連結SeriesGuide與trakt</string>
     <string name="trakt_reconnect_details">檢查您的 trakt 憑證</string>
@@ -325,7 +323,8 @@
     <string name="feedback">傳送反饋意見</string>
     <string name="action_open_in_browser">於瀏覽器中開啟</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">基本資料</string>
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">進階</string>
     <string name="prefs_category_about">關於本軟體</string>
     <string name="pref_onlyfuture">無已播出集數</string>
@@ -460,11 +459,11 @@
     <string name="billing_action_pass">取得 X Pass</string>
     <string name="billing_price_subscribe">每年%1$s，免費試用，可在%2$s 內隨時取消。</string>
     <string name="billing_duration_format">%1$s / 年</string>
-    <string name="billing_sub_description">免費試用，可隨時取消。</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">一次購買</string>
-    <string name="upgrade_description">解鎖所有功能，包括通知、 主題和更多清單小部件。幫助我進行更多地更新。</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">謝謝贊助SeriesGuide ！您可以使用的所有功能。</string>
-    <string name="billing_learn_more">為什麼要付錢？瞭解更多資訊。</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">訂閱已過期</string>
     <string name="subscription_expired_details">您的 SeriesGuide 訂閱已過期。</string>
     <!-- Amazon In-App Billing -->

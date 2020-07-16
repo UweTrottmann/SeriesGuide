@@ -11,13 +11,12 @@
     <string name="help">Ajuda</string>
     <string name="no_more_updates">SeriesGuide no rebrà més actualitzacions per aquesta versió d\'Android.</string>
     <!-- Media items -->
-    <string name="show">Sèrie</string>
+    <string name="show_details">Detalls</string>
     <string name="episode">Episodi</string>
     <string name="episode_number">Episodi %d</string>
     <string name="episodes">Episodis</string>
     <string name="season">Temporada</string>
     <string name="season_number">Temporada %d</string>
-    <string name="seasons">Temporades</string>
     <string name="specialseason">Episodis especials</string>
     <string name="ratings">Valoracions</string>
     <!-- Descriptions -->
@@ -103,17 +102,20 @@
     <string name="mark_all">Tots vists</string>
     <string name="unmark_all">Cap episodi vist</string>
     <string name="action_watched_up_to">Vist fins aquí</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="confirmation_watched_up_to">Voleu marcar tots els episodis fins aquí com a vists?</string>
     <string name="collect_all">Tots recopilats</string>
     <string name="uncollect_all">Cap recopilat</string>
     <string name="action_skip">Omet</string>
     <string name="action_dont_skip">No ometis</string>
     <string name="action_collection_add">Afegir a la coŀlecció</string>
     <string name="action_collection_remove">Elimina de la coŀlecció</string>
-    <string name="action_collection_added">S\'ha afegit a la coŀlecció</string>
-    <string name="action_collection_removed">S\'ha eliminat de la coŀlecció</string>
     <string name="action_watched">Vist</string>
     <string name="action_unwatched">No vist</string>
+    <string name="state_watched">Vist</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Realment voleu eliminar %s?</string>
     <string name="delete_error">No s\'ha pogut esborrar la sèrie. Intenteu-ho més tard.</string>
@@ -137,7 +139,7 @@
     <string name="action_shows_filter_upcoming">Propers</string>
     <string name="action_shows_filter_hidden">Ocults</string>
     <string name="action_shows_make_all_visible">Fes tot els ocults visibles</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="description_make_all_visible_format">Fer de tots les sèries amagades (%s) visibles un altre cop?</string>
     <string name="action_shows_sort">Ordena sèries</string>
     <string name="action_shows_sort_title">Títol</string>
     <string name="action_shows_sort_latest_episode">Últim episodi</string>
@@ -198,7 +200,6 @@
     <string name="add_error">No es pot afegir %s.</string>
     <string name="add_already_exists">%s ja és a la vostra llista de sèries.</string>
     <string name="title_new_episodes">Nous episodis</string>
-    <string name="recommended">Recomanat</string>
     <string name="watched_shows">Vist</string>
     <string name="shows_collection">Coŀlecció</string>
     <string name="watchlist">Llista de seguiment</string>
@@ -247,10 +248,8 @@
     <string name="shows_with_next">%s amb episodis següents</string>
     <string name="shows_continuing">%s en progrés</string>
     <string name="episodes_watched">%s mirats</string>
-    <string name="runtime_all_episodes">Durada de tots els episodis vists</string>
     <string name="movies_on_watchlist">%s a la llista de seguiment</string>
     <string name="movies_watched_format">%s mirats</string>
-    <string name="runtime_movies_watchlist">Durada de la llista de peŀlícules</string>
     <plurals name="days_plural">
         <item quantity="one">%d dia</item>
         <item quantity="other">%d dies</item>
@@ -296,7 +295,6 @@
     <string name="trakt_error_not_exists">No disponible (encara) a trakt. Prova més tard.</string>
     <string name="trakt_notice_not_exists">No pot ser registrada (encara) a trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">Compte de trakt</string>
     <string name="connect_trakt">Connecta\'t al trakt</string>
     <string name="trakt_reconnect">Connecta SeriesGuide a trakt</string>
     <string name="trakt_reconnect_details">Comprova les credencials de trakt</string>
@@ -333,7 +331,8 @@
     <string name="feedback">Envia comentaris</string>
     <string name="action_open_in_browser">Obre al navegador</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Bàsics</string>
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Avançat</string>
     <string name="prefs_category_about">Quant a</string>
     <string name="pref_onlyfuture">Amaga episodis emesos</string>
@@ -472,11 +471,11 @@ Creeu còpies per preservar-les d\'una altra manera</string>
     <string name="billing_action_pass">Obtenir un «X Pass»</string>
     <string name="billing_price_subscribe">%1$s/any, prova de forma gratuïta, cancel·la en qualsevol moment mitjançant %2$s</string>
     <string name="billing_duration_format">%1$s l\'any</string>
-    <string name="billing_sub_description">Proveu gratuïtament, cancel·leu en qualsevol moment.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">compra única</string>
-    <string name="upgrade_description">Desbloqueja totes les opcions, incloent\'hi notificacions, temes i més opcions de llista de widget. Ajuda\'m a fer futures actualitzacions.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Gràcies per donar support a SeriesGuide! Tens accés a totes les opcions.</string>
-    <string name="billing_learn_more">Per què pagar? Vegeu més informació.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">La subscripció ha caducat</string>
     <string name="subscription_expired_details">La subscripció a les característiques X ha caducat.</string>
     <!-- Amazon In-App Billing -->

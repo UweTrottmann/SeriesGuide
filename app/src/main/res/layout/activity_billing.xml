@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/inline_padding"
                     android:text="@string/action_upgrade"
-                    android:textAppearance="@style/TextAppearance.Headline" />
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5" />
 
                 <TextView
                     android:id="@+id/textViewBillingDescription"
@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/default_padding"
                     android:text="@string/upgrade_description"
-                    android:textAppearance="@style/TextAppearance.Body" />
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2" />
 
                 <TextView
                     android:id="@+id/textViewBillingExisting"
@@ -46,7 +46,7 @@
                     android:layout_marginBottom="@dimen/large_padding"
                     android:gravity="center_horizontal"
                     android:text="@string/upgrade_success"
-                    android:textAppearance="@style/TextAppearance.Body.Bold.Accent"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold.Accent"
                     android:textSize="16sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_padding"
                     android:gravity="center_horizontal"
-                    android:textAppearance="@style/TextAppearance.Body.Highlight.Red"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Error"
                     tools:text="@string/subscription_unavailable" />
 
                 <TextView
@@ -73,36 +73,17 @@
                     android:gravity="center_horizontal"
                     android:maxWidth="200dp"
                     android:text="@string/billing_sub_description"
-                    android:textAppearance="@style/TextAppearance.Body.Highlight"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Italic"
                     android:textStyle="italic" />
 
                 <Button
                     android:id="@+id/buttonBillingManageSubscription"
-                    style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                    style="@style/Widget.SeriesGuide.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/inline_padding"
                     android:text="@string/billing_action_manage_subscriptions" />
-
-                <Button
-                    android:id="@+id/buttonBillingGetPass"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/large_padding"
-                    android:enabled="false"
-                    android:text="@string/billing_action_pass" />
-
-                <TextView
-                    android:id="@+id/textViewBillingPricePass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/inline_padding"
-                    android:gravity="center_horizontal"
-                    android:text="@string/billing_price_pass"
-                    android:textAppearance="@style/TextAppearance.Body.Highlight"
-                    android:textStyle="italic" />
 
                 <Button
                     android:id="@+id/textViewBillingMoreInfo"

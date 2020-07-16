@@ -11,13 +11,12 @@
     <string name="help">Βοήθεια</string>
     <string name="no_more_updates">Το SeriesGuide δεν θα λάβει άλλες ενημερώσεις για αυτή την έκδοση Android.</string>
     <!-- Media items -->
-    <string name="show">Σειρά</string>
+    <string name="show_details">Λεπτομέρειες</string>
     <string name="episode">Επεισόδιο</string>
     <string name="episode_number">Επεισόδιο %d</string>
     <string name="episodes">Επεισόδια</string>
     <string name="season">Σεζόν</string>
     <string name="season_number">Κύκλος %d</string>
-    <string name="seasons">Σεζόν</string>
     <string name="specialseason">Ειδικά Επεισόδια</string>
     <string name="ratings">Βαθμολογίες</string>
     <!-- Descriptions -->
@@ -110,10 +109,13 @@
     <string name="action_dont_skip">μην παραλείψετε</string>
     <string name="action_collection_add">Προσθήκη στη συλλογή</string>
     <string name="action_collection_remove">Κατάργηση από τη συλλογή</string>
-    <string name="action_collection_added">Προστέθηκε στη συλλογή</string>
-    <string name="action_collection_removed">Καταργήθηκε από τη συλλογή</string>
     <string name="action_watched">Έχει παρακολουθηθεί </string>
     <string name="action_unwatched">Δεν παρακολούθησα</string>
+    <string name="state_watched">Είδατε</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Θέλετε πράγματι να αφαιρέσετε %s?</string>
     <string name="delete_error">Δεν ήταν δυνατή η αφαίρεση της σειράς. Προσπαθήστε ξανά αργότερα.</string>
@@ -198,7 +200,6 @@
     <string name="add_error">Δεν ήταν δυνατή η προσθήκη της σειράς %s.</string>
     <string name="add_already_exists">%s βρίσκετε ήδη στην λίστα με τις σειρές σου.</string>
     <string name="title_new_episodes">Νέα επεισόδια</string>
-    <string name="recommended">Προτεινόμενα</string>
     <string name="watched_shows">Είδατε</string>
     <string name="shows_collection">Συλλογή</string>
     <string name="watchlist">Λίστα προς παρακολούθηση</string>
@@ -247,10 +248,8 @@
     <string name="shows_with_next">%s με τα επόμενα επεισόδια</string>
     <string name="shows_continuing">%s συνεχίζονται</string>
     <string name="episodes_watched">%s παρακολουθήθηκαν</string>
-    <string name="runtime_all_episodes">Συνολικός χρόνος όλων των επεισοδίων που έχετε παρακολουθήσει</string>
     <string name="movies_on_watchlist">%s στην λίστα παρακολούθησης</string>
     <string name="movies_watched_format">%s παρακολουθήθηκαν</string>
-    <string name="runtime_movies_watchlist">Συνολικός χρόνος όλων των επεισοδίων που παρακολούθησες</string>
     <plurals name="days_plural">
         <item quantity="one">%d ημέρα</item>
         <item quantity="other">%d ημέρες</item>
@@ -296,7 +295,6 @@
     <string name="trakt_error_not_exists">Δεν είναι (ακόμα) διαθέσιμο στο trakt. Ξαναδοκιμάστε αργότερα.</string>
     <string name="trakt_notice_not_exists">Δεν είναι δυνατή (ακόμα) η παρακολούθηση με το trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">λογαριασμός trakt</string>
     <string name="connect_trakt">Σύνδεση trakt</string>
     <string name="trakt_reconnect">Σύνδεση του SeriesGuide με το trakt</string>
     <string name="trakt_reconnect_details">Έλεγχος διαπιστευτηρίων trakt</string>
@@ -333,7 +331,8 @@
     <string name="feedback">Αποστολή σχολίων</string>
     <string name="action_open_in_browser">Άνοιγμα σε πρόγραμμα περιήγησης</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Βασικά</string>
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Για προχωρημένους</string>
     <string name="prefs_category_about">Σχετικά</string>
     <string name="pref_onlyfuture">Επεισόδια που δεν έχουν προβληθεί</string>
@@ -471,11 +470,11 @@
     <string name="billing_action_pass">Αποκτήστε το X Pass</string>
     <string name="billing_price_subscribe">%1$s/χρόνο, δοκιμάστε δωρεάν, ακυρώστε οποιαδήποτε στιγμή μέσω του %2$s</string>
     <string name="billing_duration_format">%1$s/έτος</string>
-    <string name="billing_sub_description">Δοκιμάστε δωρεάν, ακυρώστε οποιαδήποτε στιγμή.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">εφάπαξ αγοράς</string>
-    <string name="upgrade_description">Ξεκλειδώσετε όλα τα χαρακτηριστικά συμπεριλαμβανομένων των κοινοποιήσεων, θεμάτων και περισσότερες επιλογές widget λιστών. Βοήθησε με να κάνω μελλοντικές ενημερώσεις.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Ευχαριστούμε για την υποστήριξη του SeriesGuide! Έχετε πρόσβαση σε όλα τα χαρακτηριστικά.</string>
-    <string name="billing_learn_more">Γιατί πληρώνετε; Μάθετε περισσότερα.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Εγγραφή έληξε</string>
     <string name="subscription_expired_details">Σας X συνδρομή σας έχει λήξει.</string>
     <!-- Amazon In-App Billing -->

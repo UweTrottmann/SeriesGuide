@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/inline_padding"
-        android:textAppearance="@style/TextAppearance.Title"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
         tools:text="9.6" />
 
     <TextView
@@ -27,7 +27,7 @@
         android:ellipsize="end"
         android:maxEms="6"
         android:maxLines="2"
-        android:textAppearance="@style/TextAppearance.Caption"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
         tools:text="12340 votes" />
 
     <TextView
@@ -37,7 +37,7 @@
         android:layout_below="@+id/textViewRatingsTmdbValue"
         android:layout_marginTop="-4dp"
         android:text="@string/tmdb"
-        android:textAppearance="@style/TextAppearance.Caption" />
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/inline_padding"
-            android:textAppearance="@style/TextAppearance.Title"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
             tools:text="8.4" />
 
         <TextView
@@ -62,7 +62,7 @@
             android:ellipsize="end"
             android:maxEms="6"
             android:maxLines="2"
-            android:textAppearance="@style/TextAppearance.Caption"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
             tools:text="12340 votes" />
 
         <TextView
@@ -72,7 +72,7 @@
             android:layout_below="@+id/textViewRatingsTraktValue"
             android:layout_marginTop="-4dp"
             android:text="@string/trakt"
-            android:textAppearance="@style/TextAppearance.Caption" />
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Caption" />
 
     </RelativeLayout>
 
@@ -84,7 +84,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/large_padding"
         android:text="@string/action_rate"
-        android:textAppearance="@style/TextAppearance.Button" />
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1" />
 
     <TextView
         android:id="@+id/textViewRatingsTraktUserLabel"
@@ -93,6 +93,6 @@
         android:layout_below="@+id/textViewRatingsTraktUser"
         android:layout_centerHorizontal="true"
         android:text="@string/your_rating"
-        android:textAppearance="@style/TextAppearance.Caption" />
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption" />
 
 </RelativeLayout>

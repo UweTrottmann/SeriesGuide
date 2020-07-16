@@ -2,125 +2,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Text styles -->
-    <style name="TextAppearance" parent="@android:style/TextAppearance">
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:textSize">@dimen/text_size_default_sg</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
-    </style>
-
-    <style name="TextAppearance.Display3">
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
-        <item name="android:textSize">56sp</item>
-    </style>
-
-    <style name="TextAppearance.Display1">
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
-        <item name="android:textSize">34sp</item>
-    </style>
-
-    <style name="TextAppearance.Display1.White">
-        <item name="android:textColor">@color/sg_white</item>
-    </style>
-
-    <style name="TextAppearance.Headline">
-        <item name="android:textSize">24sp</item>
-    </style>
-
-    <style name="TextAppearance.Title">
-        <item name="android:textSize">20sp</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-    </style>
-
-    <style name="TextAppearance.Title.Dim">
-        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
-    </style>
-
-    <style name="TextAppearance.Subhead">
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="TextAppearance.Subhead.Bold">
-        <item name="android:fontFamily">sans-serif-medium</item>
-    </style>
-
-    <style name="TextAppearance.Subhead.Dim">
-        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
-    </style>
-
-    <style name="TextAppearance.Subhead.Secondary">
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
-    </style>
-
-    <style name="TextAppearance.Body">
-        <item name="android:textSize">@dimen/text_size_default_sg</item>
-    </style>
-
-    <style name="TextAppearance.Body.Bold">
-        <item name="android:fontFamily">sans-serif-medium</item>
-    </style>
-
-    <style name="TextAppearance.Body.Bold.Accent">
-        <item name="android:textColor">?attr/colorAccent</item>
-    </style>
-
-    <style name="TextAppearance.Body.Bold.Dim">
-        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
-    </style>
-
-    <style name="TextAppearance.Body.Dim">
-        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
-    </style>
-
-    <style name="TextAppearance.Body.Secondary">
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
-    </style>
-
-    <style name="TextAppearance.Body.Secondary.Narrow">
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
-    </style>
-
-    <style name="TextAppearance.Body.Green">
-        <item name="android:textColor">?attr/sgTextColorGreen</item>
-    </style>
-
-    <style name="TextAppearance.Body.Highlight">
-        <item name="android:textStyle">italic</item>
-    </style>
-
-    <style name="TextAppearance.Body.Highlight.Red">
-        <item name="android:textColor">@color/text_red</item>
-    </style>
-
-    <style name="TextAppearance.Caption">
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
-        <item name="android:textSize">@dimen/text_size_caption_sg</item>
-    </style>
-
-    <style name="TextAppearance.Caption.Dim">
-        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
-    </style>
-
-    <style name="TextAppearance.Caption.Narrow">
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
-    </style>
-
-    <style name="TextAppearance.Caption.Narrow.Dim">
-        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
-    </style>
-
-    <style name="TextAppearance.Menu">
-        <item name="android:textSize">@dimen/text_size_menu_sg</item>
-    </style>
-
-    <style name="TextAppearance.Button">
-        <item name="android:textSize">@dimen/text_size_default_sg</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-    </style>
-
-    <style name="TextAppearance.SeriesGuide" />
-
     <style name="TextAppearance.SeriesGuide.Body1" parent="TextAppearance.MaterialComponents.Body1" />
 
     <style name="TextAppearance.SeriesGuide.Body2" parent="TextAppearance.MaterialComponents.Body2" />
@@ -136,6 +17,10 @@
     <style name="TextAppearance.SeriesGuide.Body2.Secondary">
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
+    <style name="TextAppearance.SeriesGuide.Body2.Secondary.Narrow">
+        <item name="fontFamily">sans-serif-condensed</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
     <style name="TextAppearance.SeriesGuide.Body2.Bold">
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -143,14 +28,31 @@
     <style name="TextAppearance.SeriesGuide.Body2.Bold.Accent">
         <item name="android:textColor">@color/sg_text_color_accent</item>
     </style>
-    <style name="TextAppearance.SeriesGuide.Body2.Italics">
+    <style name="TextAppearance.SeriesGuide.Body2.Bold.Dim">
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
+    </style>
+    <style name="TextAppearance.SeriesGuide.Body2.Italic">
         <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="TextAppearance.SeriesGuide.Widget" parent="TextAppearance.SeriesGuide.Body2">
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.SeriesGuide.Widget.Bold" parent="TextAppearance.SeriesGuide.Body2.Bold">
+        <item name="android:letterSpacing">0</item>
     </style>
 
     <style name="TextAppearance.SeriesGuide.Button" parent="TextAppearance.MaterialComponents.Button" />
 
     <style name="TextAppearance.SeriesGuide.Caption" parent="TextAppearance.MaterialComponents.Caption" />
     <style name="TextAppearance.SeriesGuide.Caption.Dim">
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
+    </style>
+    <style name="TextAppearance.SeriesGuide.Caption.Narrow">
+        <item name="fontFamily">sans-serif-condensed</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+    <style name="TextAppearance.SeriesGuide.Caption.Narrow.Dim">
         <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
 
@@ -161,11 +63,20 @@
 
     <style name="TextAppearance.SeriesGuide.Headline5" parent="TextAppearance.MaterialComponents.Headline5" />
     <style name="TextAppearance.SeriesGuide.Headline6" parent="TextAppearance.MaterialComponents.Headline6" />
+    <style name="TextAppearance.SeriesGuide.Headline6.Dim">
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
+    </style>
 
     <style name="TextAppearance.SeriesGuide.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1" />
     <style name="TextAppearance.SeriesGuide.Subtitle1.Bold">
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="TextAppearance.SeriesGuide.Subtitle1.Dim">
+        <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
+    </style>
+    <style name="TextAppearance.SeriesGuide.Subtitle1.Secondary">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
     <style name="TextAppearance.SeriesGuide.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2" />
@@ -178,7 +89,7 @@
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
-    <style name="TextAppearance.SeriesGuide.EmptyState" parent="TextAppearance.Title.Dim" />
+    <style name="TextAppearance.SeriesGuide.EmptyState" parent="TextAppearance.SeriesGuide.Headline6.Dim" />
 
     <!-- Widgets are not part of the app, so app theme attributes can not be used. -->
     <style name="TextAppearance.SeriesGuide.Widget.Title" parent="">
@@ -220,7 +131,7 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:gravity">center_vertical|start</item>
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif</item>
-        <item name="android:textAppearance">@style/TextAppearance.Menu</item>
+        <item name="android:textAppearance">@style/TextAppearance.SeriesGuide.Subtitle1</item>
         <item name="android:paddingLeft">@dimen/large_padding</item>
         <item name="android:paddingRight">@dimen/large_padding</item>
         <item name="iconPadding">32dp</item>
@@ -233,14 +144,14 @@
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Caption">
-        <item name="android:textSize">@dimen/text_size_caption_sg</item>
-        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="iconTint">?android:textColorSecondary</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.MediaItem" parent="Widget.SeriesGuide.Button.Borderless.Caption">
         <item name="android:ellipsize">end</item>
-        <item name="android:padding">8dp</item>
         <item name="android:maxLines">3</item>
     </style>
 
@@ -253,7 +164,7 @@
     </style>
 
     <style name="Widget.SeriesGuide.DistillationItem">
-        <item name="android:textAppearance">@style/TextAppearance.Menu</item>
+        <item name="android:textAppearance">@style/TextAppearance.SeriesGuide.Subtitle1</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:layout_marginStart">@dimen/large_padding</item>
         <item name="android:layout_marginEnd">@dimen/large_padding</item>

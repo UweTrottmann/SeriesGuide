@@ -66,7 +66,7 @@
                     android:layout_toRightOf="@id/frameLayoutMoviePoster"
                     android:background="?attr/selectableItemBackground"
                     android:focusable="true"
-                    android:textAppearance="@style/TextAppearance.Title"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
                     tools:text="Awesome Movie Title" />
 
                 <TextView
@@ -80,7 +80,7 @@
                     android:layout_toRightOf="@id/frameLayoutMoviePoster"
                     android:background="?attr/selectableItemBackground"
                     android:focusable="true"
-                    android:textAppearance="@style/TextAppearance.Caption"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
                     tools:text="20 Oct 2013" />
 
             </RelativeLayout>
@@ -161,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/dividerMovie2"
                 android:text="@string/show_genres"
-                android:textAppearance="@style/TextAppearance.Body.Bold" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold" />
 
             <TextView
                 android:id="@+id/textViewMovieGenres"
@@ -172,7 +172,7 @@
                 android:layout_marginBottom="@dimen/large_padding"
                 android:background="?attr/selectableItemBackground"
                 android:focusable="true"
-                android:textAppearance="@style/TextAppearance.Body"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                 tools:text="Action, Comedy, Drama" />
 
             <include

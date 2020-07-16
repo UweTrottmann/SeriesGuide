@@ -5,19 +5,18 @@
     <string name="lists">Zoznamy</string>
     <string name="movies">Filmy</string>
     <string name="statistics">Štatistiky</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">Viac</string>
     <string name="search">Hľadať</string>
     <string name="preferences">Nastavenia</string>
     <string name="help">Pomoc</string>
     <string name="no_more_updates">Pre túto verziu Androidu aplikácia SeriesGuide už nebude aktualizovaná.</string>
     <!-- Media items -->
-    <string name="show">Seriál</string>
+    <string name="show_details">Podrobnosti</string>
     <string name="episode">Epizóda</string>
     <string name="episode_number">Epizóda %d</string>
     <string name="episodes">Epizódy</string>
     <string name="season">Séria</string>
     <string name="season_number">Séria %d</string>
-    <string name="seasons">Série</string>
     <string name="specialseason">Bonusové epizódy</string>
     <string name="ratings">Hodnotenia</string>
     <!-- Descriptions -->
@@ -112,10 +111,13 @@
     <string name="action_dont_skip">Nepreskakovať</string>
     <string name="action_collection_add">Pridať do zbierky</string>
     <string name="action_collection_remove">Odstrániť zo zbierky</string>
-    <string name="action_collection_added">Pridané do zbierky</string>
-    <string name="action_collection_removed">Odstránené zo zbierky</string>
     <string name="action_watched">Označiť ako videné</string>
     <string name="action_unwatched">Označiť ako nevidené</string>
+    <string name="state_watched">Videné</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Naozaj chcete odstrániť %s?</string>
     <string name="delete_error">Seriál nemožno odstrániť. Skúste to znova neskôr.</string>
@@ -206,7 +208,6 @@
     <string name="add_error">Nemožno pridať %s.</string>
     <string name="add_already_exists">%s už je vo vašich seriáloch.</string>
     <string name="title_new_episodes">Nové epizódy</string>
-    <string name="recommended">Odporúčané</string>
     <string name="watched_shows">Videné</string>
     <string name="shows_collection">Zbierka</string>
     <string name="watchlist">Chcem vidieť</string>
@@ -255,10 +256,8 @@
     <string name="shows_with_next">%s s ďalšími epizódami</string>
     <string name="shows_continuing">%s pokračuje</string>
     <string name="episodes_watched">%s videných</string>
-    <string name="runtime_all_episodes">Celkový čas všetkých videných epizód</string>
     <string name="movies_on_watchlist">%s v Chcem vidieť</string>
     <string name="movies_watched_format">%s videných</string>
-    <string name="runtime_movies_watchlist">Celková dĺžka filmov v Chcem vidieť</string>
     <plurals name="days_plural">
         <item quantity="one">%d deň</item>
         <item quantity="few">%d dni</item>
@@ -310,7 +309,6 @@
     <string name="trakt_error_not_exists">Nie je (zatiaľ) dostupné na trakt. Skúste to znova neskôr.</string>
     <string name="trakt_notice_not_exists">Nie je (zatiaľ) možné sledovať na trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt účet</string>
     <string name="connect_trakt">Pripojiť na trakt</string>
     <string name="trakt_reconnect">Pripojiť SeriesGuide k trakt</string>
     <string name="trakt_reconnect_details">Skontrolujte užívateľské meno/heslo trakt</string>
@@ -349,7 +347,8 @@
     <string name="feedback">Poslať reakciu</string>
     <string name="action_open_in_browser">Otvoriť v prehliadači</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Základné</string>
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Pokročilé</string>
     <string name="prefs_category_about">O aplikácii</string>
     <string name="pref_onlyfuture">Nezobrazovať odvysielané epizódy</string>
@@ -493,11 +492,11 @@
     <string name="billing_action_pass">Získať X Pass</string>
     <string name="billing_price_subscribe">%1$s/ročne, vyskúšajte zadarmo, zrušte kedykoľvek prostredníctvom %2$s</string>
     <string name="billing_duration_format">%1$s/rok</string>
-    <string name="billing_sub_description">Zdarma vyskúšajte, zrušte kedykoľvek.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">jednorázová platba</string>
-    <string name="upgrade_description">Odomknúť všetky funkcie vrátane upozornení, tém a možností pre miniaplikáciu. Pomôžte mi s budúcimi aktualizáciami.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Ďakujeme za podporu SeriesGuide! Máte prístup ku všetkým funkciám.</string>
-    <string name="billing_learn_more">Prečo platiť? Zistite viac.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Predplatné vypršalo</string>
     <string name="subscription_expired_details">Vaše predplatné SeriesGuide vypršalo.</string>
     <!-- Amazon In-App Billing -->

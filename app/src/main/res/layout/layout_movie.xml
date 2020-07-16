@@ -36,7 +36,7 @@
         android:layout_marginTop="4dp"
         android:ellipsize="end"
         android:lines="2"
-        android:textAppearance="@style/TextAppearance.Body.Bold"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
         tools:text="Awesome Movie Title" />
 
     <TextView
@@ -50,7 +50,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:paddingBottom="@dimen/default_padding"
-        android:textAppearance="@style/TextAppearance.Caption.Dim"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Dim"
         tools:text="13.11.2013" />
 
     <androidx.appcompat.widget.AppCompatImageView

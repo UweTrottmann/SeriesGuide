@@ -9,5 +9,5 @@
     android:paddingLeft="@dimen/default_padding"
     android:paddingRight="@dimen/default_padding"
     android:paddingTop="@dimen/default_padding"
-    android:textAppearance="@style/TextAppearance.Subhead.Bold"
+    android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
     tools:text="Recently Watched" />

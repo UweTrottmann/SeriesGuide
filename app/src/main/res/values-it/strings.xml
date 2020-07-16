@@ -11,13 +11,12 @@
     <string name="help">Guida</string>
     <string name="no_more_updates">SeriesGuide non riceverà più aggiornamenti per questa versione di Android.</string>
     <!-- Media items -->
-    <string name="show">Descrizione</string>
+    <string name="show_details">Dettagli</string>
     <string name="episode">Episodio</string>
     <string name="episode_number">Episodio %d</string>
     <string name="episodes">Episodi</string>
     <string name="season">Stagione</string>
     <string name="season_number">Stagione %d</string>
-    <string name="seasons">Stagioni</string>
     <string name="specialseason">Episodi Speciali</string>
     <string name="ratings">Valutazioni</string>
     <!-- Descriptions -->
@@ -110,10 +109,13 @@
     <string name="action_dont_skip">Non saltare</string>
     <string name="action_collection_add">Aggiungere alla collezione</string>
     <string name="action_collection_remove">Rimuovi dalla collezione</string>
-    <string name="action_collection_added">Aggiunto alla collezione</string>
-    <string name="action_collection_removed">Rimosso dalla collezione</string>
     <string name="action_watched">Visto</string>
     <string name="action_unwatched">Non visto</string>
+    <string name="state_watched">Visto</string>
+    <string name="state_skipped">Saltato</string>
+    <string name="state_in_collection">In collezione</string>
+    <string name="state_on_watchlist">Da vedere</string>
+    <string name="state_favorite">Preferito</string>
     <!-- Shows -->
     <string name="confirm_delete">Vuoi davvero rimuovere %s?</string>
     <string name="delete_error">Impossibile rimuovere la serie. Riprova più tardi.</string>
@@ -198,7 +200,6 @@
     <string name="add_error">Impossibile aggiungere %s.</string>
     <string name="add_already_exists">%s è già nella lista delle tue serie.</string>
     <string name="title_new_episodes">Nuovi episodi</string>
-    <string name="recommended">Consigliati</string>
     <string name="watched_shows">Visti</string>
     <string name="shows_collection">Collezione</string>
     <string name="watchlist">Da vedere</string>
@@ -247,10 +248,8 @@
     <string name="shows_with_next">%s con episodi successivi</string>
     <string name="shows_continuing">%s in produzione</string>
     <string name="episodes_watched">%s guardati</string>
-    <string name="runtime_all_episodes">durata totale degli episodi guardati</string>
     <string name="movies_on_watchlist">%s nella lista dei film da vedere</string>
     <string name="movies_watched_format">%s guardati</string>
-    <string name="runtime_movies_watchlist">durata totale dei film da vedere</string>
     <plurals name="days_plural">
         <item quantity="one">%d giorno</item>
         <item quantity="other">%d giorni</item>
@@ -296,7 +295,6 @@
     <string name="trakt_error_not_exists">Non (ancora) disponibile su trakt. Riprova più tardi.</string>
     <string name="trakt_notice_not_exists">Non è (ancora) possibile monitorarlo con trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">Account trakt</string>
     <string name="connect_trakt">Collegati a trakt</string>
     <string name="trakt_reconnect">Collega SeriesGuide a trakt</string>
     <string name="trakt_reconnect_details">Controlla le tue credenziali trakt</string>
@@ -333,7 +331,8 @@
     <string name="feedback">Invia feedback</string>
     <string name="action_open_in_browser">Apri nel browser</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Base</string>
+    <string name="action_translate">Traduci l\'app</string>
+    <string name="action_contribute_content">Traduci o migliora i contenuti</string>
     <string name="prefs_category_advanced">Avanzate</string>
     <string name="prefs_category_about">Info su</string>
     <string name="pref_onlyfuture">Nessun episodio in onda</string>
@@ -471,11 +470,11 @@
     <string name="billing_action_pass">Ottieni X Pass</string>
     <string name="billing_price_subscribe">%1$s/anno, prova gratuita, annulla in qualsiasi momento tramite %2$s</string>
     <string name="billing_duration_format">%1$s/anno</string>
-    <string name="billing_sub_description">Prova gratis, annulla in qualsiasi momento.</string>
+    <string name="billing_sub_description">Prova 30 giorni gratis, annulla in qualsiasi momento.</string>
     <string name="billing_price_pass">paga una sola volta</string>
-    <string name="upgrade_description">Sblocca tutte le funzionalità, incluse le notifiche, i temi e maggiori opzioni per i widget delle liste. Aiutami a rendere possibile i futuri aggiornamenti.</string>
+    <string name="upgrade_description">Ogni abbonamento sblocca tutte le funzionalità e supporta gli aggiornamenti futuri. Non è necessario un abbonamento per utilizzare questa app.</string>
     <string name="upgrade_success">Grazie per il sostegno a SeriesGuide! Hai accesso a tutte le funzionalità.</string>
-    <string name="billing_learn_more">Perché pagare? Scopri di più.</string>
+    <string name="billing_learn_more">Più informazioni e aiuto</string>
     <string name="subscription_expired">Abbonamento scaduto</string>
     <string name="subscription_expired_details">Il tuo abbonamento alle funzioni X è scaduto.</string>
     <!-- Amazon In-App Billing -->

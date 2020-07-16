@@ -8,5 +8,5 @@
     android:minHeight="48dp"
     android:paddingLeft="@dimen/larger_padding"
     android:paddingRight="@dimen/larger_padding"
-    android:textAppearance="@style/TextAppearance.Menu"
+    android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
     tools:text="Sample Item" />

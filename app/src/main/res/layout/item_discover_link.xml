@@ -26,7 +26,7 @@
         android:paddingLeft="@dimen/large_padding"
         android:paddingRight="@dimen/large_padding"
         android:paddingTop="@dimen/inline_padding"
-        android:textAppearance="@style/TextAppearance.Button"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Button"
         tools:text="Digital releases" />
 
 </androidx.cardview.widget.CardView>

@@ -4,6 +4,5 @@
 
     <dimen name="keyline">24dp</dimen>
     <dimen name="keyline_minus_16">8dp</dimen>
-    <dimen name="item_regular_height">64dp</dimen>
 
 </resources>

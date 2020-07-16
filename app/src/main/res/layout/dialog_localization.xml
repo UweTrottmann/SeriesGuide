@@ -21,7 +21,7 @@
             android:paddingTop="@dimen/larger_padding"
             android:paddingRight="@dimen/larger_padding"
             android:text="@string/pref_language"
-            android:textAppearance="@style/TextAppearance.Caption" />
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Caption" />
 
         <Button
             android:id="@+id/buttonLocalizationLanguage"
@@ -41,7 +41,7 @@
             android:paddingLeft="@dimen/larger_padding"
             android:paddingRight="@dimen/larger_padding"
             android:text="@string/show_release_times"
-            android:textAppearance="@style/TextAppearance.Caption" />
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Caption" />
 
         <Button
             android:id="@+id/buttonLocalizationRegion"

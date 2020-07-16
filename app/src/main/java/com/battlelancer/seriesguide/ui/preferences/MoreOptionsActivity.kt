@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.backend.CloudSetupActivity
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.databinding.ActivityMoreOptionsBinding
 import com.battlelancer.seriesguide.settings.AppSettings
+import com.battlelancer.seriesguide.sync.SyncProgress
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.BaseTopActivity
@@ -26,6 +27,8 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
 import com.uwetrottmann.seriesguide.customtabs.CustomTabsHelper
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 /**
@@ -51,6 +54,8 @@ class MoreOptionsActivity : BaseTopActivity() {
         // Shows a no updates info text if the device is running a version of Android
         // that will not be supported by a future version of this app.
         binding.textViewNoMoreUpdates.isGone = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+
+        binding.syncStatus.isGone = true
 
         binding.containerCloud.setOnClickListener {
             startActivity(Intent(this, CloudSetupActivity::class.java))
@@ -99,6 +104,9 @@ class MoreOptionsActivity : BaseTopActivity() {
         binding.buttonTranslations.setOnClickListener {
             Utils.launchWebsite(this, getString(R.string.url_translations))
         }
+        binding.buttonContributeContent.setOnClickListener {
+            Utils.launchWebsite(this, getString(R.string.url_contribute_content))
+        }
         binding.buttonDebugView.setOnClickListener {
             if (AppSettings.isUserDebugModeEnabled(this)) {
                 DebugViewFragment().safeShow(supportFragmentManager, "debugViewDialog")
@@ -135,4 +143,10 @@ class MoreOptionsActivity : BaseTopActivity() {
     override fun getSnackbarParentView(): View {
         return binding.coordinatorLayoutMoreOptions
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    fun onEvent(event: SyncProgress.SyncEvent) {
+        binding.syncStatus.setProgress(event)
+    }
+
 }

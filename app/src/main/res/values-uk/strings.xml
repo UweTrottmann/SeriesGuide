@@ -5,19 +5,18 @@
     <string name="lists">Списки</string>
     <string name="movies">Фільми</string>
     <string name="statistics">Статистика</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">Більше</string>
     <string name="search">Пошук</string>
     <string name="preferences">Налаштування</string>
     <string name="help">Допомога</string>
     <string name="no_more_updates">SeriesGuide не буде отримувати більше оновлень для цієї версії Android.</string>
     <!-- Media items -->
-    <string name="show">Серіал</string>
+    <string name="show_details">Подробиці</string>
     <string name="episode">Серія</string>
     <string name="episode_number">Серія %d</string>
     <string name="episodes">Серії</string>
     <string name="season">Сезон</string>
     <string name="season_number">Сезон %d</string>
-    <string name="seasons">Сезони</string>
     <string name="specialseason">Спец. епізоди</string>
     <string name="ratings">Рейтинг</string>
     <!-- Descriptions -->
@@ -43,7 +42,7 @@
     <string name="search_hint">Пошук серій</string>
     <!-- Status messages -->
     <string name="updated">Оновлено до останньої версії.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Подробиці</string>
     <string name="norating">Немає даних</string>
     <string name="unknown">Невідомо</string>
     <string name="offline">Перевірте підключення до мережі та повторіть спробу.</string>
@@ -112,10 +111,13 @@
     <string name="action_dont_skip">Не пропускати</string>
     <string name="action_collection_add">Додати в колекцію</string>
     <string name="action_collection_remove">Видалити з колекції</string>
-    <string name="action_collection_added">Додано в колекцію</string>
-    <string name="action_collection_removed">Видалено з колекції</string>
     <string name="action_watched">Переглянуто</string>
     <string name="action_unwatched">Не переглянуто</string>
+    <string name="state_watched">Переглянуто</string>
+    <string name="state_skipped">Пропущено</string>
+    <string name="state_in_collection">В колекції</string>
+    <string name="state_on_watchlist">В списку перегляду</string>
+    <string name="state_favorite">Улюблене</string>
     <!-- Shows -->
     <string name="confirm_delete">Ви дійсно бажаєте видалити %s?</string>
     <string name="delete_error">He можливо видалити серіал. Спробуйте ще раз пізніше.</string>
@@ -206,7 +208,6 @@
     <string name="add_error">Не вдалося додати %s.</string>
     <string name="add_already_exists">%s вже є у вашому списку серіалів</string>
     <string name="title_new_episodes">Нові серії</string>
-    <string name="recommended">Рекомендовано</string>
     <string name="watched_shows">Переглянуто</string>
     <string name="shows_collection">Колекція</string>
     <string name="watchlist">Список перегляду</string>
@@ -255,10 +256,8 @@
     <string name="shows_with_next">%s з новою серією</string>
     <string name="shows_continuing">%s продовжуються</string>
     <string name="episodes_watched">%s переглянуто</string>
-    <string name="runtime_all_episodes">Тривалість всіх переглянутих серій</string>
     <string name="movies_on_watchlist">%s в списку спостереження</string>
     <string name="movies_watched_format">%s переглянуто</string>
-    <string name="runtime_movies_watchlist">Тривалість фільмів у списку переглядів</string>
     <plurals name="days_plural">
         <item quantity="one">%d день</item>
         <item quantity="few">%d дні</item>
@@ -310,7 +309,6 @@
     <string name="trakt_error_not_exists">Не доступно (поки що) на trakt. Спробуйте пізніше.</string>
     <string name="trakt_notice_not_exists">Не можна (поки що) відслідкувати на trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt аккаунт</string>
     <string name="connect_trakt">Підключитись до trakt</string>
     <string name="trakt_reconnect">Підключити SeriesGuide до trakt</string>
     <string name="trakt_reconnect_details">Перевірте свої облікові дані на trakt</string>
@@ -349,7 +347,8 @@
     <string name="feedback">Відправити відгук</string>
     <string name="action_open_in_browser">Відкрити в браузері</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">Основні</string>
+    <string name="action_translate">Перекласти додаток</string>
+    <string name="action_contribute_content">Перекласти або поліпшити вміст</string>
     <string name="prefs_category_advanced">Додатково</string>
     <string name="prefs_category_about">Про</string>
     <string name="pref_onlyfuture">Немає серій що вийшли</string>
@@ -493,11 +492,11 @@
     <string name="billing_action_pass">Отримати X Pass</string>
     <string name="billing_price_subscribe">%1$s/рік, спробуйте безкоштовно, скасуйте у будь-який час через %2$s</string>
     <string name="billing_duration_format">%1$s/рік</string>
-    <string name="billing_sub_description">Спробуйте безкоштовно, скасуйте в будь який час.</string>
+    <string name="billing_sub_description">Спробуйте 30 днів безкоштовно, скасуйте у будь-який час.</string>
     <string name="billing_price_pass">Одноразове замовлення</string>
-    <string name="upgrade_description">Розблокуйте усі функції включно зі сповіщеннями, темами і більшою кількістю опцій для віджетів. Допоможіть випускати майбутні оновлення.</string>
+    <string name="upgrade_description">Кожна підписка розблоковує всі функції та підтримує майбутні оновлення. Підписка не обов\'язкова для використання цього додатка.</string>
     <string name="upgrade_success">Дякую за підтримку SeriesGuide! Тепер ви маєте доступ до всіх функцій.</string>
-    <string name="billing_learn_more">Навіщо платити? Дізнатися більше.</string>
+    <string name="billing_learn_more">Додаткова інформація та допомога</string>
     <string name="subscription_expired">Закінчився термін дії підписки</string>
     <string name="subscription_expired_details">Підписка функцій X минула.</string>
     <!-- Amazon In-App Billing -->

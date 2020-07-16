@@ -11,13 +11,12 @@
     <string name="help">도움말</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
-    <string name="show">TV 프로그램</string>
+    <string name="show_details">Details</string>
     <string name="episode">에피소드</string>
     <string name="episode_number">%d화</string>
     <string name="episodes">에피소드</string>
     <string name="season">시즌</string>
     <string name="season_number">시즌 %d</string>
-    <string name="seasons">시즌</string>
     <string name="specialseason">스페셜 에피소드</string>
     <string name="ratings">평점</string>
     <!-- Descriptions -->
@@ -109,10 +108,13 @@
     <string name="action_dont_skip">건너뛰지 않기</string>
     <string name="action_collection_add">컬렉션에 추가</string>
     <string name="action_collection_remove">컬렉션에서 제거</string>
-    <string name="action_collection_added">컬렉션에 추가됨</string>
-    <string name="action_collection_removed">컬렉션에서 제거됨</string>
     <string name="action_watched">시청함</string>
     <string name="action_unwatched">시청하지 않음</string>
+    <string name="state_watched">시청한 목록</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">%s을(를) 제거 하시겠습니까?</string>
     <string name="delete_error">프로그램을 제거하지 못했습니다. 나중에 다시 시도해주세요.</string>
@@ -194,7 +196,6 @@
     <string name="add_error">%s를 추가할 수 없음</string>
     <string name="add_already_exists">%s는 이미 목록에 있습니다.</string>
     <string name="title_new_episodes">새로운 에피소드</string>
-    <string name="recommended">추천</string>
     <string name="watched_shows">시청한 목록</string>
     <string name="shows_collection">컬렉션</string>
     <string name="watchlist">관심목록</string>
@@ -243,10 +244,8 @@
     <string name="shows_with_next">다음 에피소드 %s편</string>
     <string name="shows_continuing">%s 방영 중</string>
     <string name="episodes_watched">%s 시청함</string>
-    <string name="runtime_all_episodes">시청한 모든 에피소드의 길이</string>
     <string name="movies_on_watchlist">관심목록 %s편</string>
     <string name="movies_watched_format">%s 시청함</string>
-    <string name="runtime_movies_watchlist">관심목록 길이</string>
     <plurals name="days_plural">
         <item quantity="other">%d일</item>
     </plurals>
@@ -289,7 +288,6 @@
     <string name="trakt_error_not_exists">아직 trakt에 정보가 없습니다. 나중에 다시 시도하세요.</string>
     <string name="trakt_notice_not_exists">아직 trakt에서 추적할 수 없습니다.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">trakt 계정</string>
     <string name="connect_trakt">trakt에 연결하기</string>
     <string name="trakt_reconnect">SeriesGuide를 trakt에 연결</string>
     <string name="trakt_reconnect_details">trakt 아이디/비밀번호를 확인하세요</string>
@@ -325,7 +323,8 @@
     <string name="feedback">사용자 의견 보내기</string>
     <string name="action_open_in_browser">브라우저에서 열기</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">기본</string>
+    <string name="action_translate">Translate this app</string>
+    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">고급</string>
     <string name="prefs_category_about">정보</string>
     <string name="pref_onlyfuture">방영된 에피소드 보이지 않기</string>
@@ -460,11 +459,11 @@
     <string name="billing_action_pass">X Pass 구매</string>
     <string name="billing_price_subscribe">1년 사용 요금: %1$s, 무료 체험 가능, %2$s에서 취소 가능</string>
     <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for free, cancel any time.</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">1회 구매로 계속 사용</string>
-    <string name="upgrade_description">알림, 테마 및 위젯 옵션을 포함한 모든 기능을 사용할 수 있습니다. 뿐만 아니라 지속적인 개발을 후원할 수 있습니다.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">SeriesGuide를 지원해주셔서 감사합니다! 모든 기능을 사용할 수 있습니다.</string>
-    <string name="billing_learn_more">유료 결제를 하면 어떤점이 좋아지는지 확인하세요.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">구독 만료되었습니다</string>
     <string name="subscription_expired_details">X 추가기능 구독 기간이 만료되었습니다.</string>
     <!-- Amazon In-App Billing -->

@@ -11,13 +11,12 @@
     <string name="help">עזרה</string>
     <string name="no_more_updates">SeriesGuide לא תקבל יותר עדכונים עבור גרסת האנדרואיד הנוכחית.</string>
     <!-- Media items -->
-    <string name="show">סדרה</string>
+    <string name="show_details">פרטים נוספים</string>
     <string name="episode">פרק</string>
     <string name="episode_number">פרק %d</string>
     <string name="episodes">פרקים</string>
     <string name="season">עונה</string>
     <string name="season_number">עונה %d</string>
-    <string name="seasons">עונות</string>
     <string name="specialseason">פרקים מיוחדים</string>
     <string name="ratings">דירוגים</string>
     <!-- Descriptions -->
@@ -104,18 +103,21 @@
     <!-- Flagging -->
     <string name="mark_all">הכל נצפה</string>
     <string name="unmark_all">סמן הכל כלא נצפה</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">סמן כנצפה עד לכאן</string>
+    <string name="confirmation_watched_up_to">סמן את כל הפרקים עד לכאן כנצפו?</string>
     <string name="collect_all">אסוף הכול</string>
     <string name="uncollect_all">אל תאסוף כלום</string>
     <string name="action_skip">דלג</string>
     <string name="action_dont_skip">לא לדלג</string>
     <string name="action_collection_add">הוסף לאוסף</string>
     <string name="action_collection_remove">הסר מאוסף</string>
-    <string name="action_collection_added">נוסף לאוסף</string>
-    <string name="action_collection_removed">הוסר מהאוסף</string>
     <string name="action_watched">נצפה</string>
     <string name="action_unwatched">לא נצפה</string>
+    <string name="state_watched">נצפה</string>
+    <string name="state_skipped">דילוג</string>
+    <string name="state_in_collection">באוסף</string>
+    <string name="state_on_watchlist">ברשימת הצפייה</string>
+    <string name="state_favorite">מועדפים</string>
     <!-- Shows -->
     <string name="confirm_delete">בטוח שאתה רוצה להסיר את %s?</string>
     <string name="delete_error">הסרת הסדרה נכשלה. נסה שוב מאוחר יותר.</string>
@@ -149,7 +151,7 @@
     <string name="action_shows_sort_favorites">מועדפים בהתחלה</string>
     <string name="context_updateshow">עדכן</string>
     <string name="context_marknext">צפה בפרק הבא</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">שינוי מצב</string>
     <!-- History -->
     <string name="user_stream">היסטוריה</string>
     <string name="recently_watched">נצפה לאחרונה</string>
@@ -167,7 +169,7 @@
     <string name="calendar_settings">הגדרות לוח שידורים</string>
     <string name="only_favorites">סדרות מעודפות בלבד</string>
     <string name="calendar_only_collected">רק פרקים שנאספו</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">רק פרקי בכורה</string>
     <string name="pref_infinite_scrolling">לוח שנה אינסופית</string>
     <!-- Updating -->
     <string name="update_scheduled">מעדכן&#8230;</string>
@@ -206,7 +208,6 @@
     <string name="add_error">לא יכול להוסיף %s.</string>
     <string name="add_already_exists">%s כבר נמצא ברשימה שלך.</string>
     <string name="title_new_episodes">פרקים חדשים</string>
-    <string name="recommended">מומלץ</string>
     <string name="watched_shows">נצפה</string>
     <string name="shows_collection">אוסף</string>
     <string name="watchlist">רשימת מעקב</string>
@@ -255,10 +256,8 @@
     <string name="shows_with_next">%s עם הפרקים הבאים</string>
     <string name="shows_continuing">%s ממשיכים</string>
     <string name="episodes_watched">%s נצפו</string>
-    <string name="runtime_all_episodes">משך כל הפרקים שנצפו</string>
     <string name="movies_on_watchlist">%s ברשימת הצפייה</string>
     <string name="movies_watched_format">%s נצפו</string>
-    <string name="runtime_movies_watchlist">זמן כולל של רשימת הצפייה</string>
     <plurals name="days_plural">
         <item quantity="one">יום %d</item>
         <item quantity="two">%d ימים</item>
@@ -310,7 +309,6 @@
     <string name="trakt_error_not_exists">לא זמין (עדיין) ב-trakt. נסה שוב מאוחר יותר.</string>
     <string name="trakt_notice_not_exists">לא ניתן (עדיין) לעקוב עם trakt.</string>
     <!-- Connect trakt -->
-    <string name="trakt_account">חשבון trakt</string>
     <string name="connect_trakt">התחבר trakt</string>
     <string name="trakt_reconnect">חבר את SeriesGuide ל trakt</string>
     <string name="trakt_reconnect_details">בדוק את פרטי ההתחברות שלך ל trakt</string>
@@ -349,7 +347,8 @@
     <string name="feedback">שלח משוב</string>
     <string name="action_open_in_browser">פתח בדפדפן</string>
     <!-- Settings -->
-    <string name="prefs_category_basic">בסיסי</string>
+    <string name="action_translate">תרגם את האפליקציה</string>
+    <string name="action_contribute_content">תרגום או שיפור תוכן</string>
     <string name="prefs_category_advanced">מתקדם</string>
     <string name="prefs_category_about">אודות</string>
     <string name="pref_onlyfuture">אין פרקים ששודרו</string>
@@ -445,7 +444,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">גיבוי אוטומטי</string>
     <string name="pref_autobackupsummary">גיבוי שבועי של הסדרות, רשימות והסרטים שלך</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">גיבויים אלה אינם זמינים אם האפליקציה מותקנת שוב אלא אם האופצייה לגיבוי המכשיר פועלת (אנדרויד 6+), אחרת יש ליצור עותקים כדי שישמרו.</string>
     <string name="last_auto_backup">גיבוי אוטומטי אחרון: %s</string>
     <string name="restore_auto_backup">שחזור גיבוי אוטומטי</string>
     <string name="autobackup_failed">הגיבוי האוטומטי האחרון נכשל</string>
@@ -472,8 +471,8 @@
     <string name="pref_notifications_hidden">התעלם מסדרות מוסתרות</string>
     <string name="pref_notifications_hidden_summary">לא להציג התראות על סדרות נסתרות, גם אם התראות פועלות</string>
     <string name="pref_notification_channel_errors">שגיאות</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">רק לפרקים לצפייה בקרוב</string>
+    <string name="pref_notifications_next_episodes_only_summary">התראה רק אם הפרק החדש הוא הבא לצפייה</string>
     <!-- List Widget -->
     <string name="hide_watched">הסתר פרקים שנצפו</string>
     <string name="pref_widget_opacity">רקע ווידג\'ט</string>
@@ -493,11 +492,11 @@
     <string name="billing_action_pass">קבל את X Pass</string>
     <string name="billing_price_subscribe">%1$s לשנה, נסה בחינם, בטל בכל עת באמצעות %2$s</string>
     <string name="billing_duration_format">%1$s/שנה</string>
-    <string name="billing_sub_description">הנסיון בחינם, ניתן לבטל בכל זמן שתרצו.</string>
+    <string name="billing_sub_description">נסו 30 יום בחינם, בטלו מתי שתרצו. </string>
     <string name="billing_price_pass">רכישה חד פעמית</string>
-    <string name="upgrade_description">פתח את כל האפשרויות, כולל התראות, ערכות נושא ואפשרויות נוספות בווידג\'ט הרשימה. עזור לי לפתח עדכונים עתידיים.</string>
+    <string name="upgrade_description">המינוי נותן את כל האפשרויות ותורם לעדכונים עתידיים. מינוי לא דרוש בשביל שימוש באפליקציה.</string>
     <string name="upgrade_success">תודה על תמיכתך ב-SeriesGuide! יש לך גישה לכל האפשרויות.</string>
-    <string name="billing_learn_more">למה לשלם? למד עוד.</string>
+    <string name="billing_learn_more">עוד מידע ועזרה</string>
     <string name="subscription_expired">פג תוקף המנוי</string>
     <string name="subscription_expired_details">פג מנוי ה-SeriesGuide שלך.</string>
     <!-- Amazon In-App Billing -->
