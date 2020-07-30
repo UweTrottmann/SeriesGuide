@@ -57,7 +57,7 @@ buildscript {
         // Firebase Crashlytics
         // https://firebase.google.com/support/release-notes/android
         classpath 'com.google.gms:google-services:4.3.3'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.1'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.2.0'
     }
 }
 
