@@ -322,7 +322,7 @@ class BillingRepository(private val applicationContext: Context) {
         playStoreBillingClient.querySkuDetailsAsync(params) { billingResult, skuDetailsList ->
             when (billingResult.responseCode) {
                 BillingClient.BillingResponseCode.OK -> {
-                    if (skuDetailsList.orEmpty().isNotEmpty()) {
+                    if (skuDetailsList != null && skuDetailsList.isNotEmpty()) {
                         skuDetailsList.forEach {
                             CoroutineScope(Job() + Dispatchers.IO).launch {
                                 localCacheBillingClient.skuDetailsDao().insertOrUpdate(it)
@@ -346,6 +346,10 @@ class BillingRepository(private val applicationContext: Context) {
      * [purchasesUpdatedListener].
      */
     fun launchBillingFlow(activity: Activity, augmentedSkuDetails: AugmentedSkuDetails) {
+        if (augmentedSkuDetails.originalJson == null) {
+            Timber.e("augmentedSkuDetails.originalJson is null")
+            return
+        }
         val skuDetails = SkuDetails(augmentedSkuDetails.originalJson)
 
         // Check if this is a subscription up- or downgrade.
@@ -368,7 +372,7 @@ class BillingRepository(private val applicationContext: Context) {
 
         val purchaseParams = BillingFlowParams.newBuilder().apply {
             setSkuDetails(skuDetails)
-            if (oldSku != null) {
+            if (oldSku != null && purchaseToken != null) {
                 setOldSku(oldSku, purchaseToken)
                 setReplaceSkusProrationMode(prorationMode)
             }
