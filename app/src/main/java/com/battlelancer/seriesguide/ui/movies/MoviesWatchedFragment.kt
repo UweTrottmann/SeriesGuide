@@ -11,12 +11,10 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.FragmentMoviesWatchedBinding
 import com.battlelancer.seriesguide.ui.MoviesActivity
+import com.battlelancer.seriesguide.widgets.SgFastScroller
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -27,11 +25,7 @@ class MoviesWatchedFragment : Fragment() {
         fun newInstance() = MoviesWatchedFragment()
     }
 
-    @BindView(R.id.textViewEmptyMoviesWatched)
-    lateinit var textViewEmpty: View
-    @BindView(R.id.recyclerViewMoviesWatched)
-    lateinit var recyclerView: RecyclerView
-    private lateinit var unbinder: Unbinder
+    private var binding: FragmentMoviesWatchedBinding? = null
 
     private lateinit var viewModel: MoviesWatchedViewModel
     private lateinit var adapter: MoviesWatchedAdapter
@@ -40,9 +34,9 @@ class MoviesWatchedFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val v = inflater.inflate(R.layout.fragment_movies_watched, container, false)
-        unbinder = ButterKnife.bind(this, v)
-        return v
+        val binding = FragmentMoviesWatchedBinding.inflate(inflater, container, false)
+        this.binding = binding
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,12 +44,13 @@ class MoviesWatchedFragment : Fragment() {
 
         adapter = MoviesWatchedAdapter(requireContext(), MovieClickListenerImpl(requireContext()))
 
-        recyclerView.also {
+        binding!!.recyclerViewMoviesWatched.also {
             it.setHasFixedSize(true)
             it.layoutManager = AutoGridLayoutManager(
                 context, R.dimen.movie_grid_columnWidth, 1, 3
             )
             it.adapter = adapter
+            SgFastScroller(requireContext(), it)
         }
 
         ViewModelProvider(requireActivity()).get(MoviesActivityViewModel::class.java)
@@ -70,7 +65,7 @@ class MoviesWatchedFragment : Fragment() {
                             MoviesActivity.TAB_POSITION_WATCHED_DEFAULT
                         }
                         if (it.tabPosition == positionOfThisTab) {
-                            recyclerView.scrollToPosition(0)
+                            binding?.recyclerViewMoviesWatched?.scrollToPosition(0)
                         }
                     }
                 }
@@ -88,7 +83,7 @@ class MoviesWatchedFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MoviesWatchedViewModel::class.java)
         viewModel.movieList.observe(viewLifecycleOwner, Observer {
-            textViewEmpty.isGone = it.size > 0
+            binding?.textViewEmptyMoviesWatched?.isGone = it.size > 0
             adapter.submitList(it)
         })
 
@@ -110,7 +105,7 @@ class MoviesWatchedFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        unbinder.unbind()
+        binding = null
     }
 
     override fun onDestroy() {
