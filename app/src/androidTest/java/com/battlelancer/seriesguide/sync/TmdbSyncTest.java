@@ -75,7 +75,7 @@ public class TmdbSyncTest {
         long lastUpdatedOutdated = System.currentTimeMillis()
                 - TmdbSync.UPDATED_BEFORE_DAYS - DateUtils.DAY_IN_MILLIS;
         long lastUpdatedVeryOutdated = System.currentTimeMillis()
-                - TmdbSync.UPDATED_BEFORE_HALF_YEAR - DateUtils.DAY_IN_MILLIS;
+                - TmdbSync.UPDATED_BEFORE_90_DAYS - DateUtils.DAY_IN_MILLIS;
         long releaseDateCurrent = System.currentTimeMillis();
         long releaseDateOld = System.currentTimeMillis()
                 - TmdbSync.RELEASED_AFTER_DAYS - DateUtils.DAY_IN_MILLIS;
