@@ -1,31 +1,31 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = '1.3.72' // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
-    ext.coroutines_version = '1.3.7' // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
+    ext.coroutines_version = '1.3.8' // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
     ext.versions = [
             'minSdk': 21,
             'compileSdk': 29,
             'targetSdk': 29,
 
             // https://developer.android.com/jetpack/androidx/releases
-            'core': '1.3.0',
+            'core': '1.3.1', // https://developer.android.com/jetpack/androidx/releases/core
             'annotation': '1.1.0',
             'lifecycle': '2.2.0',
             'paging': '2.1.2',
             'room': '2.2.5',
 
             'butterknife': '10.2.1', // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
-            'crashlytics': '17.0.1', // https://firebase.google.com/support/release-notes/android
+            'crashlytics': '17.1.1', // https://firebase.google.com/support/release-notes/android
             'dagger': '2.28', // https://github.com/google/dagger/releases
             'gson': '2.8.6', // https://github.com/google/gson/blob/master/CHANGELOG.md
-            'okhttp': '4.7.2', // https://github.com/square/okhttp/blob/master/CHANGELOG.md
+            'okhttp': '4.8.0', // https://github.com/square/okhttp/blob/master/CHANGELOG.md
             'retrofit': '2.9.0', // https://github.com/square/retrofit/blob/master/CHANGELOG.md
             'timber': '4.7.1', // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 
             'androidUtils': '2.3.1', // https://github.com/UweTrottmann/AndroidUtils/blob/master/RELEASE_NOTES.md
             'thetvdb': '2.3.0', // https://github.com/UweTrottmann/thetvdb-java/blob/master/CHANGELOG.md
             'tmdb': '2.2.0', // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
-            'trakt': '6.5.0', // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
+            'trakt': '6.6.0', // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
 
             'truth': '1.0.1', // https://github.com/google/truth/releases
 
@@ -49,15 +49,15 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0' // libraries, SeriesGuide
+        classpath 'com.android.tools.build:gradle:4.0.1' // libraries, SeriesGuide
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.28.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.29.0'
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:2.0.1' // SeriesGuide
         classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.2' // api
         // Firebase Crashlytics
         // https://firebase.google.com/support/release-notes/android
         classpath 'com.google.gms:google-services:4.3.3'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.1'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.2.0'
     }
 }
 
