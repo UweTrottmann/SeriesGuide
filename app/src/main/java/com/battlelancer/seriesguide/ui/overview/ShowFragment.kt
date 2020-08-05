@@ -44,6 +44,7 @@ import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity
 import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.ShortcutCreator
@@ -121,6 +122,8 @@ class ShowFragment : Fragment() {
     internal lateinit var buttonSimilar: Button
     @BindView(R.id.buttonShowImdb)
     internal lateinit var buttonImdb: Button
+    @BindView(R.id.buttonShowMetacritic)
+    internal lateinit var buttonShowMetacritic: Button
     @BindView(R.id.buttonShowTvdb)
     internal lateinit var buttonTvdb: Button
     @BindView(R.id.buttonShowTrakt)
@@ -529,6 +532,10 @@ class ShowFragment : Fragment() {
         val traktLink = TraktTools.buildShowUrl(showTvdbId)
         ViewTools.openUriOnClick(buttonTrakt, traktLink)
         buttonTrakt.copyTextToClipboardOnLongClick(traktLink)
+
+        buttonShowMetacritic.setOnClickListener {
+            showTitle?.let { Metacritic.searchForTvShow(requireContext(), it) }
+        }
 
         // web search button
         ServiceUtils.setUpWebSearchButton(showTitle, buttonWebSearch)
