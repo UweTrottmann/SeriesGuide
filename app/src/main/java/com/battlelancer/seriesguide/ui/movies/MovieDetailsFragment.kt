@@ -44,6 +44,7 @@ import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.ui.people.MovieCreditsLoader
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
 import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
@@ -242,10 +243,14 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             )
 
             // enable/disable actions
-            val isEnableShare = !it.tmdbMovie()?.title.isNullOrEmpty()
+            val hasTitle = !it.tmdbMovie()?.title.isNullOrEmpty()
             menu.findItem(R.id.menu_movie_share).apply {
-                isEnabled = isEnableShare
-                isVisible = isEnableShare
+                isEnabled = hasTitle
+                isVisible = hasTitle
+            }
+            menu.findItem(R.id.menu_open_metacritic).apply {
+                isEnabled = hasTitle
+                isVisible = hasTitle
             }
 
             val isEnableImdb = !it.tmdbMovie()?.imdb_id.isNullOrEmpty()
@@ -263,27 +268,39 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        if (itemId == R.id.menu_movie_share) {
-            movieDetails?.tmdbMovie()?.let { ShareUtils.shareMovie(activity, tmdbId, it.title) }
-            return true
+        return when (item.itemId) {
+            R.id.menu_movie_share -> {
+                movieDetails?.tmdbMovie()
+                    ?.title
+                    ?.let { ShareUtils.shareMovie(activity, tmdbId, it) }
+                true
+            }
+            R.id.menu_open_youtube -> {
+                trailer?.let { ServiceUtils.openYoutube(it.key, activity) }
+                true
+            }
+            R.id.menu_open_imdb -> {
+                movieDetails?.tmdbMovie()
+                    ?.let { ServiceUtils.openImdb(it.imdb_id, activity) }
+                true
+            }
+            R.id.menu_open_metacritic -> {
+                // Metacritic only has English titles, so using the original title is the best bet.
+                val titleOrNull = movieDetails?.tmdbMovie()
+                    ?.let { it.original_title ?: it.title }
+                titleOrNull?.let { Metacritic.searchForMovie(requireContext(), it) }
+                true
+            }
+            R.id.menu_open_tmdb -> {
+                TmdbTools.openTmdbMovie(activity, tmdbId)
+                true
+            }
+            R.id.menu_open_trakt -> {
+                Utils.launchWebsite(activity, TraktTools.buildMovieUrl(tmdbId))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        if (itemId == R.id.menu_open_imdb) {
-            movieDetails?.tmdbMovie()?.let { ServiceUtils.openImdb(it.imdb_id, activity) }
-            return true
-        }
-        if (itemId == R.id.menu_open_youtube) {
-            trailer?.let { ServiceUtils.openYoutube(it.key, activity) }
-            return true
-        }
-        if (itemId == R.id.menu_open_tmdb) {
-            TmdbTools.openTmdbMovie(activity, tmdbId)
-        }
-        if (itemId == R.id.menu_open_trakt) {
-            Utils.launchWebsite(activity, TraktTools.buildMovieUrl(tmdbId))
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun populateMovieViews() {

@@ -24,6 +24,10 @@
                 android:title="@string/imdb"
                 app:showAsAction="never" />
             <item
+                android:id="@+id/menu_open_metacritic"
+                android:title="@string/metacritic"
+                app:showAsAction="never" />
+            <item
                 android:id="@+id/menu_open_tmdb"
                 android:title="@string/tmdb"
                 app:showAsAction="never" />

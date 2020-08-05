@@ -8,6 +8,7 @@
     <string name="tmdb">TMDb</string>
     <string name="trakt">Trakt</string>
     <string name="ontrakt">(Trakt)</string>
+    <string name="metacritic">Metacritic</string>
     <string name="amazon">Amazon</string>
     <string name="google_play">Google Play</string>
     <string name="powered_by_ttt">powered by TMDb, TheTVDB.com</string>
