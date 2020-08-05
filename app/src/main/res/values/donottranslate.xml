@@ -489,13 +489,20 @@
     </string-array>
 
     <!-- Number format options -->
+    <!-- Added new shorter English formats, replace old ones by default.
+    Keep old formats under different ID. If there is no feedback, maybe
+    remove them at some point. -->
     <string-array name="numberData">
         <item>default</item>
         <item>english</item>
         <item>englishlower</item>
+        <item>english-long</item>
+        <item>englishlower-long</item>
     </string-array>
     <string-array name="numbers">
         <item>1x01</item>
+        <item>S1:E1</item>
+        <item>s1:e1</item>
         <item>S01E01</item>
         <item>s01e01</item>
     </string-array>

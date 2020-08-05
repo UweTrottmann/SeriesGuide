@@ -24,39 +24,59 @@ public class TextTools {
     }
 
     /**
-     * Returns the episode number formatted according to the users preference (e.g. '1x01',
-     * 'S01E01', ...).
+     * Returns the episode number formatted according to the users preference (e.g. '1x1',
+     * 'S1:E1', ...). If {@code episode} is -1 only the season number is returned.
      */
     public static String getEpisodeNumber(Context context, int season, int episode) {
+        String format = DisplaySettings.getNumberFormat(context);
+        boolean useLongNumbers = format.endsWith("-long");
+
         NumberFormat numberFormat = NumberFormat.getIntegerInstance();
         numberFormat.setGroupingUsed(false);
-        String format = DisplaySettings.getNumberFormat(context);
-        String result = numberFormat.format(season);
-        if (DisplaySettings.NUMBERFORMAT_DEFAULT.equals(format)) {
-            // 1x01 format
-            result += "x";
+
+        String seasonStr;
+        if (season < 10 && useLongNumbers) {
+            // Make season number at least two chars long.
+            seasonStr = numberFormat.format(0) + numberFormat.format(season);
         } else {
-            // S01E01 format
-            // make season number always two chars long
-            if (season < 10) {
-                result = numberFormat.format(0) + result;
-            }
-            if (DisplaySettings.NUMBERFORMAT_ENGLISHLOWER.equals(format)) {
-                result = "s" + result + "e";
+            seasonStr = numberFormat.format(season);
+        }
+
+        boolean includeEpisode = episode != -1;
+        String episodeStr = null;
+        if (includeEpisode) {
+            if (episode < 10
+                    && (useLongNumbers || DisplaySettings.NUMBERFORMAT_DEFAULT.equals(format))) {
+                // Make episode number at least two chars long.
+                episodeStr = numberFormat.format(0) + numberFormat.format(episode);
             } else {
-                result = "S" + result + "E";
+                episodeStr = numberFormat.format(episode);
             }
         }
 
-        if (episode != -1) {
-            // make episode number always two chars long
-            if (episode < 10) {
-                result += numberFormat.format(0);
+        if (format.startsWith("englishlower")) {
+            // s1:e1 or s01e01 format
+            if (includeEpisode) {
+                return "s" + seasonStr + (useLongNumbers ? "" : ":") + "e" + episodeStr;
+            } else {
+                return "s" + seasonStr;
             }
-
-            result += numberFormat.format(episode);
+        } else if (format.startsWith("english")) {
+            // S1:E1 or S01E01 format
+            if (includeEpisode) {
+                return "S" + seasonStr + (useLongNumbers ? "" : ":") + "E" + episodeStr;
+            } else {
+                return "S" + seasonStr;
+            }
+        } else {
+            // Default
+            // 1x01 format
+            if (includeEpisode) {
+                return seasonStr + "x" + episodeStr;
+            } else {
+                return seasonStr + "x";
+            }
         }
-        return result;
     }
 
     /**
