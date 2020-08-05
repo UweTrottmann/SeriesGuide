@@ -347,7 +347,7 @@ class ShowFragment : Fragment() {
         val releaseCountry = showCursor.getString(ShowQuery.RELEASE_COUNTRY)
         val releaseTime = showCursor.getInt(ShowQuery.RELEASE_TIME)
         val network = showCursor.getString(ShowQuery.NETWORK)
-        if (releaseTime != -1) {
+        val time = if (releaseTime != -1) {
             val weekDay = showCursor.getInt(ShowQuery.RELEASE_WEEKDAY)
             val release = TimeTools.getShowReleaseDateTime(
                 requireContext(),
@@ -358,10 +358,17 @@ class ShowFragment : Fragment() {
             )
             val dayString = TimeTools.formatToLocalDayOrDaily(activity, release, weekDay)
             val timeString = TimeTools.formatToLocalTime(activity, release)
-            textViewReleaseTime?.text = String.format("%s %s", dayString, timeString)
+            String.format("%s %s", dayString, timeString)
         } else {
-            textViewReleaseTime?.text = null
+            null
         }
+        val runtime = getString(
+            R.string.runtime_minutes,
+            showCursor.getInt(ShowQuery.RUNTIME).toString()
+        )
+        val combinedString =
+            TextTools.dotSeparate(TextTools.dotSeparate(network, time), runtime)
+        textViewReleaseTime?.text = combinedString
 
         // runtime
         textViewRuntime?.text = getString(
