@@ -43,6 +43,7 @@ import com.battlelancer.seriesguide.ui.people.PeopleListHelper
 import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader
 import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.ShortcutCreator
@@ -113,6 +114,8 @@ class ShowFragment : Fragment() {
     internal lateinit var buttonRate: View
     @BindView(R.id.buttonShowImdb)
     internal lateinit var buttonImdb: Button
+    @BindView(R.id.buttonShowMetacritic)
+    internal lateinit var buttonShowMetacritic: Button
     @BindView(R.id.buttonShowTvdb)
     internal lateinit var buttonTvdb: Button
     @BindView(R.id.buttonShowTrakt)
@@ -180,6 +183,7 @@ class ShowFragment : Fragment() {
         ViewTools.setVectorIconLeft(theme, buttonImdb, R.drawable.ic_link_black_24dp)
         ViewTools.setVectorIconLeft(theme, buttonTvdb, R.drawable.ic_link_black_24dp)
         ViewTools.setVectorIconLeft(theme, buttonTrakt, R.drawable.ic_link_black_24dp)
+        ViewTools.setVectorIconLeft(theme, buttonShowMetacritic, R.drawable.ic_search_white_24dp)
         ViewTools.setVectorIconLeft(theme, buttonWebSearch, R.drawable.ic_search_white_24dp)
         ViewTools.setVectorIconLeft(theme, buttonComments, R.drawable.ic_forum_black_24dp)
 
@@ -525,6 +529,10 @@ class ShowFragment : Fragment() {
         val traktLink = TraktTools.buildShowUrl(showTvdbId)
         ViewTools.openUriOnClick(buttonTrakt, traktLink)
         buttonTrakt.copyTextToClipboardOnLongClick(traktLink)
+
+        buttonShowMetacritic.setOnClickListener {
+            showTitle?.let { Metacritic.searchForTvShow(requireContext(), it) }
+        }
 
         // web search button
         ServiceUtils.setUpWebSearchButton(showTitle, buttonWebSearch)
