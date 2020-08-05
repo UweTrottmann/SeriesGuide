@@ -138,7 +138,7 @@ public class DisplaySettings {
      */
     public static int getShowsTimeOffset(Context context) {
         try {
-            return Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(context)
+            return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context)
                     .getString(KEY_SHOWS_TIME_OFFSET, "0"));
         } catch (NumberFormatException e) {
             return 0;
