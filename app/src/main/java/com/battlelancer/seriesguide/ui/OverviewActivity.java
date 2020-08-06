@@ -233,7 +233,7 @@ public class OverviewActivity extends BaseMessageActivity {
 
     @Override
     protected View getSnackbarParentView() {
-        if (getResources().getBoolean(R.bool.isSinglePane)) {
+        if (getResources().getBoolean(R.bool.isOverviewSinglePane)) {
             return findViewById(R.id.coordinatorLayoutOverview);
         } else {
             return super.getSnackbarParentView();

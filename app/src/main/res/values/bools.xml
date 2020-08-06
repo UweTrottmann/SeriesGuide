@@ -2,7 +2,7 @@
 <resources>
 
     <bool name="gridClipToPadding">false</bool>
-    <bool name="isSinglePane">true</bool>
+    <bool name="isOverviewSinglePane">true</bool>
     <bool name="isFragmentShowNarrow">false</bool>
 
 </resources>
