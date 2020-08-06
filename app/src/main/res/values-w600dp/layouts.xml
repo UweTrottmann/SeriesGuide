@@ -5,6 +5,5 @@
       include 7" devices in portrait. -->
 
     <item name="activity_people" type="layout">@layout/activity_people_twopane</item>
-    <item name="fragment_show" type="layout">@layout/fragment_show_narrow</item>
 
 </resources>

@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:layout_width="240dp">
-    <!-- Width based on 40% 600dp screen width as used in activity_overview_multipane. -->
+    <!-- Width based on 40% 600dp screen width as used in activity_overview_multipane (portrait)
+    or 30% 800dp screen width as used in activity_overview_multipane_wide (landscape). -->
 
     <LinearLayout
         android:layout_width="match_parent"

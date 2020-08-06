@@ -246,8 +246,8 @@ public class OverviewFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Hide show info if it is displayed in show fragment.
-        boolean isDisplayShowInfo = !getResources().getBoolean(R.bool.isFragmentShowNarrow);
+        // Hide show info if show fragment is visible due to multi-pane layout.
+        boolean isDisplayShowInfo = getResources().getBoolean(R.bool.isOverviewSinglePane);
         containerShow.setVisibility(isDisplayShowInfo ? View.VISIBLE : View.GONE);
 
         LoaderManager loaderManager = LoaderManager.getInstance(this);

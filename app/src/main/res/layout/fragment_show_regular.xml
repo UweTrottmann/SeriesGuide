@@ -8,7 +8,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:nestedScrollingEnabled="true"
+    tools:layout_width="288dp"
     tools:ignore="UnusedAttribute">
+    <!-- 40% of 720dp assuming activity_overview_multipane (portrait),
+     or 30% of 960dp assuming activity_overview_multipane_wide (landscape). -->
 
     <LinearLayout
         android:layout_width="match_parent"
