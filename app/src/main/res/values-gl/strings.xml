@@ -331,8 +331,8 @@
     <string name="feedback">Enviar comentarios</string>
     <string name="action_open_in_browser">Abrir no navegador</string>
     <!-- Settings -->
-    <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
+    <string name="action_translate">Traduce esta aplicación</string>
+    <string name="action_contribute_content">Traduza ou mellora o contido</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">Sobre</string>
     <string name="pref_onlyfuture">Ocultar episodios exibidos</string>

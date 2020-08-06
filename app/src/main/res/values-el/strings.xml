@@ -112,10 +112,10 @@
     <string name="action_watched">Έχει παρακολουθηθεί </string>
     <string name="action_unwatched">Δεν παρακολούθησα</string>
     <string name="state_watched">Είδατε</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_skipped">Παραλείφθηκε</string>
+    <string name="state_in_collection">Σε συλλογή</string>
+    <string name="state_on_watchlist">Σε λίστα παρακολούθησης</string>
+    <string name="state_favorite">Αγαπημένο</string>
     <!-- Shows -->
     <string name="confirm_delete">Θέλετε πράγματι να αφαιρέσετε %s?</string>
     <string name="delete_error">Δεν ήταν δυνατή η αφαίρεση της σειράς. Προσπαθήστε ξανά αργότερα.</string>
@@ -331,8 +331,8 @@
     <string name="feedback">Αποστολή σχολίων</string>
     <string name="action_open_in_browser">Άνοιγμα σε πρόγραμμα περιήγησης</string>
     <!-- Settings -->
-    <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
+    <string name="action_translate">Μετάφραση αυτής της εφαρμογής</string>
+    <string name="action_contribute_content">Μετάφραση ή βελτίωση περιεχομένου</string>
     <string name="prefs_category_advanced">Για προχωρημένους</string>
     <string name="prefs_category_about">Σχετικά</string>
     <string name="pref_onlyfuture">Επεισόδια που δεν έχουν προβληθεί</string>
@@ -472,11 +472,11 @@
     <string name="billing_action_pass">Αποκτήστε το X Pass</string>
     <string name="billing_price_subscribe">%1$s/χρόνο, δοκιμάστε δωρεάν, ακυρώστε οποιαδήποτε στιγμή μέσω του %2$s</string>
     <string name="billing_duration_format">%1$s/έτος</string>
-    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
+    <string name="billing_sub_description">Δοκιμάστε δωρεάν για 30 ημέρες, ακυρώστε όποτε θέλετε. </string>
     <string name="billing_price_pass">εφάπαξ αγοράς</string>
-    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
+    <string name="upgrade_description">Κάθε συνδρομή ξεκλειδώνει όλες τις δυνατότητες και υποστηρίζει μελλοντικές ενημερώσεις. Η συνδρομή δεν είναι απαραίτητη γιατη χρήση της εφαρμογής.</string>
     <string name="upgrade_success">Ευχαριστούμε για την υποστήριξη του SeriesGuide! Έχετε πρόσβαση σε όλα τα χαρακτηριστικά.</string>
-    <string name="billing_learn_more">More info and help</string>
+    <string name="billing_learn_more">Περισσότερες πληροφορίες και βοήθεια</string>
     <string name="subscription_expired">Εγγραφή έληξε</string>
     <string name="subscription_expired_details">Σας X συνδρομή σας έχει λήξει.</string>
     <!-- Amazon In-App Billing -->
