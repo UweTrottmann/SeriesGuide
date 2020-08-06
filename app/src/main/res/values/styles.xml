@@ -187,12 +187,6 @@
         <item name="android:singleLine">true</item>
     </style>
 
-    <style name="Widget.SeriesGuide.TextView.ShowLabels" parent="Widget.SeriesGuide.TextView.SingleLine">
-        <item name="android:layout_marginLeft">@dimen/default_padding</item>
-        <item name="android:layout_marginRight">@dimen/default_padding</item>
-        <item name="android:ellipsize">end</item>
-    </style>
-
     <!-- Toolbar -->
     <style name="Widget.SeriesGuide.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
         <!-- Fix popup menu sub-menu indicator colored white on white instead of gray on white. -->

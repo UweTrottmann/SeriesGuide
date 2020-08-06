@@ -89,8 +89,7 @@
                 app:icon="@drawable/ic_star_black_24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
-                app:layout_constraintTop_toTopOf="@+id/containerShowPoster"
-                tools:text="Remove from favorites" />
+                app:layout_constraintTop_toTopOf="@+id/containerShowPoster" />
 
             <Button
                 android:id="@+id/buttonShowNotify"
