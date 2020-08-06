@@ -451,6 +451,8 @@
     <string name="pref_notification_channel_errors">Σφάλματα</string>
     <string name="pref_notifications_next_episodes_only">Μόνο για επεισόδια που είναι επόμενα για να προβληθούν</string>
     <string name="pref_notifications_next_episodes_only_summary">Ειδοποίηση μόνο αν το νέο επιεσόδιο είναι το επόμενο για προβολή</string>
+    <string name="pref_notifications_battery_settings">Battery settings</string>
+    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
     <string name="pref_widget_opacity">Φόντο widget</string>

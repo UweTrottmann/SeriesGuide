@@ -45,4 +45,10 @@
         app:key="com.battlelancer.seriesguide.notifications.ringtone"
         app:title="@string/pref_ringtone" />
 
+    <Preference
+        app:iconSpaceReserved="false"
+        app:key="com.battlelancer.seriesguide.notifications.battery"
+        app:summary="@string/pref_notifications_battery_settings_summary"
+        app:title="@string/pref_notifications_battery_settings" />
+
 </androidx.preference.PreferenceScreen>

@@ -451,6 +451,8 @@
     <string name="pref_notification_channel_errors">Fouten</string>
     <string name="pref_notifications_next_episodes_only">Alleen voor eerstvolgende afleveringen</string>
     <string name="pref_notifications_next_episodes_only_summary">Meld alleen als de nieuwe aflevering de eerstvolgende is om te kijken</string>
+    <string name="pref_notifications_battery_settings">Battery settings</string>
+    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">Bekeken afleveringen verbergen</string>
     <string name="pref_widget_opacity">Widget achtergrond</string>

@@ -473,6 +473,8 @@
     <string name="pref_notification_channel_errors">Помилки</string>
     <string name="pref_notifications_next_episodes_only">Лише для серій що вийдуть</string>
     <string name="pref_notifications_next_episodes_only_summary">Сповіщати лише якщо нова серія буде наступною для перегляду</string>
+    <string name="pref_notifications_battery_settings">Battery settings</string>
+    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">Приховати переглянуті серії</string>
     <string name="pref_widget_opacity">Фон віджета</string>

@@ -186,6 +186,18 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             }
         }
 
+        findPreference<Preference>(KEY_BATTERY_SETTINGS)?.setOnPreferenceClickListener {
+            // Try to open app info where user can configure battery settings.
+            var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                .setData(Uri.parse("package:" + requireActivity().packageName))
+            if (!Utils.tryStartActivity(activity, intent, false)) {
+                // Open all apps view if detail view not available.
+                intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
+                Utils.tryStartActivity(activity, intent, true)
+            }
+            true
+        }
+
         updateThresholdSummary(thresholdPref)
         updateNotificationSettings()
     }
@@ -516,6 +528,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         //    public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
         private const val KEY_ABOUT = "aboutPref"
         //    public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
+        private const val KEY_BATTERY_SETTINGS = "com.battlelancer.seriesguide.notifications.battery"
 
         // links
         private const val LINK_BASE_KEY = "com.battlelancer.seriesguide.settings."
