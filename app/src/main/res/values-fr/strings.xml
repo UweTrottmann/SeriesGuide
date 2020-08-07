@@ -451,8 +451,8 @@
     <string name="pref_notification_channel_errors">Erreurs</string>
     <string name="pref_notifications_next_episodes_only">Seulement pour les épisodes à regarder ensuite</string>
     <string name="pref_notifications_next_episodes_only_summary">Notifier seulement si le prochain épisode sorti est celui à regarder</string>
-    <string name="pref_notifications_battery_settings">Battery settings</string>
-    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <string name="pref_notifications_battery_settings">Paramètres de batterie</string>
+    <string name="pref_notifications_battery_settings_summary">Aller dans les paramètres de batterie pour désactiver l\'optimisation de la batterie afin de recevoir correctement les notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">Masquer les épisodes vus</string>
     <string name="pref_widget_opacity">Arrière-plan du widget</string>
