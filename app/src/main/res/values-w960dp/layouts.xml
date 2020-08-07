@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Screens with more than 960dp of available width.
+     Includes 7 and 10 inch tablets in landscape. -->
+
+    <item name="fragment_show" type="layout">@layout/fragment_show_regular</item>
+    <item name="buttons_services" type="layout">@layout/buttons_services_wide</item>
+
+</resources>

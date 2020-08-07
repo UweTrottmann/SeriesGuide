@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Screens with more than 720dp of available width in portrait. This would
+       exclude 7" in landscape and include 10" devices in portrait. -->
+    <item name="fragment_show" type="layout">@layout/fragment_show_regular</item>
+    <item name="buttons_services" type="layout">@layout/buttons_services_wide</item>
+
+</resources>

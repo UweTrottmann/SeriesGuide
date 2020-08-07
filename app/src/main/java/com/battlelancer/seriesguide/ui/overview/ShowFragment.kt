@@ -81,12 +81,6 @@ class ShowFragment : Fragment() {
     @BindView(R.id.textViewShowReleaseTime)
     @JvmField
     internal var textViewReleaseTime: TextView? = null
-    @BindView(R.id.textViewShowRuntime)
-    @JvmField
-    internal var textViewRuntime: TextView? = null
-    @BindView(R.id.textViewShowNetwork)
-    @JvmField
-    internal var textViewNetwork: TextView? = null
     @BindView(R.id.textViewShowOverview)
     internal lateinit var textViewOverview: TextView
     @BindView(R.id.textViewShowReleaseCountry)
@@ -343,11 +337,11 @@ class ShowFragment : Fragment() {
             ShowTools.setStatusAndColor(it, showCursor.getInt(ShowQuery.STATUS))
         }
 
-        // next release day and time
+        // Network, next release day and time, runtime
         val releaseCountry = showCursor.getString(ShowQuery.RELEASE_COUNTRY)
         val releaseTime = showCursor.getInt(ShowQuery.RELEASE_TIME)
         val network = showCursor.getString(ShowQuery.NETWORK)
-        if (releaseTime != -1) {
+        val time = if (releaseTime != -1) {
             val weekDay = showCursor.getInt(ShowQuery.RELEASE_WEEKDAY)
             val release = TimeTools.getShowReleaseDateTime(
                 requireContext(),
@@ -358,19 +352,17 @@ class ShowFragment : Fragment() {
             )
             val dayString = TimeTools.formatToLocalDayOrDaily(activity, release, weekDay)
             val timeString = TimeTools.formatToLocalTime(activity, release)
-            textViewReleaseTime?.text = String.format("%s %s", dayString, timeString)
+            String.format("%s %s", dayString, timeString)
         } else {
-            textViewReleaseTime?.text = null
+            null
         }
-
-        // runtime
-        textViewRuntime?.text = getString(
+        val runtime = getString(
             R.string.runtime_minutes,
             showCursor.getInt(ShowQuery.RUNTIME).toString()
         )
-
-        // network
-        textViewNetwork?.text = network
+        val combinedString =
+            TextTools.dotSeparate(TextTools.dotSeparate(network, time), runtime)
+        textViewReleaseTime?.text = combinedString
 
         // favorite button
         val isFavorite = showCursor.getInt(ShowQuery.IS_FAVORITE) == 1

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- At least 600dp x 600dp so vertically stacked panes fit. -->
+    <!-- At least 600dp wide so narrow show layout fits (at 40% of width at least 240dp). -->
     <item name="activity_overview" type="layout">@layout/activity_overview_multipane</item>
+    <item name="fragment_show" type="layout">@layout/fragment_show_narrow</item>
 
 </resources>
