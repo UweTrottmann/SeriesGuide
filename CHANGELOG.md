@@ -8,6 +8,23 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 56
+----------
+*in development*
+
+#### 56-beta1
+*2020-08-07*
+
+* 🌟 Metacritic search link for shows and movies. Note that only English titles get good results.
+* 🔧 Shorter English episode number formats by default (S01E01 -> S1:E1). The older formats are still available in Settings.
+* 🔧 Show details layout again always includes status, network and time.
+* 🔧 Show overview multi-pane layout requires larger screen width in landscape.
+  Most tall phones using gesture navigation should support it.
+* 🔧 Update older movies more often (180 -> 90 days), this should resolve broken posters more quickly.
+* 🔧 Fast scroller for watched movie list.
+* 🔧 Link to battery settings/app info page from notification settings to make users aware of these system settings.
+* 📝 Latest translations from crowdin.
+
 Version 55
 ----------
 *2020-07-16*
