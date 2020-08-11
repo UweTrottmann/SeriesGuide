@@ -3,7 +3,7 @@
 **Note:** This work is licensed under the [Apache License 2.0](LICENSE.txt).
 If you contribute any 
 [non-trivial](http://www.gnu.org/prep/maintain/maintain.html#Legally-Significant)
-patches or translations make sure you have read and agreed to it.
+patches or translations make sure you have read it and agree with it.
 
 #### Would you like to contribute code?
 
