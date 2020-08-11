@@ -1,5 +1,4 @@
-SeriesGuide Show Manager
-========================
+# SeriesGuide Show Manager
 
 Android app to help you keep track of your favorite TV shows and movies.
 
@@ -7,17 +6,13 @@ Android app to help you keep track of your favorite TV shows and movies.
 
 <img src="screenshots/phone.png" height="375"/>
 
-Contributing
-------------
+## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-License
--------
+## License
 
-Created by [Uwe Trottmann](https://uwetrottmann.com).
+Except where noted otherwise, this work by [Uwe Trottmann](https://uwetrottmann.com) is licensed under the [Apache License 2.0](LICENSE.txt).
 
-See full [list of contributors](https://github.com/UweTrottmann/SeriesGuide/graphs/contributors).
-
-Except where noted otherwise, released into the [public domain](UNLICENSE).
-Do not just copy, make it better.
+Code [contributors](https://github.com/UweTrottmann/SeriesGuide/graphs/contributors) and changes are tracked by Git.
+Translation [contributors](https://crowdin.com/project/seriesguide-translations/activity_stream) are tracked by Crowdin.

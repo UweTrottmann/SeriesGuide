@@ -1,14 +1,9 @@
 # Contributing
 
-**Note:** This project is in the [public domain](UNLICENSE). If you contribute any 
+**Note:** This work is licensed under the [Apache License 2.0](LICENSE.txt).
+If you contribute any 
 [non-trivial](http://www.gnu.org/prep/maintain/maintain.html#Legally-Significant)
-patches or translations the following applies:
-
-    I dedicate any and all copyright interest in this software to the
-    public domain. I make this dedication for the benefit of the public at
-    large and to the detriment of my heirs and successors. I intend this
-    dedication to be an overt act of relinquishment in perpetuity of all
-    present and future rights to this software under copyright law.
+patches or translations make sure you have read and agreed to it.
 
 #### Would you like to contribute code?
 
@@ -20,10 +15,9 @@ patches or translations the following applies:
 5. [Start a pull request](https://github.com/UweTrottmann/SeriesGuide/compare) and reference [issues](https://github.com/UweTrottmann/SeriesGuide/issues) if needed.
 
 #### No code!
-* You can [get help](https://seriesgui.de/help).
+* You can [discuss or submit bug reports](https://github.com/UweTrottmann/SeriesGuide/issues).
 * You can [suggest features](https://discuss.seriesgui.de).
 * You can [translate the app](https://crowdin.com/project/seriesguide-translations).
-* You can [discuss bugs](https://github.com/UweTrottmann/SeriesGuide/issues) or [submit a bug](https://github.com/UweTrottmann/SeriesGuide/issues/new).
 
 ## Building
 
