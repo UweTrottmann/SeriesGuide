@@ -349,6 +349,7 @@
     <string name="pref_language_fallback">Alternativt språk</string>
     <string name="pref_updatewifionly">Endast bilder via Wi-Fi</string>
     <string name="pref_updatewifionlysummary">För att minska dataavgifter, hämta inte via mobilnät</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d dag innan</item>
         <item quantity="other">%d dagar innan</item>

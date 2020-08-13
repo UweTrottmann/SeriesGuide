@@ -381,6 +381,7 @@
     <string name="pref_language_fallback">اللغة البديلة</string>
     <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>
     <string name="pref_updatewifionlysummary">لتخفيض الكلفة، لا تحمّل عبر شبكات الجوال أو الشبكات الغير مجانية</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="zero">قبل يوم من %d</item>
         <item quantity="one">قبل يوم من %d</item>

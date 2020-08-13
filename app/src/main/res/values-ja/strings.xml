@@ -341,6 +341,7 @@
     <string name="pref_language_fallback">別の言語</string>
     <string name="pref_updatewifionly">画像は Wi-Fi 経由のみ</string>
     <string name="pref_updatewifionlysummary">データ通信料金を減らすため、モバイルまたは従量課金ネットワーク経由でダウンロードしません</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="other">%d 日前</item>
     </plurals>

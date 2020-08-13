@@ -437,6 +437,13 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 SgSyncAdapter.setSyncAutomatically(activity, autoUpdatePref.isChecked)
             }
         }
+
+        if (AppSettings.KEY_SEND_ERROR_REPORTS == key) {
+            pref?.also {
+                val switchPref = pref as SwitchPreferenceCompat
+                AppSettings.setSendErrorReports(switchPref.context, switchPref.isChecked, false)
+            }
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

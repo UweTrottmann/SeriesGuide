@@ -365,6 +365,7 @@
     <string name="pref_language_fallback">Alternatívny jazyk</string>
     <string name="pref_updatewifionly">Zobrazovať obrázky výlučne cez Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Pre zníženie spotreby dát, nesťahovať cez mobilné alebo merané siete</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d deň pred</item>
         <item quantity="few">%d dni pred</item>

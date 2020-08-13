@@ -349,6 +349,7 @@
     <string name="pref_language_fallback">Alternative language</string>
     <string name="pref_updatewifionly">படிமங்கள் வழியாக Wi-Fi மட்டும்</string>
     <string name="pref_updatewifionlysummary">தரவு கட்டணங்களை குறைக்க, தகவலிறக்க வேண்டாம் மேல் மொபைல் அல்லது metered பிணையங்கள்</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d நாள் முன்பு</item>
         <item quantity="other">%d நாட்கள் முன்பு</item>

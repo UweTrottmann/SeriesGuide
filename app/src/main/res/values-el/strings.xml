@@ -349,6 +349,7 @@
     <string name="pref_language_fallback">Εναλλακτική γλώσσα</string>
     <string name="pref_updatewifionly">Εικόνες μόνο μέσω Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Για μείωση των χρεώσεων, όχι μέσω δικτύων κινητής ή δικτύων με ογκοχρέωση</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d ημέρα πριν</item>
         <item quantity="other">%d ημέρα πριν</item>

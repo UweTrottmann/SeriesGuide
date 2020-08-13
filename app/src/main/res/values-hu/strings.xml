@@ -349,6 +349,7 @@
     <string name="pref_language_fallback">Alternatív nyelv</string>
     <string name="pref_updatewifionly">Képek csak Wi-Fi-n keresztül</string>
     <string name="pref_updatewifionlysummary">Az adatforgalmi díjak csökkentése éredekében ne tölts le mobil vagy díjköteles hálózatokról</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d nappal korábban</item>
         <item quantity="other">%d nappal korábban</item>

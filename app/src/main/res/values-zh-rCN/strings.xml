@@ -341,6 +341,7 @@
     <string name="pref_language_fallback">副语言</string>
     <string name="pref_updatewifionly">仅通过 Wi-Fi 下载图片</string>
     <string name="pref_updatewifionlysummary">为了减少蜂窝数据流量使用，在移动网络下禁止下载</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="other">%d 天前</item>
     </plurals>

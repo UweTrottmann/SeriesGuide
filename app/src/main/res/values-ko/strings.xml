@@ -341,6 +341,7 @@
     <string name="pref_language_fallback">기타 언어</string>
     <string name="pref_updatewifionly">와이파이를 이용하여 이미지 다운받기</string>
     <string name="pref_updatewifionlysummary">데이터 과금을 막기 위해 모바일 네트워크를 통해 다운로드하지 않음</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="other">%d일 전</item>
     </plurals>

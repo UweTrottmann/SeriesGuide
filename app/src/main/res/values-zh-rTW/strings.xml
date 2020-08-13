@@ -341,6 +341,7 @@
     <string name="pref_language_fallback">Alternative language</string>
     <string name="pref_updatewifionly">只有在使用Wi-Fi時載入圖片</string>
     <string name="pref_updatewifionlysummary">為了減少資料量，不要透過移動或計量網路下載</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="other">%d days before</item>
     </plurals>
