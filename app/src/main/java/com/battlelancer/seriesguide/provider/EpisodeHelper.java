@@ -25,6 +25,12 @@ public interface EpisodeHelper {
     @Query("SELECT * FROM " + EPISODES + " LIMIT 1")
     SgEpisode getEpisode();
 
+    /**
+     * For testing: Get single episode.
+     */
+    @Query("SELECT * FROM " + EPISODES + " WHERE _id=:episodeTvdbId")
+    SgEpisode getEpisode(int episodeTvdbId);
+
     @Nullable
     @Query("SELECT season_id, season, series_id  FROM episodes WHERE _id=:episodeTvdbId")
     SgEpisodeSeasonAndShow getEpisodeMinimal(int episodeTvdbId);

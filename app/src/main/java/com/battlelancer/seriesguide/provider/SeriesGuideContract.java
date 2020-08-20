@@ -534,7 +534,7 @@ public class SeriesGuideContract {
         String WATCHED = "movies_watched";
 
         /**
-         * Currently unused.
+         * The number of times a movie was watched.
          */
         String PLAYS = "movies_plays";
 

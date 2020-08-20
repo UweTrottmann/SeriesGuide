@@ -52,6 +52,10 @@ public class SgEpisode {
 
     @ColumnInfo(name = Episodes.WATCHED)
     public int watched = 0;
+    /**
+     * The number of times an episode was watched.
+     */
+    public Integer plays = 0;
 
     @ColumnInfo(name = Episodes.DIRECTORS)
     public String directors = "";

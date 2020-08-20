@@ -47,7 +47,8 @@ abstract class SgRoomDatabase : RoomDatabase() {
         private const val VERSION_45_RECREATE_SEASONS = 45
         const val VERSION_46_SERIES_SLUG = 46
         const val VERSION_47_SERIES_POSTER_THUMB = 47
-        const val VERSION = VERSION_47_SERIES_POSTER_THUMB
+        const val VERSION_48_EPISODE_PLAYS = 48
+        const val VERSION = VERSION_48_EPISODE_PLAYS
 
         @Volatile
         private var instance: SgRoomDatabase? = null
@@ -65,27 +66,30 @@ abstract class SgRoomDatabase : RoomDatabase() {
                 if (existingInLock != null) { // Second check (with locking)
                     existingInLock
                 } else {
-                    val newInstance = Room.databaseBuilder(context.applicationContext,
-                            SgRoomDatabase::class.java, SeriesGuideDatabase.DATABASE_NAME)
-                            .addMigrations(
-                                    MIGRATION_46_47,
-                                    MIGRATION_45_46,
-                                    MIGRATION_44_45,
-                                    MIGRATION_42_44,
-                                    MIGRATION_43_44,
-                                    MIGRATION_42_43,
-                                    MIGRATION_41_43,
-                                    MIGRATION_40_43,
-                                    MIGRATION_39_43,
-                                    MIGRATION_38_43,
-                                    MIGRATION_37_43,
-                                    MIGRATION_36_43,
-                                    MIGRATION_35_43,
-                                    MIGRATION_34_43
-                            )
-                            .addCallback(CALLBACK)
-                            .allowMainThreadQueries()
-                            .build()
+                    val newInstance = Room.databaseBuilder(
+                        context.applicationContext,
+                        SgRoomDatabase::class.java,
+                        SeriesGuideDatabase.DATABASE_NAME
+                    ).addMigrations(
+                        MIGRATION_47_48,
+                        MIGRATION_46_47,
+                        MIGRATION_45_46,
+                        MIGRATION_44_45,
+                        MIGRATION_42_44,
+                        MIGRATION_43_44,
+                        MIGRATION_42_43,
+                        MIGRATION_41_43,
+                        MIGRATION_40_43,
+                        MIGRATION_39_43,
+                        MIGRATION_38_43,
+                        MIGRATION_37_43,
+                        MIGRATION_36_43,
+                        MIGRATION_35_43,
+                        MIGRATION_34_43
+                    )
+                        .addCallback(CALLBACK)
+                        .allowMainThreadQueries()
+                        .build()
                     instance = newInstance
                     newInstance
                 }
@@ -110,6 +114,20 @@ abstract class SgRoomDatabase : RoomDatabase() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 // manually create FTS table, not supported by Room
                 db.execSQL(SeriesGuideDatabase.CREATE_SEARCH_TABLE)
+            }
+        }
+
+        @JvmField
+        val MIGRATION_47_48: Migration = object :
+            Migration(VERSION_47_SERIES_POSTER_THUMB, VERSION_48_EPISODE_PLAYS) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Timber.d("Migrating database from 47 to 48")
+
+                database.execSQL("ALTER TABLE episodes ADD COLUMN plays INTEGER;")
+                database.execSQL("UPDATE episodes SET plays = 1 WHERE watched = 1;")
+                database.execSQL("UPDATE episodes SET plays = 0 WHERE watched != 1;")
+                // Movies already have plays column, but also prepopulate it.
+                database.execSQL("UPDATE movies SET movies_plays = 1 WHERE movies_watched = 1;")
             }
         }
 

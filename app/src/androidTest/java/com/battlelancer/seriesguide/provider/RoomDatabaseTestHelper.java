@@ -11,6 +11,8 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbEpisodeTools;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
+import com.battlelancer.seriesguide.ui.movies.MovieDetails;
 import com.uwetrottmann.thetvdb.entities.Episode;
 
 /**
@@ -45,11 +47,29 @@ public class RoomDatabaseTestHelper {
 
     public static void insertEpisode(Episode episode, int showTvdbId, int seasonTvdbId,
             int seasonNumber, SupportSQLiteDatabase db) {
+        insertEpisode(db, episode, showTvdbId, seasonTvdbId, seasonNumber, false);
+    }
+
+    public static void insertEpisode(
+            SupportSQLiteDatabase db,
+            Episode episode,
+            int showTvdbId,
+            int seasonTvdbId,
+            int seasonNumber,
+            boolean watched
+    ) {
         ContentValues values = new ContentValues();
         TvdbEpisodeTools.toContentValues(episode, values,
                 episode.id, seasonTvdbId, showTvdbId, seasonNumber,
                 Constants.EPISODE_UNKNOWN_RELEASE, true);
 
+        if (watched) values.put(SeriesGuideContract.Episodes.WATCHED, EpisodeFlags.WATCHED);
+
         db.insert(Tables.EPISODES, SQLiteDatabase.CONFLICT_REPLACE, values);
+    }
+
+    public static void insertMovie(SupportSQLiteDatabase db, MovieDetails movieDetails) {
+        db.insert(Tables.MOVIES, SQLiteDatabase.CONFLICT_REPLACE,
+                movieDetails.toContentValuesInsert());
     }
 }
